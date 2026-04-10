@@ -1,0 +1,26 @@
+# NDU-sensitive source material
+raw/
+
+# Wiki pages summarizing confidential sources
+wiki/sources/Source - Signed CSA Dec 15 2025.md
+wiki/sources/Source - DOH TOR UHC Survey Year 2.md
+wiki/sources/Source - ASPSI Proposal Approach and Methodology.md
+wiki/sources/Source - Revised Inception Report.md
+wiki/analyses/Analysis - Project Intelligence Brief.md
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/temp
+*.swp
+*.tmp
+*~
+.~lock.*
+
+# Obsidian workspace state (keep config, exclude local state)
+.obsidian/workspace
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
