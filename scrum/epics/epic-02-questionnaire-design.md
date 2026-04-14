@@ -3,7 +3,7 @@ epic: 2
 title: Survey Questionnaire Design & Dictionary
 phase: per-instrument
 status: in-progress
-last_updated: 2026-04-10
+last_updated: 2026-04-13
 ---
 
 # Epic 2 — Survey Questionnaire Design & Dictionary
@@ -49,10 +49,12 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 - [x] **E2-F1-006** F1 validation rule inventory — hard stops, soft warnings, display gates all documented with paste-ready PROC snippets `status::done` `priority::critical` `estimate::1d`
 - [x] **E2-F1-007** F1 cross-field consistency rules documented (e.g., tenure ≤ age − 15; if Q51 = No then Q52–Q78 must be blank) `status::done` `priority::critical`
 - [x] **E2-F1-008** F1 sanity check — 6 DCF bugs surfaced and queued for Phase 5 correction `status::done` `priority::critical`
-- [ ] **E2-F1-009** F1 apply 6 DCF bug fixes to `generate_dcf.py` and regenerate v2 `status::todo` `priority::critical` `estimate::1d`
-  - Individual bug items tracked in `F1-Skip-Logic-and-Validations.md §DCF sanity-check findings`
-  - **This is the next active task**
-- [ ] **E2-F1-010** F1 DCF v2 opened in CSPro Designer, validated, bug list closed or explicitly deferred → sign-off to enter Epic 3 `status::todo` `priority::critical` `estimate::4h`
+- [x] **E2-F1-009** F1 apply 6 DCF bug fixes to `generate_dcf.py` and regenerate v2 `status::done` `priority::critical` `estimate::1d`
+  - Completed 2026-04-11 (see `log.md`). Output: 11 records, 952 items. Defaults assumed for 6 questions pending LSS-meeting confirmation.
+- [ ] **E2-F1-009b** Reconcile DCF v2 with LSS-meeting decisions on the 6 open items (Q63 day vs month, SECONDARY_DATA structure, NBB split, Q31 NA-skip intent, Q166 nurse list, Q121 dynamic value set) — patch generator + regenerate as v3 if any decision changes the schema `status::todo` `priority::critical` `estimate::4h`
+  - **Sprint 001 commitment**
+- [ ] **E2-F1-010** F1 DCF (final) opened in CSPro Designer, validated, bug list closed or explicitly deferred → sign-off to enter Epic 3 `status::todo` `priority::critical` `estimate::4h`
+  - **Sprint 001 commitment**
 
 ---
 

@@ -3,9 +3,10 @@ project: UHC Survey Year 2 — CAPI Development
 client: Department of Health (DOH-PMSMD)
 implementer: Asian Social Project Services, Inc. (ASPSI)
 data_programmer: Carl Patrick L. Reyes
+qa_tester: Sean (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-04-10
+last_updated: 2026-04-13
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -20,17 +21,21 @@ last_updated: 2026-04-10
 
 ## 1. Status at a Glance
 
+### Headline (this week)
+
+**F1 design is closed.** The 6 open F1 questions tracked from Apr 10 are no longer concerns — the Apr 13 LSS meeting confirmed no schema changes required, and DCF v2 stands as the final F1 dictionary. F1 is now **Build-ready**, and the per-instrument pipeline (F1 → F2 → F3 → F4) advances accordingly. Comms infrastructure is fully provisioned (project mailbox + Viber group both live, QA tester onboarded).
+
 ### By Workstream Epic
 
 | # | Epic | Current State | Next Milestone |
 |---|---|---|---|
-| **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** | SJREB clearance in hand |
+| **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** | First weekly status update shipped to ASPSI Mgmt Committee |
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
-| **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Design, F2–F4/PLF Source Captured) | F1 corrections finalized; F2 design kickoff |
-| **3** | CAPI Application Development | Not Started | Begin F1 build after Epic 2 corrections |
-| **4** | CSWeb Server Setup and Deployment | Not Started | Sync architecture decision |
+| **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Build-ready, F2–F4/PLF Source Captured) | F2 design kickoff |
+| **3** | CAPI Application Development | **Ready to Start** (F1) | F1 form file — Section A laid out in CSPro Designer |
+| **4** | CSWeb Server Setup and Deployment | Not Started | Sync architecture decision documented |
 | **5** | Tablet and Field Logistics | Not Started | Tablet provisioning SOP drafted |
-| **6** | Testing and Pilot | Not Started | F1 desk test (follows Epic 3) |
+| **6** | Testing and Pilot | Not Started | F1 desk test (follows Epic 3); QA Tester (Sean) onboarded to test workflow |
 | **7** | Training and Documentation | Not Started | Survey manual outline (tied to D2) |
 | **8** | Fieldwork Monitoring and Quality Control | Not Started (activates at fieldwork) | Dashboard requirements defined |
 | **9** | Data Management and Security | **Governance Active** (NDU + privacy compliance ongoing) | Secure sync + backup strategy defined |
@@ -42,7 +47,7 @@ last_updated: 2026-04-10
 
 | Instrument | Mode | Pages | Current State |
 |---|---|---|---|
-| **F1 — Facility Head** | Interviewer-administered | 34 | **Design** — schema corrections before build |
+| **F1 — Facility Head** | Interviewer-administered | 34 | **Build-ready** — design closed Apr 13; DCF v2 final; pending Designer walkthrough + form build |
 | **F2 — Healthcare Worker** | Self-administered | 14 | Source Captured |
 | **F3 — Patient** | Interviewer-administered | 23 | Source Captured |
 | **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2) | 26 | Source Captured |
@@ -75,13 +80,15 @@ What is being built, in numbers:
 | ID | Deliverable | Tranche | Original Due | Current Status |
 |---|---|---|---|---|
 | **D1** | Approved Inception Report (work plan, sampling, survey design, protocols, tools) | T1 (15%) | 2025-12-12 | **Accepted** |
-| **D2** | Approved survey materials & protocols: Survey Manual, SOPs, data collection tools, dialect translations | T2 (30%) | 2026-02-13 | **In Progress** (extended) |
-| **D3** | Approved pre-tested / pilot-tested questionnaires + field operations manuals + training materials | T2 (30%) | 2026-03-13 | **In Progress** (extended) |
+| **D2** | Approved survey materials & protocols: Survey Manual, SOPs, data collection tools, dialect translations | T2 (30%) | 2026-02-13 | **In Progress** (extended) — F1 instrument component ready; survey manual + SOPs + F2/F3/F4 instruments still in progress |
+| **D3** | Approved pre-tested / pilot-tested questionnaires + field operations manuals + training materials | T2 (30%) | 2026-03-13 | **In Progress** (extended) — gated on Epic 6 (pretest) which depends on SJREB |
 | **D4** | Approved progress report on piloting + initial preliminary data collection report | T3 (25%) | 2026-07-13 | Not Started |
 | **D5** | Approved training documentation (materials + summary report with pre-/post-assessment) | T4 (30%) | 2026-07-31 | Not Started |
 | **D6** | Approved full final report + summary slides / policy briefs + dissemination workshop documentation | T4 (30%) | 2026-08-13 | Not Started |
 
 > Per CSA §6, "submission dates may change as agreed with the Client." D2 and D3 are on an agreed extended timeline to accommodate the toolchain switch from SurveyCTO (Year 1) to CSPro (Year 2).
+>
+> The Inception Report's Table 14 timetable consolidates these six items into four contractual tranches matching the payment schedule (T1–T4). See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Timetable of Activities]] for the tranche-level view.
 
 ---
 
@@ -103,14 +110,17 @@ Each epic below is a long-running workstream that spans its portion of the engag
 - Project Intelligence Brief authored (timeline, decisions, stakeholder dynamics)
 - 12-phase CAPI Development Workflow codified into IT Standards as a reusable template
 - PSA sampling endorsement captured in the approved Inception Report
-- Scrum discipline adopted with per-project Product Backlog and sprint cadence
+- Scrum discipline adopted with per-project Product Backlog and 1-week sprint cadence (Sprint 001 active)
+- **Comms infrastructure live:** ASPSI project mailbox (`aspsi.doh.uhc.survey2.data@gmail.com`) for artifacts and decisions of record; CAPI Viber group for real-time coordination
+- **Team structure clarified:** Carl as Data Programmer; Sean (ASPSI RA) as QA Tester for the CAPI build
 
 **In flight:**
 - SJREB ethics clearance coordination (via ASPSI)
 - Ongoing risk tracking and stakeholder communication
-- Product Backlog maintenance
+- Product Backlog maintenance (this document)
+- Authoring the weekly status update format for ASPSI Management Committee — Carl-controlled narrative, not a coordination ask
 
-**Next milestone:** SJREB clearance in hand (long-pole dependency for Epic 6).
+**Next milestone:** First weekly status update shipped to ASPSI Management Committee.
 
 **Ties to:** Cross-cutting across all other epics. Anchors D1 (ongoing governance).
 
@@ -141,23 +151,23 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 **Covers:** Per-instrument questionnaire ingestion, data model specification (records, fields, value sets, identifiers, roster structures), field-by-field skip logic mapping, validation rule documentation (hard stops, soft warnings, display gates, cross-field consistency), informed consent form design (English + Filipino), and schema correction passes.
 
-**Current state:** In Progress
+**Current state:** In Progress (F1 closed; F2–F4 + PLF pending)
 
 **Per-instrument status:**
 
 | Instrument | State | Notes |
 |---|---|---|
-| F1 | **Design — corrections pending** | Data model complete (10 records, 649 fields). All 166 questions walked for skip logic. Four-tier validation rules fully documented. Six schema issues surfaced in the field-logic pass and queued for correction. |
-| F2 | Source Captured | Self-administered mode implications to be mapped during design. |
+| F1 | **Build-ready** | Design closed 2026-04-13. Data model complete (10 records, 649 fields). All 166 questions walked for skip logic. Four-tier validation rules fully documented. The 6 schema items surfaced in the field-logic pass were resolved at the Apr 13 LSS meeting with no schema changes required — DCF v2 stands as final. |
+| F2 | Source Captured | Self-administered mode implications to be mapped during design. Next instrument in the pipeline. |
 | F3 | Source Captured | Outpatient + inpatient dual-population eligibility to be mapped during design. |
 | F4 | Source Captured | Household roster structure is the headline design challenge. |
 | PLF | Source Captured | Implementation decision (CAPI vs paper) precedes design. |
 
-**What's done across the epic:** All five source questionnaires ingested and catalogued. F1 fully designed through the logic pass.
+**What's done across the epic:** All five source questionnaires ingested and catalogued. F1 fully designed and design-closed.
 
-**In flight:** F1 schema corrections.
+**In flight:** Preparing to start F2 design (next sprint or sprint after, depending on F1 build pace).
 
-**Next milestone:** F1 corrections finalized; F2 design kickoff.
+**Next milestone:** F2 design kickoff.
 
 **Ties to:** D2, D3.
 
@@ -167,11 +177,11 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 **Covers:** CSPro Designer application build per instrument — form layout, tablet UX, capture types, question text (English + Filipino), skip logic wiring, validation wiring (hard stops via error + re-enter, soft warnings via accept, display gates via conditional visibility), dynamic value sets (context-dependent option lists), multi-language handling, FIELD_CONTROL block (informed consent, eligibility screening, AAPOR disposition codes, GPS, interviewer/supervisor IDs, timestamps), and roster engines (F4).
 
-**Current state:** Not Started
+**Current state:** **Ready to Start (F1)** — F1 design closed Apr 13, no remaining blockers from Epic 2 for F1.
 
-**Per-instrument status:** All instruments Not Started. Build begins after Epic 2 corrections for the given instrument complete.
+**Per-instrument status:** F1 ready to start; F2/F3/F4 not started (each follows its own Epic 2 closeout).
 
-**Next milestone:** Begin F1 build after Epic 2 F1 corrections are finalized.
+**Next milestone:** F1 form file (`FacilityHeadSurvey.fmf`) created in CSPro Designer; Section A (Identification & Cover Page) laid out as the first build slice.
 
 **Sequencing strategy:**
 1. F1 first as the reference instrument (largest, exercises the full range of patterns)
@@ -219,7 +229,11 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 **Per-instrument status:** All instruments Not Started. Testing follows Epic 3 build per instrument.
 
-**Next milestone:** F1 desk test, once F1 build is underway.
+**Roles:**
+- **Carl (Data Programmer)** — author of test specs, owner of desk and bench tests against the build, owner of regression artifacts.
+- **Sean (QA Tester, ASPSI RA)** — independent QA pass on each instrument's CAPI build. Receives handoff bundles from Carl with the build, test scripts, known-issue list, and walkthrough notes. Surfaces defects ahead of the SJREB protocol freeze and the formal pretest with respondents.
+
+**Next milestone:** F1 desk test, once F1 build is underway. QA handoff workflow to Sean defined ahead of first F1 build slice ready for review.
 
 **Critical dependency:** Pretest with real respondents requires SJREB clearance (tracked in Epic 0).
 
@@ -261,6 +275,7 @@ Each epic below is a long-running workstream that spans its portion of the engag
 - Non-Disclosure Undertaking signed (Dec 12, 2025)
 - RA 10173 / RA 8293 / RA 10175 obligations acknowledged
 - Confidentiality clause in CSA (§10g, §11) in effect
+- Project mailbox provisioned as the ASPSI-custody correspondence/artifact channel (multi-user shared Gmail; treat as shared inbox)
 
 **Next milestone:** Secure sync architecture and backup strategy defined as part of Epic 4.
 
@@ -320,14 +335,15 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 | Risk | Likelihood | Impact | Mitigation | Affected Epics |
 |---|---|---|---|---|
-| SJREB ethics clearance delay | Medium | High — blocks all pretesting and fieldwork | ASPSI actively coordinating; tracked as the long-pole dependency | 0, 6 |
-| Timeline pressure on D2 / D3 extended window | Medium | High — late delivery penalty applies (1% of total per calendar day) | Sequenced instrument delivery; reproducible generators absorb late questionnaire revisions cheaply | 2, 3, 6, 7 |
-| Late questionnaire revisions from client | Medium | Medium | Script-generated data models re-run in minutes rather than days | 2, 3 |
+| SJREB ethics clearance delay | Medium | High — blocks all pretesting and fieldwork | ASPSI actively coordinating; tracked as the long-pole dependency; remains the single most important external dependency | 0, 6 |
+| Timeline pressure on D2 / D3 extended window | Medium | High — late delivery penalty applies (1% of total per calendar day if no further extension) | F1 design closed clean (Apr 13) — pipeline ahead of where it was a week ago. F2–F4 design pipeline next. Sequenced instrument delivery; reproducible generators absorb late questionnaire revisions cheaply | 2, 3, 6, 7 |
+| Late questionnaire revisions from client (F2–F4) | Low–Medium | Medium | Script-generated data models re-run in minutes; F1 came through clean which is one favorable data point but not predictive of F2–F4 | 2, 3 |
 | Household roster complexity (F4) | Medium | Medium | F4 sequenced last so lessons from F1/F2/F3 inform the roster design | 2, 3 |
 | Self-administered mode (F2) unfamiliarity | Low | Medium | Workflow template exercised and refined during F2 build | 2, 3 |
+| QA bandwidth / Sean ramp-up time on CSPro toolchain | Low–Medium | Medium | QA handoff bundles authored as opinionated walkthroughs (not raw artifacts) so Sean can productively review without deep CSPro internals knowledge | 6 |
 | Tablet device failure in field | Low | Medium | Backup/recovery plan required before deployment; partial-save patterns built into every instrument | 5, 8 |
 | Sync connectivity in remote clusters | Medium | Medium | Sync architecture decision will weigh offline tolerance; multiple fallback transports available | 4 |
-| PII breach or data loss | Low | High — regulatory and reputational | NDU in effect, encryption requirements, audit trail, retention policy to be finalized in Epic 9 | 9 |
+| PII breach or data loss | Low | High — regulatory and reputational | NDU in effect, encryption requirements, audit trail, retention policy to be finalized in Epic 9; project mailbox treated as shared inbox under ASPSI custody | 9 |
 | Incomplete handover puts service replicability at risk | Medium | Medium — lessons don't compound across engagements | Epic 12 explicit, retrospective writeback mandatory | 12 |
 
 ---
@@ -337,7 +353,7 @@ Each epic below is a long-running workstream that spans its portion of the engag
 1. **Epic 0 runs continuously** from kickoff through closeout — PM, risk, ethics coordination, stakeholder reporting, change management.
 2. **Epic 1 (Inception) is a discrete early phase** — one-time at engagement start. Already closed for this project.
 3. **Epic 9 (Data Management and Security) runs continuously** — data privacy and security governance is always on, with concrete deliverables concentrated around Epic 4 and Epic 8.
-4. **Epics 2 → 3 → 6 form the per-instrument pipeline.** Each instrument moves through Design → Build → Testing/Pilot in sequence. Instruments are staggered: F1 first as reference, F2 second (self-admin), F3 third, F4 last (roster).
+4. **Epics 2 → 3 → 6 form the per-instrument pipeline.** Each instrument moves through Design → Build → Testing/Pilot in sequence. Instruments are staggered: F1 first as reference (now Build-ready), F2 second (self-admin), F3 third, F4 last (roster).
 5. **Epics 4 and 5 must be ready before the first pretest.** Sync server and tablet logistics are prerequisites for any field activity.
 6. **Epic 7 deliverables are staged:** Survey manual outline early (D2), full training materials before pretest (D3), training delivery documentation after (D5).
 7. **Epic 8 activates at first deployment** and runs through to end of fieldwork.
@@ -351,6 +367,8 @@ Each epic below is a long-running workstream that spans its portion of the engag
 - **D5 training documentation** — original due 2026-07-31
 - **D6 final report + dissemination** — original due 2026-08-13
 - **Engagement close** — targeted end of August 2026
+
+See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Timetable of Activities]] for the Inception Report's Table 14 view of the same horizon (consolidated to four contractual tranches).
 
 ---
 
@@ -370,7 +388,7 @@ CAPI development follows a 12-phase workflow codified from industry best practic
 **Two governing design rules:**
 
 1. **Generator-based artifacts.** Instrument data models are produced by version-controlled scripts, never hand-edited. Late questionnaire revisions are absorbed by re-running, not manual rework. Primary control against timeline risk.
-2. **Logic pass before build.** Field-by-field skip logic and validation rules are walked against the data model before any application development begins. Schema issues surface while they are still cheap to fix. Primary control against functional defects.
+2. **Logic pass before build.** Field-by-field skip logic and validation rules are walked against the data model before any application development begins. Schema issues surface while they are still cheap to fix. Primary control against functional defects. (F1 demonstrated the value of this rule — the Apr 13 LSS confirmation that no schema changes were needed validated the pre-build logic pass investment.)
 
 **Validation rules** are classified into three tiers:
 - **Hard stops** — block and re-enter
@@ -383,6 +401,7 @@ CAPI development follows a 12-phase workflow codified from industry best practic
 - Every soft validation triggered and overridden in bench test
 - Every dynamic value-set branch exercised
 - Pair test with domain expert for interpretation drift
+- Independent QA pass by Sean before formal pretest with respondents
 - Mock cases archived as regression artifacts
 
 ---
@@ -393,6 +412,7 @@ CAPI development follows a 12-phase workflow codified from industry best practic
 | State | Definition |
 |---|---|
 | **Not Started** | No work initiated |
+| **Ready to Start** | Upstream blockers cleared; work can begin in the next sprint |
 | **In Progress** | Active work underway |
 | **Active / Ongoing** | Continuous workstream (e.g., PM, governance) |
 | **Governance Active** | Policy and compliance workstream always on, concrete deliverables staged |
@@ -401,19 +421,31 @@ CAPI development follows a 12-phase workflow codified from industry best practic
 | **Closed** | All work complete at engagement close |
 
 ### Per-instrument readiness ladder
-**Not Started → Source Captured → Design → Build → Internal Testing → Pretest → Ready for Fieldwork → In Production → Closed**
+**Not Started → Source Captured → Design → Build-ready → Build → Internal Testing → Pretest → Ready for Fieldwork → In Production → Closed**
 
 | State | Definition |
 |---|---|
 | **Not Started** | No work initiated |
 | **Source Captured** | Input materials received, ingested, catalogued |
 | **Design** | Data model specified; field logic documented and reviewed |
+| **Build-ready** | Design closed; schema final; awaiting CAPI Designer build slot |
 | **Build** | CAPI application under construction in CSPro Designer |
 | **Internal Testing** | Desk, bench, and pair testing |
 | **Pretest** | Field validation with a small sample of real respondents |
 | **Ready for Fieldwork** | Pretest sign-off received; instrument and application frozen |
 | **In Production** | Main data collection underway |
 | **Closed** | Data delivered, documentation finalized |
+
+---
+
+## Appendix C — Comms & Custody
+
+| Channel | Purpose | Audience |
+|---|---|---|
+| **Project mailbox** (`aspsi.doh.uhc.survey2.data@gmail.com`) | Artifacts and decisions of record; ASPSI-custody Drive for CAPI files | Carl, Sean, ASPSI staff (multi-user shared) |
+| **CAPI Viber group** | Real-time coordination, ping-velocity questions, build/test handoff notifications | Carl, Sean, ASPSI dev support staff (DOH not in this group) |
+| **Local repo** (`C:/Users/analy/Documents/analytiflow/1_Projects/ASPSI-DOH-CAPI-CSPro-Development/`) | **System of record** for all CAPI artifacts. Mailbox/Drive is a mirror, not the canonical store. | Carl |
+| **Weekly status update to ASPSI Mgmt Committee** (E0-010, in flight) | Carl-authored narrative of CAPI progress, risks, asks | ASPSI Management Committee |
 
 ---
 

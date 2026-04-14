@@ -3,7 +3,7 @@ epic: 0
 title: CAPI Project Management & Stakeholder Engagement
 phase: continuous
 status: active-ongoing
-last_updated: 2026-04-10
+last_updated: 2026-04-13
 ---
 
 # Epic 0 — CAPI Project Management & Stakeholder Engagement
@@ -23,13 +23,19 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 
 ### Scrum & Backlog Discipline
 
-- [ ] **E0-001** Run sprint planning ceremony each sprint (select items from epic files → sprint-current.md, set sprint goal, confirm dates) `status::todo` `priority::high` `estimate::recurring`
+- [ ] **E0-001** Run sprint planning ceremony each sprint (select items from epic files → sprint-current.md, set sprint goal, confirm dates) `status::ongoing` `priority::high` `estimate::recurring`
+  - Sprint 001 planned 2026-04-13 — first execution of this ceremony.
 - [ ] **E0-002** Run sprint review + retrospective each sprint close (archive sprint to `sprints/`, capture lessons, update backlog) `status::todo` `priority::high` `estimate::recurring`
 - [ ] **E0-003** Backlog grooming session mid-sprint (refine upcoming epic tasks, adjust estimates) `status::todo` `priority::medium` `estimate::recurring`
 - [x] **E0-004** Adopt Scrum discipline with per-project Product Backlog, Sprint Backlog, standups `status::done` `priority::high`
 - [x] **E0-005** Build `/daily-standup` slash command reading PB + sprint backlog `status::done` `priority::medium`
 - [ ] **E0-006** Keep Product Backlog `last_updated` current each sprint close `status::ongoing` `priority::medium`
 - [ ] **E0-007** Maintain epic files as tasks activate or mature `status::ongoing` `priority::medium`
+
+### Sprint-Linked Meetings
+
+- [ ] **E0-060** Attend Apr 13 LSS meeting (3:00 PM); capture decisions on the 6 open F1 items into a meeting note in `scrum/standups/` and feed back to F1 spec `status::todo` `priority::critical` `estimate::3h`
+  - Sprint 001 commitment.
 
 ### Stakeholder Communication
 
