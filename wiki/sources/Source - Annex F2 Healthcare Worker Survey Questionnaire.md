@@ -1,13 +1,13 @@
 ---
 type: source-summary
-source: "[[raw/Project Deliverable 1/Annex F2_Healthcare Worker Survey Questionnaire_UHC Year 2_April 08.pdf]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Project Deliverable 1/Annex F2_Healthcare Worker Survey Questionnaire_UHC Year 2_April 08.pdf]]"
 date_ingested: 2026-04-09
 tags: [questionnaire, healthcare-worker, f2, survey-instrument]
 ---
 
 # Source — Annex F2: Healthcare Worker Survey Questionnaire
 
-Healthcare Worker Survey Questionnaire for [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], 14 pages. Self-administered via online forms (Google Forms) or paper in areas with unstable connectivity.
+Healthcare Worker Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], 14 pages. Self-administered via online forms (Google Forms) or paper in areas with unstable connectivity.
 
 ## Structure
 
@@ -37,5 +37,5 @@ Healthcare Worker Survey Questionnaire for [[wiki/concepts/UHC Survey Year 2|UHC
 
 ## Sources
 
-- Part of Deliverable 1 submitted to [[wiki/entities/DOH-PMSMD|DOH-PMSMD]]
-- Developed by [[wiki/entities/ASPSI|ASPSI]] consultant team
+- Part of Deliverable 1 submitted to [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/DOH-PMSMD|DOH-PMSMD]]
+- Developed by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASPSI|ASPSI]] consultant team

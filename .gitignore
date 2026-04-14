@@ -24,3 +24,6 @@ desktop.ini
 .obsidian/workspace.json
 .obsidian/workspace-mobile.json
 .obsidian/cache
+
+# Claude Code local config and automation scripts (contains Slack webhook secret)
+.claude/

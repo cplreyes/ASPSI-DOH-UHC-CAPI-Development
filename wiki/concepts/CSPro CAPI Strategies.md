@@ -30,12 +30,12 @@ CAPI applications use alphanumeric responses more freely than key-from-paper app
 ## Questions
 
 - **Customize question text in the top half of the entry window.** Different colored fonts can distinguish what the interviewer reads aloud (black) from instructions to the interviewer (blue). CSPro ships customizable styles for this.
-- **Use fills** to substitute prior responses into question text — see [[wiki/concepts/CSPro Question Text and Fills]].
+- **Use fills** to substitute prior responses into question text — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Question Text and Fills]].
 - **Conditional question text** — present different text based on prior responses (e.g., switch wording based on household size).
 
 ## Organization of the instrument
 
-- **CAPI applications are almost always system-controlled** so logic determines the question order. See [[wiki/concepts/CSPro Data Entry Modes]].
+- **CAPI applications are almost always system-controlled** so logic determines the question order. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Data Entry Modes]].
 - **Define topical sections** before sequencing forms. Begin/end sections, FAQ, household-roster sections may live outside the main interview flow (e.g., after the end-of-interview section).
 - **Within a section, define question order**, place one or several related items per form, and let form sequence drive the interview sequence.
 
@@ -47,7 +47,7 @@ CSPro lets you define multiple CAPI languages and switch between them on the fly
 2. **Translate after the source language is locked.** The question text editor displays two languages side-by-side; translators can copy-paste while seeing the original.
 3. The interviewer switches languages from the in-app menu when arriving at a household that prefers a different language.
 
-See [[wiki/concepts/CSPro Multi-Language Applications]] for the technical mechanism.
+See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Multi-Language Applications]] for the technical mechanism.
 
 ## Breaking off the interview / Partial save
 
@@ -103,12 +103,12 @@ A `Media Store` mechanism provides shared access to audio, image, and video cont
 
 - **Section organization** for F1 (Sections A–H), F3 (A–L), F4 (A–Q) maps cleanly onto this guidance — each questionnaire annex section becomes a CSPro section.
 - **Partial save is mandatory for F4** — household interviews can run long, and respondents may need to break for fieldwork or meals. Enable from day one.
-- **Filipino + English** — define both as CAPI languages from the start, then finalize all question text in English before commissioning the Filipino translation. (See [[wiki/concepts/CSPro Multi-Language Applications]].)
+- **Filipino + English** — define both as CAPI languages from the start, then finalize all question text in English before commissioning the Filipino translation. (See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Multi-Language Applications]].)
 - **No "Force out-of-range"** — every "don't know", "refused", and "not applicable" response in F1/F3/F4 must be an explicit value-set entry.
 - **Roster patterns** — F4's household roster should follow the "gather names first, then loop" pattern.
 - **Photo / signature capture** — useful for facility consent forms and pretest documentation. Use the new `image.*` functions, not `execsystem`.
 
 ## Sources
 
-- (Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
-- (Source: [[wiki/sources/Source - CSPro Android CAPI Getting Started]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro Android CAPI Getting Started]])

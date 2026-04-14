@@ -1,13 +1,13 @@
 ---
 type: source-summary
-source: "[[raw/Project Deliverable 1/Annex F3_Patient Survey Questionnaire_UHC Year 2_Apr 08.pdf]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Project Deliverable 1/Annex F3_Patient Survey Questionnaire_UHC Year 2_Apr 08.pdf]]"
 date_ingested: 2026-04-09
 tags: [questionnaire, patient, f3, survey-instrument]
 ---
 
 # Source — Annex F3: Patient Survey Questionnaire
 
-Patient Survey Questionnaire for [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], 23 pages. Face-to-face CAPI interview with outpatients and inpatients at sampled health facilities.
+Patient Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], 23 pages. Face-to-face CAPI interview with outpatients and inpatients at sampled health facilities.
 
 ## Structure
 
@@ -43,5 +43,5 @@ Patient Survey Questionnaire for [[wiki/concepts/UHC Survey Year 2|UHC Survey Ye
 
 ## Sources
 
-- Part of Deliverable 1 submitted to [[wiki/entities/DOH-PMSMD|DOH-PMSMD]]
-- Developed by [[wiki/entities/ASPSI|ASPSI]] consultant team
+- Part of Deliverable 1 submitted to [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/DOH-PMSMD|DOH-PMSMD]]
+- Developed by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASPSI|ASPSI]] consultant team

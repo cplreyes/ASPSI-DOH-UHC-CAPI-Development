@@ -6,7 +6,7 @@ source_count: 1
 
 # ADB — Asian Development Bank
 
-Multilateral development bank engaged as a **technical advisor** to the [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]. Provides methodological recommendations, reviews instruments, and pushes for analytic rigor.
+Multilateral development bank engaged as a **technical advisor** to the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]. Provides methodological recommendations, reviews instruments, and pushes for analytic rigor.
 
 ## Key Personnel
 
@@ -14,7 +14,7 @@ Multilateral development bank engaged as a **technical advisor** to the [[wiki/c
 
 ## Role in the Project
 
-- Reviews the Inception Report and data collection tools alongside [[wiki/entities/DOH-PMSMD|DOH-PMSMD]].
+- Reviews the Inception Report and data collection tools alongside [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/DOH-PMSMD|DOH-PMSMD]].
 - Authored detailed comments on pretest plan and survey tools (shared via Drive folders).
 - Influenced key scope decisions:
   - **Pushed for inclusion of private hospitals** (over ASPSI's initial preference to exclude them) for Year 1 comparability.
@@ -26,4 +26,4 @@ ADB's review comments often translate into questionnaire revisions — every cha
 
 ## Sources
 
-- (Source: [[wiki/analyses/Analysis - Project Intelligence Brief]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Project Intelligence Brief]])

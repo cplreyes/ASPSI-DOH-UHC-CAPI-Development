@@ -57,10 +57,10 @@ For F1 (Facility Head), F3 (Patient), and F4 (Household), capture types are how 
 - **Multi-select questions** (e.g., F1 services offered, F3 reasons for visit) → **Check Box** with a wide alpha field to hold multiple codes.
 - **Dates** (interview date, birth date, last visit) → **Date** capture type — handles validation automatically.
 - **Free-text comments / "Other (specify)" fields** → **Text Box (No Tickmarks)** or **Multiline** so enumerators have room to type.
-- **Signatures and consent images** → use the [[wiki/concepts/CSPro CAPI Strategies|Signature]] and Camera multimedia features (separate from capture types — driven by `image.captureSignature` / `image.takePhoto`).
+- **Signatures and consent images** → use the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro CAPI Strategies|Signature]] and Camera multimedia features (separate from capture types — driven by `image.captureSignature` / `image.takePhoto`).
 - **Number Pad** is a no-op on Android and not worth setting for the tablet build.
 
 ## Sources
 
-- (Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
-- (Source: [[wiki/sources/Source - CSPro Android CAPI Getting Started]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro Android CAPI Getting Started]])

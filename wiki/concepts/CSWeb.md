@@ -6,7 +6,7 @@ source_count: 1
 
 # CSWeb — CSPro Web Server
 
-Web-based companion to [[wiki/concepts/CSPro|CSPro]] used for real-time survey monitoring and data synchronization in the [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]].
+Web-based companion to [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro|CSPro]] used for real-time survey monitoring and data synchronization in the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]].
 
 ## Core Functions
 
@@ -25,4 +25,4 @@ Web-based companion to [[wiki/concepts/CSPro|CSPro]] used for real-time survey m
 
 ## Sources
 
-- (Source: [[wiki/sources/Source - Revised Inception Report]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Revised Inception Report]])

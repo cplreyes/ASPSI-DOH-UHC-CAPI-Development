@@ -6,7 +6,7 @@ source_count: 2
 
 # CSPro Synchronization
 
-CSPro's mechanism for moving data between interviewer devices in the field and a central server (or between two devices directly via Bluetooth). The architecture supports both fully online and fully offline collection scenarios, and is the linchpin of the [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] data flow from enumerator tablets to the [[wiki/concepts/CSWeb|CSWeb]] server.
+CSPro's mechanism for moving data between interviewer devices in the field and a central server (or between two devices directly via Bluetooth). The architecture supports both fully online and fully offline collection scenarios, and is the linchpin of the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] data flow from enumerator tablets to the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSWeb|CSWeb]] server.
 
 ## Architecture
 
@@ -132,5 +132,5 @@ The log captures all sync operations including Deploy Application uploads/downlo
 
 ## Sources
 
-- (Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
-- (Source: [[wiki/sources/Source - CSPro Android Data Transfer Guide]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro Android Data Transfer Guide]])

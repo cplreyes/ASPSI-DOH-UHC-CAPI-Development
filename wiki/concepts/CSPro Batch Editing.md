@@ -6,9 +6,9 @@ source_count: 1
 
 # CSPro Batch Editing
 
-**Batch editing** is the post-collection cleaning pass: a separate CSPro application reads raw data files, runs structure/validity/consistency checks, optionally imputes missing or invalid values, and writes a corrected file plus reports. Built in the **Batch Edit Designer**, run by **CSBatch**. Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]] (Batch Editing section, pp. 273–301).
+**Batch editing** is the post-collection cleaning pass: a separate CSPro application reads raw data files, runs structure/validity/consistency checks, optionally imputes missing or invalid values, and writes a corrected file plus reports. Built in the **Batch Edit Designer**, run by **CSBatch**. Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]] (Batch Editing section, pp. 273–301).
 
-This is the *back-end* counterpart to data entry: you cannot fully validate during entry without slowing the enumerator, so most consistency edits run here. Built on the same dictionary, the same logic language, and the same logic events as CAPI ([[wiki/concepts/CSPro Language Fundamentals]], [[wiki/concepts/CSPro Logic Events]]).
+This is the *back-end* counterpart to data entry: you cannot fully validate during entry without slowing the enumerator, so most consistency edits run here. Built on the same dictionary, the same logic language, and the same logic events as CAPI ([[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Language Fundamentals]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Logic Events]]).
 
 ## Application files
 

@@ -6,7 +6,7 @@ source_count: 1
 
 # CSPro Multi-Language Applications
 
-CSPro supports building a single CAPI application that contains question text, dictionary labels, and runtime messages in multiple languages. The interviewer switches between them on the fly during the interview. This is essential for the [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] project, where DOH surveys are administered in **English and Filipino** (and possibly other regional languages).
+CSPro supports building a single CAPI application that contains question text, dictionary labels, and runtime messages in multiple languages. The interviewer switches between them on the fly during the interview. This is essential for the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] project, where DOH surveys are administered in **English and Filipino** (and possibly other regional languages).
 
 ## What can be localized
 
@@ -63,4 +63,4 @@ For multilingual fills, the fills themselves don't need to be translated — the
 
 ## Sources
 
-- (Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]])

@@ -7,7 +7,7 @@ tags: [cspro, csentry, sync, csweb, dropbox, bluetooth, deployment]
 
 # Source - CSPro Android Data Transfer Guide
 
-A short, practical guide from the [[wiki/entities/US Census Bureau|US Census Bureau]] covering how to move data and applications between development PCs, enumerator devices, and a server. This document is the operational complement to the synchronization sections in [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]] — where the complete guide explains *what* the sync system is, this guide tells you *which buttons to press*.
+A short, practical guide from the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/US Census Bureau|US Census Bureau]] covering how to move data and applications between development PCs, enumerator devices, and a server. This document is the operational complement to the synchronization sections in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]] — where the complete guide explains *what* the sync system is, this guide tells you *which buttons to press*.
 
 ## Key takeaways
 
@@ -19,7 +19,7 @@ A short, practical guide from the [[wiki/entities/US Census Bureau|US Census Bur
 | **Dropbox** | Smaller organizations without server expertise. No setup or maintenance, but data lives on Dropbox's servers. |
 | **FTP** | Smaller surveys where Dropbox is unacceptable but a CSWeb stand-up is impractical. |
 
-For [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] the project commitment is to **CSWeb** (per the inception report). Dropbox is the practical fallback if the CSWeb stand-up slips.
+For [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] the project commitment is to **CSWeb** (per the inception report). Dropbox is the practical fallback if the CSWeb stand-up slips.
 
 ### CSPro Deploy Application tool (one-shot deployment)
 
@@ -81,7 +81,7 @@ CSPro's Dropbox sync does **not** store a single combined data file in Dropbox. 
 
 - **Tranche 2 bench test** — even before CSWeb is stood up, the Deploy Application tool plus a Dropbox account is enough to demo end-to-end "developer PC → enumerator tablet → upload → Data Viewer" for the DOH client. This is the lowest-friction proof that the CAPI app is ready.
 - **CSWeb deployment plan** — once the server is up, the same Simple Synchronization options will be flipped from Dropbox to CSWeb without changing the application. The PFF can pre-bake the URL.
-- **Multi-app sync** — if [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] ends up with separate F1, F3, and F4 apps plus a launcher, the Sync-from-Logic pattern is the template — directly copy the example structure and substitute dictionary names.
+- **Multi-app sync** — if [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] ends up with separate F1, F3, and F4 apps plus a launcher, the Sync-from-Logic pattern is the template — directly copy the example structure and substitute dictionary names.
 - **Bluetooth fallback** — relevant for facility-head interviews in connectivity-poor regions; supervisors can collect from interviewers in person and upload later.
 
 ## Notes and caveats

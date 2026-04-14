@@ -1,13 +1,13 @@
 ---
 type: source-summary
-source: "[[raw/Project Deliverable 1/Annex F4_Household Survey Questionnaire_UHC Year 2_Apr 08.pdf]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Project Deliverable 1/Annex F4_Household Survey Questionnaire_UHC Year 2_Apr 08.pdf]]"
 date_ingested: 2026-04-09
 tags: [questionnaire, household, f4, survey-instrument]
 ---
 
 # Source — Annex F4: Household Survey Questionnaire
 
-Household Survey Questionnaire for [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], 26 pages. New module for Year 2 — captures population-level UHC awareness and household expenditure. Face-to-face CAPI interview with household head or main decision-maker.
+Household Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], 26 pages. New module for Year 2 — captures population-level UHC awareness and household expenditure. Face-to-face CAPI interview with household head or main decision-maker.
 
 ## Structure
 
@@ -44,5 +44,5 @@ Household Survey Questionnaire for [[wiki/concepts/UHC Survey Year 2|UHC Survey 
 
 ## Sources
 
-- Part of Deliverable 1 submitted to [[wiki/entities/DOH-PMSMD|DOH-PMSMD]]
-- Developed by [[wiki/entities/ASPSI|ASPSI]] consultant team
+- Part of Deliverable 1 submitted to [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/DOH-PMSMD|DOH-PMSMD]]
+- Developed by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASPSI|ASPSI]] consultant team

@@ -6,9 +6,9 @@ source_count: 1
 
 # CSPro Tabulation
 
-**Tabulation applications** turn one or more CSPro data files into frequency distributions and cross-tabulations. Built in the **Tabulation Designer**, run by **CSTab**. The point-and-click interface produces most tables without writing logic; the procedural language is reserved for the most complex tables. Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]] (Tabulation section, pp. 302–426).
+**Tabulation applications** turn one or more CSPro data files into frequency distributions and cross-tabulations. Built in the **Tabulation Designer**, run by **CSTab**. The point-and-click interface produces most tables without writing logic; the procedural language is reserved for the most complex tables. Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]] (Tabulation section, pp. 302–426).
 
-Tabulation is the *third* CSPro application type after Data Entry ([[wiki/concepts/CSPro CAPI Strategies]]) and Batch Editing ([[wiki/concepts/CSPro Batch Editing]]) — same dictionary, different purpose.
+Tabulation is the *third* CSPro application type after Data Entry ([[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro CAPI Strategies]]) and Batch Editing ([[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Batch Editing]]) — same dictionary, different purpose.
 
 ## Application files
 
@@ -49,7 +49,7 @@ A table can have any number of rows; column count is effectively unlimited but h
 
 ## Multiple value sets per item
 
-Critical leverage point. Recall that items can have multiple value sets ([[wiki/concepts/CSPro Data Dictionary]]):
+Critical leverage point. Recall that items can have multiple value sets ([[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Data Dictionary]]):
 
 ```
 AGE              0..98, 99 = Not Reported

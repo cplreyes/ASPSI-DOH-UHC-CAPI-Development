@@ -6,7 +6,7 @@ source_count: 1
 
 # CSPro Data Dictionary
 
-The **Data Dictionary** (`.dcf` file) is the schema for every CSPro application. It describes the physical layout of a data file *and* the semantic structure of the questionnaire it represents. Every CSPro application — data entry, batch edit, tabulation — is built on top of a dictionary; without one, nothing else works. Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]] (Data Dictionary Module, pp. 79–122).
+The **Data Dictionary** (`.dcf` file) is the schema for every CSPro application. It describes the physical layout of a data file *and* the semantic structure of the questionnaire it represents. Every CSPro application — data entry, batch edit, tabulation — is built on top of a dictionary; without one, nothing else works. Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]] (Data Dictionary Module, pp. 79–122).
 
 ## The dictionary mirrors the questionnaire
 
@@ -33,7 +33,7 @@ A *case* is the primary unit — usually one questionnaire. A case decomposes in
 2101001311707199207   ← person 3
 ```
 
-For [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]: F1, F2, F3 each likely fit a single-record structure (one questionnaire = one respondent). F4 (household) is the canonical multiple-record case — household record + repeating person record + repeating expenditure rows.
+For [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]: F1, F2, F3 each likely fit a single-record structure (one questionnaire = one respondent). F4 (household) is the canonical multiple-record case — household record + repeating person record + repeating expenditure rows.
 
 ## Levels (rare but powerful)
 
@@ -109,7 +109,7 @@ A value set bounds an item's allowed values. Critical for numeric items — with
 
 - Restrict data entry to valid values
 - Present a pick list to the enumerator
-- Drive `setvalueset` for dynamic value-set switching ([[wiki/concepts/CSPro Question Text and Fills]])
+- Drive `setvalueset` for dynamic value-set switching ([[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Question Text and Fills]])
 - Power `impute(...valueset...)` in batch editing
 - Auto-generate column stubs in tabulation tables
 - Generate codebooks for SPSS/Stata/R/SAS exports
@@ -179,7 +179,7 @@ Toggle: `Options → Relative Positions`.
 
 ## Multiple-language dictionaries
 
-`Edit → Languages` adds languages. Each label, value label, and occurrence label gets a per-language string. If unset for a given language, falls back to the primary. Switch in the editor with `Ctrl+Alt+L`. For multi-language CAPI, the CAPI Languages must match — see [[wiki/concepts/CSPro Multi-Language Applications]]. UHC Year 2 doesn't currently scope multilingual dictionaries (Filipino + English UI is on the CAPI side, not the dictionary).
+`Edit → Languages` adds languages. Each label, value label, and occurrence label gets a per-language string. If unset for a given language, falls back to the primary. Switch in the editor with `Ctrl+Alt+L`. For multi-language CAPI, the CAPI Languages must match — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Multi-Language Applications]]. UHC Year 2 doesn't currently scope multilingual dictionaries (Filipino + English UI is on the CAPI side, not the dictionary).
 
 ## Dictionary macros (bulk operations)
 
@@ -230,7 +230,7 @@ The book recommends, and Carl should follow:
 
 ## Why this matters for UHC Year 2
 
-- **F1, F2, F3** — single-level, mostly single-record dictionaries. F1 already has a draft dictionary (see [[wiki/sources/Source - Facility Head Data Dictionary and Value Sets]]) using `Q{n}_{DESCRIPTION}` naming.
+- **F1, F2, F3** — single-level, mostly single-record dictionaries. F1 already has a draft dictionary (see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Facility Head Data Dictionary and Value Sets]]) using `Q{n}_{DESCRIPTION}` naming.
 - **F4 (Household)** — multi-record. Will need at minimum: `HOUSEHOLD_REC` (singly-occurring), `PERSON_REC` (multiply-occurring with `Max ≈ 25` and required = No until at least one person is recorded), `EXPENDITURE_REC` or repeating items inside `HOUSEHOLD_REC` for the consumption rosters.
 - **Linked value sets** are worth using for region/province/municipality codes that appear across all four annexes.
 - **Encryption** is non-negotiable for any dictionary holding PHI (F3 patient records).

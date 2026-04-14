@@ -111,9 +111,9 @@ This visual distinction is critical in long interviews where the interviewer is 
 - **F4 household roster** — `~~getocclabel()~~` is the cleanest way to put "Person 1", "Person 2", or the actual name into per-person questions.
 - **Interviewer-vs-respondent text colors** — apply the standard styling so DOH/SJREB reviewers can immediately see which text is read aloud and which is an enumerator instruction.
 - **Filipino translation** — fills travel with the language switch automatically since they reference dictionary items, not hard-coded strings. The translator only changes the surrounding text.
-- **MyCAPI walkthrough patterns** — the `setvalueset` switching of male/female relationship value sets in the [[wiki/sources/Source - CSPro Android CAPI Getting Started|Android CAPI Getting Started]] is the same pattern that F3 outpatient/inpatient routing and F4 household-conditional questions will use.
+- **MyCAPI walkthrough patterns** — the `setvalueset` switching of male/female relationship value sets in the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro Android CAPI Getting Started|Android CAPI Getting Started]] is the same pattern that F3 outpatient/inpatient routing and F4 household-conditional questions will use.
 
 ## Sources
 
-- (Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
-- (Source: [[wiki/sources/Source - CSPro Android CAPI Getting Started]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro Android CAPI Getting Started]])

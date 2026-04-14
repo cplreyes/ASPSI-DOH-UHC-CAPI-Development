@@ -6,9 +6,9 @@ source_count: 1
 
 # CSPro Language Fundamentals
 
-The **CSPro Language** is the procedural scripting language that drives data entry, batch editing, and tabulation logic. Every dictionary item, record, form, and level can have logic attached to it; the language ties them together into an application. Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]] (CSPro Language section, pp. 123–180; also Statements & Functions Reference, pp. 448–end).
+The **CSPro Language** is the procedural scripting language that drives data entry, batch editing, and tabulation logic. Every dictionary item, record, form, and level can have logic attached to it; the language ties them together into an application. Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]] (CSPro Language section, pp. 123–180; also Statements & Functions Reference, pp. 448–end).
 
-This page is the *fundamentals* — program structure, variables, expressions, operators. Event order (`preproc`, `onfocus`, etc.) lives in [[wiki/concepts/CSPro Logic Events]]. Question text and fills live in [[wiki/concepts/CSPro Question Text and Fills]].
+This page is the *fundamentals* — program structure, variables, expressions, operators. Event order (`preproc`, `onfocus`, etc.) lives in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Logic Events]]. Question text and fills live in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Question Text and Fills]].
 
 ## Program structure
 

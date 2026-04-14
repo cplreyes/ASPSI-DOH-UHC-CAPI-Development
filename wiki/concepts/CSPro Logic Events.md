@@ -51,7 +51,7 @@ Form File preproc
         ...
 ```
 
-This is the same for both system-controlled and operator-controlled applications. (See [[wiki/concepts/CSPro Data Entry Modes]].)
+This is the same for both system-controlled and operator-controlled applications. (See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Data Entry Modes]].)
 
 ## Blocks
 
@@ -140,4 +140,4 @@ For UHC Survey Year 2 — small-volume, complex survey — **all consistency che
 
 ## Sources
 
-- (Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]])

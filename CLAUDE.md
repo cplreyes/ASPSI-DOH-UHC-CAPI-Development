@@ -53,7 +53,7 @@ One per ingested source. Links back to the raw file.
 ```yaml
 ---
 type: source-summary
-source: "[[raw/filename.md]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/filename.md]]"
 date_ingested: YYYY-MM-DD
 tags: []
 ---
@@ -100,10 +100,10 @@ last_updated: YYYY-MM-DD
 
 ## Conventions
 
-- **Links**: Use Obsidian `[[wikilinks]]` for all cross-references between wiki pages. Use `[[raw/filename]]` to cite sources.
+- **Links**: Use Obsidian `[[wikilinks]]` for all cross-references between wiki pages. Use `[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/filename]]` to cite sources.
 - **Tags**: Add relevant tags in frontmatter. Use lowercase, hyphenated (e.g., `capi`, `survey-design`, `cspro`).
 - **Headings**: H1 is the page title (matches filename). H2 for major sections. H3 for subsections.
-- **Citations**: When a claim comes from a specific source, cite it inline: `(Source: [[wiki/sources/Source - Title]])`.
+- **Citations**: When a claim comes from a specific source, cite it inline: `(Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Title]])`.
 - **Contradictions**: When sources disagree, note it explicitly with a `> [!warning] Contradiction` callout and link to both sources.
 - **Filenames**: Use descriptive names. Source summaries: `Source - Title.md`. Entities: `Entity Name.md`. Concepts: `Concept Name.md`.
 - **No orphans**: Every wiki page must be linked from at least one other page or from index.md.

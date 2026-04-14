@@ -1,13 +1,13 @@
 ---
 type: source-summary
-source: "[[raw/Sample Data/Facility Head Survey Data Dictionary and Value Sets.xlsx]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Sample Data/Facility Head Survey Data Dictionary and Value Sets.xlsx]]"
 date_ingested: 2026-04-09
 tags: [data-dictionary, value-sets, cspro, f1, facility-head]
 ---
 
 # Source — Facility Head Survey Data Dictionary and Value Sets
 
-Excel workbook containing the [[wiki/concepts/CSPro|CSPro]] data dictionary structure and value set definitions for the [[wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire|Facility Head Survey (F1)]]. This is a working/sample dictionary — likely an early draft or reference for building the actual CSPro .dcf file.
+Excel workbook containing the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro|CSPro]] data dictionary structure and value set definitions for the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire|Facility Head Survey (F1)]]. This is a working/sample dictionary — likely an early draft or reference for building the actual CSPro .dcf file.
 
 ## Sheet 1: Dictionary Names and Labels
 
@@ -58,5 +58,5 @@ Examples:
 
 ## Sources
 
-- Sample/draft data dictionary for [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]
-- Created by [[wiki/entities/ASPSI|ASPSI]] data team
+- Sample/draft data dictionary for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]
+- Created by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASPSI|ASPSI]] data team

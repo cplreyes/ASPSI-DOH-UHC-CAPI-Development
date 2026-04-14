@@ -6,7 +6,7 @@ source_count: 1
 
 # CSPro Data Entry Modes
 
-CSPro data entry applications run in one of two modes — **operator-controlled** or **system-controlled** — chosen at application creation under `Options → Data Entry`. The choice has cascading effects on path tracking, allowed values, special-key behavior, and skip philosophy. For [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] all CAPI apps (F1, F3, F4) run in **system-controlled** mode, which is the recommended setting for CAPI surveys.
+CSPro data entry applications run in one of two modes — **operator-controlled** or **system-controlled** — chosen at application creation under `Options → Data Entry`. The choice has cascading effects on path tracking, allowed values, special-key behavior, and skip philosophy. For [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] all CAPI apps (F1, F3, F4) run in **system-controlled** mode, which is the recommended setting for CAPI surveys.
 
 ## Operator-controlled vs. system-controlled
 
@@ -49,4 +49,4 @@ The trade-off: automatic skips speed up complex flows but a single mis-keyed pri
 
 ## Sources
 
-- (Source: [[wiki/sources/Source - CSPro 8.0 Complete Users Guide]])
+- (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]])

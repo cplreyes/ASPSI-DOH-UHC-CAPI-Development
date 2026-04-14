@@ -1,16 +1,16 @@
 ---
 type: source-summary
-source: "[[raw/[FOR SHARING] DOH UHC Survey 2024 Final Report.pdf]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/[FOR SHARING] DOH UHC Survey 2024 Final Report.pdf]]"
 date_ingested: 2026-04-10
 tags: [year-1, idinsight, baseline, methodology, surveycto, predecessor]
 ---
 
 # Source — IDinsight UHC Survey 2024 Final Report (Year 1)
 
-The **predecessor** to the [[wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]: the full final report of the **first round** of the DOH UHC Survey, designed and conducted by [[wiki/entities/IDinsight|IDinsight]] under commission from [[wiki/entities/DOH-PMSMD|DOH-PMSMD]]. 224 pages, version 5 (December 2024); originally submitted June 28, 2024 by Dr. Alice A. Redfern (Associate Director, IDinsight) as Principal and Coordinating Investigator.
+The **predecessor** to the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]: the full final report of the **first round** of the DOH UHC Survey, designed and conducted by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/IDinsight|IDinsight]] under commission from [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/DOH-PMSMD|DOH-PMSMD]]. 224 pages, version 5 (December 2024); originally submitted June 28, 2024 by Dr. Alice A. Redfern (Associate Director, IDinsight) as Principal and Coordinating Investigator.
 
 > [!important] Why this matters for Carl's Year 2 work
-> Year 1 used **SurveyCTO**, not CSPro. The Year 2 switch to [[wiki/concepts/CSPro|CSPro]] is therefore a deliberate stack change, not a continuation. Carl is **not** inheriting any usable CAPI artefacts from Year 1 — he is rebuilding the data collection layer from scratch against the same indicator framework. The Year 1 report is most useful as **content reference** (questionnaire scope, indicator definitions, sample design, field operations) and as a **comparability anchor** (Year 2 must produce indicators commensurable with Year 1).
+> Year 1 used **SurveyCTO**, not CSPro. The Year 2 switch to [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro|CSPro]] is therefore a deliberate stack change, not a continuation. Carl is **not** inheriting any usable CAPI artefacts from Year 1 — he is rebuilding the data collection layer from scratch against the same indicator framework. The Year 1 report is most useful as **content reference** (questionnaire scope, indicator definitions, sample design, field operations) and as a **comparability anchor** (Year 2 must produce indicators commensurable with Year 1).
 
 ## Authors
 
@@ -112,11 +112,11 @@ The Year 1 report describes the same conceptual structure that Year 2 inherits, 
 
 ## Cross-References
 
-- Year 2 successor survey: [[wiki/concepts/UHC Survey Year 2]]
-- Conducted by: [[wiki/entities/IDinsight]]
-- Commissioned by: [[wiki/entities/DOH-PMSMD]]
-- Year 2 implementer (replaces IDinsight): [[wiki/entities/ASPSI]]
-- Year 2 instruments that inherit Year 1 indicator scope: [[wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire|F1]], [[wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire|F2]], [[wiki/sources/Source - Annex F3 Patient Survey Questionnaire|F3]], [[wiki/sources/Source - Annex F4 Household Survey Questionnaire|F4]] (F4 is new in Year 2 — separate household survey, not a patient-derived household component)
-- Year 2 stack: [[wiki/concepts/CSPro]] (replaces SurveyCTO)
-- Year 2 inception: [[wiki/sources/Source - Revised Inception Report]]
-- Operational analysis: [[wiki/analyses/Analysis - Project Intelligence Brief]]
+- Year 2 successor survey: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2]]
+- Conducted by: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/IDinsight]]
+- Commissioned by: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/DOH-PMSMD]]
+- Year 2 implementer (replaces IDinsight): [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASPSI]]
+- Year 2 instruments that inherit Year 1 indicator scope: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire|F1]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire|F2]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3 Patient Survey Questionnaire|F3]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F4 Household Survey Questionnaire|F4]] (F4 is new in Year 2 — separate household survey, not a patient-derived household component)
+- Year 2 stack: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro]] (replaces SurveyCTO)
+- Year 2 inception: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Revised Inception Report]]
+- Operational analysis: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Project Intelligence Brief]]
