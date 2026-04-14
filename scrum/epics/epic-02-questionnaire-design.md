@@ -51,8 +51,8 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 - [x] **E2-F1-008** F1 sanity check — 6 DCF bugs surfaced and queued for Phase 5 correction `status::done` `priority::critical`
 - [x] **E2-F1-009** F1 apply 6 DCF bug fixes to `generate_dcf.py` and regenerate v2 `status::done` `priority::critical` `estimate::1d`
   - Completed 2026-04-11 (see `log.md`). Output: 11 records, 952 items. Defaults assumed for 6 questions pending LSS-meeting confirmation.
-- [ ] **E2-F1-009b** Reconcile DCF v2 with LSS-meeting decisions on the 6 open items (Q63 day vs month, SECONDARY_DATA structure, NBB split, Q31 NA-skip intent, Q166 nurse list, Q121 dynamic value set) — patch generator + regenerate as v3 if any decision changes the schema `status::todo` `priority::critical` `estimate::4h`
-  - **Sprint 001 commitment**
+- [x] **E2-F1-009b** Reconcile DCF v2 with LSS-meeting decisions on the 6 open items (Q63 day vs month, SECONDARY_DATA structure, NBB split, Q31 NA-skip intent, Q166 nurse list, Q121 dynamic value set) — patch generator + regenerate as v3 if any decision changes the schema `status::done` `priority::critical` `estimate::4h`
+  - Closed 2026-04-13 by LSS meeting confirmation: no schema changes required from any of the 6 open items. DCF v2 stands as the final F1 dictionary; no v3 regeneration needed. See `scrum/standups/2026-04-13.md`.
 - [ ] **E2-F1-010** F1 DCF (final) opened in CSPro Designer, validated, bug list closed or explicitly deferred → sign-off to enter Epic 3 `status::todo` `priority::critical` `estimate::4h`
   - **Sprint 001 commitment**
 
