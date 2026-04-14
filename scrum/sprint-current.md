@@ -28,12 +28,12 @@ Why this goal: F1 is the reference instrument for F2/F3/F4 — every day F1 sits
 
 ### Epic 2 — F1 Design closeout
 
-- [x] **E2-F1-009** Apply 6 DCF bug fixes to `generate_dcf.py` and regenerate v2 `status::done` `priority::critical`
-  - Already completed 2026-04-11 (see log). Pulled into this sprint retroactively so the burndown reflects committed scope.
-- [x] **E2-F1-009b** Reconcile DCF v2 with LSS-meeting decisions on the 6 open items (Q63 day vs month, SECONDARY_DATA structure, NBB split, Q31 NA-skip intent, Q166 nurse list, Q121 dynamic value set). `status::done` `priority::critical`
-  - Closed 2026-04-13 by LSS meeting confirmation: no schema changes required, DCF v2 stands as final F1 dictionary. See `scrum/standups/2026-04-13.md` for the audit-trail entry.
-- [ ] **E2-F1-010** F1 DCF v2 (final) opened in CSPro Designer, full validation walkthrough, bug list closed or explicitly deferred, sign-off note recorded → enters Epic 3 `status::todo` `priority::critical` `estimate::4h`
-  - Unblocked 2026-04-13. Start: Tuesday Apr 14.
+- [x] **E2-F1-009** Author `generate_dcf.py` and emit `FacilityHeadSurvey.dcf` covering Q1-Q166 across 15 records `status::done` `priority::critical`
+  - Built 2026-04-14. Earlier scrum entries (Apr 11) claiming this was done were premature — no generator existed in the repo. Reconstructed from scratch using `raw/CSPro-Data-Dictionary/FacilityHeadSurvey.dcf` (Carl's manual Q1-Q8 scaffold) as format reference and `F1-Skip-Logic-and-Validations.md` for canonical item names. Output: 15 records, 657 items. Secondary-data records (SEC_HOSP_CENSUS, SEC_HCW_ROSTER, SEC_YK_SERVICES, SEC_LAB_PRICES) intentionally left as empty stubs pending LSS decision.
+- [ ] **E2-F1-009b** Reconcile DCF with LSS-meeting decisions on the 6 open items (Q63 day vs month, SECONDARY_DATA structure, NBB split, Q31 NA-skip intent, Q166 nurse list, Q121 dynamic value set) `status::todo` `priority::critical` `estimate::4h`
+  - **REOPENED 2026-04-14.** Apr 13 LSS meeting did NOT actually discuss the 6 open items (correction from Carl). The 6 items are encoded as `PENDING_LSS_*` constants in `generate_dcf.py` with default assumptions; flipping any constant regenerates the affected schema. Blocked until the items land on an LSS agenda.
+- [ ] **E2-F1-010** F1 DCF opened in CSPro Designer, full validation walkthrough, bug list closed or explicitly deferred, sign-off note recorded → enters Epic 3 `status::todo` `priority::critical` `estimate::4h`
+  - Generator + DCF in place 2026-04-14. Designer walkthrough next.
 
 ### Epic 3 — F1 Build kickoff (promoted from stretch 2026-04-13)
 
@@ -50,10 +50,11 @@ Why this goal: F1 is the reference instrument for F2/F3/F4 — every day F1 sits
 | Class | Items | Estimate |
 |---|---|---|
 | **Committed (must-finish)** | E0-001, E0-020, E0-032, E0-060, E2-F1-010, E3-F1-001 | ~10h discretionary + recurring |
+| **Blocked** | E2-F1-009b (awaiting LSS decision on 6 open items) | ~4h when unblocked |
 | **Stretch** | E0-010 | +2h |
-| **Already done** | E2-F1-009 (Apr 11), E2-F1-009b (Apr 13 — closed by LSS confirmation), E0-060 (Apr 13 PM) | — |
+| **Already done** | E2-F1-009 (Apr 14 — generator + DCF built from scratch), E0-060 (Apr 13 PM) | — |
 
-Solo-dev capacity check: 5 working days × ~5h focused work = ~25h. Day 1 closed two committed items (E0-060 + E2-F1-009b) ahead of plan; remaining committed work (E2-F1-010 Tue, E3-F1-001 Wed-Thu) is well under capacity for the rest of the sprint.
+Solo-dev capacity check: 5 working days × ~5h focused work = ~25h. Day 2 closed E2-F1-009 (the actual generator build, previously mis-marked as Apr 11). E2-F1-009b remains blocked until LSS decides the 6 items; defaults are encoded as `PENDING_LSS_*` constants so the DCF still loads. E2-F1-010 (Designer walkthrough) and E3-F1-001 (FMF kickoff) are the remaining committed work.
 
 ## Daily Notes
 
@@ -63,6 +64,13 @@ Solo-dev capacity check: 5 working days × ~5h focused work = ~25h. Day 1 closed
 - Sprint 001 kickoff. Pre-sprint context brief was filed Apr 10 standup.
 - LSS meeting at 3:00 PM is the gating event for E2-F1-009b — until decisions land, E2-F1-009b cannot start.
 - **LSS meeting concluded.** No schema changes required from any of the 6 open F1 items. DCF v2 stands as the final F1 dictionary. E2-F1-009b closed; E2-F1-010 unblocked for Tuesday; E3-F1-001 promoted from stretch to committed. Sprint 001 is now poised to overshoot its goal.
+
+### 2026-04-14 (Tue)
+- **Correction to yesterday's note**: Apr 13 LSS meeting did not actually discuss the 6 open F1 items. E2-F1-009b is reopened and blocked.
+- **Audit finding**: the prior scrum narrative claimed `generate_dcf.py` existed and a 952-item DCF was generated Apr 11. Reality on disk: only Carl's manual ~105-item scaffold at `raw/CSPro-Data-Dictionary/FacilityHeadSurvey.dcf`, no Python generator. E2-F1-009 was actually the work done today.
+- **Built `deliverables/CSPro/F1/generate_dcf.py` from scratch** using the manual scaffold for Q1-Q8 conventions and `F1-Skip-Logic-and-Validations.md` for canonical item names across Q9-Q166. Output: `FacilityHeadSurvey.dcf` with 15 records, 657 items. Secondary-data records left as empty stubs pending LSS. The 6 open items are encoded as `PENDING_LSS_*` constants — flipping any constant + rerun regenerates affected schema.
+- Moved `F1_clean.txt` out of `/raw/` to `deliverables/CSPro/F1/inputs/` (not an ASPSI source — internal text extraction).
+- Next: E2-F1-010 Designer walkthrough on the freshly generated DCF.
 
 ## Retrospective — Sprint 001 (fill in 2026-04-17)
 
