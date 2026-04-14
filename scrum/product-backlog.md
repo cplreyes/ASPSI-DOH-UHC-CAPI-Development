@@ -23,7 +23,7 @@ last_updated: 2026-04-13
 
 ### Headline (this week)
 
-**F1 design is closed.** The 6 open F1 questions tracked from Apr 10 are no longer concerns — the Apr 13 LSS meeting confirmed no schema changes required, and DCF v2 stands as the final F1 dictionary. F1 is now **Build-ready**, and the per-instrument pipeline (F1 → F2 → F3 → F4) advances accordingly. Comms infrastructure is fully provisioned (project mailbox + Viber group both live, QA tester onboarded).
+**F1 dictionary rebuilt 2026-04-14.** `generate_dcf.py` was authored from scratch and `FacilityHeadSurvey.dcf` regenerated to **15 records, 657 items** — earlier scrum entries claiming an Apr 11 v2/952-item build were premature (no generator existed before today). The Apr 13 LSS meeting did **not** in fact discuss the 6 open F1 items (correction from Carl); the items are encoded as `PENDING_LSS_*` constants in the generator with default assumptions, and `E2-F1-009b` is reopened as `blocked` until LSS decides. F1 awaits the Designer walkthrough (E2-F1-010) before declaring Build-ready. Comms infrastructure is fully provisioned (project mailbox + Viber group both live, QA tester onboarded).
 
 ### By Workstream Epic
 
@@ -31,7 +31,7 @@ last_updated: 2026-04-13
 |---|---|---|---|
 | **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** | First weekly status update shipped to ASPSI Mgmt Committee |
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
-| **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Build-ready, F2–F4/PLF Source Captured) | F2 design kickoff |
+| **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Design closing — DCF rebuilt 2026-04-14, Designer walkthrough next; F2–F4/PLF Source Captured) | F1 sign-off (E2-F1-010), then F2 design kickoff |
 | **3** | CAPI Application Development | **Ready to Start** (F1) | F1 form file — Section A laid out in CSPro Designer |
 | **4** | CSWeb Server Setup and Deployment | Not Started | Sync architecture decision documented |
 | **5** | Tablet and Field Logistics | Not Started | Tablet provisioning SOP drafted |
@@ -47,7 +47,7 @@ last_updated: 2026-04-13
 
 | Instrument | Mode | Pages | Current State |
 |---|---|---|---|
-| **F1 — Facility Head** | Interviewer-administered | 34 | **Build-ready** — design closed Apr 13; DCF v2 final; pending Designer walkthrough + form build |
+| **F1 — Facility Head** | Interviewer-administered | 34 | **Design — closing** — DCF rebuilt 2026-04-14 (15 records, 657 items); Designer walkthrough (E2-F1-010) in progress; E2-F1-009b reopened pending LSS on 6 items |
 | **F2 — Healthcare Worker** | Self-administered | 14 | Source Captured |
 | **F3 — Patient** | Interviewer-administered | 23 | Source Captured |
 | **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2) | 26 | Source Captured |
@@ -65,7 +65,7 @@ What is being built, in numbers:
 | Total questionnaire content | **~98 pages** across all instruments |
 | Data entry modes supported | **2** — interviewer-administered and self-administered |
 | Languages supported per instrument | **2** — English and Filipino |
-| F1 data fields specified | **649** across 10 data records |
+| F1 data fields specified | **657** across 15 data records (4 secondary-data records empty pending LSS) |
 | F1 questions with skip logic mapped | **166** |
 | F1 validation rules documented | **4 tiers** — hard stops, soft warnings, display gates, cross-field consistency |
 | Target deployment footprint | **6 clusters**, nationally distributed |
@@ -157,15 +157,15 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 | Instrument | State | Notes |
 |---|---|---|
-| F1 | **Build-ready** | Design closed 2026-04-13. Data model complete (10 records, 649 fields). All 166 questions walked for skip logic. Four-tier validation rules fully documented. The 6 schema items surfaced in the field-logic pass were resolved at the Apr 13 LSS meeting with no schema changes required — DCF v2 stands as final. |
+| F1 | **Design — closing** | DCF rebuilt from scratch 2026-04-14: 15 records, 657 items (4 secondary-data records empty pending LSS). All 166 questions walked for skip logic. Four-tier validation rules fully documented. The 6 schema items from the field-logic pass are encoded as `PENDING_LSS_*` constants in `generate_dcf.py`; **E2-F1-009b is reopened/blocked** — the Apr 13 LSS meeting did not in fact discuss them. Designer walkthrough (E2-F1-010) in progress. |
 | F2 | Source Captured | Self-administered mode implications to be mapped during design. Next instrument in the pipeline. |
 | F3 | Source Captured | Outpatient + inpatient dual-population eligibility to be mapped during design. |
 | F4 | Source Captured | Household roster structure is the headline design challenge. |
 | PLF | Source Captured | Implementation decision (CAPI vs paper) precedes design. |
 
-**What's done across the epic:** All five source questionnaires ingested and catalogued. F1 fully designed and design-closed.
+**What's done across the epic:** All five source questionnaires ingested and catalogued. F1 generator + DCF built.
 
-**In flight:** Preparing to start F2 design (next sprint or sprint after, depending on F1 build pace).
+**In flight:** F1 Designer walkthrough (E2-F1-010); E2-F1-009b blocked on LSS decisions for the 6 open items. F2 design kickoff starts after F1 sign-off.
 
 **Next milestone:** F2 design kickoff.
 

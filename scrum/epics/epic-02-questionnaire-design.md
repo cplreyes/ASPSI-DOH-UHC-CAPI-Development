@@ -37,8 +37,8 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 
 ## F1 — Facility Head Survey *(interviewer-administered, 34pp)*
 
-**State:** Design — corrections in progress
-**Scope:** 10 records · 649 fields · 166 questions · 4 validation tiers
+**State:** Design — Designer walkthrough in progress (E2-F1-010); E2-F1-009b reopened pending LSS
+**Scope:** 15 records · 657 fields · 166 questions · 4 validation tiers (4 secondary-data records empty pending LSS)
 **Reference doc:** `deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md`
 
 - [x] **E2-F1-001** F1 questionnaire PDF ingested to `raw/` `status::done` `priority::critical`
