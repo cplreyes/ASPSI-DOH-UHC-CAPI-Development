@@ -27,3 +27,7 @@ desktop.ini
 
 # Claude Code local config and automation scripts (contains Slack webhook secret)
 .claude/
+
+# Python bytecode caches
+__pycache__/
+*.pyc

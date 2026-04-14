@@ -49,6 +49,7 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 
 **CSPro toolchain (from the 8.0 Users Guide)**
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Data Dictionary]] — `.dcf` schema: levels, records, items, value sets, relations
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F-Series Value Set Conventions]] — project-internal coding rules: NA = highest code at field width, never use `notappl` in value sets
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Language Fundamentals]] — PROC GLOBAL, declarations, logic objects, variables, expressions, operators
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Logic Events]] — preproc/postproc/onfocus/killfocus/onoccchange order of execution
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Data Entry Modes]] — system- vs operator-controlled, heads-up vs heads-down
@@ -65,9 +66,10 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 
 ## Deliverables
 
-- `deliverables/CSPro/F1/FacilityHeadSurvey.dcf` — F1 CSPro 8.0 data dictionary v1 (10 records, 649 items) generated from the April 8 questionnaire. Pending Carl's validation in CSPro Designer.
-- `deliverables/CSPro/F1/generate_dcf.py` — Reproducible Python generator for the F1 dictionary.
+- `deliverables/CSPro/F1/FacilityHeadSurvey.dcf` — F1 CSPro 8.0 data dictionary (15 records, 657 items) generated from the April 8 questionnaire. Secondary-data records (SEC_HOSP_CENSUS, SEC_HCW_ROSTER, SEC_YK_SERVICES, SEC_LAB_PRICES) intentionally empty pending LSS decision. Pending Carl's validation in CSPro Designer.
+- `deliverables/CSPro/F1/generate_dcf.py` — Reproducible Python generator for the F1 dictionary. The 6 LSS-blocked items are encoded as `PENDING_LSS_*` constants — flip + rerun to swap schema when decisions land.
 - `deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md` — Spec covering dcf sanity-check findings (6 bugs), full skip-logic table for all 166 questions, hard/soft/gate validations, and paste-ready CSPro PROC code templates.
+- `deliverables/CSPro/F1/inputs/F1_clean.txt` — Internal text extraction of the F1 questionnaire used as a generator input reference.
 
 ## Vault Path
 
