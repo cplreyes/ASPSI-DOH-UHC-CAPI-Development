@@ -163,7 +163,7 @@ def render(tally: dict, sprint: dict) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--repo", default=str(Path(__file__).resolve().parents[2]),
+    ap.add_argument("--repo", default=str(Path(__file__).resolve().parents[1]),
                     help="Repo root (default: infer from script location)")
     args = ap.parse_args(argv)
     repo = Path(args.repo)
