@@ -26,6 +26,29 @@ The F2 build follows a three-path capture model agreed internally on 2026-04-15:
 2. **Fallback A** — HCW fills paper in low-connectivity areas; ASPSI staff encodes paper responses into the same Google Form.
 3. **Fallback B (optional, deferred)** — A CSPro CAPI F2 app could be built later so ASPSI staff can encode paper responses into CSPro instead of Google Forms. Scheduled last, after F1/F3/F4 CSPro builds, and only green-lit if Google Forms F2 testing surfaces a real need for it.
 
+```mermaid
+flowchart TD
+    Start([F2 respondent universe<br/>HCWs at sampled facilities]) --> Route{Capture path?}
+    Route -->|connectivity OK<br/>HCW has Google account| Primary[Path 1 — PRIMARY<br/>HCW self-administers<br/>on Google Forms<br/>3-day window]
+    Route -->|low connectivity<br/>or no Google account| FA[Path 2 — FALLBACK A<br/>HCW fills paper;<br/>ASPSI staff encodes<br/>into same Google Form]
+    Route -.->|only if Forms testing<br/>surfaces a real need| FB[Path 3 — FALLBACK B<br/>deferred optional<br/>CSPro CAPI encoder<br/>built last]
+    Primary --> Sheet[(Google Sheet<br/>response_source=self)]
+    FA --> Sheet2[(Google Sheet<br/>response_source=staff_encoded)]
+    FB -.-> CSPro[(CSPro .csdb<br/>response_source=cspro_encoded)]
+    Sheet --> Custody[Project mailbox Drive<br/>ASPSI custody of record]
+    Sheet2 --> Custody
+    CSPro -.-> Custody
+
+    classDef primary fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef fallback fill:#fef3c7,stroke:#b45309,color:#78350f
+    classDef deferred fill:#e5e7eb,stroke:#6b7280,color:#374151,stroke-dasharray: 5 5
+    class Primary primary
+    class FA fallback
+    class FB deferred
+```
+
+> **Legend.** Solid lines = active build paths (Sprint 001 onward). Dashed = deferred / conditional on F2 Google Forms test outcomes.
+
 ## Dependency — F2 questionnaire cover-block rewrite
 
 **Finding.** The April 8 F2 questionnaire PDF is drafted using the interviewer-administered template. The questionnaire body (Sections A onward) is suitable for self-admin, but the cover blocks are not:
@@ -100,6 +123,25 @@ The F2 build follows a three-path capture model agreed internally on 2026-04-15:
 - Distribute tokenized/prefilled links per HCW (for facility pre-population and per-respondent tracking).
 - For HCWs without Google accounts, the paper fallback (Fallback A: staff encodes into the same Form) absorbs that edge case.
 
+```mermaid
+flowchart LR
+    MasterList[(Facility master list<br/>HCW roster)] --> AppsScript[Apps Script<br/>generate tokenized<br/>prefilled links]
+    AppsScript --> LinkEmail[Per-HCW email<br/>containing unique URL<br/>with prefilled facility_id,<br/>facility_type, BUCAS, GAMOT]
+    LinkEmail --> Open{HCW opens link}
+    Open -->|has Google account| SignIn[Google sign-in<br/>save-and-resume enabled]
+    Open -->|no Google account| Paper[Prints paper copy<br/>or requests one]
+    SignIn --> FormFill[HCW fills form<br/>across 3-day window]
+    FormFill --> Submit[Submit]
+    Paper --> StaffEncode[ASPSI staff opens<br/>staff-encoder Form copy<br/>response_source=staff_encoded]
+    StaffEncode --> Submit
+    Submit --> Sheet[(Response Sheet<br/>project mailbox Drive)]
+
+    classDef store fill:#e0e7ff,stroke:#4338ca,color:#1e1b4b
+    classDef action fill:#dcfce7,stroke:#15803d,color:#14532d
+    class MasterList,Sheet store
+    class Submit action
+```
+
 > **DECISION NEEDED (ASPSI).** Confirm that requiring Google sign-in is acceptable for the HCW population, OR accept that non-signed-in HCWs use the paper-and-encode fallback path.
 
 ---
@@ -117,6 +159,27 @@ Given the 3-day window:
 | Day 3 (end of day) | Window closes; non-completers flagged for paper-and-encode fallback | ASPSI field coordinator |
 
 The reminder mechanism can be Apps Script-driven (reads the response Sheet, identifies non-completers, sends email) or manual (coordinator reviews the Sheet and sends reminders). Apps Script is trivially cheap to add if Decision 2 lands on Option A.
+
+```mermaid
+flowchart LR
+    D0[Day 0<br/>link distributed] --> D1{Day 1 EOD<br/>started?}
+    D1 -->|no| R1[Reminder 1<br/>auto]
+    D1 -->|yes| D2{Day 2 EOD<br/>completed?}
+    R1 --> D2
+    D2 -->|no| R2[Reminder 2<br/>auto]
+    D2 -->|yes| Done([Complete])
+    R2 --> D3{Day 3 midday<br/>completed?}
+    D3 -->|no| R3[Reminder 3<br/>manual — field coord]
+    D3 -->|yes| Done
+    R3 --> D3E{Day 3 EOD<br/>completed?}
+    D3E -->|yes| Done
+    D3E -->|no| Flag[Flag for<br/>paper-and-encode fallback]
+
+    classDef action fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef warn fill:#fee2e2,stroke:#b91c1c,color:#7f1d1d
+    class Done action
+    class Flag warn
+```
 
 > **DECISION NEEDED (ASPSI).** Confirm the reminder cadence above, OR adjust. Confirm whether reminders should be automated (Apps Script) or manual (field coordinator).
 
@@ -167,6 +230,22 @@ Fallback A requires a printable paper version of F2 for low-connectivity areas. 
 When ASPSI staff encodes paper responses into the Google Form, they need a way to distinguish "HCW self-submitted" from "staff-encoded from paper" in the response Sheet (for audit and QA purposes).
 
 **Recommendation.** Add a hidden or auto-captured field: `response_source = self | staff_encoded`. When staff use the Form as an encoding UI, they mark the source accordingly. For Fallback A specifically, consider a separate "staff encoder" copy of the Form prefilled with `response_source = staff_encoded` so encoders don't forget to mark it.
+
+```mermaid
+flowchart TD
+    Paper[HCW submits paper<br/>questionnaire] --> Receive[ASPSI field team<br/>receives paper]
+    Receive --> Batch[Paper batched and<br/>routed to encoder]
+    Batch --> Encoder[ASPSI staff encoder<br/>opens staff-encoder Form copy]
+    Encoder --> Key[Key paper responses<br/>into Form]
+    Key --> Submit[Submit<br/>response_source=staff_encoded<br/>pre-set in URL]
+    Submit --> Sheet[(Same Sheet as self-admin<br/>filterable by response_source)]
+    Sheet --> QA[QA: compare staff-encoded<br/>distribution vs self-admin<br/>for mode-effect signals]
+
+    classDef action fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef store fill:#e0e7ff,stroke:#4338ca,color:#1e1b4b
+    class Submit action
+    class Sheet store
+```
 
 > **DECISION NEEDED (ASPSI).** Approve the source-tracking field, and confirm whether staff encoders use the same Form or a dedicated encoder copy.
 

@@ -25,6 +25,33 @@ Verbatim extraction of questionnaire body (Sections A–J) for Google Forms buil
 | `skip` | Destination on specified answers (verbatim from PDF) |
 | `gf_risk` | Google Forms translation risk: **OK** / **SECTION** (needs its own section for branching) / **SPLIT** (question must be split across sections) / **POST** (logic moves to post-processing on the response Sheet) |
 
+## Section overview (visual)
+
+```mermaid
+flowchart LR
+    Cover[Cover<br/>consent + facility confirm] --> A[A. Profile<br/>Q1–Q11]
+    A --> B[B. UHC Awareness<br/>Q12–Q26]
+    B --> C[C. YAKAP/Konsulta<br/>Q27–Q36<br/>role-gated]
+    C --> D[D. NBB/ZBB Awareness<br/>Q37–Q42<br/>role-gated]
+    D --> E1[E1. BUCAS<br/>Q43–Q45<br/>role + facility-gated]
+    E1 --> E2[E2. GAMOT<br/>Q46–Q48<br/>role + facility-gated]
+    E2 --> F[F. Referrals & Satisfaction<br/>Q49–Q55]
+    F --> G[G. KAP on Fees<br/>Q56–Q80<br/>physician/dentist only<br/>facility-type splits]
+    G --> H[H. Task Sharing<br/>Q81–Q85]
+    H --> I[I. Facility Support<br/>Q86–Q87]
+    I --> J[J. Job Satisfaction<br/>Q88–Q114<br/>two matrix grids + terminal branch]
+    J --> End([END OF SURVEY])
+
+    classDef gated fill:#fef3c7,stroke:#b45309,color:#78350f
+    classDef split fill:#e0e7ff,stroke:#4338ca,color:#1e1b4b
+    classDef terminal fill:#dcfce7,stroke:#15803d,color:#14532d
+    class C,D,E1,E2 gated
+    class G split
+    class End terminal
+```
+
+> **Legend.** Yellow = role-gated (branching on Q5 role bucket). Blue = facility-type-split (variants for DOH-retained vs public non-DOH-retained vs other). See `F2-Skip-Logic.md` for the full section graph driving these gates.
+
 ## Cover block
 
 Captured by the rewritten cover block (see `F2-Cover-Block-Rewrite-Draft.md`). Not part of the body spec below:

@@ -147,6 +147,25 @@ This draft proposes replacement text for each affected block, keeps all ethics-m
 - Replace with an in-form required question. The respondent's consent is timestamped and tied to their Google-signed-in identity and email (captured automatically), which provides audit trail equivalent to a signature for research-ethics purposes in self-admin designs.
 - The "I do not wish to participate" branch routes to a thank-you page — respondents who decline should be counted (for disposition/response-rate reporting) but should never see the main questionnaire.
 
+```mermaid
+flowchart TD
+    Open[HCW opens unique link] --> SignIn[Google sign-in required]
+    SignIn --> Read[Read Block 3 — Information about the study]
+    Read --> Contact[Block 4 — SJREB and ASPSI contacts]
+    Contact --> Consent{Block 5 — Consent confirmation<br/>required single-choice question}
+    Consent -->|I agree to participate| Main[Main questionnaire<br/>Sections A–J]
+    Consent -->|I do not wish to participate| Decline[Thank-you page<br/>form submits a declined record]
+    Main --> Submit[Submission<br/>disposition=completed]
+    Decline --> DSubmit[Submission<br/>disposition=declined]
+
+    classDef gate fill:#fef3c7,stroke:#b45309,color:#78350f
+    classDef terminal fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef warn fill:#fee2e2,stroke:#b91c1c,color:#7f1d1d
+    class Consent gate
+    class Submit terminal
+    class DSubmit warn
+```
+
 > **DECISION NEEDED (ASPSI/SJREB).** Confirm that an in-form click-through consent with timestamp + Google-authenticated email satisfies SJREB's documentation requirements. If not, fallback: keep a downloadable consent PDF alongside the form and require the respondent to acknowledge they have read it before the click-through (two required steps).
 
 ---
@@ -189,6 +208,28 @@ The following will be captured automatically by the Google Form and stored in th
 - The FIELD CONTROL block is a field-operations log for enumerator-administered work. None of it applies to self-admin. The facility is visited once at distribution; there's no "first visit / final visit" duality for an online form.
 - The AAPOR-style disposition codes (1-Completed, 2-Postponed, 3-Refused, 4-Incomplete) are still relevant for response-rate reporting, but they're **derived after the window closes** from the response Sheet, not entered by a respondent or enumerator. Apps Script computes them from the combination of form-open timestamp, consent choice, and submit timestamp.
 - `Survey Team Leader's Name` / `Field Validated by` / `Field Edited by` / `Total number of visits` have no analogue in a self-admin Google Form and should be deleted outright.
+
+```mermaid
+flowchart LR
+    MasterList[(Facility master list<br/>102 UHC-IS + 17 non-UHC-IS)] --> LinkGen[Apps Script<br/>generate unique<br/>prefilled link per facility]
+    LinkGen --> DistLog[(ASPSI distribution log<br/>separate sheet, not in HCW form)]
+    LinkGen --> HCW[HCW opens link]
+    HCW --> Meta1[Auto-capture:<br/>facility_id, area_classification,<br/>ownership, service level,<br/>region, province, city,<br/>barangay, GPS]
+    HCW --> Meta2[Auto-capture:<br/>respondent_email from sign-in<br/>submission_started_at<br/>questionnaire_no]
+    HCW --> Fill[Respondent answers<br/>Sections A–J]
+    Fill --> SubmitTs[Auto-capture:<br/>submission_completed_at<br/>response_source=self]
+    Meta1 --> Sheet[(Response Sheet<br/>all metadata + answers)]
+    Meta2 --> Sheet
+    SubmitTs --> Sheet
+    Sheet --> Disp[Apps Script derives<br/>disposition = completed /<br/>partial / declined / no_response<br/>after 3-day window closes]
+
+    classDef store fill:#e0e7ff,stroke:#4338ca,color:#1e1b4b
+    classDef action fill:#dcfce7,stroke:#15803d,color:#14532d
+    class MasterList,DistLog,Sheet store
+    class Disp action
+```
+
+> **Legend.** The HCW never sees or fills any of the boxes on the "auto-capture" lanes — they are populated by the prefilled URL, Google sign-in, and Apps Script. The FIELD CONTROL block from the paper template is entirely replaced by this pipeline.
 
 > **DECISION NEEDED (ASPSI).** (a) Confirm that removing the FIELD CONTROL block from the respondent view is acceptable. (b) Confirm whether ASPSI still wants an enumerator-like "distributor" record per facility — e.g., who handed out the link to each HCW, on what date. If yes, this becomes a separate ASPSI-internal distribution log (not part of the HCW-facing form). I recommend: yes, keep a distribution log, but as a separate Google Sheet that ASPSI field coordinators fill, not as a block inside the HCW form.
 
