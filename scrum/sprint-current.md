@@ -90,6 +90,7 @@ Solo-dev capacity check: 5 working days × ~5h focused work = ~25h. Day 2 closed
 - **Epic 2/3 files updated** with F2 Google Forms track (`E2-F2-011..018` design, `E3-F2-GF-001..015` build) and deferred CSPro track marked `status::deferred`. PB updated to reflect F2 special-case status.
 - Next: draft E2-F2-012 cover-block rewrite text today or tomorrow; E2-F2-013 spec extraction as stretch.
 - **E2-F2-013 closed same day.** Full body spec at `deliverables/F2/F2-Spec.md` — 114 items verbatim with original PDF question numbers, 18 SECTION + 9 SPLIT Google Forms risks flagged, 6 open items routed to ASPSI. Sprint 001 has now overdelivered on the F2 track.
+- **E2-F2-014 also closed Day 3.** Skip logic restructured for Google Forms at `deliverables/F2/F2-Skip-Logic.md` — full section graph + normalised routing table + POST-processing triage + 6 ASPSI open items. Direct input to E3-F2-GF-002/003 next sprint.
 
 ## Retrospective — Sprint 001 (fill in 2026-04-17)
 
