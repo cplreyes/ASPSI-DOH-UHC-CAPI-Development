@@ -2,6 +2,13 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-16 (continued)
+
+- **Standup cadence backfill.** The Sprint 001 standup cadence broke Apr 14–15 — content that should have been in standalone `scrum/standups/YYYY-MM-DD.md` files landed in the `sprint-current.md` Daily Notes section instead. With the Sprint 001 retro due Apr 17, reconstructed both missing days to restore day-by-day ceremony record. Both files carry `backfilled: 2026-04-16` in frontmatter.
+  - **`scrum/standups/2026-04-14.md`** — Day 2 of 5. Yesterday-correction-filing (Apr 13 LSS note was wrong), generator-from-scratch audit, E2-F1-009 actual completion, E2-F1-010 Designer walkthrough round 1 (5 patches + verbatim labels wide pass + secondary drop + NA convention), PSGC value sets flagged as new blocker, E2-F1-009b reopened as `blocked`, `/raw/` hygiene move. Sprint board snapshot + notes section included.
+  - **`scrum/standups/2026-04-15.md`** — Day 3 of 5. Heavy day — F2 scope locked as three-path Google Forms track, E2-F2-011..016 all closed (6 tasks in one day), F2 Build Handoff drafted, E3-F2-GF-001..008 Apps Script bundle drafted, Epics 2/3 + Sprint 001 + Product Backlog updated, Apr 13 team meeting ingested (Team Comms Protocol concept created), Carl's D2 bench-testing scope confirmed in writing, wiki lint pass with 8 new pages, PMSMD Apr 20 feedback window logged. Sprint board snapshot + notes section included.
+  - Sprint 002 feedback item noted in both files: re-enforce file-per-day standup discipline; Daily Notes in `sprint-current.md` is for mid-sprint observations, not a replacement for standup ceremony records.
+
 ## 2026-04-16
 
 - **PIB body alignment pass (completes the Apr 15 deferred work).** Walked the body of `wiki/analyses/Analysis - Project Intelligence Brief.md` and annotated every Apr 10-era section that had drifted from current state. Non-destructive: added `> [!info] 2026-04-16 update` callouts in place rather than rewriting the original prose, so the Apr 10 framing stays intact as archival record.
