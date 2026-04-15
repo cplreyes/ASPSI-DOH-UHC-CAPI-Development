@@ -55,7 +55,191 @@ The ZBB path activates only for `DOH-retained hospital`. The NBB path activates 
 
 ---
 
-## Section graph (overview)
+## Section graph (visual)
+
+> **Diagram format note.** These are Mermaid flowcharts — they render natively in Obsidian, GitHub, VS Code, and most modern Markdown viewers. They're version-controlled as text (diffable in git) and live in the same file as the routing table so they stay in sync. If you'd rather have a hand-drawn Excalidraw version for a whiteboard session, ask and I can export one from these via the Excalidraw MCP.
+>
+> The six diagrams below divide the graph into readable chunks. The **Overview** shows every section at block level; the five detail diagrams zoom into specific regions. A full textual fallback (ASCII tree) follows in the next subsection.
+
+### Diagram 1 — Overview (all sections at block level)
+
+```mermaid
+flowchart TD
+    S0[SEC-0<br/>Cover · Consent · Facility confirm] --> A[SEC-A1–A5<br/>Profile Q1–Q11]
+    A --> B1{SEC-B1<br/>Q12 Heard of UHC?}
+    B1 -->|Yes| B2[SEC-B2–B3<br/>UHC changes Q13–Q26]
+    B1 -->|No| C0{SEC-C0<br/>Role-bucket router}
+    B2 --> C0
+    C0 -->|BUCKET-CD| C[SEC-C1–C8<br/>YAKAP Q27–Q36]
+    C0 -->|BUCKET-PHARM| E2g{SEC-E2-gate}
+    C0 -->|BUCKET-OTHER| F1[SEC-F1<br/>Referrals Q49–Q53]
+    C --> D[SEC-D1–D4<br/>NBB/ZBB Q37–Q42]
+    D --> E1g{SEC-E1-gate<br/>has BUCAS?}
+    E1g -->|yes + eligible| E1[SEC-E1<br/>BUCAS Q43–Q45]
+    E1g -->|no| E2g
+    E1 --> E2g
+    E2g -->|yes + eligible| E2[SEC-E2<br/>GAMOT Q46–Q48]
+    E2g -->|no| F1
+    E2 --> F1
+    F1 --> F2{SEC-F2<br/>Q54 Satisfaction}
+    F2 -->|Dissatisfied| F3[SEC-F3 Q55]
+    F2 -->|Satisfied/Neutral| GR{SEC-G-gate-router}
+    F3 --> GR
+    GR -->|physician/dentist| G[Section G<br/>Q56–Q80]
+    GR -->|else| H[SEC-H1<br/>Task sharing Q81–Q85]
+    G --> H
+    H --> I1{SEC-I1<br/>Q86 Satisfied?}
+    I1 -->|Yes| J[SEC-J1–J4<br/>Job sat Q88–Q111]
+    I1 -->|No| I2[SEC-I2 Q87] --> J
+    J --> J5{SEC-J5<br/>Q112 Leaving?}
+    J5 -->|any Yes| J6[SEC-J6<br/>Q113–Q114]
+    J5 -->|No| SUB([SUBMIT])
+    J6 --> SUB
+
+    classDef gate fill:#fef3c7,stroke:#b45309,color:#78350f
+    classDef terminal fill:#dcfce7,stroke:#15803d,color:#14532d
+    class B1,C0,E1g,E2g,F2,GR,I1,J5 gate
+    class SUB terminal
+```
+
+### Diagram 2 — Section A detail (Profile)
+
+```mermaid
+flowchart TD
+    A1[SEC-A1<br/>Q1 name · Q2 employment · Q3 sex · Q4 age] --> A2{SEC-A2<br/>Q5 Role}
+    A2 -->|Admin · Doctor · Nurse · Midwife<br/>Dentist · Nutrition| A3[SEC-A3<br/>Q6 specialty · Q7 private practice]
+    A2 -->|else| A5[SEC-A5<br/>Q9 tenure · Q10 days/wk · Q11 hrs/day]
+    A3 -->|Q7=Yes AND<br/>facility_type=public/DOH/RHU| A4[SEC-A4<br/>Q8 practice mix]
+    A3 -->|else| A5
+    A4 --> A5
+    A5 --> B1([→ SEC-B1])
+
+    classDef gate fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A2 gate
+```
+
+### Diagram 3 — Section C (YAKAP/Konsulta)
+
+```mermaid
+flowchart TD
+    C1{SEC-C1<br/>Q27 Heard of YAKAP?}
+    C1 -->|Yes| C2[SEC-C2<br/>Q28 contents · Q29 registration]
+    C1 -->|No| D1([→ SEC-D1])
+    C2 --> C3{SEC-C3<br/>Q30 Accredited?}
+    C3 -->|Yes| C4[SEC-C4<br/>Q31 since · Q32 why]
+    C3 -->|No| C5[SEC-C5<br/>Q33 why not]
+    C3 -->|Don't know · Other| C6
+    C4 --> C6{SEC-C6<br/>Q34 Consider accreditation?}
+    C5 --> C6
+    C6 -->|Yes| C7[SEC-C7 Q35 why]
+    C6 -->|No · Not phys/dentist| C8[SEC-C8 Q36 what would convince]
+    C7 --> C8
+    C8 --> D1
+
+    classDef gate fill:#fef3c7,stroke:#b45309,color:#78350f
+    class C1,C3,C6 gate
+```
+
+### Diagram 4 — Sections D + E (NBB/ZBB awareness, BUCAS, GAMOT)
+
+```mermaid
+flowchart TD
+    D1{SEC-D1<br/>Q37 NBB heard?}
+    D1 -->|Yes| D2[SEC-D2<br/>Q38 sources · Q39 understanding]
+    D1 -->|No| D3{SEC-D3<br/>Q40 ZBB heard?}
+    D2 --> D3
+    D3 -->|Yes| D4[SEC-D4<br/>Q41 sources · Q42 understanding]
+    D3 -->|No| E1g{SEC-E1-gate<br/>has BUCAS + eligible?}
+    D4 --> E1g
+    E1g -->|yes| E1{SEC-E1 Q43 Heard of BUCAS?}
+    E1g -->|no| E2g{SEC-E2-gate<br/>has GAMOT + eligible?}
+    E1 -->|Yes| E1b{SEC-E1b Q44 Have BUCAS center?}
+    E1 -->|No| E2g
+    E1b -->|Yes| E1c[SEC-E1c Q45 utilization factors]
+    E1b -->|No · Don't know| E2g
+    E1c --> E2g
+    E2g -->|yes| E2{SEC-E2 Q46 Heard of GAMOT?}
+    E2g -->|no| F1([→ SEC-F1])
+    E2 -->|Yes| E2b{SEC-E2b Q47 Accredited GAMOT provider?}
+    E2 -->|No| F1
+    E2b -->|Yes| E2c[SEC-E2c Q48 utilization factors]
+    E2b -->|No| F1
+    E2c --> F1
+
+    classDef gate fill:#fef3c7,stroke:#b45309,color:#78350f
+    class D1,D3,E1g,E1,E1b,E2g,E2,E2b gate
+```
+
+### Diagram 5 — Section G (KAP on fees — facility-type splits, most complex)
+
+```mermaid
+flowchart TD
+    GR{SEC-G-gate-router<br/>physician or dentist?}
+    GR -->|no| H1([→ SEC-H1])
+    GR -->|yes| G1{SEC-G1<br/>Q56 Aware of facility fee policy?}
+    G1 -->|Yes| G57{SEC-G-Q57<br/>Q57 Consider it?}
+    G1 -->|No| G2{SEC-G2<br/>Q59 Aware of PhilHealth rules?}
+    G57 -->|Yes| G2
+    G57 -->|No| G58[SEC-G-Q58 Q58 why not] --> G2
+    G2 -->|Yes| G60{SEC-G-Q60<br/>Q60 Consider rules?}
+    G2 -->|No| G3R{SEC-G3-fac-router<br/>facility_type?}
+    G60 -->|Yes| G3R
+    G60 -->|No| G61[SEC-G-Q61 Q61 why not] --> G3R
+    G3R -->|DOH-retained| GZN[SEC-G-ZBB+NBB<br/>Q62 + Q62.1 + Q63]
+    G3R -->|Public non-DOH| GN[SEC-G-NBB-only<br/>Q62.1 + Q63]
+    G3R -->|else| G64
+    GZN --> G64{SEC-G-Q64<br/>Q64 RVU familiar?}
+    GN --> G64
+    G64 -->|Yes| G66[SEC-G-Q66 Q66 other factors]
+    G64 -->|No| G65[SEC-G-Q65 Q65 why not] --> G66
+    G66 --> GSR{SEC-G-scales-router<br/>facility_type?}
+    GSR -->|DOH-retained| GSB[SEC-G-scales-both<br/>Q67 + Q67.1 + Q68–Q72]
+    GSR -->|Public non-DOH| GSN[SEC-G-scales-NBB<br/>Q67.1 + Q68–Q72]
+    GSR -->|else| GSbase[SEC-G-scales-base<br/>Q68–Q72]
+    GSB --> G73[SEC-G-Q73-Q77<br/>Q73 · Q74–Q76 grid · Q77]
+    GSN --> G73
+    GSbase --> G73
+    G73 --> G78R{SEC-G-Q78-router<br/>facility_type?}
+    G78R -->|DOH-retained| G78[SEC-G-Q78 ZBB Q78]
+    G78R -->|Public non-DOH| G781{SEC-G-Q78.1 NBB Q78.1}
+    G78R -->|else| G80[SEC-G-Q80 Q80 challenges]
+    G78 --> G781
+    G781 -->|Yes| G79[SEC-G-Q79 Q79 situations] --> G80
+    G781 -->|No| G80
+    G80 --> H1
+
+    classDef gate fill:#fef3c7,stroke:#b45309,color:#78350f
+    classDef facrouter fill:#e0e7ff,stroke:#4338ca,color:#1e1b4b
+    class GR,G1,G57,G2,G60,G64,G781 gate
+    class G3R,GSR,G78R facrouter
+```
+
+> **Legend:** yellow diamonds = single-choice driver questions (respondent answers); blue diamonds = facility-type routers (driven by pre-filled `facility_type` re-confirmation). Each blue router is one extra visible "confirm facility type" question — the graph re-asks it at three points (SEC-G3, SEC-G-scales, SEC-G-Q78) because Forms has no cross-section memory.
+
+### Diagram 6 — Sections I + J terminal
+
+```mermaid
+flowchart TD
+    I1{SEC-I1<br/>Q86 Satisfied with facility support?}
+    I1 -->|Yes| J1[SEC-J1<br/>Q88–Q97 agreement grid]
+    I1 -->|No| I2[SEC-I2 Q87 why not] --> J1
+    J1 --> J2[SEC-J2<br/>Q98–Q102 benefits · needs · development]
+    J2 --> J3[SEC-J3<br/>Q103–Q110 frequency grid]
+    J3 --> J4[SEC-J4 Q111 overtime frequency]
+    J4 --> J5{SEC-J5<br/>Q112 Considered leaving?}
+    J5 -->|any Yes| J6[SEC-J6<br/>Q113 why · Q114 plans]
+    J5 -->|No| SUB([END OF SURVEY])
+    J6 --> SUB
+
+    classDef gate fill:#fef3c7,stroke:#b45309,color:#78350f
+    classDef terminal fill:#dcfce7,stroke:#15803d,color:#14532d
+    class I1,J5 gate
+    class SUB terminal
+```
+
+---
+
+## Section graph (textual fallback — ASCII tree)
 
 ```
 SEC-0  Cover + consent + facility confirmation
