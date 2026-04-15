@@ -48,8 +48,8 @@ Why this goal: F1 is the reference instrument for F3/F4 CSPro builds — every d
   - Drafted 2026-04-15. Deliverable at `deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`. Carl to send to ASPSI in parallel with build work; recommended defaults proceed on the build side while decisions are in flight.
 - [x] **E2-F2-012** F2 cover-block rewrite draft (consent, duration, FIELD CONTROL, facility ID) for ASPSI review `status::done` `priority::critical`
   - Drafted 2026-04-15 at `deliverables/F2/F2-Cover-Block-Rewrite-Draft.md`. 8 cover blocks covered; flags SJREB consent form, completion time, raffle applicability, and facility master list decisions for ASPSI.
-- [ ] **E2-F2-013** F2 spec extraction (questionnaire body Sections A–J → CSV/MD) `status::todo` `priority::critical` `estimate::1d`
-  - May slip to Sprint 002 if E3-F1-001 (F1 FMF kickoff) consumes the remaining sprint days. Lower priority than F1 sign-off.
+- [x] **E2-F2-013** F2 spec extraction (questionnaire body Sections A–J → CSV/MD) `status::done` `priority::critical` `estimate::1d`
+  - Drafted 2026-04-15 at `deliverables/F2/F2-Spec.md`. 114 items, verbatim labels, Google Forms risks consolidated (18 SECTION, 9 SPLIT). Pulled from stretch into committed-done on Day 3. Feeds E2-F2-014 next.
 
 ### Epic 0 — Process scaffolding (stretch)
 
@@ -89,6 +89,7 @@ Solo-dev capacity check: 5 working days × ~5h focused work = ~25h. Day 2 closed
 - **F2-0 Tooling & Access Model Decision Memo drafted** (`deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`). 8 decisions for ASPSI: platform, access model, reminder cadence, facility ID, PSGC dropdowns, paper fallback, staff encoder workflow, response custody. Carl to send to ASPSI in parallel with build work; recommended defaults proceed on the build side.
 - **Epic 2/3 files updated** with F2 Google Forms track (`E2-F2-011..018` design, `E3-F2-GF-001..015` build) and deferred CSPro track marked `status::deferred`. PB updated to reflect F2 special-case status.
 - Next: draft E2-F2-012 cover-block rewrite text today or tomorrow; E2-F2-013 spec extraction as stretch.
+- **E2-F2-013 closed same day.** Full body spec at `deliverables/F2/F2-Spec.md` — 114 items verbatim with original PDF question numbers, 18 SECTION + 9 SPLIT Google Forms risks flagged, 6 open items routed to ASPSI. Sprint 001 has now overdelivered on the F2 track.
 
 ## Retrospective — Sprint 001 (fill in 2026-04-17)
 

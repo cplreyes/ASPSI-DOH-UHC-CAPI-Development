@@ -3,7 +3,7 @@ epic: 2
 title: Survey Questionnaire Design & Dictionary
 phase: per-instrument
 status: in-progress
-last_updated: 2026-04-14
+last_updated: 2026-04-15
 ---
 
 # Epic 2 — Survey Questionnaire Design & Dictionary
@@ -73,7 +73,8 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
   - Drafted 2026-04-15 at `deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`. Carl to send to ASPSI (Dr. Claro, Merlyne, Mgmt Committee) in parallel with build work. Recommended defaults proceed on the build side while decisions are in flight.
 - [x] **E2-F2-012** F2 cover-block rewrite draft — consent form (remove "read aloud"), interview duration, FIELD CONTROL block removal/replacement, facility/geographic ID block. Draft for ASPSI/Dr. Claro review. `status::done` `priority::critical`
   - Drafted 2026-04-15 at `deliverables/F2/F2-Cover-Block-Rewrite-Draft.md`. Covers 8 cover blocks (title, consent header, PART I information, contact info, PART II consent certificate, FIELD CONTROL, facility/geographic ID, transition). Flags ASPSI decisions needed on click-through consent for SJREB, completion-time estimate, raffle applicability, FIELD CONTROL removal, and facility master list workflow. Carl to send to Dr. Claro + Merlyne for review; build proceeds on questionnaire body in parallel.
-- [ ] **E2-F2-013** F2 spec extraction — questionnaire body (Sections A–J) → structured CSV/MD (section, item #, verbatim text, type, choices, required, skip-to, validation). Verbatim labels per project rule. `status::todo` `priority::critical` `estimate::1d`
+- [x] **E2-F2-013** F2 spec extraction — questionnaire body (Sections A–J) → structured CSV/MD (section, item #, verbatim text, type, choices, required, skip-to, validation). Verbatim labels per project rule. `status::done` `priority::critical` `estimate::1d`
+  - Drafted 2026-04-15 at `deliverables/F2/F2-Spec.md`. 114 items extracted verbatim, preserving original PDF question numbers as primary item codes and legacy margin codes for traceability. Google Forms translation risks consolidated: 18 items flagged **SECTION** (dedicated section needed for branching), 9 items flagged **SPLIT** (role × facility-type cross-products around Q54/Q55, Q62/Q62.1, Q67/Q67.1, Q78/Q78.1). Six open items flagged for ASPSI/Dr. Claro review (Q1 name capture, Q32 skip anomaly, Q62 facility-type routing, Q63 prompt collapse, Q73/Q77/Q80 optional). Feeds E2-F2-014 (skip logic restructure) and E2-F2-015 (validation inventory).
 - [ ] **E2-F2-014** F2 skip logic restructured for Google Forms section-based branching. Flag any logic that doesn't survive the translation (per-question skips, multi-condition gates) and propose alternatives. `status::todo` `priority::critical` `estimate::4h`
 - [ ] **E2-F2-015** F2 validation rule inventory adapted for self-admin (required fields, regex, numeric ranges — no "interviewer override" pattern) `status::todo` `priority::high` `estimate::4h`
 - [ ] **E2-F2-016** F2 cross-field consistency rules (limited by Google Forms' single-question validation scope; most cross-field checks move to post-processing on the response Sheet) `status::todo` `priority::high` `estimate::2h`
