@@ -281,7 +281,7 @@ Once ASPSI returns approval on the decisions above:
 
 1. Carl drafts the F2 cover-block rewrite text → sends to Dr. Claro for review (parallelizes with ASPSI decision turnaround).
 2. Carl extracts the F2 specification (`F2-1.1`) from the questionnaire body (Sections A onward).
-3. Sean (QA Tester) reviews the spec before build.
+3. Shan (QA Tester) reviews the spec before build.
 4. Carl authors the Google Apps Script generator (`F2-2.1`).
 5. Carl runs a 3-day internal dry-run test before field deployment.
 

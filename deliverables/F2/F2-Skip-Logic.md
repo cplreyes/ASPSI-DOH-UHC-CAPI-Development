@@ -595,5 +595,5 @@ Google Forms cannot route on checkbox (multi-select) answers. The F2 questionnai
 
 - **E2-F2-015** — validation rule inventory adapted for self-admin. Input to `E3-F2-GF-002` (question-level validators).
 - **E2-F2-016** — cross-field consistency rules. Most already triaged to POST here; E2-F2-016 formalises the Sheet-side checks.
-- **E2-F2-017** — Sean QA review of this + F2-Spec.md.
+- **E2-F2-017** — Shan QA review of this + F2-Spec.md.
 - **E2-F2-018** — sign-off → Epic 3 Google Forms build.

@@ -3,7 +3,7 @@ project: UHC Survey Year 2 — CAPI Development
 client: Department of Health (DOH-PMSMD)
 implementer: Asian Social Project Services, Inc. (ASPSI)
 data_programmer: Carl Patrick L. Reyes
-qa_tester: Sean (ASPSI, RA)
+qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
 last_updated: 2026-04-15
@@ -37,7 +37,7 @@ last_updated: 2026-04-15
 | **3** | CAPI Application Development | **Ready to Start (F1); F2 Google Forms build pending spec** | F1 form file — Section A laid out in CSPro Designer; F2 Apps Script generator scaffolded |
 | **4** | CSWeb Server Setup and Deployment | Not Started | Sync architecture decision documented |
 | **5** | Tablet and Field Logistics | Not Started | Tablet provisioning SOP drafted |
-| **6** | Testing and Pilot | Not Started | F1 desk test (follows Epic 3); QA Tester (Sean) onboarded to test workflow |
+| **6** | Testing and Pilot | Not Started | F1 desk test (follows Epic 3); QA Tester (Shan) onboarded to test workflow |
 | **7** | Training and Documentation | Not Started | Survey manual outline (tied to D2) |
 | **8** | Fieldwork Monitoring and Quality Control | Not Started (activates at fieldwork) | Dashboard requirements defined |
 | **9** | Data Management and Security | **Governance Active** (NDU + privacy compliance ongoing) | Secure sync + backup strategy defined |
@@ -114,7 +114,7 @@ Each epic below is a long-running workstream that spans its portion of the engag
 - PSA sampling endorsement captured in the approved Inception Report
 - Scrum discipline adopted with per-project Product Backlog and 1-week sprint cadence (Sprint 001 active)
 - **Comms infrastructure live:** ASPSI project mailbox (`aspsi.doh.uhc.survey2.data@gmail.com`) for artifacts and decisions of record; CAPI Viber group for real-time coordination
-- **Team structure clarified:** Carl as Data Programmer; Sean (ASPSI RA) as QA Tester for the CAPI build
+- **Team structure clarified:** Carl as Data Programmer; Shan (ASPSI RA) as QA Tester for the CAPI build
 
 **In flight:**
 - SJREB ethics clearance coordination (via ASPSI)
@@ -159,7 +159,7 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 | Instrument | State | Notes |
 |---|---|---|
-| F1 | **Design — closing** | DCF rebuilt from scratch 2026-04-14: 15 records, 657 items (4 secondary-data records empty pending LSS). All 166 questions walked for skip logic. Four-tier validation rules fully documented. The 6 schema items from the field-logic pass are encoded as `PENDING_LSS_*` constants in `generate_dcf.py`; **E2-F1-009b is reopened/blocked** — the Apr 13 LSS meeting did not in fact discuss them. Designer walkthrough (E2-F1-010) in progress. |
+| F1 | **Design — closing** | DCF rebuilt from scratch 2026-04-14: 15 records, 657 items (4 secondary-data records empty pending LSS). All 166 questions walked for skip logic. Four-tier validation rules fully documented. The 6 schema items from the field-logic pass are encoded as `PENDING_DESIGN_*` constants in `generate_dcf.py`; **E2-F1-009b is reopened/blocked** — the Apr 13 LSS meeting did not in fact discuss them. Designer walkthrough (E2-F1-010) in progress. |
 | F2 | **Design — Google Forms track kicked off 2026-04-15** | **SPECIAL CASE** — not a CSPro CAPI instrument by default. Primary build is Google Forms (self-admin by HCW, 3-day window). Paper fallback encodes back into the same Form. Optional CSPro encoder variant is deferred as a late conditional build. Tooling & Access Model Decision Memo drafted (`deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`). Cover-block rewrite dependency surfaced — April 8 PDF uses interviewer template; Carl drafting rewrite for ASPSI review. |
 | F3 | Source Captured | Outpatient + inpatient dual-population eligibility to be mapped during design. |
 | F4 | Source Captured | Household roster structure is the headline design challenge. |
@@ -243,9 +243,9 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 **Roles:**
 - **Carl (Data Programmer)** — author of test specs, owner of desk and bench tests against the build, owner of regression artifacts.
-- **Sean (QA Tester, ASPSI RA)** — independent QA pass on each instrument's CAPI build. Receives handoff bundles from Carl with the build, test scripts, known-issue list, and walkthrough notes. Surfaces defects ahead of the SJREB protocol freeze and the formal pretest with respondents.
+- **Shan (QA Tester, ASPSI RA)** — independent QA pass on each instrument's CAPI build. Receives handoff bundles from Carl with the build, test scripts, known-issue list, and walkthrough notes. Surfaces defects ahead of the SJREB protocol freeze and the formal pretest with respondents.
 
-**Next milestone:** F1 desk test, once F1 build is underway. QA handoff workflow to Sean defined ahead of first F1 build slice ready for review.
+**Next milestone:** F1 desk test, once F1 build is underway. QA handoff workflow to Shan defined ahead of first F1 build slice ready for review.
 
 **Critical dependency:** Pretest with real respondents requires SJREB clearance (tracked in Epic 0).
 
@@ -354,7 +354,7 @@ Each epic below is a long-running workstream that spans its portion of the engag
 | Self-administered mode (F2) unfamiliarity | Low | Medium | F2 reframed 2026-04-15 as a special case: Google Forms primary, paper→Forms encoding fallback, optional deferred CSPro encoder. Decouples F2 from CSPro CAPI pipeline complexity; unfamiliarity absorbed into a tooling memo + Apps Script generator, not into a CSPro app. | 2, 3 |
 | F2 questionnaire cover blocks authored interviewer-style | High (confirmed) | Low–Medium — rewrite is modest but gated on ASPSI review | Carl drafting rewrite text (consent, duration framing, FIELD CONTROL removal, facility ID self-admin mapping) for ASPSI/Dr. Claro review. Build proceeds on the questionnaire body (Sections A–J) in parallel; cover blocks wired in last. | 2, 3 |
 | F2 Google Forms skip-logic limitations (section-based only) | Medium | Low–Medium — some per-question branching won't survive translation cleanly | Spec extraction flags affected items; restructure logic into section boundaries; fall back to inline instructions where section split is impractical. | 2, 3 |
-| QA bandwidth / Sean ramp-up time on CSPro toolchain | Low–Medium | Medium | QA handoff bundles authored as opinionated walkthroughs (not raw artifacts) so Sean can productively review without deep CSPro internals knowledge | 6 |
+| QA bandwidth / Shan ramp-up time on CSPro toolchain | Low–Medium | Medium | QA handoff bundles authored as opinionated walkthroughs (not raw artifacts) so Shan can productively review without deep CSPro internals knowledge | 6 |
 | Tablet device failure in field | Low | Medium | Backup/recovery plan required before deployment; partial-save patterns built into every instrument | 5, 8 |
 | Sync connectivity in remote clusters | Medium | Medium | Sync architecture decision will weigh offline tolerance; multiple fallback transports available | 4 |
 | PII breach or data loss | Low | High — regulatory and reputational | NDU in effect, encryption requirements, audit trail, retention policy to be finalized in Epic 9; project mailbox treated as shared inbox under ASPSI custody | 9 |
@@ -415,7 +415,7 @@ CAPI development follows a 12-phase workflow codified from industry best practic
 - Every soft validation triggered and overridden in bench test
 - Every dynamic value-set branch exercised
 - Pair test with domain expert for interpretation drift
-- Independent QA pass by Sean before formal pretest with respondents
+- Independent QA pass by Shan before formal pretest with respondents
 - Mock cases archived as regression artifacts
 
 ---
@@ -456,8 +456,8 @@ CAPI development follows a 12-phase workflow codified from industry best practic
 
 | Channel | Purpose | Audience |
 |---|---|---|
-| **Project mailbox** (`aspsi.doh.uhc.survey2.data@gmail.com`) | Artifacts and decisions of record; ASPSI-custody Drive for CAPI files | Carl, Sean, ASPSI staff (multi-user shared) |
-| **CAPI Viber group** | Real-time coordination, ping-velocity questions, build/test handoff notifications | Carl, Sean, ASPSI dev support staff (DOH not in this group) |
+| **Project mailbox** (`aspsi.doh.uhc.survey2.data@gmail.com`) | Artifacts and decisions of record; ASPSI-custody Drive for CAPI files | Carl, Shan, ASPSI staff (multi-user shared) |
+| **CAPI Viber group** | Real-time coordination, ping-velocity questions, build/test handoff notifications | Carl, Shan, ASPSI dev support staff (DOH not in this group) |
 | **Local repo** (`C:/Users/analy/Documents/analytiflow/1_Projects/ASPSI-DOH-CAPI-CSPro-Development/`) | **System of record** for all CAPI artifacts. Mailbox/Drive is a mirror, not the canonical store. | Carl |
 | **Weekly status update to ASPSI Mgmt Committee** (E0-010, in flight) | Carl-authored narrative of CAPI progress, risks, asks | ASPSI Management Committee |
 

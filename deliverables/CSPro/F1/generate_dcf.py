@@ -16,12 +16,18 @@ Naming convention: Q{n}_DESCRIPTOR in UPPER_SNAKE. Item names for Q9-Q166
 follow F1-Skip-Logic-and-Validations.md so the validation-rule references
 in that doc keep working without rename churn.
 
-PENDING items: 6 questions still need ASPSI / LSS-meeting decisions. They are
-flagged with `TODO: PENDING LSS` constants near the top of this file and emit
-working defaults so the dictionary loads cleanly in Designer. Hot-swap the
-constants once decisions land. The Apr 13 LSS meeting did NOT actually close
-these — the scrum log entry that claimed it did was wrong (corrected
-2026-04-14).
+PENDING items: 6 questions still need ASPSI design decisions. They are
+flagged with `TODO: PENDING DESIGN` constants near the top of this file and
+emit working defaults so the dictionary loads cleanly in Designer. Hot-swap
+the constants once decisions land.
+
+Routing note (corrected 2026-04-15): these 6 items were originally expected
+to be decided at the Apr 13 LSS meeting. After reading the actual Apr 13
+meeting minutes, the routing was recognized as a category error — LSS scope
+is process/tasking/communication, not technical questionnaire-logic
+decisions. The 6 items need a narrowly-scoped technical design review with
+Dr. Paunlagui (Survey Manager). Constants were renamed from the old
+PENDING_LSS_* prefix to PENDING_DESIGN_* to reflect the correct forum.
 
 Run:
     python generate_dcf.py        # writes FacilityHeadSurvey.dcf next to this file
@@ -88,13 +94,13 @@ WHY_DIFF_OPTIONS = [
 ]
 
 # ============================================================
-# 2. PENDING LSS DECISIONS — flip these when ASPSI confirms
+# 2. PENDING DESIGN DECISIONS — flip these when ASPSI confirms
 # ============================================================
-# These 6 items have NOT been decided as of 2026-04-14 (the Apr 13 LSS
+# These 6 items have NOT been decided as of 2026-04-14 (the technical design review
 # meeting did not actually cover them, contrary to the scrum log entry
 # that has now been corrected).
 
-PENDING_LSS = "TODO: PENDING LSS DECISION"
+PENDING_DESIGN = "TODO: PENDING DESIGN DECISION"
 
 # (1) Q63 ACCRED_WAIT — printed text says "How many DAYS did you wait..."
 #     but bucket labels are in MONTHS. Default: keep months until ASPSI confirms.
@@ -528,8 +534,8 @@ def build_section_d():
         ("Less than a month", "1"), ("1-2 months", "2"), ("3-4 months", "3"),
         ("5-6 months", "4"), ("More than six months", "5"),
     ]
-    # Q63 — PENDING LSS days vs months. Default: months (matches printed buckets).
-    Q63_LABEL_SUFFIX = " [PENDING LSS: printed text says days, buckets are months]"
+    # Q63 — PENDING DESIGN days vs months. Default: months (matches printed buckets).
+    Q63_LABEL_SUFFIX = " [PENDING DESIGN: printed text says days, buckets are months]"
     Q63_BUCKETS = Q62_TRANCHE_INTERVAL  # same shape until ASPSI confirms
 
     Q64_REASONS = [
@@ -1160,7 +1166,7 @@ def build_section_h():
         ("No forms of professional development are provided",        "8"),
         ("Other (specify)",                                          "9"),
     ]
-    # Q166 — PENDING LSS: nurse list omits audits per printed text. Default
+    # Q166 — PENDING DESIGN: nurse list omits audits per printed text. Default
     # respects that, but flag retains "Clinical/Surgical audits" toggle.
     if Q166_NURSES_INCLUDE_AUDITS:
         PD_NURSES = PD_DOCTORS
@@ -1185,20 +1191,20 @@ def build_section_h():
                             PD_DOCTORS))
     items.extend(select_all("Q166_PD_NURSES",
                             "166. What forms of professional development do you provide to your nurses?" +
-                            (" [PENDING LSS: printed list omits audits]" if not Q166_NURSES_INCLUDE_AUDITS else ""),
+                            (" [PENDING DESIGN: printed list omits audits]" if not Q166_NURSES_INCLUDE_AUDITS else ""),
                             PD_NURSES))
     return record("H_HUMAN_RESOURCES", "H. Human Resources for Health", "9", items)
 
 def build_secondary_data_stubs():
-    """Bug #2 — secondary data records. Structure is PENDING LSS so we emit
+    """Bug #2 — secondary data records. Structure is PENDING DESIGN so we emit
     empty stubs that exist in the dictionary but contain no items yet."""
     if not SECONDARY_DATA_AS_STUBS:
         raise NotImplementedError("Non-stub secondary data structure not yet decided")
     return [
-        record("SEC_HOSP_CENSUS",   "Secondary Data — Hospital Census 6mo (PENDING LSS)", "J", []),
-        record("SEC_HCW_ROSTER",    "Secondary Data — HCW Full/Part-time Roster (PENDING LSS)", "K", []),
-        record("SEC_YK_SERVICES",   "Secondary Data — YAKAP Services Availability (PENDING LSS)", "L", []),
-        record("SEC_LAB_PRICES",    "Secondary Data — Lab Procurement vs Charged Prices (PENDING LSS)", "M", []),
+        record("SEC_HOSP_CENSUS",   "Secondary Data — Hospital Census 6mo (PENDING DESIGN)", "J", []),
+        record("SEC_HCW_ROSTER",    "Secondary Data — HCW Full/Part-time Roster (PENDING DESIGN)", "K", []),
+        record("SEC_YK_SERVICES",   "Secondary Data — YAKAP Services Availability (PENDING DESIGN)", "L", []),
+        record("SEC_LAB_PRICES",    "Secondary Data — Lab Procurement vs Charged Prices (PENDING DESIGN)", "M", []),
     ]
 
 

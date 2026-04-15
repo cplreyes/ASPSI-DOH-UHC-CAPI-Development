@@ -22,7 +22,7 @@ flowchart LR
     Flags --> Sheet[(Response Sheet)]
     Nightly[Nightly cleanSheet] --> Full[Re-run all rules<br/>across full Sheet]
     Full --> Sheet
-    Sheet --> Review[Carl / Sean review<br/>rows with non-empty flags]
+    Sheet --> Review[Carl / Shan review<br/>rows with non-empty flags]
 
     classDef action fill:#dcfce7,stroke:#15803d,color:#14532d
     classDef store fill:#e0e7ff,stroke:#4338ca,color:#1e1b4b
@@ -117,7 +117,7 @@ Each row in the response Sheet gets an auto-appended column `_qa_flags` containi
 ### Review workflow
 
 1. **Carl** runs a filter `_qa_flags IS NOT EMPTY` weekly; investigates each flagged row.
-2. **Sean (QA)** runs the same filter during testing to verify no rules mis-fire on clean test data.
+2. **Shan (QA)** runs the same filter during testing to verify no rules mis-fire on clean test data.
 3. **ASPSI field coordinator** reviews `_qa_disposition=no_response` nightly to schedule reminders.
 
 ### Order of execution
@@ -148,5 +148,5 @@ Drop-style rules run first (clean the row), then plausibility checks (warn on re
 ## Open items
 
 1. **FAC-07 DOH-retained duals** — confirm with ASPSI whether DOH-retained respondents should see BOTH Q62 and Q62.1 (the skip-logic doc assumes yes). If ASPSI says only one, flip FAC-07 from warn to drop-second.
-2. **DISP-03 rapid-submission threshold** — 5 minutes is a guess. Sean's dry-run will give us a real baseline for what "too fast" means on 114 items.
+2. **DISP-03 rapid-submission threshold** — 5 minutes is a guess. Shan's dry-run will give us a real baseline for what "too fast" means on 114 items.
 3. **SRC-03 duplicate definition** — if a HCW can legitimately update their response (Google Forms allows edit-on-resubmit for signed-in users), then the "latest wins" logic needs to replace the flag-all-duplicates logic. Confirm with ASPSI.

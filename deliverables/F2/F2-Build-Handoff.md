@@ -9,13 +9,13 @@ depends_on:
   - deliverables/F2/F2-Validation.md
   - deliverables/F2/F2-Cross-Field.md
 author: Carl Reyes
-audience: Carl (build), Sean (test)
+audience: Carl (build), Shan (test)
 status: draft-for-review
 ---
 
 # F2 Build Handoff — Paste, Run, Test
 
-End-to-end recipe to take the F2 Apps Script bundle from `deliverables/F2/apps-script/` and land a live Google Form that Sean can start testing. Three phases: **Build** (Carl, ~15 min), **Seed** (Carl, ~10 min), **Test** (Sean, ~45 min for one full pass).
+End-to-end recipe to take the F2 Apps Script bundle from `deliverables/F2/apps-script/` and land a live Google Form that Shan can start testing. Three phases: **Build** (Carl, ~15 min), **Seed** (Carl, ~10 min), **Test** (Shan, ~45 min for one full pass).
 
 ## Phase 1 — Build (Carl)
 
@@ -79,17 +79,17 @@ This is a **stub** so Carl can generate prefilled links for testing without wait
 
    | facility_id | facility_name | facility_type | facility_has_bucas | facility_has_gamot | region | province | city_mun | barangay | hcw_emails |
    |---|---|---|---|---|---|---|---|---|---|
-   | TEST-DOH-01 | DOH Test Hospital A | DOH-retained hospital | Yes | Yes | NCR | Metro Manila | Manila | Test | sean.qa@example.com;carl.test@example.com |
-   | TEST-PUB-01 | Public Test Hospital B | Public hospital (non-DOH-retained) | No | Yes | Region III | Bulacan | Malolos | Test | sean.qa@example.com |
-   | TEST-RHU-01 | Test RHU C | RHU / Health center | No | No | Region IV-A | Laguna | San Pablo | Test | sean.qa@example.com |
+   | TEST-DOH-01 | DOH Test Hospital A | DOH-retained hospital | Yes | Yes | NCR | Metro Manila | Manila | Test | shan.qa@example.com;carl.test@example.com |
+   | TEST-PUB-01 | Public Test Hospital B | Public hospital (non-DOH-retained) | No | Yes | Region III | Bulacan | Malolos | Test | shan.qa@example.com |
+   | TEST-RHU-01 | Test RHU C | RHU / Health center | No | No | Region IV-A | Laguna | San Pablo | Test | shan.qa@example.com |
 
-4. Replace `sean.qa@example.com` with Sean's real Google email before generating links.
+4. Replace `shan.qa@example.com` with Shan's real Google email before generating links.
 
 ### Step 5. Run `generateLinks`
 
 1. Back in the Apps Script editor, select **`generateLinks`** from the function dropdown.
 2. Click **Run**. The function reads `FacilityMasterList`, generates prefilled URLs, and writes them to a new Sheet named **`F2-Links`** in the same Drive.
-3. Open `F2-Links` → copy the `prefilled_url` values for the rows you want Sean to test.
+3. Open `F2-Links` → copy the `prefilled_url` values for the rows you want Shan to test.
 
 ### Step 6. (Optional) Build the staff encoder variant
 
@@ -97,11 +97,11 @@ This is a **stub** so Carl can generate prefilled links for testing without wait
 2. Logs print a second Form URL tagged with `response_source=staff_encoded`.
 3. Share the edit URL with the ASPSI encoder team once the primary Form is validated.
 
-## Phase 3 — Test (Sean)
+## Phase 3 — Test (Shan)
 
 ### Step 7. Receive test links
 
-Carl sends Sean 3 prefilled URLs (one per test facility). Each link has a different facility_type / BUCAS / GAMOT combination so Sean can validate the conditional routing across the splits.
+Carl sends Shan 3 prefilled URLs (one per test facility). Each link has a different facility_type / BUCAS / GAMOT combination so Shan can validate the conditional routing across the splits.
 
 ### Step 8. Test cases — one pass per facility type
 
@@ -144,7 +144,7 @@ Open the `F2-Responses` Sheet after each submission and verify:
 
 ### Step 10. Bug reporting
 
-When Sean finds a bug or unexpected behavior, route it back to the **owning source doc** per the forward-only sign-off rule (see `memory/feedback_forward_signoff_loopback_bugs.md`):
+When Shan finds a bug or unexpected behavior, route it back to the **owning source doc** per the forward-only sign-off rule (see `memory/feedback_forward_signoff_loopback_bugs.md`):
 
 | Symptom | Fix in |
 |---|---|
@@ -155,7 +155,7 @@ When Sean finds a bug or unexpected behavior, route it back to the **owning sour
 | Apps Script crashes, routing mis-wires | `apps-script/FormBuilder.gs` or `Code.gs` |
 | Consent or cover-block wording | `deliverables/F2/F2-Cover-Block-Rewrite-Draft.md` + `apps-script/Spec.gs` (SEC-COVER) |
 
-After a fix, re-run **`rebuildForm()`** in Apps Script. This deletes the old Form + Sheet and rebuilds fresh. Sean's test submissions on the old Form are lost — that's expected. Every rebuild cycle starts clean.
+After a fix, re-run **`rebuildForm()`** in Apps Script. This deletes the old Form + Sheet and rebuilds fresh. Shan's test submissions on the old Form are lost — that's expected. Every rebuild cycle starts clean.
 
 ## Rollback / reset
 
@@ -168,10 +168,10 @@ After a fix, re-run **`rebuildForm()`** in Apps Script. This deletes the old For
 These are stubbed with defaults in the Spec; flipping any is a one-line `Spec.gs` edit + `rebuildForm()`:
 
 1. **Q1 name fields** — currently optional for raffle. Remove if SJREB requires anonymization.
-2. **Completion time estimate** — "~25 minutes" in the cover description is a placeholder; Sean's dry-run gives the real number.
+2. **Completion time estimate** — "~25 minutes" in the cover description is a placeholder; Shan's dry-run gives the real number.
 3. **Role-bucket UX** — the re-ask at `SEC-C-gate` and `SEC-F-router` is the current workaround. Open to better ideas if Forms adds cross-section memory.
 4. **Facility master list schema** — the stub `FacilityMasterList` above needs to be replaced with the real ASPSI master list once delivered.
-5. **DISP-03 rapid-submission threshold** — 5 min is a guess. Sean's dry-run timings will give a real baseline.
+5. **DISP-03 rapid-submission threshold** — 5 min is a guess. Shan's dry-run timings will give a real baseline.
 6. **Reminder wording** — default copy is in `Reminders.gs`. ASPSI may want a more formal tone.
 
-See `F2-Spec.md` and `F2-Skip-Logic.md` for the full list of ~15 ASPSI-facing decisions. None are gating Sean's first test pass.
+See `F2-Spec.md` and `F2-Skip-Logic.md` for the full list of ~15 ASPSI-facing decisions. None are gating Shan's first test pass.

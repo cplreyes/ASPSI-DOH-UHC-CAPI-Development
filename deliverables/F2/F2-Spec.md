@@ -359,5 +359,5 @@ Q8 (facility-type + Q7 gate), Q54 (answer × role), Q55 (role-dependent destinat
 - **E2-F2-014** — skip logic restructured into GF section-based branching (the SECTION/SPLIT tables above feed this)
 - **E2-F2-015** — validation rule inventory adapted for self-admin
 - **E2-F2-016** — cross-field consistency rules (most move to POST)
-- **E2-F2-017** — Sean QA review of this spec
+- **E2-F2-017** — Shan QA review of this spec
 - **E2-F2-018** — sign-off → enters Epic 3 Google Forms build

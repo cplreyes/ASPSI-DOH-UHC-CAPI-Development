@@ -108,7 +108,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [ ] **E3-F2-GF-011** Filipino translations wired into the Form (second-language variant or bilingual inline) `status::todo` `priority::high` `estimate::1d`
 - [ ] **E3-F2-GF-012** Desk test — walk every skip path from the spec against the generated Form `status::todo` `priority::critical` `estimate::4h`
 - [ ] **E3-F2-GF-013** 3-day internal dry-run test with 1–2 testers — validates save/resume across the window and reminder firing `status::todo` `priority::critical` `estimate::3d (elapsed)`
-- [ ] **E3-F2-GF-014** Sean QA pass on the generated Form + test cases `status::todo` `priority::high` `estimate::4h`
+- [ ] **E3-F2-GF-014** Shan QA pass on the generated Form + test cases `status::todo` `priority::high` `estimate::4h`
 - [ ] **E3-F2-GF-015** Gate decision — after test, assess whether the deferred F2-CSPro track should be activated or stay parked `status::todo` `priority::medium` `estimate::1h`
 
 ### CSPro CAPI track *(DEFERRED — optional late build)*

@@ -8065,7 +8065,7 @@
               "name": "Q63_ACCRED_WAIT",
               "labels": [
                 {
-                  "text": "63. How many days did you wait from application submission to accreditation approval? [PENDING LSS: printed text says days, buckets are months]"
+                  "text": "63. How many days did you wait from application submission to accreditation approval? [PENDING DESIGN: printed text says days, buckets are months]"
                 }
               ],
               "contentType": "numeric",
@@ -8076,7 +8076,7 @@
                   "name": "Q63_ACCRED_WAIT_VS1",
                   "labels": [
                     {
-                      "text": "63. How many days did you wait from application submission to accreditation approval? [PENDING LSS: printed text says days, buckets are months]"
+                      "text": "63. How many days did you wait from application submission to accreditation approval? [PENDING DESIGN: printed text says days, buckets are months]"
                     }
                   ],
                   "values": [
@@ -27917,7 +27917,7 @@
               "name": "Q166_PD_NURSES_O01",
               "labels": [
                 {
-                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Quality assurance meetings"
+                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Quality assurance meetings"
                 }
               ],
               "contentType": "numeric",
@@ -27928,7 +27928,7 @@
                   "name": "Q166_PD_NURSES_O01_VS1",
                   "labels": [
                     {
-                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Quality assurance meetings"
+                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Quality assurance meetings"
                     }
                   ],
                   "values": [
@@ -27964,7 +27964,7 @@
               "name": "Q166_PD_NURSES_O02",
               "labels": [
                 {
-                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Seminars, conferences, workshops"
+                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Seminars, conferences, workshops"
                 }
               ],
               "contentType": "numeric",
@@ -27975,7 +27975,7 @@
                   "name": "Q166_PD_NURSES_O02_VS1",
                   "labels": [
                     {
-                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Seminars, conferences, workshops"
+                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Seminars, conferences, workshops"
                     }
                   ],
                   "values": [
@@ -28011,7 +28011,7 @@
               "name": "Q166_PD_NURSES_O03",
               "labels": [
                 {
-                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Independent professional development: scholarships"
+                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Independent professional development: scholarships"
                 }
               ],
               "contentType": "numeric",
@@ -28022,7 +28022,7 @@
                   "name": "Q166_PD_NURSES_O03_VS1",
                   "labels": [
                     {
-                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Independent professional development: scholarships"
+                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Independent professional development: scholarships"
                     }
                   ],
                   "values": [
@@ -28058,7 +28058,7 @@
               "name": "Q166_PD_NURSES_O04",
               "labels": [
                 {
-                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Independent professional development: research grants"
+                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Independent professional development: research grants"
                 }
               ],
               "contentType": "numeric",
@@ -28069,7 +28069,7 @@
                   "name": "Q166_PD_NURSES_O04_VS1",
                   "labels": [
                     {
-                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Independent professional development: research grants"
+                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Independent professional development: research grants"
                     }
                   ],
                   "values": [
@@ -28105,7 +28105,7 @@
               "name": "Q166_PD_NURSES_O05",
               "labels": [
                 {
-                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 LGU/DOH led workshops/initiatives"
+                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 LGU/DOH led workshops/initiatives"
                 }
               ],
               "contentType": "numeric",
@@ -28116,7 +28116,7 @@
                   "name": "Q166_PD_NURSES_O05_VS1",
                   "labels": [
                     {
-                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 LGU/DOH led workshops/initiatives"
+                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 LGU/DOH led workshops/initiatives"
                     }
                   ],
                   "values": [
@@ -28152,7 +28152,7 @@
               "name": "Q166_PD_NURSES_O06",
               "labels": [
                 {
-                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 No forms of professional development are provided"
+                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 No forms of professional development are provided"
                 }
               ],
               "contentType": "numeric",
@@ -28163,7 +28163,7 @@
                   "name": "Q166_PD_NURSES_O06_VS1",
                   "labels": [
                     {
-                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 No forms of professional development are provided"
+                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 No forms of professional development are provided"
                     }
                   ],
                   "values": [
@@ -28199,7 +28199,7 @@
               "name": "Q166_PD_NURSES_O07",
               "labels": [
                 {
-                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Other (specify)"
+                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Other (specify)"
                 }
               ],
               "contentType": "numeric",
@@ -28210,7 +28210,7 @@
                   "name": "Q166_PD_NURSES_O07_VS1",
                   "labels": [
                     {
-                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Other (specify)"
+                      "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Other (specify)"
                     }
                   ],
                   "values": [
@@ -28246,7 +28246,7 @@
               "name": "Q166_PD_NURSES_OTHER_TXT",
               "labels": [
                 {
-                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING LSS: printed list omits audits] \u2014 Other (specify) text"
+                  "text": "166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",

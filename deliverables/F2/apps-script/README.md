@@ -66,6 +66,6 @@ This directory is an **Apps Script project** that builds the F2 Healthcare Worke
 - **Facility-type split (Q62/Q62.1, Q67/Q67.1, Q78/Q78.1).** Handled via facility-type router pages per `F2-Skip-Logic.md`.
 - **~15 ASPSI decisions still open.** The build uses defaults from the spec docs; flipping any default is a one-line `Spec.gs` edit followed by `rebuildForm()`.
 
-## Handoff to Sean
+## Handoff to Shan
 
 See `deliverables/F2/F2-Build-Handoff.md` for the tester-facing recipe (when written — task #11).
