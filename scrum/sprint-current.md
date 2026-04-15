@@ -7,13 +7,15 @@ sprint_length: 1 week (5 working days)
 deliverable_anchor: D2 / D3 (extended timeline)
 ---
 
-# Sprint 001 — Close F1 Design, Unblock F1 Build
+# Sprint 001 — Close F1 Design, Unblock F1 Build, Kick Off F2
 
 ## Sprint Goal
 
 > **Get F1 out of Design and into Build-ready by Friday**: resolve the six open F1 questions at today's LSS meeting, reconcile DCF v2 against those decisions, complete the CSPro Designer walkthrough, and sign off Epic 2 for F1 so Epic 3 (F1 build) can start in Sprint 002.
+>
+> **Stretched 2026-04-15:** Kick off F2 (Google Forms track) in parallel. F1 sign-off is not a hard gate — F2's Google Forms path doesn't reuse F1's CSPro patterns, so the two tracks are independent. Sprint 001 now ships the F2 tooling decision memo + cover-block rewrite draft; spec extraction carries into Sprint 002.
 
-Why this goal: F1 is the reference instrument for F2/F3/F4 — every day F1 sits in Design also delays the downstream pipeline. The six open questions have been frozen for ~3 days waiting on the Apr 13 LSS meeting. This sprint's value is converting that meeting into committed schema and exiting the design phase.
+Why this goal: F1 is the reference instrument for F3/F4 CSPro builds — every day F1 sits in Design also delays the downstream CSPro pipeline. The six open questions have been frozen for ~3 days waiting on the Apr 13 LSS meeting. F2 is now recognized as a special case (Google Forms primary, optional deferred CSPro encoder) and can run in parallel without waiting on F1.
 
 ## Committed Items
 
@@ -40,6 +42,15 @@ Why this goal: F1 is the reference instrument for F2/F3/F4 — every day F1 sits
 - [ ] **E3-F1-001** Create `FacilityHeadSurvey.fmf`; lay out Section A (Identification & Cover Page) only `status::todo` `priority::high` `estimate::4h`
   - Promoted from stretch to committed on 2026-04-13 after F1 design closed clean. Targets Wednesday/Thursday once E2-F1-010 sign-off is in.
 
+### Epic 2 — F2 Google Forms track kickoff (added 2026-04-15)
+
+- [x] **E2-F2-011** F2 Tooling & Access Model Decision Memo drafted (8 decisions for ASPSI) `status::done` `priority::critical`
+  - Drafted 2026-04-15. Deliverable at `deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`. Carl to send to ASPSI in parallel with build work; recommended defaults proceed on the build side while decisions are in flight.
+- [ ] **E2-F2-012** F2 cover-block rewrite draft (consent, duration, FIELD CONTROL, facility ID) for ASPSI review `status::todo` `priority::critical` `estimate::3h`
+  - Dependency: April 8 F2 PDF was authored using interviewer template; cover blocks need self-admin rewrite before the Google Form can ship. Carl drafts, ASPSI reviews.
+- [ ] **E2-F2-013** F2 spec extraction (questionnaire body Sections A–J → CSV/MD) `status::todo` `priority::critical` `estimate::1d`
+  - May slip to Sprint 002 if E3-F1-001 (F1 FMF kickoff) consumes the remaining sprint days. Lower priority than F1 sign-off.
+
 ### Epic 0 — Process scaffolding (stretch)
 
 - [ ] **E0-010** Define weekly status update format for ASPSI Management Committee — one-page template, paste-ready `status::todo` `priority::high` `estimate::2h`
@@ -49,12 +60,12 @@ Why this goal: F1 is the reference instrument for F2/F3/F4 — every day F1 sits
 
 | Class | Items | Estimate |
 |---|---|---|
-| **Committed (must-finish)** | E0-001, E0-020, E0-032, E0-060, E2-F1-010, E3-F1-001 | ~10h discretionary + recurring |
+| **Committed (must-finish)** | E0-001, E0-020, E0-032, E0-060, E2-F1-010, E3-F1-001, E2-F2-012 | ~13h discretionary + recurring |
 | **Blocked** | E2-F1-009b (awaiting LSS decision on 6 open items) | ~4h when unblocked |
-| **Stretch** | E0-010 | +2h |
-| **Already done** | E2-F1-009 (Apr 14 — generator + DCF built from scratch), E0-060 (Apr 13 PM) | — |
+| **Stretch** | E0-010, E2-F2-013 | +2h + 1d |
+| **Already done** | E2-F1-009 (Apr 14 — generator + DCF built from scratch), E0-060 (Apr 13 PM), E2-F2-011 (Apr 15 — F2 tooling memo) | — |
 
-Solo-dev capacity check: 5 working days × ~5h focused work = ~25h. Day 2 closed E2-F1-009 (the actual generator build, previously mis-marked as Apr 11). E2-F1-009b remains blocked until LSS decides the 6 items; defaults are encoded as `PENDING_LSS_*` constants so the DCF still loads. E2-F1-010 (Designer walkthrough) and E3-F1-001 (FMF kickoff) are the remaining committed work.
+Solo-dev capacity check: 5 working days × ~5h focused work = ~25h. Day 2 closed E2-F1-009. Day 3 (Apr 15) closed E2-F2-011 (F2 tooling memo). E2-F1-009b remains blocked until LSS decides the 6 items; defaults are encoded as `PENDING_LSS_*` constants so the DCF still loads. Remaining committed work: E2-F1-010 (Designer walkthrough), E3-F1-001 (FMF kickoff), E2-F2-012 (F2 cover-block rewrite draft). Stretch: E2-F2-013 (F2 spec extraction — may slip to Sprint 002).
 
 ## Daily Notes
 
@@ -71,6 +82,13 @@ Solo-dev capacity check: 5 working days × ~5h focused work = ~25h. Day 2 closed
 - **Built `deliverables/CSPro/F1/generate_dcf.py` from scratch** using the manual scaffold for Q1-Q8 conventions and `F1-Skip-Logic-and-Validations.md` for canonical item names across Q9-Q166. Output: `FacilityHeadSurvey.dcf` with 15 records, 657 items. Secondary-data records left as empty stubs pending LSS. The 6 open items are encoded as `PENDING_LSS_*` constants — flipping any constant + rerun regenerates affected schema.
 - Moved `F1_clean.txt` out of `/raw/` to `deliverables/CSPro/F1/inputs/` (not an ASPSI source — internal text extraction).
 - Next: E2-F1-010 Designer walkthrough on the freshly generated DCF.
+
+### 2026-04-15 (Wed)
+- **F2 scope decisions locked in.** F2 is officially a special case with three capture paths (Google Forms primary, paper→Forms encoding fallback, optional deferred CSPro encoder). F1 sign-off is NOT a hard gate for starting F2. Scheduled the CSPro-F2 track as an optional late build conditional on F2 Google Forms test outcomes.
+- **Contradiction found and resolved:** the April 8 F2 PDF is authored using the interviewer-administered template (read-aloud consent, FIELD CONTROL enumerator block, 1.5-hour interview framing). IR says self-admin. Resolution (per Carl): the PDF is mislabeled/stale; ASPSI needs to rewrite the cover blocks. Carl will draft the rewrite to unblock the build. Added as E2-F2-012.
+- **F2-0 Tooling & Access Model Decision Memo drafted** (`deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`). 8 decisions for ASPSI: platform, access model, reminder cadence, facility ID, PSGC dropdowns, paper fallback, staff encoder workflow, response custody. Carl to send to ASPSI in parallel with build work; recommended defaults proceed on the build side.
+- **Epic 2/3 files updated** with F2 Google Forms track (`E2-F2-011..018` design, `E3-F2-GF-001..015` build) and deferred CSPro track marked `status::deferred`. PB updated to reflect F2 special-case status.
+- Next: draft E2-F2-012 cover-block rewrite text today or tomorrow; E2-F2-013 spec extraction as stretch.
 
 ## Retrospective — Sprint 001 (fill in 2026-04-17)
 

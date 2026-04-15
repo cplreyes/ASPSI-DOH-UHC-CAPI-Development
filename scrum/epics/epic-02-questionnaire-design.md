@@ -60,19 +60,38 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 
 ## F2 — Healthcare Worker Survey *(self-administered, 14pp)*
 
-**State:** Source Captured
-**Scope:** Sections A–J, self-administered mode (distinct from F1/F3/F4)
+**State:** Design — Google Forms track kickoff 2026-04-15
+**Primary mode:** Self-administered via **Google Forms** (3-day window per HCW). Paper fallback encodes back into the same Form. See `memory/project_f2_capture_modes.md`.
+**Special case:** F2 does **NOT** flow through the standard DCF pipeline. The Google Forms path is the primary build; the CSPro DCF tasks below are deferred as an **optional late track** (only built if F2 Google Forms testing surfaces a need for a CSPro encoder variant).
+**Reference doc:** `deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`
+
+### Google Forms design track *(PRIMARY)*
 
 - [x] **E2-F2-001** F2 questionnaire PDF ingested to `raw/` `status::done` `priority::high`
 - [x] **E2-F2-002** F2 text extraction + wiki source page with Section A–J map `status::done` `priority::high`
-- [ ] **E2-F2-003** F2 `generate_dcf.py` authored (reuse F1 helpers where applicable) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E2-F2-004** F2 DCF v1 generated and opened in CSPro Designer `status::todo` `priority::high` `estimate::2h`
-- [ ] **E2-F2-005** F2 skip logic walked (account for self-admin mode: no interviewer to interpret) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E2-F2-006** F2 validation rule inventory (self-admin affects soft warnings — respondent overrides differently) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E2-F2-007** F2 cross-field consistency rules `status::todo` `priority::high` `estimate::4h`
-- [ ] **E2-F2-008** F2 sanity check findings → bug list `status::todo` `priority::high` `estimate::2h`
-- [ ] **E2-F2-009** F2 corrections + DCF v2 regeneration `status::todo` `priority::high` `estimate::4h`
-- [ ] **E2-F2-010** F2 Designer validation + sign-off `status::todo` `priority::high` `estimate::2h`
+- [x] **E2-F2-011** F2 Tooling & Access Model Decision Memo drafted (8 decisions: platform, access model, reminders, facility ID, PSGC, paper fallback, encoding workflow, custody) `status::done` `priority::critical`
+  - Drafted 2026-04-15 at `deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`. Carl to send to ASPSI (Dr. Claro, Merlyne, Mgmt Committee) in parallel with build work. Recommended defaults proceed on the build side while decisions are in flight.
+- [ ] **E2-F2-012** F2 cover-block rewrite draft — consent form (remove "read aloud"), interview duration, FIELD CONTROL block removal/replacement, facility/geographic ID block. Draft for ASPSI/Dr. Claro review. `status::todo` `priority::critical` `estimate::3h`
+  - Dependency surfaced 2026-04-15: the April 8 F2 PDF was authored using the interviewer-administered template; cover blocks are incompatible with self-admin. Carl drafts, ASPSI reviews. See `memory/project_f2_questionnaire_rewrite_needed.md`.
+- [ ] **E2-F2-013** F2 spec extraction — questionnaire body (Sections A–J) → structured CSV/MD (section, item #, verbatim text, type, choices, required, skip-to, validation). Verbatim labels per project rule. `status::todo` `priority::critical` `estimate::1d`
+- [ ] **E2-F2-014** F2 skip logic restructured for Google Forms section-based branching. Flag any logic that doesn't survive the translation (per-question skips, multi-condition gates) and propose alternatives. `status::todo` `priority::critical` `estimate::4h`
+- [ ] **E2-F2-015** F2 validation rule inventory adapted for self-admin (required fields, regex, numeric ranges — no "interviewer override" pattern) `status::todo` `priority::high` `estimate::4h`
+- [ ] **E2-F2-016** F2 cross-field consistency rules (limited by Google Forms' single-question validation scope; most cross-field checks move to post-processing on the response Sheet) `status::todo` `priority::high` `estimate::2h`
+- [ ] **E2-F2-017** Sean (QA) reviews F2 spec before build `status::todo` `priority::high` `estimate::2h`
+- [ ] **E2-F2-018** F2 spec sign-off → enters Epic 3 Google Forms build `status::todo` `priority::high` `estimate::1h`
+
+### CSPro DCF track *(DEFERRED — optional, conditional on F2 Google Forms test outcomes)*
+
+> These tasks are **not current commitments**. They are parked for potential activation after F2 Google Forms testing, if ASPSI wants a CSPro encoder variant for paper responses (Fallback B of the three-path capture model). If activated, scheduled **last** in the Epic 2 sequence — after F1/F3/F4 DCF work.
+
+- [ ] **E2-F2-003** F2 `generate_dcf.py` authored `status::deferred` `priority::low` `estimate::1d`
+- [ ] **E2-F2-004** F2 DCF v1 generated and opened in CSPro Designer `status::deferred` `priority::low` `estimate::2h`
+- [ ] **E2-F2-005** F2 skip logic walked (CSPro encoder variant) `status::deferred` `priority::low` `estimate::1d`
+- [ ] **E2-F2-006** F2 validation rule inventory (CSPro) `status::deferred` `priority::low` `estimate::1d`
+- [ ] **E2-F2-007** F2 cross-field consistency rules (CSPro) `status::deferred` `priority::low` `estimate::4h`
+- [ ] **E2-F2-008** F2 sanity check findings → bug list (CSPro) `status::deferred` `priority::low` `estimate::2h`
+- [ ] **E2-F2-009** F2 corrections + DCF v2 regeneration `status::deferred` `priority::low` `estimate::4h`
+- [ ] **E2-F2-010** F2 Designer validation + sign-off (CSPro) `status::deferred` `priority::low` `estimate::2h`
 
 ---
 

@@ -79,20 +79,35 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ---
 
-## F2 — Healthcare Worker Survey *(self-administered)*
+## F2 — Healthcare Worker Survey *(self-administered — SPECIAL CASE)*
 
-**Prerequisite:** E2-F2-010 (F2 DCF sign-off)
+**F2 is not a CSPro CAPI instrument by default.** Primary build track is **Google Forms** (self-admin by HCW, 3-day window, paper fallback encoded back into the same Form). See `memory/project_f2_capture_modes.md` and `memory/project_f2_questionnaire_rewrite_needed.md`.
 
-- [ ] **E2-F2-001..060** Standard template per F1 above, adapted for **self-administered mode**:
-  - No interviewer present → soft warnings behave differently (respondent confirms, not interviewer)
-  - Consent flow differs (self-clicked, not interviewer-read)
-  - Eligibility screen must be self-explanatory
-  - Question text must be fully unambiguous (no interviewer to interpret)
-  - Navigation must be forgiving (respondents may hit wrong buttons)
-- [ ] **E3-F2-015** Self-admin UX review: ensure question wording is unambiguous without an interviewer `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F2-016** Self-admin navigation: back-button tolerance, resume after accidental close `status::todo` `priority::high` `estimate::4h`
+**Prerequisite:** E2-F2-018 (F2 Google Forms spec sign-off)
 
-*(Full task list to be expanded when F2 enters a sprint.)*
+### Google Forms build track *(PRIMARY)*
+
+- [ ] **E3-F2-GF-001** Google Apps Script generator skeleton — reads spec CSV/MD, emits a Google Form in the project mailbox Drive, re-runnable on spec revisions `status::todo` `priority::critical` `estimate::1d`
+- [ ] **E3-F2-GF-002** Spec → Form builder: sections, questions, choices, required flags, validation (regex/numeric ranges), help text `status::todo` `priority::critical` `estimate::1d`
+- [ ] **E3-F2-GF-003** Section-based skip logic wiring (`setJumpTo` / section branching) per the restructured logic from E2-F2-014 `status::todo` `priority::critical` `estimate::4h`
+- [ ] **E3-F2-GF-004** Consent click-through + acknowledgement as required first section (replaces "read aloud" flow) `status::todo` `priority::critical` `estimate::2h`
+- [ ] **E3-F2-GF-005** Facility ID handling — unique prefilled link per facility (Apps Script generator reads a facility master list, emits one prefilled link per row) `status::todo` `priority::high` `estimate::4h`
+- [ ] **E3-F2-GF-006** Google sign-in required; response destination configured → Google Sheet in project mailbox Drive `status::todo` `priority::high` `estimate::1h`
+- [ ] **E3-F2-GF-007** `response_source` auto-captured field — distinguishes `self` vs `staff_encoded` submissions `status::todo` `priority::high` `estimate::1h`
+- [ ] **E3-F2-GF-008** Reminder cadence automation (Apps Script time-driven trigger) — Day 1 / Day 2 / Day 3 reminders to non-completers reading the response Sheet `status::todo` `priority::high` `estimate::4h`
+- [ ] **E3-F2-GF-009** Staff encoder variant of the Form (Fallback A) — prefilled `response_source=staff_encoded`, no sign-in required, accessible to ASPSI staff only `status::todo` `priority::high` `estimate::2h`
+- [ ] **E3-F2-GF-010** Paper mirror Google Doc generator — same Apps Script reads the spec and emits a print-ready Doc `status::todo` `priority::high` `estimate::4h`
+- [ ] **E3-F2-GF-011** Filipino translations wired into the Form (second-language variant or bilingual inline) `status::todo` `priority::high` `estimate::1d`
+- [ ] **E3-F2-GF-012** Desk test — walk every skip path from the spec against the generated Form `status::todo` `priority::critical` `estimate::4h`
+- [ ] **E3-F2-GF-013** 3-day internal dry-run test with 1–2 testers — validates save/resume across the window and reminder firing `status::todo` `priority::critical` `estimate::3d (elapsed)`
+- [ ] **E3-F2-GF-014** Sean QA pass on the generated Form + test cases `status::todo` `priority::high` `estimate::4h`
+- [ ] **E3-F2-GF-015** Gate decision — after test, assess whether the deferred F2-CSPro track should be activated or stay parked `status::todo` `priority::medium` `estimate::1h`
+
+### CSPro CAPI track *(DEFERRED — optional late build)*
+
+> Conditional on E3-F2-GF-015 gate decision. If activated, scheduled **last** in the Epic 3 sequence after F1/F3/F4 CSPro builds are complete. ASPSI-facing purpose: let staff encode paper F2 responses into CSPro instead of Google Forms. See `memory/project_f2_capture_modes.md`.
+
+- [ ] **E3-F2-CSPro-001..060** CSPro Designer build using standard F1 template, adapted for paper-to-CAPI encoding workflow (no interviewer text, no GPS, no live consent — encoder reads from paper) `status::deferred` `priority::low`
 
 ---
 

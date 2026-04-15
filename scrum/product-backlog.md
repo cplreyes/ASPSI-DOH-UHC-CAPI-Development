@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Sean (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-04-13
+last_updated: 2026-04-15
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -23,7 +23,9 @@ last_updated: 2026-04-13
 
 ### Headline (this week)
 
-**F1 dictionary rebuilt 2026-04-14.** `generate_dcf.py` was authored from scratch and `FacilityHeadSurvey.dcf` regenerated to **15 records, 657 items** — earlier scrum entries claiming an Apr 11 v2/952-item build were premature (no generator existed before today). The Apr 13 LSS meeting did **not** in fact discuss the 6 open F1 items (correction from Carl); the items are encoded as `PENDING_LSS_*` constants in the generator with default assumptions, and `E2-F1-009b` is reopened as `blocked` until LSS decides. F1 awaits the Designer walkthrough (E2-F1-010) before declaring Build-ready. Comms infrastructure is fully provisioned (project mailbox + Viber group both live, QA tester onboarded).
+**F1 dictionary rebuilt 2026-04-14; F2 Google Forms track kicked off 2026-04-15.** `generate_dcf.py` was authored from scratch and `FacilityHeadSurvey.dcf` regenerated to **15 records, 657 items** — earlier scrum entries claiming an Apr 11 v2/952-item build were premature (no generator existed before today). The Apr 13 LSS meeting did **not** in fact discuss the 6 open F1 items; `E2-F1-009b` is reopened as `blocked` until LSS decides. F1 awaits the Designer walkthrough (E2-F1-010) before declaring Build-ready.
+
+**F2 is now recognized as a special case with three capture paths** (Google Forms primary, paper→Forms encoding fallback, optional deferred CSPro encoder). F1 sign-off is NOT a hard gate — the Google Forms path doesn't reuse F1's CSPro patterns, so F2 kickoff runs in parallel with F1 close-out. F2-0 Tooling & Access Model Decision Memo drafted Apr 15 (`deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`) with 8 decisions for ASPSI. A separate finding surfaced during extraction: the April 8 F2 PDF is authored using the interviewer-administered template (read-aloud consent, FIELD CONTROL enumerator block, 1.5-hour interview framing) — the cover blocks will need a self-admin rewrite before the Google Form can ship (Carl drafts, ASPSI reviews). Comms infrastructure is fully provisioned (project mailbox + Viber group both live, QA tester onboarded).
 
 ### By Workstream Epic
 
@@ -31,8 +33,8 @@ last_updated: 2026-04-13
 |---|---|---|---|
 | **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** | First weekly status update shipped to ASPSI Mgmt Committee |
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
-| **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Design closing — DCF rebuilt 2026-04-14, Designer walkthrough next; F2–F4/PLF Source Captured) | F1 sign-off (E2-F1-010), then F2 design kickoff |
-| **3** | CAPI Application Development | **Ready to Start** (F1) | F1 form file — Section A laid out in CSPro Designer |
+| **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Design closing — Designer walkthrough next; **F2 Google Forms track kicked off 2026-04-15**; F3/F4/PLF Source Captured) | F1 sign-off (E2-F1-010); F2 cover-block rewrite draft + spec extraction |
+| **3** | CAPI Application Development | **Ready to Start (F1); F2 Google Forms build pending spec** | F1 form file — Section A laid out in CSPro Designer; F2 Apps Script generator scaffolded |
 | **4** | CSWeb Server Setup and Deployment | Not Started | Sync architecture decision documented |
 | **5** | Tablet and Field Logistics | Not Started | Tablet provisioning SOP drafted |
 | **6** | Testing and Pilot | Not Started | F1 desk test (follows Epic 3); QA Tester (Sean) onboarded to test workflow |
@@ -47,10 +49,10 @@ last_updated: 2026-04-13
 
 | Instrument | Mode | Pages | Current State |
 |---|---|---|---|
-| **F1 — Facility Head** | Interviewer-administered | 34 | **Design — closing** — DCF rebuilt 2026-04-14 (15 records, 657 items); Designer walkthrough (E2-F1-010) in progress; E2-F1-009b reopened pending LSS on 6 items |
-| **F2 — Healthcare Worker** | Self-administered | 14 | Source Captured |
-| **F3 — Patient** | Interviewer-administered | 23 | Source Captured |
-| **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2) | 26 | Source Captured |
+| **F1 — Facility Head** | Interviewer-administered (CSPro CAPI) | 34 | **Design — closing** — DCF rebuilt 2026-04-14 (15 records, 657 items); Designer walkthrough (E2-F1-010) in progress; E2-F1-009b reopened pending LSS on 6 items |
+| **F2 — Healthcare Worker** | **Self-admin — Google Forms (primary); paper→Forms encoding fallback; optional deferred CSPro encoder** | 14 | **Design — Google Forms track kicked off 2026-04-15.** Tooling memo drafted; cover-block rewrite + spec extraction next. |
+| **F3 — Patient** | Interviewer-administered (CSPro CAPI) | 23 | Source Captured |
+| **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2; CSPro CAPI) | 26 | Source Captured |
 | **PLF — Patient Listing Form** | Recruitment form | 1 | Source Captured |
 
 ---
@@ -158,16 +160,16 @@ Each epic below is a long-running workstream that spans its portion of the engag
 | Instrument | State | Notes |
 |---|---|---|
 | F1 | **Design — closing** | DCF rebuilt from scratch 2026-04-14: 15 records, 657 items (4 secondary-data records empty pending LSS). All 166 questions walked for skip logic. Four-tier validation rules fully documented. The 6 schema items from the field-logic pass are encoded as `PENDING_LSS_*` constants in `generate_dcf.py`; **E2-F1-009b is reopened/blocked** — the Apr 13 LSS meeting did not in fact discuss them. Designer walkthrough (E2-F1-010) in progress. |
-| F2 | Source Captured | Self-administered mode implications to be mapped during design. Next instrument in the pipeline. |
+| F2 | **Design — Google Forms track kicked off 2026-04-15** | **SPECIAL CASE** — not a CSPro CAPI instrument by default. Primary build is Google Forms (self-admin by HCW, 3-day window). Paper fallback encodes back into the same Form. Optional CSPro encoder variant is deferred as a late conditional build. Tooling & Access Model Decision Memo drafted (`deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`). Cover-block rewrite dependency surfaced — April 8 PDF uses interviewer template; Carl drafting rewrite for ASPSI review. |
 | F3 | Source Captured | Outpatient + inpatient dual-population eligibility to be mapped during design. |
 | F4 | Source Captured | Household roster structure is the headline design challenge. |
 | PLF | Source Captured | Implementation decision (CAPI vs paper) precedes design. |
 
-**What's done across the epic:** All five source questionnaires ingested and catalogued. F1 generator + DCF built.
+**What's done across the epic:** All five source questionnaires ingested and catalogued. F1 generator + DCF built. F2 Tooling & Access Model Decision Memo drafted (2026-04-15).
 
-**In flight:** F1 Designer walkthrough (E2-F1-010); E2-F1-009b blocked on LSS decisions for the 6 open items. F2 design kickoff starts after F1 sign-off.
+**In flight:** F1 Designer walkthrough (E2-F1-010); E2-F1-009b blocked on LSS decisions for the 6 open items. F2 Google Forms design track active in parallel — cover-block rewrite draft (E2-F2-012) and spec extraction (E2-F2-013) are the next deliverables.
 
-**Next milestone:** F2 design kickoff.
+**Next milestone:** F1 sign-off (E2-F1-010); F2 spec sign-off (E2-F2-018).
 
 **Ties to:** D2, D3.
 
@@ -177,17 +179,27 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 **Covers:** CSPro Designer application build per instrument — form layout, tablet UX, capture types, question text (English + Filipino), skip logic wiring, validation wiring (hard stops via error + re-enter, soft warnings via accept, display gates via conditional visibility), dynamic value sets (context-dependent option lists), multi-language handling, FIELD_CONTROL block (informed consent, eligibility screening, AAPOR disposition codes, GPS, interviewer/supervisor IDs, timestamps), and roster engines (F4).
 
-**Current state:** **Ready to Start (F1)** — F1 design closed Apr 13, no remaining blockers from Epic 2 for F1.
+**Current state:** **Ready to Start (F1 CSPro CAPI); F2 Google Forms build pending spec sign-off.** F1 design closed clean Apr 13, no remaining blockers from Epic 2 for F1. F2 primary build is on a parallel Google Forms track, not the CSPro sequence.
 
-**Per-instrument status:** F1 ready to start; F2/F3/F4 not started (each follows its own Epic 2 closeout).
+**Per-instrument status:** F1 ready to start; F2 Google Forms track pending spec (E2-F2-018); F3/F4 not started (each follows its own Epic 2 closeout); F2-CSPro encoder deferred as optional late build.
 
-**Next milestone:** F1 form file (`FacilityHeadSurvey.fmf`) created in CSPro Designer; Section A (Identification & Cover Page) laid out as the first build slice.
+**Next milestone:** F1 form file (`FacilityHeadSurvey.fmf`) created in CSPro Designer; F2 Apps Script generator scaffolded once spec signs off.
 
-**Sequencing strategy:**
+**Sequencing strategy (CSPro CAPI track):**
 1. F1 first as the reference instrument (largest, exercises the full range of patterns)
-2. F2 second in parallel once F1 build patterns stabilize (exercises self-administered mode)
-3. F3 follows F2 (reuses F1's interviewer-administered patterns)
-4. F4 last (roster engine benefits from patterns refined in F1–F3)
+2. F3 follows F1 (reuses F1's interviewer-administered patterns)
+3. F4 last (roster engine benefits from patterns refined in F1/F3)
+4. **F2-CSPro encoder variant** (conditional, optional) — if activated after F2 Google Forms testing, scheduled as the tail of this sequence after F1/F3/F4 are complete
+
+**Sequencing strategy (F2 Google Forms track — parallel, independent of CSPro sequence):**
+1. F2 Tooling & Access Model Decision Memo → ASPSI (done 2026-04-15)
+2. F2 cover-block rewrite draft (E2-F2-012)
+3. F2 spec extraction + skip-logic restructure for section-based branching (E2-F2-013..018)
+4. F2 Apps Script generator + Form build (E3-F2-GF-001..011)
+5. F2 desk test + 3-day dry-run (E3-F2-GF-012..014)
+6. Gate decision: activate deferred F2-CSPro track, or leave parked (E3-F2-GF-015)
+
+**F2 special-case note:** F2 does not flow through the CSPro Design → CSPro Build pipeline for its primary build. The Google Forms track is managed as a standalone sub-workstream inside Epics 2 and 3. The optional late F2-CSPro build reuses the standard CSPro patterns from F1/F3/F4, but only if activated. See `memory/project_f2_capture_modes.md` and the F2 sections of `scrum/epics/epic-02-questionnaire-design.md` and `scrum/epics/epic-03-capi-application.md`.
 
 **Ties to:** D2, D3.
 
@@ -339,7 +351,9 @@ Each epic below is a long-running workstream that spans its portion of the engag
 | Timeline pressure on D2 / D3 extended window | Medium | High — late delivery penalty applies (1% of total per calendar day if no further extension) | F1 design closed clean (Apr 13) — pipeline ahead of where it was a week ago. F2–F4 design pipeline next. Sequenced instrument delivery; reproducible generators absorb late questionnaire revisions cheaply | 2, 3, 6, 7 |
 | Late questionnaire revisions from client (F2–F4) | Low–Medium | Medium | Script-generated data models re-run in minutes; F1 came through clean which is one favorable data point but not predictive of F2–F4 | 2, 3 |
 | Household roster complexity (F4) | Medium | Medium | F4 sequenced last so lessons from F1/F2/F3 inform the roster design | 2, 3 |
-| Self-administered mode (F2) unfamiliarity | Low | Medium | Workflow template exercised and refined during F2 build | 2, 3 |
+| Self-administered mode (F2) unfamiliarity | Low | Medium | F2 reframed 2026-04-15 as a special case: Google Forms primary, paper→Forms encoding fallback, optional deferred CSPro encoder. Decouples F2 from CSPro CAPI pipeline complexity; unfamiliarity absorbed into a tooling memo + Apps Script generator, not into a CSPro app. | 2, 3 |
+| F2 questionnaire cover blocks authored interviewer-style | High (confirmed) | Low–Medium — rewrite is modest but gated on ASPSI review | Carl drafting rewrite text (consent, duration framing, FIELD CONTROL removal, facility ID self-admin mapping) for ASPSI/Dr. Claro review. Build proceeds on the questionnaire body (Sections A–J) in parallel; cover blocks wired in last. | 2, 3 |
+| F2 Google Forms skip-logic limitations (section-based only) | Medium | Low–Medium — some per-question branching won't survive translation cleanly | Spec extraction flags affected items; restructure logic into section boundaries; fall back to inline instructions where section split is impractical. | 2, 3 |
 | QA bandwidth / Sean ramp-up time on CSPro toolchain | Low–Medium | Medium | QA handoff bundles authored as opinionated walkthroughs (not raw artifacts) so Sean can productively review without deep CSPro internals knowledge | 6 |
 | Tablet device failure in field | Low | Medium | Backup/recovery plan required before deployment; partial-save patterns built into every instrument | 5, 8 |
 | Sync connectivity in remote clusters | Medium | Medium | Sync architecture decision will weigh offline tolerance; multiple fallback transports available | 4 |
