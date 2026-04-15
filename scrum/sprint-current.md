@@ -46,8 +46,8 @@ Why this goal: F1 is the reference instrument for F3/F4 CSPro builds — every d
 
 - [x] **E2-F2-011** F2 Tooling & Access Model Decision Memo drafted (8 decisions for ASPSI) `status::done` `priority::critical`
   - Drafted 2026-04-15. Deliverable at `deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md`. Carl to send to ASPSI in parallel with build work; recommended defaults proceed on the build side while decisions are in flight.
-- [ ] **E2-F2-012** F2 cover-block rewrite draft (consent, duration, FIELD CONTROL, facility ID) for ASPSI review `status::todo` `priority::critical` `estimate::3h`
-  - Dependency: April 8 F2 PDF was authored using interviewer template; cover blocks need self-admin rewrite before the Google Form can ship. Carl drafts, ASPSI reviews.
+- [x] **E2-F2-012** F2 cover-block rewrite draft (consent, duration, FIELD CONTROL, facility ID) for ASPSI review `status::done` `priority::critical`
+  - Drafted 2026-04-15 at `deliverables/F2/F2-Cover-Block-Rewrite-Draft.md`. 8 cover blocks covered; flags SJREB consent form, completion time, raffle applicability, and facility master list decisions for ASPSI.
 - [ ] **E2-F2-013** F2 spec extraction (questionnaire body Sections A–J → CSV/MD) `status::todo` `priority::critical` `estimate::1d`
   - May slip to Sprint 002 if E3-F1-001 (F1 FMF kickoff) consumes the remaining sprint days. Lower priority than F1 sign-off.
 
