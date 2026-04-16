@@ -34,64 +34,16 @@ Run:
 """
 
 import json
+import sys
 from pathlib import Path
 
-# ============================================================
-# 1. CONSTANTS — value sets reused across many items
-# ============================================================
-
-YES_NO = [
-    ("Yes", "1"),
-    ("No",  "2"),
-]
-
-YES_NO_DK = [
-    ("Yes",          "1"),
-    ("No",           "2"),
-    ("I don't know", "3"),
-]
-
-YES_NO_NA = [
-    ("Yes",            "1"),
-    ("No",             "2"),
-    ("Not applicable", "9"),
-]
-
-# UHC9 — the 9-option pattern driving Q12, Q14, Q17, Q19, Q21, Q23, Q25,
-# Q27, Q29, Q31, Q36, Q38, Q39, Q40, Q41, Q42, Q43, Q44, Q45, Q46, Q47, Q48.
-# The 1..9 numbering is load-bearing for skip logic ("if in 5..9 then skip").
-UHC9_OPTIONS = [
-    ("Yes, this was implemented as a direct result of the UHC Act",                          "1"),
-    ("Yes, this was pre-existing, but it has significantly improved due to the UHC Act",     "2"),
-    ("Yes, this has been implemented or improved recently, but not due to the UHC Act",      "3"),
-    ("Yes, other reason (specify)",                                                          "4"),
-    ("No, this has not been implemented yet, but we plan to in the next 1-2 years",          "5"),
-    ("No, and we have no plans to do this in the next 1-2 years",                            "6"),
-    ("No, other reason (specify)",                                                           "7"),
-    ("I don't know",                                                                         "8"),
-    ("Not applicable",                                                                       "9"),
-]
-
-FREQUENCY = [
-    ("Weekly",         "1"),
-    ("Monthly",        "2"),
-    ("Quarterly",      "3"),
-    ("Semi-annually",  "4"),
-    ("Annually",       "5"),
-    ("Other (specify)","6"),
-]
-
-WHY_DIFF_OPTIONS = [
-    ("Not enough budget / too expensive",  "1"),
-    ("Time-consuming",                     "2"),
-    ("Limited human resources",            "3"),
-    ("Legal processes",                    "4"),
-    ("Compiling documentary requirements", "5"),
-    ("Stringent standards",                "6"),
-    ("Lack of training",                   "7"),
-    ("Lack of space",                      "8"),
-    ("Other (specify)",                    "9"),
-]
+# Import shared helpers
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from cspro_helpers import (
+    YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, FREQUENCY, WHY_DIFF_OPTIONS,
+    _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
+    select_one, select_all, uhc9_item, record,
+)
 
 # ============================================================
 # 2. PENDING DESIGN DECISIONS — flip these when ASPSI confirms
@@ -129,99 +81,9 @@ Q166_NURSES_INCLUDE_AUDITS = False
 Q121_DYNAMIC_VALUE_SET = False
 
 
-# ============================================================
-# 3. HELPER FUNCTIONS — emit CSPro 8.0 dictionary objects
-# ============================================================
-
-def _value_set(name_prefix, label, options):
-    return {
-        "name": f"{name_prefix}_VS1",
-        "labels": [{"text": label}],
-        "values": [
-            {"labels": [{"text": text}], "pairs": [{"value": code}]}
-            for text, code in options
-        ],
-    }
-
-def numeric(name, label, length=1, zero_fill=False, value_set_options=None):
-    item = {
-        "name": name,
-        "labels": [{"text": label}],
-        "contentType": "numeric",
-        "length": length,
-        "zeroFill": zero_fill,
-    }
-    if value_set_options:
-        item["valueSets"] = [_value_set(name, label, value_set_options)]
-    return item
-
-def alpha(name, label, length=50):
-    return {
-        "name": name,
-        "labels": [{"text": label}],
-        "contentType": "alpha",
-        "length": length,
-    }
-
-def yes_no(name, label):
-    return numeric(name, label, length=1, value_set_options=YES_NO)
-
-def yes_no_dk(name, label):
-    return numeric(name, label, length=1, value_set_options=YES_NO_DK)
-
-def yes_no_na(name, label):
-    return numeric(name, label, length=1, value_set_options=YES_NO_NA)
-
-def select_one(name, label, options, length=2):
-    return numeric(name, label, length=length,
-                   zero_fill=(length > 1),
-                   value_set_options=options)
-
-def select_all(prefix, label, options, with_other_txt=None):
-    """SELECT-ALL idiom: one dichotomous item per option (1=selected, 2=not).
-    If with_other_txt is True (or None and last option mentions 'specify'),
-    appends an OTHER_TXT alpha for the free-text capture."""
-    items = []
-    for i, (text, _code) in enumerate(options):
-        items.append(numeric(
-            f"{prefix}_O{i+1:02d}",
-            f"{label} — {text}",
-            length=1,
-            value_set_options=YES_NO,
-        ))
-    if with_other_txt is None:
-        with_other_txt = bool(options) and "specify" in options[-1][0].lower()
-    if with_other_txt:
-        items.append(alpha(f"{prefix}_OTHER_TXT",
-                           f"{label} — Other (specify) text",
-                           length=120))
-    return items
-
-def uhc9_item(name, label):
-    """Standard UHC9 question. Emits 3 items: the main numeric (length 1,
-    9-option value set) plus two free-text items for the 'Yes other'
-    and 'No other' specify branches."""
-    return [
-        numeric(name, label, length=1, value_set_options=UHC9_OPTIONS),
-        alpha(f"{name}_YES_OTHER_TXT",
-              f"{label} — Yes, other (specify) text", length=120),
-        alpha(f"{name}_NO_OTHER_TXT",
-              f"{label} — No, other (specify) text", length=120),
-    ]
-
-
-def record(name, label, record_type, items, max_occurs=1, required=True):
-    return {
-        "name": name,
-        "labels": [{"text": label}],
-        "recordType": record_type,
-        "occurrences": {"required": required, "maximum": max_occurs},
-        "items": items,
-    }
-
 
 # ============================================================
-# 4. RECORD BUILDERS — A. Field Control + B. Geographic ID
+# 3. RECORD BUILDERS — A. Field Control + B. Geographic ID
 # ============================================================
 
 def build_field_control():

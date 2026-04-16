@@ -1,0 +1,4316 @@
+UHC Survey Year 2 
+In-Patient and Out-Patient Survey Questionnaire 
+ 
+Informed Consent Form  
+This informed consent form is to be obtained before conducting the interview. You must read this entire consent form aloud exactly 
+as written. After you have read this form to the respondent, you must complete and sign the verification consent form. 
+ 
+PART I: Information about the Study 
+Hello, my name is    (data collector’s name) . I work for Asian Social Project Services, Inc. (ASPSI).  I am here to ask you to 
+participate in a study about the Universal Health Care (UHC) and packages of programs like Yaman ng Kalusugan Program 
+(YAKAP), No Balance Billing (NBB), Zero Balance Billing (ZBB), Bagong Urgent Care and Ambulatory Services (BUCAS) 
+centers, and Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT). The Department of Health (DOH) 
+funded this study. Please let me tell you more about the study.  
+This study aims to generate evidence on the overall experience of the general public to support continuous monitoring, evaluation, 
+and learning of the implementation of the UHC Act and its Implementing Rules and Regulations (IRR). 
+ 
+Would you like to participate as a respondent in the study? The interview may last for more or less than an hour. 
+ 
+We are committed to protecting your privacy. If you choose to participate, we will never share your family’s or other household 
+members’ personal information outside of the study team. We will never include your name in information shared with the 
+government or in any reports. Your name will be kept separately from your answers in a private, secure location. For this interview, 
+it is also important to respect other people’s privacy and not tell anyone else what we talked about today. With all research, there’s 
+a small chance that someone else might get to see your data. We try our best to prevent that, but if it happens, we’ll tell you as soon 
+as possible.  
+ 
+Aside from this, there are no other risks to you if you take part in this study. As a benefit of the research, the knowledge gained may 
+help the government and DOH better support your healthcare needs. We shall also provide Php 100 as token of appreciation for the 
+time you’ve shared with us. 
+ 
+Nothing bad will happen if you do not want to be in this study. You can decide to stop being in the study at any time. You will never 
+have to pay anything to be in the study.  
+ 
+Do you have any questions about the study or about what I have told you?  
+If you have concerns or questions about your rights as a participant, you can contact:  
+Single Joint Research Ethics Board (SJREB) at the Philippines Department of Health 
+● 
+Email: sjreb.doh@gmail.com  
+● 
+National Tel: (02) 651-7800 local 1328 
+● 
+Tel: +63 936 992 5513 
+Department of Health 
+● 
+Name: Lindsley Jeremiah D. Villarante 
+● 
+Email:  ldvillarante@doh.gov.ph 
+● 
+Tel: +63 (02) 8651-7800 local 1432 
+ 
+Asian Social Project Services, Inc. 
+● 
+Name: Paulyn Jean A. Claro  
+● 
+Email: aspsiglobal@gmail.com 
+● 
+Tel: + 63 917 819 6884 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+---PAGE BREAK---
+ 
+PART II: Certificate of Consent  
+If you have understood the information above, please say “yes” or “no” for each of my questions. May I please have your 
+permission to be interviewed by signing this form? 
+ 
+_____________________________      ___________________________________________   ____________________   
+ 
+ Name and Signature of Respondent.       Address (No., Street, Barangay, Municipality/City, Province)              Tel/Mobile Phone 
+ 
+ 
+If the Respondent cannot sign this form, an adult household member can sign this consent form as a witness. 
+ 
+_____________________________      ___________________________________________    ____________________   
+ 
+ Name and Signature of Witness              Address (No., Street, Barangay, Municipality/City, Province)             Tel/Mobile Phone 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+---PAGE BREAK---
+ 
+Questionnaire No:  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+FIELD CONTROL 
+Survey Team Leader’s Name 
+ 
+Date First Visited the Patient 
+(Month, Day, Year) 
+Enumerator’s Name 
+ 
+Resulta 
+ 
+Field Validated by 
+ 
+Date of Final Visit to the Patient 
+(Month, Day, Year) 
+Field Edited by 
+ 
+Resulta 
+ 
+ 
+ 
+ 
+ 
+ 
+aCodes:  1. Completed  2. Postponed  3. Refused 
+4. Incomplete  
+ 
+Total number of visits: 
+ 
+HEALTH FACILITY AND GEOGRAPHIC IDENTIFICATION 
+Name of Health Facility (should match inpatient and outpatient 
+mentioned facility) 
+ 
+Classification 
+☐ UHC IS 
+☐ Non-UHC IS 
+Region 
+ 
+Province/HUC 
+ 
+City/Municipality 
+ 
+Barangay 
+ 
+GPS Coordinates 
+Latitude 
+ 
+Longitude 
+ 
+Date of Visit 
+ 
+ 
+PATIENT ADDRESS AND GEOGRAPHIC IDENTIFICATION 
+City/Municipality 
+ 
+Barangay 
+ 
+GPS Coordinates* 
+Latitude 
+ 
+Longitude 
+ 
+Type of Patient 
+☐ Outpatient 
+ 
+☐ Inpatient 
+*for patients interviewed in their homes 
+ 
+ 
+A. Introduction and Informed Consent  
+Q1 
+1. Before we begin, to confirm, are you the patient? 
+ 
+ 
+ 
+☐ Yes <proceed to 4> 
+ 
+ 
+ 
+☐ No  
+Q2 
+2. What is your relationship to the patient? 
+ 
+ 
+ 
+☐ Spouse 
+☐ Grandson 
+☐ Aunt 
+ 
+ 
+ 
+☐ Son 
+☐ Granddaughter 
+☐ Nephew 
+ 
+ 
+ 
+☐ Daughter 
+☐ Father 
+☐ Niece 
+ 
+ 
+ 
+☐ Step-son 
+☐ Mother 
+☐ Neighbor 
+ 
+ 
+ 
+☐ Step-daughter 
+☐ Brother 
+☐ Other (specify) 
+ 
+ 
+ 
+☐ Son-in-law 
+☐ Sister 
+ 
+ 
+ 
+☐ Daughter-in-law 
+☐ Uncle 
+☐ Refuse to answer (DO NOT READ OUT LOUD) 
+Q3 
+3. Do you live in the same house as the patient? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+Before proceeding to the survey proper, we would like to ask the patient about their personal information 
+Note to enumerator [do not read]:  This section is for the Patient Profile. Ask all questions in this section unless a skip rule applies. 
+ 
+ 
+B. Patient Profile 
+Q5 
+4. Patient’s Name (Last Name, First Name, MI, Extension) 
+ 
+ 
+5. In what month and year was the patient born? 
+ 
+Month _________  
+ 
+Year__________ 
+Q6 
+6. Just to confirm, how old is the patient as of his/her last birthday? (in years) 
+ 
+ 
+Q7 
+7. What is the patient’s sex at birth? 
+ 
+ 
+ 
+☐ Male 
+☐ Female 
+Q9 
+8. Is the patient part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.). 
+It is fine if not comfortable answering. 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+
+---PAGE BREAK---
+ 
+ 
+☐ Yes 
+☐ No 
+☐ Other (specify) 
+(not comfortable to answer, do not know, refused to answer) 
+Q10 
+9. Which group does the patient identify with? 
+It is fine if not comfortable answering. 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Lesbian 
+☐ Queer 
+ 
+ 
+ 
+☐ Gay 
+☐ Intersex 
+ 
+ 
+ 
+☐ Bisexual 
+☐ Asexual 
+ 
+ 
+ 
+☐ Transgender 
+☐ Other (specify) 
+Q11 
+10. What is the patient’s civil status? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Single / Never Married 
+☐ Divorced 
+ 
+ 
+ 
+☐ Married 
+☐ Separated 
+ 
+ 
+ 
+☐ Common law / Live-in 
+☐ Annulled 
+ 
+ 
+ 
+☐ Widowed 
+☐ Not reported 
+Q13 
+11. Does the patient identify as a person with a disability? 
+ 
+ 
+ 
+☐ Yes  
+ 
+ 
+ 
+☐ No  <proceed to 15> 
+ 
+12. Would the patient like to specify the type of disability? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 15> 
+ 
+13. May we view the patient’s PWD Identification Card? 
+ 
+ 
+ 
+☐ Yes (card was presented and verified) 
+ 
+ 
+ 
+☐ No (card not available at the time of interview) 
+ 
+ 
+ 
+☐ Respondent refused to present card 
+ 
+14. Based on the presented PWD Identification Card, what type of disability is indicated? 
+Enumerator Instruction (DO NOT READ ALOUD) 
+If the PWD Identification Card is presented, record the type of disability as indicated on the card. Do not ask the respondent directly. 
+ 
+ 
+ 
+☐ Physical disability (Orthopedic) 
+ 
+ 
+ 
+☐ Visual disability 
+ 
+ 
+ 
+☐ Hearing disability 
+ 
+ 
+ 
+☐ Speech impairment 
+ 
+ 
+ 
+☐ Intellectual disability 
+ 
+ 
+ 
+☐ Psychosocial disability 
+ 
+ 
+ 
+☐ Multiple disabilities 
+ 
+ 
+ 
+☐ Other disability (specify) 
+Q14 
+15. What is the highest level of education the patient has attained? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Early Childhood Education (Pre-school) 
+☐ Master Level Education or Equivalent 
+ 
+ 
+ 
+☐ Primary Education (Grade 1 to 6) 
+☐ Doctoral Level Education or Equivalent 
+ 
+ 
+ 
+☐ Lower Secondary Education (Grade 7 to 10) 
+☐ No schooling 
+ 
+ 
+ 
+☐ Upper Secondary Education (Grade 11 to 12) 
+☐ I don't know 
+ 
+ 
+ 
+☐ Post-Secondary Non-Tertiary Education (including 
+Technical and Vocational degrees with a certificate) 
+☐ Not applicable 
+ 
+ 
+ 
+☐ Short-Cycle Tertiary Education or Equivalent 
+(including Technical and Vocational degrees with a diploma) 
+☐ Other (specify) 
+ 
+ 
+ 
+☐ Bachelor Level Education or Equivalent 
+ 
+Q15 
+16. What is patient’s employment status? 
+If the patient is studying - please put "No employment - not looking for work"  
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Has a permanent job/ own business 
+☐ Unemployed and not looking for work 
+ 
+ 
+ 
+☐ Has a short-term, seasonal, casual job/business 
+☐ Retired 
+ 
+ 
+ 
+☐ Worked on different jobs day to day per week 
+☐ I don't know 
+ 
+ 
+ 
+☐ Unemployed and looking for work 
+☐ Not applicable 
+Q16 
+17. What is the patient’s main source of income? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. IF MORE THAN ONE, ASK FOR THE MAIN SOURCE. 
+ 
+ 
+ 
+☐ Working for private company 
+☐ Worked without pay in own family business or farm 
+ 
+ 
+ 
+☐ Working for private household 
+☐ Pension 
+ 
+ 
+ 
+☐ Working for government 
+☐ Unemployed and looking for work 
+ 
+ 
+ 
+☐ Worked with pay in own family business or farm 
+☐ Unemployed and not looking for work 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Self-employed without any paid employee 
+☐ I don't know 
+Q24 
+18. In the past 6 months, what is the patient’s average monthly household income? Please specify in 
+Philippine pesos. 
+ 
+ 
+ 
+☐ Under 40,000 
+ 
+ 
+ 
+☐ 40,000 - 59,999 
+ 
+ 
+ 
+☐ 60,000 - 99,999 
+ 
+ 
+ 
+☐ 100,000 - 249,999 
+ 
+ 
+ 
+☐ 250,000 - 499,999 
+ 
+ 
+ 
+☐ 500,000 and over 
+Q30 
+19. How many total individuals (including children) live in patient’s house now?  
+Please count the patient and all the people who usually live with the patient. Please include those who are not living here now but will be 
+back within six months, BUT do not include OFWs. 
+ 
+ 
+ 
+ 
+Q31 
+20. How many non-working age children (i.e., below the age of 18) live in patient’s house now? 
+ 
+ 
+ 
+ 
+Q32 
+21. How many senior citizens live in patient’s house now? 
+ 
+ 
+ 
+ 
+Q33 
+22. Does the patient have electricity in their household? 
+ 
+ 
+ 
+☐ Yes  
+ 
+☐ No 
+Q34 
+23. What is the patient's family’s main source of water supply for daily use? 
+ 
+ 
+ 
+☐ Faucet inside the house 
+☐ Dug well 
+ 
+ 
+ 
+☐ Tubed/piped well 
+☐ Other (specify) 
+Q35 
+24. Does the patient have their own faucet, or do they share with their community? 
+ 
+ 
+ 
+☐ I/we have our own 
+ 
+ 
+☐ I/we share with our community 
+Q36 
+25. Does the patient have their own tube/pipe, or do they share with their community? 
+ 
+ 
+ 
+☐ I/we have our own 
+ 
+ 
+☐ I/we share with our community 
+Q37 
+26. Does the patient’s family own a refrigerator/freezer? 
+ 
+ 
+ 
+☐ Yes, I/ we have 
+ 
+ 
+ 
+☐ No, I/we don't have 
+Q38 
+27. Does the patient’s family own a television set? 
+ 
+ 
+ 
+☐ Yes, I/ we have 
+ 
+ 
+ 
+☐ No, I/we don't have 
+Q39 
+28. Does the patient’s family own a washing machine? 
+ 
+ 
+ 
+☐ Yes, I/ we have 
+ 
+ 
+ 
+☐ No, I/we don't have 
+Q40 
+29. How would the socioeconomic class of the patient’s household be classified? 
+Please choose one from the options I will mention. 
+ 
+ 
+ 
+☐ Class A or B (working professionals or with a business with several assets) 
+ 
+ 
+ 
+☐ Class C (working professionals with permanent or semi-permanent income and some assets) 
+ 
+ 
+ 
+☐ Class D or E (semi-permanent workers or informal sector workers with little to no assets) 
+ 
+ 
+ 
+☐ I don't know 
+Q19 
+30. Is the patient member of Indigenous People (IP) community, like the Igorot, Lumad, Mangyans, 
+etc.? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to Q32> 
+Q20 
+31. If yes, which group? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+For enumerator: A list will be provided to ensure accurate details. 
+ 
+ 
+ 
+Specify 
+ 
+ 
+Q21 
+32. Is the patient’s household a beneficiary of the Pantawid Pamilyang Pilipino Program (4Ps)? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q22 
+33. Is the patient the main decision-maker on health care in your household? 
+The decision-maker is the person that takes responsibility on decisions regarding health in the family: for example, yearly immunizations, 
+hospital finances, etc. 
+ 
+ 
+ 
+☐ Yes (the Patient is the main decision maker) <proceed to 35> 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+☐ The Companion answering the survey is the main decision maker <proceed to 35> 
+Q23 
+34. Who takes the most responsibility for making the decisions regarding healthcare in the patient’s 
+household?  
+This is the person who makes decisions on health in the family: for example, yearly immunizations, manages hospital finances, etc. 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Patient’s father 
+☐ Patient’s sibling 
+ 
+ 
+ 
+☐ Patient’s mother 
+☐ Patient’s grandfather 
+ 
+ 
+ 
+☐ Patient’s parents 
+☐ Patient’s grandmother 
+ 
+ 
+ 
+☐ Patient’s spouse 
+☐ Patient’s uncle 
+ 
+ 
+ 
+☐ Patient’s partner 
+☐ Patient’s aunt 
+ 
+ 
+ 
+☐ Both patient and spouse 
+☐ Other (specify) 
+ 
+ 
+C. Awareness on Universal Health Care (UHC) 
+ 
+We will now ask about the patient’s awareness of the Universal Health Care (UHC) 
+ 
+This section is for the Patient’s awareness on Universal Health Care.   Ask all questions in this section unless a skip rule applies. 
+Q41 
+35. Have you heard about Universal Health Care (UHC) prior to this survey? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 38> 
+Q42 
+36. What is your source of information about UHC? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ News 
+☐ Health center/ facility 
+ 
+ 
+ 
+☐ Legislation 
+☐ LGU/ Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know 
+ 
+ 
+ 
+☐ Friends / Family 
+☐ Other (Specify) 
+Q43 
+37. What is your understanding about UHC? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Protection from financial risk/decreased out-of-pocket spending 
+ 
+ 
+ 
+☐ Access to quality and affordable health care goods and services 
+ 
+ 
+ 
+☐ Automatic enrollment into PhilHealth 
+ 
+ 
+ 
+☐ Primary care provider for every Filipino 
+ 
+ 
+ 
+☐ I don't know 
+ 
+ 
+ 
+☐ Other (Specify) 
+ 
+ 
+D. PhilHealth Registration and Health Insurance 
+ 
+The next questions we will be asking are related to the patient’s PhilHealth registration experience. We will 
+also confirm their PhilHealth registration status and membership, and their registration to other health 
+insurance. 
+ 
+This section is for the Patient’s PhilHealth Registration and Health Insurance.   Ask all questions in this section unless a skip rule applies. 
+Q72 
+38. Are you currently registered with PhilHealth? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 43> 
+ 
+ 
+ 
+☐ I don’t know <proceed to 43> 
+Q73 
+39. How did you find out about how to register for PhilHealth? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ PhilHealth representative 
+☐ No one / self-registered 
+ 
+ 
+ 
+☐ LGU 
+☐ Barangay Health Worker 
+ 
+ 
+ 
+☐ Primary care provider 
+☐ Friends / Family 
+ 
+ 
+ 
+☐ Other health care provider 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Employer 
+☐ Other (Specify) 
+Q74 
+40. Who assisted you in the registration process? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ PhilHealth representative 
+☐ No one / self-registered 
+ 
+ 
+ 
+☐ LGU 
+☐ Barangay Health Worker 
+ 
+ 
+ 
+☐ Primary care provider 
+☐ Friends / Family 
+ 
+ 
+ 
+☐ Other health care provider 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Employer 
+☐ Other (Specify) 
+Q75 
+41. Did you have any difficulties in the registration process? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Yes  
+ 
+ 
+ 
+☐ No <proceed to 45> 
+Q76 
+42. What did you find difficult about the process? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Unclear process 
+☐ No valid ID 
+ 
+ 
+ 
+☐ Took a long time 
+☐ Did not know the required documents to register 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Did not know where to ask for help 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Had to travel a long way 
+☐ Other (Specify) 
+Q77 
+43. Would you know where to go to seek assistance during registration?  
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No  <proceed to 51> 
+Q78 
+44. Where would you go to seek assistance?  
+ 
+ 
+ 
+☐ PhilHealth representative 
+☐ No one / self-registered 
+ 
+ 
+ 
+☐ LGU 
+☐ Barangay Health Worker 
+ 
+ 
+ 
+☐ Primary care provider 
+☐ Friends / Family 
+ 
+ 
+ 
+☐ Other health care provider 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Employer 
+☐ Other (Specify) 
+Q79 
+45. What category of member are you? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. ASKED ONLY FOR PHILHEALTH MEMBERS. SKIP TO 51 FOR NON-MEMBERS 
+ 
+ 
+ 
+☐ Formal economy (i.e., individuals working in the government or private sector based in the country) 
+ 
+ 
+ 
+☐ Informal economy (i.e., unemployed, self-employed, informal workers, Filipinos with dual citizenship, 
+naturalized Filipino citizens, citizens of other countries working and/or residing in the Philippines) 
+ 
+ 
+ 
+☐ Indigent (i.e., individuals who have no visible means of income, or whose income is insufficient for 
+family subsistence based on DSWD's specific criteria) 
+ 
+ 
+ 
+☐ Sponsored (i.e., members whose contributions are being paid for by another individual, government 
+agencies, or private entities. Includes some low-income citizens that are not indigent e.g. BHWs, 
+PWDs) 
+ 
+ 
+ 
+☐ Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years 
+and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 
+monthly contributions with PhilHealth and the former Medicare Programs of SSS and GSIS) 
+ 
+ 
+ 
+☐ Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently 
+covered by any membership category of PhilHealth and qualified dependents of senior citizen 
+members who are also senior citizen themselves or belonging to other membership categories, with or 
+without coverage who are senior citizens themselves) 
+ 
+ 
+ 
+☐ Overseas Filipino Worker (OFW) 
+ 
+ 
+ 
+☐ Qualified dependents (i.e., those whose contributions are declared and covered by a principal 
+member) 
+ 
+ 
+ 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Other (Specify) 
+Q80 
+46. What are some of the benefits that come with being a PhilHealth member? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ No balance billing for basic ward 
+accommodation 
+☐ There are no benefits to being a member 
+ 
+ 
+ 
+☐ Subsidized inpatient services 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Subsidized outpatient services 
+☐ Other (Specify) 
+ 
+47. Are you aware that there are PhilHealth packages for the following health services: 
+ 
+ 
+ 
+Physician check-up 
+ 
+ 
+ 
+☐ Yes 
+☐ No 
+ 
+ 
+ 
+Diagnostic tests (e.g. laboratory tests and imaging) 
+ 
+ 
+ 
+☐ Yes 
+☐ No 
+ 
+ 
+ 
+Hospital confinement 
+ 
+ 
+ 
+☐ Yes 
+☐ No 
+ 
+ 
+ 
+Outpatient drugs 
+ 
+ 
+ 
+☐ Yes 
+☐ No 
+Q81 
+48. Do you pay PhilHealth premiums every month? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Yes, I pay directly 
+ 
+ 
+ 
+☐ Yes, my employer pays 
+ 
+ 
+ 
+☐ No, I do not pay premiums <proceed to 51> 
+Q82 
+49. Do you find it difficult to pay your PhilHealth premium every month? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 51> 
+Q83 
+50. Why did you find it difficult? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Cannot afford the premium 
+☐ System of PhilHealth is unreliable/usually down 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Payment options are inconvenient 
+☐ I don’t know 
+ 
+ 
+ 
+☐ No time to pay 
+☐ Other (Specify) 
+ 
+ 
+ 
+☐ Don't see value in paying 
+ 
+Q84 
+51. Are you registered with another health insurance plan? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 53> 
+Q85 
+52. Which health insurance plan/s are you enrolled in? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ GSIS 
+☐ Pag-ibig 
+ 
+ 
+ 
+☐ SSS 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Private Insurance  
+☐ Others (specify) 
+ 
+ 
+ 
+☐ HMO 
+ 
+ 
+ 
+E. Primary Care Utilization  
+ 
+We will now ask questions about the patient’s access to a primary care provider 
+ 
+This section is about the Patient’s Primary Care Utilization.   Ask all questions in this section unless a skip rule applies. 
+ 
+53. Do you have a primary care provider? 
+A primary care provider is your first contact healthcare provider (i.e., general practitioner doctor) for an undiagnosed concern or continuing care of varied 
+medical conditions. 
+ 
+ 
+ 
+☐ Yes   
+ 
+ 
+ 
+☐ No <proceed to 63> 
+ 
+54. Who is your main primary care provider? 
+ 
+ 
+ 
+☐ General practitioner 
+ 
+ 
+ 
+☐ Specialty Care Provider/ Specialist 
+ 
+ 
+ 
+☐ Both 
+ 
+ 
+ 
+☐ Other (specify) 
+ 
+ 
+ 
+☐ None 
+ 
+55. Is the location of your main primary care provider convenient for you? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+56. Is your main primary care provider’s clinic hours (time that your provider/s is/are open for 
+medical appointments) convenient for you? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+57. Is the usual wait for setting an appointment with your main primary care provider convenient for 
+you? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+58. What is your wait time, in days and/or minutes to set an appointment with your main primary 
+care provider? (FACILITY_NAME_INPUT)? 
+ 
+ 
+ 
+Days 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Minutes 
+ 
+ 
+ 
+ 
+ 
+ 
+59. What mode/s of communication was/were available to you when scheduling a consultation with 
+your main primary care provider? SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Face-to-face 
+☐ Cellphone 
+ 
+ 
+ 
+☐ Teleconsultation Landline 
+☐ Video Conference 
+ 
+60. If teleconsultation was available, did you succeed in using the teleconsult? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+61. What mode/s of communication was/were available to you when consulting with your main 
+primary care provider? SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Face-to-face 
+☐ Cellphone 
+ 
+ 
+ 
+☐ Teleconsultation Landline 
+☐ Video Conference 
+ 
+62. If teleconsultation was available, did you succeed in using the teleconsult? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+
+---PAGE BREAK---
+ 
+ 
+Q86 
+63. In the past 12 months, do you have a clinic, or health center that you usually go to? 
+ 
+ 
+ 
+☐ Yes  
+ 
+ 
+ 
+☐ No <proceed to 65> 
+ 
+64.  What is the name of the facility? 
+<proceed to 66> 
+ 
+Q87 
+65. If none, why do you not have a usual clinic, or health center that you usually go to? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ I don't get sick 
+☐ I don’t know where to go for care 
+ 
+ 
+ 
+☐ I recently moved into the area 
+☐ I don’t know 
+ 
+ 
+ 
+☐ It's expensive 
+☐ Other (Specify) 
+ 
+ 
+ 
+☐ I can treat myself 
+ 
+Q88 
+66. Is [facility_name_input] the facility you usually go to for general health concerns? 
+ 
+ 
+ 
+☐ Yes <proceed to 68> 
+ 
+ 
+ 
+☐ No  
+Q89 
+67. Why did you go to this facility instead of your usual facility? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ This facility is more accessible than my usual facility (i.e., nearer, has more transportation options to 
+get to, and cheaper to travel to) 
+ 
+ 
+ 
+☐ Needed a service/specialist not available at my usual facility 
+ 
+ 
+ 
+☐ Recommended by friends/family 
+ 
+ 
+ 
+☐ Wanted to try another facility than my usual 
+ 
+ 
+ 
+☐ Prefer this facility than my usual 
+ 
+ 
+ 
+☐ This was referred to me by my usual facility 
+ 
+ 
+ 
+☐ Usual facility is closed for today 
+ 
+ 
+ 
+☐ Other (Specify) 
+Q90 
+68. What is the type of health facility that you usually go to? 
+ 
+ 
+ 
+☐ YAKAP/Konsulta or primary care provider 
+☐ Private Clinic 
+ 
+ 
+ 
+☐ Barangay Health Center/ Barangay Health Station 
+☐ Traditional Healer or Manghihilot/ Albularyo 
+ 
+ 
+ 
+☐ Rural Health Unit / Urban Health Center 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Public Hospital 
+☐ Other (specify) 
+ 
+ 
+ 
+☐ Private Hospital 
+ 
+ 
+Q92 
+69. How long does it take you to travel from your house when going to the health facility that you 
+usually go to? (BASED ON THE ANSWER ON Q64 (NAME OF FACILITY)) 
+ 
+ 
+ 
+Time (HH:MM) 
+ 
+ 
+Q91 
+70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? 
+Check all that apply.  
+ 
+ 
+ 
+☐ Walk 
+☐ Motorcycle 
+ 
+ 
+ 
+☐ Bike 
+☐ Boat 
+ 
+ 
+ 
+☐ Public Bus 
+☐ Taxi 
+ 
+ 
+ 
+☐ Jeepney 
+☐ Pedicab 
+ 
+ 
+ 
+☐ Tricycle 
+☐ E-bike 
+ 
+ 
+ 
+☐ Car (including private taxi/cab) 
+☐ Other (Specify) 
+ 
+Q90 
+71. What is the type of the primary care facility nearest to your house? 
+An institution that primarily delivers primary care services or the initial-contact facility for coordinated 
+care (e.g.,RHU, health center, general practitioner clinic) 
+ 
+ 
+ 
+☐ Barangay Health Center/ Barangay Health 
+Station 
+☐ Traditional Healer or Manghihilot/ Albularyo 
+ 
+ 
+ 
+☐ Rural Health Unit / Urban Health Center 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Public Hospital 
+☐ Other (specify) 
+ 
+ 
+ 
+☐ Private Hospital 
+ 
+ 
+ 
+ 
+☐ Private Clinic 
+ 
+Q92 
+72. How long does it take you to travel from your house when going to the nearest primary care 
+facility? 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+Time (HH:MM) 
+ 
+ 
+ 
+Q91 
+73. What mode/s of transportation do you use when travelling to the nearest primary care facility? Check 
+all that apply.  
+ 
+ 
+ 
+☐ Walk 
+☐ Motorcycle 
+ 
+ 
+ 
+☐ Bike 
+☐ Boat 
+ 
+ 
+ 
+☐ Public Bus 
+☐ Taxi 
+ 
+ 
+ 
+☐ Jeepney 
+☐ Pedicab 
+ 
+ 
+ 
+☐ Tricycle 
+☐ E-bike 
+ 
+ 
+ 
+☐ Car (including private taxi/cab) 
+☐ Other (Specify) 
+ 
+ 
+We will now ask about the patient’s awareness of the YAKAP/Konsulta package 
+Q44 
+74. Have you heard of the term "YAKAP/ Konsulta package"? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 83> 
+Q45 
+75. What are your sources of information about YAKAP/Konsulta package? 
+ 
+ 
+ 
+☐ News 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Legislation 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know 
+ 
+ 
+ 
+☐ Friends / Family 
+☐ Other (Specify) 
+Q46 
+76. What is your understanding about the YAKAP/Konsulta package? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY 
+ 
+ 
+ 
+☐ Free primary care consultation (with a registered YAKAP/Konsulta provider) 
+ 
+ 
+ 
+☐ Free health risk screening and assessment (with a registered YAKAP/Konsulta provider) 
+ 
+ 
+ 
+☐ Free selected laboratory / diagnostics examination 
+ 
+ 
+ 
+☐ Free selected drugs and medicines 
+ 
+ 
+ 
+☐ There are no benefits of the package 
+ 
+ 
+ 
+☐ I don't know 
+ 
+ 
+ 
+☐ Other (Specify) 
+Q47 
+77. Are you registered with a YAKAP/Konsulta package provider? 
+ 
+ 
+ 
+☐ Yes  
+ 
+ 
+ 
+☐ No <proceed to 83> 
+ 
+ 
+ 
+☐ I’ve never heard of it <proceed to 83> 
+ 
+ 
+ 
+☐ I don’t know <proceed to 83> 
+Q49 
+78. When did you register with a YAKAP/Konsulta package provider? 
+ 
+☐ Within the past six (6) months 
+ 
+☐ More than six (6) months but less than one (1) year ago 
+ 
+☐ One (1) year but less than two (2) years ago 
+ 
+☐ Two (2) years ago or more 
+Q51 
+79. Since registering, have you had an appointment with your YAKAP/Konsulta package provider? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q52 
+80. When you have a health problem, do you know how to book an appointment at your 
+YAKAP/Konsulta package provider? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q53 
+81. Was that appointment for a general check-up (i.e. not related to an illness or injury)? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q50 
+82. Why are you NOT registered with a YAKAP/Konsulta package provider? 
+ 
+ 
+ 
+☐ Don't know what a YAKAP/Konsulta provider is 
+ 
+ 
+ 
+☐ Don't trust PhilHealth 
+ 
+ 
+ 
+☐ Don't know how to register 
+ 
+ 
+ 
+☐ Registration is confusing/time-consuming/inconvenient 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Intend to register but do not have found a time to do it. 
+ 
+ 
+ 
+☐ YAKAP/Konsulta is not available in my local area 
+ 
+ 
+ 
+☐ Already have a usual primary care provider that I go to 
+ 
+ 
+ 
+☐ Don't have the required PhilHealth ID to register for YAKAP/Konsulta 
+ 
+ 
+ 
+☐ Don't have the other requirements to register 
+ 
+ 
+ 
+☐ I don't know 
+ 
+ 
+ 
+☐ Other (specify) 
+ 
+ 
+F. Patient’s Health-Seeking Behavior 
+ 
+We will now be asking about the patient’s actions taken for health concerns. This includes the type of 
+services and facilities they access for their health and well-being. 
+ 
+This section is for the Patient’s Health-Seeking Behavior.   Ask all questions in this section unless a skip rule applies. 
+Q97 
+83. What best describes why the patient visited a health facility (e.g. RHU, health center, clinic, 
+hospital)? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Consultation for new health problem 
+☐ To get a health certificate/administrative reason 
+ 
+ 
+ 
+☐ Consultation to follow-up an ongoing health problem 
+☐ For immunizations/vaccinations 
+ 
+ 
+ 
+☐ For tests/diagnostics only 
+☐ My doctor transferred to this health facility 
+ 
+ 
+ 
+☐ For a general check-up 
+☐ Other (Specify) 
+Q98 
+84. What type of service did the patient usually access? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day) 
+ 
+ 
+ 
+☐ Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night) 
+ 
+ 
+ 
+☐ Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided 
+in an emergency room or ER) 
+ 
+ 
+ 
+☐ Primary care consultation 
+ 
+ 
+ 
+☐ Other (Specify) 
+Q99 
+85. What condition/s do/es the patient usually visit the facility for? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.  
+ 
+ 
+ 
+☐ Upper respiratory infection 
+☐ Kidney problem /Dialysis 
+ 
+ 
+ 
+☐ Hypertension 
+☐ Cancer (any) 
+ 
+ 
+ 
+☐ Immunization 
+☐ Gastro problem (vomiting, diarrhea etc.) 
+ 
+ 
+ 
+☐ Pregnancy or birth 
+☐ Other infection (e.g. urine, skin, other virus etc.) 
+ 
+ 
+ 
+☐ Flu 
+☐ Accident/injury (e.g. wound/broken bone) 
+ 
+ 
+ 
+☐ Fever 
+☐ Dental 
+ 
+ 
+ 
+☐ Joint and muscle pain 
+☐ ENT (problem with ear/nose/throat) 
+ 
+ 
+ 
+☐ Asthma or COPD (chronic breathing problem, not cancer) 
+☐ Allergy 
+ 
+ 
+ 
+☐ Diabetes 
+☐ No condition - Regular check-up only 
+ 
+ 
+ 
+☐ Heart problem 
+☐ Other (Specify) 
+Q100 
+86. Which of the following happened during the patient’s most recent visit? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Saw a doctor 
+ 
+ 
+ 
+☐ Saw a nurse/midwife 
+ 
+ 
+ 
+☐ Saw any other healthcare worker/member of medical staff 
+ 
+ 
+ 
+☐ Had basic tests done (e.g. blood pressure check, height/weight) 
+ 
+ 
+ 
+☐ Had any laboratory tests done (e.g. blood, urine sample) 
+ 
+ 
+ 
+☐ Had any imaging done (e.g. ultrasound, Xray, CT) 
+ 
+ 
+ 
+☐ Prescribed medication 
+ 
+ 
+ 
+☐ Had any minor procedure/surgery done 
+Minor surgery involves minimally invasive, low-risk procedures often performed on an outpatient basis. 
+ 
+ 
+ 
+☐ Picked up medical certificate/other administration  
+Claiming of medical clearance for travel, fit to work, surgery, etc. 
+ 
+ 
+ 
+☐ Was admitted for confinement 
+Q103 
+87. Apart from this visit, has the patient done anything else to improve his/her health condition or 
+address his/her health concern? 
+ 
+ 
+ 
+☐ Visited other healthcare facility 
+ 
+ 
+ 
+☐ Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; 
+such as reflexology, acupuncture, massage therapy, herbal medicines, etc.) 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Sought telemedicine (Remote diagnosis and treatment of patients by means of telecommunications 
+technology) 
+ 
+ 
+ 
+☐ Used home care (Healthcare services and support provided to individuals in their own homes) 
+ 
+ 
+ 
+☐ Bought medicine from a pharmacy 
+ 
+ 
+ 
+☐ Did not seek other forms of care 
+ 
+ 
+ 
+☐ Other (Specify) 
+ 
+Note for CAPI Version: Questions on outpatient care should be front loaded when the tool is administered in the RHU and hospital OPD (before primary care utilization) 
+ 
+G. Outpatient Care 
+This section is for the Outpatient Care. This section will be asked for respondents who received outpatient care. Ask all questions in this 
+section unless a skip rule applies. Note also that the facility referred in this section should be the identified facility under Geographic 
+Identification. 
+ 
+For the following questions, we will ask about the patient’s most current outpatient visit. 
+ 
+88. Why are you visiting [FACILITY_NAME_INPUT] for consultation/advice or treatment? 
+ 
+ 
+ 
+☐ Sick/Injured 
+☐ Medical check-up 
+ 
+ 
+ 
+☐ Prenatal/Post-natal Check-up 
+☐ Medical requirement 
+ 
+ 
+ 
+☐ Gave Birth 
+☐ NHTS/CCT/4Ps Requirement 
+ 
+ 
+ 
+☐ Dental check-up 
+☐ Other (specify) 
+ 
+89. Were you advised for hospitalization / to be admitted in the hospital? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+90. What were the reasons why you were not confined/ admitted in a hospital/clinic? Select all that 
+apply. 
+ 
+ 
+ 
+☐ Facility is far 
+☐ Health facility is not PhilHealth accredited 
+ 
+ 
+ 
+☐ No money 
+☐ No need/regular check-up only 
+ 
+ 
+ 
+☐ Worried about treatment cost 
+☐ Other (specify) 
+ 
+ 
+ 
+☐ Home remedy is available 
+ 
+ 
+91. Do you usually avail consultation services for outpatient care? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+92. How much was the cost of consultation? 
+ 
+ 
+ 
+☐ Out-of-pocket 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Donation 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Free/no cost 
+☐ Free, charge to HMO 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth 
+☐ In kind 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance 
+☐ Don’t know 
+ 
+93. Did you have any of the following laboratory tests done during your outpatient care? Check all 
+that apply. 
+ 
+ 
+ 
+☐ CBC with platelet count 
+☐ Lipid profile 
+☐ HbA1c 
+ 
+ 
+ 
+☐ Urinalysis 
+☐ FBS 
+☐ Abdominal ultrasound 
+ 
+ 
+ 
+☐ Fecalysis 
+☐ OGTT (Oral glucose tolerance tests) 
+☐ Dental Services 
+ 
+ 
+ 
+☐ Sputum Microscopy 
+☐ ECG 
+☐ Other, specify: 
+ 
+ 
+ 
+☐ Fecal Occult Blood 
+☐ Chest X-Ray 
+ 
+ 
+ 
+☐ Pap smear 
+☐ Creatinine 
+☐ None <proceed to 95> 
+ 
+94. How much was the cost of [laboratory test:         ]?  
+To be asked for each lab test ticked in Q93 
+Q 
+ 
+ 
+☐ Out-of-pocket 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Free/no cost 
+☐ Free, charge to HMO 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth 
+☐ In kind 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance 
+☐ Don’t know 
+ 
+95. Were you prescribed medicine/s after your check-up? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 97> 
+ 
+96. How much was spent for (NAME IN ___)’s prescribed medicines?  
+ 
+ 
+ 
+☐ Out-of-pocket 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Free/no cost 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance 
+ 
+ 
+ 
+☐ Free, charge to HMO 
+ 
+ 
+ 
+☐ In kind 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Donation 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Don’t know 
+ 
+ 
+97.  What was the final amount you paid in cash 
+for your outpatient care? 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+97.1 Other than the expenses above, which of the following were also included in the bill?  How 
+much were you charged or billed? 
+If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud.  
+Select all that apply. 
+ 
+ 
+ 
+☐ Doctor’s Professional Fee 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Medical equipment or supplies 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Non-medical expenses: (e.g. Hygiene kit) 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Other expenses: 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+97.2 Did you pay for any other expenses during your OPD visit that were not included in the 
+hospital bill? 
+If yes, indicate the amount spent 
+ 
+ 
+ 
+a) 
+Doctor’s Fee  
+ 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+b) Payment made directly to doctor/s and their 
+secretary 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+c) 
+Diagnostic or laboratory procedure 
+ 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+d) Medical equipment or supplies 
+ 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+e) 
+Medicines or drugs 
+ 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+f) 
+Non-medical expenses: travel 
+ 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+g) Other expenses: 
+ 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the 
+(FACILITY TYPE IN ___) 
+ 
+98. Did you use any of the following to pay for medical costs? (select all that apply) 
+ 
+ 
+ 
+1) Salary/income 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+2) Loan/Mortgage 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+3) Savings 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+4) Donation/Charity/Assistance from Private Organization 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+5) Malasakit Center 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+☐ No 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6) Other Donation/Charity/Assistance from Government Organization 
+ 
+ 
+ 
+☐ Yes, specify: 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+7) Sale of Assets 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+8) Paid by someone else 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+9) MAIFIP 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+10) PhilHealth  
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+11) SSS 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+12) GSIS 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+13) Private Insurance 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+14) HMO 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+15) Other (specify) 
+ 
+ 
+ 
+☐ Yes, specify: 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+We will now ask about the patient’s awareness about BUCAS and the services they accessed in a BUCAS 
+Center. 
+ 
+Q99 to Q103 are applicable only to respondents in areas with BUCAS center. Otherwise, skip. 
+Q54 
+99. Have you heard about Bagong Urgent Care and Ambulatory Services (BUCAS) center? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 115> 
+Q55 
+100. If yes, what are your sources of information about this BUCAS center? 
+ 
+ 
+ 
+☐ News 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Legislation 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know 
+ 
+ 
+ 
+☐ Friends / Family 
+☐ Other (Specify) 
+Q56 
+101. What is your understanding about a BUCAS center? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Provides urgent care for non-life-threatening/serious conditions 
+ 
+ 
+ 
+☐ Offers outpatient and ambulatory health services 
+ 
+ 
+ 
+☐ Helps reduce overcrowding in hospitals 
+ 
+ 
+ 
+☐ Allows access to timely medical consultation and treatment 
+ 
+ 
+ 
+☐ Other (specify) 
+Q58 
+102. Have you accessed the services in a BUCAS center? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 115> 
+Q59 
+103. If yes, which service/s did you avail? Select all that apply. 
+ 
+ 
+ 
+☐ Medical consultation for urgent or minor conditions 
+ 
+ 
+ 
+☐ Outpatient or ambulatory care services 
+ 
+ 
+ 
+☐ Basic diagnostic services (e.g., laboratory tests, X-ray) 
+ 
+ 
+ 
+☐ Minor procedures or treatments 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Referral to higher-level health facilities 
+ 
+ 
+ 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Other (specify) 
+ 
+Note for CAPI Version: Questions on inpatient care should be front loaded when the tool is administered in the hospital (before primary care utilization).  
+ 
+H. Inpatient Care 
+This section is for the Inpatient Care. This section will be asked for respondents who received inpatient care. Ask all questions in this section 
+unless a skip rule applies. Note also that the facility referred in this section should be the identified facility under Geographic Identification. 
+ 
+For the following questions, we will ask about the patient’s most current inpatient visit. 
+ 
+104. Why are you confined in the hospital? 
+ 
+ 
+ 
+☐ Sick 
+ 
+ 
+ 
+☐ Injured 
+ 
+ 
+ 
+☐ Gave birth 
+ 
+ 
+ 
+☐ Executive check-up 
+ 
+ 
+ 
+☐ Other (specify) 
+ 
+105. How long were you confined? 
+ 
+ 
+Days 
+ 
+ 
+Nights 
+ 
+106. How much was the total bill for your confinement? 
+ 
+ 
+ 
+☐ Out-of-pocket 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Free/no cost 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance 
+ 
+ 
+ 
+☐ Free, charge to HMO 
+ 
+ 
+ 
+☐ Free, charge to MAIFIP 
+ 
+ 
+ 
+☐ Donation 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ In kind 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Don’t know 
+ 
+ 
+ 
+☐ Other, Specify: 
+ 
+107. Other than the medicine/s indicated in the hospital bill, did the patient buy medicine/s from any 
+pharmacy/facility outside the hospital? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+108. How much was paid for the medicine/s outside the hospital? 
+ 
+ 
+ 
+☐ Out-of-pocket 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Free/no cost 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance 
+ 
+ 
+ 
+☐ Free, charge to HMO 
+ 
+ 
+ 
+☐ Free, charge to MAIFIP 
+ 
+ 
+ 
+☐ In kind 
+ 
+ 
+ 
+☐ Don’t know 
+ 
+ 
+ 
+☐ Other, Specify:  
+ 
+109. Other than the laboratory service/s indicated in the hospital bill, did the patient pay for other 
+service/s outside hospital? 
+ 
+ 
+ 
+☐ Yes  
+ 
+ 
+ 
+☐ No 
+ 
+ 
+110. If yes, what are those services? 
+ 
+ 
+ 
+ 
+ 
+ 
+111. How much was paid for the service/s outside the hospital? 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Out-of-pocket 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Free/no cost 
+ 
+ 
+ 
+☐ Free, charge to PhilHealth 
+ 
+ 
+ 
+☐ Free, charge to Private Insurance 
+ 
+ 
+ 
+☐ Free, charge to HMO 
+ 
+ 
+ 
+☐ Free, charge to MAIFIP 
+ 
+ 
+ 
+☐ In kind 
+ 
+ 
+ 
+☐ Don’t know 
+ 
+ 
+ 
+☐ Other, Specify:  
+ 
+ 
+I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the 
+(FACILITY TYPE INPUT) 
+ 
+112. Did you use any of the following to pay for your hospital bill? (select all that apply) 
+ 
+ 
+ 
+1) Salary/income 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+2) Loan/Mortgage 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+3) Savings 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+4) Donation/Charity/Assistance from Private Organization 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+5) Malasakit Center 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+6) Other Donation/Charity/Assistance from Government Organization 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+7) MAIFIP 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+8) PhilHealth  
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+9) SSS 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+10) GSIS 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+11) Private Insurance 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+12) HMO 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+13) Other (specify) 
+ 
+ 
+ 
+☐ Yes 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ No 
+ 
+113. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 112) 
+ 
+ 
+ 
+☐ Not a PhilHealth member 
+ 
+ 
+ 
+☐ PhilHealth member but not eligible for benefits 
+ 
+ 
+ 
+☐ Probably used PhilHealth but cannot remember amount because benefit was deducted upon 
+discharge from hospital 
+ 
+ 
+ 
+☐ Too many requirements to comply with before can avail 
+ 
+ 
+ 
+☐ Limited hospitalization benefits 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Claims processing too long 
+ 
+ 
+ 
+☐ Other (specify) 
+ 
+ 
+114. What was the final amount you paid in cash at the hospital cashier upon discharge? 
+ 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+114.1. Other than the expenses above, which of the following were also included in the bill?  How 
+much were you charged or billed? 
+If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud.  
+Select all that apply. 
+ 
+ 
+ 
+☐ Doctor’s Professional Fee 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Medical equipment or supplies 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Non-medical expenses: (e.g. Hygiene kit) 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Other expenses: 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+114.2. Did you pay for any other expenses during your confinement that were not included in the 
+hospital bill? 
+If yes, indicate the amount spent 
+ 
+ 
+ 
+☐ Doctor’s Fee (paid directly to the doctor or 
+thru his/ her clinic) 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Payment made directly to doctor/s and 
+their secretary? 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Food 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Transportation 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Donation to the facility 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Allowance for caregiver 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+☐ Other (specify) 
+Amount in Pesos 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. Financial Risk Protection 
+This section is for the Financial Risk Protection of the patient.   Ask all questions in this section unless a skip rule applies. 
+ 
+For this section, we will be asking about your awareness of NBB, ZBB, and MAIFIP 
+Q147 
+115. Have you heard of the No Balance Billing (NBB)? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 118> 
+ 
+ 
+ 
+☐ I don’t know <proceed to 118> 
+Q148 
+116. If yes, what are your sources of information about NBB? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ News 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Legislation 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know 
+ 
+ 
+ 
+☐ Friends / Family 
+☐ Other (Specify) 
+Q149 
+117. What is your understanding about NBB? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Patient does not pay any hospital bill 
+☐ Bills are settled between the hospital and 
+PhilHealth 
+ 
+ 
+ 
+☐ PhilHealth will cover cost of treatment 
+☐ Patients should not be charged extra fees 
+ 
+ 
+ 
+☐ Medicine and service are already included 
+☐ I don’t know 
+ 
+ 
+ 
+☐ No cash payment required upon discharge 
+☐ Other (Specify) 
+ 
+ 
+ 
+☐ Applies only to certain patients or hospitals 
+ 
+ 
+118. Have you heard of the Zero Balance Billing (ZBB)? 
+ 
+ 
+ 
+☐ Yes  
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ No <proceed to 121> 
+ 
+ 
+ 
+☐ I don’t know <proceed to 121> 
+ 
+119. If yes, what are your sources of information about ZBB? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ News 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Legislation 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know 
+ 
+ 
+ 
+☐ Friends / Family 
+☐ Other (Specify) 
+ 
+120. What is your understanding about ZBB? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY 
+ 
+ 
+ 
+☐ Patient does not pay any hospital bill 
+☐ Bills are settled between the hospital and 
+PhilHealth 
+ 
+ 
+ 
+☐ PhilHealth will cover cost of treatment 
+☐ Patients should not be charged extra fees 
+ 
+ 
+ 
+☐ Medicine and service are already included 
+☐ I don’t know 
+ 
+ 
+ 
+☐ No cash payment required upon discharge 
+☐ Other (Specify) 
+ 
+ 
+ 
+☐ Applies only to PhilHealth members and 
+DOH-run hospitals 
+ 
+ 
+ 
+121. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients 
+(MAIFIP)? (SKIP iF ANSWERED MAIFIP IN Q113) 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <proceed to 123> 
+ 
+ 
+ 
+☐ I don’t know <proceed to 123> 
+ 
+122. What are your sources of information about MAIFIP? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ News 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Legislation 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know 
+ 
+ 
+ 
+☐ Friends / Family 
+☐ Other (Specify) 
+ 
+ 
+J. Satisfaction on Amenities and Medical Care 
+This section is for the patient’s Satisfaction on Amenities and Medical Care.   Ask all questions in this section unless a skip rule applies. 
+ 
+The following questions relate to the patient’s most recent experience with [facility_name_input] as an 
+[inpatient] or [outpatient], where we invited you to participate in our survey on [date_formatted]. 
+ 
+How would you rate the cleanliness and comfort of the following amenities at this facility? 
+ 
+ 
+ 
+ 
+Very Satisfied 
+Satisfied 
+Neither 
+satisfied nor 
+dissatisfied 
+Dissatisfied 
+Very 
+Dissatisfied 
+Q114 
+123. Waiting areas 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+Q115 
+124. Bathrooms and toilets 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+Q116 
+125. Consultation Rooms 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+Q117 
+126. Rooms 
+<For inpatients only> 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+Q118 
+127. Were you satisfied with the 
+overall time spent from 
+registration to exiting the 
+facility? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+ 
+In the patient’s most recent visit, how often did the staff: 
+ 
+ 
+ 
+ 
+Never 
+Sometimes 
+Usually 
+Always 
+I don’t 
+know 
+Q120 
+ 
+128. treat you with courtesy and respect? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+Q121 
+ 
+129. listen carefully to what you say or ask? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+Q122 
+ 
+130. explain your condition and procedures in 
+a way you can understand? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+Q123 
+ 
+131. give you the chance to make decisions 
+about your treatment? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+Q124 
+ 
+132. ask you for your consent before 
+performing any treatments or tests? 
+☐ 
+☐ 
+☐ 
+☐ 
+☐ 
+ 
+Q125 
+133. In your most recent visit, did the staff assure you that information about the patient's condition 
+will be kept confidential? 
+
+---PAGE BREAK---
+ 
+For example, they did not disclose any of your private medical information to anyone not involved in your care. 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+☐ I don’t know 
+Q126 
+134. In your most recent visit, did the staff respect your privacy during the physical consultation?  
+For example, your consultation was done in a private area, and no one could overhear your private medical information 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+☐ I don’t know 
+Q127 
+135. Overall, would you recommend [facility_name_input] to a friend or relative? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q128 
+136. How would the patient rate the quality of care you received at [facility_name_input]? 
+ 
+ 
+ 
+☐ Very Satisfied 
+☐ Dissatisfied 
+ 
+ 
+ 
+☐ Satisfied 
+☐ Very Dissatisfied 
+ 
+ 
+ 
+☐ Neither Satisfied nor Dissatisfied 
+ 
+ 
+ 
+K. Access to Medicines 
+This section is for the Access to Medicines of the patient. For this section, we will ask the patient about how easy or difficult it is for them to 
+purchase or receive medicines.   Ask all questions in this section unless a skip rule applies. 
+ 
+The next questions we will be asking are related to the patient’s access to medicines. We would like to know 
+how easy or difficult it is for them to purchase or receive medicines. We will also ask some questions about 
+their views in buying generic or branded medicines. 
+ 
+137. How often do you purchase or receive medicines? 
+ 
+ 
+ 
+☐ Weekly 
+☐ Rarely 
+ 
+ 
+ 
+☐ Bi-weekly 
+☐ Never <Proceed to Q144> 
+ 
+ 
+ 
+☐ Monthly 
+ 
+ 
+138. Was the most recent medicine purchased prescribed by a doctor or over-the-counter (OTC) 
+medicine (no need for a prescription)? 
+ 
+ 
+ 
+☐ Prescribed by a doctor 
+ 
+ 
+ 
+☐ Over-the-counter medicine 
+ 
+ 
+ 
+☐ Purchased both prescribed medicine and OTC medicine 
+ 
+ 
+ 
+☐ I don’t know 
+ 
+139. What are the medication that you usually take? 
+PLEASE LIST DOWN ALL MEDICINES THAT YOU TOOK FOR THE HEALTH CONDITION. 
+ 
+ 
+ 
+140. What are the medical conditions that you take the medicines for? 
+ 
+ 
+CODING FOR QUESTION ** 
+01-Upper respiratory infection 
+02-Hypertension 
+03-Immunization 
+04-Pregnancy or birth 
+05-Flu 
+06-Fever 
+07-Joint and muscle pain 
+08-Asthma or COPD (chronic breathing problem, not cancer) 
+09-Diabetes 
+10-Heart problem 
+11-Kidney problem /Dialysis 
+12-Cancer (any) 
+13-Gastro problem (vomiting, diarrhea, etc.) 
+14-Other infection (e.g. urine, skin, other virus etc.) 
+15-Accident/injury (e.g. wound/broken bone) 
+16-Dental 
+17-ENT (problem with ear/nose/throat) 
+18-Allergy 
+19-No condition - Regular check-up only 
+20-Other (Specify) 
+ 
+141. Where do you usually buy or receive your medicines? Select all that apply. 
+ 
+ 
+ 
+☐ Public Hospital 
+ 
+ 
+ 
+☐ Private Hospital 
+ 
+ 
+ 
+☐ Chain Pharmacies (e.g. Mercury Drug, Watsons, TGP, Generika) 
+ 
+ 
+ 
+☐ Local pharmacies 
+ 
+ 
+ 
+☐ Online stores (e.g. Shopee, Lazada) 
+ 
+ 
+ 
+☐ Barangay Health Station 
+ 
+ 
+ 
+☐ Rural Health Unit or City Health Office 
+ 
+ 
+ 
+☐ Other (specify) 
+ 
+142. How much time does it take for you to reach the nearest pharmacy from your home? 
+A Pharmacy is an ancillary primary care facility with a FDA LTO where registered medicines can be bought.  
+ 
+ 
+ 
+Time (HH:MM) 
+ 
+
+---PAGE BREAK---
+ 
+ 
+143. How easy is it for you to access a pharmacy or drugstore? 
+ 
+ 
+ 
+☐ Very difficult 
+☐ Easy 
+ 
+ 
+ 
+☐ Difficult 
+☐ Very easy 
+ 
+ 
+ 
+☐ Neutral 
+ 
+ 
+We will now ask about the patient’s awareness about GAMOT package and the medicines they availed in a 
+GAMOT pharmacy.  
+ 
+Q144 to Q149, Q151 are applicable only to respondents in areas with GAMOT. Otherwise, skip. 
+Q60 
+144. Have you heard of the Guaranteed and Accessible Medications for Outpatient Treatment 
+(GAMOT) Package, which is part of PhilHealth’s YAKAP/Konsulta or primary care benefit 
+package? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <Proceed to 150> 
+Q61 
+145. If yes, what are your sources of information for GAMOT Package? 
+Enumerator: Applicable only to respondents in areas with GAMOT 
+ 
+ 
+ 
+☐ News 
+☐ Health center/facility 
+ 
+ 
+ 
+☐ Legislation 
+☐ LGU/Barangay 
+ 
+ 
+ 
+☐ Social Media 
+☐ I don't know 
+ 
+ 
+ 
+☐ Friends / Family 
+☐ Other (Specify) 
+Q62 
+146. What is your understanding of the GAMOT Package? 
+Enumerator: Applicable only to respondents in areas with GAMOT 
+ 
+ 
+ 
+☐ Provides free or affordable medicines for outpatients 
+ 
+ 
+ 
+☐ Ensures continuous availability of essential medicines 
+ 
+ 
+ 
+☐ Helps reduce out-of-pocket expenses for medicines 
+ 
+ 
+ 
+☐ Supports treatment of common illnesses and chronic conditions 
+ 
+ 
+ 
+☐ I don't know 
+ 
+ 
+ 
+☐ Other (specify) 
+Q63 
+147. Did you get the medicines from the GAMOT Package during the past 6 months? 
+Enumerator: Applicable only to respondents in areas with GAMOT 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+148. What are the medications that you obtained from the GAMOT Package? [LIST] 
+Enumerator: Applicable only to respondents in areas with GAMOT  
+ 
+ 
+ 
+ 
+Q68 
+149. Where did you get the rest of the medicines? Select all that apply. 
+ 
+ 
+ 
+☐ Purchased from pharmacy 
+☐ Received from LGU for free 
+ 
+ 
+ 
+☐ Purchased from public hospital 
+☐ Received from public hospital for free 
+ 
+ 
+ 
+☐ Purchased from private hospital 
+☐ Received from private hospital for free 
+ 
+ 
+ 
+☐ Purchased from primary care provider (PCP) 
+☐ Other (Specify) 
+ 
+ 
+ 
+☐ Received from PCP for free 
+  
+ 
+ 
+ 
+Q65 
+150. Do you know the difference between a 'branded' and a 'generic' medicine? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <Proceed to 154> 
+Q69 
+151. Was/were the medicine/s you bought outside of GAMOT pharmacy branded or generic? 
+ 
+ 
+ 
+☐ Branded <Proceed to 153> 
+ 
+ 
+ 
+☐ Generic 
+ 
+ 
+ 
+☐ Both branded and generic 
+ 
+ 
+ 
+☐ Don’t know the difference <Proceed to Q154> 
+ 
+ 
+ 
+☐ Not applicable <Proceed to Q156> 
+Q70 
+152. If generic, why did you buy generic medicine?  
+ 
+ 
+ 
+☐ Lower cost 
+☐ More or as effective as branded medicine 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Prescribed by doctor 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Readily available 
+☐ Other (Specify) 
+ 
+ 
+ 
+☐ Given for free 
+ 
+Q71 
+153. If branded, why did you buy branded medicine? <Ask if answer in Q151 is branded and both 
+branded and generic, otherwise skip.> 
+ 
+ 
+ 
+☐ Branded medicine is more effective than generic 
+☐ Prefer branded over generic option 
+ 
+ 
+ 
+☐ Not aware of generic option 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Prescribed by doctor 
+☐ Other (Specify) 
+ 
+ 
+ 
+☐ Given for free 
+ 
+ 
+ 
+L. Experiences and Satisfaction on Referrals 
+FOR BOTH OUTPATIENTS AND INPATIENTS 
+ 
+We will be asking about the patient’s experience and satisfaction on referrals. 
+Q129 
+154. Based on your most recent visit/confinement at [facility_name_input], did a healthcare worker 
+refer you to another facility or specialist for further care or specialized care? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No <End of survey> 
+Q130 
+155. What type of care was the referral for? 
+READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. NO AGE LIMITATIONS 
+ 
+ 
+ 
+☐ Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within 
+the same day) 
+ 
+ 
+ 
+☐ Emergency care (Care for serious illnesses or injuries that need immediate medical attention; 
+usually provided in an emergency room or ER) 
+ 
+ 
+ 
+☐ Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least 
+one night) 
+ 
+ 
+ 
+☐ Dental care (Medical care for your teeth, such as cleanings, fillings, etc.) 
+ 
+ 
+ 
+☐ Other facility visits (Care that is provided in a facility that is not a health center or hospital, such as 
+independent diagnostic centers, TB dispensaries, etc.) 
+ 
+ 
+ 
+☐ Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical 
+therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech 
+and language therapy) 
+ 
+ 
+ 
+☐ Alternative care (Healthcare apart from medical doctors or the formal health care system; such as 
+reflexology, acupuncture, massage therapy, herbal medicines, etc.) 
+ 
+ 
+ 
+☐ Outreach / medical missions (Care provided by the government or an NGO through an outreach 
+or medical mission within a community) 
+ 
+ 
+ 
+☐ Home healthcare (Care that is administered at the patient's home, such as birth delivery, 
+checkups, immunization, rehabilitation, etc.) 
+ 
+ 
+ 
+☐ Telemedicine (Remote diagnosis and treatment of patients by means of telecommunications 
+technology) 
+ 
+ 
+ 
+☐ None of the above 
+ 
+ 
+ 
+☐ Other (Specify) 
+Q131 
+156. What kind of specialist did they recommend? 
+        READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ No specialty 
+☐ Orthopedics 
+ 
+ 
+ 
+☐ Anesthesia 
+☐ Otorhinolaryngology (ENT) 
+ 
+ 
+ 
+☐ Dermatology 
+☐ Pathology 
+ 
+ 
+ 
+☐ Emergency Medicine 
+☐ Pediatrics 
+ 
+ 
+ 
+☐ Family Medicine 
+☐ Physical and Rehabilitation Medicine 
+ 
+ 
+ 
+☐ General Surgery 
+☐ Psychiatry 
+ 
+ 
+ 
+☐ Internal Medicine 
+☐ Public health 
+ 
+ 
+ 
+☐ Neurology 
+☐ Radiology 
+ 
+ 
+ 
+☐ Nuclear Medicine 
+☐ Research 
+ 
+ 
+ 
+☐ Obstetrics and Gynecology 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Occupational Medicine 
+☐ Other (Specify) 
+ 
+ 
+ 
+☐ Ophthalmology 
+ 
+Q132 
+157. How did they refer you to the doctor? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Physical referral slip 
+☐ I don’t know 
+ 
+ 
+ 
+☐ E-referral 
+☐ Other (Specify) 
+
+---PAGE BREAK---
+ 
+ 
+ 
+ 
+☐ Phone call from referring facility to receiving facility 
+Q135 
+158. Did they discuss with you the different places you could have gone to address your health 
+problem? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q136 
+159. Did they help you make the appointment for that visit? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q137 
+160. Did they write down any information for the specialist about the reason for that visit? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q133 
+161. Have you visited the referred hospital or facility after the referral was made? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Yes  
+ 
+ 
+ 
+☐ No, I'm not planning to <Proceed to 163> 
+ 
+ 
+ 
+☐ Not yet, but I'm planning to <Proceed to 163> 
+Q138 
+162. After your visit to the referral hospital/ specialist, did they follow up with you about what 
+happened at the visit? <Proceed to 1643> 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q134 
+163. Why are you NOT planning to visit? <Proceed to 164170> 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Facility is too far 
+☐ Not needed 
+ 
+ 
+ 
+☐ Do not trust the referred facility 
+☐ Don't know how to get to facility 
+ 
+ 
+ 
+☐ No time 
+☐ Other (Specify) 
+ 
+ 
+ 
+☐ Worried about additional costs 
+ 
+Q140 
+164. Was the visit to [facility_name_input] a referral from your primary care facility? 
+ 
+ 
+ 
+☐ Yes  
+ 
+ 
+ 
+☐ No <Proceed to 169> 
+Q141 
+165. Does your primary care provider know that you made the visit? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+ 
+ 
+ 
+☐ I don’t know 
+Q143 
+166. Did your primary care provider discuss with you different places you could have gone to get 
+help with your problem? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q144 
+167. Did your primary care provider (PCP) or someone working with your PCP help you make the 
+appointment for that visit? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q145 
+168. Did your primary care provider write down any information for the specialist about the reason 
+for that visit? 
+ 
+ 
+ 
+☐ Yes 
+ 
+ 
+ 
+☐ No 
+Q142 
+169. As it was not a referral, why did you decide to visit a hospital? 
+DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY. 
+ 
+ 
+ 
+☐ Referred by other specialist (doctor in another 
+hospital) 
+☐ Referred by family / friends 
+ 
+ 
+ 
+☐ Nearest facility to house 
+☐ Facility offers subsidized or free health services 
+ 
+ 
+ 
+☐ Facility is usual source of care 
+☐ ZBB eligibility 
+ 
+ 
+ 
+☐ Facility is the only place that can perform a certain 
+test 
+☐ I don’t know 
+ 
+ 
+ 
+☐ Referred by BHW/nurse/midwife/other community 
+health professional 
+☐ Other (Specify) 
+Q146 
+170. Overall, how would you rate your experience with the referral process? 
+READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. 
+ 
+ 
+ 
+☐ Very Satisfied 
+☐ Dissatisfied 
+ 
+ 
+ 
+☐ Satisfied 
+☐ Very Dissatisfied 
+ 
+ 
+ 
+☐ Neither Satisfied nor Dissatisfied 
+☐ Not applicable 
+
+---PAGE BREAK---
+ 
+ 
+END OF SURVEY 
+
+---PAGE BREAK---
