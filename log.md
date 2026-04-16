@@ -2,6 +2,18 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-16 (F3/F4 DCF generators)
+
+- **F3/F4 data dictionary generators built.** Designed, planned, and implemented CSPro 8.0 dictionary generators for F3 (Patient Survey) and F4 (Household Survey) following the F1 pattern.
+  - **`cspro_helpers.py`** created — shared helpers module extracted from F1 (value sets, item builders, parameterized `build_field_control`/`build_geo_id`/`build_dictionary`).
+  - **F1 refactored** to import from shared module. Identity-diff verified: output unchanged (11 records, 655 items).
+  - **F3 generator** — 15 records (14 single-occurrence + root), 387 items, sections A–L. Source: Apr 8 PDF (4316 lines extracted).
+  - **F4 generator** — 20 records (3 repeating at max_occurs=20 + 16 flat + root), 460 items, sections A–Q. Repeating: C_HOUSEHOLD_ROSTER, H_PHILHEALTH_REG, J_HEALTH_SEEKING. Section N uses flat expenditure batteries across 4 reference periods. Source: Apr 8 PDF (3938 lines extracted).
+  - Design spec: `docs/superpowers/specs/2026-04-16-f3-f4-dcf-generators-design.md`
+  - Implementation plan: `docs/superpowers/plans/2026-04-16-f3-f4-dcf-generators.md`
+  - Branch `feat/f3-f4-dcf-generators` merged to main (5 commits).
+- **Index updated** — corrected F1 record/item counts (was 15/657, actual 11/655), added F3/F4/shared deliverable entries.
+
 ## 2026-04-16 (continued)
 
 - **Standup cadence backfill.** The Sprint 001 standup cadence broke Apr 14–15 — content that should have been in standalone `scrum/standups/YYYY-MM-DD.md` files landed in the `sprint-current.md` Daily Notes section instead. With the Sprint 001 retro due Apr 17, reconstructed both missing days to restore day-by-day ceremony record. Both files carry `backfilled: 2026-04-16` in frontmatter.
