@@ -34,8 +34,9 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 
 ### Sprint-Linked Meetings
 
-- [ ] **E0-060** Attend Apr 13 LSS meeting (3:00 PM); capture decisions on the 6 open F1 items into a meeting note in `scrum/standups/` and feed back to F1 spec `status::todo` `priority::critical` `estimate::3h`
+- [x] **E0-060** Attend Apr 13 LSS meeting (3:00 PM); capture decisions on the 6 open F1 items into a meeting note in `scrum/standups/` and feed back to F1 spec `status::done` `priority::critical` `estimate::3h`
   - Sprint 001 commitment.
+  - Done 2026-04-13. Meeting attended; notes ingested Apr 15 PM at `wiki/sources/Source - ASPSI Team Meeting 2026-04-13.md`. 6 F1 items were not on the agenda — decision-feedback step is N/A. E2-F1-009b tracked separately as blocked pending a technically-scoped LSS session.
 
 ### Stakeholder Communication
 

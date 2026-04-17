@@ -26,7 +26,8 @@ Why this goal: F1 is the reference instrument for F3/F4 CSPro builds — every d
 - [ ] **E0-001** Sprint 001 planning ceremony — set goal, dates, commit items `status::in-progress` `priority::high`
 - [ ] **E0-020** SJREB application status check via ASPSI (carry into every sprint until clearance) `status::in-progress` `priority::critical`
 - [ ] **E0-032** Track D2/D3 deadline exposure this week `status::in-progress` `priority::high`
-- [ ] **E0-060** Attend Apr 13 LSS meeting (3:00 PM); capture decisions on the 6 open F1 items into a meeting note in `scrum/standups/` and feed back to F1 spec `status::todo` `priority::critical` `estimate::3h`
+- [x] **E0-060** Attend Apr 13 LSS meeting (3:00 PM); capture decisions on the 6 open F1 items into a meeting note in `scrum/standups/` and feed back to F1 spec `status::done` `priority::critical` `estimate::3h`
+  - Done 2026-04-13. Meeting attended; notes ingested Apr 15 PM at `wiki/sources/Source - ASPSI Team Meeting 2026-04-13.md`. 6 F1 items were not on the agenda — decision-feedback step is N/A. E2-F1-009b tracked separately as blocked pending a technically-scoped LSS session.
 
 ### Epic 2 — F1 Design closeout
 
