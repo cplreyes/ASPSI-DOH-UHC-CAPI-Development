@@ -2,6 +2,16 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-17 (Sprint 001 closed, F2 PWA M0 shipped)
+
+- **Sprint 001 closed.** `scrum/sprint-current.md` frontmatter flipped `status::active` → `status::closed`; file archived to `scrum/sprints/sprint-001.md`. Sprint-current.md reset for Sprint 002 (2026-04-20 → 2026-04-24, `status::planning`) with carry-forward items, three candidate focus areas, and TBD sprint goal for Monday AM planning.
+  - **Sprint 001 outcome: Partial.** F1 half missed (E2-F1-010 Designer walkthrough not done, E3-F1-001 FMF kickoff not started). F2 stretch overdelivered: 013 + 014 + 015 + 016 all closed, Apps Script bundle E3-F2-GF-001..008 drafted, build-handoff doc ready for Shan. **E2-F1-009b closed 2026-04-17** — the 6 `PENDING_DESIGN_*` defaults in `generate_dcf.py` stand as final; no further reconciliation needed.
+  - **Sprint 001 retro Q4 — carry-forward rule for Sprint 002:** Require an on-disk artifact reference (file path at minimum, commit SHA preferred) before flipping any `status::done`. No status flip on meeting attendance, verbal confirmation, or "should be done by now." Applies to every item, including recurring ones. Mode B on Monday Apr 20 will seed this as the first Daily Notes entry.
+  - **Definition of Done: all 4 items unchecked** (F1 LSS decisions not recorded, DCF walkthrough not done, F1 sign-off note not in log, Sprint 002 planning deferred to Monday AM). Honest assessment — matches Q1 "Partial."
+  - **Deadline exposure at close:** D2 +63d past 2026-02-13, D3 +35d past 2026-03-13. **New checkpoint:** DOH-PMSMD feedback due 2026-04-20 (Monday) → Tranche 2 (40%) due 2026-04-24 (Friday of Sprint 002). 4-day turnaround window if revisions requested.
+- **F2 PWA M0 Foundation shipped** on branch `feat/f2-pwa-m0`; merged to `main` (`--no-ff` merge commit preserves branch narrative) and pushed. Installable PWA shell at `deliverables/F2/PWA/app/` — Vite 5 + React 18 + TypeScript strict + Tailwind + shadcn + vite-plugin-pwa. Manual acceptance demo passed 6/6 (install prompt + dev/test/typecheck/build/preview). Lighthouse 11 PWA audit: 0.88, installable-manifest passes. `.git/hooks/post-commit` Slack notifier re-enabled post-merge. Ready for M1 (Generator v1 + single-section render) — plan-writing inputs staged in `deliverables/F2/PWA/app/NEXT.md`.
+
+
 ## 2026-04-16 (F3/F4 DCF generators)
 
 - **F3/F4 data dictionary generators built.** Designed, planned, and implemented CSPro 8.0 dictionary generators for F3 (Patient Survey) and F4 (Household Survey) following the F1 pattern.
