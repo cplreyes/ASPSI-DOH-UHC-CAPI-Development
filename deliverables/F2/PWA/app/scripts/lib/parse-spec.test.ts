@@ -279,10 +279,8 @@ describe('normalizeRow', () => {
       normalizeRow({ pdf_q: 'Q31', type: 'date', required: 'N', label: 'When?' }, 'C').unsupported,
     ).toBeDefined();
     expect(
-      normalizeRow(
-        { pdf_q: 'Q60', type: 'grid-single', required: 'N', label: 'Grid' },
-        'G',
-      ).unsupported,
+      normalizeRow({ pdf_q: 'Q60', type: 'grid-single', required: 'N', label: 'Grid' }, 'G')
+        .unsupported,
     ).toBeDefined();
   });
 

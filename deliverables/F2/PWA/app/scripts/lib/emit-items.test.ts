@@ -73,9 +73,7 @@ describe('emitItems', () => {
         {
           id: 'A',
           title: 'A',
-          items: [
-            { id: 'Q1', section: 'A', type: 'short-text', required: false, label: 'Plain' },
-          ],
+          items: [{ id: 'Q1', section: 'A', type: 'short-text', required: false, label: 'Plain' }],
         },
       ],
       unsupported: [],

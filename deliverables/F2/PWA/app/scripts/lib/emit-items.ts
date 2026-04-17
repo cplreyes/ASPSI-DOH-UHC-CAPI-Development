@@ -17,9 +17,7 @@ export function emitItems(result: ParseResult): string {
       ? [
           '',
           '// unsupported items (skipped):',
-          ...result.unsupported.map(
-            (u) => `// - ${u.section}.${u.id} (${u.rawType}): ${u.reason}`,
-          ),
+          ...result.unsupported.map((u) => `// - ${u.section}.${u.id} (${u.rawType}): ${u.reason}`),
         ].join('\n')
       : '';
 

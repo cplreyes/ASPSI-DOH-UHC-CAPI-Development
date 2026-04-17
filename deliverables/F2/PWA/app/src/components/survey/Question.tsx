@@ -78,10 +78,7 @@ function renderControl(
           </fieldset>
           {showSpecify ? (
             <div className="mt-2 flex flex-col gap-1 pl-6">
-              <label
-                htmlFor={`${item.id}_other`}
-                className="text-xs text-muted-foreground"
-              >
+              <label htmlFor={`${item.id}_other`} className="text-xs text-muted-foreground">
                 Please specify
               </label>
               <input
