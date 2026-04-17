@@ -64,9 +64,14 @@ function renderControl(
       return (
         <div className="flex flex-col gap-1">
           <fieldset className="flex flex-col gap-1">
-            {item.choices?.map((choice) => (
+            {item.choices?.map((choice, idx) => (
               <label key={choice.value} className="flex items-center gap-2 text-sm">
-                <input type="radio" value={choice.value} {...register(item.id)} />
+                <input
+                  type="radio"
+                  value={choice.value}
+                  {...(idx === 0 ? { id: item.id } : {})}
+                  {...register(item.id)}
+                />
                 {choice.label}
               </label>
             ))}
