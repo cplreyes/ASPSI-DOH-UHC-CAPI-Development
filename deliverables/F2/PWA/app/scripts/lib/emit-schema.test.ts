@@ -121,6 +121,33 @@ describe('emitSchema', () => {
     expect(emitSchema(result)).toContain('Q11: z.coerce.number().min(1).max(24)');
   });
 
+  it('quotes keys that are not valid JS identifiers', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'F',
+          title: 'F',
+          items: [
+            {
+              id: 'Q62.1',
+              section: 'F',
+              type: 'single',
+              required: true,
+              label: 'L',
+              choices: [
+                { label: 'Yes', value: 'Yes' },
+                { label: 'No', value: 'No' },
+              ],
+            },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    const code = emitSchema(result);
+    expect(code).toContain("'Q62.1': z.enum(['Yes', 'No'])");
+  });
+
   it('emits long-text with .min(1) when required', () => {
     const result: ParseResult = {
       sections: [

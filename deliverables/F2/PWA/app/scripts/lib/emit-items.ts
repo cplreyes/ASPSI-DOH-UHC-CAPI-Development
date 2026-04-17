@@ -27,10 +27,14 @@ export function emitItems(result: ParseResult): string {
 }
 
 function emitSectionConst(section: Section): string {
-  const itemsLiteral = section.items.map(emitItem).join(',\n    ');
   const parts: string[] = [`  id: '${section.id}'`, `  title: ${quote(section.title)}`];
   if (section.preamble) parts.push(`  preamble: ${quote(section.preamble)}`);
-  parts.push(`  items: [\n    ${itemsLiteral},\n  ]`);
+  if (section.items.length === 0) {
+    parts.push(`  items: []`);
+  } else {
+    const itemsLiteral = section.items.map(emitItem).join(',\n    ');
+    parts.push(`  items: [\n    ${itemsLiteral},\n  ]`);
+  }
 
   return `export const section${section.id}: Section = {\n${parts.join(',\n')},\n};`;
 }

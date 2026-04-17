@@ -88,6 +88,16 @@ describe('emitItems', () => {
     expect(code).not.toContain('legacyId:');
   });
 
+  it('emits items: [] (not [,]) for sections with zero supported items', () => {
+    const result: ParseResult = {
+      sections: [{ id: 'J', title: 'Job Satisfaction', items: [] }],
+      unsupported: [],
+    };
+    const code = emitItems(result);
+    expect(code).toContain('items: []');
+    expect(code).not.toContain('items: [,]');
+  });
+
   it('includes an unsupported block as a comment when items are skipped', () => {
     const result: ParseResult = {
       sections: [{ id: 'A', title: 'A', items: [] }],

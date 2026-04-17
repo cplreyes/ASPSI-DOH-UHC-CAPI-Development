@@ -24,11 +24,16 @@ function emitSectionSchema(section: Section): string {
 }
 
 function emitFieldEntries(item: Item): string[] {
-  const primary = `${item.id}: ${fieldSchema(item)},`;
+  const key = fieldKey(item.id);
+  const primary = `${key}: ${fieldSchema(item)},`;
   if (item.hasOtherSpecify) {
-    return [primary, `${item.id}_other: z.string().optional(),`];
+    return [primary, `${fieldKey(`${item.id}_other`)}: z.string().optional(),`];
   }
   return [primary];
+}
+
+function fieldKey(id: string): string {
+  return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(id) ? id : `'${id}'`;
 }
 
 function fieldSchema(item: Item): string {
