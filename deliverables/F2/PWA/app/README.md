@@ -1,50 +1,42 @@
-# React + TypeScript + Vite
+# F2 PWA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Offline-capable self-administered survey for healthcare workers. Plan B to the CSPro F2 instrument. See the design spec at `../2026-04-17-design-spec.md`.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node 20+
+- npm 10+
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+```bash
+cd deliverables/F2/PWA/app
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Development
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react';
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-});
+```bash
+npm run dev         # Vite dev server at http://localhost:5173
+npm run test        # run Vitest once
+npm run test:watch  # watch mode
+npm run lint        # ESLint
+npm run format      # Prettier write
+npm run typecheck   # tsc -b (project-references build, noEmit)
 ```
+
+## Production build
+
+```bash
+npm run build       # emits dist/ including sw.js and manifest.webmanifest
+npm run preview     # serve dist/ at http://localhost:4173
+npm run audit:pwa   # Lighthouse PWA audit against preview (requires preview running)
+```
+
+## Assets
+
+- Placeholder icons: `npm run gen:icons` regenerates the solid-teal placeholders from `scripts/gen-icons.mjs`. Real design lands in M11.
+
+## Milestones
+
+See `../2026-04-17-implementation-plan.md` for current M0 plan. Subsequent milestones each get their own plan file at `../YYYY-MM-DD-implementation-plan-MN-<name>.md`.
