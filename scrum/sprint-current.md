@@ -106,21 +106,22 @@ Solo-dev capacity check: 5 working days × ~5h focused work = ~25h. Day 2 closed
 
 ### 1. Did the sprint goal land? (yes / partial / no — one line why)
 
-_(answer here)_
+**Partial.** F1 half missed: E2-F1-010 Designer walkthrough not done, E3-F1-001 FMF kickoff not started, E2-F1-009b DCF reconciliation still blocked because the Apr 13 LSS meeting was process-focused and did not discuss the 6 open items. F2 stretch overdelivered: 013 + 014 + 015 + 016 all closed, Apps Script bundle E3-F2-GF-001..008 drafted, build-handoff doc ready for Shan.
 
 ### 2. What surprised me? (process, not work — max 3 bullets)
 
--
--
--
+- **Premature-done narrative, twice in one sprint.** Apr 11 scrum claimed `generate_dcf.py` existed and a 952-item DCF was generated — audit Apr 14 showed no generator on disk. Apr 13 PM end-of-day claimed "LSS meeting concluded, no schema changes required" — Apr 14 correction: the meeting didn't actually discuss the 6 items. Narrative got ahead of artifacts twice.
+- **External blockers re-routed work faster than expected.** F1 blocked on LSS + ASPSI; F2 self-propelled because the Google Forms track has no external dependency. Result: stretch outperformed committed. Useful pattern, but it means committed/stretch labels on Monday were misreading the actual dependency graph.
+- **I'm not an authorized DOH-facing sender.** Discovered via Apr 13 meeting notes ingested Apr 15 — reshapes E0-010/E0-011 scope (format is for Carl → Juvy / Dr Claro / Dr Paunlagui, who then route to DOH).
 
 ### 3. Deadline exposure check — D2 / D3 slip days this week
 
 > The 1%/day penalty (CSA §5) means deadline exposure is the metric, not velocity.
 > Answer explicitly even when the answer is "0 days, held steady."
 
-- **D2 exposure:** ___ days (Δ from last week: ___)
-- **D3 exposure:** ___ days (Δ from last week: ___)
+- **D2 exposure:** 63 days past 2026-02-13 (Δ from sprint start: +5 days — Sprint 001 is the first sprint, no prior sprint to compare to)
+- **D3 exposure:** 35 days past 2026-03-13 (Δ from sprint start: +5 days)
+- **External checkpoint added this sprint:** DOH-PMSMD feedback due 2026-04-20 → Tranche 2 (40%) due 2026-04-24. 4-day turnaround window if revisions are requested.
 
 ### 4. One thing to change in Sprint 002
 
@@ -128,7 +129,7 @@ _(answer here)_
 > If nothing needs changing, write "none — keep the same shape."
 > Carry this into Sprint 002's Daily Notes as the first entry so it stays visible.
 
--
+- **Require an on-disk artifact reference (file path at minimum, commit SHA preferred) before flipping any `status::done`.** No status flip on meeting attendance, verbal confirmation, or "should be done by now." Applies to every item, including recurring ones. Carry into Sprint 002 Daily Notes on Monday Apr 20 as the first entry.
 
 ## Definition of Done — Sprint 001
 
