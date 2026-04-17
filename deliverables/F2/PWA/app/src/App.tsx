@@ -9,7 +9,6 @@ export default function App() {
 
   const handleSubmit = (values: SectionAValues) => {
     // M2 replaces this with an IndexedDB write.
-    // eslint-disable-next-line no-console
     console.log('Section A submitted:', values);
     alert(`Submitted:\n${JSON.stringify(values, null, 2)}`);
   };
