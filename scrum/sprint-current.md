@@ -27,8 +27,6 @@ deliverable_anchor: D2 / Tranche 2 (40% due 2026-04-24)
 
 - [ ] **E2-F1-010** F1 DCF opened in CSPro Designer, full validation walkthrough, bug list closed or explicitly deferred, sign-off note recorded `status::todo` `priority::critical` `estimate::4h`
 - [ ] **E3-F1-001** Create `FacilityHeadSurvey.fmf`; lay out Section A (Identification & Cover Page) only `status::todo` `priority::high` `estimate::4h`
-- [ ] **E2-F1-009b** Reconcile DCF with LSS-meeting decisions on the 6 open items `status::blocked` `priority::critical` `estimate::4h`
-  - Still blocked pending a technically-scoped LSS session. Escalate to Dr Myra / Dr Claro Monday morning.
 - [ ] **E0-010** Define weekly status update format for ASPSI Management Committee `status::todo` `priority::high` `estimate::2h`
   - Scope updated per Apr 13 meeting notes: format is for Carl → Juvy / Dr Claro / Dr Paunlagui, not Carl → DOH directly.
 
@@ -49,7 +47,6 @@ deliverable_anchor: D2 / Tranche 2 (40% due 2026-04-24)
 | Class | Items | Estimate |
 |---|---|---|
 | **Committed (must-finish)** | TBD Monday | TBD |
-| **Blocked** | E2-F1-009b | — |
 | **Stretch** | F2 PWA M1 | 12-15h |
 
 ## Daily Notes

@@ -37,8 +37,8 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 
 ## F1 — Facility Head Survey *(interviewer-administered, 34pp)*
 
-**State:** Design — Designer walkthrough in progress (E2-F1-010); E2-F1-009b reopened pending LSS
-**Scope:** 15 records · 657 fields · 166 questions · 4 validation tiers (4 secondary-data records empty pending LSS)
+**State:** Design — Designer walkthrough in progress (E2-F1-010). The 6 `PENDING_DESIGN_*` defaults stand as final; no further LSS reconciliation.
+**Scope:** 15 records · 657 fields · 166 questions · 4 validation tiers (4 secondary-data records carried as empty stubs per `PENDING_DESIGN_SECONDARY_DATA_AS_STUBS`)
 **Reference doc:** `deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md`
 
 - [x] **E2-F1-001** F1 questionnaire PDF ingested to `raw/` `status::done` `priority::critical`
@@ -51,8 +51,7 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 - [x] **E2-F1-008** F1 sanity check — 6 DCF bugs surfaced and queued for Phase 5 correction `status::done` `priority::critical`
 - [x] **E2-F1-009** F1 `generate_dcf.py` authored from scratch + `FacilityHeadSurvey.dcf` emitted (Q1-Q166 across 15 records) `status::done` `priority::critical` `estimate::1d`
   - Built 2026-04-14. Earlier scrum entries claiming Apr 11 completion were premature — no generator existed in the repo before today. Reconstructed using `raw/CSPro-Data-Dictionary/FacilityHeadSurvey.dcf` (Carl's manual Q1-Q8 scaffold) for format conventions and `F1-Skip-Logic-and-Validations.md` for canonical item names. Output: 15 records, 657 items. Secondary-data records (SEC_HOSP_CENSUS, SEC_HCW_ROSTER, SEC_YK_SERVICES, SEC_LAB_PRICES) intentionally left as empty stubs — populated once LSS decides the SECONDARY_DATA structure.
-- [ ] **E2-F1-009b** Reconcile DCF with LSS-meeting decisions on the 6 open items (Q63 day vs month, SECONDARY_DATA structure, NBB split, Q31 NA-skip intent, Q166 nurse list, Q121 dynamic value set) — patch `PENDING_DESIGN_*` constants in `generate_dcf.py` + regenerate `status::blocked` `priority::critical` `estimate::4h`
-  - **REOPENED 2026-04-14.** Apr 13 LSS meeting did NOT actually discuss the 6 open items (correction from Carl on 2026-04-14). Defaults are encoded as `PENDING_DESIGN_Q63_USE_DAY_BUCKETS`, `PENDING_DESIGN_SECONDARY_DATA_AS_STUBS`, `PENDING_DESIGN_NBB_SPLIT_BY_TIER`, `PENDING_DESIGN_Q31_NA_SKIPS`, `PENDING_DESIGN_Q166_NURSES_INCLUDE_AUDITS`, `PENDING_DESIGN_Q121_DYNAMIC_VALUE_SET` in `generate_dcf.py`. Blocked until items land on an LSS agenda.
+- [x] **E2-F1-009b** ~~Reconcile DCF with LSS-meeting decisions on the 6 open items~~ **CLOSED 2026-04-17 — defaults stand as final.** The 6 items (Q63 day vs month, SECONDARY_DATA structure, NBB split, Q31 NA-skip intent, Q166 nurse list, Q121 dynamic value set) remain encoded as `PENDING_DESIGN_Q63_USE_DAY_BUCKETS`, `PENDING_DESIGN_SECONDARY_DATA_AS_STUBS`, `PENDING_DESIGN_NBB_SPLIT_BY_TIER`, `PENDING_DESIGN_Q31_NA_SKIPS`, `PENDING_DESIGN_Q166_NURSES_INCLUDE_AUDITS`, `PENDING_DESIGN_Q121_DYNAMIC_VALUE_SET` in `generate_dcf.py` — these are the final design decisions. If any item needs to change later, flip the constant + regenerate. `status::done` `priority::critical`
 - [ ] **E2-F1-010** F1 DCF opened in CSPro Designer, validated, bug list closed or explicitly deferred → sign-off to enter Epic 3 `status::todo` `priority::critical` `estimate::4h`
   - **Sprint 001 commitment.** Generator + DCF in place 2026-04-14; Designer walkthrough next.
 
