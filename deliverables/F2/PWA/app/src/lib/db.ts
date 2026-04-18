@@ -33,10 +33,13 @@ export interface SubmissionRow {
 }
 
 export interface FacilityRow {
-  id: string;
+  facility_id: string;
+  facility_name: string;
+  facility_type: string;
   region: string;
   province: string;
-  name: string;
+  city_mun: string;
+  barangay: string;
 }
 
 export interface ConfigRow {
@@ -51,12 +54,21 @@ export interface AuditRow {
   payload?: Record<string, unknown>;
 }
 
+export interface EnrollmentRow {
+  id: 'singleton';
+  hcw_id: string;
+  facility_id: string;
+  facility_type: string;
+  enrolled_at: number;
+}
+
 export class F2Database extends Dexie {
   drafts!: Table<DraftRow, string>;
   submissions!: Table<SubmissionRow, string>;
   facilities!: Table<FacilityRow, string>;
   config!: Table<ConfigRow, string>;
   audit!: Table<AuditRow, number>;
+  enrollment!: Table<EnrollmentRow, string>;
 
   constructor() {
     super('f2_pwa');
@@ -78,6 +90,10 @@ export class F2Database extends Dexie {
           if (row.last_error === undefined) row.last_error = null;
         });
       });
+    this.version(3).stores({
+      facilities: 'facility_id, facility_type, region, province',
+      enrollment: 'id',
+    });
   }
 }
 

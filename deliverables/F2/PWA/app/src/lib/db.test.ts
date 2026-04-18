@@ -2,12 +2,12 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { db, type SubmissionRow } from './db';
 
 describe('db', () => {
-  it('opens at version 2 with the spec §7.2 schema', async () => {
+  it('opens at version 3 with the spec §7.2 schema + enrollment store', async () => {
     await db.open();
-    expect(db.verno).toBe(2);
+    expect(db.verno).toBe(3);
     const names = db.tables.map((t) => t.name).sort();
     expect(names).toEqual(
-      ['audit', 'config', 'drafts', 'facilities', 'submissions'].sort(),
+      ['audit', 'config', 'drafts', 'enrollment', 'facilities', 'submissions'].sort(),
     );
   });
 
@@ -78,5 +78,39 @@ describe('db v2 — submissions retry fields', () => {
     const due = await db.submissions.where('next_retry_at').below(300).toArray();
     expect(due).toHaveLength(1);
     expect(due[0]?.client_submission_id).toBe('a');
+  });
+});
+
+describe('F2Database v3', () => {
+  beforeEach(async () => {
+    if (!db.isOpen()) await db.open();
+    await db.facilities.clear();
+    await db.enrollment.clear();
+  });
+
+  it('exposes a facilities table with facility_type indexed', async () => {
+    await db.facilities.put({
+      facility_id: 'F-001',
+      facility_name: 'Manila General',
+      facility_type: 'Hospital',
+      region: 'NCR',
+      province: 'Metro Manila',
+      city_mun: 'Manila',
+      barangay: 'Ermita',
+    });
+    const found = await db.facilities.where('facility_type').equals('Hospital').first();
+    expect(found?.facility_id).toBe('F-001');
+  });
+
+  it('exposes an enrollment table that stores a single row', async () => {
+    await db.enrollment.put({
+      id: 'singleton',
+      hcw_id: 'HCW-42',
+      facility_id: 'F-001',
+      facility_type: 'Hospital',
+      enrolled_at: 1_700_000_000_000,
+    });
+    const row = await db.enrollment.get('singleton');
+    expect(row).toMatchObject({ hcw_id: 'HCW-42', facility_id: 'F-001' });
   });
 });
