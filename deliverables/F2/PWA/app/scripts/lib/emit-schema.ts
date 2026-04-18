@@ -24,6 +24,23 @@ function emitSectionSchema(section: Section): string {
 }
 
 function emitFieldEntries(item: Item): string[] {
+  if (item.type === 'multi-field' && item.subFields) {
+    return item.subFields.map((sf) => {
+      const schema =
+        sf.kind === 'short-text'
+          ? item.required
+            ? 'z.string().min(1)'
+            : 'z.string().optional()'
+          : (() => {
+              let expr = 'z.coerce.number()';
+              if (sf.min !== undefined) expr += `.min(${sf.min})`;
+              if (sf.max !== undefined) expr += `.max(${sf.max})`;
+              if (!item.required) expr += '.optional()';
+              return expr;
+            })();
+      return `${fieldKey(sf.id)}: ${schema},`;
+    });
+  }
   const key = fieldKey(item.id);
   const primary = `${key}: ${fieldSchema(item)},`;
   if (item.hasOtherSpecify) {
@@ -53,5 +70,18 @@ function fieldSchema(item: Item): string {
       const base = `z.enum([${values.join(', ')}])`;
       return item.required ? base : `${base}.optional()`;
     }
+    case 'multi': {
+      const values = (item.choices ?? []).map((c) => `'${c.value.replace(/'/g, "\\'")}'`);
+      const base = `z.array(z.enum([${values.join(', ')}]))`;
+      return item.required ? `${base}.min(1)` : `${base}.optional()`;
+    }
+    case 'date': {
+      const base = String.raw`z.string().regex(/^\d{4}-\d{2}-\d{2}$/)`;
+      return item.required ? base : `${base}.optional()`;
+    }
+    case 'multi-field':
+      throw new Error(
+        `multi-field items must be handled in emitFieldEntries, not fieldSchema (item ${item.id})`,
+      );
   }
 }

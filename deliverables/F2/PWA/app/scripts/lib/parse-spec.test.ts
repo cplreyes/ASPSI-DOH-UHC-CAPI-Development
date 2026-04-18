@@ -273,10 +273,11 @@ describe('normalizeRow', () => {
     expect(result.item?.required).toBe(false);
   });
 
-  it('flags ×N multi-field items as unsupported', () => {
+  it('parses "short-text ×3" as multi-field with three short-text subfields', () => {
     const result = normalizeRow(
       {
         pdf_q: 'Q1',
+        legacy_q: 'Q1',
         type: 'short-text ×3',
         required: 'Y',
         label: 'What is your name?',
@@ -284,31 +285,153 @@ describe('normalizeRow', () => {
       },
       'A',
     );
-    expect(result.item).toBeUndefined();
-    expect(result.unsupported).toMatchObject({
+    expect(result.unsupported).toBeUndefined();
+    expect(result.item).toMatchObject({
       id: 'Q1',
-      section: 'A',
-      rawType: 'short-text ×3',
+      type: 'multi-field',
+      subFields: [
+        { id: 'Q1_1', label: 'Last Name', kind: 'short-text' },
+        { id: 'Q1_2', label: 'First Name', kind: 'short-text' },
+        { id: 'Q1_3', label: 'Middle Initial', kind: 'short-text' },
+      ],
     });
   });
 
-  it('flags multi-choice items as unsupported (M6)', () => {
+  it('parses "number ×2" as multi-field with two number subfields', () => {
     const result = normalizeRow(
-      { pdf_q: 'Q21', type: 'multi + specify', required: 'Y', label: 'Which?', choices: 'A · B' },
-      'B',
+      {
+        pdf_q: 'Q9',
+        legacy_q: 'Q13',
+        type: 'number ×2',
+        required: 'Y',
+        label: 'How many?',
+        choices: 'Year(s) / Month(s)',
+      },
+      'A',
     );
-    expect(result.item).toBeUndefined();
-    expect(result.unsupported?.rawType).toBe('multi + specify');
+    expect(result.item).toMatchObject({
+      id: 'Q9',
+      type: 'multi-field',
+      subFields: [
+        { id: 'Q9_1', label: 'Year(s)', kind: 'number' },
+        { id: 'Q9_2', label: 'Month(s)', kind: 'number' },
+      ],
+    });
   });
 
-  it('flags date/grid items as unsupported (M6)', () => {
-    expect(
-      normalizeRow({ pdf_q: 'Q31', type: 'date', required: 'N', label: 'When?' }, 'C').unsupported,
-    ).toBeDefined();
-    expect(
-      normalizeRow({ pdf_q: 'Q60', type: 'grid-single', required: 'N', label: 'Grid' }, 'G')
-        .unsupported,
-    ).toBeDefined();
+  it('treats "single (1–5)" as a single with auto-generated 1..5 numeric choices', () => {
+    const result = normalizeRow(
+      {
+        pdf_q: 'Q68',
+        legacy_q: '—',
+        type: 'single (1–5)',
+        required: 'Y',
+        label: 'How adequate is your fee?',
+        choices: '1 · 2 · 3 · 4 · 5',
+      },
+      'G',
+    );
+    expect(result.unsupported).toBeUndefined();
+    expect(result.item).toMatchObject({
+      id: 'Q68',
+      type: 'single',
+      choices: [
+        { label: '1', value: '1' },
+        { label: '2', value: '2' },
+        { label: '3', value: '3' },
+        { label: '4', value: '4' },
+        { label: '5', value: '5' },
+      ],
+    });
+  });
+
+  it('parses "multi" as multi-select with choices', () => {
+    const result = normalizeRow(
+      {
+        pdf_q: 'Q28',
+        legacy_q: 'Q34',
+        type: 'multi',
+        required: 'Y',
+        label: 'Which are included in the package?',
+        choices: 'Pap smear · Mammogram · Lipid profile',
+      },
+      'C',
+    );
+    expect(result.unsupported).toBeUndefined();
+    expect(result.item).toMatchObject({
+      id: 'Q28',
+      type: 'multi',
+      hasOtherSpecify: false,
+      choices: [
+        { label: 'Pap smear', value: 'Pap smear' },
+        { label: 'Mammogram', value: 'Mammogram' },
+        { label: 'Lipid profile', value: 'Lipid profile' },
+      ],
+    });
+  });
+
+  it('parses "multi + specify" with the Other choice flagged', () => {
+    const result = normalizeRow(
+      {
+        pdf_q: 'Q21',
+        legacy_q: 'Q28',
+        type: 'multi + specify',
+        required: 'Y',
+        label: 'Which do you expect to change?',
+        choices: 'Salary · Working hours · Other (specify)',
+      },
+      'B',
+    );
+    expect(result.item).toMatchObject({
+      id: 'Q21',
+      type: 'multi',
+      hasOtherSpecify: true,
+    });
+    expect(result.item?.choices?.find((c) => c.isOtherSpecify)).toMatchObject({
+      label: 'Other (specify)',
+    });
+  });
+
+  it('parses "date" as a date item', () => {
+    const result = normalizeRow(
+      {
+        pdf_q: 'Q31',
+        legacy_q: '—',
+        type: 'date',
+        required: 'conditional',
+        label: 'Since when?',
+        choices: 'Month / Day / Year',
+      },
+      'C',
+    );
+    expect(result.unsupported).toBeUndefined();
+    expect(result.item).toMatchObject({ id: 'Q31', type: 'date', required: false });
+  });
+
+  it('treats "grid-single" as a single with the inline choice set', () => {
+    const result = normalizeRow(
+      {
+        pdf_q: 'Q74',
+        legacy_q: '—',
+        type: 'grid-single',
+        required: 'Y',
+        label: 'How often do you charge?',
+        choices: 'Never · Rarely · Sometimes · Often · Always',
+      },
+      'G',
+    );
+    expect(result.unsupported).toBeUndefined();
+    expect(result.item).toMatchObject({
+      id: 'Q74',
+      type: 'single',
+      choices: [
+        { label: 'Never', value: 'Never' },
+        { label: 'Rarely', value: 'Rarely' },
+        { label: 'Sometimes', value: 'Sometimes' },
+        { label: 'Often', value: 'Often' },
+        { label: 'Always', value: 'Always' },
+      ],
+    });
   });
 
   it('captures help text after semicolon in choices', () => {

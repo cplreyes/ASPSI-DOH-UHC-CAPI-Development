@@ -15,7 +15,7 @@ describe('<MultiSectionForm>', () => {
     expect(
       screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Section 1 of 3/)).toBeInTheDocument();
+    expect(screen.getByText(/Section 1 of 11/)).toBeInTheDocument();
   });
 
   it('blocks Next when Section A validation fails and advances when it passes', async () => {
@@ -31,11 +31,16 @@ describe('<MultiSectionForm>', () => {
     await user.click(screen.getByRole('button', { name: /next/i }));
     expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
 
+    await user.type(screen.getByLabelText('Last Name'), 'Reyes');
+    await user.type(screen.getByLabelText('First Name'), 'Carl');
+    await user.type(screen.getByLabelText('Middle Initial'), 'P');
     await user.click(screen.getByLabelText('Regular'));
     await user.click(screen.getByLabelText('Female'));
     await user.type(screen.getByLabelText(/How old are you/), '30');
     await user.click(screen.getByLabelText('Nurse'));
     await user.click(screen.getByLabelText('No'));
+    await user.type(screen.getByLabelText('Year(s)'), '3');
+    await user.type(screen.getByLabelText('Month(s)'), '6');
     await user.type(screen.getByLabelText(/days in a week/), '5');
     await user.type(screen.getByLabelText(/hours do you work/), '8');
 
@@ -43,7 +48,7 @@ describe('<MultiSectionForm>', () => {
     await waitFor(() =>
       expect(screen.getByRole('heading', { name: /Section B/ })).toBeInTheDocument(),
     );
-    expect(screen.getByText(/Section 2 of 3/)).toBeInTheDocument();
+    expect(screen.getByText(/Section 2 of 11/)).toBeInTheDocument();
   });
 
   it('applies intra-section skip logic — Q8 appears when Q7 = Yes', async () => {
@@ -67,11 +72,16 @@ describe('<MultiSectionForm>', () => {
     render(
       <MultiSectionForm
         initialValues={{
+          Q1_1: 'Reyes',
+          Q1_2: 'Carl',
+          Q1_3: 'P',
           Q2: 'Regular',
           Q3: 'Female',
           Q4: 30,
           Q5: 'Nurse',
           Q7: 'No',
+          Q9_1: 3,
+          Q9_2: 6,
           Q10: 5,
           Q11: 8,
         }}

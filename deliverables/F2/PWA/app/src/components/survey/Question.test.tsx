@@ -99,6 +99,94 @@ describe('<Question>', () => {
     expect(screen.getByLabelText(/Please specify/)).toBeInTheDocument();
   });
 
+  it('renders multi as a checkbox group', () => {
+    const item: Item = {
+      id: 'Q28',
+      section: 'C',
+      type: 'multi',
+      required: true,
+      label: 'Which are included?',
+      choices: [
+        { label: 'Pap smear', value: 'Pap smear' },
+        { label: 'Mammogram', value: 'Mammogram' },
+        { label: 'Lipid profile', value: 'Lipid profile' },
+      ],
+    };
+    render(<Harness item={item} />);
+    const boxes = screen.getAllByRole('checkbox');
+    expect(boxes).toHaveLength(3);
+    expect(screen.getByLabelText('Pap smear')).toBeInTheDocument();
+  });
+
+  it('shows specify input when an "Other" checkbox is selected in multi', async () => {
+    const user = userEvent.setup();
+    const item: Item = {
+      id: 'Q21',
+      section: 'B',
+      type: 'multi',
+      required: true,
+      label: 'Which do you expect to change?',
+      hasOtherSpecify: true,
+      choices: [
+        { label: 'Salary', value: 'Salary' },
+        { label: 'Other (specify)', value: 'Other (specify)', isOtherSpecify: true },
+      ],
+    };
+    render(<Harness item={item} />);
+    expect(screen.queryByLabelText(/Please specify/)).toBeNull();
+    await user.click(screen.getByLabelText('Other (specify)'));
+    expect(screen.getByLabelText(/Please specify/)).toBeInTheDocument();
+  });
+
+  it('renders date as an input type=date', () => {
+    const item: Item = {
+      id: 'Q31',
+      section: 'C',
+      type: 'date',
+      required: false,
+      label: 'Since when?',
+    };
+    render(<Harness item={item} />);
+    const input = screen.getByLabelText(/since when/i);
+    expect(input).toHaveAttribute('type', 'date');
+  });
+
+  it('renders multi-field as one input per subField, labelled', () => {
+    const item: Item = {
+      id: 'Q1',
+      section: 'A',
+      type: 'multi-field',
+      required: true,
+      label: 'What is your name?',
+      subFields: [
+        { id: 'Q1_1', label: 'Last Name', kind: 'short-text' },
+        { id: 'Q1_2', label: 'First Name', kind: 'short-text' },
+        { id: 'Q1_3', label: 'Middle Initial', kind: 'short-text' },
+      ],
+    };
+    render(<Harness item={item} />);
+    expect(screen.getByLabelText('Last Name')).toBeInTheDocument();
+    expect(screen.getByLabelText('First Name')).toBeInTheDocument();
+    expect(screen.getByLabelText('Middle Initial')).toBeInTheDocument();
+  });
+
+  it('uses input type=number for number subFields', () => {
+    const item: Item = {
+      id: 'Q9',
+      section: 'A',
+      type: 'multi-field',
+      required: true,
+      label: 'How many?',
+      subFields: [
+        { id: 'Q9_1', label: 'Years', kind: 'number' },
+        { id: 'Q9_2', label: 'Months', kind: 'number' },
+      ],
+    };
+    render(<Harness item={item} />);
+    expect(screen.getByLabelText('Years')).toHaveAttribute('type', 'number');
+    expect(screen.getByLabelText('Months')).toHaveAttribute('type', 'number');
+  });
+
   it('shows a required asterisk when required=true', () => {
     const item: Item = {
       id: 'Q1',

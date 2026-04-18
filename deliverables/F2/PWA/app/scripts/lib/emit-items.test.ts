@@ -99,10 +99,39 @@ describe('emitItems', () => {
   it('includes an unsupported block as a comment when items are skipped', () => {
     const result: ParseResult = {
       sections: [{ id: 'A', title: 'A', items: [] }],
-      unsupported: [{ id: 'Q1', section: 'A', rawType: 'short-text ×3', reason: 'multi-field' }],
+      unsupported: [{ id: 'Q1', section: 'A', rawType: 'section-break', reason: 'section break' }],
     };
     const code = emitItems(result);
     expect(code).toContain('// unsupported items (skipped):');
-    expect(code).toContain('// - A.Q1 (short-text ×3): multi-field');
+    expect(code).toContain('// - A.Q1 (section-break): section break');
+  });
+
+  it('serialises subFields onto multi-field items', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'A',
+          title: 'A',
+          items: [
+            {
+              id: 'Q1',
+              section: 'A',
+              type: 'multi-field',
+              required: true,
+              label: 'name',
+              subFields: [
+                { id: 'Q1_1', label: 'Last', kind: 'short-text' },
+                { id: 'Q1_2', label: 'First', kind: 'short-text' },
+              ],
+            },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    const out = emitItems(result);
+    expect(out).toContain(
+      "subFields: [{ id: 'Q1_1', label: 'Last', kind: 'short-text' }, { id: 'Q1_2', label: 'First', kind: 'short-text' }]",
+    );
   });
 });

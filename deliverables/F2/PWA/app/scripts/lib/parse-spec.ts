@@ -1,4 +1,12 @@
-import type { Item, ParseResult, Section, UnsupportedItem, ItemType, Choice } from './types';
+import type {
+  Item,
+  ParseResult,
+  Section,
+  UnsupportedItem,
+  ItemType,
+  Choice,
+  SubField,
+} from './types';
 
 export interface RawSection {
   id: string;
@@ -33,6 +41,7 @@ export type RowFields = Record<string, string>;
 
 const TABLE_HEADER = /^\|(.+)\|\s*$/;
 const ALIGNMENT_ROW = /^\|[\s\-|:]+\|\s*$/;
+const GRID_HEADER = /^\*\*Grid #\d+\s*[—-]\s*[^(]+\(([^)]+)\):\*\*/;
 
 function splitCells(line: string): string[] {
   return line
@@ -51,9 +60,17 @@ export function parseTableRows(body: string): RowFields[] {
   const lines = body.split('\n');
   const rows: RowFields[] = [];
   let i = 0;
+  let currentGridChoices: string | undefined;
 
   while (i < lines.length) {
     const line = lines[i];
+    const gridMatch = line.match(GRID_HEADER);
+    if (gridMatch) {
+      currentGridChoices = gridMatch[1].trim();
+      i++;
+      continue;
+    }
+
     const next = lines[i + 1];
     const isTableHeader =
       TABLE_HEADER.test(line) &&
@@ -76,6 +93,13 @@ export function parseTableRows(body: string): RowFields[] {
         header.forEach((col, idx) => {
           row[normalizeHeader(col)] = cells[idx] ?? '';
         });
+        if (
+          (!row.choices || row.choices === '') &&
+          row.type === 'grid-single' &&
+          currentGridChoices
+        ) {
+          row.choices = currentGridChoices;
+        }
         rows.push(row);
       }
       i++;
@@ -88,12 +112,19 @@ export function parseTableRows(body: string): RowFields[] {
 const SUPPORTED_TYPES: Record<string, ItemType> = {
   single: 'single',
   'single + specify': 'single',
+  'single (1–5)': 'single',
+  'grid-single': 'single',
+  multi: 'multi',
+  'multi + specify': 'multi',
+  date: 'date',
   'short-text': 'short-text',
   'long-text': 'long-text',
   number: 'number',
 };
 
 const CHOICE_SEP = /\s*·\s*/;
+
+const MULTI_FIELD_RE = /^(short-text|number)\s*×\s*(\d+)$/;
 
 export interface NormalizeRowResult {
   item?: Item;
@@ -102,6 +133,37 @@ export interface NormalizeRowResult {
 
 export function normalizeRow(row: RowFields, section: string): NormalizeRowResult {
   const rawType = (row.type ?? '').trim();
+
+  const multiFieldMatch = rawType.match(MULTI_FIELD_RE);
+  if (multiFieldMatch) {
+    const kind = multiFieldMatch[1] as 'short-text' | 'number';
+    const count = Number(multiFieldMatch[2]);
+    const labels = (row.choices ?? '')
+      .split('/')
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
+    const subFields: SubField[] = [];
+    for (let i = 0; i < count; i++) {
+      subFields.push({
+        id: `${row.pdf_q}_${i + 1}`,
+        label: labels[i] ?? `Field ${i + 1}`,
+        kind,
+      });
+    }
+    const required = (row.required ?? '').trim() === 'Y';
+    const item: Item = {
+      id: row.pdf_q,
+      section,
+      type: 'multi-field',
+      required,
+      label: row.label ?? '',
+      subFields,
+    };
+    if (row.legacy_q && row.legacy_q !== '—' && row.legacy_q !== '') {
+      item.legacyId = row.legacy_q;
+    }
+    return { item };
+  }
 
   if (!(rawType in SUPPORTED_TYPES)) {
     return {
@@ -135,7 +197,7 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
   if (min !== undefined) item.min = min;
   if (max !== undefined) item.max = max;
 
-  if (type === 'single') {
+  if (type === 'single' || type === 'multi') {
     item.hasOtherSpecify = hasOtherSpecify;
     const choices = parseChoiceList(choicesText, hasOtherSpecify);
     if (choices) item.choices = choices;
@@ -245,10 +307,9 @@ function extractPreamble(body: string): string | undefined {
 }
 
 function unsupportedReason(rawType: string): string {
-  if (/×\d+/.test(rawType)) return 'multi-field (×N) — handled in M6';
-  if (rawType.startsWith('multi')) return 'multi-choice — handled in M6';
-  if (rawType === 'date') return 'date picker — handled in M6';
-  if (rawType.startsWith('grid')) return 'grid item — handled in M6';
-  if (rawType === 'section-break') return 'section break — rendered in M3';
+  if (rawType.startsWith('grid') && rawType !== 'grid-single') {
+    return 'grid item — handled in a later milestone';
+  }
+  if (rawType === 'section-break') return 'section break — not a renderable item';
   return `unsupported type "${rawType}" — handled in a later milestone`;
 }

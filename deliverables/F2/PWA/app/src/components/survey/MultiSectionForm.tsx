@@ -1,11 +1,31 @@
 import { useMemo, useRef, useState } from 'react';
 import type { ZodTypeAny } from 'zod';
 import type { Item, Section as SectionModel } from '@/types/survey';
-import { sectionA, sectionB, sectionC } from '@/generated/items';
+import {
+  sectionA,
+  sectionB,
+  sectionC,
+  sectionD,
+  sectionE1,
+  sectionE2,
+  sectionF,
+  sectionG,
+  sectionH,
+  sectionI,
+  sectionJ,
+} from '@/generated/items';
 import {
   sectionASchema,
   sectionBSchema,
   sectionCSchema,
+  sectionDSchema,
+  sectionE1Schema,
+  sectionE2Schema,
+  sectionFSchema,
+  sectionGSchema,
+  sectionHSchema,
+  sectionISchema,
+  sectionJSchema,
 } from '@/generated/schema';
 import { shouldShow, type FormValues } from '@/lib/skip-logic';
 import { Section } from './Section';
@@ -22,6 +42,14 @@ const SECTIONS: SectionConfig[] = [
   { id: 'A', section: sectionA, schema: sectionASchema },
   { id: 'B', section: sectionB, schema: sectionBSchema },
   { id: 'C', section: sectionC, schema: sectionCSchema },
+  { id: 'D', section: sectionD, schema: sectionDSchema },
+  { id: 'E1', section: sectionE1, schema: sectionE1Schema },
+  { id: 'E2', section: sectionE2, schema: sectionE2Schema },
+  { id: 'F', section: sectionF, schema: sectionFSchema },
+  { id: 'G', section: sectionG, schema: sectionGSchema },
+  { id: 'H', section: sectionH, schema: sectionHSchema },
+  { id: 'I', section: sectionI, schema: sectionISchema },
+  { id: 'J', section: sectionJ, schema: sectionJSchema },
 ];
 
 interface MultiSectionFormProps {
@@ -54,6 +82,12 @@ export function MultiSectionForm({
   const sectionDefaults = useMemo(() => {
     const out: FormValues = {};
     for (const it of current.section.items) {
+      if (it.type === 'multi-field' && it.subFields) {
+        for (const sf of it.subFields) {
+          if (sf.id in merged) out[sf.id] = merged[sf.id];
+        }
+        continue;
+      }
       if (it.id in merged) out[it.id] = merged[it.id];
       const otherKey = `${it.id}_other`;
       if (otherKey in merged) out[otherKey] = merged[otherKey];

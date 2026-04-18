@@ -59,6 +59,17 @@ function emitItem(item: Item): string {
       .join(', ');
     fields.push(`choices: [${choicesLiteral}]`);
   }
+  if (item.subFields) {
+    const subFieldsLiteral = item.subFields
+      .map((sf) => {
+        const parts = [`id: '${sf.id}'`, `label: ${quote(sf.label)}`, `kind: '${sf.kind}'`];
+        if (sf.min !== undefined) parts.push(`min: ${sf.min}`);
+        if (sf.max !== undefined) parts.push(`max: ${sf.max}`);
+        return `{ ${parts.join(', ')} }`;
+      })
+      .join(', ');
+    fields.push(`subFields: [${subFieldsLiteral}]`);
+  }
   return `{ ${fields.join(', ')} }`;
 }
 

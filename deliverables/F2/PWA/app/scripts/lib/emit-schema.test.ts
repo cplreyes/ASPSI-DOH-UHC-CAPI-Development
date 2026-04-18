@@ -148,6 +148,141 @@ describe('emitSchema', () => {
     expect(code).toContain("'Q62.1': z.enum(['Yes', 'No'])");
   });
 
+  it('emits multi as z.array(z.enum([...])).min(1) when required', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'C',
+          title: 'C',
+          items: [
+            {
+              id: 'Q28',
+              section: 'C',
+              type: 'multi',
+              required: true,
+              label: 'Which?',
+              choices: [
+                { label: 'Pap smear', value: 'Pap smear' },
+                { label: 'Mammogram', value: 'Mammogram' },
+              ],
+            },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    const code = emitSchema(result);
+    expect(code).toContain("Q28: z.array(z.enum(['Pap smear', 'Mammogram'])).min(1)");
+  });
+
+  it('emits multi as optional z.array when required=false', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'C',
+          title: 'C',
+          items: [
+            {
+              id: 'Q29',
+              section: 'C',
+              type: 'multi',
+              required: false,
+              label: 'Which?',
+              choices: [{ label: 'A', value: 'A' }],
+            },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    expect(emitSchema(result)).toContain("Q29: z.array(z.enum(['A'])).optional()");
+  });
+
+  it('adds companion _other field for multi+specify', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'B',
+          title: 'B',
+          items: [
+            {
+              id: 'Q21',
+              section: 'B',
+              type: 'multi',
+              required: true,
+              hasOtherSpecify: true,
+              label: 'Which?',
+              choices: [
+                { label: 'Salary', value: 'Salary' },
+                { label: 'Other (specify)', value: 'Other (specify)', isOtherSpecify: true },
+              ],
+            },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    const code = emitSchema(result);
+    expect(code).toContain("Q21: z.array(z.enum(['Salary', 'Other (specify)'])).min(1)");
+    expect(code).toContain('Q21_other: z.string().optional()');
+  });
+
+  it('emits an ISO-date string schema for date items', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'C',
+          title: 'C',
+          items: [{ id: 'Q31', section: 'C', type: 'date', required: false, label: 'When?' }],
+        },
+      ],
+      unsupported: [],
+    };
+    const out = emitSchema(result);
+    expect(out).toContain('Q31: z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/).optional()');
+  });
+
+  it('flattens multi-field items into per-subfield schema entries', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'A',
+          title: 'A',
+          items: [
+            {
+              id: 'Q1',
+              section: 'A',
+              type: 'multi-field',
+              required: true,
+              label: 'name',
+              subFields: [
+                { id: 'Q1_1', label: 'Last', kind: 'short-text' },
+                { id: 'Q1_2', label: 'First', kind: 'short-text' },
+              ],
+            },
+            {
+              id: 'Q9',
+              section: 'A',
+              type: 'multi-field',
+              required: false,
+              label: 'how long',
+              subFields: [
+                { id: 'Q9_1', label: 'Y', kind: 'number' },
+                { id: 'Q9_2', label: 'M', kind: 'number' },
+              ],
+            },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    const out = emitSchema(result);
+    expect(out).toContain('Q1_1: z.string().min(1)');
+    expect(out).toContain('Q1_2: z.string().min(1)');
+    expect(out).toContain('Q9_1: z.coerce.number().optional()');
+    expect(out).toContain('Q9_2: z.coerce.number().optional()');
+  });
+
   it('emits long-text with .min(1) when required', () => {
     const result: ParseResult = {
       sections: [
