@@ -1,11 +1,17 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type * as React from 'react';
+import { LocaleProvider } from '@/i18n/locale-context';
 import { MultiSectionForm } from './MultiSectionForm';
+
+function renderWithProviders(ui: React.ReactElement) {
+  return render(<LocaleProvider>{ui}</LocaleProvider>);
+}
 
 describe('<MultiSectionForm>', () => {
   it('starts on Section A and shows the correct progress', () => {
-    render(
+    renderWithProviders(
       <MultiSectionForm
         initialValues={{}}
         onAutosave={vi.fn()}
@@ -20,7 +26,7 @@ describe('<MultiSectionForm>', () => {
 
   it('blocks Next when Section A validation fails and advances when it passes', async () => {
     const user = userEvent.setup();
-    render(
+    renderWithProviders(
       <MultiSectionForm
         initialValues={{}}
         onAutosave={vi.fn()}
@@ -53,7 +59,7 @@ describe('<MultiSectionForm>', () => {
 
   it('applies intra-section skip logic — Q8 appears when Q7 = Yes', async () => {
     const user = userEvent.setup();
-    render(
+    renderWithProviders(
       <MultiSectionForm
         initialValues={{}}
         onAutosave={vi.fn()}
@@ -69,7 +75,7 @@ describe('<MultiSectionForm>', () => {
 
   it('restores merged values when navigating back', async () => {
     const user = userEvent.setup();
-    render(
+    renderWithProviders(
       <MultiSectionForm
         initialValues={{
           Q1_1: 'Reyes',
@@ -102,7 +108,7 @@ describe('<MultiSectionForm>', () => {
 
   it('blocks Next when Q5 is "Other (specify)" but Q5_other is empty', async () => {
     const user = userEvent.setup();
-    render(
+    renderWithProviders(
       <MultiSectionForm
         initialValues={{
           Q1_1: 'Reyes',
@@ -127,7 +133,7 @@ describe('<MultiSectionForm>', () => {
   });
 
   it('renders the review screen when initialIndex points past the last section', () => {
-    render(
+    renderWithProviders(
       <MultiSectionForm
         initialValues={{
           Q1_1: 'Reyes', Q1_2: 'Carl', Q1_3: 'P',
@@ -152,7 +158,7 @@ describe('<MultiSectionForm>', () => {
       Q2: 'Regular', Q3: 'Female', Q4: 30, Q5: 'Nurse', Q7: 'No',
       Q9_1: 3, Q9_2: 6, Q10: 5, Q11: 8,
     };
-    render(
+    renderWithProviders(
       <MultiSectionForm
         initialValues={values}
         initialIndex={11}
@@ -166,7 +172,7 @@ describe('<MultiSectionForm>', () => {
 
   it('returns to the chosen section when Edit is clicked on the review screen', async () => {
     const user = userEvent.setup();
-    render(
+    renderWithProviders(
       <MultiSectionForm
         initialValues={{
           Q1_1: 'Reyes', Q1_2: 'Carl', Q1_3: 'P',

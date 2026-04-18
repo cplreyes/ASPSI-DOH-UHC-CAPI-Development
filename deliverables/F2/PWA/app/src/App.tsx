@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { MultiSectionForm } from '@/components/survey/MultiSectionForm';
 import { EnrollmentScreen } from '@/components/enrollment/EnrollmentScreen';
 import { PendingCount } from '@/components/sync/PendingCount';
 import { SyncPage } from '@/components/sync/SyncPage';
+import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher';
+import { LocaleProvider } from '@/i18n/locale-context';
 import type { FormValues } from '@/lib/skip-logic';
 import { useInstallPrompt } from '@/lib/install-prompt';
 import { AuthProvider, useAuth } from '@/lib/auth-context';
@@ -77,6 +80,7 @@ function buildRefreshFacilities(): () => Promise<RefreshResult> {
 }
 
 function AppShell() {
+  const { t } = useTranslation();
   const { canInstall, install } = useInstallPrompt();
   const { status: authStatus, enrollment } = useAuth();
   const [status, setStatus] = useState<Status>('loading');
@@ -147,8 +151,9 @@ function AppShell() {
   return (
     <main className="flex min-h-full flex-col">
       <header className="flex items-center justify-between border-b px-6 py-3">
-        <h1 className="text-lg font-semibold">F2 Survey</h1>
+        <h1 className="text-lg font-semibold">{t('chrome.appTitle')}</h1>
         <div className="flex items-center gap-3">
+          <LanguageSwitcher />
           <PendingCount />
           {authStatus === 'enrolled' ? (
             <Button
@@ -156,31 +161,29 @@ function AppShell() {
               variant={view === 'sync' ? 'default' : 'outline'}
               onClick={() => setView(view === 'sync' ? 'form' : 'sync')}
             >
-              {view === 'sync' ? 'Form' : 'Sync'}
+              {view === 'sync' ? t('chrome.formView') : t('chrome.syncView')}
             </Button>
           ) : null}
           {canInstall ? (
             <Button size="sm" onClick={install}>
-              Install
+              {t('chrome.install')}
             </Button>
           ) : null}
         </div>
       </header>
 
       {authStatus === 'loading' ? (
-        <p className="p-6 text-sm text-muted-foreground">Loading…</p>
+        <p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>
       ) : authStatus === 'unenrolled' ? (
         <EnrollmentScreen onRefresh={refresh} />
       ) : view === 'sync' ? (
         <SyncPage runSync={runSyncRef.current} />
       ) : status === 'loading' ? (
-        <p className="p-6 text-sm text-muted-foreground">Loading…</p>
+        <p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>
       ) : status === 'submitted' ? (
         <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
-          <h2 className="text-2xl font-semibold">Thank you</h2>
-          <p className="text-sm text-muted-foreground">
-            Your response is saved on this device and will sync when the app is online.
-          </p>
+          <h2 className="text-2xl font-semibold">{t('chrome.thankYouHeading')}</h2>
+          <p className="text-sm text-muted-foreground">{t('chrome.thankYouBody')}</p>
         </section>
       ) : (
         <MultiSectionForm
@@ -195,8 +198,10 @@ function AppShell() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppShell />
-    </AuthProvider>
+    <LocaleProvider>
+      <AuthProvider>
+        <AppShell />
+      </AuthProvider>
+    </LocaleProvider>
   );
 }
