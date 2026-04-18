@@ -1,0 +1,84 @@
+import Dexie, { type Table } from 'dexie';
+
+export type SubmissionStatus =
+  | 'pending_sync'
+  | 'syncing'
+  | 'synced'
+  | 'rejected'
+  | 'retry_scheduled';
+
+export interface DraftRow {
+  id: string;
+  hcw_id: string;
+  updated_at: number;
+  values: Record<string, unknown>;
+}
+
+export interface LastError {
+  code: string;
+  message: string;
+}
+
+export interface SubmissionRow {
+  client_submission_id: string;
+  hcw_id: string;
+  status: SubmissionStatus;
+  synced_at: number | null;
+  submitted_at: number;
+  spec_version: string;
+  values: Record<string, unknown>;
+  retry_count: number;
+  next_retry_at: number | null;
+  last_error: LastError | null;
+}
+
+export interface FacilityRow {
+  id: string;
+  region: string;
+  province: string;
+  name: string;
+}
+
+export interface ConfigRow {
+  key: string;
+  value: unknown;
+}
+
+export interface AuditRow {
+  id?: number;
+  event: string;
+  occurred_at: number;
+  payload?: Record<string, unknown>;
+}
+
+export class F2Database extends Dexie {
+  drafts!: Table<DraftRow, string>;
+  submissions!: Table<SubmissionRow, string>;
+  facilities!: Table<FacilityRow, string>;
+  config!: Table<ConfigRow, string>;
+  audit!: Table<AuditRow, number>;
+
+  constructor() {
+    super('f2_pwa');
+    this.version(1).stores({
+      drafts: 'id, hcw_id, updated_at',
+      submissions: 'client_submission_id, status, synced_at, hcw_id',
+      facilities: 'id, region, province, name',
+      config: 'key',
+      audit: '++id, event, occurred_at',
+    });
+    this.version(2)
+      .stores({
+        submissions: 'client_submission_id, status, synced_at, hcw_id, next_retry_at',
+      })
+      .upgrade(async (tx) => {
+        await tx.table<SubmissionRow, string>('submissions').toCollection().modify((row) => {
+          if (row.retry_count == null) row.retry_count = 0;
+          if (row.next_retry_at === undefined) row.next_retry_at = null;
+          if (row.last_error === undefined) row.last_error = null;
+        });
+      });
+  }
+}
+
+export const db = new F2Database();
