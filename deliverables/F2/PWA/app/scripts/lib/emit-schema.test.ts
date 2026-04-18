@@ -2,26 +2,28 @@ import { describe, expect, it } from 'vitest';
 import { emitSchema } from './emit-schema';
 import type { ParseResult } from './types';
 
+const dual = (en: string) => ({ en, fil: en });
+
 describe('emitSchema', () => {
   it('emits a module that imports zod and exports a section schema', () => {
     const result: ParseResult = {
       sections: [
         {
           id: 'A',
-          title: 'Profile',
+          title: dual('Profile'),
           items: [
             {
               id: 'Q3',
               section: 'A',
               type: 'single',
               required: true,
-              label: 'Sex?',
+              label: dual('Sex?'),
               choices: [
-                { label: 'Male', value: 'Male' },
-                { label: 'Female', value: 'Female' },
+                { label: dual('Male'), value: 'Male' },
+                { label: dual('Female'), value: 'Female' },
               ],
             },
-            { id: 'Q4', section: 'A', type: 'number', required: true, label: 'Age?', min: 18 },
+            { id: 'Q4', section: 'A', type: 'number', required: true, label: dual('Age?'), min: 18 },
           ],
         },
       ],
@@ -42,9 +44,9 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'A',
-          title: 'A',
+          title: dual('A'),
           items: [
-            { id: 'Q1', section: 'A', type: 'short-text', required: false, label: 'Optional?' },
+            { id: 'Q1', section: 'A', type: 'short-text', required: false, label: dual('Optional?') },
           ],
         },
       ],
@@ -59,8 +61,8 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'A',
-          title: 'A',
-          items: [{ id: 'Q1', section: 'A', type: 'short-text', required: true, label: 'L' }],
+          title: dual('A'),
+          items: [{ id: 'Q1', section: 'A', type: 'short-text', required: true, label: dual('L') }],
         },
       ],
       unsupported: [],
@@ -73,7 +75,7 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'A',
-          title: 'A',
+          title: dual('A'),
           items: [
             {
               id: 'Q2',
@@ -81,10 +83,10 @@ describe('emitSchema', () => {
               type: 'single',
               required: true,
               hasOtherSpecify: true,
-              label: 'Employment?',
+              label: dual('Employment?'),
               choices: [
-                { label: 'Regular', value: 'Regular' },
-                { label: 'Other, specify', value: 'Other, specify', isOtherSpecify: true },
+                { label: dual('Regular'), value: 'Regular' },
+                { label: dual('Other, specify'), value: 'Other, specify', isOtherSpecify: true },
               ],
             },
           ],
@@ -102,14 +104,14 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'A',
-          title: 'A',
+          title: dual('A'),
           items: [
             {
               id: 'Q11',
               section: 'A',
               type: 'number',
               required: true,
-              label: 'L',
+              label: dual('L'),
               min: 1,
               max: 24,
             },
@@ -126,17 +128,17 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'F',
-          title: 'F',
+          title: dual('F'),
           items: [
             {
               id: 'Q62.1',
               section: 'F',
               type: 'single',
               required: true,
-              label: 'L',
+              label: dual('L'),
               choices: [
-                { label: 'Yes', value: 'Yes' },
-                { label: 'No', value: 'No' },
+                { label: dual('Yes'), value: 'Yes' },
+                { label: dual('No'), value: 'No' },
               ],
             },
           ],
@@ -153,17 +155,17 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'C',
-          title: 'C',
+          title: dual('C'),
           items: [
             {
               id: 'Q28',
               section: 'C',
               type: 'multi',
               required: true,
-              label: 'Which?',
+              label: dual('Which?'),
               choices: [
-                { label: 'Pap smear', value: 'Pap smear' },
-                { label: 'Mammogram', value: 'Mammogram' },
+                { label: dual('Pap smear'), value: 'Pap smear' },
+                { label: dual('Mammogram'), value: 'Mammogram' },
               ],
             },
           ],
@@ -180,15 +182,15 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'C',
-          title: 'C',
+          title: dual('C'),
           items: [
             {
               id: 'Q29',
               section: 'C',
               type: 'multi',
               required: false,
-              label: 'Which?',
-              choices: [{ label: 'A', value: 'A' }],
+              label: dual('Which?'),
+              choices: [{ label: dual('A'), value: 'A' }],
             },
           ],
         },
@@ -203,7 +205,7 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'B',
-          title: 'B',
+          title: dual('B'),
           items: [
             {
               id: 'Q21',
@@ -211,10 +213,10 @@ describe('emitSchema', () => {
               type: 'multi',
               required: true,
               hasOtherSpecify: true,
-              label: 'Which?',
+              label: dual('Which?'),
               choices: [
-                { label: 'Salary', value: 'Salary' },
-                { label: 'Other (specify)', value: 'Other (specify)', isOtherSpecify: true },
+                { label: dual('Salary'), value: 'Salary' },
+                { label: dual('Other (specify)'), value: 'Other (specify)', isOtherSpecify: true },
               ],
             },
           ],
@@ -232,8 +234,8 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'C',
-          title: 'C',
-          items: [{ id: 'Q31', section: 'C', type: 'date', required: false, label: 'When?' }],
+          title: dual('C'),
+          items: [{ id: 'Q31', section: 'C', type: 'date', required: false, label: dual('When?') }],
         },
       ],
       unsupported: [],
@@ -247,17 +249,17 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'A',
-          title: 'A',
+          title: dual('A'),
           items: [
             {
               id: 'Q1',
               section: 'A',
               type: 'multi-field',
               required: true,
-              label: 'name',
+              label: dual('name'),
               subFields: [
-                { id: 'Q1_1', label: 'Last', kind: 'short-text' },
-                { id: 'Q1_2', label: 'First', kind: 'short-text' },
+                { id: 'Q1_1', label: dual('Last'), kind: 'short-text' },
+                { id: 'Q1_2', label: dual('First'), kind: 'short-text' },
               ],
             },
             {
@@ -265,10 +267,10 @@ describe('emitSchema', () => {
               section: 'A',
               type: 'multi-field',
               required: false,
-              label: 'how long',
+              label: dual('how long'),
               subFields: [
-                { id: 'Q9_1', label: 'Y', kind: 'number' },
-                { id: 'Q9_2', label: 'M', kind: 'number' },
+                { id: 'Q9_1', label: dual('Y'), kind: 'number' },
+                { id: 'Q9_2', label: dual('M'), kind: 'number' },
               ],
             },
           ],
@@ -288,9 +290,9 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'C',
-          title: 'C',
+          title: dual('C'),
           items: [
-            { id: 'Q36', section: 'C', type: 'long-text', required: true, label: 'What might?' },
+            { id: 'Q36', section: 'C', type: 'long-text', required: true, label: dual('What might?') },
           ],
         },
       ],
@@ -304,7 +306,7 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'A',
-          title: 'A',
+          title: dual('A'),
           items: [
             {
               id: 'Q2',
@@ -312,10 +314,10 @@ describe('emitSchema', () => {
               type: 'single',
               required: true,
               hasOtherSpecify: true,
-              label: 'Employment?',
+              label: dual('Employment?'),
               choices: [
-                { label: 'Regular', value: 'Regular' },
-                { label: 'Other, specify', value: 'Other, specify', isOtherSpecify: true },
+                { label: dual('Regular'), value: 'Regular' },
+                { label: dual('Other, specify'), value: 'Other, specify', isOtherSpecify: true },
               ],
             },
           ],
@@ -334,7 +336,7 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'B',
-          title: 'B',
+          title: dual('B'),
           items: [
             {
               id: 'Q21',
@@ -342,10 +344,10 @@ describe('emitSchema', () => {
               type: 'multi',
               required: true,
               hasOtherSpecify: true,
-              label: 'Which?',
+              label: dual('Which?'),
               choices: [
-                { label: 'Salary', value: 'Salary' },
-                { label: 'Other (specify)', value: 'Other (specify)', isOtherSpecify: true },
+                { label: dual('Salary'), value: 'Salary' },
+                { label: dual('Other (specify)'), value: 'Other (specify)', isOtherSpecify: true },
               ],
             },
           ],
@@ -363,9 +365,9 @@ describe('emitSchema', () => {
       sections: [
         {
           id: 'H',
-          title: 'H',
+          title: dual('H'),
           items: [
-            { id: 'Q88', section: 'H', type: 'single', required: true, label: 'L', choices: [{ label: 'A', value: 'A' }] },
+            { id: 'Q88', section: 'H', type: 'single', required: true, label: dual('L'), choices: [{ label: dual('A'), value: 'A' }] },
           ],
         },
       ],

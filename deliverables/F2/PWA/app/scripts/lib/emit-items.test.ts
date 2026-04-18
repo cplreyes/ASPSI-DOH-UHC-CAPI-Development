@@ -2,25 +2,27 @@ import { describe, expect, it } from 'vitest';
 import { emitItems } from './emit-items';
 import type { ParseResult } from './types';
 
+const dual = (en: string) => ({ en, fil: en });
+
 describe('emitItems', () => {
   it('emits a module that exports sectionA and sections', () => {
     const result: ParseResult = {
       sections: [
         {
           id: 'A',
-          title: 'Healthcare Worker Profile',
-          preamble: 'A preamble',
+          title: dual('Healthcare Worker Profile'),
+          preamble: dual('A preamble'),
           items: [
             {
               id: 'Q3',
               section: 'A',
               type: 'single',
               required: true,
-              label: 'What is your sex at birth?',
+              label: dual('What is your sex at birth?'),
               hasOtherSpecify: false,
               choices: [
-                { label: 'Male', value: 'Male' },
-                { label: 'Female', value: 'Female' },
+                { label: dual('Male'), value: 'Male' },
+                { label: dual('Female'), value: 'Female' },
               ],
             },
           ],
@@ -35,10 +37,10 @@ describe('emitItems', () => {
     expect(code).toContain("import type { Section } from '@/types/survey';");
     expect(code).toContain('export const sectionA: Section = {');
     expect(code).toContain("id: 'A'");
-    expect(code).toContain("title: 'Healthcare Worker Profile'");
-    expect(code).toContain("preamble: 'A preamble'");
+    expect(code).toContain("title: { en: 'Healthcare Worker Profile', fil: 'Healthcare Worker Profile' }");
+    expect(code).toContain("preamble: { en: 'A preamble', fil: 'A preamble' }");
     expect(code).toContain("id: 'Q3'");
-    expect(code).toContain("label: 'What is your sex at birth?'");
+    expect(code).toContain("label: { en: 'What is your sex at birth?', fil: 'What is your sex at birth?' }");
     expect(code).toContain('export const sections: Section[] = [sectionA];');
   });
 
@@ -47,14 +49,14 @@ describe('emitItems', () => {
       sections: [
         {
           id: 'A',
-          title: "Mark's section",
+          title: dual("Mark's section"),
           items: [
             {
               id: 'Q1',
               section: 'A',
               type: 'short-text',
               required: true,
-              label: "Don't answer if C:\\Windows",
+              label: dual("Don't answer if C:\\Windows"),
             },
           ],
         },
@@ -63,8 +65,8 @@ describe('emitItems', () => {
     };
 
     const code = emitItems(result);
-    expect(code).toContain("title: 'Mark\\'s section'");
-    expect(code).toContain("label: 'Don\\'t answer if C:\\\\Windows'");
+    expect(code).toContain("title: { en: 'Mark\\'s section', fil: 'Mark\\'s section' }");
+    expect(code).toContain("label: { en: 'Don\\'t answer if C:\\\\Windows', fil: 'Don\\'t answer if C:\\\\Windows' }");
   });
 
   it('omits optional fields when absent', () => {
@@ -72,8 +74,8 @@ describe('emitItems', () => {
       sections: [
         {
           id: 'A',
-          title: 'A',
-          items: [{ id: 'Q1', section: 'A', type: 'short-text', required: false, label: 'Plain' }],
+          title: dual('A'),
+          items: [{ id: 'Q1', section: 'A', type: 'short-text', required: false, label: dual('Plain') }],
         },
       ],
       unsupported: [],
@@ -88,7 +90,7 @@ describe('emitItems', () => {
 
   it('emits items: [] (not [,]) for sections with zero supported items', () => {
     const result: ParseResult = {
-      sections: [{ id: 'J', title: 'Job Satisfaction', items: [] }],
+      sections: [{ id: 'J', title: dual('Job Satisfaction'), items: [] }],
       unsupported: [],
     };
     const code = emitItems(result);
@@ -98,7 +100,7 @@ describe('emitItems', () => {
 
   it('includes an unsupported block as a comment when items are skipped', () => {
     const result: ParseResult = {
-      sections: [{ id: 'A', title: 'A', items: [] }],
+      sections: [{ id: 'A', title: dual('A'), items: [] }],
       unsupported: [{ id: 'Q1', section: 'A', rawType: 'section-break', reason: 'section break' }],
     };
     const code = emitItems(result);
@@ -111,17 +113,17 @@ describe('emitItems', () => {
       sections: [
         {
           id: 'A',
-          title: 'A',
+          title: dual('A'),
           items: [
             {
               id: 'Q1',
               section: 'A',
               type: 'multi-field',
               required: true,
-              label: 'name',
+              label: dual('name'),
               subFields: [
-                { id: 'Q1_1', label: 'Last', kind: 'short-text' },
-                { id: 'Q1_2', label: 'First', kind: 'short-text' },
+                { id: 'Q1_1', label: dual('Last'), kind: 'short-text' },
+                { id: 'Q1_2', label: dual('First'), kind: 'short-text' },
               ],
             },
           ],
@@ -131,7 +133,7 @@ describe('emitItems', () => {
     };
     const out = emitItems(result);
     expect(out).toContain(
-      "subFields: [{ id: 'Q1_1', label: 'Last', kind: 'short-text' }, { id: 'Q1_2', label: 'First', kind: 'short-text' }]",
+      "subFields: [{ id: 'Q1_1', label: { en: 'Last', fil: 'Last' }, kind: 'short-text' }, { id: 'Q1_2', label: { en: 'First', fil: 'First' }, kind: 'short-text' }]",
     );
   });
 });

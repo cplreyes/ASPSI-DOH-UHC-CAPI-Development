@@ -25,8 +25,8 @@ export function emitItems(result: ParseResult): string {
 }
 
 function emitSectionConst(section: Section): string {
-  const parts: string[] = [`  id: '${section.id}'`, `  title: ${quote(section.title)}`];
-  if (section.preamble) parts.push(`  preamble: ${quote(section.preamble)}`);
+  const parts: string[] = [`  id: '${section.id}'`, `  title: ${quoteLocalized(section.title)}`];
+  if (section.preamble) parts.push(`  preamble: ${quoteLocalized(section.preamble)}`);
   if (section.items.length === 0) {
     parts.push(`  items: []`);
   } else {
@@ -43,10 +43,10 @@ function emitItem(item: Item): string {
     `section: '${item.section}'`,
     `type: '${item.type}'`,
     `required: ${item.required}`,
-    `label: ${quote(item.label)}`,
+    `label: ${quoteLocalized(item.label)}`,
   ];
   if (item.legacyId) fields.push(`legacyId: '${item.legacyId}'`);
-  if (item.help) fields.push(`help: ${quote(item.help)}`);
+  if (item.help) fields.push(`help: ${quoteLocalized(item.help)}`);
   if (item.min !== undefined) fields.push(`min: ${item.min}`);
   if (item.max !== undefined) fields.push(`max: ${item.max}`);
   if (item.hasOtherSpecify) fields.push(`hasOtherSpecify: true`);
@@ -54,7 +54,7 @@ function emitItem(item: Item): string {
     const choicesLiteral = item.choices
       .map(
         (c) =>
-          `{ label: ${quote(c.label)}, value: ${quote(c.value)}${c.isOtherSpecify ? ', isOtherSpecify: true' : ''} }`,
+          `{ label: ${quoteLocalized(c.label)}, value: ${quote(c.value)}${c.isOtherSpecify ? ', isOtherSpecify: true' : ''} }`,
       )
       .join(', ');
     fields.push(`choices: [${choicesLiteral}]`);
@@ -62,7 +62,7 @@ function emitItem(item: Item): string {
   if (item.subFields) {
     const subFieldsLiteral = item.subFields
       .map((sf) => {
-        const parts = [`id: '${sf.id}'`, `label: ${quote(sf.label)}`, `kind: '${sf.kind}'`];
+        const parts = [`id: '${sf.id}'`, `label: ${quoteLocalized(sf.label)}`, `kind: '${sf.kind}'`];
         if (sf.min !== undefined) parts.push(`min: ${sf.min}`);
         if (sf.max !== undefined) parts.push(`max: ${sf.max}`);
         return `{ ${parts.join(', ')} }`;
@@ -75,4 +75,8 @@ function emitItem(item: Item): string {
 
 function quote(s: string): string {
   return `'${s.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
+}
+
+function quoteLocalized(s: { en: string; fil: string }): string {
+  return `{ en: ${quote(s.en)}, fil: ${quote(s.fil)} }`;
 }
