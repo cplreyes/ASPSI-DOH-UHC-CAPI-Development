@@ -68,7 +68,7 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
               className={`rounded-md border px-3 py-2 text-sm ${SEVERITY_STYLES[w.severity]}`}
             >
               <strong className="mr-2">{w.id}</strong>
-              {w.message}
+              {t(w.message.key, w.message.values)}
             </div>
           ))}
         </section>

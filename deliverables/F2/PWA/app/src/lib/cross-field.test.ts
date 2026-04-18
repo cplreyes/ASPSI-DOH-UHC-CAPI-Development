@@ -7,7 +7,10 @@ describe('evaluateCrossField', () => {
       {
         id: 'PROF-03',
         severity: 'info',
-        message: 'Derived employment class: full-time.',
+        message: {
+          key: 'crossField.employmentClassDerived',
+          values: { employmentClass: 'full-time' },
+        },
         fields: ['Q11'],
         derived: { employment_class: 'full-time' },
       },
@@ -74,7 +77,10 @@ describe('evaluateCrossField', () => {
   it('warning has a human-readable message and lists involved fields', () => {
     const out = evaluateCrossField({ Q4: 25, Q5: 'Nurse', Q9_1: 15 });
     const prof01 = out.find((w): w is Warning => w.id === 'PROF-01');
-    expect(prof01?.message).toMatch(/tenure/i);
+    expect(prof01?.message).toEqual({
+      key: 'crossField.tenureImplausible',
+      values: { years: 15, age: 25 },
+    });
     expect(prof01?.fields).toEqual(['Q4', 'Q9_1']);
   });
 });

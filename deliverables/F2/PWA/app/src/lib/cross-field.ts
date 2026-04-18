@@ -5,7 +5,7 @@ export type Severity = 'info' | 'warn' | 'clean' | 'error';
 export interface Warning {
   id: string;
   severity: Severity;
-  message: string;
+  message: { key: string; values?: Record<string, unknown> };
   fields: string[];
   derived?: Record<string, string>;
 }
@@ -52,7 +52,10 @@ export function evaluateCrossField(values: FormValues): Warning[] {
     out.push({
       id: 'PROF-01',
       severity: 'warn',
-      message: `Reported tenure (${tenureYears} years) is implausible for age ${age}.`,
+      message: {
+        key: 'crossField.tenureImplausible',
+        values: { years: tenureYears, age },
+      },
       fields: ['Q4', 'Q9_1'],
     });
   }
@@ -63,7 +66,10 @@ export function evaluateCrossField(values: FormValues): Warning[] {
     out.push({
       id: 'PROF-02',
       severity: 'warn',
-      message: `Role "${role}" does not normally carry a medical specialty (${specialty}).`,
+      message: {
+        key: 'crossField.specialtyMismatch',
+        values: { role, specialty },
+      },
       fields: ['Q5', 'Q6'],
     });
   }
@@ -73,7 +79,10 @@ export function evaluateCrossField(values: FormValues): Warning[] {
     out.push({
       id: 'PROF-03',
       severity: 'info',
-      message: `Derived employment class: ${hours >= 8 ? 'full-time' : 'part-time'}.`,
+      message: {
+        key: 'crossField.employmentClassDerived',
+        values: { employmentClass: hours >= 8 ? 'full-time' : 'part-time' },
+      },
       fields: ['Q11'],
       derived: { employment_class: hours >= 8 ? 'full-time' : 'part-time' },
     });
@@ -84,7 +93,10 @@ export function evaluateCrossField(values: FormValues): Warning[] {
     out.push({
       id: 'PROF-04',
       severity: 'warn',
-      message: `Reported workload (${days} days × ${hours} hrs = ${days * hours} hrs/week) exceeds 80.`,
+      message: {
+        key: 'crossField.workloadExceeds80',
+        values: { days, hours, total: days * hours },
+      },
       fields: ['Q10', 'Q11'],
     });
   }
@@ -93,7 +105,10 @@ export function evaluateCrossField(values: FormValues): Warning[] {
     out.push({
       id: 'GATE-02',
       severity: 'clean',
-      message: `Section G is for physicians and dentists only; answers from "${role}" will be dropped server-side.`,
+      message: {
+        key: 'crossField.sectionGRoleMismatch',
+        values: { role },
+      },
       fields: ['Q5', ...SECTION_G_FIELDS.filter((f) => isFilled(values[f]))],
     });
   }
@@ -102,7 +117,10 @@ export function evaluateCrossField(values: FormValues): Warning[] {
     out.push({
       id: 'GATE-05',
       severity: 'clean',
-      message: `Sections C and D are for clinical-care roles only; answers from "${role}" will be dropped server-side.`,
+      message: {
+        key: 'crossField.sectionsCDRoleMismatch',
+        values: { role },
+      },
       fields: ['Q5', ...SECTION_CD_FIELDS.filter((f) => isFilled(values[f]))],
     });
   }
