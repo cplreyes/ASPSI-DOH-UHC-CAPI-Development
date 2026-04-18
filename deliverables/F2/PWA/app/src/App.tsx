@@ -1,16 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { MultiSectionForm } from '@/components/survey/MultiSectionForm';
+import { EnrollmentScreen } from '@/components/enrollment/EnrollmentScreen';
 import { PendingCount } from '@/components/sync/PendingCount';
 import { SyncPage } from '@/components/sync/SyncPage';
 import type { FormValues } from '@/lib/skip-logic';
 import { useInstallPrompt } from '@/lib/install-prompt';
-import { getOrCreateDraftId, loadDraft, saveDraft, submitDraft } from '@/lib/draft';
+import { AuthProvider, useAuth } from '@/lib/auth-context';
+import { getOrCreateDraftId, loadDraft, saveDraft, submitDraft, type EnrollmentInfo } from '@/lib/draft';
 import { getSyncEnv } from '@/lib/env';
 import { hmacSha256Hex } from '@/lib/hmac';
 import { postBatchSubmit } from '@/lib/sync-client';
 import { runSync, type SyncRunSummary } from '@/lib/sync-orchestrator';
 import { installSyncTriggers } from '@/lib/sync-triggers';
+import { getFacilities } from '@/lib/facilities-client';
+import { refreshFacilities, type RefreshResult } from '@/lib/facilities-cache';
 
 type Status = 'loading' | 'editing' | 'submitted';
 type View = 'form' | 'sync';
@@ -57,22 +61,51 @@ const noopRunSync: () => Promise<SyncRunSummary> = async () => ({
   alreadyRunning: false,
 });
 
-export default function App() {
+function buildRefreshFacilities(): () => Promise<RefreshResult> {
+  const env = getSyncEnv();
+  return () =>
+    refreshFacilities({
+      fetcher: () =>
+        getFacilities({
+          backendUrl: env.backendUrl,
+          hmacSecret: env.hmacSecret,
+          hmacSign: hmacSha256Hex,
+          nowMs: Date.now,
+          fetchImpl: fetch.bind(globalThis),
+        }),
+    });
+}
+
+function AppShell() {
   const { canInstall, install } = useInstallPrompt();
+  const { status: authStatus, enrollment } = useAuth();
   const [status, setStatus] = useState<Status>('loading');
   const [view, setView] = useState<View>('form');
   const [draftId, setDraftId] = useState<string>('');
   const [initialValues, setInitialValues] = useState<FormValues>({});
   const runSyncRef = useRef<() => Promise<SyncRunSummary>>(noopRunSync);
 
+  const enrollmentInfo: EnrollmentInfo | null = useMemo(
+    () =>
+      enrollment
+        ? {
+            hcw_id: enrollment.hcw_id,
+            facility_id: enrollment.facility_id,
+            facility_type: enrollment.facility_type,
+          }
+        : null,
+    [enrollment],
+  );
+
   useEffect(() => {
+    if (authStatus !== 'enrolled') return;
     const id = getOrCreateDraftId();
     setDraftId(id);
-    loadDraft(id).then((row) => {
+    void loadDraft(id).then((row) => {
       setInitialValues((row?.values as FormValues | undefined) ?? {});
       setStatus('editing');
     });
-  }, []);
+  }, [authStatus]);
 
   useEffect(() => {
     let triggers: { stop: () => void } | null = null;
@@ -90,15 +123,23 @@ export default function App() {
     };
   }, []);
 
+  const refresh = useMemo<() => Promise<RefreshResult>>(() => {
+    try {
+      return buildRefreshFacilities();
+    } catch {
+      return async () => ({ ok: false, error: { code: 'E_ENV', message: 'Backend env missing' } });
+    }
+  }, []);
+
   const handleAutosave = (values: FormValues) => {
-    if (!draftId) return;
-    void saveDraft(draftId, values);
+    if (!draftId || !enrollmentInfo) return;
+    void saveDraft(draftId, values, enrollmentInfo);
   };
 
   const handleSubmit = async (values: FormValues) => {
-    if (!draftId) return;
-    await saveDraft(draftId, values);
-    await submitDraft(draftId);
+    if (!draftId || !enrollmentInfo) return;
+    await saveDraft(draftId, values, enrollmentInfo);
+    await submitDraft(draftId, enrollmentInfo);
     setStatus('submitted');
     void runSyncRef.current();
   };
@@ -109,13 +150,15 @@ export default function App() {
         <h1 className="text-lg font-semibold">F2 Survey</h1>
         <div className="flex items-center gap-3">
           <PendingCount />
-          <Button
-            size="sm"
-            variant={view === 'sync' ? 'default' : 'outline'}
-            onClick={() => setView(view === 'sync' ? 'form' : 'sync')}
-          >
-            {view === 'sync' ? 'Form' : 'Sync'}
-          </Button>
+          {authStatus === 'enrolled' ? (
+            <Button
+              size="sm"
+              variant={view === 'sync' ? 'default' : 'outline'}
+              onClick={() => setView(view === 'sync' ? 'form' : 'sync')}
+            >
+              {view === 'sync' ? 'Form' : 'Sync'}
+            </Button>
+          ) : null}
           {canInstall ? (
             <Button size="sm" onClick={install}>
               Install
@@ -123,7 +166,12 @@ export default function App() {
           ) : null}
         </div>
       </header>
-      {view === 'sync' ? (
+
+      {authStatus === 'loading' ? (
+        <p className="p-6 text-sm text-muted-foreground">Loading…</p>
+      ) : authStatus === 'unenrolled' ? (
+        <EnrollmentScreen onRefresh={refresh} />
+      ) : view === 'sync' ? (
         <SyncPage runSync={runSyncRef.current} />
       ) : status === 'loading' ? (
         <p className="p-6 text-sm text-muted-foreground">Loading…</p>
@@ -142,5 +190,13 @@ export default function App() {
         />
       )}
     </main>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppShell />
+    </AuthProvider>
   );
 }

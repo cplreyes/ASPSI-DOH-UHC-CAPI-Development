@@ -4,9 +4,32 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 import { db, type SubmissionRow } from '@/lib/db';
 
+async function seedEnrollment() {
+  if (!db.isOpen()) await db.open();
+  await db.facilities.clear();
+  await db.enrollment.clear();
+  await db.facilities.put({
+    facility_id: 'F-001',
+    facility_name: 'Manila General',
+    facility_type: 'Hospital',
+    region: 'NCR',
+    province: 'Metro Manila',
+    city_mun: 'Manila',
+    barangay: 'Ermita',
+  });
+  await db.enrollment.put({
+    id: 'singleton',
+    hcw_id: 'HCW-1',
+    facility_id: 'F-001',
+    facility_type: 'Hospital',
+    enrolled_at: 1,
+  });
+}
+
 describe('<App>', () => {
   beforeEach(async () => {
     if (!db.isOpen()) await db.open();
+    await seedEnrollment();
   });
 
   it('renders Section A heading after loading', async () => {
@@ -33,7 +56,6 @@ describe('<App>', () => {
 
     await user.click(screen.getByLabelText('Female'));
 
-    // Wait past the 500 ms autosave debounce + Dexie write.
     await waitFor(
       async () => {
         const draftId = localStorage.getItem('f2_current_draft_id');
@@ -51,6 +73,14 @@ describe('<App>', () => {
       expect(screen.getByLabelText('Female')).toBeChecked();
     });
   });
+
+  it('renders the EnrollmentScreen when no enrollment row exists', async () => {
+    await db.enrollment.clear();
+    render(<App />);
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: /enrol|enroll/i })).toBeInTheDocument(),
+    );
+  });
 });
 
 describe('App — sync integration', () => {
@@ -59,6 +89,7 @@ describe('App — sync integration', () => {
     await db.submissions.clear();
     await db.drafts.clear();
     localStorage.clear();
+    await seedEnrollment();
   });
 
   it('renders a pending count badge when the DB has pending submissions', async () => {
