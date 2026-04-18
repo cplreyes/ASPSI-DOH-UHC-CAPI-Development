@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { liveQuery } from 'dexie';
 import { db } from '@/lib/db';
 
 export function PendingCount() {
+  const { t } = useTranslation();
   const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
@@ -23,7 +25,7 @@ export function PendingCount() {
       data-testid="pending-count"
       className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800"
     >
-      {count} pending
+      {t('sync.pendingBadge', { count })}
     </span>
   );
 }
