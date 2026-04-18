@@ -1,0 +1,23 @@
+import { describe, expect, it } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { ProgressBar } from './ProgressBar';
+
+describe('<ProgressBar>', () => {
+  it('renders the current / total label', () => {
+    render(<ProgressBar current={2} total={3} />);
+    expect(screen.getByText(/Section 2 of 3/)).toBeInTheDocument();
+  });
+
+  it('exposes aria-valuenow as a percent', () => {
+    render(<ProgressBar current={2} total={3} />);
+    const bar = screen.getByRole('progressbar');
+    expect(bar).toHaveAttribute('aria-valuenow', '67');
+    expect(bar).toHaveAttribute('aria-valuemin', '0');
+    expect(bar).toHaveAttribute('aria-valuemax', '100');
+  });
+
+  it('caps at 100% when current === total', () => {
+    render(<ProgressBar current={3} total={3} />);
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100');
+  });
+});

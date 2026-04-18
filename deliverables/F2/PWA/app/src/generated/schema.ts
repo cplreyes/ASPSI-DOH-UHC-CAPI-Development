@@ -3,75 +3,16 @@
 import { z } from 'zod';
 
 export const sectionASchema = z.object({
-  Q2: z.enum([
-    'Regular',
-    'Casual',
-    'Seasonal',
-    'Probationary',
-    'Project',
-    'Fixed-term',
-    'Other, specify',
-  ]),
+  Q2: z.enum(['Regular', 'Casual', 'Seasonal', 'Probationary', 'Project', 'Fixed-term', 'Other, specify']),
   Q2_other: z.string().optional(),
   Q3: z.enum(['Male', 'Female']),
   Q4: z.coerce.number().min(18),
-  Q5: z.enum([
-    'Administrator',
-    'Physician/Doctor',
-    'Physician assistant',
-    'Nurse',
-    'Nursing assistant',
-    'Pharmacist/Dispenser',
-    'Midwife',
-    'Laboratory technician',
-    'Medical/radiologic technologist',
-    'Health promotion officer',
-    'Nutrition action officer/coordinator',
-    'Physical Therapist',
-    'Dentist',
-    'Dentist aide',
-    'Barangay Health Worker',
-    'Other (specify)',
-  ]),
+  Q5: z.enum(['Administrator', 'Physician/Doctor', 'Physician assistant', 'Nurse', 'Nursing assistant', 'Pharmacist/Dispenser', 'Midwife', 'Laboratory technician', 'Medical/radiologic technologist', 'Health promotion officer', 'Nutrition action officer/coordinator', 'Physical Therapist', 'Dentist', 'Dentist aide', 'Barangay Health Worker', 'Other (specify)']),
   Q5_other: z.string().optional(),
-  Q6: z
-    .enum([
-      'No specialty',
-      'Anesthesia',
-      'Dermatology',
-      'Emergency Medicine',
-      'Family Medicine',
-      'General Surgery',
-      'Internal Medicine',
-      'Neurology',
-      'Nuclear Medicine',
-      'Obstetrics and Gynecology',
-      'Occupational Medicine',
-      'Ophthalmology',
-      'Orthopedics',
-      'Otorhinolaryngology (ENT)',
-      'Pathology',
-      'Pediatrics',
-      'Physical and Rehabilitation Medicine',
-      'Psychiatry',
-      'Public health',
-      'Radiology',
-      'Research',
-      'Others (specify)',
-    ])
-    .optional(),
+  Q6: z.enum(['No specialty', 'Anesthesia', 'Dermatology', 'Emergency Medicine', 'Family Medicine', 'General Surgery', 'Internal Medicine', 'Neurology', 'Nuclear Medicine', 'Obstetrics and Gynecology', 'Occupational Medicine', 'Ophthalmology', 'Orthopedics', 'Otorhinolaryngology (ENT)', 'Pathology', 'Pediatrics', 'Physical and Rehabilitation Medicine', 'Psychiatry', 'Public health', 'Radiology', 'Research', 'Others (specify)']).optional(),
   Q6_other: z.string().optional(),
   Q7: z.enum(['Yes', 'No']),
-  Q8: z
-    .enum([
-      'All time in private',
-      'Over half but not all in private',
-      'Equally',
-      'Over half but not all in public',
-      'All time in public',
-      "I don't know",
-    ])
-    .optional(),
+  Q8: z.enum(['All time in private', 'Over half but not all in private', 'Equally', 'Over half but not all in public', 'All time in public', 'I don\'t know']).optional(),
   Q10: z.coerce.number().min(1).max(7),
   Q11: z.coerce.number().min(1).max(24),
 });
@@ -79,61 +20,34 @@ export type SectionAValues = z.infer<typeof sectionASchema>;
 
 export const sectionBSchema = z.object({
   Q12: z.enum(['Yes', 'No']),
-  Q13: z.enum([
-    'Yes, direct result of UHC Act',
-    'Yes, pre-existing but significantly improved due to UHC Act',
-    'Yes, recently implemented/improved but not due to UHC Act',
-    'Yes, specify other reason',
-    'No, not yet but planned in next 1–2 years',
-    'No, and no plans in next 1–2 years',
-    'No, specify other reason',
-    "I don't know",
-  ]),
+  Q13: z.enum(['Yes, direct result of UHC Act', 'Yes, pre-existing but significantly improved due to UHC Act', 'Yes, recently implemented/improved but not due to UHC Act', 'Yes, specify other reason', 'No, not yet but planned in next 1–2 years', 'No, and no plans in next 1–2 years', 'No, specify other reason', 'I don\'t know']),
   Q13_other: z.string().optional(),
   Q14: z.string().optional(),
-  Q15: z.enum(['*(same choice set as Q13)*']),
+  Q15: z.enum(['Yes, direct result of UHC Act', 'Yes, pre-existing but significantly improved due to UHC Act', 'Yes, recently implemented/improved but not due to UHC Act', 'Yes, specify other reason', 'No, not yet but planned in next 1–2 years', 'No, and no plans in next 1–2 years', 'No, specify other reason', 'I don\'t know']),
   Q15_other: z.string().optional(),
   Q16: z.string().optional(),
-  Q17: z.enum(['*(same choice set as Q13)*']),
+  Q17: z.enum(['Yes, direct result of UHC Act', 'Yes, pre-existing but significantly improved due to UHC Act', 'Yes, recently implemented/improved but not due to UHC Act', 'Yes, specify other reason', 'No, not yet but planned in next 1–2 years', 'No, and no plans in next 1–2 years', 'No, specify other reason', 'I don\'t know']),
   Q17_other: z.string().optional(),
-  Q18: z.enum(['*(same choice set as Q13)*']),
+  Q18: z.enum(['Yes, direct result of UHC Act', 'Yes, pre-existing but significantly improved due to UHC Act', 'Yes, recently implemented/improved but not due to UHC Act', 'Yes, specify other reason', 'No, not yet but planned in next 1–2 years', 'No, and no plans in next 1–2 years', 'No, specify other reason', 'I don\'t know']),
   Q18_other: z.string().optional(),
-  Q19: z.enum(['*(same choice set as Q13)*']),
+  Q19: z.enum(['Yes, direct result of UHC Act', 'Yes, pre-existing but significantly improved due to UHC Act', 'Yes, recently implemented/improved but not due to UHC Act', 'Yes, specify other reason', 'No, not yet but planned in next 1–2 years', 'No, and no plans in next 1–2 years', 'No, specify other reason', 'I don\'t know']),
   Q19_other: z.string().optional(),
-  Q20: z.enum(['*(same choice set as Q13)*']),
+  Q20: z.enum(['Yes, direct result of UHC Act', 'Yes, pre-existing but significantly improved due to UHC Act', 'Yes, recently implemented/improved but not due to UHC Act', 'Yes, specify other reason', 'No, not yet but planned in next 1–2 years', 'No, and no plans in next 1–2 years', 'No, specify other reason', 'I don\'t know']),
   Q20_other: z.string().optional(),
-  Q22: z.enum(['Higher', 'Lower', "I don't know"]),
-  Q23: z.enum(['Higher', 'Lower', "I don't know"]),
-  Q24: z.enum(['Longer', 'Shorter', "I don't know"]),
-  Q25: z.enum(['More stringent', 'Less stringent', "I don't know"]),
-  Q26: z.enum(['More', 'Less', "I don't know"]),
+  Q22: z.enum(['Higher', 'Lower', 'I don\'t know']),
+  Q23: z.enum(['Higher', 'Lower', 'I don\'t know']),
+  Q24: z.enum(['Longer', 'Shorter', 'I don\'t know']),
+  Q25: z.enum(['More stringent', 'Less stringent', 'I don\'t know']),
+  Q26: z.enum(['More', 'Less', 'I don\'t know']),
 });
 export type SectionBValues = z.infer<typeof sectionBSchema>;
 
 export const sectionCSchema = z.object({
   Q27: z.enum(['Yes', 'No']),
-  Q29: z.enum([
-    'It is possible to register individual patients',
-    'It is possible to register whole families',
-    'It is possible to register both individual patients and their family members together',
-    'None of the above are true',
-    "I don't know",
-  ]),
-  Q30: z.enum([
-    'Yes',
-    'No',
-    "I don't know what PhilHealth YAKAP/Konsulta package accreditation is",
-    'Other (specify)',
-  ]),
+  Q29: z.enum(['It is possible to register individual patients', 'It is possible to register whole families', 'It is possible to register both individual patients and their family members together', 'None of the above are true', 'I don\'t know']),
+  Q30: z.enum(['Yes', 'No', 'I don\'t know what PhilHealth YAKAP/Konsulta package accreditation is', 'Other (specify)']),
   Q30_other: z.string().optional(),
-  Q32: z
-    .enum([
-      'Predictable revenue due to capitation',
-      'YAKAP is more comprehensive',
-      'High volume of patients',
-      'Other (specify)',
-    ])
-    .optional(),
+  Q32: z.enum(['Predictable revenue due to capitation', 'YAKAP is more comprehensive', 'High volume of patients', 'Other (specify)']).optional(),
   Q32_other: z.string().optional(),
   Q34: z.enum(['Yes', 'No', 'Not a physician/dentist']),
   Q36: z.string().min(1),
@@ -148,7 +62,7 @@ export type SectionDValues = z.infer<typeof sectionDSchema>;
 
 export const sectionE1Schema = z.object({
   Q43: z.enum(['Yes', 'No']),
-  Q44: z.enum(['Yes', 'No', "I don't know"]),
+  Q44: z.enum(['Yes', 'No', 'I don\'t know']),
 });
 export type SectionE1Values = z.infer<typeof sectionE1Schema>;
 
@@ -159,31 +73,11 @@ export const sectionE2Schema = z.object({
 export type SectionE2Values = z.infer<typeof sectionE2Schema>;
 
 export const sectionFSchema = z.object({
-  Q50: z.enum([
-    'DOH standard referral form',
-    "Facility's standard referral form",
-    "Province's standard referral form",
-    'City/LGU standard referral form',
-    'No standard referral form',
-    'Other (specify)',
-  ]),
+  Q50: z.enum(['DOH standard referral form', 'Facility\'s standard referral form', 'Province\'s standard referral form', 'City/LGU standard referral form', 'No standard referral form', 'Other (specify)']),
   Q50_other: z.string().optional(),
-  Q51: z.enum(['Yes', 'No', "I've never heard of it", "I don't know"]),
-  Q52: z.enum([
-    'Almost all referred, very few walk-in',
-    'Majority referred, some walk-in',
-    'About equal',
-    'Majority walk-in, some referred',
-    'Almost all walk-in, very few referred',
-    'I am unsure about the typical ratio',
-  ]),
-  Q54: z.enum([
-    'Very Satisfied: Minor improvements needed…',
-    'Satisfied: Some improvements needed…',
-    'Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional',
-    'Dissatisfied: Moderate improvements needed…',
-    'Very Dissatisfied: Major improvements needed…',
-  ]),
+  Q51: z.enum(['Yes', 'No', 'I\'ve never heard of it', 'I don\'t know']),
+  Q52: z.enum(['Almost all referred, very few walk-in', 'Majority referred, some walk-in', 'About equal', 'Majority walk-in, some referred', 'Almost all walk-in, very few referred', 'I am unsure about the typical ratio']),
+  Q54: z.enum(['Very Satisfied: Minor improvements needed…', 'Satisfied: Some improvements needed…', 'Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional', 'Dissatisfied: Moderate improvements needed…', 'Very Dissatisfied: Major improvements needed…']),
 });
 export type SectionFValues = z.infer<typeof sectionFSchema>;
 
@@ -210,34 +104,12 @@ export const sectionGSchema = z.object({
 export type SectionGValues = z.infer<typeof sectionGSchema>;
 
 export const sectionHSchema = z.object({
-  Q81: z.enum([
-    'Everyday',
-    'More than once a week, but not everyday',
-    'Around once a week',
-    'Less than once a week, but at least once a month',
-    'Very rarely (can think of a few times only)',
-    'This has never happened to me',
-  ]),
-  Q82: z.enum([
-    'I typically have to take on tasks that should be performed by only staff / more junior health care providers to me',
-    'I typically have to take on tasks that should be performed only by staff / more senior health care providers to me',
-    'I have to take on tasks that should be performed by staff that are not health workers (e.g., cleaners, drivers, IT)',
-    'Other (specify)',
-  ]),
+  Q81: z.enum(['Everyday', 'More than once a week, but not everyday', 'Around once a week', 'Less than once a week, but at least once a month', 'Very rarely (can think of a few times only)', 'This has never happened to me']),
+  Q82: z.enum(['I typically have to take on tasks that should be performed by only staff / more junior health care providers to me', 'I typically have to take on tasks that should be performed only by staff / more senior health care providers to me', 'I have to take on tasks that should be performed by staff that are not health workers (e.g., cleaners, drivers, IT)', 'Other (specify)']),
   Q82_other: z.string().optional(),
-  Q84: z.enum([
-    'We are short staffed, so I have to',
-    "I am capable of the task, I just haven't completed official certification yet",
-    'I think that someone of my role should be responsible for these tasks',
-    'Other (specify)',
-  ]),
+  Q84: z.enum(['We are short staffed, so I have to', 'I am capable of the task, I just haven\'t completed official certification yet', 'I think that someone of my role should be responsible for these tasks', 'Other (specify)']),
   Q84_other: z.string().optional(),
-  Q85: z.enum([
-    'Agree but for medical tasks only',
-    'Agree but for clerical tasks only',
-    'Agree for both medical and clerical tasks',
-    'Disagree for both medical and clerical tasks',
-  ]),
+  Q85: z.enum(['Agree but for medical tasks only', 'Agree but for clerical tasks only', 'Agree for both medical and clerical tasks', 'Disagree for both medical and clerical tasks']),
 });
 export type SectionHValues = z.infer<typeof sectionHSchema>;
 
@@ -246,5 +118,9 @@ export const sectionISchema = z.object({
 });
 export type SectionIValues = z.infer<typeof sectionISchema>;
 
-export const sectionJSchema = z.object({});
+export const sectionJSchema = z.object({
+  Q98: z.string().min(1),
+  Q111: z.enum(['Once or twice in the past month', 'Once or twice a week', 'Three or four days every week', 'Almost everyday', 'Everyday']).optional(),
+  Q112: z.enum(['Yes, I\'ve thought about it and have definite plans to leave', 'Yes, I\'ve thought about it and am actively exploring other opportunities, but no firm plans yet', 'Yes, I\'ve thought about it, but I\'m not actively exploring nor have I made any firm plans yet', 'No, I haven\'t thought about it']),
+});
 export type SectionJValues = z.infer<typeof sectionJSchema>;

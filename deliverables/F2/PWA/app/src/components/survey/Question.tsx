@@ -6,12 +6,18 @@ interface QuestionProps {
 }
 
 export function Question({ item }: QuestionProps) {
-  const { register, watch } = useFormContext();
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext();
   const currentValue = watch(item.id);
   const showSpecify =
     (item.hasOtherSpecify &&
       item.choices?.some((c) => c.isOtherSpecify && c.value === currentValue)) ??
     false;
+  const error = errors[item.id];
+  const errorMessage = typeof error?.message === 'string' ? error.message : undefined;
 
   return (
     <div className="flex flex-col gap-2 py-3">
@@ -21,6 +27,15 @@ export function Question({ item }: QuestionProps) {
       </label>
       {item.help ? <p className="text-xs text-muted-foreground">{item.help}</p> : null}
       {renderControl(item, register, showSpecify)}
+      {errorMessage ? (
+        <p role="alert" className="text-xs text-red-600">
+          {errorMessage}
+        </p>
+      ) : error ? (
+        <p role="alert" className="text-xs text-red-600">
+          This field is required.
+        </p>
+      ) : null}
     </div>
   );
 }

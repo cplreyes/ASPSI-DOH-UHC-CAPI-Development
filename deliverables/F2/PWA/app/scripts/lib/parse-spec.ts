@@ -49,36 +49,37 @@ function normalizeHeader(header: string): string {
 
 export function parseTableRows(body: string): RowFields[] {
   const lines = body.split('\n');
-  let headerIdx = -1;
+  const rows: RowFields[] = [];
+  let i = 0;
 
-  for (let i = 0; i < lines.length; i++) {
+  while (i < lines.length) {
     const line = lines[i];
     const next = lines[i + 1];
-    if (TABLE_HEADER.test(line) && next && ALIGNMENT_ROW.test(next)) {
-      const firstCell = splitCells(line)[0];
-      if (firstCell === 'pdf_q') {
-        headerIdx = i;
-        break;
-      }
+    const isTableHeader =
+      TABLE_HEADER.test(line) &&
+      next &&
+      ALIGNMENT_ROW.test(next) &&
+      splitCells(line)[0] === 'pdf_q';
+
+    if (!isTableHeader) {
+      i++;
+      continue;
     }
-  }
 
-  if (headerIdx === -1) return [];
+    const header = splitCells(line);
+    i += 2;
 
-  const header = splitCells(lines[headerIdx]);
-  const rows: RowFields[] = [];
-
-  for (let i = headerIdx + 2; i < lines.length; i++) {
-    const line = lines[i];
-    if (!TABLE_HEADER.test(line)) break;
-    const cells = splitCells(line);
-    if (!cells[0] || !/^Q\d+/.test(cells[0])) continue;
-
-    const row: RowFields = {};
-    header.forEach((col, idx) => {
-      row[normalizeHeader(col)] = cells[idx] ?? '';
-    });
-    rows.push(row);
+    while (i < lines.length && TABLE_HEADER.test(lines[i])) {
+      const cells = splitCells(lines[i]);
+      if (cells[0] && /^Q\d+/.test(cells[0])) {
+        const row: RowFields = {};
+        header.forEach((col, idx) => {
+          row[normalizeHeader(col)] = cells[idx] ?? '';
+        });
+        rows.push(row);
+      }
+      i++;
+    }
   }
 
   return rows;
@@ -143,6 +144,8 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
   return { item };
 }
 
+const SAME_CHOICE_SET_RE = /same choice set as (Q\d+(?:\.\d+)?)/i;
+
 export function parseSpec(markdown: string): ParseResult {
   const sections: Section[] = [];
   const unsupported: UnsupportedItem[] = [];
@@ -166,7 +169,28 @@ export function parseSpec(markdown: string): ParseResult {
     });
   }
 
+  resolveSameChoiceSetReferences(sections);
+
   return { sections, unsupported };
+}
+
+function resolveSameChoiceSetReferences(sections: Section[]): void {
+  const byId = new Map<string, Item>();
+  for (const section of sections) {
+    for (const item of section.items) byId.set(item.id, item);
+  }
+
+  for (const section of sections) {
+    for (const item of section.items) {
+      if (!item.choices || item.choices.length !== 1) continue;
+      const match = item.choices[0].label.match(SAME_CHOICE_SET_RE);
+      if (!match) continue;
+      const referenced = byId.get(match[1]);
+      if (referenced?.choices) {
+        item.choices = referenced.choices.map((c) => ({ ...c }));
+      }
+    }
+  }
 }
 
 function parseChoicesColumn(
@@ -183,7 +207,10 @@ function parseChoicesColumn(
   const result: { help?: string; choicesText: string; min?: number; max?: number } = {
     choicesText: head,
   };
-  if (tail) result.help = tail;
+  if (tail) {
+    const wrapped = tail.match(/^help:\s*"([\s\S]+)"\s*$/);
+    result.help = wrapped ? wrapped[1] : tail;
+  }
 
   if (type === 'number') {
     const rangeMatch = head.match(/(\d+)\s*[–-]\s*(\d+)/);

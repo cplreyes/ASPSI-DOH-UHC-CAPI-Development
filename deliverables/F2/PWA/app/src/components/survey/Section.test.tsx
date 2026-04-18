@@ -65,4 +65,56 @@ describe('<Section>', () => {
 
     expect(onSubmit).not.toHaveBeenCalled();
   });
+
+  it('renders only the items passed via the items override prop', () => {
+    render(
+      <Section
+        section={fixture}
+        schema={schema}
+        items={[fixture.items[1]]}
+        onSubmit={() => {}}
+      />,
+    );
+    expect(screen.queryByLabelText(/sex at birth/)).toBeNull();
+    expect(screen.getByLabelText(/Age\?/)).toBeInTheDocument();
+  });
+
+  it('prefills inputs from defaultValues', () => {
+    render(
+      <Section
+        section={fixture}
+        schema={schema}
+        defaultValues={{ Q3: 'Female', Q4: 25 }}
+        onSubmit={() => {}}
+      />,
+    );
+    expect(screen.getByLabelText('Female')).toBeChecked();
+    expect(screen.getByLabelText(/Age\?/)).toHaveValue(25);
+  });
+
+  it('calls onAutosave with debounced form values', async () => {
+    const user = userEvent.setup();
+    const onAutosave = vi.fn();
+
+    render(
+      <Section
+        section={fixture}
+        schema={schema}
+        onAutosave={onAutosave}
+        onSubmit={() => {}}
+      />,
+    );
+
+    await user.click(screen.getByLabelText('Female'));
+
+    // Still within debounce window (500 ms).
+    await new Promise((r) => setTimeout(r, 100));
+    expect(onAutosave).not.toHaveBeenCalled();
+
+    // Wait past debounce threshold.
+    await new Promise((r) => setTimeout(r, 600));
+    expect(onAutosave).toHaveBeenCalled();
+    const last = onAutosave.mock.calls[onAutosave.mock.calls.length - 1];
+    expect(last[0]).toMatchObject({ Q3: 'Female' });
+  });
 });

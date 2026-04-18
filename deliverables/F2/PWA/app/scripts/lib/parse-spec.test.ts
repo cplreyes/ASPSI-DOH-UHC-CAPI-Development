@@ -118,6 +118,33 @@ describe('parseTableRows', () => {
     expect(rows).toHaveLength(1);
     expect(rows[0].pdf_q).toBe('Q1');
   });
+
+  it('collects rows from multiple pdf_q tables in the same section body (Section J shape)', () => {
+    const body = [
+      '**Grid #1:**',
+      '',
+      '| pdf_q | type | required | label (verbatim) | gf_risk |',
+      '|---|---|---|---|---|',
+      '| Q88 | grid-single | Y | I am compensated fairly. | OK |',
+      '',
+      '**Open/closed items between grids:**',
+      '',
+      '| pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | skip | gf_risk |',
+      '|---|---|---|---|---|---|---|---|',
+      '| Q98 | Q62 | long-text | Y | In addition to your salary, what other benefits? | — | — | OK |',
+      '',
+      '**Closing items:**',
+      '',
+      '| pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | skip | gf_risk |',
+      '|---|---|---|---|---|---|---|---|',
+      '| Q112 | Q70 | single | Y | Have you considered leaving? | Yes · No | No → end | SECTION |',
+    ].join('\n');
+
+    const rows = parseTableRows(body);
+    expect(rows.map((r) => r.pdf_q)).toEqual(['Q88', 'Q98', 'Q112']);
+    expect(rows[1].type).toBe('long-text');
+    expect(rows[2].choices).toBe('Yes · No');
+  });
 });
 
 describe('normalizeRow', () => {
@@ -297,6 +324,20 @@ describe('normalizeRow', () => {
     );
     expect(result.item?.help).toContain('full-time is 8 hours per day');
   });
+
+  it('strips the `help: "..."` wrapper from help text', () => {
+    const result = normalizeRow(
+      {
+        pdf_q: 'Q11',
+        type: 'number',
+        required: 'Y',
+        label: 'Hours per day?',
+        choices: 'integer 1–24; help: "full-time is 8 hours per day"',
+      },
+      'A',
+    );
+    expect(result.item?.help).toBe('full-time is 8 hours per day');
+  });
 });
 
 describe('parseSpec (integration)', () => {
@@ -319,5 +360,34 @@ describe('parseSpec (integration)', () => {
     expect(result.sections[0].items[0].id).toBe('Q3');
     expect(result.sections[0].items[1].min).toBe(18);
     expect(result.unsupported).toEqual([]);
+  });
+
+  it('resolves "same choice set as QN" references to the referenced item\'s choices', () => {
+    const md = [
+      '# F2 Spec',
+      '',
+      '## Section B — UHC Awareness',
+      '',
+      '| pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | gate | skip | gf_risk |',
+      '|---|---|---|---|---|---|---|---|---|',
+      '| Q13 | Q22 | single + specify | Y | Equipment implemented? | Yes, direct · Yes, pre-existing · No · I don\'t know | — | — | OK |',
+      '| Q15 | — | single + specify | Y | Supplies implemented? | *(same choice set as Q13)* | — | — | OK |',
+      '| Q17 | Q23 | single + specify | Y | EMR implemented? | _(same choice set as Q13)_ | — | — | OK |',
+    ].join('\n');
+
+    const result = parseSpec(md);
+    const items = result.sections[0].items;
+    const q13 = items.find((i) => i.id === 'Q13');
+    const q15 = items.find((i) => i.id === 'Q15');
+    const q17 = items.find((i) => i.id === 'Q17');
+
+    expect(q13?.choices?.map((c) => c.label)).toEqual([
+      'Yes, direct',
+      'Yes, pre-existing',
+      'No',
+      "I don't know",
+    ]);
+    expect(q15?.choices?.map((c) => c.label)).toEqual(q13?.choices?.map((c) => c.label));
+    expect(q17?.choices?.map((c) => c.label)).toEqual(q13?.choices?.map((c) => c.label));
   });
 });
