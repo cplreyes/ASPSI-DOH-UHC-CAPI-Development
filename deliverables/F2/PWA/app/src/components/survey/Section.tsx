@@ -1,9 +1,12 @@
 import { useEffect, type MutableRefObject } from 'react';
 import { FormProvider, useForm, type DefaultValues, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslation } from 'react-i18next';
 import type { ZodTypeAny } from 'zod';
 import type { Item, Section as SectionModel } from '@/types/survey';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/i18n/locale-context';
+import { localized } from '@/i18n/localized';
 import { Question } from './Question';
 
 function stripNulls(values: unknown): unknown {
@@ -41,6 +44,9 @@ export function Section<T extends Record<string, unknown>>({
   onAutosave,
   onSubmit,
 }: SectionProps<T>) {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
+
   const baseResolver = zodResolver(schema) as Resolver<T>;
   const resolver: Resolver<T> = async (values, context, options) =>
     baseResolver(stripNulls(values) as T, context, options);
@@ -81,10 +87,10 @@ export function Section<T extends Record<string, unknown>>({
       <form onSubmit={submit} className="mx-auto flex max-w-xl flex-col gap-4 p-6" noValidate>
         <header className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">
-            Section {section.id} — {section.title}
+            {t('review.sectionHeading', { id: section.id, title: localized(section.title, locale) })}
           </h2>
           {section.preamble ? (
-            <p className="text-sm text-muted-foreground">{section.preamble}</p>
+            <p className="text-sm text-muted-foreground">{localized(section.preamble, locale)}</p>
           ) : null}
         </header>
 
@@ -94,7 +100,7 @@ export function Section<T extends Record<string, unknown>>({
 
         {!hideSubmit ? (
           <div className="pt-4">
-            <Button type="submit">Submit</Button>
+            <Button type="submit">{t('navigator.submit')}</Button>
           </div>
         ) : null}
       </form>

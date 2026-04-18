@@ -2,27 +2,35 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { z } from 'zod';
+import type * as React from 'react';
 import type { Section as SectionModel } from '@/types/survey';
+import { LocaleProvider } from '@/i18n/locale-context';
 import { Section } from './Section';
+
+const dual = (en: string) => ({ en, fil: en });
+
+function renderWithProviders(ui: React.ReactElement) {
+  return render(<LocaleProvider>{ui}</LocaleProvider>);
+}
 
 describe('<Section>', () => {
   const fixture: SectionModel = {
     id: 'A',
-    title: 'Healthcare Worker Profile',
-    preamble: 'Please answer the following.',
+    title: dual('Healthcare Worker Profile'),
+    preamble: dual('Please answer the following.'),
     items: [
       {
         id: 'Q3',
         section: 'A',
         type: 'single',
         required: true,
-        label: 'What is your sex at birth?',
+        label: dual('What is your sex at birth?'),
         choices: [
-          { label: 'Male', value: 'Male' },
-          { label: 'Female', value: 'Female' },
+          { label: dual('Male'), value: 'Male' },
+          { label: dual('Female'), value: 'Female' },
         ],
       },
-      { id: 'Q4', section: 'A', type: 'number', required: true, label: 'Age?', min: 18 },
+      { id: 'Q4', section: 'A', type: 'number', required: true, label: dual('Age?'), min: 18 },
     ],
   };
 
@@ -32,13 +40,13 @@ describe('<Section>', () => {
   });
 
   it('renders the section title and preamble', () => {
-    render(<Section section={fixture} schema={schema} onSubmit={() => {}} />);
+    renderWithProviders(<Section section={fixture} schema={schema} onSubmit={() => {}} />);
     expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
-    expect(screen.getByText(fixture.preamble!)).toBeInTheDocument();
+    expect(screen.getByText('Please answer the following.')).toBeInTheDocument();
   });
 
   it('renders one Question per item', () => {
-    render(<Section section={fixture} schema={schema} onSubmit={() => {}} />);
+    renderWithProviders(<Section section={fixture} schema={schema} onSubmit={() => {}} />);
     expect(screen.getByLabelText(/sex at birth/)).toBeInTheDocument();
     expect(screen.getByLabelText(/Age\?/)).toBeInTheDocument();
   });
@@ -46,7 +54,7 @@ describe('<Section>', () => {
   it('calls onSubmit with parsed values when the form is valid', async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();
-    render(<Section section={fixture} schema={schema} onSubmit={onSubmit} />);
+    renderWithProviders(<Section section={fixture} schema={schema} onSubmit={onSubmit} />);
 
     await user.click(screen.getByLabelText('Female'));
     await user.type(screen.getByLabelText(/Age\?/), '25');
@@ -59,7 +67,7 @@ describe('<Section>', () => {
   it('does not call onSubmit when validation fails', async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();
-    render(<Section section={fixture} schema={schema} onSubmit={onSubmit} />);
+    renderWithProviders(<Section section={fixture} schema={schema} onSubmit={onSubmit} />);
 
     await user.click(screen.getByRole('button', { name: /submit/i }));
 
@@ -67,7 +75,7 @@ describe('<Section>', () => {
   });
 
   it('renders only the items passed via the items override prop', () => {
-    render(
+    renderWithProviders(
       <Section
         section={fixture}
         schema={schema}
@@ -80,7 +88,7 @@ describe('<Section>', () => {
   });
 
   it('prefills inputs from defaultValues', () => {
-    render(
+    renderWithProviders(
       <Section
         section={fixture}
         schema={schema}
@@ -96,7 +104,7 @@ describe('<Section>', () => {
     const user = userEvent.setup();
     const onAutosave = vi.fn();
 
-    render(
+    renderWithProviders(
       <Section
         section={fixture}
         schema={schema}
