@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   sectionA, sectionB, sectionC, sectionD, sectionE1, sectionE2,
   sectionF, sectionG, sectionH, sectionI, sectionJ,
@@ -7,6 +8,9 @@ import type { Section as SectionModel, Item } from '@/types/survey';
 import { evaluateCrossField, type Warning } from '@/lib/cross-field';
 import type { FormValues } from '@/lib/skip-logic';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/i18n/locale-context';
+import { localized } from '@/i18n/localized';
+import type { Locale } from '@/i18n/index';
 
 const SECTIONS: SectionModel[] = [
   sectionA, sectionB, sectionC, sectionD, sectionE1, sectionE2,
@@ -25,15 +29,15 @@ function formatValue(v: unknown): string {
   return String(v);
 }
 
-function rowsForItem(item: Item, values: FormValues): Array<{ key: string; label: string; value: string }> {
+function rowsForItem(item: Item, values: FormValues, locale: Locale): Array<{ key: string; label: string; value: string }> {
   if (item.type === 'multi-field' && item.subFields) {
     return item.subFields
-      .map((sf) => ({ key: sf.id, label: `${item.id} ${sf.label}`, value: formatValue(values[sf.id]) }))
+      .map((sf) => ({ key: sf.id, label: `${item.id} ${localized(sf.label, locale)}`, value: formatValue(values[sf.id]) }))
       .filter((r) => r.value !== '');
   }
   const primary = formatValue(values[item.id]);
   const rows: Array<{ key: string; label: string; value: string }> = [];
-  if (primary !== '') rows.push({ key: item.id, label: `${item.id} ${item.label}`, value: primary });
+  if (primary !== '') rows.push({ key: item.id, label: `${item.id} ${localized(item.label, locale)}`, value: primary });
   const otherKey = `${item.id}_other`;
   const otherVal = formatValue(values[otherKey]);
   if (otherVal !== '') rows.push({ key: otherKey, label: `${item.id} (specify)`, value: otherVal });
@@ -48,14 +52,16 @@ const SEVERITY_STYLES: Record<Warning['severity'], string> = {
 };
 
 export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const warnings = useMemo(() => evaluateCrossField(values), [values]);
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6 p-6">
-      <h2 className="text-2xl font-semibold tracking-tight">Review your answers</h2>
+      <h2 className="text-2xl font-semibold tracking-tight">{t('review.heading')}</h2>
 
       {warnings.length > 0 ? (
-        <section aria-label="Cross-field warnings" className="flex flex-col gap-2">
+        <section aria-label={t('review.crossFieldRegion')} className="flex flex-col gap-2">
           {warnings.map((w) => (
             <div
               key={w.id}
@@ -69,16 +75,16 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
       ) : null}
 
       {SECTIONS.map((section) => {
-        const rows = section.items.flatMap((item) => rowsForItem(item, values));
+        const rows = section.items.flatMap((item) => rowsForItem(item, values, locale));
         if (rows.length === 0) return null;
         return (
           <section key={section.id} className="flex flex-col gap-2">
             <header className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">
-                Section {section.id} — {section.title}
+                {t('review.sectionHeading', { id: section.id, title: localized(section.title, locale) })}
               </h3>
               <Button type="button" variant="outline" size="sm" onClick={() => onEdit(section.id)}>
-                Edit
+                {t('review.edit')}
               </Button>
             </header>
             <dl className="divide-y divide-slate-200 rounded border border-slate-200">
@@ -95,7 +101,7 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
 
       <div className="pt-2">
         <Button type="button" onClick={onSubmit}>
-          Submit
+          {t('review.submit')}
         </Button>
       </div>
     </div>
