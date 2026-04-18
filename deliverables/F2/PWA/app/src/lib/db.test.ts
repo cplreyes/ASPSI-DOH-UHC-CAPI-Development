@@ -2,9 +2,9 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { db, type SubmissionRow } from './db';
 
 describe('db', () => {
-  it('opens at version 3 with the spec §7.2 schema + enrollment store', async () => {
+  it('opens at version 4 with the spec §7.2 schema + enrollment store', async () => {
     await db.open();
-    expect(db.verno).toBe(3);
+    expect(db.verno).toBe(4);
     const names = db.tables.map((t) => t.name).sort();
     expect(names).toEqual(
       ['audit', 'config', 'drafts', 'enrollment', 'facilities', 'submissions'].sort(),
@@ -81,7 +81,7 @@ describe('db v2 — submissions retry fields', () => {
   });
 });
 
-describe('F2Database v3', () => {
+describe('F2Database v4', () => {
   beforeEach(async () => {
     if (!db.isOpen()) await db.open();
     await db.facilities.clear();

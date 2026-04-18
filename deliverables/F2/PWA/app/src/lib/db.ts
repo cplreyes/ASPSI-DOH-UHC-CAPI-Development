@@ -91,8 +91,11 @@ export class F2Database extends Dexie {
         });
       });
     this.version(3).stores({
-      facilities: 'facility_id, facility_type, region, province',
+      facilities: null,
       enrollment: 'id',
+    });
+    this.version(4).stores({
+      facilities: 'facility_id, facility_type, region, province',
     });
   }
 }

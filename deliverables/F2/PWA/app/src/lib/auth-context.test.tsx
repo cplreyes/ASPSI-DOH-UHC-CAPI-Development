@@ -1,8 +1,9 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AuthProvider, useAuth } from './auth-context';
 import { db } from './db';
+import * as enrollmentModule from './enrollment';
 
 function Probe() {
   const { status, enrollment, enroll, unenroll } = useAuth();
@@ -70,6 +71,23 @@ describe('<AuthProvider>', () => {
     await user.click(screen.getByRole('button', { name: 'enroll' }));
     await waitFor(() => expect(screen.getByTestId('status').textContent).toBe('enrolled'));
     expect(screen.getByTestId('hcw').textContent).toBe('HCW-1');
+  });
+
+  it('falls back to "unenrolled" when getEnrollment rejects', async () => {
+    const spy = vi
+      .spyOn(enrollmentModule, 'getEnrollment')
+      .mockRejectedValueOnce(new Error('dexie boom'));
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    render(
+      <AuthProvider>
+        <Probe />
+      </AuthProvider>,
+    );
+    await waitFor(() => expect(screen.getByTestId('status').textContent).toBe('unenrolled'));
+    expect(spy).toHaveBeenCalled();
+    expect(errorSpy).toHaveBeenCalled();
+    spy.mockRestore();
+    errorSpy.mockRestore();
   });
 
   it('unenroll() resets context state', async () => {

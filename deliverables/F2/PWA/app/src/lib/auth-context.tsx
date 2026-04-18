@@ -24,11 +24,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let cancelled = false;
-    void getEnrollment().then((row) => {
-      if (cancelled) return;
-      setEnrollmentState(row);
-      setStatus(row ? 'enrolled' : 'unenrolled');
-    });
+    getEnrollment()
+      .then((row) => {
+        if (cancelled) return;
+        setEnrollmentState(row);
+        setStatus(row ? 'enrolled' : 'unenrolled');
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error('[F2] failed to read enrollment:', err);
+        setEnrollmentState(null);
+        setStatus('unenrolled');
+      });
     return () => {
       cancelled = true;
     };
