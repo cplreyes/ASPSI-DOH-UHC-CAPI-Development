@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { splitSections, parseTableRows, normalizeRow, parseSpec } from './parse-spec';
 
+const dual = (en: string) => ({ en, fil: en });
+
 describe('splitSections', () => {
   it('extracts section headers and bodies', () => {
     const md = [
@@ -166,12 +168,12 @@ describe('normalizeRow', () => {
       section: 'A',
       type: 'single',
       required: true,
-      label: 'What is your sex at birth?',
+      label: dual('What is your sex at birth?'),
       hasOtherSpecify: false,
     });
     expect(result.item?.choices).toEqual([
-      { label: 'Male', value: 'Male' },
-      { label: 'Female', value: 'Female' },
+      { label: dual('Male'), value: 'Male' },
+      { label: dual('Female'), value: 'Female' },
     ]);
     expect(result.unsupported).toBeUndefined();
   });
@@ -190,9 +192,9 @@ describe('normalizeRow', () => {
     expect(result.item?.type).toBe('single');
     expect(result.item?.hasOtherSpecify).toBe(true);
     expect(result.item?.choices?.map((c) => c.label)).toEqual([
-      'Regular',
-      'Casual',
-      'Other, specify',
+      dual('Regular'),
+      dual('Casual'),
+      dual('Other, specify'),
     ]);
     expect(result.item?.choices?.[2].isOtherSpecify).toBe(true);
   });
@@ -290,9 +292,9 @@ describe('normalizeRow', () => {
       id: 'Q1',
       type: 'multi-field',
       subFields: [
-        { id: 'Q1_1', label: 'Last Name', kind: 'short-text' },
-        { id: 'Q1_2', label: 'First Name', kind: 'short-text' },
-        { id: 'Q1_3', label: 'Middle Initial', kind: 'short-text' },
+        { id: 'Q1_1', label: dual('Last Name'), kind: 'short-text' },
+        { id: 'Q1_2', label: dual('First Name'), kind: 'short-text' },
+        { id: 'Q1_3', label: dual('Middle Initial'), kind: 'short-text' },
       ],
     });
   });
@@ -313,8 +315,8 @@ describe('normalizeRow', () => {
       id: 'Q9',
       type: 'multi-field',
       subFields: [
-        { id: 'Q9_1', label: 'Year(s)', kind: 'number' },
-        { id: 'Q9_2', label: 'Month(s)', kind: 'number' },
+        { id: 'Q9_1', label: dual('Year(s)'), kind: 'number' },
+        { id: 'Q9_2', label: dual('Month(s)'), kind: 'number' },
       ],
     });
   });
@@ -336,11 +338,11 @@ describe('normalizeRow', () => {
       id: 'Q68',
       type: 'single',
       choices: [
-        { label: '1', value: '1' },
-        { label: '2', value: '2' },
-        { label: '3', value: '3' },
-        { label: '4', value: '4' },
-        { label: '5', value: '5' },
+        { label: dual('1'), value: '1' },
+        { label: dual('2'), value: '2' },
+        { label: dual('3'), value: '3' },
+        { label: dual('4'), value: '4' },
+        { label: dual('5'), value: '5' },
       ],
     });
   });
@@ -363,9 +365,9 @@ describe('normalizeRow', () => {
       type: 'multi',
       hasOtherSpecify: false,
       choices: [
-        { label: 'Pap smear', value: 'Pap smear' },
-        { label: 'Mammogram', value: 'Mammogram' },
-        { label: 'Lipid profile', value: 'Lipid profile' },
+        { label: dual('Pap smear'), value: 'Pap smear' },
+        { label: dual('Mammogram'), value: 'Mammogram' },
+        { label: dual('Lipid profile'), value: 'Lipid profile' },
       ],
     });
   });
@@ -388,7 +390,7 @@ describe('normalizeRow', () => {
       hasOtherSpecify: true,
     });
     expect(result.item?.choices?.find((c) => c.isOtherSpecify)).toMatchObject({
-      label: 'Other (specify)',
+      label: dual('Other (specify)'),
     });
   });
 
@@ -425,11 +427,11 @@ describe('normalizeRow', () => {
       id: 'Q74',
       type: 'single',
       choices: [
-        { label: 'Never', value: 'Never' },
-        { label: 'Rarely', value: 'Rarely' },
-        { label: 'Sometimes', value: 'Sometimes' },
-        { label: 'Often', value: 'Often' },
-        { label: 'Always', value: 'Always' },
+        { label: dual('Never'), value: 'Never' },
+        { label: dual('Rarely'), value: 'Rarely' },
+        { label: dual('Sometimes'), value: 'Sometimes' },
+        { label: dual('Often'), value: 'Often' },
+        { label: dual('Always'), value: 'Always' },
       ],
     });
   });
@@ -445,7 +447,7 @@ describe('normalizeRow', () => {
       },
       'A',
     );
-    expect(result.item?.help).toContain('full-time is 8 hours per day');
+    expect(result.item?.help?.en).toContain('full-time is 8 hours per day');
   });
 
   it('strips the `help: "..."` wrapper from help text', () => {
@@ -459,7 +461,7 @@ describe('normalizeRow', () => {
       },
       'A',
     );
-    expect(result.item?.help).toBe('full-time is 8 hours per day');
+    expect(result.item?.help).toEqual(dual('full-time is 8 hours per day'));
   });
 });
 
@@ -505,10 +507,10 @@ describe('parseSpec (integration)', () => {
     const q17 = items.find((i) => i.id === 'Q17');
 
     expect(q13?.choices?.map((c) => c.label)).toEqual([
-      'Yes, direct',
-      'Yes, pre-existing',
-      'No',
-      "I don't know",
+      dual('Yes, direct'),
+      dual('Yes, pre-existing'),
+      dual('No'),
+      dual("I don't know"),
     ]);
     expect(q15?.choices?.map((c) => c.label)).toEqual(q13?.choices?.map((c) => c.label));
     expect(q17?.choices?.map((c) => c.label)).toEqual(q13?.choices?.map((c) => c.label));

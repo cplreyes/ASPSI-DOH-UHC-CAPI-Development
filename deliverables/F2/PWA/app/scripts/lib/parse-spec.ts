@@ -6,7 +6,12 @@ import type {
   ItemType,
   Choice,
   SubField,
+  LocalizedString,
 } from './types';
+
+function dual(en: string): LocalizedString {
+  return { en, fil: en };
+}
 
 export interface RawSection {
   id: string;
@@ -146,7 +151,7 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
     for (let i = 0; i < count; i++) {
       subFields.push({
         id: `${row.pdf_q}_${i + 1}`,
-        label: labels[i] ?? `Field ${i + 1}`,
+        label: dual(labels[i] ?? `Field ${i + 1}`),
         kind,
       });
     }
@@ -156,7 +161,7 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
       section,
       type: 'multi-field',
       required,
-      label: row.label ?? '',
+      label: dual(row.label ?? ''),
       subFields,
     };
     if (row.legacy_q && row.legacy_q !== '—' && row.legacy_q !== '') {
@@ -187,13 +192,13 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
     section,
     type,
     required,
-    label: row.label ?? '',
+    label: dual(row.label ?? ''),
   };
 
   if (row.legacy_q && row.legacy_q !== '—' && row.legacy_q !== '') {
     item.legacyId = row.legacy_q;
   }
-  if (help) item.help = help;
+  if (help) item.help = dual(help);
   if (min !== undefined) item.min = min;
   if (max !== undefined) item.max = max;
 
@@ -225,8 +230,8 @@ export function parseSpec(markdown: string): ParseResult {
 
     sections.push({
       id: raw.id,
-      title: raw.title,
-      ...(preamble ? { preamble } : {}),
+      title: dual(raw.title),
+      ...(preamble ? { preamble: dual(preamble) } : {}),
       items,
     });
   }
@@ -245,7 +250,7 @@ function resolveSameChoiceSetReferences(sections: Section[]): void {
   for (const section of sections) {
     for (const item of section.items) {
       if (!item.choices || item.choices.length !== 1) continue;
-      const match = item.choices[0].label.match(SAME_CHOICE_SET_RE);
+      const match = item.choices[0].label.en.match(SAME_CHOICE_SET_RE);
       if (!match) continue;
       const referenced = byId.get(match[1]);
       if (referenced?.choices) {
@@ -295,7 +300,7 @@ function parseChoiceList(text: string, hasOtherSpecify: boolean): Choice[] | und
   return text.split(CHOICE_SEP).map((label) => {
     const trimmed = label.trim();
     const isOther = hasOtherSpecify && /other[s]?(?:,\s*specify|\s*\(specify\))/i.test(trimmed);
-    const choice: Choice = { label: trimmed, value: trimmed };
+    const choice: Choice = { label: dual(trimmed), value: trimmed };
     if (isOther) choice.isOtherSpecify = true;
     return choice;
   });
