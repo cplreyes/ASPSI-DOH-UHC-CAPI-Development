@@ -2,8 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useForm, FormProvider } from 'react-hook-form';
+import type * as React from 'react';
 import type { Item } from '@/types/survey';
 import { Question } from './Question';
+import { LocaleProvider } from '@/i18n/locale-context';
+
+const dual = (en: string) => ({ en, fil: en });
+
+function renderWithProviders(ui: React.ReactElement) {
+  return render(<LocaleProvider>{ui}</LocaleProvider>);
+}
 
 function Harness({ item }: { item: Item }) {
   const methods = useForm();
@@ -23,9 +31,9 @@ describe('<Question>', () => {
       section: 'A',
       type: 'short-text',
       required: true,
-      label: 'What is your name?',
+      label: dual('What is your name?'),
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     expect(screen.getByLabelText(/What is your name\?/)).toBeInTheDocument();
     expect(screen.getByRole('textbox')).toHaveAttribute('type', 'text');
   });
@@ -36,9 +44,9 @@ describe('<Question>', () => {
       section: 'C',
       type: 'long-text',
       required: true,
-      label: 'What might convince you?',
+      label: dual('What might convince you?'),
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     expect(screen.getByLabelText(/What might convince you/)).toBeInstanceOf(HTMLTextAreaElement);
   });
 
@@ -48,11 +56,11 @@ describe('<Question>', () => {
       section: 'A',
       type: 'number',
       required: true,
-      label: 'Hours per day?',
+      label: dual('Hours per day?'),
       min: 1,
       max: 24,
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     const input = screen.getByLabelText(/Hours per day/) as HTMLInputElement;
     expect(input.type).toBe('number');
     expect(input.min).toBe('1');
@@ -65,13 +73,13 @@ describe('<Question>', () => {
       section: 'A',
       type: 'single',
       required: true,
-      label: 'What is your sex at birth?',
+      label: dual('What is your sex at birth?'),
       choices: [
-        { label: 'Male', value: 'Male' },
-        { label: 'Female', value: 'Female' },
+        { label: dual('Male'), value: 'Male' },
+        { label: dual('Female'), value: 'Female' },
       ],
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     expect(screen.getAllByRole('radio')).toHaveLength(2);
     expect(screen.getByLabelText('Male')).toBeInTheDocument();
     expect(screen.getByLabelText('Female')).toBeInTheDocument();
@@ -84,14 +92,14 @@ describe('<Question>', () => {
       section: 'A',
       type: 'single',
       required: true,
-      label: 'Employment?',
+      label: dual('Employment?'),
       hasOtherSpecify: true,
       choices: [
-        { label: 'Regular', value: 'Regular' },
-        { label: 'Other, specify', value: 'Other, specify', isOtherSpecify: true },
+        { label: dual('Regular'), value: 'Regular' },
+        { label: dual('Other, specify'), value: 'Other, specify', isOtherSpecify: true },
       ],
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
 
     expect(screen.queryByLabelText(/Please specify/)).toBeNull();
 
@@ -105,14 +113,14 @@ describe('<Question>', () => {
       section: 'C',
       type: 'multi',
       required: true,
-      label: 'Which are included?',
+      label: dual('Which are included?'),
       choices: [
-        { label: 'Pap smear', value: 'Pap smear' },
-        { label: 'Mammogram', value: 'Mammogram' },
-        { label: 'Lipid profile', value: 'Lipid profile' },
+        { label: dual('Pap smear'), value: 'Pap smear' },
+        { label: dual('Mammogram'), value: 'Mammogram' },
+        { label: dual('Lipid profile'), value: 'Lipid profile' },
       ],
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     const boxes = screen.getAllByRole('checkbox');
     expect(boxes).toHaveLength(3);
     expect(screen.getByLabelText('Pap smear')).toBeInTheDocument();
@@ -125,14 +133,14 @@ describe('<Question>', () => {
       section: 'B',
       type: 'multi',
       required: true,
-      label: 'Which do you expect to change?',
+      label: dual('Which do you expect to change?'),
       hasOtherSpecify: true,
       choices: [
-        { label: 'Salary', value: 'Salary' },
-        { label: 'Other (specify)', value: 'Other (specify)', isOtherSpecify: true },
+        { label: dual('Salary'), value: 'Salary' },
+        { label: dual('Other (specify)'), value: 'Other (specify)', isOtherSpecify: true },
       ],
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     expect(screen.queryByLabelText(/Please specify/)).toBeNull();
     await user.click(screen.getByLabelText('Other (specify)'));
     expect(screen.getByLabelText(/Please specify/)).toBeInTheDocument();
@@ -144,9 +152,9 @@ describe('<Question>', () => {
       section: 'C',
       type: 'date',
       required: false,
-      label: 'Since when?',
+      label: dual('Since when?'),
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     const input = screen.getByLabelText(/since when/i);
     expect(input).toHaveAttribute('type', 'date');
   });
@@ -157,14 +165,14 @@ describe('<Question>', () => {
       section: 'A',
       type: 'multi-field',
       required: true,
-      label: 'What is your name?',
+      label: dual('What is your name?'),
       subFields: [
-        { id: 'Q1_1', label: 'Last Name', kind: 'short-text' },
-        { id: 'Q1_2', label: 'First Name', kind: 'short-text' },
-        { id: 'Q1_3', label: 'Middle Initial', kind: 'short-text' },
+        { id: 'Q1_1', label: dual('Last Name'), kind: 'short-text' },
+        { id: 'Q1_2', label: dual('First Name'), kind: 'short-text' },
+        { id: 'Q1_3', label: dual('Middle Initial'), kind: 'short-text' },
       ],
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     expect(screen.getByLabelText('Last Name')).toBeInTheDocument();
     expect(screen.getByLabelText('First Name')).toBeInTheDocument();
     expect(screen.getByLabelText('Middle Initial')).toBeInTheDocument();
@@ -176,13 +184,13 @@ describe('<Question>', () => {
       section: 'A',
       type: 'multi-field',
       required: true,
-      label: 'How many?',
+      label: dual('How many?'),
       subFields: [
-        { id: 'Q9_1', label: 'Years', kind: 'number' },
-        { id: 'Q9_2', label: 'Months', kind: 'number' },
+        { id: 'Q9_1', label: dual('Years'), kind: 'number' },
+        { id: 'Q9_2', label: dual('Months'), kind: 'number' },
       ],
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     expect(screen.getByLabelText('Years')).toHaveAttribute('type', 'number');
     expect(screen.getByLabelText('Months')).toHaveAttribute('type', 'number');
   });
@@ -193,9 +201,9 @@ describe('<Question>', () => {
       section: 'A',
       type: 'short-text',
       required: true,
-      label: 'Req',
+      label: dual('Req'),
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     expect(screen.getByText('*')).toBeInTheDocument();
   });
 
@@ -205,9 +213,9 @@ describe('<Question>', () => {
       section: 'A',
       type: 'short-text',
       required: false,
-      label: 'Opt',
+      label: dual('Opt'),
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     expect(screen.queryByText('*')).toBeNull();
   });
 
@@ -217,10 +225,10 @@ describe('<Question>', () => {
       section: 'A',
       type: 'number',
       required: true,
-      label: 'Hours?',
-      help: 'full-time is 8 hours',
+      label: dual('Hours?'),
+      help: dual('full-time is 8 hours'),
     };
-    render(<Harness item={item} />);
+    renderWithProviders(<Harness item={item} />);
     expect(screen.getByText(/full-time is 8 hours/)).toBeInTheDocument();
   });
 });

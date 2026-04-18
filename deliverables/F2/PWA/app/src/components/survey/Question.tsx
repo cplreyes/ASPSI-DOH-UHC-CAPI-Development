@@ -1,4 +1,8 @@
 import { useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useLocale } from '@/i18n/locale-context';
+import { localized } from '@/i18n/localized';
+import type { Locale } from '@/i18n/index';
 import type { Item } from '@/types/survey';
 
 interface QuestionProps {
@@ -6,6 +10,8 @@ interface QuestionProps {
 }
 
 export function Question({ item }: QuestionProps) {
+  const { t } = useTranslation();
+  const { locale } = useLocale();
   const {
     register,
     watch,
@@ -26,18 +32,20 @@ export function Question({ item }: QuestionProps) {
   return (
     <div className="flex flex-col gap-2 py-3">
       <label htmlFor={item.id} className="text-sm font-medium">
-        {item.label}
+        {localized(item.label, locale)}
         {item.required ? <span className="ml-1 text-red-600">*</span> : null}
       </label>
-      {item.help ? <p className="text-xs text-muted-foreground">{item.help}</p> : null}
-      {renderControl(item, register, showSpecify)}
+      {item.help ? (
+        <p className="text-xs text-muted-foreground">{localized(item.help, locale)}</p>
+      ) : null}
+      {renderControl(item, register, showSpecify, t, locale)}
       {errorMessage ? (
         <p role="alert" className="text-xs text-red-600">
           {errorMessage}
         </p>
       ) : error ? (
         <p role="alert" className="text-xs text-red-600">
-          This field is required.
+          {t('question.requiredFallback')}
         </p>
       ) : null}
     </div>
@@ -48,6 +56,8 @@ function renderControl(
   item: Item,
   register: ReturnType<typeof useFormContext>['register'],
   showSpecify: boolean,
+  t: ReturnType<typeof useTranslation>['t'],
+  locale: Locale,
 ) {
   switch (item.type) {
     case 'short-text':
@@ -91,14 +101,14 @@ function renderControl(
                   {...(idx === 0 ? { id: item.id } : {})}
                   {...register(item.id)}
                 />
-                {choice.label}
+                {localized(choice.label, locale)}
               </label>
             ))}
           </fieldset>
           {showSpecify ? (
             <div className="mt-2 flex flex-col gap-1 pl-6">
               <label htmlFor={`${item.id}_other`} className="text-xs text-muted-foreground">
-                Please specify
+                {t('question.pleaseSpecifyLabel')}
               </label>
               <input
                 id={`${item.id}_other`}
@@ -122,14 +132,14 @@ function renderControl(
                   {...(idx === 0 ? { id: item.id } : {})}
                   {...register(item.id)}
                 />
-                {choice.label}
+                {localized(choice.label, locale)}
               </label>
             ))}
           </fieldset>
           {showSpecify ? (
             <div className="mt-2 flex flex-col gap-1 pl-6">
               <label htmlFor={`${item.id}_other`} className="text-xs text-muted-foreground">
-                Please specify
+                {t('question.pleaseSpecifyLabel')}
               </label>
               <input
                 id={`${item.id}_other`}
@@ -156,7 +166,7 @@ function renderControl(
           {item.subFields?.map((sf) => (
             <div key={sf.id} className="flex flex-col gap-1">
               <label htmlFor={sf.id} className="text-xs text-muted-foreground">
-                {sf.label}
+                {localized(sf.label, locale)}
               </label>
               <input
                 id={sf.id}
