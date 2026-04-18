@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 
 interface NavigatorProps {
@@ -15,18 +16,20 @@ export function Navigator({
   onNext,
   onSubmit,
 }: NavigatorProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="flex items-center justify-between gap-3 pt-4">
       <Button type="button" variant="outline" onClick={onPrev} disabled={isFirst}>
-        Previous
+        {t('navigator.previous')}
       </Button>
       {isLast ? (
         <Button type="button" onClick={onSubmit}>
-          Submit
+          {t('navigator.submit')}
         </Button>
       ) : (
         <Button type="button" onClick={onNext}>
-          Next
+          {t('navigator.next')}
         </Button>
       )}
     </div>

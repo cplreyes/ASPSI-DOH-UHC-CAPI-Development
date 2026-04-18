@@ -35,6 +35,9 @@ export const fil: EnBundle = {
     next: 'Next',
     submit: 'Submit',
   },
+  progressBar: {
+    sectionLabel: 'Section {{current}} of {{total}}',
+  },
   question: {
     requiredFallback: 'This field is required.',
     pleaseSpecifyLabel: 'Please specify',

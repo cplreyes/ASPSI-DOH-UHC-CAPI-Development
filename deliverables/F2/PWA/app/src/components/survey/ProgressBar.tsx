@@ -1,14 +1,17 @@
+import { useTranslation } from 'react-i18next';
+
 interface ProgressBarProps {
   current: number;
   total: number;
 }
 
 export function ProgressBar({ current, total }: ProgressBarProps) {
+  const { t } = useTranslation();
   const percent = Math.min(100, Math.round((current / total) * 100));
   return (
     <div className="flex flex-col gap-1 px-6 pt-3">
       <p className="text-xs text-muted-foreground">
-        Section {current} of {total}
+        {t('progressBar.sectionLabel', { current, total })}
       </p>
       <div
         role="progressbar"
