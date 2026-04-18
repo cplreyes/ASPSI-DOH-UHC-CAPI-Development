@@ -1,17 +1,88 @@
-import { describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, expect, it, beforeEach } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from './App';
+import { db, type SubmissionRow } from '@/lib/db';
 
 describe('<App>', () => {
-  it('renders Section A heading', () => {
+  beforeEach(async () => {
+    if (!db.isOpen()) await db.open();
+  });
+
+  it('renders Section A heading after loading', async () => {
     render(<App />);
     expect(
-      screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
+      await screen.findByRole('heading', {
+        name: /Section A — Healthcare Worker Profile/,
+      }),
     ).toBeInTheDocument();
   });
 
-  it('renders at least one Section A question', () => {
+  it('renders at least one Section A question after loading', async () => {
     render(<App />);
-    expect(screen.getByLabelText(/What is your sex at birth/)).toBeInTheDocument();
+    expect(
+      await screen.findByLabelText(/What is your sex at birth/),
+    ).toBeInTheDocument();
+  });
+
+  it('autosaves an answer and restores it after remount', async () => {
+    const user = userEvent.setup();
+
+    const first = render(<App />);
+    await screen.findByLabelText(/What is your sex at birth/);
+
+    await user.click(screen.getByLabelText('Female'));
+
+    // Wait past the 500 ms autosave debounce + Dexie write.
+    await waitFor(
+      async () => {
+        const draftId = localStorage.getItem('f2_current_draft_id');
+        expect(draftId).toBeTruthy();
+        const row = await db.drafts.get(draftId!);
+        expect(row?.values).toMatchObject({ Q3: 'Female' });
+      },
+      { timeout: 2000 },
+    );
+
+    first.unmount();
+
+    render(<App />);
+    await waitFor(() => {
+      expect(screen.getByLabelText('Female')).toBeChecked();
+    });
+  });
+});
+
+describe('App — sync integration', () => {
+  beforeEach(async () => {
+    if (!db.isOpen()) await db.open();
+    await db.submissions.clear();
+    await db.drafts.clear();
+    localStorage.clear();
+  });
+
+  it('renders a pending count badge when the DB has pending submissions', async () => {
+    const row: SubmissionRow = {
+      client_submission_id: 'csid-pending',
+      hcw_id: 'h1',
+      status: 'pending_sync',
+      synced_at: null,
+      submitted_at: Date.now(),
+      spec_version: 'v',
+      values: {},
+      retry_count: 0,
+      next_retry_at: null,
+      last_error: null,
+    };
+    await db.submissions.put(row);
+    render(<App />);
+    expect(await screen.findByTestId('pending-count')).toHaveTextContent('1 pending');
+  });
+
+  it('opens the Sync page when the header "Sync" link is clicked', async () => {
+    render(<App />);
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole('button', { name: /^sync$/i }));
+    expect(await screen.findByRole('heading', { name: /^sync$/i })).toBeInTheDocument();
   });
 });
