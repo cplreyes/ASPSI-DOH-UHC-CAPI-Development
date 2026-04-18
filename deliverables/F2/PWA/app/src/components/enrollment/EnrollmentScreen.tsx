@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/lib/auth-context';
 import { listFacilities, type RefreshResult } from '@/lib/facilities-cache';
@@ -9,6 +10,7 @@ interface EnrollmentScreenProps {
 }
 
 export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
+  const { t } = useTranslation();
   const { enroll } = useAuth();
   const [facilities, setFacilities] = useState<FacilityRow[]>([]);
   const [hcwId, setHcwId] = useState('');
@@ -48,13 +50,11 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
 
   return (
     <form onSubmit={handleEnroll} className="mx-auto flex max-w-md flex-col gap-4 p-6">
-      <h2 className="text-2xl font-semibold tracking-tight">Enroll</h2>
-      <p className="text-sm text-muted-foreground">
-        Enter your HCW ID and select your facility. You can change these later from the Sync page.
-      </p>
+      <h2 className="text-2xl font-semibold tracking-tight">{t('enrollment.heading')}</h2>
+      <p className="text-sm text-muted-foreground">{t('enrollment.helper')}</p>
 
       <label className="flex flex-col gap-1 text-sm">
-        HCW ID
+        {t('enrollment.hcwIdLabel')}
         <input
           type="text"
           value={hcwId}
@@ -65,10 +65,10 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
       </label>
 
       <label className="flex flex-col gap-1 text-sm">
-        Facility
+        {t('enrollment.facilityLabel')}
         {facilities.length === 0 ? (
           <span className="text-sm text-muted-foreground">
-            No facilities cached. Tap Refresh to download the master list.
+            {t('enrollment.noFacilitiesCached')}
           </span>
         ) : (
           <select
@@ -76,7 +76,7 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
             onChange={(e) => setFacilityId(e.target.value)}
             className="rounded-md border border-input bg-background px-3 py-2 text-sm"
           >
-            <option value="">Select a facility…</option>
+            <option value="">{t('enrollment.facilityPlaceholder')}</option>
             {facilities.map((f) => (
               <option key={f.facility_id} value={f.facility_id}>
                 {f.facility_name}
@@ -90,10 +90,10 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
 
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={!canSubmit}>
-          Enroll
+          {t('enrollment.enrollButton')}
         </Button>
         <Button type="button" variant="outline" onClick={handleRefresh} disabled={refreshing}>
-          {refreshing ? 'Refreshing…' : 'Refresh facility list'}
+          {refreshing ? t('enrollment.refreshingButton') : t('enrollment.refreshButton')}
         </Button>
       </div>
     </form>

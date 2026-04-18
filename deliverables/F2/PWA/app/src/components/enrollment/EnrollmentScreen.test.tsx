@@ -2,14 +2,17 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AuthProvider } from '@/lib/auth-context';
+import { LocaleProvider } from '@/i18n/locale-context';
 import { db } from '@/lib/db';
 import { EnrollmentScreen } from './EnrollmentScreen';
 
 function setup(props: Partial<React.ComponentProps<typeof EnrollmentScreen>> = {}) {
   return render(
-    <AuthProvider>
-      <EnrollmentScreen onRefresh={vi.fn().mockResolvedValue({ ok: true, count: 1 })} {...props} />
-    </AuthProvider>,
+    <LocaleProvider>
+      <AuthProvider>
+        <EnrollmentScreen onRefresh={vi.fn().mockResolvedValue({ ok: true, count: 1 })} {...props} />
+      </AuthProvider>
+    </LocaleProvider>,
   );
 }
 
