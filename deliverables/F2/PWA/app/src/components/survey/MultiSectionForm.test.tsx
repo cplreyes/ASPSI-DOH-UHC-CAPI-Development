@@ -125,4 +125,63 @@ describe('<MultiSectionForm>', () => {
     await user.click(screen.getByRole('button', { name: /next/i }));
     expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
   });
+
+  it('renders the review screen when initialIndex points past the last section', () => {
+    render(
+      <MultiSectionForm
+        initialValues={{
+          Q1_1: 'Reyes', Q1_2: 'Carl', Q1_3: 'P',
+          Q2: 'Regular', Q3: 'Female', Q4: 30, Q5: 'Nurse', Q7: 'No',
+          Q9_1: 3, Q9_2: 6, Q10: 5, Q11: 8,
+        }}
+        initialIndex={11}
+        onAutosave={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+    expect(
+      screen.getByRole('heading', { name: /Review your answers/i }),
+    ).toBeInTheDocument();
+  });
+
+  it('calls onSubmit with merged values when Submit is clicked on the review screen', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    const values = {
+      Q1_1: 'Reyes', Q1_2: 'Carl', Q1_3: 'P',
+      Q2: 'Regular', Q3: 'Female', Q4: 30, Q5: 'Nurse', Q7: 'No',
+      Q9_1: 3, Q9_2: 6, Q10: 5, Q11: 8,
+    };
+    render(
+      <MultiSectionForm
+        initialValues={values}
+        initialIndex={11}
+        onAutosave={vi.fn()}
+        onSubmit={onSubmit}
+      />,
+    );
+    await user.click(screen.getByRole('button', { name: /^submit$/i }));
+    expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining(values));
+  });
+
+  it('returns to the chosen section when Edit is clicked on the review screen', async () => {
+    const user = userEvent.setup();
+    render(
+      <MultiSectionForm
+        initialValues={{
+          Q1_1: 'Reyes', Q1_2: 'Carl', Q1_3: 'P',
+          Q2: 'Regular', Q3: 'Female', Q4: 30, Q5: 'Nurse', Q7: 'No',
+          Q9_1: 3, Q9_2: 6, Q10: 5, Q11: 8,
+        }}
+        initialIndex={11}
+        onAutosave={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+    const editButtons = screen.getAllByRole('button', { name: /^edit$/i });
+    await user.click(editButtons[0]);
+    expect(
+      screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/i }),
+    ).toBeInTheDocument();
+  });
 });

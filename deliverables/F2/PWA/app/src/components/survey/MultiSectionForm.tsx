@@ -31,6 +31,7 @@ import { shouldShow, type FormValues } from '@/lib/skip-logic';
 import { Section } from './Section';
 import { ProgressBar } from './ProgressBar';
 import { Navigator } from './Navigator';
+import { ReviewSection } from './ReviewSection';
 
 interface SectionConfig {
   id: string;
@@ -52,34 +53,37 @@ const SECTIONS: SectionConfig[] = [
   { id: 'J', section: sectionJ, schema: sectionJSchema },
 ];
 
+const REVIEW_INDEX = SECTIONS.length;
+
 interface MultiSectionFormProps {
   initialValues: FormValues;
+  initialIndex?: number;
   onAutosave: (values: FormValues) => void;
   onSubmit: (values: FormValues) => void;
 }
 
 export function MultiSectionForm({
   initialValues,
+  initialIndex = 0,
   onAutosave,
   onSubmit,
 }: MultiSectionFormProps) {
   const [merged, setMerged] = useState<FormValues>(initialValues);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(initialIndex);
   const submitRef = useRef<(() => void) | null>(null);
 
-  const current = SECTIONS[index]!;
+  const isReview = index === REVIEW_INDEX;
+  const current = isReview ? null : SECTIONS[index]!;
   const isFirst = index === 0;
-  const isLast = index === SECTIONS.length - 1;
+  const isLastSection = index === SECTIONS.length - 1;
 
-  const visibleItems: Item[] = useMemo(
-    () =>
-      current.section.items.filter((it) =>
-        shouldShow(current.id, it.id, merged),
-      ),
-    [current, merged],
-  );
+  const visibleItems: Item[] = useMemo(() => {
+    if (!current) return [];
+    return current.section.items.filter((it) => shouldShow(current.id, it.id, merged));
+  }, [current, merged]);
 
   const sectionDefaults = useMemo(() => {
+    if (!current) return {};
     const out: FormValues = {};
     for (const it of current.section.items) {
       if (it.type === 'multi-field' && it.subFields) {
@@ -106,11 +110,7 @@ export function MultiSectionForm({
   const handleSectionValid = (values: FormValues) => {
     const next = { ...merged, ...values };
     setMerged(next);
-    if (isLast) {
-      onSubmit(next);
-    } else {
-      setIndex(index + 1);
-    }
+    setIndex(index + 1);
   };
 
   const handlePrev = () => {
@@ -122,17 +122,28 @@ export function MultiSectionForm({
     submitRef.current?.();
   };
 
-  const handleSubmitClick = () => {
-    submitRef.current?.();
+  const handleEdit = (sectionId: string) => {
+    const target = SECTIONS.findIndex((s) => s.id === sectionId);
+    if (target >= 0) setIndex(target);
   };
+
+  const handleFinalSubmit = () => {
+    onSubmit(merged);
+  };
+
+  if (isReview) {
+    return (
+      <ReviewSection values={merged} onEdit={handleEdit} onSubmit={handleFinalSubmit} />
+    );
+  }
 
   return (
     <div className="flex flex-col">
       <ProgressBar current={index + 1} total={SECTIONS.length} />
       <Section<FormValues>
-        key={current.id}
-        section={current.section}
-        schema={current.schema}
+        key={current!.id}
+        section={current!.section}
+        schema={current!.schema}
         items={visibleItems}
         defaultValues={sectionDefaults}
         hideSubmit
@@ -143,10 +154,10 @@ export function MultiSectionForm({
       <div className="mx-auto w-full max-w-xl px-6 pb-6">
         <Navigator
           isFirst={isFirst}
-          isLast={isLast}
+          isLast={isLastSection}
           onPrev={handlePrev}
           onNext={handleNext}
-          onSubmit={handleSubmitClick}
+          onSubmit={handleNext}
         />
       </div>
     </div>
