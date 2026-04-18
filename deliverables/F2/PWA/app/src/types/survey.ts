@@ -1,3 +1,5 @@
+import type { LocalizedString } from '@/i18n/localized';
+
 export type ItemType =
   | 'short-text'
   | 'long-text'
@@ -8,14 +10,14 @@ export type ItemType =
   | 'multi-field';
 
 export interface Choice {
-  label: string;
+  label: LocalizedString;
   value: string;
   isOtherSpecify?: boolean;
 }
 
 export interface SubField {
   id: string;
-  label: string;
+  label: LocalizedString;
   kind: 'short-text' | 'number';
   min?: number;
   max?: number;
@@ -27,8 +29,8 @@ export interface Item {
   section: string;
   type: ItemType;
   required: boolean;
-  label: string;
-  help?: string;
+  label: LocalizedString;
+  help?: LocalizedString;
   choices?: Choice[];
   hasOtherSpecify?: boolean;
   min?: number;
@@ -38,7 +40,7 @@ export interface Item {
 
 export interface Section {
   id: string;
-  title: string;
-  preamble?: string;
+  title: LocalizedString;
+  preamble?: LocalizedString;
   items: Item[];
 }
