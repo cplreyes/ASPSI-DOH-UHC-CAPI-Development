@@ -20,6 +20,16 @@ export const sectionASchema = z.object({
   Q9_2: z.coerce.number(),
   Q10: z.coerce.number().min(1).max(7),
   Q11: z.coerce.number().min(1).max(24),
+}).superRefine((data, ctx) => {
+  if (data.Q2 === 'Other, specify' && !(typeof data.Q2_other === 'string' && data.Q2_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q2_other'], message: 'Please specify' });
+  }
+  if (data.Q5 === 'Other (specify)' && !(typeof data.Q5_other === 'string' && data.Q5_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q5_other'], message: 'Please specify' });
+  }
+  if (data.Q6 === 'Others (specify)' && !(typeof data.Q6_other === 'string' && data.Q6_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q6_other'], message: 'Please specify' });
+  }
 });
 export type SectionAValues = z.infer<typeof sectionASchema>;
 
@@ -46,6 +56,10 @@ export const sectionBSchema = z.object({
   Q24: z.enum(['Longer', 'Shorter', 'I don\'t know']),
   Q25: z.enum(['More stringent', 'Less stringent', 'I don\'t know']),
   Q26: z.enum(['More', 'Less', 'I don\'t know']),
+}).superRefine((data, ctx) => {
+  if (Array.isArray(data.Q21) && data.Q21.includes('Other (specify)') && !(typeof data.Q21_other === 'string' && data.Q21_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q21_other'], message: 'Please specify' });
+  }
 });
 export type SectionBValues = z.infer<typeof sectionBSchema>;
 
@@ -64,6 +78,19 @@ export const sectionCSchema = z.object({
   Q35: z.array(z.enum(['Predictable revenue due to capitation', 'YAKAP is more comprehensive', 'High volume of patients', 'Other, specify', 'Not a physician/dentist'])).optional(),
   Q35_other: z.string().optional(),
   Q36: z.string().min(1),
+}).superRefine((data, ctx) => {
+  if (data.Q30 === 'Other (specify)' && !(typeof data.Q30_other === 'string' && data.Q30_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q30_other'], message: 'Please specify' });
+  }
+  if (data.Q32 === 'Other (specify)' && !(typeof data.Q32_other === 'string' && data.Q32_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q32_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q33) && data.Q33.includes('Other (specify)') && !(typeof data.Q33_other === 'string' && data.Q33_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q33_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q35) && data.Q35.includes('Other, specify') && !(typeof data.Q35_other === 'string' && data.Q35_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q35_other'], message: 'Please specify' });
+  }
 });
 export type SectionCValues = z.infer<typeof sectionCSchema>;
 
@@ -78,6 +105,19 @@ export const sectionDSchema = z.object({
   Q41_other: z.string().optional(),
   Q42: z.array(z.enum(['Patient does not pay any hospital bill', 'PhilHealth will cover cost of treatment', 'Medicine and service are already included', 'No cash payment required upon discharge', 'Applies only to PhilHealth members and DOH-run hospitals', 'Bills are settled between the hospital and PhilHealth', 'Patients should not be charged extra fees', 'Applies only to PhilHealth members and any public hospital', 'Applies only to PhilHealth members and any public and private hospital', 'I don\'t know', 'Other (Specify)'])).optional(),
   Q42_other: z.string().optional(),
+}).superRefine((data, ctx) => {
+  if (Array.isArray(data.Q38) && data.Q38.includes('Other (specify)') && !(typeof data.Q38_other === 'string' && data.Q38_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q38_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q39) && data.Q39.includes('Other (Specify)') && !(typeof data.Q39_other === 'string' && data.Q39_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q39_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q41) && data.Q41.includes('Other (specify)') && !(typeof data.Q41_other === 'string' && data.Q41_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q41_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q42) && data.Q42.includes('Other (Specify)') && !(typeof data.Q42_other === 'string' && data.Q42_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q42_other'], message: 'Please specify' });
+  }
 });
 export type SectionDValues = z.infer<typeof sectionDSchema>;
 
@@ -86,6 +126,10 @@ export const sectionE1Schema = z.object({
   Q44: z.enum(['Yes', 'No', 'I don\'t know']),
   Q45: z.array(z.enum(['Patient awareness', 'Referral patterns', 'Availability of staff/services', 'Facility location and accessibility', 'PhilHealth coverage and reimbursement', 'Other (specify)'])).optional(),
   Q45_other: z.string().optional(),
+}).superRefine((data, ctx) => {
+  if (Array.isArray(data.Q45) && data.Q45.includes('Other (specify)') && !(typeof data.Q45_other === 'string' && data.Q45_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q45_other'], message: 'Please specify' });
+  }
 });
 export type SectionE1Values = z.infer<typeof sectionE1Schema>;
 
@@ -94,6 +138,10 @@ export const sectionE2Schema = z.object({
   Q47: z.enum(['Yes', 'No']),
   Q48: z.array(z.enum(['Availability of GAMOT medicines', 'Patient awareness of the program', 'Prescribing practices of physicians', 'Pharmacy capacity', 'PhilHealth eligibility and reimbursement processes', 'Other (specify)'])).optional(),
   Q48_other: z.string().optional(),
+}).superRefine((data, ctx) => {
+  if (Array.isArray(data.Q48) && data.Q48.includes('Other (specify)') && !(typeof data.Q48_other === 'string' && data.Q48_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q48_other'], message: 'Please specify' });
+  }
 });
 export type SectionE2Values = z.infer<typeof sectionE2Schema>;
 
@@ -109,6 +157,19 @@ export const sectionFSchema = z.object({
   Q54: z.enum(['Very Satisfied: Minor improvements needed…', 'Satisfied: Some improvements needed…', 'Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional', 'Dissatisfied: Moderate improvements needed…', 'Very Dissatisfied: Major improvements needed…']),
   Q55: z.array(z.enum(['Facilities are overcrowded…', 'The referral process is slow', 'Poor coordination between our facility and referred facilities…', 'Other (specify)'])).optional(),
   Q55_other: z.string().optional(),
+}).superRefine((data, ctx) => {
+  if (Array.isArray(data.Q49) && data.Q49.includes('Other (specify)') && !(typeof data.Q49_other === 'string' && data.Q49_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q49_other'], message: 'Please specify' });
+  }
+  if (data.Q50 === 'Other (specify)' && !(typeof data.Q50_other === 'string' && data.Q50_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q50_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q53) && data.Q53.includes('Other (specify)') && !(typeof data.Q53_other === 'string' && data.Q53_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q53_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q55) && data.Q55.includes('Other (specify)') && !(typeof data.Q55_other === 'string' && data.Q55_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q55_other'], message: 'Please specify' });
+  }
 });
 export type SectionFValues = z.infer<typeof sectionFSchema>;
 
@@ -153,6 +214,16 @@ export const sectionHSchema = z.object({
   Q84: z.enum(['We are short staffed, so I have to', 'I am capable of the task, I just haven\'t completed official certification yet', 'I think that someone of my role should be responsible for these tasks', 'Other (specify)']),
   Q84_other: z.string().optional(),
   Q85: z.enum(['Agree but for medical tasks only', 'Agree but for clerical tasks only', 'Agree for both medical and clerical tasks', 'Disagree for both medical and clerical tasks']),
+}).superRefine((data, ctx) => {
+  if (data.Q82 === 'Other (specify)' && !(typeof data.Q82_other === 'string' && data.Q82_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q82_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q83) && data.Q83.includes('Other (specify)') && !(typeof data.Q83_other === 'string' && data.Q83_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q83_other'], message: 'Please specify' });
+  }
+  if (data.Q84 === 'Other (specify)' && !(typeof data.Q84_other === 'string' && data.Q84_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q84_other'], message: 'Please specify' });
+  }
 });
 export type SectionHValues = z.infer<typeof sectionHSchema>;
 
@@ -160,6 +231,10 @@ export const sectionISchema = z.object({
   Q86: z.enum(['Yes', 'No']),
   Q87: z.array(z.enum(['Insufficient support given', 'Hard to coordinate', 'Support is not targeted', 'Other (specify)'])).optional(),
   Q87_other: z.string().optional(),
+}).superRefine((data, ctx) => {
+  if (Array.isArray(data.Q87) && data.Q87.includes('Other (specify)') && !(typeof data.Q87_other === 'string' && data.Q87_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q87_other'], message: 'Please specify' });
+  }
 });
 export type SectionIValues = z.infer<typeof sectionISchema>;
 
@@ -196,5 +271,21 @@ export const sectionJSchema = z.object({
   Q113_other: z.string().optional(),
   Q114: z.array(z.enum(['Transfer to a new facility with the same role', 'Change training/specialization within healthcare', 'Change profession', 'Take an extended leave from work', 'Take a position as a health worker in another country', 'Retire', 'Other (specify)'])).optional(),
   Q114_other: z.string().optional(),
+}).superRefine((data, ctx) => {
+  if (Array.isArray(data.Q99) && data.Q99.includes('Other (specify)') && !(typeof data.Q99_other === 'string' && data.Q99_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q99_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q100) && data.Q100.includes('Other (specify)') && !(typeof data.Q100_other === 'string' && data.Q100_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q100_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q102) && data.Q102.includes('Other (specify)') && !(typeof data.Q102_other === 'string' && data.Q102_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q102_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q113) && data.Q113.includes('Other (specify)') && !(typeof data.Q113_other === 'string' && data.Q113_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q113_other'], message: 'Please specify' });
+  }
+  if (Array.isArray(data.Q114) && data.Q114.includes('Other (specify)') && !(typeof data.Q114_other === 'string' && data.Q114_other.trim().length > 0)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q114_other'], message: 'Please specify' });
+  }
 });
 export type SectionJValues = z.infer<typeof sectionJSchema>;

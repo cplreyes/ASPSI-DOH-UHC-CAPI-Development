@@ -99,4 +99,30 @@ describe('<MultiSectionForm>', () => {
     );
     expect(screen.getByLabelText('Female')).toBeChecked();
   });
+
+  it('blocks Next when Q5 is "Other (specify)" but Q5_other is empty', async () => {
+    const user = userEvent.setup();
+    render(
+      <MultiSectionForm
+        initialValues={{
+          Q1_1: 'Reyes',
+          Q1_2: 'Carl',
+          Q1_3: 'P',
+          Q2: 'Regular',
+          Q3: 'Female',
+          Q4: 30,
+          Q7: 'No',
+          Q9_1: 3,
+          Q9_2: 6,
+          Q10: 5,
+          Q11: 8,
+        }}
+        onAutosave={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+    await user.click(screen.getByLabelText('Other (specify)'));
+    await user.click(screen.getByRole('button', { name: /next/i }));
+    expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
+  });
 });

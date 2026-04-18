@@ -298,4 +298,79 @@ describe('emitSchema', () => {
     };
     expect(emitSchema(result)).toContain('Q36: z.string().min(1)');
   });
+
+  it('emits a .superRefine that requires _other when parent single equals the other-specify value', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'A',
+          title: 'A',
+          items: [
+            {
+              id: 'Q2',
+              section: 'A',
+              type: 'single',
+              required: true,
+              hasOtherSpecify: true,
+              label: 'Employment?',
+              choices: [
+                { label: 'Regular', value: 'Regular' },
+                { label: 'Other, specify', value: 'Other, specify', isOtherSpecify: true },
+              ],
+            },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    const code = emitSchema(result);
+    expect(code).toContain('.superRefine((data, ctx) => {');
+    expect(code).toContain("if (data.Q2 === 'Other, specify'");
+    expect(code).toContain("path: ['Q2_other']");
+  });
+
+  it('emits a .superRefine clause that uses .includes for multi+specify parents', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'B',
+          title: 'B',
+          items: [
+            {
+              id: 'Q21',
+              section: 'B',
+              type: 'multi',
+              required: true,
+              hasOtherSpecify: true,
+              label: 'Which?',
+              choices: [
+                { label: 'Salary', value: 'Salary' },
+                { label: 'Other (specify)', value: 'Other (specify)', isOtherSpecify: true },
+              ],
+            },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    const code = emitSchema(result);
+    expect(code).toContain("Array.isArray(data.Q21) && data.Q21.includes('Other (specify)')");
+    expect(code).toContain("path: ['Q21_other']");
+  });
+
+  it('does not emit .superRefine when the section has no hasOtherSpecify items', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'H',
+          title: 'H',
+          items: [
+            { id: 'Q88', section: 'H', type: 'single', required: true, label: 'L', choices: [{ label: 'A', value: 'A' }] },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    expect(emitSchema(result)).not.toContain('.superRefine');
+  });
 });

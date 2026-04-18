@@ -15,12 +15,45 @@ export function emitSchema(result: ParseResult): string {
 function emitSectionSchema(section: Section): string {
   const fieldLines = section.items.flatMap(emitFieldEntries).map((l) => `  ${l}`);
   const objectLiteral = `z.object({\n${fieldLines.join('\n')}\n})`;
+  const refinement = emitOtherSpecifyRefinement(section);
+  const expr = refinement ? `${objectLiteral}${refinement}` : objectLiteral;
   const constName = `section${section.id}Schema`;
   const typeName = `Section${section.id}Values`;
   return [
-    `export const ${constName} = ${objectLiteral};`,
+    `export const ${constName} = ${expr};`,
     `export type ${typeName} = z.infer<typeof ${constName}>;`,
   ].join('\n');
+}
+
+function emitOtherSpecifyRefinement(section: Section): string | null {
+  const clauses: string[] = [];
+  for (const item of section.items) {
+    if (!item.hasOtherSpecify || !item.choices) continue;
+    const otherChoice = item.choices.find((c) => c.isOtherSpecify);
+    if (!otherChoice) continue;
+    const parentKey = jsAccess(item.id);
+    const otherKey = jsAccess(`${item.id}_other`);
+    const otherValue = otherChoice.value.replace(/'/g, "\\'");
+    const condition =
+      item.type === 'multi'
+        ? `Array.isArray(data${parentKey}) && data${parentKey}.includes('${otherValue}')`
+        : `data${parentKey} === '${otherValue}'`;
+    const filledCheck = `typeof data${otherKey} === 'string' && data${otherKey}.trim().length > 0`;
+    const pathLiteral = `['${item.id}_other']`;
+    clauses.push(
+      [
+        `  if (${condition} && !(${filledCheck})) {`,
+        `    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ${pathLiteral}, message: 'Please specify' });`,
+        `  }`,
+      ].join('\n'),
+    );
+  }
+  if (clauses.length === 0) return null;
+  return `.superRefine((data, ctx) => {\n${clauses.join('\n')}\n})`;
+}
+
+function jsAccess(id: string): string {
+  return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(id) ? `.${id}` : `['${id}']`;
 }
 
 function emitFieldEntries(item: Item): string[] {
