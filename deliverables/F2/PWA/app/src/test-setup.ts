@@ -21,3 +21,5 @@ afterEach(async () => {
   );
   localStorage.clear();
 });
+
+import '@/i18n';
