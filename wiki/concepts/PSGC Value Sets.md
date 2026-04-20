@@ -1,7 +1,7 @@
 ---
 type: concept
-tags: [cspro, dcf, value-sets, psgc, geography, blocker, conventions]
-source_count: 0
+tags: [cspro, dcf, value-sets, psgc, geography, conventions]
+source_count: 1
 ---
 
 # PSGC Value Sets
@@ -12,30 +12,54 @@ source_count: 0
 
 In F1's `FacilityHeadSurvey.dcf` (the template for F2/F3/F4):
 
-- `REGION` — 1-level code
-- `PROVINCE_HUC` — province or HUC (Highly Urbanized City) code
-- `CITY_MUNICIPALITY` — city/municipality code
-- `BARANGAY` — barangay code
+- `REGION` — length 10, stores full PSGC (e.g. `1300000000` for NCR)
+- `PROVINCE_HUC` — length 10, stores full PSGC; includes all 82 Prov + 33 HUCs + 2 specials (Isabela City "not a province", Special Geographic Area)
+- `CITY_MUNICIPALITY` — length 10, stores full PSGC; includes 149 City (CC/ICC/HUC) + 1,493 Mun + 14 SubMun (Manila districts) + 2 specials
+- `BARANGAY` — length 10, stores full PSGC; 42,010 barangays
 
-F2/F3/F4 inherit the same four items and the same blocker.
+F2/F3/F4 inherit the same four items; the PSA source + loader is shared so those instruments can reuse without re-fetching.
 
-## Blocker
+## Source — PSA 1Q 2026 publication (self-served)
 
-As of 2026-04-15, ASPSI has not delivered the PSGC code lists. `generate_dcf.py` marks the four items as **plain numerics without value sets** so the DCF still loads in CSPro Designer — the items are live but don't have drop-downs or validation yet. When ASPSI delivers the lists:
+As of **2026-04-20**, PSGC value sets are sourced directly from the PSA 1Q 2026 Publication Datafile (released 13 Apr 2026), not from ASPSI. The shift happened because PSGC is public PSA data — ASPSI had no proprietary input to add, and waiting on them was pure delay.
 
-1. Drop them into the generator as new value-set constants.
-2. Wire them into the four items.
-3. Regenerate — no other schema changes required.
+Pipeline:
 
-Until then, these items are **ASPSI-blocked**, not design-blocked (distinct from the six `PENDING_DESIGN_*` F1 questions that await a Leadership decision on schema shape).
+| Artifact | Path | Purpose |
+|---|---|---|
+| Source xlsx | `deliverables/CSPro/F1/inputs/PSGC-1Q-2026-Publication-Datafile.xlsx` | PSA's published workbook |
+| Parser | `deliverables/CSPro/F1/inputs/parse_psgc.py` | state-machine extractor; emits 4 CSVs |
+| Region CSV | `deliverables/CSPro/F1/inputs/psgc_region.csv` | 18 rows |
+| Province/HUC CSV | `deliverables/CSPro/F1/inputs/psgc_province_huc.csv` | 117 rows (82 Prov + 33 HUC + 2 Special) |
+| City/Mun CSV | `deliverables/CSPro/F1/inputs/psgc_city_municipality.csv` | 1,658 rows (149 City + 1,493 Mun + 14 SubMun + 2 Special) |
+| Barangay CSV | `deliverables/CSPro/F1/inputs/psgc_barangay.csv` | 42,010 rows |
+| Loader | `deliverables/CSPro/cspro_helpers.load_psgc_value_set()` | reads a CSV into `value_set_options` tuples |
+| Wiring | `F1/generate_dcf.py :: build_geographic_id()` | attaches all four value sets to the items |
+
+## Parent chains (for cascading filters)
+
+Each CSV carries the parent PSGC code(s) so CSPro PROC code can filter child dropdowns by the selected parent:
+
+- `psgc_province_huc.csv` → `parent_region`
+- `psgc_city_municipality.csv` → `parent_province_huc` + `parent_region`
+- `psgc_barangay.csv` → `parent_city_municipality` + `parent_province_huc` + `parent_region`
+
+**Cascading-filter logic is NOT yet implemented.** The DCF ships with all 42k barangays in one dropdown. Implementing per-parent filtering is a follow-on PROC task — the data is ready.
+
+## Edge cases handled by the parser
+
+- **HUCs** (33) live at province-level (PROVINCE_HUC) AND as their own city-level (CITY_MUNICIPALITY) container, since their barangays sit directly beneath them in PSA's hierarchy.
+- **ICCs** (5) stay under their geographic province (CITY_MUNICIPALITY), following DOH convention.
+- **Manila SubMuns** (14) are preserved as distinct CITY_MUNICIPALITY-level entries, faithful to PSA's hierarchy; barangays list the SubMun as parent.
+- **Isabela City "Not a Province"** and **Special Geographic Area** (BARMM) are treated as PROVINCE_HUC-level + CITY_MUNICIPALITY-level specials so their child barangays chain correctly.
 
 ## F2 parallel
 
-[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]] takes a different approach: rather than shipping PSGC as drop-downs, the F2 design **absorbs geographic fields into a `FacilityMasterList` Sheet** that prefills facility-linked metadata (region, province, city_mun, barangay) via per-facility prefilled URLs (`Links.generateLinks()`). This sidesteps the PSGC dropdown problem for F2 — but the underlying blocker (ASPSI must produce the facility master list) is the same shape of dependency.
+[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]] takes a different UX approach: rather than shipping PSGC as drop-downs, the F2 design **absorbs geographic fields into a `FacilityMasterList` Sheet** that prefills facility-linked metadata via per-facility prefilled URLs. The underlying PSGC codes it populates with should come from the same PSA source / CSVs here — keep one source of truth.
 
 ## Memory
 
-- `memory/project_aspsi_psgc_value_sets.md` — ASPSI ask + F2–F4 inheritance note.
+- `memory/project_aspsi_psgc_value_sets.md` — pivot from ASPSI-blocked → self-served; pipeline artifacts list.
 
 ## Related
 

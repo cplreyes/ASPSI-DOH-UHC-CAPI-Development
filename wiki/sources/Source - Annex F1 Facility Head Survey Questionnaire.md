@@ -52,8 +52,8 @@ Driven by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - An
 - Probing instructions embedded (e.g., "DO NOT READ OPTIONS OUT LOUD" guide questions).
 - Secondary data section requires separate roster/grid input for staffing tables.
 - Facility geographic identification includes GPS coordinates (latitude/longitude).
-- **PSGC value sets** for REGION / PROVINCE_HUC / CITY_MUNICIPALITY / BARANGAY still inbound from ASPSI — see project memory on this open dependency.
-- **DCF-generator impact**: `generate_dcf.py` needs re-audit against Apr 20 items. Previous build was 11 records / 655 items against Apr 08 source; item count will grow with the new Section C, E, G items.
+- **PSGC value sets** for REGION / PROVINCE_HUC / CITY_MUNICIPALITY / BARANGAY are **self-served + wired** from the PSA 1Q 2026 Publication — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/PSGC Value Sets|PSGC Value Sets]]. No longer an ASPSI-inbound dependency.
+- **DCF-generator status**: Apr 20 structural patches landed — Q32–34 (Section C DOH IS/PhilHealth submission + frequency + 12-option decision-making checklist), Q40–42 (separate NBB/ZBB/no-copay items), Section E BUCAS+GAMOT label + Q101–117 coverage, Section G 4-subsection grouping (NBB Q135–137, ZBB Q138–140, LGU Q148–153, Referral Q154–162). Current build: 11 records / 655 items.
 
 ## Cross-references
 

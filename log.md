@@ -2,6 +2,23 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-20 (PSGC value sets — self-served from PSA 1Q 2026)
+
+- **PSGC dependency flipped from ASPSI-blocked to self-served + wired** — F1's four geographic items (REGION / PROVINCE_HUC / CITY_MUNICIPALITY / BARANGAY) now have PSA-authoritative value sets attached. Realization driver: PSGC is public PSA data; ASPSI had no proprietary input, so waiting on them was pure delay.
+- **Source**: PSA 1Q 2026 PSGC Publication Datafile (released 13 Apr 2026), downloaded from `psa.gov.ph` directly to `deliverables/CSPro/F1/inputs/PSGC-1Q-2026-Publication-Datafile.xlsx`.
+- **Parser**: `deliverables/CSPro/F1/inputs/parse_psgc.py` — state-machine walk of PSA's flat hierarchy sheet; handles HUCs (33, elevated to province-level + duplicated at city-level as their own barangay container), ICCs (5, stay under geographic province), Manila's 14 SubMuns (preserved as distinct city-level entries per PSA hierarchy), and the two null-level specials (Isabela City "not a province", Special Geographic Area). Emits 4 CSVs with parent chains.
+- **CSV outputs** in `F1/inputs/`:
+  - `psgc_region.csv` — 18 rows
+  - `psgc_province_huc.csv` — 117 rows (82 Prov + 33 HUC + 2 Special)
+  - `psgc_city_municipality.csv` — 1,658 rows (149 City + 1,493 Mun + 14 SubMun + 2 Special)
+  - `psgc_barangay.csv` — 42,010 rows
+- **Loader**: `cspro_helpers.load_psgc_value_set()` — shared so F2/F3/F4 can reuse without re-parsing.
+- **Generator patch**: `F1/generate_dcf.py :: build_geographic_id()` — dropped the `PENDING ASPSI` stub comment; all four items now `length=10` (full PSGC code) with value sets wired. Lengths changed from 2/3/4/4 — no saved data invalidated (still in build).
+- **DCF regenerated**: `FacilityHeadSurvey.dcf` now 17.2 MB (was 944 KB); 11 records / 655 items unchanged; geographic record now carries 18 + 117 + 1,658 + 42,010 = 43,803 value-set entries.
+- **Cascading-filter logic NOT implemented in this pass** — barangay dropdown currently shows all 42k entries. Follow-on: write CSPro PROC-level filter by selected parent code; the CSV parent-chain columns are ready.
+- **Wiki + memory updates**: `wiki/concepts/PSGC Value Sets.md` rewritten to remove "blocker" framing and document the pipeline; `memory/project_aspsi_psgc_value_sets.md` flipped from REQUESTED → SELF-SERVED + WIRED; MEMORY.md index entry relabeled.
+- **Downstream impact**: F2/F3/F4 inherit the same PSGC resolution path; they can reuse `load_psgc_value_set` + the same CSVs when their generators/build-out need geographic ID items. F2 Google Forms FacilityMasterList should also populate its prefills from these CSVs, not from ASPSI.
+
 ## 2026-04-20 (Apr 20 Del-1 re-ingest — step 6: Annexes B/C/D/E/H/I/J)
 
 - **Step 6 — FINAL step of the 6-step Apr 20 re-ingest plan complete.** All 7 remaining annex source pages created; full 15-file Apr 20 submission now ingested.
