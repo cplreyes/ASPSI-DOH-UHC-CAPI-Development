@@ -486,77 +486,133 @@ def build_section_c_gate():
 
 
 # ============================================================
-# Section D. UHC Awareness (Q51-Q60)
+# Shared source-of-information value set — reused across D52, E55, F58,
+# F70 (GAMOT) and similar awareness items. Identical 8-option list in
+# every occurrence in the Apr 20 source.
+# ============================================================
+F4_INFO_SOURCE = [
+    ("News",                   "1"),
+    ("Legislation",            "2"),
+    ("Social Media",           "3"),
+    ("Friends / Family",       "4"),
+    ("Health center/facility", "5"),
+    ("LGU/Barangay",           "6"),
+    ("I don't know",           "7"),
+    ("Other (Specify)",        "8"),
+]
+
+
+# ============================================================
+# Section D. Awareness on Universal Health Care (UHC) — Q51-Q53 — Apr 20
 # ============================================================
 
 def build_section_d():
-    Q52_SOURCE = [
-        ("News",                "1"),
-        ("Legislation",         "2"),
-        ("Social Media",        "3"),
-        ("Friends / Family",    "4"),
-        ("Health center/facility","5"),
-        ("LGU/Barangay",        "6"),
-        ("I don't know",        "7"),
-        ("Other (specify)",     "8"),
-    ]
-    Q54_UNDERSTANDING = [
-        ("Free healthcare for all Filipinos",                       "1"),
-        ("Government provides financial assistance for health",     "2"),
-        ("All Filipinos are automatically enrolled in PhilHealth",  "3"),
-        ("Primary care provider for every Filipino",                "4"),
-        ("Access to quality healthcare for everyone",               "5"),
-        ("I don't know",                                            "6"),
-        ("Other (specify)",                                         "7"),
+    Q53_UNDERSTANDING = [
+        ("Protection from financial risk/decreased out-of-pocket spending",       "1"),
+        ("Access to quality and affordable health care goods and services",       "2"),
+        ("Automatic enrollment into PhilHealth",                                  "3"),
+        ("Primary care provider for every Filipino",                              "4"),
+        ("I don't know",                                                          "5"),
+        ("Other (Specify)",                                                       "6"),
     ]
     items = [
-        yes_no_dk("Q51_UHC_HEARD", "51. Have you heard about Universal Health Care (UHC)?"),
-        *select_all("Q52_UHC_SOURCE", "52. Sources of information about UHC", Q52_SOURCE),
-        yes_no_dk("Q53_UHC_LAW_AWARE", "53. Are you aware that UHC is a law?"),
-        *select_all("Q54_UHC_UNDERSTAND", "54. What is your understanding about UHC?", Q54_UNDERSTANDING),
+        yes_no("Q51_UHC_HEARD",
+               "51. Have you heard about Universal Health Care (UHC) prior to this survey?"),
+        *select_all("Q52_UHC_SOURCE",
+                    "52. What is your source of information about UHC?",
+                    F4_INFO_SOURCE),
+        alpha("Q52_UHC_SOURCE_OTHER_TXT",
+              "52. Source of information — Other (Specify) text", length=120),
+        *select_all("Q53_UHC_UNDERSTAND",
+                    "53. What is your understanding about UHC?",
+                    Q53_UNDERSTANDING),
+        alpha("Q53_UHC_UNDERSTAND_OTHER_TXT",
+              "53. UHC understanding — Other (Specify) text", length=120),
     ]
-    return record("D_UHC_AWARENESS", "D. UHC Awareness", "F", items)
+    return record("D_UHC_AWARENESS",
+                  "D. Awareness on Universal Health Care (UHC)", "F", items)
 
 
 # ============================================================
-# Section E. YAKAP/Konsulta Awareness (Q61-Q68)
+# Section E. YAKAP/Konsulta Awareness — Q54-Q56 — Apr 20
 # ============================================================
 
 def build_section_e():
-    Q62_SOURCE = [
-        ("News",                 "01"),
-        ("Legislation",          "02"),
-        ("Social Media",         "03"),
-        ("Friends / Family",     "04"),
-        ("Health center/facility","05"),
-        ("PhilHealth",           "06"),
-        ("LGU/Barangay",        "07"),
-        ("BHW",                  "08"),
-        ("I don't know",         "09"),
-        ("Other (specify)",     "10"),
+    Q56_UNDERSTANDING = [
+        ("Free primary care consultation (with a registered YAKAP/Konsulta provider)",              "1"),
+        ("Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)",   "2"),
+        ("Free selected laboratory / diagnostics examination",                                      "3"),
+        ("Free selected drugs and medicines",                                                       "4"),
+        ("There are no benefits in the package",                                                    "5"),
+        ("I don't know",                                                                            "6"),
+        ("Other (Specify)",                                                                         "7"),
     ]
     items = [
-        yes_no_dk("Q61_YAKAP_HEARD", "61. Have you heard about YAKAP/Konsulta?"),
-        *select_all("Q62_YAKAP_SOURCE", "62. Sources of information about YAKAP/Konsulta", Q62_SOURCE),
-        yes_no_dk("Q63_KONSULTA_ENROLLED", "63. Are you or any HH member enrolled in a Konsulta provider?"),
-        yes_no_dk("Q64_KONSULTA_USED", "64. Have you used any Konsulta services in the past 12 months?"),
-        yes_no("Q65_KONSULTA_SATISFIED", "65. Were you satisfied with the Konsulta services?"),
+        yes_no("Q54_YAKAP_HEARD",
+               "54. Have you heard of the term \"YAKAP/Konsulta package\"?"),
+        *select_all("Q55_YAKAP_SOURCE",
+                    "55. What are your sources of information about the YAKAP/Konsulta package?",
+                    F4_INFO_SOURCE),
+        alpha("Q55_YAKAP_SOURCE_OTHER_TXT",
+              "55. Source of information — Other (Specify) text", length=120),
+        *select_all("Q56_YAKAP_UNDERSTAND",
+                    "56. What is your understanding about the YAKAP/Konsulta package?",
+                    Q56_UNDERSTANDING),
+        alpha("Q56_YAKAP_UNDERSTAND_OTHER_TXT",
+              "56. YAKAP understanding — Other (Specify) text", length=120),
     ]
-    return record("E_YAKAP_KONSULTA", "E. YAKAP/Konsulta Awareness", "G", items)
+    return record("E_YAKAP_KONSULTA",
+                  "E. YAKAP/Konsulta Awareness", "G", items)
 
 
 # ============================================================
-# Section F. BUCAS Awareness (Q69-Q72)
+# Section F. BUCAS Awareness and Utilization — Q57-Q61 — Apr 20
+# Expanded per Annex G#1 (BUCAS/PuroKalusugan/ZBB coverage woven
+# through household survey). Q57-Q61 applicable only to respondents
+# in areas with BUCAS; otherwise proceed to Q62.
 # ============================================================
 
 def build_section_f():
-    items = [
-        yes_no_dk("Q69_BUCAS_HEARD", "69. Have you heard about BUCAS?"),
-        yes_no("Q70_BUCAS_ENROLLED", "70. Are you or any HH member enrolled in BUCAS?"),
-        yes_no("Q71_BUCAS_USED", "71. Have you used any BUCAS services?"),
-        yes_no("Q72_BUCAS_SATISFIED", "72. Were you satisfied with the BUCAS services?"),
+    Q59_UNDERSTANDING = [
+        ("Provides urgent care for non-life-threatening/serious conditions",   "1"),
+        ("Offers outpatient and ambulatory health services",                   "2"),
+        ("Helps reduce overcrowding in hospitals",                             "3"),
+        ("Allows access to timely medical consultation and treatment",         "4"),
+        ("Other (specify)",                                                    "5"),
     ]
-    return record("F_BUCAS_AWARENESS", "F. BUCAS Awareness", "H", items)
+    Q61_SERVICES = [
+        ("Medical consultation for urgent or minor conditions",        "1"),
+        ("Outpatient or ambulatory care services",                     "2"),
+        ("Basic diagnostic services (e.g., laboratory tests, X-ray)",  "3"),
+        ("Minor procedures or treatments",                             "4"),
+        ("Referral to higher-level health facilities",                 "5"),
+        ("I don't know",                                               "6"),
+        ("Other (specify)",                                            "7"),
+    ]
+    items = [
+        yes_no("Q57_BUCAS_HEARD",
+               "57. Have you heard about Bagong Urgent Care and Ambulatory Service (BUCAS) center?"),
+        *select_all("Q58_BUCAS_SOURCE",
+                    "58. If yes, what are your sources of information about this BUCAS center?",
+                    F4_INFO_SOURCE),
+        alpha("Q58_BUCAS_SOURCE_OTHER_TXT",
+              "58. BUCAS source — Other (Specify) text", length=120),
+        *select_all("Q59_BUCAS_UNDERSTAND",
+                    "59. What is your understanding about a BUCAS center?",
+                    Q59_UNDERSTANDING),
+        alpha("Q59_BUCAS_UNDERSTAND_OTHER_TXT",
+              "59. BUCAS understanding — Other (specify) text", length=120),
+        yes_no("Q60_BUCAS_ACCESSED",
+               "60. In the last six months, did you or any member of your HH accessed the services in a BUCAS center?"),
+        *select_all("Q61_BUCAS_SERVICES",
+                    "61. If yes, which of the services did you avail?",
+                    Q61_SERVICES),
+        alpha("Q61_BUCAS_SERVICES_OTHER_TXT",
+              "61. BUCAS services — Other (specify) text", length=120),
+    ]
+    return record("F_BUCAS_AWARENESS",
+                  "F. Bagong Urgent Care and Ambulatory Service (BUCAS) Awareness and Utilization",
+                  "H", items)
 
 
 # ============================================================

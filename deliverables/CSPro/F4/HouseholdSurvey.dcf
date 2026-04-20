@@ -4107,7 +4107,7 @@
           "name": "D_UHC_AWARENESS",
           "labels": [
             {
-              "text": "D. UHC Awareness"
+              "text": "D. Awareness on Universal Health Care (UHC)"
             }
           ],
           "recordType": "F",
@@ -4120,7 +4120,7 @@
               "name": "Q51_UHC_HEARD",
               "labels": [
                 {
-                  "text": "51. Have you heard about Universal Health Care (UHC)?"
+                  "text": "51. Have you heard about Universal Health Care (UHC) prior to this survey?"
                 }
               ],
               "contentType": "numeric",
@@ -4131,7 +4131,7 @@
                   "name": "Q51_UHC_HEARD_VS1",
                   "labels": [
                     {
-                      "text": "51. Have you heard about Universal Health Care (UHC)?"
+                      "text": "51. Have you heard about Universal Health Care (UHC) prior to this survey?"
                     }
                   ],
                   "values": [
@@ -4158,18 +4158,6 @@
                           "value": "2"
                         }
                       ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "I don't know"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "3"
-                        }
-                      ]
                     }
                   ]
                 }
@@ -4179,7 +4167,7 @@
               "name": "Q52_UHC_SOURCE_O01",
               "labels": [
                 {
-                  "text": "52. Sources of information about UHC \u2014 News"
+                  "text": "52. What is your source of information about UHC? \u2014 News"
                 }
               ],
               "contentType": "numeric",
@@ -4190,7 +4178,7 @@
                   "name": "Q52_UHC_SOURCE_O01_VS1",
                   "labels": [
                     {
-                      "text": "52. Sources of information about UHC \u2014 News"
+                      "text": "52. What is your source of information about UHC? \u2014 News"
                     }
                   ],
                   "values": [
@@ -4226,7 +4214,7 @@
               "name": "Q52_UHC_SOURCE_O02",
               "labels": [
                 {
-                  "text": "52. Sources of information about UHC \u2014 Legislation"
+                  "text": "52. What is your source of information about UHC? \u2014 Legislation"
                 }
               ],
               "contentType": "numeric",
@@ -4237,7 +4225,7 @@
                   "name": "Q52_UHC_SOURCE_O02_VS1",
                   "labels": [
                     {
-                      "text": "52. Sources of information about UHC \u2014 Legislation"
+                      "text": "52. What is your source of information about UHC? \u2014 Legislation"
                     }
                   ],
                   "values": [
@@ -4273,7 +4261,7 @@
               "name": "Q52_UHC_SOURCE_O03",
               "labels": [
                 {
-                  "text": "52. Sources of information about UHC \u2014 Social Media"
+                  "text": "52. What is your source of information about UHC? \u2014 Social Media"
                 }
               ],
               "contentType": "numeric",
@@ -4284,7 +4272,7 @@
                   "name": "Q52_UHC_SOURCE_O03_VS1",
                   "labels": [
                     {
-                      "text": "52. Sources of information about UHC \u2014 Social Media"
+                      "text": "52. What is your source of information about UHC? \u2014 Social Media"
                     }
                   ],
                   "values": [
@@ -4320,7 +4308,7 @@
               "name": "Q52_UHC_SOURCE_O04",
               "labels": [
                 {
-                  "text": "52. Sources of information about UHC \u2014 Friends / Family"
+                  "text": "52. What is your source of information about UHC? \u2014 Friends / Family"
                 }
               ],
               "contentType": "numeric",
@@ -4331,7 +4319,7 @@
                   "name": "Q52_UHC_SOURCE_O04_VS1",
                   "labels": [
                     {
-                      "text": "52. Sources of information about UHC \u2014 Friends / Family"
+                      "text": "52. What is your source of information about UHC? \u2014 Friends / Family"
                     }
                   ],
                   "values": [
@@ -4367,7 +4355,7 @@
               "name": "Q52_UHC_SOURCE_O05",
               "labels": [
                 {
-                  "text": "52. Sources of information about UHC \u2014 Health center/facility"
+                  "text": "52. What is your source of information about UHC? \u2014 Health center/facility"
                 }
               ],
               "contentType": "numeric",
@@ -4378,7 +4366,7 @@
                   "name": "Q52_UHC_SOURCE_O05_VS1",
                   "labels": [
                     {
-                      "text": "52. Sources of information about UHC \u2014 Health center/facility"
+                      "text": "52. What is your source of information about UHC? \u2014 Health center/facility"
                     }
                   ],
                   "values": [
@@ -4414,7 +4402,7 @@
               "name": "Q52_UHC_SOURCE_O06",
               "labels": [
                 {
-                  "text": "52. Sources of information about UHC \u2014 LGU/Barangay"
+                  "text": "52. What is your source of information about UHC? \u2014 LGU/Barangay"
                 }
               ],
               "contentType": "numeric",
@@ -4425,7 +4413,7 @@
                   "name": "Q52_UHC_SOURCE_O06_VS1",
                   "labels": [
                     {
-                      "text": "52. Sources of information about UHC \u2014 LGU/Barangay"
+                      "text": "52. What is your source of information about UHC? \u2014 LGU/Barangay"
                     }
                   ],
                   "values": [
@@ -4461,7 +4449,7 @@
               "name": "Q52_UHC_SOURCE_O07",
               "labels": [
                 {
-                  "text": "52. Sources of information about UHC \u2014 I don't know"
+                  "text": "52. What is your source of information about UHC? \u2014 I don't know"
                 }
               ],
               "contentType": "numeric",
@@ -4472,7 +4460,7 @@
                   "name": "Q52_UHC_SOURCE_O07_VS1",
                   "labels": [
                     {
-                      "text": "52. Sources of information about UHC \u2014 I don't know"
+                      "text": "52. What is your source of information about UHC? \u2014 I don't know"
                     }
                   ],
                   "values": [
@@ -4508,7 +4496,7 @@
               "name": "Q52_UHC_SOURCE_O08",
               "labels": [
                 {
-                  "text": "52. Sources of information about UHC \u2014 Other (specify)"
+                  "text": "52. What is your source of information about UHC? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -4519,7 +4507,7 @@
                   "name": "Q52_UHC_SOURCE_O08_VS1",
                   "labels": [
                     {
-                      "text": "52. Sources of information about UHC \u2014 Other (specify)"
+                      "text": "52. What is your source of information about UHC? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -4555,76 +4543,27 @@
               "name": "Q52_UHC_SOURCE_OTHER_TXT",
               "labels": [
                 {
-                  "text": "52. Sources of information about UHC \u2014 Other (specify) text"
+                  "text": "52. What is your source of information about UHC? \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
               "length": 120
             },
             {
-              "name": "Q53_UHC_LAW_AWARE",
+              "name": "Q52_UHC_SOURCE_OTHER_TXT",
               "labels": [
                 {
-                  "text": "53. Are you aware that UHC is a law?"
+                  "text": "52. Source of information \u2014 Other (Specify) text"
                 }
               ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q53_UHC_LAW_AWARE_VS1",
-                  "labels": [
-                    {
-                      "text": "53. Are you aware that UHC is a law?"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "I don't know"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "3"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "contentType": "alpha",
+              "length": 120
             },
             {
-              "name": "Q54_UHC_UNDERSTAND_O01",
+              "name": "Q53_UHC_UNDERSTAND_O01",
               "labels": [
                 {
-                  "text": "54. What is your understanding about UHC? \u2014 Free healthcare for all Filipinos"
+                  "text": "53. What is your understanding about UHC? \u2014 Protection from financial risk/decreased out-of-pocket spending"
                 }
               ],
               "contentType": "numeric",
@@ -4632,10 +4571,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q54_UHC_UNDERSTAND_O01_VS1",
+                  "name": "Q53_UHC_UNDERSTAND_O01_VS1",
                   "labels": [
                     {
-                      "text": "54. What is your understanding about UHC? \u2014 Free healthcare for all Filipinos"
+                      "text": "53. What is your understanding about UHC? \u2014 Protection from financial risk/decreased out-of-pocket spending"
                     }
                   ],
                   "values": [
@@ -4668,10 +4607,10 @@
               ]
             },
             {
-              "name": "Q54_UHC_UNDERSTAND_O02",
+              "name": "Q53_UHC_UNDERSTAND_O02",
               "labels": [
                 {
-                  "text": "54. What is your understanding about UHC? \u2014 Government provides financial assistance for health"
+                  "text": "53. What is your understanding about UHC? \u2014 Access to quality and affordable health care goods and services"
                 }
               ],
               "contentType": "numeric",
@@ -4679,10 +4618,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q54_UHC_UNDERSTAND_O02_VS1",
+                  "name": "Q53_UHC_UNDERSTAND_O02_VS1",
                   "labels": [
                     {
-                      "text": "54. What is your understanding about UHC? \u2014 Government provides financial assistance for health"
+                      "text": "53. What is your understanding about UHC? \u2014 Access to quality and affordable health care goods and services"
                     }
                   ],
                   "values": [
@@ -4715,10 +4654,10 @@
               ]
             },
             {
-              "name": "Q54_UHC_UNDERSTAND_O03",
+              "name": "Q53_UHC_UNDERSTAND_O03",
               "labels": [
                 {
-                  "text": "54. What is your understanding about UHC? \u2014 All Filipinos are automatically enrolled in PhilHealth"
+                  "text": "53. What is your understanding about UHC? \u2014 Automatic enrollment into PhilHealth"
                 }
               ],
               "contentType": "numeric",
@@ -4726,10 +4665,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q54_UHC_UNDERSTAND_O03_VS1",
+                  "name": "Q53_UHC_UNDERSTAND_O03_VS1",
                   "labels": [
                     {
-                      "text": "54. What is your understanding about UHC? \u2014 All Filipinos are automatically enrolled in PhilHealth"
+                      "text": "53. What is your understanding about UHC? \u2014 Automatic enrollment into PhilHealth"
                     }
                   ],
                   "values": [
@@ -4762,10 +4701,10 @@
               ]
             },
             {
-              "name": "Q54_UHC_UNDERSTAND_O04",
+              "name": "Q53_UHC_UNDERSTAND_O04",
               "labels": [
                 {
-                  "text": "54. What is your understanding about UHC? \u2014 Primary care provider for every Filipino"
+                  "text": "53. What is your understanding about UHC? \u2014 Primary care provider for every Filipino"
                 }
               ],
               "contentType": "numeric",
@@ -4773,10 +4712,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q54_UHC_UNDERSTAND_O04_VS1",
+                  "name": "Q53_UHC_UNDERSTAND_O04_VS1",
                   "labels": [
                     {
-                      "text": "54. What is your understanding about UHC? \u2014 Primary care provider for every Filipino"
+                      "text": "53. What is your understanding about UHC? \u2014 Primary care provider for every Filipino"
                     }
                   ],
                   "values": [
@@ -4809,10 +4748,10 @@
               ]
             },
             {
-              "name": "Q54_UHC_UNDERSTAND_O05",
+              "name": "Q53_UHC_UNDERSTAND_O05",
               "labels": [
                 {
-                  "text": "54. What is your understanding about UHC? \u2014 Access to quality healthcare for everyone"
+                  "text": "53. What is your understanding about UHC? \u2014 I don't know"
                 }
               ],
               "contentType": "numeric",
@@ -4820,10 +4759,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q54_UHC_UNDERSTAND_O05_VS1",
+                  "name": "Q53_UHC_UNDERSTAND_O05_VS1",
                   "labels": [
                     {
-                      "text": "54. What is your understanding about UHC? \u2014 Access to quality healthcare for everyone"
+                      "text": "53. What is your understanding about UHC? \u2014 I don't know"
                     }
                   ],
                   "values": [
@@ -4856,10 +4795,10 @@
               ]
             },
             {
-              "name": "Q54_UHC_UNDERSTAND_O06",
+              "name": "Q53_UHC_UNDERSTAND_O06",
               "labels": [
                 {
-                  "text": "54. What is your understanding about UHC? \u2014 I don't know"
+                  "text": "53. What is your understanding about UHC? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -4867,10 +4806,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q54_UHC_UNDERSTAND_O06_VS1",
+                  "name": "Q53_UHC_UNDERSTAND_O06_VS1",
                   "labels": [
                     {
-                      "text": "54. What is your understanding about UHC? \u2014 I don't know"
+                      "text": "53. What is your understanding about UHC? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -4903,57 +4842,20 @@
               ]
             },
             {
-              "name": "Q54_UHC_UNDERSTAND_O07",
+              "name": "Q53_UHC_UNDERSTAND_OTHER_TXT",
               "labels": [
                 {
-                  "text": "54. What is your understanding about UHC? \u2014 Other (specify)"
+                  "text": "53. What is your understanding about UHC? \u2014 Other (specify) text"
                 }
               ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q54_UHC_UNDERSTAND_O07_VS1",
-                  "labels": [
-                    {
-                      "text": "54. What is your understanding about UHC? \u2014 Other (specify)"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "contentType": "alpha",
+              "length": 120
             },
             {
-              "name": "Q54_UHC_UNDERSTAND_OTHER_TXT",
+              "name": "Q53_UHC_UNDERSTAND_OTHER_TXT",
               "labels": [
                 {
-                  "text": "54. What is your understanding about UHC? \u2014 Other (specify) text"
+                  "text": "53. UHC understanding \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -4975,10 +4877,10 @@
           },
           "items": [
             {
-              "name": "Q61_YAKAP_HEARD",
+              "name": "Q54_YAKAP_HEARD",
               "labels": [
                 {
-                  "text": "61. Have you heard about YAKAP/Konsulta?"
+                  "text": "54. Have you heard of the term \"YAKAP/Konsulta package\"?"
                 }
               ],
               "contentType": "numeric",
@@ -4986,69 +4888,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q61_YAKAP_HEARD_VS1",
+                  "name": "Q54_YAKAP_HEARD_VS1",
                   "labels": [
                     {
-                      "text": "61. Have you heard about YAKAP/Konsulta?"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "I don't know"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "3"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q62_YAKAP_SOURCE_O01",
-              "labels": [
-                {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 News"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q62_YAKAP_SOURCE_O01_VS1",
-                  "labels": [
-                    {
-                      "text": "62. Sources of information about YAKAP/Konsulta \u2014 News"
+                      "text": "54. Have you heard of the term \"YAKAP/Konsulta package\"?"
                     }
                   ],
                   "values": [
@@ -5081,10 +4924,10 @@
               ]
             },
             {
-              "name": "Q62_YAKAP_SOURCE_O02",
+              "name": "Q55_YAKAP_SOURCE_O01",
               "labels": [
                 {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 Legislation"
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 News"
                 }
               ],
               "contentType": "numeric",
@@ -5092,10 +4935,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q62_YAKAP_SOURCE_O02_VS1",
+                  "name": "Q55_YAKAP_SOURCE_O01_VS1",
                   "labels": [
                     {
-                      "text": "62. Sources of information about YAKAP/Konsulta \u2014 Legislation"
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 News"
                     }
                   ],
                   "values": [
@@ -5128,10 +4971,10 @@
               ]
             },
             {
-              "name": "Q62_YAKAP_SOURCE_O03",
+              "name": "Q55_YAKAP_SOURCE_O02",
               "labels": [
                 {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 Social Media"
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Legislation"
                 }
               ],
               "contentType": "numeric",
@@ -5139,10 +4982,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q62_YAKAP_SOURCE_O03_VS1",
+                  "name": "Q55_YAKAP_SOURCE_O02_VS1",
                   "labels": [
                     {
-                      "text": "62. Sources of information about YAKAP/Konsulta \u2014 Social Media"
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Legislation"
                     }
                   ],
                   "values": [
@@ -5175,10 +5018,10 @@
               ]
             },
             {
-              "name": "Q62_YAKAP_SOURCE_O04",
+              "name": "Q55_YAKAP_SOURCE_O03",
               "labels": [
                 {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 Friends / Family"
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Social Media"
                 }
               ],
               "contentType": "numeric",
@@ -5186,10 +5029,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q62_YAKAP_SOURCE_O04_VS1",
+                  "name": "Q55_YAKAP_SOURCE_O03_VS1",
                   "labels": [
                     {
-                      "text": "62. Sources of information about YAKAP/Konsulta \u2014 Friends / Family"
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Social Media"
                     }
                   ],
                   "values": [
@@ -5222,10 +5065,10 @@
               ]
             },
             {
-              "name": "Q62_YAKAP_SOURCE_O05",
+              "name": "Q55_YAKAP_SOURCE_O04",
               "labels": [
                 {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 Health center/facility"
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Friends / Family"
                 }
               ],
               "contentType": "numeric",
@@ -5233,10 +5076,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q62_YAKAP_SOURCE_O05_VS1",
+                  "name": "Q55_YAKAP_SOURCE_O04_VS1",
                   "labels": [
                     {
-                      "text": "62. Sources of information about YAKAP/Konsulta \u2014 Health center/facility"
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Friends / Family"
                     }
                   ],
                   "values": [
@@ -5269,10 +5112,10 @@
               ]
             },
             {
-              "name": "Q62_YAKAP_SOURCE_O06",
+              "name": "Q55_YAKAP_SOURCE_O05",
               "labels": [
                 {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 PhilHealth"
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Health center/facility"
                 }
               ],
               "contentType": "numeric",
@@ -5280,10 +5123,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q62_YAKAP_SOURCE_O06_VS1",
+                  "name": "Q55_YAKAP_SOURCE_O05_VS1",
                   "labels": [
                     {
-                      "text": "62. Sources of information about YAKAP/Konsulta \u2014 PhilHealth"
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Health center/facility"
                     }
                   ],
                   "values": [
@@ -5316,10 +5159,10 @@
               ]
             },
             {
-              "name": "Q62_YAKAP_SOURCE_O07",
+              "name": "Q55_YAKAP_SOURCE_O06",
               "labels": [
                 {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 LGU/Barangay"
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 LGU/Barangay"
                 }
               ],
               "contentType": "numeric",
@@ -5327,10 +5170,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q62_YAKAP_SOURCE_O07_VS1",
+                  "name": "Q55_YAKAP_SOURCE_O06_VS1",
                   "labels": [
                     {
-                      "text": "62. Sources of information about YAKAP/Konsulta \u2014 LGU/Barangay"
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 LGU/Barangay"
                     }
                   ],
                   "values": [
@@ -5363,10 +5206,10 @@
               ]
             },
             {
-              "name": "Q62_YAKAP_SOURCE_O08",
+              "name": "Q55_YAKAP_SOURCE_O07",
               "labels": [
                 {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 BHW"
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 I don't know"
                 }
               ],
               "contentType": "numeric",
@@ -5374,10 +5217,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q62_YAKAP_SOURCE_O08_VS1",
+                  "name": "Q55_YAKAP_SOURCE_O07_VS1",
                   "labels": [
                     {
-                      "text": "62. Sources of information about YAKAP/Konsulta \u2014 BHW"
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 I don't know"
                     }
                   ],
                   "values": [
@@ -5410,10 +5253,10 @@
               ]
             },
             {
-              "name": "Q62_YAKAP_SOURCE_O09",
+              "name": "Q55_YAKAP_SOURCE_O08",
               "labels": [
                 {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 I don't know"
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -5421,10 +5264,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q62_YAKAP_SOURCE_O09_VS1",
+                  "name": "Q55_YAKAP_SOURCE_O08_VS1",
                   "labels": [
                     {
-                      "text": "62. Sources of information about YAKAP/Konsulta \u2014 I don't know"
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -5457,67 +5300,30 @@
               ]
             },
             {
-              "name": "Q62_YAKAP_SOURCE_O10",
+              "name": "Q55_YAKAP_SOURCE_OTHER_TXT",
               "labels": [
                 {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 Other (specify)"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q62_YAKAP_SOURCE_O10_VS1",
-                  "labels": [
-                    {
-                      "text": "62. Sources of information about YAKAP/Konsulta \u2014 Other (specify)"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q62_YAKAP_SOURCE_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "62. Sources of information about YAKAP/Konsulta \u2014 Other (specify) text"
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
               "length": 120
             },
             {
-              "name": "Q63_KONSULTA_ENROLLED",
+              "name": "Q55_YAKAP_SOURCE_OTHER_TXT",
               "labels": [
                 {
-                  "text": "63. Are you or any HH member enrolled in a Konsulta provider?"
+                  "text": "55. Source of information \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTAND_O01",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free primary care consultation (with a registered YAKAP/Konsulta provider)"
                 }
               ],
               "contentType": "numeric",
@@ -5525,10 +5331,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q63_KONSULTA_ENROLLED_VS1",
+                  "name": "Q56_YAKAP_UNDERSTAND_O01_VS1",
                   "labels": [
                     {
-                      "text": "63. Are you or any HH member enrolled in a Konsulta provider?"
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free primary care consultation (with a registered YAKAP/Konsulta provider)"
                     }
                   ],
                   "values": [
@@ -5553,18 +5359,6 @@
                       "pairs": [
                         {
                           "value": "2"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "I don't know"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "3"
                         }
                       ]
                     }
@@ -5573,10 +5367,10 @@
               ]
             },
             {
-              "name": "Q64_KONSULTA_USED",
+              "name": "Q56_YAKAP_UNDERSTAND_O02",
               "labels": [
                 {
-                  "text": "64. Have you used any Konsulta services in the past 12 months?"
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)"
                 }
               ],
               "contentType": "numeric",
@@ -5584,10 +5378,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q64_KONSULTA_USED_VS1",
+                  "name": "Q56_YAKAP_UNDERSTAND_O02_VS1",
                   "labels": [
                     {
-                      "text": "64. Have you used any Konsulta services in the past 12 months?"
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)"
                     }
                   ],
                   "values": [
@@ -5612,18 +5406,6 @@
                       "pairs": [
                         {
                           "value": "2"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "I don't know"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "3"
                         }
                       ]
                     }
@@ -5632,10 +5414,10 @@
               ]
             },
             {
-              "name": "Q65_KONSULTA_SATISFIED",
+              "name": "Q56_YAKAP_UNDERSTAND_O03",
               "labels": [
                 {
-                  "text": "65. Were you satisfied with the Konsulta services?"
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected laboratory / diagnostics examination"
                 }
               ],
               "contentType": "numeric",
@@ -5643,10 +5425,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q65_KONSULTA_SATISFIED_VS1",
+                  "name": "Q56_YAKAP_UNDERSTAND_O03_VS1",
                   "labels": [
                     {
-                      "text": "65. Were you satisfied with the Konsulta services?"
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected laboratory / diagnostics examination"
                     }
                   ],
                   "values": [
@@ -5677,6 +5459,214 @@
                   ]
                 }
               ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTAND_O04",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected drugs and medicines"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTAND_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected drugs and medicines"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTAND_O05",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 There are no benefits in the package"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTAND_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 There are no benefits in the package"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTAND_O06",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTAND_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTAND_O07",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTAND_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "56. YAKAP understanding \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
             }
           ]
         },
@@ -5684,7 +5674,7 @@
           "name": "F_BUCAS_AWARENESS",
           "labels": [
             {
-              "text": "F. BUCAS Awareness"
+              "text": "F. Bagong Urgent Care and Ambulatory Service (BUCAS) Awareness and Utilization"
             }
           ],
           "recordType": "H",
@@ -5694,10 +5684,10 @@
           },
           "items": [
             {
-              "name": "Q69_BUCAS_HEARD",
+              "name": "Q57_BUCAS_HEARD",
               "labels": [
                 {
-                  "text": "69. Have you heard about BUCAS?"
+                  "text": "57. Have you heard about Bagong Urgent Care and Ambulatory Service (BUCAS) center?"
                 }
               ],
               "contentType": "numeric",
@@ -5705,69 +5695,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q69_BUCAS_HEARD_VS1",
+                  "name": "Q57_BUCAS_HEARD_VS1",
                   "labels": [
                     {
-                      "text": "69. Have you heard about BUCAS?"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "I don't know"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "3"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q70_BUCAS_ENROLLED",
-              "labels": [
-                {
-                  "text": "70. Are you or any HH member enrolled in BUCAS?"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q70_BUCAS_ENROLLED_VS1",
-                  "labels": [
-                    {
-                      "text": "70. Are you or any HH member enrolled in BUCAS?"
+                      "text": "57. Have you heard about Bagong Urgent Care and Ambulatory Service (BUCAS) center?"
                     }
                   ],
                   "values": [
@@ -5800,10 +5731,10 @@
               ]
             },
             {
-              "name": "Q71_BUCAS_USED",
+              "name": "Q58_BUCAS_SOURCE_O01",
               "labels": [
                 {
-                  "text": "71. Have you used any BUCAS services?"
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 News"
                 }
               ],
               "contentType": "numeric",
@@ -5811,10 +5742,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q71_BUCAS_USED_VS1",
+                  "name": "Q58_BUCAS_SOURCE_O01_VS1",
                   "labels": [
                     {
-                      "text": "71. Have you used any BUCAS services?"
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 News"
                     }
                   ],
                   "values": [
@@ -5847,10 +5778,10 @@
               ]
             },
             {
-              "name": "Q72_BUCAS_SATISFIED",
+              "name": "Q58_BUCAS_SOURCE_O02",
               "labels": [
                 {
-                  "text": "72. Were you satisfied with the BUCAS services?"
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Legislation"
                 }
               ],
               "contentType": "numeric",
@@ -5858,10 +5789,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q72_BUCAS_SATISFIED_VS1",
+                  "name": "Q58_BUCAS_SOURCE_O02_VS1",
                   "labels": [
                     {
-                      "text": "72. Were you satisfied with the BUCAS services?"
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Legislation"
                     }
                   ],
                   "values": [
@@ -5892,6 +5823,959 @@
                   ]
                 }
               ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Health center/facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Health center/facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 LGU/Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 LGU/Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "58. BUCAS source \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTAND_O01",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Provides urgent care for non-life-threatening/serious conditions"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_BUCAS_UNDERSTAND_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What is your understanding about a BUCAS center? \u2014 Provides urgent care for non-life-threatening/serious conditions"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTAND_O02",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Offers outpatient and ambulatory health services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_BUCAS_UNDERSTAND_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What is your understanding about a BUCAS center? \u2014 Offers outpatient and ambulatory health services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTAND_O03",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Helps reduce overcrowding in hospitals"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_BUCAS_UNDERSTAND_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What is your understanding about a BUCAS center? \u2014 Helps reduce overcrowding in hospitals"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTAND_O04",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Allows access to timely medical consultation and treatment"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_BUCAS_UNDERSTAND_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What is your understanding about a BUCAS center? \u2014 Allows access to timely medical consultation and treatment"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTAND_O05",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_BUCAS_UNDERSTAND_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What is your understanding about a BUCAS center? \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "59. BUCAS understanding \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q60_BUCAS_ACCESSED",
+              "labels": [
+                {
+                  "text": "60. In the last six months, did you or any member of your HH accessed the services in a BUCAS center?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q60_BUCAS_ACCESSED_VS1",
+                  "labels": [
+                    {
+                      "text": "60. In the last six months, did you or any member of your HH accessed the services in a BUCAS center?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_O01",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Medical consultation for urgent or minor conditions"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Medical consultation for urgent or minor conditions"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_O02",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Outpatient or ambulatory care services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Outpatient or ambulatory care services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_O03",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Basic diagnostic services (e.g., laboratory tests, X-ray)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Basic diagnostic services (e.g., laboratory tests, X-ray)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_O04",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Minor procedures or treatments"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Minor procedures or treatments"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_O05",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Referral to higher-level health facilities"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Referral to higher-level health facilities"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_O06",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_O07",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "61. BUCAS services \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
             }
           ]
         },
