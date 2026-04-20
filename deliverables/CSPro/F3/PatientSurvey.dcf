@@ -3025,6 +3025,3283 @@
               "length": 120
             }
           ]
+        },
+        {
+          "name": "C_UHC_AWARENESS",
+          "labels": [
+            {
+              "text": "C. Awareness on Universal Health Care (UHC)"
+            }
+          ],
+          "recordType": "E",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "Q35_UHC_HEARD",
+              "labels": [
+                {
+                  "text": "35. Have you heard about Universal Health Care (UHC) prior to this survey?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q35_UHC_HEARD_VS1",
+                  "labels": [
+                    {
+                      "text": "35. Have you heard about Universal Health Care (UHC) prior to this survey?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q36_UHC_SOURCE_O01",
+              "labels": [
+                {
+                  "text": "36. What is your source of information about UHC? \u2014 News"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q36_UHC_SOURCE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "36. What is your source of information about UHC? \u2014 News"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q36_UHC_SOURCE_O02",
+              "labels": [
+                {
+                  "text": "36. What is your source of information about UHC? \u2014 Legislation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q36_UHC_SOURCE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "36. What is your source of information about UHC? \u2014 Legislation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q36_UHC_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "36. What is your source of information about UHC? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q36_UHC_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "36. What is your source of information about UHC? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q36_UHC_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "36. What is your source of information about UHC? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q36_UHC_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "36. What is your source of information about UHC? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q36_UHC_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "36. What is your source of information about UHC? \u2014 Health center/ facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q36_UHC_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "36. What is your source of information about UHC? \u2014 Health center/ facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q36_UHC_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "36. What is your source of information about UHC? \u2014 LGU/ Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q36_UHC_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "36. What is your source of information about UHC? \u2014 LGU/ Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q36_UHC_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "36. What is your source of information about UHC? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q36_UHC_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "36. What is your source of information about UHC? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q36_UHC_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "36. What is your source of information about UHC? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q36_UHC_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "36. What is your source of information about UHC? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q36_UHC_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "36. What is your source of information about UHC? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q36_UHC_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "36. UHC source \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q37_UHC_UNDERSTAND_O01",
+              "labels": [
+                {
+                  "text": "37. What is your understanding about UHC? \u2014 Protection from financial risk/decreased out-of-pocket spending"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q37_UHC_UNDERSTAND_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "37. What is your understanding about UHC? \u2014 Protection from financial risk/decreased out-of-pocket spending"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q37_UHC_UNDERSTAND_O02",
+              "labels": [
+                {
+                  "text": "37. What is your understanding about UHC? \u2014 Access to quality and affordable health care goods and services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q37_UHC_UNDERSTAND_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "37. What is your understanding about UHC? \u2014 Access to quality and affordable health care goods and services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q37_UHC_UNDERSTAND_O03",
+              "labels": [
+                {
+                  "text": "37. What is your understanding about UHC? \u2014 Automatic enrollment into PhilHealth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q37_UHC_UNDERSTAND_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "37. What is your understanding about UHC? \u2014 Automatic enrollment into PhilHealth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q37_UHC_UNDERSTAND_O04",
+              "labels": [
+                {
+                  "text": "37. What is your understanding about UHC? \u2014 Primary care provider for every Filipino"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q37_UHC_UNDERSTAND_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "37. What is your understanding about UHC? \u2014 Primary care provider for every Filipino"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q37_UHC_UNDERSTAND_O05",
+              "labels": [
+                {
+                  "text": "37. What is your understanding about UHC? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q37_UHC_UNDERSTAND_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "37. What is your understanding about UHC? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q37_UHC_UNDERSTAND_O06",
+              "labels": [
+                {
+                  "text": "37. What is your understanding about UHC? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q37_UHC_UNDERSTAND_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "37. What is your understanding about UHC? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q37_UHC_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "37. What is your understanding about UHC? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q37_UHC_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "37. UHC understanding \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
+        },
+        {
+          "name": "D_PHILHEALTH_REG",
+          "labels": [
+            {
+              "text": "D. PhilHealth Registration and Health Insurance"
+            }
+          ],
+          "recordType": "F",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "Q38_PHILHEALTH_REG",
+              "labels": [
+                {
+                  "text": "38. Are you currently registered with PhilHealth?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q38_PHILHEALTH_REG_VS1",
+                  "labels": [
+                    {
+                      "text": "38. Are you currently registered with PhilHealth?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q39_HOW_FIND_OUT",
+              "labels": [
+                {
+                  "text": "39. How did you find out about how to register for PhilHealth?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q39_HOW_FIND_OUT_VS1",
+                  "labels": [
+                    {
+                      "text": "39. How did you find out about how to register for PhilHealth?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "PhilHealth representative"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "LGU"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Primary care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other health care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Employer"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No one / self-registered"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Barangay Health Worker"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Friends / Family"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Health center/facility"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q39_HOW_FIND_OUT_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "39. How found out \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q40_WHO_ASSISTED",
+              "labels": [
+                {
+                  "text": "40. Who assisted you in the registration process?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q40_WHO_ASSISTED_VS1",
+                  "labels": [
+                    {
+                      "text": "40. Who assisted you in the registration process?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "PhilHealth representative"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "LGU"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Primary care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other health care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Employer"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No one / self-registered"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Barangay Health Worker"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Friends / Family"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Health center/facility"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q40_WHO_ASSISTED_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "40. Who assisted \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q41_REG_DIFFICULTY",
+              "labels": [
+                {
+                  "text": "41. Did you have any difficulties in the registration process?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q41_REG_DIFFICULTY_VS1",
+                  "labels": [
+                    {
+                      "text": "41. Did you have any difficulties in the registration process?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q42_DIFFICULTY_O01",
+              "labels": [
+                {
+                  "text": "42. What did you find difficult about the process? \u2014 Unclear process"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q42_DIFFICULTY_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "42. What did you find difficult about the process? \u2014 Unclear process"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q42_DIFFICULTY_O02",
+              "labels": [
+                {
+                  "text": "42. What did you find difficult about the process? \u2014 Took a long time"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q42_DIFFICULTY_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "42. What did you find difficult about the process? \u2014 Took a long time"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q42_DIFFICULTY_O03",
+              "labels": [
+                {
+                  "text": "42. What did you find difficult about the process? \u2014 Did not know where to ask for help"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q42_DIFFICULTY_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "42. What did you find difficult about the process? \u2014 Did not know where to ask for help"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q42_DIFFICULTY_O04",
+              "labels": [
+                {
+                  "text": "42. What did you find difficult about the process? \u2014 Had to travel a long way"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q42_DIFFICULTY_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "42. What did you find difficult about the process? \u2014 Had to travel a long way"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q42_DIFFICULTY_O05",
+              "labels": [
+                {
+                  "text": "42. What did you find difficult about the process? \u2014 No valid ID"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q42_DIFFICULTY_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "42. What did you find difficult about the process? \u2014 No valid ID"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q42_DIFFICULTY_O06",
+              "labels": [
+                {
+                  "text": "42. What did you find difficult about the process? \u2014 Did not know the required documents to register"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q42_DIFFICULTY_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "42. What did you find difficult about the process? \u2014 Did not know the required documents to register"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q42_DIFFICULTY_O07",
+              "labels": [
+                {
+                  "text": "42. What did you find difficult about the process? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q42_DIFFICULTY_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "42. What did you find difficult about the process? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q42_DIFFICULTY_O08",
+              "labels": [
+                {
+                  "text": "42. What did you find difficult about the process? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q42_DIFFICULTY_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "42. What did you find difficult about the process? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q42_DIFFICULTY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "42. What did you find difficult about the process? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q42_DIFFICULTY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "42. Difficulty \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q43_KNOWS_ASSIST",
+              "labels": [
+                {
+                  "text": "43. Would you know where to go to seek assistance during registration?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q43_KNOWS_ASSIST_VS1",
+                  "labels": [
+                    {
+                      "text": "43. Would you know where to go to seek assistance during registration?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q44_WHERE_ASSIST",
+              "labels": [
+                {
+                  "text": "44. Where would you go to seek assistance?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q44_WHERE_ASSIST_VS1",
+                  "labels": [
+                    {
+                      "text": "44. Where would you go to seek assistance?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "PhilHealth representative"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "LGU"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Primary care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other health care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Employer"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No one / self-registered"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Barangay Health Worker"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Friends / Family"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Health center/facility"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q44_WHERE_ASSIST_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "44. Where to seek assistance \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q45_CATEGORY",
+              "labels": [
+                {
+                  "text": "45. What category of member are you?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q45_CATEGORY_VS1",
+                  "labels": [
+                    {
+                      "text": "45. What category of member are you?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Formal economy (i.e., individuals working in the government or private sector based in the country)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Informal economy (i.e., unemployed, self-employed, informal workers, Filipinos with dual citizenship, naturalized Filipino citizens, citizens of other countries working and/or residing in the Philippines)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Indigent (i.e., individuals who have no visible means of income, or whose income is insufficient for family subsistence based on DSWD's specific criteria)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Sponsored (i.e., members whose contributions are being paid for by another individual, government agencies, or private entities. Includes some low-income citizens that are not indigent e.g. BHWs, PWDs)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel aged 56 years and above, and SSS underground miner-retirees aged 55 years and above and paid at least 120 monthly contributions with PhilHealth and the former Medicare Programs of SSS and GSIS)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above and are not currently covered by any membership category of PhilHealth and qualified dependents of senior citizen members who are also senior citizen themselves or belonging to other membership categories, with or without coverage who are senior citizens themselves)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Overseas Filipino Worker (OFW)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Qualified dependents (i.e., those whose contributions are declared and covered by a principal member)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "98"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q45_CATEGORY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "45. Category \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q46_BENEFITS_O01",
+              "labels": [
+                {
+                  "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 No balance billing for basic ward accommodation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q46_BENEFITS_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 No balance billing for basic ward accommodation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q46_BENEFITS_O02",
+              "labels": [
+                {
+                  "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 Subsidized inpatient services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q46_BENEFITS_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 Subsidized inpatient services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q46_BENEFITS_O03",
+              "labels": [
+                {
+                  "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 Subsidized outpatient services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q46_BENEFITS_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 Subsidized outpatient services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q46_BENEFITS_O04",
+              "labels": [
+                {
+                  "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 There are no benefits to being a member"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q46_BENEFITS_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 There are no benefits to being a member"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q46_BENEFITS_O05",
+              "labels": [
+                {
+                  "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q46_BENEFITS_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q46_BENEFITS_O06",
+              "labels": [
+                {
+                  "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q46_BENEFITS_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q46_BENEFITS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "46. What are some of the benefits that come with being a PhilHealth member? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q46_BENEFITS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "46. Benefits \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q47_PHYSICIAN_CHECKUP",
+              "labels": [
+                {
+                  "text": "47. Awareness of PhilHealth package \u2014 Physician check-up"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q47_PHYSICIAN_CHECKUP_VS1",
+                  "labels": [
+                    {
+                      "text": "47. Awareness of PhilHealth package \u2014 Physician check-up"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q47_DIAGNOSTIC_TESTS",
+              "labels": [
+                {
+                  "text": "47. Awareness of PhilHealth package \u2014 Diagnostic tests (e.g. laboratory tests and imaging)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q47_DIAGNOSTIC_TESTS_VS1",
+                  "labels": [
+                    {
+                      "text": "47. Awareness of PhilHealth package \u2014 Diagnostic tests (e.g. laboratory tests and imaging)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q47_HOSPITAL_CONF",
+              "labels": [
+                {
+                  "text": "47. Awareness of PhilHealth package \u2014 Hospital confinement"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q47_HOSPITAL_CONF_VS1",
+                  "labels": [
+                    {
+                      "text": "47. Awareness of PhilHealth package \u2014 Hospital confinement"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q47_OUTPATIENT_DRUGS",
+              "labels": [
+                {
+                  "text": "47. Awareness of PhilHealth package \u2014 Outpatient drugs"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q47_OUTPATIENT_DRUGS_VS1",
+                  "labels": [
+                    {
+                      "text": "47. Awareness of PhilHealth package \u2014 Outpatient drugs"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q48_PREMIUM_PAY",
+              "labels": [
+                {
+                  "text": "48. Do you pay PhilHealth premiums every month?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q48_PREMIUM_PAY_VS1",
+                  "labels": [
+                    {
+                      "text": "48. Do you pay PhilHealth premiums every month?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes, I pay directly"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes, my employer pays"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No, I do not pay premiums"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q49_PREMIUM_DIFFICULT",
+              "labels": [
+                {
+                  "text": "49. Do you find it difficult to pay your PhilHealth premium every month?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q49_PREMIUM_DIFFICULT_VS1",
+                  "labels": [
+                    {
+                      "text": "49. Do you find it difficult to pay your PhilHealth premium every month?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q50_DIFFICULTY_PAYING_O01",
+              "labels": [
+                {
+                  "text": "50. Why did you find it difficult? \u2014 Cannot afford the premium"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q50_DIFFICULTY_PAYING_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "50. Why did you find it difficult? \u2014 Cannot afford the premium"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q50_DIFFICULTY_PAYING_O02",
+              "labels": [
+                {
+                  "text": "50. Why did you find it difficult? \u2014 Payment options are inconvenient"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q50_DIFFICULTY_PAYING_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "50. Why did you find it difficult? \u2014 Payment options are inconvenient"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q50_DIFFICULTY_PAYING_O03",
+              "labels": [
+                {
+                  "text": "50. Why did you find it difficult? \u2014 No time to pay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q50_DIFFICULTY_PAYING_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "50. Why did you find it difficult? \u2014 No time to pay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q50_DIFFICULTY_PAYING_O04",
+              "labels": [
+                {
+                  "text": "50. Why did you find it difficult? \u2014 Don't see value in paying"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q50_DIFFICULTY_PAYING_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "50. Why did you find it difficult? \u2014 Don't see value in paying"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q50_DIFFICULTY_PAYING_O05",
+              "labels": [
+                {
+                  "text": "50. Why did you find it difficult? \u2014 System of PhilHealth is unreliable/usually down"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q50_DIFFICULTY_PAYING_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "50. Why did you find it difficult? \u2014 System of PhilHealth is unreliable/usually down"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q50_DIFFICULTY_PAYING_O06",
+              "labels": [
+                {
+                  "text": "50. Why did you find it difficult? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q50_DIFFICULTY_PAYING_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "50. Why did you find it difficult? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q50_DIFFICULTY_PAYING_O07",
+              "labels": [
+                {
+                  "text": "50. Why did you find it difficult? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q50_DIFFICULTY_PAYING_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "50. Why did you find it difficult? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q50_DIFFICULTY_PAYING_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "50. Why did you find it difficult? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q50_DIFFICULTY_PAYING_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "50. Difficulty paying \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q51_OTHER_INSURANCE",
+              "labels": [
+                {
+                  "text": "51. Are you registered with another health insurance plan?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q51_OTHER_INSURANCE_VS1",
+                  "labels": [
+                    {
+                      "text": "51. Are you registered with another health insurance plan?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_PLANS_O01",
+              "labels": [
+                {
+                  "text": "52. Which health insurance plan/s are you enrolled in? \u2014 GSIS"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_PLANS_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "52. Which health insurance plan/s are you enrolled in? \u2014 GSIS"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_PLANS_O02",
+              "labels": [
+                {
+                  "text": "52. Which health insurance plan/s are you enrolled in? \u2014 SSS"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_PLANS_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "52. Which health insurance plan/s are you enrolled in? \u2014 SSS"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_PLANS_O03",
+              "labels": [
+                {
+                  "text": "52. Which health insurance plan/s are you enrolled in? \u2014 Private Insurance"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_PLANS_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "52. Which health insurance plan/s are you enrolled in? \u2014 Private Insurance"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_PLANS_O04",
+              "labels": [
+                {
+                  "text": "52. Which health insurance plan/s are you enrolled in? \u2014 HMO"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_PLANS_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "52. Which health insurance plan/s are you enrolled in? \u2014 HMO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_PLANS_O05",
+              "labels": [
+                {
+                  "text": "52. Which health insurance plan/s are you enrolled in? \u2014 Pag-ibig"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_PLANS_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "52. Which health insurance plan/s are you enrolled in? \u2014 Pag-ibig"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_PLANS_O06",
+              "labels": [
+                {
+                  "text": "52. Which health insurance plan/s are you enrolled in? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_PLANS_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "52. Which health insurance plan/s are you enrolled in? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_PLANS_O07",
+              "labels": [
+                {
+                  "text": "52. Which health insurance plan/s are you enrolled in? \u2014 Others (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_PLANS_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "52. Which health insurance plan/s are you enrolled in? \u2014 Others (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_PLANS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "52. Which health insurance plan/s are you enrolled in? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q52_PLANS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "52. Insurance plans \u2014 Others (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
         }
       ]
     }
