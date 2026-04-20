@@ -616,37 +616,201 @@ def build_section_f():
 
 
 # ============================================================
-# Section G. Access to Medicines (Q73-Q78)
+# Section G. Access to Medicines — Q62-Q78 — Apr 20
+# Covers HH medicine purchase behavior (Q62-Q68), GAMOT awareness and
+# utilization (Q69-Q74), and branded-vs-generic reasoning (Q75-Q78).
+# GAMOT sub-block (Q69-Q74, Q76) applies only to respondents in areas
+# with GAMOT; otherwise proceed to Q79.
 # ============================================================
 
 def build_section_g():
+    Q62_FREQUENCY = [
+        ("Weekly",     "1"),
+        ("Bi-weekly",  "2"),
+        ("Monthly",    "3"),
+        ("Rarely",     "4"),
+        ("Never",      "5"),  # proceed to Q69
+    ]
+    Q63_PRESCRIPTION = [
+        ("Prescribed by a doctor",                             "1"),
+        ("Over-the-counter medicine",                          "2"),
+        ("Purchased both prescribed medicine and OTC medicine","3"),
+        ("I don't know",                                       "4"),
+    ]
+    Q65_CONDITIONS = [
+        ("Upper respiratory infection",                         "01"),
+        ("Hypertension",                                        "02"),
+        ("Immunization",                                        "03"),
+        ("Pregnancy or birth",                                  "04"),
+        ("Flu",                                                 "05"),
+        ("Fever",                                               "06"),
+        ("Joint and muscle pain",                               "07"),
+        ("Asthma or COPD (chronic breathing problem, not cancer)", "08"),
+        ("Diabetes",                                            "09"),
+        ("Heart problem",                                       "10"),
+        ("Kidney problem / Dialysis",                           "11"),
+        ("Cancer (any)",                                        "12"),
+        ("Gastro problem (vomiting, diarrhea, etc.)",           "13"),
+        ("Other infection (e.g. urine, skin, other virus etc.)","14"),
+        ("Accident/injury (e.g. wound/broken bone)",            "15"),
+        ("Dental",                                              "16"),
+        ("ENT (problem with ear/nose/throat)",                  "17"),
+        ("Allergy",                                             "18"),
+        ("No condition - Regular check-up only",                "19"),
+        ("Other (Specify)",                                     "20"),
+    ]
+    Q66_WHERE_BUY = [
+        ("Public Hospital",                                     "1"),
+        ("Private Hospital",                                    "2"),
+        ("Chain Pharmacies (e.g. Mercury Drug, Watsons, TGP, Generika)", "3"),
+        ("Local pharmacies",                                    "4"),
+        ("Online stores (e.g. Shopee, Lazada)",                 "5"),
+        ("Barangay Health Station",                             "6"),
+        ("Rural Health Unit or City Health Office",             "7"),
+        ("Other (specify)",                                     "8"),
+    ]
+    Q68_EASE = [
+        ("Very difficult", "1"),
+        ("Difficult",      "2"),
+        ("Neutral",        "3"),
+        ("Easy",            "4"),
+        ("Very easy",       "5"),
+    ]
+    Q71_UNDERSTANDING = [
+        ("Provides free or affordable medicines for outpatients",      "1"),
+        ("Ensures continuous availability of essential medicines",     "2"),
+        ("Helps reduce out-of-pocket expenses for medicines",          "3"),
+        ("Supports treatment of common illnesses and chronic conditions","4"),
+        ("I don't know",                                               "5"),
+        ("Other (specify)",                                            "6"),
+    ]
+    Q74_WHERE_REST = [
+        ("Purchased from pharmacy",                   "01"),
+        ("Purchased from public hospital",            "02"),
+        ("Purchased from private hospital",           "03"),
+        ("Purchased from primary care provider (PCP)","04"),
+        ("Received from PCP for free",                "05"),
+        ("Received from LGU for free",                "06"),
+        ("Received from public hospital for free",    "07"),
+        ("Received from private hospital for free",   "08"),
+        ("Not applicable",                            "09"),
+        ("Other (Specify)",                           "10"),
+    ]
+    Q76_BRAND_OR_GEN = [
+        ("Branded",                        "1"),  # proceed to Q78
+        ("Generic",                        "2"),
+        ("Both branded and generic",       "3"),
+        ("Don't know the difference",      "4"),  # proceed to Q79
+        ("Not applicable",                 "9"),  # proceed to Q79
+    ]
+    Q77_WHY_GENERIC = [
+        ("Lower cost",                                 "1"),
+        ("Prescribed by doctor",                       "2"),
+        ("Readily available",                          "3"),
+        ("Given for free",                             "4"),
+        ("More or as effective as branded medicine",   "5"),
+        ("I don't know",                               "6"),
+        ("Not applicable",                             "7"),
+        ("Other (Specify)",                            "8"),
+    ]
+    Q78_WHY_BRANDED = [
+        ("Branded medicine is more effective than generic", "1"),
+        ("Not aware of generic option",                     "2"),
+        ("Prescribed by doctor",                            "3"),
+        ("Given for free",                                  "4"),
+        ("Prefer branded over generic option",              "5"),
+        ("I don't know",                                    "6"),
+        ("Not applicable",                                  "7"),
+        ("Other (Specify)",                                 "8"),
+    ]
     items = [
-        yes_no_dk("Q73_GAMOT_HEARD", "73. Have you heard of GAMOT (DOH medicine access program)?"),
-        yes_no("Q74_GAMOT_USED", "74. Have you used GAMOT?"),
-        yes_no_dk("Q75_GENERIC_AWARE", "75. Are you aware of the Generics Act / generic medicines?"),
-        yes_no("Q76_GENERIC_PREFER", "76. Do you prefer generic over branded medicines?"),
-        yes_no("Q77_MEDS_ACCESSIBLE", "77. Do you find medicines accessible and affordable?"),
-        yes_no("Q78_BOTIKA_AWARE", "78. Are you aware of Botika ng Barangay / Botika ng Bayan?"),
+        select_one("Q62_PURCHASE_FREQ",
+                   "62. How often do you purchase or receive medicines?",
+                   Q62_FREQUENCY, length=1),
+        select_one("Q63_PRESCRIPTION_TYPE",
+                   "63. Was the most recent medicine purchased prescribed by a doctor or over-the-counter (OTC) medicine (no need for a prescription)?",
+                   Q63_PRESCRIPTION, length=1),
+        alpha("Q64_MEDICATIONS_LIST",
+              "64. What are the medications that you or any member of your household usually take? (List all medicines taken for the health condition.)",
+              length=500),
+        *select_all("Q65_CONDITIONS",
+                    "65. What are the medical conditions that you/your household member/s take the medicine/s for?",
+                    Q65_CONDITIONS),
+        alpha("Q65_CONDITIONS_OTHER_TXT",
+              "65. Conditions — Other (Specify) text", length=120),
+        *select_all("Q66_WHERE_BUY",
+                    "66. Where do you usually buy or receive your medicines?",
+                    Q66_WHERE_BUY),
+        alpha("Q66_WHERE_BUY_OTHER_TXT",
+              "66. Where buy — Other (specify) text", length=120),
+        numeric("Q67_TIME_TO_PHARMACY",
+                "67. How much time does it take for you to reach the nearest pharmacy from your home? (HHMM)",
+                length=4),
+        select_one("Q68_PHARMACY_ACCESS",
+                   "68. How easy is it for you to access a pharmacy or drugstore?",
+                   Q68_EASE, length=1),
+        # GAMOT sub-block (Q69-Q74, Q76) — applies only in GAMOT areas
+        yes_no("Q69_GAMOT_HEARD",
+               "69. Have you heard of the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's YAKAP/Konsulta or primary care benefit package?"),
+        *select_all("Q70_GAMOT_SOURCE",
+                    "70. If yes, what are your sources of information for GAMOT Package?",
+                    F4_INFO_SOURCE),
+        alpha("Q70_GAMOT_SOURCE_OTHER_TXT",
+              "70. GAMOT source — Other (Specify) text", length=120),
+        *select_all("Q71_GAMOT_UNDERSTAND",
+                    "71. What is your understanding of the GAMOT Package?",
+                    Q71_UNDERSTANDING),
+        alpha("Q71_GAMOT_UNDERSTAND_OTHER_TXT",
+              "71. GAMOT understanding — Other (specify) text", length=120),
+        yes_no("Q72_GAMOT_OBTAINED",
+               "72. Did you get the medicines from the GAMOT Package during the past 6 months?"),
+        alpha("Q73_GAMOT_MEDS_LIST",
+              "73. What are the medications that you obtained from the GAMOT Package? [LIST]",
+              length=500),
+        *select_all("Q74_WHERE_REST",
+                    "74. Where did you get the rest of the medicines?",
+                    Q74_WHERE_REST),
+        alpha("Q74_WHERE_REST_OTHER_TXT",
+              "74. Where rest — Other (Specify) text", length=120),
+        yes_no("Q75_BRAND_GEN_KNOWS",
+               "75. Do you know the difference between a 'branded' and a 'generic' medicine?"),
+        select_one("Q76_BRAND_OR_GEN",
+                   "76. Was/were the medicine/s you bought outside of GAMOT pharmacy branded or generic?",
+                   Q76_BRAND_OR_GEN, length=1),
+        *select_all("Q77_WHY_GENERIC",
+                    "77. If generic, why did you buy generic medicine?",
+                    Q77_WHY_GENERIC),
+        alpha("Q77_WHY_GENERIC_OTHER_TXT",
+              "77. Generic reason — Other (Specify) text", length=120),
+        *select_all("Q78_WHY_BRANDED",
+                    "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.)",
+                    Q78_WHY_BRANDED),
+        alpha("Q78_WHY_BRANDED_OTHER_TXT",
+              "78. Branded reason — Other (Specify) text", length=120),
     ]
     return record("G_ACCESS_MEDICINES", "G. Access to Medicines", "I", items)
 
 
 # ============================================================
-# Section H. PhilHealth Registration (Q79-Q88) — REPEATING per member
+# Section H. PhilHealth Registration and Health Insurance — Q79-Q88 — Apr 20
+# Respondent-level (non-repeating); gated by respondent's Q45 in Section C.
+# Apr 08 had max_occurs=20 (per-member); Apr 20 source explicitly states
+# "Q79 to Q88 if the respondent is registered with PhilHealth in Q45" —
+# asked once of the main respondent, not roster-repeating. (Annex G#4)
 # ============================================================
 
 def build_section_h():
     Q79_REG_SOURCE = [
-        ("PhilHealth representative","01"),
-        ("No one / self-registered", "02"),
-        ("LGU",                      "03"),
-        ("Barangay Health Worker",   "04"),
-        ("Primary care provider",    "05"),
-        ("Friends / Family",         "06"),
-        ("Other health care provider","07"),
-        ("Health center/facility",   "08"),
-        ("Employer",                 "09"),
-        ("Other (specify)",          "10"),
+        ("PhilHealth representative",  "01"),
+        ("LGU",                        "02"),
+        ("Primary care provider",      "03"),
+        ("Other health care provider", "04"),
+        ("Employer",                   "05"),
+        ("No one / self-registered",   "06"),
+        ("Barangay Health Worker",     "07"),
+        ("Friends / Family",           "08"),
+        ("Health center/facility",     "09"),
+        ("Other (Specify)",            "10"),
     ]
     Q82_DIFFICULTY_REASONS = [
         ("Unclear process",                                 "1"),
@@ -656,48 +820,71 @@ def build_section_h():
         ("No valid ID",                                     "5"),
         ("Did not know the required documents to register", "6"),
         ("I don't know",                                    "7"),
-        ("Other (specify)",                                 "8"),
+        ("Other (Specify)",                                 "8"),
     ]
     Q85_BENEFITS = [
-        ("No balance billing for basic ward accommodation","1"),
-        ("Subsidized inpatient services",                  "2"),
-        ("Subsidized outpatient services",                 "3"),
-        ("There are no benefits to being a member",        "4"),
-        ("I don't know",                                   "5"),
-        ("Other (specify)",                                "6"),
+        ("No balance billing for basic ward accommodation",  "1"),
+        ("Subsidized inpatient services",                    "2"),
+        ("Subsidized outpatient services",                   "3"),
+        ("There are no benefits to being a member",          "4"),
+        ("I don't know",                                     "5"),
+        ("Other (Specify)",                                  "6"),
     ]
     Q86_PREMIUM_PAY = [
-        ("Yes, I pay directly",     "1"),
-        ("Yes, my employer pays",   "2"),
+        ("Yes, I pay directly",      "1"),
+        ("Yes, my employer pays",    "2"),
         ("No, I do not pay premiums","3"),
     ]
     Q88_DIFF_PAYING = [
-        ("Cannot afford the premium",                     "1"),
-        ("Payment options are inconvenient",              "2"),
-        ("No time to pay",                                "3"),
-        ("Don't see value in paying",                     "4"),
-        ("System of PhilHealth is unreliable/usually down","5"),
-        ("I don't know",                                   "6"),
-        ("Other (specify)",                                "7"),
+        ("Cannot afford the premium",                       "1"),
+        ("Payment options are inconvenient",                "2"),
+        ("No time to pay",                                  "3"),
+        ("Don't see value in paying",                       "4"),
+        ("System of PhilHealth is unreliable/usually down", "5"),
+        ("I don't know",                                    "6"),
+        ("Other (Specify)",                                 "7"),
     ]
     items = [
-        numeric("MEMBER_LINE_NO", "Household Member Line Number", length=2, zero_fill=True),
-        select_one("Q79_REG_SOURCE", "79. How did you find out about how to register to PhilHealth?",
+        select_one("Q79_REG_SOURCE",
+                   "79. How did you find out about how to register to PhilHealth?",
                    Q79_REG_SOURCE, length=2),
-        alpha("Q79_OTHER_TXT", "79. Registration source — Other (specify) text", length=80),
-        select_one("Q80_ASSIST", "80. Who assisted you in the registration process?",
+        alpha("Q79_REG_SOURCE_OTHER_TXT",
+              "79. Registration source — Other (Specify) text", length=120),
+        select_one("Q80_ASSIST",
+                   "80. Who assisted you in the registration process?",
                    Q79_REG_SOURCE, length=2),
-        alpha("Q80_OTHER_TXT", "80. Registration assistant — Other (specify) text", length=80),
-        yes_no("Q81_REG_DIFFICULTY", "81. Did you have any difficulties in the registration process?"),
-        *select_all("Q82_DIFFICULTY", "82. What did you find difficult?", Q82_DIFFICULTY_REASONS),
-        yes_no("Q83_KNOWS_ASSIST", "83. Would you know where to seek assistance?"),
-        alpha("Q84_WHERE_ASSIST", "84. Where would you go to seek assistance?", length=120),
-        *select_all("Q85_BENEFITS", "85. What are some benefits of being a PhilHealth member?", Q85_BENEFITS),
-        select_one("Q86_PREMIUM_PAY", "86. Do you pay PhilHealth premiums every month?", Q86_PREMIUM_PAY, length=1),
-        yes_no("Q87_PREMIUM_DIFFICULT", "87. Do you find it difficult to pay premiums?"),
-        *select_all("Q88_DIFF_PAYING", "88. Why did you find it difficult?", Q88_DIFF_PAYING),
+        alpha("Q80_ASSIST_OTHER_TXT",
+              "80. Registration assistant — Other (Specify) text", length=120),
+        yes_no("Q81_REG_DIFFICULTY",
+               "81. Did you have any difficulties in the registration process?"),
+        *select_all("Q82_DIFFICULTY_REASONS",
+                    "82. What did you find difficult about the process?",
+                    Q82_DIFFICULTY_REASONS),
+        alpha("Q82_DIFFICULTY_OTHER_TXT",
+              "82. Difficulty — Other (Specify) text", length=120),
+        yes_no("Q83_KNOWS_ASSIST",
+               "83. Would you know where to go to seek assistance in registration?"),
+        alpha("Q84_WHERE_ASSIST",
+              "84. Where would you go to seek assistance?", length=200),
+        *select_all("Q85_BENEFITS",
+                    "85. What are some of the benefits that come with being a PhilHealth member?",
+                    Q85_BENEFITS),
+        alpha("Q85_BENEFITS_OTHER_TXT",
+              "85. Benefits — Other (Specify) text", length=120),
+        select_one("Q86_PREMIUM_PAY",
+                   "86. Do you and members of your HH pay PhilHealth premiums every month?",
+                   Q86_PREMIUM_PAY, length=1),
+        yes_no("Q87_PREMIUM_DIFFICULT",
+               "87. Do you find it difficult to pay the PhilHealth premiums every month?"),
+        *select_all("Q88_DIFF_PAYING",
+                    "88. Why did you find it difficult?",
+                    Q88_DIFF_PAYING),
+        alpha("Q88_DIFF_PAYING_OTHER_TXT",
+              "88. Difficulty paying — Other (Specify) text", length=120),
     ]
-    return record("H_PHILHEALTH_REG", "H. PhilHealth Registration", "J", items, max_occurs=20)
+    return record("H_PHILHEALTH_REG",
+                  "H. PhilHealth Registration and Health Insurance",
+                  "J", items)
 
 
 # ============================================================
@@ -1226,7 +1413,7 @@ def build_f4_dictionary():
         build_section_e(),
         build_section_f(),
         build_section_g(),
-        build_section_h(),   # Repeating: max_occurs=20
+        build_section_h(),       # Apr 20: respondent-level (non-repeating)
         build_section_i(),
         build_section_j(),   # Repeating: max_occurs=20
         build_section_k(),
