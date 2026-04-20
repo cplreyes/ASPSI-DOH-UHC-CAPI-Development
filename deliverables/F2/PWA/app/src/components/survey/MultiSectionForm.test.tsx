@@ -12,11 +12,7 @@ function renderWithProviders(ui: React.ReactElement) {
 describe('<MultiSectionForm>', () => {
   it('starts on Section A and shows the correct progress', () => {
     renderWithProviders(
-      <MultiSectionForm
-        initialValues={{}}
-        onAutosave={vi.fn()}
-        onSubmit={vi.fn()}
-      />,
+      <MultiSectionForm initialValues={{}} onAutosave={vi.fn()} onSubmit={vi.fn()} />,
     );
     expect(
       screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
@@ -27,11 +23,7 @@ describe('<MultiSectionForm>', () => {
   it('blocks Next when Section A validation fails and advances when it passes', async () => {
     const user = userEvent.setup();
     renderWithProviders(
-      <MultiSectionForm
-        initialValues={{}}
-        onAutosave={vi.fn()}
-        onSubmit={vi.fn()}
-      />,
+      <MultiSectionForm initialValues={{}} onAutosave={vi.fn()} onSubmit={vi.fn()} />,
     );
 
     await user.click(screen.getByRole('button', { name: /next/i }));
@@ -60,17 +52,11 @@ describe('<MultiSectionForm>', () => {
   it('applies intra-section skip logic — Q8 appears when Q7 = Yes', async () => {
     const user = userEvent.setup();
     renderWithProviders(
-      <MultiSectionForm
-        initialValues={{}}
-        onAutosave={vi.fn()}
-        onSubmit={vi.fn()}
-      />,
+      <MultiSectionForm initialValues={{}} onAutosave={vi.fn()} onSubmit={vi.fn()} />,
     );
     expect(screen.queryByLabelText(/divide your time/)).toBeNull();
     await user.click(screen.getByLabelText('Yes'));
-    await waitFor(() =>
-      expect(screen.getByLabelText(/divide your time/)).toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.getByLabelText(/divide your time/)).toBeInTheDocument());
   });
 
   it('restores merged values when navigating back', async () => {
@@ -136,27 +122,43 @@ describe('<MultiSectionForm>', () => {
     renderWithProviders(
       <MultiSectionForm
         initialValues={{
-          Q1_1: 'Reyes', Q1_2: 'Carl', Q1_3: 'P',
-          Q2: 'Regular', Q3: 'Female', Q4: 30, Q5: 'Nurse', Q7: 'No',
-          Q9_1: 3, Q9_2: 6, Q10: 5, Q11: 8,
+          Q1_1: 'Reyes',
+          Q1_2: 'Carl',
+          Q1_3: 'P',
+          Q2: 'Regular',
+          Q3: 'Female',
+          Q4: 30,
+          Q5: 'Nurse',
+          Q7: 'No',
+          Q9_1: 3,
+          Q9_2: 6,
+          Q10: 5,
+          Q11: 8,
         }}
         initialIndex={11}
         onAutosave={vi.fn()}
         onSubmit={vi.fn()}
       />,
     );
-    expect(
-      screen.getByRole('heading', { name: /Review your answers/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Review your answers/i })).toBeInTheDocument();
   });
 
   it('calls onSubmit with merged values when Submit is clicked on the review screen', async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();
     const values = {
-      Q1_1: 'Reyes', Q1_2: 'Carl', Q1_3: 'P',
-      Q2: 'Regular', Q3: 'Female', Q4: 30, Q5: 'Nurse', Q7: 'No',
-      Q9_1: 3, Q9_2: 6, Q10: 5, Q11: 8,
+      Q1_1: 'Reyes',
+      Q1_2: 'Carl',
+      Q1_3: 'P',
+      Q2: 'Regular',
+      Q3: 'Female',
+      Q4: 30,
+      Q5: 'Nurse',
+      Q7: 'No',
+      Q9_1: 3,
+      Q9_2: 6,
+      Q10: 5,
+      Q11: 8,
     };
     renderWithProviders(
       <MultiSectionForm
@@ -175,9 +177,18 @@ describe('<MultiSectionForm>', () => {
     renderWithProviders(
       <MultiSectionForm
         initialValues={{
-          Q1_1: 'Reyes', Q1_2: 'Carl', Q1_3: 'P',
-          Q2: 'Regular', Q3: 'Female', Q4: 30, Q5: 'Nurse', Q7: 'No',
-          Q9_1: 3, Q9_2: 6, Q10: 5, Q11: 8,
+          Q1_1: 'Reyes',
+          Q1_2: 'Carl',
+          Q1_3: 'P',
+          Q2: 'Regular',
+          Q3: 'Female',
+          Q4: 30,
+          Q5: 'Nurse',
+          Q7: 'No',
+          Q9_1: 3,
+          Q9_2: 6,
+          Q10: 5,
+          Q11: 8,
         }}
         initialIndex={11}
         onAutosave={vi.fn()}

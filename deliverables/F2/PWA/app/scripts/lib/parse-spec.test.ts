@@ -495,7 +495,7 @@ describe('parseSpec (integration)', () => {
       '',
       '| pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | gate | skip | gf_risk |',
       '|---|---|---|---|---|---|---|---|---|',
-      '| Q13 | Q22 | single + specify | Y | Equipment implemented? | Yes, direct · Yes, pre-existing · No · I don\'t know | — | — | OK |',
+      "| Q13 | Q22 | single + specify | Y | Equipment implemented? | Yes, direct · Yes, pre-existing · No · I don't know | — | — | OK |",
       '| Q15 | — | single + specify | Y | Supplies implemented? | *(same choice set as Q13)* | — | — | OK |',
       '| Q17 | Q23 | single + specify | Y | EMR implemented? | _(same choice set as Q13)_ | — | — | OK |',
     ].join('\n');

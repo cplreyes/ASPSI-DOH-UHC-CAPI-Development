@@ -19,7 +19,13 @@ describe('SyncButton', () => {
   });
 
   it('shows "Synced N" after a successful run', async () => {
-    const runSync = vi.fn().mockResolvedValue({ attempted: 2, synced: 2, failed: 0, retryScheduled: 0, alreadyRunning: false });
+    const runSync = vi.fn().mockResolvedValue({
+      attempted: 2,
+      synced: 2,
+      failed: 0,
+      retryScheduled: 0,
+      alreadyRunning: false,
+    });
     render(<SyncButton runSync={runSync} />);
     const user = userEvent.setup();
     await user.click(screen.getByRole('button'));
@@ -27,7 +33,13 @@ describe('SyncButton', () => {
   });
 
   it('shows "Retry in X" when some rows go to retry_scheduled', async () => {
-    const runSync = vi.fn().mockResolvedValue({ attempted: 3, synced: 1, failed: 0, retryScheduled: 2, alreadyRunning: false });
+    const runSync = vi.fn().mockResolvedValue({
+      attempted: 3,
+      synced: 1,
+      failed: 0,
+      retryScheduled: 2,
+      alreadyRunning: false,
+    });
     render(<SyncButton runSync={runSync} />);
     const user = userEvent.setup();
     await user.click(screen.getByRole('button'));
@@ -35,7 +47,13 @@ describe('SyncButton', () => {
   });
 
   it('shows "N rejected" when some rows were terminally rejected', async () => {
-    const runSync = vi.fn().mockResolvedValue({ attempted: 2, synced: 1, failed: 1, retryScheduled: 0, alreadyRunning: false });
+    const runSync = vi.fn().mockResolvedValue({
+      attempted: 2,
+      synced: 1,
+      failed: 1,
+      retryScheduled: 0,
+      alreadyRunning: false,
+    });
     render(<SyncButton runSync={runSync} />);
     const user = userEvent.setup();
     await user.click(screen.getByRole('button'));

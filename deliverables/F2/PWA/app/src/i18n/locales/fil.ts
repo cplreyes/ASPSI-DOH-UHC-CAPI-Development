@@ -13,6 +13,13 @@ export const fil: EnBundle = {
     syncView: 'Sync',
     thankYouHeading: 'Thank you',
     thankYouBody: 'Your response is saved on this device and will sync when the app is online.',
+    killSwitchTitle: 'Submissions temporarily paused',
+    killSwitchBody:
+      'The administrator has paused submissions. Your progress is saved locally and will sync when submissions resume.',
+    specDriftTitle: 'Update required',
+    specDriftBody:
+      'Your form version ({{localVersion}}) is older than the server requires ({{serverMin}}). Reload to get the latest.',
+    reload: 'Reload',
   },
   language: {
     label: 'Language',
@@ -21,7 +28,8 @@ export const fil: EnBundle = {
   },
   enrollment: {
     heading: 'Enroll',
-    helper: 'Enter your HCW ID and select your facility. You can change these later from the Sync page.',
+    helper:
+      'Enter your HCW ID and select your facility. You can change these later from the Sync page.',
     hcwIdLabel: 'HCW ID',
     facilityLabel: 'Facility',
     facilityPlaceholder: 'Select a facility…',
@@ -29,6 +37,10 @@ export const fil: EnBundle = {
     enrollButton: 'Enroll',
     refreshButton: 'Refresh facility list',
     refreshingButton: 'Refreshing…',
+    changeButton: 'Change enrollment',
+    changeConfirm: 'Sign out of this device? You can re-enroll afterward.',
+    changeConfirmWithDraft:
+      'You have an unfinished draft. Changing enrollment will discard it. Continue?',
   },
   navigator: {
     previous: 'Previous',
@@ -70,12 +82,10 @@ export const fil: EnBundle = {
     syncFailedFallback: 'Sync failed',
   },
   crossField: {
-    tenureImplausible:
-      'Reported tenure ({{years}} years) is implausible for age {{age}}.',
+    tenureImplausible: 'Reported tenure ({{years}} years) is implausible for age {{age}}.',
     specialtyMismatch:
       'Role "{{role}}" does not normally carry a medical specialty ({{specialty}}).',
-    employmentClassDerived:
-      'Derived employment class: {{employmentClass}}.',
+    employmentClassDerived: 'Derived employment class: {{employmentClass}}.',
     workloadExceeds80:
       'Reported workload ({{days}} days × {{hours}} hrs = {{total}} hrs/week) exceeds 80.',
     sectionGRoleMismatch:

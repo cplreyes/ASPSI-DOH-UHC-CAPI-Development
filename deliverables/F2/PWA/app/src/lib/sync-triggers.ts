@@ -17,7 +17,9 @@ export function installSyncTriggers(deps: TriggersDeps): TriggerHandle {
     void runSync();
   };
 
-  const onOnline = () => { safeRun(); };
+  const onOnline = () => {
+    safeRun();
+  };
   window.addEventListener('online', onOnline);
 
   const interval = setInterval(safeRun, intervalMs);

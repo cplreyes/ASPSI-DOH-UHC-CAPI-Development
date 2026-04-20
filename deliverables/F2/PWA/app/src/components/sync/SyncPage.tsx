@@ -4,6 +4,7 @@ import { liveQuery } from 'dexie';
 import { db, type SubmissionRow } from '@/lib/db';
 import type { SyncRunSummary } from '@/lib/sync-orchestrator';
 import { SyncButton } from './SyncButton';
+import { ChangeEnrollmentButton } from '@/components/enrollment/ChangeEnrollmentButton';
 
 interface SyncPageProps {
   runSync: () => Promise<SyncRunSummary>;
@@ -60,6 +61,7 @@ export function SyncPage({ runSync }: SyncPageProps) {
         <h2 className="text-2xl font-semibold">{t('sync.heading')}</h2>
         <p className="text-sm text-muted-foreground">{t('sync.none')}</p>
         <SyncButton runSync={runSync} />
+        <ChangeEnrollmentButton />
       </section>
     );
   }
@@ -72,6 +74,7 @@ export function SyncPage({ runSync }: SyncPageProps) {
     <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
       <h2 className="text-2xl font-semibold">{t('sync.heading')}</h2>
       <SyncButton runSync={runSync} />
+      <ChangeEnrollmentButton />
       {STATUS_ORDER.map((s) => {
         const group = grouped.get(s) ?? [];
         if (group.length === 0) return null;

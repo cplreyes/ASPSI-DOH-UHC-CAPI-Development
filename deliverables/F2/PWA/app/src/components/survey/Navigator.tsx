@@ -9,13 +9,7 @@ interface NavigatorProps {
   onSubmit: () => void;
 }
 
-export function Navigator({
-  isFirst,
-  isLast,
-  onPrev,
-  onNext,
-  onSubmit,
-}: NavigatorProps) {
+export function Navigator({ isFirst, isLast, onPrev, onNext, onSubmit }: NavigatorProps) {
   const { t } = useTranslation();
 
   return (

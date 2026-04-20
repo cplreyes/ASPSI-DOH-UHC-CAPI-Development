@@ -1,7 +1,12 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { db, type SubmissionRow } from '@/lib/db';
+import { AuthProvider } from '@/lib/auth-context';
 import { SyncPage } from './SyncPage';
+
+function renderPage(ui: React.ReactElement) {
+  return render(<AuthProvider>{ui}</AuthProvider>);
+}
 
 function mkSub(overrides: Partial<SubmissionRow>): SubmissionRow {
   return {
@@ -26,7 +31,17 @@ describe('SyncPage', () => {
   });
 
   it('renders an empty-state message when no submissions exist', async () => {
-    render(<SyncPage runSync={vi.fn().mockResolvedValue({ attempted: 0, synced: 0, failed: 0, retryScheduled: 0, alreadyRunning: false })} />);
+    renderPage(
+      <SyncPage
+        runSync={vi.fn().mockResolvedValue({
+          attempted: 0,
+          synced: 0,
+          failed: 0,
+          retryScheduled: 0,
+          alreadyRunning: false,
+        })}
+      />,
+    );
     await waitFor(() => {
       expect(screen.getByText(/no submissions yet/i)).toBeInTheDocument();
     });
@@ -35,11 +50,24 @@ describe('SyncPage', () => {
   it('lists submissions grouped by status and shows last_error for rejected', async () => {
     await db.submissions.bulkPut([
       mkSub({ client_submission_id: 'a', status: 'pending_sync' }),
-      mkSub({ client_submission_id: 'b', status: 'synced', synced_at: Date.UTC(2026, 3, 18, 2, 0, 0) }),
-      mkSub({ client_submission_id: 'c', status: 'rejected', last_error: { code: 'E_VALIDATION', message: 'bad field' } }),
-      mkSub({ client_submission_id: 'd', status: 'retry_scheduled', next_retry_at: Date.UTC(2026, 3, 18, 3, 0, 0), last_error: { code: 'E_NETWORK', message: 'offline' } }),
+      mkSub({
+        client_submission_id: 'b',
+        status: 'synced',
+        synced_at: Date.UTC(2026, 3, 18, 2, 0, 0),
+      }),
+      mkSub({
+        client_submission_id: 'c',
+        status: 'rejected',
+        last_error: { code: 'E_VALIDATION', message: 'bad field' },
+      }),
+      mkSub({
+        client_submission_id: 'd',
+        status: 'retry_scheduled',
+        next_retry_at: Date.UTC(2026, 3, 18, 3, 0, 0),
+        last_error: { code: 'E_NETWORK', message: 'offline' },
+      }),
     ]);
-    render(<SyncPage runSync={vi.fn()} />);
+    renderPage(<SyncPage runSync={vi.fn()} />);
     await waitFor(() => {
       expect(screen.getByText('a')).toBeInTheDocument();
       expect(screen.getByText('b')).toBeInTheDocument();

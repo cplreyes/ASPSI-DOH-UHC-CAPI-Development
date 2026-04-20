@@ -1,23 +1,39 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { MultiSectionForm } from '@/components/survey/MultiSectionForm';
 import { EnrollmentScreen } from '@/components/enrollment/EnrollmentScreen';
 import { PendingCount } from '@/components/sync/PendingCount';
-import { SyncPage } from '@/components/sync/SyncPage';
 import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher';
+import { BroadcastBanner } from '@/components/chrome/BroadcastBanner';
+import { KillSwitchOverlay } from '@/components/chrome/KillSwitchOverlay';
+import { SpecDriftOverlay } from '@/components/chrome/SpecDriftOverlay';
 import { LocaleProvider } from '@/i18n/locale-context';
 import type { FormValues } from '@/lib/skip-logic';
 import { useInstallPrompt } from '@/lib/install-prompt';
 import { AuthProvider, useAuth } from '@/lib/auth-context';
-import { getOrCreateDraftId, loadDraft, saveDraft, submitDraft, type EnrollmentInfo } from '@/lib/draft';
+import {
+  getOrCreateDraftId,
+  loadDraft,
+  saveDraft,
+  submitDraft,
+  LOCAL_SPEC_VERSION,
+  type EnrollmentInfo,
+} from '@/lib/draft';
 import { getSyncEnv } from '@/lib/env';
 import { hmacSha256Hex } from '@/lib/hmac';
+import { isServerNewer } from '@/lib/spec-version';
 import { postBatchSubmit } from '@/lib/sync-client';
 import { runSync, type SyncRunSummary } from '@/lib/sync-orchestrator';
 import { installSyncTriggers } from '@/lib/sync-triggers';
 import { getFacilities } from '@/lib/facilities-client';
 import { refreshFacilities, type RefreshResult } from '@/lib/facilities-cache';
+import { getConfig, type GetConfigResponse } from '@/lib/config-client';
+import { RuntimeConfigProvider, useRuntimeConfig } from '@/lib/runtime-config';
+
+const SyncPage = lazy(() =>
+  import('@/components/sync/SyncPage').then((m) => ({ default: m.SyncPage })),
+);
 
 type Status = 'loading' | 'editing' | 'submitted';
 type View = 'form' | 'sync';
@@ -25,6 +41,7 @@ type View = 'form' | 'sync';
 const APP_VERSION = '0.1.0';
 const DEVICE_FINGERPRINT_KEY = 'f2_device_fingerprint';
 const SYNC_INTERVAL_MS = 5 * 60 * 1000;
+const CONFIG_REFRESH_INTERVAL_MS = 5 * 60 * 1000;
 
 function getOrCreateDeviceFingerprint(): string {
   const existing = localStorage.getItem(DEVICE_FINGERPRINT_KEY);
@@ -49,7 +66,7 @@ function buildRunSync(): () => Promise<SyncRunSummary> {
         }),
       nowMs: Date.now,
       batchSize: 25,
-      specVersion: '2026-04-17-m1',
+      specVersion: LOCAL_SPEC_VERSION,
       appVersion: APP_VERSION,
       deviceFingerprint: fingerprint,
       stuckSyncingThresholdMs: 10 * 60 * 1000,
@@ -79,10 +96,29 @@ function buildRefreshFacilities(): () => Promise<RefreshResult> {
     });
 }
 
+function buildConfigFetcher(): () => Promise<GetConfigResponse> {
+  const env = getSyncEnv();
+  return () =>
+    getConfig({
+      backendUrl: env.backendUrl,
+      hmacSecret: env.hmacSecret,
+      hmacSign: hmacSha256Hex,
+      nowMs: Date.now,
+      fetchImpl: fetch.bind(globalThis),
+    });
+}
+
+const noopConfigFetcher: () => Promise<GetConfigResponse> = async () => ({
+  ok: false,
+  transport: true,
+  error: { code: 'E_ENV', message: 'Backend env missing' },
+});
+
 function AppShell() {
   const { t } = useTranslation();
   const { canInstall, install } = useInstallPrompt();
   const { status: authStatus, enrollment } = useAuth();
+  const runtimeConfig = useRuntimeConfig();
   const [status, setStatus] = useState<Status>('loading');
   const [view, setView] = useState<View>('form');
   const [draftId, setDraftId] = useState<string>('');
@@ -100,6 +136,8 @@ function AppShell() {
         : null,
     [enrollment],
   );
+
+  const specDrift = isServerNewer(LOCAL_SPEC_VERSION, runtimeConfig.min_accepted_spec_version);
 
   useEffect(() => {
     if (authStatus !== 'enrolled') return;
@@ -135,6 +173,10 @@ function AppShell() {
     }
   }, []);
 
+  useEffect(() => {
+    void refresh();
+  }, [refresh]);
+
   const handleAutosave = (values: FormValues) => {
     if (!draftId || !enrollmentInfo) return;
     void saveDraft(draftId, values, enrollmentInfo);
@@ -142,6 +184,8 @@ function AppShell() {
 
   const handleSubmit = async (values: FormValues) => {
     if (!draftId || !enrollmentInfo) return;
+    if (runtimeConfig.kill_switch) return;
+    if (specDrift) return;
     await saveDraft(draftId, values, enrollmentInfo);
     await submitDraft(draftId, enrollmentInfo);
     setStatus('submitted');
@@ -149,7 +193,8 @@ function AppShell() {
   };
 
   return (
-    <main className="flex min-h-full flex-col">
+    <main className="flex min-h-screen-dvh flex-col">
+      <BroadcastBanner message={runtimeConfig.broadcast_message} />
       <header className="flex items-center justify-between border-b px-6 py-3">
         <h1 className="text-lg font-semibold">{t('chrome.appTitle')}</h1>
         <div className="flex items-center gap-3">
@@ -177,7 +222,11 @@ function AppShell() {
       ) : authStatus === 'unenrolled' ? (
         <EnrollmentScreen onRefresh={refresh} />
       ) : view === 'sync' ? (
-        <SyncPage runSync={runSyncRef.current} />
+        <Suspense
+          fallback={<p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>}
+        >
+          <SyncPage runSync={runSyncRef.current} />
+        </Suspense>
       ) : status === 'loading' ? (
         <p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>
       ) : status === 'submitted' ? (
@@ -192,16 +241,31 @@ function AppShell() {
           onSubmit={handleSubmit}
         />
       )}
+
+      <KillSwitchOverlay active={runtimeConfig.kill_switch} />
+      <SpecDriftOverlay
+        drift={specDrift}
+        localVersion={LOCAL_SPEC_VERSION}
+        serverMin={runtimeConfig.min_accepted_spec_version}
+      />
     </main>
   );
 }
 
 export default function App() {
+  let fetcher: () => Promise<GetConfigResponse>;
+  try {
+    fetcher = buildConfigFetcher();
+  } catch {
+    fetcher = noopConfigFetcher;
+  }
   return (
     <LocaleProvider>
-      <AuthProvider>
-        <AppShell />
-      </AuthProvider>
+      <RuntimeConfigProvider fetcher={fetcher} refreshIntervalMs={CONFIG_REFRESH_INTERVAL_MS}>
+        <AuthProvider>
+          <AppShell />
+        </AuthProvider>
+      </RuntimeConfigProvider>
     </LocaleProvider>
   );
 }

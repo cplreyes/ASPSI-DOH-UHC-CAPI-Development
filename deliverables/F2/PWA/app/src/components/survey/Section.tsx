@@ -87,7 +87,10 @@ export function Section<T extends Record<string, unknown>>({
       <form onSubmit={submit} className="mx-auto flex max-w-xl flex-col gap-4 p-6" noValidate>
         <header className="flex flex-col gap-1">
           <h2 className="text-2xl font-semibold tracking-tight">
-            {t('review.sectionHeading', { id: section.id, title: localized(section.title, locale) })}
+            {t('review.sectionHeading', {
+              id: section.id,
+              title: localized(section.title, locale),
+            })}
           </h2>
           {section.preamble ? (
             <p className="text-sm text-muted-foreground">{localized(section.preamble, locale)}</p>

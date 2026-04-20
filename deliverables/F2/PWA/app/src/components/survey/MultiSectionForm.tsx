@@ -132,9 +132,7 @@ export function MultiSectionForm({
   };
 
   if (isReview) {
-    return (
-      <ReviewSection values={merged} onEdit={handleEdit} onSubmit={handleFinalSubmit} />
-    );
+    return <ReviewSection values={merged} onEdit={handleEdit} onSubmit={handleFinalSubmit} />;
   }
 
   return (

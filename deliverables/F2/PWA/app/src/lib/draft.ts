@@ -1,7 +1,7 @@
 import { db, type DraftRow, type SubmissionRow } from './db';
 
-const DRAFT_ID_KEY = 'f2_current_draft_id';
-const SPEC_VERSION_PLACEHOLDER = '2026-04-17-m1';
+export const DRAFT_ID_KEY = 'f2_current_draft_id';
+export const LOCAL_SPEC_VERSION = '2026-04-17-m1';
 
 export interface EnrollmentInfo {
   hcw_id: string;
@@ -35,10 +35,7 @@ export async function saveDraft(
   await db.drafts.put(row);
 }
 
-export async function submitDraft(
-  id: string,
-  enrollment: EnrollmentInfo,
-): Promise<SubmissionRow> {
+export async function submitDraft(id: string, enrollment: EnrollmentInfo): Promise<SubmissionRow> {
   return db.transaction('rw', db.drafts, db.submissions, async () => {
     const draft = await db.drafts.get(id);
     if (!draft) throw new Error(`Draft ${id} not found`);
@@ -55,7 +52,7 @@ export async function submitDraft(
       status: 'pending_sync',
       synced_at: null,
       submitted_at: Date.now(),
-      spec_version: SPEC_VERSION_PLACEHOLDER,
+      spec_version: LOCAL_SPEC_VERSION,
       values: valuesWithFacility,
       retry_count: 0,
       next_retry_at: null,

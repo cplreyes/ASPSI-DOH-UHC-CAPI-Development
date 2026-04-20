@@ -10,7 +10,10 @@ function setup(props: Partial<React.ComponentProps<typeof EnrollmentScreen>> = {
   return render(
     <LocaleProvider>
       <AuthProvider>
-        <EnrollmentScreen onRefresh={vi.fn().mockResolvedValue({ ok: true, count: 1 })} {...props} />
+        <EnrollmentScreen
+          onRefresh={vi.fn().mockResolvedValue({ ok: true, count: 1 })}
+          {...props}
+        />
       </AuthProvider>
     </LocaleProvider>,
   );
@@ -45,9 +48,7 @@ describe('<EnrollmentScreen>', () => {
 
   it('renders the title, HCW id input, and a populated facility select', async () => {
     setup();
-    expect(
-      screen.getByRole('heading', { name: /enrol|enroll/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /enrol|enroll/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/HCW ID/i)).toBeInTheDocument();
     await waitFor(() => {
       const select = screen.getByLabelText(/Facility/i) as HTMLSelectElement;
@@ -82,9 +83,7 @@ describe('<EnrollmentScreen>', () => {
   it('shows an empty-state message + refresh button when no facilities are cached', async () => {
     await db.facilities.clear();
     setup();
-    await waitFor(() =>
-      expect(screen.getByText(/no facilities/i)).toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.getByText(/no facilities/i)).toBeInTheDocument());
     expect(screen.getByRole('button', { name: /refresh/i })).toBeInTheDocument();
   });
 
@@ -111,8 +110,6 @@ describe('<EnrollmentScreen>', () => {
     await user.selectOptions(screen.getByLabelText(/Facility/i), 'F-001');
     await db.facilities.clear();
     await user.click(screen.getByRole('button', { name: /^enroll$/i }));
-    await waitFor(() =>
-      expect(screen.getByText(/unknown facility/i)).toBeInTheDocument(),
-    );
+    await waitFor(() => expect(screen.getByText(/unknown facility/i)).toBeInTheDocument());
   });
 });

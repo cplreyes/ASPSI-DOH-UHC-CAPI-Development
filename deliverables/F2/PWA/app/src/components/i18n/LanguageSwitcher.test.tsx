@@ -37,10 +37,22 @@ describe('<LanguageSwitcher>', () => {
         <LanguageSwitcher />
       </LocaleProvider>,
     );
-    expect(screen.getByRole('button', { name: /english/i })).toHaveAttribute('aria-pressed', 'true');
-    expect(screen.getByRole('button', { name: /filipino/i })).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByRole('button', { name: /english/i })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    expect(screen.getByRole('button', { name: /filipino/i })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    );
     await user.click(screen.getByRole('button', { name: /filipino/i }));
-    expect(screen.getByRole('button', { name: /filipino/i })).toHaveAttribute('aria-pressed', 'true');
-    expect(screen.getByRole('button', { name: /english/i })).toHaveAttribute('aria-pressed', 'false');
+    expect(screen.getByRole('button', { name: /filipino/i })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    expect(screen.getByRole('button', { name: /english/i })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    );
   });
 });

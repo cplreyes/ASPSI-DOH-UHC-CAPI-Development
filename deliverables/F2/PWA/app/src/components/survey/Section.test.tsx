@@ -76,12 +76,7 @@ describe('<Section>', () => {
 
   it('renders only the items passed via the items override prop', () => {
     renderWithProviders(
-      <Section
-        section={fixture}
-        schema={schema}
-        items={[fixture.items[1]]}
-        onSubmit={() => {}}
-      />,
+      <Section section={fixture} schema={schema} items={[fixture.items[1]]} onSubmit={() => {}} />,
     );
     expect(screen.queryByLabelText(/sex at birth/)).toBeNull();
     expect(screen.getByLabelText(/Age\?/)).toBeInTheDocument();
@@ -105,12 +100,7 @@ describe('<Section>', () => {
     const onAutosave = vi.fn();
 
     renderWithProviders(
-      <Section
-        section={fixture}
-        schema={schema}
-        onAutosave={onAutosave}
-        onSubmit={() => {}}
-      />,
+      <Section section={fixture} schema={schema} onAutosave={onAutosave} onSubmit={() => {}} />,
     );
 
     await user.click(screen.getByLabelText('Female'));

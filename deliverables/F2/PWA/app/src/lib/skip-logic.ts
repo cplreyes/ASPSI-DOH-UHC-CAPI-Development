@@ -64,11 +64,7 @@ const predicates: Record<string, Record<string, Predicate>> = {
   },
 };
 
-export function shouldShow(
-  sectionId: string,
-  itemId: string,
-  values: FormValues,
-): boolean {
+export function shouldShow(sectionId: string, itemId: string, values: FormValues): boolean {
   const p = predicates[sectionId]?.[itemId];
   return p ? p(values) : true;
 }

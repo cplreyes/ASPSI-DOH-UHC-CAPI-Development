@@ -32,8 +32,9 @@ describe('hmacSha256Hex', () => {
 
 describe('canonicalString', () => {
   it('joins method, action, ts, body with pipes', () => {
-    expect(canonicalString('POST', 'submit', 1_700_000_000_000, '{"x":1}'))
-      .toBe('POST|submit|1700000000000|{"x":1}');
+    expect(canonicalString('POST', 'submit', 1_700_000_000_000, '{"x":1}')).toBe(
+      'POST|submit|1700000000000|{"x":1}',
+    );
   });
 
   it('uppercases the method', () => {

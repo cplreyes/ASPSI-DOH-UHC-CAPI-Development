@@ -22,6 +22,30 @@ Run `rotateSecret()` from the editor. Update the PWA's build-time `VITE_F2_HMAC_
 
 Delete the ScriptProperty `SPREADSHEET_ID` and re-run `setupBackend()`. The old spreadsheet remains in Drive for audit.
 
+## Admin dashboard
+
+The backend also serves an ops-only HTML admin at `?action=admin`. Read-only views of `F2_Responses`, `F2_Audit`, and `F2_DLQ` with facility/status/date filters and per-view CSV export.
+
+### First deploy
+
+After `setupBackend()` runs, a second ScriptProperty `ADMIN_SECRET` is generated. To retrieve it: Editor → Project Settings → Script Properties → copy `ADMIN_SECRET`. Share it with the ops team out-of-band (Signal, 1Password, etc. — never Slack/email).
+
+When pasting source into `script.google.com`, add `Admin.html` as a second file (File → New → HTML) and paste the contents of `dist/Admin.html`.
+
+### Access
+
+Admin URL = the same Web App `/exec` URL with `?action=admin` appended. Example:
+
+```
+https://script.google.com/macros/s/AKfycb.../exec?action=admin
+```
+
+Operator enters the admin secret on the login screen. Token is held in browser memory only — closing the tab ends the session.
+
+### Rotate the admin secret
+
+Run `rotateAdminSecret()` from the editor. Redistribute out-of-band. Existing operator sessions will fail on next request and drop back to the login screen.
+
 ## Smoke tests
 
 ```bash

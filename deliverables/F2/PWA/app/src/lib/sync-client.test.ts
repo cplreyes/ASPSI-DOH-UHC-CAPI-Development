@@ -38,7 +38,12 @@ describe('postBatchSubmit', () => {
 
   it('sends a signed POST with ts, sig, action, and body', async () => {
     baseDeps.fetchImpl.mockResolvedValue(
-      mockJsonResponse({ ok: true, data: { results: [{ client_submission_id: 'csid-1', submission_id: 'srv-1', status: 'accepted' }] } }),
+      mockJsonResponse({
+        ok: true,
+        data: {
+          results: [{ client_submission_id: 'csid-1', submission_id: 'srv-1', status: 'accepted' }],
+        },
+      }),
     );
     const result = await postBatchSubmit(items, {
       backendUrl: 'https://x/exec',
@@ -63,7 +68,9 @@ describe('postBatchSubmit', () => {
     baseDeps.fetchImpl.mockResolvedValue(
       mockJsonResponse({
         ok: true,
-        data: { results: [{ client_submission_id: 'csid-1', submission_id: 'srv-1', status: 'accepted' }] },
+        data: {
+          results: [{ client_submission_id: 'csid-1', submission_id: 'srv-1', status: 'accepted' }],
+        },
       }),
     );
     const result = await postBatchSubmit(items, {

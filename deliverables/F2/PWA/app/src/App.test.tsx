@@ -43,9 +43,7 @@ describe('<App>', () => {
 
   it('renders at least one Section A question after loading', async () => {
     render(<App />);
-    expect(
-      await screen.findByLabelText(/What is your sex at birth/),
-    ).toBeInTheDocument();
+    expect(await screen.findByLabelText(/What is your sex at birth/)).toBeInTheDocument();
   });
 
   it('autosaves an answer and restores it after remount', async () => {

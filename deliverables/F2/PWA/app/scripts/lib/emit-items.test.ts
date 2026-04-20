@@ -37,10 +37,14 @@ describe('emitItems', () => {
     expect(code).toContain("import type { Section } from '@/types/survey';");
     expect(code).toContain('export const sectionA: Section = {');
     expect(code).toContain("id: 'A'");
-    expect(code).toContain("title: { en: 'Healthcare Worker Profile', fil: 'Healthcare Worker Profile' }");
+    expect(code).toContain(
+      "title: { en: 'Healthcare Worker Profile', fil: 'Healthcare Worker Profile' }",
+    );
     expect(code).toContain("preamble: { en: 'A preamble', fil: 'A preamble' }");
     expect(code).toContain("id: 'Q3'");
-    expect(code).toContain("label: { en: 'What is your sex at birth?', fil: 'What is your sex at birth?' }");
+    expect(code).toContain(
+      "label: { en: 'What is your sex at birth?', fil: 'What is your sex at birth?' }",
+    );
     expect(code).toContain('export const sections: Section[] = [sectionA];');
   });
 
@@ -66,7 +70,9 @@ describe('emitItems', () => {
 
     const code = emitItems(result);
     expect(code).toContain("title: { en: 'Mark\\'s section', fil: 'Mark\\'s section' }");
-    expect(code).toContain("label: { en: 'Don\\'t answer if C:\\\\Windows', fil: 'Don\\'t answer if C:\\\\Windows' }");
+    expect(code).toContain(
+      "label: { en: 'Don\\'t answer if C:\\\\Windows', fil: 'Don\\'t answer if C:\\\\Windows' }",
+    );
   });
 
   it('omits optional fields when absent', () => {
@@ -75,7 +81,9 @@ describe('emitItems', () => {
         {
           id: 'A',
           title: dual('A'),
-          items: [{ id: 'Q1', section: 'A', type: 'short-text', required: false, label: dual('Plain') }],
+          items: [
+            { id: 'Q1', section: 'A', type: 'short-text', required: false, label: dual('Plain') },
+          ],
         },
       ],
       unsupported: [],

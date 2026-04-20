@@ -43,13 +43,11 @@ describe('facilities-cache', () => {
 
   it('refreshFacilities leaves the cache untouched on transport error', async () => {
     await db.facilities.put(fac('F-KEEP'));
-    const fetcher = vi
-      .fn<() => Promise<GetFacilitiesResponse>>()
-      .mockResolvedValue({
-        ok: false,
-        transport: true,
-        error: { code: 'E_NETWORK', message: 'offline' },
-      });
+    const fetcher = vi.fn<() => Promise<GetFacilitiesResponse>>().mockResolvedValue({
+      ok: false,
+      transport: true,
+      error: { code: 'E_NETWORK', message: 'offline' },
+    });
     const result = await refreshFacilities({ fetcher });
     expect(result).toEqual({ ok: false, error: { code: 'E_NETWORK', message: 'offline' } });
     expect(await getFacility('F-KEEP')).toBeDefined();

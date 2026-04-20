@@ -3,3 +3,5 @@ dev-dist/
 coverage/
 node_modules/
 public/icons/
+test-results/
+playwright-report/

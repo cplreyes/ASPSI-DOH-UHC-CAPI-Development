@@ -1,34 +1,30 @@
 # Next step (future-Carl)
 
-**Last milestone shipped:** M9 — i18n / Filipino. react-i18next wired in, LocaleProvider persists locale to `localStorage` key `f2_locale`, header LanguageSwitcher toggles EN/FIL. Generator now emits `LocalizedString = { en, fil }` for every label/title/help/preamble/choice/subField; `localized(label, locale)` resolves at render time with English fallback. All chrome strings (header, EnrollmentScreen, Navigator, ReviewSection, Section, SyncPage, SyncButton, PendingCount) routed through `t()`. Cross-field warning messages converted to interpolated i18n keys (`{ key, values }`). **Filipino strings are placeholder-equal-to-English — drop in real translations by editing `app/src/i18n/locales/fil.ts` (chrome) and adding a `--with-translations spec/F2-Spec.fil.md` overlay to the generator (instrument labels) when ASPSI delivers.** Tests + typecheck + build clean.
+**Last milestone shipped:** M11 — Hardening / release prep. Runtime config (`/config`) is polled every 5 min and on app open; `kill_switch` blocks submit via a modal overlay; `broadcast_message` shows as a top banner; spec-version drift (server `min_accepted_spec_version` > local `LOCAL_SPEC_VERSION`) forces a reload modal. Facilities auto-refresh on app open. Sync page has a "Change enrollment" button that warns on unsaved draft. Playwright E2E covers the runtime-config scenarios (kill-switch + spec-drift) automatically; golden-path + offline-retry are stubbed (`test.skip`) pending form-schema-aware test helpers — those paths are covered by the manual QA checklist for now. vitest-axe guards a11y at component + page level. iOS safe-area + `100dvh` polish applied. `SyncPage` lazy-loaded. Cross-platform QA checklist at `../2026-04-18-cross-platform-qa-checklist.md`.
 
-**Next milestone:** M10 — Admin dashboard (Apps-Script-served HTML). 10–15h per spec §11.1.
+**Next decision (not a milestone):** Pilot readiness per spec §11.2 checkpoint row M11. Three options:
 
-**Before starting M10:**
+1. **Run the pilot now.** 5–10 HCWs, one facility, 2-week dry-run. Ship `dist/` + deploy Apps Script + redeploy Cloudflare Pages. Collect feedback. File new milestones from observations (not speculative work).
+2. **Close deferred M11 items first** (below) before pilot.
+3. **Move to M12 (F3/F4 parity)** if ASPSI says PWA-Plan-B is gated behind PWA supporting more instruments.
 
-1. Re-invoke `superpowers:writing-plans` against `../2026-04-17-design-spec.md` §4.7 (Admin dashboard) and §11.1 row M10.
-2. Confirm the existing `backend/src/Handlers.js` exposes the data the dashboard needs (status counts, recent submissions, kill-switch toggle, broadcast_message editor). If not, the plan also needs backend additions.
-3. Target: HtmlService template served from a new `?action=admin` route, basic-auth gated by a separate ADMIN_SECRET env var. CSV export. Status counters live-queried via the existing endpoints.
-4. Expected deliverable: `../YYYY-MM-DD-implementation-plan-M10-admin-dashboard.md`.
+**Deferred from M11 (slot in only if pilot feedback demands):**
 
-**M9 follow-ups (slot in when ASPSI delivers):**
+- **Per-HCW enrollment tokens** (spec §13 row 4). Current: static enrollment — any HCW ID works once a facility is selected. Threat-model change if real deployments show cross-HCW data bleed.
+- **Auto-migrate drafts across spec versions** (spec §12 row 3). Current: drift modal forces reload; drafts survive because they're in IndexedDB, but if schema shifts in a breaking way, the draft may fail validation on next save.
+- **iOS push notifications for deadline reminders** (spec §13 row 5).
+- **Admin dashboard mutations** (kill-switch toggle, broadcast_message editor, requeue-from-DLQ) — ops team can edit the Config sheet directly for now.
 
-- **Filipino instrument translations.** Add `spec/F2-Spec.fil.md` (parallel structure to `spec/F2-Spec.md`). Extend `app/scripts/lib/parse-spec.ts` to read it as an overlay (when present, populate `fil` from the overlay instead of mirroring `en`). Regenerate `items.ts`. Estimated 3–5h.
-- **Filipino chrome translations.** Replace placeholder values in `app/src/i18n/locales/fil.ts` with the real translations. Estimated 1–2h.
-- **Browser language auto-detection on first load.** Currently defaults to `'en'` if nothing is in `localStorage`. Optional: use `i18next-browser-languagedetector` to auto-pick `fil` for users whose browser locale is `fil-PH`. Estimated 30 minutes.
+**M8/M9 tech debt still outstanding** (unchanged from prior NEXT.md):
 
-**M8 technical debt still outstanding:**
-
-- **`facility_has_bucas` / `facility_has_gamot` flags** — backend schema additions still pending; needed before FAC-01..07 cross-field rules can wire up.
-- **`response_source` per-respondent capture** — currently hardcoded `source: 'pwa'`. SRC-01..03 cross-field rules want this.
-- **Sync-page "change enrollment" affordance** — `unenroll()` exists but no UI calls it.
-- **Auto-refresh facilities on app open** — currently only the explicit Refresh button on EnrollmentScreen calls it.
-- **`/config` endpoint** — backend has it; PWA never calls it. M11 hardening should poll on app open.
+- `facility_has_bucas` / `facility_has_gamot` flags; `response_source` per-respondent capture.
+- Filipino instrument + chrome translations.
 
 **When picking this back up after a gap:**
 
-- `cd deliverables/F2/PWA/app && npm install && npm run test && npm run typecheck && npm run build` — confirm M9 still green.
-- `cd deliverables/F2/PWA/backend && npm install && npm test && npm run build` — confirm M4 still green.
-- Copy `.env.example` → `.env.local` and fill both vars from the live Apps Script deployment.
-- `npm run dev`, walk through: enrollment screen → fill form (toggle EN/FIL in header) → review → submit → sync.
-- Open `../2026-04-17-design-spec.md` §4.7 + §11.1 row M10 to re-orient for the admin dashboard.
+- `cd deliverables/F2/PWA/app && npm install && npm run test && npm run typecheck && npm run build && npm run e2e`
+- `cd deliverables/F2/PWA/backend && npm install && npm test && npm run build`
+- Redeploy `dist/Code.gs` + `dist/Admin.html` + `dist/appsscript.json` to Apps Script if backend changed.
+- Copy `.env.example` → `.env.local` and fill both vars.
+- `npm run dev`, walk the golden path. Open Admin URL and confirm login.
+- Work through `../2026-04-18-cross-platform-qa-checklist.md` on at least iOS Safari + Desktop Chrome before declaring pilot-ready.

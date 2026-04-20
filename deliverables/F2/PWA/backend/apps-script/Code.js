@@ -2,6 +2,12 @@ var PROP_HMAC_SECRET = 'HMAC_SECRET';
 var PROP_SPREADSHEET_ID = 'SPREADSHEET_ID';
 
 function doGet(e) {
+  var action = (e && e.parameter && e.parameter.action) || '';
+  if (action === 'admin') {
+    return HtmlService.createTemplateFromFile('Admin').evaluate()
+      .setTitle('F2 Admin')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT);
+  }
   return _serve('GET', e);
 }
 
@@ -107,6 +113,22 @@ function _buildResponsesCtx(sheet) {
       sheet.appendRow(arr);
       return rowObj.submission_id;
     },
+    readAll: function (limit, offset) {
+      limit = limit || 500;
+      offset = offset || 0;
+      var last = sheet.getLastRow();
+      if (last < 2) return [];
+      var startRow = 2 + offset;
+      var availableRows = last - startRow + 1;
+      if (availableRows <= 0) return [];
+      var take = Math.min(limit, availableRows);
+      var data = sheet.getRange(startRow, 1, take, cols.length).getValues();
+      return data.map(function (row) {
+        var obj = {};
+        for (var i = 0; i < cols.length; i++) obj[cols[i]] = row[i];
+        return obj;
+      });
+    },
   };
 }
 
@@ -116,6 +138,16 @@ function _buildDlqCtx(sheet) {
     appendRow: function (rowObj) {
       var arr = cols.map(function (c) { return rowObj[c] != null ? rowObj[c] : ''; });
       sheet.appendRow(arr);
+    },
+    readAll: function () {
+      var last = sheet.getLastRow();
+      if (last < 2) return [];
+      var data = sheet.getRange(2, 1, last - 1, cols.length).getValues();
+      return data.map(function (row) {
+        var obj = {};
+        for (var i = 0; i < cols.length; i++) obj[cols[i]] = row[i];
+        return obj;
+      });
     },
   };
 }
@@ -127,6 +159,22 @@ function _buildAuditCtx(sheet) {
       var arr = cols.map(function (c) { return rowObj[c] != null ? rowObj[c] : ''; });
       sheet.appendRow(arr);
       return rowObj.audit_id;
+    },
+    readAll: function (limit, offset) {
+      limit = limit || 500;
+      offset = offset || 0;
+      var last = sheet.getLastRow();
+      if (last < 2) return [];
+      var startRow = 2 + offset;
+      var availableRows = last - startRow + 1;
+      if (availableRows <= 0) return [];
+      var take = Math.min(limit, availableRows);
+      var data = sheet.getRange(startRow, 1, take, cols.length).getValues();
+      return data.map(function (row) {
+        var obj = {};
+        for (var i = 0; i < cols.length; i++) obj[cols[i]] = row[i];
+        return obj;
+      });
     },
   };
 }

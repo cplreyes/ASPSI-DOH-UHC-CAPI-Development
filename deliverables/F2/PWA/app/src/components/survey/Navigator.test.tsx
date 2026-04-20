@@ -6,13 +6,7 @@ import { Navigator } from './Navigator';
 describe('<Navigator>', () => {
   it('disables Previous on the first section', () => {
     render(
-      <Navigator
-        isFirst
-        isLast={false}
-        onPrev={vi.fn()}
-        onNext={vi.fn()}
-        onSubmit={vi.fn()}
-      />,
+      <Navigator isFirst isLast={false} onPrev={vi.fn()} onNext={vi.fn()} onSubmit={vi.fn()} />,
     );
     expect(screen.getByRole('button', { name: /previous/i })).toBeDisabled();
   });
@@ -33,13 +27,7 @@ describe('<Navigator>', () => {
 
   it('renders Submit (not Next) on the last section', () => {
     render(
-      <Navigator
-        isFirst={false}
-        isLast
-        onPrev={vi.fn()}
-        onNext={vi.fn()}
-        onSubmit={vi.fn()}
-      />,
+      <Navigator isFirst={false} isLast onPrev={vi.fn()} onNext={vi.fn()} onSubmit={vi.fn()} />,
     );
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /next/i })).toBeNull();
@@ -64,13 +52,7 @@ describe('<Navigator>', () => {
     await user.click(screen.getByRole('button', { name: /next/i }));
 
     rerender(
-      <Navigator
-        isFirst={false}
-        isLast
-        onPrev={onPrev}
-        onNext={onNext}
-        onSubmit={onSubmit}
-      />,
+      <Navigator isFirst={false} isLast onPrev={onPrev} onNext={onNext} onSubmit={onSubmit} />,
     );
     await user.click(screen.getByRole('button', { name: /submit/i }));
 

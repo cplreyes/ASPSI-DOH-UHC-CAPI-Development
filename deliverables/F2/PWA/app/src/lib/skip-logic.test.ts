@@ -26,15 +26,11 @@ describe('shouldShow', () => {
 
   describe('Section B', () => {
     it('hides Q14 when Q13 is a No variant', () => {
-      expect(
-        shouldShow('B', 'Q14', { Q13: 'No, and no plans in next 1–2 years' }),
-      ).toBe(false);
+      expect(shouldShow('B', 'Q14', { Q13: 'No, and no plans in next 1–2 years' })).toBe(false);
     });
 
     it('shows Q14 when Q13 starts with Yes', () => {
-      expect(
-        shouldShow('B', 'Q14', { Q13: 'Yes, direct result of UHC Act' }),
-      ).toBe(true);
+      expect(shouldShow('B', 'Q14', { Q13: 'Yes, direct result of UHC Act' })).toBe(true);
     });
 
     it('hides Q14 when Q13 is unanswered', () => {
@@ -79,7 +75,7 @@ describe('shouldShow', () => {
       expect(shouldShow('E1', 'Q45', { Q43: 'No', Q44: 'Yes' })).toBe(false);
     });
 
-    it('hides Q45 when Q44 is No or I don\'t know', () => {
+    it("hides Q45 when Q44 is No or I don't know", () => {
       expect(shouldShow('E1', 'Q45', { Q43: 'Yes', Q44: 'No' })).toBe(false);
       expect(shouldShow('E1', 'Q45', { Q43: 'Yes', Q44: "I don't know" })).toBe(false);
     });
@@ -105,12 +101,10 @@ describe('shouldShow', () => {
 
   describe('Section F', () => {
     it('hides Q55 when Q54 is a satisfied variant', () => {
-      expect(
-        shouldShow('F', 'Q55', { Q54: 'Very Satisfied: Minor improvements needed…' }),
-      ).toBe(false);
-      expect(
-        shouldShow('F', 'Q55', { Q54: 'Satisfied: Some improvements needed…' }),
-      ).toBe(false);
+      expect(shouldShow('F', 'Q55', { Q54: 'Very Satisfied: Minor improvements needed…' })).toBe(
+        false,
+      );
+      expect(shouldShow('F', 'Q55', { Q54: 'Satisfied: Some improvements needed…' })).toBe(false);
       expect(
         shouldShow('F', 'Q55', {
           Q54: 'Neither Satisfied nor Dissatisfied: Improvements needed, but generally functional',
@@ -119,12 +113,12 @@ describe('shouldShow', () => {
     });
 
     it('shows Q55 when Q54 is Dissatisfied or Very Dissatisfied', () => {
-      expect(
-        shouldShow('F', 'Q55', { Q54: 'Dissatisfied: Moderate improvements needed…' }),
-      ).toBe(true);
-      expect(
-        shouldShow('F', 'Q55', { Q54: 'Very Dissatisfied: Major improvements needed…' }),
-      ).toBe(true);
+      expect(shouldShow('F', 'Q55', { Q54: 'Dissatisfied: Moderate improvements needed…' })).toBe(
+        true,
+      );
+      expect(shouldShow('F', 'Q55', { Q54: 'Very Dissatisfied: Major improvements needed…' })).toBe(
+        true,
+      );
     });
   });
 
@@ -188,12 +182,8 @@ describe('shouldShow', () => {
     });
 
     it('hides Q113 and Q114 when Q112 is No', () => {
-      expect(
-        shouldShow('J', 'Q113', { Q112: "No, I haven't thought about it" }),
-      ).toBe(false);
-      expect(
-        shouldShow('J', 'Q114', { Q112: "No, I haven't thought about it" }),
-      ).toBe(false);
+      expect(shouldShow('J', 'Q113', { Q112: "No, I haven't thought about it" })).toBe(false);
+      expect(shouldShow('J', 'Q114', { Q112: "No, I haven't thought about it" })).toBe(false);
     });
 
     it('shows Q113 and Q114 when Q112 starts with Yes,', () => {

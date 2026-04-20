@@ -62,7 +62,11 @@ function emitItem(item: Item): string {
   if (item.subFields) {
     const subFieldsLiteral = item.subFields
       .map((sf) => {
-        const parts = [`id: '${sf.id}'`, `label: ${quoteLocalized(sf.label)}`, `kind: '${sf.kind}'`];
+        const parts = [
+          `id: '${sf.id}'`,
+          `label: ${quoteLocalized(sf.label)}`,
+          `kind: '${sf.kind}'`,
+        ];
         if (sf.min !== undefined) parts.push(`min: ${sf.min}`);
         if (sf.max !== undefined) parts.push(`max: ${sf.max}`);
         return `{ ${parts.join(', ')} }`;

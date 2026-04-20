@@ -12,8 +12,10 @@ const ORDER = [
   'src/Auth.js',
   'src/Idempotency.js',
   'src/Handlers.js',
+  'src/AdminHandlers.js',
   'src/Router.js',
   'apps-script/Setup.js',
+  'apps-script/AdminGlue.js',
   'apps-script/Code.js',
 ];
 
@@ -44,6 +46,9 @@ async function main() {
 
   const manifest = await readFile(resolve(root, 'apps-script/appsscript.json'), 'utf8');
   await writeFile(resolve(distDir, 'appsscript.json'), manifest, 'utf8');
+
+  const adminHtml = await readFile(resolve(root, 'apps-script/Admin.html'), 'utf8');
+  await writeFile(resolve(distDir, 'Admin.html'), adminHtml, 'utf8');
 
   console.log(`Wrote ${outPath} (${parts.join('\n').length} chars)`);
 }

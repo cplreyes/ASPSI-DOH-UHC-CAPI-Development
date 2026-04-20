@@ -84,11 +84,14 @@ export class F2Database extends Dexie {
         submissions: 'client_submission_id, status, synced_at, hcw_id, next_retry_at',
       })
       .upgrade(async (tx) => {
-        await tx.table<SubmissionRow, string>('submissions').toCollection().modify((row) => {
-          if (row.retry_count == null) row.retry_count = 0;
-          if (row.next_retry_at === undefined) row.next_retry_at = null;
-          if (row.last_error === undefined) row.last_error = null;
-        });
+        await tx
+          .table<SubmissionRow, string>('submissions')
+          .toCollection()
+          .modify((row) => {
+            if (row.retry_count == null) row.retry_count = 0;
+            if (row.next_retry_at === undefined) row.next_retry_at = null;
+            if (row.last_error === undefined) row.last_error = null;
+          });
       });
     this.version(3).stores({
       facilities: null,

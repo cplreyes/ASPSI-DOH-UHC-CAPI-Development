@@ -8,7 +8,13 @@ describe('installSyncTriggers', () => {
 
   beforeEach(() => {
     vi.useFakeTimers();
-    runSync = vi.fn<() => Promise<SyncRunSummary>>().mockResolvedValue({ attempted: 0, synced: 0, failed: 0, retryScheduled: 0, alreadyRunning: false });
+    runSync = vi.fn<() => Promise<SyncRunSummary>>().mockResolvedValue({
+      attempted: 0,
+      synced: 0,
+      failed: 0,
+      retryScheduled: 0,
+      alreadyRunning: false,
+    });
     handle = null;
   });
 

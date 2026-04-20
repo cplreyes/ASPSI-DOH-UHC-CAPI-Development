@@ -83,6 +83,9 @@ export async function postBatchSubmit(
   return {
     ok: false,
     transport: false,
-    error: env && 'error' in env ? env.error : { code: 'E_UNKNOWN', message: 'Malformed backend envelope' },
+    error:
+      env && 'error' in env
+        ? env.error
+        : { code: 'E_UNKNOWN', message: 'Malformed backend envelope' },
   };
 }

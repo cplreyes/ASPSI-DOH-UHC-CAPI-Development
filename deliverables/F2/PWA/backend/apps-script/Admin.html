@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <title>F2 Admin</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 1rem; color: #111; }
+    h1 { font-size: 1.2rem; margin: 0 0 1rem; }
+    #login, #app { max-width: 1200px; }
+    #app { display: none; }
+    .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; border-bottom: 1px solid #ccc; }
+    .tab { padding: 0.5rem 1rem; cursor: pointer; border: 1px solid transparent; border-bottom: none; }
+    .tab.active { background: #f0f0f0; border-color: #ccc; }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem; align-items: end; }
+    .filters label { display: flex; flex-direction: column; font-size: 0.75rem; color: #555; }
+    .filters input, .filters select { padding: 0.25rem; font-size: 0.9rem; }
+    button { padding: 0.4rem 0.8rem; font-size: 0.9rem; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    th, td { border: 1px solid #ddd; padding: 0.3rem 0.5rem; text-align: left; vertical-align: top; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    th { background: #f5f5f5; position: sticky; top: 0; }
+    tr:hover { background: #fafafa; }
+    .status { margin: 0.5rem 0; color: #555; font-size: 0.85rem; }
+    .error { color: #b00; }
+    .muted { color: #999; }
+  </style>
+</head>
+<body>
+  <h1>F2 Admin Dashboard</h1>
+
+  <div id="login">
+    <p>Enter the admin secret provided by the backend operator.</p>
+    <label>Admin secret: <input type="password" id="secret-input" autocomplete="off" style="width: 20rem;"></label>
+    <button id="login-btn">Sign in</button>
+    <div id="login-error" class="error"></div>
+  </div>
+
+  <div id="app">
+    <div class="tabs">
+      <div class="tab active" data-tab="responses">Responses</div>
+      <div class="tab" data-tab="audit">Audit</div>
+      <div class="tab" data-tab="dlq">DLQ</div>
+      <span style="margin-left: auto; font-size: 0.8rem; color: #666;">
+        <button id="signout-btn">Sign out</button>
+      </span>
+    </div>
+
+    <div id="tab-responses" class="tab-panel">
+      <div class="filters">
+        <label>Facility ID <input type="text" id="resp-facility"></label>
+        <label>Status
+          <select id="resp-status">
+            <option value="">(any)</option>
+            <option value="stored">stored</option>
+            <option value="rejected">rejected</option>
+          </select>
+        </label>
+        <label>From <input type="date" id="resp-from"></label>
+        <label>To <input type="date" id="resp-to"></label>
+        <button id="resp-refresh">Refresh</button>
+        <button id="resp-export">Export CSV</button>
+      </div>
+      <div class="status" id="resp-status-text"></div>
+      <div id="resp-table"></div>
+    </div>
+
+    <div id="tab-audit" class="tab-panel" style="display:none;">
+      <div class="filters">
+        <label>Event type <input type="text" id="audit-event"></label>
+        <label>HCW ID <input type="text" id="audit-hcw"></label>
+        <label>From <input type="date" id="audit-from"></label>
+        <label>To <input type="date" id="audit-to"></label>
+        <button id="audit-refresh">Refresh</button>
+        <button id="audit-export">Export CSV</button>
+      </div>
+      <div class="status" id="audit-status-text"></div>
+      <div id="audit-table"></div>
+    </div>
+
+    <div id="tab-dlq" class="tab-panel" style="display:none;">
+      <div class="filters">
+        <button id="dlq-refresh">Refresh</button>
+        <button id="dlq-export">Export CSV</button>
+      </div>
+      <div class="status" id="dlq-status-text"></div>
+      <div id="dlq-table"></div>
+    </div>
+  </div>
+
+<script>
+(function () {
+  var ADMIN_TOKEN = null;
+
+  function $(id) { return document.getElementById(id); }
+
+  function setText(id, msg) { $(id).textContent = msg || ''; }
+
+  function clearNode(node) {
+    while (node.firstChild) node.removeChild(node.firstChild);
+  }
+
+  function renderTable(containerId, columns, rows) {
+    var container = $(containerId);
+    clearNode(container);
+
+    var table = document.createElement('table');
+    var thead = document.createElement('thead');
+    var headerTr = document.createElement('tr');
+    for (var i = 0; i < columns.length; i++) {
+      var th = document.createElement('th');
+      th.textContent = columns[i];
+      headerTr.appendChild(th);
+    }
+    thead.appendChild(headerTr);
+    table.appendChild(thead);
+
+    var tbody = document.createElement('tbody');
+    if (rows.length === 0) {
+      var emptyTr = document.createElement('tr');
+      var emptyTd = document.createElement('td');
+      emptyTd.colSpan = columns.length;
+      emptyTd.className = 'muted';
+      emptyTd.textContent = 'No rows.';
+      emptyTr.appendChild(emptyTd);
+      tbody.appendChild(emptyTr);
+    } else {
+      for (var r = 0; r < rows.length; r++) {
+        var tr = document.createElement('tr');
+        for (var c = 0; c < columns.length; c++) {
+          var td = document.createElement('td');
+          var v = rows[r][columns[c]];
+          td.textContent = v == null ? '' : String(v);
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      }
+    }
+    table.appendChild(tbody);
+    container.appendChild(table);
+  }
+
+  function downloadCsv(csv, filename) {
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function handleAuthError(err) {
+    var msg = err && err.message ? err.message : String(err);
+    if (msg.indexOf('E_ADMIN_AUTH') >= 0 || msg.indexOf('E_ADMIN_NOT_CONFIGURED') >= 0) {
+      ADMIN_TOKEN = null;
+      $('app').style.display = 'none';
+      $('login').style.display = '';
+      setText('login-error', 'Session invalid. Re-enter secret.');
+      return true;
+    }
+    return false;
+  }
+
+  $('login-btn').addEventListener('click', function () {
+    var token = $('secret-input').value;
+    if (!token) { setText('login-error', 'Enter a secret.'); return; }
+    setText('login-error', 'Verifying…');
+    google.script.run
+      .withSuccessHandler(function () {
+        ADMIN_TOKEN = token;
+        $('login').style.display = 'none';
+        $('app').style.display = '';
+        $('secret-input').value = '';
+        setText('login-error', '');
+        loadResponses();
+      })
+      .withFailureHandler(function (err) {
+        if (!handleAuthError(err)) setText('login-error', 'Auth failed: ' + (err.message || err));
+      })
+      .adminAuth(token);
+  });
+
+  $('signout-btn').addEventListener('click', function () {
+    ADMIN_TOKEN = null;
+    $('app').style.display = 'none';
+    $('login').style.display = '';
+  });
+
+  var tabs = document.querySelectorAll('.tab');
+  for (var t = 0; t < tabs.length; t++) {
+    tabs[t].addEventListener('click', function (ev) {
+      var name = ev.target.getAttribute('data-tab');
+      for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+      ev.target.classList.add('active');
+      var panels = ['responses', 'audit', 'dlq'];
+      for (var j = 0; j < panels.length; j++) {
+        $('tab-' + panels[j]).style.display = panels[j] === name ? '' : 'none';
+      }
+      if (name === 'responses') loadResponses();
+      else if (name === 'audit') loadAudit();
+      else if (name === 'dlq') loadDlq();
+    });
+  }
+
+  var RESPONSE_COLUMNS = ['submission_id', 'submitted_at_server', 'hcw_id', 'facility_id', 'status', 'spec_version', 'app_version', 'device_fingerprint', 'client_submission_id'];
+
+  function respFilters() {
+    return {
+      facility_id: $('resp-facility').value || undefined,
+      status: $('resp-status').value || undefined,
+      from: $('resp-from').value || undefined,
+      to: $('resp-to').value || undefined,
+    };
+  }
+
+  function loadResponses() {
+    setText('resp-status-text', 'Loading…');
+    google.script.run
+      .withSuccessHandler(function (r) {
+        renderTable('resp-table', RESPONSE_COLUMNS, r.data.rows);
+        setText('resp-status-text', r.data.count + ' row(s).');
+      })
+      .withFailureHandler(function (err) {
+        if (!handleAuthError(err)) setText('resp-status-text', 'Error: ' + (err.message || err));
+      })
+      .adminListResponses(ADMIN_TOKEN, respFilters(), 500, 0);
+  }
+
+  $('resp-refresh').addEventListener('click', loadResponses);
+  $('resp-export').addEventListener('click', function () {
+    setText('resp-status-text', 'Exporting…');
+    google.script.run
+      .withSuccessHandler(function (r) {
+        downloadCsv(r.data.csv, r.data.filename);
+        setText('resp-status-text', 'Exported.');
+      })
+      .withFailureHandler(function (err) {
+        if (!handleAuthError(err)) setText('resp-status-text', 'Export failed: ' + (err.message || err));
+      })
+      .adminExportCsv(ADMIN_TOKEN, 'responses', respFilters());
+  });
+
+  var AUDIT_COLUMNS = ['audit_id', 'occurred_at_server', 'event_type', 'hcw_id', 'facility_id', 'app_version', 'payload_json'];
+
+  function auditFilters() {
+    return {
+      event_type: $('audit-event').value || undefined,
+      hcw_id: $('audit-hcw').value || undefined,
+      from: $('audit-from').value || undefined,
+      to: $('audit-to').value || undefined,
+    };
+  }
+
+  function loadAudit() {
+    setText('audit-status-text', 'Loading…');
+    google.script.run
+      .withSuccessHandler(function (r) {
+        renderTable('audit-table', AUDIT_COLUMNS, r.data.rows);
+        setText('audit-status-text', r.data.count + ' row(s).');
+      })
+      .withFailureHandler(function (err) {
+        if (!handleAuthError(err)) setText('audit-status-text', 'Error: ' + (err.message || err));
+      })
+      .adminListAudit(ADMIN_TOKEN, auditFilters(), 500, 0);
+  }
+
+  $('audit-refresh').addEventListener('click', loadAudit);
+  $('audit-export').addEventListener('click', function () {
+    setText('audit-status-text', 'Exporting…');
+    google.script.run
+      .withSuccessHandler(function (r) {
+        downloadCsv(r.data.csv, r.data.filename);
+        setText('audit-status-text', 'Exported.');
+      })
+      .withFailureHandler(function (err) {
+        if (!handleAuthError(err)) setText('audit-status-text', 'Export failed: ' + (err.message || err));
+      })
+      .adminExportCsv(ADMIN_TOKEN, 'audit', auditFilters());
+  });
+
+  var DLQ_COLUMNS = ['dlq_id', 'received_at_server', 'client_submission_id', 'reason', 'payload_json'];
+
+  function loadDlq() {
+    setText('dlq-status-text', 'Loading…');
+    google.script.run
+      .withSuccessHandler(function (r) {
+        renderTable('dlq-table', DLQ_COLUMNS, r.data.rows);
+        setText('dlq-status-text', r.data.count + ' row(s).');
+      })
+      .withFailureHandler(function (err) {
+        if (!handleAuthError(err)) setText('dlq-status-text', 'Error: ' + (err.message || err));
+      })
+      .adminListDlq(ADMIN_TOKEN);
+  }
+
+  $('dlq-refresh').addEventListener('click', loadDlq);
+  $('dlq-export').addEventListener('click', function () {
+    setText('dlq-status-text', 'Exporting…');
+    google.script.run
+      .withSuccessHandler(function (r) {
+        downloadCsv(r.data.csv, r.data.filename);
+        setText('dlq-status-text', 'Exported.');
+      })
+      .withFailureHandler(function (err) {
+        if (!handleAuthError(err)) setText('dlq-status-text', 'Export failed: ' + (err.message || err));
+      })
+      .adminExportCsv(ADMIN_TOKEN, 'dlq', {});
+  });
+})();
+</script>
+</body>
+</html>

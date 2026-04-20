@@ -1,11 +1,15 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import { visualizer } from 'rollup-plugin-visualizer';
 import path from 'node:path';
 
 export default defineConfig({
   plugins: [
     react(),
+    process.env.BUNDLE_VISUALIZE === '1'
+      ? visualizer({ filename: 'dist/bundle.html', gzipSize: true, brotliSize: true, open: false })
+      : null,
     VitePWA({
       registerType: 'prompt',
       injectRegister: false,

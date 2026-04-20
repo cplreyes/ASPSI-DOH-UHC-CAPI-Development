@@ -26,21 +26,15 @@ describe('<ReviewSection>', () => {
   };
 
   it('renders a summary heading and section labels', () => {
-    renderWithProviders(
-      <ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={vi.fn()} />,
-    );
-    expect(
-      screen.getByRole('heading', { name: /Review your answers/i }),
-    ).toBeInTheDocument();
+    renderWithProviders(<ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={vi.fn()} />);
+    expect(screen.getByRole('heading', { name: /Review your answers/i })).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/i }),
     ).toBeInTheDocument();
   });
 
   it('lists answered fields and omits empty ones', () => {
-    renderWithProviders(
-      <ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={vi.fn()} />,
-    );
+    renderWithProviders(<ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={vi.fn()} />);
     expect(screen.getByText('Reyes')).toBeInTheDocument();
     expect(screen.getByText('Nurse')).toBeInTheDocument();
     expect(screen.queryByText(/^Q6\b/)).toBeNull();
@@ -55,15 +49,11 @@ describe('<ReviewSection>', () => {
       />,
     );
     expect(screen.getByText(/GATE-05/)).toBeInTheDocument();
-    expect(
-      screen.getByText(/Sections C and D are for clinical-care roles/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Sections C and D are for clinical-care roles/i)).toBeInTheDocument();
   });
 
   it('renders an info-level PROF-03 derivation alongside warnings', () => {
-    renderWithProviders(
-      <ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={vi.fn()} />,
-    );
+    renderWithProviders(<ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={vi.fn()} />);
     expect(screen.getByText(/PROF-03/)).toBeInTheDocument();
     expect(screen.getByText(/full-time/i)).toBeInTheDocument();
   });
@@ -71,9 +61,7 @@ describe('<ReviewSection>', () => {
   it('calls onSubmit when the Submit button is clicked', async () => {
     const onSubmit = vi.fn();
     const user = userEvent.setup();
-    renderWithProviders(
-      <ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={onSubmit} />,
-    );
+    renderWithProviders(<ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={onSubmit} />);
     await user.click(screen.getByRole('button', { name: /^submit$/i }));
     expect(onSubmit).toHaveBeenCalledTimes(1);
   });
@@ -81,9 +69,7 @@ describe('<ReviewSection>', () => {
   it('calls onEdit with the section id when an Edit button is clicked', async () => {
     const onEdit = vi.fn();
     const user = userEvent.setup();
-    renderWithProviders(
-      <ReviewSection values={baseValues} onEdit={onEdit} onSubmit={vi.fn()} />,
-    );
+    renderWithProviders(<ReviewSection values={baseValues} onEdit={onEdit} onSubmit={vi.fn()} />);
     const editButtons = screen.getAllByRole('button', { name: /^edit$/i });
     await user.click(editButtons[0]);
     expect(onEdit).toHaveBeenCalledWith('A');

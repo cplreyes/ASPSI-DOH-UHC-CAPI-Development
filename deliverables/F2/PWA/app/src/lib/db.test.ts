@@ -18,9 +18,7 @@ describe('db', () => {
 
   it('uses client_submission_id as primary key for submissions', async () => {
     await db.open();
-    expect(db.table('submissions').schema.primKey.name).toBe(
-      'client_submission_id',
-    );
+    expect(db.table('submissions').schema.primKey.name).toBe('client_submission_id');
   });
 });
 
@@ -72,8 +70,30 @@ describe('db v2 — submissions retry fields', () => {
 
   it('supports querying by next_retry_at index', async () => {
     await db.submissions.bulkPut([
-      { client_submission_id: 'a', hcw_id: 'h', status: 'retry_scheduled', synced_at: null, submitted_at: 1, spec_version: 'v', values: {}, retry_count: 1, next_retry_at: 100, last_error: null },
-      { client_submission_id: 'b', hcw_id: 'h', status: 'retry_scheduled', synced_at: null, submitted_at: 1, spec_version: 'v', values: {}, retry_count: 1, next_retry_at: 500, last_error: null },
+      {
+        client_submission_id: 'a',
+        hcw_id: 'h',
+        status: 'retry_scheduled',
+        synced_at: null,
+        submitted_at: 1,
+        spec_version: 'v',
+        values: {},
+        retry_count: 1,
+        next_retry_at: 100,
+        last_error: null,
+      },
+      {
+        client_submission_id: 'b',
+        hcw_id: 'h',
+        status: 'retry_scheduled',
+        synced_at: null,
+        submitted_at: 1,
+        spec_version: 'v',
+        values: {},
+        retry_count: 1,
+        next_retry_at: 500,
+        last_error: null,
+      },
     ]);
     const due = await db.submissions.where('next_retry_at').below(300).toArray();
     expect(due).toHaveLength(1);

@@ -30,18 +30,18 @@ function buildDeps(fetchImpl: typeof fetch) {
 
 describe('getFacilities', () => {
   it('signs the request with GET|facilities|<ts>|', async () => {
-    const fetchImpl = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify(sampleEnvelope), { status: 200 }),
-    );
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValue(new Response(JSON.stringify(sampleEnvelope), { status: 200 }));
     const deps = buildDeps(fetchImpl);
     await getFacilities(deps);
     expect(deps.hmacSign).toHaveBeenCalledWith('secret', 'GET|facilities|1700000000000|');
   });
 
   it('returns the facilities array on a 200 ok envelope', async () => {
-    const fetchImpl = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify(sampleEnvelope), { status: 200 }),
-    );
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValue(new Response(JSON.stringify(sampleEnvelope), { status: 200 }));
     const out = await getFacilities(buildDeps(fetchImpl));
     expect(out).toEqual({ ok: true, facilities: sampleEnvelope.data.facilities });
   });
@@ -63,9 +63,14 @@ describe('getFacilities', () => {
   });
 
   it('returns logical error on ok=false envelope', async () => {
-    const fetchImpl = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify({ ok: false, error: { code: 'E_KILL_SWITCH', message: 'down' } }), { status: 200 }),
-    );
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValue(
+        new Response(
+          JSON.stringify({ ok: false, error: { code: 'E_KILL_SWITCH', message: 'down' } }),
+          { status: 200 },
+        ),
+      );
     const out = await getFacilities(buildDeps(fetchImpl));
     expect(out).toEqual({
       ok: false,

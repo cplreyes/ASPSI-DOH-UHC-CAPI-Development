@@ -4,7 +4,8 @@ import { runSync, type OrchestratorDeps } from './sync-orchestrator';
 
 function mkSubmission(overrides: Partial<SubmissionRow> = {}): SubmissionRow {
   return {
-    client_submission_id: overrides.client_submission_id ?? 'csid-' + Math.random().toString(36).slice(2),
+    client_submission_id:
+      overrides.client_submission_id ?? 'csid-' + Math.random().toString(36).slice(2),
     hcw_id: 'hcw-1',
     status: 'pending_sync',
     synced_at: null,
@@ -93,7 +94,13 @@ describe('runSync — rejections', () => {
     const deps = baseDeps({
       postBatchSubmit: vi.fn().mockResolvedValue({
         ok: true,
-        results: [{ client_submission_id: 'a', status: 'rejected', error: { code: 'E_VALIDATION', message: 'bad' } }],
+        results: [
+          {
+            client_submission_id: 'a',
+            status: 'rejected',
+            error: { code: 'E_VALIDATION', message: 'bad' },
+          },
+        ],
       }),
     });
     await runSync(deps);
@@ -111,7 +118,11 @@ describe('runSync — rejections', () => {
       postBatchSubmit: vi.fn().mockResolvedValue({
         ok: true,
         results: [
-          { client_submission_id: 'a', status: 'rejected', error: { code: 'E_SPEC_TOO_OLD', message: 'old' } },
+          {
+            client_submission_id: 'a',
+            status: 'rejected',
+            error: { code: 'E_SPEC_TOO_OLD', message: 'old' },
+          },
           { client_submission_id: 'b', submission_id: 'srv-b', status: 'accepted' },
         ],
       }),
@@ -168,12 +179,14 @@ describe('runSync — retry eligibility', () => {
   });
 
   it('includes retry_scheduled rows whose next_retry_at has passed', async () => {
-    await db.submissions.put(mkSubmission({
-      client_submission_id: 'ready',
-      status: 'retry_scheduled',
-      retry_count: 1,
-      next_retry_at: 1_699_999_900_000,
-    }));
+    await db.submissions.put(
+      mkSubmission({
+        client_submission_id: 'ready',
+        status: 'retry_scheduled',
+        retry_count: 1,
+        next_retry_at: 1_699_999_900_000,
+      }),
+    );
     const postBatchSubmit = vi.fn().mockResolvedValue({
       ok: true,
       results: [{ client_submission_id: 'ready', submission_id: 'srv', status: 'accepted' }],
@@ -185,23 +198,27 @@ describe('runSync — retry eligibility', () => {
   });
 
   it('excludes retry_scheduled rows whose next_retry_at is in the future', async () => {
-    await db.submissions.put(mkSubmission({
-      client_submission_id: 'notyet',
-      status: 'retry_scheduled',
-      retry_count: 1,
-      next_retry_at: 1_700_000_100_000,
-    }));
+    await db.submissions.put(
+      mkSubmission({
+        client_submission_id: 'notyet',
+        status: 'retry_scheduled',
+        retry_count: 1,
+        next_retry_at: 1_700_000_100_000,
+      }),
+    );
     const postBatchSubmit = vi.fn().mockResolvedValue({ ok: true, results: [] });
     await runSync(baseDeps({ postBatchSubmit }));
     expect(postBatchSubmit).not.toHaveBeenCalled();
   });
 
   it('reclaims rows stuck in syncing for longer than stuckSyncingThresholdMs', async () => {
-    await db.submissions.put(mkSubmission({
-      client_submission_id: 'stuck',
-      status: 'syncing',
-      submitted_at: 1_700_000_000_000 - 700_000,
-    }));
+    await db.submissions.put(
+      mkSubmission({
+        client_submission_id: 'stuck',
+        status: 'syncing',
+        submitted_at: 1_700_000_000_000 - 700_000,
+      }),
+    );
     const postBatchSubmit = vi.fn().mockResolvedValue({
       ok: true,
       results: [{ client_submission_id: 'stuck', submission_id: 'srv', status: 'accepted' }],
@@ -224,7 +241,10 @@ describe('runSync — reentrancy guard', () => {
     const slow = new Promise((r) => (resolveFetch = r));
     const postBatchSubmit = vi.fn().mockImplementation(async () => {
       await slow;
-      return { ok: true, results: [{ client_submission_id: 'a', submission_id: 'x', status: 'accepted' }] };
+      return {
+        ok: true,
+        results: [{ client_submission_id: 'a', submission_id: 'x', status: 'accepted' }],
+      };
     });
     const first = runSync(baseDeps({ postBatchSubmit }));
     const second = await runSync(baseDeps({ postBatchSubmit }));

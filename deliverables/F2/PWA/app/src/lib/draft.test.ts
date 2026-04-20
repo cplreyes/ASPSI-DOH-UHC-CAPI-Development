@@ -21,9 +21,7 @@ describe('getOrCreateDraftId', () => {
 
   it('generates and persists a new UUID when localStorage is empty', () => {
     const id = getOrCreateDraftId();
-    expect(id).toMatch(
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
-    );
+    expect(id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
     expect(localStorage.getItem('f2_current_draft_id')).toBe(id);
   });
 

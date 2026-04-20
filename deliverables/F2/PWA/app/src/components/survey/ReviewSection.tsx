@@ -1,8 +1,17 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  sectionA, sectionB, sectionC, sectionD, sectionE1, sectionE2,
-  sectionF, sectionG, sectionH, sectionI, sectionJ,
+  sectionA,
+  sectionB,
+  sectionC,
+  sectionD,
+  sectionE1,
+  sectionE2,
+  sectionF,
+  sectionG,
+  sectionH,
+  sectionI,
+  sectionJ,
 } from '@/generated/items';
 import type { Section as SectionModel, Item } from '@/types/survey';
 import { evaluateCrossField, type Warning } from '@/lib/cross-field';
@@ -13,8 +22,17 @@ import { localized } from '@/i18n/localized';
 import type { Locale } from '@/i18n/index';
 
 const SECTIONS: SectionModel[] = [
-  sectionA, sectionB, sectionC, sectionD, sectionE1, sectionE2,
-  sectionF, sectionG, sectionH, sectionI, sectionJ,
+  sectionA,
+  sectionB,
+  sectionC,
+  sectionD,
+  sectionE1,
+  sectionE2,
+  sectionF,
+  sectionG,
+  sectionH,
+  sectionI,
+  sectionJ,
 ];
 
 interface ReviewSectionProps {
@@ -29,15 +47,28 @@ function formatValue(v: unknown): string {
   return String(v);
 }
 
-function rowsForItem(item: Item, values: FormValues, locale: Locale): Array<{ key: string; label: string; value: string }> {
+function rowsForItem(
+  item: Item,
+  values: FormValues,
+  locale: Locale,
+): Array<{ key: string; label: string; value: string }> {
   if (item.type === 'multi-field' && item.subFields) {
     return item.subFields
-      .map((sf) => ({ key: sf.id, label: `${item.id} ${localized(sf.label, locale)}`, value: formatValue(values[sf.id]) }))
+      .map((sf) => ({
+        key: sf.id,
+        label: `${item.id} ${localized(sf.label, locale)}`,
+        value: formatValue(values[sf.id]),
+      }))
       .filter((r) => r.value !== '');
   }
   const primary = formatValue(values[item.id]);
   const rows: Array<{ key: string; label: string; value: string }> = [];
-  if (primary !== '') rows.push({ key: item.id, label: `${item.id} ${localized(item.label, locale)}`, value: primary });
+  if (primary !== '')
+    rows.push({
+      key: item.id,
+      label: `${item.id} ${localized(item.label, locale)}`,
+      value: primary,
+    });
   const otherKey = `${item.id}_other`;
   const otherVal = formatValue(values[otherKey]);
   if (otherVal !== '') rows.push({ key: otherKey, label: `${item.id} (specify)`, value: otherVal });
@@ -81,7 +112,10 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
           <section key={section.id} className="flex flex-col gap-2">
             <header className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">
-                {t('review.sectionHeading', { id: section.id, title: localized(section.title, locale) })}
+                {t('review.sectionHeading', {
+                  id: section.id,
+                  title: localized(section.title, locale),
+                })}
               </h3>
               <Button type="button" variant="outline" size="sm" onClick={() => onEdit(section.id)}>
                 {t('review.edit')}
