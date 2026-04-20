@@ -12217,7 +12217,7 @@
               "name": "Q89_HAS_USUAL_FACILITY",
               "labels": [
                 {
-                  "text": "89. In the past 12 months, do you have a clinic or health center that you usually go to?"
+                  "text": "89. In the past 12 months, do you have a clinic, or health center that you usually go to?"
                 }
               ],
               "contentType": "numeric",
@@ -12228,7 +12228,7 @@
                   "name": "Q89_HAS_USUAL_FACILITY_VS1",
                   "labels": [
                     {
-                      "text": "89. In the past 12 months, do you have a clinic or health center that you usually go to?"
+                      "text": "89. In the past 12 months, do you have a clinic, or health center that you usually go to?"
                     }
                   ],
                   "values": [
@@ -12273,17 +12273,17 @@
               ]
             },
             {
-              "name": "Q89A_FACILITY_NAME",
+              "name": "Q89_1_FACILITY_NAME",
               "labels": [
                 {
-                  "text": "89a. What is the name of the facility?"
+                  "text": "89.1. What is the name of the facility?"
                 }
               ],
               "contentType": "alpha",
               "length": 120
             },
             {
-              "name": "Q90_IS_USUAL",
+              "name": "Q90_IS_USUAL_FOR_GENERAL",
               "labels": [
                 {
                   "text": "90. Is this the facility you usually go to for general health concerns?"
@@ -12294,7 +12294,7 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q90_IS_USUAL_VS1",
+                  "name": "Q90_IS_USUAL_FOR_GENERAL_VS1",
                   "labels": [
                     {
                       "text": "90. Is this the facility you usually go to for general health concerns?"
@@ -12330,10 +12330,10 @@
               ]
             },
             {
-              "name": "Q91_WHY_DIFF_O01",
+              "name": "Q91_WHY_WENT_O01",
               "labels": [
                 {
-                  "text": "91. Why did you go to this facility? \u2014 More accessible than usual facility"
+                  "text": "91. Why did you go to this facility? \u2014 This facility is more accessible than my usual facility (i.e., nearer, has more transportation options to get to, and cheaper to travel to)"
                 }
               ],
               "contentType": "numeric",
@@ -12341,10 +12341,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q91_WHY_DIFF_O01_VS1",
+                  "name": "Q91_WHY_WENT_O01_VS1",
                   "labels": [
                     {
-                      "text": "91. Why did you go to this facility? \u2014 More accessible than usual facility"
+                      "text": "91. Why did you go to this facility? \u2014 This facility is more accessible than my usual facility (i.e., nearer, has more transportation options to get to, and cheaper to travel to)"
                     }
                   ],
                   "values": [
@@ -12377,10 +12377,10 @@
               ]
             },
             {
-              "name": "Q91_WHY_DIFF_O02",
+              "name": "Q91_WHY_WENT_O02",
               "labels": [
                 {
-                  "text": "91. Why did you go to this facility? \u2014 Needed specialist not available"
+                  "text": "91. Why did you go to this facility? \u2014 Needed a service/specialist not available at my usual facility"
                 }
               ],
               "contentType": "numeric",
@@ -12388,10 +12388,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q91_WHY_DIFF_O02_VS1",
+                  "name": "Q91_WHY_WENT_O02_VS1",
                   "labels": [
                     {
-                      "text": "91. Why did you go to this facility? \u2014 Needed specialist not available"
+                      "text": "91. Why did you go to this facility? \u2014 Needed a service/specialist not available at my usual facility"
                     }
                   ],
                   "values": [
@@ -12424,7 +12424,7 @@
               ]
             },
             {
-              "name": "Q91_WHY_DIFF_O03",
+              "name": "Q91_WHY_WENT_O03",
               "labels": [
                 {
                   "text": "91. Why did you go to this facility? \u2014 Recommended by friends/family"
@@ -12435,7 +12435,7 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q91_WHY_DIFF_O03_VS1",
+                  "name": "Q91_WHY_WENT_O03_VS1",
                   "labels": [
                     {
                       "text": "91. Why did you go to this facility? \u2014 Recommended by friends/family"
@@ -12471,10 +12471,10 @@
               ]
             },
             {
-              "name": "Q91_WHY_DIFF_O04",
+              "name": "Q91_WHY_WENT_O04",
               "labels": [
                 {
-                  "text": "91. Why did you go to this facility? \u2014 Wanted to try another facility"
+                  "text": "91. Why did you go to this facility? \u2014 Wanted to try another facility than my usual"
                 }
               ],
               "contentType": "numeric",
@@ -12482,10 +12482,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q91_WHY_DIFF_O04_VS1",
+                  "name": "Q91_WHY_WENT_O04_VS1",
                   "labels": [
                     {
-                      "text": "91. Why did you go to this facility? \u2014 Wanted to try another facility"
+                      "text": "91. Why did you go to this facility? \u2014 Wanted to try another facility than my usual"
                     }
                   ],
                   "values": [
@@ -12518,10 +12518,10 @@
               ]
             },
             {
-              "name": "Q91_WHY_DIFF_O05",
+              "name": "Q91_WHY_WENT_O05",
               "labels": [
                 {
-                  "text": "91. Why did you go to this facility? \u2014 Prefer this facility"
+                  "text": "91. Why did you go to this facility? \u2014 Prefer this facility than my usual"
                 }
               ],
               "contentType": "numeric",
@@ -12529,10 +12529,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q91_WHY_DIFF_O05_VS1",
+                  "name": "Q91_WHY_WENT_O05_VS1",
                   "labels": [
                     {
-                      "text": "91. Why did you go to this facility? \u2014 Prefer this facility"
+                      "text": "91. Why did you go to this facility? \u2014 Prefer this facility than my usual"
                     }
                   ],
                   "values": [
@@ -12565,10 +12565,10 @@
               ]
             },
             {
-              "name": "Q91_WHY_DIFF_O06",
+              "name": "Q91_WHY_WENT_O06",
               "labels": [
                 {
-                  "text": "91. Why did you go to this facility? \u2014 Referred by usual facility"
+                  "text": "91. Why did you go to this facility? \u2014 This was referred to me by my usual facility"
                 }
               ],
               "contentType": "numeric",
@@ -12576,10 +12576,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q91_WHY_DIFF_O06_VS1",
+                  "name": "Q91_WHY_WENT_O06_VS1",
                   "labels": [
                     {
-                      "text": "91. Why did you go to this facility? \u2014 Referred by usual facility"
+                      "text": "91. Why did you go to this facility? \u2014 This was referred to me by my usual facility"
                     }
                   ],
                   "values": [
@@ -12612,10 +12612,10 @@
               ]
             },
             {
-              "name": "Q91_WHY_DIFF_O07",
+              "name": "Q91_WHY_WENT_O07",
               "labels": [
                 {
-                  "text": "91. Why did you go to this facility? \u2014 Usual facility closed"
+                  "text": "91. Why did you go to this facility? \u2014 Usual facility is closed for today"
                 }
               ],
               "contentType": "numeric",
@@ -12623,10 +12623,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q91_WHY_DIFF_O07_VS1",
+                  "name": "Q91_WHY_WENT_O07_VS1",
                   "labels": [
                     {
-                      "text": "91. Why did you go to this facility? \u2014 Usual facility closed"
+                      "text": "91. Why did you go to this facility? \u2014 Usual facility is closed for today"
                     }
                   ],
                   "values": [
@@ -12659,10 +12659,10 @@
               ]
             },
             {
-              "name": "Q91_WHY_DIFF_O08",
+              "name": "Q91_WHY_WENT_O08",
               "labels": [
                 {
-                  "text": "91. Why did you go to this facility? \u2014 Doctor transferred here"
+                  "text": "91. Why did you go to this facility? \u2014 The doctor I trust/familiar with transferred in this facility"
                 }
               ],
               "contentType": "numeric",
@@ -12670,10 +12670,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q91_WHY_DIFF_O08_VS1",
+                  "name": "Q91_WHY_WENT_O08_VS1",
                   "labels": [
                     {
-                      "text": "91. Why did you go to this facility? \u2014 Doctor transferred here"
+                      "text": "91. Why did you go to this facility? \u2014 The doctor I trust/familiar with transferred in this facility"
                     }
                   ],
                   "values": [
@@ -12706,10 +12706,10 @@
               ]
             },
             {
-              "name": "Q91_WHY_DIFF_O09",
+              "name": "Q91_WHY_WENT_O09",
               "labels": [
                 {
-                  "text": "91. Why did you go to this facility? \u2014 Other (specify)"
+                  "text": "91. Why did you go to this facility? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -12717,10 +12717,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q91_WHY_DIFF_O09_VS1",
+                  "name": "Q91_WHY_WENT_O09_VS1",
                   "labels": [
                     {
-                      "text": "91. Why did you go to this facility? \u2014 Other (specify)"
+                      "text": "91. Why did you go to this facility? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -12753,7 +12753,7 @@
               ]
             },
             {
-              "name": "Q91_WHY_DIFF_OTHER_TXT",
+              "name": "Q91_WHY_WENT_OTHER_TXT",
               "labels": [
                 {
                   "text": "91. Why did you go to this facility? \u2014 Other (specify) text"
@@ -12763,10 +12763,20 @@
               "length": 120
             },
             {
+              "name": "Q91_WHY_WENT_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
               "name": "Q92_FACILITY_TYPE",
               "labels": [
                 {
-                  "text": "92. Type of facility usually visited"
+                  "text": "92. What is the type of facility that you usually go to?"
                 }
               ],
               "contentType": "numeric",
@@ -12777,7 +12787,7 @@
                   "name": "Q92_FACILITY_TYPE_VS1",
                   "labels": [
                     {
-                      "text": "92. Type of facility usually visited"
+                      "text": "92. What is the type of facility that you usually go to?"
                     }
                   ],
                   "values": [
@@ -12880,7 +12890,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Other (specify)"
+                          "text": "Other (Specify)"
                         }
                       ],
                       "pairs": [
@@ -12894,10 +12904,20 @@
               ]
             },
             {
+              "name": "Q92_FACILITY_TYPE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "92. Type of facility \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
               "name": "Q93_WHY_NOT_O01",
               "labels": [
                 {
-                  "text": "93. Why do you not have a usual facility? \u2014 I don't get sick"
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't get sick"
                 }
               ],
               "contentType": "numeric",
@@ -12908,7 +12928,7 @@
                   "name": "Q93_WHY_NOT_O01_VS1",
                   "labels": [
                     {
-                      "text": "93. Why do you not have a usual facility? \u2014 I don't get sick"
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't get sick"
                     }
                   ],
                   "values": [
@@ -12944,7 +12964,7 @@
               "name": "Q93_WHY_NOT_O02",
               "labels": [
                 {
-                  "text": "93. Why do you not have a usual facility? \u2014 I recently moved into the area"
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I recently moved into the area"
                 }
               ],
               "contentType": "numeric",
@@ -12955,7 +12975,7 @@
                   "name": "Q93_WHY_NOT_O02_VS1",
                   "labels": [
                     {
-                      "text": "93. Why do you not have a usual facility? \u2014 I recently moved into the area"
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I recently moved into the area"
                     }
                   ],
                   "values": [
@@ -12991,7 +13011,7 @@
               "name": "Q93_WHY_NOT_O03",
               "labels": [
                 {
-                  "text": "93. Why do you not have a usual facility? \u2014 It's expensive"
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 It's expensive"
                 }
               ],
               "contentType": "numeric",
@@ -13002,7 +13022,7 @@
                   "name": "Q93_WHY_NOT_O03_VS1",
                   "labels": [
                     {
-                      "text": "93. Why do you not have a usual facility? \u2014 It's expensive"
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 It's expensive"
                     }
                   ],
                   "values": [
@@ -13038,7 +13058,7 @@
               "name": "Q93_WHY_NOT_O04",
               "labels": [
                 {
-                  "text": "93. Why do you not have a usual facility? \u2014 I can treat myself"
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I can treat myself"
                 }
               ],
               "contentType": "numeric",
@@ -13049,7 +13069,7 @@
                   "name": "Q93_WHY_NOT_O04_VS1",
                   "labels": [
                     {
-                      "text": "93. Why do you not have a usual facility? \u2014 I can treat myself"
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I can treat myself"
                     }
                   ],
                   "values": [
@@ -13085,7 +13105,7 @@
               "name": "Q93_WHY_NOT_O05",
               "labels": [
                 {
-                  "text": "93. Why do you not have a usual facility? \u2014 I don't know where to go"
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know where to go for care"
                 }
               ],
               "contentType": "numeric",
@@ -13096,7 +13116,7 @@
                   "name": "Q93_WHY_NOT_O05_VS1",
                   "labels": [
                     {
-                      "text": "93. Why do you not have a usual facility? \u2014 I don't know where to go"
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know where to go for care"
                     }
                   ],
                   "values": [
@@ -13132,7 +13152,7 @@
               "name": "Q93_WHY_NOT_O06",
               "labels": [
                 {
-                  "text": "93. Why do you not have a usual facility? \u2014 I don't know"
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know"
                 }
               ],
               "contentType": "numeric",
@@ -13143,7 +13163,7 @@
                   "name": "Q93_WHY_NOT_O06_VS1",
                   "labels": [
                     {
-                      "text": "93. Why do you not have a usual facility? \u2014 I don't know"
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know"
                     }
                   ],
                   "values": [
@@ -13179,7 +13199,7 @@
               "name": "Q93_WHY_NOT_O07",
               "labels": [
                 {
-                  "text": "93. Why do you not have a usual facility? \u2014 Other (specify)"
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -13190,7 +13210,7 @@
                   "name": "Q93_WHY_NOT_O07_VS1",
                   "labels": [
                     {
-                      "text": "93. Why do you not have a usual facility? \u2014 Other (specify)"
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -13226,7 +13246,17 @@
               "name": "Q93_WHY_NOT_OTHER_TXT",
               "labels": [
                 {
-                  "text": "93. Why do you not have a usual facility? \u2014 Other (specify) text"
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q93_WHY_NOT_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "93. Why no usual facility \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -13236,7 +13266,7 @@
               "name": "Q94_TRANSPORT_O01",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Walk"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Walk"
                 }
               ],
               "contentType": "numeric",
@@ -13247,7 +13277,7 @@
                   "name": "Q94_TRANSPORT_O01_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Walk"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Walk"
                     }
                   ],
                   "values": [
@@ -13283,7 +13313,7 @@
               "name": "Q94_TRANSPORT_O02",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Bike"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Bike"
                 }
               ],
               "contentType": "numeric",
@@ -13294,7 +13324,7 @@
                   "name": "Q94_TRANSPORT_O02_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Bike"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Bike"
                     }
                   ],
                   "values": [
@@ -13330,7 +13360,7 @@
               "name": "Q94_TRANSPORT_O03",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Public Bus"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Public Bus"
                 }
               ],
               "contentType": "numeric",
@@ -13341,7 +13371,7 @@
                   "name": "Q94_TRANSPORT_O03_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Public Bus"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Public Bus"
                     }
                   ],
                   "values": [
@@ -13377,7 +13407,7 @@
               "name": "Q94_TRANSPORT_O04",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Jeepney"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Jeepney"
                 }
               ],
               "contentType": "numeric",
@@ -13388,7 +13418,7 @@
                   "name": "Q94_TRANSPORT_O04_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Jeepney"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Jeepney"
                     }
                   ],
                   "values": [
@@ -13424,7 +13454,7 @@
               "name": "Q94_TRANSPORT_O05",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Tricycle"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Tricycle"
                 }
               ],
               "contentType": "numeric",
@@ -13435,7 +13465,7 @@
                   "name": "Q94_TRANSPORT_O05_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Tricycle"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Tricycle"
                     }
                   ],
                   "values": [
@@ -13471,7 +13501,7 @@
               "name": "Q94_TRANSPORT_O06",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Car (including private taxi/cab)"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Car (including private taxi/cab)"
                 }
               ],
               "contentType": "numeric",
@@ -13482,7 +13512,7 @@
                   "name": "Q94_TRANSPORT_O06_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Car (including private taxi/cab)"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Car (including private taxi/cab)"
                     }
                   ],
                   "values": [
@@ -13518,7 +13548,7 @@
               "name": "Q94_TRANSPORT_O07",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Motorcycle"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Motorcycle"
                 }
               ],
               "contentType": "numeric",
@@ -13529,7 +13559,7 @@
                   "name": "Q94_TRANSPORT_O07_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Motorcycle"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Motorcycle"
                     }
                   ],
                   "values": [
@@ -13565,7 +13595,7 @@
               "name": "Q94_TRANSPORT_O08",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Boat"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Boat"
                 }
               ],
               "contentType": "numeric",
@@ -13576,7 +13606,7 @@
                   "name": "Q94_TRANSPORT_O08_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Boat"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Boat"
                     }
                   ],
                   "values": [
@@ -13612,7 +13642,7 @@
               "name": "Q94_TRANSPORT_O09",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Taxi"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Taxi"
                 }
               ],
               "contentType": "numeric",
@@ -13623,7 +13653,7 @@
                   "name": "Q94_TRANSPORT_O09_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Taxi"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Taxi"
                     }
                   ],
                   "values": [
@@ -13659,7 +13689,7 @@
               "name": "Q94_TRANSPORT_O10",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Pedicab"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Pedicab"
                 }
               ],
               "contentType": "numeric",
@@ -13670,7 +13700,7 @@
                   "name": "Q94_TRANSPORT_O10_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Pedicab"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Pedicab"
                     }
                   ],
                   "values": [
@@ -13706,7 +13736,7 @@
               "name": "Q94_TRANSPORT_O11",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 E-bike"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 E-bike"
                 }
               ],
               "contentType": "numeric",
@@ -13717,7 +13747,7 @@
                   "name": "Q94_TRANSPORT_O11_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 E-bike"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 E-bike"
                     }
                   ],
                   "values": [
@@ -13753,7 +13783,7 @@
               "name": "Q94_TRANSPORT_O12",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Other (specify)"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -13764,7 +13794,7 @@
                   "name": "Q94_TRANSPORT_O12_VS1",
                   "labels": [
                     {
-                      "text": "94. Transportation modes to nearest primary care facility \u2014 Other (specify)"
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -13800,17 +13830,27 @@
               "name": "Q94_TRANSPORT_OTHER_TXT",
               "labels": [
                 {
-                  "text": "94. Transportation modes to nearest primary care facility \u2014 Other (specify) text"
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
               "length": 120
             },
             {
-              "name": "Q95_TRAVEL_TIME",
+              "name": "Q94_TRANSPORT_OTHER_TXT",
               "labels": [
                 {
-                  "text": "95. Travel time to nearest primary care facility (minutes)"
+                  "text": "94. Transportation mode \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q95_TRAVEL_TIME_MIN",
+              "labels": [
+                {
+                  "text": "95. How long does it take you to travel from your house when going to the nearest primary care facility? (one-way, minutes)"
                 }
               ],
               "contentType": "numeric",
@@ -13818,10 +13858,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q96_TRAVEL_COST",
+              "name": "Q96_TRAVEL_COST_PHP",
               "labels": [
                 {
-                  "text": "96. Travel cost to facility (PHP, one-way)"
+                  "text": "96. How much does it usually cost for you to travel to this facility from your home? (PHP, one-way)"
                 }
               ],
               "contentType": "numeric",
@@ -13832,7 +13872,7 @@
               "name": "Q97_KNOWS_BOOKING",
               "labels": [
                 {
-                  "text": "97. Do you know how to book an appointment?"
+                  "text": "97. When you have a health problem, do you know how to book an appointment at a primary care facility?"
                 }
               ],
               "contentType": "numeric",
@@ -13843,7 +13883,7 @@
                   "name": "Q97_KNOWS_BOOKING_VS1",
                   "labels": [
                     {
-                      "text": "97. Do you know how to book an appointment?"
+                      "text": "97. When you have a health problem, do you know how to book an appointment at a primary care facility?"
                     }
                   ],
                   "values": [
@@ -13876,10 +13916,10 @@
               ]
             },
             {
-              "name": "Q98_PHONE_ADVICE",
+              "name": "Q98_PHONE_ADVICE_OPEN",
               "labels": [
                 {
-                  "text": "98. Can you get advice over the phone when facility is open?"
+                  "text": "98. When your primary care facility is open, can you get advice quickly over the phone if you need it?"
                 }
               ],
               "contentType": "numeric",
@@ -13887,81 +13927,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q98_PHONE_ADVICE_VS1",
+                  "name": "Q98_PHONE_ADVICE_OPEN_VS1",
                   "labels": [
                     {
-                      "text": "98. Can you get advice over the phone when facility is open?"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "I haven't tried"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "3"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "I don't know"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "4"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q99_AFTER_HOURS",
-              "labels": [
-                {
-                  "text": "99. Is there a phone number to call when facility is closed?"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q99_AFTER_HOURS_VS1",
-                  "labels": [
-                    {
-                      "text": "99. Is there a phone number to call when facility is closed?"
+                      "text": "98. When your primary care facility is open, can you get advice quickly over the phone if you need it?"
                     }
                   ],
                   "values": [
@@ -14018,10 +13987,10 @@
               ]
             },
             {
-              "name": "Q100_LEAVE_WORK",
+              "name": "Q99_PHONE_ADVICE_CLOSED",
               "labels": [
                 {
-                  "text": "100. Do you have to take leave to visit?"
+                  "text": "99. When your primary care facility is closed, is there a phone number you can call when you get sick?"
                 }
               ],
               "contentType": "numeric",
@@ -14029,10 +13998,81 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q100_LEAVE_WORK_VS1",
+                  "name": "Q99_PHONE_ADVICE_CLOSED_VS1",
                   "labels": [
                     {
-                      "text": "100. Do you have to take leave to visit?"
+                      "text": "99. When your primary care facility is closed, is there a phone number you can call when you get sick?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I haven't tried"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q100_LEAVE_WORK_SCHOOL",
+              "labels": [
+                {
+                  "text": "100. When you have to visit your primary care facility, do you have to take a leave from work or school to go?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q100_LEAVE_WORK_SCHOOL_VS1",
+                  "labels": [
+                    {
+                      "text": "100. When you have to visit your primary care facility, do you have to take a leave from work or school to go?"
                     }
                   ],
                   "values": [
@@ -14106,31 +14146,20 @@
           "name": "J_HEALTH_SEEKING",
           "labels": [
             {
-              "text": "J. Health-Seeking Behavior"
+              "text": "J. Household Members' Health-Seeking Behavior and Outcomes"
             }
           ],
           "recordType": "L",
           "occurrences": {
             "required": true,
-            "maximum": 20
+            "maximum": 1
           },
           "items": [
-            {
-              "name": "MEMBER_LINE_NO",
-              "labels": [
-                {
-                  "text": "Household Member Line Number"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 2,
-              "zeroFill": true
-            },
             {
               "name": "Q101_CHECKUP_FREQ",
               "labels": [
                 {
-                  "text": "101. How often do you have a general check-up?"
+                  "text": "101. How often do you/your household member have a general check-up on your health (i.e., when you feel healthy, without any specific illness)?"
                 }
               ],
               "contentType": "numeric",
@@ -14141,7 +14170,7 @@
                   "name": "Q101_CHECKUP_FREQ_VS1",
                   "labels": [
                     {
-                      "text": "101. How often do you have a general check-up?"
+                      "text": "101. How often do you/your household member have a general check-up on your health (i.e., when you feel healthy, without any specific illness)?"
                     }
                   ],
                   "values": [
@@ -14196,7 +14225,7 @@
                     {
                       "labels": [
                         {
-                          "text": "No set time; once or twice ever"
+                          "text": "No set time; I've only ever done this once or twice in my life"
                         }
                       ],
                       "pairs": [
@@ -14208,7 +14237,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Never; only when sick"
+                          "text": "Never; I only go to the doctor when I am sick"
                         }
                       ],
                       "pairs": [
@@ -14220,7 +14249,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Other (specify)"
+                          "text": "Other (Specify)"
                         }
                       ],
                       "pairs": [
@@ -14234,10 +14263,20 @@
               ]
             },
             {
+              "name": "Q101_CHECKUP_FREQ_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "101. Checkup frequency \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
               "name": "Q102_VISIT_REASON_O01",
               "labels": [
                 {
-                  "text": "102. Why would you visit a health facility? \u2014 Consultation for new health problem"
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Consultation for new health problem"
                 }
               ],
               "contentType": "numeric",
@@ -14248,7 +14287,7 @@
                   "name": "Q102_VISIT_REASON_O01_VS1",
                   "labels": [
                     {
-                      "text": "102. Why would you visit a health facility? \u2014 Consultation for new health problem"
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Consultation for new health problem"
                     }
                   ],
                   "values": [
@@ -14284,7 +14323,7 @@
               "name": "Q102_VISIT_REASON_O02",
               "labels": [
                 {
-                  "text": "102. Why would you visit a health facility? \u2014 Follow-up ongoing health problem"
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Consultation to follow-up an ongoing health problem"
                 }
               ],
               "contentType": "numeric",
@@ -14295,7 +14334,7 @@
                   "name": "Q102_VISIT_REASON_O02_VS1",
                   "labels": [
                     {
-                      "text": "102. Why would you visit a health facility? \u2014 Follow-up ongoing health problem"
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Consultation to follow-up an ongoing health problem"
                     }
                   ],
                   "values": [
@@ -14331,7 +14370,7 @@
               "name": "Q102_VISIT_REASON_O03",
               "labels": [
                 {
-                  "text": "102. Why would you visit a health facility? \u2014 For tests/diagnostics only"
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For tests/diagnostics only"
                 }
               ],
               "contentType": "numeric",
@@ -14342,7 +14381,7 @@
                   "name": "Q102_VISIT_REASON_O03_VS1",
                   "labels": [
                     {
-                      "text": "102. Why would you visit a health facility? \u2014 For tests/diagnostics only"
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For tests/diagnostics only"
                     }
                   ],
                   "values": [
@@ -14378,7 +14417,7 @@
               "name": "Q102_VISIT_REASON_O04",
               "labels": [
                 {
-                  "text": "102. Why would you visit a health facility? \u2014 For a general check-up"
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For a general check-up"
                 }
               ],
               "contentType": "numeric",
@@ -14389,7 +14428,7 @@
                   "name": "Q102_VISIT_REASON_O04_VS1",
                   "labels": [
                     {
-                      "text": "102. Why would you visit a health facility? \u2014 For a general check-up"
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For a general check-up"
                     }
                   ],
                   "values": [
@@ -14425,7 +14464,7 @@
               "name": "Q102_VISIT_REASON_O05",
               "labels": [
                 {
-                  "text": "102. Why would you visit a health facility? \u2014 Health certificate/administrative"
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 To get a health certificate/administrative reason"
                 }
               ],
               "contentType": "numeric",
@@ -14436,7 +14475,7 @@
                   "name": "Q102_VISIT_REASON_O05_VS1",
                   "labels": [
                     {
-                      "text": "102. Why would you visit a health facility? \u2014 Health certificate/administrative"
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 To get a health certificate/administrative reason"
                     }
                   ],
                   "values": [
@@ -14472,7 +14511,7 @@
               "name": "Q102_VISIT_REASON_O06",
               "labels": [
                 {
-                  "text": "102. Why would you visit a health facility? \u2014 Immunizations/vaccinations"
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For immunizations/vaccinations"
                 }
               ],
               "contentType": "numeric",
@@ -14483,7 +14522,7 @@
                   "name": "Q102_VISIT_REASON_O06_VS1",
                   "labels": [
                     {
-                      "text": "102. Why would you visit a health facility? \u2014 Immunizations/vaccinations"
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For immunizations/vaccinations"
                     }
                   ],
                   "values": [
@@ -14519,7 +14558,7 @@
               "name": "Q102_VISIT_REASON_O07",
               "labels": [
                 {
-                  "text": "102. Why would you visit a health facility? \u2014 Doctor transferred to this facility"
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 My doctor transferred to this health facility"
                 }
               ],
               "contentType": "numeric",
@@ -14530,7 +14569,7 @@
                   "name": "Q102_VISIT_REASON_O07_VS1",
                   "labels": [
                     {
-                      "text": "102. Why would you visit a health facility? \u2014 Doctor transferred to this facility"
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 My doctor transferred to this health facility"
                     }
                   ],
                   "values": [
@@ -14566,7 +14605,7 @@
               "name": "Q102_VISIT_REASON_O08",
               "labels": [
                 {
-                  "text": "102. Why would you visit a health facility? \u2014 Other (specify)"
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -14577,7 +14616,7 @@
                   "name": "Q102_VISIT_REASON_O08_VS1",
                   "labels": [
                     {
-                      "text": "102. Why would you visit a health facility? \u2014 Other (specify)"
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -14613,7 +14652,17 @@
               "name": "Q102_VISIT_REASON_OTHER_TXT",
               "labels": [
                 {
-                  "text": "102. Why would you visit a health facility? \u2014 Other (specify) text"
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q102_VISIT_REASON_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "102. Visit reason \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -14623,7 +14672,7 @@
               "name": "Q103_CARE_TYPE_O01",
               "labels": [
                 {
-                  "text": "103. Forms of care accessed in the last 6 months \u2014 Outpatient care"
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)"
                 }
               ],
               "contentType": "numeric",
@@ -14634,7 +14683,7 @@
                   "name": "Q103_CARE_TYPE_O01_VS1",
                   "labels": [
                     {
-                      "text": "103. Forms of care accessed in the last 6 months \u2014 Outpatient care"
+                      "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)"
                     }
                   ],
                   "values": [
@@ -14670,7 +14719,7 @@
               "name": "Q103_CARE_TYPE_O02",
               "labels": [
                 {
-                  "text": "103. Forms of care accessed in the last 6 months \u2014 Inpatient care"
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)"
                 }
               ],
               "contentType": "numeric",
@@ -14681,7 +14730,7 @@
                   "name": "Q103_CARE_TYPE_O02_VS1",
                   "labels": [
                     {
-                      "text": "103. Forms of care accessed in the last 6 months \u2014 Inpatient care"
+                      "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)"
                     }
                   ],
                   "values": [
@@ -14717,7 +14766,7 @@
               "name": "Q103_CARE_TYPE_O03",
               "labels": [
                 {
-                  "text": "103. Forms of care accessed in the last 6 months \u2014 Emergency care"
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)"
                 }
               ],
               "contentType": "numeric",
@@ -14728,7 +14777,7 @@
                   "name": "Q103_CARE_TYPE_O03_VS1",
                   "labels": [
                     {
-                      "text": "103. Forms of care accessed in the last 6 months \u2014 Emergency care"
+                      "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)"
                     }
                   ],
                   "values": [
@@ -14764,7 +14813,7 @@
               "name": "Q103_CARE_TYPE_O04",
               "labels": [
                 {
-                  "text": "103. Forms of care accessed in the last 6 months \u2014 Primary care consultation"
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Primary care consultation"
                 }
               ],
               "contentType": "numeric",
@@ -14775,7 +14824,7 @@
                   "name": "Q103_CARE_TYPE_O04_VS1",
                   "labels": [
                     {
-                      "text": "103. Forms of care accessed in the last 6 months \u2014 Primary care consultation"
+                      "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Primary care consultation"
                     }
                   ],
                   "values": [
@@ -14811,7 +14860,7 @@
               "name": "Q103_CARE_TYPE_O05",
               "labels": [
                 {
-                  "text": "103. Forms of care accessed in the last 6 months \u2014 Other (specify)"
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -14822,7 +14871,7 @@
                   "name": "Q103_CARE_TYPE_O05_VS1",
                   "labels": [
                     {
-                      "text": "103. Forms of care accessed in the last 6 months \u2014 Other (specify)"
+                      "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -14858,7 +14907,17 @@
               "name": "Q103_CARE_TYPE_OTHER_TXT",
               "labels": [
                 {
-                  "text": "103. Forms of care accessed in the last 6 months \u2014 Other (specify) text"
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q103_CARE_TYPE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "103. Forms of care \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -14868,7 +14927,7 @@
               "name": "Q104_PREVENTIVE",
               "labels": [
                 {
-                  "text": "104. Have you consulted a physician for preventative reasons?"
+                  "text": "104. Have you ever consulted a physician for preventative reasons, such as to consult about your lifestyle, weight loss, stopping smoking, etc.?"
                 }
               ],
               "contentType": "numeric",
@@ -14879,7 +14938,7 @@
                   "name": "Q104_PREVENTIVE_VS1",
                   "labels": [
                     {
-                      "text": "104. Have you consulted a physician for preventative reasons?"
+                      "text": "104. Have you ever consulted a physician for preventative reasons, such as to consult about your lifestyle, weight loss, stopping smoking, etc.?"
                     }
                   ],
                   "values": [
@@ -14912,10 +14971,10 @@
               ]
             },
             {
-              "name": "Q105_FORGONE",
+              "name": "Q105_FORGONE_CARE",
               "labels": [
                 {
-                  "text": "105. In the last 6 months, had a medical problem and chose NOT to see a provider?"
+                  "text": "105. In the last 6 months, have you or any of your household members had a medical problem and chosen NOT to see a healthcare provider?"
                 }
               ],
               "contentType": "numeric",
@@ -14923,10 +14982,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q105_FORGONE_VS1",
+                  "name": "Q105_FORGONE_CARE_VS1",
                   "labels": [
                     {
-                      "text": "105. In the last 6 months, had a medical problem and chose NOT to see a provider?"
+                      "text": "105. In the last 6 months, have you or any of your household members had a medical problem and chosen NOT to see a healthcare provider?"
                     }
                   ],
                   "values": [
@@ -15103,7 +15162,7 @@
               "name": "Q106_FORGONE_WHY_O04",
               "labels": [
                 {
-                  "text": "106. Why not? \u2014 Could not get appointment soon enough"
+                  "text": "106. Why not? \u2014 Could not get an appointment soon enough"
                 }
               ],
               "contentType": "numeric",
@@ -15114,7 +15173,7 @@
                   "name": "Q106_FORGONE_WHY_O04_VS1",
                   "labels": [
                     {
-                      "text": "106. Why not? \u2014 Could not get appointment soon enough"
+                      "text": "106. Why not? \u2014 Could not get an appointment soon enough"
                     }
                   ],
                   "values": [
@@ -15291,7 +15350,7 @@
               "name": "Q106_FORGONE_WHY_O08",
               "labels": [
                 {
-                  "text": "106. Why not? \u2014 Other (specify)"
+                  "text": "106. Why not? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -15302,7 +15361,7 @@
                   "name": "Q106_FORGONE_WHY_O08_VS1",
                   "labels": [
                     {
-                      "text": "106. Why not? \u2014 Other (specify)"
+                      "text": "106. Why not? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -15345,10 +15404,20 @@
               "length": 120
             },
             {
-              "name": "Q107_ACTIONS_O01",
+              "name": "Q106_FORGONE_WHY_OTHER_TXT",
               "labels": [
                 {
-                  "text": "107. Other actions taken to improve health? \u2014 Visited other healthcare facility"
+                  "text": "106. Why forgone \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q107_OTHER_ACTIONS_O01",
+              "labels": [
+                {
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Visited other healthcare facility"
                 }
               ],
               "contentType": "numeric",
@@ -15356,10 +15425,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q107_ACTIONS_O01_VS1",
+                  "name": "Q107_OTHER_ACTIONS_O01_VS1",
                   "labels": [
                     {
-                      "text": "107. Other actions taken to improve health? \u2014 Visited other healthcare facility"
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Visited other healthcare facility"
                     }
                   ],
                   "values": [
@@ -15392,10 +15461,10 @@
               ]
             },
             {
-              "name": "Q107_ACTIONS_O02",
+              "name": "Q107_OTHER_ACTIONS_O02",
               "labels": [
                 {
-                  "text": "107. Other actions taken to improve health? \u2014 Sought alternative care"
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)"
                 }
               ],
               "contentType": "numeric",
@@ -15403,10 +15472,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q107_ACTIONS_O02_VS1",
+                  "name": "Q107_OTHER_ACTIONS_O02_VS1",
                   "labels": [
                     {
-                      "text": "107. Other actions taken to improve health? \u2014 Sought alternative care"
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)"
                     }
                   ],
                   "values": [
@@ -15439,10 +15508,10 @@
               ]
             },
             {
-              "name": "Q107_ACTIONS_O03",
+              "name": "Q107_OTHER_ACTIONS_O03",
               "labels": [
                 {
-                  "text": "107. Other actions taken to improve health? \u2014 Sought telemedicine"
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)"
                 }
               ],
               "contentType": "numeric",
@@ -15450,10 +15519,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q107_ACTIONS_O03_VS1",
+                  "name": "Q107_OTHER_ACTIONS_O03_VS1",
                   "labels": [
                     {
-                      "text": "107. Other actions taken to improve health? \u2014 Sought telemedicine"
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)"
                     }
                   ],
                   "values": [
@@ -15486,10 +15555,10 @@
               ]
             },
             {
-              "name": "Q107_ACTIONS_O04",
+              "name": "Q107_OTHER_ACTIONS_O04",
               "labels": [
                 {
-                  "text": "107. Other actions taken to improve health? \u2014 Used home care"
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Used home care (Healthcare services and support provided to individuals in their own homes)"
                 }
               ],
               "contentType": "numeric",
@@ -15497,10 +15566,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q107_ACTIONS_O04_VS1",
+                  "name": "Q107_OTHER_ACTIONS_O04_VS1",
                   "labels": [
                     {
-                      "text": "107. Other actions taken to improve health? \u2014 Used home care"
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Used home care (Healthcare services and support provided to individuals in their own homes)"
                     }
                   ],
                   "values": [
@@ -15533,10 +15602,10 @@
               ]
             },
             {
-              "name": "Q107_ACTIONS_O05",
+              "name": "Q107_OTHER_ACTIONS_O05",
               "labels": [
                 {
-                  "text": "107. Other actions taken to improve health? \u2014 Bought medicine from a pharmacy"
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Bought medicine from a pharmacy"
                 }
               ],
               "contentType": "numeric",
@@ -15544,10 +15613,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q107_ACTIONS_O05_VS1",
+                  "name": "Q107_OTHER_ACTIONS_O05_VS1",
                   "labels": [
                     {
-                      "text": "107. Other actions taken to improve health? \u2014 Bought medicine from a pharmacy"
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Bought medicine from a pharmacy"
                     }
                   ],
                   "values": [
@@ -15580,10 +15649,10 @@
               ]
             },
             {
-              "name": "Q107_ACTIONS_O06",
+              "name": "Q107_OTHER_ACTIONS_O06",
               "labels": [
                 {
-                  "text": "107. Other actions taken to improve health? \u2014 Did not seek other forms of care"
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Did not seek other forms of care"
                 }
               ],
               "contentType": "numeric",
@@ -15591,10 +15660,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q107_ACTIONS_O06_VS1",
+                  "name": "Q107_OTHER_ACTIONS_O06_VS1",
                   "labels": [
                     {
-                      "text": "107. Other actions taken to improve health? \u2014 Did not seek other forms of care"
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Did not seek other forms of care"
                     }
                   ],
                   "values": [
@@ -15627,10 +15696,10 @@
               ]
             },
             {
-              "name": "Q107_ACTIONS_O07",
+              "name": "Q107_OTHER_ACTIONS_O07",
               "labels": [
                 {
-                  "text": "107. Other actions taken to improve health? \u2014 Other (specify)"
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -15638,10 +15707,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q107_ACTIONS_O07_VS1",
+                  "name": "Q107_OTHER_ACTIONS_O07_VS1",
                   "labels": [
                     {
-                      "text": "107. Other actions taken to improve health? \u2014 Other (specify)"
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -15674,10 +15743,20 @@
               ]
             },
             {
-              "name": "Q107_ACTIONS_OTHER_TXT",
+              "name": "Q107_OTHER_ACTIONS_OTHER_TXT",
               "labels": [
                 {
-                  "text": "107. Other actions taken to improve health? \u2014 Other (specify) text"
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q107_OTHER_ACTIONS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "107. Other actions \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
