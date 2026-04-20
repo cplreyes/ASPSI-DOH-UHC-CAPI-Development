@@ -2,6 +2,117 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-20 (Apr 20 Del-1 re-ingest — step 6: Annexes B/C/D/E/H/I/J)
+
+- **Step 6 — FINAL step of the 6-step Apr 20 re-ingest plan complete.** All 7 remaining annex source pages created; full 15-file Apr 20 submission now ingested.
+- **Annex B** (`Source - Annex B List of UHC Integration Sites.md`) — 107 UHC IS by integration-year cohort: 58 (2020) + 13 (2022) + 2 (2023) + 28 (2024) + 6 (2025). Compiled from DOH DCs 2024-0094 and 2025-0125 + Nov 2025 BLHSD update. Includes sampling-frame notes for F1/F4 and PSGC-value-set alignment requirements.
+- **Annex C** (`Source - Annex C List of Non UHC Integration Sites.md`) — 13 non-UHC IS enumerated with Revised IR island-group allocation (Northern/Central Luzon, Southern Luzon, Visayas, Mindanao) for F4 sampling.
+- **Annex D** (`Source - Annex D Replacement Protocol.md`) — per-module (F1/F3/F4) replacement rules. Key invariants: ≥3-visit minimum contact protocol; same-stratum substitution from reserve list; 5–10% facility replacement cap; enumerator discretion **banned**; same-session patient replacement; same-cluster household replacement; supervisor approval required; weights adjusted. Flag private-hospital rules still in draft.
+- **Annex E** (`Source - Annex E Suggested Indicators.md`) — 104 indicators × 8 HLRQs matrix. DOH RETAIN/AMEND/OMIT verdicts from OAAED / HFDB / HPB / HPDPB. Year-2-Source column tagged [PATIENT]/[HH]/[FACILITY]/[HCW]/SECONDARY DATA — the authoritative item-to-indicator crosswalk for the DCF completeness audit.
+- **Annex H** (`Source - Annex H Informed Consent Forms.md`) — 4 ICFs (F1/F2/F3/F4) with PART I + PART II structure. F3/F4 guarantee PhP 100 + witness clause; F2 PhP 1,000 raffle; F1 no incentive. Text is SJREB-approvable; CAPI intro screens must mirror verbatim. Translation to 7 Philippine dialects still required before fieldwork.
+- **Annex I** (`Source - Annex I Dummy Tables.md`) — 51 dummy tables (A1–A14 F1, B1–B10 F2, C1–C18 F3, D1–D9 F4). Header dated March 06 2026 — **pre-dates Apr 20 questionnaire revisions**; expect Annex I revision in later cycle. B9 burnout table retained in output plan despite Annex G #23.
+- **Annex J** (`Source - Annex J CV of ASPSI Team.md`) — 7 CVs (Claro, Paunlagui, Silva-Javier, Demaisip, Faderogao, Reyes, Garciano). **Field Manager Airyne D. Almendral's CV missing** despite being listed as an 8th key expert in IR Section V.G — flag for Annex J rev2.
+- **`index.md`** — 7 new annex entries added under Sources (B, C, D, E, H, I, J), after Annex A.
+- **6-step Apr 20 Del-1 re-ingest plan now 100% complete.** Full 15-file Juvy→DOH submission at `raw/Project-Deliverable-1_Apr20-submitted/` is represented in wiki sources. Tranche-1 payment release is downstream. DCF patching (F1/F3/F4 generators, F2 PWA spec) remains the next substantive work item — see `wiki/analyses/Analysis - Apr 20 DCF Generator Audit.md` for the prioritized patch queue.
+
+## 2026-04-20 (Apr 20 Del-1 re-ingest — step 5: Revised Inception Report)
+
+- **Step 5 of the 6-step Apr 20 re-ingest plan complete.** Rewrote `wiki/sources/Source - Revised Inception Report.md` against the Apr 20 PDF (`raw/Project-Deliverable-1_Apr20-submitted/ASPSI_DOH_UHC Year 2_Deliverable 1_Revised Inception Report.PDF`, 2.9 MB).
+- **Swapped frontmatter source link** DOCX Apr 08 → PDF Apr 20; updated `date_ingested` to 2026-04-20; added `ingest-batch-apr20` tag.
+- **Document structure captured**: Sections I–XI with methodology Section V broken into A–H (Study Design, Data to be Collected, Study Sites, Sampling Design, Data Collection, Data Transfer/Processing, Team Organization, Study Activities). 18 numbered tables, 7 figures.
+- **Sampling numbers locked in**: F1 = 1,521 facilities (914 RHU + 607 hospitals, margin 3%, 95% CI, deff 1.5); F3 = 45 outpatient + 30 inpatient per sampling domain (margin 5%, deff 1, OP=3%/IP=2%); F4 = 2,672 households (1,336 UHC IS + 1,336 non-UHC IS, 334 × 8 cells, margin 3%, deff 2.5, PIDS 2025 design — not LFS as Apr 08 claimed).
+- **Private hospital inclusion** formalized via SJREB-acceptance clause with ≤30-day internal-review window (new Apr 20 Section V.D text). Infirmaries excluded.
+- **Contradiction flagged**: IR body says **120 sites (107 UHC IS + 13 non-UHC IS)** per Annexes B/C (authoritative); Annex G remark #21 says **107 + 17 = 124 sites**. Captured as `> [!warning]` callout — operative count is 120; Annex G's 124 appears to be a stale earlier draft. Confirm with ASPSI before downstream use.
+- **CHE methodology** — Apr 20 IR Section V.B explicitly adopts **SDG 3.8.2 Capacity-to-Pay** (denominator = total HH expenditure minus food + housing + utilities). Full 2-approach comparison in Annex A.
+- **Apr 08 → Apr 20 delta table** added to source page: DOCX→PDF, LFS→PIDS, private-hospital inclusion, BUCAS/GAMOT/NBB/ZBB full-scope, explicit CHE methodology, annexes split into 10 companion PDFs.
+- **Deliverables timeline** explicit: Del-1 2025-12-12 (15%), Del-2 2026-07-30 (40%), Del-3 2026-10-30 (25%), Del-4 2026-11-20 (20%); grand total **PHP 59,480,564.56**.
+- **F2 self-admin primary** re-confirmed from Section V.E — matches `feedback_f2_admin_model_self_admin_first` memory; interviewer-style paper text is formality, not a build gate.
+- **`index.md`** — Revised IR entry updated with Apr 20 version note, sample sizes, 18-table/7-figure count, and budget figure.
+- **Next (step 6 of plan):** ingest Annexes B (UHC IS list), C (non-UHC IS list), D (Replacement Protocol), E (Suggested Indicators), H (Informed Consent Forms), I (Dummy Tables), J (ASPSI CVs).
+
+## 2026-04-20 (Apr 20 Del-1 re-ingest — step 4: Annex A)
+
+- **Step 4 of the 6-step Apr 20 re-ingest plan complete.** Created `wiki/sources/Source - Annex A Data to be Collected and Sources.md`.
+- **Annex A structure:** (1) Data-to-sources crosswalk mapping each data concept to Primary (which F-instrument) and Secondary (facility records / PhilHealth DBs / program docs); (2) CHE methodology — two approaches (Budget Share thresholds 10%/25%, Capacity-to-pay thresholds 25%/40%) with three denominator sub-methods for the capacity-to-pay approach, ref Nguyen et al. 2023; (3) F1 Secondary Data template — Patient Load, HR matrix (16 roles × 4 full-time statuses + part-time), YAKAP/Konsulta services availability (14 diagnostics) + diagnostic/consultation/room pricing grids + lab markup.
+- **CAPI implication:** F1 `build_secondary_data_stubs()` currently stubs-only — should be expanded against Annex A Section 3 (14-service × 2-price grid, 16-role × 4-status staffing matrix). Added to the DCF audit follow-up list (informally — not a new generator audit).
+- **Community survey (F4) appears as Primary source in nearly every crosswalk row** — reconfirms the Annex G #6/#13 scope addition.
+- **No new Primary-instrument items land** from Annex A — it's a data-mapping document. Item-level additions still driven by Annex G.
+- **`index.md`** — added Annex A entry under Sources (after Annex G).
+- **Next (step 5 of plan):** ingest the Revised Inception Report Apr 20 PDF (update `Source - Revised Inception Report.md`).
+
+## 2026-04-20 (Apr 20 Del-1 re-ingest — step 3: DCF generator audit)
+
+- **Step 3 of the 6-step Apr 20 re-ingest plan complete.** Produced `wiki/analyses/Analysis - Apr 20 DCF Generator Audit.md` — per-generator audit report identifying specific `build_section_X()` functions and records that need patching against Apr 20 questionnaires.
+- **Baseline captured** (from emitted DCF files): F1 = 11 records / 655 items, F3 = 15 records / 387 items, F4 = 20 records / 460 items (3 repeating: C roster, H PhilHealth, J health-seeking).
+- **F1 audit**: Q32–34 new items in Section C (DOH IS / PhilHealth Dashboard); Section G restructure into 4 subsections (NBB/ZBB/LGU/Referral); Section E label update; risk-flagged Q# renumbering in Section G.
+- **F3 audit**: Q32 4Ps in Section B (+1); Q45 PhilHealth member category value-set expansion in Section D; OOP-outside-facility items Q108–112 in Sections G + H; Section L referral follow-through Q162–178 verification.
+- **F4 audit**: Section F BUCAS expanded awareness → awareness + utilization; Section H add PhilHealth member category (roster ×20); Section J verify no facility-visit gate; Section N WHO expenditures verification; Section P expand Q197–199.
+- **F2 audit**: no DCF (Google Forms track). `F2-Spec.md` + skip-logic + validation need re-audit for Apr 20 body (114 → 125 items). Burnout block Q114–122 flagged as decision gate (Annex G #23). Cover-block rewrite **no longer a build gate** per superseded feedback memory.
+- **Expected deltas**: F1 → ~700–720 items, F3 → ~430–450 items, F4 → ~485–510 items.
+- **Recommended patching order**: F1 first (highest impact + E2-F1-010 in flight), F3 second (mechanical), F4 third (BUCAS expansion), F2 in parallel.
+- **`index.md`** — added Analyses entry for the new audit.
+- **Next (step 4 of plan):** ingest Annex A (Data to be Collected and Sources). Patching work for F1/F3/F4 generators is downstream of this ingest sequence — each generator gets its own dedicated session.
+
+## 2026-04-20 (Apr 20 Del-1 re-ingest — step 2: F1/F2/F3/F4/F3b)
+
+- **Step 2 of the 6-step Apr 20 re-ingest plan complete.** All five questionnaire source pages rewritten to reference the Apr 20 PDFs and document changes driven by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex G DOH Recommendations Matrix|Annex G]] remarks.
+- **F1** (`Source - Annex F1 Facility Head Survey Questionnaire.md`): 37 pp, **166 items** (up from ~126). New Q32–34 on DOH IS / PhilHealth Dashboard submissions + decision-making utilization (Annex G #3). Section E renamed "Awareness on Expanded Health Programs (BUCAS and GAMOT)". Section G expanded into four subsections (NBB Q135–137, ZBB Q138–140, LGU Support Q148–153, Referral Q154–162).
+- **F2** (`Source - Annex F2 Healthcare Worker Survey Questionnaire.md`): **125 items**. Section D renamed with explicit NBB+ZBB naming; Section E renamed "Awareness on Expanded Health Programs (BUCAS and GAMOT)". **Burnout block retained** despite Annex G #23 ("reduce or possibly remove") — candidate for removal pre-build. Cover-block rewrite still outstanding (interviewer-style text preserved in Apr 20 PDF).
+- **F3** (`Source - Annex F3 Patient Survey Questionnaire.md`): **178 items** (up from ~126). Q32 4Ps household beneficiary (Annex G #11); Q45 PhilHealth member category = registration type (Annex G #4); expanded OOP lines Q108–112 for outside-facility medicines/services (Annex G #10); respondent universe inpatient+outpatient (Annex G #15); Section L referral follow-through expanded Q162–178.
+- **F4** (`Source - Annex F4 Household Survey Questionnaire.md`): **202 items** across 17 sections — community survey confirmed (Annex G #6, #13). Section F renamed "BUCAS Awareness **and Utilization**"; Section H added PhilHealth registration type (Annex G #4); Section J household-level health-seeking irrespective of facility visit (Annex G #12); Section N WHO household expenditures module (Annex G #11).
+- **F3b** (renamed: `Source - Patient Listing Form.md` → `Source - Annex F3b Patient Listing Protocol.md`): field-ops protocol (not a form). New CAPI requirement: **random-interval generator (1–10 min) in CSPro listing app**. Covers outpatient + inpatient listing stations, multi-station handling, refusals, inpatient-ward safety rule.
+- **`index.md`** — all F-series entries rewritten with Apr 20 version notes and item counts; Patient Listing entry renamed to F3b.
+- **Next (step 3 of plan):** re-audit F1 `generate_dcf.py` (was 11 records / 655 items), F3 generator (15 records / 387 items), F4 generator (20 records / 460 items incl. 3 repeating), and F2 PWA question tree against the new Apr 20 source pages. Expect net growth on F1 (Section C, E, G), F3 (Section I OOP, B 4Ps, D registration type, L referrals), F4 (Section F, H, J, P).
+
+## 2026-04-20 (Apr 20 Del-1 re-ingest — step 1: Annex G)
+
+- **Started the Apr 20 Deliverable-1 re-ingest per saved plan (`memory/project_apr20_ingest_plan.md`).** 15-file submission landed in `raw/Project-Deliverable-1_Apr20-submitted/`. Step 1 of the 6-step plan complete.
+- **New source page: `wiki/sources/Source - Annex G DOH Recommendations Matrix.md`.** 4-page DOH Recommendations-vs-ASPSI-Response matrix with **23 remarks** from three origins: PMSMD (#1–#4), ADB Consultant Xylee Javier (#5–#18), DOH 11th EXECOM Sep 2024 (#19–#23).
+  - Captured full matrix with per-remark "instruments affected" column.
+  - Added per-instrument (F1/F2/F3/F4) crosswalk summarizing schema/sampling impact for each tool.
+  - Extracted key themes: PuroKalusugan/BUCAS/ZBB drive cross-instrument coverage; community survey is F4's major structural addition (#6, #13); burnout section is contracting (#23, #8); sampling frame is 107 UHC IS + 17 non-UHC = 124 sites (#14, #17, #21).
+  - Flagged data-presentation conventions from #18 (wealth quintiles, Under-5 / 60-over age groups, 3-way insurance, hospital-level facility types) as **analysis-layer**, not CAPI-schema concerns.
+- **`index.md`** — added Annex G entry under Sources.
+- **Next (step 2 of plan):** ingest F1/F2/F3/F4/F3b Apr 20 questionnaires against existing source pages; catalogue item-level changes driven by Annex G remarks.
+
+## 2026-04-20 (PIB correction — PSGC status shift)
+
+- **PSGC request has been sent to ASPSI; Carl is now in inbound-wait state, not action-pending.** Updated PIB, PSGC memory, and MEMORY.md index to reflect.
+  - **PIB Apr 20 addendum callout** — last bullet rewritten: "requested from ASPSI — waiting on delivery as of 2026-04-20. Not a Carl action item anymore; now an external inbound dependency."
+  - **PIB Critical Blocker #5** — rewritten: "PSGC value sets — requested, waiting on ASPSI delivery. No Carl action pending — inbound wait only."
+  - **PIB Carl's Next Steps** — removed PSGC-request as step #1; shifted remaining items up (new #1 is F2 PWA M1, new #2 is F1 CAPI start, etc.). Added an "Inbound waits (not Carl action items)" subsection listing PSGC as pending delivery.
+  - **Memory `project_aspsi_psgc_value_sets.md`** — description and body updated with explicit "REQUESTED — waiting on ASPSI staff to deliver" status line.
+  - **MEMORY.md index** — PSGC entry reworded to reflect the inbound-wait status.
+
+## 2026-04-20 (PIB correction — LSS framing + comms-lane discipline)
+
+- **PIB correction — LSS references stripped.** Carl flagged that my Apr 20 PIB update re-introduced LSS framing that was closed on 2026-04-17 (see memory: `feedback_lss_closed.md`). Fixes applied to `wiki/analyses/Analysis - Project Intelligence Brief.md`:
+  - **Addendum Apr 20 callout** — last bullet rewritten: removed "technical LSS session still unrequested"; kept PSGC; added explicit note that LSS topic is closed and the 6 `PENDING_DESIGN_*` defaults stand as final.
+  - **Critical Blockers** — removed the "E2-F1-009b reopened / BLOCKED" item; renumbered PSGC blocker from #6 → #5. Added a closing "LSS topic — closed" callout under the list to prevent re-drift.
+  - **Recommended positioning bullet 1** — `PENDING_LSS_*` → `PENDING_DESIGN_*`; reframed as "CAPI can start against the full dictionary — the 6 defaults are final" instead of "start on the non-`PENDING_LSS_*` portion".
+  - **Tranche 2 Assessment checklist** — F1 dictionary row: `PENDING_LSS_*` → `PENDING_DESIGN_*`; status line now says "E2-F1-009b closed Apr 17". F1 CAPI row: "unblocked for non-`PENDING_LSS_*` portion" → "dictionary complete — 6 `PENDING_DESIGN_*` defaults are final".
+  - **Carl's Next Steps** — removed step #1 ("request a technical LSS session"); shifted items 2–8 up to 1–7. New #1 is PSGC request (still genuinely open).
+- **New feedback memory — `feedback_comms_lane_discipline.md`.** Carl challenged "check with Juvy/Dr. Claro whether the tools shipped" as scope creep outside his comms lane. Saved rule: don't recommend Carl chase ASPSI↔DOH logistics; note them as project-level observations instead. MEMORY.md index updated.
+
+## 2026-04-20 (PIB update — D1 resubmission + PMSMD receipt)
+
+- **Gmail sweep (newer_than:2d).** Pulled the `DOH UHC Survey Yr2_ASPSI Del 1_Inception Report` thread in full. Two messages:
+  - **Apr 20 06:39Z** — Juvy (cjrocamora) submitted the updated Inception Report to pmsmd/ldvillarante/cmpaita with the full team cc'd. Hard copy + USB delivered same day. Scope: IR only.
+  - **Apr 20 07:47Z** — Chrys Paita (PMSMD) acknowledged receipt of soft + hard copies ~1 hour after submission. **Procedural receipt, not formal acceptance.** T1 acceptance letter still pending.
+  - Also swept recent threads: Apr 17 PMSMD returned F1/F2/F3 tools to ASPSI via Drive link for revision; Apr 18 Kidd circulated tools internally; Apr 18 Merlyne reviewed F1 (balloons); Apr 19 Esmeralda ("Myra") cleared F2/F3 typos ("good to go"). No DOH-facing resubmission of the revised tools visible in the thread yet — internally cleared but not re-shipped to DOH as of today's IR-only submission.
+- **PIB update (`wiki/analyses/Analysis - Project Intelligence Brief.md`).** `last_updated` bumped Apr 16 → Apr 20. Edits:
+  - **New addendum callout** (Apr 20) pinned at the top of the addendum block — summarizes D1 resubmission + same-day PMSMD receipt, scope limitation (IR only, tools still in ASPSI's court), T2 deadline now 4 days out, blocker list unchanged.
+  - **Timeline of Key Events** — added 6 new rows: Apr 17 DOH tools kickback, Apr 18 internal circulation + Merlyne F1 review, Apr 19 Myra F2/F3 typo clear, Apr 20 06:39Z IR resubmission, Apr 20 07:47Z PMSMD receipt, Apr 20 "4 days to T2 deadline" status row. Previous "Apr 16 — TODAY" row retained as historical.
+  - **Critical Blockers** — header "as of 2026-04-16" → "as of 2026-04-20". Blocker #1 rewritten to reflect today's receipt ("procedural receipt, not acceptance"). New blocker #2 inserted: F1/F2/F3 tools revision still in ASPSI's court. Re-numbered existing SJREB / T2-deadline / LSS / PSGC blockers to #3–#6. T2 window updated "8 days" → "4 days".
+  - **ASPSI↔DOH tranche table** — Status column header "Apr 16" → "Apr 20". T1 cell extended with Apr 17 kickback + Apr 20 resubmission + PMSMD same-day receipt. T2 cell updated "8 days out" → "4 days out"; F3/F4 DCF status "not started" → "built Apr 16"; F2 M0 shipped Apr 17.
+  - **Carl's tranche table** — Status column header "Apr 16" → "Apr 20". C-T1 cell extended with Apr 17 + Apr 20 events. C-T2 cell rewritten: F3/F4 dictionaries now built; F2 PWA M0 shipped + M1 in progress.
+  - **"What this means as of Apr 16" compensation callout** — header → "Apr 20". Day count 125 → 129. C-T2 risk line updated "8 days out" → "4 days out"; added "Today's IR-only submission + receipt does not unblock this in the remaining window."
+  - **Timeline Slippage Analysis** — IR row updated to note Apr 20 resubmission; T1 acceptance row updated to "Still pending (Apr 20); D1 received by PMSMD Apr 20; acceptance letter not yet issued".
+  - **Tranche 2 Assessment block** — "8 days from today (2026-04-16)" → "4 days from today (2026-04-20)". Checklist status column "Apr 16" → "Apr 20". F3 row: not started → DONE (15 records / 387 items). F4 row: not started → DONE (20 records / 460 items, 3 repeating). F2 Google Forms build row: "Epic 3 F2-GF track active..." → "PWA M0 shipped Apr 17; M1 generator v1 + single-section render in progress". CAPI F3/F4 rows: "Not started" → "Not started; dictionary now in place".
+  - **Risk Assessment** — "8 days out" → "4 days out"; added paragraph flagging F1/F2/F3 tools revision round as open risk (internally cleared but not DOH-facing resubmitted).
+  - **Carl's Next Steps** — header "(Priority Order)" → "(Priority Order, as of 2026-04-20)". #1 LSS session request + #2 PSGC request annotated as "still unfulfilled from the Apr 16 priority list". #3 F2 Google Forms track rewritten ("continue PWA M1 (generator v1...)"). #5 rewritten: was "Build F3 + F4 data dictionaries" (now done); is "Start F3 + F4 CAPI applications".
+- **Body sections preserved unchanged**: Carl's Contract table, Scope Changes (Chronological), Stakeholder Dynamics, Google Drive Links, Carl's Position and How to Help bullets, Alignment Check table, Scope Changes Affecting Carl's Work table, Additional Threads Discovered, Sources.
+
 ## 2026-04-17 (Sprint 001 closed, F2 PWA M0 shipped)
 
 - **Sprint 001 closed.** `scrum/sprint-current.md` frontmatter flipped `status::active` → `status::closed`; file archived to `scrum/sprints/sprint-001.md`. Sprint-current.md reset for Sprint 002 (2026-04-20 → 2026-04-24, `status::planning`) with carry-forward items, three candidate focus areas, and TBD sprint goal for Monday AM planning.

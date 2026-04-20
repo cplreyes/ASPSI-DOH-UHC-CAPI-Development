@@ -1,41 +1,56 @@
 ---
 type: source-summary
-source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Project Deliverable 1/Annex F2_Healthcare Worker Survey Questionnaire_UHC Year 2_April 08.pdf]]"
-date_ingested: 2026-04-09
-last_updated: 2026-04-15
-tags: [questionnaire, healthcare-worker, f2, survey-instrument]
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Project-Deliverable-1_Apr20-submitted/Annex F2_Healthcare Worker Survey Questionnaire_UHC Year 2.pdf]]"
+date_ingested: 2026-04-20
+last_updated: 2026-04-20
+tags: [questionnaire, healthcare-worker, f2, survey-instrument, ingest-batch-apr20]
 ---
 
 # Source — Annex F2: Healthcare Worker Survey Questionnaire
 
-Healthcare Worker Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], 14 pages. Self-administered by the HCW within a **3-day window** via the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]] (primary) or paper → encoded back into the same Form by ASPSI staff (fallback).
+Healthcare Worker Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], **125 numbered items** (last is Q125; earlier grids reuse sub-item numbering).
 
-> [!warning] Contradiction — cover blocks authored interviewer-style
-> The April 8 PDF contradicts the Revised Inception Report's self-admin framing. The consent form instructs the reader to *"read this entire consent form aloud exactly as written"*, narrative frames the instrument as a 1.5-hour interview, and the `FIELD CONTROL` block is labeled *"to be filled in by the Enumerator"* with Survey Team Leader / Enumerator / Field Validated by / dispositions — all enumerator-administered conventions.
->
-> **Resolution (2026-04-15, per Carl):** The PDF is mislabeled/stale. ASPSI used the interviewer template and never rewrote the cover blocks for self-admin. Carl drafted the rewrite (`deliverables/F2/F2-Cover-Block-Rewrite-Draft.md`) for Dr. Claro's review; build work proceeds on the questionnaire body (Sections A–J) in parallel so the rewrite doesn't gate spec extraction. See also `memory/project_f2_questionnaire_rewrite_needed.md`.
+**Field-work administration model:**
+- **Primary: self-administered** by the HCW within a **3-day window** via the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]].
+- **Fallback: guided / interviewer-administered** only if the respondent needs assistance (e.g., low digital literacy, connectivity issues). In those cases enumerator walks the HCW through the same Form; paper → Form encoding also remains available as a low-connectivity path.
+
+The Apr 20 PDF's interviewer-style cover blocks are a **formality of the paper template** ASPSI carried over; they do not reflect the field-work administration model, which is self-admin-first. Treat field-work rules as authoritative over the PDF cover-block text when the two disagree.
+
+**Version:** Apr 20 2026 Revised Inception Report submission (+39 KB vs Apr 08). Supersedes Apr 08 baseline.
 
 ## Structure
 
 | Section | Topic | Key Data Collected |
 |---|---|---|
-| **A. Healthcare Worker Profile** | Respondent demographics | Personal info, profession, employment status, tenure |
-| **B. UHC Awareness** | UHC knowledge | Awareness of UHC Act, understanding of key provisions |
+| **A. Healthcare Worker Profile** | Respondent demographics | Name, employment type, sex, age, role, specialty, public/private practice split, tenure |
+| **B. Universal Health Care (UHC) Awareness** | UHC knowledge | Awareness of UHC Act, IRR, key provisions |
 | **C. YAKAP/Konsulta Package** | PhilHealth program knowledge | Awareness and understanding of YAKAP/Konsulta benefits |
-| **D. NBB and ZBB Awareness** | Billing program knowledge | No Balance Billing and Zero Balance Billing awareness |
-| **E. Expanded Health Programs** | BUCAS and GAMOT | Awareness of expanded programs |
-| **F. Referrals and Satisfaction** | Referral system | Outbound/inbound referral experiences, satisfaction |
-| **G. KAP on Professional Setting** | Charging and reimbursement | Knowledge, attitudes, practices on professional fees and PhilHealth reimbursement |
+| **D. Awareness on No Balance Billing (NBB) and Zero Balance Billing (ZBB)** | Billing program knowledge | NBB + ZBB awareness (Annex G #1, #19) |
+| **E. Awareness on Expanded Health Programs (BUCAS and GAMOT)** | BUCAS + GAMOT | Awareness of expanded programs (Annex G #1) |
+| **F. Outbound & Inbound Referrals and Satisfaction** | Referral system | Outbound/inbound referral experiences, satisfaction |
+| **G. KAP on Professional Setting, Charging, and Reimbursement** | Charging and reimbursement | Knowledge, attitudes, practices on professional fees and PhilHealth reimbursement |
 | **H. Task Sharing** | Workload distribution | Task sharing practices, willingness, barriers |
 | **I. Facility Support** | Institutional support | Equipment, supplies, infrastructure support received |
-| **J. Job Satisfaction** | Worker satisfaction | Compensation, professional development, working conditions |
+| **J. Job Satisfaction** | Worker satisfaction + burnout | Compensation, prof development, working conditions, burnout scale (Q114–122), retention intent (Q123–125) |
 
 ## Skip Logic Notes
 
-- Pharmacist/assistant pharmacist respondents have special routing (e.g., skip to Section E2 or Section F).
-- Multiple "select all that apply" questions throughout.
+- Q7 Yes/No gates Q8 (public-facility respondents only: public/private time-split); No → skip to Q9
+- Pharmacist/assistant pharmacist respondents have special routing through Section E
+- Q114 "Never" on overtime → skip Q122
+- Q123 "No" on leaving facility → end of survey (skips Q124, Q125)
+- Multiple "select all that apply" questions throughout
 
-## Build Decision (2026-04-15)
+## Changes from Apr 08 baseline
+
+Driven by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex G DOH Recommendations Matrix|Annex G remarks]]:
+
+- **Section D renamed + expanded**: "NBB and ZBB Awareness" → "Awareness on No Balance Billing (NBB) and Zero Balance Billing (ZBB)" with explicit item coverage for both programs (Annex G #1, #7, #19).
+- **Section E renamed**: "Expanded Health Programs" → "Awareness on Expanded Health Programs (BUCAS and GAMOT)" — explicit naming of the two programmes (Annex G #1).
+- **Burnout block retained** (Q114–122): Despite Annex G #23 suggesting burnout emphasis be "reduced or possibly removed altogether", the Apr 20 version **still carries the burnout scale items**. Candidates for removal before CAPI build if Dr. Claro confirms. Retention/leaving items Q123–125 remain.
+- **Satisfaction items** (Section J): Annex G #8 + #16 suggest dropping some HCW satisfaction questions — net effect in Apr 20 appears to be **reorganization not deletion**. Item count is flat-to-slight-growth at 125 items.
+
+## Build Decision (unchanged from 2026-04-15)
 
 F2 is officially a **special case** with three capture paths — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]]:
 
@@ -43,20 +58,28 @@ F2 is officially a **special case** with three capture paths — see [[1_Project
 2. **Paper → Forms encoding (fallback)** — HCW fills paper in low-connectivity areas; ASPSI staff encodes responses back into the same Form via a staff-encoder variant with `response_source=staff_encoded`.
 3. **CSPro CAPI track (deferred)** — optional late build, scheduled as the tail of Epic 3 after F1/F3/F4 CSPro builds, activated only if F2 Google Forms testing surfaces a need. Existing `E3-F2-CSPro-*` tasks carry `status::deferred`.
 
-F1 sign-off is **not** a hard gate for starting F2 — the Google Forms path doesn't reuse F1 CSPro patterns, so the two tracks run in parallel. Shortest of the four instruments (14 pages).
+F1 sign-off is **not** a hard gate for starting F2. Shortest of the four instruments.
 
 ## Downstream artifacts
 
 - `deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md` — 8 decisions for ASPSI review
 - `deliverables/F2/F2-Cover-Block-Rewrite-Draft.md` — rewrite text for the interviewer→self-admin cover-block fix
-- `deliverables/F2/F2-Spec.md` — 114-item verbatim body spec
-- `deliverables/F2/F2-Skip-Logic.md` — Google-Forms-restructured routing graph
+- `deliverables/F2/F2-Spec.md` — **needs re-audit against Apr 20 body**; previous 114-item spec was against Apr 08
+- `deliverables/F2/F2-Skip-Logic.md` — Google-Forms-restructured routing graph (re-audit needed)
 - `deliverables/F2/F2-Validation.md` — required-flag + numeric-range inventory
 - `deliverables/F2/F2-Cross-Field.md` — 20 POST rules for `onFormSubmit`
 - `deliverables/F2/F2-Build-Handoff.md` — Build / Seed / Test recipe for Carl + Shan
 - `deliverables/F2/apps-script/` — Apps Script bundle (Code / Spec / FormBuilder / OnSubmit / Reminders / Links / Routing)
 
+## Cross-references
+
+- Change-rationale map: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex G DOH Recommendations Matrix|Annex G DOH Recommendations Matrix]]
+- Sibling instruments: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire|F1]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3 Patient Survey Questionnaire|F3]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F4 Household Survey Questionnaire|F4]]
+- Track concept: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]]
+
 ## Sources
 
-- Part of Deliverable 1 submitted to [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/DOH-PMSMD|DOH-PMSMD]]
+- Part of [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Revised Inception Report|Revised Inception Report]] Apr 20 submission to [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/DOH-PMSMD|DOH-PMSMD]]
 - Developed by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASPSI|ASPSI]] consultant team
+- Raw file: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Project-Deliverable-1_Apr20-submitted/Annex F2_Healthcare Worker Survey Questionnaire_UHC Year 2.pdf|F2 Apr 20 PDF]]
+- Apr 08 baseline preserved at: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Project-Deliverable-1/Annex F2_Healthcare Worker Survey Questionnaire_UHC Year 2_April 08.pdf|F2 Apr 08 PDF]]

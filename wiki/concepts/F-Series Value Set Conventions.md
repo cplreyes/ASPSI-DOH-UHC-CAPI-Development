@@ -8,7 +8,7 @@ source_count: 0
 
 Coding conventions that apply across the F-series CSPro dictionaries (F1 Facility Head, F2/F3/F4 when built). These are project-internal decisions, not CSPro mandates — they exist to keep coding consistent across instruments and to give analysts a predictable codebook.
 
-Decided during the [[E2-F1-010]] Designer walkthrough on 2026-04-14 (see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/log]] entry for that date).
+Decided during the `E2-F1-010` Designer walkthrough on 2026-04-14 (see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/log]] entry for that date).
 
 ## "Not Applicable" coding
 
@@ -72,4 +72,4 @@ The convention lives in two places:
 
 - [[CSPro Data Dictionary]] — overall DCF schema and value-set mechanics
 - [[CSPro Capture Types]] — single-response vs multi-mark idioms
-- [[E2-F1-010]] — sprint task where these conventions were ratified
+- `E2-F1-010` — sprint task where these conventions were ratified
