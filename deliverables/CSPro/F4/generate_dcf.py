@@ -32,83 +32,264 @@ def build_f4_field_control():
 
 
 # ============================================================
-# GEO ID — household mode
+# GEO ID — household mode + GPS
 # ============================================================
 
 def build_f4_geo_id():
-    return build_geo_id(mode="household")
+    # Apr 20 source adds GPS lat/lon under "HOUSEHOLD ADDRESS AND GEOGRAPHIC
+    # IDENTIFICATION". PSGC remains at helper defaults (length 2/3/4/4, no
+    # value sets) until Chunk 8 wires them from F1/inputs/ PSA 1Q 2026 CSVs.
+    extra = [
+        alpha("LATITUDE",  "GPS Latitude",  length=12),
+        alpha("LONGITUDE", "GPS Longitude", length=12),
+    ]
+    return build_geo_id(mode="household", extra_items=extra)
 
 
 # ============================================================
-# Section A. Informed Consent (Q1)
+# Section A. Introduction and Informed Consent (Q1) — Apr 20
 # ============================================================
 
 def build_section_a():
     items = [
-        yes_no("Q1_CONSENT", "1. Do you voluntarily agree to participate in this survey?"),
+        yes_no("Q1_IS_HH_HEAD",
+               "1. Before we begin, to confirm, are you the household head?"),
     ]
-    return record("A_INFORMED_CONSENT", "A. Informed Consent", "C", items)
+    return record("A_INFORMED_CONSENT",
+                  "A. Introduction and Informed Consent", "C", items)
 
 
 # ============================================================
-# Section B. Respondent Profile (Q2-Q29)
+# Section B. Respondent Profile (Q2-Q29) — Apr 20
 # ============================================================
+# Source PDF prints Q18 (income bracket) visually out of order (after Q23).
+# The DCF emits in strictly ascending Q-number order for deterministic output
+# and cleaner CSPro PROC routing; this is a source-layout artifact, not a
+# skip-logic signal.
 
 def build_section_b():
-    Q5_CIVIL_STATUS = [
-        ("Single",    "1"),
-        ("Married",   "2"),
-        ("Widowed",   "3"),
-        ("Separated", "4"),
-        ("Divorced",  "5"),
+    Q3_SEX = [
+        ("Male",   "1"),
+        ("Female", "2"),
     ]
-    Q6_EDUCATION = [
-        ("No formal education",      "01"),
-        ("Elementary (incomplete)",   "02"),
-        ("Elementary (complete)",     "03"),
-        ("High School (incomplete)",  "04"),
-        ("High School (complete)",    "05"),
-        ("Vocational / Technical",    "06"),
-        ("College (incomplete)",      "07"),
-        ("College (complete)",        "08"),
-        ("Post-graduate",             "09"),
-        ("I don't know",              "99"),
+    Q4_LGBTQIA = [
+        ("Yes",                        "1"),
+        ("No",                         "2"),
+        ("Not Comfortable to Answer",  "3"),
+        ("Don't Know",                 "4"),
+        ("Refused to answer",          "5"),
     ]
-    Q7_EMPLOYMENT = [
-        ("Employed (full-time)",  "1"),
-        ("Employed (part-time)",  "2"),
-        ("Self-employed",         "3"),
-        ("Unemployed",            "4"),
-        ("Retired",               "5"),
-        ("Student",               "6"),
-        ("Homemaker",             "7"),
-        ("Other (specify)",       "8"),
+    Q5_GROUP = [
+        ("Lesbian",          "1"),
+        ("Gay",              "2"),
+        ("Bisexual",         "3"),
+        ("Transgender",      "4"),
+        ("Queer",            "5"),
+        ("Intersex",         "6"),
+        ("Asexual",          "7"),
+        ("Other (specify)",  "8"),
     ]
-    Q9_INCOME = [
-        ("Below PHP 10,957 (poor)",              "1"),
-        ("PHP 10,957 - PHP 21,914 (low income)", "2"),
-        ("PHP 21,914 - PHP 43,828 (lower middle)","3"),
-        ("PHP 43,828 - PHP 76,669 (middle)",      "4"),
-        ("PHP 76,669 - PHP 131,484 (upper middle)","5"),
-        ("PHP 131,484 - PHP 219,140 (upper income)","6"),
-        ("Above PHP 219,140 (rich)",               "7"),
-        ("Refused to answer",                      "8"),
-        ("I don't know",                           "9"),
+    Q6_CIVIL_STATUS = [
+        ("Single / Never Married",   "1"),
+        ("Married",                  "2"),
+        ("Common law / Live-in",     "3"),
+        ("Widowed",                  "4"),
+        ("Divorced",                 "5"),
+        ("Separated",                "6"),
+        ("Annulled",                 "7"),
+        ("Not reported",             "8"),
+    ]
+    Q9_PWD_CARD = [
+        ("Yes (card was presented and verified)",             "1"),
+        ("No (card not available at the time of interview)",  "2"),
+        ("Respondent refused to present card",                "3"),
+    ]
+    Q10_DISABILITY_TYPE = [
+        ("Physical disability (Orthopedic)", "1"),
+        ("Visual disability",                "2"),
+        ("Hearing disability",               "3"),
+        ("Speech impairment",                "4"),
+        ("Intellectual disability",          "5"),
+        ("Psychosocial disability",          "6"),
+        ("Multiple disabilities",            "7"),
+        ("Other disability (specify)",       "8"),
+    ]
+    Q11_EDUCATION = [
+        ("Early Childhood Education (Pre-school)",                                                                              "01"),
+        ("Primary Education (Grade 1 to 6)",                                                                                    "02"),
+        ("Lower Secondary Education (Grade 7 to 10)",                                                                           "03"),
+        ("Upper Secondary Education (Grade 11 to 12)",                                                                          "04"),
+        ("Post-Secondary Non-Tertiary Education (including Technical and Vocational degrees with a certificate)",               "05"),
+        ("Short-Cycle Tertiary Education or Equivalent (including Technical and Vocational degrees with a diploma)",            "06"),
+        ("Bachelor Level Education or Equivalent",                                                                              "07"),
+        ("Master Level Education or Equivalent",                                                                                "08"),
+        ("Doctoral Level Education or Equivalent",                                                                              "09"),
+        ("No schooling",                                                                                                        "10"),
+        ("Other (specify)",                                                                                                     "11"),
+        ("I don't know",                                                                                                        "98"),
+        ("Not applicable",                                                                                                      "99"),
+    ]
+    Q12_EMPLOYMENT = [
+        ("Has a permanent job/ own business",                  "1"),
+        ("Has a short-term, seasonal, casual job/business",    "2"),
+        ("Worked on different jobs day to day per week",       "3"),
+        ("Unemployed and looking for work",                    "4"),
+        ("Unemployed and not looking for work",                "5"),
+        ("Retired",                                            "6"),
+        ("I don't know",                                       "7"),
+        ("Not applicable",                                     "9"),
+    ]
+    Q13_INCOME_SOURCE = [
+        ("Working for private company",                        "01"),
+        ("Working for private household",                      "02"),
+        ("Working for government",                             "03"),
+        ("Worked with pay in own family business or farm",     "04"),
+        ("Self-employed without any paid employee",            "05"),
+        ("Employer in own family business",                    "06"),
+        ("Worked without pay in own family business or farm",  "07"),
+        ("Pension",                                            "08"),
+        ("Unemployed and looking for work",                    "09"),
+        ("Unemployed and not looking for work",                "10"),
+        ("I don't know",                                       "99"),
+    ]
+    Q17_DECISION_MAKER = [
+        ("Me (respondent)",                "01"),
+        ("My father",                      "02"),
+        ("My mother",                      "03"),
+        ("My parents",                     "04"),
+        ("My spouse/partner",              "05"),
+        ("My spouse/partner and I",        "06"),
+        ("My sibling",                     "07"),
+        ("My grandfather",                 "08"),
+        ("My grandmother",                 "09"),
+        ("My uncle",                       "10"),
+        ("My aunt",                        "11"),
+        ("Other (specify)",                "12"),
+    ]
+    Q18_BRACKET = [
+        ("Under 40,000",      "1"),
+        ("40,000 - 59,999",   "2"),
+        ("60,000 - 99,999",   "3"),
+        ("100,000 - 249,999", "4"),
+        ("250,000 - 499,999", "5"),
+        ("500,000 and over",  "6"),
+        ("Refuse to answer",  "7"),
+    ]
+    Q23_WATER = [
+        ("Faucet inside the house", "1"),
+        ("Tubed/piped well",        "2"),
+        ("Dug well",                "3"),
+        ("Other (specify)",         "4"),
+    ]
+    Q24_OWN_SHARE = [
+        ("I/we have our own",             "1"),
+        ("I/we share with our community", "2"),
+    ]
+    Q26_HAVE = [
+        ("Yes, I/ we have",     "1"),
+        ("No, I/we don't have", "2"),
+    ]
+    Q29_SEC = [
+        ("Class A or B (working professionals or with a business with several assets)",                            "1"),
+        ("Class C (working professionals with permanent or semi-permanent income and some assets)",                "2"),
+        ("Class D or E (semi-permanent workers or informal sector workers with little to no assets)",              "3"),
+        ("I don't know",                                                                                            "4"),
     ]
     items = [
-        alpha("Q2_NAME", "2. What is the name of the respondent? (Last Name, First Name, MI)", length=80),
-        numeric("Q3_AGE", "3. How old are you (in years), as of your last birthday?", length=3),
-        numeric("Q4_SEX", "4. What is your sex assigned at birth?", length=1,
-                value_set_options=[("Male", "1"), ("Female", "2")]),
-        select_one("Q5_CIVIL_STATUS", "5. What is your civil status?", Q5_CIVIL_STATUS, length=1),
-        select_one("Q6_EDUCATION", "6. What is your highest educational attainment?", Q6_EDUCATION, length=2),
-        select_one("Q7_EMPLOYMENT", "7. What is your current employment status?", Q7_EMPLOYMENT, length=1),
-        alpha("Q7_OTHER_TXT", "7. Employment — Other (specify) text", length=120),
-        numeric("Q8_HH_SIZE", "8. How many members are there in your household?", length=2),
-        select_one("Q9_INCOME", "9. Estimated average monthly household income", Q9_INCOME, length=1),
-        yes_no_dk("Q10_INDIGENOUS", "10. Do you identify as a member of an indigenous group?"),
-        alpha("Q10_INDIGENOUS_TXT", "10a. Name of indigenous group", length=80),
-        yes_no("Q11_PWD", "11. Are you a person with disability (PWD)?"),
+        alpha("RESPONDENT_NAME",
+              "Name: (Last Name, First Name, MI, Extension)", length=120),
+        numeric("Q2_BIRTH_MONTH",
+                "2. In what month were you born?", length=2),
+        numeric("Q2_BIRTH_YEAR",
+                "2. In what year were you born?", length=4),
+        numeric("Q2_1_AGE",
+                "2.1 Just to confirm, how old are you as of your last birthday (in years)?",
+                length=3),
+        select_one("Q3_SEX", "3. What is your sex at birth?", Q3_SEX, length=1),
+        select_one("Q4_LGBTQIA",
+                   "4. Are you part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.). It is fine if you are not comfortable answering.",
+                   Q4_LGBTQIA, length=1),
+        select_one("Q5_GROUP",
+                   "5. Which group do you identify with? It is fine if you are not comfortable answering.",
+                   Q5_GROUP, length=1),
+        alpha("Q5_GROUP_OTHER_TXT",
+              "5. Group — Other (specify) text", length=120),
+        select_one("Q6_CIVIL_STATUS",
+                   "6. What is your civil status?", Q6_CIVIL_STATUS, length=1),
+        yes_no("Q7_IS_PWD",
+               "7. Do you identify as a person with a disability?"),
+        yes_no("Q8_SPECIFY_DISABILITY",
+               "8. Would you like to specify the type of disability?"),
+        select_one("Q9_PWD_CARD",
+                   "9. May we view your PWD Identification Card?",
+                   Q9_PWD_CARD, length=1),
+        select_one("Q10_DISABILITY_TYPE",
+                   "10. Based on the presented PWD Identification Card, what type of disability is indicated?",
+                   Q10_DISABILITY_TYPE, length=1),
+        alpha("Q10_DISABILITY_OTHER_TXT",
+              "10. Disability — Other (specify) text", length=120),
+        select_one("Q11_EDUCATION",
+                   "11. What is the highest level of education you have attained?",
+                   Q11_EDUCATION, length=2),
+        alpha("Q11_EDUCATION_OTHER_TXT",
+              "11. Education — Other (specify) text", length=120),
+        select_one("Q12_EMPLOYMENT",
+                   "12. What is your employment status?",
+                   Q12_EMPLOYMENT, length=1),
+        select_one("Q13_INCOME_SOURCE",
+                   "13. What is your main source of income?",
+                   Q13_INCOME_SOURCE, length=2),
+        yes_no("Q14_IP_MEMBER",
+               "14. Are you a member of Indigenous People (IP) community, like the Igorot, Lumad, Mangyans, etc.?"),
+        alpha("Q15_IP_GROUP",
+              "15. If yes, which group?", length=120),
+        yes_no("Q16_4PS",
+               "16. Is your household a beneficiary of the Pantawid Pamilyang Pilipino Program (4Ps)?"),
+        select_one("Q17_DECISION_MAKER",
+                   "17. Who takes the most responsibility for making the decisions regarding healthcare in your household?",
+                   Q17_DECISION_MAKER, length=2),
+        alpha("Q17_DECISION_MAKER_OTHER_TXT",
+              "17. Decision-maker — Other (specify) text", length=120),
+        numeric("Q18_INCOME_AMOUNT",
+                "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos).",
+                length=9),
+        select_one("Q18_INCOME_BRACKET",
+                   "18. Income bracket — tick the category that corresponds to the approximate household income.",
+                   Q18_BRACKET, length=1),
+        numeric("Q19_HH_SIZE_TOTAL",
+                "19. How many total individuals (including children) live in your house now?",
+                length=3),
+        numeric("Q20_HH_CHILDREN",
+                "20. How many non-working age children (i.e., below the age of 18) live in your house now?",
+                length=3),
+        numeric("Q21_HH_SENIORS",
+                "21. How many senior citizens live in your house now?",
+                length=3),
+        yes_no("Q22_ELECTRICITY",
+               "22. Do you have electricity in your household?"),
+        select_one("Q23_WATER_SOURCE",
+                   "23. What is the family's main source of water supply for daily use?",
+                   Q23_WATER, length=1),
+        alpha("Q23_WATER_OTHER_TXT",
+              "23. Water — Other (specify) text", length=120),
+        select_one("Q24_FAUCET_SHARE",
+                   "24. Do you have your own faucet, or do you share with your community?",
+                   Q24_OWN_SHARE, length=1),
+        select_one("Q25_TUBE_SHARE",
+                   "25. Do you have your own tube/pipe, or do you share with your community?",
+                   Q24_OWN_SHARE, length=1),
+        select_one("Q26_REFRIGERATOR",
+                   "26. Does the family own a refrigerator/freezer?",
+                   Q26_HAVE, length=1),
+        select_one("Q27_TELEVISION",
+                   "27. Does the family own a television set?",
+                   Q26_HAVE, length=1),
+        select_one("Q28_WASHING_MACHINE",
+                   "28. Does the family own a washing machine?",
+                   Q26_HAVE, length=1),
+        select_one("Q29_SOCIOECONOMIC_CLASS",
+                   "29. How would the socioeconomic class of your household be classified?",
+                   Q29_SEC, length=1),
     ]
     return record("B_RESPONDENT_PROFILE", "B. Respondent Profile", "D", items)
 

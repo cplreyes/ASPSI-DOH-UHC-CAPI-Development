@@ -458,6 +458,26 @@
               ],
               "contentType": "alpha",
               "length": 200
+            },
+            {
+              "name": "LATITUDE",
+              "labels": [
+                {
+                  "text": "GPS Latitude"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 12
+            },
+            {
+              "name": "LONGITUDE",
+              "labels": [
+                {
+                  "text": "GPS Longitude"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 12
             }
           ]
         },
@@ -465,7 +485,7 @@
           "name": "A_INFORMED_CONSENT",
           "labels": [
             {
-              "text": "A. Informed Consent"
+              "text": "A. Introduction and Informed Consent"
             }
           ],
           "recordType": "C",
@@ -475,10 +495,10 @@
           },
           "items": [
             {
-              "name": "Q1_CONSENT",
+              "name": "Q1_IS_HH_HEAD",
               "labels": [
                 {
-                  "text": "1. Do you voluntarily agree to participate in this survey?"
+                  "text": "1. Before we begin, to confirm, are you the household head?"
                 }
               ],
               "contentType": "numeric",
@@ -486,10 +506,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q1_CONSENT_VS1",
+                  "name": "Q1_IS_HH_HEAD_VS1",
                   "labels": [
                     {
-                      "text": "1. Do you voluntarily agree to participate in this survey?"
+                      "text": "1. Before we begin, to confirm, are you the household head?"
                     }
                   ],
                   "values": [
@@ -537,20 +557,42 @@
           },
           "items": [
             {
-              "name": "Q2_NAME",
+              "name": "RESPONDENT_NAME",
               "labels": [
                 {
-                  "text": "2. What is the name of the respondent? (Last Name, First Name, MI)"
+                  "text": "Name: (Last Name, First Name, MI, Extension)"
                 }
               ],
               "contentType": "alpha",
-              "length": 80
+              "length": 120
             },
             {
-              "name": "Q3_AGE",
+              "name": "Q2_BIRTH_MONTH",
               "labels": [
                 {
-                  "text": "3. How old are you (in years), as of your last birthday?"
+                  "text": "2. In what month were you born?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "Q2_BIRTH_YEAR",
+              "labels": [
+                {
+                  "text": "2. In what year were you born?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": false
+            },
+            {
+              "name": "Q2_1_AGE",
+              "labels": [
+                {
+                  "text": "2.1 Just to confirm, how old are you as of your last birthday (in years)?"
                 }
               ],
               "contentType": "numeric",
@@ -558,10 +600,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q4_SEX",
+              "name": "Q3_SEX",
               "labels": [
                 {
-                  "text": "4. What is your sex assigned at birth?"
+                  "text": "3. What is your sex at birth?"
                 }
               ],
               "contentType": "numeric",
@@ -569,10 +611,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q4_SEX_VS1",
+                  "name": "Q3_SEX_VS1",
                   "labels": [
                     {
-                      "text": "4. What is your sex assigned at birth?"
+                      "text": "3. What is your sex at birth?"
                     }
                   ],
                   "values": [
@@ -605,10 +647,10 @@
               ]
             },
             {
-              "name": "Q5_CIVIL_STATUS",
+              "name": "Q4_LGBTQIA",
               "labels": [
                 {
-                  "text": "5. What is your civil status?"
+                  "text": "4. Are you part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.). It is fine if you are not comfortable answering."
                 }
               ],
               "contentType": "numeric",
@@ -616,17 +658,17 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q5_CIVIL_STATUS_VS1",
+                  "name": "Q4_LGBTQIA_VS1",
                   "labels": [
                     {
-                      "text": "5. What is your civil status?"
+                      "text": "4. Are you part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.). It is fine if you are not comfortable answering."
                     }
                   ],
                   "values": [
                     {
                       "labels": [
                         {
-                          "text": "Single"
+                          "text": "Yes"
                         }
                       ],
                       "pairs": [
@@ -638,7 +680,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Married"
+                          "text": "No"
                         }
                       ],
                       "pairs": [
@@ -650,7 +692,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Widowed"
+                          "text": "Not Comfortable to Answer"
                         }
                       ],
                       "pairs": [
@@ -662,7 +704,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Separated"
+                          "text": "Don't Know"
                         }
                       ],
                       "pairs": [
@@ -674,7 +716,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Divorced"
+                          "text": "Refused to answer"
                         }
                       ],
                       "pairs": [
@@ -688,153 +730,10 @@
               ]
             },
             {
-              "name": "Q6_EDUCATION",
+              "name": "Q5_GROUP",
               "labels": [
                 {
-                  "text": "6. What is your highest educational attainment?"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 2,
-              "zeroFill": true,
-              "valueSets": [
-                {
-                  "name": "Q6_EDUCATION_VS1",
-                  "labels": [
-                    {
-                      "text": "6. What is your highest educational attainment?"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "No formal education"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "01"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Elementary (incomplete)"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "02"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Elementary (complete)"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "03"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "High School (incomplete)"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "04"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "High School (complete)"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "05"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Vocational / Technical"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "College (incomplete)"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "07"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "College (complete)"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "08"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Post-graduate"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "09"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "I don't know"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "99"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q7_EMPLOYMENT",
-              "labels": [
-                {
-                  "text": "7. What is your current employment status?"
+                  "text": "5. Which group do you identify with? It is fine if you are not comfortable answering."
                 }
               ],
               "contentType": "numeric",
@@ -842,17 +741,17 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q7_EMPLOYMENT_VS1",
+                  "name": "Q5_GROUP_VS1",
                   "labels": [
                     {
-                      "text": "7. What is your current employment status?"
+                      "text": "5. Which group do you identify with? It is fine if you are not comfortable answering."
                     }
                   ],
                   "values": [
                     {
                       "labels": [
                         {
-                          "text": "Employed (full-time)"
+                          "text": "Lesbian"
                         }
                       ],
                       "pairs": [
@@ -864,7 +763,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Employed (part-time)"
+                          "text": "Gay"
                         }
                       ],
                       "pairs": [
@@ -876,7 +775,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Self-employed"
+                          "text": "Bisexual"
                         }
                       ],
                       "pairs": [
@@ -888,7 +787,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Unemployed"
+                          "text": "Transgender"
                         }
                       ],
                       "pairs": [
@@ -900,7 +799,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Retired"
+                          "text": "Queer"
                         }
                       ],
                       "pairs": [
@@ -912,7 +811,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Student"
+                          "text": "Intersex"
                         }
                       ],
                       "pairs": [
@@ -924,7 +823,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Homemaker"
+                          "text": "Asexual"
                         }
                       ],
                       "pairs": [
@@ -950,31 +849,20 @@
               ]
             },
             {
-              "name": "Q7_OTHER_TXT",
+              "name": "Q5_GROUP_OTHER_TXT",
               "labels": [
                 {
-                  "text": "7. Employment \u2014 Other (specify) text"
+                  "text": "5. Group \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
               "length": 120
             },
             {
-              "name": "Q8_HH_SIZE",
+              "name": "Q6_CIVIL_STATUS",
               "labels": [
                 {
-                  "text": "8. How many members are there in your household?"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 2,
-              "zeroFill": false
-            },
-            {
-              "name": "Q9_INCOME",
-              "labels": [
-                {
-                  "text": "9. Estimated average monthly household income"
+                  "text": "6. What is your civil status?"
                 }
               ],
               "contentType": "numeric",
@@ -982,17 +870,17 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q9_INCOME_VS1",
+                  "name": "Q6_CIVIL_STATUS_VS1",
                   "labels": [
                     {
-                      "text": "9. Estimated average monthly household income"
+                      "text": "6. What is your civil status?"
                     }
                   ],
                   "values": [
                     {
                       "labels": [
                         {
-                          "text": "Below PHP 10,957 (poor)"
+                          "text": "Single / Never Married"
                         }
                       ],
                       "pairs": [
@@ -1004,7 +892,7 @@
                     {
                       "labels": [
                         {
-                          "text": "PHP 10,957 - PHP 21,914 (low income)"
+                          "text": "Married"
                         }
                       ],
                       "pairs": [
@@ -1016,7 +904,7 @@
                     {
                       "labels": [
                         {
-                          "text": "PHP 21,914 - PHP 43,828 (lower middle)"
+                          "text": "Common law / Live-in"
                         }
                       ],
                       "pairs": [
@@ -1028,7 +916,7 @@
                     {
                       "labels": [
                         {
-                          "text": "PHP 43,828 - PHP 76,669 (middle)"
+                          "text": "Widowed"
                         }
                       ],
                       "pairs": [
@@ -1040,7 +928,7 @@
                     {
                       "labels": [
                         {
-                          "text": "PHP 76,669 - PHP 131,484 (upper middle)"
+                          "text": "Divorced"
                         }
                       ],
                       "pairs": [
@@ -1052,7 +940,7 @@
                     {
                       "labels": [
                         {
-                          "text": "PHP 131,484 - PHP 219,140 (upper income)"
+                          "text": "Separated"
                         }
                       ],
                       "pairs": [
@@ -1064,7 +952,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Above PHP 219,140 (rich)"
+                          "text": "Annulled"
                         }
                       ],
                       "pairs": [
@@ -1076,7 +964,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Refused to answer"
+                          "text": "Not reported"
                         }
                       ],
                       "pairs": [
@@ -1084,11 +972,589 @@
                           "value": "8"
                         }
                       ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q7_IS_PWD",
+              "labels": [
+                {
+                  "text": "7. Do you identify as a person with a disability?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q7_IS_PWD_VS1",
+                  "labels": [
+                    {
+                      "text": "7. Do you identify as a person with a disability?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q8_SPECIFY_DISABILITY",
+              "labels": [
+                {
+                  "text": "8. Would you like to specify the type of disability?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q8_SPECIFY_DISABILITY_VS1",
+                  "labels": [
+                    {
+                      "text": "8. Would you like to specify the type of disability?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q9_PWD_CARD",
+              "labels": [
+                {
+                  "text": "9. May we view your PWD Identification Card?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q9_PWD_CARD_VS1",
+                  "labels": [
+                    {
+                      "text": "9. May we view your PWD Identification Card?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes (card was presented and verified)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No (card not available at the time of interview)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Respondent refused to present card"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q10_DISABILITY_TYPE",
+              "labels": [
+                {
+                  "text": "10. Based on the presented PWD Identification Card, what type of disability is indicated?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q10_DISABILITY_TYPE_VS1",
+                  "labels": [
+                    {
+                      "text": "10. Based on the presented PWD Identification Card, what type of disability is indicated?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Physical disability (Orthopedic)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Visual disability"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Hearing disability"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Speech impairment"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Intellectual disability"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Psychosocial disability"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Multiple disabilities"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "7"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other disability (specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "8"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q10_DISABILITY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "10. Disability \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q11_EDUCATION",
+              "labels": [
+                {
+                  "text": "11. What is the highest level of education you have attained?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q11_EDUCATION_VS1",
+                  "labels": [
+                    {
+                      "text": "11. What is the highest level of education you have attained?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Early Childhood Education (Pre-school)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Primary Education (Grade 1 to 6)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Lower Secondary Education (Grade 7 to 10)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Upper Secondary Education (Grade 11 to 12)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Post-Secondary Non-Tertiary Education (including Technical and Vocational degrees with a certificate)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Short-Cycle Tertiary Education or Equivalent (including Technical and Vocational degrees with a diploma)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Bachelor Level Education or Equivalent"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Master Level Education or Equivalent"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Doctoral Level Education or Equivalent"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No schooling"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "11"
+                        }
+                      ]
                     },
                     {
                       "labels": [
                         {
                           "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "98"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q11_EDUCATION_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "11. Education \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q12_EMPLOYMENT",
+              "labels": [
+                {
+                  "text": "12. What is your employment status?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q12_EMPLOYMENT_VS1",
+                  "labels": [
+                    {
+                      "text": "12. What is your employment status?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Has a permanent job/ own business"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Has a short-term, seasonal, casual job/business"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Worked on different jobs day to day per week"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Unemployed and looking for work"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Unemployed and not looking for work"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Retired"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "7"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
                         }
                       ],
                       "pairs": [
@@ -1102,45 +1568,141 @@
               ]
             },
             {
-              "name": "Q10_INDIGENOUS",
+              "name": "Q13_INCOME_SOURCE",
               "labels": [
                 {
-                  "text": "10. Do you identify as a member of an indigenous group?"
+                  "text": "13. What is your main source of income?"
                 }
               ],
               "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
+              "length": 2,
+              "zeroFill": true,
               "valueSets": [
                 {
-                  "name": "Q10_INDIGENOUS_VS1",
+                  "name": "Q13_INCOME_SOURCE_VS1",
                   "labels": [
                     {
-                      "text": "10. Do you identify as a member of an indigenous group?"
+                      "text": "13. What is your main source of income?"
                     }
                   ],
                   "values": [
                     {
                       "labels": [
                         {
-                          "text": "Yes"
+                          "text": "Working for private company"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "1"
+                          "value": "01"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No"
+                          "text": "Working for private household"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Working for government"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Worked with pay in own family business or farm"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Self-employed without any paid employee"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Employer in own family business"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Worked without pay in own family business or farm"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Pension"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Unemployed and looking for work"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Unemployed and not looking for work"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
                         }
                       ]
                     },
@@ -1152,7 +1714,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "3"
+                          "value": "99"
                         }
                       ]
                     }
@@ -1161,20 +1723,10 @@
               ]
             },
             {
-              "name": "Q10_INDIGENOUS_TXT",
+              "name": "Q14_IP_MEMBER",
               "labels": [
                 {
-                  "text": "10a. Name of indigenous group"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 80
-            },
-            {
-              "name": "Q11_PWD",
-              "labels": [
-                {
-                  "text": "11. Are you a person with disability (PWD)?"
+                  "text": "14. Are you a member of Indigenous People (IP) community, like the Igorot, Lumad, Mangyans, etc.?"
                 }
               ],
               "contentType": "numeric",
@@ -1182,10 +1734,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q11_PWD_VS1",
+                  "name": "Q14_IP_MEMBER_VS1",
                   "labels": [
                     {
-                      "text": "11. Are you a person with disability (PWD)?"
+                      "text": "14. Are you a member of Indigenous People (IP) community, like the Igorot, Lumad, Mangyans, etc.?"
                     }
                   ],
                   "values": [
@@ -1210,6 +1762,825 @@
                       "pairs": [
                         {
                           "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q15_IP_GROUP",
+              "labels": [
+                {
+                  "text": "15. If yes, which group?"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q16_4PS",
+              "labels": [
+                {
+                  "text": "16. Is your household a beneficiary of the Pantawid Pamilyang Pilipino Program (4Ps)?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q16_4PS_VS1",
+                  "labels": [
+                    {
+                      "text": "16. Is your household a beneficiary of the Pantawid Pamilyang Pilipino Program (4Ps)?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q17_DECISION_MAKER",
+              "labels": [
+                {
+                  "text": "17. Who takes the most responsibility for making the decisions regarding healthcare in your household?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q17_DECISION_MAKER_VS1",
+                  "labels": [
+                    {
+                      "text": "17. Who takes the most responsibility for making the decisions regarding healthcare in your household?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Me (respondent)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "My father"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "My mother"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "My parents"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "My spouse/partner"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "My spouse/partner and I"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "My sibling"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "My grandfather"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "My grandmother"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "My uncle"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "My aunt"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "11"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "12"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q17_DECISION_MAKER_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "17. Decision-maker \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q18_INCOME_AMOUNT",
+              "labels": [
+                {
+                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos)."
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q18_INCOME_BRACKET",
+              "labels": [
+                {
+                  "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income."
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q18_INCOME_BRACKET_VS1",
+                  "labels": [
+                    {
+                      "text": "18. Income bracket \u2014 tick the category that corresponds to the approximate household income."
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Under 40,000"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "40,000 - 59,999"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "60,000 - 99,999"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "100,000 - 249,999"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "250,000 - 499,999"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "500,000 and over"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refuse to answer"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "7"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q19_HH_SIZE_TOTAL",
+              "labels": [
+                {
+                  "text": "19. How many total individuals (including children) live in your house now?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "Q20_HH_CHILDREN",
+              "labels": [
+                {
+                  "text": "20. How many non-working age children (i.e., below the age of 18) live in your house now?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "Q21_HH_SENIORS",
+              "labels": [
+                {
+                  "text": "21. How many senior citizens live in your house now?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "Q22_ELECTRICITY",
+              "labels": [
+                {
+                  "text": "22. Do you have electricity in your household?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q22_ELECTRICITY_VS1",
+                  "labels": [
+                    {
+                      "text": "22. Do you have electricity in your household?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q23_WATER_SOURCE",
+              "labels": [
+                {
+                  "text": "23. What is the family's main source of water supply for daily use?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q23_WATER_SOURCE_VS1",
+                  "labels": [
+                    {
+                      "text": "23. What is the family's main source of water supply for daily use?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Faucet inside the house"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Tubed/piped well"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Dug well"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q23_WATER_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "23. Water \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q24_FAUCET_SHARE",
+              "labels": [
+                {
+                  "text": "24. Do you have your own faucet, or do you share with your community?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q24_FAUCET_SHARE_VS1",
+                  "labels": [
+                    {
+                      "text": "24. Do you have your own faucet, or do you share with your community?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "I/we have our own"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I/we share with our community"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q25_TUBE_SHARE",
+              "labels": [
+                {
+                  "text": "25. Do you have your own tube/pipe, or do you share with your community?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q25_TUBE_SHARE_VS1",
+                  "labels": [
+                    {
+                      "text": "25. Do you have your own tube/pipe, or do you share with your community?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "I/we have our own"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I/we share with our community"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q26_REFRIGERATOR",
+              "labels": [
+                {
+                  "text": "26. Does the family own a refrigerator/freezer?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q26_REFRIGERATOR_VS1",
+                  "labels": [
+                    {
+                      "text": "26. Does the family own a refrigerator/freezer?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes, I/ we have"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No, I/we don't have"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q27_TELEVISION",
+              "labels": [
+                {
+                  "text": "27. Does the family own a television set?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q27_TELEVISION_VS1",
+                  "labels": [
+                    {
+                      "text": "27. Does the family own a television set?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes, I/ we have"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No, I/we don't have"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q28_WASHING_MACHINE",
+              "labels": [
+                {
+                  "text": "28. Does the family own a washing machine?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q28_WASHING_MACHINE_VS1",
+                  "labels": [
+                    {
+                      "text": "28. Does the family own a washing machine?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes, I/ we have"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No, I/we don't have"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q29_SOCIOECONOMIC_CLASS",
+              "labels": [
+                {
+                  "text": "29. How would the socioeconomic class of your household be classified?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q29_SOCIOECONOMIC_CLASS_VS1",
+                  "labels": [
+                    {
+                      "text": "29. How would the socioeconomic class of your household be classified?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Class A or B (working professionals or with a business with several assets)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Class C (working professionals with permanent or semi-permanent income and some assets)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Class D or E (semi-permanent workers or informal sector workers with little to no assets)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
                         }
                       ]
                     }
