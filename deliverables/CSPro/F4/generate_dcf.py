@@ -2,7 +2,11 @@
 generate_dcf.py — F4 Household Survey CSPro Data Dictionary generator.
 
 Emits HouseholdSurvey.dcf in CSPro 8.0 JSON dictionary format from the
-April 8 2026 Annex F4 questionnaire.
+April 20 2026 Revised Inception Report submission (202 numbered items
+across sections A–Q; supersedes the Apr 08 baseline).
+
+PSGC value sets are sourced from the PSA 1Q 2026 publication, parsed once
+under F1/inputs/ and shared across F-series generators.
 
 Run:
     python generate_dcf.py        # writes HouseholdSurvey.dcf next to this file
@@ -15,9 +19,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
-    select_one, select_all, record,
+    select_one, select_all, record, load_psgc_value_set,
     build_field_control, build_geo_id, build_dictionary, write_dcf,
 )
+
+INPUTS_DIR = Path(__file__).resolve().parent.parent / "F1" / "inputs"
 
 
 # ============================================================
@@ -36,14 +42,28 @@ def build_f4_field_control():
 # ============================================================
 
 def build_f4_geo_id():
-    # Apr 20 source adds GPS lat/lon under "HOUSEHOLD ADDRESS AND GEOGRAPHIC
-    # IDENTIFICATION". PSGC remains at helper defaults (length 2/3/4/4, no
-    # value sets) until Chunk 8 wires them from F1/inputs/ PSA 1Q 2026 CSVs.
-    extra = [
-        alpha("LATITUDE",  "GPS Latitude",  length=12),
-        alpha("LONGITUDE", "GPS Longitude", length=12),
+    # PSGC value sets from PSA 1Q 2026 publication, shared with F1/F3 via
+    # F1/inputs/. Length=10 retains the full PSGC code for clean crosswalk
+    # to NHFR, PSA census, and DOH downstream systems. Cascading parent→child
+    # dropdown filter logic belongs in CSPro PROC, not here.
+    region_options       = load_psgc_value_set(INPUTS_DIR / "psgc_region.csv")
+    province_huc_options = load_psgc_value_set(INPUTS_DIR / "psgc_province_huc.csv")
+    city_mun_options     = load_psgc_value_set(INPUTS_DIR / "psgc_city_municipality.csv")
+    barangay_options     = load_psgc_value_set(INPUTS_DIR / "psgc_barangay.csv")
+    items = [
+        numeric("CLASSIFICATION", "Classification", length=1, value_set_options=[
+            ("UHC IS",     "1"),
+            ("Non-UHC IS", "2"),
+        ]),
+        numeric("REGION",            "Region",              length=10, zero_fill=True, value_set_options=region_options),
+        numeric("PROVINCE_HUC",      "Province / HUC",      length=10, zero_fill=True, value_set_options=province_huc_options),
+        numeric("CITY_MUNICIPALITY", "City / Municipality", length=10, zero_fill=True, value_set_options=city_mun_options),
+        numeric("BARANGAY",          "Barangay",            length=10, zero_fill=True, value_set_options=barangay_options),
+        alpha("HH_ADDRESS", "Household Address", length=200),
+        alpha("LATITUDE",   "GPS Latitude",      length=12),
+        alpha("LONGITUDE",  "GPS Longitude",     length=12),
     ]
-    return build_geo_id(mode="household", extra_items=extra)
+    return record("HOUSEHOLD_GEO_ID", "Household Geographic Identification", "B", items)
 
 
 # ============================================================
@@ -1544,11 +1564,14 @@ def build_section_n():
 
 
 # ============================================================
-# Section O. Sources of Funds for Health (Q182-Q192)
+# Section O. Sources of Funds for Health (Q186-Q196) — Apr 20
 # ============================================================
+# Skip logic (logic-pass phase): Q195 Less than 1% / 1-3% / 4-6% /
+# More than 6% / Don't know → Q197 (bypass Q196). Only Q195 = "None"
+# falls through to Q196.
 
 def build_section_o():
-    Q191_INCOME_PCT = [
+    Q195_INCOME_PCT = [
         ("None",          "1"),
         ("Less than 1%",  "2"),
         ("1-3%",          "3"),
@@ -1556,90 +1579,107 @@ def build_section_o():
         ("More than 6%",  "5"),
         ("Don't know",    "6"),
     ]
-    Q192_FOREGONE_CARE = [
-        ("Doctor/consultation visit",        "1"),
-        ("Medicines or treatments",          "2"),
-        ("Laboratory tests / diagnostics",   "3"),
-        ("Hospital admission / inpatient care","4"),
-        ("Preventive care",                  "5"),
-        ("Dental care",                      "6"),
-        ("Other (specify)",                  "7"),
-        ("We do not forego care",            "8"),
+    Q196_FOREGONE_CARE = [
+        ("Doctor/consultation visit",                    "1"),
+        ("Medicines or treatments",                      "2"),
+        ("Laboratory tests / diagnostics",               "3"),
+        ("Hospital admission / inpatient care",          "4"),
+        ("Preventive care (e.g., vaccinations, check-ups)", "5"),
+        ("Dental care",                                  "6"),
+        ("Other (please specify)",                       "7"),
+        ("We do not forego care",                        "8"),
     ]
     items = [
-        yes_no("Q182_CURRENT_INCOME", "182. Current income of any household members"),
-        yes_no("Q183_SAVINGS",        "183. Savings, pension"),
-        yes_no("Q184_SOLD_ASSETS",    "184. Selling of household's assets or goods"),
-        yes_no("Q185_BORROW_FAMILY",  "185. Borrowing from friends or relatives"),
-        yes_no("Q186_BORROW_INST",    "186. Borrowing from institutions"),
-        yes_no("Q187_REMITTANCE",     "187. Remittance or money gift"),
-        yes_no("Q188_GOVT_ASSIST",    "188. Government assistance (DSWD, local)"),
-        yes_no("Q189_LGU_DONATION",   "189. Donation from LGUs"),
-        yes_no("Q190_OTHER_SOURCE",   "190. Other source"),
-        alpha("Q190_OTHER_TXT",       "190. Other source — specify", length=120),
-        select_one("Q191_INCOME_PCT", "191. Portion of income willing to set aside for health care",
-                   Q191_INCOME_PCT, length=1),
-        *select_all("Q192_FOREGONE", "192. What kind of care do you usually forego for financial reasons?",
-                    Q192_FOREGONE_CARE),
+        yes_no("Q186_CURRENT_INCOME", "186. Current income of any household members"),
+        yes_no("Q187_SAVINGS",        "187. Savings, pension"),
+        yes_no("Q188_SOLD_ASSETS",    "188. Selling of any household's assets or goods (housing, land, animals, jewelry, appliances, or machines)"),
+        yes_no("Q189_BORROW_FAMILY",  "189. Borrowing from friends or relatives outside the household"),
+        yes_no("Q190_BORROW_INST",    "190. Borrowing from institutions (e.g., financial, microfinance arrangements)"),
+        yes_no("Q191_REMITTANCE",     "191. Remittance or money gift"),
+        yes_no("Q192_GOVT_ASSIST",    "192. Government assistance (DSWD, local, etc.)"),
+        yes_no("Q193_LGU_DONATION",   "193. Donation from LGUs"),
+        yes_no("Q194_OTHER_SOURCE",   "194. Other specify"),
+        alpha("Q194_OTHER_TXT",       "194. Other specify — text", length=120),
+        select_one("Q195_INCOME_PCT",
+                   "195. What portion of your household's monthly income would you be willing to set aside for health care if it reduced unexpected medical expenses?",
+                   Q195_INCOME_PCT, length=1),
+        *select_all("Q196_FOREGONE",
+                    "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
+                    Q196_FOREGONE_CARE),
+        alpha("Q196_FOREGONE_OTHER_TXT",
+              "196. Other (please specify) — text", length=120),
     ]
     return record("O_SOURCES_OF_FUNDS", "O. Sources of Funds for Health", "Q", items)
 
 
 # ============================================================
-# Section P. Financial Risk Protection (Q193-Q195)
+# Section P. Financial Risk Protection: Incidence of Reduced/
+# Delayed Care (Q197-Q199) — Apr 20
 # ============================================================
 
 def build_section_p():
-    Q195_WTP = [
-        ("Php 0 - Php 249",        "1"),
-        ("Php 250 - Php 499",      "2"),
-        ("Php 500 - Php 999",      "3"),
-        ("Php 1,000 - Php 1,249",  "4"),
-        ("Php 1,250 - Php 1,499",  "5"),
-        ("Php 1,500 - Php 1,749",  "6"),
-        ("Php 1,750 - Php 1,999",  "7"),
-        ("Php 2,000 and above",    "8"),
-        ("Other (specify)",         "9"),
+    Q199_WTP = [
+        ("Php 0 – Php 249",         "1"),
+        ("Php 250 – Php 499",       "2"),
+        ("Php 500 – Php 999",       "3"),
+        ("Php 1,000 – Php 1249",    "4"),
+        ("Php 1,250 – Php 1499",    "5"),
+        ("Php 1,500 – Php 1749",    "6"),
+        ("Php 1,750 – Php 1999",    "7"),
+        ("Php 2,000 and above",     "8"),
+        ("Other (Specify)",         "9"),
     ]
     items = [
-        yes_no("Q193_DELAYED_CARE", "193. Delayed seeking care for financial reasons in the last 6 months?"),
-        yes_no("Q194_NOT_FOLLOWED", "194. Seen a doctor and not fully followed advice for financial reasons?"),
-        select_one("Q195_WTP_CONSULT", "195. Highest amount willing to pay for a consultation", Q195_WTP, length=1),
-        alpha("Q195_OTHER_TXT", "195. WTP — Other (specify) text", length=80),
+        yes_no("Q197_DELAYED_CARE",
+               "197. In the last 6 months, have you or your household member delayed seeking care for financial reasons?"),
+        yes_no("Q198_NOT_FOLLOWED",
+               "198. In the last 6 months, have you or your household member seen a doctor and not fully followed their advice (for example, to buy prescribed medicine, to go for a follow-up consultation, to get additional diagnostics) for financial reasons?"),
+        select_one("Q199_WTP_CONSULT",
+                   "199. The usual price for a consultation ranges from Php 500 to Php 2,000. What is the highest amount you are willing to pay for a consultation?",
+                   Q199_WTP, length=1),
+        alpha("Q199_WTP_OTHER_TXT", "199. Other (Specify) — text", length=120),
     ]
-    return record("P_FINANCIAL_RISK", "P. Financial Risk Protection", "R", items)
+    return record("P_FINANCIAL_RISK",
+                  "P. Financial Risk Protection: Incidence of Reduced/Delayed Care",
+                  "R", items)
 
 
 # ============================================================
-# Section Q. Anxiety about Household Finances (Q196-Q198)
+# Section Q. Anxiety about Household Finances (Q200-Q202) — Apr 20
 # ============================================================
+# Skip logic (logic-pass phase): Q200 "Refused to answer" → end of survey;
+# Q201 "Not worried at all" → end of survey (bypass Q202).
 
 def build_section_q():
-    Q196_REDUCED = [
+    Q200_REDUCED = [
         ("Yes",              "1"),
         ("No",               "2"),
         ("Don't know",       "3"),
         ("Refused to answer","4"),
     ]
-    Q197_WORRIED = [
+    Q201_WORRIED = [
         ("Very worried",      "1"),
         ("Somewhat worried",  "2"),
         ("Not too worried",   "3"),
         ("Not worried at all","4"),
     ]
-    Q198_REASONS = [
-        ("Loss of income",                                   "1"),
-        ("Healthcare costs related to COVID-19",              "2"),
-        ("Healthcare costs NOT related to COVID-19",          "3"),
+    Q202_REASONS = [
+        ("Loss of income",                                                                                              "1"),
+        ("Healthcare costs related to coronavirus (COVID-19)",                                                          "2"),
+        ("Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)", "3"),
     ]
     items = [
-        select_one("Q196_REDUCED_SPEND", "196. Had to reduce spending on needs because of health expenditure?",
-                   Q196_REDUCED, length=1),
-        select_one("Q197_WORRIED", "197. How worried are you about household finances in the next month?",
-                   Q197_WORRIED, length=1),
-        *select_all("Q198_WORRY_REASONS", "198. Reasons for worry about finances", Q198_REASONS, with_other_txt=False),
+        select_one("Q200_REDUCED_SPEND",
+                   "200. Have you or your household had to reduce spending on things you need (such as food, housing, or utilities) because of this health expenditure in the last 1 month?",
+                   Q200_REDUCED, length=1),
+        select_one("Q201_WORRIED",
+                   "201. How worried are you about your household's finances in the next 1 month?",
+                   Q201_WORRIED, length=1),
+        *select_all("Q202_WORRY_REASONS",
+                    "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
+                    Q202_REASONS, with_other_txt=False),
     ]
-    return record("Q_FINANCIAL_ANXIETY", "Q. Financial Anxiety", "S", items)
+    return record("Q_FINANCIAL_ANXIETY", "Q. Anxiety about Household Finances", "S", items)
 
 
 # ============================================================
