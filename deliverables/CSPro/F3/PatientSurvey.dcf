@@ -6302,6 +6302,4831 @@
               "length": 120
             }
           ]
+        },
+        {
+          "name": "E_PRIMARY_CARE",
+          "labels": [
+            {
+              "text": "E. Primary Care Utilization"
+            }
+          ],
+          "recordType": "G",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "Q53_HAS_PCP",
+              "labels": [
+                {
+                  "text": "53. Do you have a primary care provider?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q53_HAS_PCP_VS1",
+                  "labels": [
+                    {
+                      "text": "53. Do you have a primary care provider?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q54_PCP_TYPE",
+              "labels": [
+                {
+                  "text": "54. Who is your main primary care provider?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q54_PCP_TYPE_VS1",
+                  "labels": [
+                    {
+                      "text": "54. Who is your main primary care provider?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "General practitioner"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Specialty Care Provider/ Specialist"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Both"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q54_PCP_TYPE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "54. Primary care provider \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q55_LOC_CONVENIENT",
+              "labels": [
+                {
+                  "text": "55. Is the location of your main primary care provider convenient for you?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q55_LOC_CONVENIENT_VS1",
+                  "labels": [
+                    {
+                      "text": "55. Is the location of your main primary care provider convenient for you?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_HOURS_CONVENIENT",
+              "labels": [
+                {
+                  "text": "56. Is your main primary care provider's clinic hours (time that your provider/s is/are open for medical appointments) convenient for you?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_HOURS_CONVENIENT_VS1",
+                  "labels": [
+                    {
+                      "text": "56. Is your main primary care provider's clinic hours (time that your provider/s is/are open for medical appointments) convenient for you?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q57_WAIT_CONVENIENT",
+              "labels": [
+                {
+                  "text": "57. Is the usual wait for setting an appointment with your main primary care provider convenient for you?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q57_WAIT_CONVENIENT_VS1",
+                  "labels": [
+                    {
+                      "text": "57. Is the usual wait for setting an appointment with your main primary care provider convenient for you?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_WAIT_DAYS",
+              "labels": [
+                {
+                  "text": "58. Wait time to set appointment with main primary care provider \u2014 Days"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "Q58_WAIT_MINUTES",
+              "labels": [
+                {
+                  "text": "58. Wait time to set appointment with main primary care provider \u2014 Minutes"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": false
+            },
+            {
+              "name": "Q59_SCHED_COMM_O01",
+              "labels": [
+                {
+                  "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? \u2014 Face-to-face"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_SCHED_COMM_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? \u2014 Face-to-face"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_SCHED_COMM_O02",
+              "labels": [
+                {
+                  "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? \u2014 Teleconsultation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_SCHED_COMM_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? \u2014 Teleconsultation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_SCHED_COMM_O03",
+              "labels": [
+                {
+                  "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? \u2014 Landline"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_SCHED_COMM_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? \u2014 Landline"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_SCHED_COMM_O04",
+              "labels": [
+                {
+                  "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? \u2014 Cellphone"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_SCHED_COMM_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? \u2014 Cellphone"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_SCHED_COMM_O05",
+              "labels": [
+                {
+                  "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? \u2014 Video Conference"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_SCHED_COMM_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? \u2014 Video Conference"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q60_SCHED_TELECON_OK",
+              "labels": [
+                {
+                  "text": "60. If teleconsultation was available, did you succeed in using the teleconsult? (scheduling)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q60_SCHED_TELECON_OK_VS1",
+                  "labels": [
+                    {
+                      "text": "60. If teleconsultation was available, did you succeed in using the teleconsult? (scheduling)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_CONSULT_COMM_O01",
+              "labels": [
+                {
+                  "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider? \u2014 Face-to-face"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_CONSULT_COMM_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider? \u2014 Face-to-face"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_CONSULT_COMM_O02",
+              "labels": [
+                {
+                  "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider? \u2014 Teleconsultation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_CONSULT_COMM_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider? \u2014 Teleconsultation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_CONSULT_COMM_O03",
+              "labels": [
+                {
+                  "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider? \u2014 Landline"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_CONSULT_COMM_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider? \u2014 Landline"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_CONSULT_COMM_O04",
+              "labels": [
+                {
+                  "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider? \u2014 Cellphone"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_CONSULT_COMM_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider? \u2014 Cellphone"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_CONSULT_COMM_O05",
+              "labels": [
+                {
+                  "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider? \u2014 Video Conference"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_CONSULT_COMM_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "61. What mode/s of communication was/were available to you when consulting with your main primary care provider? \u2014 Video Conference"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q62_CONSULT_TELECON_OK",
+              "labels": [
+                {
+                  "text": "62. If teleconsultation was available, did you succeed in using the teleconsult? (consultation)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q62_CONSULT_TELECON_OK_VS1",
+                  "labels": [
+                    {
+                      "text": "62. If teleconsultation was available, did you succeed in using the teleconsult? (consultation)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q63_HAS_USUAL_FACILITY",
+              "labels": [
+                {
+                  "text": "63. In the past 12 months, do you have a clinic, or health center that you usually go to?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q63_HAS_USUAL_FACILITY_VS1",
+                  "labels": [
+                    {
+                      "text": "63. In the past 12 months, do you have a clinic, or health center that you usually go to?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q64_FACILITY_NAME",
+              "labels": [
+                {
+                  "text": "64. What is the name of the facility?"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q65_WHY_NO_USUAL_O01",
+              "labels": [
+                {
+                  "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't get sick"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_WHY_NO_USUAL_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't get sick"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_WHY_NO_USUAL_O02",
+              "labels": [
+                {
+                  "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 I recently moved into the area"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_WHY_NO_USUAL_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 I recently moved into the area"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_WHY_NO_USUAL_O03",
+              "labels": [
+                {
+                  "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 It's expensive"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_WHY_NO_USUAL_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 It's expensive"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_WHY_NO_USUAL_O04",
+              "labels": [
+                {
+                  "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 I can treat myself"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_WHY_NO_USUAL_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 I can treat myself"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_WHY_NO_USUAL_O05",
+              "labels": [
+                {
+                  "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know where to go for care"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_WHY_NO_USUAL_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know where to go for care"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_WHY_NO_USUAL_O06",
+              "labels": [
+                {
+                  "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_WHY_NO_USUAL_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_WHY_NO_USUAL_O07",
+              "labels": [
+                {
+                  "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_WHY_NO_USUAL_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_WHY_NO_USUAL_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "65. If none, why do you not have a usual clinic, or health center that you usually go to? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q65_WHY_NO_USUAL_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "65. Why no usual facility \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q66_SAME_AS_USUAL",
+              "labels": [
+                {
+                  "text": "66. Is [facility_name_input] the facility you usually go to for general health concerns?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q66_SAME_AS_USUAL_VS1",
+                  "labels": [
+                    {
+                      "text": "66. Is [facility_name_input] the facility you usually go to for general health concerns?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q67_WHY_THIS_FACILITY_O01",
+              "labels": [
+                {
+                  "text": "67. Why did you go to this facility instead of your usual facility? \u2014 This facility is more accessible than my usual facility (i.e., nearer, has more transportation options to get to, and cheaper to travel to)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q67_WHY_THIS_FACILITY_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "67. Why did you go to this facility instead of your usual facility? \u2014 This facility is more accessible than my usual facility (i.e., nearer, has more transportation options to get to, and cheaper to travel to)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q67_WHY_THIS_FACILITY_O02",
+              "labels": [
+                {
+                  "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Needed a service/specialist not available at my usual facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q67_WHY_THIS_FACILITY_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Needed a service/specialist not available at my usual facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q67_WHY_THIS_FACILITY_O03",
+              "labels": [
+                {
+                  "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Recommended by friends/family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q67_WHY_THIS_FACILITY_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Recommended by friends/family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q67_WHY_THIS_FACILITY_O04",
+              "labels": [
+                {
+                  "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Wanted to try another facility than my usual"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q67_WHY_THIS_FACILITY_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Wanted to try another facility than my usual"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q67_WHY_THIS_FACILITY_O05",
+              "labels": [
+                {
+                  "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Prefer this facility than my usual"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q67_WHY_THIS_FACILITY_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Prefer this facility than my usual"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q67_WHY_THIS_FACILITY_O06",
+              "labels": [
+                {
+                  "text": "67. Why did you go to this facility instead of your usual facility? \u2014 This was referred to me by my usual facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q67_WHY_THIS_FACILITY_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "67. Why did you go to this facility instead of your usual facility? \u2014 This was referred to me by my usual facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q67_WHY_THIS_FACILITY_O07",
+              "labels": [
+                {
+                  "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Usual facility is closed for today"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q67_WHY_THIS_FACILITY_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Usual facility is closed for today"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q67_WHY_THIS_FACILITY_O08",
+              "labels": [
+                {
+                  "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q67_WHY_THIS_FACILITY_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q67_WHY_THIS_FACILITY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q67_WHY_THIS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "67. Why this facility \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q68_USUAL_FAC_TYPE",
+              "labels": [
+                {
+                  "text": "68. What is the type of health facility that you usually go to?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q68_USUAL_FAC_TYPE_VS1",
+                  "labels": [
+                    {
+                      "text": "68. What is the type of health facility that you usually go to?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "YAKAP/Konsulta or primary care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Barangay Health Center/ Barangay Health Station"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Rural Health Unit / Urban Health Center"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Public Hospital"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Private Hospital"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Private Clinic"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Traditional Healer or Manghihilot/ Albularyo"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "7"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "8"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q68_USUAL_FAC_TYPE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "68. Usual facility type \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q69_USUAL_TRAVEL_HH",
+              "labels": [
+                {
+                  "text": "69. How long does it take you to travel to the health facility you usually go to \u2014 Hours"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "Q69_USUAL_TRAVEL_MM",
+              "labels": [
+                {
+                  "text": "69. How long does it take you to travel to the health facility you usually go to \u2014 Minutes"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O01",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Walk"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Walk"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O02",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Bike"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Bike"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O03",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Public Bus"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Public Bus"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O04",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Jeepney"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Jeepney"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O05",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Tricycle"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Tricycle"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O06",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Car (including private taxi/cab)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Car (including private taxi/cab)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O07",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Motorcycle"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Motorcycle"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O08",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Boat"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Boat"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O09",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Taxi"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Taxi"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O10",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Pedicab"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O10_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Pedicab"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O11",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 E-bike"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O11_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 E-bike"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_O12",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_USUAL_TRANSPORT_O12_VS1",
+                  "labels": [
+                    {
+                      "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q70_USUAL_TRANSPORT_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "70. Transport to usual facility \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q71_NEAREST_TYPE",
+              "labels": [
+                {
+                  "text": "71. What is the type of the primary care facility nearest to your house?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q71_NEAREST_TYPE_VS1",
+                  "labels": [
+                    {
+                      "text": "71. What is the type of the primary care facility nearest to your house?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Barangay Health Center/ Barangay Health Station"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Rural Health Unit / Urban Health Center"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Public Hospital"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Private Hospital"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Private Clinic"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Traditional Healer or Manghihilot/ Albularyo"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "7"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "8"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q71_NEAREST_TYPE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "71. Nearest primary care facility type \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q72_NEAREST_TRAVEL_HH",
+              "labels": [
+                {
+                  "text": "72. How long does it take you to travel from your house when going to the nearest primary care facility? \u2014 Hours"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "Q72_NEAREST_TRAVEL_MM",
+              "labels": [
+                {
+                  "text": "72. How long does it take you to travel from your house when going to the nearest primary care facility? \u2014 Minutes"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O01",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Walk"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Walk"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O02",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Bike"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Bike"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O03",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Public Bus"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Public Bus"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O04",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Jeepney"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Jeepney"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O05",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Tricycle"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Tricycle"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O06",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Car (including private taxi/cab)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Car (including private taxi/cab)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O07",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Motorcycle"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Motorcycle"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O08",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Boat"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Boat"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O09",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Taxi"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Taxi"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O10",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Pedicab"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O10_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Pedicab"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O11",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 E-bike"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O11_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 E-bike"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_O12",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q73_NEAREST_TRANSPORT_O12_VS1",
+                  "labels": [
+                    {
+                      "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "73. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q73_NEAREST_TRANSPORT_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "73. Transport to nearest primary care \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q74_KON_HEARD",
+              "labels": [
+                {
+                  "text": "74. Have you heard of the term \"YAKAP/ Konsulta package\"?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_KON_HEARD_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Have you heard of the term \"YAKAP/ Konsulta package\"?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q75_KON_SOURCE_O01",
+              "labels": [
+                {
+                  "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 News"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q75_KON_SOURCE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 News"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q75_KON_SOURCE_O02",
+              "labels": [
+                {
+                  "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Legislation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q75_KON_SOURCE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Legislation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q75_KON_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q75_KON_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q75_KON_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q75_KON_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q75_KON_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Health center/facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q75_KON_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Health center/facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q75_KON_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 LGU/Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q75_KON_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 LGU/Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q75_KON_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q75_KON_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q75_KON_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q75_KON_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q75_KON_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "75. What are your sources of information about the YAKAP/Konsulta package? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q75_KON_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "75. YAKAP/Konsulta source \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q76_KON_UNDERSTAND_O01",
+              "labels": [
+                {
+                  "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Free primary care consultation (with a registered YAKAP/Konsulta provider)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q76_KON_UNDERSTAND_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Free primary care consultation (with a registered YAKAP/Konsulta provider)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q76_KON_UNDERSTAND_O02",
+              "labels": [
+                {
+                  "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q76_KON_UNDERSTAND_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q76_KON_UNDERSTAND_O03",
+              "labels": [
+                {
+                  "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected laboratory / diagnostics examination"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q76_KON_UNDERSTAND_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected laboratory / diagnostics examination"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q76_KON_UNDERSTAND_O04",
+              "labels": [
+                {
+                  "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected drugs and medicines"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q76_KON_UNDERSTAND_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected drugs and medicines"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q76_KON_UNDERSTAND_O05",
+              "labels": [
+                {
+                  "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 There are no benefits of the package"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q76_KON_UNDERSTAND_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 There are no benefits of the package"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q76_KON_UNDERSTAND_O06",
+              "labels": [
+                {
+                  "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q76_KON_UNDERSTAND_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q76_KON_UNDERSTAND_O07",
+              "labels": [
+                {
+                  "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q76_KON_UNDERSTAND_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q76_KON_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q76_KON_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "76. YAKAP/Konsulta understanding \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q77_KON_REGISTERED",
+              "labels": [
+                {
+                  "text": "77. Are you registered with a YAKAP/Konsulta package provider?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q77_KON_REGISTERED_VS1",
+                  "labels": [
+                    {
+                      "text": "77. Are you registered with a YAKAP/Konsulta package provider?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I've never heard of it"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q78_KON_WHEN_REG",
+              "labels": [
+                {
+                  "text": "78. When did you register with a YAKAP/Konsulta package provider?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q78_KON_WHEN_REG_VS1",
+                  "labels": [
+                    {
+                      "text": "78. When did you register with a YAKAP/Konsulta package provider?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Within the past six (6) months"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "More than six (6) months but less than one (1) year ago"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "One (1) year but less than two (2) years ago"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Two (2) years ago or more"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q79_KON_HAD_APPT",
+              "labels": [
+                {
+                  "text": "79. Since registering, have you had an appointment with your YAKAP/Konsulta package provider?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q79_KON_HAD_APPT_VS1",
+                  "labels": [
+                    {
+                      "text": "79. Since registering, have you had an appointment with your YAKAP/Konsulta package provider?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q80_KON_KNOWS_BOOKING",
+              "labels": [
+                {
+                  "text": "80. When you have a health problem, do you know how to book an appointment at your YAKAP/Konsulta package provider?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q80_KON_KNOWS_BOOKING_VS1",
+                  "labels": [
+                    {
+                      "text": "80. When you have a health problem, do you know how to book an appointment at your YAKAP/Konsulta package provider?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q81_KON_APPT_CHECKUP",
+              "labels": [
+                {
+                  "text": "81. Was that appointment for a general check-up (i.e. not related to an illness or injury)?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q81_KON_APPT_CHECKUP_VS1",
+                  "labels": [
+                    {
+                      "text": "81. Was that appointment for a general check-up (i.e. not related to an illness or injury)?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O01",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Don't know what a YAKAP/Konsulta provider is"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Don't know what a YAKAP/Konsulta provider is"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O02",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Don't trust PhilHealth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Don't trust PhilHealth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O03",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Don't know how to register"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Don't know how to register"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O04",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Registration is confusing/time-consuming/inconvenient"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Registration is confusing/time-consuming/inconvenient"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O05",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Intend to register but do not have found a time to do it."
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Intend to register but do not have found a time to do it."
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O06",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 YAKAP/Konsulta is not available in my local area"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 YAKAP/Konsulta is not available in my local area"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O07",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Already have a usual primary care provider that I go to"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Already have a usual primary care provider that I go to"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O08",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Don't have the required PhilHealth ID to register for YAKAP/Konsulta"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Don't have the required PhilHealth ID to register for YAKAP/Konsulta"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O09",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Don't have the other requirements to register"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Don't have the other requirements to register"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O10",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O10_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_O11",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_KON_WHY_NOT_REG_O11_VS1",
+                  "labels": [
+                    {
+                      "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q82_KON_WHY_NOT_REG_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "82. Why not registered \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
         }
       ]
     }
