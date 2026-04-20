@@ -205,4 +205,203 @@ Bracket-vs-amount table (for Q18 consistency check):
 
 ---
 
-*Sections D–L, CSPro logic templates: see subsequent chunks.*
+## 2. Skip-logic table (Sections D–F)
+
+### Section D — PhilHealth Registration and Health Insurance
+
+| Q | Condition | Skip to |
+|---|---|---|
+| Q38 PHILHEALTH_REG | = No (2) **or** "I don't know" (3) | **Q43** (skip Q39–Q42; non-members still asked whether they know where to seek help) |
+| Q41 REG_DIFFICULTY | = No | **Q43** (skip Q42 — no difficulty → no reason-for-difficulty) |
+| Q43 KNOWS_ASSIST | = No | **Q45** (skip Q44 — patient doesn't know where to go, no point asking) |
+| — | `Q38_PHILHEALTH_REG ≠ Yes` | **Q51** after Q45 (non-members skip Q46–Q50: benefits/packages/premiums) |
+| Q48 PREMIUM_PAY | = "No, I do not pay premiums" (3) | **Q51** (skip Q49, Q50) |
+| Q49 PREMIUM_DIFFICULT | = No | **Q51** (skip Q50) |
+| Q51 OTHER_INSURANCE | = No | **Q53** (skip Q52) |
+
+### Section E — Primary Care Utilization
+
+| Q | Condition | Skip to |
+|---|---|---|
+| Q53 HAS_PCP | = No | **Q63** (skip Q54–Q62 — no PCP, no PCP-specific questions) |
+| Q59 SCHED_COMM | "Teleconsultation" (2) NOT ticked | Q60 disabled (teleconsult-success gate) |
+| Q61 CONSULT_COMM | "Teleconsultation" (2) NOT ticked | Q62 disabled (teleconsult-success gate) |
+| Q63 HAS_USUAL_FACILITY | = No | **Q65** (skip Q64 — no usual facility → no name to record) |
+| Q63 HAS_USUAL_FACILITY | = Yes | **Q66** (skip Q65 — usual facility present → no reason-for-none question) |
+| Q66 SAME_AS_USUAL | = Yes | **Q68** (skip Q67 — this IS the usual facility, so no why-different reason) |
+| Q74 KON_HEARD | = No | **Q83** (skip Q75–Q82 — never heard of YAKAP/Konsulta; all remaining E block out) |
+| Q77 KON_REGISTERED | = No (2) | **Q82** (skip Q78–Q81 — not registered → jump to reasons-not-registered) |
+| Q77 KON_REGISTERED | = "I've never heard of it" (3) **or** "I don't know" (4) | **Q83** (skip Q78–Q82 entirely — exit Section E) |
+
+### Section F — Health-Seeking Behavior
+
+No explicit skip rules in Section F. Q84 `SERVICE_TYPE` is advisory for Section G vs. Section H routing, but **the authoritative routing signal is `FIELD_CONTROL.PATIENT_TYPE`** (see §3.7 cross-field rules).
+
+---
+
+## 3. Validations (Sections D–F)
+
+### 3.5 Section D — PhilHealth Registration and Health Insurance
+
+**Registration gates**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q38_PHILHEALTH_REG` | Required, ∈ {1, 2, 3} | HARD |
+| Q39 enabled | `Q38_PHILHEALTH_REG = Yes` (1) | GATE |
+| Q40 enabled | `Q38_PHILHEALTH_REG = Yes` (1) | GATE |
+| Q41 enabled | `Q38_PHILHEALTH_REG = Yes` (1) | GATE |
+| Q42 enabled | `Q38_PHILHEALTH_REG = Yes` **and** `Q41_REG_DIFFICULTY = Yes` | GATE |
+| Q44 enabled | `Q43_KNOWS_ASSIST = Yes` | GATE |
+| `Q39_HOW_FIND_OUT = 10` (Other) | `Q39_HOW_FIND_OUT_OTHER_TXT` required | HARD |
+| `Q40_WHO_ASSISTED = 10` (Other) | `Q40_WHO_ASSISTED_OTHER_TXT` required | HARD |
+| `Q44_WHERE_ASSIST = 10` (Other) | `Q44_WHERE_ASSIST_OTHER_TXT` required | HARD |
+| `Q42_DIFFICULTY` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q42_DIFFICULTY` "I don't know" (7) | Cannot be combined with any other option | HARD |
+| `Q42_DIFFICULTY = 8` (Other) | `Q42_DIFFICULTY_OTHER_TXT` required | HARD |
+
+**Member category, benefits, packages**
+
+| Item | Rule | Severity |
+|---|---|---|
+| Q45 enabled | `Q38_PHILHEALTH_REG = Yes` (non-members skip to Q51) | GATE |
+| `Q45_CATEGORY` | Required when enabled, ∈ {01–08, 98, 99} | HARD |
+| `Q45_CATEGORY = 99` (Other) | `Q45_CATEGORY_OTHER_TXT` required | HARD |
+| Q46 enabled | `Q38_PHILHEALTH_REG = Yes` | GATE |
+| `Q46_BENEFITS` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q46_BENEFITS` "There are no benefits" (4) | Cannot be combined with any other option | HARD |
+| `Q46_BENEFITS` "I don't know" (5) | Cannot be combined with any other option | HARD |
+| `Q46_BENEFITS = 6` (Other) | `Q46_BENEFITS_OTHER_TXT` required | HARD |
+| Q45 = 06 (Senior citizen) | Check patient `Q6_AGE ≥ 60` | SOFT (warn if mismatched) |
+| Q47 roster — Q47_PHYSICIAN_CHECKUP / Q47_DIAGNOSTIC_TESTS / Q47_HOSPITAL_CONF / Q47_OUTPATIENT_DRUGS | Each item required, ∈ {1, 2}, when Q46 enabled | HARD |
+
+**Premiums**
+
+| Item | Rule | Severity |
+|---|---|---|
+| Q48 enabled | `Q38_PHILHEALTH_REG = Yes` | GATE |
+| `Q48_PREMIUM_PAY` | Required when enabled, ∈ {1, 2, 3} | HARD |
+| Q49 enabled | `Q48_PREMIUM_PAY ∈ {1, 2}` (actually pays) | GATE |
+| Q50 enabled | `Q48_PREMIUM_PAY ∈ {1, 2}` **and** `Q49_PREMIUM_DIFFICULT = Yes` | GATE |
+| `Q50_DIFFICULTY_PAYING` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q50_DIFFICULTY_PAYING` "I don't know" (6) | Cannot be combined with any other option | HARD |
+| `Q50_DIFFICULTY_PAYING = 7` (Other) | `Q50_DIFFICULTY_PAYING_OTHER_TXT` required | HARD |
+
+**Other insurance**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q51_OTHER_INSURANCE` | Required, ∈ {1, 2} | HARD |
+| Q52 enabled | `Q51_OTHER_INSURANCE = Yes` | GATE |
+| `Q52_PLANS` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q52_PLANS` "I don't know" (6) | Cannot be combined with any other option | HARD |
+| `Q52_PLANS = 7` (Others) | `Q52_PLANS_OTHER_TXT` required | HARD |
+
+### 3.6 Section E — Primary Care Utilization
+
+**Primary care provider block (Q53–Q62)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q53_HAS_PCP` | Required, ∈ {1, 2} | HARD |
+| Q54–Q62 enabled | `Q53_HAS_PCP = Yes` | GATE |
+| `Q54_PCP_TYPE` | Required when enabled, ∈ {1–5} | HARD |
+| `Q54_PCP_TYPE = 4` (Other) | `Q54_PCP_TYPE_OTHER_TXT` required | HARD |
+| `Q55_LOC_CONVENIENT` / `Q56_HOURS_CONVENIENT` / `Q57_WAIT_CONVENIENT` | Required when enabled, ∈ {1, 2} | HARD |
+| `Q58_WAIT_DAYS` | `0 ≤ days ≤ 365` | HARD |
+| `Q58_WAIT_MINUTES` | `0 ≤ minutes ≤ 1440` (24 h cap) | HARD |
+| Q58 pair sanity | `Q58_WAIT_DAYS + Q58_WAIT_MINUTES > 0` (at least one non-zero when enabled) | SOFT |
+| `Q59_SCHED_COMM` select-all | ≥ 1 option ticked when enabled | HARD |
+| Q60 enabled | `Q59_SCHED_COMM` includes "Teleconsultation" (2) | GATE |
+| `Q60_SCHED_TELECON_OK` | Required when enabled, ∈ {1, 2} | HARD |
+| `Q61_CONSULT_COMM` select-all | ≥ 1 option ticked when enabled | HARD |
+| Q62 enabled | `Q61_CONSULT_COMM` includes "Teleconsultation" (2) | GATE |
+| `Q62_CONSULT_TELECON_OK` | Required when enabled, ∈ {1, 2} | HARD |
+
+**Usual vs. current facility (Q63–Q73)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q63_HAS_USUAL_FACILITY` | Required, ∈ {1, 2} | HARD |
+| Q64 enabled | `Q63_HAS_USUAL_FACILITY = Yes` | GATE |
+| `Q64_FACILITY_NAME` | Required when enabled, non-blank | HARD |
+| Q65 enabled | `Q63_HAS_USUAL_FACILITY = No` | GATE |
+| `Q65_WHY_NO_USUAL` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q65_WHY_NO_USUAL` "I don't know" (6) | Cannot be combined with any other option | HARD |
+| `Q65_WHY_NO_USUAL = 7` (Other) | `Q65_WHY_NO_USUAL_OTHER_TXT` required | HARD |
+| Q66 enabled | `Q63_HAS_USUAL_FACILITY = Yes` | GATE |
+| `Q66_SAME_AS_USUAL` | Required when enabled, ∈ {1, 2} | HARD |
+| Q67 enabled | `Q63_HAS_USUAL_FACILITY = Yes` **and** `Q66_SAME_AS_USUAL = No` | GATE |
+| `Q67_WHY_THIS_FACILITY` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q67_WHY_THIS_FACILITY = 8` (Other) | `Q67_WHY_THIS_OTHER_TXT` required | HARD |
+| Q68 enabled | `Q63_HAS_USUAL_FACILITY = Yes` | GATE |
+| `Q68_USUAL_FAC_TYPE` | Required when enabled, ∈ {1–9} | HARD |
+| `Q68_USUAL_FAC_TYPE = 9` (Other) | `Q68_USUAL_FAC_TYPE_OTHER_TXT` required | HARD |
+| Q69/Q70 enabled | `Q63_HAS_USUAL_FACILITY = Yes` | GATE |
+| `Q69_USUAL_TRAVEL_HH` | `0 ≤ HH ≤ 24` | HARD |
+| `Q69_USUAL_TRAVEL_MM` | `0 ≤ MM ≤ 59` | HARD |
+| `Q69` pair sanity | `Q69_USUAL_TRAVEL_HH + Q69_USUAL_TRAVEL_MM > 0` (warn if both zero) | SOFT |
+| `Q70_USUAL_TRANSPORT` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q70_USUAL_TRANSPORT = 12` (Other) | `Q70_USUAL_TRANSPORT_OTHER_TXT` required | HARD |
+| `Q71_NEAREST_TYPE` | Required, ∈ {1–8} | HARD |
+| `Q71_NEAREST_TYPE = 7` (I don't know) | `Q72`, `Q73` may be skipped (IDK → no travel estimate); warn if answered anyway | SOFT |
+| `Q71_NEAREST_TYPE = 8` (Other) | `Q71_NEAREST_TYPE_OTHER_TXT` required | HARD |
+| `Q72_NEAREST_TRAVEL_HH` | `0 ≤ HH ≤ 24` | HARD |
+| `Q72_NEAREST_TRAVEL_MM` | `0 ≤ MM ≤ 59` | HARD |
+| `Q73_NEAREST_TRANSPORT` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q73_NEAREST_TRANSPORT = 12` (Other) | `Q73_NEAREST_TRANSPORT_OTHER_TXT` required | HARD |
+
+**YAKAP/Konsulta block (Q74–Q82)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q74_KON_HEARD` | Required, ∈ {1, 2} | HARD |
+| Q75–Q82 enabled | `Q74_KON_HEARD = Yes` | GATE |
+| `Q75_KON_SOURCE` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q75_KON_SOURCE` "I don't know" (7) | Cannot be combined with any other option | HARD |
+| `Q75_KON_SOURCE = 8` (Other) | `Q75_KON_SOURCE_OTHER_TXT` required | HARD |
+| `Q76_KON_UNDERSTAND` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q76_KON_UNDERSTAND` "There are no benefits" (5) | Cannot be combined with any other option | HARD |
+| `Q76_KON_UNDERSTAND` "I don't know" (6) | Cannot be combined with any other option | HARD |
+| `Q76_KON_UNDERSTAND = 7` (Other) | `Q76_KON_UNDERSTAND_OTHER_TXT` required | HARD |
+| `Q77_KON_REGISTERED` | Required when enabled, ∈ {1, 2, 3, 4} | HARD |
+| Q78 enabled | `Q77_KON_REGISTERED = Yes` (1) | GATE |
+| Q79 enabled | `Q77_KON_REGISTERED = Yes` (1) | GATE |
+| Q80 enabled | `Q77_KON_REGISTERED = Yes` (1) | GATE |
+| Q81 enabled | `Q77_KON_REGISTERED = Yes` (1) **and** `Q79_KON_HAD_APPT = Yes` | GATE |
+| `Q78_KON_WHEN_REG` | Required when enabled, ∈ {1–4} | HARD |
+| `Q78_KON_WHEN_REG` vs. age | Warn if `Q78 ∈ {3, 4}` and Q6 age suggests YAKAP/Konsulta did not yet exist at that time (configurable by ASPSI) | SOFT |
+| Q82 enabled | `Q77_KON_REGISTERED = No` (2) | GATE |
+| `Q82_KON_WHY_NOT_REG` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q82_KON_WHY_NOT_REG` "I don't know" (10) | Cannot be combined with any other option | HARD |
+| `Q82_KON_WHY_NOT_REG = 11` (Other) | `Q82_KON_WHY_NOT_REG_OTHER_TXT` required | HARD |
+
+### 3.7 Section F — Health-Seeking Behavior
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q83_VISIT_REASON` | Required, ∈ {1–8} | HARD |
+| `Q83_VISIT_REASON = 8` (Other) | `Q83_VISIT_REASON_OTHER_TXT` required | HARD |
+| `Q84_SERVICE_TYPE` | Required, ∈ {1–5} | HARD |
+| `Q84_SERVICE_TYPE = 5` (Other) | `Q84_SERVICE_TYPE_OTHER_TXT` required | HARD |
+| Q84 vs. `FIELD_CONTROL.PATIENT_TYPE` | `PATIENT_TYPE` is authoritative for Section G vs H routing. If `Q84 = 1 (Outpatient)` but `PATIENT_TYPE = Inpatient` (or vice versa), warn enumerator to verify | SOFT |
+| `Q85_CONDITIONS` select-all | ≥ 1 option ticked | HARD |
+| `Q85_CONDITIONS` "No condition - Regular check-up only" (19) | Cannot be combined with any other option | HARD |
+| `Q85_CONDITIONS = 20` (Other) | `Q85_CONDITIONS_OTHER_TXT` required | HARD |
+| Q85 vs. Q83 | If `Q83 = 4` (general check-up) → expect `Q85 = 19` (No condition); if conflicting, warn | SOFT |
+| `Q86_VISIT_EVENTS` select-all | ≥ 1 option ticked (a visit must have SOMETHING happen) | HARD |
+| `Q87_OTHER_ACTIONS` select-all | ≥ 1 option ticked | HARD |
+| `Q87_OTHER_ACTIONS` "Did not seek other forms of care" (6) | Cannot be combined with any other option | HARD |
+| `Q87_OTHER_ACTIONS = 7` (Other) | `Q87_OTHER_ACTIONS_OTHER_TXT` required | HARD |
+
+**Cross-section routing signal** (carries into Chunks 3 & 4):
+
+| Signal | Consequence |
+|---|---|
+| `FIELD_CONTROL.PATIENT_TYPE = Outpatient` | Section G (Q88–Q104) asked; Section H (Q105–Q115) skipped |
+| `FIELD_CONTROL.PATIENT_TYPE = Inpatient`  | Section H (Q105–Q115) asked; Section G (Q88–Q104) skipped |
+| `FIELD_CONTROL.PATIENT_TYPE` missing      | HARD block — cannot advance past Section F until set |
+
+---
+
+*Sections G–L, CSPro logic templates: see subsequent chunks.*
