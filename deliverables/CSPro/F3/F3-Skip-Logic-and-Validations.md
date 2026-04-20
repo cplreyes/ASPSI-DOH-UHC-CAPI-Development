@@ -404,4 +404,245 @@ No explicit skip rules in Section F. Q84 `SERVICE_TYPE` is advisory for Section 
 
 ---
 
-*Sections G–L, CSPro logic templates: see subsequent chunks.*
+## 2. Skip-logic table (Sections G–I)
+
+**Routing preamble.** `FIELD_CONTROL.PATIENT_TYPE` is the authoritative routing signal:
+
+- `PATIENT_TYPE = Outpatient` → enter Section G (Q88–Q104); skip Section H (Q105–Q115) entirely.
+- `PATIENT_TYPE = Inpatient`  → skip Section G (Q88–Q104); enter Section H (Q105–Q115).
+- Section I (Q116–Q130) is asked **for both** patient types after the applicable G or H has completed.
+
+### Section G — Outpatient Care
+
+| Q | Condition | Skip to |
+|---|---|---|
+| — | `PATIENT_TYPE ≠ Outpatient` | **Section I** (skip entire G record) |
+| Q89 ADVISED_ADMIT | = Yes | Q91 (Q90 is the "why not confined" reasons — only meaningful when Q89 = No; see §3.8 sanity rule) |
+| Q93 LABS | "None" (17) ticked | **Q95** (skip Q94 lab-cost matrix) |
+| Q95 PRESCRIBED | = No | **Q97** (skip Q96 meds-cost matrix) |
+| Q99 BUCAS_HEARD | = No | **Q115 as printed** — source prints `<proceed to Q115>` which crosses out of Section G into Section H. See sanity finding #9; default behaviour: **skip to end of Section G** (i.e., skip Q100–Q104) |
+| Q99 / Q100–Q103 enumerator gate | Respondent's area has no BUCAS center | Skip Q99–Q103 entirely (enumerator judgment per source note) |
+| Q102 BUCAS_ACCESSED | = No | **Q104** (skip Q103) |
+
+### Section H — Inpatient Care
+
+| Q | Condition | Skip to |
+|---|---|---|
+| — | `PATIENT_TYPE ≠ Inpatient` | **Section I** (skip entire H record) |
+| Q108 MEDS_OUTSIDE | = No | **Q110** (skip Q109 meds-outside-cost matrix) |
+| Q110 LAB_OUTSIDE | = No | **Q113** (skip Q111, Q112) |
+| Q113 PhilHealth line (`Q113_PAY_08`) | = Yes (PhilHealth already availed) | **Q114.1** (skip Q114 — why-not-availed question moot) |
+
+### Section I — Financial Risk Protection
+
+| Q | Condition | Skip to |
+|---|---|---|
+| Q116 NBB_HEARD | = No (2) **or** "I don't know" (3) | **Q119** (skip Q117, Q118) |
+| Q119 ZBB_HEARD | = No (2) **or** "I don't know" (3) | **Q124** (skip Q120, Q121, Q122, Q123) |
+| Q119 ZBB_HEARD | = Yes **and** `PATIENT_TYPE ≠ Inpatient` | **Q124** (Q122/Q123 presume a confinement context) |
+| Q124 MAIFIP_HEARD | = No (2) **or** "I don't know" (3) | **Q130** (skip Q125–Q129) |
+| — | `Q113_PAY_07` (Q113 MAIFIP row, inpatients only) = Yes | **Q125** still asked; **Q124 auto-set to Yes** per source note ("SKIP IF ANSWERED MAIFIP IN Q113" — interpreted as: don't re-ask awareness when they already availed it) |
+| Q126 MAIFIP_AVAILED | = No | **Q129** (skip Q127, Q128) |
+| Q127 MAIFIP_OOP | = No | **Q130** (skip Q128, Q129) |
+| Q128 MAIFIP_OOP_ITEMS | (after completion) | **Q130** (skip Q129 — reached only via Q127 = Yes path) |
+
+---
+
+## 3. Validations (Sections G–I)
+
+### 3.8 Sanity extensions (carries additional findings for chunks 3–4)
+
+| # | Item | Issue | Fix |
+|---|---|---|---|
+| 9 | **Q99 No → Q115** | Source prints `<proceed to Q115>` but Q115 is in Section H; for an outpatient, Q115 is unreachable. Likely typo for "end of Section G". | Default: treat as end-of-Section-G (skip Q100–Q104). Flag to ASPSI for confirmation. |
+| 10 | **Q90 asked regardless of Q89** | Source prints no skip between Q89 and Q90; but Q90 asks "reasons why you were NOT confined" — only meaningful when Q89 = No. | Soft-warn when `Q89_ADVISED_ADMIT = No` **and** Q90 has ticked options other than option 6 ("No need/regular check-up only"). |
+| 11 | **Q99–Q103 BUCAS enumerator gate** | Source note: "Q99 to Q103 are applicable only to respondents in areas with BUCAS center. Otherwise, skip." No dcf field captures the enumerator judgment. | Add PROC-level `BUCAS_AREA_FLAG` (not in dcf) or rely on enumerator leaving Q99 blank. Simplest: if Q99 blank, treat Q100–Q103 as skipped. |
+| 12 | **Q94 per-test cost matrix is aggregate** | Source says "To be asked for each lab test ticked in Q93"; dcf captures Q94 once in aggregate across all labs. | Acknowledged deviation — fieldable only if per-test roster is added. For Apr 20 bench test, aggregate is acceptable; flag for pilot. |
+| 13 | **Q124 MAIFIP awareness implied by Q113** | Source note "SKIP IF ANSWERED MAIFIP IN Q113". If patient already availed MAIFIP (Q113_PAY_07 = Yes), re-asking "have you heard of MAIFIP" is redundant. | Auto-set `Q124_MAIFIP_HEARD = Yes` and hide Q124 when `Q113_PAY_07 = Yes`; proceed directly to Q125. |
+| 14 | **Section H cost-matrix lengths** | Q107/Q109/Q112/Q113 amount fields use `length=9` (max 999,999,999 pesos). Inpatient stays with long confinement may approach this — monitor during pilot. | Monitor; no action. |
+
+### 3.9 Section G — Outpatient Care
+
+**Routing and visit reason**
+
+| Item | Rule | Severity |
+|---|---|---|
+| Section G enabled | `FIELD_CONTROL.PATIENT_TYPE = Outpatient` | GATE |
+| `Q88_WHY_VISIT` | Required, ∈ {1–8} | HARD |
+| `Q88_WHY_VISIT = 8` (Other) | `Q88_WHY_VISIT_OTHER_TXT` required | HARD |
+| `Q89_ADVISED_ADMIT` | Required, ∈ {1, 2} | HARD |
+| `Q89_ADVISED_ADMIT = Yes` + in facility for outpatient | Warn enumerator: "Patient was advised to be admitted but is receiving outpatient care — verify" | SOFT |
+| `Q90_NOT_CONFINED` select-all | When Q89 = No: ≥ 1 option ticked | HARD |
+| `Q90_NOT_CONFINED = 7` (Other) | `Q90_NOT_CONFINED_OTHER_TXT` required | HARD |
+| `Q91_USUAL_OUTPATIENT` | Required, ∈ {1, 2} | HARD |
+
+**Consultation and lab costs (Q92–Q94)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| Q92 payment-source matrix | For each `Q92_PAY_{code} = Yes`, `Q92_PAY_{code}_AMT` required `> 0` (pesos); for `= No`, `_AMT` must be 0 or blank | HARD |
+| Q92 mutual exclusivity | `Q92_PAY_03` ("Free/no cost") = Yes cannot coexist with any Q92_PAY_01/02/07 (Out-of-pocket/Donation/In kind) | SOFT (allow override) |
+| Q92 total sanity | Sum of Q92_*_AMT > 0 if Q92_PAY_03 ≠ Yes; warn if Q92 total implausibly low/high for facility tier | SOFT |
+| `Q93_LABS` select-all | ≥ 1 option ticked | HARD |
+| `Q93_LABS = 16` (Other, specify) | `Q93_LABS_OTHER_TXT` required | HARD |
+| `Q93_LABS = 17` (None) | Cannot be combined with any other lab option; gates Q94 off | HARD |
+| Q94 payment-source matrix enabled | `Q93_LABS ≠ {17}` (at least one lab ticked) | GATE |
+| Q94 amount rules | Same as Q92 pattern | HARD |
+
+**Meds cost and final payment (Q95–Q97.2)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q95_PRESCRIBED` | Required, ∈ {1, 2} | HARD |
+| Q96 payment-source matrix enabled | `Q95_PRESCRIBED = Yes` | GATE |
+| Q96 amount rules | Same as Q92 pattern | HARD |
+| `Q97_FINAL_AMOUNT` | `0 ≤ amt ≤ 99,999,999` | HARD |
+| Q97 vs. Q92/Q94/Q96 | `Q97_FINAL_AMOUNT` should be ≈ sum of all Out-of-pocket (`_PAY_01`) lines across Q92/Q94/Q96 ± 10%; warn otherwise | SOFT |
+| Q97.1 select matrix (`Q971_{1-4}`) | For each ticked, `_AMT > 0`; sum of Q971 amounts must also appear in Q97_FINAL_AMOUNT | HARD + SOFT |
+| `Q971_4 = Yes` (Other expenses) | `Q971_OTHER_TXT` required | HARD |
+| Q97.2 select matrix (`Q972_{1-6}`) | For each ticked, `_AMT > 0`; NOT summed into Q97 (these are out-of-bill) | HARD |
+| `Q972_6 = Yes` (Other expenses) | `Q972_OTHER_TXT` required | HARD |
+
+**Payment sources (Q98) — 15-row matrix**
+
+| Item | Rule | Severity |
+|---|---|---|
+| Q98 matrix | ≥ 1 `Q98_PAY_*` = Yes (patient must have paid somehow) | HARD |
+| Q98 per-row | For each `Q98_PAY_{code} = Yes`, `Q98_PAY_{code}_AMT > 0` | HARD |
+| `Q98_PAY_06 = Yes` (Other gov donation) | `Q98_OTHER_DONATION_TXT` required | HARD |
+| `Q98_PAY_15 = Yes` (Other) | `Q98_OTHER_TXT` required | HARD |
+| Q98 total vs. Q97 | Sum of Q98_*_AMT should ≈ `Q97_FINAL_AMOUNT + Q972 non-OOP amounts`; warn if wildly different | SOFT |
+
+**BUCAS block (Q99–Q104)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q99_BUCAS_HEARD` | Required when enumerator judges area has BUCAS (see sanity #11); else may be blank | HARD (conditional) |
+| Q100–Q103 enabled | `Q99_BUCAS_HEARD = Yes` | GATE |
+| `Q100_BUCAS_SOURCE` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q100_BUCAS_SOURCE` "I don't know" (7) | Cannot be combined with any other option | HARD |
+| `Q100_BUCAS_SOURCE = 8` (Other) | `Q100_BUCAS_SOURCE_OTHER_TXT` required | HARD |
+| `Q101_BUCAS_UNDERSTAND` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q101_BUCAS_UNDERSTAND = 5` (Other) | `Q101_BUCAS_UNDERSTAND_OTHER_TXT` required | HARD |
+| `Q102_BUCAS_ACCESSED` | Required when Q99 = Yes, ∈ {1, 2} | HARD |
+| Q103 enabled | `Q102_BUCAS_ACCESSED = Yes` | GATE |
+| `Q103_BUCAS_SERVICES` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q103_BUCAS_SERVICES` "I don't know" (6) | Cannot be combined with any other option | HARD |
+| `Q103_BUCAS_SERVICES = 7` (Other) | `Q103_BUCAS_SERVICES_OTHER_TXT` required | HARD |
+| `Q104_WITHOUT_BUCAS` | Required when Q99 = Yes, ∈ {1–6} | HARD |
+| `Q104_WITHOUT_BUCAS = 6` (Others) | `Q104_WITHOUT_BUCAS_OTHER_TXT` required | HARD |
+
+### 3.10 Section H — Inpatient Care
+
+**Reason and duration**
+
+| Item | Rule | Severity |
+|---|---|---|
+| Section H enabled | `FIELD_CONTROL.PATIENT_TYPE = Inpatient` | GATE |
+| `Q105_REASON` | Required, ∈ {1–5} | HARD |
+| `Q105_REASON = 5` (Other) | `Q105_REASON_OTHER_TXT` required | HARD |
+| `Q106_NIGHTS` | `0 ≤ nights ≤ 365` (warn if > 90) | HARD + SOFT |
+| `Q106_DAYS`   | `0 ≤ days ≤ 365`   (warn if > 90) | HARD + SOFT |
+| Q106 pair sanity | `Q106_NIGHTS + Q106_DAYS ≥ 1` (at least one full day of stay) | HARD |
+| Q106 vs. visit dates | `abs((DATE_FINAL_VISIT − DATE_FIRST_VISIT) − Q106_DAYS) ≤ 1` | SOFT |
+
+**Total bill and outside-facility costs**
+
+| Item | Rule | Severity |
+|---|---|---|
+| Q107 matrix | ≥ 1 `Q107_PAY_*` = Yes | HARD |
+| Q107 per-row | For each `Q107_PAY_{code} = Yes`, `Q107_PAY_{code}_AMT > 0` | HARD |
+| `Q107_PAY_10 = Yes` (Other) | `Q107_PAY_OTHER_TXT` required | HARD |
+| `Q108_MEDS_OUTSIDE` | Required, ∈ {1, 2} | HARD |
+| Q109 matrix enabled | `Q108_MEDS_OUTSIDE = Yes` | GATE |
+| Q109 per-row | Same pattern as Q107 | HARD |
+| `Q109_PAY_09 = Yes` (Other) | `Q109_PAY_OTHER_TXT` required | HARD |
+| `Q110_LAB_OUTSIDE` | Required, ∈ {1, 2} | HARD |
+| Q111, Q112 enabled | `Q110_LAB_OUTSIDE = Yes` | GATE |
+| `Q111_SERVICES_OUTSIDE` | Required when enabled, non-blank | HARD |
+| Q112 matrix enabled | `Q110_LAB_OUTSIDE = Yes` | GATE |
+| Q112 per-row | Same pattern as Q107 | HARD |
+| `Q112_PAY_09 = Yes` (Other) | `Q112_PAY_OTHER_TXT` required | HARD |
+
+**Payment sources (Q113) — 13-row matrix**
+
+| Item | Rule | Severity |
+|---|---|---|
+| Q113 matrix | ≥ 1 `Q113_PAY_*` = Yes | HARD |
+| Q113 per-row | For each `Q113_PAY_{code} = Yes`, `Q113_PAY_{code}_AMT > 0` | HARD |
+| `Q113_PAY_13 = Yes` (Other) | `Q113_PAY_OTHER_TXT` required | HARD |
+| Q113 total vs. Q107 | Sum of Q113_*_AMT ≈ sum of Q107 OOP + PhilHealth/HMO/etc. rows; warn if off by > 10% | SOFT |
+
+**Why-no-PhilHealth and other-bill items (Q114, Q114.1, Q114.2)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| Q114 enabled | `Q113_PAY_08 ≠ Yes` (PhilHealth not availed) | GATE |
+| `Q114_NO_PH` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q114_NO_PH = 7` (Other) | `Q114_NO_PH_OTHER_TXT` required | HARD |
+| Q114.1 matrix (`Q1141_{1-6}`) | For each ticked, `_AMT > 0`; amount included in Q107 totals | HARD |
+| `Q1141_6 = Yes` (Other) | `Q1141_OTHER_TXT` required | HARD |
+| Q114.2 matrix (`Q1142_{1-7}`) | For each ticked, `_AMT > 0`; amounts are out-of-bill, NOT in Q107 | HARD |
+| `Q1142_7 = Yes` (Other) | `Q1142_OTHER_TXT` required | HARD |
+| `Q115_FINAL_CASH` | `0 ≤ amt ≤ 999,999,999`; should ≈ Q107 OOP row (`Q107_PAY_01_AMT`) ± 10% | HARD + SOFT |
+
+### 3.11 Section I — Financial Risk Protection
+
+**NBB (Q116–Q118)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q116_NBB_HEARD` | Required, ∈ {1, 2, 3} | HARD |
+| Q117, Q118 enabled | `Q116_NBB_HEARD = Yes` | GATE |
+| `Q117_NBB_SOURCE` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q117_NBB_SOURCE` "I don't know" (7) | Cannot be combined with any other option | HARD |
+| `Q117_NBB_SOURCE = 8` (Other) | `Q117_NBB_SOURCE_OTHER_TXT` required | HARD |
+| `Q118_NBB_UNDERSTAND` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q118_NBB_UNDERSTAND` "I don't know" (8) | Cannot be combined with any other option | HARD |
+| `Q118_NBB_UNDERSTAND = 9` (Other) | `Q118_NBB_UNDERSTAND_OTHER_TXT` required | HARD |
+
+**ZBB (Q119–Q123)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q119_ZBB_HEARD` | Required, ∈ {1, 2, 3} | HARD |
+| Q120–Q123 enabled | `Q119_ZBB_HEARD = Yes` | GATE |
+| `Q120_ZBB_SOURCE` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q120_ZBB_SOURCE` "I don't know" (7) | Cannot be combined with any other option | HARD |
+| `Q120_ZBB_SOURCE = 8` (Other) | `Q120_ZBB_SOURCE_OTHER_TXT` required | HARD |
+| `Q121_ZBB_UNDERSTAND` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q121_ZBB_UNDERSTAND` "I don't know" (8) | Cannot be combined with any other option | HARD |
+| `Q121_ZBB_UNDERSTAND = 9` (Other) | `Q121_ZBB_UNDERSTAND_OTHER_TXT` required | HARD |
+| Q122 enabled | `Q119_ZBB_HEARD = Yes` **and** `PATIENT_TYPE = Inpatient` | GATE |
+| `Q122_ZBB_INFORMED` | Required when enabled, ∈ {1, 2} | HARD |
+| Q123 enabled | `Q119_ZBB_HEARD = Yes` **and** `PATIENT_TYPE = Inpatient` | GATE |
+| `Q123_ZBB_EXTENT` | Required when enabled, ∈ {1–4} | HARD |
+
+**MAIFIP (Q124–Q129)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| Q124 auto-set | If `Q113_PAY_07 = Yes` (MAIFIP already availed), set `Q124_MAIFIP_HEARD = Yes` and skip display | GATE (auto) |
+| `Q124_MAIFIP_HEARD` | Required, ∈ {1, 2, 3} | HARD |
+| Q125–Q129 enabled | `Q124_MAIFIP_HEARD = Yes` **or** `Q113_PAY_07 = Yes` | GATE |
+| `Q125_MAIFIP_SOURCE` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q125_MAIFIP_SOURCE` "I don't know" (7) | Cannot be combined with any other option | HARD |
+| `Q125_MAIFIP_SOURCE = 8` (Other) | `Q125_MAIFIP_SOURCE_OTHER_TXT` required | HARD |
+| `Q126_MAIFIP_AVAILED` | Required when enabled, ∈ {1, 2}; must = Yes if `Q113_PAY_07 = Yes` | HARD |
+| Q127 enabled | `Q126_MAIFIP_AVAILED = Yes` | GATE |
+| `Q127_MAIFIP_OOP` | Required when enabled, ∈ {1, 2} | HARD |
+| Q128 enabled | `Q126_MAIFIP_AVAILED = Yes` **and** `Q127_MAIFIP_OOP = Yes` | GATE |
+| `Q128_MAIFIP_OOP_ITEMS` select-all | ≥ 1 option ticked when enabled | HARD |
+| Q129 enabled | `Q126_MAIFIP_AVAILED = No` | GATE |
+| `Q129_WHY_NO_MAIFIP` select-all | ≥ 1 option ticked when enabled; ∈ {1–4} | HARD |
+
+**Reduced spending (Q130)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q130_REDUCED_SPEND` | Required (asked for all patients), ∈ {1–4} | HARD |
+| Q130 = Yes vs. Q98/Q113 | If patient reports reduced-spending but all Q98/Q113 amounts are in free/covered rows (no OOP), warn | SOFT |
+
+---
+
+*Sections J–L, CSPro logic templates: see final chunk.*
