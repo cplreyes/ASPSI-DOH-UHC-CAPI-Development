@@ -2,26 +2,18 @@
 sprint: 002
 start: 2026-04-20
 end: 2026-04-24
-status: planning
+status: active
 sprint_length: 1 week (5 working days)
 deliverable_anchor: D2 / Tranche 2 (40% due 2026-04-24)
 ---
 
-# Sprint 002 — TBD (plan Monday 2026-04-20 AM)
+# Sprint 002 — Ship the Tranche 2 submission package
 
 ## Sprint Goal
 
-> **TBD.** Fill in Monday morning. Anchor: Tranche 2 (40%) is due 2026-04-24 — Friday of this sprint. DOH-PMSMD feedback on the matrices is due 2026-04-20 (Monday). Whatever the goal is, it has to protect the Tranche 2 payment window.
-
-**Candidate focus areas** (Carl picks one as the goal Monday):
-
-1. **Tranche 2 protection** — triage DOH-PMSMD feedback landing Apr 20; execute whatever revisions they request against F1/F2 build state; Juvy/Dr Claro submit Tranche 2 package by Apr 24.
-2. **F1 Designer walkthrough + sign-off** (E2-F1-010, carry-forward critical) — open freshly generated DCF in CSPro Designer, close bug list, append sign-off note to `log.md`. Unblocks E3-F1-001 (FMF kickoff).
-3. **F2 Google Forms build push** (E3-F2-GF-009..015) — staff encoder, paper mirror, Filipino translations, desk test, 3-day dry-run, Shan QA, gate decision.
+> **Ship the Tranche 2 (40%) submission package by Fri 2026-04-24.** Triage DOH-PMSMD matrix feedback into F1/F2 build state, close F1 Designer sign-off (E2-F1-010) so F1 design is formally complete, and confirm Tranche 2 package contents with Juvy for Dr Claro's submission route. Late-delivery penalty is 1%/day after Apr 24 (CSA §5) — deadline exposure is the metric, not velocity.
 
 ## Committed Items
-
-<!-- Populate Monday 2026-04-20 AM. IDs reference epic files in scrum/epics/. -->
 
 ### Carry-forward from Sprint 001 (priority order)
 
@@ -38,16 +30,19 @@ deliverable_anchor: D2 / Tranche 2 (40% due 2026-04-24)
 ### New for Sprint 002
 
 - [ ] **E0-032a** Triage DOH-PMSMD feedback on matrices (arrives Apr 20 Mon); route any requested revisions into F1/F2 build state; confirm Tranche 2 submission package with Juvy by Apr 23 `status::todo` `priority::critical` `estimate::TBD`
-- [ ] **F2 PWA M1** (optional stretch) — Generator v1 + single-section render from F2-Spec.md. See `deliverables/F2/PWA/app/NEXT.md` for pre-start checklist and `deliverables/F2/PWA/2026-04-17-design-spec.md` §§5.2, 6, 11.1 for plan-writing inputs. `status::todo` `priority::medium` `estimate::12-15h`
+
+### Stretch (not committed)
+
+- [ ] **F2 PWA pilot-readiness decision** — per `deliverables/F2/PWA/app/NEXT.md`: pick one of pilot now / close-deferred M11 items / move to M12 F3-F4 parity. Decision itself is ~30m; follow-through TBD depending on path. `status::todo` `priority::medium` `estimate::30m decision`
 
 ## Sprint Backlog Sizing
 
-<!-- Populate Monday. Solo-dev capacity: 5 days × ~5h = ~25h. -->
-
 | Class | Items | Estimate |
 |---|---|---|
-| **Committed (must-finish)** | TBD Monday | TBD |
-| **Stretch** | F2 PWA M1 | 12-15h |
+| **Committed (must-finish)** | E2-F1-010, E3-F1-001, E0-010, E0-020, E0-032, E0-032a | ~10h + E0-032a unbounded |
+| **Stretch** | F2 PWA pilot-readiness decision | 30m decision + follow-through TBD |
+
+> Capacity: ~25h solo-dev week. Hard-committed ~10h; E0-032a depends entirely on DOH-PMSMD feedback scope and can absorb the remaining ~15h if revisions are heavy. Stretch is a decision, not a build push — intentional, because Tranche 2 is the anchor.
 
 ## Daily Notes
 
@@ -83,8 +78,7 @@ _TBD 2026-04-24_
 
 ## Definition of Done — Sprint 002
 
-<!-- Populate Monday alongside the sprint goal. -->
-
-- [ ] TBD
-- [ ] TBD
-- [ ] TBD
+- [ ] **Tranche 2 (40%) submission package** confirmed with Juvy and submitted via DOH route by EOD Fri 2026-04-24; submission entry logged in `log.md`.
+- [ ] **E2-F1-010** closed: F1 DCF walkthrough complete in CSPro Designer, bug list closed or deferred with rationale, sign-off note appended to `log.md`.
+- [ ] **E0-032a** closed: DOH-PMSMD matrix feedback triaged; any requested revisions reflected in F1/F2 build state or explicitly deferred with rationale recorded.
+- [ ] **Sprint 002 retrospective** (4 questions) filled in `sprint-current.md` by EOD Fri 2026-04-24; sprint archived to `scrum/sprints/sprint-002.md`; `sprint-current.md` reset for Sprint 003.
