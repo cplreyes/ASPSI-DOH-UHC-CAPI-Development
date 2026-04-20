@@ -764,138 +764,341 @@ def build_section_e():
 
 
 # ============================================================
-# Section F. Health-Seeking Behavior (Q51-Q57)
+# Section F. Patient's Health-Seeking Behavior (Q83-Q87) — Apr 20
 # ============================================================
 
 def build_section_f():
-    Q51_WHY_VISIT = [
-        ("This facility is more accessible than my usual facility", "01"),
-        ("Needed a service/specialist not available at my usual facility", "02"),
-        ("Recommended by friends/family", "03"),
-        ("Wanted to try another facility than my usual", "04"),
-        ("Prefer this facility than my usual", "05"),
-        ("This was referred to me by my usual facility", "06"),
-        ("Usual facility is closed for today", "07"),
-        ("The doctor I trust transferred in this facility", "08"),
-        ("Other (specify)", "09"),
+    Q83_REASON = [
+        ("Consultation for new health problem",                      "1"),
+        ("Consultation to follow-up an ongoing health problem",      "2"),
+        ("For tests/diagnostics only",                               "3"),
+        ("For a general check-up",                                   "4"),
+        ("To get a health certificate/administrative reason",        "5"),
+        ("For immunizations/vaccinations",                           "6"),
+        ("My doctor transferred to this health facility",            "7"),
+        ("Other (Specify)",                                          "8"),
     ]
-    Q52_REASON_VISIT = [
-        ("Consultation for new health problem",           "1"),
-        ("Follow-up on ongoing health problem",           "2"),
-        ("For tests/diagnostics only",                    "3"),
-        ("For a general check-up",                        "4"),
-        ("To get a health certificate/administrative reason","5"),
-        ("For immunizations/vaccinations",                "6"),
-        ("My doctor transferred to this facility",        "7"),
-        ("Other (specify)",                               "8"),
+    Q84_SERVICE = [
+        ("Outpatient care (Consultation, procedure, or treatment where the patient visits "
+         "and leaves within the same day)", "1"),
+        ("Inpatient care (Care provided in hospital or another facility where the patient is "
+         "admitted for at least one night)", "2"),
+        ("Emergency care (Care for serious illnesses or injuries that need immediate medical "
+         "attention; usually provided in an emergency room or ER)", "3"),
+        ("Primary care consultation",                                                        "4"),
+        ("Other (Specify)",                                                                  "5"),
     ]
-    Q53_CARE_TYPE = [
-        ("Outpatient care",            "1"),
-        ("Inpatient care",             "2"),
-        ("Emergency care",             "3"),
-        ("Primary care consultation",  "4"),
-        ("Other (specify)",            "5"),
+    Q85_CONDITIONS = [
+        ("Upper respiratory infection",                                  "01"),
+        ("Hypertension",                                                 "02"),
+        ("Immunization",                                                 "03"),
+        ("Pregnancy or birth",                                           "04"),
+        ("Flu",                                                          "05"),
+        ("Fever",                                                        "06"),
+        ("Joint and muscle pain",                                        "07"),
+        ("Asthma or COPD (chronic breathing problem, not cancer)",       "08"),
+        ("Diabetes",                                                     "09"),
+        ("Heart problem",                                                "10"),
+        ("Kidney problem /Dialysis",                                     "11"),
+        ("Cancer (any)",                                                 "12"),
+        ("Gastro problem (vomiting, diarrhea etc.)",                     "13"),
+        ("Other infection (e.g. urine, skin, other virus etc.)",         "14"),
+        ("Accident/injury (e.g. wound/broken bone)",                     "15"),
+        ("Dental",                                                       "16"),
+        ("ENT (problem with ear/nose/throat)",                           "17"),
+        ("Allergy",                                                      "18"),
+        ("No condition - Regular check-up only",                         "19"),
+        ("Other (Specify)",                                              "20"),
     ]
-    Q55_ACTIONS = [
-        ("Visited other healthcare facility",   "1"),
-        ("Sought alternative care",             "2"),
-        ("Sought telemedicine",                 "3"),
-        ("Used home care",                      "4"),
-        ("Bought medicine from a pharmacy",     "5"),
-        ("Did not seek other forms of care",    "6"),
-        ("Other (specify)",                     "7"),
+    Q86_VISIT_EVENTS = [
+        ("Saw a doctor",                                                                      "01"),
+        ("Saw a nurse/midwife",                                                               "02"),
+        ("Saw any other healthcare worker/member of medical staff",                           "03"),
+        ("Had basic tests done (e.g. blood pressure check, height/weight)",                   "04"),
+        ("Had any laboratory tests done (e.g. blood, urine sample)",                          "05"),
+        ("Had any imaging done (e.g. ultrasound, Xray, CT)",                                  "06"),
+        ("Prescribed medication",                                                             "07"),
+        ("Had any minor procedure/surgery done",                                              "08"),
+        ("Picked up medical certificate/other administration",                                "09"),
+        ("Was admitted for confinement",                                                      "10"),
+    ]
+    Q87_OTHER_ACTIONS = [
+        ("Visited other healthcare facility",                                                 "1"),
+        ("Sought alternative care (Healthcare apart from medical doctors or the formal "
+         "healthcare system; such as reflexology, acupuncture, massage therapy, herbal "
+         "medicines, etc.)",                                                                   "2"),
+        ("Sought telemedicine (Remote diagnosis and treatment of patients by means of "
+         "telecommunications technology)",                                                     "3"),
+        ("Used home care (Healthcare services and support provided to individuals in their "
+         "own homes)",                                                                         "4"),
+        ("Bought medicine from a pharmacy",                                                    "5"),
+        ("Did not seek other forms of care",                                                   "6"),
+        ("Other (Specify)",                                                                    "7"),
     ]
     items = [
-        yes_no("Q51_USUAL_FACILITY", "51. Is this the facility you usually go to for general health concerns?"),
-        *select_all("Q51A_WHY_DIFF", "51a. Why did you go to this facility?", Q51_WHY_VISIT),
-        *select_all("Q52_REASON_VISIT", "52. What best describes why you will visit a health facility?", Q52_REASON_VISIT),
-        *select_all("Q53_CARE_TYPE", "53. Have you accessed any of the following forms of care in the last 6 months?", Q53_CARE_TYPE),
-        yes_no("Q54_PREVENTIVE", "54. Have you ever consulted a physician for preventative reasons?"),
-        yes_no("Q55_FORGONE", "55. In the last 6 months, have you had a medical problem and chosen NOT to see a healthcare provider?"),
-        *select_all("Q56_FORGONE_WHY", "56. Why not?", [
-            ("Not sick enough","1"),("It's too expensive","2"),
-            ("Could not take time off work","3"),("Could not get an appointment soon enough","4"),
-            ("No transportation available","5"),("Afraid to know my illness","6"),
-            ("I don't know","7"),("Other (specify)","8"),
-        ]),
-        *select_all("Q57_ACTIONS", "57. Did you do any other actions to improve your health?", Q55_ACTIONS),
+        select_one("Q83_VISIT_REASON",
+                   "83. What best describes why the patient visited a health facility "
+                   "(e.g. RHU, health center, clinic, hospital)?", Q83_REASON, length=1),
+        alpha("Q83_VISIT_REASON_OTHER_TXT",
+              "83. Visit reason — Other (specify) text", length=120),
+        select_one("Q84_SERVICE_TYPE",
+                   "84. What type of service did the patient usually access?",
+                   Q84_SERVICE, length=1),
+        alpha("Q84_SERVICE_TYPE_OTHER_TXT",
+              "84. Service type — Other (specify) text", length=120),
+        *select_all("Q85_CONDITIONS",
+                    "85. What condition/s do/es the patient usually visit the facility for?",
+                    Q85_CONDITIONS),
+        alpha("Q85_CONDITIONS_OTHER_TXT",
+              "85. Conditions — Other (specify) text", length=120),
+        *select_all("Q86_VISIT_EVENTS",
+                    "86. Which of the following happened during the patient's most recent visit?",
+                    Q86_VISIT_EVENTS),
+        *select_all("Q87_OTHER_ACTIONS",
+                    "87. Apart from this visit, has the patient done anything else to improve "
+                    "his/her health condition or address his/her health concern?", Q87_OTHER_ACTIONS),
+        alpha("Q87_OTHER_ACTIONS_OTHER_TXT",
+              "87. Other actions — Other (specify) text", length=120),
     ]
-    return record("F_HEALTH_SEEKING", "F. Health-Seeking Behavior", "H", items)
+    return record("F_HEALTH_SEEKING",
+                  "F. Patient's Health-Seeking Behavior", "H", items)
 
 
 # ============================================================
-# Section G. Outpatient Care (Q58-Q68)
+# Section G. Outpatient Care (Q88-Q104) — Apr 20
 # ============================================================
 
 def build_section_g():
-    Q58_SERVICES = [
-        ("Consultation with a doctor",          "01"),
-        ("Vaccination / immunization",          "02"),
-        ("Dental care",                         "03"),
-        ("Eye care / vision check",             "04"),
-        ("Mental health consultation",          "05"),
-        ("Prenatal / postnatal care",           "06"),
-        ("Family planning",                     "07"),
-        ("Laboratory / diagnostic test",        "08"),
-        ("Physical therapy / rehabilitation",   "09"),
-        ("Other (specify)",                     "10"),
+    Q88_WHY_VISIT = [
+        ("Sick/Injured",                     "1"),
+        ("Prenatal/Post-natal Check-up",     "2"),
+        ("Gave Birth",                       "3"),
+        ("Dental check-up",                  "4"),
+        ("Medical check-up",                 "5"),
+        ("Medical requirement",              "6"),
+        ("NHTS/CCT/4Ps Requirement",         "7"),
+        ("Other (specify)",                  "8"),
     ]
-    Q61_LABS = [
-        ("Complete blood count (CBC)",   "01"),
-        ("Urinalysis",                   "02"),
-        ("Fecalysis / Stool exam",       "03"),
-        ("Blood chemistry",              "04"),
-        ("Lipid profile",                "05"),
-        ("Blood sugar / glucose test",   "06"),
-        ("Thyroid function test",        "07"),
-        ("X-ray",                        "08"),
-        ("Ultrasound",                   "09"),
-        ("ECG / EKG",                    "10"),
-        ("Drug test",                    "11"),
-        ("Pap smear",                    "12"),
-        ("Mammogram",                    "13"),
-        ("CT Scan",                      "14"),
-        ("MRI",                          "15"),
-        ("COVID-19 test",                "16"),
-        ("Other (specify)",              "17"),
+    Q90_NOT_CONFINED = [
+        ("Facility is far",                                 "1"),
+        ("No money",                                        "2"),
+        ("Worried about treatment cost",                    "3"),
+        ("Home remedy is available",                        "4"),
+        ("Health facility is not PhilHealth accredited",    "5"),
+        ("No need/regular check-up only",                   "6"),
+        ("Other (specify)",                                 "7"),
     ]
-    Q65_PAYMENT = [
-        ("Own income / household income","01"),
-        ("PhilHealth",                   "02"),
-        ("Private insurance / HMO",      "03"),
-        ("Loan",                         "04"),
-        ("Sale of assets",               "05"),
-        ("Donations from charities/NGOs","06"),
-        ("Donations from LGUs",          "07"),
-        ("National Gov't Agencies",      "08"),
-        ("Paid by someone else",         "09"),
-        ("Savings / pension",            "10"),
-        ("Remittance",                   "11"),
-        ("Borrowing from relatives",     "12"),
-        ("Borrowing from institutions",  "13"),
-        ("Government assistance",        "14"),
-        ("Other (specify)",              "15"),
+    Q92_PAYMENT_SRC = [
+        ("Out-of-pocket",                        "01"),
+        ("Donation",                             "02"),
+        ("Free/no cost",                         "03"),
+        ("Free, charge to PhilHealth",           "04"),
+        ("Free, charge to Private Insurance",    "05"),
+        ("Free, charge to HMO",                  "06"),
+        ("In kind",                              "07"),
+        ("Don't know",                           "08"),
+    ]
+    Q93_LABS = [
+        ("CBC with platelet count",   "01"),
+        ("Urinalysis",                "02"),
+        ("Fecalysis",                 "03"),
+        ("Sputum Microscopy",         "04"),
+        ("Fecal Occult Blood",        "05"),
+        ("Pap smear",                 "06"),
+        ("Lipid profile",             "07"),
+        ("FBS",                       "08"),
+        ("OGTT (Oral glucose tolerance tests)", "09"),
+        ("ECG",                       "10"),
+        ("Chest X-Ray",               "11"),
+        ("Creatinine",                "12"),
+        ("HbA1c",                     "13"),
+        ("Abdominal ultrasound",      "14"),
+        ("Dental Services",           "15"),
+        ("Other, specify:",           "16"),
+        ("None",                      "17"),  # proceed to Q95
+    ]
+    Q96_MEDS_PAY = [
+        ("Out-of-pocket",                        "01"),
+        ("Free/no cost",                         "02"),
+        ("Free, charge to PhilHealth",           "03"),
+        ("Free, charge to Private Insurance",    "04"),
+        ("Free, charge to HMO",                  "05"),
+        ("In kind",                              "06"),
+        ("Donation",                             "07"),
+        ("Don't know",                           "08"),
+    ]
+    Q971_EXPENSES = [
+        ("Consultation Fee",                          "1"),
+        ("Medical equipment or supplies",             "2"),
+        ("Non-medical expenses (e.g. Hygiene kit)",   "3"),
+        ("Other expenses",                            "4"),
+    ]
+    Q972_EXPENSES = [
+        ("a) Consultation Fee",                             "1"),
+        ("b) Diagnostic or laboratory procedure",           "2"),
+        ("c) Medical equipment or supplies",                "3"),
+        ("d) Medicines or drugs",                           "4"),
+        ("e) Non-medical expenses: travel",                 "5"),
+        ("f) Other expenses",                               "6"),
+    ]
+    Q98_SOURCES = [
+        ("Salary/income",                                                      "01"),
+        ("Loan/Mortgage",                                                      "02"),
+        ("Savings",                                                            "03"),
+        ("Donation/Charity/Assistance from Private Organization",              "04"),
+        ("Malasakit Center",                                                   "05"),
+        ("Other Donation/Charity/Assistance from Government Organization",     "06"),
+        ("Sale of Assets",                                                     "07"),
+        ("Paid by someone else",                                               "08"),
+        ("MAIFIP",                                                             "09"),
+        ("PhilHealth",                                                         "10"),
+        ("SSS",                                                                "11"),
+        ("GSIS",                                                               "12"),
+        ("Private Insurance",                                                  "13"),
+        ("HMO",                                                                "14"),
+        ("Other (specify)",                                                    "15"),
+    ]
+    Q100_BUCAS_SOURCE = [
+        ("News",                       "1"),
+        ("Legislation",                "2"),
+        ("Social Media",               "3"),
+        ("Friends / Family",           "4"),
+        ("Health center/facility",     "5"),
+        ("LGU/Barangay",               "6"),
+        ("I don't know",               "7"),
+        ("Other (Specify)",            "8"),
+    ]
+    Q101_BUCAS_UNDERSTAND = [
+        ("Provides urgent care for non-life-threatening/serious conditions",  "1"),
+        ("Offers outpatient and ambulatory health services",                  "2"),
+        ("Helps reduce overcrowding in hospitals",                            "3"),
+        ("Allows access to timely medical consultation and treatment",        "4"),
+        ("Other (specify)",                                                   "5"),
+    ]
+    Q103_BUCAS_SERVICES = [
+        ("Medical consultation for urgent or minor conditions",               "1"),
+        ("Outpatient or ambulatory care services",                            "2"),
+        ("Basic diagnostic services (e.g., laboratory tests, X-ray)",         "3"),
+        ("Minor procedures or treatments",                                    "4"),
+        ("Referral to higher-level health facilities",                        "5"),
+        ("I don't know",                                                      "6"),
+        ("Other (specify)",                                                   "7"),
+    ]
+    Q104_ALT = [
+        ("Another DOH hospital",                    "1"),
+        ("Private clinic/hospital",                 "2"),
+        ("LGU hospital",                            "3"),
+        ("Rural Health Unit / Health Center",       "4"),
+        ("Would not seek care",                     "5"),
+        ("Others",                                  "6"),
     ]
     items = [
-        numeric("Q58_OUTPATIENT_VISITS", "58. How many outpatient visits in the last 6 months?", length=2),
-        *select_all("Q59_SERVICES", "59. What services did you receive during your most recent outpatient visit?", Q58_SERVICES),
-        yes_no("Q60_LABS", "60. Did you have any laboratory or diagnostic tests?"),
-        *select_all("Q61_LAB_TYPES", "61. Which laboratory tests?", Q61_LABS),
-        numeric("Q62_LAB_COST", "62. How much did you pay for lab tests? (PHP)", length=7),
-        numeric("Q63_CONSULT_COST", "63. How much was the consultation fee? (PHP)", length=7),
-        numeric("Q64_MEDS_COST", "64. How much did you spend on medicines? (PHP)", length=7),
-        numeric("Q65_TOTAL_OOP", "65. Total out-of-pocket spending for outpatient visit (PHP)", length=8),
+        select_one("Q88_WHY_VISIT",
+                   "88. Why are you visiting [FACILITY_NAME_INPUT] for consultation/advice or treatment?",
+                   Q88_WHY_VISIT, length=1),
+        alpha("Q88_WHY_VISIT_OTHER_TXT",
+              "88. Why visit — Other (specify) text", length=120),
+        yes_no("Q89_ADVISED_ADMIT",
+               "89. Were you advised for hospitalization / to be admitted in the hospital?"),
+        *select_all("Q90_NOT_CONFINED",
+                    "90. What were the reasons why you were not confined/ admitted in a hospital/clinic?",
+                    Q90_NOT_CONFINED),
+        alpha("Q90_NOT_CONFINED_OTHER_TXT",
+              "90. Reasons not confined — Other (specify) text", length=120),
+        yes_no("Q91_USUAL_OUTPATIENT",
+               "91. Do you usually avail consultation services for outpatient care?"),
     ]
-    # Payment sources: each has Yes/No + Amount
-    for i, (label, code) in enumerate(Q65_PAYMENT):
-        items.append(yes_no(f"Q66_PAY_O{i+1:02d}", f"66. Payment source: {label}"))
-        items.append(numeric(f"Q66_PAY_O{i+1:02d}_AMT", f"66. Amount from {label} (PHP)", length=8))
-    items.append(alpha("Q66_PAY_OTHER_TXT", "66. Payment source — Other (specify) text", length=120))
+    # Q92 consultation cost — payment-source matrix
+    for label, code in Q92_PAYMENT_SRC:
+        items.append(yes_no(f"Q92_PAY_{code}", f"92. Cost of consultation — {label}"))
+        items.append(numeric(f"Q92_PAY_{code}_AMT",
+                             f"92. Cost of consultation — {label} (Amount in Pesos)", length=8))
     items.extend([
-        yes_no("Q67_PHILHEALTH_USED", "67. Did you use PhilHealth for this visit?"),
-        yes_no("Q68_SATISFIED_OOP", "68. Were you satisfied with the amount you paid?"),
+        *select_all("Q93_LABS",
+                    "93. Did you have any of the following laboratory tests done during your outpatient care?",
+                    Q93_LABS),
+        alpha("Q93_LABS_OTHER_TXT",
+              "93. Lab tests — Other, specify text", length=120),
     ])
-    return record("G_OUTPATIENT_CARE", "G. Outpatient Care", "I", items)
+    # Q94 lab test cost — payment-source matrix (aggregate; spec asks per-test roster)
+    for label, code in Q92_PAYMENT_SRC:
+        items.append(yes_no(f"Q94_PAY_{code}",
+                            f"94. Cost of laboratory test/s — {label}"))
+        items.append(numeric(f"Q94_PAY_{code}_AMT",
+                             f"94. Cost of laboratory test/s — {label} (Amount in Pesos)", length=8))
+    items.extend([
+        yes_no("Q95_PRESCRIBED",
+               "95. Were you prescribed medicine/s after your check-up?"),
+    ])
+    # Q96 prescribed meds cost — payment-source matrix
+    for label, code in Q96_MEDS_PAY:
+        items.append(yes_no(f"Q96_PAY_{code}",
+                            f"96. Amount spent for prescribed medicines — {label}"))
+        items.append(numeric(f"Q96_PAY_{code}_AMT",
+                             f"96. Amount spent for prescribed medicines — {label} (Amount in Pesos)",
+                             length=8))
+    items.append(numeric("Q97_FINAL_AMOUNT",
+                         "97. What was the final amount you paid in cash for your outpatient care? "
+                         "(Amount in Pesos)", length=8))
+    # Q97.1 other expenses in bill — select all + amounts
+    for label, code in Q971_EXPENSES:
+        items.append(yes_no(f"Q971_{code}",
+                            f"97.1 Other items included in the bill — {label}"))
+        items.append(numeric(f"Q971_{code}_AMT",
+                             f"97.1 Other items included in the bill — {label} (Amount in Pesos)",
+                             length=8))
+    items.append(alpha("Q971_OTHER_TXT",
+                       "97.1 Other expenses — specify text", length=120))
+    # Q97.2 other expenses not in bill — select all + amounts
+    for label, code in Q972_EXPENSES:
+        items.append(yes_no(f"Q972_{code}",
+                            f"97.2 Other expenses during OPD visit not in bill — {label}"))
+        items.append(numeric(f"Q972_{code}_AMT",
+                             f"97.2 Other expenses during OPD visit not in bill — {label} (Amount in Pesos)",
+                             length=8))
+    items.append(alpha("Q972_OTHER_TXT",
+                       "97.2 Other expenses — specify text", length=120))
+    # Q98 15-source payment matrix
+    for label, code in Q98_SOURCES:
+        items.append(yes_no(f"Q98_PAY_{code}",
+                            f"98. Used to pay for medical costs — {label}"))
+        items.append(numeric(f"Q98_PAY_{code}_AMT",
+                             f"98. Used to pay for medical costs — {label} (Amount in Pesos)",
+                             length=8))
+    items.append(alpha("Q98_OTHER_DONATION_TXT",
+                       "98. Other Donation/Charity/Assistance from Government Organization — specify text",
+                       length=120))
+    items.append(alpha("Q98_OTHER_TXT",
+                       "98. Other payment source — specify text", length=120))
+    # BUCAS block (Q99-104)
+    items.extend([
+        yes_no("Q99_BUCAS_HEARD",
+               "99. Have you heard about Bagong Urgent Care and Ambulatory Services (BUCAS) center?"),
+        *select_all("Q100_BUCAS_SOURCE",
+                    "100. If yes, what are your sources of information about this BUCAS center?",
+                    Q100_BUCAS_SOURCE),
+        alpha("Q100_BUCAS_SOURCE_OTHER_TXT",
+              "100. BUCAS source — Other (specify) text", length=120),
+        *select_all("Q101_BUCAS_UNDERSTAND",
+                    "101. What is your understanding about a BUCAS center?",
+                    Q101_BUCAS_UNDERSTAND),
+        alpha("Q101_BUCAS_UNDERSTAND_OTHER_TXT",
+              "101. BUCAS understanding — Other (specify) text", length=120),
+        yes_no("Q102_BUCAS_ACCESSED",
+               "102. Have you accessed the services in a BUCAS center?"),
+        *select_all("Q103_BUCAS_SERVICES",
+                    "103. If yes, which service/s did you avail?",
+                    Q103_BUCAS_SERVICES),
+        alpha("Q103_BUCAS_SERVICES_OTHER_TXT",
+              "103. BUCAS services — Other (specify) text", length=120),
+        select_one("Q104_WITHOUT_BUCAS",
+                   "104. Without BUCAS Center, where would you have gone?",
+                   Q104_ALT, length=1),
+        alpha("Q104_WITHOUT_BUCAS_OTHER_TXT",
+              "104. Without BUCAS — Others specify text", length=120),
+    ])
+    return record("G_OUTPATIENT_CARE",
+                  "G. Outpatient Care", "I", items)
 
 
 # ============================================================
@@ -1118,6 +1321,7 @@ def build_f3_dictionary():
     #   Chunk 1 (2026-04-21): A, B
     #   Chunk 2 (2026-04-21): C, D
     #   Chunk 3 (2026-04-21): E
+    #   Chunk 4 (2026-04-21): F, G (incl. BUCAS Q99-104)
     records = [
         record("PATIENTSURVEY_REC", "PatientSurvey Record", "1", []),
         build_f3_field_control(),
@@ -1127,6 +1331,8 @@ def build_f3_dictionary():
         build_section_c(),
         build_section_d(),
         build_section_e(),
+        build_section_f(),
+        build_section_g(),
     ]
     return build_dictionary(
         dict_name="PATIENTSURVEY_DICT",
