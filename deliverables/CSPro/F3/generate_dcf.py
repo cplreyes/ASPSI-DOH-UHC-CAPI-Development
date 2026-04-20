@@ -1265,37 +1265,136 @@ def build_section_h():
 
 
 # ============================================================
-# Section I. Financial Risk Protection (Q79-Q88)
+# Section I. Financial Risk Protection (Q116-Q130) — Apr 20
 # ============================================================
 
 def build_section_i():
-    Q79_INCOME_BRACKET = [
-        ("Below PHP 10,957 (poor)",           "1"),
-        ("PHP 10,957 - PHP 21,914 (low income)","2"),
-        ("PHP 21,914 - PHP 43,828 (lower middle)","3"),
-        ("PHP 43,828 - PHP 76,669 (middle)",    "4"),
-        ("PHP 76,669 - PHP 131,484 (upper middle)","5"),
-        ("PHP 131,484 - PHP 219,140 (upper income)","6"),
-        ("Above PHP 219,140 (rich)",            "7"),
-        ("Refused to answer",                   "8"),
-        ("I don't know",                        "9"),
+    Q116_HEARD = [
+        ("Yes",          "1"),
+        ("No",           "2"),  # proceed to Q119
+        ("I don't know", "3"),  # proceed to Q119
+    ]
+    Q119_HEARD = [
+        ("Yes",          "1"),
+        ("No",           "2"),  # proceed to Q124
+        ("I don't know", "3"),  # proceed to Q124
+    ]
+    Q124_HEARD = [
+        ("Yes",          "1"),
+        ("No",           "2"),  # proceed to Q130
+        ("I don't know", "3"),  # proceed to Q130
+    ]
+    SOURCE_8 = [
+        ("News",                     "1"),
+        ("Legislation",              "2"),
+        ("Social Media",             "3"),
+        ("Friends / Family",         "4"),
+        ("Health center/facility",   "5"),
+        ("LGU/Barangay",             "6"),
+        ("I don't know",             "7"),
+        ("Other (Specify)",          "8"),
+    ]
+    Q118_UNDERSTAND_NBB = [
+        ("Patient does not pay any hospital bill",                        "1"),
+        ("PhilHealth will cover cost of treatment",                       "2"),
+        ("Medicine and service are already included",                     "3"),
+        ("No cash payment required upon discharge",                       "4"),
+        ("Applies only to certain patients or hospitals",                 "5"),
+        ("Bills are settled between the hospital and PhilHealth",         "6"),
+        ("Patients should not be charged extra fees",                     "7"),
+        ("I don't know",                                                  "8"),
+        ("Other (Specify)",                                               "9"),
+    ]
+    Q121_UNDERSTAND_ZBB = [
+        ("Patient does not pay any hospital bill",                        "1"),
+        ("PhilHealth will cover cost of treatment",                       "2"),
+        ("Medicine and service are already included",                     "3"),
+        ("No cash payment required upon discharge",                       "4"),
+        ("Applies only to PhilHealth members and DOH-run hospitals",      "5"),
+        ("Bills are settled between the hospital and PhilHealth",         "6"),
+        ("Patients should not be charged extra fees",                     "7"),
+        ("I don't know",                                                  "8"),
+        ("Other (Specify)",                                               "9"),
+    ]
+    Q123_ZBB_EXTENT = [
+        ("ZBB significantly reduced my financial burden by covering my expenses",                "1"),
+        ("It helped lessen some costs, but I still incurred Out-of-Pocket (OOP) expenses",       "2"),
+        ("ZBB provided some financial relief, though the support was limited compared to my "
+         "total needs",                                                                           "3"),
+        ("ZBB did not make a noticeable difference in my financial situation",                   "4"),
+    ]
+    Q128_OOP_ITEMS = [
+        ("Drugs",              "1"),
+        ("Laboratory",         "2"),
+        ("Professional Fees",  "3"),
+        ("Accommodation",      "4"),
+    ]
+    Q129_WHY_NO_MAIFIP = [
+        ("Not eligible",                            "1"),
+        ("Too complicated",                         "2"),
+        ("I don't like to stay in basic ward",      "3"),
+        ("There is no available basic ward",        "4"),
+    ]
+    Q130_REDUCED_SPEND = [
+        ("Yes",                "1"),
+        ("No",                 "2"),
+        ("Don't know",         "3"),
+        ("Refused to answer",  "4"),
     ]
     items = [
-        select_one("Q79_INCOME", "79. What is your estimated average monthly household income?",
-                   Q79_INCOME_BRACKET, length=1),
-        yes_no("Q80_DELAYED_CARE", "80. Have you delayed seeking care for financial reasons in the last 6 months?"),
-        yes_no("Q81_REDUCED_SPEND", "81. Have you reduced spending on basic needs because of health expenditures?"),
-        yes_no("Q82_BORROWED", "82. Have you borrowed money to pay for health expenses?"),
-        yes_no("Q83_SOLD_ASSETS", "83. Have you sold assets to pay for health expenses?"),
-        numeric("Q84_HEALTH_SPEND_PCT",
-                "84. What percentage of household income was spent on health in the last 12 months?",
-                length=3),
-        yes_no("Q85_CATASTROPHIC", "85. Did health spending exceed 10% of household income?"),
-        yes_no("Q86_IMPOVERISHED", "86. Did health spending push your household below the poverty line?"),
-        yes_no("Q87_FORGONE_MEDS", "87. Have you foregone buying prescribed medicines for financial reasons?"),
-        yes_no("Q88_FORGONE_FOLLOWUP", "88. Have you skipped follow-up visits for financial reasons?"),
+        select_one("Q116_NBB_HEARD",
+                   "116. Have you heard of the No Balance Billing (NBB)?",
+                   Q116_HEARD, length=1),
+        *select_all("Q117_NBB_SOURCE",
+                    "117. If yes, what are your sources of information about NBB?", SOURCE_8),
+        alpha("Q117_NBB_SOURCE_OTHER_TXT",
+              "117. NBB source — Other (specify) text", length=120),
+        *select_all("Q118_NBB_UNDERSTAND",
+                    "118. What is your understanding about NBB?", Q118_UNDERSTAND_NBB),
+        alpha("Q118_NBB_UNDERSTAND_OTHER_TXT",
+              "118. NBB understanding — Other (specify) text", length=120),
+        select_one("Q119_ZBB_HEARD",
+                   "119. Have you heard of the Zero Balance Billing (ZBB)?",
+                   Q119_HEARD, length=1),
+        *select_all("Q120_ZBB_SOURCE",
+                    "120. If yes, what are your sources of information about ZBB?", SOURCE_8),
+        alpha("Q120_ZBB_SOURCE_OTHER_TXT",
+              "120. ZBB source — Other (specify) text", length=120),
+        *select_all("Q121_ZBB_UNDERSTAND",
+                    "121. What is your understanding about ZBB?", Q121_UNDERSTAND_ZBB),
+        alpha("Q121_ZBB_UNDERSTAND_OTHER_TXT",
+              "121. ZBB understanding — Other (specify) text", length=120),
+        yes_no("Q122_ZBB_INFORMED",
+               "122. Were you informed about ZBB upon admission?"),
+        select_one("Q123_ZBB_EXTENT",
+                   "123. To what extent did ZBB reduce your financial burden?",
+                   Q123_ZBB_EXTENT, length=1),
+        select_one("Q124_MAIFIP_HEARD",
+                   "124. Have you heard of the Medical Assistance for Indigent and "
+                   "Financially Incapacitated Patients (MAIFIP)? (SKIP IF ANSWERED MAIFIP IN Q113)",
+                   Q124_HEARD, length=1),
+        *select_all("Q125_MAIFIP_SOURCE",
+                    "125. What are your sources of information about MAIFIP?", SOURCE_8),
+        alpha("Q125_MAIFIP_SOURCE_OTHER_TXT",
+              "125. MAIFIP source — Other (specify) text", length=120),
+        yes_no("Q126_MAIFIP_AVAILED",
+               "126. Did you avail of MAIFIP in this last confinement?"),
+        yes_no("Q127_MAIFIP_OOP",
+               "127. If you availed MAIFIP, did you have to make any out-of-pocket payment?"),
+        *select_all("Q128_MAIFIP_OOP_ITEMS",
+                    "128. Which items did you have to pay for out-of-pocket?",
+                    Q128_OOP_ITEMS),
+        *select_all("Q129_WHY_NO_MAIFIP",
+                    "129. Why did you not avail of MAIFP during this last confinement?",
+                    Q129_WHY_NO_MAIFIP),
+        select_one("Q130_REDUCED_SPEND",
+                   "130. Have you or your household had to reduce spending on things you need "
+                   "(such as food, housing, or utilities) because of this health expenditure "
+                   "in the last 1 month?",
+                   Q130_REDUCED_SPEND, length=1),
     ]
-    return record("I_FINANCIAL_RISK", "I. Financial Risk Protection", "K", items)
+    return record("I_FINANCIAL_RISK",
+                  "I. Financial Risk Protection", "K", items)
 
 
 # ============================================================
@@ -1437,6 +1536,7 @@ def build_f3_dictionary():
     #   Chunk 4 (2026-04-21): F, G (incl. BUCAS Q99-104)
     #   Chunk 5 (2026-04-21): H (incl. Q108-112 OOP outside hospital,
     #                            Q113 13-src, Q114.1/114.2)
+    #   Chunk 6 (2026-04-21): I (NBB / ZBB / MAIFIP awareness + distress)
     records = [
         record("PATIENTSURVEY_REC", "PatientSurvey Record", "1", []),
         build_f3_field_control(),
@@ -1449,6 +1549,7 @@ def build_f3_dictionary():
         build_section_f(),
         build_section_g(),
         build_section_h(),
+        build_section_i(),
     ]
     return build_dictionary(
         dict_name="PATIENTSURVEY_DICT",

@@ -22464,6 +22464,2931 @@
               "zeroFill": false
             }
           ]
+        },
+        {
+          "name": "I_FINANCIAL_RISK",
+          "labels": [
+            {
+              "text": "I. Financial Risk Protection"
+            }
+          ],
+          "recordType": "K",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "Q116_NBB_HEARD",
+              "labels": [
+                {
+                  "text": "116. Have you heard of the No Balance Billing (NBB)?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q116_NBB_HEARD_VS1",
+                  "labels": [
+                    {
+                      "text": "116. Have you heard of the No Balance Billing (NBB)?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q117_NBB_SOURCE_O01",
+              "labels": [
+                {
+                  "text": "117. If yes, what are your sources of information about NBB? \u2014 News"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q117_NBB_SOURCE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "117. If yes, what are your sources of information about NBB? \u2014 News"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q117_NBB_SOURCE_O02",
+              "labels": [
+                {
+                  "text": "117. If yes, what are your sources of information about NBB? \u2014 Legislation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q117_NBB_SOURCE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "117. If yes, what are your sources of information about NBB? \u2014 Legislation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q117_NBB_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "117. If yes, what are your sources of information about NBB? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q117_NBB_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "117. If yes, what are your sources of information about NBB? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q117_NBB_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "117. If yes, what are your sources of information about NBB? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q117_NBB_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "117. If yes, what are your sources of information about NBB? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q117_NBB_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "117. If yes, what are your sources of information about NBB? \u2014 Health center/facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q117_NBB_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "117. If yes, what are your sources of information about NBB? \u2014 Health center/facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q117_NBB_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "117. If yes, what are your sources of information about NBB? \u2014 LGU/Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q117_NBB_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "117. If yes, what are your sources of information about NBB? \u2014 LGU/Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q117_NBB_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "117. If yes, what are your sources of information about NBB? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q117_NBB_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "117. If yes, what are your sources of information about NBB? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q117_NBB_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "117. If yes, what are your sources of information about NBB? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q117_NBB_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "117. If yes, what are your sources of information about NBB? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q117_NBB_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "117. If yes, what are your sources of information about NBB? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q117_NBB_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "117. NBB source \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_O01",
+              "labels": [
+                {
+                  "text": "118. What is your understanding about NBB? \u2014 Patient does not pay any hospital bill"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q118_NBB_UNDERSTAND_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "118. What is your understanding about NBB? \u2014 Patient does not pay any hospital bill"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_O02",
+              "labels": [
+                {
+                  "text": "118. What is your understanding about NBB? \u2014 PhilHealth will cover cost of treatment"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q118_NBB_UNDERSTAND_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "118. What is your understanding about NBB? \u2014 PhilHealth will cover cost of treatment"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_O03",
+              "labels": [
+                {
+                  "text": "118. What is your understanding about NBB? \u2014 Medicine and service are already included"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q118_NBB_UNDERSTAND_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "118. What is your understanding about NBB? \u2014 Medicine and service are already included"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_O04",
+              "labels": [
+                {
+                  "text": "118. What is your understanding about NBB? \u2014 No cash payment required upon discharge"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q118_NBB_UNDERSTAND_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "118. What is your understanding about NBB? \u2014 No cash payment required upon discharge"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_O05",
+              "labels": [
+                {
+                  "text": "118. What is your understanding about NBB? \u2014 Applies only to certain patients or hospitals"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q118_NBB_UNDERSTAND_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "118. What is your understanding about NBB? \u2014 Applies only to certain patients or hospitals"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_O06",
+              "labels": [
+                {
+                  "text": "118. What is your understanding about NBB? \u2014 Bills are settled between the hospital and PhilHealth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q118_NBB_UNDERSTAND_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "118. What is your understanding about NBB? \u2014 Bills are settled between the hospital and PhilHealth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_O07",
+              "labels": [
+                {
+                  "text": "118. What is your understanding about NBB? \u2014 Patients should not be charged extra fees"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q118_NBB_UNDERSTAND_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "118. What is your understanding about NBB? \u2014 Patients should not be charged extra fees"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_O08",
+              "labels": [
+                {
+                  "text": "118. What is your understanding about NBB? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q118_NBB_UNDERSTAND_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "118. What is your understanding about NBB? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_O09",
+              "labels": [
+                {
+                  "text": "118. What is your understanding about NBB? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q118_NBB_UNDERSTAND_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "118. What is your understanding about NBB? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "118. What is your understanding about NBB? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q118_NBB_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "118. NBB understanding \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q119_ZBB_HEARD",
+              "labels": [
+                {
+                  "text": "119. Have you heard of the Zero Balance Billing (ZBB)?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q119_ZBB_HEARD_VS1",
+                  "labels": [
+                    {
+                      "text": "119. Have you heard of the Zero Balance Billing (ZBB)?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q120_ZBB_SOURCE_O01",
+              "labels": [
+                {
+                  "text": "120. If yes, what are your sources of information about ZBB? \u2014 News"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q120_ZBB_SOURCE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "120. If yes, what are your sources of information about ZBB? \u2014 News"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q120_ZBB_SOURCE_O02",
+              "labels": [
+                {
+                  "text": "120. If yes, what are your sources of information about ZBB? \u2014 Legislation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q120_ZBB_SOURCE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "120. If yes, what are your sources of information about ZBB? \u2014 Legislation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q120_ZBB_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "120. If yes, what are your sources of information about ZBB? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q120_ZBB_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "120. If yes, what are your sources of information about ZBB? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q120_ZBB_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "120. If yes, what are your sources of information about ZBB? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q120_ZBB_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "120. If yes, what are your sources of information about ZBB? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q120_ZBB_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "120. If yes, what are your sources of information about ZBB? \u2014 Health center/facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q120_ZBB_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "120. If yes, what are your sources of information about ZBB? \u2014 Health center/facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q120_ZBB_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "120. If yes, what are your sources of information about ZBB? \u2014 LGU/Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q120_ZBB_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "120. If yes, what are your sources of information about ZBB? \u2014 LGU/Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q120_ZBB_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "120. If yes, what are your sources of information about ZBB? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q120_ZBB_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "120. If yes, what are your sources of information about ZBB? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q120_ZBB_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "120. If yes, what are your sources of information about ZBB? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q120_ZBB_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "120. If yes, what are your sources of information about ZBB? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q120_ZBB_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "120. If yes, what are your sources of information about ZBB? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q120_ZBB_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "120. ZBB source \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_O01",
+              "labels": [
+                {
+                  "text": "121. What is your understanding about ZBB? \u2014 Patient does not pay any hospital bill"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_ZBB_UNDERSTAND_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "121. What is your understanding about ZBB? \u2014 Patient does not pay any hospital bill"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_O02",
+              "labels": [
+                {
+                  "text": "121. What is your understanding about ZBB? \u2014 PhilHealth will cover cost of treatment"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_ZBB_UNDERSTAND_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "121. What is your understanding about ZBB? \u2014 PhilHealth will cover cost of treatment"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_O03",
+              "labels": [
+                {
+                  "text": "121. What is your understanding about ZBB? \u2014 Medicine and service are already included"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_ZBB_UNDERSTAND_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "121. What is your understanding about ZBB? \u2014 Medicine and service are already included"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_O04",
+              "labels": [
+                {
+                  "text": "121. What is your understanding about ZBB? \u2014 No cash payment required upon discharge"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_ZBB_UNDERSTAND_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "121. What is your understanding about ZBB? \u2014 No cash payment required upon discharge"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_O05",
+              "labels": [
+                {
+                  "text": "121. What is your understanding about ZBB? \u2014 Applies only to PhilHealth members and DOH-run hospitals"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_ZBB_UNDERSTAND_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "121. What is your understanding about ZBB? \u2014 Applies only to PhilHealth members and DOH-run hospitals"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_O06",
+              "labels": [
+                {
+                  "text": "121. What is your understanding about ZBB? \u2014 Bills are settled between the hospital and PhilHealth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_ZBB_UNDERSTAND_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "121. What is your understanding about ZBB? \u2014 Bills are settled between the hospital and PhilHealth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_O07",
+              "labels": [
+                {
+                  "text": "121. What is your understanding about ZBB? \u2014 Patients should not be charged extra fees"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_ZBB_UNDERSTAND_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "121. What is your understanding about ZBB? \u2014 Patients should not be charged extra fees"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_O08",
+              "labels": [
+                {
+                  "text": "121. What is your understanding about ZBB? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_ZBB_UNDERSTAND_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "121. What is your understanding about ZBB? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_O09",
+              "labels": [
+                {
+                  "text": "121. What is your understanding about ZBB? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_ZBB_UNDERSTAND_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "121. What is your understanding about ZBB? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "121. What is your understanding about ZBB? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q121_ZBB_UNDERSTAND_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "121. ZBB understanding \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q122_ZBB_INFORMED",
+              "labels": [
+                {
+                  "text": "122. Were you informed about ZBB upon admission?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q122_ZBB_INFORMED_VS1",
+                  "labels": [
+                    {
+                      "text": "122. Were you informed about ZBB upon admission?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q123_ZBB_EXTENT",
+              "labels": [
+                {
+                  "text": "123. To what extent did ZBB reduce your financial burden?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q123_ZBB_EXTENT_VS1",
+                  "labels": [
+                    {
+                      "text": "123. To what extent did ZBB reduce your financial burden?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "ZBB significantly reduced my financial burden by covering my expenses"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "It helped lessen some costs, but I still incurred Out-of-Pocket (OOP) expenses"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "ZBB provided some financial relief, though the support was limited compared to my total needs"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "ZBB did not make a noticeable difference in my financial situation"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q124_MAIFIP_HEARD",
+              "labels": [
+                {
+                  "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (SKIP IF ANSWERED MAIFIP IN Q113)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q124_MAIFIP_HEARD_VS1",
+                  "labels": [
+                    {
+                      "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (SKIP IF ANSWERED MAIFIP IN Q113)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q125_MAIFIP_SOURCE_O01",
+              "labels": [
+                {
+                  "text": "125. What are your sources of information about MAIFIP? \u2014 News"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q125_MAIFIP_SOURCE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "125. What are your sources of information about MAIFIP? \u2014 News"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q125_MAIFIP_SOURCE_O02",
+              "labels": [
+                {
+                  "text": "125. What are your sources of information about MAIFIP? \u2014 Legislation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q125_MAIFIP_SOURCE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "125. What are your sources of information about MAIFIP? \u2014 Legislation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q125_MAIFIP_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "125. What are your sources of information about MAIFIP? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q125_MAIFIP_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "125. What are your sources of information about MAIFIP? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q125_MAIFIP_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "125. What are your sources of information about MAIFIP? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q125_MAIFIP_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "125. What are your sources of information about MAIFIP? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q125_MAIFIP_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "125. What are your sources of information about MAIFIP? \u2014 Health center/facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q125_MAIFIP_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "125. What are your sources of information about MAIFIP? \u2014 Health center/facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q125_MAIFIP_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "125. What are your sources of information about MAIFIP? \u2014 LGU/Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q125_MAIFIP_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "125. What are your sources of information about MAIFIP? \u2014 LGU/Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q125_MAIFIP_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "125. What are your sources of information about MAIFIP? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q125_MAIFIP_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "125. What are your sources of information about MAIFIP? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q125_MAIFIP_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "125. What are your sources of information about MAIFIP? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q125_MAIFIP_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "125. What are your sources of information about MAIFIP? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q125_MAIFIP_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "125. What are your sources of information about MAIFIP? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q125_MAIFIP_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "125. MAIFIP source \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q126_MAIFIP_AVAILED",
+              "labels": [
+                {
+                  "text": "126. Did you avail of MAIFIP in this last confinement?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q126_MAIFIP_AVAILED_VS1",
+                  "labels": [
+                    {
+                      "text": "126. Did you avail of MAIFIP in this last confinement?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q127_MAIFIP_OOP",
+              "labels": [
+                {
+                  "text": "127. If you availed MAIFIP, did you have to make any out-of-pocket payment?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q127_MAIFIP_OOP_VS1",
+                  "labels": [
+                    {
+                      "text": "127. If you availed MAIFIP, did you have to make any out-of-pocket payment?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q128_MAIFIP_OOP_ITEMS_O01",
+              "labels": [
+                {
+                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Drugs"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q128_MAIFIP_OOP_ITEMS_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Drugs"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q128_MAIFIP_OOP_ITEMS_O02",
+              "labels": [
+                {
+                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Laboratory"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q128_MAIFIP_OOP_ITEMS_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Laboratory"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q128_MAIFIP_OOP_ITEMS_O03",
+              "labels": [
+                {
+                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Professional Fees"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q128_MAIFIP_OOP_ITEMS_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Professional Fees"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q128_MAIFIP_OOP_ITEMS_O04",
+              "labels": [
+                {
+                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Accommodation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q128_MAIFIP_OOP_ITEMS_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Accommodation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q129_WHY_NO_MAIFIP_O01",
+              "labels": [
+                {
+                  "text": "129. Why did you not avail of MAIFP during this last confinement? \u2014 Not eligible"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q129_WHY_NO_MAIFIP_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "129. Why did you not avail of MAIFP during this last confinement? \u2014 Not eligible"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q129_WHY_NO_MAIFIP_O02",
+              "labels": [
+                {
+                  "text": "129. Why did you not avail of MAIFP during this last confinement? \u2014 Too complicated"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q129_WHY_NO_MAIFIP_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "129. Why did you not avail of MAIFP during this last confinement? \u2014 Too complicated"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q129_WHY_NO_MAIFIP_O03",
+              "labels": [
+                {
+                  "text": "129. Why did you not avail of MAIFP during this last confinement? \u2014 I don't like to stay in basic ward"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q129_WHY_NO_MAIFIP_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "129. Why did you not avail of MAIFP during this last confinement? \u2014 I don't like to stay in basic ward"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q129_WHY_NO_MAIFIP_O04",
+              "labels": [
+                {
+                  "text": "129. Why did you not avail of MAIFP during this last confinement? \u2014 There is no available basic ward"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q129_WHY_NO_MAIFIP_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "129. Why did you not avail of MAIFP during this last confinement? \u2014 There is no available basic ward"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q130_REDUCED_SPEND",
+              "labels": [
+                {
+                  "text": "130. Have you or your household had to reduce spending on things you need (such as food, housing, or utilities) because of this health expenditure in the last 1 month?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q130_REDUCED_SPEND_VS1",
+                  "labels": [
+                    {
+                      "text": "130. Have you or your household had to reduce spending on things you need (such as food, housing, or utilities) because of this health expenditure in the last 1 month?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refused to answer"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }
