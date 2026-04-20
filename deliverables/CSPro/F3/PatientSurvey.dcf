@@ -18678,6 +18678,3792 @@
               "length": 120
             }
           ]
+        },
+        {
+          "name": "H_INPATIENT_CARE",
+          "labels": [
+            {
+              "text": "H. Inpatient Care"
+            }
+          ],
+          "recordType": "J",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "Q105_REASON",
+              "labels": [
+                {
+                  "text": "105. Why are you confined in the hospital?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q105_REASON_VS1",
+                  "labels": [
+                    {
+                      "text": "105. Why are you confined in the hospital?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Sick"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Injured"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Gave birth"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Executive check-up"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q105_REASON_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "105. Confinement reason \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q106_NIGHTS",
+              "labels": [
+                {
+                  "text": "106. How long were you confined? \u2014 Nights"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "Q106_DAYS",
+              "labels": [
+                {
+                  "text": "106. How long were you confined? \u2014 Days"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_01",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Out-of-pocket"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_PAY_01_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Total bill for confinement \u2014 Out-of-pocket"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_PAY_01_AMT",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Out-of-pocket (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_02",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Free/no cost"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_PAY_02_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Total bill for confinement \u2014 Free/no cost"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_PAY_02_AMT",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Free/no cost (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_03",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Free, charge to PhilHealth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_PAY_03_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Total bill for confinement \u2014 Free, charge to PhilHealth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_PAY_03_AMT",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Free, charge to PhilHealth (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_04",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Free, charge to Private Insurance"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_PAY_04_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Total bill for confinement \u2014 Free, charge to Private Insurance"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_PAY_04_AMT",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Free, charge to Private Insurance (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_05",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Free, charge to HMO"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_PAY_05_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Total bill for confinement \u2014 Free, charge to HMO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_PAY_05_AMT",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Free, charge to HMO (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_06",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Free, charge to MAIFIP"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_PAY_06_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Total bill for confinement \u2014 Free, charge to MAIFIP"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_PAY_06_AMT",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Free, charge to MAIFIP (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_07",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Donation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_PAY_07_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Total bill for confinement \u2014 Donation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_PAY_07_AMT",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Donation (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_08",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 In kind"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_PAY_08_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Total bill for confinement \u2014 In kind"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_PAY_08_AMT",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 In kind (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_09",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_PAY_09_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Total bill for confinement \u2014 Don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_PAY_09_AMT",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Don't know (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_10",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Other"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_PAY_10_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Total bill for confinement \u2014 Other"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_PAY_10_AMT",
+              "labels": [
+                {
+                  "text": "107. Total bill for confinement \u2014 Other (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q107_PAY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "107. Total bill \u2014 Other, specify text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q108_MEDS_OUTSIDE",
+              "labels": [
+                {
+                  "text": "108. Other than the medicine/s indicated in the hospital bill, did the patient buy medicine/s from any pharmacy/facility outside the hospital?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q108_MEDS_OUTSIDE_VS1",
+                  "labels": [
+                    {
+                      "text": "108. Other than the medicine/s indicated in the hospital bill, did the patient buy medicine/s from any pharmacy/facility outside the hospital?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_PAY_01",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Out-of-pocket"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_PAY_01_VS1",
+                  "labels": [
+                    {
+                      "text": "109. Amount paid for medicines outside the hospital \u2014 Out-of-pocket"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_PAY_01_AMT",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Out-of-pocket (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q109_PAY_02",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Free/no cost"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_PAY_02_VS1",
+                  "labels": [
+                    {
+                      "text": "109. Amount paid for medicines outside the hospital \u2014 Free/no cost"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_PAY_02_AMT",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Free/no cost (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q109_PAY_03",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to PhilHealth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_PAY_03_VS1",
+                  "labels": [
+                    {
+                      "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to PhilHealth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_PAY_03_AMT",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to PhilHealth (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q109_PAY_04",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to Private Insurance"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_PAY_04_VS1",
+                  "labels": [
+                    {
+                      "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to Private Insurance"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_PAY_04_AMT",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to Private Insurance (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q109_PAY_05",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to HMO"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_PAY_05_VS1",
+                  "labels": [
+                    {
+                      "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to HMO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_PAY_05_AMT",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to HMO (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q109_PAY_06",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to MAIFIP"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_PAY_06_VS1",
+                  "labels": [
+                    {
+                      "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to MAIFIP"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_PAY_06_AMT",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Free, charge to MAIFIP (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q109_PAY_07",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 In kind"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_PAY_07_VS1",
+                  "labels": [
+                    {
+                      "text": "109. Amount paid for medicines outside the hospital \u2014 In kind"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_PAY_07_AMT",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 In kind (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q109_PAY_08",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_PAY_08_VS1",
+                  "labels": [
+                    {
+                      "text": "109. Amount paid for medicines outside the hospital \u2014 Don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_PAY_08_AMT",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Don't know (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q109_PAY_09",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Other"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_PAY_09_VS1",
+                  "labels": [
+                    {
+                      "text": "109. Amount paid for medicines outside the hospital \u2014 Other"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_PAY_09_AMT",
+              "labels": [
+                {
+                  "text": "109. Amount paid for medicines outside the hospital \u2014 Other (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q109_PAY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "109. Meds outside \u2014 Other, specify text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q110_LAB_OUTSIDE",
+              "labels": [
+                {
+                  "text": "110. Other than the laboratory service/s indicated in the hospital bill, did the patient pay for other service/s outside the hospital?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q110_LAB_OUTSIDE_VS1",
+                  "labels": [
+                    {
+                      "text": "110. Other than the laboratory service/s indicated in the hospital bill, did the patient pay for other service/s outside the hospital?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q111_SERVICES_OUTSIDE",
+              "labels": [
+                {
+                  "text": "111. If yes, what are those services?"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 240
+            },
+            {
+              "name": "Q112_PAY_01",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Out-of-pocket"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q112_PAY_01_VS1",
+                  "labels": [
+                    {
+                      "text": "112. Amount paid for services outside the hospital \u2014 Out-of-pocket"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q112_PAY_01_AMT",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Out-of-pocket (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q112_PAY_02",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Free/no cost"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q112_PAY_02_VS1",
+                  "labels": [
+                    {
+                      "text": "112. Amount paid for services outside the hospital \u2014 Free/no cost"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q112_PAY_02_AMT",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Free/no cost (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q112_PAY_03",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to PhilHealth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q112_PAY_03_VS1",
+                  "labels": [
+                    {
+                      "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to PhilHealth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q112_PAY_03_AMT",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to PhilHealth (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q112_PAY_04",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to Private Insurance"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q112_PAY_04_VS1",
+                  "labels": [
+                    {
+                      "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to Private Insurance"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q112_PAY_04_AMT",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to Private Insurance (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q112_PAY_05",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to HMO"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q112_PAY_05_VS1",
+                  "labels": [
+                    {
+                      "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to HMO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q112_PAY_05_AMT",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to HMO (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q112_PAY_06",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to MAIFIP"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q112_PAY_06_VS1",
+                  "labels": [
+                    {
+                      "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to MAIFIP"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q112_PAY_06_AMT",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Free, charge to MAIFIP (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q112_PAY_07",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 In kind"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q112_PAY_07_VS1",
+                  "labels": [
+                    {
+                      "text": "112. Amount paid for services outside the hospital \u2014 In kind"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q112_PAY_07_AMT",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 In kind (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q112_PAY_08",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q112_PAY_08_VS1",
+                  "labels": [
+                    {
+                      "text": "112. Amount paid for services outside the hospital \u2014 Don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q112_PAY_08_AMT",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Don't know (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q112_PAY_09",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Other"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q112_PAY_09_VS1",
+                  "labels": [
+                    {
+                      "text": "112. Amount paid for services outside the hospital \u2014 Other"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q112_PAY_09_AMT",
+              "labels": [
+                {
+                  "text": "112. Amount paid for services outside the hospital \u2014 Other (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q112_PAY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "112. Services outside \u2014 Other, specify text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q113_PAY_01",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Salary/income"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_01_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 Salary/income"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_01_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Salary/income (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_02",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Loan/Mortgage"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_02_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 Loan/Mortgage"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_02_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Loan/Mortgage (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_03",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Savings"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_03_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 Savings"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_03_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Savings (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_04",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Donation/Charity/Assistance from Private Organization"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_04_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 Donation/Charity/Assistance from Private Organization"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_04_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Donation/Charity/Assistance from Private Organization (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_05",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Malasakit Center"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_05_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 Malasakit Center"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_05_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Malasakit Center (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_06",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Other Donation/Charity/Assistance from Government Organization"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_06_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 Other Donation/Charity/Assistance from Government Organization"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_06_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_07",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 MAIFIP"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_07_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 MAIFIP"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_07_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 MAIFIP (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_08",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 PhilHealth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_08_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 PhilHealth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_08_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 PhilHealth (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_09",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 SSS"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_09_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 SSS"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_09_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 SSS (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_10",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 GSIS"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_10_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 GSIS"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_10_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 GSIS (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_11",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Private Insurance"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_11_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 Private Insurance"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_11_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Private Insurance (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_12",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 HMO"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_12_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 HMO"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_12_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 HMO (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_13",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_PAY_13_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Used to pay for hospital bill \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_PAY_13_AMT",
+              "labels": [
+                {
+                  "text": "113. Used to pay for hospital bill \u2014 Other (specify) (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q113_PAY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "113. Hospital bill payment \u2014 Other specify text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q114_NO_PH_O01",
+              "labels": [
+                {
+                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Not a PhilHealth member"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q114_NO_PH_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Not a PhilHealth member"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q114_NO_PH_O02",
+              "labels": [
+                {
+                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 PhilHealth member but not eligible for benefits"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q114_NO_PH_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 PhilHealth member but not eligible for benefits"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q114_NO_PH_O03",
+              "labels": [
+                {
+                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Probably used PhilHealth but cannot remember amount because benefit was deducted upon discharge from hospital"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q114_NO_PH_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Probably used PhilHealth but cannot remember amount because benefit was deducted upon discharge from hospital"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q114_NO_PH_O04",
+              "labels": [
+                {
+                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Too many requirements to comply with before can avail"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q114_NO_PH_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Too many requirements to comply with before can avail"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q114_NO_PH_O05",
+              "labels": [
+                {
+                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Limited hospitalization benefits"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q114_NO_PH_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Limited hospitalization benefits"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q114_NO_PH_O06",
+              "labels": [
+                {
+                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Claims processing too long"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q114_NO_PH_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Claims processing too long"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q114_NO_PH_O07",
+              "labels": [
+                {
+                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q114_NO_PH_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q114_NO_PH_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q114_NO_PH_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "114. Why no PhilHealth \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q1141_1",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1141_1_VS1",
+                  "labels": [
+                    {
+                      "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1141_1_AMT",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1141_2",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1141_2_VS1",
+                  "labels": [
+                    {
+                      "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1141_2_AMT",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1141_3",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1141_3_VS1",
+                  "labels": [
+                    {
+                      "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1141_3_AMT",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1141_4",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1141_4_VS1",
+                  "labels": [
+                    {
+                      "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1141_4_AMT",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1141_5",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1141_5_VS1",
+                  "labels": [
+                    {
+                      "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1141_5_AMT",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1141_6",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Other expenses"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1141_6_VS1",
+                  "labels": [
+                    {
+                      "text": "114.1 Other items included in the bill \u2014 Other expenses"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1141_6_AMT",
+              "labels": [
+                {
+                  "text": "114.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1141_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "114.1 Other expenses \u2014 specify text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q1142_1",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1142_1_VS1",
+                  "labels": [
+                    {
+                      "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1142_1_AMT",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1142_2",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1142_2_VS1",
+                  "labels": [
+                    {
+                      "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1142_2_AMT",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1142_3",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Food"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1142_3_VS1",
+                  "labels": [
+                    {
+                      "text": "114.2 Other expenses during confinement not in bill \u2014 Food"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1142_3_AMT",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1142_4",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1142_4_VS1",
+                  "labels": [
+                    {
+                      "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1142_4_AMT",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1142_5",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1142_5_VS1",
+                  "labels": [
+                    {
+                      "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1142_5_AMT",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1142_6",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1142_6_VS1",
+                  "labels": [
+                    {
+                      "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1142_6_AMT",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1142_7",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q1142_7_VS1",
+                  "labels": [
+                    {
+                      "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q1142_7_AMT",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1142_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "114.2 Other expenses \u2014 specify text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q115_FINAL_CASH",
+              "labels": [
+                {
+                  "text": "115. What was the final amount you paid in cash at the hospital cashier upon discharge? (Amount in Pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            }
+          ]
         }
       ]
     }

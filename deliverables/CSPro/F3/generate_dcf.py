@@ -1102,53 +1102,166 @@ def build_section_g():
 
 
 # ============================================================
-# Section H. Inpatient Care (Q69-Q78)
+# Section H. Inpatient Care (Q105-Q115) — Apr 20
 # ============================================================
 
 def build_section_h():
-    Q69_REASON = [
-        ("Illness / medical condition",    "1"),
-        ("Surgery / procedure",            "2"),
-        ("Childbirth / delivery",          "3"),
-        ("Injury / accident",              "4"),
-        ("Mental health",                  "5"),
-        ("Other (specify)",                "6"),
+    Q105_REASON = [
+        ("Sick",                 "1"),
+        ("Injured",              "2"),
+        ("Gave birth",           "3"),
+        ("Executive check-up",   "4"),
+        ("Other (specify)",      "5"),
     ]
-    Q72_PAYMENT = [
-        ("Own income / household income","01"),
-        ("PhilHealth",                   "02"),
-        ("Private insurance / HMO",      "03"),
-        ("Loan",                         "04"),
-        ("Sale of assets",               "05"),
-        ("Donations from charities/NGOs","06"),
-        ("Donations from LGUs",          "07"),
-        ("National Gov't Agencies",      "08"),
-        ("Paid by someone else",         "09"),
-        ("Savings / pension",            "10"),
-        ("Remittance",                   "11"),
-        ("Borrowing from relatives",     "12"),
-        ("Borrowing from institutions",  "13"),
-        ("Other (specify)",              "14"),
+    Q107_PAYMENT = [
+        ("Out-of-pocket",                      "01"),
+        ("Free/no cost",                       "02"),
+        ("Free, charge to PhilHealth",         "03"),
+        ("Free, charge to Private Insurance",  "04"),
+        ("Free, charge to HMO",                "05"),
+        ("Free, charge to MAIFIP",             "06"),
+        ("Donation",                           "07"),
+        ("In kind",                            "08"),
+        ("Don't know",                         "09"),
+        ("Other",                              "10"),
+    ]
+    Q109_PAYMENT = [
+        ("Out-of-pocket",                      "01"),
+        ("Free/no cost",                       "02"),
+        ("Free, charge to PhilHealth",         "03"),
+        ("Free, charge to Private Insurance",  "04"),
+        ("Free, charge to HMO",                "05"),
+        ("Free, charge to MAIFIP",             "06"),
+        ("In kind",                            "07"),
+        ("Don't know",                         "08"),
+        ("Other",                              "09"),
+    ]
+    Q113_SOURCES = [
+        ("Salary/income",                                                  "01"),
+        ("Loan/Mortgage",                                                  "02"),
+        ("Savings",                                                        "03"),
+        ("Donation/Charity/Assistance from Private Organization",          "04"),
+        ("Malasakit Center",                                               "05"),
+        ("Other Donation/Charity/Assistance from Government Organization", "06"),
+        ("MAIFIP",                                                         "07"),
+        ("PhilHealth",                                                     "08"),
+        ("SSS",                                                            "09"),
+        ("GSIS",                                                           "10"),
+        ("Private Insurance",                                              "11"),
+        ("HMO",                                                            "12"),
+        ("Other (specify)",                                                "13"),
+    ]
+    Q114_NO_PH = [
+        ("Not a PhilHealth member",                                                            "1"),
+        ("PhilHealth member but not eligible for benefits",                                    "2"),
+        ("Probably used PhilHealth but cannot remember amount because benefit was deducted "
+         "upon discharge from hospital",                                                       "3"),
+        ("Too many requirements to comply with before can avail",                              "4"),
+        ("Limited hospitalization benefits",                                                   "5"),
+        ("Claims processing too long",                                                         "6"),
+        ("Other (specify)",                                                                    "7"),
+    ]
+    Q1141_IN_BILL = [
+        ("Doctor's Professional Fee",                                       "1"),
+        ("Medical equipment or supplies",                                   "2"),
+        ("Non-medical expenses (e.g. Hygiene kit)",                         "3"),
+        ("Diagnostic or laboratory procedure inside the facility",          "4"),
+        ("Medicines or drugs inside the facility",                          "5"),
+        ("Other expenses",                                                  "6"),
+    ]
+    Q1142_NOT_IN_BILL = [
+        ("Medical equipment or supplies bought outside the facility",       "1"),
+        ("Payment made directly to doctor/s and their secretary",           "2"),
+        ("Food",                                                            "3"),
+        ("Transportation",                                                  "4"),
+        ("Donation to the facility",                                        "5"),
+        ("Allowance for caregiver",                                         "6"),
+        ("Other (specify)",                                                 "7"),
     ]
     items = [
-        numeric("Q69_INPATIENT_STAYS", "69. How many times were you admitted as an inpatient in the last 6 months?", length=2),
-        *select_all("Q70_REASON", "70. What was the primary reason for the most recent admission?", Q69_REASON),
-        numeric("Q71_NIGHTS", "71. How many nights were you admitted?", length=3),
-        numeric("Q72_TOTAL_BILL", "72. Total hospital bill (PHP)", length=8),
-        numeric("Q73_OOP", "73. Total out-of-pocket amount paid (PHP)", length=8),
+        select_one("Q105_REASON",
+                   "105. Why are you confined in the hospital?", Q105_REASON, length=1),
+        alpha("Q105_REASON_OTHER_TXT",
+              "105. Confinement reason — Other (specify) text", length=120),
+        numeric("Q106_NIGHTS",
+                "106. How long were you confined? — Nights", length=3),
+        numeric("Q106_DAYS",
+                "106. How long were you confined? — Days", length=3),
     ]
-    # Payment sources: each has Yes/No + Amount
-    for i, (label, code) in enumerate(Q72_PAYMENT):
-        items.append(yes_no(f"Q74_PAY_O{i+1:02d}", f"74. Payment source: {label}"))
-        items.append(numeric(f"Q74_PAY_O{i+1:02d}_AMT", f"74. Amount from {label} (PHP)", length=8))
-    items.append(alpha("Q74_PAY_OTHER_TXT", "74. Payment source — Other (specify) text", length=120))
+    # Q107 total bill — 10-source payment matrix
+    for label, code in Q107_PAYMENT:
+        items.append(yes_no(f"Q107_PAY_{code}",
+                            f"107. Total bill for confinement — {label}"))
+        items.append(numeric(f"Q107_PAY_{code}_AMT",
+                             f"107. Total bill for confinement — {label} (Amount in Pesos)",
+                             length=9))
+    items.append(alpha("Q107_PAY_OTHER_TXT",
+                       "107. Total bill — Other, specify text", length=120))
+    items.append(yes_no("Q108_MEDS_OUTSIDE",
+                        "108. Other than the medicine/s indicated in the hospital bill, did the patient "
+                        "buy medicine/s from any pharmacy/facility outside the hospital?"))
+    # Q109 meds outside — 9-source payment matrix
+    for label, code in Q109_PAYMENT:
+        items.append(yes_no(f"Q109_PAY_{code}",
+                            f"109. Amount paid for medicines outside the hospital — {label}"))
+        items.append(numeric(f"Q109_PAY_{code}_AMT",
+                             f"109. Amount paid for medicines outside the hospital — {label} "
+                             "(Amount in Pesos)", length=9))
+    items.append(alpha("Q109_PAY_OTHER_TXT",
+                       "109. Meds outside — Other, specify text", length=120))
+    items.append(yes_no("Q110_LAB_OUTSIDE",
+                        "110. Other than the laboratory service/s indicated in the hospital bill, did "
+                        "the patient pay for other service/s outside the hospital?"))
+    items.append(alpha("Q111_SERVICES_OUTSIDE",
+                       "111. If yes, what are those services?", length=240))
+    # Q112 services outside — 9-source payment matrix
+    for label, code in Q109_PAYMENT:
+        items.append(yes_no(f"Q112_PAY_{code}",
+                            f"112. Amount paid for services outside the hospital — {label}"))
+        items.append(numeric(f"Q112_PAY_{code}_AMT",
+                             f"112. Amount paid for services outside the hospital — {label} "
+                             "(Amount in Pesos)", length=9))
+    items.append(alpha("Q112_PAY_OTHER_TXT",
+                       "112. Services outside — Other, specify text", length=120))
+    # Q113 13-source hospital bill payment matrix
+    for label, code in Q113_SOURCES:
+        items.append(yes_no(f"Q113_PAY_{code}",
+                            f"113. Used to pay for hospital bill — {label}"))
+        items.append(numeric(f"Q113_PAY_{code}_AMT",
+                             f"113. Used to pay for hospital bill — {label} (Amount in Pesos)",
+                             length=9))
+    items.append(alpha("Q113_PAY_OTHER_TXT",
+                       "113. Hospital bill payment — Other specify text", length=120))
     items.extend([
-        yes_no("Q75_PHILHEALTH_USED", "75. Did you use PhilHealth for this admission?"),
-        numeric("Q76_PHILHEALTH_COVERED", "76. How much did PhilHealth cover? (PHP)", length=8),
-        yes_no("Q77_NBB_APPLIED", "77. Was No Balance Billing applied?"),
-        yes_no("Q78_SATISFIED_OOP", "78. Were you satisfied with the amount you paid?"),
+        *select_all("Q114_NO_PH",
+                    "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)",
+                    Q114_NO_PH),
+        alpha("Q114_NO_PH_OTHER_TXT",
+              "114. Why no PhilHealth — Other (specify) text", length=120),
     ])
-    return record("H_INPATIENT_CARE", "H. Inpatient Care", "J", items)
+    # Q114.1 other expenses included in bill — 6 items with amount
+    for label, code in Q1141_IN_BILL:
+        items.append(yes_no(f"Q1141_{code}",
+                            f"114.1 Other items included in the bill — {label}"))
+        items.append(numeric(f"Q1141_{code}_AMT",
+                             f"114.1 Other items included in the bill — {label} (Amount in Pesos)",
+                             length=9))
+    items.append(alpha("Q1141_OTHER_TXT",
+                       "114.1 Other expenses — specify text", length=120))
+    # Q114.2 other expenses NOT included in bill — 7 items with amount
+    for label, code in Q1142_NOT_IN_BILL:
+        items.append(yes_no(f"Q1142_{code}",
+                            f"114.2 Other expenses during confinement not in bill — {label}"))
+        items.append(numeric(f"Q1142_{code}_AMT",
+                             f"114.2 Other expenses during confinement not in bill — {label} "
+                             "(Amount in Pesos)", length=9))
+    items.append(alpha("Q1142_OTHER_TXT",
+                       "114.2 Other expenses — specify text", length=120))
+    items.append(numeric("Q115_FINAL_CASH",
+                         "115. What was the final amount you paid in cash at the hospital cashier "
+                         "upon discharge? (Amount in Pesos)", length=9))
+    return record("H_INPATIENT_CARE",
+                  "H. Inpatient Care", "J", items)
 
 
 # ============================================================
@@ -1322,6 +1435,8 @@ def build_f3_dictionary():
     #   Chunk 2 (2026-04-21): C, D
     #   Chunk 3 (2026-04-21): E
     #   Chunk 4 (2026-04-21): F, G (incl. BUCAS Q99-104)
+    #   Chunk 5 (2026-04-21): H (incl. Q108-112 OOP outside hospital,
+    #                            Q113 13-src, Q114.1/114.2)
     records = [
         record("PATIENTSURVEY_REC", "PatientSurvey Record", "1", []),
         build_f3_field_control(),
@@ -1333,6 +1448,7 @@ def build_f3_dictionary():
         build_section_e(),
         build_section_f(),
         build_section_g(),
+        build_section_h(),
     ]
     return build_dictionary(
         dict_name="PATIENTSURVEY_DICT",
