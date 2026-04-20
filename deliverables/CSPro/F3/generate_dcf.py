@@ -5,11 +5,8 @@ Emits PatientSurvey.dcf in CSPro 8.0 JSON dictionary format from the
 Apr 20 2026 Annex F3 questionnaire (Revised Inception Report submission,
 178 numbered items across sections A–L; supersedes the Apr 08 baseline).
 
-Staged rewrite against Apr 20:
-    Old `build_section_a..l` (Apr 08 numbering Q1–Q120) remain defined
-    below but are excluded from `build_f3_dictionary()` once their Apr 20
-    replacement lands. See log.md entries dated 2026-04-21 for per-chunk
-    progress.
+PSGC value sets are sourced from the PSA 1Q 2026 publication, parsed once
+under F1/inputs/ and shared across F-series generators.
 
 Run:
     python generate_dcf.py        # writes PatientSurvey.dcf next to this file
@@ -22,9 +19,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
-    select_one, select_all, uhc9_item, record,
+    select_one, select_all, uhc9_item, record, load_psgc_value_set,
     build_field_control, build_geo_id, build_dictionary, write_dcf,
 )
+
+INPUTS_DIR = Path(__file__).resolve().parent.parent / "F1" / "inputs"
 
 
 # ============================================================
@@ -45,7 +44,31 @@ def build_f3_field_control():
 # ============================================================
 
 def build_f3_geo_id():
-    return build_geo_id(mode="facility_and_patient")
+    # PSGC value sets from PSA 1Q 2026 publication, shared with F1 via
+    # F1/inputs/. Length=10 retains the full PSGC code for clean crosswalk
+    # to NHFR, PSA census, and DOH downstream systems. Cascading parent→child
+    # dropdown filter logic belongs in CSPro PROC, not here.
+    region_options       = load_psgc_value_set(INPUTS_DIR / "psgc_region.csv")
+    province_huc_options = load_psgc_value_set(INPUTS_DIR / "psgc_province_huc.csv")
+    city_mun_options     = load_psgc_value_set(INPUTS_DIR / "psgc_city_municipality.csv")
+    barangay_options     = load_psgc_value_set(INPUTS_DIR / "psgc_barangay.csv")
+    items = [
+        numeric("CLASSIFICATION", "Classification", length=1, value_set_options=[
+            ("UHC IS",     "1"),
+            ("Non-UHC IS", "2"),
+        ]),
+        numeric("REGION",            "Region",              length=10, zero_fill=True, value_set_options=region_options),
+        numeric("PROVINCE_HUC",      "Province / HUC",      length=10, zero_fill=True, value_set_options=province_huc_options),
+        numeric("CITY_MUNICIPALITY", "City / Municipality", length=10, zero_fill=True, value_set_options=city_mun_options),
+        numeric("BARANGAY",          "Barangay",            length=10, zero_fill=True, value_set_options=barangay_options),
+        alpha("FACILITY_NAME",    "Facility Name",    length=100),
+        alpha("FACILITY_ADDRESS", "Facility Address", length=200),
+        numeric("P_REGION",            "Patient Home Region",              length=10, zero_fill=True, value_set_options=region_options),
+        numeric("P_PROVINCE_HUC",      "Patient Home Province / HUC",      length=10, zero_fill=True, value_set_options=province_huc_options),
+        numeric("P_CITY_MUNICIPALITY", "Patient Home City / Municipality", length=10, zero_fill=True, value_set_options=city_mun_options),
+        numeric("P_BARANGAY",          "Patient Home Barangay",            length=10, zero_fill=True, value_set_options=barangay_options),
+    ]
+    return record("PATIENT_GEO_ID", "Patient Geographic Identification", "B", items)
 
 
 # ============================================================
@@ -1639,56 +1662,166 @@ def build_section_k():
 # ============================================================
 
 def build_section_l():
-    Q112_TYPE = [
-        ("Outpatient care",   "01"),
-        ("Emergency care",    "02"),
-        ("Inpatient care",    "03"),
-        ("Dental care",       "04"),
-        ("Other facility",    "05"),
-        ("Special therapy",   "06"),
-        ("Alternative care",  "07"),
-        ("Medical mission",   "08"),
-        ("Home healthcare",   "09"),
-        ("Telemedicine",      "10"),
-        ("None of the above", "11"),
-        ("Other (specify)",   "12"),
+    Q163_CARE_TYPE = [
+        ("Outpatient care (Consultation, procedure, or treatment where the patient visits "
+         "and leaves within the same day)",                                                   "01"),
+        ("Emergency care (Care for serious illnesses or injuries that need immediate medical "
+         "attention; usually provided in an emergency room or ER)",                           "02"),
+        ("Inpatient care (Care provided in hospital or another facility where the patient is "
+         "admitted for at least one night)",                                                  "03"),
+        ("Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)",      "04"),
+        ("Other facility visits (Care that is provided in a facility that is not a health "
+         "center or hospital, such as independent diagnostic centers, TB dispensaries, etc.)","05"),
+        ("Special therapy visits (Rehabilitation care or services, such as occupational "
+         "therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics "
+         "and orthotics rehabilitation, or speech and language therapy)",                     "06"),
+        ("Alternative care (Healthcare apart from medical doctors or the formal health care "
+         "system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)","07"),
+        ("Outreach / medical missions (Care provided by the government or an NGO through an "
+         "outreach or medical mission within a community)",                                   "08"),
+        ("Home healthcare (Care that is administered at the patient's home, such as birth "
+         "delivery, checkups, immunization, rehabilitation, etc.)",                           "09"),
+        ("Telemedicine (Remote diagnosis and treatment of patients by means of "
+         "telecommunications technology)",                                                    "10"),
+        ("None of the above",                                                                 "11"),
+        ("Other (Specify)",                                                                   "12"),
     ]
-    Q113_REFERRAL_METHOD = [
-        ("Physical referral slip",                        "1"),
-        ("E-referral",                                    "2"),
-        ("Phone call from referring to receiving facility","3"),
-        ("I don't know",                                  "4"),
-        ("Other (specify)",                               "5"),
+    Q164_SPECIALIST = [
+        ("No specialty",                            "01"),
+        ("Anesthesia",                              "02"),
+        ("Dermatology",                             "03"),
+        ("Emergency Medicine",                      "04"),
+        ("Family Medicine",                         "05"),
+        ("General Surgery",                         "06"),
+        ("Internal Medicine",                       "07"),
+        ("Neurology",                               "08"),
+        ("Nuclear Medicine",                        "09"),
+        ("Obstetrics and Gynecology",               "10"),
+        ("Occupational Medicine",                   "11"),
+        ("Ophthalmology",                           "12"),
+        ("Orthopedics",                             "13"),
+        ("Otorhinolaryngology (ENT)",               "14"),
+        ("Pathology",                               "15"),
+        ("Pediatrics",                              "16"),
+        ("Physical and Rehabilitation Medicine",    "17"),
+        ("Psychiatry",                              "18"),
+        ("Public health",                           "19"),
+        ("Radiology",                               "20"),
+        ("Research",                                "21"),
+        ("I don't know",                            "22"),
+        ("Other (Specify)",                         "23"),
     ]
-    Q114_VISIT_STATUS = [
+    Q165_HOW_REFERRED = [
+        ("Physical referral slip",                                  "1"),
+        ("E-referral",                                              "2"),
+        ("Phone call from referring facility to receiving facility", "3"),
+        ("I don't know",                                            "4"),
+        ("Other (Specify)",                                         "5"),
+    ]
+    Q169_VISITED = [
         ("Yes",                          "1"),
         ("No, I'm not planning to",      "2"),
         ("Not yet, but I'm planning to", "3"),
     ]
-    Q115_WHY_NOT = [
-        ("Facility is too far",              "1"),
-        ("Do not trust the referred facility","2"),
-        ("No time",                          "3"),
-        ("Worried about additional costs",   "4"),
-        ("Not needed",                       "5"),
-        ("Don't know how to get to facility","6"),
-        ("Other (specify)",                  "7"),
+    Q171_WHY_NOT = [
+        ("Facility is too far",                "1"),
+        ("Do not trust the referred facility", "2"),
+        ("No time",                            "3"),
+        ("Worried about additional costs",     "4"),
+        ("Not needed",                         "5"),
+        ("Don't know how to get to facility",  "6"),
+        ("Other (Specify)",                    "7"),
+    ]
+    Q173_PCP_KNOWS = [
+        ("Yes",          "1"),
+        ("No",           "2"),
+        ("I don't know", "3"),
+    ]
+    Q177_WHY_HOSPITAL = [
+        ("Referred by other specialist (doctor in another hospital)",                    "01"),
+        ("Nearest facility to house",                                                    "02"),
+        ("Facility is usual source of care",                                             "03"),
+        ("Facility is the only place that can perform a certain test",                   "04"),
+        ("Referred by BHW/nurse/midwife/other community health professional",            "05"),
+        ("Referred by family / friends",                                                 "06"),
+        ("Facility offers subsidized or free health services",                           "07"),
+        ("ZBB eligibility",                                                              "08"),
+        ("I don't know",                                                                 "09"),
+        ("Other (Specify)",                                                              "10"),
+    ]
+    Q178_SAT_REFERRAL = [
+        ("Very Satisfied",                    "1"),
+        ("Satisfied",                         "2"),
+        ("Neither Satisfied nor Dissatisfied","3"),
+        ("Dissatisfied",                      "4"),
+        ("Very Dissatisfied",                 "5"),
+        ("Not applicable",                    "6"),
     ]
     items = [
-        yes_no("Q111_REFERRED", "111. In the past 6 months, did a healthcare worker refer you to another facility?"),
-        *select_all("Q112_TYPE", "112. What type of care was the referral for?", Q112_TYPE),
-        select_one("Q113_METHOD", "113. How did they refer you?", Q113_REFERRAL_METHOD, length=1),
-        select_one("Q114_VISITED", "114. Did you visit another facility after the referral?",
-                   Q114_VISIT_STATUS, length=1),
-        *select_all("Q115_WHY_NOT", "115. Why are you not planning to visit?", Q115_WHY_NOT),
-        yes_no("Q116_DISCUSSED_OPTIONS", "116. Did they discuss different places you could go?"),
-        yes_no("Q117_HELPED_APPT", "117. Did they help you make the appointment?"),
-        yes_no("Q118_WROTE_INFO", "118. Did they write down information for the specialist?"),
-        yes_no("Q119_FOLLOWUP", "119. Did they follow up with you about the visit?"),
-        select_one("Q120_SAT_REFERRAL", "120. Overall satisfaction with the referral process",
-                   SATISFACTION_5PT, length=1),
+        yes_no("Q162_REFERRED",
+               "162. Based on your most recent visit/confinement at [facility_name_input], "
+               "did a healthcare worker refer you to another facility or specialist for "
+               "further care or specialized care?"),
+        *select_all("Q163_CARE_TYPE",
+                    "163. What type of care was the referral for?",
+                    Q163_CARE_TYPE),
+        alpha("Q163_CARE_TYPE_OTHER_TXT",
+              "163. Care type — Other (specify) text", length=120),
+        select_one("Q164_SPECIALIST",
+                   "164. What kind of specialist did they recommend?",
+                   Q164_SPECIALIST, length=2),
+        alpha("Q164_SPECIALIST_OTHER_TXT",
+              "164. Specialist — Other (specify) text", length=120),
+        select_one("Q165_HOW_REFERRED",
+                   "165. How did they refer you to the doctor?",
+                   Q165_HOW_REFERRED, length=1),
+        alpha("Q165_HOW_REFERRED_OTHER_TXT",
+              "165. How referred — Other (specify) text", length=120),
+        yes_no("Q166_DISCUSSED_OPTIONS",
+               "166. Did they discuss with you the different places you could have gone to "
+               "address your health problem?"),
+        yes_no("Q167_HELPED_APPT",
+               "167. Did they help you make the appointment for that visit?"),
+        yes_no("Q168_WROTE_INFO",
+               "168. Did they write down any information for the specialist about the reason "
+               "for that visit?"),
+        select_one("Q169_VISITED",
+                   "169. Have you visited the referred hospital or facility after the "
+                   "referral was made?", Q169_VISITED, length=1),
+        yes_no("Q170_FOLLOWUP",
+               "170. After your visit to the referral hospital/ specialist, did they follow "
+               "up with you about what happened at the visit?"),
+        *select_all("Q171_WHY_NOT",
+                    "171. Why are you NOT planning to visit?",
+                    Q171_WHY_NOT),
+        alpha("Q171_WHY_NOT_OTHER_TXT",
+              "171. Why not visit — Other (specify) text", length=120),
+        yes_no("Q172_PCP_REFERRAL",
+               "172. Was the visit to [facility_name_input] a referral from your primary "
+               "care facility?"),
+        select_one("Q173_PCP_KNOWS",
+                   "173. Does your primary care provider know that you made the visit?",
+                   Q173_PCP_KNOWS, length=1),
+        yes_no("Q174_PCP_DISCUSSED",
+               "174. Did your primary care provider discuss with you different places you "
+               "could have gone to get help with your problem?"),
+        yes_no("Q175_PCP_HELPED_APPT",
+               "175. Did your primary care provider (PCP) or someone working with your PCP "
+               "help you make the appointment for that visit?"),
+        yes_no("Q176_PCP_WROTE_INFO",
+               "176. Did your primary care provider write down any information for the "
+               "specialist about the reason for that visit?"),
+        *select_all("Q177_WHY_HOSPITAL",
+                    "177. As it was not a referral, why did you decide to visit a hospital?",
+                    Q177_WHY_HOSPITAL),
+        alpha("Q177_WHY_HOSPITAL_OTHER_TXT",
+              "177. Why hospital — Other (specify) text", length=120),
+        select_one("Q178_SAT_REFERRAL",
+                   "178. Overall, how would you rate your experience with the referral process?",
+                   Q178_SAT_REFERRAL, length=1),
     ]
-    return record("L_REFERRALS", "L. Referrals", "N", items)
+    return record("L_REFERRALS",
+                  "L. Experiences and Satisfaction on Referrals", "N", items)
 
 
 # ============================================================
@@ -1696,18 +1829,15 @@ def build_section_l():
 # ============================================================
 
 def build_f3_dictionary():
-    # Apr 20 staged rewrite — only sections already rewritten against the
-    # Apr 20 questionnaire are assembled. Old Apr 08 builders remain defined
-    # above for reference until their Apr 20 replacements land.
-    #   Chunk 1 (2026-04-21): A, B
-    #   Chunk 2 (2026-04-21): C, D
-    #   Chunk 3 (2026-04-21): E
-    #   Chunk 4 (2026-04-21): F, G (incl. BUCAS Q99-104)
-    #   Chunk 5 (2026-04-21): H (incl. Q108-112 OOP outside hospital,
-    #                            Q113 13-src, Q114.1/114.2)
-    #   Chunk 6 (2026-04-21): I (NBB / ZBB / MAIFIP awareness + distress)
-    #   Chunk 7 (2026-04-21): J (satisfaction on amenities + medical care),
-    #                         K (access to medicines + GAMOT)
+    # Apr 20 full rewrite complete. Per-chunk landing order (2026-04-21):
+    #   Chunk 1: A, B                            (consent + patient profile)
+    #   Chunk 2: C, D                            (UHC + PhilHealth)
+    #   Chunk 3: E                               (primary care + YAKAP/Konsulta)
+    #   Chunk 4: F, G                            (health-seeking + outpatient + BUCAS)
+    #   Chunk 5: H                               (inpatient + OOP outside hospital)
+    #   Chunk 6: I                               (NBB / ZBB / MAIFIP + distress)
+    #   Chunk 7: J, K                            (satisfaction + meds + GAMOT)
+    #   Chunk 8: L + PSGC wiring + docstring    (referrals)
     records = [
         record("PATIENTSURVEY_REC", "PatientSurvey Record", "1", []),
         build_f3_field_control(),
@@ -1723,6 +1853,7 @@ def build_f3_dictionary():
         build_section_i(),
         build_section_j(),
         build_section_k(),
+        build_section_l(),
     ]
     return build_dictionary(
         dict_name="PATIENTSURVEY_DICT",
