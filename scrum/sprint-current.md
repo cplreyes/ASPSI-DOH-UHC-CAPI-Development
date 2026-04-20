@@ -46,7 +46,9 @@ deliverable_anchor: D2 / Tranche 2 (40% due 2026-04-24)
 
 ## Daily Notes
 
-<!-- Mid-sprint observations that aren't standup material. Mode B on Monday Apr 20 will seed this with the Sprint 001 retro Q4 carry-forward. -->
+### 2026-04-20 (Mon)
+
+- **Sprint 002 kickoff carry-forward from Sprint 001 retro Q4:** Require an on-disk artifact reference (file path at minimum, commit SHA preferred) before flipping any `status::done`. No status flip on meeting attendance, verbal confirmation, or "should be done by now." Applies to every item, including recurring ones.
 
 ## Retrospective — Sprint 002 (fill in 2026-04-24)
 
