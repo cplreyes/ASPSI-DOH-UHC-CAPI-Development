@@ -1091,44 +1091,70 @@ def build_section_j():
 
 
 # ============================================================
-# Section K. Referrals (Q108-Q125)
+# Section K. Experiences and Satisfaction with Referrals (Q108-Q125)
+# Skip logic (logic-pass phase):
+# - Q108 No → Q126 (skip entire K section)
+# - Q112 Yes → Q114; Q112 No (not planning) → Q113; Q112 Not yet → Q114
+# - Q117, Q118 only when Q112=Yes
+# - Q119 No → Q121 (bypass Q120)
 # ============================================================
+
+# 6-option satisfaction scale with Not applicable (Q118, Q125 Apr 20).
+SATISFACTION_6PT_NA = [
+    ("Very Satisfied",                     "1"),
+    ("Satisfied",                          "2"),
+    ("Neither Satisfied nor Dissatisfied", "3"),
+    ("Dissatisfied",                       "4"),
+    ("Very Dissatisfied",                  "5"),
+    ("Not applicable",                     "9"),
+]
 
 def build_section_k():
     Q109_TYPE = [
-        ("Outpatient care",   "01"),
-        ("Emergency care",    "02"),
-        ("Inpatient care",    "03"),
-        ("Dental care",       "04"),
-        ("Other facility",    "05"),
-        ("Special therapy",   "06"),
-        ("Alternative care",  "07"),
-        ("Medical mission",   "08"),
-        ("Home healthcare",   "09"),
-        ("Telemedicine",      "10"),
+        ("Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)", "01"),
+        ("Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)", "02"),
+        ("Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)", "03"),
+        ("Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)", "04"),
+        ("Other facility visits (Care that is provided in a facility that is not a health center or hospital, such as independent diagnostic centers, TB dispensaries, etc.)", "05"),
+        ("Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech and language therapy)", "06"),
+        ("Alternative care (Healthcare apart from medical doctors or the formal health care system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)", "07"),
+        ("Outreach / medical missions (Care provided by the government or an NGO through an outreach or medical mission within a community)", "08"),
+        ("Home healthcare (Care that is administered at the patient's home, such as birth delivery, checkups, immunization, rehabilitation, etc.)", "09"),
+        ("Telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)", "10"),
         ("None of the above", "11"),
-        ("Other (specify)",   "12"),
+        ("Other (Specify)",   "12"),
     ]
     Q110_SPECIALIST = [
-        ("No specialty",          "01"),("Anesthesia",            "02"),
-        ("Dermatology",           "03"),("Emergency Medicine",    "04"),
-        ("Family Medicine",       "05"),("General Surgery",       "06"),
-        ("Internal Medicine",     "07"),("Neurology",             "08"),
-        ("Nuclear Medicine",      "09"),("Obstetrics and Gynecology","10"),
-        ("Occupational Medicine", "11"),("Ophthalmology",         "12"),
-        ("Orthopedics",           "13"),("Otorhinolaryngology (ENT)","14"),
-        ("Pathology",             "15"),("Pediatrics",            "16"),
-        ("Physical and Rehabilitation Medicine","17"),("Psychiatry","18"),
-        ("Public health",         "19"),("Radiology",             "20"),
-        ("Research",              "21"),("I don't know",          "22"),
-        ("Other (specify)",       "23"),
+        ("No specialty",                          "01"),
+        ("Anesthesia",                            "02"),
+        ("Dermatology",                           "03"),
+        ("Emergency Medicine",                    "04"),
+        ("Family Medicine",                       "05"),
+        ("General Surgery",                       "06"),
+        ("Internal Medicine",                     "07"),
+        ("Neurology",                             "08"),
+        ("Nuclear Medicine",                      "09"),
+        ("Obstetrics and Gynecology",             "10"),
+        ("Occupational Medicine",                 "11"),
+        ("Ophthalmology",                         "12"),
+        ("Orthopedics",                           "13"),
+        ("Otorhinolaryngology (ENT)",             "14"),
+        ("Pathology",                             "15"),
+        ("Pediatrics",                            "16"),
+        ("Physical and Rehabilitation Medicine",  "17"),
+        ("Psychiatry",                            "18"),
+        ("Public health",                         "19"),
+        ("Radiology",                             "20"),
+        ("Research",                              "21"),
+        ("I don't know",                          "22"),
+        ("Other (Specify)",                       "23"),
     ]
     Q111_METHOD = [
-        ("Physical referral slip",  "1"),
-        ("E-referral",              "2"),
-        ("Phone call",              "3"),
-        ("I don't know",            "4"),
-        ("Other (specify)",         "5"),
+        ("Physical referral slip",                                      "1"),
+        ("E-referral",                                                  "2"),
+        ("Phone call from referring facility to receiving facility",    "3"),
+        ("I don't know",                                                "4"),
+        ("Other (Specify)",                                             "5"),
     ]
     Q112_VISIT = [
         ("Yes",                          "1"),
@@ -1136,150 +1162,245 @@ def build_section_k():
         ("Not yet, but I'm planning to", "3"),
     ]
     Q113_WHY_NOT = [
-        ("Facility is too far",              "1"),
-        ("Do not trust the referred facility","2"),
-        ("No time",                          "3"),
-        ("Worried about additional costs",   "4"),
-        ("Not needed",                       "5"),
-        ("Don't know how to get to facility","6"),
-        ("Other (specify)",                  "7"),
+        ("Facility is too far",                    "1"),
+        ("Do not trust the referred facility",     "2"),
+        ("No time",                                "3"),
+        ("Worried about additional costs",         "4"),
+        ("Not needed",                             "5"),
+        ("Don't know how to get to facility",      "6"),
+        ("Other (Specify)",                        "7"),
     ]
     Q121_WHY_HOSPITAL = [
-        ("Referred by other specialist",       "1"),
-        ("Nearest facility to house",          "2"),
-        ("Facility is usual source of care",   "3"),
-        ("Only place for certain test",        "4"),
-        ("Referred by BHW/nurse/midwife",      "5"),
-        ("Referred by family / friends",       "6"),
-        ("Offers subsidized/free services",    "7"),
-        ("I don't know",                       "8"),
-        ("Other (specify)",                    "9"),
+        ("Referred by other specialist (doctor in another hospital)",                     "1"),
+        ("Nearest facility to house",                                                     "2"),
+        ("Facility is usual source of care",                                              "3"),
+        ("Facility is the only place that can perform a certain test",                    "4"),
+        ("Referred by BHW/nurse/midwife/other community health professional",             "5"),
+        ("Referred by family / friends",                                                  "6"),
+        ("Facility offers subsidized or free health services",                            "7"),
+        ("I don't know",                                                                  "8"),
+        ("Other (Specify)",                                                               "9"),
     ]
     items = [
-        yes_no("Q108_REFERRED", "108. Were you referred to another facility in the past 6 months?"),
-        *select_all("Q109_TYPE", "109. What type of care was the referral for?", Q109_TYPE),
-        select_one("Q110_SPECIALIST", "110. What kind of specialist was recommended?", Q110_SPECIALIST, length=2),
-        alpha("Q110_OTHER_TXT", "110. Specialist — Other (specify) text", length=80),
-        select_one("Q111_METHOD", "111. How did they refer you?", Q111_METHOD, length=1),
-        alpha("Q111_OTHER_TXT", "111. Referral method — Other (specify) text", length=80),
-        select_one("Q112_VISITED", "112. Did you visit another facility after the referral?", Q112_VISIT, length=1),
-        *select_all("Q113_WHY_NOT", "113. Why are you not planning to visit?", Q113_WHY_NOT),
-        yes_no("Q114_DISCUSSED", "114. Did they discuss different places you could go?"),
-        yes_no("Q115_HELPED_APPT", "115. Did they help you make the appointment?"),
-        yes_no("Q116_WROTE_INFO", "116. Did they write down information for the specialist?"),
-        yes_no("Q117_FOLLOWUP", "117. Did they follow up with you about what happened?"),
-        select_one("Q118_SAT_REFERRAL", "118. Satisfaction with the referral process", SATISFACTION_5PT, length=1),
-        yes_no("Q119_WAS_REFERRAL", "119. Was the visit a referral from your primary care facility?"),
-        yes_no_dk("Q120_PCP_KNOWS", "120. Does your primary care provider know about the visit?"),
-        *select_all("Q121_WHY_HOSPITAL", "121. Why did you decide to visit a hospital?", Q121_WHY_HOSPITAL),
-        yes_no("Q122_PCP_DISCUSSED", "122. Did your PCP discuss different places to go?"),
-        yes_no("Q123_PCP_HELPED_APPT", "123. Did your PCP help make the appointment?"),
-        yes_no("Q124_PCP_WROTE_INFO", "124. Did your PCP write down information for the specialist?"),
-        select_one("Q125_SAT_REFERRAL2", "125. Overall satisfaction with referral experience", SATISFACTION_5PT, length=1),
+        yes_no("Q108_REFERRED",
+               "108. In the past 6 months, did a healthcare worker refer you to another facility or specialist for further care or specialized care?"),
+        *select_all("Q109_TYPE",
+                    "109. What type of care was the referral for?",
+                    Q109_TYPE),
+        alpha("Q109_TYPE_OTHER_TXT",
+              "109. Referral care type — Other (Specify) text", length=120),
+        select_one("Q110_SPECIALIST",
+                   "110. What kind of specialist did they recommend?",
+                   Q110_SPECIALIST, length=2),
+        alpha("Q110_SPECIALIST_OTHER_TXT",
+              "110. Specialist — Other (Specify) text", length=120),
+        select_one("Q111_METHOD",
+                   "111. How did they refer you to the doctor?",
+                   Q111_METHOD, length=1),
+        alpha("Q111_METHOD_OTHER_TXT",
+              "111. Referral method — Other (Specify) text", length=120),
+        select_one("Q112_VISITED",
+                   "112. Did you visit another facility after the referral?",
+                   Q112_VISIT, length=1),
+        *select_all("Q113_WHY_NOT",
+                    "113. Why are you not planning to visit?",
+                    Q113_WHY_NOT),
+        alpha("Q113_WHY_NOT_OTHER_TXT",
+              "113. Why not planning to visit — Other (Specify) text", length=120),
+        yes_no("Q114_DISCUSSED_PLACES",
+               "114. Did they discuss with you the different places you could have gone to get help with your problem?"),
+        yes_no("Q115_HELPED_APPT",
+               "115. Did they help you make the appointment for that visit?"),
+        yes_no("Q116_WROTE_INFO",
+               "116. Did they write down any information for the specialist about the reason for that visit?"),
+        yes_no("Q117_SPECIALIST_FOLLOWUP",
+               "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)"),
+        select_one("Q118_SAT_REFERRAL_PROCESS",
+                   "118. Overall, how would you rate your satisfaction with the referral process? (Only if Q112=Yes)",
+                   SATISFACTION_6PT_NA, length=1),
+        yes_no("Q119_PCF_REFERRAL",
+               "119. Was the visit to the facility a referral from your primary care facility?"),
+        yes_no_dk("Q120_PCP_KNOWS",
+                  "120. Does your primary care provider know that you made the visit?"),
+        *select_all("Q121_WHY_HOSPITAL",
+                    "121. As it was not a referral, why did you decide to visit a hospital?",
+                    Q121_WHY_HOSPITAL),
+        alpha("Q121_WHY_HOSPITAL_OTHER_TXT",
+              "121. Why visit hospital — Other (Specify) text", length=120),
+        yes_no("Q122_PCP_DISCUSSED_PLACES",
+               "122. Did your primary care provider discuss with you different places you could have gone to get help with your problem?"),
+        yes_no("Q123_PCP_HELPED_APPT",
+               "123. Did your primary care provider (PCP) or someone working with your PCP help you make the appointment for that visit?"),
+        yes_no("Q124_PCP_WROTE_INFO",
+               "124. Did your primary care provider write down any information for the specialist about the reason for that visit?"),
+        select_one("Q125_SAT_REFERRAL_EXP",
+                   "125. Overall, how would you rate your experience with the referral process?",
+                   SATISFACTION_6PT_NA, length=1),
     ]
-    return record("K_REFERRALS", "K. Referrals", "M", items)
+    return record("K_REFERRALS",
+                  "K. Experiences and Satisfaction with Referrals",
+                  "M", items)
 
 
 # ============================================================
-# Section L. NBB Awareness (Q126-Q131)
+# Sections L/M shared value sets (NBB, ZBB, MAIFIP — identical structures)
+# ============================================================
+
+NBB_ZBB_MAIFIP_INFO_SOURCE = [
+    ("News",                   "1"),
+    ("Legislation",            "2"),
+    ("Social Media",           "3"),
+    ("Friends / Family",       "4"),
+    ("Health center/facility", "5"),
+    ("LGU/Barangay",           "6"),
+    ("I don't know",           "7"),
+    ("Other (Specify)",        "8"),
+]
+
+# Source order preserved verbatim from Apr 20 Q128/Q134 (9 options, read in
+# two columns left-then-right per PDF layout).
+NBB_ZBB_UNDERSTANDING = [
+    ("Patient does not pay any hospital bill",              "1"),
+    ("Bills are settled between the hospital and PhilHealth","2"),
+    ("PhilHealth will cover cost of treatment",             "3"),
+    ("Patients should not be charged extra fees",           "4"),
+    ("Medicine and service are already included",           "5"),
+    ("I don't know",                                        "6"),
+    ("No cash payment required upon discharge",             "7"),
+    ("Other (Specify)",                                     "8"),
+    ("Applies only to certain patients or hospitals",       "9"),
+]
+
+
+# ============================================================
+# Section L. No Balance Billing (NBB) Awareness and Utilization (Q126-Q131)
+# Skip logic (logic-pass phase):
+# - Q126 No/IDK → Q132 (skip to Section M)
+# - Q129 No/IDK → Q132
+# - Q130 Public or Private → Q132 (bypass Q131; Q131 only for DOH-retained)
 # ============================================================
 
 def build_section_l():
-    Q127_SOURCE = [
-        ("News",                "1"),
-        ("Legislation",         "2"),
-        ("Social Media",        "3"),
-        ("Friends / Family",    "4"),
-        ("Health center/facility","5"),
-        ("LGU/Barangay",        "6"),
-        ("I don't know",        "7"),
-        ("Other (specify)",     "8"),
-    ]
-    Q128_UNDERSTANDING = [
-        ("Patient does not pay any hospital bill",          "1"),
-        ("PhilHealth will cover cost of treatment",         "2"),
-        ("Medicine and service are already included",       "3"),
-        ("No cash payment required upon discharge",         "4"),
-        ("Applies only to certain patients or hospitals",   "5"),
-        ("Bills settled between hospital and PhilHealth",   "6"),
-        ("Patients should not be charged extra fees",       "7"),
-        ("I don't know",                                    "8"),
-        ("Other (specify)",                                 "9"),
-    ]
     Q130_HOSPITAL_TYPE = [
-        ("Public",                "1"),
-        ("DOH-retained hospital", "2"),
-        ("Private",               "3"),
+        ("Public",                                            "1"),
+        ("DOH-retained hospital (sub-type of public hospital)","2"),
+        ("Private",                                           "3"),
     ]
     items = [
-        yes_no_dk("Q126_NBB_HEARD", "126. Have you heard of the No Balance Billing (NBB)?"),
-        *select_all("Q127_NBB_SOURCE", "127. Sources of information about NBB", Q127_SOURCE),
-        *select_all("Q128_NBB_UNDERSTAND", "128. What is your understanding about NBB?", Q128_UNDERSTANDING),
-        yes_no_dk("Q129_CONFINED", "129. Were you or a HH member confined in a hospital in the past 6 months?"),
-        select_one("Q130_HOSPITAL_TYPE", "130. For the most recent hospitalization, what type of hospital?",
+        yes_no_dk("Q126_NBB_HEARD",
+                  "126. Have you heard of the No Balance Billing (NBB)?"),
+        *select_all("Q127_NBB_SOURCE",
+                    "127. If yes, what are your sources of information about NBB?",
+                    NBB_ZBB_MAIFIP_INFO_SOURCE),
+        alpha("Q127_NBB_SOURCE_OTHER_TXT",
+              "127. NBB info source — Other (Specify) text", length=120),
+        *select_all("Q128_NBB_UNDERSTAND",
+                    "128. What is your understanding about NBB?",
+                    NBB_ZBB_UNDERSTANDING),
+        alpha("Q128_NBB_UNDERSTAND_OTHER_TXT",
+              "128. NBB understanding — Other (Specify) text", length=120),
+        yes_no_dk("Q129_HH_CONFINED",
+                  "129. Were you or any of your household members confined in a hospital during the past 6 months?"),
+        select_one("Q130_HOSPITAL_TYPE",
+                   "130. For the most recent hospitalization, what type of hospital?",
                    Q130_HOSPITAL_TYPE, length=1),
-        yes_no_dk("Q131_NBB_OOP", "131. During hospitalization in a DOH-retained hospital, did you pay OOP that should have been covered under NBB?"),
+        yes_no_dk("Q131_NBB_OOP",
+                  "131. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under NBB?"),
     ]
-    return record("L_NBB_AWARENESS", "L. NBB Awareness", "N", items)
+    return record("L_NBB_AWARENESS",
+                  "L. No Balance Billing (NBB) Awareness and Utilization",
+                  "N", items)
 
 
 # ============================================================
-# Section M. ZBB Awareness (Q132-Q141)
+# Section M. Zero Balance Billing (ZBB) Awareness and Utilization + MAIFIP
+#            + Bill Breakdown (Q132-Q143)
+# Apr 20 additions vs Apr 08:
+# - Q136 MAIFIP heard-of + Q137 MAIFIP info sources (Annex G#1)
+# - Q138-Q143 hospital-bill breakdown renumbered (+2 from Apr 08 Q136-Q141)
+# Skip logic (logic-pass phase):
+# - Q132 No/IDK → Q136 (bypass Q133-Q135)
+# - Q136 No/IDK → Q138 (skip MAIFIP source)
+# - Q142 No → Q144 (bypass Q143 how-paid)
 # ============================================================
 
 def build_section_m():
-    Q133_SOURCE = [
-        ("News",                "1"),
-        ("Legislation",         "2"),
-        ("Social Media",        "3"),
-        ("Friends / Family",    "4"),
-        ("Health center/facility","5"),
-        ("LGU/Barangay",        "6"),
-        ("I don't know",        "7"),
-        ("Other (specify)",     "8"),
-    ]
-    Q134_UNDERSTANDING = [
-        ("Patient does not pay any hospital bill",          "1"),
-        ("PhilHealth will cover cost of treatment",         "2"),
-        ("Medicine and service are already included",       "3"),
-        ("No cash payment required upon discharge",         "4"),
-        ("Applies only to certain patients or hospitals",   "5"),
-        ("Bills settled between hospital and PhilHealth",   "6"),
-        ("Patients should not be charged extra fees",       "7"),
-        ("I don't know",                                    "8"),
-        ("Other (specify)",                                 "9"),
-    ]
-    Q136_MOST_EXPENSIVE = [
+    Q138_MOST_EXPENSIVE = [
         ("Medicine",          "1"),
         ("Laboratory Tests",  "2"),
         ("Medical Supplies",  "3"),
         ("Doctor's Fee",      "4"),
     ]
-    items = [
-        yes_no_dk("Q132_ZBB_HEARD", "132. Have you heard of the Zero Balance Billing (ZBB)?"),
-        *select_all("Q133_ZBB_SOURCE", "133. Sources of information about ZBB", Q133_SOURCE),
-        *select_all("Q134_ZBB_UNDERSTAND", "134. What is your understanding about ZBB?", Q134_UNDERSTANDING),
-        yes_no_dk("Q135_ZBB_OOP", "135. During hospitalization in a DOH-retained hospital, did you pay OOP that should have been covered under ZBB?"),
-        select_one("Q136_MOST_EXPENSIVE", "136. From your most recent visit, which charge was most expensive?",
-                   Q136_MOST_EXPENSIVE, length=1),
-        numeric("Q137_FINAL_AMOUNT", "137. Final amount paid in cash at the hospital cashier upon discharge (PHP)", length=8),
-        yes_no("Q138_RECALL_BREAKDOWN", "138. Do you recall the breakdown of the bill?"),
-        *select_all("Q139_BILL_ITEMS", "139. Which items were included in the bill?", [
-            ("Rooms","1"),("Doctor's Fee","2"),("Diagnostic or laboratory procedure","3"),
-            ("Medical equipment or supplies","4"),("Medicines or drugs","5"),
-            ("Non-medical expenses","6"),("Other expenses","7"),
-        ]),
-        numeric("Q139A_NO_RECEIPT_AMT", "139a. Amount charged for services with no receipts (PHP)", length=8),
-        yes_no("Q140_RECALL_PAYMENT", "140. Do you recall how you paid for your bill?"),
-        *select_all("Q141_HOW_PAID", "141. How did you pay?", [
-            ("Own income/household income","01"),("PhilHealth","02"),
-            ("Private insurance/HMO","03"),("Loan","04"),("Sale of assets","05"),
-            ("Donations from charities/NGOs","06"),("Donations from LGUs","07"),
-            ("National Government Agencies","08"),("Paid by someone else","09"),
-            ("Other (specify)","10"),
-        ]),
+    Q141_BILL_ITEMS = [
+        ("Rooms <for inpatients only>",         "1"),
+        ("Doctor's Fee",                        "2"),
+        ("Diagnostic or laboratory procedure",  "3"),
+        ("Medical equipment or supplies",       "4"),
+        ("Medicines or drugs",                  "5"),
+        ("Non-medical expenses (e.g. hygiene kit)", "6"),
+        ("Other expenses",                      "7"),
     ]
-    return record("M_ZBB_AWARENESS", "M. ZBB Awareness", "O", items)
+    Q143_HOW_PAID = [
+        ("Own income/ household income",              "01"),
+        ("PhilHealth",                                "02"),
+        ("Private insurance / HMO",                   "03"),
+        ("Loan",                                      "04"),
+        ("Sale of assets",                            "05"),
+        ("Donations from charities / NGOs",           "06"),
+        ("Donations from LGUs / LGU programs",        "07"),
+        ("National Government Agencies (DSWD, etc.)", "08"),
+        ("Paid by someone else",                      "09"),
+        ("Other (Specify)",                           "10"),
+    ]
+    items = [
+        yes_no_dk("Q132_ZBB_HEARD",
+                  "132. Have you heard of the Zero Balance Billing (ZBB)?"),
+        *select_all("Q133_ZBB_SOURCE",
+                    "133. If yes, what are your sources of information about ZBB?",
+                    NBB_ZBB_MAIFIP_INFO_SOURCE),
+        alpha("Q133_ZBB_SOURCE_OTHER_TXT",
+              "133. ZBB info source — Other (Specify) text", length=120),
+        *select_all("Q134_ZBB_UNDERSTAND",
+                    "134. What is your understanding about ZBB?",
+                    NBB_ZBB_UNDERSTANDING),
+        alpha("Q134_ZBB_UNDERSTAND_OTHER_TXT",
+              "134. ZBB understanding — Other (Specify) text", length=120),
+        yes_no_dk("Q135_ZBB_OOP",
+                  "135. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under ZBB?"),
+        yes_no_dk("Q136_MAIFIP_HEARD",
+                  "136. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?"),
+        *select_all("Q137_MAIFIP_SOURCE",
+                    "137. What are your sources of information about MAIFIP?",
+                    NBB_ZBB_MAIFIP_INFO_SOURCE),
+        alpha("Q137_MAIFIP_SOURCE_OTHER_TXT",
+              "137. MAIFIP info source — Other (Specify) text", length=120),
+        select_one("Q138_MOST_EXPENSIVE",
+                   "138. From your most recent visit, which among the charges was the most expensive?",
+                   Q138_MOST_EXPENSIVE, length=1),
+        numeric("Q139_FINAL_AMOUNT_PHP",
+                "139. From your most recent visit, what was the final amount you paid in cash at the hospital cashier upon discharge? (PHP)",
+                length=8),
+        yes_no("Q140_RECALL_BREAKDOWN",
+               "140. From your most recent visit, do you recall the breakdown of the bill?"),
+        *select_all("Q141_BILL_ITEMS",
+                    "141. From your most recent visit, which of the following were included in the bill?",
+                    Q141_BILL_ITEMS),
+        alpha("Q141_BILL_ITEMS_OTHER_TXT",
+              "141. Bill items — Other expenses (Specify) text", length=120),
+        numeric("Q141_1_NO_RECEIPT_AMT_PHP",
+                "141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)",
+                length=8),
+        yes_no("Q142_RECALL_PAYMENT",
+               "142. From your most recent visit, do you recall how you paid for your bill?"),
+        *select_all("Q143_HOW_PAID",
+                    "143. From your most recent visit, how did you pay?",
+                    Q143_HOW_PAID),
+        alpha("Q143_HOW_PAID_OTHER_TXT",
+              "143. How paid — Other (Specify) text", length=120),
+    ]
+    return record("M_ZBB_MAIFIP_BILL",
+                  "M. Zero Balance Billing (ZBB) Awareness + MAIFIP + Bill Breakdown",
+                  "O", items)
 
 
 # ============================================================

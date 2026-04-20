@@ -15768,7 +15768,7 @@
           "name": "K_REFERRALS",
           "labels": [
             {
-              "text": "K. Referrals"
+              "text": "K. Experiences and Satisfaction with Referrals"
             }
           ],
           "recordType": "M",
@@ -15781,7 +15781,7 @@
               "name": "Q108_REFERRED",
               "labels": [
                 {
-                  "text": "108. Were you referred to another facility in the past 6 months?"
+                  "text": "108. In the past 6 months, did a healthcare worker refer you to another facility or specialist for further care or specialized care?"
                 }
               ],
               "contentType": "numeric",
@@ -15792,7 +15792,7 @@
                   "name": "Q108_REFERRED_VS1",
                   "labels": [
                     {
-                      "text": "108. Were you referred to another facility in the past 6 months?"
+                      "text": "108. In the past 6 months, did a healthcare worker refer you to another facility or specialist for further care or specialized care?"
                     }
                   ],
                   "values": [
@@ -15828,7 +15828,7 @@
               "name": "Q109_TYPE_O01",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Outpatient care"
+                  "text": "109. What type of care was the referral for? \u2014 Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)"
                 }
               ],
               "contentType": "numeric",
@@ -15839,7 +15839,7 @@
                   "name": "Q109_TYPE_O01_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Outpatient care"
+                      "text": "109. What type of care was the referral for? \u2014 Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)"
                     }
                   ],
                   "values": [
@@ -15875,7 +15875,7 @@
               "name": "Q109_TYPE_O02",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Emergency care"
+                  "text": "109. What type of care was the referral for? \u2014 Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)"
                 }
               ],
               "contentType": "numeric",
@@ -15886,7 +15886,7 @@
                   "name": "Q109_TYPE_O02_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Emergency care"
+                      "text": "109. What type of care was the referral for? \u2014 Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)"
                     }
                   ],
                   "values": [
@@ -15922,7 +15922,7 @@
               "name": "Q109_TYPE_O03",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Inpatient care"
+                  "text": "109. What type of care was the referral for? \u2014 Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)"
                 }
               ],
               "contentType": "numeric",
@@ -15933,7 +15933,7 @@
                   "name": "Q109_TYPE_O03_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Inpatient care"
+                      "text": "109. What type of care was the referral for? \u2014 Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)"
                     }
                   ],
                   "values": [
@@ -15969,7 +15969,7 @@
               "name": "Q109_TYPE_O04",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Dental care"
+                  "text": "109. What type of care was the referral for? \u2014 Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)"
                 }
               ],
               "contentType": "numeric",
@@ -15980,7 +15980,7 @@
                   "name": "Q109_TYPE_O04_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Dental care"
+                      "text": "109. What type of care was the referral for? \u2014 Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)"
                     }
                   ],
                   "values": [
@@ -16016,7 +16016,7 @@
               "name": "Q109_TYPE_O05",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Other facility"
+                  "text": "109. What type of care was the referral for? \u2014 Other facility visits (Care that is provided in a facility that is not a health center or hospital, such as independent diagnostic centers, TB dispensaries, etc.)"
                 }
               ],
               "contentType": "numeric",
@@ -16027,7 +16027,7 @@
                   "name": "Q109_TYPE_O05_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Other facility"
+                      "text": "109. What type of care was the referral for? \u2014 Other facility visits (Care that is provided in a facility that is not a health center or hospital, such as independent diagnostic centers, TB dispensaries, etc.)"
                     }
                   ],
                   "values": [
@@ -16063,7 +16063,7 @@
               "name": "Q109_TYPE_O06",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Special therapy"
+                  "text": "109. What type of care was the referral for? \u2014 Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech and language therapy)"
                 }
               ],
               "contentType": "numeric",
@@ -16074,7 +16074,7 @@
                   "name": "Q109_TYPE_O06_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Special therapy"
+                      "text": "109. What type of care was the referral for? \u2014 Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech and language therapy)"
                     }
                   ],
                   "values": [
@@ -16110,7 +16110,7 @@
               "name": "Q109_TYPE_O07",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Alternative care"
+                  "text": "109. What type of care was the referral for? \u2014 Alternative care (Healthcare apart from medical doctors or the formal health care system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)"
                 }
               ],
               "contentType": "numeric",
@@ -16121,7 +16121,7 @@
                   "name": "Q109_TYPE_O07_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Alternative care"
+                      "text": "109. What type of care was the referral for? \u2014 Alternative care (Healthcare apart from medical doctors or the formal health care system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)"
                     }
                   ],
                   "values": [
@@ -16157,7 +16157,7 @@
               "name": "Q109_TYPE_O08",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Medical mission"
+                  "text": "109. What type of care was the referral for? \u2014 Outreach / medical missions (Care provided by the government or an NGO through an outreach or medical mission within a community)"
                 }
               ],
               "contentType": "numeric",
@@ -16168,7 +16168,7 @@
                   "name": "Q109_TYPE_O08_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Medical mission"
+                      "text": "109. What type of care was the referral for? \u2014 Outreach / medical missions (Care provided by the government or an NGO through an outreach or medical mission within a community)"
                     }
                   ],
                   "values": [
@@ -16204,7 +16204,7 @@
               "name": "Q109_TYPE_O09",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Home healthcare"
+                  "text": "109. What type of care was the referral for? \u2014 Home healthcare (Care that is administered at the patient's home, such as birth delivery, checkups, immunization, rehabilitation, etc.)"
                 }
               ],
               "contentType": "numeric",
@@ -16215,7 +16215,7 @@
                   "name": "Q109_TYPE_O09_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Home healthcare"
+                      "text": "109. What type of care was the referral for? \u2014 Home healthcare (Care that is administered at the patient's home, such as birth delivery, checkups, immunization, rehabilitation, etc.)"
                     }
                   ],
                   "values": [
@@ -16251,7 +16251,7 @@
               "name": "Q109_TYPE_O10",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Telemedicine"
+                  "text": "109. What type of care was the referral for? \u2014 Telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)"
                 }
               ],
               "contentType": "numeric",
@@ -16262,7 +16262,7 @@
                   "name": "Q109_TYPE_O10_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Telemedicine"
+                      "text": "109. What type of care was the referral for? \u2014 Telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)"
                     }
                   ],
                   "values": [
@@ -16345,7 +16345,7 @@
               "name": "Q109_TYPE_O12",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Other (specify)"
+                  "text": "109. What type of care was the referral for? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -16356,7 +16356,7 @@
                   "name": "Q109_TYPE_O12_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Other (specify)"
+                      "text": "109. What type of care was the referral for? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -16399,10 +16399,20 @@
               "length": 120
             },
             {
+              "name": "Q109_TYPE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "109. Referral care type \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
               "name": "Q110_SPECIALIST",
               "labels": [
                 {
-                  "text": "110. What kind of specialist was recommended?"
+                  "text": "110. What kind of specialist did they recommend?"
                 }
               ],
               "contentType": "numeric",
@@ -16413,7 +16423,7 @@
                   "name": "Q110_SPECIALIST_VS1",
                   "labels": [
                     {
-                      "text": "110. What kind of specialist was recommended?"
+                      "text": "110. What kind of specialist did they recommend?"
                     }
                   ],
                   "values": [
@@ -16684,7 +16694,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Other (specify)"
+                          "text": "Other (Specify)"
                         }
                       ],
                       "pairs": [
@@ -16698,20 +16708,20 @@
               ]
             },
             {
-              "name": "Q110_OTHER_TXT",
+              "name": "Q110_SPECIALIST_OTHER_TXT",
               "labels": [
                 {
-                  "text": "110. Specialist \u2014 Other (specify) text"
+                  "text": "110. Specialist \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
-              "length": 80
+              "length": 120
             },
             {
               "name": "Q111_METHOD",
               "labels": [
                 {
-                  "text": "111. How did they refer you?"
+                  "text": "111. How did they refer you to the doctor?"
                 }
               ],
               "contentType": "numeric",
@@ -16722,7 +16732,7 @@
                   "name": "Q111_METHOD_VS1",
                   "labels": [
                     {
-                      "text": "111. How did they refer you?"
+                      "text": "111. How did they refer you to the doctor?"
                     }
                   ],
                   "values": [
@@ -16753,7 +16763,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Phone call"
+                          "text": "Phone call from referring facility to receiving facility"
                         }
                       ],
                       "pairs": [
@@ -16777,7 +16787,7 @@
                     {
                       "labels": [
                         {
-                          "text": "Other (specify)"
+                          "text": "Other (Specify)"
                         }
                       ],
                       "pairs": [
@@ -16791,14 +16801,14 @@
               ]
             },
             {
-              "name": "Q111_OTHER_TXT",
+              "name": "Q111_METHOD_OTHER_TXT",
               "labels": [
                 {
-                  "text": "111. Referral method \u2014 Other (specify) text"
+                  "text": "111. Referral method \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
-              "length": 80
+              "length": 120
             },
             {
               "name": "Q112_VISITED",
@@ -17145,7 +17155,7 @@
               "name": "Q113_WHY_NOT_O07",
               "labels": [
                 {
-                  "text": "113. Why are you not planning to visit? \u2014 Other (specify)"
+                  "text": "113. Why are you not planning to visit? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -17156,7 +17166,7 @@
                   "name": "Q113_WHY_NOT_O07_VS1",
                   "labels": [
                     {
-                      "text": "113. Why are you not planning to visit? \u2014 Other (specify)"
+                      "text": "113. Why are you not planning to visit? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -17199,10 +17209,20 @@
               "length": 120
             },
             {
-              "name": "Q114_DISCUSSED",
+              "name": "Q113_WHY_NOT_OTHER_TXT",
               "labels": [
                 {
-                  "text": "114. Did they discuss different places you could go?"
+                  "text": "113. Why not planning to visit \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q114_DISCUSSED_PLACES",
+              "labels": [
+                {
+                  "text": "114. Did they discuss with you the different places you could have gone to get help with your problem?"
                 }
               ],
               "contentType": "numeric",
@@ -17210,10 +17230,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q114_DISCUSSED_VS1",
+                  "name": "Q114_DISCUSSED_PLACES_VS1",
                   "labels": [
                     {
-                      "text": "114. Did they discuss different places you could go?"
+                      "text": "114. Did they discuss with you the different places you could have gone to get help with your problem?"
                     }
                   ],
                   "values": [
@@ -17249,7 +17269,7 @@
               "name": "Q115_HELPED_APPT",
               "labels": [
                 {
-                  "text": "115. Did they help you make the appointment?"
+                  "text": "115. Did they help you make the appointment for that visit?"
                 }
               ],
               "contentType": "numeric",
@@ -17260,7 +17280,7 @@
                   "name": "Q115_HELPED_APPT_VS1",
                   "labels": [
                     {
-                      "text": "115. Did they help you make the appointment?"
+                      "text": "115. Did they help you make the appointment for that visit?"
                     }
                   ],
                   "values": [
@@ -17296,7 +17316,7 @@
               "name": "Q116_WROTE_INFO",
               "labels": [
                 {
-                  "text": "116. Did they write down information for the specialist?"
+                  "text": "116. Did they write down any information for the specialist about the reason for that visit?"
                 }
               ],
               "contentType": "numeric",
@@ -17307,7 +17327,7 @@
                   "name": "Q116_WROTE_INFO_VS1",
                   "labels": [
                     {
-                      "text": "116. Did they write down information for the specialist?"
+                      "text": "116. Did they write down any information for the specialist about the reason for that visit?"
                     }
                   ],
                   "values": [
@@ -17340,10 +17360,10 @@
               ]
             },
             {
-              "name": "Q117_FOLLOWUP",
+              "name": "Q117_SPECIALIST_FOLLOWUP",
               "labels": [
                 {
-                  "text": "117. Did they follow up with you about what happened?"
+                  "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)"
                 }
               ],
               "contentType": "numeric",
@@ -17351,10 +17371,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q117_FOLLOWUP_VS1",
+                  "name": "Q117_SPECIALIST_FOLLOWUP_VS1",
                   "labels": [
                     {
-                      "text": "117. Did they follow up with you about what happened?"
+                      "text": "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)"
                     }
                   ],
                   "values": [
@@ -17387,10 +17407,10 @@
               ]
             },
             {
-              "name": "Q118_SAT_REFERRAL",
+              "name": "Q118_SAT_REFERRAL_PROCESS",
               "labels": [
                 {
-                  "text": "118. Satisfaction with the referral process"
+                  "text": "118. Overall, how would you rate your satisfaction with the referral process? (Only if Q112=Yes)"
                 }
               ],
               "contentType": "numeric",
@@ -17398,10 +17418,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q118_SAT_REFERRAL_VS1",
+                  "name": "Q118_SAT_REFERRAL_PROCESS_VS1",
                   "labels": [
                     {
-                      "text": "118. Satisfaction with the referral process"
+                      "text": "118. Overall, how would you rate your satisfaction with the referral process? (Only if Q112=Yes)"
                     }
                   ],
                   "values": [
@@ -17482,10 +17502,10 @@
               ]
             },
             {
-              "name": "Q119_WAS_REFERRAL",
+              "name": "Q119_PCF_REFERRAL",
               "labels": [
                 {
-                  "text": "119. Was the visit a referral from your primary care facility?"
+                  "text": "119. Was the visit to the facility a referral from your primary care facility?"
                 }
               ],
               "contentType": "numeric",
@@ -17493,10 +17513,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q119_WAS_REFERRAL_VS1",
+                  "name": "Q119_PCF_REFERRAL_VS1",
                   "labels": [
                     {
-                      "text": "119. Was the visit a referral from your primary care facility?"
+                      "text": "119. Was the visit to the facility a referral from your primary care facility?"
                     }
                   ],
                   "values": [
@@ -17532,7 +17552,7 @@
               "name": "Q120_PCP_KNOWS",
               "labels": [
                 {
-                  "text": "120. Does your primary care provider know about the visit?"
+                  "text": "120. Does your primary care provider know that you made the visit?"
                 }
               ],
               "contentType": "numeric",
@@ -17543,7 +17563,7 @@
                   "name": "Q120_PCP_KNOWS_VS1",
                   "labels": [
                     {
-                      "text": "120. Does your primary care provider know about the visit?"
+                      "text": "120. Does your primary care provider know that you made the visit?"
                     }
                   ],
                   "values": [
@@ -17591,7 +17611,7 @@
               "name": "Q121_WHY_HOSPITAL_O01",
               "labels": [
                 {
-                  "text": "121. Why did you decide to visit a hospital? \u2014 Referred by other specialist"
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by other specialist (doctor in another hospital)"
                 }
               ],
               "contentType": "numeric",
@@ -17602,7 +17622,7 @@
                   "name": "Q121_WHY_HOSPITAL_O01_VS1",
                   "labels": [
                     {
-                      "text": "121. Why did you decide to visit a hospital? \u2014 Referred by other specialist"
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by other specialist (doctor in another hospital)"
                     }
                   ],
                   "values": [
@@ -17638,7 +17658,7 @@
               "name": "Q121_WHY_HOSPITAL_O02",
               "labels": [
                 {
-                  "text": "121. Why did you decide to visit a hospital? \u2014 Nearest facility to house"
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Nearest facility to house"
                 }
               ],
               "contentType": "numeric",
@@ -17649,7 +17669,7 @@
                   "name": "Q121_WHY_HOSPITAL_O02_VS1",
                   "labels": [
                     {
-                      "text": "121. Why did you decide to visit a hospital? \u2014 Nearest facility to house"
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Nearest facility to house"
                     }
                   ],
                   "values": [
@@ -17685,7 +17705,7 @@
               "name": "Q121_WHY_HOSPITAL_O03",
               "labels": [
                 {
-                  "text": "121. Why did you decide to visit a hospital? \u2014 Facility is usual source of care"
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility is usual source of care"
                 }
               ],
               "contentType": "numeric",
@@ -17696,7 +17716,7 @@
                   "name": "Q121_WHY_HOSPITAL_O03_VS1",
                   "labels": [
                     {
-                      "text": "121. Why did you decide to visit a hospital? \u2014 Facility is usual source of care"
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility is usual source of care"
                     }
                   ],
                   "values": [
@@ -17732,7 +17752,7 @@
               "name": "Q121_WHY_HOSPITAL_O04",
               "labels": [
                 {
-                  "text": "121. Why did you decide to visit a hospital? \u2014 Only place for certain test"
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility is the only place that can perform a certain test"
                 }
               ],
               "contentType": "numeric",
@@ -17743,7 +17763,7 @@
                   "name": "Q121_WHY_HOSPITAL_O04_VS1",
                   "labels": [
                     {
-                      "text": "121. Why did you decide to visit a hospital? \u2014 Only place for certain test"
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility is the only place that can perform a certain test"
                     }
                   ],
                   "values": [
@@ -17779,7 +17799,7 @@
               "name": "Q121_WHY_HOSPITAL_O05",
               "labels": [
                 {
-                  "text": "121. Why did you decide to visit a hospital? \u2014 Referred by BHW/nurse/midwife"
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by BHW/nurse/midwife/other community health professional"
                 }
               ],
               "contentType": "numeric",
@@ -17790,7 +17810,7 @@
                   "name": "Q121_WHY_HOSPITAL_O05_VS1",
                   "labels": [
                     {
-                      "text": "121. Why did you decide to visit a hospital? \u2014 Referred by BHW/nurse/midwife"
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by BHW/nurse/midwife/other community health professional"
                     }
                   ],
                   "values": [
@@ -17826,7 +17846,7 @@
               "name": "Q121_WHY_HOSPITAL_O06",
               "labels": [
                 {
-                  "text": "121. Why did you decide to visit a hospital? \u2014 Referred by family / friends"
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by family / friends"
                 }
               ],
               "contentType": "numeric",
@@ -17837,7 +17857,7 @@
                   "name": "Q121_WHY_HOSPITAL_O06_VS1",
                   "labels": [
                     {
-                      "text": "121. Why did you decide to visit a hospital? \u2014 Referred by family / friends"
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by family / friends"
                     }
                   ],
                   "values": [
@@ -17873,7 +17893,7 @@
               "name": "Q121_WHY_HOSPITAL_O07",
               "labels": [
                 {
-                  "text": "121. Why did you decide to visit a hospital? \u2014 Offers subsidized/free services"
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility offers subsidized or free health services"
                 }
               ],
               "contentType": "numeric",
@@ -17884,7 +17904,7 @@
                   "name": "Q121_WHY_HOSPITAL_O07_VS1",
                   "labels": [
                     {
-                      "text": "121. Why did you decide to visit a hospital? \u2014 Offers subsidized/free services"
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility offers subsidized or free health services"
                     }
                   ],
                   "values": [
@@ -17920,7 +17940,7 @@
               "name": "Q121_WHY_HOSPITAL_O08",
               "labels": [
                 {
-                  "text": "121. Why did you decide to visit a hospital? \u2014 I don't know"
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 I don't know"
                 }
               ],
               "contentType": "numeric",
@@ -17931,7 +17951,7 @@
                   "name": "Q121_WHY_HOSPITAL_O08_VS1",
                   "labels": [
                     {
-                      "text": "121. Why did you decide to visit a hospital? \u2014 I don't know"
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 I don't know"
                     }
                   ],
                   "values": [
@@ -17967,7 +17987,7 @@
               "name": "Q121_WHY_HOSPITAL_O09",
               "labels": [
                 {
-                  "text": "121. Why did you decide to visit a hospital? \u2014 Other (specify)"
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -17978,7 +17998,7 @@
                   "name": "Q121_WHY_HOSPITAL_O09_VS1",
                   "labels": [
                     {
-                      "text": "121. Why did you decide to visit a hospital? \u2014 Other (specify)"
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -18014,17 +18034,27 @@
               "name": "Q121_WHY_HOSPITAL_OTHER_TXT",
               "labels": [
                 {
-                  "text": "121. Why did you decide to visit a hospital? \u2014 Other (specify) text"
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
               "length": 120
             },
             {
-              "name": "Q122_PCP_DISCUSSED",
+              "name": "Q121_WHY_HOSPITAL_OTHER_TXT",
               "labels": [
                 {
-                  "text": "122. Did your PCP discuss different places to go?"
+                  "text": "121. Why visit hospital \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q122_PCP_DISCUSSED_PLACES",
+              "labels": [
+                {
+                  "text": "122. Did your primary care provider discuss with you different places you could have gone to get help with your problem?"
                 }
               ],
               "contentType": "numeric",
@@ -18032,10 +18062,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q122_PCP_DISCUSSED_VS1",
+                  "name": "Q122_PCP_DISCUSSED_PLACES_VS1",
                   "labels": [
                     {
-                      "text": "122. Did your PCP discuss different places to go?"
+                      "text": "122. Did your primary care provider discuss with you different places you could have gone to get help with your problem?"
                     }
                   ],
                   "values": [
@@ -18071,7 +18101,7 @@
               "name": "Q123_PCP_HELPED_APPT",
               "labels": [
                 {
-                  "text": "123. Did your PCP help make the appointment?"
+                  "text": "123. Did your primary care provider (PCP) or someone working with your PCP help you make the appointment for that visit?"
                 }
               ],
               "contentType": "numeric",
@@ -18082,7 +18112,7 @@
                   "name": "Q123_PCP_HELPED_APPT_VS1",
                   "labels": [
                     {
-                      "text": "123. Did your PCP help make the appointment?"
+                      "text": "123. Did your primary care provider (PCP) or someone working with your PCP help you make the appointment for that visit?"
                     }
                   ],
                   "values": [
@@ -18118,7 +18148,7 @@
               "name": "Q124_PCP_WROTE_INFO",
               "labels": [
                 {
-                  "text": "124. Did your PCP write down information for the specialist?"
+                  "text": "124. Did your primary care provider write down any information for the specialist about the reason for that visit?"
                 }
               ],
               "contentType": "numeric",
@@ -18129,7 +18159,7 @@
                   "name": "Q124_PCP_WROTE_INFO_VS1",
                   "labels": [
                     {
-                      "text": "124. Did your PCP write down information for the specialist?"
+                      "text": "124. Did your primary care provider write down any information for the specialist about the reason for that visit?"
                     }
                   ],
                   "values": [
@@ -18162,10 +18192,10 @@
               ]
             },
             {
-              "name": "Q125_SAT_REFERRAL2",
+              "name": "Q125_SAT_REFERRAL_EXP",
               "labels": [
                 {
-                  "text": "125. Overall satisfaction with referral experience"
+                  "text": "125. Overall, how would you rate your experience with the referral process?"
                 }
               ],
               "contentType": "numeric",
@@ -18173,10 +18203,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q125_SAT_REFERRAL2_VS1",
+                  "name": "Q125_SAT_REFERRAL_EXP_VS1",
                   "labels": [
                     {
-                      "text": "125. Overall satisfaction with referral experience"
+                      "text": "125. Overall, how would you rate your experience with the referral process?"
                     }
                   ],
                   "values": [
@@ -18262,7 +18292,7 @@
           "name": "L_NBB_AWARENESS",
           "labels": [
             {
-              "text": "L. NBB Awareness"
+              "text": "L. No Balance Billing (NBB) Awareness and Utilization"
             }
           ],
           "recordType": "N",
@@ -18334,7 +18364,7 @@
               "name": "Q127_NBB_SOURCE_O01",
               "labels": [
                 {
-                  "text": "127. Sources of information about NBB \u2014 News"
+                  "text": "127. If yes, what are your sources of information about NBB? \u2014 News"
                 }
               ],
               "contentType": "numeric",
@@ -18345,7 +18375,7 @@
                   "name": "Q127_NBB_SOURCE_O01_VS1",
                   "labels": [
                     {
-                      "text": "127. Sources of information about NBB \u2014 News"
+                      "text": "127. If yes, what are your sources of information about NBB? \u2014 News"
                     }
                   ],
                   "values": [
@@ -18381,7 +18411,7 @@
               "name": "Q127_NBB_SOURCE_O02",
               "labels": [
                 {
-                  "text": "127. Sources of information about NBB \u2014 Legislation"
+                  "text": "127. If yes, what are your sources of information about NBB? \u2014 Legislation"
                 }
               ],
               "contentType": "numeric",
@@ -18392,7 +18422,7 @@
                   "name": "Q127_NBB_SOURCE_O02_VS1",
                   "labels": [
                     {
-                      "text": "127. Sources of information about NBB \u2014 Legislation"
+                      "text": "127. If yes, what are your sources of information about NBB? \u2014 Legislation"
                     }
                   ],
                   "values": [
@@ -18428,7 +18458,7 @@
               "name": "Q127_NBB_SOURCE_O03",
               "labels": [
                 {
-                  "text": "127. Sources of information about NBB \u2014 Social Media"
+                  "text": "127. If yes, what are your sources of information about NBB? \u2014 Social Media"
                 }
               ],
               "contentType": "numeric",
@@ -18439,7 +18469,7 @@
                   "name": "Q127_NBB_SOURCE_O03_VS1",
                   "labels": [
                     {
-                      "text": "127. Sources of information about NBB \u2014 Social Media"
+                      "text": "127. If yes, what are your sources of information about NBB? \u2014 Social Media"
                     }
                   ],
                   "values": [
@@ -18475,7 +18505,7 @@
               "name": "Q127_NBB_SOURCE_O04",
               "labels": [
                 {
-                  "text": "127. Sources of information about NBB \u2014 Friends / Family"
+                  "text": "127. If yes, what are your sources of information about NBB? \u2014 Friends / Family"
                 }
               ],
               "contentType": "numeric",
@@ -18486,7 +18516,7 @@
                   "name": "Q127_NBB_SOURCE_O04_VS1",
                   "labels": [
                     {
-                      "text": "127. Sources of information about NBB \u2014 Friends / Family"
+                      "text": "127. If yes, what are your sources of information about NBB? \u2014 Friends / Family"
                     }
                   ],
                   "values": [
@@ -18522,7 +18552,7 @@
               "name": "Q127_NBB_SOURCE_O05",
               "labels": [
                 {
-                  "text": "127. Sources of information about NBB \u2014 Health center/facility"
+                  "text": "127. If yes, what are your sources of information about NBB? \u2014 Health center/facility"
                 }
               ],
               "contentType": "numeric",
@@ -18533,7 +18563,7 @@
                   "name": "Q127_NBB_SOURCE_O05_VS1",
                   "labels": [
                     {
-                      "text": "127. Sources of information about NBB \u2014 Health center/facility"
+                      "text": "127. If yes, what are your sources of information about NBB? \u2014 Health center/facility"
                     }
                   ],
                   "values": [
@@ -18569,7 +18599,7 @@
               "name": "Q127_NBB_SOURCE_O06",
               "labels": [
                 {
-                  "text": "127. Sources of information about NBB \u2014 LGU/Barangay"
+                  "text": "127. If yes, what are your sources of information about NBB? \u2014 LGU/Barangay"
                 }
               ],
               "contentType": "numeric",
@@ -18580,7 +18610,7 @@
                   "name": "Q127_NBB_SOURCE_O06_VS1",
                   "labels": [
                     {
-                      "text": "127. Sources of information about NBB \u2014 LGU/Barangay"
+                      "text": "127. If yes, what are your sources of information about NBB? \u2014 LGU/Barangay"
                     }
                   ],
                   "values": [
@@ -18616,7 +18646,7 @@
               "name": "Q127_NBB_SOURCE_O07",
               "labels": [
                 {
-                  "text": "127. Sources of information about NBB \u2014 I don't know"
+                  "text": "127. If yes, what are your sources of information about NBB? \u2014 I don't know"
                 }
               ],
               "contentType": "numeric",
@@ -18627,7 +18657,7 @@
                   "name": "Q127_NBB_SOURCE_O07_VS1",
                   "labels": [
                     {
-                      "text": "127. Sources of information about NBB \u2014 I don't know"
+                      "text": "127. If yes, what are your sources of information about NBB? \u2014 I don't know"
                     }
                   ],
                   "values": [
@@ -18663,7 +18693,7 @@
               "name": "Q127_NBB_SOURCE_O08",
               "labels": [
                 {
-                  "text": "127. Sources of information about NBB \u2014 Other (specify)"
+                  "text": "127. If yes, what are your sources of information about NBB? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -18674,7 +18704,7 @@
                   "name": "Q127_NBB_SOURCE_O08_VS1",
                   "labels": [
                     {
-                      "text": "127. Sources of information about NBB \u2014 Other (specify)"
+                      "text": "127. If yes, what are your sources of information about NBB? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -18710,7 +18740,17 @@
               "name": "Q127_NBB_SOURCE_OTHER_TXT",
               "labels": [
                 {
-                  "text": "127. Sources of information about NBB \u2014 Other (specify) text"
+                  "text": "127. If yes, what are your sources of information about NBB? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q127_NBB_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "127. NBB info source \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -18767,7 +18807,7 @@
               "name": "Q128_NBB_UNDERSTAND_O02",
               "labels": [
                 {
-                  "text": "128. What is your understanding about NBB? \u2014 PhilHealth will cover cost of treatment"
+                  "text": "128. What is your understanding about NBB? \u2014 Bills are settled between the hospital and PhilHealth"
                 }
               ],
               "contentType": "numeric",
@@ -18778,7 +18818,7 @@
                   "name": "Q128_NBB_UNDERSTAND_O02_VS1",
                   "labels": [
                     {
-                      "text": "128. What is your understanding about NBB? \u2014 PhilHealth will cover cost of treatment"
+                      "text": "128. What is your understanding about NBB? \u2014 Bills are settled between the hospital and PhilHealth"
                     }
                   ],
                   "values": [
@@ -18814,7 +18854,7 @@
               "name": "Q128_NBB_UNDERSTAND_O03",
               "labels": [
                 {
-                  "text": "128. What is your understanding about NBB? \u2014 Medicine and service are already included"
+                  "text": "128. What is your understanding about NBB? \u2014 PhilHealth will cover cost of treatment"
                 }
               ],
               "contentType": "numeric",
@@ -18825,7 +18865,7 @@
                   "name": "Q128_NBB_UNDERSTAND_O03_VS1",
                   "labels": [
                     {
-                      "text": "128. What is your understanding about NBB? \u2014 Medicine and service are already included"
+                      "text": "128. What is your understanding about NBB? \u2014 PhilHealth will cover cost of treatment"
                     }
                   ],
                   "values": [
@@ -18861,147 +18901,6 @@
               "name": "Q128_NBB_UNDERSTAND_O04",
               "labels": [
                 {
-                  "text": "128. What is your understanding about NBB? \u2014 No cash payment required upon discharge"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q128_NBB_UNDERSTAND_O04_VS1",
-                  "labels": [
-                    {
-                      "text": "128. What is your understanding about NBB? \u2014 No cash payment required upon discharge"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q128_NBB_UNDERSTAND_O05",
-              "labels": [
-                {
-                  "text": "128. What is your understanding about NBB? \u2014 Applies only to certain patients or hospitals"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q128_NBB_UNDERSTAND_O05_VS1",
-                  "labels": [
-                    {
-                      "text": "128. What is your understanding about NBB? \u2014 Applies only to certain patients or hospitals"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q128_NBB_UNDERSTAND_O06",
-              "labels": [
-                {
-                  "text": "128. What is your understanding about NBB? \u2014 Bills settled between hospital and PhilHealth"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q128_NBB_UNDERSTAND_O06_VS1",
-                  "labels": [
-                    {
-                      "text": "128. What is your understanding about NBB? \u2014 Bills settled between hospital and PhilHealth"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q128_NBB_UNDERSTAND_O07",
-              "labels": [
-                {
                   "text": "128. What is your understanding about NBB? \u2014 Patients should not be charged extra fees"
                 }
               ],
@@ -19010,7 +18909,7 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q128_NBB_UNDERSTAND_O07_VS1",
+                  "name": "Q128_NBB_UNDERSTAND_O04_VS1",
                   "labels": [
                     {
                       "text": "128. What is your understanding about NBB? \u2014 Patients should not be charged extra fees"
@@ -19046,7 +18945,54 @@
               ]
             },
             {
-              "name": "Q128_NBB_UNDERSTAND_O08",
+              "name": "Q128_NBB_UNDERSTAND_O05",
+              "labels": [
+                {
+                  "text": "128. What is your understanding about NBB? \u2014 Medicine and service are already included"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q128_NBB_UNDERSTAND_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "128. What is your understanding about NBB? \u2014 Medicine and service are already included"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q128_NBB_UNDERSTAND_O06",
               "labels": [
                 {
                   "text": "128. What is your understanding about NBB? \u2014 I don't know"
@@ -19057,7 +19003,7 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q128_NBB_UNDERSTAND_O08_VS1",
+                  "name": "Q128_NBB_UNDERSTAND_O06_VS1",
                   "labels": [
                     {
                       "text": "128. What is your understanding about NBB? \u2014 I don't know"
@@ -19093,10 +19039,104 @@
               ]
             },
             {
+              "name": "Q128_NBB_UNDERSTAND_O07",
+              "labels": [
+                {
+                  "text": "128. What is your understanding about NBB? \u2014 No cash payment required upon discharge"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q128_NBB_UNDERSTAND_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "128. What is your understanding about NBB? \u2014 No cash payment required upon discharge"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q128_NBB_UNDERSTAND_O08",
+              "labels": [
+                {
+                  "text": "128. What is your understanding about NBB? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q128_NBB_UNDERSTAND_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "128. What is your understanding about NBB? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "Q128_NBB_UNDERSTAND_O09",
               "labels": [
                 {
-                  "text": "128. What is your understanding about NBB? \u2014 Other (specify)"
+                  "text": "128. What is your understanding about NBB? \u2014 Applies only to certain patients or hospitals"
                 }
               ],
               "contentType": "numeric",
@@ -19107,7 +19147,7 @@
                   "name": "Q128_NBB_UNDERSTAND_O09_VS1",
                   "labels": [
                     {
-                      "text": "128. What is your understanding about NBB? \u2014 Other (specify)"
+                      "text": "128. What is your understanding about NBB? \u2014 Applies only to certain patients or hospitals"
                     }
                   ],
                   "values": [
@@ -19143,17 +19183,17 @@
               "name": "Q128_NBB_UNDERSTAND_OTHER_TXT",
               "labels": [
                 {
-                  "text": "128. What is your understanding about NBB? \u2014 Other (specify) text"
+                  "text": "128. NBB understanding \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
               "length": 120
             },
             {
-              "name": "Q129_CONFINED",
+              "name": "Q129_HH_CONFINED",
               "labels": [
                 {
-                  "text": "129. Were you or a HH member confined in a hospital in the past 6 months?"
+                  "text": "129. Were you or any of your household members confined in a hospital during the past 6 months?"
                 }
               ],
               "contentType": "numeric",
@@ -19161,10 +19201,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q129_CONFINED_VS1",
+                  "name": "Q129_HH_CONFINED_VS1",
                   "labels": [
                     {
-                      "text": "129. Were you or a HH member confined in a hospital in the past 6 months?"
+                      "text": "129. Were you or any of your household members confined in a hospital during the past 6 months?"
                     }
                   ],
                   "values": [
@@ -19242,7 +19282,7 @@
                     {
                       "labels": [
                         {
-                          "text": "DOH-retained hospital"
+                          "text": "DOH-retained hospital (sub-type of public hospital)"
                         }
                       ],
                       "pairs": [
@@ -19271,7 +19311,7 @@
               "name": "Q131_NBB_OOP",
               "labels": [
                 {
-                  "text": "131. During hospitalization in a DOH-retained hospital, did you pay OOP that should have been covered under NBB?"
+                  "text": "131. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under NBB?"
                 }
               ],
               "contentType": "numeric",
@@ -19282,7 +19322,7 @@
                   "name": "Q131_NBB_OOP_VS1",
                   "labels": [
                     {
-                      "text": "131. During hospitalization in a DOH-retained hospital, did you pay OOP that should have been covered under NBB?"
+                      "text": "131. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under NBB?"
                     }
                   ],
                   "values": [
@@ -19329,10 +19369,10 @@
           ]
         },
         {
-          "name": "M_ZBB_AWARENESS",
+          "name": "M_ZBB_MAIFIP_BILL",
           "labels": [
             {
-              "text": "M. ZBB Awareness"
+              "text": "M. Zero Balance Billing (ZBB) Awareness + MAIFIP + Bill Breakdown"
             }
           ],
           "recordType": "O",
@@ -19404,7 +19444,7 @@
               "name": "Q133_ZBB_SOURCE_O01",
               "labels": [
                 {
-                  "text": "133. Sources of information about ZBB \u2014 News"
+                  "text": "133. If yes, what are your sources of information about ZBB? \u2014 News"
                 }
               ],
               "contentType": "numeric",
@@ -19415,7 +19455,7 @@
                   "name": "Q133_ZBB_SOURCE_O01_VS1",
                   "labels": [
                     {
-                      "text": "133. Sources of information about ZBB \u2014 News"
+                      "text": "133. If yes, what are your sources of information about ZBB? \u2014 News"
                     }
                   ],
                   "values": [
@@ -19451,7 +19491,7 @@
               "name": "Q133_ZBB_SOURCE_O02",
               "labels": [
                 {
-                  "text": "133. Sources of information about ZBB \u2014 Legislation"
+                  "text": "133. If yes, what are your sources of information about ZBB? \u2014 Legislation"
                 }
               ],
               "contentType": "numeric",
@@ -19462,7 +19502,7 @@
                   "name": "Q133_ZBB_SOURCE_O02_VS1",
                   "labels": [
                     {
-                      "text": "133. Sources of information about ZBB \u2014 Legislation"
+                      "text": "133. If yes, what are your sources of information about ZBB? \u2014 Legislation"
                     }
                   ],
                   "values": [
@@ -19498,7 +19538,7 @@
               "name": "Q133_ZBB_SOURCE_O03",
               "labels": [
                 {
-                  "text": "133. Sources of information about ZBB \u2014 Social Media"
+                  "text": "133. If yes, what are your sources of information about ZBB? \u2014 Social Media"
                 }
               ],
               "contentType": "numeric",
@@ -19509,7 +19549,7 @@
                   "name": "Q133_ZBB_SOURCE_O03_VS1",
                   "labels": [
                     {
-                      "text": "133. Sources of information about ZBB \u2014 Social Media"
+                      "text": "133. If yes, what are your sources of information about ZBB? \u2014 Social Media"
                     }
                   ],
                   "values": [
@@ -19545,7 +19585,7 @@
               "name": "Q133_ZBB_SOURCE_O04",
               "labels": [
                 {
-                  "text": "133. Sources of information about ZBB \u2014 Friends / Family"
+                  "text": "133. If yes, what are your sources of information about ZBB? \u2014 Friends / Family"
                 }
               ],
               "contentType": "numeric",
@@ -19556,7 +19596,7 @@
                   "name": "Q133_ZBB_SOURCE_O04_VS1",
                   "labels": [
                     {
-                      "text": "133. Sources of information about ZBB \u2014 Friends / Family"
+                      "text": "133. If yes, what are your sources of information about ZBB? \u2014 Friends / Family"
                     }
                   ],
                   "values": [
@@ -19592,7 +19632,7 @@
               "name": "Q133_ZBB_SOURCE_O05",
               "labels": [
                 {
-                  "text": "133. Sources of information about ZBB \u2014 Health center/facility"
+                  "text": "133. If yes, what are your sources of information about ZBB? \u2014 Health center/facility"
                 }
               ],
               "contentType": "numeric",
@@ -19603,7 +19643,7 @@
                   "name": "Q133_ZBB_SOURCE_O05_VS1",
                   "labels": [
                     {
-                      "text": "133. Sources of information about ZBB \u2014 Health center/facility"
+                      "text": "133. If yes, what are your sources of information about ZBB? \u2014 Health center/facility"
                     }
                   ],
                   "values": [
@@ -19639,7 +19679,7 @@
               "name": "Q133_ZBB_SOURCE_O06",
               "labels": [
                 {
-                  "text": "133. Sources of information about ZBB \u2014 LGU/Barangay"
+                  "text": "133. If yes, what are your sources of information about ZBB? \u2014 LGU/Barangay"
                 }
               ],
               "contentType": "numeric",
@@ -19650,7 +19690,7 @@
                   "name": "Q133_ZBB_SOURCE_O06_VS1",
                   "labels": [
                     {
-                      "text": "133. Sources of information about ZBB \u2014 LGU/Barangay"
+                      "text": "133. If yes, what are your sources of information about ZBB? \u2014 LGU/Barangay"
                     }
                   ],
                   "values": [
@@ -19686,7 +19726,7 @@
               "name": "Q133_ZBB_SOURCE_O07",
               "labels": [
                 {
-                  "text": "133. Sources of information about ZBB \u2014 I don't know"
+                  "text": "133. If yes, what are your sources of information about ZBB? \u2014 I don't know"
                 }
               ],
               "contentType": "numeric",
@@ -19697,7 +19737,7 @@
                   "name": "Q133_ZBB_SOURCE_O07_VS1",
                   "labels": [
                     {
-                      "text": "133. Sources of information about ZBB \u2014 I don't know"
+                      "text": "133. If yes, what are your sources of information about ZBB? \u2014 I don't know"
                     }
                   ],
                   "values": [
@@ -19733,7 +19773,7 @@
               "name": "Q133_ZBB_SOURCE_O08",
               "labels": [
                 {
-                  "text": "133. Sources of information about ZBB \u2014 Other (specify)"
+                  "text": "133. If yes, what are your sources of information about ZBB? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -19744,7 +19784,7 @@
                   "name": "Q133_ZBB_SOURCE_O08_VS1",
                   "labels": [
                     {
-                      "text": "133. Sources of information about ZBB \u2014 Other (specify)"
+                      "text": "133. If yes, what are your sources of information about ZBB? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -19780,7 +19820,17 @@
               "name": "Q133_ZBB_SOURCE_OTHER_TXT",
               "labels": [
                 {
-                  "text": "133. Sources of information about ZBB \u2014 Other (specify) text"
+                  "text": "133. If yes, what are your sources of information about ZBB? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q133_ZBB_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "133. ZBB info source \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -19837,7 +19887,7 @@
               "name": "Q134_ZBB_UNDERSTAND_O02",
               "labels": [
                 {
-                  "text": "134. What is your understanding about ZBB? \u2014 PhilHealth will cover cost of treatment"
+                  "text": "134. What is your understanding about ZBB? \u2014 Bills are settled between the hospital and PhilHealth"
                 }
               ],
               "contentType": "numeric",
@@ -19848,7 +19898,7 @@
                   "name": "Q134_ZBB_UNDERSTAND_O02_VS1",
                   "labels": [
                     {
-                      "text": "134. What is your understanding about ZBB? \u2014 PhilHealth will cover cost of treatment"
+                      "text": "134. What is your understanding about ZBB? \u2014 Bills are settled between the hospital and PhilHealth"
                     }
                   ],
                   "values": [
@@ -19884,7 +19934,7 @@
               "name": "Q134_ZBB_UNDERSTAND_O03",
               "labels": [
                 {
-                  "text": "134. What is your understanding about ZBB? \u2014 Medicine and service are already included"
+                  "text": "134. What is your understanding about ZBB? \u2014 PhilHealth will cover cost of treatment"
                 }
               ],
               "contentType": "numeric",
@@ -19895,7 +19945,7 @@
                   "name": "Q134_ZBB_UNDERSTAND_O03_VS1",
                   "labels": [
                     {
-                      "text": "134. What is your understanding about ZBB? \u2014 Medicine and service are already included"
+                      "text": "134. What is your understanding about ZBB? \u2014 PhilHealth will cover cost of treatment"
                     }
                   ],
                   "values": [
@@ -19931,147 +19981,6 @@
               "name": "Q134_ZBB_UNDERSTAND_O04",
               "labels": [
                 {
-                  "text": "134. What is your understanding about ZBB? \u2014 No cash payment required upon discharge"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q134_ZBB_UNDERSTAND_O04_VS1",
-                  "labels": [
-                    {
-                      "text": "134. What is your understanding about ZBB? \u2014 No cash payment required upon discharge"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q134_ZBB_UNDERSTAND_O05",
-              "labels": [
-                {
-                  "text": "134. What is your understanding about ZBB? \u2014 Applies only to certain patients or hospitals"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q134_ZBB_UNDERSTAND_O05_VS1",
-                  "labels": [
-                    {
-                      "text": "134. What is your understanding about ZBB? \u2014 Applies only to certain patients or hospitals"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q134_ZBB_UNDERSTAND_O06",
-              "labels": [
-                {
-                  "text": "134. What is your understanding about ZBB? \u2014 Bills settled between hospital and PhilHealth"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q134_ZBB_UNDERSTAND_O06_VS1",
-                  "labels": [
-                    {
-                      "text": "134. What is your understanding about ZBB? \u2014 Bills settled between hospital and PhilHealth"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q134_ZBB_UNDERSTAND_O07",
-              "labels": [
-                {
                   "text": "134. What is your understanding about ZBB? \u2014 Patients should not be charged extra fees"
                 }
               ],
@@ -20080,7 +19989,7 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q134_ZBB_UNDERSTAND_O07_VS1",
+                  "name": "Q134_ZBB_UNDERSTAND_O04_VS1",
                   "labels": [
                     {
                       "text": "134. What is your understanding about ZBB? \u2014 Patients should not be charged extra fees"
@@ -20116,7 +20025,54 @@
               ]
             },
             {
-              "name": "Q134_ZBB_UNDERSTAND_O08",
+              "name": "Q134_ZBB_UNDERSTAND_O05",
+              "labels": [
+                {
+                  "text": "134. What is your understanding about ZBB? \u2014 Medicine and service are already included"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q134_ZBB_UNDERSTAND_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "134. What is your understanding about ZBB? \u2014 Medicine and service are already included"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q134_ZBB_UNDERSTAND_O06",
               "labels": [
                 {
                   "text": "134. What is your understanding about ZBB? \u2014 I don't know"
@@ -20127,7 +20083,7 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q134_ZBB_UNDERSTAND_O08_VS1",
+                  "name": "Q134_ZBB_UNDERSTAND_O06_VS1",
                   "labels": [
                     {
                       "text": "134. What is your understanding about ZBB? \u2014 I don't know"
@@ -20163,10 +20119,104 @@
               ]
             },
             {
+              "name": "Q134_ZBB_UNDERSTAND_O07",
+              "labels": [
+                {
+                  "text": "134. What is your understanding about ZBB? \u2014 No cash payment required upon discharge"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q134_ZBB_UNDERSTAND_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "134. What is your understanding about ZBB? \u2014 No cash payment required upon discharge"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q134_ZBB_UNDERSTAND_O08",
+              "labels": [
+                {
+                  "text": "134. What is your understanding about ZBB? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q134_ZBB_UNDERSTAND_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "134. What is your understanding about ZBB? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "Q134_ZBB_UNDERSTAND_O09",
               "labels": [
                 {
-                  "text": "134. What is your understanding about ZBB? \u2014 Other (specify)"
+                  "text": "134. What is your understanding about ZBB? \u2014 Applies only to certain patients or hospitals"
                 }
               ],
               "contentType": "numeric",
@@ -20177,7 +20227,7 @@
                   "name": "Q134_ZBB_UNDERSTAND_O09_VS1",
                   "labels": [
                     {
-                      "text": "134. What is your understanding about ZBB? \u2014 Other (specify)"
+                      "text": "134. What is your understanding about ZBB? \u2014 Applies only to certain patients or hospitals"
                     }
                   ],
                   "values": [
@@ -20213,7 +20263,7 @@
               "name": "Q134_ZBB_UNDERSTAND_OTHER_TXT",
               "labels": [
                 {
-                  "text": "134. What is your understanding about ZBB? \u2014 Other (specify) text"
+                  "text": "134. ZBB understanding \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -20223,7 +20273,7 @@
               "name": "Q135_ZBB_OOP",
               "labels": [
                 {
-                  "text": "135. During hospitalization in a DOH-retained hospital, did you pay OOP that should have been covered under ZBB?"
+                  "text": "135. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under ZBB?"
                 }
               ],
               "contentType": "numeric",
@@ -20234,7 +20284,7 @@
                   "name": "Q135_ZBB_OOP_VS1",
                   "labels": [
                     {
-                      "text": "135. During hospitalization in a DOH-retained hospital, did you pay OOP that should have been covered under ZBB?"
+                      "text": "135. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under ZBB?"
                     }
                   ],
                   "values": [
@@ -20279,10 +20329,10 @@
               ]
             },
             {
-              "name": "Q136_MOST_EXPENSIVE",
+              "name": "Q136_MAIFIP_HEARD",
               "labels": [
                 {
-                  "text": "136. From your most recent visit, which charge was most expensive?"
+                  "text": "136. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?"
                 }
               ],
               "contentType": "numeric",
@@ -20290,10 +20340,465 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q136_MOST_EXPENSIVE_VS1",
+                  "name": "Q136_MAIFIP_HEARD_VS1",
                   "labels": [
                     {
-                      "text": "136. From your most recent visit, which charge was most expensive?"
+                      "text": "136. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q137_MAIFIP_SOURCE_O01",
+              "labels": [
+                {
+                  "text": "137. What are your sources of information about MAIFIP? \u2014 News"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q137_MAIFIP_SOURCE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "137. What are your sources of information about MAIFIP? \u2014 News"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q137_MAIFIP_SOURCE_O02",
+              "labels": [
+                {
+                  "text": "137. What are your sources of information about MAIFIP? \u2014 Legislation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q137_MAIFIP_SOURCE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "137. What are your sources of information about MAIFIP? \u2014 Legislation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q137_MAIFIP_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "137. What are your sources of information about MAIFIP? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q137_MAIFIP_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "137. What are your sources of information about MAIFIP? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q137_MAIFIP_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "137. What are your sources of information about MAIFIP? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q137_MAIFIP_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "137. What are your sources of information about MAIFIP? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q137_MAIFIP_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "137. What are your sources of information about MAIFIP? \u2014 Health center/facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q137_MAIFIP_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "137. What are your sources of information about MAIFIP? \u2014 Health center/facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q137_MAIFIP_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "137. What are your sources of information about MAIFIP? \u2014 LGU/Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q137_MAIFIP_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "137. What are your sources of information about MAIFIP? \u2014 LGU/Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q137_MAIFIP_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "137. What are your sources of information about MAIFIP? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q137_MAIFIP_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "137. What are your sources of information about MAIFIP? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q137_MAIFIP_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "137. What are your sources of information about MAIFIP? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q137_MAIFIP_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "137. What are your sources of information about MAIFIP? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q137_MAIFIP_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "137. What are your sources of information about MAIFIP? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q137_MAIFIP_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "137. MAIFIP info source \u2014 Other (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q138_MOST_EXPENSIVE",
+              "labels": [
+                {
+                  "text": "138. From your most recent visit, which among the charges was the most expensive?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q138_MOST_EXPENSIVE_VS1",
+                  "labels": [
+                    {
+                      "text": "138. From your most recent visit, which among the charges was the most expensive?"
                     }
                   ],
                   "values": [
@@ -20350,10 +20855,10 @@
               ]
             },
             {
-              "name": "Q137_FINAL_AMOUNT",
+              "name": "Q139_FINAL_AMOUNT_PHP",
               "labels": [
                 {
-                  "text": "137. Final amount paid in cash at the hospital cashier upon discharge (PHP)"
+                  "text": "139. From your most recent visit, what was the final amount you paid in cash at the hospital cashier upon discharge? (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -20361,10 +20866,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q138_RECALL_BREAKDOWN",
+              "name": "Q140_RECALL_BREAKDOWN",
               "labels": [
                 {
-                  "text": "138. Do you recall the breakdown of the bill?"
+                  "text": "140. From your most recent visit, do you recall the breakdown of the bill?"
                 }
               ],
               "contentType": "numeric",
@@ -20372,10 +20877,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q138_RECALL_BREAKDOWN_VS1",
+                  "name": "Q140_RECALL_BREAKDOWN_VS1",
                   "labels": [
                     {
-                      "text": "138. Do you recall the breakdown of the bill?"
+                      "text": "140. From your most recent visit, do you recall the breakdown of the bill?"
                     }
                   ],
                   "values": [
@@ -20408,10 +20913,10 @@
               ]
             },
             {
-              "name": "Q139_BILL_ITEMS_O01",
+              "name": "Q141_BILL_ITEMS_O01",
               "labels": [
                 {
-                  "text": "139. Which items were included in the bill? \u2014 Rooms"
+                  "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Rooms <for inpatients only>"
                 }
               ],
               "contentType": "numeric",
@@ -20419,10 +20924,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q139_BILL_ITEMS_O01_VS1",
+                  "name": "Q141_BILL_ITEMS_O01_VS1",
                   "labels": [
                     {
-                      "text": "139. Which items were included in the bill? \u2014 Rooms"
+                      "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Rooms <for inpatients only>"
                     }
                   ],
                   "values": [
@@ -20455,10 +20960,10 @@
               ]
             },
             {
-              "name": "Q139_BILL_ITEMS_O02",
+              "name": "Q141_BILL_ITEMS_O02",
               "labels": [
                 {
-                  "text": "139. Which items were included in the bill? \u2014 Doctor's Fee"
+                  "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Doctor's Fee"
                 }
               ],
               "contentType": "numeric",
@@ -20466,10 +20971,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q139_BILL_ITEMS_O02_VS1",
+                  "name": "Q141_BILL_ITEMS_O02_VS1",
                   "labels": [
                     {
-                      "text": "139. Which items were included in the bill? \u2014 Doctor's Fee"
+                      "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Doctor's Fee"
                     }
                   ],
                   "values": [
@@ -20502,10 +21007,10 @@
               ]
             },
             {
-              "name": "Q139_BILL_ITEMS_O03",
+              "name": "Q141_BILL_ITEMS_O03",
               "labels": [
                 {
-                  "text": "139. Which items were included in the bill? \u2014 Diagnostic or laboratory procedure"
+                  "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Diagnostic or laboratory procedure"
                 }
               ],
               "contentType": "numeric",
@@ -20513,10 +21018,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q139_BILL_ITEMS_O03_VS1",
+                  "name": "Q141_BILL_ITEMS_O03_VS1",
                   "labels": [
                     {
-                      "text": "139. Which items were included in the bill? \u2014 Diagnostic or laboratory procedure"
+                      "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Diagnostic or laboratory procedure"
                     }
                   ],
                   "values": [
@@ -20549,10 +21054,10 @@
               ]
             },
             {
-              "name": "Q139_BILL_ITEMS_O04",
+              "name": "Q141_BILL_ITEMS_O04",
               "labels": [
                 {
-                  "text": "139. Which items were included in the bill? \u2014 Medical equipment or supplies"
+                  "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Medical equipment or supplies"
                 }
               ],
               "contentType": "numeric",
@@ -20560,10 +21065,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q139_BILL_ITEMS_O04_VS1",
+                  "name": "Q141_BILL_ITEMS_O04_VS1",
                   "labels": [
                     {
-                      "text": "139. Which items were included in the bill? \u2014 Medical equipment or supplies"
+                      "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Medical equipment or supplies"
                     }
                   ],
                   "values": [
@@ -20596,10 +21101,10 @@
               ]
             },
             {
-              "name": "Q139_BILL_ITEMS_O05",
+              "name": "Q141_BILL_ITEMS_O05",
               "labels": [
                 {
-                  "text": "139. Which items were included in the bill? \u2014 Medicines or drugs"
+                  "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Medicines or drugs"
                 }
               ],
               "contentType": "numeric",
@@ -20607,10 +21112,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q139_BILL_ITEMS_O05_VS1",
+                  "name": "Q141_BILL_ITEMS_O05_VS1",
                   "labels": [
                     {
-                      "text": "139. Which items were included in the bill? \u2014 Medicines or drugs"
+                      "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Medicines or drugs"
                     }
                   ],
                   "values": [
@@ -20643,10 +21148,10 @@
               ]
             },
             {
-              "name": "Q139_BILL_ITEMS_O06",
+              "name": "Q141_BILL_ITEMS_O06",
               "labels": [
                 {
-                  "text": "139. Which items were included in the bill? \u2014 Non-medical expenses"
+                  "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Non-medical expenses (e.g. hygiene kit)"
                 }
               ],
               "contentType": "numeric",
@@ -20654,10 +21159,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q139_BILL_ITEMS_O06_VS1",
+                  "name": "Q141_BILL_ITEMS_O06_VS1",
                   "labels": [
                     {
-                      "text": "139. Which items were included in the bill? \u2014 Non-medical expenses"
+                      "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Non-medical expenses (e.g. hygiene kit)"
                     }
                   ],
                   "values": [
@@ -20690,10 +21195,10 @@
               ]
             },
             {
-              "name": "Q139_BILL_ITEMS_O07",
+              "name": "Q141_BILL_ITEMS_O07",
               "labels": [
                 {
-                  "text": "139. Which items were included in the bill? \u2014 Other expenses"
+                  "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Other expenses"
                 }
               ],
               "contentType": "numeric",
@@ -20701,10 +21206,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q139_BILL_ITEMS_O07_VS1",
+                  "name": "Q141_BILL_ITEMS_O07_VS1",
                   "labels": [
                     {
-                      "text": "139. Which items were included in the bill? \u2014 Other expenses"
+                      "text": "141. From your most recent visit, which of the following were included in the bill? \u2014 Other expenses"
                     }
                   ],
                   "values": [
@@ -20737,10 +21242,20 @@
               ]
             },
             {
-              "name": "Q139A_NO_RECEIPT_AMT",
+              "name": "Q141_BILL_ITEMS_OTHER_TXT",
               "labels": [
                 {
-                  "text": "139a. Amount charged for services with no receipts (PHP)"
+                  "text": "141. Bill items \u2014 Other expenses (Specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q141_1_NO_RECEIPT_AMT_PHP",
+              "labels": [
+                {
+                  "text": "141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -20748,10 +21263,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q140_RECALL_PAYMENT",
+              "name": "Q142_RECALL_PAYMENT",
               "labels": [
                 {
-                  "text": "140. Do you recall how you paid for your bill?"
+                  "text": "142. From your most recent visit, do you recall how you paid for your bill?"
                 }
               ],
               "contentType": "numeric",
@@ -20759,10 +21274,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q140_RECALL_PAYMENT_VS1",
+                  "name": "Q142_RECALL_PAYMENT_VS1",
                   "labels": [
                     {
-                      "text": "140. Do you recall how you paid for your bill?"
+                      "text": "142. From your most recent visit, do you recall how you paid for your bill?"
                     }
                   ],
                   "values": [
@@ -20795,10 +21310,10 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_O01",
+              "name": "Q143_HOW_PAID_O01",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 Own income/household income"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 Own income/ household income"
                 }
               ],
               "contentType": "numeric",
@@ -20806,10 +21321,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q141_HOW_PAID_O01_VS1",
+                  "name": "Q143_HOW_PAID_O01_VS1",
                   "labels": [
                     {
-                      "text": "141. How did you pay? \u2014 Own income/household income"
+                      "text": "143. From your most recent visit, how did you pay? \u2014 Own income/ household income"
                     }
                   ],
                   "values": [
@@ -20842,10 +21357,10 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_O02",
+              "name": "Q143_HOW_PAID_O02",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 PhilHealth"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 PhilHealth"
                 }
               ],
               "contentType": "numeric",
@@ -20853,10 +21368,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q141_HOW_PAID_O02_VS1",
+                  "name": "Q143_HOW_PAID_O02_VS1",
                   "labels": [
                     {
-                      "text": "141. How did you pay? \u2014 PhilHealth"
+                      "text": "143. From your most recent visit, how did you pay? \u2014 PhilHealth"
                     }
                   ],
                   "values": [
@@ -20889,10 +21404,10 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_O03",
+              "name": "Q143_HOW_PAID_O03",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 Private insurance/HMO"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 Private insurance / HMO"
                 }
               ],
               "contentType": "numeric",
@@ -20900,10 +21415,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q141_HOW_PAID_O03_VS1",
+                  "name": "Q143_HOW_PAID_O03_VS1",
                   "labels": [
                     {
-                      "text": "141. How did you pay? \u2014 Private insurance/HMO"
+                      "text": "143. From your most recent visit, how did you pay? \u2014 Private insurance / HMO"
                     }
                   ],
                   "values": [
@@ -20936,10 +21451,10 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_O04",
+              "name": "Q143_HOW_PAID_O04",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 Loan"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 Loan"
                 }
               ],
               "contentType": "numeric",
@@ -20947,10 +21462,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q141_HOW_PAID_O04_VS1",
+                  "name": "Q143_HOW_PAID_O04_VS1",
                   "labels": [
                     {
-                      "text": "141. How did you pay? \u2014 Loan"
+                      "text": "143. From your most recent visit, how did you pay? \u2014 Loan"
                     }
                   ],
                   "values": [
@@ -20983,10 +21498,10 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_O05",
+              "name": "Q143_HOW_PAID_O05",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 Sale of assets"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 Sale of assets"
                 }
               ],
               "contentType": "numeric",
@@ -20994,10 +21509,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q141_HOW_PAID_O05_VS1",
+                  "name": "Q143_HOW_PAID_O05_VS1",
                   "labels": [
                     {
-                      "text": "141. How did you pay? \u2014 Sale of assets"
+                      "text": "143. From your most recent visit, how did you pay? \u2014 Sale of assets"
                     }
                   ],
                   "values": [
@@ -21030,10 +21545,10 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_O06",
+              "name": "Q143_HOW_PAID_O06",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 Donations from charities/NGOs"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 Donations from charities / NGOs"
                 }
               ],
               "contentType": "numeric",
@@ -21041,10 +21556,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q141_HOW_PAID_O06_VS1",
+                  "name": "Q143_HOW_PAID_O06_VS1",
                   "labels": [
                     {
-                      "text": "141. How did you pay? \u2014 Donations from charities/NGOs"
+                      "text": "143. From your most recent visit, how did you pay? \u2014 Donations from charities / NGOs"
                     }
                   ],
                   "values": [
@@ -21077,10 +21592,10 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_O07",
+              "name": "Q143_HOW_PAID_O07",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 Donations from LGUs"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 Donations from LGUs / LGU programs"
                 }
               ],
               "contentType": "numeric",
@@ -21088,10 +21603,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q141_HOW_PAID_O07_VS1",
+                  "name": "Q143_HOW_PAID_O07_VS1",
                   "labels": [
                     {
-                      "text": "141. How did you pay? \u2014 Donations from LGUs"
+                      "text": "143. From your most recent visit, how did you pay? \u2014 Donations from LGUs / LGU programs"
                     }
                   ],
                   "values": [
@@ -21124,10 +21639,10 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_O08",
+              "name": "Q143_HOW_PAID_O08",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 National Government Agencies"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 National Government Agencies (DSWD, etc.)"
                 }
               ],
               "contentType": "numeric",
@@ -21135,10 +21650,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q141_HOW_PAID_O08_VS1",
+                  "name": "Q143_HOW_PAID_O08_VS1",
                   "labels": [
                     {
-                      "text": "141. How did you pay? \u2014 National Government Agencies"
+                      "text": "143. From your most recent visit, how did you pay? \u2014 National Government Agencies (DSWD, etc.)"
                     }
                   ],
                   "values": [
@@ -21171,10 +21686,10 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_O09",
+              "name": "Q143_HOW_PAID_O09",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 Paid by someone else"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 Paid by someone else"
                 }
               ],
               "contentType": "numeric",
@@ -21182,10 +21697,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q141_HOW_PAID_O09_VS1",
+                  "name": "Q143_HOW_PAID_O09_VS1",
                   "labels": [
                     {
-                      "text": "141. How did you pay? \u2014 Paid by someone else"
+                      "text": "143. From your most recent visit, how did you pay? \u2014 Paid by someone else"
                     }
                   ],
                   "values": [
@@ -21218,10 +21733,10 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_O10",
+              "name": "Q143_HOW_PAID_O10",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 Other (specify)"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 Other (Specify)"
                 }
               ],
               "contentType": "numeric",
@@ -21229,10 +21744,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q141_HOW_PAID_O10_VS1",
+                  "name": "Q143_HOW_PAID_O10_VS1",
                   "labels": [
                     {
-                      "text": "141. How did you pay? \u2014 Other (specify)"
+                      "text": "143. From your most recent visit, how did you pay? \u2014 Other (Specify)"
                     }
                   ],
                   "values": [
@@ -21265,10 +21780,20 @@
               ]
             },
             {
-              "name": "Q141_HOW_PAID_OTHER_TXT",
+              "name": "Q143_HOW_PAID_OTHER_TXT",
               "labels": [
                 {
-                  "text": "141. How did you pay? \u2014 Other (specify) text"
+                  "text": "143. From your most recent visit, how did you pay? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q143_HOW_PAID_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "143. How paid \u2014 Other (Specify) text"
                 }
               ],
               "contentType": "alpha",
