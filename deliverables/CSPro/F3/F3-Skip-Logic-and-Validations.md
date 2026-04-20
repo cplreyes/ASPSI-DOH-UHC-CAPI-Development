@@ -645,4 +645,488 @@ No explicit skip rules in Section F. Q84 `SERVICE_TYPE` is advisory for Section 
 
 ---
 
-*Sections J–L, CSPro logic templates: see final chunk.*
+## 2. Skip-logic table (Sections J–L)
+
+### Section J — Satisfaction on Amenities and Medical Care
+
+No explicit skip rules in Section J. Q134 (Rooms) and Q135 (Overall time) are flagged "For inpatients only" in the printed form — see §3.12 gates.
+
+### Section K — Access to Medicines
+
+| Q | Condition | Skip to |
+|---|---|---|
+| Q145 PURCHASE_FREQ | = "Never" (5) | **Q152** (skip Q146–Q151 — never purchases → skip meds-access block; proceed to GAMOT awareness) |
+| Q152 GAMOT_HEARD  | = No | **Q158** (skip Q153–Q157 — never heard of GAMOT → skip sources/understanding/meds obtained/rest) |
+| Q158 BRAND_GEN_KNOW | = No | **Q162** (skip Q159–Q161 — doesn't know difference → exit Section K) |
+| Q159 BRAND_GEN_BOUGHT | = "Branded" (1) | **Q161** (skip Q160 — why-generic irrelevant) |
+| Q159 BRAND_GEN_BOUGHT | = "Don't know the difference" (4) | **Q162** (skip Q160, Q161 — exit Section K) |
+| Q159 BRAND_GEN_BOUGHT | = "Not applicable" (5) | **Q164** (source prints cross-section jump — see sanity finding #7; default: honor source) |
+
+### Section L — Experiences and Satisfaction on Referrals
+
+| Q | Condition | Skip to |
+|---|---|---|
+| Q162 REFERRED | = No | **End of survey** (skip Q163–Q178; set `ENUM_RESULT = Completed`) |
+| Q169 VISITED | = "No, I'm not planning to" (2) **or** "Not yet, but I'm planning to" (3) | **Q171** (skip Q170 — didn't visit yet → no follow-up question) |
+| Q170 FOLLOWUP | (after completion) | **Q172** (explicit — skip Q171) |
+| Q171 WHY_NOT | (after completion) | **Q172** (explicit) |
+| Q172 PCP_REFERRAL | = No | **Q177** (skip Q173–Q176 — not a PCP referral → skip PCP-role questions) |
+| Q178 | (after completion) | **End of survey** |
+
+---
+
+## 3. Validations (Sections J–L)
+
+### 3.12 Section J — Satisfaction on Amenities and Medical Care
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q131_AMEN_WAITING`, `Q132_AMEN_BATHROOMS`, `Q133_AMEN_CONSULT_ROOMS` | Required, ∈ SATISFACTION_5PT codes | HARD |
+| Q134 enabled (Rooms)        | `FIELD_CONTROL.PATIENT_TYPE = Inpatient` | GATE |
+| `Q134_AMEN_ROOMS`           | Required when enabled, ∈ SATISFACTION_5PT codes | HARD |
+| Q135 enabled (Overall time) | `FIELD_CONTROL.PATIENT_TYPE = Inpatient` | GATE |
+| `Q135_SAT_OVERALL_TIME`     | Required when enabled, ∈ SATISFACTION_5PT codes | HARD |
+| `Q136_STAFF_COURTESY`, `Q137_STAFF_LISTEN`, `Q138_STAFF_EXPLAIN`, `Q139_STAFF_DECIDE`, `Q140_STAFF_CONSENT` | Required, ∈ FREQUENCY_5PT codes | HARD |
+| `Q141_CONFIDENTIALITY`, `Q142_PRIVACY` | Required, ∈ {1, 2, 3} (Yes/No/IDK) | HARD |
+| `Q143_RECOMMEND` | Required, ∈ {1, 2} | HARD |
+| `Q144_QUALITY`   | Required, ∈ SATISFACTION_5PT codes | HARD |
+| Q143 vs. Q144 sanity | `Q143 = Yes (recommend)` with `Q144 ∈ {Very Dissatisfied, Dissatisfied}` → warn | SOFT |
+| Q143 vs. Q144 sanity | `Q143 = No (would not recommend)` with `Q144 ∈ {Very Satisfied, Satisfied}` → warn | SOFT |
+
+### 3.13 Section K — Access to Medicines
+
+**Meds access (Q145–Q151)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q145_PURCHASE_FREQ` | Required, ∈ {1–5} | HARD |
+| Q146–Q151 enabled | `Q145_PURCHASE_FREQ ≠ 5` (Never) | GATE |
+| `Q146_RX_OR_OTC`       | Required when enabled, ∈ {1–4} | HARD |
+| `Q147_MEDS_LIST`       | Required when enabled, non-blank; ≤ 240 chars | HARD |
+| `Q148_CONDITIONS` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q148_CONDITIONS` "No condition - Regular check-up only" (19) | Cannot be combined with any other option | HARD |
+| `Q148_CONDITIONS = 20` (Other) | `Q148_CONDITIONS_OTHER_TXT` required | HARD |
+| `Q149_WHERE_BUY` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q149_WHERE_BUY = 8` (Other) | `Q149_WHERE_BUY_OTHER_TXT` required | HARD |
+| `Q150_TRAVEL_HH` | `0 ≤ HH ≤ 24` | HARD |
+| `Q150_TRAVEL_MM` | `0 ≤ MM ≤ 59` | HARD |
+| Q150 pair sanity | `Q150_TRAVEL_HH + Q150_TRAVEL_MM = 0` → warn (patient lives at the pharmacy?) | SOFT |
+| `Q151_PHARM_EASE` | Required when enabled, ∈ {1–5} | HARD |
+
+**GAMOT block (Q152–Q157)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q152_GAMOT_HEARD` | Required, ∈ {1, 2} | HARD |
+| Q153–Q157 enabled | `Q152_GAMOT_HEARD = Yes` | GATE |
+| `Q153_GAMOT_SOURCE` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q153_GAMOT_SOURCE` "I don't know" (7) | Cannot be combined with any other option | HARD |
+| `Q153_GAMOT_SOURCE = 8` (Other) | `Q153_GAMOT_SOURCE_OTHER_TXT` required | HARD |
+| `Q154_GAMOT_UNDERSTAND` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q154_GAMOT_UNDERSTAND` "I don't know" (5) | Cannot be combined with any other option | HARD |
+| `Q154_GAMOT_UNDERSTAND = 6` (Other) | `Q154_GAMOT_UNDERSTAND_OTHER_TXT` required | HARD |
+| `Q155_GAMOT_GOT_MEDS` | Required when enabled, ∈ {1, 2} | HARD |
+| Q156 enabled | `Q155_GAMOT_GOT_MEDS = Yes` | GATE |
+| `Q156_GAMOT_MEDS_LIST` | Required when enabled, non-blank; ≤ 240 chars | HARD |
+| Q157 enabled | `Q155_GAMOT_GOT_MEDS = Yes` | GATE |
+| `Q157_WHERE_REST` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q157_WHERE_REST = 9` (Other) | `Q157_WHERE_REST_OTHER_TXT` required | HARD |
+
+**Branded vs. generic (Q158–Q161)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q158_BRAND_GEN_KNOW` | Required, ∈ {1, 2} | HARD |
+| Q159 enabled | `Q158_BRAND_GEN_KNOW = Yes` | GATE |
+| `Q159_BRAND_GEN_BOUGHT` | Required when enabled, ∈ {1–5} | HARD |
+| Q160 enabled | `Q159_BRAND_GEN_BOUGHT ∈ {2, 3}` (Generic, or Both) | GATE |
+| `Q160_WHY_GENERIC` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q160_WHY_GENERIC` "I don't know" (6) | Cannot be combined with any other option | HARD |
+| `Q160_WHY_GENERIC = 7` (Other) | `Q160_WHY_GENERIC_OTHER_TXT` required | HARD |
+| Q161 enabled | `Q159_BRAND_GEN_BOUGHT ∈ {1, 3}` (Branded, or Both) | GATE |
+| `Q161_WHY_BRANDED` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q161_WHY_BRANDED` "I don't know" (6) | Cannot be combined with any other option | HARD |
+| `Q161_WHY_BRANDED = 7` (Other) | `Q161_WHY_BRANDED_OTHER_TXT` required | HARD |
+
+### 3.14 Section L — Referrals
+
+**Gate and referral details (Q162–Q168)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q162_REFERRED` | Required, ∈ {1, 2}; if = No → terminate with `ENUM_RESULT = Completed` | HARD |
+| Q163–Q168 enabled | `Q162_REFERRED = Yes` | GATE |
+| `Q163_CARE_TYPE` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q163_CARE_TYPE` "None of the above" (11) | Cannot be combined with any other option | HARD |
+| `Q163_CARE_TYPE = 12` (Other) | `Q163_CARE_TYPE_OTHER_TXT` required | HARD |
+| `Q164_SPECIALIST` | Required when enabled, ∈ {01–23} | HARD |
+| `Q164_SPECIALIST = 23` (Other) | `Q164_SPECIALIST_OTHER_TXT` required | HARD |
+| `Q165_HOW_REFERRED` | Required when enabled, ∈ {1–5} | HARD |
+| `Q165_HOW_REFERRED = 5` (Other) | `Q165_HOW_REFERRED_OTHER_TXT` required | HARD |
+| `Q166_DISCUSSED_OPTIONS`, `Q167_HELPED_APPT`, `Q168_WROTE_INFO` | Required when enabled, ∈ {1, 2} | HARD |
+
+**Visit outcome (Q169–Q171)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q169_VISITED` | Required when enabled, ∈ {1, 2, 3} | HARD |
+| Q170 enabled | `Q169_VISITED = Yes` (1) | GATE |
+| `Q170_FOLLOWUP` | Required when enabled, ∈ {1, 2} | HARD |
+| Q171 enabled | `Q169_VISITED ∈ {2, 3}` (not planning / not yet) | GATE |
+| `Q171_WHY_NOT` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q171_WHY_NOT = 7` (Other) | `Q171_WHY_NOT_OTHER_TXT` required | HARD |
+
+**PCP referral trail (Q172–Q176) and hospital-choice (Q177–Q178)**
+
+| Item | Rule | Severity |
+|---|---|---|
+| `Q172_PCP_REFERRAL` | Required when enabled (i.e., Q162 = Yes), ∈ {1, 2} | HARD |
+| Q173–Q176 enabled | `Q172_PCP_REFERRAL = Yes` | GATE |
+| `Q173_PCP_KNOWS` | Required when enabled, ∈ {1, 2, 3} | HARD |
+| `Q174_PCP_DISCUSSED`, `Q175_PCP_HELPED_APPT`, `Q176_PCP_WROTE_INFO` | Required when enabled, ∈ {1, 2} | HARD |
+| Q177 enabled | `Q172_PCP_REFERRAL = No` | GATE |
+| `Q177_WHY_HOSPITAL` select-all | ≥ 1 option ticked when enabled | HARD |
+| `Q177_WHY_HOSPITAL` "I don't know" (09) | Cannot be combined with any other option | HARD |
+| `Q177_WHY_HOSPITAL = 10` (Other) | `Q177_WHY_HOSPITAL_OTHER_TXT` required | HARD |
+| `Q178_SAT_REFERRAL` | Required (asked for all Q162 = Yes respondents), ∈ {1–6} | HARD |
+| Q178 = 6 (Not applicable) consistency | If `Q169 = Yes` (did visit), Q178 ≠ 6 — warn | SOFT |
+
+---
+
+## 4. CSPro logic templates
+
+Drop these into the corresponding `PROC` blocks in CSPro Designer. Item names match `generate_dcf.py`.
+
+### 4.1 Helper: global preproc
+
+```cspro
+PROC GLOBAL
+numeric currentYYYYMMDD;
+numeric currentYear;
+numeric currentMonth;
+
+PROC PATIENTSURVEY_FF          { application-level entry }
+preproc
+  currentYYYYMMDD = systemdate("YYYYMMDD");
+  currentYear  = int(currentYYYYMMDD / 10000);
+  currentMonth = int(currentYYYYMMDD / 100) % 100;
+endpreproc
+```
+
+### 4.2 Field Control — consent terminator and lat/lon
+
+```cspro
+PROC CONSENT_GIVEN
+postproc
+  if CONSENT_GIVEN = 2 then  { No }
+    ENUM_RESULT_FIRST_VISIT = 4;   { Withdraw Participation/Consent — code per Field Control value set }
+    endgroup;                      { close the questionnaire }
+  endif;
+
+PROC LATITUDE
+postproc
+  numeric lat;
+  lat = tonumber(LATITUDE);
+  if lat = notappl or lat < 4.5 or lat > 21.5 then
+    errmsg("Latitude must be between 4.5 and 21.5 (Philippines).");
+    reenter;
+  endif;
+
+PROC LONGITUDE
+postproc
+  numeric lon;
+  lon = tonumber(LONGITUDE);
+  if lon = notappl or lon < 116.5 or lon > 127.0 then
+    errmsg("Longitude must be between 116.5 and 127.0 (Philippines).");
+    reenter;
+  endif;
+```
+
+### 4.3 PSGC cascading dropdowns (parent → child)
+
+```cspro
+PROC REGION
+postproc
+  { Filter PROVINCE_HUC value set by selected REGION code prefix. }
+  setvalueset(PROVINCE_HUC, filterPsgc("province_huc", REGION));
+
+PROC PROVINCE_HUC
+postproc
+  setvalueset(CITY_MUNICIPALITY, filterPsgc("city_municipality", PROVINCE_HUC));
+
+PROC CITY_MUNICIPALITY
+postproc
+  setvalueset(BARANGAY, filterPsgc("barangay", CITY_MUNICIPALITY));
+
+{ Mirror the same chain for P_REGION / P_PROVINCE_HUC / P_CITY_MUNICIPALITY / P_BARANGAY. }
+```
+
+### 4.4 Core routing — PATIENT_TYPE drives G vs. H
+
+```cspro
+PROC F_HEALTH_SEEKING
+postproc
+  { After Section F, route to G or H based on Field Control. }
+  if PATIENT_TYPE = 1 then          { Outpatient }
+    skip to G_OUTPATIENT_CARE;
+  elseif PATIENT_TYPE = 2 then      { Inpatient }
+    skip to H_INPATIENT_CARE;
+  else
+    errmsg("PATIENT_TYPE missing — set in Field Control before advancing.");
+    reenter;
+  endif;
+
+PROC G_OUTPATIENT_CARE
+preproc
+  if PATIENT_TYPE <> 1 then skip to I_FINANCIAL_RISK; endif;
+
+PROC H_INPATIENT_CARE
+preproc
+  if PATIENT_TYPE <> 2 then skip to I_FINANCIAL_RISK; endif;
+```
+
+### 4.5 Section A — Q1 Yes skips to Q4
+
+```cspro
+PROC Q1_IS_PATIENT
+postproc
+  if Q1_IS_PATIENT = 1 then        { Yes, respondent is the patient }
+    skip to Q4_NAME;               { skip Q2, Q3 }
+  endif;
+```
+
+### 4.6 Section B — Q18 amount-vs-bracket consistency
+
+```cspro
+PROC Q18_INCOME_BRACKET
+postproc
+  numeric lo; numeric hi;
+  if     Q18_INCOME_BRACKET = 1 then lo =       0; hi =   39999;
+  elseif Q18_INCOME_BRACKET = 2 then lo =   40000; hi =   59999;
+  elseif Q18_INCOME_BRACKET = 3 then lo =   60000; hi =   99999;
+  elseif Q18_INCOME_BRACKET = 4 then lo =  100000; hi =  249999;
+  elseif Q18_INCOME_BRACKET = 5 then lo =  250000; hi =  499999;
+  elseif Q18_INCOME_BRACKET = 6 then lo =  500000; hi = 99999999;
+  endif;
+
+  if Q18_INCOME_AMOUNT < lo or Q18_INCOME_AMOUNT > hi then
+    errmsg("Amount %d is outside bracket %d (%d-%d). Reenter amount or bracket.",
+           Q18_INCOME_AMOUNT, Q18_INCOME_BRACKET, lo, hi);
+    reenter;
+  endif;
+```
+
+### 4.7 Section B — household composition invariant
+
+```cspro
+PROC Q21_HH_SENIORS
+postproc
+  if (Q20_HH_CHILDREN + Q21_HH_SENIORS) > Q19_HH_SIZE then
+    errmsg("Children (%d) + Seniors (%d) exceed total HH size (%d).",
+           Q20_HH_CHILDREN, Q21_HH_SENIORS, Q19_HH_SIZE);
+    reenter;
+  endif;
+```
+
+### 4.8 Select-all "I don't know" mutual exclusion (generic pattern)
+
+```cspro
+{ Apply to every select-all with an IDK row. Example: Q36_UHC_SOURCE with IDK = 7. }
+PROC Q36_UHC_SOURCE_O07      { the per-option yes_no for "I don't know" }
+postproc
+  if Q36_UHC_SOURCE_O07 = 1 then
+    if Q36_UHC_SOURCE_O01 = 1 or Q36_UHC_SOURCE_O02 = 1 or
+       Q36_UHC_SOURCE_O03 = 1 or Q36_UHC_SOURCE_O04 = 1 or
+       Q36_UHC_SOURCE_O05 = 1 or Q36_UHC_SOURCE_O06 = 1 or
+       Q36_UHC_SOURCE_O08 = 1 then
+      errmsg("'I don't know' cannot be combined with other options.");
+      reenter;
+    endif;
+  endif;
+```
+
+### 4.9 "Other (specify)" enforcement (generic)
+
+```cspro
+{ Apply to every Q*_OTHER_TXT. Example: Q2_RELATIONSHIP_OTHER_TXT triggered when Q2 = 19. }
+PROC Q2_RELATIONSHIP_OTHER_TXT
+postproc
+  if Q2_RELATIONSHIP = 19 and length(strip(Q2_RELATIONSHIP_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected. Please specify.");
+    reenter;
+  endif;
+```
+
+### 4.10 Payment-source matrix (Q92, Q94, Q96, Q98, Q107, Q109, Q112, Q113)
+
+```cspro
+{ Pattern: enforce (flag = Yes) ⇔ (amount > 0). Example for Q92 row Out-of-pocket (01). }
+PROC Q92_PAY_01_AMT
+postproc
+  if Q92_PAY_01 = 1 and Q92_PAY_01_AMT <= 0 then
+    errmsg("Out-of-pocket flagged but amount is 0. Enter a positive peso amount.");
+    reenter;
+  endif;
+  if Q92_PAY_01 = 2 and Q92_PAY_01_AMT > 0 then
+    errmsg("Amount entered for a payment source that was not used. Clear amount or flag source.");
+    reenter;
+  endif;
+
+{ Q113 MAIFIP cross-link to Q124 (auto-set awareness when availed). }
+PROC Q113_PAY_07
+postproc
+  if Q113_PAY_07 = 1 then
+    Q124_MAIFIP_HEARD = 1;    { pre-answer awareness when MAIFIP already in payment list }
+  endif;
+```
+
+### 4.11 Section G — Q93 None and Q95 skips
+
+```cspro
+PROC Q93_LABS_O17       { "None" option in Q93 }
+postproc
+  if Q93_LABS_O17 = 1 then
+    skip to Q95_PRESCRIBED;     { skip Q94 cost matrix }
+  endif;
+
+PROC Q95_PRESCRIBED
+postproc
+  if Q95_PRESCRIBED = 2 then    { No }
+    skip to Q97_FINAL_AMOUNT;   { skip Q96 meds cost matrix }
+  endif;
+```
+
+### 4.12 Section H — outside-facility cost gates
+
+```cspro
+PROC Q108_MEDS_OUTSIDE
+postproc
+  if Q108_MEDS_OUTSIDE = 2 then
+    skip to Q110_LAB_OUTSIDE;   { skip Q109 }
+  endif;
+
+PROC Q110_LAB_OUTSIDE
+postproc
+  if Q110_LAB_OUTSIDE = 2 then
+    skip to Q113_PAY_01;        { skip Q111, Q112 }
+  endif;
+```
+
+### 4.13 Section I — awareness gates
+
+```cspro
+PROC Q116_NBB_HEARD
+postproc
+  if Q116_NBB_HEARD in 2,3 then skip to Q119_ZBB_HEARD;   endif;
+
+PROC Q119_ZBB_HEARD
+postproc
+  if Q119_ZBB_HEARD in 2,3 then skip to Q124_MAIFIP_HEARD; endif;
+
+PROC Q124_MAIFIP_HEARD
+postproc
+  if Q124_MAIFIP_HEARD in 2,3 then skip to Q130_REDUCED_SPEND; endif;
+
+PROC Q126_MAIFIP_AVAILED
+postproc
+  if Q126_MAIFIP_AVAILED = 2 then skip to Q129_WHY_NO_MAIFIP_O01; endif;
+
+PROC Q127_MAIFIP_OOP
+postproc
+  if Q127_MAIFIP_OOP = 2 then skip to Q130_REDUCED_SPEND; endif;
+```
+
+### 4.14 Section K — meds and GAMOT skips
+
+```cspro
+PROC Q145_PURCHASE_FREQ
+postproc
+  if Q145_PURCHASE_FREQ = 5 then          { Never }
+    skip to Q152_GAMOT_HEARD;             { skip Q146-Q151 }
+  endif;
+
+PROC Q152_GAMOT_HEARD
+postproc
+  if Q152_GAMOT_HEARD = 2 then            { No }
+    skip to Q158_BRAND_GEN_KNOW;          { skip Q153-Q157 }
+  endif;
+
+PROC Q158_BRAND_GEN_KNOW
+postproc
+  if Q158_BRAND_GEN_KNOW = 2 then         { No }
+    skip to Q162_REFERRED;                { exit Section K }
+  endif;
+
+PROC Q159_BRAND_GEN_BOUGHT
+postproc
+  if Q159_BRAND_GEN_BOUGHT = 1 then       { Branded }
+    skip to Q161_WHY_BRANDED_O01;
+  elseif Q159_BRAND_GEN_BOUGHT = 4 then   { Don't know the difference }
+    skip to Q162_REFERRED;
+  elseif Q159_BRAND_GEN_BOUGHT = 5 then   { Not applicable — cross-section jump per source }
+    skip to Q164_SPECIALIST;              { sanity finding #7 — confirm with ASPSI }
+  endif;
+```
+
+### 4.15 Section L — referral gate, Q169 branch, and terminator
+
+```cspro
+PROC Q162_REFERRED
+postproc
+  if Q162_REFERRED = 2 then               { No referral }
+    ENUM_RESULT_FINAL_VISIT = 1;          { Completed — code per Field Control value set }
+    endgroup;                             { close the questionnaire — skip Q163-Q178 }
+  endif;
+
+PROC Q169_VISITED
+postproc
+  if Q169_VISITED in 2,3 then             { Not planning / Not yet }
+    skip to Q171_WHY_NOT_O01;             { skip Q170 }
+  endif;
+
+PROC Q170_FOLLOWUP
+postproc
+  skip to Q172_PCP_REFERRAL;              { explicit — skip Q171 }
+
+PROC Q172_PCP_REFERRAL
+postproc
+  if Q172_PCP_REFERRAL = 2 then           { Not a PCP referral }
+    skip to Q177_WHY_HOSPITAL_O01;        { skip Q173-Q176 }
+  endif;
+
+PROC Q178_SAT_REFERRAL
+postproc
+  ENUM_RESULT_FINAL_VISIT = 1;            { mark complete at end of L }
+```
+
+---
+
+## 5. Open questions for ASPSI
+
+1. **Q31 IP_GROUP list** — Source promises "a list will be provided" but Annex F3 ships only free-text. Confirm whether a coded IP value set will arrive before bench test, or keep as alpha.
+2. **Q99 No → Q115 typo** (sanity #9) — Source prints a cross-section skip from Section G to mid-Section H. Default behaviour: treat as end-of-Section-G. Confirm.
+3. **Q159 "Not applicable" → Q164 cross-section jump** (sanity #7) — Source prints a jump from Section K into Section L. Default: honor source as printed. Confirm this is intentional, not a typo for Q162.
+4. **Q94 per-test roster** (sanity #12) — Source specifies per-test cost capture; dcf aggregates. Flag for pilot, or add roster now?
+5. **BUCAS enumerator gate** (sanity #11) — How should enumerator capture "no BUCAS center in this area"? Leave Q99 blank, or add a flag field?
+6. **Q124 auto-set from Q113 MAIFIP** (sanity #13) — Confirm the spec's interpretation of the "SKIP IF ANSWERED MAIFIP IN Q113" note: auto-set `Q124 = Yes` and hide, proceed to Q125.
+
+---
+
+## 6. Implementation order (recommended)
+
+1. **Fix dcf items flagged in §1** — none are regenerator blockers; current build (15 records / 818 items) is bench-testable.
+2. **Open `PatientSurvey.dcf` in CSPro Designer**, validate the dictionary loads cleanly; inspect record layout (14 data records + header).
+3. **Build the Form file** (`.fmf`) — one form per section A–L + Field Control + Geographic ID; tab-order aligned with Q-number sequence.
+4. **Add PROC code** in this order:
+   1. Field Control validations (§4.2) + PSGC cascade (§4.3)
+   2. Routing gate at Section F (§4.4)
+   3. Section A eligibility (§4.5) + Section B consistency (§4.6, §4.7)
+   4. Select-all/Other enforcement generics (§4.8, §4.9)
+   5. Payment-source matrix pattern (§4.10) applied across Q92/Q94/Q96/Q98/Q107/Q109/Q112/Q113
+   6. Section-specific skips (§4.11–§4.15)
+5. **Bench-test** with paper walk-through of 4 mock respondents: outpatient with PhilHealth + YAKAP, outpatient non-member, inpatient with MAIFIP, referral-non-planner.
+6. **Pretest readiness** — bundle as PFF for CSEntry Android distribution alongside the F3b patient listing import.
+
+---
+
+*This spec is generated from the Apr 20 2026 Annex F3 PDF and the Apr 20 dcf (15 records / 818 items). Update both this file and `generate_dcf.py` whenever the questionnaire is revised.*
