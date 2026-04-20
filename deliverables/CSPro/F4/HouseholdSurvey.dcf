@@ -21805,7 +21805,7 @@
           "name": "N_HOUSEHOLD_EXPENDITURES",
           "labels": [
             {
-              "text": "N. Household Expenditures"
+              "text": "N. Household Expenditures (WHO/SHA)"
             }
           ],
           "recordType": "P",
@@ -21815,10 +21815,10 @@
           },
           "items": [
             {
-              "name": "Q142_CEREALS_CONSUMED",
+              "name": "Q144_CEREALS_CONSUMED",
               "labels": [
                 {
-                  "text": "142. Cereals (rice, flour, noodles, corn) \u2014 Consumed?"
+                  "text": "144. Cereals (rice, flour, noodles, corn, etc.) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -21826,10 +21826,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q142_CEREALS_CONSUMED_VS1",
+                  "name": "Q144_CEREALS_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "142. Cereals (rice, flour, noodles, corn) \u2014 Consumed?"
+                      "text": "144. Cereals (rice, flour, noodles, corn, etc.) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -21862,10 +21862,10 @@
               ]
             },
             {
-              "name": "Q142_CEREALS_PURCHASED",
+              "name": "Q144_CEREALS_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "142. Cereals (rice, flour, noodles, corn) \u2014 Amount purchased (PHP)"
+                  "text": "144. Cereals (rice, flour, noodles, corn, etc.) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -21873,10 +21873,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q142_CEREALS_INKIND",
+              "name": "Q144_CEREALS_INKIND_PHP",
               "labels": [
                 {
-                  "text": "142. Cereals (rice, flour, noodles, corn) \u2014 Estimated in-kind value (PHP)"
+                  "text": "144. Cereals (rice, flour, noodles, corn, etc.) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -21884,10 +21884,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q143_PULSES_CONSUMED",
+              "name": "Q145_PULSES_CONSUMED",
               "labels": [
                 {
-                  "text": "143. Pulses, roots, tubers, plantains, nuts \u2014 Consumed?"
+                  "text": "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -21895,10 +21895,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q143_PULSES_CONSUMED_VS1",
+                  "name": "Q145_PULSES_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "143. Pulses, roots, tubers, plantains, nuts \u2014 Consumed?"
+                      "text": "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -21931,10 +21931,10 @@
               ]
             },
             {
-              "name": "Q143_PULSES_PURCHASED",
+              "name": "Q145_PULSES_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "143. Pulses, roots, tubers, plantains, nuts \u2014 Amount purchased (PHP)"
+                  "text": "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -21942,10 +21942,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q143_PULSES_INKIND",
+              "name": "Q145_PULSES_INKIND_PHP",
               "labels": [
                 {
-                  "text": "143. Pulses, roots, tubers, plantains, nuts \u2014 Estimated in-kind value (PHP)"
+                  "text": "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -21953,10 +21953,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q144_VEGETABLES_CONSUMED",
+              "name": "Q146_VEGETABLES_CONSUMED",
               "labels": [
                 {
-                  "text": "144. Vegetables \u2014 Consumed?"
+                  "text": "146. Vegetables (fresh, dried, dehydrated, frozen) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -21964,10 +21964,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q144_VEGETABLES_CONSUMED_VS1",
+                  "name": "Q146_VEGETABLES_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "144. Vegetables \u2014 Consumed?"
+                      "text": "146. Vegetables (fresh, dried, dehydrated, frozen) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22000,10 +22000,10 @@
               ]
             },
             {
-              "name": "Q144_VEGETABLES_PURCHASED",
+              "name": "Q146_VEGETABLES_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "144. Vegetables \u2014 Amount purchased (PHP)"
+                  "text": "146. Vegetables (fresh, dried, dehydrated, frozen) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22011,10 +22011,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q144_VEGETABLES_INKIND",
+              "name": "Q146_VEGETABLES_INKIND_PHP",
               "labels": [
                 {
-                  "text": "144. Vegetables \u2014 Estimated in-kind value (PHP)"
+                  "text": "146. Vegetables (fresh, dried, dehydrated, frozen) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22022,10 +22022,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q145_FRUITS_CONSUMED",
+              "name": "Q147_FRUITS_CONSUMED",
               "labels": [
                 {
-                  "text": "145. Fruits \u2014 Consumed?"
+                  "text": "147. Fruits in any form (fresh, dried, dehydrated, frozen) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22033,10 +22033,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q145_FRUITS_CONSUMED_VS1",
+                  "name": "Q147_FRUITS_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "145. Fruits \u2014 Consumed?"
+                      "text": "147. Fruits in any form (fresh, dried, dehydrated, frozen) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22069,10 +22069,10 @@
               ]
             },
             {
-              "name": "Q145_FRUITS_PURCHASED",
+              "name": "Q147_FRUITS_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "145. Fruits \u2014 Amount purchased (PHP)"
+                  "text": "147. Fruits in any form (fresh, dried, dehydrated, frozen) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22080,10 +22080,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q145_FRUITS_INKIND",
+              "name": "Q147_FRUITS_INKIND_PHP",
               "labels": [
                 {
-                  "text": "145. Fruits \u2014 Estimated in-kind value (PHP)"
+                  "text": "147. Fruits in any form (fresh, dried, dehydrated, frozen) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22091,10 +22091,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q146_FISH_CONSUMED",
+              "name": "Q148_FISH_CONSUMED",
               "labels": [
                 {
-                  "text": "146. Fish and other seafoods \u2014 Consumed?"
+                  "text": "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22102,10 +22102,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q146_FISH_CONSUMED_VS1",
+                  "name": "Q148_FISH_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "146. Fish and other seafoods \u2014 Consumed?"
+                      "text": "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22138,10 +22138,10 @@
               ]
             },
             {
-              "name": "Q146_FISH_PURCHASED",
+              "name": "Q148_FISH_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "146. Fish and other seafoods \u2014 Amount purchased (PHP)"
+                  "text": "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22149,10 +22149,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q146_FISH_INKIND",
+              "name": "Q148_FISH_INKIND_PHP",
               "labels": [
                 {
-                  "text": "146. Fish and other seafoods \u2014 Estimated in-kind value (PHP)"
+                  "text": "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22160,10 +22160,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q147_MEAT_CONSUMED",
+              "name": "Q149_MEAT_CONSUMED",
               "labels": [
                 {
-                  "text": "147. Any kind of meat and offal \u2014 Consumed?"
+                  "text": "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22171,10 +22171,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q147_MEAT_CONSUMED_VS1",
+                  "name": "Q149_MEAT_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "147. Any kind of meat and offal \u2014 Consumed?"
+                      "text": "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22207,10 +22207,10 @@
               ]
             },
             {
-              "name": "Q147_MEAT_PURCHASED",
+              "name": "Q149_MEAT_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "147. Any kind of meat and offal \u2014 Amount purchased (PHP)"
+                  "text": "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22218,10 +22218,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q147_MEAT_INKIND",
+              "name": "Q149_MEAT_INKIND_PHP",
               "labels": [
                 {
-                  "text": "147. Any kind of meat and offal \u2014 Estimated in-kind value (PHP)"
+                  "text": "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22229,10 +22229,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q148_EGGS_CONSUMED",
+              "name": "Q150_EGGS_CONSUMED",
               "labels": [
                 {
-                  "text": "148. Eggs \u2014 Consumed?"
+                  "text": "150. Any kind of egg (from chicken, duck, quail, etc.) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22240,10 +22240,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q148_EGGS_CONSUMED_VS1",
+                  "name": "Q150_EGGS_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "148. Eggs \u2014 Consumed?"
+                      "text": "150. Any kind of egg (from chicken, duck, quail, etc.) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22276,10 +22276,10 @@
               ]
             },
             {
-              "name": "Q148_EGGS_PURCHASED",
+              "name": "Q150_EGGS_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "148. Eggs \u2014 Amount purchased (PHP)"
+                  "text": "150. Any kind of egg (from chicken, duck, quail, etc.) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22287,10 +22287,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q148_EGGS_INKIND",
+              "name": "Q150_EGGS_INKIND_PHP",
               "labels": [
                 {
-                  "text": "148. Eggs \u2014 Estimated in-kind value (PHP)"
+                  "text": "150. Any kind of egg (from chicken, duck, quail, etc.) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22298,10 +22298,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q149_MILK_CONSUMED",
+              "name": "Q151_MILK_CONSUMED",
               "labels": [
                 {
-                  "text": "149. Milk and milk products \u2014 Consumed?"
+                  "text": "151. Milk and other milk products, excluding butter \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22309,10 +22309,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q149_MILK_CONSUMED_VS1",
+                  "name": "Q151_MILK_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "149. Milk and milk products \u2014 Consumed?"
+                      "text": "151. Milk and other milk products, excluding butter \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22345,10 +22345,10 @@
               ]
             },
             {
-              "name": "Q149_MILK_PURCHASED",
+              "name": "Q151_MILK_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "149. Milk and milk products \u2014 Amount purchased (PHP)"
+                  "text": "151. Milk and other milk products, excluding butter \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22356,10 +22356,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q149_MILK_INKIND",
+              "name": "Q151_MILK_INKIND_PHP",
               "labels": [
                 {
-                  "text": "149. Milk and milk products \u2014 Estimated in-kind value (PHP)"
+                  "text": "151. Milk and other milk products, excluding butter \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22367,10 +22367,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q150_FATS_CONSUMED",
+              "name": "Q152_FATS_CONSUMED",
               "labels": [
                 {
-                  "text": "150. Butter, lard, oils and fats \u2014 Consumed?"
+                  "text": "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22378,10 +22378,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q150_FATS_CONSUMED_VS1",
+                  "name": "Q152_FATS_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "150. Butter, lard, oils and fats \u2014 Consumed?"
+                      "text": "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22414,10 +22414,10 @@
               ]
             },
             {
-              "name": "Q150_FATS_PURCHASED",
+              "name": "Q152_FATS_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "150. Butter, lard, oils and fats \u2014 Amount purchased (PHP)"
+                  "text": "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22425,10 +22425,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q150_FATS_INKIND",
+              "name": "Q152_FATS_INKIND_PHP",
               "labels": [
                 {
-                  "text": "150. Butter, lard, oils and fats \u2014 Estimated in-kind value (PHP)"
+                  "text": "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22436,10 +22436,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q151_CONDIMENTS_CONSUMED",
+              "name": "Q153_SUGAR_CONSUMED",
               "labels": [
                 {
-                  "text": "151. Condiments, spices, and ready-made meals \u2014 Consumed?"
+                  "text": "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22447,10 +22447,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q151_CONDIMENTS_CONSUMED_VS1",
+                  "name": "Q153_SUGAR_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "151. Condiments, spices, and ready-made meals \u2014 Consumed?"
+                      "text": "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22483,10 +22483,10 @@
               ]
             },
             {
-              "name": "Q151_CONDIMENTS_PURCHASED",
+              "name": "Q153_SUGAR_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "151. Condiments, spices, and ready-made meals \u2014 Amount purchased (PHP)"
+                  "text": "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22494,10 +22494,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q151_CONDIMENTS_INKIND",
+              "name": "Q153_SUGAR_INKIND_PHP",
               "labels": [
                 {
-                  "text": "151. Condiments, spices, and ready-made meals \u2014 Estimated in-kind value (PHP)"
+                  "text": "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22505,10 +22505,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q152_BEVERAGES_CONSUMED",
+              "name": "Q154_CONDIMENTS_CONSUMED",
               "labels": [
                 {
-                  "text": "152. Water and non-alcoholic beverages \u2014 Consumed?"
+                  "text": "154. Condiments and other spices and other ready-made meals \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22516,10 +22516,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q152_BEVERAGES_CONSUMED_VS1",
+                  "name": "Q154_CONDIMENTS_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "152. Water and non-alcoholic beverages \u2014 Consumed?"
+                      "text": "154. Condiments and other spices and other ready-made meals \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22552,10 +22552,10 @@
               ]
             },
             {
-              "name": "Q152_BEVERAGES_PURCHASED",
+              "name": "Q154_CONDIMENTS_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "152. Water and non-alcoholic beverages \u2014 Amount purchased (PHP)"
+                  "text": "154. Condiments and other spices and other ready-made meals \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22563,10 +22563,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q152_BEVERAGES_INKIND",
+              "name": "Q154_CONDIMENTS_INKIND_PHP",
               "labels": [
                 {
-                  "text": "152. Water and non-alcoholic beverages \u2014 Estimated in-kind value (PHP)"
+                  "text": "154. Condiments and other spices and other ready-made meals \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22574,10 +22574,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q153_ALCOHOL_CONSUMED",
+              "name": "Q155_WATER_NA_CONSUMED",
               "labels": [
                 {
-                  "text": "153. Alcoholic beverages \u2014 Consumed?"
+                  "text": "155. Water and non-alcoholic beverages (e.g., coffee) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22585,10 +22585,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q153_ALCOHOL_CONSUMED_VS1",
+                  "name": "Q155_WATER_NA_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "153. Alcoholic beverages \u2014 Consumed?"
+                      "text": "155. Water and non-alcoholic beverages (e.g., coffee) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22621,10 +22621,10 @@
               ]
             },
             {
-              "name": "Q153_ALCOHOL_PURCHASED",
+              "name": "Q155_WATER_NA_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "153. Alcoholic beverages \u2014 Amount purchased (PHP)"
+                  "text": "155. Water and non-alcoholic beverages (e.g., coffee) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22632,10 +22632,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q153_ALCOHOL_INKIND",
+              "name": "Q155_WATER_NA_INKIND_PHP",
               "labels": [
                 {
-                  "text": "153. Alcoholic beverages \u2014 Estimated in-kind value (PHP)"
+                  "text": "155. Water and non-alcoholic beverages (e.g., coffee) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22643,10 +22643,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q155_RESTAURANT_CONSUMED",
+              "name": "Q156_ALCOHOL_CONSUMED",
               "labels": [
                 {
-                  "text": "155. Meals and snacks from restaurants \u2014 Consumed?"
+                  "text": "156. Alcoholic beverages (e.g., local and imported) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22654,10 +22654,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q155_RESTAURANT_CONSUMED_VS1",
+                  "name": "Q156_ALCOHOL_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "155. Meals and snacks from restaurants \u2014 Consumed?"
+                      "text": "156. Alcoholic beverages (e.g., local and imported) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22690,10 +22690,10 @@
               ]
             },
             {
-              "name": "Q155_RESTAURANT_PURCHASED",
+              "name": "Q156_ALCOHOL_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "155. Meals and snacks from restaurants \u2014 Amount purchased (PHP)"
+                  "text": "156. Alcoholic beverages (e.g., local and imported) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22701,10 +22701,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q155_RESTAURANT_INKIND",
+              "name": "Q156_ALCOHOL_INKIND_PHP",
               "labels": [
                 {
-                  "text": "155. Meals and snacks from restaurants \u2014 Estimated in-kind value (PHP)"
+                  "text": "156. Alcoholic beverages (e.g., local and imported) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22712,10 +22712,21 @@
               "zeroFill": false
             },
             {
-              "name": "Q156_TOBACCO_CONSUMED",
+              "name": "Q157_FOOD_SUBTOTAL_TOTAL_PHP",
               "labels": [
                 {
-                  "text": "156. Smoking and tobacco products \u2014 Consumed?"
+                  "text": "157. Sub-total (food, last week) \u2014 Auto-computed total (PHP, [DO NOT ASK])"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q158_RESTAURANT_CONSUMED",
+              "labels": [
+                {
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22723,10 +22734,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q156_TOBACCO_CONSUMED_VS1",
+                  "name": "Q158_RESTAURANT_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "156. Smoking and tobacco products \u2014 Consumed?"
+                      "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22759,10 +22770,10 @@
               ]
             },
             {
-              "name": "Q156_TOBACCO_PURCHASED",
+              "name": "Q158_RESTAURANT_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "156. Smoking and tobacco products \u2014 Amount purchased (PHP)"
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22770,10 +22781,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q156_TOBACCO_INKIND",
+              "name": "Q158_RESTAURANT_INKIND_PHP",
               "labels": [
                 {
-                  "text": "156. Smoking and tobacco products \u2014 Estimated in-kind value (PHP)"
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22781,10 +22792,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q157_PERSONAL_CARE_CONSUMED",
+              "name": "Q159_SMOKING_TOBACCO_CONSUMED",
               "labels": [
                 {
-                  "text": "157. Personal care products \u2014 Consumed?"
+                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22792,10 +22803,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q157_PERSONAL_CARE_CONSUMED_VS1",
+                  "name": "Q159_SMOKING_TOBACCO_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "157. Personal care products \u2014 Consumed?"
+                      "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22828,10 +22839,10 @@
               ]
             },
             {
-              "name": "Q157_PERSONAL_CARE_PURCHASED",
+              "name": "Q159_SMOKING_TOBACCO_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "157. Personal care products \u2014 Amount purchased (PHP)"
+                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22839,10 +22850,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q157_PERSONAL_CARE_INKIND",
+              "name": "Q159_SMOKING_TOBACCO_INKIND_PHP",
               "labels": [
                 {
-                  "text": "157. Personal care products \u2014 Estimated in-kind value (PHP)"
+                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22850,10 +22861,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q158_HOUSEHOLD_CONSUMED",
+              "name": "Q160_PERSONAL_CARE_CONSUMED",
               "labels": [
                 {
-                  "text": "158. Household cleaning and maintenance \u2014 Consumed?"
+                  "text": "160. Personal care products (e.g., shampoo, haircut) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22861,10 +22872,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q158_HOUSEHOLD_CONSUMED_VS1",
+                  "name": "Q160_PERSONAL_CARE_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "158. Household cleaning and maintenance \u2014 Consumed?"
+                      "text": "160. Personal care products (e.g., shampoo, haircut) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22897,10 +22908,10 @@
               ]
             },
             {
-              "name": "Q158_HOUSEHOLD_PURCHASED",
+              "name": "Q160_PERSONAL_CARE_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "158. Household cleaning and maintenance \u2014 Amount purchased (PHP)"
+                  "text": "160. Personal care products (e.g., shampoo, haircut) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22908,10 +22919,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q158_HOUSEHOLD_INKIND",
+              "name": "Q160_PERSONAL_CARE_INKIND_PHP",
               "labels": [
                 {
-                  "text": "158. Household cleaning and maintenance \u2014 Estimated in-kind value (PHP)"
+                  "text": "160. Personal care products (e.g., shampoo, haircut) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22919,10 +22930,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q159_TRANSPORT_CONSUMED",
+              "name": "Q161_HOUSEHOLD_CLEAN_CONSUMED",
               "labels": [
                 {
-                  "text": "159. Passenger transportation \u2014 Consumed?"
+                  "text": "161. Household cleaning and maintenance products and services including domestic ones \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22930,10 +22941,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q159_TRANSPORT_CONSUMED_VS1",
+                  "name": "Q161_HOUSEHOLD_CLEAN_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "159. Passenger transportation \u2014 Consumed?"
+                      "text": "161. Household cleaning and maintenance products and services including domestic ones \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -22966,10 +22977,10 @@
               ]
             },
             {
-              "name": "Q159_TRANSPORT_PURCHASED",
+              "name": "Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "159. Passenger transportation \u2014 Amount purchased (PHP)"
+                  "text": "161. Household cleaning and maintenance products and services including domestic ones \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22977,10 +22988,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q159_TRANSPORT_INKIND",
+              "name": "Q161_HOUSEHOLD_CLEAN_INKIND_PHP",
               "labels": [
                 {
-                  "text": "159. Passenger transportation \u2014 Estimated in-kind value (PHP)"
+                  "text": "161. Household cleaning and maintenance products and services including domestic ones \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -22988,10 +22999,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q160_TELECOM_CONSUMED",
+              "name": "Q162_UTILITIES_CONSUMED",
               "labels": [
                 {
-                  "text": "160. Phone, mobile, WiFi, cable TV \u2014 Consumed?"
+                  "text": "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -22999,10 +23010,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q160_TELECOM_CONSUMED_VS1",
+                  "name": "Q162_UTILITIES_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "160. Phone, mobile, WiFi, cable TV \u2014 Consumed?"
+                      "text": "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23035,10 +23046,10 @@
               ]
             },
             {
-              "name": "Q160_TELECOM_PURCHASED",
+              "name": "Q162_UTILITIES_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "160. Phone, mobile, WiFi, cable TV \u2014 Amount purchased (PHP)"
+                  "text": "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23046,10 +23057,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q160_TELECOM_INKIND",
+              "name": "Q162_UTILITIES_INKIND_PHP",
               "labels": [
                 {
-                  "text": "160. Phone, mobile, WiFi, cable TV \u2014 Estimated in-kind value (PHP)"
+                  "text": "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23057,10 +23068,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q161_RECREATION_CONSUMED",
+              "name": "Q163_TRANSPORT_CONSUMED",
               "labels": [
                 {
-                  "text": "161. Recreational, cultural, sporting \u2014 Consumed?"
+                  "text": "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23068,10 +23079,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q161_RECREATION_CONSUMED_VS1",
+                  "name": "Q163_TRANSPORT_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "161. Recreational, cultural, sporting \u2014 Consumed?"
+                      "text": "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23104,10 +23115,10 @@
               ]
             },
             {
-              "name": "Q161_RECREATION_PURCHASED",
+              "name": "Q163_TRANSPORT_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "161. Recreational, cultural, sporting \u2014 Amount purchased (PHP)"
+                  "text": "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23115,10 +23126,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q161_RECREATION_INKIND",
+              "name": "Q163_TRANSPORT_INKIND_PHP",
               "labels": [
                 {
-                  "text": "161. Recreational, cultural, sporting \u2014 Estimated in-kind value (PHP)"
+                  "text": "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23126,10 +23137,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q162_POSTAL_CONSUMED",
+              "name": "Q164_TELECOM_CONSUMED",
               "labels": [
                 {
-                  "text": "162. Postal services \u2014 Consumed?"
+                  "text": "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23137,10 +23148,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q162_POSTAL_CONSUMED_VS1",
+                  "name": "Q164_TELECOM_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "162. Postal services \u2014 Consumed?"
+                      "text": "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23173,10 +23184,10 @@
               ]
             },
             {
-              "name": "Q162_POSTAL_PURCHASED",
+              "name": "Q164_TELECOM_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "162. Postal services \u2014 Amount purchased (PHP)"
+                  "text": "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23184,10 +23195,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q162_POSTAL_INKIND",
+              "name": "Q164_TELECOM_INKIND_PHP",
               "labels": [
                 {
-                  "text": "162. Postal services \u2014 Estimated in-kind value (PHP)"
+                  "text": "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23195,10 +23206,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q163_HOUSING_CONSUMED",
+              "name": "Q165_RECREATION_1M_CONSUMED",
               "labels": [
                 {
-                  "text": "163. Housing (actual/estimated rent) \u2014 Consumed?"
+                  "text": "165. Recreational, cultural, religious, sporting and entertainment devices (monthly) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23206,10 +23217,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q163_HOUSING_CONSUMED_VS1",
+                  "name": "Q165_RECREATION_1M_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "163. Housing (actual/estimated rent) \u2014 Consumed?"
+                      "text": "165. Recreational, cultural, religious, sporting and entertainment devices (monthly) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23242,10 +23253,10 @@
               ]
             },
             {
-              "name": "Q163_HOUSING_PURCHASED",
+              "name": "Q165_RECREATION_1M_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "163. Housing (actual/estimated rent) \u2014 Amount purchased (PHP)"
+                  "text": "165. Recreational, cultural, religious, sporting and entertainment devices (monthly) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23253,10 +23264,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q163_HOUSING_INKIND",
+              "name": "Q165_RECREATION_1M_INKIND_PHP",
               "labels": [
                 {
-                  "text": "163. Housing (actual/estimated rent) \u2014 Estimated in-kind value (PHP)"
+                  "text": "165. Recreational, cultural, religious, sporting and entertainment devices (monthly) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23264,10 +23275,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q164_RECREATION_6M_CONSUMED",
+              "name": "Q166_POSTAL_CONSUMED",
               "labels": [
                 {
-                  "text": "164. Recreational devices (6-month) \u2014 Consumed?"
+                  "text": "166. Postal services \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23275,10 +23286,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q164_RECREATION_6M_CONSUMED_VS1",
+                  "name": "Q166_POSTAL_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "164. Recreational devices (6-month) \u2014 Consumed?"
+                      "text": "166. Postal services \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23311,10 +23322,10 @@
               ]
             },
             {
-              "name": "Q164_RECREATION_6M_PURCHASED",
+              "name": "Q166_POSTAL_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "164. Recreational devices (6-month) \u2014 Amount purchased (PHP)"
+                  "text": "166. Postal services \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23322,10 +23333,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q164_RECREATION_6M_INKIND",
+              "name": "Q166_POSTAL_INKIND_PHP",
               "labels": [
                 {
-                  "text": "164. Recreational devices (6-month) \u2014 Estimated in-kind value (PHP)"
+                  "text": "166. Postal services \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23333,10 +23344,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q165_CLOTHING_CONSUMED",
+              "name": "Q167_HOUSING_CONSUMED",
               "labels": [
                 {
-                  "text": "165. Clothing, footwear, textiles \u2014 Consumed?"
+                  "text": "167. Housing (actual rentals, estimated value of rent if owned) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23344,10 +23355,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q165_CLOTHING_CONSUMED_VS1",
+                  "name": "Q167_HOUSING_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "165. Clothing, footwear, textiles \u2014 Consumed?"
+                      "text": "167. Housing (actual rentals, estimated value of rent if owned) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23380,10 +23391,10 @@
               ]
             },
             {
-              "name": "Q165_CLOTHING_PURCHASED",
+              "name": "Q167_HOUSING_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "165. Clothing, footwear, textiles \u2014 Amount purchased (PHP)"
+                  "text": "167. Housing (actual rentals, estimated value of rent if owned) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23391,10 +23402,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q165_CLOTHING_INKIND",
+              "name": "Q167_HOUSING_INKIND_PHP",
               "labels": [
                 {
-                  "text": "165. Clothing, footwear, textiles \u2014 Estimated in-kind value (PHP)"
+                  "text": "167. Housing (actual rentals, estimated value of rent if owned) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23402,10 +23413,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q166_EDUCATION_CONSUMED",
+              "name": "Q168_RECREATION_6M_CONSUMED",
               "labels": [
                 {
-                  "text": "166. Educational services \u2014 Consumed?"
+                  "text": "168. Recreational, cultural, religious, sporting and entertainment devices (6-month) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23413,10 +23424,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q166_EDUCATION_CONSUMED_VS1",
+                  "name": "Q168_RECREATION_6M_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "166. Educational services \u2014 Consumed?"
+                      "text": "168. Recreational, cultural, religious, sporting and entertainment devices (6-month) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23449,10 +23460,10 @@
               ]
             },
             {
-              "name": "Q166_EDUCATION_PURCHASED",
+              "name": "Q168_RECREATION_6M_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "166. Educational services \u2014 Amount purchased (PHP)"
+                  "text": "168. Recreational, cultural, religious, sporting and entertainment devices (6-month) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23460,10 +23471,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q166_EDUCATION_INKIND",
+              "name": "Q168_RECREATION_6M_INKIND_PHP",
               "labels": [
                 {
-                  "text": "166. Educational services \u2014 Estimated in-kind value (PHP)"
+                  "text": "168. Recreational, cultural, religious, sporting and entertainment devices (6-month) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23471,10 +23482,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q167_ACCOMMODATION_CONSUMED",
+              "name": "Q169_CLOTHING_CONSUMED",
               "labels": [
                 {
-                  "text": "167. Accommodation services \u2014 Consumed?"
+                  "text": "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23482,10 +23493,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q167_ACCOMMODATION_CONSUMED_VS1",
+                  "name": "Q169_CLOTHING_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "167. Accommodation services \u2014 Consumed?"
+                      "text": "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23518,10 +23529,10 @@
               ]
             },
             {
-              "name": "Q167_ACCOMMODATION_PURCHASED",
+              "name": "Q169_CLOTHING_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "167. Accommodation services \u2014 Amount purchased (PHP)"
+                  "text": "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23529,10 +23540,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q167_ACCOMMODATION_INKIND",
+              "name": "Q169_CLOTHING_INKIND_PHP",
               "labels": [
                 {
-                  "text": "167. Accommodation services \u2014 Estimated in-kind value (PHP)"
+                  "text": "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23540,10 +23551,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q168_GARDEN_PETS_CONSUMED",
+              "name": "Q170_EDUCATION_CONSUMED",
               "labels": [
                 {
-                  "text": "168. Garden and personal pets \u2014 Consumed?"
+                  "text": "170. Educational services (e.g., tuitions and tutoring) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23551,10 +23562,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q168_GARDEN_PETS_CONSUMED_VS1",
+                  "name": "Q170_EDUCATION_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "168. Garden and personal pets \u2014 Consumed?"
+                      "text": "170. Educational services (e.g., tuitions and tutoring) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23587,10 +23598,10 @@
               ]
             },
             {
-              "name": "Q168_GARDEN_PETS_PURCHASED",
+              "name": "Q170_EDUCATION_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "168. Garden and personal pets \u2014 Amount purchased (PHP)"
+                  "text": "170. Educational services (e.g., tuitions and tutoring) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23598,10 +23609,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q168_GARDEN_PETS_INKIND",
+              "name": "Q170_EDUCATION_INKIND_PHP",
               "labels": [
                 {
-                  "text": "168. Garden and personal pets \u2014 Estimated in-kind value (PHP)"
+                  "text": "170. Educational services (e.g., tuitions and tutoring) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23609,10 +23620,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q169_HEALTH_INS_CONSUMED",
+              "name": "Q171_ACCOMMODATION_CONSUMED",
               "labels": [
                 {
-                  "text": "169. Health insurance \u2014 Consumed?"
+                  "text": "171. Accommodation services, including for educational establishment (e.g., hotels) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23620,10 +23631,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q169_HEALTH_INS_CONSUMED_VS1",
+                  "name": "Q171_ACCOMMODATION_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "169. Health insurance \u2014 Consumed?"
+                      "text": "171. Accommodation services, including for educational establishment (e.g., hotels) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23656,10 +23667,10 @@
               ]
             },
             {
-              "name": "Q169_HEALTH_INS_PURCHASED",
+              "name": "Q171_ACCOMMODATION_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "169. Health insurance \u2014 Amount purchased (PHP)"
+                  "text": "171. Accommodation services, including for educational establishment (e.g., hotels) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23667,10 +23678,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q169_HEALTH_INS_INKIND",
+              "name": "Q171_ACCOMMODATION_INKIND_PHP",
               "labels": [
                 {
-                  "text": "169. Health insurance \u2014 Estimated in-kind value (PHP)"
+                  "text": "171. Accommodation services, including for educational establishment (e.g., hotels) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23678,10 +23689,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q170_OTHER_INS_CONSUMED",
+              "name": "Q172_GARDEN_PETS_CONSUMED",
               "labels": [
                 {
-                  "text": "170. Other insurance \u2014 Consumed?"
+                  "text": "172. Garden and personal pets' products and services \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23689,10 +23700,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q170_OTHER_INS_CONSUMED_VS1",
+                  "name": "Q172_GARDEN_PETS_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "170. Other insurance \u2014 Consumed?"
+                      "text": "172. Garden and personal pets' products and services \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23725,10 +23736,10 @@
               ]
             },
             {
-              "name": "Q170_OTHER_INS_PURCHASED",
+              "name": "Q172_GARDEN_PETS_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "170. Other insurance \u2014 Amount purchased (PHP)"
+                  "text": "172. Garden and personal pets' products and services \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23736,10 +23747,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q170_OTHER_INS_INKIND",
+              "name": "Q172_GARDEN_PETS_INKIND_PHP",
               "labels": [
                 {
-                  "text": "170. Other insurance \u2014 Estimated in-kind value (PHP)"
+                  "text": "172. Garden and personal pets' products and services \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23747,10 +23758,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q171_INPATIENT_CONSUMED",
+              "name": "Q173_HEALTH_INS_CONSUMED",
               "labels": [
                 {
-                  "text": "171. Inpatient care services \u2014 Consumed?"
+                  "text": "173. Health insurance \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23758,10 +23769,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q171_INPATIENT_CONSUMED_VS1",
+                  "name": "Q173_HEALTH_INS_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "171. Inpatient care services \u2014 Consumed?"
+                      "text": "173. Health insurance \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23794,10 +23805,10 @@
               ]
             },
             {
-              "name": "Q171_INPATIENT_PURCHASED",
+              "name": "Q173_HEALTH_INS_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "171. Inpatient care services \u2014 Amount purchased (PHP)"
+                  "text": "173. Health insurance \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23805,10 +23816,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q171_INPATIENT_INKIND",
+              "name": "Q173_HEALTH_INS_INKIND_PHP",
               "labels": [
                 {
-                  "text": "171. Inpatient care services \u2014 Estimated in-kind value (PHP)"
+                  "text": "173. Health insurance \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23816,10 +23827,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q172_EMERGENCY_CONSUMED",
+              "name": "Q174_OTHER_INS_CONSUMED",
               "labels": [
                 {
-                  "text": "172. Emergency transportation \u2014 Consumed?"
+                  "text": "174. Other insurance (e.g., for life and accident, and travel) \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23827,10 +23838,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q172_EMERGENCY_CONSUMED_VS1",
+                  "name": "Q174_OTHER_INS_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "172. Emergency transportation \u2014 Consumed?"
+                      "text": "174. Other insurance (e.g., for life and accident, and travel) \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23863,10 +23874,10 @@
               ]
             },
             {
-              "name": "Q172_EMERGENCY_PURCHASED",
+              "name": "Q174_OTHER_INS_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "172. Emergency transportation \u2014 Amount purchased (PHP)"
+                  "text": "174. Other insurance (e.g., for life and accident, and travel) \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23874,10 +23885,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q172_EMERGENCY_INKIND",
+              "name": "Q174_OTHER_INS_INKIND_PHP",
               "labels": [
                 {
-                  "text": "172. Emergency transportation \u2014 Estimated in-kind value (PHP)"
+                  "text": "174. Other insurance (e.g., for life and accident, and travel) \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23885,10 +23896,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q174_PREVENTIVE_CONSUMED",
+              "name": "Q175_INPATIENT_CONSUMED",
               "labels": [
                 {
-                  "text": "174. Preventive services (immunization) \u2014 Consumed?"
+                  "text": "175. Inpatient care services \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23896,10 +23907,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q174_PREVENTIVE_CONSUMED_VS1",
+                  "name": "Q175_INPATIENT_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "174. Preventive services (immunization) \u2014 Consumed?"
+                      "text": "175. Inpatient care services \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -23932,10 +23943,10 @@
               ]
             },
             {
-              "name": "Q174_PREVENTIVE_PURCHASED",
+              "name": "Q175_INPATIENT_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "174. Preventive services (immunization) \u2014 Amount purchased (PHP)"
+                  "text": "175. Inpatient care services \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23943,10 +23954,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q174_PREVENTIVE_INKIND",
+              "name": "Q175_INPATIENT_INKIND_PHP",
               "labels": [
                 {
-                  "text": "174. Preventive services (immunization) \u2014 Estimated in-kind value (PHP)"
+                  "text": "175. Inpatient care services \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -23954,10 +23965,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q175_DIAGNOSTIC_CONSUMED",
+              "name": "Q176_EMERGENCY_TRANSPORT_CONSUMED",
               "labels": [
                 {
-                  "text": "175. Diagnostic and laboratory tests \u2014 Consumed?"
+                  "text": "176. Emergency transportation and emergency rescue services \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -23965,10 +23976,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q175_DIAGNOSTIC_CONSUMED_VS1",
+                  "name": "Q176_EMERGENCY_TRANSPORT_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "175. Diagnostic and laboratory tests \u2014 Consumed?"
+                      "text": "176. Emergency transportation and emergency rescue services \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -24001,10 +24012,10 @@
               ]
             },
             {
-              "name": "Q175_DIAGNOSTIC_PURCHASED",
+              "name": "Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "175. Diagnostic and laboratory tests \u2014 Amount purchased (PHP)"
+                  "text": "176. Emergency transportation and emergency rescue services \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -24012,10 +24023,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q175_DIAGNOSTIC_INKIND",
+              "name": "Q176_EMERGENCY_TRANSPORT_INKIND_PHP",
               "labels": [
                 {
-                  "text": "175. Diagnostic and laboratory tests \u2014 Estimated in-kind value (PHP)"
+                  "text": "176. Emergency transportation and emergency rescue services \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -24023,10 +24034,21 @@
               "zeroFill": false
             },
             {
-              "name": "Q176_ASSISTIVE_CONSUMED",
+              "name": "Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP",
               "labels": [
                 {
-                  "text": "176. Assistive health products (vision, hearing, mobility) \u2014 Consumed?"
+                  "text": "177. Total value of 175 and 176 (health, 12-month) \u2014 Auto-computed total (PHP, [DO NOT ASK])"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q178_PREVENTIVE_CONSUMED",
+              "labels": [
+                {
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -24034,10 +24056,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q176_ASSISTIVE_CONSUMED_VS1",
+                  "name": "Q178_PREVENTIVE_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "176. Assistive health products (vision, hearing, mobility) \u2014 Consumed?"
+                      "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -24070,10 +24092,10 @@
               ]
             },
             {
-              "name": "Q176_ASSISTIVE_PURCHASED",
+              "name": "Q178_PREVENTIVE_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "176. Assistive health products (vision, hearing, mobility) \u2014 Amount purchased (PHP)"
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -24081,10 +24103,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q176_ASSISTIVE_INKIND",
+              "name": "Q178_PREVENTIVE_INKIND_PHP",
               "labels": [
                 {
-                  "text": "176. Assistive health products (vision, hearing, mobility) \u2014 Estimated in-kind value (PHP)"
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -24092,10 +24114,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q177_MEDICAL_PROD_CONSUMED",
+              "name": "Q179_DIAGNOSTIC_CONSUMED",
               "labels": [
                 {
-                  "text": "177. Medical products (antigen tests, masks) \u2014 Consumed?"
+                  "text": "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -24103,10 +24125,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q177_MEDICAL_PROD_CONSUMED_VS1",
+                  "name": "Q179_DIAGNOSTIC_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "177. Medical products (antigen tests, masks) \u2014 Consumed?"
+                      "text": "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -24139,10 +24161,10 @@
               ]
             },
             {
-              "name": "Q177_MEDICAL_PROD_PURCHASED",
+              "name": "Q179_DIAGNOSTIC_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "177. Medical products (antigen tests, masks) \u2014 Amount purchased (PHP)"
+                  "text": "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -24150,10 +24172,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q177_MEDICAL_PROD_INKIND",
+              "name": "Q179_DIAGNOSTIC_INKIND_PHP",
               "labels": [
                 {
-                  "text": "177. Medical products (antigen tests, masks) \u2014 Estimated in-kind value (PHP)"
+                  "text": "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -24161,10 +24183,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q179_MEDICINES_CONSUMED",
+              "name": "Q180_ASSISTIVE_CONSUMED",
               "labels": [
                 {
-                  "text": "179. Medicines, vaccines, pharmaceuticals \u2014 Consumed?"
+                  "text": "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -24172,10 +24194,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q179_MEDICINES_CONSUMED_VS1",
+                  "name": "Q180_ASSISTIVE_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "179. Medicines, vaccines, pharmaceuticals \u2014 Consumed?"
+                      "text": "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -24208,10 +24230,10 @@
               ]
             },
             {
-              "name": "Q179_MEDICINES_PURCHASED",
+              "name": "Q180_ASSISTIVE_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "179. Medicines, vaccines, pharmaceuticals \u2014 Amount purchased (PHP)"
+                  "text": "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -24219,10 +24241,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q179_MEDICINES_INKIND",
+              "name": "Q180_ASSISTIVE_INKIND_PHP",
               "labels": [
                 {
-                  "text": "179. Medicines, vaccines, pharmaceuticals \u2014 Estimated in-kind value (PHP)"
+                  "text": "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -24230,10 +24252,10 @@
               "zeroFill": false
             },
             {
-              "name": "Q180_OUTPATIENT_CONSUMED",
+              "name": "Q181_MEDICAL_PRODUCTS_CONSUMED",
               "labels": [
                 {
-                  "text": "180. Outpatient medical and dental services \u2014 Consumed?"
+                  "text": "181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases \u2014 Consumed by household in reference period?"
                 }
               ],
               "contentType": "numeric",
@@ -24241,10 +24263,10 @@
               "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "Q180_OUTPATIENT_CONSUMED_VS1",
+                  "name": "Q181_MEDICAL_PRODUCTS_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "180. Outpatient medical and dental services \u2014 Consumed?"
+                      "text": "181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases \u2014 Consumed by household in reference period?"
                     }
                   ],
                   "values": [
@@ -24277,10 +24299,10 @@
               ]
             },
             {
-              "name": "Q180_OUTPATIENT_PURCHASED",
+              "name": "Q181_MEDICAL_PRODUCTS_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "180. Outpatient medical and dental services \u2014 Amount purchased (PHP)"
+                  "text": "181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases \u2014 Amount spent purchasing (PHP)"
                 }
               ],
               "contentType": "numeric",
@@ -24288,14 +24310,174 @@
               "zeroFill": false
             },
             {
-              "name": "Q180_OUTPATIENT_INKIND",
+              "name": "Q181_MEDICAL_PRODUCTS_INKIND_PHP",
               "labels": [
                 {
-                  "text": "180. Outpatient medical and dental services \u2014 Estimated in-kind value (PHP)"
+                  "text": "181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases \u2014 Estimated value in-kind / received / own-produce (PHP)"
                 }
               ],
               "contentType": "numeric",
               "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP",
+              "labels": [
+                {
+                  "text": "182. Total value of 178 to 181 (health, 6-month) \u2014 Auto-computed total (PHP, [DO NOT ASK])"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q183_MEDICINES_CONSUMED",
+              "labels": [
+                {
+                  "text": "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases \u2014 Consumed by household in reference period?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q183_MEDICINES_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases \u2014 Consumed by household in reference period?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q183_MEDICINES_PURCHASED_PHP",
+              "labels": [
+                {
+                  "text": "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases \u2014 Amount spent purchasing (PHP)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "Q183_MEDICINES_INKIND_PHP",
+              "labels": [
+                {
+                  "text": "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases \u2014 Estimated value in-kind / received / own-produce (PHP)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "Q184_OUTPATIENT_CONSUMED",
+              "labels": [
+                {
+                  "text": "184. Outpatient medical and dental services, including online services, without overnight stay \u2014 Consumed by household in reference period?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q184_OUTPATIENT_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "184. Outpatient medical and dental services, including online services, without overnight stay \u2014 Consumed by household in reference period?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q184_OUTPATIENT_PURCHASED_PHP",
+              "labels": [
+                {
+                  "text": "184. Outpatient medical and dental services, including online services, without overnight stay \u2014 Amount spent purchasing (PHP)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "Q184_OUTPATIENT_INKIND_PHP",
+              "labels": [
+                {
+                  "text": "184. Outpatient medical and dental services, including online services, without overnight stay \u2014 Estimated value in-kind / received / own-produce (PHP)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP",
+              "labels": [
+                {
+                  "text": "185. Total value of 183 and 184 (health, 1-month) \u2014 Auto-computed total (PHP, [DO NOT ASK])"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
               "zeroFill": false
             }
           ]

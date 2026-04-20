@@ -1404,91 +1404,143 @@ def build_section_m():
 
 
 # ============================================================
-# Section N. Household Expenditures (Q142-Q180)
-# Flat item batteries: each item has consumed (Y/N), purchased_amt, in_kind_amt
-# Reference periods vary: weekly, monthly, 6-month, 12-month
+# Section N. Household Expenditures (Q144-Q185) — WHO/SHA module
+#
+# Annex G #11 response: expanded from Apr 08's compressed expenditure list
+# to the full WHO/SHA reference-period-varying table (weekly / monthly /
+# 6-month / 12-month). Each line item emits the standard SHA triplet:
+#   {CONSUMED Y/N} + {PURCHASED_PHP numeric} + {INKIND_PHP numeric}
+# Sub-total rows (Q157, Q177, Q182, Q185) are CAPI-computed single numerics
+# marked [DO NOT ASK] in source — emitted as TOTAL_PHP fields for logic pass.
 # ============================================================
 
 def _expenditure_item(prefix, label):
-    """Three items per expenditure line: consumed Y/N, purchased amount, in-kind value."""
+    """Standard SHA triplet: consumed Y/N, purchased PHP, in-kind PHP."""
     return [
-        yes_no(f"{prefix}_CONSUMED", f"{label} — Consumed?"),
-        numeric(f"{prefix}_PURCHASED", f"{label} — Amount purchased (PHP)", length=8),
-        numeric(f"{prefix}_INKIND", f"{label} — Estimated in-kind value (PHP)", length=8),
+        yes_no(f"{prefix}_CONSUMED",
+               f"{label} — Consumed by household in reference period?"),
+        numeric(f"{prefix}_PURCHASED_PHP",
+                f"{label} — Amount spent purchasing (PHP)", length=8),
+        numeric(f"{prefix}_INKIND_PHP",
+                f"{label} — Estimated value in-kind / received / own-produce (PHP)", length=8),
     ]
+
+
+def _computed_total(prefix, label):
+    """Single numeric for [DO NOT ASK] sub-total rows (CAPI auto-computes)."""
+    return [
+        numeric(f"{prefix}_TOTAL_PHP",
+                f"{label} — Auto-computed total (PHP, [DO NOT ASK])", length=10),
+    ]
+
 
 def build_section_n():
     items = []
 
-    # A. Food Items (last WEEK) — Q142-Q155
-    food_items = [
-        ("Q142_CEREALS",     "142. Cereals (rice, flour, noodles, corn)"),
-        ("Q143_PULSES",      "143. Pulses, roots, tubers, plantains, nuts"),
-        ("Q144_VEGETABLES",  "144. Vegetables"),
-        ("Q145_FRUITS",      "145. Fruits"),
-        ("Q146_FISH",        "146. Fish and other seafoods"),
-        ("Q147_MEAT",        "147. Any kind of meat and offal"),
-        ("Q148_EGGS",        "148. Eggs"),
-        ("Q149_MILK",        "149. Milk and milk products"),
-        ("Q150_FATS",        "150. Butter, lard, oils and fats"),
-        ("Q151_CONDIMENTS",  "151. Condiments, spices, and ready-made meals"),
-        ("Q152_BEVERAGES",   "152. Water and non-alcoholic beverages"),
-        ("Q153_ALCOHOL",     "153. Alcoholic beverages"),
-        ("Q155_RESTAURANT",  "155. Meals and snacks from restaurants"),
+    # ----- A. Food Items (Consumed last WEEK) — Q144-Q158 -----
+    food_weekly = [
+        ("Q144_CEREALS",     "144. Cereals (rice, flour, noodles, corn, etc.)"),
+        ("Q145_PULSES",      "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts"),
+        ("Q146_VEGETABLES",  "146. Vegetables (fresh, dried, dehydrated, frozen)"),
+        ("Q147_FRUITS",      "147. Fruits in any form (fresh, dried, dehydrated, frozen)"),
+        ("Q148_FISH",        "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen)"),
+        ("Q149_MEAT",        "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen)"),
+        ("Q150_EGGS",        "150. Any kind of egg (from chicken, duck, quail, etc.)"),
+        ("Q151_MILK",        "151. Milk and other milk products, excluding butter"),
+        ("Q152_FATS",        "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame)"),
+        ("Q153_SUGAR",       "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes)"),
+        ("Q154_CONDIMENTS",  "154. Condiments and other spices and other ready-made meals"),
+        ("Q155_WATER_NA",    "155. Water and non-alcoholic beverages (e.g., coffee)"),
+        ("Q156_ALCOHOL",     "156. Alcoholic beverages (e.g., local and imported)"),
     ]
-    for prefix, label in food_items:
+    for prefix, label in food_weekly:
+        items.extend(_expenditure_item(prefix, label))
+    items.extend(_computed_total("Q157_FOOD_SUBTOTAL",
+                                 "157. Sub-total (food, last week)"))
+    items.extend(_expenditure_item(
+        "Q158_RESTAURANT",
+        "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries)"))
+
+    # ----- B. Non-food and Non-Health Items -----
+    # Last WEEK — Q159
+    items.extend(_expenditure_item(
+        "Q159_SMOKING_TOBACCO",
+        "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut)"))
+
+    # Last MONTH — Q160-Q167
+    nonfood_monthly = [
+        ("Q160_PERSONAL_CARE",   "160. Personal care products (e.g., shampoo, haircut)"),
+        ("Q161_HOUSEHOLD_CLEAN", "161. Household cleaning and maintenance products and services including domestic ones"),
+        ("Q162_UTILITIES",       "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas)"),
+        ("Q163_TRANSPORT",       "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle"),
+        ("Q164_TELECOM",         "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations"),
+        ("Q165_RECREATION_1M",   "165. Recreational, cultural, religious, sporting and entertainment devices (monthly)"),
+        ("Q166_POSTAL",          "166. Postal services"),
+        ("Q167_HOUSING",         "167. Housing (actual rentals, estimated value of rent if owned)"),
+    ]
+    for prefix, label in nonfood_monthly:
         items.extend(_expenditure_item(prefix, label))
 
-    # B. Non-food (last WEEK) — Q156
-    items.extend(_expenditure_item("Q156_TOBACCO", "156. Smoking and tobacco products"))
+    # Last 6 MONTHS — Q168-Q169
+    items.extend(_expenditure_item(
+        "Q168_RECREATION_6M",
+        "168. Recreational, cultural, religious, sporting and entertainment devices (6-month)"))
+    items.extend(_expenditure_item(
+        "Q169_CLOTHING",
+        "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs"))
 
-    # Non-food (last MONTH) — Q157-Q163
-    monthly_nonfood = [
-        ("Q157_PERSONAL_CARE", "157. Personal care products"),
-        ("Q158_HOUSEHOLD",     "158. Household cleaning and maintenance"),
-        ("Q159_TRANSPORT",     "159. Passenger transportation"),
-        ("Q160_TELECOM",       "160. Phone, mobile, WiFi, cable TV"),
-        ("Q161_RECREATION",    "161. Recreational, cultural, sporting"),
-        ("Q162_POSTAL",        "162. Postal services"),
-        ("Q163_HOUSING",       "163. Housing (actual/estimated rent)"),
+    # Last 12 MONTHS — Q170-Q174
+    nonfood_annual = [
+        ("Q170_EDUCATION",      "170. Educational services (e.g., tuitions and tutoring)"),
+        ("Q171_ACCOMMODATION",  "171. Accommodation services, including for educational establishment (e.g., hotels)"),
+        ("Q172_GARDEN_PETS",    "172. Garden and personal pets' products and services"),
+        ("Q173_HEALTH_INS",     "173. Health insurance"),
+        ("Q174_OTHER_INS",      "174. Other insurance (e.g., for life and accident, and travel)"),
     ]
-    for prefix, label in monthly_nonfood:
+    for prefix, label in nonfood_annual:
         items.extend(_expenditure_item(prefix, label))
 
-    # Non-food (last 6 MONTHS) — Q164-Q165
-    items.extend(_expenditure_item("Q164_RECREATION_6M", "164. Recreational devices (6-month)"))
-    items.extend(_expenditure_item("Q165_CLOTHING",      "165. Clothing, footwear, textiles"))
+    # ----- E. Health Products and Services (Consumed last 12 MONTHS) — Q175-Q177 -----
+    items.extend(_expenditure_item(
+        "Q175_INPATIENT",
+        "175. Inpatient care services"))
+    items.extend(_expenditure_item(
+        "Q176_EMERGENCY_TRANSPORT",
+        "176. Emergency transportation and emergency rescue services"))
+    items.extend(_computed_total(
+        "Q177_HEALTH_12M_SUBTOTAL",
+        "177. Total value of 175 and 176 (health, 12-month)"))
 
-    # Non-food (last 12 MONTHS) — Q166-Q170
-    annual_nonfood = [
-        ("Q166_EDUCATION",     "166. Educational services"),
-        ("Q167_ACCOMMODATION", "167. Accommodation services"),
-        ("Q168_GARDEN_PETS",   "168. Garden and personal pets"),
-        ("Q169_HEALTH_INS",    "169. Health insurance"),
-        ("Q170_OTHER_INS",     "170. Other insurance"),
-    ]
-    for prefix, label in annual_nonfood:
-        items.extend(_expenditure_item(prefix, label))
+    # Health (Consumed last 6 MONTHS) — Q178-Q182
+    items.extend(_expenditure_item(
+        "Q178_PREVENTIVE",
+        "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself."))
+    items.extend(_expenditure_item(
+        "Q179_DIAGNOSTIC",
+        "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care"))
+    items.extend(_expenditure_item(
+        "Q180_ASSISTIVE",
+        "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases"))
+    items.extend(_expenditure_item(
+        "Q181_MEDICAL_PRODUCTS",
+        "181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases"))
+    items.extend(_computed_total(
+        "Q182_HEALTH_6M_SUBTOTAL",
+        "182. Total value of 178 to 181 (health, 6-month)"))
 
-    # E. Health Products and Services (last 12 MONTHS) — Q171-Q173
-    items.extend(_expenditure_item("Q171_INPATIENT",   "171. Inpatient care services"))
-    items.extend(_expenditure_item("Q172_EMERGENCY",   "172. Emergency transportation"))
+    # Health (Consumed last MONTH) — Q183-Q185
+    items.extend(_expenditure_item(
+        "Q183_MEDICINES",
+        "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases"))
+    items.extend(_expenditure_item(
+        "Q184_OUTPATIENT",
+        "184. Outpatient medical and dental services, including online services, without overnight stay"))
+    items.extend(_computed_total(
+        "Q185_HEALTH_1M_SUBTOTAL",
+        "185. Total value of 183 and 184 (health, 1-month)"))
 
-    # Health (last 6 MONTHS) — Q174-Q178
-    health_6m = [
-        ("Q174_PREVENTIVE",   "174. Preventive services (immunization)"),
-        ("Q175_DIAGNOSTIC",   "175. Diagnostic and laboratory tests"),
-        ("Q176_ASSISTIVE",    "176. Assistive health products (vision, hearing, mobility)"),
-        ("Q177_MEDICAL_PROD", "177. Medical products (antigen tests, masks)"),
-    ]
-    for prefix, label in health_6m:
-        items.extend(_expenditure_item(prefix, label))
-
-    # Health (last MONTH) — Q179-Q180
-    items.extend(_expenditure_item("Q179_MEDICINES",  "179. Medicines, vaccines, pharmaceuticals"))
-    items.extend(_expenditure_item("Q180_OUTPATIENT", "180. Outpatient medical and dental services"))
-
-    return record("N_HOUSEHOLD_EXPENDITURES", "N. Household Expenditures", "P", items)
+    return record("N_HOUSEHOLD_EXPENDITURES",
+                  "N. Household Expenditures (WHO/SHA)", "P", items)
 
 
 # ============================================================
