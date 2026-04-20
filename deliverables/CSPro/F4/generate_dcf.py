@@ -295,118 +295,194 @@ def build_section_b():
 
 
 # ============================================================
-# Section C. Household Roster (Q30-Q50) — REPEATING, max_occurs=20
-# Sub-tables C1-C5 flattened into single repeating record
+# Section C. Household Roster and Characteristics (Q30-Q50) — Apr 20
+# Per-member sub-tables C1-C5 (Q30-Q46) + private-insurance roster
+# (Q48-Q50) flattened into one repeating record (max_occurs=20).
+# Q47 is a single HH-level gate — emitted as a separate non-repeating
+# record (type "T") so it does not disturb letters A-S already in use.
 # ============================================================
+# Code convention: source uses "-55" for "I don't know" (PhilHealth internal
+# convention). CSPro value codes can't carry a minus sign, so we store "55".
+# Source "88" ("Other (Specify)") is kept as literal "88". Both mapped below
+# via the YN_DK55 and Q46_CATEGORY value sets; flag as a sanity finding for
+# the F4 logic-pass spec.
 
 def build_section_c():
+    Q31_PRESENT = [
+        ("Away",    "0"),
+        ("Present", "1"),
+    ]
+    Q33_SEX = [
+        ("Male",   "1"),
+        ("Female", "2"),
+    ]
     Q34_RELATIONSHIP = [
-        ("Head",              "01"),
-        ("Spouse",            "02"),
-        ("Son/Daughter",      "03"),
-        ("Son-in-law/Daughter-in-law","04"),
-        ("Grandchild",        "05"),
-        ("Parent",            "06"),
-        ("Brother/Sister",    "07"),
-        ("Other relative",    "08"),
-        ("Non-relative",      "09"),
+        ("Head",                        "01"),
+        ("Spouse/Partner",              "02"),
+        ("Son/Daughter",                "03"),
+        ("Brother/Sister",              "04"),
+        ("Son-In-Law/Daughter-In-Law",  "05"),
+        ("Grandson/Granddaughter",      "06"),
+        ("Father/Mother",               "07"),
+        ("Nephew/Niece",                "08"),
+        ("Cousin",                      "09"),
+        ("Boarder",                     "10"),
+        ("Domestic Helper",             "11"),
+        ("Non-relative",                "12"),
     ]
-    Q36_DISABILITY = [
-        ("None",           "1"),
-        ("Visual",         "2"),
-        ("Hearing",        "3"),
-        ("Physical",       "4"),
-        ("Intellectual",   "5"),
-        ("Psychosocial",   "6"),
-        ("Multiple",       "7"),
-        ("Other (specify)","8"),
+    YN_01 = [
+        ("No",  "0"),
+        ("Yes", "1"),
     ]
-    Q39_CIVIL = [
-        ("Single",    "1"),
-        ("Married",   "2"),
-        ("Widowed",   "3"),
-        ("Separated", "4"),
-        ("Divorced",  "5"),
-        ("Not applicable (below 15)","9"),
+    Q37_PWD_CARD = [
+        ("No",                                     "0"),
+        ("Yes",                                    "1"),
+        ("Respondent refused to present card",     "2"),
+    ]
+    Q38_DISABILITY_TYPE = [
+        ("Physical disability (Orthopedic)", "1"),
+        ("Visual disability",                "2"),
+        ("Hearing disability",               "3"),
+        ("Speech impairment",                "4"),
+        ("Intellectual disability",          "5"),
+        ("Psychosocial disability",          "6"),
+        ("Multiple disabilities",            "7"),
+        ("Other disability (specify)",       "8"),
+    ]
+    Q39_CIVIL_STATUS = [
+        ("Single / Never Married",   "1"),
+        ("Married",                  "2"),
+        ("Common law / Live-in",     "3"),
+        ("Widowed",                  "4"),
+        ("Divorced",                 "5"),
+        ("Separated",                "6"),
+        ("Annulled",                 "7"),
+        ("Not reported",             "8"),
     ]
     Q40_EDUCATION = [
-        ("No formal education",      "01"),
-        ("Elementary (incomplete)",   "02"),
-        ("Elementary (complete)",     "03"),
-        ("High School (incomplete)",  "04"),
-        ("High School (complete)",    "05"),
-        ("Vocational / Technical",    "06"),
-        ("College (incomplete)",      "07"),
-        ("College (complete)",        "08"),
-        ("Post-graduate",             "09"),
-        ("Not applicable (below 5)",  "98"),
-        ("I don't know",              "99"),
+        ("Early Childhood Education (Pre-school)",                                                                            "01"),
+        ("Primary Education (Grade 1 to 6)",                                                                                  "02"),
+        ("Lower Secondary Education (Grade 7 to 10)",                                                                         "03"),
+        ("Upper Secondary Education (Grade 11 to 12)",                                                                        "04"),
+        ("Post-Secondary Non-Tertiary Education (including Technical and Vocational degrees with a certificate)",             "05"),
+        ("Short-Cycle Tertiary Education or Equivalent (including Technical and Vocational degrees with a diploma)",          "06"),
+        ("Bachelor Level Education or Equivalent",                                                                            "07"),
+        ("Master Level Education or Equivalent",                                                                              "08"),
+        ("Doctoral Level Education or Equivalent",                                                                            "09"),
+        ("No schooling",                                                                                                      "10"),
     ]
     Q41_EMPLOYMENT = [
-        ("Employed (full-time)",  "1"),
-        ("Employed (part-time)",  "2"),
-        ("Self-employed",         "3"),
-        ("Unemployed",            "4"),
-        ("Retired",               "5"),
-        ("Student",               "6"),
-        ("Homemaker",             "7"),
-        ("Not applicable",        "8"),
-        ("Other (specify)",       "9"),
+        ("Has a permanent job/ own business",                  "1"),
+        ("Has a short-term, seasonal, casual job/business",    "2"),
+        ("Worked on different jobs day to day per week",       "3"),
+        ("Unemployed and looking for work",                    "4"),
+        ("Unemployed and not looking for work",                "5"),
+        ("Retired",                                            "6"),
+        ("I don't know",                                       "7"),
+        ("Not applicable",                                     "8"),
     ]
-    Q45_PHILHEALTH_STATUS = [
-        ("Member (direct contributor)",  "1"),
-        ("Dependent",                    "2"),
-        ("Indigent / sponsored member",  "3"),
-        ("Senior citizen",               "4"),
-        ("Not a member",                 "5"),
-        ("I don't know",                 "6"),
+    # -55 (source) stored as "55" — see module-level note
+    YN_DK55 = [
+        ("Yes",          "01"),
+        ("No",           "02"),
+        ("I don't know", "55"),
     ]
-    Q46_MEMBER_TYPE = [
-        ("Employed (private sector)",      "01"),
-        ("Employed (government)",          "02"),
-        ("Self-employed / Informal sector","03"),
-        ("Voluntary / Individual paying",  "04"),
-        ("Overseas Filipino Worker (OFW)", "05"),
-        ("Sponsored (LGU/National Gov't)", "06"),
-        ("Indigent",                       "07"),
-        ("Senior citizen",                 "08"),
-        ("Lifetime member",                "09"),
-        ("I don't know",                   "99"),
+    Q46_MEMBER_CATEGORY = [
+        ("Formal economy",                  "01"),
+        ("Informal economy",                "02"),
+        ("Indigent",                        "03"),
+        ("Sponsored",                       "04"),
+        ("Lifetime member",                 "05"),
+        ("Senior citizen",                  "06"),
+        ("Overseas Filipino Worker (OFW)",  "07"),
+        ("Qualified dependents",            "08"),
+        ("Dependent",                       "09"),
+        ("Other (Specify)",                 "88"),
+        ("I don't know",                    "55"),
     ]
     items = [
         numeric("MEMBER_LINE_NO", "Household Member Line Number", length=2, zero_fill=True),
-        # C1: Basic demographic
-        alpha("Q30_NAME", "30. Name of household member", length=80),
-        numeric("Q31_PRESENT", "31. Is this member present or away?", length=1,
-                value_set_options=[("Present","1"),("Away","2")]),
-        numeric("Q32_AGE", "32. Age (years)", length=3),
-        numeric("Q33_SEX", "33. Sex assigned at birth", length=1,
-                value_set_options=[("Male","1"),("Female","2")]),
-        select_one("Q34_RELATIONSHIP", "34. Relationship to household head", Q34_RELATIONSHIP, length=2),
-        # C2: Disability
-        yes_no("Q35_HAS_DISABILITY", "35. Does this member have a disability?"),
-        select_one("Q36_DISABILITY_TYPE", "36. Type of disability", Q36_DISABILITY, length=1),
-        alpha("Q36_OTHER_TXT", "36. Disability — Other (specify) text", length=80),
-        yes_no("Q37_DISABILITY_ID", "37. Does this member have a PWD ID?"),
-        yes_no("Q38_DISABILITY_BENEFITS", "38. Does this member receive any disability benefits?"),
-        # C3: Civil status, education, employment
-        select_one("Q39_CIVIL_STATUS", "39. Civil status", Q39_CIVIL, length=1),
-        select_one("Q40_EDUCATION", "40. Highest educational attainment", Q40_EDUCATION, length=2),
-        select_one("Q41_EMPLOYMENT", "41. Current employment status", Q41_EMPLOYMENT, length=1),
-        alpha("Q41_OTHER_TXT", "41. Employment — Other (specify) text", length=80),
-        # C4: Social insurance coverage
-        yes_no_dk("Q42_GSIS", "42. Is this member covered by GSIS?"),
-        yes_no_dk("Q43_SSS", "43. Is this member covered by SSS?"),
-        yes_no_dk("Q44_PAGIBIG", "44. Is this member covered by Pag-IBIG?"),
-        # C5: PhilHealth and insurance
-        select_one("Q45_PHILHEALTH", "45. PhilHealth membership status", Q45_PHILHEALTH_STATUS, length=1),
-        select_one("Q46_PH_TYPE", "46. Type of PhilHealth membership", Q46_MEMBER_TYPE, length=2),
-        yes_no_dk("Q47_PH_ACTIVE", "47. Is PhilHealth membership currently active?"),
-        yes_no_dk("Q48_PH_ID", "48. Does this member have a PhilHealth ID?"),
-        yes_no_dk("Q49_PRIVATE_INS", "49. Does this member have private health insurance/HMO?"),
-        alpha("Q50_PRIVATE_INS_NAME", "50. Name of private insurance provider", length=80),
+        # C1. Household Roster (Q30-Q34)
+        alpha("Q30_NAME",
+              "30. Name (LAST NAME, FIRST NAME & MIDDLE NAME, EXT)", length=120),
+        select_one("Q31_PRESENT",
+                   "31. HH member present or away", Q31_PRESENT, length=1),
+        numeric("Q32_AGE",
+                "32. Age (as of last birthday)", length=3),
+        select_one("Q33_SEX",
+                   "33. Sex at birth", Q33_SEX, length=1),
+        select_one("Q34_RELATIONSHIP",
+                   "34. Relationship to Household Head", Q34_RELATIONSHIP, length=2),
+        # C2. Household Characteristics — disability (Q35-Q38)
+        select_one("Q35_HAS_DISABILITY",
+                   "35. Do you identify as a person with a disability?",
+                   YN_01, length=1),
+        select_one("Q36_SPECIFY_DISABILITY",
+                   "36. Would you like to specify the type of disability?",
+                   YN_01, length=1),
+        select_one("Q37_PWD_CARD",
+                   "37. May we view the patient's PWD Identification Card?",
+                   Q37_PWD_CARD, length=1),
+        select_one("Q38_DISABILITY_TYPE",
+                   "38. Based on the presented PWD Identification Card, what type of disability is indicated?",
+                   Q38_DISABILITY_TYPE, length=1),
+        alpha("Q38_DISABILITY_OTHER_TXT",
+              "38. Disability — Other (specify) text", length=120),
+        # C3. Household Characteristics — civil/education/employment (Q39-Q41)
+        select_one("Q39_CIVIL_STATUS",
+                   "39. Civil Status", Q39_CIVIL_STATUS, length=1),
+        select_one("Q40_EDUCATION",
+                   "40. Highest level of education completed",
+                   Q40_EDUCATION, length=2),
+        select_one("Q41_EMPLOYMENT",
+                   "41. Employment Status", Q41_EMPLOYMENT, length=1),
+        # C4. Household Characteristics — social insurance (Q42-Q44)
+        select_one("Q42_GSIS",
+                   "42. Is (NAME) covered by GSIS either as a member or dependent?",
+                   YN_DK55, length=2),
+        select_one("Q43_SSS",
+                   "43. Is (NAME) covered by SSS either as a member or dependent?",
+                   YN_DK55, length=2),
+        select_one("Q44_PAGIBIG",
+                   "44. Is (NAME) covered by Pag-ibig either as a member or dependent?",
+                   YN_DK55, length=2),
+        # C5. Household Characteristics — PhilHealth (Q45-Q46)
+        select_one("Q45_PHILHEALTH_REG",
+                   "45. Currently registered with PhilHealth?",
+                   YN_DK55, length=2),
+        select_one("Q46_MEMBER_CATEGORY",
+                   "46. What is his/her membership category? (Only answer if 'Yes' in Q45)",
+                   Q46_MEMBER_CATEGORY, length=2),
+        alpha("Q46_MEMBER_OTHER_TXT",
+              "46. Member category — Other (specify) text", length=120),
+        # Private-insurance roster columns (Q48-Q50) — gated at HH level by Q47
+        alpha("Q48_NAME_FIRST",
+              "48. Name (First Name Only) — private insurance roster", length=80),
+        select_one("Q49_PRIVATE_INS",
+                   "49. Is (NAME) covered by a private health insurance either as a member or dependent? (Example: Maxicare, Intellicare, Pacific Cross Health Care)",
+                   YN_DK55, length=2),
+        alpha("Q50_PRIVATE_INS_OTHER_TXT",
+              "50. Others (Specify)", length=120),
     ]
-    return record("C_HOUSEHOLD_ROSTER", "C. Household Roster", "E", items, max_occurs=20)
+    return record("C_HOUSEHOLD_ROSTER",
+                  "C. Household Roster and Characteristics",
+                  "E", items, max_occurs=20)
+
+
+# ------------------------------------------------------------
+# Q47 HH-level gate for private insurance sub-roster.
+# Emitted as a separate non-repeating record (type "T") so the
+# existing A-S letter sequence remains stable.
+# ------------------------------------------------------------
+
+def build_section_c_gate():
+    items = [
+        yes_no("Q47_HH_HAS_PRIVATE_INS",
+               "47. Do you or other members of your HH have private insurance?"),
+    ]
+    return record("C_HH_PRIVATE_INS_GATE",
+                  "C. Household Private Insurance Gate (Q47)",
+                  "T", items)
 
 
 # ============================================================
@@ -1088,7 +1164,8 @@ def build_f4_dictionary():
         build_f4_geo_id(),
         build_section_a(),
         build_section_b(),
-        build_section_c(),   # Repeating: max_occurs=20
+        build_section_c(),       # Repeating: max_occurs=20 (Q30-Q46, Q48-Q50)
+        build_section_c_gate(),  # Non-repeating: Q47 HH-level gate
         build_section_d(),
         build_section_e(),
         build_section_f(),
