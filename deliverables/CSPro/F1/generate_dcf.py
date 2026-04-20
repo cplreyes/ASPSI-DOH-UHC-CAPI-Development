@@ -2,13 +2,15 @@
 generate_dcf.py — F1 Facility Head Survey CSPro Data Dictionary generator.
 
 Emits FacilityHeadSurvey.dcf in CSPro 8.0 JSON dictionary format from the
-April 8 2026 Annex F1 questionnaire.
+Apr 20 2026 Annex F1 questionnaire (Revised Inception Report submission;
+supersedes the Apr 08 baseline).
 
 Authority sources (in priority order):
-  1. raw/Project-Deliverable-1/Annex F1...Questionnaire...Apr 08.pdf  (printed)
-  2. deliverables/CSPro/F1/inputs/F1_clean.txt                         (text extract)
-  3. deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md            (logic spec)
-  4. raw/CSPro-Data-Dictionary/FacilityHeadSurvey.dcf                  (Carl's manual
+  1. raw/Project-Deliverable-1_Apr20-submitted/Annex F1_Facility Head Survey
+     Questionnaire_UHC Year 2.pdf                                   (printed)
+  2. deliverables/CSPro/F1/inputs/F1_clean.txt                       (text extract)
+  3. deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md          (logic spec)
+  4. raw/CSPro-Data-Dictionary/FacilityHeadSurvey.dcf                (Carl's manual
      scaffold — authoritative for FIELD_CONTROL, GEO_ID, Q1-Q8 item names + value
      set labels; this generator extends it for Q9-Q166 + secondary data.)
 
@@ -16,18 +18,9 @@ Naming convention: Q{n}_DESCRIPTOR in UPPER_SNAKE. Item names for Q9-Q166
 follow F1-Skip-Logic-and-Validations.md so the validation-rule references
 in that doc keep working without rename churn.
 
-PENDING items: 6 questions still need ASPSI design decisions. They are
-flagged with `TODO: PENDING DESIGN` constants near the top of this file and
-emit working defaults so the dictionary loads cleanly in Designer. Hot-swap
-the constants once decisions land.
-
-Routing note (corrected 2026-04-15): these 6 items were originally expected
-to be decided at the Apr 13 LSS meeting. After reading the actual Apr 13
-meeting minutes, the routing was recognized as a category error — LSS scope
-is process/tasking/communication, not technical questionnaire-logic
-decisions. The 6 items need a narrowly-scoped technical design review with
-Dr. Paunlagui (Survey Manager). Constants were renamed from the old
-PENDING_LSS_* prefix to PENDING_DESIGN_* to reflect the correct forum.
+Closed design decisions: the 6 `PENDING_DESIGN_*` constants near the top of
+this file encode final defaults confirmed under E2-F1-009b. The prefix is
+kept for grep-ability; treat the values as closed, not pending.
 
 Run:
     python generate_dcf.py        # writes FacilityHeadSurvey.dcf next to this file
@@ -42,8 +35,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, FREQUENCY, WHY_DIFF_OPTIONS,
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
-    select_one, select_all, uhc9_item, record,
+    select_one, select_all, uhc9_item, record, load_psgc_value_set,
 )
+
+INPUTS_DIR = Path(__file__).resolve().parent / "inputs"
 
 # ============================================================
 # 2. PENDING DESIGN DECISIONS — flip these when ASPSI confirms
@@ -121,23 +116,27 @@ def build_field_control():
 
 
 def build_geographic_id():
-    # PENDING ASPSI: REGION / PROVINCE_HUC / CITY_MUNICIPALITY / BARANGAY value sets.
-    # These are PSGC-style code lists (Philippine Standard Geographic Code). Carl
-    # is requesting the authoritative lookup tables from ASPSI; until they land,
-    # the four items remain plain numerics with no value sets attached so the DCF
-    # still loads. Lengths follow PSGC conventions (region 2, province 3, city 4,
-    # barangay 4) — adjust if ASPSI ships a different code width.
+    # PSGC value sets sourced from PSA 1Q 2026 publication (released 13 Apr 2026),
+    # parsed by inputs/parse_psgc.py into 4 CSVs keyed by 10-digit PSGC codes.
+    # Length=10 on all four items so the full PSGC code is stored, giving clean
+    # crosswalk to NHFR, PSA census, and DOH downstream systems without a
+    # project-local lookup table. Cascading dropdown filter logic (show only
+    # child options for the selected parent) belongs in CSPro PROC, not here.
+    region_options      = load_psgc_value_set(INPUTS_DIR / "psgc_region.csv")
+    province_huc_options = load_psgc_value_set(INPUTS_DIR / "psgc_province_huc.csv")
+    city_mun_options    = load_psgc_value_set(INPUTS_DIR / "psgc_city_municipality.csv")
+    barangay_options    = load_psgc_value_set(INPUTS_DIR / "psgc_barangay.csv")
     items = [
         numeric("CLASSIFICATION", "Classification", length=1, value_set_options=[
             ("UHC IS",     "1"),
             ("Non-UHC IS", "2"),
         ]),
-        numeric("REGION",            "Region",           length=2, zero_fill=True),
-        numeric("PROVINCE_HUC",      "Province / HUC",   length=3, zero_fill=True),
-        numeric("CITY_MUNICIPALITY", "City / Municipality", length=4, zero_fill=True),
-        numeric("BARANGAY",          "Barangay",         length=4, zero_fill=True),
-        alpha("LATITUDE",            "Latitude",         length=12),
-        alpha("LONGITUDE",           "Longitude",        length=12),
+        numeric("REGION",            "Region",               length=10, zero_fill=True, value_set_options=region_options),
+        numeric("PROVINCE_HUC",      "Province / HUC",       length=10, zero_fill=True, value_set_options=province_huc_options),
+        numeric("CITY_MUNICIPALITY", "City / Municipality",  length=10, zero_fill=True, value_set_options=city_mun_options),
+        numeric("BARANGAY",          "Barangay",             length=10, zero_fill=True, value_set_options=barangay_options),
+        alpha("LATITUDE",            "Latitude",             length=12),
+        alpha("LONGITUDE",           "Longitude",            length=12),
     ]
     return record("HEALTH_FACILITY_AND_GEOGRAPHIC_IDENTIFICATION",
                   "Health Facility and Geographic Identification",

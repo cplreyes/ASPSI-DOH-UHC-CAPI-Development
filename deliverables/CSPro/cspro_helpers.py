@@ -22,12 +22,28 @@ Compatibility guarantee:
     constants or helper bodies without also updating the F1 generator.
 """
 
+import csv
 import json
 from pathlib import Path
 
 # ============================================================
 # 1. VALUE SETS — reused across many items in multiple surveys
 # ============================================================
+
+
+def load_psgc_value_set(csv_path, code_col="code", name_col="name"):
+    """Load a PSGC CSV (produced by F1/inputs/parse_psgc.py) into
+    value_set_options tuples (label, code). Source: PSA 1Q 2026 publication.
+    """
+    options = []
+    with open(csv_path, encoding="utf-8", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            options.append((row[name_col], row[code_col]))
+    return options
+
+
+
 
 YES_NO = [
     ("Yes", "1"),
