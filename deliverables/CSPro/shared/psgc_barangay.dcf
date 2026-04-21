@@ -1,0 +1,84 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "PSGC_BARANGAY_DICT",
+  "labels": [
+    {
+      "text": "PSGC Barangay Lookup"
+    }
+  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 0,
+    "length": 0
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": true
+  },
+  "relativePositions": true,
+  "levels": [
+    {
+      "name": "PSGC_BARANGAY_DICT_LEVEL",
+      "labels": [
+        {
+          "text": "PSGC Barangay Lookup Level"
+        }
+      ],
+      "ids": {
+        "items": [
+          {
+            "name": "B_PARENT_CITY",
+            "labels": [
+              {
+                "text": "Parent code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 1,
+            "length": 10,
+            "zeroFill": true
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "PSGC_BARANGAY_REC",
+          "labels": [
+            {
+              "text": "Barangay record"
+            }
+          ],
+          "occurrences": {
+            "required": true,
+            "maximum": 2000
+          },
+          "items": [
+            {
+              "name": "B_CODE",
+              "labels": [
+                {
+                  "text": "Code"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": true
+            },
+            {
+              "name": "B_NAME",
+              "labels": [
+                {
+                  "text": "Name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 80
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "PSGC_PROVINCE_DICT",
+  "labels": [
+    {
+      "text": "PSGC Province / HUC Lookup"
+    }
+  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 0,
+    "length": 0
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": true
+  },
+  "relativePositions": true,
+  "levels": [
+    {
+      "name": "PSGC_PROVINCE_DICT_LEVEL",
+      "labels": [
+        {
+          "text": "PSGC Province / HUC Lookup Level"
+        }
+      ],
+      "ids": {
+        "items": [
+          {
+            "name": "P_PARENT_REGION",
+            "labels": [
+              {
+                "text": "Parent code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 1,
+            "length": 10,
+            "zeroFill": true
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "PSGC_PROVINCE_REC",
+          "labels": [
+            {
+              "text": "Province / HUC record"
+            }
+          ],
+          "occurrences": {
+            "required": true,
+            "maximum": 30
+          },
+          "items": [
+            {
+              "name": "P_CODE",
+              "labels": [
+                {
+                  "text": "Code"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": true
+            },
+            {
+              "name": "P_NAME",
+              "labels": [
+                {
+                  "text": "Name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 80
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

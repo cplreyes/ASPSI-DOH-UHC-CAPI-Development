@@ -1,0 +1,84 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "PSGC_CITY_DICT",
+  "labels": [
+    {
+      "text": "PSGC City / Municipality Lookup"
+    }
+  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 0,
+    "length": 0
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": true
+  },
+  "relativePositions": true,
+  "levels": [
+    {
+      "name": "PSGC_CITY_DICT_LEVEL",
+      "labels": [
+        {
+          "text": "PSGC City / Municipality Lookup Level"
+        }
+      ],
+      "ids": {
+        "items": [
+          {
+            "name": "C_PARENT_PROVINCE",
+            "labels": [
+              {
+                "text": "Parent code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 1,
+            "length": 10,
+            "zeroFill": true
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "PSGC_CITY_REC",
+          "labels": [
+            {
+              "text": "City / Municipality record"
+            }
+          ],
+          "occurrences": {
+            "required": true,
+            "maximum": 60
+          },
+          "items": [
+            {
+              "name": "C_CODE",
+              "labels": [
+                {
+                  "text": "Code"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": true
+            },
+            {
+              "name": "C_NAME",
+              "labels": [
+                {
+                  "text": "Name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 80
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
