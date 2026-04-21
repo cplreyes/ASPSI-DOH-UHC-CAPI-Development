@@ -21,6 +21,7 @@ from cspro_helpers import (
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, uhc9_item, record,
     build_field_control, build_geo_id, build_dictionary, write_dcf,
+    _gps_fields, _photo_block,
 )
 
 
@@ -1794,6 +1795,30 @@ def build_section_l():
 # ASSEMBLE THE DICTIONARY
 # ============================================================
 
+def build_f3_facility_capture():
+    """GPS metadata for the sampled facility (F3-side)."""
+    return record(
+        "REC_FACILITY_CAPTURE", "Facility GPS Capture", "Z",
+        items=_gps_fields(prefix="FACILITY_"),
+    )
+
+
+def build_f3_patient_home_capture():
+    """GPS metadata for the patient's home (distinct from facility GPS)."""
+    return record(
+        "REC_PATIENT_HOME_CAPTURE", "Patient Home GPS Capture", "Y",
+        items=_gps_fields(prefix="P_HOME_"),
+    )
+
+
+def build_f3_case_verification():
+    """Single verification photo per case, not per GPS block."""
+    return record(
+        "REC_CASE_VERIFICATION", "Case Verification Photo", "X",
+        items=_photo_block(prefix=""),
+    )
+
+
 def build_f3_dictionary():
     # Apr 20 full rewrite complete. Per-chunk landing order (2026-04-21):
     #   Chunk 1: A, B                            (consent + patient profile)
@@ -1804,10 +1829,18 @@ def build_f3_dictionary():
     #   Chunk 6: I                               (NBB / ZBB / MAIFIP + distress)
     #   Chunk 7: J, K                            (satisfaction + meds + GAMOT)
     #   Chunk 8: L + PSGC wiring + docstring    (referrals)
+    # F3_FACILITY_ID links the F3 case back to the F1 facility record (MVP analytical linkage)
+    f3_facility_id_item = numeric(
+        "F3_FACILITY_ID", "Sampled Facility ID (F1 linkage)",
+        length=10, zero_fill=True,
+    )
     records = [
         record("PATIENTSURVEY_REC", "PatientSurvey Record", "1", []),
         build_f3_field_control(),
-        build_geo_id("facility_and_patient"),
+        build_geo_id("facility_and_patient", extra_items=[f3_facility_id_item]),
+        build_f3_facility_capture(),
+        build_f3_patient_home_capture(),
+        build_f3_case_verification(),
         build_section_a(),
         build_section_b(),
         build_section_c(),
