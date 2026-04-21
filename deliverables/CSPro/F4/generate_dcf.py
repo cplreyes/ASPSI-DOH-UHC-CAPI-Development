@@ -19,11 +19,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
-    select_one, select_all, record, load_psgc_value_set,
+    select_one, select_all, record,
     build_field_control, build_geo_id, build_dictionary, write_dcf,
 )
-
-INPUTS_DIR = Path(__file__).resolve().parent.parent / "F1" / "inputs"
 
 
 # ============================================================
@@ -42,28 +40,10 @@ def build_f4_field_control():
 # ============================================================
 
 def build_f4_geo_id():
-    # PSGC value sets from PSA 1Q 2026 publication, shared with F1/F3 via
-    # F1/inputs/. Length=10 retains the full PSGC code for clean crosswalk
-    # to NHFR, PSA census, and DOH downstream systems. Cascading parent→child
-    # dropdown filter logic belongs in CSPro PROC, not here.
-    region_options       = load_psgc_value_set(INPUTS_DIR / "psgc_region.csv")
-    province_huc_options = load_psgc_value_set(INPUTS_DIR / "psgc_province_huc.csv")
-    city_mun_options     = load_psgc_value_set(INPUTS_DIR / "psgc_city_municipality.csv")
-    barangay_options     = load_psgc_value_set(INPUTS_DIR / "psgc_barangay.csv")
-    items = [
-        numeric("CLASSIFICATION", "Classification", length=1, value_set_options=[
-            ("UHC IS",     "1"),
-            ("Non-UHC IS", "2"),
-        ]),
-        numeric("REGION",            "Region",              length=10, zero_fill=True, value_set_options=region_options),
-        numeric("PROVINCE_HUC",      "Province / HUC",      length=10, zero_fill=True, value_set_options=province_huc_options),
-        numeric("CITY_MUNICIPALITY", "City / Municipality", length=10, zero_fill=True, value_set_options=city_mun_options),
-        numeric("BARANGAY",          "Barangay",            length=10, zero_fill=True, value_set_options=barangay_options),
-        alpha("HH_ADDRESS", "Household Address", length=200),
-        alpha("LATITUDE",   "GPS Latitude",      length=12),
-        alpha("LONGITUDE",  "GPS Longitude",     length=12),
-    ]
-    return record("HOUSEHOLD_GEO_ID", "Household Geographic Identification", "B", items)
+    return build_geo_id("household", extra_items=[
+        alpha("LATITUDE",  "GPS Latitude",  length=12),
+        alpha("LONGITUDE", "GPS Longitude", length=12),
+    ])
 
 
 # ============================================================
