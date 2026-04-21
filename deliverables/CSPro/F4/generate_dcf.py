@@ -21,6 +21,7 @@ from cspro_helpers import (
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, record,
     build_field_control, build_geo_id, build_dictionary, write_dcf,
+    _photo_block,
 )
 
 
@@ -40,10 +41,27 @@ def build_f4_field_control():
 # ============================================================
 
 def build_f4_geo_id():
+    # Existing LATITUDE/LONGITUDE kept unchanged (baseline preservation).
+    # GPS metadata + capture trigger added alongside; the .app handler
+    # populates LATITUDE/LONGITUDE from gps(latitude/longitude) directly.
     return build_geo_id("household", extra_items=[
-        alpha("LATITUDE",  "GPS Latitude",  length=12),
-        alpha("LONGITUDE", "GPS Longitude", length=12),
+        alpha(  "LATITUDE",          "GPS Latitude",         length=12),
+        alpha(  "LONGITUDE",         "GPS Longitude",        length=12),
+        alpha(  "HH_GPS_ALTITUDE",   "GPS Altitude (m)",     length=10),
+        numeric("HH_GPS_ACCURACY",   "GPS Accuracy (m)",     length=3),
+        numeric("HH_GPS_SATELLITES", "GPS Satellites",       length=2),
+        alpha(  "HH_GPS_READTIME",   "GPS Read Time (UTC)",  length=19),
+        numeric("CAPTURE_HH_GPS",    "Capture GPS",          length=1,
+                value_set_options=[("Capture GPS now", "1")]),
     ])
+
+
+def build_f4_case_verification():
+    """Single verification photo per household case."""
+    return record(
+        "REC_CASE_VERIFICATION", "Case Verification Photo", "Z",
+        items=_photo_block(prefix=""),
+    )
 
 
 # ============================================================
@@ -1611,6 +1629,7 @@ def build_f4_dictionary():
         record("HOUSEHOLDSURVEY_REC", "HouseholdSurvey Record", "1", []),
         build_f4_field_control(),
         build_f4_geo_id(),
+        build_f4_case_verification(),
         build_section_a(),
         build_section_b(),
         build_section_c(),       # Repeating: max_occurs=20 (Q30-Q46, Q48-Q50)

@@ -574,6 +574,143 @@
               ],
               "contentType": "alpha",
               "length": 12
+            },
+            {
+              "name": "HH_GPS_ALTITUDE",
+              "labels": [
+                {
+                  "text": "GPS Altitude (m)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 10
+            },
+            {
+              "name": "HH_GPS_ACCURACY",
+              "labels": [
+                {
+                  "text": "GPS Accuracy (m)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "HH_GPS_SATELLITES",
+              "labels": [
+                {
+                  "text": "GPS Satellites"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "HH_GPS_READTIME",
+              "labels": [
+                {
+                  "text": "GPS Read Time (UTC)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 19
+            },
+            {
+              "name": "CAPTURE_HH_GPS",
+              "labels": [
+                {
+                  "text": "Capture GPS"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CAPTURE_HH_GPS_VS1",
+                  "labels": [
+                    {
+                      "text": "Capture GPS"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Capture GPS now"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "REC_CASE_VERIFICATION",
+          "labels": [
+            {
+              "text": "Case Verification Photo"
+            }
+          ],
+          "recordType": "Z",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "VERIFICATION_PHOTO_FILENAME",
+              "labels": [
+                {
+                  "text": "Verification Photo Filename"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "CAPTURE_VERIFICATION_PHOTO",
+              "labels": [
+                {
+                  "text": "Take Verification Photo"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CAPTURE_VERIFICATION_PHOTO_VS1",
+                  "labels": [
+                    {
+                      "text": "Take Verification Photo"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Take verification photo"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
