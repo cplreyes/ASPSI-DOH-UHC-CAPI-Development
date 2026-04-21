@@ -260,6 +260,69 @@ def build_field_control(extra_items=None, date_label_entity="the Facility"):
     return record("FIELD_CONTROL", "Field Control", "A", items)
 
 
+def _gps_fields(prefix=""):
+    """Six GPS-metadata items plus a capture-trigger button.
+
+    The trigger item's onfocus handler (wired in the form's .app) calls
+    `ReadGPSReading()` from shared/Capture-Helpers.apc and assigns the
+    `gps(latitude)`, `gps(longitude)`, etc. results to the metadata items.
+
+    Parameters
+    ----------
+    prefix : str
+        Optional prefix so multiple GPS blocks coexist in one case.
+        Examples: prefix="FACILITY_"  → FACILITY_GPS_LATITUDE, ...
+                  prefix="P_HOME_"    → P_HOME_GPS_LATITUDE, ...
+
+    Returns
+    -------
+    list of dict
+        [LAT, LON, ALT, ACCURACY, SATELLITES, READTIME, CAPTURE_TRIGGER]
+    """
+    capture_vs = [("Capture GPS now", "1")]
+    return [
+        alpha(  f"{prefix}GPS_LATITUDE",   "GPS Latitude",   length=12),
+        alpha(  f"{prefix}GPS_LONGITUDE",  "GPS Longitude",  length=12),
+        alpha(  f"{prefix}GPS_ALTITUDE",   "GPS Altitude (m)", length=10),
+        numeric(f"{prefix}GPS_ACCURACY",   "GPS Accuracy (m)", length=3),
+        numeric(f"{prefix}GPS_SATELLITES", "GPS Satellites",   length=2),
+        alpha(  f"{prefix}GPS_READTIME",   "GPS Read Time (UTC)", length=19),
+        numeric(f"{prefix}CAPTURE_GPS",    "Capture GPS", length=1,
+                value_set_options=capture_vs),
+    ]
+
+
+def _photo_block(prefix=""):
+    """Verification-photo filename item + capture-trigger button.
+
+    The .app's onfocus handler calls `TakeVerificationPhoto()` from
+    shared/Capture-Helpers.apc, which launches the camera, resamples,
+    and saves the JPG to tablet storage. The saved filename is assigned
+    to the alpha item; CSWeb syncs the file itself via CSEntry's
+    attachment mechanism (not as a dictionary binary item — that class
+    is flagged experimental in CSPro 8.0 and avoided for MVP).
+
+    Parameters
+    ----------
+    prefix : str
+        Optional prefix. Default "" emits
+        VERIFICATION_PHOTO_FILENAME + CAPTURE_VERIFICATION_PHOTO.
+
+    Returns
+    -------
+    list of dict
+        [FILENAME_ALPHA, CAPTURE_TRIGGER]
+    """
+    capture_vs = [("Take verification photo", "1")]
+    return [
+        alpha(f"{prefix}VERIFICATION_PHOTO_FILENAME",
+              "Verification Photo Filename", length=120),
+        numeric(f"{prefix}CAPTURE_VERIFICATION_PHOTO",
+                "Take Verification Photo", length=1,
+                value_set_options=capture_vs),
+    ]
+
+
 def _psgc_fields(prefix=""):
     """Return the four standard PSGC geographic code items.
 
