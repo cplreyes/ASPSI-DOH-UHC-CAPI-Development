@@ -3,7 +3,8 @@ type: spec
 project: ASPSI-DOH-CAPI-CSPro-Development
 deliverable: F3 Patient Survey — CAPI logic spec
 date_created: 2026-04-21
-status: draft
+reviewed_on: 2026-04-21
+status: reviewed
 source_questionnaire: raw/Project-Deliverable-1_Apr20-submitted/Annex F3_Patient Survey Questionnaire_UHC Year 2.pdf
 source_dcf: deliverables/CSPro/F3/PatientSurvey.dcf
 tags: [cspro, capi, skip-logic, validations, f3]
@@ -19,6 +20,8 @@ Source-of-truth for CSPro CAPI logic on `PatientSurvey.dcf`. Covers:
 4. **CSPro logic templates** — paste-ready snippets for common patterns (final chunk).
 
 All Q-numbers refer to the **Apr 20 printed questionnaire** (1–178); dcf item names follow the `Q{n}_*` convention.
+
+> **Item-count provenance.** The dcf was 387 items as of the Apr 08 baseline. The Apr 20 DOH-submitted questionnaire expanded from 126 printed items to 178, and the generator rebuild widened per-item data capture — payment-source matrices (Q92/Q94/Q96/Q98/Q107/Q109/Q112/Q113) exploded each payment row into `_PAY_{code}` flag + `_PAY_{code}_AMT` amount pairs, select-all items got per-option flag items, and `_OTHER_TXT` companions were added everywhere. That lifts the dcf to 15 records / 818 items with no schema changes still pending. See `wiki/analyses/Analysis - Apr 20 DCF Generator Audit.md` for the per-patch ledger.
 
 ---
 
@@ -1101,14 +1104,21 @@ postproc
 
 ---
 
-## 5. Open questions for ASPSI
+## 5. Open questions — routing
 
-1. **Q31 IP_GROUP list** — Source promises "a list will be provided" but Annex F3 ships only free-text. Confirm whether a coded IP value set will arrive before bench test, or keep as alpha.
-2. **Q99 No → Q115 typo** (sanity #9) — Source prints a cross-section skip from Section G to mid-Section H. Default behaviour: treat as end-of-Section-G. Confirm.
-3. **Q159 "Not applicable" → Q164 cross-section jump** (sanity #7) — Source prints a jump from Section K into Section L. Default: honor source as printed. Confirm this is intentional, not a typo for Q162.
-4. **Q94 per-test roster** (sanity #12) — Source specifies per-test cost capture; dcf aggregates. Flag for pilot, or add roster now?
-5. **BUCAS enumerator gate** (sanity #11) — How should enumerator capture "no BUCAS center in this area"? Leave Q99 blank, or add a flag field?
-6. **Q124 auto-set from Q113 MAIFIP** (sanity #13) — Confirm the spec's interpretation of the "SKIP IF ANSWERED MAIFIP IN Q113" note: auto-set `Q124 = Yes` and hide, proceed to Q125.
+Disposition of the six items previously held "open." Only **#1 (Q31 IP_GROUP)** genuinely requires ASPSI input; the rest are spec-level decisions documented below, with ASPSI override reserved if they disagree.
+
+### Needs ASPSI
+
+1. **Q31 IP_GROUP list** — Source promises "a list will be provided" but Annex F3 ships only free-text. **Route to Juvy** before bench test: either (a) ASPSI ships a coded IP value set, or (b) we keep alpha as final. Default if no response: keep alpha.
+
+### Spec-decision (ASPSI may override)
+
+2. **Q99 No → Q115 cross-section skip** (sanity #9) — Source prints a jump from Section G (outpatient) into Section H (inpatient); mid-H is unreachable for an outpatient. **Spec default**: treat as end-of-Section-G (skip Q100–Q104). PROC coded accordingly (§4). Flag to DOH-PMSMD only if they surface it.
+3. **Q159 "Not applicable" → Q164 cross-section jump** (sanity #7) — Source prints a jump from Section K (medicines) into Section L (referrals). **Spec default**: honor source as printed. PROC coded in §4.14. Flag to DOH-PMSMD only if they surface it.
+4. **Q94 per-test cost capture** (sanity #12) — Source specifies per-test capture; dcf aggregates. **Spec default**: aggregate for Apr 20 bench test; roster conversion revisited at pilot.
+5. **Q99–Q103 BUCAS enumerator gate** (sanity #11) — Source note: "applicable only to respondents in areas with BUCAS center; otherwise skip." No dcf flag. **Spec default**: enumerator leaves Q99 blank → Q100–Q103 auto-skipped; no dedicated `BUCAS_AREA_FLAG` item added.
+6. **Q124 auto-set from Q113 MAIFIP** (sanity #13) — Source note "SKIP IF ANSWERED MAIFIP IN Q113." **Spec default**: if `Q113_PAY_07 = Yes`, auto-set `Q124_MAIFIP_HEARD = Yes` and hide Q124, proceed to Q125. PROC coded in §4.13.
 
 ---
 

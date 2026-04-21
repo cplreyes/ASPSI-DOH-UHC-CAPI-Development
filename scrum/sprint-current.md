@@ -31,8 +31,8 @@ deliverable_anchor: D2 / Tranche 2 (40% due 2026-04-24)
 ### New for Sprint 002
 
 - [ ] **E0-032a** Triage DOH-PMSMD feedback on matrices (arrives Apr 20 Mon); route any requested revisions into F1/F2 build state; confirm Tranche 2 submission package with Juvy by Apr 23 `status::todo` `priority::critical` `estimate::TBD`
-- [ ] **E2-F3-001** F3 skip-logic + validation spec — full instrument, mirroring `F1-Skip-Logic-and-Validations.md` shape. Output: `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md`. Unblocks F3 Build-ready classification and future F3 patching passes. `status::todo` `priority::critical` `estimate::10-12h`
-- [ ] **E2-F4-001a** F4 skip-logic + validation spec — **Sections A–F slice** (non-repeating records: identification, household-level items through BUCAS awareness/utilization). Output: `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md` (partial, A–F complete). Remaining slice G–Q (roster-heavy, WHO expenditures, financial risk) carries to Sprint 003 as **E2-F4-001b**. Split is at the non-repeating/repeating boundary — natural cut, not a shortcut. `status::todo` `priority::critical` `estimate::6-8h`
+- [x] **E2-F3-001** F3 skip-logic + validation spec — full instrument, mirroring `F1-Skip-Logic-and-Validations.md` shape. Output: `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (1133 lines, status: reviewed 2026-04-21; 14 sanity findings, skip-logic + validations for all 12 sections A–L, 15 CSPro PROC templates, 6 originally-open questions dispositioned — 1 routed to Juvy for Q31 IP_GROUP, 5 closed as spec-decisions). F3 Build-ready unblocked. `status::done` `priority::critical` `actual::~0h (spec already authored; review/edit pass only)`
+- [ ] **E2-F4-001** F4 skip-logic + validation spec — **full instrument A–Q** (rescoped from A–F slice after F3 closed early). Output: `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md`. Uses F3 spec as shape reference. Roster-heavy sections (`C_HOUSEHOLD_ROSTER`, `H_PHILHEALTH_REG`, `J_HEALTH_SEEKING`) and Section N WHO/SHA expenditure batteries are the tricky parts. If capacity runs short, the fallback split is A–M complete / N–Q to Sprint 003. `status::todo` `priority::critical` `estimate::10-14h`
 
 ### Stretch (not committed)
 
@@ -42,10 +42,10 @@ deliverable_anchor: D2 / Tranche 2 (40% due 2026-04-24)
 
 | Class | Items | Estimate |
 |---|---|---|
-| **Committed (must-finish)** | E2-F1-010, E0-010, E0-020, E0-032, E0-032a, E2-F3-001, E2-F4-001a | ~22–26h + E0-032a unbounded |
+| **Committed (must-finish)** | E2-F1-010, E0-010, E0-020, E0-032, E0-032a, **E2-F3-001 (done Day 2)**, E2-F4-001 | ~16–22h remaining + E0-032a unbounded |
 | **Stretch** | F2 PWA pilot-readiness decision | 30m decision + follow-through TBD |
 
-> Capacity: ~25h solo-dev week. Hard commits alone total ~22–26h (F1 sign-off 4h + E0-010 2h + F3 spec 10–12h + F4 A–F spec 6–8h), before E0-032a. This is full-to-overflow by design — quality gates take the capacity they take. If E0-032a is heavy (DOH-PMSMD wants substantial revisions), the move is **E2-F4-001a slides to Sprint 003**, not "rush F3 spec." Preserving F3 spec integrity beats hitting every committed item. Stretch stays as a 30m decision, not a build push.
+> Capacity: ~25h solo-dev week. E2-F3-001 closed Day 2 — the spec was already authored, a review/disposition pass replaced the 10–12h estimate with ~1h real cost. Remaining hard commits: F1 sign-off 4h + E0-010 2h + F4 full A–Q spec 10–14h, before E0-032a. Still full-to-overflow by design — quality gates take the capacity they take. Fallback if E0-032a goes heavy: F4 truncates at A–M with N–Q deferred to Sprint 003 as E2-F4-001b. Preserving F4 spec integrity beats hitting every committed item. Stretch stays as a 30m decision, not a build push.
 
 ## Daily Notes
 
@@ -56,6 +56,8 @@ deliverable_anchor: D2 / Tranche 2 (40% due 2026-04-24)
 ### 2026-04-21 (Tue)
 
 - **Sprint 002 scope reshaped Day 2 to anchor on quality, not payment window.** Initial plan deferred F3/F4 skip-logic specs to Sprint 003 to protect Tranche 2; Carl pushed back — "I don't want shortcuts, quality of development is my prio." Committed list now includes E2-F3-001 (full F3 spec) and E2-F4-001a (F4 A–F slice); E3-F1-001 (FMF Section A) deferred to Sprint 003 because FMF needs an upstream form-layout plan, not a rushed start. Tranche 2 cover letter reframed as status-to-date, not "D2 complete." Capacity is full-to-overflow by design; if E0-032a goes heavy, E2-F4-001a slides before F3 spec integrity is touched.
+- **E2-F3-001 closed Day 2 — discovered spec was already authored.** On starting the F3 logic-pass, found `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` already existed at 1133 lines (status: draft) covering all 12 sections A–L with 14 sanity findings, skip-logic tables, HARD/SOFT/GATE validations, and 15 CSPro PROC templates. Auto-standup narrative said "pending" because the Python generator reads sprint-current.md + product-backlog.md but never reads git log — same failure mode the Sprint 001 retro flagged. Reviewed spec against the Apr 20 questionnaire + verified DCF state (15 records / 818 items, matches spec); added item-count drift provenance (387 Apr 08 → 818 Apr 20) and dispositioned the 6 "open" questions: only **Q31 IP_GROUP** needs Juvy (coded list or confirm alpha); five others were already internal spec-decisions, now marked as such with ASPSI override reserved. Flipped `status: draft` → `status: reviewed`. E2-F4-001 **rescoped A–F → full A–Q** given ~10h of released capacity, with A–M/N–Q fallback split kept in reserve.
+- **Process flag for Sprint 002 retro:** auto-standup generator (`.claude/scripts/generate_standup.py`) doesn't read git log or file mtimes in `deliverables/` — narrative lags actual artifacts. Second occurrence. Fix for Sprint 003: either extend the generator to diff since last standup, or make it the Day 1 ritual to manually grep for artifact drift before writing the Today-plan table.
 
 ## Retrospective — Sprint 002 (fill in 2026-04-24)
 
@@ -89,7 +91,7 @@ _TBD 2026-04-24_
 
 - [ ] **Tranche 2 (40%) submission package** submitted via DOH route by EOD Fri 2026-04-24, framed as *status-to-date against an extended D2/D3 window* — not "D2 complete." Cover-letter framing confirmed with Juvy before send. Submission entry logged in `log.md`.
 - [ ] **E2-F1-010** closed: F1 DCF walkthrough complete in CSPro Designer, bug list closed or deferred with rationale, sign-off note appended to `log.md`.
-- [ ] **E2-F3-001** closed: F3 skip-logic + validation spec written, reviewed against Apr 20 questionnaire + Annex G audit, filed at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md`. F3 declared Build-ready (generator patching pass now unblocked for Sprint 003).
-- [ ] **E2-F4-001a** closed: F4 A–F skip-logic + validation spec written, filed at `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md` (partial). E2-F4-001b (G–Q slice) explicitly scheduled for Sprint 003.
+- [x] **E2-F3-001** closed 2026-04-21: F3 skip-logic + validation spec reviewed against Apr 20 questionnaire + DCF state, 6 open questions dispositioned (Q31 IP_GROUP routed to Juvy; 5 closed as spec-decisions), `status: reviewed` at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md`. F3 Build-ready.
+- [ ] **E2-F4-001** closed: F4 skip-logic + validation spec written full A–Q at `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md`. Fallback: if capacity runs short, truncate at A–M and schedule E2-F4-001b (N–Q) for Sprint 003 with rationale.
 - [ ] **E0-032a** closed: DOH-PMSMD matrix feedback triaged; any requested revisions reflected in F1/F2 build state or explicitly deferred with rationale recorded.
 - [ ] **Sprint 002 retrospective** (4 questions) filled in `sprint-current.md` by EOD Fri 2026-04-24; sprint archived to `scrum/sprints/sprint-002.md`; `sprint-current.md` reset for Sprint 003.
