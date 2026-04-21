@@ -1,0 +1,90 @@
+{ Capture-Helpers — reusable CSPro logic for GPS reads + verification photos.
+
+  Include this module inside each form's .app:
+      #include "../shared/Capture-Helpers.apc"
+
+  Prerequisites:
+  - Main dictionary must expose the items emitted by
+    cspro_helpers._gps_fields(prefix) and _photo_block(prefix).
+  - Android tablet with GPS hardware + camera (for photos).
+
+  Usage pattern (example — F1 facility block):
+
+      PROC FACILITY_CAPTURE_GPS
+      onfocus
+          if ReadGPSReading(120, 20) then
+              FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
+              FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+              FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+              FACILITY_GPS_ACCURACY   = gps(accuracy);
+              FACILITY_GPS_SATELLITES = gps(satellites);
+              FACILITY_GPS_READTIME   = gps(readtime);
+          endif;
+          FACILITY_CAPTURE_GPS = notappl;   { reset trigger so button re-arms }
+
+      PROC CAPTURE_VERIFICATION_PHOTO
+      onfocus
+          string fn = "case-" + maketext("%d", QUESTIONNAIRE_NO) + "-verification.jpg";
+          if TakeVerificationPhoto(fn) then
+              VERIFICATION_PHOTO_FILENAME = fn;
+          endif;
+          CAPTURE_VERIFICATION_PHOTO = notappl;
+
+  References:
+  - gps() logic family: CSPro 8.0 Users Guide — Positioning & GPS
+  - Image object: CSPro 8.0 Users Guide — Image
+  - Popstan Census CAPI sample: Household/Household.ent.apc:171-240
+}
+
+PROC GLOBAL
+
+
+function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
+    { Opens GPS, attempts a read within maxTimeSec, closes the radio,
+      and returns 1 on success / 0 on failure. Caller reads gps(latitude),
+      gps(longitude), gps(altitude), gps(accuracy), gps(satellites), and
+      gps(readtime) after a successful call. }
+
+    if not gps(open) then
+        errmsg("GPS hardware unavailable — check tablet location permission.");
+        ReadGPSReading = 0;
+        exit;
+    endif;
+
+    numeric result = gps(read, maxTimeSec, desiredAccuracyM);
+    gps(close);
+
+    if result <> 1 then
+        errmsg("GPS read failed or timed out (target accuracy %d m).", desiredAccuracyM);
+        ReadGPSReading = 0;
+        exit;
+    endif;
+
+    if gps(accuracy) > desiredAccuracyM then
+        errmsg("GPS accuracy %d m exceeds target %d m — consider a retry outdoors.",
+               gps(accuracy), desiredAccuracyM);
+        { still return success — let the caller/enumerator decide to keep or retry }
+    endif;
+
+    ReadGPSReading = 1;
+end;
+
+
+function TakeVerificationPhoto(string filename)
+    { Launches the Android camera, resamples to <= 1600 x 1200, and saves
+      the JPG to tablet storage under the given filename. Returns 1 on
+      success / 0 on cancel or error. The .app assigns `filename` to the
+      dictionary's *_VERIFICATION_PHOTO_FILENAME alpha item on success. }
+
+    Image photo;
+
+    if not photo.takePhoto("Take a verification photo for this interview.") then
+        TakeVerificationPhoto = 0;
+        exit;
+    endif;
+
+    photo.resample(maxWidth := 1600, maxHeight := 1200);
+    photo.save(filename, quality := 85);
+
+    TakeVerificationPhoto = 1;
+end;
