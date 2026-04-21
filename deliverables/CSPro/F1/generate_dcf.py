@@ -35,10 +35,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, FREQUENCY, WHY_DIFF_OPTIONS,
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
-    select_one, select_all, uhc9_item, record, load_psgc_value_set,
+    select_one, select_all, uhc9_item, record, build_geo_id,
 )
-
-INPUTS_DIR = Path(__file__).resolve().parent / "inputs"
 
 # ============================================================
 # 2. PENDING DESIGN DECISIONS — flip these when ASPSI confirms
@@ -113,34 +111,6 @@ def build_field_control():
                 value_set_options=YES_NO),
     ]
     return record("FIELD_CONTROL", "Field Control", "A", items)
-
-
-def build_geographic_id():
-    # PSGC value sets sourced from PSA 1Q 2026 publication (released 13 Apr 2026),
-    # parsed by inputs/parse_psgc.py into 4 CSVs keyed by 10-digit PSGC codes.
-    # Length=10 on all four items so the full PSGC code is stored, giving clean
-    # crosswalk to NHFR, PSA census, and DOH downstream systems without a
-    # project-local lookup table. Cascading dropdown filter logic (show only
-    # child options for the selected parent) belongs in CSPro PROC, not here.
-    region_options      = load_psgc_value_set(INPUTS_DIR / "psgc_region.csv")
-    province_huc_options = load_psgc_value_set(INPUTS_DIR / "psgc_province_huc.csv")
-    city_mun_options    = load_psgc_value_set(INPUTS_DIR / "psgc_city_municipality.csv")
-    barangay_options    = load_psgc_value_set(INPUTS_DIR / "psgc_barangay.csv")
-    items = [
-        numeric("CLASSIFICATION", "Classification", length=1, value_set_options=[
-            ("UHC IS",     "1"),
-            ("Non-UHC IS", "2"),
-        ]),
-        numeric("REGION",            "Region",               length=10, zero_fill=True, value_set_options=region_options),
-        numeric("PROVINCE_HUC",      "Province / HUC",       length=10, zero_fill=True, value_set_options=province_huc_options),
-        numeric("CITY_MUNICIPALITY", "City / Municipality",  length=10, zero_fill=True, value_set_options=city_mun_options),
-        numeric("BARANGAY",          "Barangay",             length=10, zero_fill=True, value_set_options=barangay_options),
-        alpha("LATITUDE",            "Latitude",             length=12),
-        alpha("LONGITUDE",           "Longitude",            length=12),
-    ]
-    return record("HEALTH_FACILITY_AND_GEOGRAPHIC_IDENTIFICATION",
-                  "Health Facility and Geographic Identification",
-                  "B", items)
 
 
 # ============================================================
@@ -1078,7 +1048,7 @@ def build_dictionary():
         # Root record (recordType "1") — required by CSPro hierarchy
         record("FACILITYHEADSURVEY_REC", "FacilityHeadSurvey Record", "1", []),
         build_field_control(),
-        build_geographic_id(),
+        build_geo_id("facility"),
         build_section_a(),
         build_section_b(),
         build_section_c(),
