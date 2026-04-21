@@ -33,18 +33,55 @@ Pipeline:
 | Province/HUC CSV | `deliverables/CSPro/F1/inputs/psgc_province_huc.csv` | 117 rows (82 Prov + 33 HUC + 2 Special) |
 | City/Mun CSV | `deliverables/CSPro/F1/inputs/psgc_city_municipality.csv` | 1,658 rows (149 City + 1,493 Mun + 14 SubMun + 2 Special) |
 | Barangay CSV | `deliverables/CSPro/F1/inputs/psgc_barangay.csv` | 42,010 rows |
-| Loader | `deliverables/CSPro/cspro_helpers.load_psgc_value_set()` | reads a CSV into `value_set_options` tuples |
-| Wiring | `F1/generate_dcf.py :: build_geographic_id()` | attaches all four value sets to the items |
+| Builder | `deliverables/CSPro/shared/build_psgc_lookups.py` | emits 4 external lookup dicts + fixed-width .dat files |
+| External dicts | `deliverables/CSPro/shared/psgc_{region,province,city,barangay}.{dcf,dat}` | the 4 lookup dictionaries CSEntry reads via `loadcase()` |
+| Cascade logic | `deliverables/CSPro/shared/PSGC-Cascade.apc` | 4 public `Fill*ValueSet` functions invoked from each form's `onfocus` events |
+| Helper | `deliverables/CSPro/cspro_helpers._psgc_fields(prefix="")` | emits the 4 main-dict numeric items (length=10, placeholder VS) |
+| Wiring | `F1/F3/F4 generate_dcf.py` via `build_geo_id(mode)` | attaches the placeholder value set; runtime cascade fills the real options |
 
-## Parent chains (for cascading filters)
+## Architecture — External Lookup + Cascade
 
-Each CSV carries the parent PSGC code(s) so CSPro PROC code can filter child dropdowns by the selected parent:
+The four PSGC levels (18 regions / 117 provinces-HUCs / 1,658 cities-municipalities / 42,010 barangays) are **not baked into the main F1/F3/F4 dictionaries**. They live in four **external lookup dictionaries** under `deliverables/CSPro/shared/`. The main-dict PSGC items carry only a 1-entry generic placeholder value set (per CSPro 8.0 Users Guide p.188 best-practice #3 for cascading items).
 
-- `psgc_province_huc.csv` → `parent_region`
-- `psgc_city_municipality.csv` → `parent_province_huc` + `parent_region`
-- `psgc_barangay.csv` → `parent_city_municipality` + `parent_province_huc` + `parent_region`
+At runtime, `PSGC-Cascade.apc` uses `loadcase()` to pull the relevant parent's children from the external dict and `setvalueset()` to replace the placeholder VS on the target item. Each handler fires in `onfocus` (not `preproc`, per Users Guide p.188 Logic Tip #4) so reverse-navigation re-populates the value set.
 
-**Cascading-filter logic is NOT yet implemented.** The DCF ships with all 42k barangays in one dropdown. Implementing per-parent filtering is a follow-on PROC task — the data is ready.
+The design mirrors the **Popstan Census CAPI reference app** (`3_Resources/Tools-and-Software/CSPro/Examples 8.0/1 - Data Entry/CAPI Census/`) — the US Census Bureau's canonical demonstration of external-lookup geographic hierarchies.
+
+### Why externalize?
+
+| Concern | Before (baked VS) | After (external lookup) |
+|---|---|---|
+| F1 `.dcf` size | 17.2 MB | ~0.9 MB |
+| F3 `.dcf` size | ~33 MB (doubled: facility + patient home) | ~1.0 MB |
+| F4 `.dcf` size | ~17 MB | ~0.8 MB |
+| PSGC duplication | 3× (once per F-series form) | 1× (single `shared/` source of truth) |
+| Review xlsx Value Sets rows | 46k–90k | 2k–2.6k |
+| Cascading dropdowns | infeasible | first-class via `setvalueset()` |
+| Tablet UX | 42k-barangay single dropdown | filtered to parent-city's ~25 avg barangays |
+
+### Parent-code schema
+
+Each external dict is keyed by a 10-digit parent code in its single ID item. Regions have no real parent, so the builder uses the sentinel `0000000000`.
+
+| Dict | ID item | Record | Children items | Max occurs |
+|---|---|---|---|---|
+| `PSGC_REGION_DICT` | `R_PARENT_CODE` | `PSGC_REGION_REC` | `R_CODE` (num 10), `R_NAME` (alpha 80) | 20 |
+| `PSGC_PROVINCE_DICT` | `P_PARENT_REGION` | `PSGC_PROVINCE_REC` | `P_CODE`, `P_NAME` | 30 |
+| `PSGC_CITY_DICT` | `C_PARENT_PROVINCE` | `PSGC_CITY_REC` | `C_CODE`, `C_NAME` | 60 |
+| `PSGC_BARANGAY_DICT` | `B_PARENT_CITY` | `PSGC_BARANGAY_REC` | `B_CODE`, `B_NAME` | 2000 |
+
+### Cascade handlers
+
+`PSGC-Cascade.apc` exposes four public functions. Each form's `.app` file wires them from the corresponding main-dict item's `onfocus`:
+
+```
+PROC REGION            onfocus  FillRegionValueSet(REGION);
+PROC PROVINCE_HUC      onfocus  FillProvinceValueSet(PROVINCE_HUC, REGION);
+PROC CITY_MUNICIPALITY onfocus  FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
+PROC BARANGAY          onfocus  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+```
+
+F3's patient-home block (`P_REGION`, `P_PROVINCE_HUC`, `P_CITY_MUNICIPALITY`, `P_BARANGAY`) wires the same functions against those items.
 
 ## Edge cases handled by the parser
 

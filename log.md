@@ -2,6 +2,42 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-21 (PSGC external-lookup refactor)
+
+- **Problem**: After the Apr 20 PSGC wiring, each F-series DCF baked the full 43,803-entry PSGC value set into the main dictionary — F1 hit 17.2 MB, F3 ~33 MB (double: facility + patient-home blocks), F4 ~17 MB. PSGC was duplicated 3× across the F-series; the 42k-entry barangay dropdown was unusable on tablets; review xlsx Value Sets sheets ballooned to 46k–90k rows.
+- **Solution**: Move PSGC to **four CSPro external lookup dictionaries** + a reusable **`PSGC-Cascade.apc`** logic module. Mirrors the Popstan Census CAPI reference app (`3_Resources/Tools-and-Software/CSPro/Examples 8.0/1 - Data Entry/CAPI Census/`) and CSPro 8.0 Users Guide p.188 Logic Tip #4 (`onfocus`, not `preproc`, for cascading value sets).
+- **New shared assets** under `deliverables/CSPro/shared/`:
+  - `build_psgc_lookups.py` — Python generator; reads `F1/inputs/psgc_*.csv`, emits 4 `.dcf` + 4 fixed-width `.dat` files.
+  - `psgc_region.dcf/.dat` (18 rows, parent sentinel `0000000000`)
+  - `psgc_province.dcf/.dat` (117 rows, keyed by region)
+  - `psgc_city.dcf/.dat` (1,658 rows, keyed by province/HUC)
+  - `psgc_barangay.dcf/.dat` (42,010 rows, keyed by city/municipality)
+  - `PSGC-Cascade.apc` — 4 public functions (`FillRegionValueSet`, `FillProvinceValueSet`, `FillCityValueSet`, `FillBarangayValueSet`) invoked from each form's `onfocus` events; each loads the matching parent's children via `loadcase()` and replaces the target item's VS via `setvalueset()`.
+- **Helper refactor**: `cspro_helpers._psgc_fields(prefix="")` now returns length-10 numeric items with a 1-entry generic placeholder VS (per Users Guide p.188 best-practice #3 for cascading items). Added `prefix` parameter so `build_geo_id("facility_and_patient")` can reuse the same builder for `P_` patient-home fields.
+- **F1/F3/F4 generators**: dropped local `load_psgc_value_set` calls and the inline geographic-record overrides. F1 uses `build_geo_id("facility")`; F3 uses `build_geo_id("facility_and_patient")`; F4 uses `build_geo_id("household", extra_items=[LATITUDE, LONGITUDE])`. Item and record counts preserved on all three.
+- **DCF sizes**:
+  - F1: 17.2 MB → 0.90 MB (11 records, 655 items)
+  - F3: ~33 MB → 1.01 MB (15 records, 818 items)
+  - F4: ~17 MB → 0.80 MB (21 records, 611 items)
+- **Review xlsx Value Sets sheet row counts**:
+  - F1: 46,060 → 2,261
+  - F3: 90,159 → 2,561
+  - F4: 45,807 → 2,008
+- **What cascading buys**: Barangay dropdown filters from 42,010 entries to ~25 per parent city (max observed 259 in QC); tablet UX becomes viable; single source of truth for PSGC updates (re-run `build_psgc_lookups.py` on PSA 2Q 2026 quarterly publication, no generator changes).
+- **Plan**: `docs/superpowers/plans/2026-04-21-psgc-external-lookup-refactor.md`. 7 tasks, executed inline.
+
+## 2026-04-21 (DCF → Excel review exporter)
+
+- **New tool**: `deliverables/CSPro/export_dcf_to_xlsx.py`. Parses the CSPro 8.0 JSON `.dcf` and emits a workbook in the same two-sheet layout CSPro Designer's Dictionary → Export produces (matches `raw/Sample-Data/Facility Head Survey Data Dictionary and Value Sets.xlsx`): `Dictionary Names and Labels` (hierarchical Level → Record → Item, 6 cols) + `Value Sets` (one block per VS, 4 cols with blank-row separators).
+- **Why**: enable second-opinion review of F1/F3/F4 dictionaries + value sets by reviewers without a CSPro install. Pairs with the "open the DCF in Designer → auto-form → key through in CSEntry" smoke-test path for pre-build validation.
+- **Batch output** (three workbooks generated):
+  - `deliverables/CSPro/F1/FacilityHeadSurvey - Data Dictionary and Value Sets.xlsx` — 669 dictionary rows / 46,060 value-set rows
+  - `deliverables/CSPro/F3/PatientSurvey - Data Dictionary and Value Sets.xlsx` — 836 / 90,159
+  - `deliverables/CSPro/F4/HouseholdSurvey - Data Dictionary and Value Sets.xlsx` — 635 / 45,807
+- **PSGC heft**: F3's Value Sets sheet is ~90k rows because PSGC-backed geographic items appear in both facility and patient-residence blocks. F1/F4 carry one PSGC block each (~43k rows). Sheet is fully scrollable but not review-friendly for the 43k-row barangay list; that block is PSA-authoritative and doesn't need eyeballing.
+- **Invocation**: `python deliverables/CSPro/export_dcf_to_xlsx.py --all` (regen all three) or `python deliverables/CSPro/export_dcf_to_xlsx.py path/to/file.dcf [-o out.xlsx]` (single file).
+- **Index updated** with shared-tool entry under `deliverables/CSPro/` and a per-form xlsx line under F1/F3/F4.
+
 ## 2026-04-20 (PSGC value sets — self-served from PSA 1Q 2026)
 
 - **PSGC dependency flipped from ASPSI-blocked to self-served + wired** — F1's four geographic items (REGION / PROVINCE_HUC / CITY_MUNICIPALITY / BARANGAY) now have PSA-authoritative value sets attached. Realization driver: PSGC is public PSA data; ASPSI had no proprietary input, so waiting on them was pure delay.
