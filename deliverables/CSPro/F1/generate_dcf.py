@@ -36,6 +36,7 @@ from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, FREQUENCY, WHY_DIFF_OPTIONS,
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, uhc9_item, record, build_geo_id,
+    _gps_fields, _photo_block,
 )
 
 # ============================================================
@@ -1043,12 +1044,26 @@ def build_secondary_data_stubs():
 # 8. ASSEMBLE THE DICTIONARY
 # ============================================================
 
+def build_capture_record():
+    """GPS metadata + verification photo capture record (record type 'Z').
+    Items are off-form (wired via onfocus in the .app); see
+    shared/Capture-Helpers.apc for the capture logic."""
+    return record(
+        "REC_FACILITY_CAPTURE", "Facility GPS and Verification Photo", "Z",
+        items=(
+            _gps_fields(prefix="FACILITY_")
+            + _photo_block(prefix="")
+        ),
+    )
+
+
 def build_dictionary():
     records = [
         # Root record (recordType "1") — required by CSPro hierarchy
         record("FACILITYHEADSURVEY_REC", "FacilityHeadSurvey Record", "1", []),
         build_field_control(),
         build_geo_id("facility"),
+        build_capture_record(),
         build_section_a(),
         build_section_b(),
         build_section_c(),

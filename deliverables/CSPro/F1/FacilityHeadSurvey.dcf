@@ -557,6 +557,163 @@
           ]
         },
         {
+          "name": "REC_FACILITY_CAPTURE",
+          "labels": [
+            {
+              "text": "Facility GPS and Verification Photo"
+            }
+          ],
+          "recordType": "Z",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "FACILITY_GPS_LATITUDE",
+              "labels": [
+                {
+                  "text": "GPS Latitude"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 12
+            },
+            {
+              "name": "FACILITY_GPS_LONGITUDE",
+              "labels": [
+                {
+                  "text": "GPS Longitude"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 12
+            },
+            {
+              "name": "FACILITY_GPS_ALTITUDE",
+              "labels": [
+                {
+                  "text": "GPS Altitude (m)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 10
+            },
+            {
+              "name": "FACILITY_GPS_ACCURACY",
+              "labels": [
+                {
+                  "text": "GPS Accuracy (m)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "FACILITY_GPS_SATELLITES",
+              "labels": [
+                {
+                  "text": "GPS Satellites"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "FACILITY_GPS_READTIME",
+              "labels": [
+                {
+                  "text": "GPS Read Time (UTC)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 19
+            },
+            {
+              "name": "FACILITY_CAPTURE_GPS",
+              "labels": [
+                {
+                  "text": "Capture GPS"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "FACILITY_CAPTURE_GPS_VS1",
+                  "labels": [
+                    {
+                      "text": "Capture GPS"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Capture GPS now"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "VERIFICATION_PHOTO_FILENAME",
+              "labels": [
+                {
+                  "text": "Verification Photo Filename"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "CAPTURE_VERIFICATION_PHOTO",
+              "labels": [
+                {
+                  "text": "Take Verification Photo"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CAPTURE_VERIFICATION_PHOTO_VS1",
+                  "labels": [
+                    {
+                      "text": "Take Verification Photo"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Take verification photo"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
           "name": "A_FACILITY_HEAD_PROFILE",
           "labels": [
             {
