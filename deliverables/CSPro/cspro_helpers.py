@@ -260,23 +260,36 @@ def build_field_control(extra_items=None, date_label_entity="the Facility"):
     return record("FIELD_CONTROL", "Field Control", "A", items)
 
 
-def _psgc_fields():
+def _psgc_fields(prefix=""):
     """Return the four standard PSGC geographic code items.
 
-    Lengths follow PSGC conventions (region 2, province 3, city 4, barangay 4).
-    All are zero-filled numerics with no value sets attached (ASPSI lookup tables
-    are pending — add valueSets once the authoritative code lists arrive).
+    Items are length=10 numeric zero-filled, holding the full 10-digit PSA
+    PSGC code. Value sets are deliberately NOT baked in — the four PSGC
+    external lookup dictionaries (shared/psgc_*.dcf) + PSGC-Cascade.apc
+    logic populate dynamic value sets at runtime via setvalueset().
+
+    A one-entry generic placeholder value set is attached so CSPro Designer
+    shows a label in the case tree (per CSPro 8.0 Users Guide p.188 best-
+    practice #3 for cascading items).
+
+    Parameters
+    ----------
+    prefix : str
+        Optional prefix to disambiguate when two PSGC blocks live in the
+        same record (e.g. facility vs patient-home). Names become
+        {prefix}REGION, {prefix}PROVINCE_HUC, etc.
 
     Returns
     -------
     list of dict
         [REGION, PROVINCE_HUC, CITY_MUNICIPALITY, BARANGAY]
     """
+    placeholder = [("(set at runtime)", "0" * 10)]
     return [
-        numeric("REGION",            "Region",               length=2, zero_fill=True),
-        numeric("PROVINCE_HUC",      "Province / HUC",       length=3, zero_fill=True),
-        numeric("CITY_MUNICIPALITY", "City / Municipality",  length=4, zero_fill=True),
-        numeric("BARANGAY",          "Barangay",             length=4, zero_fill=True),
+        numeric(f"{prefix}REGION",            "Region",               length=10, zero_fill=True, value_set_options=placeholder),
+        numeric(f"{prefix}PROVINCE_HUC",      "Province / HUC",       length=10, zero_fill=True, value_set_options=placeholder),
+        numeric(f"{prefix}CITY_MUNICIPALITY", "City / Municipality",  length=10, zero_fill=True, value_set_options=placeholder),
+        numeric(f"{prefix}BARANGAY",          "Barangay",             length=10, zero_fill=True, value_set_options=placeholder),
     ]
 
 
@@ -326,12 +339,9 @@ def build_geo_id(mode, extra_items=None):
         )
 
     elif mode == "facility_and_patient":
-        patient_psgc = [
-            numeric("P_REGION",            "Patient Home Region",              length=2, zero_fill=True),
-            numeric("P_PROVINCE_HUC",      "Patient Home Province / HUC",      length=3, zero_fill=True),
-            numeric("P_CITY_MUNICIPALITY", "Patient Home City / Municipality",  length=4, zero_fill=True),
-            numeric("P_BARANGAY",          "Patient Home Barangay",             length=4, zero_fill=True),
-        ]
+        patient_psgc = _psgc_fields(prefix="P_")
+        for it in patient_psgc:
+            it["labels"][0]["text"] = "Patient Home " + it["labels"][0]["text"]
         items = (
             [classification_item]
             + _psgc_fields()
