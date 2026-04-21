@@ -2,6 +2,17 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-21 (GPS + verification photo capture)
+
+- **Added** `_gps_fields(prefix)` and `_photo_block(prefix)` helpers in `cspro_helpers.py` and a new shared CSPro logic module `deliverables/CSPro/shared/Capture-Helpers.apc` (`ReadGPSReading`, `TakeVerificationPhoto`).
+- **F1** gains one facility GPS block + one verification photo — new `REC_FACILITY_CAPTURE` (type Z); DCF grows from 11 records / 655 items to **12 records / 664 items**.
+- **F3** gains facility GPS + patient-home GPS + verification photo + `F3_FACILITY_ID` linkage item — three new records (Z/Y/X) + one `PATIENT_GEO_ID` extra item; DCF grows from 15 records / 818 items to **18 records / 835 items**.
+- **F4** gains GPS metadata (altitude, accuracy, satellites, read-time) + capture trigger alongside existing `LATITUDE`/`LONGITUDE` (baseline preserved) + a verification-photo record (type Z); DCF grows from 21 records / 611 items to **22 records / 618 items**.
+- **Photo storage**: filename-reference alpha item rather than CSPro 8.0 experimental binary dictionary items — the JPG lives on tablet storage (saved via `Image.save()`), synced to CSWeb as a file attachment.
+- **Deferred to post-MVP**: CSPro patient-listing mini-app (paper F3b listing covers MVP); SJREB ethics addendum for verification photos (Carl handles outside the code).
+- **Plan**: `docs/superpowers/plans/2026-04-21-gps-photo-capture-f1-f3-f4.md`. 6 tasks, executed inline.
+- **New concept page**: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/GPS and Photo Capture|GPS and Photo Capture]].
+
 ## 2026-04-21 (PSGC external-lookup refactor)
 
 - **Problem**: After the Apr 20 PSGC wiring, each F-series DCF baked the full 43,803-entry PSGC value set into the main dictionary — F1 hit 17.2 MB, F3 ~33 MB (double: facility + patient-home blocks), F4 ~17 MB. PSGC was duplicated 3× across the F-series; the 42k-entry barangay dropdown was unusable on tablets; review xlsx Value Sets sheets ballooned to 46k–90k rows.

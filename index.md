@@ -65,6 +65,7 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Timetable of Activities]] — Table 14 from the Inception Report: 9-month schedule, deliverable dates, A/B/C activity breakdown
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track]] — F2 special case: Google Forms primary, paper→Forms fallback, deferred CSPro
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/PSGC Value Sets]] — PSA 1Q 2026 PSGC (43,803 entries) externalized to `shared/psgc_*.dcf` lookups + `PSGC-Cascade.apc`; DCFs shrink 17 MB → ~1 MB
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/GPS and Photo Capture]] — F1/F3/F4 auto-GPS metadata blocks + end-of-interview verification photo; shared `Capture-Helpers.apc`; F3→F1 linkage via `F3_FACILITY_ID`
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro]] — Census and Survey Processing System (overview)
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSWeb]] — Web server for real-time monitoring and data sync
 
