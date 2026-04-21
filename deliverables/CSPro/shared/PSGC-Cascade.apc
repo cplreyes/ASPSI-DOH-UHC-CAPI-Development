@@ -1,0 +1,106 @@
+{ PSGC Cascade — reusable CSPro logic module.
+
+  Prerequisites:
+  - The four PSGC external dictionaries (psgc_region.dcf, psgc_province.dcf,
+    psgc_city.dcf, psgc_barangay.dcf) must be inserted in the application.
+  - Main dictionary must expose four numeric length-10 items:
+        REGION, PROVINCE_HUC, CITY_MUNICIPALITY, BARANGAY
+    (or a parallel block prefixed with P_ for patient-home / other secondary
+    geo blocks). Prefix-specific variants are separate procs below.
+
+  Pattern mirrors the CSPro 8.0 Set Value Set example (Setvalueset example.ent.apc)
+  and the Popstan Census CAPI app. Each handler fires in onfocus so that
+  reverse navigation re-populates the value set (Users Guide p.188 Logic Tip #4).
+}
+
+PROC GLOBAL
+
+    numeric ROOT_PSGC_PARENT = 0;    { Sentinel for the region-level lookup }
+
+
+function FillRegionValueSet(numeric targetItem)
+
+    R_PARENT_CODE = ROOT_PSGC_PARENT;
+    if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) = 0 then
+        errmsg("PSGC region lookup failed — verify psgc_region.dat is deployed");
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_REGION_DICT.PSGC_REGION_REC)
+        vs.add(strip(R_NAME(i)), R_CODE(i));
+    enddo;
+    setvalueset(targetItem, vs);
+
+end;
+
+
+function FillProvinceValueSet(numeric targetItem, numeric parentRegion)
+
+    P_PARENT_REGION = parentRegion;
+    if loadcase(PSGC_PROVINCE_DICT, P_PARENT_REGION) = 0 then
+        ValueSet empty;
+        setvalueset(targetItem, empty);
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_PROVINCE_DICT.PSGC_PROVINCE_REC)
+        vs.add(strip(P_NAME(i)), P_CODE(i));
+    enddo;
+    setvalueset(targetItem, vs);
+
+end;
+
+
+function FillCityValueSet(numeric targetItem, numeric parentProvince)
+
+    C_PARENT_PROVINCE = parentProvince;
+    if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) = 0 then
+        ValueSet empty;
+        setvalueset(targetItem, empty);
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_CITY_DICT.PSGC_CITY_REC)
+        vs.add(strip(C_NAME(i)), C_CODE(i));
+    enddo;
+    setvalueset(targetItem, vs);
+
+end;
+
+
+function FillBarangayValueSet(numeric targetItem, numeric parentCity)
+
+    B_PARENT_CITY = parentCity;
+    if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) = 0 then
+        ValueSet empty;
+        setvalueset(targetItem, empty);
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
+        vs.add(strip(B_NAME(i)), B_CODE(i));
+    enddo;
+    setvalueset(targetItem, vs);
+
+end;
+
+
+{ Facility PSGC handlers — attach these to main-dict field onfocus events.
+  Usage inside a form's PROC:
+      PROC REGION
+      onfocus
+          FillRegionValueSet(REGION);
+      PROC PROVINCE_HUC
+      onfocus
+          FillProvinceValueSet(PROVINCE_HUC, REGION);
+      PROC CITY_MUNICIPALITY
+      onfocus
+          FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
+      PROC BARANGAY
+      onfocus
+          FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+}
