@@ -19,11 +19,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
-    select_one, select_all, uhc9_item, record, load_psgc_value_set,
+    select_one, select_all, uhc9_item, record,
     build_field_control, build_geo_id, build_dictionary, write_dcf,
 )
-
-INPUTS_DIR = Path(__file__).resolve().parent.parent / "F1" / "inputs"
 
 
 # ============================================================
@@ -37,38 +35,6 @@ def build_f3_field_control():
         numeric("PATIENT_LISTING_NO", "Patient Listing Reference Number", length=4, zero_fill=True),
     ]
     return build_field_control(extra_items=extra, date_label_entity="the Patient")
-
-
-# ============================================================
-# GEO ID — facility + patient home
-# ============================================================
-
-def build_f3_geo_id():
-    # PSGC value sets from PSA 1Q 2026 publication, shared with F1 via
-    # F1/inputs/. Length=10 retains the full PSGC code for clean crosswalk
-    # to NHFR, PSA census, and DOH downstream systems. Cascading parent→child
-    # dropdown filter logic belongs in CSPro PROC, not here.
-    region_options       = load_psgc_value_set(INPUTS_DIR / "psgc_region.csv")
-    province_huc_options = load_psgc_value_set(INPUTS_DIR / "psgc_province_huc.csv")
-    city_mun_options     = load_psgc_value_set(INPUTS_DIR / "psgc_city_municipality.csv")
-    barangay_options     = load_psgc_value_set(INPUTS_DIR / "psgc_barangay.csv")
-    items = [
-        numeric("CLASSIFICATION", "Classification", length=1, value_set_options=[
-            ("UHC IS",     "1"),
-            ("Non-UHC IS", "2"),
-        ]),
-        numeric("REGION",            "Region",              length=10, zero_fill=True, value_set_options=region_options),
-        numeric("PROVINCE_HUC",      "Province / HUC",      length=10, zero_fill=True, value_set_options=province_huc_options),
-        numeric("CITY_MUNICIPALITY", "City / Municipality", length=10, zero_fill=True, value_set_options=city_mun_options),
-        numeric("BARANGAY",          "Barangay",            length=10, zero_fill=True, value_set_options=barangay_options),
-        alpha("FACILITY_NAME",    "Facility Name",    length=100),
-        alpha("FACILITY_ADDRESS", "Facility Address", length=200),
-        numeric("P_REGION",            "Patient Home Region",              length=10, zero_fill=True, value_set_options=region_options),
-        numeric("P_PROVINCE_HUC",      "Patient Home Province / HUC",      length=10, zero_fill=True, value_set_options=province_huc_options),
-        numeric("P_CITY_MUNICIPALITY", "Patient Home City / Municipality", length=10, zero_fill=True, value_set_options=city_mun_options),
-        numeric("P_BARANGAY",          "Patient Home Barangay",            length=10, zero_fill=True, value_set_options=barangay_options),
-    ]
-    return record("PATIENT_GEO_ID", "Patient Geographic Identification", "B", items)
 
 
 # ============================================================
@@ -1841,7 +1807,7 @@ def build_f3_dictionary():
     records = [
         record("PATIENTSURVEY_REC", "PatientSurvey Record", "1", []),
         build_f3_field_control(),
-        build_f3_geo_id(),
+        build_geo_id("facility_and_patient"),
         build_section_a(),
         build_section_b(),
         build_section_c(),
