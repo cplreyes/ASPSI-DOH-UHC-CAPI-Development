@@ -15,8 +15,9 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Save Draft** — replaces the old bottom nav bar; a "Draft saved" confirmation appears for 2 seconds after saving
 - **Question numbering** — question IDs (Q1, Q2, …) displayed as muted number prefixes so enumerators can reference items by number
 - **Sticky section header** — section title and progress bar stay visible while scrolling through long sections
-- **Version display** — `v1.0.0` shown as a subtle badge under the app title in the header; version is baked in at build time from `package.json`
+- **Version display** — `v1.0.0` shown as a subtle badge under the app title in the header
+- **App icon** — replaced with the official DOH Philippines seal
 
 ### Fixed
-- **Backend build** — `stripCjsExport` regex now correctly removes the entire `if (typeof module !== 'undefined')` block; a `m`-flag + non-greedy match bug was leaving the outer closing `}` behind, causing a syntax error in the generated `Code.gs`
-- **Sync CORS** — POST requests now use `Content-Type: text/plain` to avoid the OPTIONS preflight that Apps Script cannot handle; the body is still readable via `e.postData.contents`
+- **Backend build** — `stripCjsExport` regex now correctly removes the entire `if (typeof module !== 'undefined')` block, fixing a syntax error in the generated `Code.gs`
+- **Sync CORS** — POST requests now use `Content-Type: text/plain` to avoid the OPTIONS preflight that Apps Script cannot handle
