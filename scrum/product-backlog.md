@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-04-21
+last_updated: 2026-04-23
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -23,13 +23,13 @@ last_updated: 2026-04-21
 
 ### Headline (this week)
 
-**Sprint 002 Day 2 (Tue 2026-04-21). Tranche 2 (40%) is due Fri 2026-04-24 — 3 days out.** DOH-PMSMD feedback on Juvy's Apr 14 matrices + Word tools submission landed yesterday (Apr 20, Chrys Paita / PMSMD).
+**Sprint 002 Day 4 (Thu 2026-04-23). Tranche 2 (40%) is due tomorrow Fri 2026-04-24.** DOH-PMSMD feedback on Juvy's Apr 14 matrices + Word tools submission landed Apr 20 (Chrys Paita / PMSMD).
 
 **F3 and F4 skip-logic + validation specs both landed 2026-04-21 (Sprint 002 Day 2 overdelivery).** F3 spec reviewed at 1133 lines — all 12 sections A–L, 14 sanity findings, 15 CSPro PROC templates, 6 open questions dispositioned (1 routed to Juvy: Q31 IP_GROUP; 5 spec-decisions with override clause). F4 spec drafted at 904 lines — all 17 sections A–Q, 13 sanity findings (findings #1/#2 CLOSED-BY-VERIFICATION 2026-04-21: `C_HOUSEHOLD_ROSTER` already repeating at `max_occurs=20`, `J_HEALTH_SEEKING` intentionally respondent-level per Apr 20 source), 11 CSPro PROC templates, 8 open questions dispositioned (3 routed to ASPSI, 5 spec-decisions). Both F3 and F4 are **Build-ready**. Deliverables at `deliverables/CSPro/F3/` and `deliverables/CSPro/F4/`.
 
 **F1 skip-logic + validation spec aligned with F3/F4 on 2026-04-21.** F1 spec rewrite added GPS capture via `REC_FACILITY_CAPTURE` (uses `ReadGPSReading()` helper) + verification-photo capture (filename-reference pattern, `TakeVerificationPhoto()` helper) + PSGC cascade (`onfocus` + `loadcase()` + `setvalueset()` via `PSGC-Cascade.apc`). F1 DCF now at **12 records / 671 items**. Shared `.apc` fragments live under `deliverables/CSPro/Capture-Helpers.apc` and `deliverables/CSPro/PSGC-Cascade.apc` — F3/F4 will consume the same helpers. Designer round 2 / sign-off (E2-F1-010) remains the carry-forward from Sprint 001. PSGC value sets still blocked on ASPSI.
 
-**F2 PWA M0–M11 shipped 2026-04-17 / 2026-04-18 — pilot-ready.** Installable Vite+React+TS shell, IndexedDB autosave, skip-logic nav, Apps Script backend, sync orchestrator, full 114-item instrument, validation + cross-field rules (POST), enrollment, i18n scaffold, admin dashboard, runtime config kill-switch + spec-drift modal. Cross-platform QA checklist at `deliverables/F2/PWA/2026-04-18-cross-platform-qa-checklist.md`. Deferred from M11: per-HCW tokens, draft auto-migration across spec versions, iOS push, admin mutations. **Decision open** — pilot vs. close-deferred-first vs. move to M12 F3/F4 parity (see `deliverables/F2/PWA/app/NEXT.md`). The Apr 15 Google Forms Apps Script bundle (E3-F2-GF-001..008) and the deferred-CSPro-encoder track are both retired.
+**F2 PWA QA-complete 2026-04-23. UAT Round 1 active.** M0–M11 shipped 2026-04-17/18; auto-advance + section-lock UX shipped post-M11; 3/3 Playwright E2E tests pass (golden path, section lock, language switch). Staging SUT live at `https://5466a539.f2-pwa-staging.pages.dev`. UAT coordination via Slack `#f2-pwa-uat`; formal feedback via GitHub Issues (`uat_feedback.yml`). UAT Guide at `docs/F2-PWA-UAT-Guide.md` (public: `github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development`). **F2 Epic 3 build is complete.** CSPro-encoder and Google Forms fallback tracks are retired and remain least priority — do not reopen unless deployment context changes fundamentally.
 
 Comms infrastructure fully provisioned (project mailbox + Viber group both live, Shan onboarded as QA tester, Juvy confirmed as DOH-routing gate per the Apr 13 Team Communication Protocol).
 
@@ -42,7 +42,7 @@ Comms infrastructure fully provisioned (project mailbox + Viber group both live,
 | **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** | First weekly status update shipped to ASPSI Mgmt Committee |
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
 | **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Design — Designer round 2 / sign-off next; **F3 Build-ready, F4 Build-ready** — specs complete 2026-04-21; F2 data model lives inside the PWA spec; PLF Source Captured) | F1 sign-off (E2-F1-010); F3/F4 Designer validation (E2-F3-010, E2-F4-010) |
-| **3** | CAPI Application Development | **In Progress** (F2 **PWA M11 pilot-ready**; F1 CSPro build pending Designer sign-off; F3/F4 Build-ready) | F2 pilot-vs-deferred-cleanup decision; F1 `FacilityHeadSurvey.fmf` Section A layout (deferred to Sprint 003 pending form-layout plan) |
+| **3** | CAPI Application Development | **In Progress** (F2 **PWA QA-complete, UAT Round 1 active**; F1 CSPro build pending Designer sign-off; F3/F4 Build-ready) | F1 `FacilityHeadSurvey.fmf` Section A layout (Sprint 003); F3/F4 build slots TBD |
 | **4** | CSWeb Server Setup and Deployment | Not Started | Sync architecture decision documented |
 | **5** | Tablet and Field Logistics | Not Started | Tablet provisioning SOP drafted |
 | **6** | Testing and Pilot | Not Started | F1 desk test (follows Epic 3); QA Tester (Shan) onboarded to test workflow |
@@ -58,7 +58,7 @@ Comms infrastructure fully provisioned (project mailbox + Viber group both live,
 | Instrument | Mode | Pages | Current State |
 |---|---|---|---|
 | **F1 — Facility Head** | Interviewer-administered (CSPro CAPI) | 34 | **Design — closing** — DCF at 12 records / 671 items (post Apr 21 GPS+photo+PSGC-cascade pass); E2-F1-009b closed 2026-04-17; skip-logic spec aligned with F3/F4 on 2026-04-21; PSGC value sets still blocked on ASPSI; Designer round 2 / sign-off (E2-F1-010) is the next milestone |
-| **F2 — Healthcare Worker** | **Self-admin — PWA (primary). Google Forms + CSPro-encoder fallbacks retired 2026-04-17.** | 14 | **Build — PWA M11 shipped 2026-04-18, pilot-ready.** Vite+React+TS PWA at `deliverables/F2/PWA/app/`; runtime config kill-switch + spec-drift modal; cross-platform QA checklist pending. Pilot vs. deferred-cleanup vs. M12 F3/F4-parity decision open (`NEXT.md`). |
+| **F2 — Healthcare Worker** | **Self-admin — PWA (primary). Google Forms + CSPro-encoder fallbacks retired 2026-04-17. CSPro F2 track: least priority — do not reopen.** | 14 | **QA-complete 2026-04-23. UAT Round 1 active.** Vite+React+TS PWA at `deliverables/F2/PWA/app/`; auto-advance + section lock shipped; 3/3 E2E pass; SUT at `5466a539.f2-pwa-staging.pages.dev`; UAT via `#f2-pwa-uat` + GitHub Issues. Epic 3 F2 build is done. |
 | **F3 — Patient** | Interviewer-administered (CSPro CAPI) | 23 | **Design — Build-ready 2026-04-21** (18 records / 840 items, sections A–L). Skip-logic + validation spec reviewed at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md`; 1 question to Juvy (Q31 IP_GROUP). |
 | **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2; CSPro CAPI) | 26 | **Design — Build-ready 2026-04-21** (22 records / 623 items, sections A–Q; skip-logic + validation spec at `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md`; `C_HOUSEHOLD_ROSTER` already repeating at `max_occurs=20`, `J_HEALTH_SEEKING` intentionally respondent-level — assumed schema patch closed by verification). |
 | **PLF — Patient Listing Form** | Recruitment form | 1 | Source Captured |
@@ -208,7 +208,9 @@ Each epic below is a long-running workstream that spans its portion of the engag
 4. Pilot readiness checkpoint (open) — three options per `NEXT.md`: run pilot with 5–10 HCWs at one facility / close deferred M11 items first / move to M12 F3/F4 parity
 5. Deferred M11 items (slot in only if pilot feedback demands): per-HCW tokens, draft auto-migration across spec versions, iOS push, admin mutations
 
-**F2 PWA note:** The Apr 15 Google Forms / paper / deferred-CSPro three-path model is superseded by the PWA primary build. The Apr 15 Apps Script bundle (E3-F2-GF-001..008) contributed code and data patterns that landed inside the PWA backend. If ASPSI's deployment context ever shifts back toward Google Forms or a CSPro encoder, the artifacts from the Apr 15 work remain available under `deliverables/F2/` as fallback starting points — but they are not the active build path.
+**F2 PWA note:** The Apr 15 Google Forms / paper / deferred-CSPro three-path model is superseded by the PWA primary build. The PWA is the only active F2 build path. **The CSPro-encoder track for F2 is the least priority item in this engagement** — do not reopen without an explicit decision reversal driven by a deployment-context change. If ASPSI's deployment context ever shifts back, prior artifacts remain under `deliverables/F2/` as fallback starting points only.
+
+**F2 QA/UAT note (2026-04-23):** 3/3 Playwright E2E tests pass (golden path enrollment → 10 sections → review → submit; section lock; language switch). Auto-advance and section-lock UX shipped and tested. SUT deployed to Cloudflare Pages staging. UAT Round 1 launched via Slack `#f2-pwa-uat` and GitHub Issues. GitHub repo renamed to `ASPSI-DOH-UHC-CAPI-Development` (public). Epic 3 F2 build is closed.
 
 **Ties to:** D2, D3.
 

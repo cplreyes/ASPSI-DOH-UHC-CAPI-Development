@@ -2,6 +2,37 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-23 (F2 PWA QA sprint — E2E tests, UAT launch, GitHub repo rename)
+
+- **F2 PWA post-M11 UX shipped**: auto-advance (section transitions non-complete → complete within 400 ms) and section-lock forward navigation (amber notification strip + maxVisitedIndex guard). Both committed to `staging` branch.
+- **Production bug fixes**:
+  - `MultiSectionForm.tsx` `sectionDefaults`: optional `multi` (checkbox array) fields now initialize to `[]` when not in `merged`. Fix eliminates Section C→D validation failure where RHF submitted `true` (boolean) instead of `[]` for uninitialized Q37/Q39, which failed `z.array(...).optional()`.
+  - `Section.tsx` `stripNulls`: empty strings now converted to `undefined` before Zod resolver. Fix eliminates optional date-regex fields (Q35) rejecting `""` from `<input type="date">` even with `.optional()`.
+- **Playwright E2E test suite written and passing (3/3)**:
+  - Golden path: enrollment → all 10 sections (IndexedDB-seeded) → review → submit
+  - Section lock: cannot navigate to unvisited section via sidebar tree
+  - Language switch: form labels change without data loss
+  - Config: `npx playwright test --config e2e/playwright.config.ts` (config lives in `e2e/` subdirectory)
+- **SUT deployed**: `https://5466a539.f2-pwa-staging.pages.dev` (Cloudflare Pages project `f2-pwa-staging`, branch `staging`).
+- **UAT Round 1 launched**:
+  - Slack `#f2-pwa-uat` (C0AV19GB05P, aspsi-doh-uhc-survey2.slack.com) — coordination channel for announcements, guide links, quick questions
+  - `docs/F2-PWA-UAT-Guide.md` — 10 scenarios (TC-001–TC-010), 2 personas (UAT-NURSE-01 / UAT-PHYS-01), sign-off instructions
+  - `.github/ISSUE_TEMPLATE/bug_report.yml` + `uat_feedback.yml` — structured GitHub Issues for formal bug reports and UAT feedback
+  - `.github/ISSUE_TEMPLATE/config.yml` — disables blank issues, links to UAT guide
+- **GitHub repo renamed** from `ASPSI-DOH-CAPI-CSPro-Development` to `ASPSI-DOH-UHC-CAPI-Development` and made **public** (2026-04-23). Local vault folder unchanged (`1_Projects/ASPSI-DOH-CAPI-CSPro-Development/`). Remote URL updated to `https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development.git`. `staging` branch pushed and tracking `origin/staging`.
+- **Scrum artifacts updated**: `product-backlog.md`, `sprint-current.md`, `epics/epic-03-capi-application.md` all updated to reflect F2 Epic 3 build complete, UAT Round 1 active, CSPro F2 track = least priority.
+- **Epic 3 F2 build closed**: QA-complete. After UAT sign-off, promote `staging` → `main` and redeploy `f2-pwa.pages.dev`.
+
+## 2026-04-22 (Case-control extension F1/F3/F4; F3 duplicate-item fix; FMF skeletons verified)
+
+- **Case-control extension — `cspro_helpers.py`**: Added `AAPOR_DISPOSITION_OPTIONS` (AAPOR 2023 Standard Definitions 10th ed., 11-code 3-digit zero-filled value set, codes 110–540) + `_case_control_items(survey_code)` helper (5 items: `SURVEY_CODE` alpha-2 literal, `INTERVIEWER_ID` numeric-4, `DATE_STARTED` YYYYMMDD, `TIME_STARTED` HHMMSS, `AAPOR_DISPOSITION` with AAPOR VS). `build_field_control()` updated to require `survey_code` param and prepend the block. `FACILITY_NAME` (alpha-100) + `FACILITY_ADDRESS` (alpha-200) baked into `build_geo_id("facility")` for F1 parity with F3's `facility_and_patient` mode.
+- **Case-control extension — generators**: F1/F3/F4 `generate_dcf.py` each updated to pass `survey_code`. All three DCFs regenerated: **F1 12/671 (+7 vs 664), F3 18/840 (+5 vs 835), F4 22/623 (+5 vs 618)**. Item deltas match the 5-item case-control block exactly (F1 gets +7 for the additional `FACILITY_NAME`/`FACILITY_ADDRESS`).
+- **Case-control extension — specs**: Preproc templates added to F1 §4.17, F3 §4.16, F4 §4.12 — `sysdate()`/`systime()` for timestamps, literal SURVEY_CODE, `AAPOR_DISPOSITION = 0` (000 In Progress) initial + `210` on consent refusal.
+- **F1 form-layout plan — Cat 1 typos fixed**: `PROVINCE` → `PROVINCE_HUC`, `CITY_MUN` → `CITY_MUNICIPALITY`, `Q2_DESIGNATION` → `Q2_FACILITY_ROLE`. Dropped fictional `Q2_DESIGNATION_OTHER_TXT` row; Form 4 row cost 8 → 7. Form 1 AAPOR code `000` corrected.
+- **F3 duplicate-item bug fixed**: `select_all()` in `cspro_helpers.py` auto-appends `_OTHER_TXT` on "specify" options; 34 `generate_dcf.py` calls also added it explicitly — creating duplicates across 9 records. Removed 34 redundant explicit `alpha(_OTHER_TXT)` calls. F3 DCF regenerated: **18/806 items** (down 34 from post-case-control 840; zero duplicates confirmed). F3 FMF skeleton re-run: 19 forms, 0 orphan items — clean.
+- **F4 verified clean**: `generate_dcf.py` + `generate_fmf.py` re-run — 22/623, 0 duplicates, 24 forms, 0 orphan items. `_OTHER_TXT` duplication was F3-only.
+- **Scrum artifacts synced**: Epic 2/3 scope rows + Designer sign-off task descriptions updated with new case-control block + item counts. Sprint-current Day 3 entry added.
+
 ## 2026-04-21 (F2 Apr 20 PDF alignment — 114 → 124 items)
 
 - **Problem**: All F2 deliverables (`F2-Spec.md`, `F2-Skip-Logic.md`, `F2-Validation.md`, `F2-Cross-Field.md`, `apps-script/Spec.gs`, PWA planning docs, `F2-Build-Handoff.md`) were still against the Apr 08 PDF (114 items). The Apr 20 Revised Inception Report PDF raised the instrument to 124 actual items across Q1–Q125 (Q108 is a numbering gap).

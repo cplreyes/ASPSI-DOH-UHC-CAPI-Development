@@ -36,7 +36,7 @@ deliverable_anchor: D2 / Tranche 2 (40% due 2026-04-24)
 
 ### Stretch (not committed)
 
-- [ ] **F2 PWA pilot-readiness decision** — per `deliverables/F2/PWA/app/NEXT.md`: pick one of pilot now / close-deferred M11 items / move to M12 F3-F4 parity. Decision itself is ~30m; follow-through TBD depending on path. `status::todo` `priority::medium` `estimate::30m decision`
+- [x] **F2 PWA pilot-readiness decision** — Decision: UAT Round 1 is the pilot. QA done (3/3 E2E pass), SUT deployed, `#f2-pwa-uat` Slack channel live, GitHub Issues UAT template active. Epic 3 F2 build closed 2026-04-23. CSPro F2 track = least priority. `status::done` `priority::medium` `actual::2026-04-23`
 
 ## Sprint Backlog Sizing
 
@@ -70,6 +70,10 @@ deliverable_anchor: D2 / Tranche 2 (40% due 2026-04-24)
 - **E3-F1-001 kickoff (in progress after case-control lands):** generator-first route chosen (hybrid per form-layout-plan §6) — `generate_fmf.py` emits the skeleton (form names, labels, item membership, tab order); Designer handles visual polish. Non-destructive — writes to `FacilityHeadSurvey.generated.fmf`; existing scaffold untouched until Designer-reviewed.
 - **E3-F3-001 kickoff (F3 FMF skeleton landed).** `deliverables/CSPro/F3/generate_fmf.py` authored and run; output at `deliverables/CSPro/F3/PatientSurvey.generated.fmf` (1023 lines, 19 forms, 0 orphan items — every non-container DCF item placed exactly once). Structure: FORM000 Id item, FORM001 top-level container, FORM002–FORM004 FC/Geo/Facility-GPS, FORM005 Patient-home GPS + verification photo (bundled), FORM006 Section A (Q1 gate), FORM007–FORM017 one-form-per-section skeleton for B–L, FORM018 closing with FIELD_CONTROL case-end items. Form labels carry the intended Designer splits inline (e.g., "B. Patient Profile — split into B1/B2/B3 in Designer") so the 32-form screen-density plan stays visible without pre-splitting at generation. Form-level skips (Q1/Q162/Q169) deferred to Designer per form-layout-plan §2.
 - **E3-F4-001 kickoff (F4 FMF skeleton landed).** `deliverables/CSPro/F4/generate_fmf.py` authored and run; output at `deliverables/CSPro/F4/HouseholdSurvey.generated.fmf` (851 lines, 24 forms, 0 orphan items). Shape mirrors F3 but reflects F4-specifics: FORM002 FC case-start (includes `HH_LISTING_NO`), FORM003 `HOUSEHOLD_GEO_ID` carries both PSGC cascade and GPS items (Designer splits PSGC from GPS trigger), FORM004 `REC_CASE_VERIFICATION` photo-only (F4 has no separate GPS capture record — GPS lives in geo-id), FORM007 `C_HOUSEHOLD_ROSTER` on its own form per Form-Layout-Principles §8 (one roster per form, no adjacent fields), FORM008 `C_HH_PRIVATE_INS_GATE` isolates Q47 from the roster loop, FORM018 (M) and FORM019 (N) flagged for 3-way / 6-way Designer splits (bill-recall chain + WHO expenditure grid), FORM023 closing. Form-level skips (Q1 consent, Q129 Section-M gate, Q142 bill-recall chain) deferred to Designer per form-layout-plan §2.
+
+### 2026-04-23 (Thu)
+
+- **F2 PWA Epic 3 build closed.** Auto-advance + section-lock UX shipped earlier this sprint; today: 3/3 Playwright E2E tests passing (golden path, section lock, language switch); two production bugs fixed (`multi` checkbox array defaulting + empty-string Zod stripping); SUT deployed to Cloudflare Pages staging (`5466a539.f2-pwa-staging.pages.dev`). UAT Round 1 launched — `#f2-pwa-uat` Slack channel live, `docs/F2-PWA-UAT-Guide.md` published, GitHub Issues templates active. GitHub repo renamed to `ASPSI-DOH-UHC-CAPI-Development` and made public; remote URL updated. CSPro F2 track explicitly deprioritised as least priority in all scrum files.
 
 ## Retrospective — Sprint 002 (fill in 2026-04-24)
 
