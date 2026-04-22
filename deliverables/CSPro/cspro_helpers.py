@@ -115,6 +115,25 @@ ENUM_RESULT_OPTIONS = [
     ("Incomplete", "4"),
 ]
 
+# AAPOR Standard Definitions 10th ed. (2023) — Final Disposition Codes
+# adapted for in-person CAPI health surveys. 3-digit numeric (zero-filled)
+# maps AAPOR decimals to integers (×100). The "In Progress" (000) sentinel
+# is ASPSI-internal — set at case start by FIELD_CONTROL.preproc, rewritten
+# to the final code on the CLOSING form.
+AAPOR_DISPOSITION_OPTIONS = [
+    ("000 — In Progress (initial)",                       "000"),
+    ("110 — Complete interview",                          "110"),
+    ("120 — Partial interview / break-off",               "120"),
+    ("210 — Refusal — respondent",                        "210"),
+    ("211 — Refusal — gatekeeper / household",            "211"),
+    ("220 — Non-contact — respondent unavailable",        "220"),
+    ("230 — Other eligible non-interview",                "230"),
+    ("310 — Unknown eligibility — facility/household",    "310"),
+    ("320 — Unknown eligibility — respondent",            "320"),
+    ("410 — Not eligible — out of sample / ineligible",   "410"),
+    ("450 — Not eligible — other",                        "450"),
+]
+
 
 # ============================================================
 # 2. HELPER FUNCTIONS — emit CSPro 8.0 dictionary objects
@@ -219,11 +238,45 @@ def record(name, label, record_type, items, max_occurs=1, required=True):
 # 3. COMMON RECORD BUILDERS
 # ============================================================
 
-def build_field_control(extra_items=None, date_label_entity="the Facility"):
+def _case_control_items(survey_code):
+    """Five case-control items prepended to every FIELD_CONTROL record (F1/F3/F4).
+
+    Captures case-start metadata: instrument identification, interviewer,
+    start-timestamps, and initial AAPOR disposition. Populated by the
+    FIELD_CONTROL.preproc handler in the instrument's .apc file — see the
+    corresponding F*-Skip-Logic-and-Validations spec §2 for PROC snippets.
+
+    Parameters
+    ----------
+    survey_code : str
+        The instrument code string — one of "F1", "F3", "F4". Attached to
+        the SURVEY_CODE item's value set as the sole allowed value so the
+        DCF self-documents which instrument the dictionary belongs to.
+
+    Returns
+    -------
+    list of dict
+        [SURVEY_CODE, INTERVIEWER_ID, DATE_STARTED, TIME_STARTED,
+         AAPOR_DISPOSITION]
+    """
+    return [
+        alpha("SURVEY_CODE",        "Survey Instrument Code",              length=2),
+        numeric("INTERVIEWER_ID",   "Interviewer ID",                      length=4,
+                zero_fill=True),
+        numeric("DATE_STARTED",     "Date Interview Started (YYYYMMDD)",   length=8),
+        numeric("TIME_STARTED",     "Time Interview Started (HHMMSS)",     length=6),
+        numeric("AAPOR_DISPOSITION", "AAPOR Disposition Code",             length=3,
+                zero_fill=True, value_set_options=AAPOR_DISPOSITION_OPTIONS),
+    ]
+
+
+def build_field_control(survey_code, extra_items=None, date_label_entity="the Facility"):
     """Build a FIELD_CONTROL record (record type "A").
 
     Parameters
     ----------
+    survey_code : str
+        Instrument code ("F1", "F3", "F4") — prepended as SURVEY_CODE item.
     extra_items : list, optional
         Additional item dicts to append after the standard block.
         Use this when a survey needs fields not present in the base template.
@@ -233,12 +286,13 @@ def build_field_control(extra_items=None, date_label_entity="the Facility"):
         Pass "the Patient" for F3, "the Household" for F4, etc.
 
     Standard items (in order):
+        SURVEY_CODE, INTERVIEWER_ID, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION,
         SURVEY_TEAM_LEADER_S_NAME, ENUMERATOR_S_NAME, FIELD_VALIDATED_BY,
         FIELD_EDITED_BY, DATE_FIRST_VISITED (length 8), DATE_FINAL_VISIT (length 8),
         TOTAL_NUMBER_OF_VISITS, ENUM_RESULT_FIRST_VISIT, ENUM_RESULT_FINAL_VISIT,
         CONSENT_GIVEN.
     """
-    items = [
+    items = _case_control_items(survey_code) + [
         alpha("SURVEY_TEAM_LEADER_S_NAME", "Survey Team Leader's Name",   length=50),
         alpha("ENUMERATOR_S_NAME",         "Enumerator's Name",           length=50),
         alpha("FIELD_VALIDATED_BY",        "Field Validated by",          length=50),
@@ -389,6 +443,8 @@ def build_geo_id(mode, extra_items=None):
             [classification_item]
             + _psgc_fields()
             + [
+                alpha("FACILITY_NAME",    "Facility Name",    length=100),
+                alpha("FACILITY_ADDRESS", "Facility Address", length=200),
                 alpha("LATITUDE",  "Latitude",  length=12),
                 alpha("LONGITUDE", "Longitude", length=12),
             ]

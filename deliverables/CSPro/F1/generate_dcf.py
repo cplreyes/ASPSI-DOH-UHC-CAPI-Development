@@ -36,7 +36,7 @@ from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, FREQUENCY, WHY_DIFF_OPTIONS,
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, uhc9_item, record, build_geo_id,
-    _gps_fields, _photo_block,
+    _gps_fields, _photo_block, _case_control_items,
 )
 
 # ============================================================
@@ -81,7 +81,7 @@ Q121_DYNAMIC_VALUE_SET = False
 # ============================================================
 
 def build_field_control():
-    items = [
+    items = _case_control_items("F1") + [
         # Header — preserves exact item names from Carl's scaffold so
         # any prior PROC code keeps working.
         alpha("SURVEY_TEAM_LEADER_S_NAME",      "Survey Team Leader's Name",                    length=50),

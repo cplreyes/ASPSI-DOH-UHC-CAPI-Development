@@ -33,7 +33,7 @@ def build_f4_field_control():
     extra = [
         numeric("HH_LISTING_NO", "Household Listing Reference Number", length=4, zero_fill=True),
     ]
-    return build_field_control(extra_items=extra, date_label_entity="the Household")
+    return build_field_control(survey_code="F4", extra_items=extra, date_label_entity="the Household")
 
 
 # ============================================================

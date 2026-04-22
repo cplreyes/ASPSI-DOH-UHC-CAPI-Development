@@ -71,6 +71,204 @@
           },
           "items": [
             {
+              "name": "SURVEY_CODE",
+              "labels": [
+                {
+                  "text": "Survey Instrument Code"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 2
+            },
+            {
+              "name": "INTERVIEWER_ID",
+              "labels": [
+                {
+                  "text": "Interviewer ID"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": true
+            },
+            {
+              "name": "DATE_STARTED",
+              "labels": [
+                {
+                  "text": "Date Interview Started (YYYYMMDD)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "TIME_STARTED",
+              "labels": [
+                {
+                  "text": "Time Interview Started (HHMMSS)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 6,
+              "zeroFill": false
+            },
+            {
+              "name": "AAPOR_DISPOSITION",
+              "labels": [
+                {
+                  "text": "AAPOR Disposition Code"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "AAPOR_DISPOSITION_VS1",
+                  "labels": [
+                    {
+                      "text": "AAPOR Disposition Code"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "000 \u2014 In Progress (initial)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "000"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "110 \u2014 Complete interview"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "110"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "120 \u2014 Partial interview / break-off"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "120"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "210 \u2014 Refusal \u2014 respondent"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "210"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "211 \u2014 Refusal \u2014 gatekeeper / household"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "211"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "220 \u2014 Non-contact \u2014 respondent unavailable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "220"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "230 \u2014 Other eligible non-interview"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "230"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "310 \u2014 Unknown eligibility \u2014 facility/household"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "310"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "320 \u2014 Unknown eligibility \u2014 respondent"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "320"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "410 \u2014 Not eligible \u2014 out of sample / ineligible"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "410"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "450 \u2014 Not eligible \u2014 other"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "450"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "SURVEY_TEAM_LEADER_S_NAME",
               "labels": [
                 {
@@ -533,6 +731,26 @@
                   ]
                 }
               ]
+            },
+            {
+              "name": "FACILITY_NAME",
+              "labels": [
+                {
+                  "text": "Facility Name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 100
+            },
+            {
+              "name": "FACILITY_ADDRESS",
+              "labels": [
+                {
+                  "text": "Facility Address"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 200
             },
             {
               "name": "LATITUDE",

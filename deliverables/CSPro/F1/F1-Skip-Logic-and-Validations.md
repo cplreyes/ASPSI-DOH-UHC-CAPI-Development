@@ -3,42 +3,48 @@ type: spec
 project: ASPSI-DOH-CAPI-CSPro-Development
 deliverable: F1 Facility Head Survey — CAPI logic spec
 date_created: 2026-04-10
-status: draft
-source_questionnaire: raw/Project-Deliverable-1/Annex F1_Facility Head Survey Questionnaire_UHC Year 2_April 08.pdf
+reviewed_on: 2026-04-21
+status: reviewed
+source_questionnaire: raw/Project-Deliverable-1_Apr20-submitted/Annex F1_Facility Head Survey Questionnaire_UHC Year 2.pdf
 source_dcf: deliverables/CSPro/F1/FacilityHeadSurvey.dcf
 tags: [cspro, capi, skip-logic, validations, f1]
 ---
 
 # F1 Facility Head Survey — Skip Logic and Validations Spec
 
-This spec is the source-of-truth for CSPro CAPI logic on `FacilityHeadSurvey.dcf`. It covers:
+Source-of-truth for CSPro CAPI logic on `FacilityHeadSurvey.dcf`. Covers:
 
-1. **Sanity-check findings** — discrepancies between the April 8 questionnaire and the v1 dcf.
+1. **Sanity-check findings** — discrepancies between the Apr 20 questionnaire and the current dcf (12 records / 664 items).
 2. **Skip-logic table** — every conditional jump extracted from the questionnaire.
-3. **Cross-field validations** — logical impossibilities, range checks, and consistency rules.
-4. **CSPro logic templates** — paste-ready snippets for the most common patterns.
+3. **Cross-field validations** — HARD (block save), SOFT (warn-and-confirm), GATE (display-only conditional rendering).
+4. **CSPro logic templates** — paste-ready snippets for common patterns.
 
-> All Q-numbers refer to the **printed questionnaire** numbering (1–166), which is what the dcf items are named after (`Q{n}_*`).
+All Q-numbers refer to the **Apr 20 printed questionnaire** (1–166); dcf item names follow the `Q{n}_*` convention.
+
+> **Item-count provenance.** The Apr 08 baseline had ~126 printed items. The Apr 20 DOH-submitted revision (driven by the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex G DOH Recommendations Matrix|Annex G remarks]]) added ~40 items — Q32–Q34 (EMR DOH IS / PhilHealth Dashboard submission + decision-making checklist), Q40–Q42 (explicit NBB / ZBB / no-copay), Section E expansion to BUCAS + GAMOT (Q101–Q117), and Section G's four named subsections (NBB Q135–137, ZBB Q138–140, LGU Q148–153, Referral Q154–162). Generator expansion (select-all per-option flags, `_OTHER_TXT` companions, secondary-data stub records) lifted the dcf to 11 records / 655 items on Apr 20. The Apr 21 GPS+photo capture pass added one further record — `REC_FACILITY_CAPTURE` (type Z, facility GPS + verification photo) — bringing the dcf to **12 records / 664 items**. See `wiki/analyses/Analysis - Apr 20 DCF Generator Audit.md` for the per-patch ledger.
 
 ---
 
-## 1. Sanity-check findings (dcf vs questionnaire)
+## 1. Sanity-check findings (dcf vs Apr 20 questionnaire)
 
-### A. Bugs to fix in `generate_dcf.py` before bench-test
+### A. Dispositions of the six original bugs
 
-| # | Item | Issue | Fix |
+The original Apr 10 spec flagged six generator bugs. Five are now closed in code; two remain pending ASPSI input (tracked below). Numbering preserved for continuity with the Apr 13 LSS minutes and E2-F1-009b.
+
+| # | Item | Status | Disposition |
 |---|---|---|---|
-| 1 | **Q166 PD_NURSES** | dcf reuses the same `pd_options` list as Q165 (doctors), which includes "Clinical audits" and "Surgical audits". The printed Q166 list omits both audit options. | Build a separate `pd_nurse_options` without `Clinical audits` / `Surgical audits`. |
-| 2 | **Secondary Data section MISSING ENTIRELY** | Pages 30–34 of the questionnaire (hospital census 6mo, patient load by month, full-time/part-time HCW rosters by cadre × employment type, YAKAP services availability, procurement vs charged prices, lab markup) are not represented in the dcf at all. | Add new records: `SEC_HOSP_CENSUS` (occurs 6, monthly), `SEC_HCW_ROSTER` (one record per cadre, multi-occurring), `SEC_YK_SERVICES` (15 yes/no items), `SEC_LAB_PRICES` (procurement + charged amount per service), `SEC_FT_LEFT` / `SEC_CONTRACT_NOT_RENEWED` numerics, `SEC_LAB_MARKUP` numeric. Decide unit (record-per-month vs flat) before re-generating. |
-| 3 | **Q63 ACCRED_WAIT label/units mismatch** | Printed question: "How many **days** did you wait from application to approval?" Bucket labels in both source and dcf are in **months** ("Less than a month", "1-2 months", …). | Confirm with ASPSI which is correct; either rewrite labels to days (`<30`, `31–60`, `>60`) or keep months and edit the question stem. Source bug — flag in Apr 13 LSS meeting. |
-| 4 | **Q31 EMR — `Not applicable` skip omitted** | Every other UHC9 question routes "Not applicable" → next-section skip; Q31 in source omits the skip on NA but dcf inherits it as a missing skip. | Add Q31 NA → Q35 skip in CAPI logic to be consistent. Mark in field manual. |
-| 5 | **Informed consent block not captured** | Field Control captures questionnaire #/visit dates but not respondent name/position/email/mobile from the consent form, nor a consent-signed flag. | Add to `FIELD_CONTROL`: `CONSENT_GIVEN` (1=Yes, 2=No, refusal aborts interview), `RESP_NAME`, `RESP_POSITION`, `RESP_EMAIL`, `RESP_MOBILE`. |
-| 6 | **Tenure pre-filter missing** | Inception Report restricts F1 respondents to facility heads with **≥6 months tenure**. No screening item exists. | Either add a screening Q before Section A or enforce in Q5 logic (months ≥ 6 → continue, else terminate with refusal code). |
+| 1 | **Q166 PD_NURSES list** | PARTIAL — generator-implemented, pending ASPSI sign-off | `Q166_NURSES_INCLUDE_AUDITS = False` in `generate_dcf.py`; a dedicated `pd_nurse_options` list is emitted without "Clinical audits" / "Surgical audits". Still flagged `PENDING DESIGN` awaiting confirmation from ASPSI that the printed Q166 omission is intentional. |
+| 2 | **Secondary Data section** | PARTIAL — stubs present, structure open | `SECONDARY_DATA_AS_STUBS = True`; four empty-item records exist in the dcf (`SEC_HOSP_CENSUS`, `SEC_HCW_ROSTER`, `SEC_YK_SERVICES`, `SEC_LAB_PRICES`) so the dictionary opens. The internal structure (record-per-month vs flat, roster cadre × employment type) is still pending a Juvy/Kidd decision — see §5 Dispositions. |
+| 3 | **Q63 ACCRED_WAIT label/units mismatch** | OPEN — source bug, needs ASPSI | `Q63_USE_DAY_BUCKETS = False` (months kept as current default). Question stem says "days"; bucket labels are in months. Routed to Juvy/Kidd for a single-source fix to the printed questionnaire before Tranche 2. |
+| 4 | **Q31 EMR — `Not applicable` skip** | CLOSED | `Q31_NA_SKIPS = True`. Handled in CAPI `PROC Q31_EMR_USE` (§4.4 pattern) — NA routes to Q35 alongside the other UHC9 NA branches. |
+| 5 | **Informed-consent block** | CLOSED | `CONSENT_GIVEN` added to `FIELD_CONTROL`; `RESP_NAME` / `RESP_POSITION` / `RESP_EMAIL` / `RESP_MOBILE` live at the top of `A_FACILITY_HEAD_PROFILE` (moved out of FIELD_CONTROL so they sit next to the facility-head profile they describe). Consent=No aborts the interview. |
+| 6 | **Tenure ≥6 months pre-filter** | CLOSED-BY-DESIGN | Enforced in `PROC Q5_MONTHS_AT_FACILITY postproc` (§4.2), not as a separate screening item. Tenure below 6 months terminates and sets `ENUM_RESULT = Refused/Incomplete`. |
 
 ### B. Cosmetic / acceptable as-is
 
-- F1.txt has stray legacy prefixes like `Q40 52`, `Q43 64` — these are leftover from an older question-numbering scheme. Dcf correctly uses the printed 1–166 numbering. No action.
-- Hospital-only / PCF-only flags inside Q121 options are not encoded as separate items in the dcf — they will be enforced via display logic (Section 3 below), which is the right approach.
+- F1.txt has stray legacy prefixes like `Q40 52`, `Q43 64` — leftover from an older question-numbering scheme. Dcf correctly uses the printed 1–166 numbering. No action.
+- Hospital-only / PCF-only gating inside Q121 options is not encoded as separate items in the dcf — enforced via display logic (§3 below and `Q121_DYNAMIC_VALUE_SET = False` fallback), which is the right approach.
+- Respondent informed-consent contact block (`RESP_NAME` / `RESP_POSITION` / `RESP_EMAIL` / `RESP_MOBILE`) lives inside Section A rather than `FIELD_CONTROL` — intentional; generator comment notes "moved out of FIELD_CONTROL so it lives with the facility-head profile it describes."
 
 ---
 
@@ -147,13 +153,37 @@ Categories: **HARD** = block save / reenter, **SOFT** = warn-and-confirm, **GATE
 
 | Item | Rule | Severity |
 |---|---|---|
-| `DATE_FIRST_VISIT` | Must be a valid date; `20260101 ≤ d ≤ today + 1` | HARD |
-| `DATE_FINAL_VISIT` | Must be a valid date; `≥ DATE_FIRST_VISIT`; `≤ today + 1` | HARD |
-| `TOTAL_VISITS` | `≥ 1`; if `ENUM_RESULT = Completed`, must be `≥ 1` | HARD |
-| `LATITUDE` | Numeric in `[4.5, 21.5]` (Philippine bounding box) | HARD |
-| `LONGITUDE` | Numeric in `[116.5, 127.0]` (Philippine bounding box) | HARD |
-| `CLASSIFICATION`, `REGION`, `PROVINCE_HUC`, `CITY_MUNICIPALITY`, `BARANGAY` | Required, non-blank | HARD |
-| `ENUM_RESULT = Completed` | All Section A–H mandatory items present (no blanks) | HARD |
+| `DATE_FIRST_VISITED_THE_FACILITY` | Valid date (YYYYMMDD); `20260101 ≤ d ≤ today + 1` | HARD |
+| `DATE_OF_FINAL_VISIT_TO_THE_FACILITY` | Valid date; `≥ DATE_FIRST_VISITED_THE_FACILITY`; `≤ today + 1` | HARD |
+| `TOTAL_NUMBER_OF_VISITS` | `≥ 1` when `ENUM_RESULT_FIRST_VISIT` or `ENUM_RESULT_FINAL_VISIT = Completed` | HARD |
+| `CONSENT_GIVEN` | Required; if = No → terminate with `ENUM_RESULT = Refused` | HARD |
+| `CLASSIFICATION`, `REGION`, `PROVINCE_HUC`, `CITY_MUNICIPALITY`, `BARANGAY` | Required, non-blank; must exist in the loaded PSGC external lookup dictionaries (`shared/psgc_*.dcf`) | HARD |
+| Child PSGC parent consistency | Enforced **at pick-time** by `PSGC-Cascade.apc` — `onfocus` on each child filters its value set to children of the chosen parent, so an inconsistent pair is unrepresentable | HARD — cascade enforces |
+| `ENUM_RESULT_FIRST_VISIT = Completed` / `ENUM_RESULT_FINAL_VISIT = Completed` | All Section A–H mandatory items must be non-blank | HARD |
+
+### 3.1.1 GPS capture block (`REC_FACILITY_CAPTURE`)
+
+Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator taps the capture-trigger item to fire the read. `REC_FACILITY_CAPTURE` is a type-Z off-form record — items are wired via `onfocus` in the .app, not placed on a data-entry form.
+
+| Item | Rule | Severity |
+|---|---|---|
+| `FACILITY_CAPTURE_GPS` | Trigger; auto-resets to blank after each successful read (so the button re-arms for retry) | — |
+| `FACILITY_GPS_LATITUDE` | Alpha; after capture, `tonumber()` must be in `[4.5, 21.5]` (Philippine bounding box) | HARD |
+| `FACILITY_GPS_LONGITUDE` | After capture, `tonumber()` in `[116.5, 127.0]` | HARD |
+| `FACILITY_GPS_ALTITUDE` | Alpha; captured from `gps(altitude)`; no bounds enforced | — |
+| `FACILITY_GPS_ACCURACY` | Numeric, metres. Warn if `> 30` — re-read outdoors recommended | SOFT |
+| `FACILITY_GPS_SATELLITES` | Numeric. Warn if `< 4` (fix is below minimum for reliable lat/lon) | SOFT |
+| `FACILITY_GPS_READTIME` | Alpha UTC timestamp; must parse and be within `±24 h` of `DATE_OF_FINAL_VISIT_TO_THE_FACILITY` | SOFT |
+| `FACILITY_GPS_*` non-blank required | When `ENUM_RESULT_FINAL_VISIT = Completed` | HARD |
+
+### 3.1.2 Verification photo (in `REC_FACILITY_CAPTURE`)
+
+| Item | Rule | Severity |
+|---|---|---|
+| `CAPTURE_VERIFICATION_PHOTO` | Trigger; auto-resets to blank after each successful capture | — |
+| `VERIFICATION_PHOTO_FILENAME` | Non-blank when `ENUM_RESULT_FINAL_VISIT = Completed`; 120-char alpha populated by `TakeVerificationPhoto()` | HARD |
+| Filename pattern | Matches `case-{QUESTIONNAIRE_NO}-verification.jpg` (enforced by the PROC that assigns it) | HARD |
+| File reachability | CSEntry attachment must sync to CSWeb before the case can be marked final; enforced by sync workflow, not dictionary validation | — |
 
 ### 3.2 Section A — Facility Head Profile
 
@@ -508,51 +538,175 @@ postproc
   endif;
 ```
 
-### 4.14 Geographic ID lat/long bounds
+### 4.14 Field Control — consent terminator
 
 ```cspro
-PROC LATITUDE
+PROC CONSENT_GIVEN
+postproc
+  if CONSENT_GIVEN = 2 then              { No — respondent withdraws }
+    ENUM_RESULT_FINAL_VISIT = 3;         { Refused }
+    errmsg("Consent not given. Close the questionnaire and code as Refused.");
+    endgroup;                            { terminate — do not enter Section A }
+  endif;
+```
+
+### 4.15 Geographic ID — PSGC cascading value sets
+
+Include `PSGC-Cascade.apc` in the form's .app:
+
+```cspro
+#include "../shared/PSGC-Cascade.apc"
+```
+
+Each PSGC item filters its own value set on focus, using the parent picked upstream. `loadcase()` reads from the external PSGC lookup dictionaries under `shared/psgc_*.dcf`; see CSPro 8.0 Users Guide p.188 Logic Tip #4 for the `setvalueset()` + `loadcase()` pattern.
+
+```cspro
+PROC REGION
+onfocus
+  FillRegionValueSet(REGION);
+
+PROC PROVINCE_HUC
+onfocus
+  FillProvinceValueSet(PROVINCE_HUC, REGION);
+
+PROC CITY_MUNICIPALITY
+onfocus
+  FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
+
+PROC BARANGAY
+onfocus
+  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+```
+
+### 4.16 GPS capture and verification photo
+
+Include `Capture-Helpers.apc` in the form's .app:
+
+```cspro
+#include "../shared/Capture-Helpers.apc"
+```
+
+```cspro
+{ Facility GPS — fired on the capture-trigger item. }
+PROC FACILITY_CAPTURE_GPS
+onfocus
+  if ReadGPSReading(120, 20) then
+    FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
+    FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+    FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+    FACILITY_GPS_ACCURACY   = gps(accuracy);
+    FACILITY_GPS_SATELLITES = gps(satellites);
+    FACILITY_GPS_READTIME   = gps(readtime);
+  endif;
+  FACILITY_CAPTURE_GPS = notappl;   { reset trigger so button re-arms }
+
+{ Post-capture sanity checks — run on the lat/lon items themselves, not on the trigger. }
+PROC FACILITY_GPS_LATITUDE
 postproc
   numeric lat;
-  lat = tonumber(LATITUDE);
-  if lat = notappl or lat < 4.5 or lat > 21.5 then
-    errmsg("Latitude must be a number between 4.5 and 21.5 (Philippines).");
-    reenter;
+  lat = tonumber(FACILITY_GPS_LATITUDE);
+  if lat <> notappl and (lat < 4.5 or lat > 21.5) then
+    errmsg("Facility latitude %f is outside the Philippine bounding box — re-capture.", lat);
+    move to FACILITY_CAPTURE_GPS;
   endif;
 
-PROC LONGITUDE
+PROC FACILITY_GPS_LONGITUDE
 postproc
   numeric lon;
-  lon = tonumber(LONGITUDE);
-  if lon = notappl or lon < 116.5 or lon > 127.0 then
-    errmsg("Longitude must be a number between 116.5 and 127.0 (Philippines).");
-    reenter;
+  lon = tonumber(FACILITY_GPS_LONGITUDE);
+  if lon <> notappl and (lon < 116.5 or lon > 127.0) then
+    errmsg("Facility longitude %f is outside the Philippine bounding box — re-capture.", lon);
+    move to FACILITY_CAPTURE_GPS;
+  endif;
+
+{ Verification photo — fired on the capture-trigger. }
+PROC CAPTURE_VERIFICATION_PHOTO
+onfocus
+  string fn = "case-" + maketext("%06d", QUESTIONNAIRE_NO) + "-verification.jpg";
+  if TakeVerificationPhoto(fn) then
+    VERIFICATION_PHOTO_FILENAME = fn;
+  endif;
+  CAPTURE_VERIFICATION_PHOTO = notappl;
+
+PROC VERIFICATION_PHOTO_FILENAME
+postproc
+  if ENUM_RESULT_FINAL_VISIT = 1 and length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
+    errmsg("Verification photo is required when the case is marked Completed.");
+    move to CAPTURE_VERIFICATION_PHOTO;
   endif;
 ```
 
 ---
 
-## 5. Open questions for the Apr 13 LSS meeting
+### 4.17 Case-control preproc (SURVEY_CODE, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION)
 
-1. **Q63 days vs months** — clarify whether "How many days did you wait" should have day buckets or month buckets.
-2. **Secondary data section** — confirm structure: separate dcf records vs separate CSPro app vs paper-only collection.
-3. **Eligibility termination** — should `<6 months tenure` exit the questionnaire entirely, or capture what data we have and code as Incomplete?
-4. **Q31 NA-skip** — is the missing skip on "Not applicable" intentional?
-5. **Q166 PD_NURSES options** — confirm whether nurses really should not have "Clinical audits" / "Surgical audits" in the choice list, or whether the printed questionnaire is missing them.
-6. **Hospital-only Q121 options** — confirm whether the Q121 value set should dynamically change by facility type, or whether all options are shown and only enforcement happens via skip on Q132/Q133/Q134.
+Added 2026-04-21 as part of the case-control extension (cross-instrument scope — same block in F3/F4 with `survey_code` set per instrument). These five items live at the top of `FIELD_CONTROL`: `SURVEY_CODE`, `INTERVIEWER_ID`, `DATE_STARTED`, `TIME_STARTED`, `AAPOR_DISPOSITION`.
+
+All four auto-set fields are prefilled on the first visit to the case; `INTERVIEWER_ID` is the only one the enumerator types. `AAPOR_DISPOSITION` is reassigned at well-defined transition points (consent refusal, eligibility termination, and CLOSING postproc).
+
+```
+PROC FIELD_CONTROL
+preproc
+  { Prefill the case-control block on first visit. visualvalue() returns
+    the case's current value — when blank, this is a fresh case. }
+  if visualvalue(SURVEY_CODE) = "" then
+    SURVEY_CODE       = "F1";                         { per-instrument literal }
+    DATE_STARTED      = tonumber(sysdate("YYYYMMDD"));
+    TIME_STARTED      = tonumber(systime("HHMMSS"));
+    AAPOR_DISPOSITION = 0;                            { 000 = In Progress }
+  endif;
+
+PROC CONSENT_GIVEN
+postproc
+  { Consent refusal → final disposition 210 (respondent refusal), jump to closing. }
+  if CONSENT_GIVEN = 2 then
+    AAPOR_DISPOSITION = 210;
+    skip to AAPOR_DISPOSITION_FINAL;  { CLOSING form field }
+  endif;
+```
+
+**Notes:**
+- `sysdate("YYYYMMDD")` and `systime("HHMMSS")` are CSPro 8.0 system functions; `tonumber()` strips any formatting. Store as numeric so range/consistency checks are straightforward downstream.
+- The AAPOR `210` code used on consent refusal is AAPOR 2023 "Refusal — respondent" (see `cspro_helpers.py` `AAPOR_DISPOSITION_OPTIONS`). The eligibility terminator at §4.2 should similarly reassign (`230` for eligible non-interview / tenure < 6mo fails re-screen).
+- `INTERVIEWER_ID` is left blank — enumerator enters manually. Don't prefill from `fieldvar()` even if available, because enumerator assignments may rotate mid-day (two enumerators sharing one tablet).
+- `AAPOR_DISPOSITION` on the CLOSING form is rewritten in `postproc` to the final code per AAPOR 2023 rules. Complete → `110`; Partial → `120`; Non-contact → `220`; etc.
+
+---
+
+## 5. Dispositions — Apr 13 LSS meeting + post-LSS E2-F1-009b
+
+The six items previously held "open" are now dispositioned. Two still need ASPSI; four are closed in spec (generator constants listed so the reverse lookup works).
+
+### Needs ASPSI
+
+1. **Q63 ACCRED_WAIT days vs months** (original Bug #3) — Printed stem says "days"; bucket labels are in months. **Route to Juvy/Kidd** before Tranche 2: either (a) ASPSI rewrites labels to day buckets (`<30`, `31–60`, `>60`) or (b) edits the question stem to months. Default if no response before bench-test: keep months (`Q63_USE_DAY_BUCKETS = False`).
+2. **Secondary data section structure** (original Bug #2) — Pages 30–34 (hospital census 6mo, HCW roster by cadre × employment type, YAKAP services, procurement vs charged prices, lab markup) still need a structural decision: record-per-month vs flat; separate CSPro app vs embedded records; paper-only collection vs CAPI. **Route to Juvy**. Default: empty stub records ship in the dcf (`SECONDARY_DATA_AS_STUBS = True`) so the dictionary opens and bench-test can proceed without the secondary-data path.
+
+### Spec-decision (ASPSI may override)
+
+3. **Eligibility termination behaviour** — `<6 months tenure` terminates the questionnaire at Q5 postproc and codes `ENUM_RESULT = Refused/Incomplete`. **Spec default**: terminate immediately (do not capture Sections B–H); enumerator re-screens at a different facility. PROC coded in §4.2.
+4. **Q31 EMR NA-skip** (original Bug #4) — `Q31_NA_SKIPS = True`. **Spec default**: NA routes to Q35 alongside the other UHC9 NA branches; treat the source omission as a printing bug and enforce parity in CAPI logic. Flag in field manual.
+5. **Q166 PD_NURSES audits omission** (original Bug #1) — `Q166_NURSES_INCLUDE_AUDITS = False`. **Spec default**: honour source; nurses' PD list ships without "Clinical audits" / "Surgical audits". Flag to ASPSI only if they surface it during Tranche 2 review.
+6. **Q121 hospital-only options** — `Q121_DYNAMIC_VALUE_SET = False`. **Spec default**: single shared value set; facility-type enforcement happens via GATE rules on Q130 (PCF-only) and Q132–Q134 (hospital-only). If pilot reveals enumerator confusion from irrelevant options appearing, revisit with `setvalueset()` at Q121 preproc (pattern documented in §4.9).
 
 ---
 
 ## 6. Implementation order (recommended)
 
-1. **Fix dcf bugs #1, #4, #5, #6** in `generate_dcf.py`, regenerate `FacilityHeadSurvey.dcf`.
-2. **Decide secondary data structure** (Bug #2), add records, regenerate.
-3. **Open in CSPro Designer**, validate the dictionary loads cleanly.
-4. **Build Form file** (`.fmf`) — one form per record A–H + secondary data.
-5. **Add PROC code** in this order: Field Control validations → Section A eligibility → Section C generic UHC9 skips → Section D Q51 master gate → other section gates → Other-specify enforcements.
-6. **Bench-test** with paper-walkthrough of 2–3 mock facility responses (one accredited hospital, one non-accredited PCF, one terminated-on-tenure case).
-7. **Pretest readiness** — bundle as PFF for CSEntry Android distribution.
+1. **Dispositioned bugs in §1** — all six are already landed or stubbed in `generate_dcf.py`; current build (12 records / 664 items) is bench-testable without further generator work. Revisit Bug #2 (secondary-data structure) and Bug #3 (Q63 units) only after ASPSI response.
+2. **Open `FacilityHeadSurvey.dcf` in CSPro Designer**, validate the dictionary loads cleanly; inspect record layout (11 data records + root header, including the 4 `SEC_*` stubs and `REC_FACILITY_CAPTURE`).
+3. **Build the Form file** (`.fmf`) — one form per record A–H; skip the `SEC_*` stubs and the off-form `REC_FACILITY_CAPTURE` (its items are wired via `onfocus` triggers, not placed on a data-entry form).
+4. **Add PROC code** in this order:
+   1. Field Control consent terminator (§4.14) + PSGC cascade (§4.15) + GPS/photo capture (§4.16)
+   2. Section A eligibility at Q5 (§4.2) + tenure consistency at Q6 (§4.3)
+   3. Section C generic UHC9 skip pattern (§4.4)
+   4. Section D Q51 master gate (§4.5) + Q52 date (§4.6) + Q86/Q87 consistency (§4.7) + Q57 capitation (§4.8)
+   5. Section F Q121 facility-type gating (§4.9) + generic why-difficult gate (§4.10)
+   6. Section G skips (§4.11, §4.12)
+   7. Other-specify enforcement generics (§4.13)
+5. **Bench-test** with paper-walkthrough of 3 mock facility responses: one accredited Level-2 hospital, one non-accredited PCF, one terminated-on-tenure case. Verify the capture triggers fire correctly and the verification-photo filename lands next to the case data.
+6. **Pretest readiness** — bundle as PFF for CSEntry Android distribution. Confirm `shared/PSGC-Cascade.apc`, `shared/Capture-Helpers.apc`, and the PSGC external lookup dictionaries (`shared/psgc_*.dcf`) are packaged alongside the .app.
 
 ---
 
-*This spec is generated from the April 8 Annex F1 PDF and the v1 dcf. Update both this file and `generate_dcf.py` whenever the questionnaire is revised.*
+*This spec is generated from the Apr 20 2026 Annex F1 PDF and the Apr 21 dcf (12 records / 671 items, post-GPS/photo capture pass + case-control extension). Update both this file and `generate_dcf.py` whenever the questionnaire is revised.*

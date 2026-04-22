@@ -71,6 +71,204 @@
           },
           "items": [
             {
+              "name": "SURVEY_CODE",
+              "labels": [
+                {
+                  "text": "Survey Instrument Code"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 2
+            },
+            {
+              "name": "INTERVIEWER_ID",
+              "labels": [
+                {
+                  "text": "Interviewer ID"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": true
+            },
+            {
+              "name": "DATE_STARTED",
+              "labels": [
+                {
+                  "text": "Date Interview Started (YYYYMMDD)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "TIME_STARTED",
+              "labels": [
+                {
+                  "text": "Time Interview Started (HHMMSS)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 6,
+              "zeroFill": false
+            },
+            {
+              "name": "AAPOR_DISPOSITION",
+              "labels": [
+                {
+                  "text": "AAPOR Disposition Code"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "AAPOR_DISPOSITION_VS1",
+                  "labels": [
+                    {
+                      "text": "AAPOR Disposition Code"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "000 \u2014 In Progress (initial)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "000"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "110 \u2014 Complete interview"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "110"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "120 \u2014 Partial interview / break-off"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "120"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "210 \u2014 Refusal \u2014 respondent"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "210"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "211 \u2014 Refusal \u2014 gatekeeper / household"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "211"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "220 \u2014 Non-contact \u2014 respondent unavailable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "220"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "230 \u2014 Other eligible non-interview"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "230"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "310 \u2014 Unknown eligibility \u2014 facility/household"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "310"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "320 \u2014 Unknown eligibility \u2014 respondent"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "320"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "410 \u2014 Not eligible \u2014 out of sample / ineligible"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "410"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "450 \u2014 Not eligible \u2014 other"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "450"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "SURVEY_TEAM_LEADER_S_NAME",
               "labels": [
                 {
@@ -3960,16 +4158,6 @@
               "length": 120
             },
             {
-              "name": "Q36_UHC_SOURCE_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "36. UHC source \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q37_UHC_UNDERSTAND_O01",
               "labels": [
                 {
@@ -4256,16 +4444,6 @@
               "labels": [
                 {
                   "text": "37. What is your understanding about UHC? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q37_UHC_UNDERSTAND_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "37. UHC understanding \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -5085,16 +5263,6 @@
               "length": 120
             },
             {
-              "name": "Q42_DIFFICULTY_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "42. Difficulty \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q43_KNOWS_ASSIST",
               "labels": [
                 {
@@ -5740,16 +5908,6 @@
               "length": 120
             },
             {
-              "name": "Q46_BENEFITS_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "46. Benefits \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q47_PHYSICIAN_CHECKUP",
               "labels": [
                 {
@@ -6383,16 +6541,6 @@
               "length": 120
             },
             {
-              "name": "Q50_DIFFICULTY_PAYING_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "50. Difficulty paying \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q51_OTHER_INSURANCE",
               "labels": [
                 {
@@ -6773,16 +6921,6 @@
               "labels": [
                 {
                   "text": "52. Which health insurance plan/s are you enrolled in? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q52_PLANS_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "52. Insurance plans \u2014 Others (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -8067,16 +8205,6 @@
               "length": 120
             },
             {
-              "name": "Q65_WHY_NO_USUAL_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "65. Why no usual facility \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q66_SAME_AS_USUAL",
               "labels": [
                 {
@@ -9257,16 +9385,6 @@
               "length": 120
             },
             {
-              "name": "Q70_USUAL_TRANSPORT_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "70. Transport to usual facility \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q71_NEAREST_TYPE",
               "labels": [
                 {
@@ -9992,16 +10110,6 @@
               "length": 120
             },
             {
-              "name": "Q73_NEAREST_TRANSPORT_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "73. Transport to nearest primary care \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q74_KON_HEARD",
               "labels": [
                 {
@@ -10435,16 +10543,6 @@
               "length": 120
             },
             {
-              "name": "Q75_KON_SOURCE_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "75. YAKAP/Konsulta source \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q76_KON_UNDERSTAND_O01",
               "labels": [
                 {
@@ -10778,16 +10876,6 @@
               "labels": [
                 {
                   "text": "76. What is your understanding about the YAKAP/Konsulta package? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q76_KON_UNDERSTAND_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "76. YAKAP/Konsulta understanding \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -11598,16 +11686,6 @@
               "labels": [
                 {
                   "text": "82. Why are you NOT registered with a YAKAP/Konsulta package provider? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q82_KON_WHY_NOT_REG_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "82. Why not registered \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -12801,16 +12879,6 @@
               "length": 120
             },
             {
-              "name": "Q85_CONDITIONS_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "85. Conditions \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q86_VISIT_EVENTS_O01",
               "labels": [
                 {
@@ -13618,16 +13686,6 @@
               ],
               "contentType": "alpha",
               "length": 120
-            },
-            {
-              "name": "Q87_OTHER_ACTIONS_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "87. Other actions \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
             }
           ]
         },
@@ -14154,16 +14212,6 @@
               "labels": [
                 {
                   "text": "90. What were the reasons why you were not confined/ admitted in a hospital/clinic? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q90_NOT_CONFINED_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "90. Reasons not confined \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -18399,16 +18447,6 @@
               "length": 120
             },
             {
-              "name": "Q100_BUCAS_SOURCE_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "100. BUCAS source \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q101_BUCAS_UNDERSTAND_O01",
               "labels": [
                 {
@@ -18648,16 +18686,6 @@
               "labels": [
                 {
                   "text": "101. What is your understanding about a BUCAS center? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q101_BUCAS_UNDERSTAND_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "101. BUCAS understanding \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -19044,16 +19072,6 @@
               "labels": [
                 {
                   "text": "103. If yes, which service/s did you avail? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q103_BUCAS_SERVICES_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "103. BUCAS services \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -22156,16 +22174,6 @@
               "length": 120
             },
             {
-              "name": "Q114_NO_PH_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "114. Why no PhilHealth \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q1141_1",
               "labels": [
                 {
@@ -23411,16 +23419,6 @@
               "length": 120
             },
             {
-              "name": "Q117_NBB_SOURCE_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "117. NBB source \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q118_NBB_UNDERSTAND_O01",
               "labels": [
                 {
@@ -23848,16 +23846,6 @@
               "labels": [
                 {
                   "text": "118. What is your understanding about NBB? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q118_NBB_UNDERSTAND_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "118. NBB understanding \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -24309,16 +24297,6 @@
               "length": 120
             },
             {
-              "name": "Q120_ZBB_SOURCE_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "120. ZBB source \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q121_ZBB_UNDERSTAND_O01",
               "labels": [
                 {
@@ -24746,16 +24724,6 @@
               "labels": [
                 {
                   "text": "121. What is your understanding about ZBB? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q121_ZBB_UNDERSTAND_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "121. ZBB understanding \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -25319,16 +25287,6 @@
               "labels": [
                 {
                   "text": "125. What are your sources of information about MAIFIP? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q125_MAIFIP_SOURCE_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "125. MAIFIP source \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -28170,16 +28128,6 @@
               "length": 120
             },
             {
-              "name": "Q148_CONDITIONS_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "148. Conditions \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q149_WHERE_BUY_O01",
               "labels": [
                 {
@@ -28560,16 +28508,6 @@
               "labels": [
                 {
                   "text": "149. Where do you usually buy or receive your medicines? Select all that apply. \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q149_WHERE_BUY_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "149. Where buy \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -29114,16 +29052,6 @@
               "length": 120
             },
             {
-              "name": "Q153_GAMOT_SOURCE_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "153. GAMOT source \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q154_GAMOT_UNDERSTAND_O01",
               "labels": [
                 {
@@ -29410,16 +29338,6 @@
               "labels": [
                 {
                   "text": "154. What is your understanding of the GAMOT Package? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q154_GAMOT_UNDERSTAND_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "154. GAMOT understanding \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -29916,16 +29834,6 @@
               "length": 120
             },
             {
-              "name": "Q157_WHERE_REST_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "157. Where got rest \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q158_BRAND_GEN_KNOW",
               "labels": [
                 {
@@ -30395,16 +30303,6 @@
               "length": 120
             },
             {
-              "name": "Q160_WHY_GENERIC_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "160. Why generic \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q161_WHY_BRANDED_O01",
               "labels": [
                 {
@@ -30738,16 +30636,6 @@
               "labels": [
                 {
                   "text": "161. If branded, why did you buy branded medicine? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q161_WHY_BRANDED_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "161. Why branded \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -31384,16 +31272,6 @@
               "labels": [
                 {
                   "text": "163. What type of care was the referral for? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q163_CARE_TYPE_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "163. Care type \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",
@@ -32388,16 +32266,6 @@
               "length": 120
             },
             {
-              "name": "Q171_WHY_NOT_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "171. Why not visit \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
               "name": "Q172_PCP_REFERRAL",
               "labels": [
                 {
@@ -33119,16 +32987,6 @@
               "labels": [
                 {
                   "text": "177. As it was not a referral, why did you decide to visit a hospital? \u2014 Other (specify) text"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q177_WHY_HOSPITAL_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "177. Why hospital \u2014 Other (specify) text"
                 }
               ],
               "contentType": "alpha",

@@ -13,7 +13,7 @@ tags: [cspro, capi, skip-logic, validations, f4, household]
 
 Source-of-truth for CSPro CAPI logic on `HouseholdSurvey.dcf`. Covers:
 
-1. **Sanity-check findings** — schema gaps and discrepancies between the Apr 20 questionnaire (Q1–Q202, 17 sections) and the current dcf (21 records / 611 items).
+1. **Sanity-check findings** — schema gaps and discrepancies between the Apr 20 questionnaire (Q1–Q202, 17 sections) and the current dcf (22 records / 623 items).
 2. **Skip-logic table** — every conditional jump extracted from the questionnaire, section by section A–Q.
 3. **Cross-field validations** — HARD (block save), SOFT (warn-and-confirm), GATE (display-only conditional rendering).
 4. **CSPro logic templates** — paste-ready snippets for Field Control, PSGC cascade, household-roster loop, WHO expenditure grid, financial bill-recall chain, distress financing.
@@ -22,7 +22,7 @@ Source-of-truth for CSPro CAPI logic on `HouseholdSurvey.dcf`. Covers:
 
 All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item names follow the `Q{n}_*` convention. This spec mirrors the shape of `deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md` and `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md`.
 
-> **Item-count provenance.** The Apr 20 F4 DCF is 21 records / 611 items capturing 202 numbered source questions. Expansion from source → dcf is driven by the same patterns as F3: payment/consumption matrices explode each row into flag + amount pairs, select-all items get per-option `_O01..On` flag items plus an `_OTHER_TXT` companion, and a separate `FIELD_CONTROL` + `HOUSEHOLD_GEO_ID` pair captures survey logistics and PSGC cascade. See `wiki/analyses/Analysis - Apr 20 DCF Generator Audit.md` for the per-chunk rewrite ledger (chunks 1–8, commits `fe3b567` → `001b796`).
+> **Item-count provenance.** The Apr 20 F4 DCF was 21 records / 611 items capturing 202 numbered source questions. Expansion from source → dcf is driven by the same patterns as F3: payment/consumption matrices explode each row into flag + amount pairs, select-all items get per-option `_O01..On` flag items plus an `_OTHER_TXT` companion, and a separate `FIELD_CONTROL` + `HOUSEHOLD_GEO_ID` pair captures survey logistics and PSGC cascade. The Apr 21 GPS+photo pass added GPS metadata (altitude, accuracy, satellites, read-time, capture trigger) alongside the preserved `LATITUDE`/`LONGITUDE` in `HOUSEHOLD_GEO_ID`, plus a new verification-photo record (`REC_CASE_VERIFICATION`, type Z) — bringing the dcf to **22 records / 623 items**. See `wiki/analyses/Analysis - Apr 20 DCF Generator Audit.md` for the per-chunk rewrite ledger (chunks 1–8, commits `fe3b567` → `001b796`).
 
 ---
 
@@ -32,13 +32,13 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 
 | # | Item | Issue | Fix |
 |---|---|---|---|
-| 1 | **`C_HOUSEHOLD_ROSTER` not repeating** | Currently `occurrences.maximum = 1` — captures one household member only. Source (Annex F4 Section C) is an explicit roster keyed by member line number; Section J health-seeking is designed to loop over it. | Patch `generate_dcf.py` so `C_HOUSEHOLD_ROSTER` is written with `occurrences.maximum = 20` (reasonable upper bound; tuneable), and `MEMBER_LINE_NO` becomes the id-item of a nested sub-level — or keep the roster as a single-level repeating record with an id suffix. Blocks Section J looping. |
-| 2 | **`J_HEALTH_SEEKING` not per-member** | Source: "looping over household members for health-seeking items" (36 items Q101–Q107). Currently a flat single-occurrence record. Either one health-seeking block per member (repeating) or one per-household (flat) — the former is what the source ordered. | Patch `generate_dcf.py` to make `J_HEALTH_SEEKING` repeating keyed by `MEMBER_LINE_NO`. Alternatively, confirm with ASPSI whether Section J applies to the respondent-only; honor source as printed otherwise. Linked to finding #1. |
+| 1 | ~~`C_HOUSEHOLD_ROSTER` not repeating~~ **CLOSED-BY-VERIFICATION 2026-04-21.** | Entry was stale against the current generator. `build_section_c()` in `generate_dcf.py:487` already emits `record("C_HOUSEHOLD_ROSTER", ..., "E", items, max_occurs=20)`, and the committed `HouseholdSurvey.dcf:2836` shows `"occurrences": { "required": true, "maximum": 20 }`. `MEMBER_LINE_NO` is the id-item (zero-filled, length=2). Roster loops correctly. | No code change. Finding #7 below is now actually enforceable. |
+| 2 | ~~`J_HEALTH_SEEKING` not per-member~~ **CLOSED-BY-DESIGN 2026-04-21.** | Apr 20 source uses singular "you/your household member" phrasing for Q101–Q107 — intentionally respondent-level, not roster-repeating (downgraded from the Apr 08 `max_occurs=20` structure per Annex G#4). Code comment at `generate_dcf.py:984–989` documents this. `J_HEALTH_SEEKING` correctly emits `"maximum": 1`. Section H (PhilHealth) follows the same respondent-level pattern (`generate_dcf.py:785–789`). | No code change. |
 | 3 | **Q47 placement** | `Q47_HH_HAS_PRIVATE_INS` lives in its own `C_HH_PRIVATE_INS_GATE` record between `C_HOUSEHOLD_ROSTER` and `D_UHC_AWARENESS`. Q47 is the household-level "does anyone in the HH have private insurance" gate — Q49/Q50 per-member insurance lives inside the roster. | Acceptable as-is: isolating the HH-level gate from the per-member loop keeps the roster schema clean. Document the split. |
 | 4 | **Q2 birth date ↔ Q2.1 age** | Q2 captures `BIRTH_MONTH` + `BIRTH_YEAR`; Q2.1 captures `AGE`. Source asks "age on last birthday" — needs consistency rule: `AGE` must equal the computed year difference from BIRTH_YEAR given today's date (±1 for pre/post-birthday bracket). | HARD consistency rule in §3.2. |
 | 5 | **Q18 amount + bracket duality** | Same pattern as F3 Q18. Q18_INCOME_AMOUNT + Q18_INCOME_BRACKET captured together — needs consistency check (amount falls in bracket). | HARD consistency rule in §3.2. |
 | 6 | **Q15 IP_GROUP coded list** | Source says "A list will be provided" but Annex F4 ships free-text only (identical to F3 Q31). | Route to ASPSI (§5, item #1). Keep alpha as default. |
-| 7 | **Q19 vs roster count** | `Q19_HH_SIZE_TOTAL` is the self-reported HH size; roster occurrences should equal Q19 (or Q19 − 1 if respondent is listed separately). Without the roster being repeating (finding #1), this check can't be enforced. | HARD post-roster rule once finding #1 is fixed: `count(C_HOUSEHOLD_ROSTER) = Q19_HH_SIZE_TOTAL`. |
+| 7 | **Q19 vs roster count** | `Q19_HH_SIZE_TOTAL` is the self-reported HH size; roster occurrences should equal Q19 (or Q19 − 1 if respondent is listed separately). | HARD post-roster rule (finding #1 already closed): `count(C_HOUSEHOLD_ROSTER) = Q19_HH_SIZE_TOTAL`. Implement in roster `postproc`. |
 | 8 | **Section N per-item "consumed" gate pattern** | 42 expenditure items use the three-column pattern `{Q}_CONSUMED` → `{Q}_PURCHASED_PHP` → `{Q}_INKIND_PHP`. Needs uniform gate: if `_CONSUMED = No`, both `_PURCHASED_PHP` and `_INKIND_PHP` must be 0 or blank. | Spec as HARD gate + PROC template in §4.9. |
 | 9 | **Section N subtotals** | Q157, Q177, Q182, Q185 are `_SUBTOTAL_TOTAL_PHP` auto-compute items. Must be computed (not entered) from their panel's `_PURCHASED_PHP + _INKIND_PHP` sum. | HARD: item is auto-set, enumerator cannot edit. PROC template in §4.9. |
 | 10 | **Section M bill-recall chain** | Q140_RECALL_BREAKDOWN + Q141_BILL_ITEMS + Q141.1_NO_RECEIPT_AMT + Q142_RECALL_PAYMENT + Q143_HOW_PAID form a recall chain: if Q140 = No, skip Q141/Q141.1; if Q142 = No, skip Q143. Also Q129 gates whether Section M applies at all (only HHs with confinement experience answer bill-recall). | Spec as skip-logic §2 Section M + PROC §4.8. |
@@ -249,10 +249,33 @@ HARD = block save; SOFT = warn-and-confirm; GATE = display-only (items rendered 
 | `ENUM_RESULT_FIRST_VISIT`, `ENUM_RESULT_FINAL_VISIT` | Required, ∈ value set | HARD |
 | `CONSENT_GIVEN` | Required, ∈ {Yes, No}; if No → terminate | HARD |
 | `HH_LISTING_NO` | Required, matches F3b listing form entry | HARD |
-| `REGION` → `PROVINCE_HUC` → `CITY_MUNICIPALITY` → `BARANGAY` | PSGC cascade; each level must match a child of the prior level | HARD (per-level) |
-| `LATITUDE`, `LONGITUDE` | Within Philippine bounding box if captured; optional | SOFT |
+| `REGION` → `PROVINCE_HUC` → `CITY_MUNICIPALITY` → `BARANGAY` | PSGC cascade enforced at pick-time by `PSGC-Cascade.apc` — each child's `onfocus` filters its value set to children of the chosen parent, so an inconsistent pair is unrepresentable | HARD — cascade enforces |
 | `HH_ADDRESS` | Required, non-blank | HARD |
 | `CLASSIFICATION` | ∈ {Urban, Rural} — matches barangay classification from PSA | HARD |
+
+### 3.1.1 GPS capture (household `HOUSEHOLD_GEO_ID` block)
+
+Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator taps the capture-trigger item to fire the read. Unlike F1/F3, F4 preserves its baseline `LATITUDE`/`LONGITUDE` alpha items (no schema break for historical data) and the capture handler writes into them directly alongside the new GPS-metadata items.
+
+| Item | Rule | Severity |
+|---|---|---|
+| `CAPTURE_HH_GPS` | Trigger; auto-resets to blank after each successful read (so the button re-arms for retry) | — |
+| `LATITUDE` | Alpha; after capture, `tonumber()` must be in `[4.5, 21.5]` (Philippine bounding box) | HARD |
+| `LONGITUDE` | After capture, `tonumber()` in `[116.5, 127.0]` | HARD |
+| `HH_GPS_ALTITUDE` | Alpha, metres; parsed for sanity when present | SOFT |
+| `HH_GPS_ACCURACY` | Numeric, metres. Warn if `> 30` — re-read outdoors recommended | SOFT |
+| `HH_GPS_SATELLITES` | Numeric. Warn if `< 4` (fix is below minimum for reliable lat/lon) | SOFT |
+| `HH_GPS_READTIME` | Alpha UTC timestamp; must parse and be within `±24 h` of `DATE_FINAL_VISIT` | SOFT |
+| `LATITUDE`/`LONGITUDE` non-blank required | When `ENUM_RESULT_FINAL_VISIT = Completed*` | HARD |
+| HH vs barangay centroid | Warn if captured point is `> 5 km` from the PSA-barangay centroid for the selected `BARANGAY` — likely wrong-barangay mis-capture (centroid lookup is a follow-on data task) | SOFT — advisory only |
+
+### 3.1.2 Verification photo (`REC_CASE_VERIFICATION`)
+
+| Item | Rule | Severity |
+|---|---|---|
+| `CAPTURE_VERIFICATION_PHOTO` | Trigger; auto-resets after each successful capture | — |
+| `VERIFICATION_PHOTO_FILENAME` | Non-blank when `ENUM_RESULT_FINAL_VISIT = Completed*`; 120-char alpha populated by `TakeVerificationPhoto()` | HARD |
+| Filename pattern | Matches `case-{QUESTIONNAIRE_NO}-verification.jpg` (enforced by the PROC that assigns it) | HARD |
 
 ### 3.2 Section A — Informed Consent
 
@@ -602,7 +625,89 @@ postproc
 
 ### 4.3 PSGC cascade gate
 
-(Identical to F3 §4.3 — REGION → PROVINCE_HUC → CITY_MUNICIPALITY → BARANGAY each validated against the PSA-loaded value sets. Copy from the F3 spec.)
+Identical pattern to F3 §4.3 — PSGC is carried in `shared/psgc_*.dcf` external lookup dictionaries, and each child's `onfocus` calls into `shared/PSGC-Cascade.apc` to filter its value set to children of the chosen parent. Include the cascade .apc in the form's .app:
+
+```cspro
+#include "../shared/PSGC-Cascade.apc"
+```
+
+```cspro
+PROC REGION
+onfocus
+  FillRegionValueSet(REGION);
+
+PROC PROVINCE_HUC
+onfocus
+  FillProvinceValueSet(PROVINCE_HUC, REGION);
+
+PROC CITY_MUNICIPALITY
+onfocus
+  FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
+
+PROC BARANGAY
+onfocus
+  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+```
+
+F4 has only one PSGC block (the household address); no `P_` family is needed.
+
+### 4.3a GPS capture and verification photo
+
+Include `Capture-Helpers.apc` in the form's .app:
+
+```cspro
+#include "../shared/Capture-Helpers.apc"
+```
+
+```cspro
+{ Household GPS — fired on the capture-trigger item. Writes into the preserved
+  LATITUDE/LONGITUDE items plus the new HH_GPS_* metadata. }
+PROC CAPTURE_HH_GPS
+onfocus
+  if ReadGPSReading(120, 20) then
+    LATITUDE          = maketext("%f", gps(latitude));
+    LONGITUDE         = maketext("%f", gps(longitude));
+    HH_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+    HH_GPS_ACCURACY   = gps(accuracy);
+    HH_GPS_SATELLITES = gps(satellites);
+    HH_GPS_READTIME   = gps(readtime);
+  endif;
+  CAPTURE_HH_GPS = notappl;   { reset trigger so button re-arms }
+
+PROC LATITUDE
+postproc
+  numeric lat;
+  lat = tonumber(LATITUDE);
+  if lat <> notappl and (lat < 4.5 or lat > 21.5) then
+    errmsg("Latitude %f is outside the Philippine bounding box — re-capture.", lat);
+    move to CAPTURE_HH_GPS;
+  endif;
+
+PROC LONGITUDE
+postproc
+  numeric lon;
+  lon = tonumber(LONGITUDE);
+  if lon <> notappl and (lon < 116.5 or lon > 127.0) then
+    errmsg("Longitude %f is outside the Philippine bounding box — re-capture.", lon);
+    move to CAPTURE_HH_GPS;
+  endif;
+
+{ Verification photo — fired on the capture-trigger. }
+PROC CAPTURE_VERIFICATION_PHOTO
+onfocus
+  string fn = "case-" + maketext("%04d", QUESTIONNAIRE_NO) + "-verification.jpg";
+  if TakeVerificationPhoto(fn) then
+    VERIFICATION_PHOTO_FILENAME = fn;
+  endif;
+  CAPTURE_VERIFICATION_PHOTO = notappl;
+
+PROC VERIFICATION_PHOTO_FILENAME
+postproc
+  if ENUM_RESULT_FINAL_VISIT in 1,2,3 and length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
+    errmsg("Verification photo is required when the case is marked Completed.");
+    move to CAPTURE_VERIFICATION_PHOTO;
+  endif;
+```
 
 ### 4.4 Section A + B consistency
 
@@ -644,11 +749,11 @@ postproc
   endif;
 ```
 
-### 4.5 Roster loop — gate + per-member skips (depends on sanity #1 fix)
+### 4.5 Roster loop — gate + per-member skips
 
 ```cspro
-{ Assumes C_HOUSEHOLD_ROSTER is repeating. Until the schema patch lands, }
-{ this template documents intended behavior. }
+{ C_HOUSEHOLD_ROSTER is repeating at max_occurs=20 (verified 2026-04-21). }
+{ Template below is directly buildable against the emitted DCF. }
 
 PROC C_HOUSEHOLD_ROSTER
 preproc
@@ -854,6 +959,32 @@ postproc
 
 ---
 
+### 4.12 Case-control preproc (SURVEY_CODE, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION)
+
+Added 2026-04-21 — same shape as F1 §4.17 and F3 §4.16. Five case-control items at the top of `FIELD_CONTROL`: `SURVEY_CODE` (literal "F4"), `INTERVIEWER_ID`, `DATE_STARTED`, `TIME_STARTED`, `AAPOR_DISPOSITION` (AAPOR 2023 value set).
+
+```
+PROC FIELD_CONTROL
+preproc
+  if visualvalue(SURVEY_CODE) = "" then
+    SURVEY_CODE       = "F4";
+    DATE_STARTED      = tonumber(sysdate("YYYYMMDD"));
+    TIME_STARTED      = tonumber(systime("HHMMSS"));
+    AAPOR_DISPOSITION = 0;                            { 000 = In Progress }
+  endif;
+
+PROC CONSENT_GIVEN
+postproc
+  if CONSENT_GIVEN = 2 then
+    AAPOR_DISPOSITION = 210;              { Refusal — respondent }
+    skip to AAPOR_DISPOSITION_FINAL;
+  endif;
+```
+
+See F1 §4.17 for full notes on AAPOR codes and transition rules.
+
+---
+
 ## 5. Open questions — routing
 
 Disposition following the F3 pattern: genuine ASPSI asks vs spec-decisions.
@@ -876,12 +1007,12 @@ Disposition following the F3 pattern: genuine ASPSI asks vs spec-decisions.
 
 ## 6. Implementation order (recommended)
 
-1. **Fix schema gaps #1 and #2 in `generate_dcf.py`** — make `C_HOUSEHOLD_ROSTER` and (per source) `J_HEALTH_SEEKING` repeating records with `MEMBER_LINE_NO` as id. This is the only regenerator blocker; once patched, the dcf goes from 611 to something higher (adds `occurrenceLabel` metadata; items unchanged). Re-run the generator, diff the dcf, verify items are unchanged and only record structure changed.
+1. **Fix schema gaps #1 and #2 in `generate_dcf.py`** — make `C_HOUSEHOLD_ROSTER` and (per source) `J_HEALTH_SEEKING` repeating records with `MEMBER_LINE_NO` as id. This is the only regenerator blocker; once patched, the dcf goes from 618 to something higher (adds `occurrenceLabel` metadata; items unchanged). Re-run the generator, diff the dcf, verify items are unchanged and only record structure changed.
 2. **Route ASPSI questions** (§5 items 1–3) in the same message — one batch, one reply expected. Default behaviors documented so the build isn't blocked pending response.
 3. **Open `HouseholdSurvey.dcf` in CSPro Designer**, validate the dictionary loads cleanly; inspect record layout (11 data records + header + field control + geo + consent gate + roster + per-section blocks).
 4. **Build the Form file** (`.fmf`) — one form per section A–Q + Field Control + Geographic ID; roster form gets its own scrolling behavior (per `CSPro CAPI Strategies`: roster scrolls alone). Tab-order aligned with Q-number sequence.
 5. **Add PROC code** in this order:
-   1. Field Control + consent terminator (§4.2) + PSGC cascade (§4.3)
+   1. Field Control + consent terminator (§4.2) + PSGC cascade (§4.3) + GPS/photo capture (§4.3a)
    2. Section A–B consistency (§4.4) — age-birth-year, income bracket, HH-size sanity
    3. Roster loop (§4.5) — including post-loop count check and Q47 auto-set
    4. Awareness-block generics (§4.6) applied to D, E, F
@@ -901,4 +1032,4 @@ Disposition following the F3 pattern: genuine ASPSI asks vs spec-decisions.
 
 ---
 
-*This spec is generated from the Apr 20 2026 Annex F4 PDF and the Apr 20 dcf (21 records / 611 items). Update both this file and `generate_dcf.py` whenever the questionnaire is revised. Mirrors the shape of `F1-Skip-Logic-and-Validations.md` and `F3-Skip-Logic-and-Validations.md`.*
+*This spec is generated from the Apr 20 2026 Annex F4 PDF and the Apr 21 dcf (22 records / 623 items, post-GPS/photo). Update both this file and `generate_dcf.py` whenever the questionnaire is revised. Mirrors the shape of `F1-Skip-Logic-and-Validations.md` and `F3-Skip-Logic-and-Validations.md`.*

@@ -14,14 +14,14 @@ tags: [cspro, capi, skip-logic, validations, f3]
 
 Source-of-truth for CSPro CAPI logic on `PatientSurvey.dcf`. Covers:
 
-1. **Sanity-check findings** — discrepancies between the Apr 20 questionnaire and the current dcf (15 records / 818 items).
+1. **Sanity-check findings** — discrepancies between the Apr 20 questionnaire and the current dcf (18 records / 840 items).
 2. **Skip-logic table** — every conditional jump extracted from the questionnaire.
 3. **Cross-field validations** — HARD (block save), SOFT (warn-and-confirm), GATE (display-only conditional rendering).
 4. **CSPro logic templates** — paste-ready snippets for common patterns (final chunk).
 
 All Q-numbers refer to the **Apr 20 printed questionnaire** (1–178); dcf item names follow the `Q{n}_*` convention.
 
-> **Item-count provenance.** The dcf was 387 items as of the Apr 08 baseline. The Apr 20 DOH-submitted questionnaire expanded from 126 printed items to 178, and the generator rebuild widened per-item data capture — payment-source matrices (Q92/Q94/Q96/Q98/Q107/Q109/Q112/Q113) exploded each payment row into `_PAY_{code}` flag + `_PAY_{code}_AMT` amount pairs, select-all items got per-option flag items, and `_OTHER_TXT` companions were added everywhere. That lifts the dcf to 15 records / 818 items with no schema changes still pending. See `wiki/analyses/Analysis - Apr 20 DCF Generator Audit.md` for the per-patch ledger.
+> **Item-count provenance.** The dcf was 387 items as of the Apr 08 baseline. The Apr 20 DOH-submitted questionnaire expanded from 126 printed items to 178, and the generator rebuild widened per-item data capture — payment-source matrices (Q92/Q94/Q96/Q98/Q107/Q109/Q112/Q113) exploded each payment row into `_PAY_{code}` flag + `_PAY_{code}_AMT` amount pairs, select-all items got per-option flag items, and `_OTHER_TXT` companions were added everywhere. That lifted the dcf to 15 records / 818 items on Apr 20. The Apr 21 GPS+photo capture pass added three further records — facility GPS (`REC_FACILITY_CAPTURE`, type Z), patient-home GPS (`REC_PATIENT_CAPTURE`, type Y), verification photo (type X) — plus a `PATIENT_GEO_ID` extra item and the `F3_FACILITY_ID` F1-linkage item, bringing the dcf to **18 records / 840 items**. See `wiki/analyses/Analysis - Apr 20 DCF Generator Audit.md` for the per-patch ledger.
 
 ---
 
@@ -86,11 +86,44 @@ Format: **Trigger → Destination (skip range)**. Multiple "No / IDK / Not appli
 | `DATE_FIRST_VISIT` | Valid date; `20260101 ≤ d ≤ today + 1` | HARD |
 | `DATE_FINAL_VISIT` | Valid date; `≥ DATE_FIRST_VISIT`; `≤ today + 1` | HARD |
 | `TOTAL_VISITS` | `≥ 1` when `ENUM_RESULT_FIRST_VISIT` or `ENUM_RESULT_FINAL_VISIT = Completed` | HARD |
-| `LATITUDE` (facility + patient home) | Numeric in `[4.5, 21.5]` (Philippine bounding box) when provided | HARD |
-| `LONGITUDE` (facility + patient home) | Numeric in `[116.5, 127.0]` (Philippine bounding box) when provided | HARD |
-| `CLASSIFICATION`, `REGION`, `PROVINCE_HUC`, `CITY_MUNICIPALITY`, `BARANGAY` | Required, non-blank; must exist in the loaded PSGC value sets | HARD |
-| `P_REGION`, `P_PROVINCE_HUC`, `P_CITY_MUNICIPALITY`, `P_BARANGAY` | Required when `PATIENT_TYPE = Outpatient` or home-visit interview; exist in PSGC value sets | HARD |
-| Child PSGC parent consistency | `PROVINCE_HUC` must be under the selected `REGION`; `CITY_MUNICIPALITY` under `PROVINCE_HUC`; `BARANGAY` under `CITY_MUNICIPALITY` (apply same check to `P_*` family) | HARD — enforce via cascading dropdown in PROC |
+| `CLASSIFICATION`, `REGION`, `PROVINCE_HUC`, `CITY_MUNICIPALITY`, `BARANGAY` | Required, non-blank; must exist in the loaded PSGC external lookup dictionaries (`shared/psgc_*.dcf`) | HARD |
+| `P_REGION`, `P_PROVINCE_HUC`, `P_CITY_MUNICIPALITY`, `P_BARANGAY` | Required when `PATIENT_TYPE = Outpatient` or home-visit interview; exist in PSGC lookups | HARD |
+| Child PSGC parent consistency | Enforced **at pick-time** by `PSGC-Cascade.apc` — `onfocus` on each child filters its value set to children of the chosen parent, so an inconsistent pair is unrepresentable (apply the same chain to the `P_*` family) | HARD — cascade enforces |
+
+### 3.1.1 GPS capture blocks (`REC_FACILITY_CAPTURE` + `REC_PATIENT_CAPTURE`)
+
+Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator taps the capture-trigger item to fire the read.
+
+| Item | Rule | Severity |
+|---|---|---|
+| `FACILITY_CAPTURE_GPS` | Trigger; auto-resets to blank after each successful read (so the button re-arms for retry) | — |
+| `FACILITY_GPS_LATITUDE` | Alpha; after capture, `tonumber()` must be in `[4.5, 21.5]` (Philippine bounding box) | HARD |
+| `FACILITY_GPS_LONGITUDE` | After capture, `tonumber()` in `[116.5, 127.0]` | HARD |
+| `FACILITY_GPS_ACCURACY` | Numeric, metres. Warn if `> 30` — re-read outdoors recommended | SOFT |
+| `FACILITY_GPS_SATELLITES` | Numeric. Warn if `< 4` (fix is below minimum for reliable lat/lon) | SOFT |
+| `FACILITY_GPS_READTIME` | Alpha UTC timestamp; must parse and be within `±24 h` of `DATE_FINAL_VISIT` | SOFT |
+| `FACILITY_GPS_*` non-blank required | When `ENUM_RESULT_FINAL_VISIT = Completed at Hospital`/`at Home` and `PATIENT_TYPE = Inpatient` (facility-captured case) | HARD |
+| `P_HOME_CAPTURE_GPS` | Trigger mirror of facility capture; auto-resets | — |
+| `P_HOME_GPS_LATITUDE`, `P_HOME_GPS_LONGITUDE` | Same bounding-box checks as facility block | HARD |
+| `P_HOME_GPS_ACCURACY`, `P_HOME_GPS_SATELLITES`, `P_HOME_GPS_READTIME` | Same sanity rules as facility block | SOFT |
+| `P_HOME_GPS_*` non-blank required | When home-visit interview (`ENUM_RESULT_FINAL_VISIT = Completed at Home`) or `PATIENT_TYPE = Outpatient` | HARD |
+| Facility vs patient-home distance | Warn if `haversine(FACILITY_GPS_*, P_HOME_GPS_*) > 100 km` — likely cross-facility / mis-capture | SOFT |
+
+### 3.1.2 Verification photo (type-X record)
+
+| Item | Rule | Severity |
+|---|---|---|
+| `CAPTURE_VERIFICATION_PHOTO` | Trigger; auto-resets to blank after each successful capture | — |
+| `VERIFICATION_PHOTO_FILENAME` | Non-blank when `ENUM_RESULT_FINAL_VISIT = Completed*`; 120-char alpha populated by `TakeVerificationPhoto()` | HARD |
+| Filename pattern | Matches `case-{QUESTIONNAIRE_NO}-verification.jpg` (enforced by the PROC that assigns it) | HARD |
+| File reachability | CSEntry attachment must sync to CSWeb before the case can be marked final; enforced by sync workflow, not dictionary validation | — |
+
+### 3.1.3 F1 linkage (`F3_FACILITY_ID`)
+
+| Item | Rule | Severity |
+|---|---|---|
+| `F3_FACILITY_ID` | Required, non-blank; must match a `QUESTIONNAIRE_NO` in the sampled-facility F1 dataset sync'd from CSWeb | HARD |
+| Linkage consistency | `F3.REGION == F1.REGION` (and PROVINCE_HUC / CITY_MUNICIPALITY / BARANGAY) for the linked facility record — prevents accidental cross-region linkage | HARD |
 | `PATIENT_TYPE` | Required, ∈ {Outpatient, Inpatient}; drives Section G vs Section H gating | HARD |
 | `PATIENT_LISTING_NO` | Required, 4-digit zero-filled; must match a row in the F3b patient listing export | HARD |
 | `CONSENT_GIVEN` | Required; if = No → terminate with `ENUM_RESULT = Withdraw Participation/Consent` | HARD |
@@ -816,7 +849,7 @@ preproc
 endpreproc
 ```
 
-### 4.2 Field Control — consent terminator and lat/lon
+### 4.2 Field Control — consent terminator
 
 ```cspro
 PROC CONSENT_GIVEN
@@ -825,43 +858,141 @@ postproc
     ENUM_RESULT_FIRST_VISIT = 4;   { Withdraw Participation/Consent — code per Field Control value set }
     endgroup;                      { close the questionnaire }
   endif;
-
-PROC LATITUDE
-postproc
-  numeric lat;
-  lat = tonumber(LATITUDE);
-  if lat = notappl or lat < 4.5 or lat > 21.5 then
-    errmsg("Latitude must be between 4.5 and 21.5 (Philippines).");
-    reenter;
-  endif;
-
-PROC LONGITUDE
-postproc
-  numeric lon;
-  lon = tonumber(LONGITUDE);
-  if lon = notappl or lon < 116.5 or lon > 127.0 then
-    errmsg("Longitude must be between 116.5 and 127.0 (Philippines).");
-    reenter;
-  endif;
 ```
 
-### 4.3 PSGC cascading dropdowns (parent → child)
+Latitude/longitude live in the GPS capture blocks (`REC_FACILITY_CAPTURE`, `REC_PATIENT_CAPTURE`) — see §4.3a below. Do not hand-enter these; the enumerator triggers a read via the capture buttons.
+
+### 4.3 PSGC cascading dropdowns — external-lookup pattern
+
+PSGC is carried in four external lookup dictionaries (`shared/psgc_region.dcf`, `psgc_province.dcf`, `psgc_city.dcf`, `psgc_barangay.dcf`) — **not** baked into the main dictionary. The cascade functions live in `shared/PSGC-Cascade.apc`; each child item fires its handler on `onfocus` so reverse navigation re-populates the list (CSPro 8.0 Users Guide p.188 Logic Tip #4). Include the cascade .apc in the form's .app:
+
+```cspro
+#include "../shared/PSGC-Cascade.apc"
+```
 
 ```cspro
 PROC REGION
-postproc
-  { Filter PROVINCE_HUC value set by selected REGION code prefix. }
-  setvalueset(PROVINCE_HUC, filterPsgc("province_huc", REGION));
+onfocus
+  FillRegionValueSet(REGION);
 
 PROC PROVINCE_HUC
-postproc
-  setvalueset(CITY_MUNICIPALITY, filterPsgc("city_municipality", PROVINCE_HUC));
+onfocus
+  FillProvinceValueSet(PROVINCE_HUC, REGION);
 
 PROC CITY_MUNICIPALITY
-postproc
-  setvalueset(BARANGAY, filterPsgc("barangay", CITY_MUNICIPALITY));
+onfocus
+  FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
 
-{ Mirror the same chain for P_REGION / P_PROVINCE_HUC / P_CITY_MUNICIPALITY / P_BARANGAY. }
+PROC BARANGAY
+onfocus
+  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+
+{ Mirror the same four handlers on P_REGION / P_PROVINCE_HUC / P_CITY_MUNICIPALITY / P_BARANGAY. }
+PROC P_REGION
+onfocus
+  FillRegionValueSet(P_REGION);
+
+PROC P_PROVINCE_HUC
+onfocus
+  FillProvinceValueSet(P_PROVINCE_HUC, P_REGION);
+
+PROC P_CITY_MUNICIPALITY
+onfocus
+  FillCityValueSet(P_CITY_MUNICIPALITY, P_PROVINCE_HUC);
+
+PROC P_BARANGAY
+onfocus
+  FillBarangayValueSet(P_BARANGAY, P_CITY_MUNICIPALITY);
+```
+
+### 4.3a GPS capture and verification photo
+
+Include `Capture-Helpers.apc` in the form's .app:
+
+```cspro
+#include "../shared/Capture-Helpers.apc"
+```
+
+```cspro
+{ Facility GPS — fired on the capture-trigger item. }
+PROC FACILITY_CAPTURE_GPS
+onfocus
+  if ReadGPSReading(120, 20) then
+    FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
+    FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+    FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+    FACILITY_GPS_ACCURACY   = gps(accuracy);
+    FACILITY_GPS_SATELLITES = gps(satellites);
+    FACILITY_GPS_READTIME   = gps(readtime);
+  endif;
+  FACILITY_CAPTURE_GPS = notappl;   { reset trigger so button re-arms }
+
+{ Patient-home GPS — same pattern on the P_HOME_ block. }
+PROC P_HOME_CAPTURE_GPS
+onfocus
+  if ReadGPSReading(120, 20) then
+    P_HOME_GPS_LATITUDE   = maketext("%f", gps(latitude));
+    P_HOME_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+    P_HOME_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+    P_HOME_GPS_ACCURACY   = gps(accuracy);
+    P_HOME_GPS_SATELLITES = gps(satellites);
+    P_HOME_GPS_READTIME   = gps(readtime);
+  endif;
+  P_HOME_CAPTURE_GPS = notappl;
+
+{ Post-capture sanity checks — run on the lat/lon items themselves, not on the trigger. }
+PROC FACILITY_GPS_LATITUDE
+postproc
+  numeric lat;
+  lat = tonumber(FACILITY_GPS_LATITUDE);
+  if lat <> notappl and (lat < 4.5 or lat > 21.5) then
+    errmsg("Facility latitude %f is outside the Philippine bounding box — re-capture.", lat);
+    move to FACILITY_CAPTURE_GPS;
+  endif;
+
+PROC FACILITY_GPS_LONGITUDE
+postproc
+  numeric lon;
+  lon = tonumber(FACILITY_GPS_LONGITUDE);
+  if lon <> notappl and (lon < 116.5 or lon > 127.0) then
+    errmsg("Facility longitude %f is outside the Philippine bounding box — re-capture.", lon);
+    move to FACILITY_CAPTURE_GPS;
+  endif;
+
+{ Apply the same pair of postproc handlers to P_HOME_GPS_LATITUDE / P_HOME_GPS_LONGITUDE. }
+
+{ Verification photo — fired on the capture-trigger. }
+PROC CAPTURE_VERIFICATION_PHOTO
+onfocus
+  string fn = "case-" + maketext("%04d", QUESTIONNAIRE_NO) + "-verification.jpg";
+  if TakeVerificationPhoto(fn) then
+    VERIFICATION_PHOTO_FILENAME = fn;
+  endif;
+  CAPTURE_VERIFICATION_PHOTO = notappl;
+
+PROC VERIFICATION_PHOTO_FILENAME
+postproc
+  if ENUM_RESULT_FINAL_VISIT in 1,2,3 and length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
+    errmsg("Verification photo is required when the case is marked Completed.");
+    move to CAPTURE_VERIFICATION_PHOTO;
+  endif;
+```
+
+### 4.3b F1 linkage — `F3_FACILITY_ID`
+
+```cspro
+PROC F3_FACILITY_ID
+postproc
+  { Validate against the F1 facility dataset synced locally via CSWeb. }
+  if loadcase(F1_FACILITY_DICT, F3_FACILITY_ID) = 0 then
+    errmsg("F3_FACILITY_ID %s does not match any synced F1 facility — re-enter.", F3_FACILITY_ID);
+    reenter;
+  endif;
+  { Region-chain consistency — catches cross-region linkage mistakes. }
+  if F1_REGION <> REGION then
+    errmsg("Linked facility is in region %d but this F3 case is in region %d.", F1_REGION, REGION);
+    reenter;
+  endif;
 ```
 
 ### 4.4 Core routing — PATIENT_TYPE drives G vs. H
@@ -1104,6 +1235,32 @@ postproc
 
 ---
 
+### 4.16 Case-control preproc (SURVEY_CODE, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION)
+
+Added 2026-04-21 — same shape as F1 §4.17 and F4 §4.X. Five case-control items at the top of `FIELD_CONTROL`: `SURVEY_CODE` (literal "F3"), `INTERVIEWER_ID`, `DATE_STARTED`, `TIME_STARTED`, `AAPOR_DISPOSITION` (AAPOR 2023 value set).
+
+```
+PROC FIELD_CONTROL
+preproc
+  if visualvalue(SURVEY_CODE) = "" then
+    SURVEY_CODE       = "F3";
+    DATE_STARTED      = tonumber(sysdate("YYYYMMDD"));
+    TIME_STARTED      = tonumber(systime("HHMMSS"));
+    AAPOR_DISPOSITION = 0;                            { 000 = In Progress }
+  endif;
+
+PROC CONSENT_GIVEN
+postproc
+  if CONSENT_GIVEN = 2 then
+    AAPOR_DISPOSITION = 210;              { Refusal — respondent }
+    skip to AAPOR_DISPOSITION_FINAL;
+  endif;
+```
+
+See F1 §4.17 for full notes on AAPOR codes and transition rules.
+
+---
+
 ## 5. Open questions — routing
 
 Disposition of the six items previously held "open." Only **#1 (Q31 IP_GROUP)** genuinely requires ASPSI input; the rest are spec-level decisions documented below, with ASPSI override reserved if they disagree.
@@ -1124,11 +1281,11 @@ Disposition of the six items previously held "open." Only **#1 (Q31 IP_GROUP)** 
 
 ## 6. Implementation order (recommended)
 
-1. **Fix dcf items flagged in §1** — none are regenerator blockers; current build (15 records / 818 items) is bench-testable.
+1. **Fix dcf items flagged in §1** — none are regenerator blockers; current build (18 records / 840 items) is bench-testable.
 2. **Open `PatientSurvey.dcf` in CSPro Designer**, validate the dictionary loads cleanly; inspect record layout (14 data records + header).
 3. **Build the Form file** (`.fmf`) — one form per section A–L + Field Control + Geographic ID; tab-order aligned with Q-number sequence.
 4. **Add PROC code** in this order:
-   1. Field Control validations (§4.2) + PSGC cascade (§4.3)
+   1. Field Control consent terminator (§4.2) + PSGC cascade (§4.3) + GPS/photo capture (§4.3a) + F1 linkage (§4.3b)
    2. Routing gate at Section F (§4.4)
    3. Section A eligibility (§4.5) + Section B consistency (§4.6, §4.7)
    4. Select-all/Other enforcement generics (§4.8, §4.9)
@@ -1139,4 +1296,4 @@ Disposition of the six items previously held "open." Only **#1 (Q31 IP_GROUP)** 
 
 ---
 
-*This spec is generated from the Apr 20 2026 Annex F3 PDF and the Apr 20 dcf (15 records / 818 items). Update both this file and `generate_dcf.py` whenever the questionnaire is revised.*
+*This spec is generated from the Apr 20 2026 Annex F3 PDF and the Apr 21 dcf (18 records / 840 items, post-GPS/photo + F1-linkage). Update both this file and `generate_dcf.py` whenever the questionnaire is revised.*
