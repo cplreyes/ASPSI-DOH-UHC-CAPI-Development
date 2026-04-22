@@ -1,0 +1,8 @@
+﻿[Run Information]
+Version=CSPro 8.0
+AppType=Entry
+
+[Files]
+Application=.\FacilityHeadSurvey.ent
+InputData=.\sample042126.csdb
+Paradata=.\FacilityHeadSurvey.cslog
