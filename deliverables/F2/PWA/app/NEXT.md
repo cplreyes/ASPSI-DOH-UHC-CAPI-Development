@@ -2,11 +2,28 @@
 
 **Last milestone shipped:** M11 — Hardening / release prep. Runtime config (`/config`) is polled every 5 min and on app open; `kill_switch` blocks submit via a modal overlay; `broadcast_message` shows as a top banner; spec-version drift (server `min_accepted_spec_version` > local `LOCAL_SPEC_VERSION`) forces a reload modal. Facilities auto-refresh on app open. Sync page has a "Change enrollment" button that warns on unsaved draft. Playwright E2E covers the runtime-config scenarios (kill-switch + spec-drift) automatically; golden-path + offline-retry are stubbed (`test.skip`) pending form-schema-aware test helpers — those paths are covered by the manual QA checklist for now. vitest-axe guards a11y at component + page level. iOS safe-area + `100dvh` polish applied. `SyncPage` lazy-loaded. Cross-platform QA checklist at `../2026-04-18-cross-platform-qa-checklist.md`.
 
-**Next decision (not a milestone):** Pilot readiness per spec §11.2 checkpoint row M11. Three options:
+**Pilot deployed 2026-04-23:**
+- Frontend: https://f2-pwa.pages.dev (Cloudflare Pages, project `f2-pwa`, branch `main`)
+- Backend: Apps Script Web App — deployment ID `AKfycbwdKrp0N7aKtu3nww2AbByACSRd0JwGK5UK9yTnicuW-S51ZwiiUfgzETS9D9fQ7ovD`
+- Spreadsheet: https://docs.google.com/spreadsheets/d/19huXNUO6hcNX77U7Xm63rvFFhJWGXZ7b38Rrnq8d_KY/edit
+- Admin dashboard: append `?action=admin` to the `/exec` URL; use `ADMIN_SECRET` from Script Properties to log in
+- Golden-path smoke test passed 2026-04-23
 
-1. **Run the pilot now.** 5–10 HCWs, one facility, 2-week dry-run. Ship `dist/` + deploy Apps Script + redeploy Cloudflare Pages. Collect feedback. File new milestones from observations (not speculative work).
-2. **Close deferred M11 items first** (below) before pilot.
-3. **Move to M12 (F3/F4 parity)** if ASPSI says PWA-Plan-B is gated behind PWA supporting more instruments.
+**Current state:** Pilot running. Collect feedback from 5–10 HCWs over 2-week dry-run. File new milestones from observations — not speculative work.
+
+**To redeploy frontend after a change:**
+```bash
+cd deliverables/F2/PWA/app
+npm run build
+npx wrangler pages deploy dist --project-name f2-pwa --branch main --commit-dirty=true
+```
+
+**To redeploy backend after a change:**
+```bash
+cd deliverables/F2/PWA/backend
+npm run build
+# Paste dist/Code.gs into Apps Script editor → Deploy → New deployment (or Manage → edit existing)
+```
 
 **Deferred from M11 (slot in only if pilot feedback demands):**
 
@@ -20,11 +37,4 @@
 - `facility_has_bucas` / `facility_has_gamot` flags; `response_source` per-respondent capture.
 - Filipino instrument + chrome translations.
 
-**When picking this back up after a gap:**
-
-- `cd deliverables/F2/PWA/app && npm install && npm run test && npm run typecheck && npm run build && npm run e2e`
-- `cd deliverables/F2/PWA/backend && npm install && npm test && npm run build`
-- Redeploy `dist/Code.gs` + `dist/Admin.html` + `dist/appsscript.json` to Apps Script if backend changed.
-- Copy `.env.example` → `.env.local` and fill both vars.
-- `npm run dev`, walk the golden path. Open Admin URL and confirm login.
-- Work through `../2026-04-18-cross-platform-qa-checklist.md` on at least iOS Safari + Desktop Chrome before declaring pilot-ready.
+**FacilityMasterList:** Populate with real facility rows before pilot HCWs onboard. Each row: `facility_id, facility_name, facility_type, region, province, city_mun, barangay`.
