@@ -38,7 +38,7 @@ const SyncPage = lazy(() =>
 type Status = 'loading' | 'editing' | 'submitted';
 type View = 'form' | 'sync';
 
-const APP_VERSION = '0.1.0';
+const APP_VERSION = __APP_VERSION__;
 const DEVICE_FINGERPRINT_KEY = 'f2_device_fingerprint';
 const SYNC_INTERVAL_MS = 5 * 60 * 1000;
 const CONFIG_REFRESH_INTERVAL_MS = 5 * 60 * 1000;
@@ -196,7 +196,10 @@ function AppShell() {
     <main className="flex min-h-screen-dvh flex-col">
       <BroadcastBanner message={runtimeConfig.broadcast_message} />
       <header className="flex items-center justify-between border-b px-6 py-3">
-        <h1 className="text-lg font-semibold">{t('chrome.appTitle')}</h1>
+        <div className="flex flex-col">
+          <h1 className="text-lg font-semibold">{t('chrome.appTitle')}</h1>
+          <span className="text-[10px] leading-none text-muted-foreground/60">v{APP_VERSION}</span>
+        </div>
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
           <PendingCount />

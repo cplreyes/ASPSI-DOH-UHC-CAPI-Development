@@ -1,7 +1,7 @@
 {
   "name": "app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -18,7 +18,10 @@
     "audit:pwa": "lighthouse http://localhost:4173 --only-categories=pwa --chrome-flags=\"--headless=new\" --output=json --output-path=./lighthouse-pwa.json --quiet",
     "audit:bundle": "node scripts/audit-bundle.mjs",
     "e2e": "playwright test -c e2e/playwright.config.ts",
-    "e2e:ui": "playwright test -c e2e/playwright.config.ts --ui"
+    "e2e:ui": "playwright test -c e2e/playwright.config.ts --ui",
+    "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version",
+    "version:major": "npm version major --no-git-tag-version"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
