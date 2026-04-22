@@ -20,7 +20,7 @@ const ORDER = [
 ];
 
 function stripCjsExport(source) {
-  return source.replace(/\n?if \(typeof module !== ['"]undefined['"]\)[\s\S]*?\};?\s*$/m, '\n');
+  return source.replace(/\n?if \(typeof module !== ['"]undefined['"]\)[\s\S]*$/, '\n');
 }
 
 async function main() {
