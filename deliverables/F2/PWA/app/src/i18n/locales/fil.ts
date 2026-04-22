@@ -6,7 +6,7 @@ import type { EnBundle } from './en';
 
 export const fil: EnBundle = {
   chrome: {
-    appTitle: 'F2 Survey',
+    appTitle: 'UHC Survey Y2 — Healthcare Worker Survey Questionnaire',
     install: 'Install',
     loading: 'Loading…',
     formView: 'Form',

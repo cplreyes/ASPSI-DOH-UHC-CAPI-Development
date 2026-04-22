@@ -2,7 +2,7 @@
 // Mirror every key in fil.ts. New keys MUST be added to both files.
 export const en = {
   chrome: {
-    appTitle: 'F2 Survey',
+    appTitle: 'UHC Survey Y2 — Healthcare Worker Survey Questionnaire',
     install: 'Install',
     loading: 'Loading…',
     formView: 'Form',
