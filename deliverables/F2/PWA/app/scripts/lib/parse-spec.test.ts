@@ -147,6 +147,22 @@ describe('parseTableRows', () => {
     expect(rows[1].type).toBe('long-text');
     expect(rows[2].choices).toBe('Yes · No');
   });
+
+  it('inherits grid-header choices into grid-single rows (Apr 20 bold-before-parens format)', () => {
+    const body = [
+      '**Grid #1 — Agreement** (Strongly Agree · Agree · Neither Agree nor Disagree · Disagree · Strongly Disagree):',
+      '',
+      '| pdf_q | legacy_q | type | required | label (verbatim) | gf_risk |',
+      '|---|---|---|---|---|---|',
+      '| Q98 | Q88 | grid-single | Y | I am compensated fairly. | OK |',
+    ].join('\n');
+
+    const rows = parseTableRows(body);
+    expect(rows).toHaveLength(1);
+    expect(rows[0].choices).toBe(
+      'Strongly Agree · Agree · Neither Agree nor Disagree · Disagree · Strongly Disagree',
+    );
+  });
 });
 
 describe('normalizeRow', () => {
@@ -514,5 +530,39 @@ describe('parseSpec (integration)', () => {
     ]);
     expect(q15?.choices?.map((c) => c.label)).toEqual(q13?.choices?.map((c) => c.label));
     expect(q17?.choices?.map((c) => c.label)).toEqual(q13?.choices?.map((c) => c.label));
+  });
+
+  it('resolves named-set references ("UHC-impl set") to the set body defined elsewhere', () => {
+    const md = [
+      '# F2 Spec',
+      '',
+      '## Section B — UHC Awareness',
+      '',
+      '| pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | gate | skip | gf_risk |',
+      '|---|---|---|---|---|---|---|---|---|',
+      '| Q13 | Q22 | single + specify | Y | Equipment? | *[standard 8-option UHC-implementation set — see "UHC-impl set" below]* | — | — | OK |',
+      '| Q15 | — | single + specify | Y | Supplies? | *[UHC-impl set]* | — | — | OK |',
+      '',
+      '**UHC-impl set** (verbatim, used for Q13, Q15):',
+      '- Yes, direct result',
+      '- Yes, pre-existing',
+      '- Yes, specify other reason __________',
+      '- No, not yet',
+      '- No, specify other reason __________',
+      "- I don't know",
+    ].join('\n');
+
+    const result = parseSpec(md);
+    const items = result.sections[0].items;
+    const q13 = items.find((i) => i.id === 'Q13');
+    const q15 = items.find((i) => i.id === 'Q15');
+
+    expect(q13?.choices).toHaveLength(6);
+    expect(q13?.choices?.[0].label).toEqual(dual('Yes, direct result'));
+    expect(q13?.choices?.[5].label).toEqual(dual("I don't know"));
+    expect(q13?.choices?.[2].isOtherSpecify).toBe(true);
+    expect(q13?.choices?.[4].isOtherSpecify).toBe(true);
+    expect(q13?.choices?.[0].isOtherSpecify).toBeUndefined();
+    expect(q15?.choices?.map((c) => c.label)).toEqual(q13?.choices?.map((c) => c.label));
   });
 });

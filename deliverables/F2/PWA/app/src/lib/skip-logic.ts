@@ -17,7 +17,7 @@ const isDissatisfied = (v: unknown) => {
   return v.startsWith('Dissatisfied') || v.startsWith('Very Dissatisfied');
 };
 
-const q112IsYes = (v: unknown) => typeof v === 'string' && v.startsWith('Yes,');
+const q123IsYes = (v: unknown) => typeof v === 'string' && v.startsWith('Yes,');
 
 const predicates: Record<string, Record<string, Predicate>> = {
   A: {
@@ -28,39 +28,39 @@ const predicates: Record<string, Record<string, Predicate>> = {
     Q14: (v) => typeof v.Q13 === 'string' && v.Q13.startsWith('Yes'),
   },
   C: {
-    Q32: (v) => v.Q30 === 'Yes',
+    Q36: (v) => v.Q34 === 'Yes',
   },
   D: {
-    Q38: (v) => isYes(v.Q37),
-    Q39: (v) => isYes(v.Q37),
-    Q41: (v) => isYes(v.Q40),
-    Q42: (v) => isYes(v.Q40),
+    Q42: (v) => isYes(v.Q41),
+    Q43: (v) => isYes(v.Q41),
+    Q45: (v) => isYes(v.Q44),
+    Q46: (v) => isYes(v.Q44),
   },
-  E1: {
-    Q45: (v) => isYes(v.Q43) && isYes(v.Q44),
-  },
-  E2: {
-    Q48: (v) => isYes(v.Q46) && isYes(v.Q47),
+  E: {
+    Q50: (v) => isYes(v.Q48) && isYes(v.Q49),
+    Q51: (v) => isYes(v.Q48) && isYes(v.Q49),
+    Q52: (v) => isYes(v.Q48) && isYes(v.Q49),
+    Q55: (v) => isYes(v.Q53) && isYes(v.Q54),
   },
   F: {
-    Q55: (v) => isDissatisfied(v.Q54),
+    Q62: (v) => isDissatisfied(v.Q61),
   },
   G: {
-    Q57: (v) => isYes(v.Q56),
-    Q58: (v) => v.Q57 === 'No',
-    Q60: (v) => isYes(v.Q59),
-    Q61: (v) => v.Q60 === 'No',
-    Q63: (v) => isYes(v['Q62']) || isYes(v['Q62.1']),
+    Q64: (v) => isYes(v.Q63),
     Q65: (v) => v.Q64 === 'No',
-    Q79: (v) => isYes(v['Q78']) || isYes(v['Q78.1']),
+    Q67: (v) => isYes(v.Q66),
+    Q68: (v) => v.Q67 === 'No',
+    Q71: (v) => isYes(v['Q69']) || isYes(v['Q70']),
+    Q73: (v) => v.Q72 === 'No',
+    Q89: (v) => isYes(v['Q87']) || isYes(v['Q88']),
   },
   I: {
-    Q87: (v) => v.Q86 === 'No',
+    Q97: (v) => v.Q96 === 'No',
   },
   J: {
-    Q111: (v) => typeof v.Q103 === 'string' && v.Q103 !== 'Never',
-    Q113: (v) => q112IsYes(v.Q112),
-    Q114: (v) => q112IsYes(v.Q112),
+    Q122: (v) => typeof v.Q114 === 'string' && v.Q114 !== 'Never',
+    Q124: (v) => q123IsYes(v.Q123),
+    Q125: (v) => q123IsYes(v.Q123),
   },
 };
 

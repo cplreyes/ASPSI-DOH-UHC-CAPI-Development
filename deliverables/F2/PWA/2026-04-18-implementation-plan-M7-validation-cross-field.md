@@ -450,15 +450,18 @@ const BUCKET_CD = new Set([
 
 const DOCTOR_DENTIST = new Set(['Physician/Doctor', 'Dentist']);
 
+// Apr 20 rev: Section G spans Q63..Q90. The ZBB/NBB facility-type pairs
+// are proper sibling items now (no ".1" suffix): Q69/Q70, Q75/Q76, Q87/Q88.
 const SECTION_G_FIELDS = [
-  'Q56', 'Q57', 'Q58', 'Q59', 'Q60', 'Q61', 'Q62', 'Q62.1', 'Q63',
-  'Q64', 'Q65', 'Q66', 'Q67', 'Q67.1', 'Q68', 'Q69', 'Q70', 'Q71',
-  'Q72', 'Q73', 'Q74', 'Q75', 'Q76', 'Q77', 'Q78', 'Q78.1', 'Q79', 'Q80',
+  'Q63', 'Q64', 'Q65', 'Q66', 'Q67', 'Q68', 'Q69', 'Q70', 'Q71', 'Q72',
+  'Q73', 'Q74', 'Q75', 'Q76', 'Q77', 'Q78', 'Q79', 'Q80', 'Q81', 'Q82',
+  'Q83', 'Q84', 'Q85', 'Q86', 'Q87', 'Q88', 'Q89', 'Q90',
 ];
 
+// Apr 20 rev: the CD-bucket (Section C/D) span is Q31..Q47.
 const SECTION_CD_FIELDS = [
-  'Q27', 'Q28', 'Q29', 'Q30', 'Q31', 'Q32', 'Q33', 'Q34', 'Q35', 'Q36',
-  'Q37', 'Q38', 'Q39', 'Q40', 'Q41', 'Q42',
+  'Q31', 'Q32', 'Q33', 'Q34', 'Q35', 'Q36', 'Q37', 'Q38', 'Q39', 'Q40',
+  'Q41', 'Q42', 'Q43', 'Q44', 'Q45', 'Q46', 'Q47',
 ];
 
 function isFilled(v: unknown): boolean {

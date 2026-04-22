@@ -22,20 +22,11 @@ const BUCKET_CD = new Set([
 const DOCTOR_DENTIST = new Set(['Physician/Doctor', 'Dentist']);
 
 const SECTION_G_FIELDS = [
-  'Q56',
-  'Q57',
-  'Q58',
-  'Q59',
-  'Q60',
-  'Q61',
-  'Q62',
-  'Q62.1',
   'Q63',
   'Q64',
   'Q65',
   'Q66',
   'Q67',
-  'Q67.1',
   'Q68',
   'Q69',
   'Q70',
@@ -47,16 +38,21 @@ const SECTION_G_FIELDS = [
   'Q76',
   'Q77',
   'Q78',
-  'Q78.1',
   'Q79',
   'Q80',
+  'Q81',
+  'Q82',
+  'Q83',
+  'Q84',
+  'Q85',
+  'Q86',
+  'Q87',
+  'Q88',
+  'Q89',
+  'Q90',
 ];
 
 const SECTION_CD_FIELDS = [
-  'Q27',
-  'Q28',
-  'Q29',
-  'Q30',
   'Q31',
   'Q32',
   'Q33',
@@ -69,6 +65,10 @@ const SECTION_CD_FIELDS = [
   'Q40',
   'Q41',
   'Q42',
+  'Q43',
+  'Q44',
+  'Q45',
+  'Q46',
 ];
 
 function isFilled(v: unknown): boolean {

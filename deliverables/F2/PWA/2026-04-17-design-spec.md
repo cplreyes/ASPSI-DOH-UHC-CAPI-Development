@@ -21,7 +21,13 @@ related:
 
 ## 1. Context and Decision History
 
-This is the design for the F2 (Healthcare Worker Survey) instrument delivered as a Progressive Web App (PWA). It is **Plan B**, running alongside the primary CSPro/CSEntry delivery (Plan A).
+This is the design for the F2 (Healthcare Worker Survey) instrument delivered as a Progressive Web App (PWA).
+
+### Track positioning (revised 2026-04-21, Frame #2)
+
+**The PWA is the long-term F2 capture target.** The Google Forms build at `../apps-script/` is a temporary bridge whose sole purpose is to unblock **Tranche 2 (Apr 24)** submission. The Forms build gets a smoke test + Shan QA pass — no feature investment beyond what the Apr 20 spec already mandates. All F2 feature work from Tranche 3 onward lands in this PWA.
+
+Relative to F1/F3/F4 (which deliver on CSPro/CSEntry/CSWeb), the PWA is still **Plan B** on platform — CSPro remains Plan A for the interviewer-administered instruments. But within the F2 track specifically, the PWA has been elevated from "hedge" to "real target." The deferred `E3-F2-CSPro-*` tasks stay deferred; the PWA, not CSPro, is the F2 CAPI equivalent.
 
 ### Why PWA
 
@@ -294,7 +300,7 @@ All props-in / callbacks-out. No component reaches into global store.
 
 ### 6.1 Inputs
 
-- `spec/F2-Spec.md` — 114 items with type, label, options, required, group
+- `spec/F2-Spec.md` — 124 items (Apr 20 rev; numbered Q1–Q125 with Q108 as a PDF numbering gap) with type, label, options, required, group
 - `spec/F2-Skip-Logic.md` — section graph + routing table
 - `spec/F2-Validation.md` — hard-required fields + per-item rules
 - `spec/F2-Cross-Field.md` — 20 POST rules
@@ -527,20 +533,20 @@ Effort-based, not calendar-based. Each milestone ships something demonstrable. V
 
 ### 11.1 The twelve milestones
 
-| # | Milestone | Effort | Skill acquired | Ships |
-|---|---|---|---|---|
-| M0 | Foundation: Vite + React + TS + Tailwind + shadcn/ui + vite-plugin-pwa scaffold | 8–10h | PWA manifest, SW registration, Tailwind | Installable "Hello F2" shell |
-| M1 | Generator v1 + single-section render | 12–15h | TS generator, react-hook-form, Zod | One F2 section in browser from spec |
-| M2 | Autosave + IndexedDB via Dexie | 8–10h | Dexie, debounced effects, persistence | Draft survives reload |
-| M3 | Skip logic + multi-section nav + progress | 10–12h | Derived state, navigation | 3 sections with skip logic |
-| M4 | Apps Script backend (endpoints, Sheet, HMAC) | 12–15h | Apps Script Web App, request signing | Backend live, curl-testable |
-| **M5** | **Sync orchestrator end-to-end** ⭐ | **15–20h** | Async state machines, Background Sync | **First vertical slice. Demo-able.** |
-| M6 | Full instrument scaffolding (all 114 items, 35 sections) | 20–25h | Generator robustness, large-form perf | All items fillable |
-| M7 | Validation + 20 POST cross-field rules | 15–20h | Zod composition, form-level validation | Full validation |
-| M8 | Facility list + enrollment flow | 8–10h | AuthContext, cached lookups | Proper enrollment |
-| M9 | i18n — Filipino translations | 10–15h (+20–30h if Carl translates) | react-i18next, label bundles | Bilingual instrument |
-| M10 | Admin dashboard (Apps-Script-served HTML) | 10–15h | HtmlService, CSV export | Operations panel |
-| M11 | Hardening: E2E, cross-platform QA, iOS polish, a11y, perf | 20–30h | Playwright, accessibility audit | **Production-eligible** |
+| # | Milestone | Effort | Tranche alignment | Skill acquired | Ships |
+|---|---|---|---|---|---|
+| M0 | Foundation: Vite + React + TS + Tailwind + shadcn/ui + vite-plugin-pwa scaffold | 8–10h | T2 complement | PWA manifest, SW registration, Tailwind | Installable "Hello F2" shell |
+| M1 | Generator v1 + single-section render | 12–15h | T2→T3 critical path | TS generator, react-hook-form, Zod | One F2 section in browser from spec |
+| M2 | Autosave + IndexedDB via Dexie | 8–10h | T3 critical path | Dexie, debounced effects, persistence | Draft survives reload |
+| M3 | Skip logic + multi-section nav + progress | 10–12h | T3 critical path | Derived state, navigation | 3 sections with skip logic |
+| M4 | Apps Script backend (endpoints, Sheet, HMAC) | 12–15h | T3 critical path | Apps Script Web App, request signing | Backend live, curl-testable |
+| **M5** | **Sync orchestrator end-to-end** ⭐ | **15–20h** | **T3 vertical-slice demo** | Async state machines, Background Sync | **First vertical slice. Demo-able to ASPSI/DOH as the "real" F2 instrument.** |
+| M6 | Full instrument scaffolding (all 124 items, 35+ sections) | 20–25h | T3 content completion | Generator robustness, large-form perf | All items fillable |
+| M7 | Validation + 20 POST cross-field rules | 15–20h | T3→T4 hardening | Zod composition, form-level validation | Full validation |
+| M8 | Facility list + enrollment flow | 8–10h | T3→T4 hardening | AuthContext, cached lookups | Proper enrollment |
+| M9 | i18n — Filipino translations | 10–15h (+20–30h if Carl translates) | T3→T4 hardening | react-i18next, label bundles | Bilingual instrument |
+| M10 | Admin dashboard (Apps-Script-served HTML) | 10–15h | T3→T4 hardening | HtmlService, CSV export | Operations panel |
+| M11 | Hardening: E2E, cross-platform QA, iOS polish, a11y, perf | 20–30h | **T4 production-eligible** | Playwright, accessibility audit | **Production-eligible** |
 
 **Total: 150–200h.**
 
@@ -610,7 +616,7 @@ By M5 (~70h in), Carl is self-sufficient on React + PWA. Everything after is app
 
 ## 14. Related Artifacts
 
-- `deliverables/F2/F2-Spec.md` — 114 items verbatim
+- `deliverables/F2/F2-Spec.md` — 124 items verbatim (Apr 20 rev; Q1–Q125 with Q108 numbering gap)
 - `deliverables/F2/F2-Skip-Logic.md`
 - `deliverables/F2/F2-Validation.md`
 - `deliverables/F2/F2-Cross-Field.md`

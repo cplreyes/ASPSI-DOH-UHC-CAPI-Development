@@ -10,6 +10,10 @@ status: ready-to-execute
 
 # F2 PWA Implementation Plan — M0: Foundation
 
+## Positioning (revised 2026-04-21, Frame #2)
+
+The PWA is the long-term F2 capture target. The Google Forms build at `../apps-script/` is a temporary bridge for **Tranche 2 (Apr 24)** only — smoke test + Shan QA pass, no further investment. M1–M5 is the **Tranche 2→3 critical path** that produces the demo-able vertical slice ASPSI/DOH sees as the "real" F2 instrument. See design spec §1 "Track positioning" for the full framing.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Scaffold an installable PWA shell at `deliverables/F2/PWA/app/` that boots, passes Lighthouse "Installable" audit on Chromium, and is ready to receive the F2 generator (M1).
@@ -30,20 +34,20 @@ This plan covers **M0 Foundation only** (8–10h of the 150–200h total). M1–
 
 ## Milestone roadmap (from spec §11)
 
-| # | Milestone | Effort | Status |
-|---|---|---|---|
-| **M0** | **Foundation** | **8–10h** | **Covered by this plan** |
-| M1 | Generator v1 + single-section render | 12–15h | Plan pending (draft when M0 ships) |
-| M2 | Autosave + IndexedDB via Dexie | 8–10h | Plan pending |
-| M3 | Skip logic + multi-section nav + progress | 10–12h | Plan pending |
-| M4 | Apps Script backend (endpoints, Sheet, HMAC) | 12–15h | Plan pending |
-| M5 | Sync orchestrator end-to-end ⭐ | 15–20h | Plan pending (first vertical-slice checkpoint) |
-| M6 | Full instrument scaffolding (114 items) | 20–25h | Plan pending |
-| M7 | Validation + 20 POST cross-field rules | 15–20h | Plan pending |
-| M8 | Facility list + enrollment flow | 8–10h | Plan pending |
-| M9 | i18n — Filipino translations | 10–15h | Plan pending |
-| M10 | Admin dashboard (HtmlService) | 10–15h | Plan pending |
-| M11 | Hardening → production-eligible | 20–30h | Plan pending |
+| # | Milestone | Effort | Tranche alignment | Status |
+|---|---|---|---|---|
+| **M0** | **Foundation** | **8–10h** | T2 complement | **Shipped** (merge `9745b1c`, tag `f2-pwa-m0`) |
+| M1 | Generator v1 + single-section render | 12–15h | T2→T3 critical path | Plan drafted (`…-M1-generator-plus-render.md`) |
+| M2 | Autosave + IndexedDB via Dexie | 8–10h | T3 critical path | Plan drafted |
+| M3 | Skip logic + multi-section nav + progress | 10–12h | T3 critical path | Plan drafted |
+| M4 | Apps Script backend (endpoints, Sheet, HMAC) | 12–15h | T3 critical path | Plan drafted |
+| M5 | Sync orchestrator end-to-end ⭐ | 15–20h | **T3 vertical-slice demo** | Plan drafted (demo-to-ASPSI checkpoint) |
+| M6 | Full instrument scaffolding (124 items, Apr 20 rev) | 20–25h | T3 content completion | Plan drafted |
+| M7 | Validation + 20 POST cross-field rules | 15–20h | T3→T4 hardening | Plan drafted |
+| M8 | Facility list + enrollment flow | 8–10h | T3→T4 hardening | Plan drafted |
+| M9 | i18n — Filipino translations | 10–15h | T3→T4 hardening | Plan drafted |
+| M10 | Admin dashboard (HtmlService) | 10–15h | T3→T4 hardening | Plan drafted |
+| M11 | Hardening → production-eligible | 20–30h | **T4 production-eligible** | Plan drafted |
 
 ---
 

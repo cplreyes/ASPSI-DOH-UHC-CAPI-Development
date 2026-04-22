@@ -288,3 +288,21 @@ Once ASPSI returns approval on the decisions above:
 ## Open items flagged for separate follow-up
 
 - **Product Backlog edits** at next sprint close: Epic 2 F2 row, Epic 3 sequencing note, per-instrument table, F2 risk row. The PB currently treats F2 as flowing through the CSPro Design → CSPro Build pipeline; this memo documents why F2 is a special case with an optional late CSPro track.
+
+---
+
+## Revision — 2026-04-21 (Frame #2: PWA supersedes CSPro as long-term F2 track)
+
+After the Apr 20 spec alignment pass and a strategic framing review, the three-path capture model is **revised** as follows:
+
+| Path | Previous framing (2026-04-15) | Revised framing (2026-04-21) |
+|---|---|---|
+| **Primary** | Google Forms self-admin (3-day window) | **Google Forms = Tranche 2 bridge.** Smoke-tested, QA'd by Shan, submitted for Tranche 2 (Apr 24). No further feature investment. |
+| **Fallback A** | Paper → staff-encoded into same Google Form | Unchanged — still the T2 fallback. |
+| **Fallback B (optional, deferred)** | CSPro CAPI F2 app built last, only if Forms surfaces a real need | **Replaced.** The **F2 PWA** (`deliverables/F2/PWA/`) is now the long-term F2 capture instrument. It is Tranche 3→4 work. The `E3-F2-CSPro-*` tasks remain deferred — the PWA, not CSPro, is F2's CAPI equivalent. |
+
+**Why the revision.** Google Forms has structural ceilings (no cross-section memory, no per-HCW enrollment tokens, no true offline) that Carl expects to hit in production. The PWA covers those. Building the Google Forms track to production quality would be throwaway work; building it to "T2 submission green checkmark" quality uses it for what it's actually good at.
+
+**Implication for the decisions above.** Decisions 1–8 remain in force for the Tranche 2 Google Forms build. New Frame-#2-only decisions arise for the PWA — enrollment token scheme, offline conflict-resolution policy, facility master list API ownership — and are tracked in the M6 plan's "Decision gates past M6" section (`PWA/2026-04-18-implementation-plan-M6-full-instrument.md`). Those will be bundled into a separate ASPSI decision memo before M7 kicks off.
+
+**Memory pointer.** `memory/project_f2_frame_decision.md` carries the durable record of this framing.

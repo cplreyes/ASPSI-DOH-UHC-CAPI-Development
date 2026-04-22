@@ -50,7 +50,7 @@ Where M1 deliberately stays small:
 | M3 | Skip logic + multi-section nav + progress | 10–12h | Plan pending |
 | M4 | Apps Script backend (endpoints, Sheet, HMAC) | 12–15h | Plan pending |
 | M5 | Sync orchestrator end-to-end ⭐ | 15–20h | Plan pending (first vertical-slice checkpoint) |
-| M6 | Full instrument scaffolding (114 items) | 20–25h | Plan pending |
+| M6 | Full instrument scaffolding (124 items, Apr 20 rev) | 20–25h | Plan pending |
 | M7 | Validation + 20 POST cross-field rules | 15–20h | Plan pending |
 | M8 | Facility list + enrollment flow | 8–10h | Plan pending |
 | M9 | i18n — Filipino translations | 10–15h | Plan pending |
@@ -253,7 +253,7 @@ M11 may introduce an automated sync + hash check. For now it's manual.
 
 ## Files
 
-- `F2-Spec.md` — 114 items across 35 sections. Source of `src/generated/items.ts` and `src/generated/schema.ts`.
+- `F2-Spec.md` — **Apr 20 rev**: 124 items (numbered Q1–Q125 with Q108 as a PDF numbering gap) across 35+ sections. Source of `src/generated/items.ts` and `src/generated/schema.ts`. Supersedes the Apr 08 draft (114 items).
 ```
 
 - [ ] **Step 3: Write the domain types file**

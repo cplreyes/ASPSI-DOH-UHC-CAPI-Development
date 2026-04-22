@@ -17,7 +17,7 @@ describe('<MultiSectionForm>', () => {
     expect(
       screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Section 1 of 11/)).toBeInTheDocument();
+    expect(screen.getByText(/Section 1 of 10/)).toBeInTheDocument();
   });
 
   it('blocks Next when Section A validation fails and advances when it passes', async () => {
@@ -46,7 +46,7 @@ describe('<MultiSectionForm>', () => {
     await waitFor(() =>
       expect(screen.getByRole('heading', { name: /Section B/ })).toBeInTheDocument(),
     );
-    expect(screen.getByText(/Section 2 of 11/)).toBeInTheDocument();
+    expect(screen.getByText(/Section 2 of 10/)).toBeInTheDocument();
   });
 
   it('applies intra-section skip logic — Q8 appears when Q7 = Yes', async () => {
@@ -135,7 +135,7 @@ describe('<MultiSectionForm>', () => {
           Q10: 5,
           Q11: 8,
         }}
-        initialIndex={11}
+        initialIndex={10}
         onAutosave={vi.fn()}
         onSubmit={vi.fn()}
       />,
@@ -163,7 +163,7 @@ describe('<MultiSectionForm>', () => {
     renderWithProviders(
       <MultiSectionForm
         initialValues={values}
-        initialIndex={11}
+        initialIndex={10}
         onAutosave={vi.fn()}
         onSubmit={onSubmit}
       />,
@@ -190,7 +190,7 @@ describe('<MultiSectionForm>', () => {
           Q10: 5,
           Q11: 8,
         }}
-        initialIndex={11}
+        initialIndex={10}
         onAutosave={vi.fn()}
         onSubmit={vi.fn()}
       />,

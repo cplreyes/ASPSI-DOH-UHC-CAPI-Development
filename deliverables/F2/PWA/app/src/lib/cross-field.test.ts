@@ -55,22 +55,22 @@ describe('evaluateCrossField', () => {
   });
 
   it('flags GATE-02 when a nurse has answered Section G items', () => {
-    const out = evaluateCrossField({ Q5: 'Nurse', Q56: 'Yes' });
+    const out = evaluateCrossField({ Q5: 'Nurse', Q63: 'Yes' });
     expect(out.map((w) => w.id)).toContain('GATE-02');
   });
 
   it('does not flag GATE-02 for doctors who answered Section G', () => {
-    const out = evaluateCrossField({ Q5: 'Physician/Doctor', Q56: 'Yes' });
+    const out = evaluateCrossField({ Q5: 'Physician/Doctor', Q63: 'Yes' });
     expect(out.map((w) => w.id)).not.toContain('GATE-02');
   });
 
   it('flags GATE-05 when a pharmacist has answered Section C items', () => {
-    const out = evaluateCrossField({ Q5: 'Pharmacist/Dispenser', Q27: 'Yes' });
+    const out = evaluateCrossField({ Q5: 'Pharmacist/Dispenser', Q31: 'Yes' });
     expect(out.map((w) => w.id)).toContain('GATE-05');
   });
 
   it('does not flag GATE-05 for administrators (in BUCKET-CD)', () => {
-    const out = evaluateCrossField({ Q5: 'Administrator', Q27: 'Yes' });
+    const out = evaluateCrossField({ Q5: 'Administrator', Q31: 'Yes' });
     expect(out.map((w) => w.id)).not.toContain('GATE-05');
   });
 

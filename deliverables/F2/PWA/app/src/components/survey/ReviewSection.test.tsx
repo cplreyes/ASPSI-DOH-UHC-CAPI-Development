@@ -43,7 +43,7 @@ describe('<ReviewSection>', () => {
   it('surfaces a warning when GATE-05 fires (pharmacist + Section C answers)', () => {
     renderWithProviders(
       <ReviewSection
-        values={{ ...baseValues, Q5: 'Pharmacist/Dispenser', Q27: 'Yes' }}
+        values={{ ...baseValues, Q5: 'Pharmacist/Dispenser', Q31: 'Yes' }}
         onEdit={vi.fn()}
         onSubmit={vi.fn()}
       />,

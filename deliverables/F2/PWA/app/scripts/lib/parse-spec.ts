@@ -46,7 +46,7 @@ export type RowFields = Record<string, string>;
 
 const TABLE_HEADER = /^\|(.+)\|\s*$/;
 const ALIGNMENT_ROW = /^\|[\s\-|:]+\|\s*$/;
-const GRID_HEADER = /^\*\*Grid #\d+\s*[—-]\s*[^(]+\(([^)]+)\):\*\*/;
+const GRID_HEADER = /^\*\*Grid #\d+[^(]*\(([^)]+)\)/;
 
 function splitCells(line: string): string[] {
   return line
@@ -212,10 +212,14 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
 }
 
 const SAME_CHOICE_SET_RE = /same choice set as (Q\d+(?:\.\d+)?)/i;
+const NAMED_SET_RE = /\*\*([A-Za-z0-9-]+) set\*\*[^\n]*\n((?:-\s+[^\n]+\n?)+)/g;
+const NAMED_SET_BULLET_RE = /^-\s+(.+?)\s*$/;
+const SPECIFY_OTHER_RE = /other[s]?(?:,\s*specify|\s*\(specify\))|specify\s+other\s+reason/i;
 
 export function parseSpec(markdown: string): ParseResult {
   const sections: Section[] = [];
   const unsupported: UnsupportedItem[] = [];
+  const namedSets = extractNamedSets(markdown);
 
   for (const raw of splitSections(markdown)) {
     const preamble = extractPreamble(raw.body);
@@ -237,6 +241,7 @@ export function parseSpec(markdown: string): ParseResult {
   }
 
   resolveSameChoiceSetReferences(sections);
+  resolveNamedSetReferences(sections, namedSets);
 
   return { sections, unsupported };
 }
@@ -258,6 +263,44 @@ function resolveSameChoiceSetReferences(sections: Section[]): void {
       }
     }
   }
+}
+
+export function extractNamedSets(markdown: string): Map<string, string[]> {
+  const sets = new Map<string, string[]>();
+  for (const match of markdown.matchAll(NAMED_SET_RE)) {
+    const name = match[1];
+    const bullets = match[2]
+      .split('\n')
+      .map((line) => line.match(NAMED_SET_BULLET_RE)?.[1])
+      .filter((v): v is string => Boolean(v));
+    if (bullets.length > 0) sets.set(name, bullets);
+  }
+  return sets;
+}
+
+function resolveNamedSetReferences(sections: Section[], sets: Map<string, string[]>): void {
+  if (sets.size === 0) return;
+  for (const section of sections) {
+    for (const item of section.items) {
+      if (!item.choices || item.choices.length !== 1) continue;
+      const label = item.choices[0].label.en;
+      for (const [name, options] of sets) {
+        const re = new RegExp(`${escapeRegex(name)}\\s+set`, 'i');
+        if (!re.test(label)) continue;
+        item.choices = options.map((raw) => {
+          const trimmed = raw.trim();
+          const choice: Choice = { label: dual(trimmed), value: trimmed };
+          if (SPECIFY_OTHER_RE.test(trimmed)) choice.isOtherSpecify = true;
+          return choice;
+        });
+        break;
+      }
+    }
+  }
+}
+
+function escapeRegex(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function parseChoicesColumn(

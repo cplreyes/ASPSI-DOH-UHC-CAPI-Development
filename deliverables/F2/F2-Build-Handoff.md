@@ -1,16 +1,17 @@
 ---
 title: F2 Build Handoff — Paste, Run, Test
 instrument: F2
-version: draft-2026-04-15
+version: draft-2026-04-21-apr20
+supersedes: draft-2026-04-15 (Apr 08 PDF)
 depends_on:
-  - deliverables/F2/apps-script/
-  - deliverables/F2/F2-Spec.md
-  - deliverables/F2/F2-Skip-Logic.md
-  - deliverables/F2/F2-Validation.md
-  - deliverables/F2/F2-Cross-Field.md
+  - deliverables/F2/apps-script/ (Apr 20 rev)
+  - deliverables/F2/F2-Spec.md (Apr 20 rev, 124 items, Q1–Q125 with Q108 gap)
+  - deliverables/F2/F2-Skip-Logic.md (Apr 20 rev)
+  - deliverables/F2/F2-Validation.md (Apr 20 rev)
+  - deliverables/F2/F2-Cross-Field.md (Apr 20 rev)
 author: Carl Reyes
 audience: Carl (build), Shan (test)
-status: draft-for-review
+status: build-draft-apr20
 ---
 
 # F2 Build Handoff — Paste, Run, Test
@@ -59,8 +60,9 @@ End-to-end recipe to take the F2 Apps Script bundle from `deliverables/F2/apps-s
 
 - **Page-break routing can only read the LAST multiple-choice item of a section.** Branches are intentionally structured so each branching question is the last item in its section (see `Spec.gs`). If you edit `Spec.gs` and add a new item *after* a branching one in the same section, the routing silently stops working. Rule of thumb: put branching questions alone at the end of their section.
 - **Role bucket is re-asked**, not remembered. `SEC-C-gate` and `SEC-F-router` both ask a routing-only confirmation question. This is the Google Forms workaround for lack of cross-section memory and is documented in `F2-Skip-Logic.md` open item #2.
-- **Q103 is a standalone single-choice**, not part of Grid #2. This is a deliberate lift from `F2-Validation.md` so Q111 skip-if-Never works. Don't merge it back into the grid without also rewriting the routing.
-- **Facility-type ZBB/NBB splits (Q62/Q62.1, Q67/Q67.1, Q78/Q78.1)** are all shown to all Section G respondents. `OnSubmit.gs` drops the non-applicable variant in POST based on `facility_type`. Form-side filtering is intentionally avoided because Forms grids and scale items don't support section routing.
+- **Q114 is a standalone single-choice** (Apr 20 rev; was Q103 under the Apr 08 draft), not part of Grid #2. This is a deliberate lift from `F2-Validation.md` so Q122 skip-if-Never works. Don't merge it back into the grid without also rewriting the routing.
+- **Facility-type ZBB/NBB pairs (Q69/Q70, Q75/Q76, Q87/Q88)** are all shown to all Section G respondents (Apr 20 rev; the Apr 08 draft used the Q62/Q62.1, Q67/Q67.1, Q78/Q78.1 split-pair pattern — Apr 20 promotes the NBB variants to proper sibling items). `OnSubmit.gs` drops the non-applicable variant in POST based on `facility_type`. Form-side filtering is intentionally avoided because Forms grids and scale items don't support section routing.
+- **Q108 is a PDF numbering gap.** Apr 20 numbers items Q1–Q125 but omits Q108. `Spec.gs` emits no Q108 field and `F2-Cross-Field.md` SCHEMA-01 guards against accidental emission — if the response Sheet ever grows a `Q108` column, halt and investigate.
 
 ## Phase 2 — Seed (Carl)
 
@@ -117,18 +119,19 @@ For **each** of the three test links:
    - [ ] Q4 age: try 17 (should reject) and 25 (should accept).
    - [ ] Q5 role: try each of the three role buckets (Doctor, Pharmacist, Barangay Health Worker) in separate passes to validate routing.
 5. **Section B:**
-   - [ ] Q12 = **No** → confirm you skip directly to the role-bucket gate (not through Q13–Q26).
+   - [ ] Q12 = **No** → confirm you skip directly to the role-bucket gate (not through Q13–Q30, which includes the Apr 20 UHC-implementation items Q21–Q24 and the Q25 multi + Q26–Q30 grid).
+   - [ ] Q12 = **Yes**: Q13–Q24 visible; Q25 multi-select drives the help text on Q26–Q30 (unselected domains → pick "I don't know" per Apr 20 wording).
 6. **Section C/D/E1/E2 routing:**
-   - [ ] Doctor pass: confirm you see all of Sections C, D, E1 (if BUCAS=Yes), E2 (if GAMOT=Yes).
+   - [ ] Doctor pass: confirm you see all of Sections C, D, E1 (if BUCAS=Yes), E2 (if GAMOT=Yes). Apr 20 rev adds Q47 ZBB challenges at the tail of Section D (conditional on Q44=Yes) and Q50/Q51 (BUCAS factors + efficacy) in Section E1.
    - [ ] Pharmacist pass: confirm you skip C + D and land directly on E2.
    - [ ] Other role pass: confirm you skip C/D/E1/E2 entirely and land on Section F.
 7. **Section G (physicians/dentists only):**
-   - [ ] Doctor pass: see Q56 through Q80 including both Q62 ZBB and Q62.1 NBB on Section G4.
+   - [ ] Doctor pass: see Q63 through Q90 including all three Apr 20 ZBB/NBB sibling pairs on their respective sub-sections — Q69 ZBB + Q70 NBB (SEC-G4), Q75 ZBB + Q76 NBB (SEC-G6 scales), Q87 ZBB + Q88 NBB (SEC-G8).
    - [ ] Non-doctor pass: skip Section G entirely (routed from `SEC-F-router`).
 8. **Section J terminal branch:**
-   - [ ] Q103 = **Never** → confirm Q111 does NOT appear and you go straight to Q112 path.
-   - [ ] Q103 = anything else → confirm Q104–Q110 grid + Q111 appear.
-   - [ ] Q112 = **No, I haven't thought about it** → confirm you skip Q113/Q114 and go to End of survey.
+   - [ ] Q114 = **Never** → confirm Q122 does NOT appear and you go straight to Q123 path (Apr 20 rev; was Q103 → Q111 → Q112 under the Apr 08 draft).
+   - [ ] Q114 = anything else → confirm Q115–Q121 grid + Q122 appear.
+   - [ ] Q123 = **No, I haven't thought about it** → confirm you skip Q124/Q125 and go to End of survey.
 9. **Submit** each pass and check the response Sheet.
 
 ### Step 9. Validate POST rules in the response Sheet
@@ -138,8 +141,9 @@ Open the `F2-Responses` Sheet after each submission and verify:
 - [ ] `_qa_flags` is empty on clean rows.
 - [ ] `_qa_disposition` shows `completed` (or `declined` on the decline pass).
 - [ ] `_derived_employment_class` shows `full-time` if Q11 ≥ 8, else `part-time`.
-- [ ] For a non-doctor pass, any Q55–Q80 values that leaked get dropped, and `_dropped_fields` lists them.
-- [ ] For a non-DOH-retained pass, Q62/Q67/Q78 (ZBB) are dropped. For Private facility pass, both ZBB and NBB are dropped.
+- [ ] For a non-doctor pass, any Q62–Q90 Section G values that leaked get dropped, and `_dropped_fields` lists them.
+- [ ] For a non-DOH-retained pass, Q69/Q75/Q87 (ZBB) are dropped (Apr 20 rev). For a DOH-retained pass, Q70/Q76/Q88 (NBB) are dropped. For a Private-hospital pass, both ZBB and NBB pairs are dropped per `OnSubmit.gs` facility-type logic.
+- [ ] No `Q108` column appears in the response Sheet — Apr 20 omits this number; SCHEMA-01 should halt the nightly run if one ever appears.
 - [ ] Try submitting with Q4=12 age + Q9a=10 tenure years (invalid combo if passed) — confirm `PROF-01` appears in `_qa_flags` on the nightly rerun (or re-run `runNightlyCleanSheet` manually).
 
 ### Step 10. Bug reporting
@@ -171,7 +175,7 @@ These are stubbed with defaults in the Spec; flipping any is a one-line `Spec.gs
 2. **Completion time estimate** — "~25 minutes" in the cover description is a placeholder; Shan's dry-run gives the real number.
 3. **Role-bucket UX** — the re-ask at `SEC-C-gate` and `SEC-F-router` is the current workaround. Open to better ideas if Forms adds cross-section memory.
 4. **Facility master list schema** — the stub `FacilityMasterList` above needs to be replaced with the real ASPSI master list once delivered.
-5. **DISP-03 rapid-submission threshold** — 5 min is a guess. Shan's dry-run timings will give a real baseline.
+5. **DISP-03 rapid-submission threshold** — raised to 7 min for the 124-item Apr 20 instrument (was 5 min under the 114-item Apr 08 draft). Shan's dry-run timings will give the real baseline.
 6. **Reminder wording** — default copy is in `Reminders.gs`. ASPSI may want a more formal tone.
 
 See `F2-Spec.md` and `F2-Skip-Logic.md` for the full list of ~15 ASPSI-facing decisions. None are gating Shan's first test pass.

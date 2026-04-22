@@ -1426,9 +1426,9 @@ git commit -m "chore(f2-pwa): M6.11 NEXT.md → M7 (validation + cross-field)"
 
 ## Self-Review
 
-**Spec coverage** — `2026-04-17-design-spec.md` §11.1 row M6 promises "all 114 items, 35 sections" and "all items fillable":
-- "All items fillable" — Tasks 1–7 add every missing ItemType; Task 8 regenerates, Task 9 wires every section. ✓
-- "35 sections" — actual `F2-Spec.md` has 11 sections (A, B, C, D, E1, E2, F, G, H, I, J). The "35" in the roadmap predates the spec finalization. Aligning silently to actual content per `feedback_align_dont_flag.md`.
+**Spec coverage** — `2026-04-17-design-spec.md` §11.1 row M6 promises "all 124 items, 35+ sections" and "all items fillable" (Apr 20 rev; was "all 114 items, 35 sections" under the Apr 08 draft):
+- "All items fillable" — Tasks 1–7 add every missing ItemType; Task 8 regenerates, Task 9 wires every section. ✓ **Apr 20 note**: Q108 is a PDF numbering gap — no item exists; generator must not emit a Q108 column. See `F2-Cross-Field.md` SCHEMA-01.
+- "35+ sections" — actual `F2-Spec.md` has 11 top-level lettered sections (A, B, C, D, E1, E2, F, G, H, I, J); the Apr 20 section-graph in `F2-Skip-Logic.md` subdivides these into 35+ routing sub-sections. The roadmap figure originally meant routing sub-sections. Aligning silently to actual content per `feedback_align_dont_flag.md`.
 - "Generator robustness" — Tasks 1, 2, 4, 5, 7 all extend the generator with TDD coverage. ✓
 - "Large-form perf" — implicit; no perf regression test, but live smoke in Task 11.2 will catch obvious jank. Deeper perf work is M11.
 
@@ -1441,3 +1441,13 @@ git commit -m "chore(f2-pwa): M6.11 NEXT.md → M7 (validation + cross-field)"
 ## Execution Handoff
 
 Plan complete and saved to `deliverables/F2/PWA/2026-04-18-implementation-plan-M6-full-instrument.md`. Per documented preference (`feedback_inline_over_subagent.md`), inline execution will follow when you say "next".
+
+## Decision gates past M6 (added 2026-04-21, Frame #2)
+
+M6 is the **last milestone that should proceed on assumption.** Under Frame #2 (PWA as the long-term F2 target, not a hedge), M7+ compounds on architectural choices that cannot be deferred indefinitely. Before M7 starts, the following must be resolved:
+
+1. **Per-HCW enrollment token scheme** (gates M4/M8) — email-link? short-code? OAuth to UP Google / ASPSI Google? Affects the Apps Script backend shape, the PWA's AuthContext, and the link-distribution UX.
+2. **Offline conflict-resolution policy** (gates M5) — when two devices (e.g., tablet + phone) submit the same HCW's draft, which wins? Server timestamp? Device-local last-write? Block the second with a 409? Determines the sync orchestrator's state machine.
+3. **Facility master list source-of-truth + refresh cadence** (gates M8) — the design spec §6.1 names `spec/FacilityMasterList.json` as "cached from API," but no API owner exists yet. ASPSI field team? Data team? Quarterly refresh from PSA + ASPSI overrides?
+
+These are Frame-#2-only decisions (they were irrelevant under the Forms-primary frame). Surface them as a single ASPSI decision batch before M7 kicks off. If answers haven't landed when M6 ships, pause the PWA and flip back to other-front work rather than guessing and rebuilding.

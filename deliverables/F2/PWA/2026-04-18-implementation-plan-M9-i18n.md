@@ -1053,7 +1053,7 @@ Run from `app/`:
 npm run generate
 ```
 
-Expected: console reports `35 section(s)` and `114 supported item(s)` (or whatever the current counts are; same as before this milestone). `app/src/generated/items.ts` is rewritten in place.
+Expected: console reports `35+ section(s)` and `124 supported item(s)` (Apr 20 rev; or whatever the current counts are — same as before this milestone). `app/src/generated/items.ts` is rewritten in place.
 
 - [ ] **Step 2: Spot-check the output**
 

@@ -40,7 +40,7 @@ describe('<Question>', () => {
 
   it('renders long-text as a textarea', () => {
     const item: Item = {
-      id: 'Q36',
+      id: 'Q40',
       section: 'C',
       type: 'long-text',
       required: true,
@@ -109,7 +109,7 @@ describe('<Question>', () => {
 
   it('renders multi as a checkbox group', () => {
     const item: Item = {
-      id: 'Q28',
+      id: 'Q32',
       section: 'C',
       type: 'multi',
       required: true,
@@ -129,7 +129,7 @@ describe('<Question>', () => {
   it('shows specify input when an "Other" checkbox is selected in multi', async () => {
     const user = userEvent.setup();
     const item: Item = {
-      id: 'Q21',
+      id: 'Q25',
       section: 'B',
       type: 'multi',
       required: true,
@@ -148,7 +148,7 @@ describe('<Question>', () => {
 
   it('renders date as an input type=date', () => {
     const item: Item = {
-      id: 'Q31',
+      id: 'Q35',
       section: 'C',
       type: 'date',
       required: false,

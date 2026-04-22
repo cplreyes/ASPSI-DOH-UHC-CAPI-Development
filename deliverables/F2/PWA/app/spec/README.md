@@ -15,4 +15,4 @@ M11 may introduce an automated sync + hash check. For now it's manual.
 
 ## Files
 
-- `F2-Spec.md` — 114 items across 35 sections. Source of `src/generated/items.ts` and `src/generated/schema.ts`.
+- `F2-Spec.md` — **Apr 20 rev**: 124 actual items (numbered Q1–Q125 with Q108 as a PDF numbering gap) across 35+ sections. Source of `src/generated/items.ts` and `src/generated/schema.ts`. Supersedes the Apr 08 draft (114 items).

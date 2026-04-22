@@ -1,0 +1,201 @@
+# F2 Apr 08 vs Apr 20 numbered-item audit
+
+Apr 08 extracted items: 66  (expected 114)
+Apr 20 extracted items: 124  (expected 125)
+
+## Apr 20 full list (parsed)
+
+  1. What is your name?
+  2. What type of employment do you have at this health facility?
+  3. Casual Employment: Work is not essential to the main business and is usually for a short period. If a casual employee works for at least one
+  4. Project Employment: Employment is fixed for a specific project or undertaking, with the end date determined by the completion of that projec
+  5. Seasonal Employment: Work is only performed during specific, recurring times of the year, such as holidays or harvest seasons.
+  6. Fixed-Term Employment: The contract specifies a set duration for the employment, agreed upon by both parties.
+  7. Other (Job Order: worker is classified as a contractual worker or contract of service personnel, hired for a short-term, specific piece of w
+  8. How do you divide your time between public and private practice?
+  9. In your current position, how many (months/years) have you worked at this health
+ 10. How many days in a week do you work at this health facility?
+ 11. On average, how many hours do you work per day?
+ 12. Have you heard about Universal Health Care (UHC) prior to this survey?
+ 13. Has the increase in equipment been implemented since the UHC Act was passed
+ 14. What are these pieces of equipment?
+ 15. Has the increase in supplies been implemented since the UHC Act was passed in
+ 16. What are these supplies?
+ 17. Has the use of electronic medical records at the facility been implemented since
+ 18. Have the changes to the referral system (inbound or outbound) been implemented
+ 19. Have the changes in staffing been implemented since the UHC Act was passed in
+ 20. Have the improved clinical practice guidelines been implemented since the UHC
+ 21. Have the DOH licensing standards been implemented since the UHC Act was
+ 22. Have the PhilHealth accreditation requirements been implemented since the UHC
+ 23. Have the service delivery protocols been implemented since the UHC Act was
+ 24. Have the primary care quality measures been implemented since the UHC Act was
+ 25. Which of the following do you expect to change in your personal work as a health
+ 26. How do you expect the following to change: Salary?
+ 27. How do you expect the following to change: Number of patients?
+ 28. How do you expect the following to change: Working hours?
+ 29. How do you expect the following to change: Standards to follow?
+ 30. How do you expect the following to change: Preventive healthcare?
+ 31. Have you heard of the PhilHealth YAKAP/Konsulta package?
+ 32. Which of the following are included in the YAKAP/Konsulta package?
+ 33. Which of the following statements is true with regard to registering patients to
+ 34. Are you part of a health facility that is an accredited PhilHealth YAKAP/ Konsulta
+ 35. Since when?
+ 36. Why is your facility applying to become an accredited YAKAP/Konsulta provider?
+ 37. Why is your facility not accredited?
+ 38. Under UHC, there is a thrust towards primary health care. Part of this is the
+ 39. Why would your facility consider it?
+ 40. What might convince your facility to become a primary care provider?
+ 41. Have you heard about the No Balance Billing (NBB)?
+ 42. What are your sources of information about NBB?
+ 43. What is your understanding about the No Balance Billing (NBB)?
+ 44. Have you heard about the Zero Balance Billing (ZBB)?
+ 45. What are your sources of information about ZBB?
+ 46. What is your understanding about the Zero Balance Billing (ZBB)?
+ 47. What challenges do you commonly encounter for patients covered by ZBB?
+ 48. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS)
+ 49. Do you have a BUCAS Center?
+ 50. In your assessment, what are the main factors affecting the utilization of BUCAS in
+ 51. Do you feel BUCAS improves patient management efficiently?
+ 52. In your opinion, BUCAS Centers have:
+ 53. Have you heard about the Guaranteed and Accessible Medications for Outpatient
+ 54. Is your facility an accredited GAMOT provider?
+ 55. In your assessment, what are the main factors affecting the utilization of the
+ 56. What is/are the most common way/s you send referrals to higher level facilities?
+ 57. What type of referral form do you use to send to higher level facilities?
+ 58. Do you have a network of specialist providers to refer patients to, if needed?
+ 59. Considering all patients who come to this facility for the past 6 months, what
+ 60. Of those referred, what is/are the most common way/s you receive referrals from
+ 61. How would you rate your satisfaction with your current referral system?
+ 62. Why are you not satisfied with the current referral system?
+ 63. Are you aware of the facility-level professional fee policies in setting your
+ 64. If yes, do you consider them in setting your professional fees?
+ 65. If no, why not?
+ 66. Are you aware of the PhilHealth coverage rules in setting your professional fees?
+ 67. Do you consider these in setting professional fees?
+ 68. If no, why not?
+ 69. Do you know the implications of the ZBB policy for professional fee charging?
+ 70. Do you know the implications of the NBB policy for professional fee charging?
+ 71. If yes, what are the implications?
+ 72. Are you familiar with the Relative Value Unit (RVU)-based pricing?
+ 73. If no, why not?
+ 74. Aside from above policies, what other factors do you consider in setting your
+ 75. On a scale of 1-5 with 5 as highest, how fair is your professional fee
+ 76. On a scale of 1-5 with 5 as highest, how fair is your professional fee
+ 77. On a scale of 1-5 with 5 as highest, how adequate is your professional fee given
+ 78. On a scale of 1-5 with 5 as highest, do you agree that the current reimbursement
+ 79. On a scale of 1-5 with 5 as highest, does your professional fee compensate for the
+ 80. On a scale of 1-5 with 5 as highest, do reimbursement rates influence your
+ 81. On a scale of 1-5 with 5 as highest, how acceptable is the professional fee
+ 82. What is your opinion on the policy of charging different professional fees based on
+ 83. How often do you charge your
+ 84. How often do you waive your
+ 85. How often do you give
+ 86. What coping strategies have you adapted when reimbursement is perceived as
+ 87. Have you experienced professional fee balance billing despite the insurance/ZBB?
+ 88. Have you experienced professional fee balance billing despite the insurance/NBB?
+ 89. If yes, what are those situations?
+ 90. What challenges do you face in maintaining fair and sustainable professional
+ 91. In your day-to-day work, how often do you have to perform tasks that should be
+ 92. When this happens, which of the following best applies to you?
+ 93. What are the most common tasks you do in your daily work that you could
+ 94. Which best explains why you take on these tasks?
+ 95. Do you agree or disagree with this statement:
+ 96. Are you satisfied with the support you receive from your facility to implement UHC
+ 97. Why not?
+ 98. I am compensated fairly.
+ 99. All of my salary payments have arrived
+100. All of my salary payments have arrived
+101. The working environment is a fully
+102. I am treated fairly at the workplace.
+103. My colleagues treat me with respect.
+104. My department/unit/practice provides a
+105. I have access to the resources I need
+106. In this post, I am given opportunities to
+107. I am satisfied with the professional
+109. In addition to your salary, what other benefits as an accredited healthcare provider
+110. What additional resources do you need to perform well in this job?
+111. What opportunities to develop leadership skill/s would be useful to you?
+112. Which of the following professional development opportunity/ies is/are currently
+113. Which of the following professional development opportunity/ies would be most
+114. In the past month, I have
+115. I have been compensated for
+116. My work is emotionally
+117. My work frustrates me.
+118. I feel worn out at the end of a
+119. I feel exhausted every morning
+120. I feel that every working hour is
+121. I have enough energy for family
+122. I have worked overtime for:
+123. Have you considered leaving this facility?
+124. Why are you planning on leaving this facility?
+125. What are you planning to do after leaving this facility?
+
+---
+## Apr 08 full list (parsed) — for reference
+
+  1. Regular Employment: Employees perform tasks necessary or desirable to the employer's main business, usually after a probationary period. The
+  2. Probationary Employment: A trial period (maximum of 6 months) to determine if the employee meets the standards for regularization.
+  3. Casual Employment: Work is not essential to the main business and is usually for a short period. If a casual employee works for at least one
+  4. Project Employment: Employment is fixed for a specific project or undertaking, with the end date determined by the completion of that projec
+  5. Seasonal Employment: Work is only performed during specific, recurring times of the year, such as holidays or harvest seasons.
+  6. Fixed-Term Employment: The contract specifies a set duration for the employment, agreed upon by both parties.
+  7. Other (Job Order: worker is classified as a contractual worker or contract of service personnel, hired for a short-term, specific piece of w
+ 14. What are these pieces of equipment?
+ 15. Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a
+ 16. What are these supplies?
+ 22. Salary                     Higher             Lower             I don't know
+ 23. Number of patients         Higher             Shorter           I don't know
+ 24. Working hours              Longer             Less              I don't know
+ 25. Standards to follow        More stringent
+ 26. Preventive healthcare  More
+ 31. Since when?
+ 33. Why are you not accredited?
+ 37. Have you heard about the No Balance Billing (NBB)?
+ 38. What are your sources of information about NBB?
+ 39. What is your understanding about the No Balance Billing (NBB)?
+ 40. Have you heard about the Zero Balance Billing (ZBB)?
+ 41. What are your sources of information about ZBB?
+ 42. What is your understanding about the Zero Balance Billing (ZBB)?
+ 56. Are you aware of the facility-level professional fee policies in setting your professional fees?
+ 57. If yes, do you consider them in setting your professional fees?
+ 58. If no, why not?
+ 59. Are you aware of the PhilHealth coverage rules in setting your professional fees?
+ 60. Do you consider these in setting professional fees?
+ 61. If no, why not?
+ 62. Do you know the implications of the ZBB policy for professional fee charging?
+ 63. If yes, what are the implications?
+ 64. Are you familiar with the Relative Value Unit (RVU)-based pricing?
+ 65. If no, why not?
+ 66. Aside from above policies, what other factors do you consider in setting your professional fee?
+ 67. On a scale of 1-5 with 5 as highest, how fair is your professional fee reimbursement compared to
+ 68. On a scale of 1-5 with 5 as highest, how adequate is your professional fee given your specialization
+ 69. On a scale of 1-5 with 5 as highest, do you agree that the current reimbursement rates accurately
+ 70. On a scale of 1-5 with 5 as highest, does your professional fee compensate for the medico-legal
+ 71. On a scale of 1-5 with 5 as highest, do reimbursement rates influence your practice's pricing
+ 72. On a scale of 1-5 with 5 as highest, how acceptable is the professional fee regulation or
+ 73. What is your opinion on the policy of charging different professional fees based on the patient's
+ 74. How often do you charge your patients?       Never  Rarely          Sometimes  Often           Always
+ 75. How often do you waive your professional
+ 76. How often do you give
+ 77. What coping strategies have you adapted when reimbursement is perceived as insufficient?
+ 78. Have you experienced professional fee balance billing despite the insurance/ZBB?
+ 79. If yes, what are those situations?
+ 80. What challenges do you face in maintaining fair and sustainable professional fees?
+ 88. I am compensated fairly.
+ 89. All of my salary payments have arrived on
+ 90. All of my salary payments have arrived in
+ 91. The working environment is a fully
+ 92. I am treated fairly at the workplace.
+ 93. My colleagues treat me with respect.
+ 94. My department/unit/practice provides a
+ 95. I have access to the resources I need to do
+ 96. In this post, I am given opportunities to
+ 97. I am satisfied with the professional
+103. In the past month, I have worked
+104. I have been compensated for working
+105. My work is emotionally exhausting.
+106. My work frustrates me.
+107. I feel worn out at the end of a working
+108. I feel exhausted every morning at the
+109. I feel that every working hour is tiring
+110. I have enough energy for family and
