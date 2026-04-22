@@ -32,6 +32,7 @@ export function Question({ item }: QuestionProps) {
   return (
     <div className="flex flex-col gap-2 py-3">
       <label htmlFor={item.id} className="text-sm font-medium">
+        <span className="mr-1 text-muted-foreground">{item.id}.</span>
         {localized(item.label, locale)}
         {item.required ? <span className="ml-1 text-red-600">*</span> : null}
       </label>

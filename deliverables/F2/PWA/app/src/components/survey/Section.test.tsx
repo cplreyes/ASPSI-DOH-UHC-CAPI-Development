@@ -39,9 +39,8 @@ describe('<Section>', () => {
     Q4: z.coerce.number().min(18),
   });
 
-  it('renders the section title and preamble', () => {
+  it('renders the preamble', () => {
     renderWithProviders(<Section section={fixture} schema={schema} onSubmit={() => {}} />);
-    expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
     expect(screen.getByText('Please answer the following.')).toBeInTheDocument();
   });
 

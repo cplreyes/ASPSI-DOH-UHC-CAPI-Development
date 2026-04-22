@@ -85,17 +85,9 @@ export function Section<T extends Record<string, unknown>>({
   return (
     <FormProvider {...methods}>
       <form onSubmit={submit} className="mx-auto flex max-w-xl flex-col gap-4 p-6" noValidate>
-        <header className="flex flex-col gap-1">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            {t('review.sectionHeading', {
-              id: section.id,
-              title: localized(section.title, locale),
-            })}
-          </h2>
-          {section.preamble ? (
-            <p className="text-sm text-muted-foreground">{localized(section.preamble, locale)}</p>
-          ) : null}
-        </header>
+        {section.preamble ? (
+          <p className="text-sm text-muted-foreground">{localized(section.preamble, locale)}</p>
+        ) : null}
 
         {(items ?? section.items).map((item) => (
           <Question key={item.id} item={item} />
