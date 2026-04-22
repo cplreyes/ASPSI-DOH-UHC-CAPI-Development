@@ -21,7 +21,8 @@
     "e2e:ui": "playwright test -c e2e/playwright.config.ts --ui",
     "version:patch": "npm version patch --no-git-tag-version",
     "version:minor": "npm version minor --no-git-tag-version",
-    "version:major": "npm version major --no-git-tag-version"
+    "version:major": "npm version major --no-git-tag-version",
+    "changelog": "code CHANGELOG.md"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
