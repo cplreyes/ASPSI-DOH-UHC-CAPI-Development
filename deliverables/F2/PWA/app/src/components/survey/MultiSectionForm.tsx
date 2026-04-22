@@ -32,9 +32,8 @@ import {
 import { shouldShow, type FormValues } from '@/lib/skip-logic';
 import { Section } from './Section';
 import { ProgressBar } from './ProgressBar';
-import { Navigator } from './Navigator';
 import { ReviewSection } from './ReviewSection';
-import { SectionTree } from './SectionTree';
+import { SectionTree, type SectionStatus } from './SectionTree';
 
 interface SectionConfig {
   id: string;
@@ -56,6 +55,35 @@ const SECTIONS: SectionConfig[] = [
 ];
 
 const REVIEW_INDEX = SECTIONS.length;
+
+function hasValue(v: unknown): boolean {
+  return v !== undefined && v !== null && v !== '';
+}
+
+function getSectionStatus(section: SectionConfig, values: FormValues): SectionStatus {
+  const items = section.section.items;
+
+  const hasAnyData = items.some((it) => {
+    if (it.type === 'multi-field' && it.subFields) {
+      return it.subFields.some((sf) => hasValue(values[sf.id]));
+    }
+    return hasValue(values[it.id]);
+  });
+
+  if (!hasAnyData) return 'empty';
+
+  const visibleItems = items.filter((it) => shouldShow(section.id, it.id, values));
+
+  const allRequiredFilled = visibleItems.every((it) => {
+    if (!it.required) return true;
+    if (it.type === 'multi-field' && it.subFields) {
+      return it.subFields.every((sf) => hasValue(values[sf.id]));
+    }
+    return hasValue(values[it.id]);
+  });
+
+  return allRequiredFilled ? 'complete' : 'incomplete';
+}
 
 interface MultiSectionFormProps {
   initialValues: FormValues;
@@ -89,6 +117,11 @@ export function MultiSectionForm({
   const current = isReview ? null : SECTIONS[index]!;
   const isFirst = index === 0;
   const isLastSection = index === SECTIONS.length - 1;
+
+  const sectionStatuses = useMemo<SectionStatus[]>(
+    () => SECTIONS.map((s) => getSectionStatus(s, merged)),
+    [merged],
+  );
 
   const visibleItems: Item[] = useMemo(() => {
     if (!current) return [];
@@ -153,11 +186,8 @@ export function MultiSectionForm({
     const dx = e.changedTouches[0].clientX - touchStartXRef.current;
     const dy = e.changedTouches[0].clientY - touchStartYRef.current;
     if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
-    if (dx < 0) {
-      handleNext();
-    } else {
-      handlePrev();
-    }
+    if (dx < 0) handleNext();
+    else handlePrev();
   };
 
   const handleSaveDraftClick = () => {
@@ -192,6 +222,7 @@ export function MultiSectionForm({
         <SectionTree
           sections={SECTIONS}
           currentIndex={index}
+          statuses={sectionStatuses}
           onNavigate={handleNavigate}
         />
       </aside>
@@ -213,6 +244,7 @@ export function MultiSectionForm({
             <SectionTree
               sections={SECTIONS}
               currentIndex={index}
+              statuses={sectionStatuses}
               onNavigate={(i) => { handleNavigate(i); setDrawerOpen(false); }}
               onClose={() => setDrawerOpen(false)}
             />
@@ -258,7 +290,7 @@ export function MultiSectionForm({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Sticky header: hamburger + progress + section title */}
+        {/* Sticky header: hamburger + progress + save draft */}
         <div className="sticky top-0 z-10 border-b bg-background">
           <div className="flex items-center gap-2 px-4 pt-3 pb-1">
             <button
@@ -276,6 +308,18 @@ export function MultiSectionForm({
               total={SECTIONS.length}
               className="flex-1 px-0 pt-0"
             />
+            {/* Save Draft — upper right */}
+            <button
+              type="button"
+              onClick={handleSaveDraftClick}
+              className="shrink-0 rounded border px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted"
+            >
+              {showSaved ? (
+                <span className="text-green-600">{t('navigator.draftSaved')}</span>
+              ) : (
+                t('navigator.saveDraft')
+              )}
+            </button>
           </div>
           <div className="mx-auto max-w-xl px-6 pb-2">
             <h2 className="text-xl font-semibold tracking-tight">
@@ -305,9 +349,6 @@ export function MultiSectionForm({
             onAutosave={handleSectionAutosave}
             onSubmit={handleSectionValid}
           />
-        </div>
-        <div className="mx-auto w-full max-w-xl px-6 pb-6">
-          <Navigator onSaveDraft={handleSaveDraftClick} showSaved={showSaved} />
         </div>
       </div>
     </div>

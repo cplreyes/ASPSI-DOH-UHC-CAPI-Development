@@ -8,14 +8,17 @@ export interface SectionEntry {
   section: SectionModel;
 }
 
+export type SectionStatus = 'complete' | 'incomplete' | 'empty';
+
 interface SectionTreeProps {
   sections: SectionEntry[];
   currentIndex: number;
+  statuses: SectionStatus[];
   onNavigate: (index: number) => void;
   onClose?: () => void;
 }
 
-export function SectionTree({ sections, currentIndex, onNavigate, onClose }: SectionTreeProps) {
+export function SectionTree({ sections, currentIndex, statuses, onNavigate, onClose }: SectionTreeProps) {
   const { locale } = useLocale();
 
   return (
@@ -38,8 +41,8 @@ export function SectionTree({ sections, currentIndex, onNavigate, onClose }: Sec
 
       <nav aria-label="Survey sections" className="flex flex-col py-1">
         {sections.map((s, i) => {
-          const isCompleted = i < currentIndex;
           const isCurrent = i === currentIndex;
+          const status = statuses[i] ?? 'empty';
 
           return (
             <button
@@ -52,26 +55,42 @@ export function SectionTree({ sections, currentIndex, onNavigate, onClose }: Sec
                 isCurrent && 'bg-primary/10 font-medium text-primary',
               )}
             >
+              {/* Status badge */}
               <span
                 className={cn(
                   'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold',
                   isCurrent && 'bg-primary text-primary-foreground',
-                  isCompleted && 'bg-green-100 text-green-700',
-                  !isCurrent && !isCompleted && 'bg-muted text-muted-foreground',
+                  !isCurrent && status === 'complete' && 'bg-green-100 text-green-700',
+                  !isCurrent && status === 'incomplete' && 'bg-red-100 text-red-600',
+                  !isCurrent && status === 'empty' && 'bg-muted text-muted-foreground',
                 )}
               >
-                {isCompleted ? (
+                {isCurrent ? (
+                  s.id
+                ) : status === 'complete' ? (
                   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : status === 'incomplete' ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 ) : (
                   s.id
                 )}
               </span>
+
+              {/* Section title */}
               <span
                 className={cn(
                   'leading-snug',
-                  isCurrent ? 'text-primary' : isCompleted ? 'text-muted-foreground' : 'text-foreground',
+                  isCurrent
+                    ? 'text-primary'
+                    : status === 'complete'
+                      ? 'text-muted-foreground'
+                      : status === 'incomplete'
+                        ? 'text-foreground'
+                        : 'text-foreground',
                 )}
               >
                 {localized(s.section.title, locale)}
