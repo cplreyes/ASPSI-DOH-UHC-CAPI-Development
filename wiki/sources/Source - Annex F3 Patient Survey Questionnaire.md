@@ -57,8 +57,8 @@ Driven by [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - An
 - Financial section (I) needs numeric validation with range checks and consistency checks (e.g., OOP ≤ total bill, outside-facility payments reconcile with Q108/Q110 "did you pay outside?" gates).
 - Patient listing form (**F3b, separate document**) used to select respondents before this interview.
 - Dual geographic identification: facility location AND patient home address.
-- **PSGC value sets** for REGION / PROVINCE_HUC / CITY_MUNICIPALITY / BARANGAY — same inbound ASPSI dependency as F1.
-- **DCF-generator impact**: F3 `generate_dcf.py` needs re-audit (previous build was 15 records / 387 items against Apr 08; expect meaningful growth).
+- **PSGC value sets** for REGION / PROVINCE_HUC / CITY_MUNICIPALITY / BARANGAY are **self-served + wired** from the PSA 1Q 2026 Publication (shared with F1 via `F1/inputs/`) — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/PSGC Value Sets|PSGC Value Sets]]. No longer an ASPSI-inbound dependency.
+- **DCF-generator status**: Apr 20 rewrite complete across all sections A–L (2026-04-21, landed in 8 per-chunk commits). Current build: **15 records / 818 items** (up from 15 records / 387 items on the Apr 08 baseline). Skip logic targets (Q10 No→Q12, Q145 Never→Q152, Q152 No→Q158, Q158 No→Q162, Q162 No→end, Q169 2/3→Q171, Q172 No→Q177, etc.) left for the logic-pass phase.
 
 ## Cross-references
 

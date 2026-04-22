@@ -2,6 +2,36 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-21 (F2 Apr 20 PDF alignment — 114 → 124 items)
+
+- **Problem**: All F2 deliverables (`F2-Spec.md`, `F2-Skip-Logic.md`, `F2-Validation.md`, `F2-Cross-Field.md`, `apps-script/Spec.gs`, PWA planning docs, `F2-Build-Handoff.md`) were still against the Apr 08 PDF (114 items). The Apr 20 Revised Inception Report PDF raised the instrument to 124 actual items across Q1–Q125 (Q108 is a numbering gap).
+- **Green light**: Carl's "Yes, aligned all about in the F2." Executed as an 8-task plan; all 8 tasks completed this session.
+- **Delta snapshot** (Apr 08 → Apr 20):
+  - Section B +11 UHC-implementation items (Q21–Q24 new single-choice + .other specify; Q25 multi-select domain picker + Q26–Q30 grid).
+  - Section D +1 (Q47 ZBB challenges, conditional on Q44=Yes).
+  - Section E1 +2 (Q50 BUCAS factors multi; Q51 BUCAS efficacy scale).
+  - Section G triple-pair restructure: Apr 08's ZBB-with-`.1`-NBB split pattern (Q62/Q62.1, Q67/Q67.1, Q78/Q78.1) promoted to proper sibling items — **Q69/Q70, Q75/Q76, Q87/Q88**.
+  - Section J grid lift: standalone single-choice was Q103 in Apr 08, now **Q114** in Apr 20 (preserves Q122 skip-if-Never routing survival in Google Forms).
+  - Terminal-branch driver: Q112 → **Q123**. Q113/Q114 → **Q124/Q125**.
+  - Q108 is a PDF numbering gap — no item; builder must not emit.
+- **Files rewritten / updated**:
+  - `deliverables/F2/F2-Spec.md` — full Apr 20 rewrite, verbatim labels.
+  - `deliverables/F2/F2-Skip-Logic.md` — full Apr 20 rewrite; section graph restructured with three facility-type router sub-sections (SEC-G3, SEC-G-scales, SEC-G-Q87).
+  - `deliverables/F2/F2-Validation.md` — req / gf_type / rule / on_fail inventory for Apr 20 numbering; new-item summary table with 10 entries.
+  - `deliverables/F2/F2-Cross-Field.md` — 20 POST rules renumbered onto Apr 20 fields; **NEW GATE-06** (Q25 × Q26–Q30 multi-to-grid integrity); FAC-01..06 renumbered onto Q69/Q70, Q75/Q76, Q87/Q88; FAC-07 split into three pair-checks; **NEW FAC-08** (Q89 situations gate on Q87=Yes OR Q88=Yes); DISP-03 threshold raised 5 min → 7 min; CONS-01/02 range Q1..Q114 → Q1..Q125 (Q108 omitted); **NEW SCHEMA-01** (error-level guard halting cleaner if a phantom Q108 column appears).
+  - `deliverables/F2/apps-script/Spec.gs` — full rewrite to 124 verbatim-Apr20 items. New shared choice sets (`ZBB_CHALLENGE_CHOICES`, `BUCAS_FACTOR_CHOICES`, `BUCAS_IMPACT_CHOICES`, `GAMOT_FACTOR_CHOICES`, `EXPECT_CHANGE_MULTI_CHOICES`). `UHC_CHANGE_CHOICES` upgraded to verbatim full-sentence wording. Section C routing fix: Q36 all-answers → SEC-D (was SEC-C3 in Apr 08). Q108 explicitly skipped.
+  - `deliverables/F2/apps-script/README.md` — frontmatter bumped, file-map row for Spec.gs updated, Known-limitations section rewritten onto Apr 20 field names + Q108 gap note.
+  - `deliverables/F2/PWA/app/spec/F2-Spec.md` — resynced from canonical.
+  - `deliverables/F2/PWA/app/spec/README.md` — "Apr 20 rev: 124 items (Q1–Q125 with Q108 gap), supersedes Apr 08 draft (114 items)".
+  - `deliverables/F2/PWA/2026-04-17-design-spec.md` — 114 → 124 refs at §6.1, M6 row, §14.
+  - `deliverables/F2/PWA/2026-04-17-implementation-plan.md` + `…-M1-generator-plus-render.md` — M6 row "114 items" → "124 items, Apr 20 rev"; Files-section `F2-Spec.md` description.
+  - `deliverables/F2/PWA/2026-04-18-implementation-plan-M6-full-instrument.md` — §11.1 self-review paragraph reframed for Apr 20 (35+ sub-sections; Q108 SCHEMA-01 pointer).
+  - `deliverables/F2/PWA/2026-04-18-implementation-plan-M7-validation-cross-field.md` — `SECTION_G_FIELDS` rewritten as Q63..Q90 (no `.1` variants); `SECTION_CD_FIELDS` rewritten as Q31..Q47.
+  - `deliverables/F2/PWA/2026-04-18-implementation-plan-M9-i18n.md` — generator console expectation `35 section(s) / 114 supported item(s)` → `35+ section(s) / 124 supported item(s)`.
+  - `deliverables/F2/F2-Build-Handoff.md` — frontmatter bumped (`draft-2026-04-21-apr20`, supersedes Apr 08); Q103/Q111/Q112 test-pass recipe rewritten to Q114/Q122/Q123; Section G recipe rewritten onto Q63–Q90 with the three Apr 20 sibling pairs; Section B skip rewritten to Q13–Q30; POST-rule verification rewritten to Q69/Q75/Q87 ZBB drops + Q70/Q76/Q88 NBB drops; Q108 absence added as a verification checkbox; DISP-03 note updated to 7 min.
+- **Untouched by design**: `F2-Apr20-Delta-Audit.md`, `_audit_apr20_structure.md` (historical audit artifacts — Apr 08 references are load-bearing comparison context); `F2-Cover-Block-Rewrite-Draft.md` (still valid cover-block text; no item-count references).
+- **Next**: Shan re-audit of the Apr 20 spec bundle, then Epic 3 Google Forms build can proceed on the corrected numbering.
+
 ## 2026-04-21 (GPS + verification photo capture)
 
 - **Added** `_gps_fields(prefix)` and `_photo_block(prefix)` helpers in `cspro_helpers.py` and a new shared CSPro logic module `deliverables/CSPro/shared/Capture-Helpers.apc` (`ReadGPSReading`, `TakeVerificationPhoto`).

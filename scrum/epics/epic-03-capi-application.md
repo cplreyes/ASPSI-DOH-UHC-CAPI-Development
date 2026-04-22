@@ -1,17 +1,27 @@
 ---
 epic: 3
-title: CAPI Application Development (CSPro + CSEntry)
+title: CAPI Application Development (CSPro + CSEntry / PWA)
 phase: per-instrument
-status: not-started
-last_updated: 2026-04-10
+status: in-progress
+last_updated: 2026-04-21
 ---
 
-# Epic 3 — CAPI Application Development (CSPro + CSEntry)
+# Epic 3 — CAPI Application Development (CSPro + CSEntry / PWA)
 
-Per-instrument application build workstream. Turns the validated data dictionary from Epic 2 into a working CSEntry application ready for testing in Epic 6.
+Per-instrument application build workstream. Turns the validated data dictionary from Epic 2 into a working data-collection application ready for testing in Epic 6. F1/F3/F4 are built as CSPro/CSEntry CAPI apps; **F2 pivoted to a Progressive Web App on 2026-04-17** and no longer uses the CSPro or Google Forms tracks.
 
 **Ties to Product Backlog:** [[../product-backlog#Epic 3 — CAPI Application Development|PB Epic 3]]
 **Methodology:** [[../../../../2_Areas/IT-Standards/templates/CAPI-Development-Workflow|CAPI Development Workflow]] Phase 6
+
+## Status snapshot (2026-04-21)
+
+| Instrument | Mode | Build state |
+|---|---|---|
+| F1 | CSPro CAPI | In progress — DCF stable at 12 records / 671 items (post Apr 21 GPS+photo+PSGC-cascade pass); Designer sign-off (E2-F1-010) pending; FMF build deferred to Sprint 003 |
+| F2 | **PWA** (self-admin; paper/CSPro-encoder fallbacks retired) | **M0–M11 shipped 2026-04-17 / 2026-04-18 — pilot-ready.** M12+ decision open at `deliverables/F2/PWA/app/NEXT.md` |
+| F3 | CSPro CAPI | Build-ready — DCF built 2026-04-16, skip-logic+validation spec reviewed 2026-04-21 (`F3-Skip-Logic-and-Validations.md`) |
+| F4 | CSPro CAPI (roster-heavy) | Build-ready — DCF built 2026-04-16, skip-logic+validation spec drafted 2026-04-21 (`F4-Skip-Logic-and-Validations.md`); schema verified 2026-04-21 (`C_HOUSEHOLD_ROSTER` already `max_occurs=20`, `J_HEALTH_SEEKING` intentionally respondent-level) |
+| PLF | Recruitment form (mode TBD) | Source captured |
 
 ## Task conventions
 
@@ -35,7 +45,9 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ## F1 — Facility Head Survey
 
-**Prerequisite:** E2-F1-010 (Designer sign-off on F1 DCF v2)
+**Prerequisite:** E2-F1-010 (Designer sign-off on F1 DCF)
+**Current DCF state (2026-04-21):** 12 records / 671 items. Shared `cspro_helpers.py` in use. PSGC cascade wired via `PSGC-Cascade.apc`; GPS + verification-photo via `Capture-Helpers.apc` (`REC_FACILITY_CAPTURE`). Skip-logic + validation spec at `deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md` (aligned with F3/F4 Apr 21).
+**Sprint 003 prerequisite:** Form-layout plan (forms per subsection, no scrolling, roster-scrolls-alone) must land before E3-F1-001 starts — see Sprint 002 rationale.
 
 ### Form layout & UX
 
@@ -68,7 +80,9 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [ ] **E3-F1-040** Informed consent capture screen (with explicit accept/refuse + timestamp) `status::todo` `priority::critical` `estimate::3h`
 - [ ] **E3-F1-041** Eligibility screen (must pass before main questionnaire loads) `status::todo` `priority::high` `estimate::2h`
 - [ ] **E3-F1-042** AAPOR-aligned disposition codes (completed, partial, refused, ineligible, contact attempt, etc.) `status::todo` `priority::high` `estimate::3h`
-- [ ] **E3-F1-043** GPS capture at start of interview `status::todo` `priority::high` `estimate::2h`
+- [ ] **E3-F1-043** GPS capture at start of interview — uses `ReadGPSReading()` helper from `Capture-Helpers.apc`; writes `FACILITY_GPS_*` items via `REC_FACILITY_CAPTURE` trigger block (see F1 spec §3.1.1 / §4.16) `status::todo` `priority::high` `estimate::2h`
+- [ ] **E3-F1-043a** Verification photo capture — uses `TakeVerificationPhoto()` helper, writes `VERIFICATION_PHOTO_FILENAME` with pattern `case-{QUESTIONNAIRE_NO}-verification.jpg` (F1 spec §3.1.2) `status::todo` `priority::high` `estimate::2h`
+- [ ] **E3-F1-043b** PSGC cascade wiring — `onfocus` + `loadcase()` + `setvalueset()` per `PSGC-Cascade.apc`; external lookup dictionaries for REGION/PROVINCE_HUC/CITY_MUNICIPALITY/BARANGAY (F1 spec §4.15); blocked on ASPSI PSGC value-set confirmation `status::blocked` `priority::high` `estimate::3h`
 - [ ] **E3-F1-044** Interviewer ID + Supervisor ID capture `status::todo` `priority::high` `estimate::1h`
 - [ ] **E3-F1-045** Date/time stamps (start, end, duration) `status::todo` `priority::medium` `estimate::1h`
 
@@ -79,51 +93,55 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ---
 
-## F2 — Healthcare Worker Survey *(self-administered — SPECIAL CASE)*
+## F2 — Healthcare Worker Survey *(self-administered — PWA)*
 
-**F2 is not a CSPro CAPI instrument by default.** Primary build track is **Google Forms** (self-admin by HCW, 3-day window, paper fallback encoded back into the same Form). See `memory/project_f2_capture_modes.md` and `memory/project_f2_questionnaire_rewrite_needed.md`.
+**F2 pivoted to a full Progressive Web App on 2026-04-17.** Vite + React + TypeScript installable shell with IndexedDB autosave, skip-logic navigation, Apps Script sync backend, and full 114-item instrument. The prior Google Forms track (E3-F2-GF-001..008) and the deferred CSPro-encoder track are both **RETIRED / SUPERSEDED** as of the pivot.
 
-**Prerequisite:** E2-F2-018 (F2 Google Forms spec sign-off)
+**Build location:** `deliverables/F2/PWA/app/`
+**Decision point:** `deliverables/F2/PWA/app/NEXT.md` (pilot now / close deferred M11 items / move to M12 F3-F4 parity)
+**Prerequisite:** none — spec frozen and embedded in the PWA
 
-### Google Forms build track *(PRIMARY)*
+### PWA build track *(PRIMARY — M0–M11 shipped 2026-04-17 / 2026-04-18)*
 
-- [x] **E3-F2-GF-001** Google Apps Script generator skeleton — reads spec CSV/MD, emits a Google Form in the project mailbox Drive, re-runnable on spec revisions `status::done` `priority::critical` `estimate::1d`
-  - Drafted 2026-04-15 at `deliverables/F2/apps-script/`. `Code.gs` is the entry point — `buildForm()`, `rebuildForm()`, trigger installation. Spec is baked in as structured JS in `Spec.gs` rather than parsed from MD at runtime (Apps Script has no reliable MD parser and the spec is large enough that JS data is clearer to diff).
-- [x] **E3-F2-GF-002** Spec → Form builder: sections, questions, choices, required flags, validation (regex/numeric ranges), help text `status::done` `priority::critical` `estimate::1d`
-  - `Spec.gs` contains all 114 items across 35 sections with verbatim labels and numeric ranges from `F2-Validation.md` (Q4 age 18–80, Q9a years 0–60, Q10 days 1–7, Q11 hours 1–24, etc.). `FormBuilder.gs` is a two-pass materializer: pass 1 clears any existing items, pass 2 walks sections in order creating (pageBreak, items) pairs so Forms' implicit "items belong to the most recent page break" rule produces correct groupings.
-- [x] **E3-F2-GF-003** Section-based skip logic wiring (`setJumpTo` / section branching) per the restructured logic from E2-F2-014 `status::done` `priority::critical` `estimate::4h`
-  - `FormBuilder.wireRouting_` applies per-choice `PageNavigationType` via `createChoice(text, pageBreakItem)` on the last branching item of each section. Forward-reference targets are resolved via a `pages` dict keyed by sectionId (see `F2-Skip-Logic.md` for the section graph). Role-bucket gates re-ask role at `SEC-C-gate` and `SEC-F-router` since Forms has no cross-section memory.
-- [x] **E3-F2-GF-004** Consent click-through + acknowledgement as required first section (replaces "read aloud" flow) `status::done` `priority::critical` `estimate::2h`
-  - `SEC-COVER` is the first section with the consent click-through. Decline routes to `SEC-DECLINE` (thank-you page); consent routes to `SEC-COVER2` (facility confirmation). `OnSubmit.CONS-02` drops all Q* body answers on declined submissions as a defensive POST check.
-- [x] **E3-F2-GF-005** Facility ID handling — unique prefilled link per facility (Apps Script generator reads a facility master list, emits one prefilled link per row) `status::done` `priority::high` `estimate::4h`
-  - `Links.gs` implements `generateLinks()` which reads a `FacilityMasterList` Sheet (columns: facility_id, facility_name, facility_type, facility_has_bucas, facility_has_gamot, region, province, city_mun, barangay, hcw_emails semicolon-separated) and emits one prefilled URL per (facility × HCW email) into a new `F2-Links` Sheet. Prefills facility_id, facility_type, BUCAS, GAMOT, and response_source=self via `FormResponse.toPrefilledUrl()`.
-- [x] **E3-F2-GF-006** Google sign-in required; response destination configured → Google Sheet in project mailbox Drive `status::done` `priority::high` `estimate::1h`
-  - `Code.buildForm` calls `setRequireLogin(true)`, `setCollectEmail(true)`, and `setDestination(SPREADSHEET, ss.getId())`. Response sheet is named `F2-Responses` in the same Drive.
-- [x] **E3-F2-GF-007** `response_source` auto-captured field — distinguishes `self` vs `staff_encoded` submissions `status::done` `priority::high` `estimate::1h`
-  - Hidden `response_source` field lives in `SEC-COVER2` and is prefilled by `Links.generateLinks()` (self) or by `Code.buildStaffEncoderForm` (staff_encoded). `OnSubmit.SRC-01..03` validates source integrity.
-- [x] **E3-F2-GF-008** Reminder cadence automation (Apps Script time-driven trigger) — Day 1 / Day 2 / Day 3 reminders to non-completers reading the response Sheet `status::done` `priority::high` `estimate::4h`
-  - `Reminders.gs` installed as a 09:00 Manila daily trigger by `Code.installReminderTrigger_`. `runRemindersNow()` reads `F2-Links` + the response Sheet, diffs by email, and sends Day 1/2/3 nudges via `MailApp.sendEmail`. Also manually runnable for testing.
-- [ ] **E3-F2-GF-009** Staff encoder variant of the Form (Fallback A) — prefilled `response_source=staff_encoded`, no sign-in required, accessible to ASPSI staff only `status::todo` `priority::high` `estimate::2h`
-- [ ] **E3-F2-GF-010** Paper mirror Google Doc generator — same Apps Script reads the spec and emits a print-ready Doc `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F2-GF-011** Filipino translations wired into the Form (second-language variant or bilingual inline) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F2-GF-012** Desk test — walk every skip path from the spec against the generated Form `status::todo` `priority::critical` `estimate::4h`
-- [ ] **E3-F2-GF-013** 3-day internal dry-run test with 1–2 testers — validates save/resume across the window and reminder firing `status::todo` `priority::critical` `estimate::3d (elapsed)`
-- [ ] **E3-F2-GF-014** Shan QA pass on the generated Form + test cases `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F2-GF-015** Gate decision — after test, assess whether the deferred F2-CSPro track should be activated or stay parked `status::todo` `priority::medium` `estimate::1h`
+- [x] **E3-F2-PWA-M0** Vite + React + TypeScript installable shell — PWA manifest, service worker, install prompt `status::done` `priority::critical`
+- [x] **E3-F2-PWA-M1** IndexedDB autosave — per-field writes, resume on reload `status::done` `priority::critical`
+- [x] **E3-F2-PWA-M2** Skip-logic navigation engine — spec-driven section/question routing `status::done` `priority::critical`
+- [x] **E3-F2-PWA-M3** Apps Script backend — sync endpoint, response sheet, deployment URL in runtime config `status::done` `priority::critical`
+- [x] **E3-F2-PWA-M4** Sync orchestrator — queue, retry, conflict detection, offline-first `status::done` `priority::critical`
+- [x] **E3-F2-PWA-M5** Full 114-item instrument wired from spec `status::done` `priority::critical`
+- [x] **E3-F2-PWA-M6** Validation + cross-field rules (POST-submit layer) `status::done` `priority::high`
+- [x] **E3-F2-PWA-M7** Enrollment flow — facility link → HCW identity → draft seed `status::done` `priority::high`
+- [x] **E3-F2-PWA-M8** i18n scaffold — EN/FIL switching, translation table surfaces `status::done` `priority::high`
+- [x] **E3-F2-PWA-M9** Admin dashboard — response counts, sync status, per-HCW drill-down (read-only) `status::done` `priority::medium`
+- [x] **E3-F2-PWA-M10** Runtime config kill-switch — disable new draft creation remotely via config endpoint `status::done` `priority::high`
+- [x] **E3-F2-PWA-M11** Spec-drift modal — detect client/server spec-version mismatch, block submit until resolved `status::done` `priority::high`
 
-### CSPro CAPI track *(DEFERRED — optional late build)*
+### Deferred from M11 (decision required)
 
-> Conditional on E3-F2-GF-015 gate decision. If activated, scheduled **last** in the Epic 3 sequence after F1/F3/F4 CSPro builds are complete. ASPSI-facing purpose: let staff encode paper F2 responses into CSPro instead of Google Forms. See `memory/project_f2_capture_modes.md`.
+- [ ] **E3-F2-PWA-M12a** Per-HCW tokens (replace email-based identity) `status::deferred`
+- [ ] **E3-F2-PWA-M12b** Draft auto-migration across spec versions `status::deferred`
+- [ ] **E3-F2-PWA-M12c** iOS push notifications `status::deferred`
+- [ ] **E3-F2-PWA-M12d** Admin mutations (beyond read-only) `status::deferred`
 
-- [ ] **E3-F2-CSPro-001..060** CSPro Designer build using standard F1 template, adapted for paper-to-CAPI encoding workflow (no interviewer text, no GPS, no live consent — encoder reads from paper) `status::deferred` `priority::low`
+### Pilot readiness
+
+- [ ] **E3-F2-PWA-QA-001** Cross-platform QA checklist walkthrough — Android Chrome, iOS Safari, desktop Chrome/Firefox/Edge; checklist at `deliverables/F2/PWA/2026-04-18-cross-platform-qa-checklist.md` `status::todo` `priority::critical`
+- [ ] **E3-F2-PWA-QA-002** Shan QA dry-run with 1–2 HCW testers `status::todo` `priority::high`
+- [ ] **E3-F2-PWA-PILOT-001** Pilot-vs-deferred-cleanup-vs-M12-F3-F4-parity decision (per `NEXT.md`) `status::todo` `priority::high` `estimate::30m decision`
+
+### Retired tracks *(do not re-open without explicit decision reversal)*
+
+- **Google Forms track (E3-F2-GF-001..015):** Superseded 2026-04-17 by PWA pivot. 8 tasks (GF-001..008) closed before supersede; remaining (GF-009..015) retired unbuilt. Prior artifacts under `deliverables/F2/apps-script/` retained for reference only.
+- **CSPro-encoder track (E3-F2-CSPro-*):** Retired — three-path model (self / paper / staff-encoded-into-CSPro) collapsed to a single PWA path with a print-mode fallback inside the PWA.
 
 ---
 
 ## F3 — Patient Survey
 
-**Prerequisite:** E2-F3-010 (F3 DCF sign-off)
+**Prerequisite:** Form-layout plan (shared with F1/F4 — Sprint 003 prerequisite).
+**Current DCF state (2026-04-21):** 18 records / 840 items, sections A–L. Skip-logic + validation spec reviewed 2026-04-21 at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (1 question routed to Juvy — Q31 IP_GROUP; 5 spec-decisions closed with override clause). **Build-ready.**
 
-- [ ] **E3-F3-001..060** Standard template; reuses F1's interviewer-administered patterns
+- [ ] **E3-F3-001..060** Standard template; reuses F1's interviewer-administered patterns (PSGC cascade + consent + GPS/photo via `Capture-Helpers.apc`)
 - [ ] **E3-F3-015** Outpatient vs inpatient branching at eligibility screen `status::todo` `priority::high` `estimate::4h`
 
 *(Full task list to be expanded when F3 enters a sprint.)*
@@ -132,15 +150,19 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ## F4 — Household Survey
 
-**Prerequisite:** E2-F4-010 (F4 DCF sign-off)
+**Prerequisite:** Form-layout plan (drafted 2026-04-21, [[../../deliverables/CSPro/F4/F4-Form-Layout-Plan|F4-Form-Layout-Plan]]). Schema is already correct — no patch needed.
+**Current DCF state (2026-04-21):** 22 records / 623 items, sections A–Q. `C_HOUSEHOLD_ROSTER` is repeating (`max_occurs=20`, id-item `MEMBER_LINE_NO`); `H_PHILHEALTH_REG` and `J_HEALTH_SEEKING` are respondent-level non-repeating per the Apr 20 source rephrase ("singular you/your household member"). Skip-logic + validation spec drafted 2026-04-21 at `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md` (3 questions routed to ASPSI, 5 spec-decisions; findings #1/#2 CLOSED-BY-VERIFICATION). **Build-ready.**
 
 F4 inherits the standard template **plus a roster engine**. The household roster loop is the primary technical challenge in this instrument.
 
+- [x] **E3-F4-000** ~~Schema patch — flip `C_HOUSEHOLD_ROSTER` and `J_HEALTH_SEEKING` to repeating records~~ **CLOSED-BY-VERIFICATION 2026-04-21.** Re-inspected generator + emitted DCF before starting patch: `C_HOUSEHOLD_ROSTER` already at `max_occurs=20`, `J_HEALTH_SEEKING` correctly respondent-level per Apr 20 source. No code change. `status::done` `priority::critical`
 - [ ] **E3-F4-001..060** Standard template per F1
 - [ ] **E3-F4-070** Household roster grid: add-member, edit-member, remove-member, reorder `status::todo` `priority::critical` `estimate::2d`
 - [ ] **E3-F4-071** Per-member sub-questionnaire loop (conditional on age/relation/etc.) `status::todo` `priority::critical` `estimate::2d`
 - [ ] **E3-F4-072** Cross-member consistency rules (e.g., only one household head, spouse implies head exists) `status::todo` `priority::high` `estimate::1d`
 - [ ] **E3-F4-073** Max roster size validation + soft warning at unusual sizes `status::todo` `priority::high` `estimate::2h`
+- [ ] **E3-F4-074** WHO expenditure grid + catastrophic-expenditure check (Section N flat batteries) `status::todo` `priority::high` `estimate::1d`
+- [ ] **E3-F4-075** Bill-recall chain (Section N) `status::todo` `priority::high` `estimate::4h`
 
 *(Full task list to be expanded when F4 enters a sprint.)*
 
@@ -154,6 +176,11 @@ F4 inherits the standard template **plus a roster engine**. The household roster
 
 ## Notes
 
-- **F1 is the priority.** Its full task breakdown above is the template for the others.
-- F2/F3/F4 task lists are stubs — they'll be expanded as each instrument enters its build sprint. Front-loading detailed task breakdowns for instruments months away is wasted effort because the specifics will shift.
-- Reusable patterns established in F1 (e.g., consent flow, FIELD_CONTROL block, GPS capture) should be extracted into includable `.apc` fragments for later instruments.
+- **F2 PWA is ahead of F1/F3/F4 on build status** (M0–M11 shipped 2026-04-18) but blocked on a pilot-vs-cleanup-vs-parity decision.
+- **F1 is the priority CSPro instrument.** Its task breakdown above is the template for F3 and F4.
+- **F3 and F4 are Build-ready** as of 2026-04-21; form-layout plans also landed 2026-04-21 ([[../../deliverables/CSPro/Form-Layout-Principles|shared principles]] + per-instrument F1/F3/F4 plans). E3-F4-000 schema patch closed by verification on the same day — the generator and DCF were already correct.
+- Reusable CSPro patterns live in `deliverables/CSPro/` as includable `.apc` fragments:
+  - `Capture-Helpers.apc` — `ReadGPSReading()`, `TakeVerificationPhoto()`
+  - `PSGC-Cascade.apc` — `FillRegionValueSet()`, `FillProvinceValueSet()`, `FillCityValueSet()`, `FillBarangayValueSet()`
+  - `cspro_helpers.py` — shared Python generator helpers used by F1/F3/F4 `generate_dcf.py`
+- F2/F3/F4 CSPro task lists remain partial stubs — expanded as each instrument enters its build sprint. Front-loading detailed task breakdowns for instruments months away is wasted effort.

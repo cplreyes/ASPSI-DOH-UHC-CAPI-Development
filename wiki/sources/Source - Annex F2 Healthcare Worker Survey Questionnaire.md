@@ -2,13 +2,13 @@
 type: source-summary
 source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Project-Deliverable-1_Apr20-submitted/Annex F2_Healthcare Worker Survey Questionnaire_UHC Year 2.pdf]]"
 date_ingested: 2026-04-20
-last_updated: 2026-04-20
+last_updated: 2026-04-21
 tags: [questionnaire, healthcare-worker, f2, survey-instrument, ingest-batch-apr20]
 ---
 
 # Source — Annex F2: Healthcare Worker Survey Questionnaire
 
-Healthcare Worker Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], **125 numbered items** (last is Q125; earlier grids reuse sub-item numbering).
+Healthcare Worker Survey Questionnaire for [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]], **125 numbered slots, 124 actual items** (last is Q125; Q108 is a PDF numbering gap — Section J's grid lift jumps Q107 → Q109; earlier grids reuse sub-item numbering).
 
 **Field-work administration model:**
 - **Primary: self-administered** by the HCW within a **3-day window** via the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]].
@@ -64,12 +64,13 @@ F1 sign-off is **not** a hard gate for starting F2. Shortest of the four instrum
 
 - `deliverables/F2/F2-0_Tooling-and-Access-Model-Decision-Memo.md` — 8 decisions for ASPSI review
 - `deliverables/F2/F2-Cover-Block-Rewrite-Draft.md` — rewrite text for the interviewer→self-admin cover-block fix
-- `deliverables/F2/F2-Spec.md` — **needs re-audit against Apr 20 body**; previous 114-item spec was against Apr 08
-- `deliverables/F2/F2-Skip-Logic.md` — Google-Forms-restructured routing graph (re-audit needed)
-- `deliverables/F2/F2-Validation.md` — required-flag + numeric-range inventory
-- `deliverables/F2/F2-Cross-Field.md` — 20 POST rules for `onFormSubmit`
-- `deliverables/F2/F2-Build-Handoff.md` — Build / Seed / Test recipe for Carl + Shan
-- `deliverables/F2/apps-script/` — Apps Script bundle (Code / Spec / FormBuilder / OnSubmit / Reminders / Links / Routing)
+- `deliverables/F2/F2-Apr20-Delta-Audit.md` — Apr 08 → Apr 20 item-by-item delta audit (114 → 124)
+- `deliverables/F2/F2-Spec.md` — **Apr 20 rev** (124 items, Q1–Q125 with Q108 gap; verbatim labels from this PDF)
+- `deliverables/F2/F2-Skip-Logic.md` — **Apr 20 rev** Google-Forms-restructured routing graph (35+ sections, facility-type triple-pair router sub-sections)
+- `deliverables/F2/F2-Validation.md` — **Apr 20 rev** required-flag + numeric-range inventory
+- `deliverables/F2/F2-Cross-Field.md` — **Apr 20 rev** 20 POST rules + GATE-06 multi-to-grid integrity + FAC-08 situations gate + SCHEMA-01 Q108-column guard
+- `deliverables/F2/F2-Build-Handoff.md` — **Apr 20 rev** Build / Seed / Test recipe for Carl + Shan
+- `deliverables/F2/apps-script/` — **Apr 20 rev** Apps Script bundle (Code / Spec / FormBuilder / OnSubmit / Reminders / Links / Routing)
 
 ## Cross-references
 

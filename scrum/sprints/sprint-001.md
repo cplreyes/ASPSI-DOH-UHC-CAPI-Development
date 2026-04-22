@@ -138,3 +138,11 @@ Solo-dev capacity check: 5 working days × ~5h focused work = ~25h. Day 2 closed
 - [ ] DCF v3 (or confirmed v2) opens cleanly in CSPro Designer with no unresolved bug-list items
 - [ ] F1 sign-off note appended to `log.md` declaring Epic 2/F1 closed and Epic 3/F1 ready to start
 - [ ] Sprint 002 planning happens Friday Apr 17 PM or Monday Apr 20 AM
+
+## Post-close context *(added 2026-04-21 for traceability — do not edit Sprint 001 history above)*
+
+Events that landed on **Sprint 001 closeout day (2026-04-17)** and the **weekend immediately after** reshaped multiple epic-level facts. Captured here so a cold reader of sprint-001.md does not miss the pivot:
+
+- **E2-F1-009b closed 2026-04-17.** The 6 `PENDING_DESIGN_*` defaults in `generate_dcf.py` were declared final — no further LSS reconciliation pursued. (Reopened Apr 14, closed Apr 17 as spec-decisions-final.)
+- **F2 pivoted to a Progressive Web App 2026-04-17 → 2026-04-18.** M0 through M11 shipped across two days at `deliverables/F2/PWA/app/`. The Apr 15 Google Forms Apps Script bundle (E3-F2-GF-001..008) became retired artifacts; the deferred CSPro-encoder track was also retired. F2 is now a PWA instrument. See product-backlog + epic-02 + epic-03.
+- **Sprint 002 opened Mon 2026-04-20** with E2-F1-010, E0-010, E0-032, E0-020 carried forward and new items E0-032a + E2-F3-001 + E2-F4-001 added. Sprint 002 Day 2 (Apr 21) overdelivered: F3 and F4 skip-logic + validation specs both landed; F1 spec was also aligned with F3/F4 architecture (GPS/photo/PSGC cascade).

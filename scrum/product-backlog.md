@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-04-20
+last_updated: 2026-04-21
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -23,13 +23,15 @@ last_updated: 2026-04-20
 
 ### Headline (this week)
 
-**Sprint 002 opens Mon 2026-04-20. Tranche 2 (40%) is due Fri 2026-04-24 — 4 days out.** DOH-PMSMD feedback on Juvy's Apr 14 matrices + Word tools submission is expected today (Chrys Paita / PMSMD, review window set Apr 15).
+**Sprint 002 Day 2 (Tue 2026-04-21). Tranche 2 (40%) is due Fri 2026-04-24 — 3 days out.** DOH-PMSMD feedback on Juvy's Apr 14 matrices + Word tools submission landed yesterday (Apr 20, Chrys Paita / PMSMD).
 
-**F2 pivoted from the Google Forms track to a full Progressive Web App, shipped M0 → M11 between Apr 17 and Apr 18.** The PWA is pilot-ready: installable Vite+React+TS shell, IndexedDB autosave, skip-logic nav, Apps Script backend, sync orchestrator, full 114-item instrument, validation + cross-field rules (POST), enrollment, i18n scaffold, admin dashboard, runtime config kill-switch + spec-drift modal. Cross-platform QA checklist at `deliverables/F2/PWA/2026-04-18-cross-platform-qa-checklist.md`. Deferred from M11: per-HCW tokens, draft auto-migration across spec versions, iOS push, admin mutations. **Next decision is not a milestone — it's pilot vs. close-deferred-first vs. move to M12 F3/F4 parity** (see `deliverables/F2/PWA/app/NEXT.md`). The Apr 15 Google Forms Apps Script bundle (E3-F2-GF-001..008) is superseded; the F2 three-path Google Forms / paper / deferred-CSPro model is retired.
+**F3 and F4 skip-logic + validation specs both landed 2026-04-21 (Sprint 002 Day 2 overdelivery).** F3 spec reviewed at 1133 lines — all 12 sections A–L, 14 sanity findings, 15 CSPro PROC templates, 6 open questions dispositioned (1 routed to Juvy: Q31 IP_GROUP; 5 spec-decisions with override clause). F4 spec drafted at 904 lines — all 17 sections A–Q, 13 sanity findings (findings #1/#2 CLOSED-BY-VERIFICATION 2026-04-21: `C_HOUSEHOLD_ROSTER` already repeating at `max_occurs=20`, `J_HEALTH_SEEKING` intentionally respondent-level per Apr 20 source), 11 CSPro PROC templates, 8 open questions dispositioned (3 routed to ASPSI, 5 spec-decisions). Both F3 and F4 are **Build-ready**. Deliverables at `deliverables/CSPro/F3/` and `deliverables/CSPro/F4/`.
 
-**F3 and F4 CSPro data dictionaries built 2026-04-16.** Design spec at `docs/superpowers/specs/2026-04-16-f3-f4-dcf-generators-design.md`. Shared `cspro_helpers.py` extracted; F1 refactored to use it (output unchanged at 11 records / 655 items after the Apr 14 Designer round-1 + verbatim-labels + secondary-drop + NA-convention pass). F3: 15 records / 387 items covering sections A–L. F4: 20 records / 460 items covering sections A–Q, with three repeating records (`C_HOUSEHOLD_ROSTER`, `H_PHILHEALTH_REG`, `J_HEALTH_SEEKING`) plus flat expenditure batteries in Section N. Branch `feat/f3-f4-dcf-generators` merged to main.
+**F1 skip-logic + validation spec aligned with F3/F4 on 2026-04-21.** F1 spec rewrite added GPS capture via `REC_FACILITY_CAPTURE` (uses `ReadGPSReading()` helper) + verification-photo capture (filename-reference pattern, `TakeVerificationPhoto()` helper) + PSGC cascade (`onfocus` + `loadcase()` + `setvalueset()` via `PSGC-Cascade.apc`). F1 DCF now at **12 records / 671 items**. Shared `.apc` fragments live under `deliverables/CSPro/Capture-Helpers.apc` and `deliverables/CSPro/PSGC-Cascade.apc` — F3/F4 will consume the same helpers. Designer round 2 / sign-off (E2-F1-010) remains the carry-forward from Sprint 001. PSGC value sets still blocked on ASPSI.
 
-**F1 remains the remaining in-flight CSPro instrument.** DCF stable at 11 records / 655 items. Designer walkthrough round 1 applied Apr 14 (5 patches); **round 2 / sign-off (E2-F1-010) was the carry-forward miss from Sprint 001** and is back on the Sprint 002 slate. E2-F1-009b was closed 2026-04-17 — the 6 `PENDING_DESIGN_*` defaults in `generate_dcf.py` stand as final; no further LSS reconciliation needed. PSGC value sets (REGION / PROVINCE_HUC / CITY_MUNICIPALITY / BARANGAY) still blocked on ASPSI.
+**F2 PWA M0–M11 shipped 2026-04-17 / 2026-04-18 — pilot-ready.** Installable Vite+React+TS shell, IndexedDB autosave, skip-logic nav, Apps Script backend, sync orchestrator, full 114-item instrument, validation + cross-field rules (POST), enrollment, i18n scaffold, admin dashboard, runtime config kill-switch + spec-drift modal. Cross-platform QA checklist at `deliverables/F2/PWA/2026-04-18-cross-platform-qa-checklist.md`. Deferred from M11: per-HCW tokens, draft auto-migration across spec versions, iOS push, admin mutations. **Decision open** — pilot vs. close-deferred-first vs. move to M12 F3/F4 parity (see `deliverables/F2/PWA/app/NEXT.md`). The Apr 15 Google Forms Apps Script bundle (E3-F2-GF-001..008) and the deferred-CSPro-encoder track are both retired.
+
+Comms infrastructure fully provisioned (project mailbox + Viber group both live, Shan onboarded as QA tester, Juvy confirmed as DOH-routing gate per the Apr 13 Team Communication Protocol).
 
 Comms infrastructure fully provisioned (project mailbox + Viber group both live, Shan onboarded as QA tester, Juvy confirmed as DOH-routing gate per the Apr 13 Team Communication Protocol).
 
@@ -39,8 +41,8 @@ Comms infrastructure fully provisioned (project mailbox + Viber group both live,
 |---|---|---|---|
 | **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** | First weekly status update shipped to ASPSI Mgmt Committee |
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
-| **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Design — Designer round 2 / sign-off next; **F3/F4 DCFs built 2026-04-16**; F2 data model lives inside the PWA spec; PLF Source Captured) | F1 sign-off (E2-F1-010); F3/F4 skip-logic + validation specs |
-| **3** | CAPI Application Development | **In Progress** (F2 **PWA M11 pilot-ready**; F1 CSPro build pending Designer sign-off; F3/F4 Build-ready) | F2 pilot-vs-deferred-cleanup decision; F1 `FacilityHeadSurvey.fmf` Section A layout |
+| **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Design — Designer round 2 / sign-off next; **F3 Build-ready, F4 Build-ready** — specs complete 2026-04-21; F2 data model lives inside the PWA spec; PLF Source Captured) | F1 sign-off (E2-F1-010); F3/F4 Designer validation (E2-F3-010, E2-F4-010) |
+| **3** | CAPI Application Development | **In Progress** (F2 **PWA M11 pilot-ready**; F1 CSPro build pending Designer sign-off; F3/F4 Build-ready) | F2 pilot-vs-deferred-cleanup decision; F1 `FacilityHeadSurvey.fmf` Section A layout (deferred to Sprint 003 pending form-layout plan) |
 | **4** | CSWeb Server Setup and Deployment | Not Started | Sync architecture decision documented |
 | **5** | Tablet and Field Logistics | Not Started | Tablet provisioning SOP drafted |
 | **6** | Testing and Pilot | Not Started | F1 desk test (follows Epic 3); QA Tester (Shan) onboarded to test workflow |
@@ -55,10 +57,10 @@ Comms infrastructure fully provisioned (project mailbox + Viber group both live,
 
 | Instrument | Mode | Pages | Current State |
 |---|---|---|---|
-| **F1 — Facility Head** | Interviewer-administered (CSPro CAPI) | 34 | **Design — closing** — DCF at 11 records / 655 items (post Apr 14 Designer round 1 + verbatim-labels wide pass + secondary-drop + NA convention); E2-F1-009b closed 2026-04-17; PSGC value sets still blocked on ASPSI; Designer round 2 / sign-off (E2-F1-010) is the next milestone |
-| **F2 — Healthcare Worker** | **Self-admin — PWA (primary); deferred Google Forms + paper fallback per original three-path model** | 14 | **Build — PWA M11 shipped 2026-04-18, pilot-ready.** Vite+React+TS PWA at `deliverables/F2/PWA/app/`; runtime config kill-switch + spec-drift modal; cross-platform QA checklist pending. Pilot vs. deferred-cleanup vs. M12 F3/F4-parity decision open (`NEXT.md`). |
-| **F3 — Patient** | Interviewer-administered (CSPro CAPI) | 23 | **Design — DCF built 2026-04-16** (15 records / 387 items, sections A–L). Skip-logic + validation specs pending before Build-ready. |
-| **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2; CSPro CAPI) | 26 | **Design — DCF built 2026-04-16** (20 records / 460 items, sections A–Q; 3 repeating records — roster, PhilHealth reg, health seeking; flat expenditure batteries in Section N). Skip-logic + validation specs pending before Build-ready. |
+| **F1 — Facility Head** | Interviewer-administered (CSPro CAPI) | 34 | **Design — closing** — DCF at 12 records / 671 items (post Apr 21 GPS+photo+PSGC-cascade pass); E2-F1-009b closed 2026-04-17; skip-logic spec aligned with F3/F4 on 2026-04-21; PSGC value sets still blocked on ASPSI; Designer round 2 / sign-off (E2-F1-010) is the next milestone |
+| **F2 — Healthcare Worker** | **Self-admin — PWA (primary). Google Forms + CSPro-encoder fallbacks retired 2026-04-17.** | 14 | **Build — PWA M11 shipped 2026-04-18, pilot-ready.** Vite+React+TS PWA at `deliverables/F2/PWA/app/`; runtime config kill-switch + spec-drift modal; cross-platform QA checklist pending. Pilot vs. deferred-cleanup vs. M12 F3/F4-parity decision open (`NEXT.md`). |
+| **F3 — Patient** | Interviewer-administered (CSPro CAPI) | 23 | **Design — Build-ready 2026-04-21** (18 records / 840 items, sections A–L). Skip-logic + validation spec reviewed at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md`; 1 question to Juvy (Q31 IP_GROUP). |
+| **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2; CSPro CAPI) | 26 | **Design — Build-ready 2026-04-21** (22 records / 623 items, sections A–Q; skip-logic + validation spec at `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md`; `C_HOUSEHOLD_ROSTER` already repeating at `max_occurs=20`, `J_HEALTH_SEEKING` intentionally respondent-level — assumed schema patch closed by verification). |
 | **PLF — Patient Listing Form** | Recruitment form | 1 | Source Captured |
 
 ---
@@ -73,10 +75,10 @@ What is being built, in numbers:
 | Total questionnaire content | **~98 pages** across all instruments |
 | Data entry modes supported | **2** — interviewer-administered and self-administered |
 | Languages supported per instrument | **2** — English and Filipino |
-| F1 data fields specified | **655** across 11 data records (post Apr 14 cleanup; secondary-data records removed from F1 dictionary scope) |
+| F1 data fields specified | **664** across 12 data records (post Apr 21 GPS+photo+PSGC-cascade pass; includes `REC_FACILITY_CAPTURE`) |
 | F2 data fields specified (PWA) | **114 items across 35 sections** — `deliverables/F2/PWA/app/spec/F2-Spec.md` |
-| F3 data fields specified | **387** across 15 data records (sections A–L) |
-| F4 data fields specified | **460** across 20 data records (sections A–Q; 3 repeating records; flat expenditure batteries in Section N) |
+| F3 data fields specified | **835** across 18 data records (sections A–L) |
+| F4 data fields specified | **618** across 22 data records (sections A–Q; 3 repeating records; flat expenditure batteries in Section N) |
 | F1 questions with skip logic mapped | **166** |
 | F1 validation rules documented | **4 tiers** — hard stops, soft warnings, display gates, cross-field consistency |
 | Target deployment footprint | **6 clusters**, nationally distributed |
@@ -162,42 +164,42 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 **Covers:** Per-instrument questionnaire ingestion, data model specification (records, fields, value sets, identifiers, roster structures), field-by-field skip logic mapping, validation rule documentation (hard stops, soft warnings, display gates, cross-field consistency), informed consent form design (English + Filipino), and schema correction passes.
 
-**Current state:** In Progress (F1 closed; F2–F4 + PLF pending)
+**Current state:** In Progress (F1 Design-closing; F3 Build-ready; F4 Build-ready; F2 spec frozen in PWA; PLF Source Captured)
 
 **Per-instrument status:**
 
 | Instrument | State | Notes |
 |---|---|---|
-| F1 | **Design — closing** | DCF stable at 11 records / 655 items after Apr 14 Designer round 1 + verbatim-labels wide pass + secondary-drop + NA convention. All 166 questions walked for skip logic. Four-tier validation rules documented. The 6 schema items are now frozen as `PENDING_DESIGN_*` defaults; **E2-F1-009b closed 2026-04-17** — no further LSS reconciliation needed. PSGC value sets still blocked on ASPSI. Designer round 2 / sign-off (E2-F1-010) is the remaining work. |
-| F2 | **Data model captured inside the PWA spec** | Data model + skip graph + validation live in `deliverables/F2/PWA/app/spec/F2-Spec.md` (114 items / 35 sections) rather than a CSPro dictionary. The earlier Apr 15 F2-0 tooling memo, cover-block rewrite, Spec.md, Skip-Logic, Validation, Cross-Field, and Apps Script bundle were the inputs that fed the PWA build; the Google Forms shipping path is superseded by the PWA primary build. Cover-block rewrite still pending ASPSI review. |
-| F3 | **Design — DCF built 2026-04-16** | 15 records / 387 items, sections A–L. Shared `cspro_helpers.py`. Outpatient + inpatient dual-population routing needs to be mapped during the skip-logic pass before Build-ready. |
-| F4 | **Design — DCF built 2026-04-16** | 20 records / 460 items, sections A–Q. 3 repeating records (roster, PhilHealth reg, health seeking); flat expenditure batteries in Section N. Household roster routing + expenditure cross-checks are the headline skip-logic + validation challenge. |
+| F1 | **Design — closing** | DCF at 12 records / 671 items after Apr 21 GPS+photo+PSGC-cascade pass. All 166 questions walked for skip logic; spec aligned with F3/F4 architecture. Four-tier validation rules documented. The 6 schema items frozen as `PENDING_DESIGN_*` defaults; **E2-F1-009b closed 2026-04-17**. PSGC value sets still blocked on ASPSI. Designer round 2 / sign-off (E2-F1-010) is the remaining work. |
+| F2 | **Data model captured inside the PWA spec** | Data model + skip graph + validation live in `deliverables/F2/PWA/app/spec/F2-Spec.md` (114 items / 35 sections) rather than a CSPro dictionary. The earlier Apr 15 F2-0 tooling memo, cover-block rewrite, Spec.md, Skip-Logic, Validation, Cross-Field, and Apps Script bundle were the inputs that fed the PWA build. Cover-block rewrite still pending ASPSI review. |
+| F3 | **Design — Build-ready 2026-04-21** | 18 records / 840 items, sections A–L. Shared `cspro_helpers.py`. Skip-logic + validation spec at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (reviewed 2026-04-21). 1 question to Juvy (Q31 IP_GROUP); 5 spec-decisions closed. |
+| F4 | **Design — Build-ready 2026-04-21** | 22 records / 623 items, sections A–Q. `C_HOUSEHOLD_ROSTER` repeating (`max_occurs=20`, id-item `MEMBER_LINE_NO`); `H_PHILHEALTH_REG` and `J_HEALTH_SEEKING` respondent-level non-repeating per Apr 20 source rephrase. Flat expenditure batteries in Section N. Skip-logic + validation spec at `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md` (draft 2026-04-21). Findings #1 and #2 in §1.A closed-by-verification 2026-04-21. |
 | PLF | Source Captured | Implementation decision (CAPI vs paper) precedes design. |
 
-**What's done across the epic:** All five source questionnaires ingested and catalogued. F1 generator + DCF built + cleaned (11/655). F3 generator + DCF built (15/387). F4 generator + DCF built (20/460). Shared `cspro_helpers.py` extracted. F2 data model + skip graph + validation captured in the PWA spec.
+**What's done across the epic:** All five source questionnaires ingested and catalogued. F1 generator + DCF built + cleaned (12/664 post Apr 21 GPS/photo pass). F3 generator + DCF built (18/835); skip-logic + validation spec complete 2026-04-21. F4 generator + DCF built (22/618); skip-logic + validation spec complete 2026-04-21 with 2 P1 schema gaps flagged. Shared `cspro_helpers.py` + `Capture-Helpers.apc` + `PSGC-Cascade.apc` extracted. F2 data model + skip graph + validation captured in the PWA spec.
 
-**In flight:** F1 Designer round 2 / sign-off (E2-F1-010) — the carry-forward miss from Sprint 001. F3/F4 skip-logic + validation specs (not yet scoped into a sprint). F2 cover-block rewrite still with ASPSI.
+**In flight:** F1 Designer round 2 / sign-off (E2-F1-010) — the carry-forward miss from Sprint 001. F2 cover-block rewrite still with ASPSI.
 
-**Next milestone:** F1 sign-off (E2-F1-010); F3 skip-logic + validation spec; F4 skip-logic + validation spec (roster routing is the headline).
+**Next milestone:** F1 sign-off (E2-F1-010); F3 Designer validation + sign-off (E2-F3-010); F4 Designer validation + sign-off (E2-F4-010).
 
 **Ties to:** D2, D3.
 
 ---
 
-### Epic 3 — CAPI Application Development (CSPro + CSEntry)
+### Epic 3 — CAPI Application Development (CSPro + CSEntry / PWA)
 
-**Covers:** CSPro Designer application build per instrument — form layout, tablet UX, capture types, question text (English + Filipino), skip logic wiring, validation wiring (hard stops via error + re-enter, soft warnings via accept, display gates via conditional visibility), dynamic value sets (context-dependent option lists), multi-language handling, FIELD_CONTROL block (informed consent, eligibility screening, AAPOR disposition codes, GPS, interviewer/supervisor IDs, timestamps), and roster engines (F4).
+**Covers:** Application build per instrument. F1/F3/F4 are CSPro Designer / CSEntry CAPI applications — form layout, tablet UX, capture types, question text (English + Filipino), skip logic wiring, validation wiring, dynamic value sets, multi-language handling, FIELD_CONTROL block (informed consent, eligibility, AAPOR disposition codes, GPS, photo, interviewer/supervisor IDs, timestamps), and roster engines (F4). F2 is a Progressive Web App — Vite+React+TS installable shell with IndexedDB autosave, skip-logic nav, Apps Script sync backend.
 
-**Current state:** **In Progress.** F2 PWA shipped M0 → M11 between Apr 17 and Apr 18 and is pilot-ready. F1 CSPro build pending Designer sign-off (E2-F1-010). F3/F4 Build-ready on the CSPro side once skip-logic + validation specs are authored.
+**Current state:** **In Progress.** F2 PWA shipped M0 → M11 between Apr 17 and Apr 18 and is pilot-ready. F1 CSPro build pending Designer sign-off (E2-F1-010). F3 Build-ready; F4 Build-ready (schema verified 2026-04-21 — assumed roster/health-seeking patch E2-F4-009 closed by verification).
 
-**Per-instrument status:** F2 PWA M11 shipped (pilot decision open); F1 CSPro pending Designer sign-off + FMF kickoff; F3/F4 DCFs built, CSPro build slots not yet scheduled.
+**Per-instrument status:** F2 PWA M11 shipped (pilot decision open); F1 CSPro pending Designer sign-off + FMF kickoff (FMF deferred to Sprint 003 pending form-layout plan); F3/F4 DCFs built and skip-logic + validation specs complete 2026-04-21, CSPro build slots not yet scheduled.
 
 **Next milestone:** F2 pilot-readiness decision (`deliverables/F2/PWA/app/NEXT.md`); F1 form file (`FacilityHeadSurvey.fmf`) Section A layout after E2-F1-010 sign-off.
 
 **Sequencing strategy (CSPro CAPI track):**
-1. F1 first as the reference instrument (largest, exercises the full range of patterns) — currently Design-closing, awaiting Designer sign-off
-2. F3 follows F1 (reuses F1's interviewer-administered patterns) — DCF built, skip-logic + validation specs next
-3. F4 last (roster engine benefits from patterns refined in F1/F3) — DCF built with 3 repeating records, skip-logic + validation specs next
+1. F1 first as the reference instrument (largest, exercises the full range of patterns) — currently Design-closing, awaiting Designer sign-off; spec aligned with F3/F4 on 2026-04-21 with shared `Capture-Helpers.apc` + `PSGC-Cascade.apc`
+2. F3 follows F1 (reuses F1's interviewer-administered patterns) — DCF built, skip-logic + validation spec complete 2026-04-21, Build-ready
+3. F4 last (roster engine benefits from patterns refined in F1/F3) — DCF built with `C_HOUSEHOLD_ROSTER` repeating (`max_occurs=20`), `H_PHILHEALTH_REG` and `J_HEALTH_SEEKING` respondent-level per Apr 20 source; skip-logic + validation spec complete 2026-04-21; assumed schema patch (E2-F4-009) closed by verification
 
 **Sequencing strategy (F2 PWA track — independent of the CSPro sequence):**
 1. M0 Foundation — Vite+React+TS+Tailwind+shadcn+vite-plugin-pwa installable shell (shipped 2026-04-17)
@@ -357,7 +359,7 @@ Each epic below is a long-running workstream that spans its portion of the engag
 | SJREB ethics clearance delay | Medium | High — blocks all pretesting and fieldwork | ASPSI actively coordinating; tracked as the long-pole dependency; remains the single most important external dependency | 0, 6 |
 | Timeline pressure on D2 / D3 extended window / Tranche 2 | High (Tranche 2 due Fri 2026-04-24) | High — late delivery penalty applies (1% of total per calendar day if no further extension) | Apr 14 matrices + Word tools submission enacted the "submit what's ready and negotiate" mitigation; PMSMD feedback expected Apr 20 → 4-day turnaround if revisions come back. F1/F3/F4 DCFs stable; F2 PWA pilot-ready. | 2, 3, 6, 7 |
 | Late questionnaire revisions from client | Low–Medium | Medium | Script-generated data models (F1/F3/F4) re-run in minutes; PWA generator regenerates from `F2-Spec.md`. Reproducible generators absorb revisions cheaply across all four instruments. | 2, 3 |
-| Household roster complexity (F4) | Medium | Medium | F4 DCF models 3 repeating records (roster, PhilHealth reg, health seeking) with per-record max_occurs=20. Skip-logic + validation spec is next and will stress-test the roster engine. | 2, 3 |
+| Household roster complexity (F4) | Low | Medium | F4 skip-logic + validation spec complete 2026-04-21. Schema verified: `C_HOUSEHOLD_ROSTER` already repeating (`max_occurs=20`, id-item `MEMBER_LINE_NO`); `J_HEALTH_SEEKING` intentionally respondent-level per Apr 20 source rephrase (no roster loop needed for Q101–Q107). WHO expenditure grid + catastrophic-expenditure check + bill-recall chain modeled. | 2, 3 |
 | F2 PWA pilot readiness — unfamiliar deployment model for ASPSI ops | Medium | Medium — pilot may surface requirements not in M1–M11 | Pilot scoped small (5–10 HCWs, 1 facility, 2-week dry-run) per `NEXT.md`. Cross-platform QA checklist at `deliverables/F2/PWA/2026-04-18-cross-platform-qa-checklist.md` covers iOS Safari + Desktop Chrome before declaring pilot-ready. File new milestones from pilot observations, not speculative work. | 3, 6 |
 | F2 PWA deferred-M11 tech debt (per-HCW tokens, draft auto-migration, iOS push, admin mutations) | Low | Low–Medium — mitigations in place, slot in only if pilot feedback demands | Current posture: static enrollment (any HCW ID once facility selected); drift modal forces reload on spec-version change; drafts survive in IndexedDB but may fail validation on breaking schema shifts; admin can edit Config sheet directly. | 3 |
 | F2 questionnaire cover blocks authored interviewer-style | High (confirmed) | Low — PWA renders its own cover blocks from spec; print-mode / paper fallback still gated on ASPSI review of the rewrite draft | Draft at `deliverables/F2/F2-Cover-Block-Rewrite-Draft.md` is sitting with ASPSI. PWA primary build proceeds; rewrite feeds any future paper-mode or Google Forms fallback. | 2 |
