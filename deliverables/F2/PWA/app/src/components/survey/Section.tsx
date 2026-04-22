@@ -10,7 +10,7 @@ import { localized } from '@/i18n/localized';
 import { Question } from './Question';
 
 function stripNulls(values: unknown): unknown {
-  if (values === null) return undefined;
+  if (values === null || values === '') return undefined;
   if (Array.isArray(values)) return values.map(stripNulls);
   if (values && typeof values === 'object') {
     const out: Record<string, unknown> = {};

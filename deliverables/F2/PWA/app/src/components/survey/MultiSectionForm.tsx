@@ -145,7 +145,11 @@ export function MultiSectionForm({
         }
         continue;
       }
-      if (it.id in merged) out[it.id] = merged[it.id];
+      if (it.id in merged) {
+        out[it.id] = merged[it.id];
+      } else if (it.type === 'multi') {
+        out[it.id] = [];
+      }
       const otherKey = `${it.id}_other`;
       if (otherKey in merged) out[otherKey] = merged[otherKey];
     }

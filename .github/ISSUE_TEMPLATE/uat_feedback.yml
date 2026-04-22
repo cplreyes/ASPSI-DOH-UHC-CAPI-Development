@@ -1,0 +1,71 @@
+name: UAT Feedback
+description: Submit feedback from an ASPSI staff UAT session
+labels: ["uat-feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for testing! Fill in what you observed. No technical knowledge needed — just describe what you saw.
+
+  - type: input
+    id: tester
+    attributes:
+      label: Your name or initials
+      placeholder: e.g. MRD or Maria Dela Cruz
+    validations:
+      required: true
+
+  - type: input
+    id: test_date
+    attributes:
+      label: Date of testing
+      placeholder: e.g. 2026-04-30
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scenario
+    attributes:
+      label: Test scenario (from UAT Guide)
+      options:
+        - TC-001 Enrollment
+        - TC-002 Section A Profile
+        - TC-003 Auto-advance
+        - TC-004 Section lock
+        - TC-005 Language switch
+        - TC-006 Save Draft and resume
+        - TC-007 Complete all sections
+        - TC-008 Review and Edit
+        - TC-009 Submit and Thank You
+        - TC-010 Offline behavior
+        - General observation
+    validations:
+      required: true
+
+  - type: dropdown
+    id: result
+    attributes:
+      label: Test result
+      options:
+        - Pass — worked exactly as described
+        - Pass with comment — worked but noticed something
+        - Fail — did not work as described
+        - Blocked — could not complete the test
+    validations:
+      required: true
+
+  - type: textarea
+    id: observation
+    attributes:
+      label: What did you observe?
+      placeholder: Describe what happened in plain language. No need to be technical.
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshot or photo (optional)
+      placeholder: Drag and drop an image, or describe what the screen showed.
+    validations:
+      required: false
