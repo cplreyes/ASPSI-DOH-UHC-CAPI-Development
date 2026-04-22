@@ -2,7 +2,7 @@
 
 **Version:** v1.1.0 UAT Round 1
 **Staging URL:** https://5466a539.f2-pwa-staging.pages.dev
-**Bug Report Link:** https://github.com/cplreyes/ASPSI-DOH-CAPI-CSPro-Development/issues/new?template=uat_feedback.yml
+**Bug Report Link:** https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/new?template=uat_feedback.yml
 **UAT Coordinator:** Carl Patrick Reyes (carlpatricklreyes@gmail.com)
 
 ---
@@ -193,7 +193,7 @@ Run the full scenario set twice — once per persona:
 
 ## How to Report a Bug
 
-1. Click: https://github.com/cplreyes/ASPSI-DOH-CAPI-CSPro-Development/issues/new?template=uat_feedback.yml
+1. Click: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/new?template=uat_feedback.yml
 2. Fill in the form — you need a free GitHub account, or email your report to the UAT coordinator.
 3. Include: which test scenario, what happened, what you expected, and a screenshot if possible.
 

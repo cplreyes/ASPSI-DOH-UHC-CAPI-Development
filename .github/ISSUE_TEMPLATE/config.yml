@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: UAT Guide
-    url: https://github.com/cplreyes/ASPSI-DOH-CAPI-CSPro-Development/blob/main/docs/F2-PWA-UAT-Guide.md
+    url: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/blob/main/docs/F2-PWA-UAT-Guide.md
     about: Read the test scenarios before filing feedback
