@@ -17,7 +17,7 @@ export default defineConfig({
       includeAssets: ['icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable.png'],
       manifest: {
         name: 'UHC Survey Y2 — Healthcare Worker Survey Questionnaire',
-        short_name: 'UHC Survey Y2',
+        short_name: 'UHC Survey Y2 - HCW',
         description: 'Offline-capable self-administered survey for healthcare workers.',
         start_url: '/',
         scope: '/',
