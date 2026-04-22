@@ -58,7 +58,7 @@ describe('postBatchSubmit', () => {
     const sigParam = new URL(String(url)).searchParams.get('sig') ?? '';
     expect(sigParam).toMatch(/^sig\(S:POST\|batch-submit\|1700000000000\|/);
     expect((init as RequestInit).method).toBe('POST');
-    expect((init as RequestInit).headers).toMatchObject({ 'Content-Type': 'application/json' });
+    expect((init as RequestInit).headers).toMatchObject({ 'Content-Type': 'text/plain' });
     const body = JSON.parse((init as RequestInit).body as string);
     expect(body.responses).toHaveLength(1);
     expect(body.responses[0].client_submission_id).toBe('csid-1');

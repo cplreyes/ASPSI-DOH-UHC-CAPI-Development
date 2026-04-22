@@ -43,7 +43,7 @@ export async function postBatchSubmit(
   try {
     response = await deps.fetchImpl(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain' },
       body,
     });
   } catch (err) {
