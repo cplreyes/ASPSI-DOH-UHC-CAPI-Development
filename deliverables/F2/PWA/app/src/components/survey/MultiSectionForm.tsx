@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ZodTypeAny } from 'zod';
 import type { Item, Section as SectionModel } from '@/types/survey';
@@ -73,7 +73,6 @@ function getSectionStatus(section: SectionConfig, values: FormValues): SectionSt
   if (!hasAnyData) return 'empty';
 
   const visibleItems = items.filter((it) => shouldShow(section.id, it.id, values));
-
   const allRequiredFilled = visibleItems.every((it) => {
     if (!it.required) return true;
     if (it.type === 'multi-field' && it.subFields) {
@@ -104,14 +103,22 @@ export function MultiSectionForm({
   const { locale } = useLocale();
   const [merged, setMerged] = useState<FormValues>(initialValues);
   const [index, setIndex] = useState(initialIndex);
+  const [maxVisitedIndex, setMaxVisitedIndex] = useState(initialIndex);
   const [showSaved, setShowSaved] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [animKey, setAnimKey] = useState(0);
+  const [lockMsg, setLockMsg] = useState('');
   const submitRef = useRef<(() => void) | null>(null);
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const directionRef = useRef<'forward' | 'back'>('forward');
   const touchStartXRef = useRef(0);
   const touchStartYRef = useRef(0);
+  // Tracks the section status when we arrived at the current section,
+  // so auto-advance only fires on a non-complete → complete transition.
+  const entryStatusRef = useRef<SectionStatus>(
+    getSectionStatus(SECTIONS[initialIndex] ?? SECTIONS[0]!, initialValues),
+  );
 
   const isReview = index === REVIEW_INDEX;
   const current = isReview ? null : SECTIONS[index]!;
@@ -145,6 +152,32 @@ export function MultiSectionForm({
     return out;
   }, [current, merged]);
 
+  // Reset entry status when navigating to a new section (must be before the auto-advance effect)
+  useEffect(() => {
+    entryStatusRef.current = sectionStatuses[index] ?? 'empty';
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [index]);
+
+  // Auto-advance when current section transitions from non-complete to complete
+  useEffect(() => {
+    if (isReview) return;
+    const currentStatus = sectionStatuses[index];
+    if (currentStatus !== 'complete') return;
+    if (entryStatusRef.current === 'complete') return; // was already complete on arrival
+
+    const timer = setTimeout(() => {
+      handleNext();
+    }, 400);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sectionStatuses]);
+
+  const showLockMsg = () => {
+    setLockMsg(t('navigator.sectionLocked'));
+    if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
+    lockTimerRef.current = setTimeout(() => setLockMsg(''), 3000);
+  };
+
   const handleSectionAutosave = (values: FormValues) => {
     setMerged((prev) => {
       const next = { ...prev, ...values };
@@ -156,9 +189,11 @@ export function MultiSectionForm({
   const handleSectionValid = (values: FormValues) => {
     const next = { ...merged, ...values };
     setMerged(next);
+    const nextIndex = index + 1;
+    setMaxVisitedIndex((prev) => Math.max(prev, nextIndex));
     directionRef.current = 'forward';
     setAnimKey((k) => k + 1);
-    setIndex(index + 1);
+    setIndex(nextIndex);
     window.scrollTo(0, 0);
   };
 
@@ -171,6 +206,10 @@ export function MultiSectionForm({
   };
 
   const handleNavigate = (targetIndex: number) => {
+    if (targetIndex > maxVisitedIndex) {
+      showLockMsg();
+      return;
+    }
     directionRef.current = targetIndex > index ? 'forward' : 'back';
     setAnimKey((k) => k + 1);
     setIndex(targetIndex);
@@ -217,17 +256,18 @@ export function MultiSectionForm({
 
   return (
     <div className="flex flex-col lg:flex-row lg:items-start">
-      {/* Desktop sidebar — always visible, sticky */}
+      {/* Desktop sidebar */}
       <aside className="hidden lg:flex lg:flex-col lg:w-56 lg:shrink-0 lg:border-r lg:sticky lg:top-0 lg:self-start lg:h-screen lg:overflow-y-auto">
         <SectionTree
           sections={SECTIONS}
           currentIndex={index}
           statuses={sectionStatuses}
+          maxVisitedIndex={maxVisitedIndex}
           onNavigate={handleNavigate}
         />
       </aside>
 
-      {/* Mobile drawer overlay */}
+      {/* Mobile drawer */}
       {drawerOpen ? (
         <div
           className="fixed inset-0 z-40 lg:hidden"
@@ -245,6 +285,7 @@ export function MultiSectionForm({
               sections={SECTIONS}
               currentIndex={index}
               statuses={sectionStatuses}
+              maxVisitedIndex={maxVisitedIndex}
               onNavigate={(i) => { handleNavigate(i); setDrawerOpen(false); }}
               onClose={() => setDrawerOpen(false)}
             />
@@ -290,7 +331,7 @@ export function MultiSectionForm({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Sticky header: hamburger + progress + save draft */}
+        {/* Sticky header */}
         <div className="sticky top-0 z-10 border-b bg-background">
           <div className="flex items-center gap-2 px-4 pt-3 pb-1">
             <button
@@ -303,11 +344,7 @@ export function MultiSectionForm({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <ProgressBar
-              current={index + 1}
-              total={SECTIONS.length}
-              className="flex-1 px-0 pt-0"
-            />
+            <ProgressBar current={index + 1} total={SECTIONS.length} className="flex-1 px-0 pt-0" />
             {/* Save Draft — upper right */}
             <button
               type="button"
@@ -321,6 +358,14 @@ export function MultiSectionForm({
               )}
             </button>
           </div>
+
+          {/* Lock notification strip */}
+          {lockMsg ? (
+            <div className="border-t border-amber-200 bg-amber-50 px-4 py-1.5 text-xs text-amber-700">
+              {lockMsg}
+            </div>
+          ) : null}
+
           <div className="mx-auto max-w-xl px-6 pb-2">
             <h2 className="text-xl font-semibold tracking-tight">
               {t('review.sectionHeading', {

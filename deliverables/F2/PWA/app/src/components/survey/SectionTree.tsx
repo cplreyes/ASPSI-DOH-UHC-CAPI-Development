@@ -14,11 +14,19 @@ interface SectionTreeProps {
   sections: SectionEntry[];
   currentIndex: number;
   statuses: SectionStatus[];
+  maxVisitedIndex: number;
   onNavigate: (index: number) => void;
   onClose?: () => void;
 }
 
-export function SectionTree({ sections, currentIndex, statuses, onNavigate, onClose }: SectionTreeProps) {
+export function SectionTree({
+  sections,
+  currentIndex,
+  statuses,
+  maxVisitedIndex,
+  onNavigate,
+  onClose,
+}: SectionTreeProps) {
   const { locale } = useLocale();
 
   return (
@@ -42,6 +50,7 @@ export function SectionTree({ sections, currentIndex, statuses, onNavigate, onCl
       <nav aria-label="Survey sections" className="flex flex-col py-1">
         {sections.map((s, i) => {
           const isCurrent = i === currentIndex;
+          const isLocked = i > maxVisitedIndex;
           const status = statuses[i] ?? 'empty';
 
           return (
@@ -53,20 +62,26 @@ export function SectionTree({ sections, currentIndex, statuses, onNavigate, onCl
               className={cn(
                 'flex w-full items-start gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-muted',
                 isCurrent && 'bg-primary/10 font-medium text-primary',
+                isLocked && 'opacity-50 cursor-not-allowed hover:bg-transparent',
               )}
             >
-              {/* Status badge */}
+              {/* Status / lock badge */}
               <span
                 className={cn(
                   'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold',
                   isCurrent && 'bg-primary text-primary-foreground',
-                  !isCurrent && status === 'complete' && 'bg-green-100 text-green-700',
-                  !isCurrent && status === 'incomplete' && 'bg-red-100 text-red-600',
-                  !isCurrent && status === 'empty' && 'bg-muted text-muted-foreground',
+                  !isCurrent && isLocked && 'bg-muted text-muted-foreground',
+                  !isCurrent && !isLocked && status === 'complete' && 'bg-green-100 text-green-700',
+                  !isCurrent && !isLocked && status === 'incomplete' && 'bg-red-100 text-red-600',
+                  !isCurrent && !isLocked && status === 'empty' && 'bg-muted text-muted-foreground',
                 )}
               >
                 {isCurrent ? (
                   s.id
+                ) : isLocked ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  </svg>
                 ) : status === 'complete' ? (
                   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
@@ -84,13 +99,7 @@ export function SectionTree({ sections, currentIndex, statuses, onNavigate, onCl
               <span
                 className={cn(
                   'leading-snug',
-                  isCurrent
-                    ? 'text-primary'
-                    : status === 'complete'
-                      ? 'text-muted-foreground'
-                      : status === 'incomplete'
-                        ? 'text-foreground'
-                        : 'text-foreground',
+                  isCurrent ? 'text-primary' : isLocked ? 'text-muted-foreground' : 'text-foreground',
                 )}
               >
                 {localized(s.section.title, locale)}

@@ -48,6 +48,7 @@ export const fil: EnBundle = {
     submit: 'Submit',
     saveDraft: 'Save Draft',
     draftSaved: 'Draft saved',
+    sectionLocked: 'Complete sections in order — finish the current section first.',
   },
   progressBar: {
     sectionLabel: 'Section {{current}} of {{total}}',
