@@ -4,60 +4,31 @@ import userEvent from '@testing-library/user-event';
 import { Navigator } from './Navigator';
 
 describe('<Navigator>', () => {
-  it('disables Previous on the first section', () => {
-    render(
-      <Navigator isFirst isLast={false} onPrev={vi.fn()} onNext={vi.fn()} onSubmit={vi.fn()} />,
-    );
-    expect(screen.getByRole('button', { name: /previous/i })).toBeDisabled();
+  it('renders nothing when onSaveDraft is not provided', () => {
+    const { container } = render(<Navigator />);
+    expect(container.firstChild).toBeNull();
   });
 
-  it('renders Next (not Submit) on a middle section', () => {
-    render(
-      <Navigator
-        isFirst={false}
-        isLast={false}
-        onPrev={vi.fn()}
-        onNext={vi.fn()}
-        onSubmit={vi.fn()}
-      />,
-    );
-    expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /submit/i })).toBeNull();
+  it('renders Save Draft button when onSaveDraft is provided', () => {
+    render(<Navigator onSaveDraft={vi.fn()} />);
+    expect(screen.getByRole('button', { name: /save draft/i })).toBeInTheDocument();
   });
 
-  it('renders Submit (not Next) on the last section', () => {
-    render(
-      <Navigator isFirst={false} isLast onPrev={vi.fn()} onNext={vi.fn()} onSubmit={vi.fn()} />,
-    );
-    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /next/i })).toBeNull();
-  });
-
-  it('calls onPrev / onNext / onSubmit when the respective buttons are clicked', async () => {
+  it('calls onSaveDraft when the button is clicked', async () => {
     const user = userEvent.setup();
-    const onPrev = vi.fn();
-    const onNext = vi.fn();
-    const onSubmit = vi.fn();
+    const onSaveDraft = vi.fn();
+    render(<Navigator onSaveDraft={onSaveDraft} />);
+    await user.click(screen.getByRole('button', { name: /save draft/i }));
+    expect(onSaveDraft).toHaveBeenCalledTimes(1);
+  });
 
-    const { rerender } = render(
-      <Navigator
-        isFirst={false}
-        isLast={false}
-        onPrev={onPrev}
-        onNext={onNext}
-        onSubmit={onSubmit}
-      />,
-    );
-    await user.click(screen.getByRole('button', { name: /previous/i }));
-    await user.click(screen.getByRole('button', { name: /next/i }));
+  it('shows the saved confirmation when showSaved is true', () => {
+    render(<Navigator onSaveDraft={vi.fn()} showSaved />);
+    expect(screen.getByText(/draft saved/i)).toBeInTheDocument();
+  });
 
-    rerender(
-      <Navigator isFirst={false} isLast onPrev={onPrev} onNext={onNext} onSubmit={onSubmit} />,
-    );
-    await user.click(screen.getByRole('button', { name: /submit/i }));
-
-    expect(onPrev).toHaveBeenCalledTimes(1);
-    expect(onNext).toHaveBeenCalledTimes(1);
-    expect(onSubmit).toHaveBeenCalledTimes(1);
+  it('hides the saved confirmation when showSaved is false', () => {
+    render(<Navigator onSaveDraft={vi.fn()} showSaved={false} />);
+    expect(screen.queryByText(/draft saved/i)).toBeNull();
   });
 });

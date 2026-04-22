@@ -42,6 +42,8 @@ export const en = {
     previous: 'Previous',
     next: 'Next',
     submit: 'Submit',
+    saveDraft: 'Save Draft',
+    draftSaved: 'Draft saved',
   },
   progressBar: {
     sectionLabel: 'Section {{current}} of {{total}}',
