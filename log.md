@@ -2,6 +2,27 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-25 (F2 PWA UAT Rounds 1 + 2 closed; production live at v1.1.1)
+
+- **UAT Round 1 closed.** Shan Rykel Lait (ASPSI) signed off "Pass with comments" on 2026-04-24 with 12 GitHub Issues + a DOCX comment attachment. Triage on 2026-04-25 added severity / type / round / status labels, milestones (`v1.1.0`, `v1.1.1`), and project-board fields (Status / Round / Severity / UAT Verified). Filed umbrella issue `#13 — Mid-section skip logic` after re-reading the DOCX exposed 10 conditional jumps not split out into individual issues. **All 7 Round 1 issues closed and verified on staging same day**: #4 (Q4 age max 99), #5 (Q9 months max 11), #6 (Q12 UHC skip), #8 (Q25 sub-question gating), #10 (auto-advance bug), #11 (Section G nurse hide), #13 (mid-section skip umbrella). Milestone `v1.1.0 — UAT Round 1` closed.
+- **UAT Round 2 closed.** Six issues fixed in the same session: #1 / #3 (letter-input keystroke filter on number fields — re-opened from tester's premature 2026-04-23 close after diagnosis re-read), #2 (Q6 specialty list filtered by Q5 role), #12 (TC-005 language switcher visibility + TC-010 silent submit-failure UX). Plus regressions found during verification: #14 (Q9 Month optional override) and #15 (gate-question navigation regression — Q12=No / Q31=No couldn't proceed because Section C+ items emitted strict Zod schema; fix: parse-spec now reads `src/lib/skip-logic.ts` predicates at build time to derive `conditional: true` for items in sections that lack a `gate` column). Milestone `v1.1.1 — UAT Round 2` closed.
+- **Generator architecture changes** (in commit `a4fbf9f`):
+  - `parse-spec.ts` recognises `conditional` required column AND non-empty `gate` column AND skip-logic predicate keys. Items get `required: true` + `conditional: true`.
+  - `emit-schema.ts` emits `.optional()` for any item with `conditional: true`.
+  - New per-subfield bracket constraint syntax for multi-fields: `Year(s) [min 0, max 99] / Month(s) [min 0, max 11, optional]`.
+  - Item / SubField types extended with `conditional?` and per-subfield `required?` flags.
+- **UX shipped** (commit `fb0fb84`): real-time validation tooltips (`mode: 'onChange'`); `blockNonNumericKeys` keydown filter on number inputs; multi-field renderer now propagates `min`/`max` and per-subfield error messages; submit failure UI replaces silent failures (kill_switch, specDrift, IndexedDB write errors all surface visibly); thank-you screen links to Sync; language switcher buttons get `font-bold` + `ring` outline on the active locale; LocaleProvider sets `document.documentElement.lang`; Q6 specialty list filtered by Q5 role via new `filterChoices` API.
+- **Production deployed at v1.1.1.** App header now reads `v{APP_VERSION} · spec {LOCAL_SPEC_VERSION}`. URL: https://f2-pwa.pages.dev. The corresponding GitHub Releases at `releases/tag/v1.1.0` and `releases/tag/v1.1.1`; `CHANGELOG.md` initialised with both entries.
+- **UAT bot automation shipped** (commit `7ee1504`):
+  - `.github/workflows/uat-slack-events.yml` — issue / milestone events to `#f2-pwa-uat`.
+  - `.github/workflows/uat-slack-digest.yml` — cron `0 1 * * *` UTC = 09:00 MNL + manual `workflow_dispatch` with force flag.
+  - `.github/workflows/uat-release-notes.yml` — milestone-closed trigger writes CHANGELOG, creates GitHub Release, posts to Slack, auto-bumps `package.json` to match the milestone's version.
+  - Helper Python scripts at `.github/scripts/uat_slack_digest.py` and `.github/scripts/generate_release_notes.py`.
+  - Slack incoming webhook stored as `SLACK_WEBHOOK_URL` repo secret.
+- **Round 3 (v1.2.0) backlog queued.** Three enhancement issues filed: #16 (exclusive "I don't know" multi-select), #17 ("All of the above" auto-select), #18 (matrix view for scale-style questions). Milestone created and items added to project board #7.
+- **Lint pass.** Aligned `scrum/product-backlog.md` (last_updated 2026-04-23 → 2026-04-25; F2 PWA section rewritten for production state; instrument table + epic-3 row + risk register row updated), `scrum/epics/epic-03-capi-application.md` (F2 row + SUT URL + QA-002 task closure), `wiki/concepts/F2 Google Forms Track.md` (status: superseded callout), `deliverables/F2/PWA/app/NEXT.md` (latest staging URL).
+- **Project memories saved** (cross-session): `project_aspsi_uat_slack_bot`, `project_aspsi_translations_pipeline`, plus the existing `project_aspsi_f2_pwa_state` updated.
+
 ## 2026-04-23 (F2 PWA QA sprint — E2E tests, UAT launch, GitHub repo rename)
 
 - **F2 PWA post-M11 UX shipped**: auto-advance (section transitions non-complete → complete within 400 ms) and section-lock forward navigation (amber notification strip + maxVisitedIndex guard). Both committed to `staging` branch.

@@ -18,7 +18,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 | Instrument | Mode | Build state |
 |---|---|---|
 | F1 | CSPro CAPI | In progress — DCF stable at 12 records / 671 items; Designer sign-off (E2-F1-010) pending; FMF build deferred to Sprint 003 |
-| F2 | **PWA** (self-admin; CSPro-encoder and Google Forms fallbacks retired; **CSPro F2 track = least priority**) | **Epic 3 build COMPLETE 2026-04-23.** QA done: 3/3 E2E pass. SUT live at `5466a539.f2-pwa-staging.pages.dev`. UAT Round 1 active via `#f2-pwa-uat` + GitHub Issues. |
+| F2 | **PWA** (self-admin; CSPro-encoder and Google Forms fallbacks retired; **CSPro F2 track = least priority**) | **Production live at v1.1.1 (2026-04-25).** UAT Rounds 1 + 2 both closed (13 issues fixed across both rounds). Production: https://f2-pwa.pages.dev. UAT automation pipeline in place (Slack events + daily digest + release notes). Round 3 (v1.2.0) backlog queued: #16/#17/#18 enhancements. |
 | F3 | CSPro CAPI | Build-ready — DCF built 2026-04-16, skip-logic+validation spec reviewed 2026-04-21 |
 | F4 | CSPro CAPI (roster-heavy) | Build-ready — DCF built 2026-04-16, skip-logic+validation spec drafted 2026-04-21; schema verified |
 | PLF | Recruitment form (mode TBD) | Source captured |
@@ -98,9 +98,11 @@ Per-instrument application build workstream. Turns the validated data dictionary
 **F2 PWA Epic 3 build is COMPLETE as of 2026-04-23.** M0–M11 shipped 2026-04-17/18; auto-advance + section-lock UX shipped post-M11; 3/3 Playwright E2E tests pass. The prior Google Forms track (E3-F2-GF-001..008) and the deferred CSPro-encoder track are both **RETIRED / SUPERSEDED**. **The CSPro F2 track is the least priority item in this engagement — do not reopen without explicit decision reversal.**
 
 **Build location:** `deliverables/F2/PWA/app/`
-**SUT:** `https://5466a539.f2-pwa-staging.pages.dev` (Cloudflare Pages, branch `staging`)
+**Production:** `https://f2-pwa.pages.dev` (Cloudflare Pages, branch `main`, v1.1.1 as of 2026-04-25)
+**Staging (SUT):** `https://b1e46a55.f2-pwa-staging.pages.dev` (Cloudflare Pages, branch `staging` — deploy URL rotates per push; canonical alias is the project root)
 **GitHub repo:** `github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development` (public)
-**UAT coordination:** Slack `#f2-pwa-uat` (C0AV19GB05P) + GitHub Issues `uat_feedback.yml`
+**UAT coordination:** Slack `#f2-pwa-uat` (C0AV19GB05P) + GitHub Issues + project board #7
+**Automation:** GitHub Actions workflows on `main` auto-post UAT events / daily digests / release notes to Slack
 **Prerequisite:** none — spec frozen and embedded in the PWA
 
 ### PWA build track *(PRIMARY — M0–M11 shipped 2026-04-17 / 2026-04-18)*
@@ -128,7 +130,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 ### Pilot readiness
 
 - [x] **E3-F2-PWA-QA-001** Automated E2E test suite (Playwright) — 3/3 pass: golden path (enrollment → all 10 sections → review → submit), section lock, language switch. Config: `npx playwright test --config e2e/playwright.config.ts`. `status::done` `priority::critical` `actual::2026-04-23`
-- [ ] **E3-F2-PWA-QA-002** Shan / ASPSI staff UAT dry-run — UAT Round 1 active via `#f2-pwa-uat`; 10 scenarios (TC-001–TC-010), 2 personas (UAT-NURSE-01, UAT-PHYS-01). `status::in-progress` `priority::high`
+- [x] **E3-F2-PWA-QA-002** Shan / ASPSI staff UAT dry-run — UAT Rounds 1 + 2 both closed 2026-04-25; 13 issues filed and fixed across the two rounds. `status::done` `priority::high` `actual::2026-04-23..2026-04-25`
 - [x] **E3-F2-PWA-PILOT-001** Pilot decision — **UAT Round 1 is the pilot.** Decision: run pilot via ASPSI staff UAT before production promote. `status::done` `priority::high` `actual::2026-04-23`
 
 ### Retired tracks *(do not re-open without explicit decision reversal)*
@@ -178,7 +180,7 @@ F4 inherits the standard template **plus a roster engine**. The household roster
 
 ## Notes
 
-- **F2 PWA Epic 3 build is COMPLETE (2026-04-23).** QA done, UAT Round 1 active. After UAT sign-off: promote `staging` → `main`, redeploy production (`f2-pwa.pages.dev`). **CSPro F2 track is least priority — do not reopen.**
+- **F2 PWA Epic 3 build is COMPLETE (2026-04-23) and in production at v1.1.1 (2026-04-25).** UAT Rounds 1 + 2 both closed; 13 issues fixed; production live at https://f2-pwa.pages.dev. Round 3 (v1.2.0) UX enhancements queued: #16/#17/#18 on the project board. **CSPro F2 track is least priority — do not reopen.**
 - **F1 is the priority CSPro instrument.** Its task breakdown above is the template for F3 and F4.
 - **F3 and F4 are Build-ready** as of 2026-04-21; form-layout plans also landed 2026-04-21 ([[../../deliverables/CSPro/Form-Layout-Principles|shared principles]] + per-instrument F1/F3/F4 plans). E3-F4-000 schema patch closed by verification on the same day — the generator and DCF were already correct.
 - Reusable CSPro patterns live in `deliverables/CSPro/` as includable `.apc` fragments:

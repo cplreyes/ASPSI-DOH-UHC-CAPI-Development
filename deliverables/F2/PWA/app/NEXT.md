@@ -21,7 +21,7 @@
 | (also) | Section C Q31-gate | Q31=No → Q32–Q40 skipped |
 | (also) | Section H Q91-gate | Q91='never happened' → Q92–Q95 skipped |
 
-**Verify these on staging:** https://5466a539.f2-pwa-staging.pages.dev — then close issues #4/#5/#6/#7/#9/#11 with reference to commit + verification screenshot.
+**Verify these on staging:** https://b1e46a55.f2-pwa-staging.pages.dev — then close issues #4/#5/#6/#7/#9/#11 with reference to commit + verification screenshot.
 
 ### ⏳ NOT yet addressed — Round 2 fix batch needed
 
@@ -75,7 +75,7 @@ npm run build
 ## Reference URLs
 
 - **Production:** https://f2-pwa.pages.dev (Cloudflare Pages, project `f2-pwa`, branch `main`)
-- **Staging (SUT):** https://5466a539.f2-pwa-staging.pages.dev (project `f2-pwa-staging`, branch `staging`)
+- **Staging (SUT):** https://b1e46a55.f2-pwa-staging.pages.dev (project `f2-pwa-staging`, branch `staging`)
 - **GitHub repo:** https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development
 - **GitHub Issues:** https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues
 - **UAT Guide:** https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/blob/staging/docs/F2-PWA-UAT-Guide.md

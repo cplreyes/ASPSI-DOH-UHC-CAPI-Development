@@ -1,12 +1,20 @@
 ---
 type: concept
-tags: [f2, google-forms, apps-script, capi, self-admin, special-case]
+tags: [f2, google-forms, apps-script, capi, self-admin, special-case, superseded]
 source_count: 1
+status: superseded
+superseded_on: 2026-04-17
+superseded_by: F2 PWA (deliverables/F2/PWA/app/)
 ---
 
 # F2 Google Forms Track
 
-F2 (Healthcare Worker Survey) is an **explicit special case** in the project — it is not a CSPro CAPI instrument by default. Unlike F1/F3/F4, the primary build lives in Google Forms driven by a Google Apps Script generator, with CSPro held in reserve as an optional late build.
+> [!warning] **SUPERSEDED 2026-04-17 — kept for historical context only.**
+> The Google Forms primary track was retired 2026-04-17 in favor of a Vite+React+TS PWA build at `deliverables/F2/PWA/app/`. The PWA reached production 2026-04-25 at v1.1.1 after two UAT rounds. Google Forms artefacts under `deliverables/F2/apps-script/` remain as fallback starting points only — do not reopen this track without a deployment-context decision reversal.
+
+---
+
+F2 (Healthcare Worker Survey) was originally framed as an **explicit special case** in the project — it is not a CSPro CAPI instrument by default. Unlike F1/F3/F4, the original primary build lived in Google Forms driven by a Google Apps Script generator, with CSPro held in reserve as an optional late build.
 
 ## Why a special case
 
