@@ -56,19 +56,29 @@ function jsAccess(id: string): string {
   return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(id) ? `.${id}` : `['${id}']`;
 }
 
+// Conditional items are required-when-shown but absent when hidden, so the schema must
+// accept undefined. The runtime (getSectionStatus) blocks completion via item.required.
+function isSchemaOptional(item: Item): boolean {
+  return !item.required || item.conditional === true;
+}
+
 function emitFieldEntries(item: Item): string[] {
   if (item.type === 'multi-field' && item.subFields) {
+    const itemOptional = isSchemaOptional(item);
     return item.subFields.map((sf) => {
+      // A subfield is schema-optional if (a) the parent is optional, OR
+      // (b) the subfield's own required flag is explicitly false.
+      const optional = itemOptional || sf.required === false;
       const schema =
         sf.kind === 'short-text'
-          ? item.required
-            ? 'z.string().min(1)'
-            : 'z.string().optional()'
+          ? optional
+            ? 'z.string().optional()'
+            : 'z.string().min(1)'
           : (() => {
               let expr = 'z.coerce.number()';
               if (sf.min !== undefined) expr += `.min(${sf.min})`;
               if (sf.max !== undefined) expr += `.max(${sf.max})`;
-              if (!item.required) expr += '.optional()';
+              if (optional) expr += '.optional()';
               return expr;
             })();
       return `${fieldKey(sf.id)}: ${schema},`;
@@ -87,30 +97,31 @@ function fieldKey(id: string): string {
 }
 
 function fieldSchema(item: Item): string {
+  const optional = isSchemaOptional(item);
   switch (item.type) {
     case 'short-text':
     case 'long-text':
-      return item.required ? 'z.string().min(1)' : 'z.string().optional()';
+      return optional ? 'z.string().optional()' : 'z.string().min(1)';
     case 'number': {
       let expr = 'z.coerce.number()';
       if (item.min !== undefined) expr += `.min(${item.min})`;
       if (item.max !== undefined) expr += `.max(${item.max})`;
-      if (!item.required) expr += '.optional()';
+      if (optional) expr += '.optional()';
       return expr;
     }
     case 'single': {
       const values = (item.choices ?? []).map((c) => `'${c.value.replace(/'/g, "\\'")}'`);
       const base = `z.enum([${values.join(', ')}])`;
-      return item.required ? base : `${base}.optional()`;
+      return optional ? `${base}.optional()` : base;
     }
     case 'multi': {
       const values = (item.choices ?? []).map((c) => `'${c.value.replace(/'/g, "\\'")}'`);
       const base = `z.array(z.enum([${values.join(', ')}]))`;
-      return item.required ? `${base}.min(1)` : `${base}.optional()`;
+      return optional ? `${base}.optional()` : `${base}.min(1)`;
     }
     case 'date': {
       const base = String.raw`z.string().regex(/^\d{4}-\d{2}-\d{2}$/)`;
-      return item.required ? base : `${base}.optional()`;
+      return optional ? `${base}.optional()` : base;
     }
     case 'multi-field':
       throw new Error(

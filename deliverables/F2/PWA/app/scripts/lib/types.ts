@@ -24,6 +24,11 @@ export interface SubField {
   kind: 'short-text' | 'number';
   min?: number;
   max?: number;
+  // Per-subfield override of the parent multi-field's required flag. Defaults to
+  // true (inherit). Set false via `[optional]` in the spec's choices column when
+  // a multi-field has one always-required subfield and one optional one (e.g.
+  // Q9: years required, months optional).
+  required?: boolean;
 }
 
 export interface Item {
@@ -32,6 +37,10 @@ export interface Item {
   section: string;
   type: ItemType;
   required: boolean;
+  // True when the spec marks the item as `conditional` — required when shown via skip-logic
+  // but absent (undefined) when hidden. Schema emits `.optional()` for these so submission
+  // isn't blocked when the item is filtered out by shouldShow.
+  conditional?: boolean;
   label: LocalizedString;
   help?: LocalizedString;
   choices?: Choice[];

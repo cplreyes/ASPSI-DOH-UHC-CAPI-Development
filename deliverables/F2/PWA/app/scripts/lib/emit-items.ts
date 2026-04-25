@@ -45,6 +45,7 @@ function emitItem(item: Item): string {
     `required: ${item.required}`,
     `label: ${quoteLocalized(item.label)}`,
   ];
+  if (item.conditional) fields.push(`conditional: true`);
   if (item.legacyId) fields.push(`legacyId: '${item.legacyId}'`);
   if (item.help) fields.push(`help: ${quoteLocalized(item.help)}`);
   if (item.min !== undefined) fields.push(`min: ${item.min}`);
@@ -69,6 +70,7 @@ function emitItem(item: Item): string {
         ];
         if (sf.min !== undefined) parts.push(`min: ${sf.min}`);
         if (sf.max !== undefined) parts.push(`max: ${sf.max}`);
+        if (sf.required === false) parts.push(`required: false`);
         return `{ ${parts.join(', ')} }`;
       })
       .join(', ');

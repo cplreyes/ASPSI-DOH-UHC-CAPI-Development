@@ -277,7 +277,7 @@ describe('normalizeRow', () => {
     expect(result.item?.type).toBe('long-text');
   });
 
-  it('treats "conditional" required as false (M3 handles conditional show/hide)', () => {
+  it('treats "conditional" required as true so the runtime blocks completion when shouldShow allows the item', () => {
     const result = normalizeRow(
       {
         pdf_q: 'Q8',
@@ -288,7 +288,7 @@ describe('normalizeRow', () => {
       },
       'A',
     );
-    expect(result.item?.required).toBe(false);
+    expect(result.item?.required).toBe(true);
   });
 
   it('parses "short-text ×3" as multi-field with three short-text subfields', () => {
@@ -423,7 +423,7 @@ describe('normalizeRow', () => {
       'C',
     );
     expect(result.unsupported).toBeUndefined();
-    expect(result.item).toMatchObject({ id: 'Q31', type: 'date', required: false });
+    expect(result.item).toMatchObject({ id: 'Q31', type: 'date', required: true });
   });
 
   it('treats "grid-single" as a single with the inline choice set', () => {

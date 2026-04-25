@@ -21,6 +21,7 @@ export interface SubField {
   kind: 'short-text' | 'number';
   min?: number;
   max?: number;
+  required?: boolean;
 }
 
 export interface Item {
@@ -29,6 +30,9 @@ export interface Item {
   section: string;
   type: ItemType;
   required: boolean;
+  // Required when shown via skip-logic but absent when hidden — runtime blocks completion
+  // while visible; schema treats as optional so submission survives hidden state.
+  conditional?: boolean;
   label: LocalizedString;
   help?: LocalizedString;
   choices?: Choice[];

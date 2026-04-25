@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type {
   Item,
   ParseResult,
@@ -9,8 +12,95 @@ import type {
   LocalizedString,
 } from './types';
 
+// Read skip-logic.ts at build time and extract every (section, itemId) that has a
+// shouldShow predicate. Anything in this set is conditionally visible at runtime
+// and therefore must be schema-optional (regardless of what the spec's `required`
+// column says). Sections C-J encode their gating in upstream `skip` columns rather
+// than per-row `gate` columns, so this is the only way to derive their conditional
+// items without rewriting the spec.
+function loadConditionalItemKeys(): Set<string> {
+  try {
+    const here = dirname(fileURLToPath(import.meta.url));
+    const skipLogicPath = resolve(here, '../../src/lib/skip-logic.ts');
+    const content = readFileSync(skipLogicPath, 'utf-8');
+    // The predicates map is `{ A: { Q6: ..., Q8: ... }, B: { Q13: ..., ... }, ... }`
+    // Match section headers like `  A: {` and predicate entries like `    Q14:`.
+    const keys = new Set<string>();
+    let currentSection: string | null = null;
+    for (const line of content.split('\n')) {
+      const sectionMatch = line.match(/^\s*([A-Z]):\s*\{/);
+      if (sectionMatch) {
+        currentSection = sectionMatch[1];
+        continue;
+      }
+      if (/^\s*\}/.test(line)) currentSection = null;
+      if (!currentSection) continue;
+      const itemMatch = line.match(/^\s+(Q\d+(?:_\d+)?)\s*:\s*\(/);
+      if (itemMatch) keys.add(`${currentSection}.${itemMatch[1]}`);
+    }
+    return keys;
+  } catch {
+    return new Set<string>();
+  }
+}
+
+const CONDITIONAL_KEYS_FROM_SKIP_LOGIC = loadConditionalItemKeys();
+
 function dual(en: string): LocalizedString {
   return { en, fil: en };
+}
+
+// Spec uses `Y` (always required), `conditional` (required when shown via skip-logic),
+// or `N` (always optional). Conditional items must block section completion when visible
+// (so getSectionStatus sees required:true) but be schema-optional so submission survives
+// when shouldShow filters them out (so emit-schema sees conditional:true and emits .optional()).
+function isRequired(rawRequired: string | undefined): boolean {
+  const v = (rawRequired ?? '').trim();
+  return v === 'Y' || v === 'conditional';
+}
+
+// An item is conditional (= required when visible, optional in schema) if any of:
+//   1. The spec's `required` column is `conditional`.
+//   2. The spec has a non-empty `gate` column (Sections A and B only).
+//   3. The item has a shouldShow predicate registered in skip-logic.ts (covers
+//      Sections C-J which lack a per-row `gate` column).
+// The runtime hides the item via shouldShow when the gate isn't met, and the
+// schema must accept undefined in that case so submission isn't blocked.
+function isConditional(
+  sectionId: string,
+  itemId: string,
+  rawRequired: string | undefined,
+  rawGate: string | undefined,
+): boolean {
+  if ((rawRequired ?? '').trim() === 'conditional') return true;
+  const gate = (rawGate ?? '').trim();
+  if (gate.length > 0 && gate !== '—' && gate !== '-') return true;
+  return CONDITIONAL_KEYS_FROM_SKIP_LOGIC.has(`${sectionId}.${itemId}`);
+}
+
+// Parse `Year(s) [min 0, max 99, optional]` style constraints from a multi-field
+// subfield label. Returns the label with the bracket section stripped, plus min/max
+// and a per-subfield required flag if `optional` is present.
+function parseSubFieldConstraints(raw: string): {
+  label: string;
+  min?: number;
+  max?: number;
+  required?: boolean;
+} {
+  const bracketMatch = raw.match(/\s*\[([^\]]+)\]\s*$/);
+  if (!bracketMatch) {
+    return { label: raw };
+  }
+  const inner = bracketMatch[1];
+  const min = inner.match(/min\s+(-?\d+)/i)?.[1];
+  const max = inner.match(/max\s+(-?\d+)/i)?.[1];
+  const isOptional = /\boptional\b/i.test(inner);
+  return {
+    label: raw.replace(bracketMatch[0], '').trim(),
+    ...(min !== undefined ? { min: Number(min) } : {}),
+    ...(max !== undefined ? { max: Number(max) } : {}),
+    ...(isOptional ? { required: false } : {}),
+  };
 }
 
 export interface RawSection {
@@ -149,18 +239,25 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
       .filter((s) => s.length > 0);
     const subFields: SubField[] = [];
     for (let i = 0; i < count; i++) {
+      const raw = labels[i] ?? `Field ${i + 1}`;
+      const constraints = parseSubFieldConstraints(raw);
       subFields.push({
         id: `${row.pdf_q}_${i + 1}`,
-        label: dual(labels[i] ?? `Field ${i + 1}`),
+        label: dual(constraints.label),
         kind,
+        ...(constraints.min !== undefined ? { min: constraints.min } : {}),
+        ...(constraints.max !== undefined ? { max: constraints.max } : {}),
+        ...(constraints.required === false ? { required: false } : {}),
       });
     }
-    const required = (row.required ?? '').trim() === 'Y';
+    const required = isRequired(row.required);
+    const conditional = isConditional(section, row.pdf_q, row.required, row.gate);
     const item: Item = {
       id: row.pdf_q,
       section,
       type: 'multi-field',
       required,
+      ...(conditional ? { conditional: true } : {}),
       label: dual(row.label ?? ''),
       subFields,
     };
@@ -183,7 +280,8 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
 
   const type = SUPPORTED_TYPES[rawType];
   const hasOtherSpecify = rawType.includes('+ specify');
-  const required = (row.required ?? '').trim() === 'Y';
+  const required = isRequired(row.required);
+  const conditional = isConditional(section, row.pdf_q, row.required, row.gate);
 
   const { help, choicesText, min, max } = parseChoicesColumn(row.choices ?? '', type);
 
@@ -192,6 +290,7 @@ export function normalizeRow(row: RowFields, section: string): NormalizeRowResul
     section,
     type,
     required,
+    ...(conditional ? { conditional: true } : {}),
     label: dual(row.label ?? ''),
   };
 
