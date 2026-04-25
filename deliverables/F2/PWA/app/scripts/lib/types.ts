@@ -16,6 +16,13 @@ export interface Choice {
   label: LocalizedString;
   value: string;
   isOtherSpecify?: boolean;
+  // True for options like "I don't know" / "None of the above" — checking it
+  // clears all other selections in a multi-select; checking another option
+  // clears the exclusive one.
+  isExclusive?: boolean;
+  // True for options like "All of the above" — checking it auto-selects every
+  // non-exclusive non-otherSpecify option; unchecking it clears them all.
+  isSelectAll?: boolean;
 }
 
 export interface SubField {

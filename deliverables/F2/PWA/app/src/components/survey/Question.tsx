@@ -16,6 +16,7 @@ export function Question({ item }: QuestionProps) {
   const {
     register,
     watch,
+    setValue,
     formState: { errors },
   } = useFormContext();
   const currentValue = watch(item.id);
@@ -44,7 +45,17 @@ export function Question({ item }: QuestionProps) {
       {item.help ? (
         <p className="text-xs text-muted-foreground">{localized(item.help, locale)}</p>
       ) : null}
-      {renderControl(item, register, showSpecify, t, locale, errors, visibleChoices)}
+      {renderControl(
+        item,
+        register,
+        showSpecify,
+        t,
+        locale,
+        errors,
+        visibleChoices,
+        currentValue,
+        (next) => setValue(item.id, next, { shouldValidate: true, shouldDirty: true }),
+      )}
       {errorMessage ? (
         <p role="alert" className="text-xs text-red-600">
           {errorMessage}
@@ -67,6 +78,53 @@ function blockNonNumericKeys(event: React.KeyboardEvent<HTMLInputElement>) {
   }
 }
 
+// Compute the next selected-values array for a multi-select after the user
+// clicks a checkbox. Encodes the exclusivity rules from issues #16 and #17.
+//
+// - Clicking an `isExclusive` option (e.g. "I don't know") clears all others.
+// - Clicking an `isSelectAll` option (e.g. "All of the above") auto-selects
+//   every non-exclusive non-otherSpecify choice.
+// - Clicking a regular option clears any currently-selected exclusive or
+//   selectAll values (mixed selection isn't compatible).
+// - Unchecking `isSelectAll` clears the auto-selected values.
+// - Unchecking a regular option also clears `isSelectAll` (the "all" claim
+//   is no longer accurate).
+export function nextMultiValue(
+  current: string[],
+  clicked: { value: string; isExclusive?: boolean; isSelectAll?: boolean; isOtherSpecify?: boolean },
+  willBeChecked: boolean,
+  allChoices: ReadonlyArray<{ value: string; isExclusive?: boolean; isSelectAll?: boolean; isOtherSpecify?: boolean }>,
+): string[] {
+  const findChoice = (v: string) => allChoices.find((c) => c.value === v);
+
+  if (willBeChecked) {
+    if (clicked.isExclusive) return [clicked.value];
+    if (clicked.isSelectAll) {
+      return allChoices
+        .filter((c) => !c.isExclusive && !c.isOtherSpecify)
+        .map((c) => c.value);
+    }
+    const filtered = current.filter((v) => {
+      const c = findChoice(v);
+      return c ? !c.isExclusive && !c.isSelectAll : true;
+    });
+    return filtered.includes(clicked.value) ? filtered : [...filtered, clicked.value];
+  }
+
+  // Unchecking
+  if (clicked.isSelectAll) {
+    return current.filter((v) => {
+      const c = findChoice(v);
+      return c?.isOtherSpecify || c?.isExclusive;
+    });
+  }
+  const next = current.filter((v) => v !== clicked.value);
+  return next.filter((v) => {
+    const c = findChoice(v);
+    return c ? !c.isSelectAll : true;
+  });
+}
+
 function renderControl(
   item: Item,
   register: ReturnType<typeof useFormContext>['register'],
@@ -75,6 +133,8 @@ function renderControl(
   locale: Locale,
   errors: FieldErrors,
   visibleChoices?: Item['choices'],
+  currentValue?: unknown,
+  onChange?: (next: string[]) => void,
 ) {
   // Use filtered choices if provided (e.g., A.Q6 specialty narrowed by Q5 role).
   const choices = visibleChoices ?? item.choices;
@@ -141,21 +201,42 @@ function renderControl(
           ) : null}
         </div>
       );
-    case 'multi':
+    case 'multi': {
+      // Controlled checkboxes — exclusivity ("I don't know") and select-all
+      // ("All of the above") rules computed via nextMultiValue().
+      const selected: string[] = Array.isArray(currentValue) ? (currentValue as string[]) : [];
+      const allChoices = choices ?? [];
+      // Register the array field so RHF knows about it (default value handling
+      // + form lifecycle), but skip the rendered input via `style: hidden`.
+      const reg = register(item.id);
       return (
         <div className="flex flex-col gap-1">
           <fieldset className="flex flex-col gap-1">
-            {choices?.map((choice, idx) => (
-              <label key={choice.value} className="flex items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  value={choice.value}
-                  {...(idx === 0 ? { id: item.id } : {})}
-                  {...register(item.id)}
-                />
-                {localized(choice.label, locale)}
-              </label>
-            ))}
+            {allChoices.map((choice, idx) => {
+              const isChecked = selected.includes(choice.value);
+              return (
+                <label key={choice.value} className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    value={choice.value}
+                    checked={isChecked}
+                    onChange={(e) => {
+                      if (!onChange) return;
+                      const next = nextMultiValue(
+                        selected,
+                        choice,
+                        e.target.checked,
+                        allChoices,
+                      );
+                      onChange(next);
+                    }}
+                    onBlur={reg.onBlur}
+                    {...(idx === 0 ? { id: item.id, ref: reg.ref, name: reg.name } : { name: reg.name })}
+                  />
+                  {localized(choice.label, locale)}
+                </label>
+              );
+            })}
           </fieldset>
           {showSpecify ? (
             <div className="mt-2 flex flex-col gap-1 pl-6">
@@ -172,6 +253,7 @@ function renderControl(
           ) : null}
         </div>
       );
+    }
     case 'date':
       return (
         <input

@@ -8,7 +8,7 @@ import { LanguageSwitcher } from '@/components/i18n/LanguageSwitcher';
 import { BroadcastBanner } from '@/components/chrome/BroadcastBanner';
 import { KillSwitchOverlay } from '@/components/chrome/KillSwitchOverlay';
 import { SpecDriftOverlay } from '@/components/chrome/SpecDriftOverlay';
-import { LocaleProvider } from '@/i18n/locale-context';
+import { LocaleProvider, useLocale } from '@/i18n/locale-context';
 import type { FormValues } from '@/lib/skip-logic';
 import { useInstallPrompt } from '@/lib/install-prompt';
 import { AuthProvider, useAuth } from '@/lib/auth-context';
@@ -116,6 +116,7 @@ const noopConfigFetcher: () => Promise<GetConfigResponse> = async () => ({
 
 function AppShell() {
   const { t } = useTranslation();
+  const { locale } = useLocale();
   const { canInstall, install } = useInstallPrompt();
   const { status: authStatus, enrollment } = useAuth();
   const runtimeConfig = useRuntimeConfig();
@@ -204,7 +205,11 @@ function AppShell() {
       return;
     }
     try {
-      await saveDraft(draftId, values, enrollmentInfo);
+      // Auto-inject the active locale so the harmonization ETL can stratify
+      // by language without needing the user to declare it explicitly. See
+      // codebook §13 (survey_language) and §15.E.
+      const valuesWithMeta: FormValues = { ...values, survey_language: locale };
+      await saveDraft(draftId, valuesWithMeta, enrollmentInfo);
       await submitDraft(draftId, enrollmentInfo);
       setSubmitError(null);
       setPendingValuesRef(null);

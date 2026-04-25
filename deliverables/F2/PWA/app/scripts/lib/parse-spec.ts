@@ -390,6 +390,8 @@ function resolveNamedSetReferences(sections: Section[], sets: Map<string, string
           const trimmed = raw.trim();
           const choice: Choice = { label: dual(trimmed), value: trimmed };
           if (SPECIFY_OTHER_RE.test(trimmed)) choice.isOtherSpecify = true;
+          if (EXCLUSIVE_VALUES.has(trimmed)) choice.isExclusive = true;
+          if (SELECT_ALL_VALUES.has(trimmed)) choice.isSelectAll = true;
           return choice;
         });
         break;
@@ -437,6 +439,22 @@ function parseChoicesColumn(
   return result;
 }
 
+// Multi-select option values that should be treated as exclusive (clicking
+// clears all other selections; clicking another option clears this one).
+// Match is case-sensitive against the canonical spec value.
+const EXCLUSIVE_VALUES = new Set([
+  "I don't know",
+  'None',
+  'None of the above',
+  'None of the above are true',
+]);
+
+// Multi-select option values that should auto-select all other non-exclusive
+// non-otherSpecify options when checked.
+const SELECT_ALL_VALUES = new Set([
+  'All of the above',
+]);
+
 function parseChoiceList(text: string, hasOtherSpecify: boolean): Choice[] | undefined {
   if (!text) return undefined;
   return text.split(CHOICE_SEP).map((label) => {
@@ -444,6 +462,8 @@ function parseChoiceList(text: string, hasOtherSpecify: boolean): Choice[] | und
     const isOther = hasOtherSpecify && /other[s]?(?:,\s*specify|\s*\(specify\))/i.test(trimmed);
     const choice: Choice = { label: dual(trimmed), value: trimmed };
     if (isOther) choice.isOtherSpecify = true;
+    if (EXCLUSIVE_VALUES.has(trimmed)) choice.isExclusive = true;
+    if (SELECT_ALL_VALUES.has(trimmed)) choice.isSelectAll = true;
     return choice;
   });
 }

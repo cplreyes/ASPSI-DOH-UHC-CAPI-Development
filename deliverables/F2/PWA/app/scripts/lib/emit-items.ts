@@ -53,10 +53,14 @@ function emitItem(item: Item): string {
   if (item.hasOtherSpecify) fields.push(`hasOtherSpecify: true`);
   if (item.choices) {
     const choicesLiteral = item.choices
-      .map(
-        (c) =>
-          `{ label: ${quoteLocalized(c.label)}, value: ${quote(c.value)}${c.isOtherSpecify ? ', isOtherSpecify: true' : ''} }`,
-      )
+      .map((c) => {
+        const flags = [
+          c.isOtherSpecify ? ', isOtherSpecify: true' : '',
+          c.isExclusive ? ', isExclusive: true' : '',
+          c.isSelectAll ? ', isSelectAll: true' : '',
+        ].join('');
+        return `{ label: ${quoteLocalized(c.label)}, value: ${quote(c.value)}${flags} }`;
+      })
       .join(', ');
     fields.push(`choices: [${choicesLiteral}]`);
   }
