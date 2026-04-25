@@ -72,6 +72,9 @@ export const fil: EnBundle = {
     edit: 'Edit',
     submit: 'Submit',
   },
+  matrix: {
+    statementHeader: 'Statement',
+  },
   sync: {
     heading: 'Sync',
     none: 'No submissions yet.',
