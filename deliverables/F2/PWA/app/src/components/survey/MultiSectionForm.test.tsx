@@ -228,7 +228,19 @@ describe('<MultiSectionForm>', () => {
         onSubmit={vi.fn()}
       />,
     );
-    // Section G renders. Q75-Q81 should appear within a matrix table (may be multiple matrices).
-    expect(screen.getAllByRole('table').length).toBeGreaterThan(0);
+    // Section G (with all gating answers unset) renders 3 matrix tables:
+    //   - Q63/Q66/Q69/Q72 (Yes/No) — gating questions Q64/Q65/Q67/Q68/Q70/Q71 are hidden,
+    //     so all four Yes/No items are consecutive and collapse into one matrix.
+    //   - Q75-Q81 (1-5 scale)
+    //   - Q83-Q85 (frequency Never–Always)
+    const tables = screen.getAllByRole('table');
+    expect(tables.length).toBe(3);
+    // Specifically confirm the Q75-Q81 cluster: find a table that contains both
+    // Q75's and Q81's question prefixes (the matrix renders "Q75. <label>" in
+    // the row header for each row).
+    const q75Q81Matrix = tables.find(
+      (t) => t.textContent?.includes('Q75.') && t.textContent?.includes('Q81.'),
+    );
+    expect(q75Q81Matrix).toBeDefined();
   });
 });
