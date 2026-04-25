@@ -9,7 +9,7 @@ import { useLocale } from '@/i18n/locale-context';
 import { localized } from '@/i18n/localized';
 import { Question } from './Question';
 import { MatrixQuestion } from './MatrixQuestion';
-import { groupVisibleItems } from './group-matrix';
+import { groupVisibleItems, isMatrixGroup } from './group-matrix';
 
 function stripNulls(values: unknown): unknown {
   if (values === null || values === '') return undefined;
@@ -92,7 +92,7 @@ export function Section<T extends Record<string, unknown>>({
         ) : null}
 
         {groupVisibleItems(items ?? section.items).map((entry) =>
-          'kind' in entry && entry.kind === 'matrix' ? (
+          isMatrixGroup(entry) ? (
             <MatrixQuestion
               key={`matrix-${entry.items[0].id}`}
               items={entry.items}

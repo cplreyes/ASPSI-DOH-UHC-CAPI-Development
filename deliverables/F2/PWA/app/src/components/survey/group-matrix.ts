@@ -8,6 +8,11 @@ export interface MatrixGroup {
   items: Item[];
 }
 
+/** Type guard for the discriminated union. */
+export function isMatrixGroup(entry: Item | MatrixGroup): entry is MatrixGroup {
+  return 'kind' in entry && entry.kind === 'matrix';
+}
+
 function isMatrixCandidate(item: Item): boolean {
   return (
     item.type === 'single' &&

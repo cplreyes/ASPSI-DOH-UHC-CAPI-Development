@@ -19,7 +19,7 @@ import { Button } from '@/components/ui/button';
 import { useLocale } from '@/i18n/locale-context';
 import { localized } from '@/i18n/localized';
 import type { Locale } from '@/i18n/index';
-import { groupVisibleItems, type MatrixGroup } from './group-matrix';
+import { groupVisibleItems, isMatrixGroup, type MatrixGroup } from './group-matrix';
 
 const SECTIONS: SectionModel[] = [
   sectionA,
@@ -109,7 +109,7 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
         type Block = { kind: 'rows'; rows: ReturnType<typeof rowsForItem> } | { kind: 'matrix'; group: MatrixGroup };
         const blocks: Block[] = [];
         for (const entry of grouped) {
-          if ('kind' in entry && entry.kind === 'matrix') {
+          if (isMatrixGroup(entry)) {
             // Only include the matrix if at least one row has a value
             const hasAny = entry.items.some((it) => formatValue(values[it.id]) !== '');
             if (hasAny) blocks.push({ kind: 'matrix', group: entry });
@@ -133,7 +133,7 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
               </Button>
             </header>
             <dl className="divide-y divide-slate-200 rounded border border-slate-200">
-              {blocks.flatMap((block, blockIdx) =>
+              {blocks.flatMap((block) =>
                 block.kind === 'matrix'
                   ? [
                       <div

@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useEffect } from 'react';
-import type * as React from 'react';
 import { LocaleProvider } from '@/i18n/locale-context';
 import type { Choice, Item } from '@/types/survey';
 import { MatrixQuestion } from './MatrixQuestion';
@@ -92,7 +91,7 @@ describe('<MatrixQuestion>', () => {
 
   it('renders a row\'s required error inline when triggered', async () => {
     function ErrHarness({ items, choices }: { items: Item[]; choices: Choice[] }) {
-      const methods = useForm({
+      const methods = useForm<Record<string, unknown>>({
         defaultValues: {},
       });
       // Force an error on Q76 to test display — use effect so it runs after
