@@ -54,14 +54,14 @@ Comms infrastructure fully provisioned (project mailbox + Viber group both live,
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
 | **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Design — Designer round 2 / sign-off next; **F3 Build-ready, F4 Build-ready** — specs complete 2026-04-21; F2 data model lives inside the PWA spec; PLF Source Captured) | F1 sign-off (E2-F1-010); F3/F4 Designer validation (E2-F3-010, E2-F4-010) |
 | **3** | CAPI Application Development | **In Progress** (F2 **PWA in production at v1.1.1**, Rounds 1+2 closed, Round 3 v1.2.0 queued; F1 CSPro build pending Designer sign-off; F3/F4 Build-ready) | F1 `FacilityHeadSurvey.fmf` Section A layout (Sprint 003); F3/F4 build slots TBD; F2 Round 3 features when slot opens |
-| **4** | CSWeb Server Setup and Deployment | Not Started | Sync architecture decision documented |
-| **5** | Tablet and Field Logistics | Not Started | Tablet provisioning SOP drafted |
-| **6** | Testing and Pilot | Not Started | F1 desk test (follows Epic 3); QA Tester (Shan) onboarded to test workflow |
-| **7** | Training and Documentation | Not Started | Survey manual outline (tied to D2) |
-| **8** | Fieldwork Monitoring and Quality Control | Not Started (activates at fieldwork) | Dashboard requirements defined |
-| **9** | Data Management and Security | **Governance Active** (NDU + privacy compliance ongoing) | Secure sync + backup strategy defined |
-| **10** | Data Cleaning and Processing | Not Started | Batch edit rules drafted alongside instrument design |
-| **11** | Analysis Support & Deliverables | Not Started | Interim tabulation template prepared ahead of D4 |
+| **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Apps Script + Cloudflare Pages for PWA) | **In Progress** (PWA backend live and serving production v1.1.1; CSWeb track Not Started) | CSWeb provisioning + integration ETL spec drafted |
+| **5** | Field Distribution & Device Management (tablets for CAPI; URL distribution + PWA install + reminder ops for F2) | **In Progress** (PWA distribution model proven via UAT; CAPI tablet provisioning Not Started) | Tablet provisioning SOP drafted; F2 distribution-list SOP drafted |
+| **6** | Testing and Pilot | **Mode-aware:** PWA test stack live (vitest + Playwright + cross-platform QA; UAT Rounds 1+2 closed). CAPI track Not Started. | F1 desk test (follows Epic 3); QA Tester (Shan) handoff workflow extended to CAPI |
+| **7** | Training and Documentation | Not Started | Survey manual outline (tied to D2); F2 self-admin one-pager + in-app help review |
+| **8** | Fieldwork Monitoring and Quality Control | Not Started (activates at fieldwork) | Cross-track BI dashboard scaffolded (CSWeb + F2 backend in one view) |
+| **9** | Data Management and Security | **Governance Active** (NDU + privacy compliance ongoing) | Secure sync + backup strategy defined for both tracks |
+| **10** | Data Cleaning and Processing | Not Started | Shared codebook + harmonization ETL spec drafted alongside instrument design |
+| **11** | Analysis Support & Deliverables | Not Started | Interim tabulation template prepared ahead of D4; CSV + Stata export pipeline defined for both tracks |
 | **12** | Handover, Closeout & Retrospective | Not Started | NDU-compliant file disposition plan |
 
 ### By Survey Instrument
@@ -216,8 +216,9 @@ Each epic below is a long-running workstream that spans its portion of the engag
 1. M0 Foundation — Vite+React+TS+Tailwind+shadcn+vite-plugin-pwa installable shell (shipped 2026-04-17)
 2. M1 Generator v1 + single-section render (shipped 2026-04-17)
 3. M2–M11 — autosave/IndexedDB, skip-logic nav, Apps Script backend, sync orchestrator, full 114-item instrument, validation + cross-field rules, enrollment, i18n, admin dashboard, hardening (shipped 2026-04-18)
-4. Pilot readiness checkpoint (open) — three options per `NEXT.md`: run pilot with 5–10 HCWs at one facility / close deferred M11 items first / move to M12 F3/F4 parity
-5. Deferred M11 items (slot in only if pilot feedback demands): per-HCW tokens, draft auto-migration across spec versions, iOS push, admin mutations
+4. UAT Rounds 1 + 2 (closed 2026-04-25) — Shan as tester, GitHub Issues + Slack `#f2-pwa-uat`, 13 issues fixed; production tagged v1.1.1
+5. Round 3 (v1.2.0) backlog queued — #16 exclusive multi-select, #17 all-of-the-above auto-select, #18 matrix view for scale-style questions
+6. Deferred M11 items (slot in only if production feedback demands): per-HCW tokens, draft auto-migration across spec versions, iOS push, admin mutations
 
 **F2 PWA note:** The Apr 15 Google Forms / paper / deferred-CSPro three-path model is superseded by the PWA primary build. The PWA is the only active F2 build path. **The CSPro-encoder track for F2 is the least priority item in this engagement** — do not reopen without an explicit decision reversal driven by a deployment-context change. If ASPSI's deployment context ever shifts back, prior artifacts remain under `deliverables/F2/` as fallback starting points only.
 
@@ -227,29 +228,57 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 ---
 
-### Epic 4 — CSWeb Server Setup and Deployment
+### Epic 4 — Backend & Sync Infrastructure
 
-**Covers:** Sync architecture decision (CSWeb vs Dropbox vs FTP vs Bluetooth, with trade-off documentation), server provisioning, authentication and access control, data dictionary deployment per instrument, round-trip sync testing per instrument, server-side storage and retention.
+**Covers:** Per-track backend provisioning, sync architecture, authentication and access control, server-side storage and retention. The two tracks run independent infrastructure, integrated only at the data-export step (see [Section 5: Cross-Track Integration](#5-cross-track-integration)).
 
-**Current state:** Not Started
+#### 4.A — CAPI track (F1, F3, F4)
 
-**Next milestone:** Sync architecture decision documented.
+- **Sync architecture decision** — CSWeb vs Dropbox vs FTP vs Bluetooth, with trade-off documentation. CSWeb is the recommended default for real-time monitoring.
+- **CSWeb server provisioning** — host (cloud / on-prem), TLS, authentication, dictionary deployment per instrument, round-trip sync testing.
+- **Server-side storage** — `.dat` retention, dictionary versioning, cross-version migration plan.
 
-**Dependencies:** Sync architecture decision must precede all downstream deployment work.
+#### 4.B — PWA track (F2)
+
+- **Backend** — Google Apps Script Web App (`AKfycb...zETS9D9fQ7ovD`), HMAC-signed batch submit endpoint, idempotency keys, response-sheet write target. Health-check endpoint for monitoring.
+- **Hosting** — Cloudflare Pages with two projects: `f2-pwa-staging` (branch `staging`) and `f2-pwa` (branch `main`, production at https://f2-pwa.pages.dev).
+- **Service worker / PWA manifest** — vite-plugin-pwa, `skipWaiting` + `clientsClaim` upgrade flow, precache for shell, runtime cache for `/config` and facility list.
+- **Runtime config** — `kill_switch`, `broadcast_message`, `min_accepted_spec_version` editable from the Apps Script Config sheet without redeploy.
+
+**Current state:** PWA backend (4.B) live and serving production v1.1.1 since 2026-04-25. CSWeb track (4.A) Not Started.
+
+**Next milestone:** CSWeb provisioned for CAPI track + integration ETL spec drafted (lands in Epic 10) so both tracks export to the same downstream format.
+
+**Dependencies:** CSWeb provisioning blocks F1/F3/F4 fieldwork. PWA backend already in production.
 
 **Ties to:** D3, TOR Duty 7 (configure web server for uploading completed questionnaires).
 
 ---
 
-### Epic 5 — Tablet and Field Logistics
+### Epic 5 — Field Distribution & Device Management
 
-**Covers:** Tablet provisioning SOP, CSEntry installation and configuration, per-role deployment packages (interviewer vs supervisor), sync credential management, backup and recovery plan for mid-interview device failure, spare device strategy, field rollout logistics, device check-in/check-out procedures.
+**Covers:** Per-track field model — how the instrument reaches respondents and how completed cases reach the backend. The two tracks have fundamentally different distribution models: CAPI is push-to-tablet via enumerator; PWA is pull-by-respondent via URL.
 
-**Current state:** Not Started
+#### 5.A — CAPI track (F1, F3, F4)
 
-**Next milestone:** Tablet provisioning SOP drafted.
+- **Tablet provisioning SOP** — CSEntry installation, app/PFF deployment, sync credential management, role-specific bundles (interviewer vs supervisor).
+- **Backup & recovery** — what happens when a tablet dies mid-interview (local-cache survival + sync replay).
+- **Spare device strategy** — N+10% spare ratio for field; hot-swap procedure.
+- **Field rollout logistics** — provisioning timeline aligned to enumerator training; check-in / check-out procedures; lost-device protocol.
 
-**Dependencies:** Requires Epic 3 build and Epic 4 sync architecture.
+#### 5.B — PWA track (F2)
+
+- **Distribution-list SOP** — facility-level HCW lists assembled (sourced from F1's HCW roster + ASPSI manual augmentation), URL distributed via the channels HCWs already use (email, organisation portal, Slack), per-facility tracking sheet.
+- **Onboarding aid** — one-page "how to fill the form on your device" + in-app help; PWA install prompt surfaces automatically; documented install flow per platform (iOS / Android / Desktop).
+- **Reminder ops** — Day 3 / Day 7 nudge protocol for non-completers (email + Slack); response-rate monitoring per facility.
+- **Backup & recovery** — IndexedDB persists drafts across navigations and offline; backend retains all `pending_sync` rows until acknowledgement; service worker auto-updates on next session.
+- **Distribution rights** — no per-HCW token currently (any HCW ID once facility selected); upgrade path documented as M11 deferred work.
+
+**Current state:** PWA distribution model proven via UAT Rounds 1+2 (Shan as tester, structured Slack + GitHub Issues coordination). CAPI tablet provisioning Not Started.
+
+**Next milestone:** Tablet provisioning SOP drafted (Epic 5.A); F2 distribution-list SOP formalised for production fieldwork (Epic 5.B — currently lives in `#f2-pwa-uat` channel conventions, needs documenting as a runbook).
+
+**Dependencies:** 5.A requires Epic 3 (CSPro build) + Epic 4.A (CSWeb sync architecture). 5.B is unblocked but blocked on getting facility-level HCW lists from ASPSI / DOH for production rollout.
 
 **Ties to:** D3.
 
@@ -289,13 +318,24 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 ### Epic 8 — Fieldwork Monitoring and Quality Control
 
-**Covers:** Real-time sync monitoring dashboard (daily case counts, completion rates, disposition breakdowns per cluster), hotfix protocol for in-field application issues, issue log with triage and resolution, field-reported anomaly tracking, interviewer performance monitoring, weekly client progress updates during main collection.
+**Covers:** Real-time monitoring across both tracks, hot-fix protocol per track, unified issue log with triage and resolution, field-reported anomaly tracking, weekly client progress updates during main collection.
 
-**Current state:** Not Started (activates at fieldwork kickoff)
+**Architecture decision (2026-04-25):** Don't force F2 PWA into CSWeb. Instead, build a **thin BI layer above both backends** so ops + DOH see one dashboard while each system stays in its native shape.
 
-**Next milestone:** Dashboard requirements defined before first deployment.
+- **Cross-track BI dashboard** — Looker Studio (or Metabase / Sheets) connects to:
+  - **CAPI side:** CSWeb's PostgreSQL (or its periodic CSV export)
+  - **PWA side:** F2's response sheet / Apps Script-managed DB
+  - Surfaces side-by-side: response counts by region, completion rates, sync lag, disposition breakdowns, daily case counts.
+- **Per-track ops dashboards** continue to exist where useful — CSWeb dashboard for CAPI sync health, F2 admin URL for PWA submission queue — but the BI dashboard is the single stakeholder-facing view.
+- **Hot-fix protocol** — CAPI: new PFF push to tablets; PWA: deploy to staging → verify → merge to main → service-worker auto-updates next session.
+- **Slack-bot automation** (already live for F2) — issue events + daily 09:00 MNL digest + milestone-closed release notes auto-post to `#f2-pwa-uat`. Pattern replicable for CAPI rounds when fieldwork starts.
+- **Issue log** — single GitHub Issues backlog spans both tracks, distinguished by `track:capi` / `track:pwa` labels (or per-instrument labels).
 
-**Ties to:** TOR Duty 8 (prepare survey data dashboard), TOR Duty 9 (technical support during CAPI survey), D4 (progress report on piloting).
+**Current state:** Not Started (activates at CAPI fieldwork kickoff). PWA-side automation scaffolding already in place (workflows + Slack bot live since 2026-04-25).
+
+**Next milestone:** Cross-track BI dashboard scaffolded — pick the BI tool (Looker Studio recommended for low-touch ops + DOH familiarity) and stand up a v0 view backed by mock CSWeb + real F2 data.
+
+**Ties to:** TOR Duty 8 (prepare survey data dashboard), TOR Duty 9 (technical support during CAPI survey), D4 (progress report on piloting), [Section 5: Cross-Track Integration](#5-cross-track-integration).
 
 ---
 
@@ -319,25 +359,51 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 ### Epic 10 — Data Cleaning and Processing
 
-**Covers:** Batch editing pipeline per instrument (structure checks, validity checks, consistency checks, imputation rules where appropriate), CSBatch scripts, edit specifications document, data validation passes on incoming production data, hot-deck imputation strategy, data quality reporting.
+**Covers:** Per-instrument batch editing pipeline, **plus the cross-track harmonization step that produces clean unified analysis-ready output.** Both halves matter; the harmonization is what makes the data actually usable across instruments without per-analysis re-work.
 
-**Current state:** Not Started
+#### 10.A — Per-instrument batch editing
 
-**Next milestone:** Batch edit rules drafted alongside instrument design (rules are derived from validation rules documented in Epic 2).
+- **CAPI track:** CSBatch scripts (structure / validity / consistency / imputation), edit specifications document, hot-deck imputation strategy where appropriate, data quality reporting per instrument.
+- **PWA track:** F2 already enforces structural validity at submit time via Zod schema + `superRefine`, so the post-collection batch step is lighter — primarily consistency checks and imputation for missing optional fields. Same edit-specs document discipline applies.
 
-**Ties to:** D4 (initial data collection report), D6 (edit specifications in final documentation).
+#### 10.B — Cross-track harmonization layer
+
+The **harmonization ETL** is the bridge between raw export and clean analysis-ready dataset. It runs after each batch edit pass and produces both CSV (codebook-driven) and Stata (with labeled values) outputs per instrument, plus a **shared-dimensions table** for cross-instrument joins. See [Section 5: Cross-Track Integration](#5-cross-track-integration) for the data alignment risks and the canonical codebook.
+
+The ETL handles:
+- **Naming normalization** — every column follows `<instrument>_<questionId>` (e.g. `f1_q12`, `f2_q12`) so the same Q-number across instruments doesn't collide downstream.
+- **Yes / No / DK normalization** — CSPro stores 1/2/8 or Y/N; PWA stores literal `'Yes'`/`'No'`/`'I don't know'`. ETL maps both to a canonical `1`/`2`/`8` with consistent labels.
+- **Sex / role / facility-type recoding** — single codebook drives the canonical labels; per-instrument value mismatches caught at ETL time.
+- **PSGC alignment** — every instrument carries `region`, `province`, `city_mun`, `barangay` codes from the same PSGC value-set source; ETL validates conformance.
+- **Date format normalization** — CSPro YYYYMMDD → ISO 8601; PWA already ISO; output uniform.
+- **Missing-vs-skip semantics** — CSPro `NOTAPPL` / `REFUSED` / `DK` and PWA `undefined` (hidden by skip-logic) → unified Stata extended-missing codes (`.a` skipped, `.b` refused, `.c` don't know, `.` truly missing).
+- **`_source_instrument` column** added to every row so cross-instrument concatenation is traceable.
+
+**Current state:** Not Started.
+
+**Next milestone:** Shared codebook + harmonization ETL spec drafted alongside instrument design — see [Section 5: Cross-Track Integration](#5-cross-track-integration). Spec captures every shared dimension, every per-instrument coding decision, every recode rule.
+
+**Ties to:** D4 (initial data collection report), D6 (edit specifications in final documentation), Epic 11 (consumer of the harmonized output).
 
 ---
 
 ### Epic 11 — Analysis Support & Deliverables
 
-**Covers:** Interim tabulation (cross-tabs) for client progress reports during piloting and fieldwork, final dataset exports in multiple formats (CSPro `.dat`, Stata, SPSS, CSV), codebook, edit specifications document, contributions to the final report, policy brief support, dissemination workshop documentation.
+**Covers:** Interim tabulation (cross-tabs) for client progress reports, final dataset exports, codebook, edit specifications document, contributions to the final report, policy brief support, dissemination workshop documentation.
+
+**Output formats** (confirmed 2026-04-25): **CSV + Stata (`.dta` with labeled values)** are the primary delivery formats per instrument. CSPro `.dat` retained for archival of raw CAPI track data. Each output corresponds to one instrument; cross-instrument joins happen in the analysis step using the shared keys defined in [Section 5: Cross-Track Integration](#5-cross-track-integration).
+
+Per-instrument deliverables:
+- **F1 / F3 / F4** — raw `.dat` (archive) + post-CSBatch `.dat` + harmonized CSV + Stata `.dta`
+- **F2** — raw response sheet (JSON / sheet rows; archive) + harmonized CSV + Stata `.dta`
+- **Codebook** — single document covers all four instruments; explicitly names the shared-dimension columns with canonical codes; per-instrument variables follow.
+- **Edit specifications** — per-instrument document, plus a cross-track harmonization rules document (the ETL spec from Epic 10.B).
 
 **Current state:** Not Started
 
 **Next milestone:** Interim tabulation template prepared ahead of D4.
 
-**Ties to:** D4 (progress report with piloting results), D6 (final report, policy briefs, dissemination).
+**Ties to:** D4 (progress report with piloting results), D6 (final report, policy briefs, dissemination), Epic 10.B (harmonization layer is the data source).
 
 ---
 
@@ -365,7 +431,75 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 ---
 
-## 5. Risks & Watchlist
+## 5. Cross-Track Integration
+
+The engagement runs two delivery modes side-by-side: **CAPI** (F1/F3/F4 on CSPro) and **self-admin Web** (F2 on PWA). Each is operationally independent — they deliberately do **not** share infrastructure at runtime. They converge at three coordination points: data export, field operations status reporting, and stakeholder dashboard.
+
+### 5.1 Data field alignment — what aligns and what doesn't
+
+**Honest baseline:** the four instruments have different units of analysis (facility / HCW / patient / household). Most fields are instrument-specific and shouldn't be force-aligned. Cross-instrument value comes from the small set of **shared dimensions** that *do* need to align so joins and stratified analysis are clean.
+
+The risks come from fields that *look* the same across instruments but encode differently — silent merge failures rather than loud schema errors.
+
+#### Shared dimensions (must align across all four instruments)
+
+| Dimension | Why it's shared | Risk if it doesn't align |
+|---|---|---|
+| `region`, `province`, `city_mun`, `barangay` (PSGC codes) | Geographic stratification; every instrument has it | Two instruments using different PSGC vintages → join failures and wrong region rollups |
+| `facility_id`, `facility_type`, `facility_name` | F1's facility is F2's HCW employer is F3's sampling point is F4's PSU linkage | Different facility-id schemes between F1 and F2 → can't link HCWs to facility characteristics |
+| `sex` | All four instruments collect this | F1 uses 1/2 (CSPro); F2 PWA stores `'Male'`/`'Female'` strings — same meaning, different shape |
+| `age` (or `age_group`) | All four | Number vs binned categorical; missing-vs-DK |
+| `role` (HCW only — F1 head + F2 worker) | F1 captures facility head's role; F2 captures HCW's role | Different choice lists; F1 might say "Physician" where F2 says "Physician/Doctor" |
+| `philhealth_status` (F1 head, F2 HCW, F3 patient, F4 HH member) | All four ask | Different categorical encodings per instrument |
+| `informed_consent` (Y/N + timestamp + interviewer/respondent ID) | Required by ethics; format varies by mode | CAPI captures in FIELD_CONTROL block; PWA records implicitly via submission; need a uniform consent-capture column |
+| `survey_date` / `submission_date` | All four | Format consistency (CSPro YYYYMMDD numeric vs PWA ISO 8601) |
+| `interviewer_id` (CAPI) / `respondent_self_id` (PWA) | Source attribution | Different field names, similar semantics |
+| `disposition_code` | Response status | CAPI uses AAPOR codes; PWA uses simpler `submitted` / `partial` / `abandoned` — needs a mapping |
+| `language` (en / fil / others) | Both modes | OK if both capture explicitly; pin from i18n state in PWA, from `setlanguage()` in CSPro |
+
+#### Instrument-specific (do NOT need to align)
+
+The remaining ~95% of each questionnaire — facility staffing tables, HCW satisfaction Likert batteries, patient experience ratings, household roster economics — is meant to stay instrument-specific. Don't try to merge these into a single wide row; analysis joins on the shared keys above and treats the per-instrument fields separately.
+
+### 5.2 Harmonization ETL — where the alignment happens
+
+A small Python (or R) ETL step runs after each batch-edit pass per instrument and produces:
+
+1. **One harmonized CSV per instrument** — columns prefixed `<instrument>_<questionId>` (e.g. `f1_q12`); shared dimensions canonicalized; missing-vs-skip semantics resolved into Stata extended-missing codes.
+2. **One Stata `.dta` per instrument** — same data with labeled values, variable labels, value labels per the codebook.
+3. **One `shared_dimensions.csv`** — long-format table with one row per (instrument, respondent, dimension) — the join layer for cross-instrument analysis.
+
+Owner of the harmonization step lives in **Epic 10.B**; consumer is **Epic 11**. The ETL spec is the artefact you write before fieldwork starts; the actual implementation runs after data lands.
+
+### 5.3 Field operations coordination — two ops, one status report
+
+The two tracks run independent ops:
+
+- **CAPI track:** ASPSI enumerator coordinator owns assignment per facility/cluster, daily progress via CSWeb dashboard, supervisor sign-off per case.
+- **PWA track:** ASPSI ops lead owns URL distribution to facility-level HCW lists, Day 3 / Day 7 reminder protocol for non-completers, response-rate tracking via the F2 backend.
+
+Both feed **one rolled-up daily status report** to ASPSI Mgmt Committee that shows progress on both tracks side-by-side (e.g. "F1: 18/120 facilities complete; F2: 245/600 HCWs responded; F3/F4: not yet open"). The report is a thin daily summary, not a duplicate of either ops team's working dashboard.
+
+### 5.4 Dashboard architecture — BI layer over both backends
+
+Decided 2026-04-25: **don't integrate F2 PWA into CSWeb.** CSWeb is built around CSPro's data model; forcing F2 in means writing a fake `.dcf`, a sync-protocol translator, and a custom CSWeb adapter — significant ongoing tax for no analytical gain.
+
+Instead, build a **Looker Studio dashboard** (recommended for low-touch ops + DOH familiarity; alternatives: Metabase, Google Sheets dashboard) that connects to:
+- **CSWeb's PostgreSQL** (or its periodic CSV export) for the CAPI track
+- **F2's response sheet** (already a Google Sheet) for the PWA track
+
+That gives ASPSI ops + DOH a single dashboard URL showing both tracks in one view (response counts by region, completion rates, sync lag, daily case counts, disposition breakdowns), without forcing F2's architecture into a shape it shouldn't be. Implementation lives in [Epic 8](#epic-8--fieldwork-monitoring-and-quality-control).
+
+### 5.5 Open dependencies
+
+- **Shared codebook** — needs to be authored before any instrument enters production fieldwork. Ideal trigger: F1 sign-off (Sprint 003) — start the codebook from the F1 dimensions, extend as F3/F4 reach Build phase. F2 dimensions retrofitted from current `items.ts` since the PWA is already in production.
+- **Facility master list** — single source for `facility_id`, `facility_type`, PSGC codes; used by F1 (cover block), F2 (facility selection), F3 (PSU sampling), F4 (cluster linkage). ASPSI to provide. Currently F2 PWA uses a placeholder facility list.
+- **PSGC value-set vintage** — pin one PSGC release (e.g. PSA 2023Q4) for the entire engagement; all instruments use the same.
+- **AAPOR ↔ PWA disposition mapping** — small but necessary; document before the harmonization ETL is built.
+
+---
+
+## 6. Risks & Watchlist
 
 | Risk | Likelihood | Impact | Mitigation | Affected Epics |
 |---|---|---|---|---|
@@ -384,7 +518,7 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 ---
 
-## 6. Timeline & Sequencing Strategy
+## 7. Timeline & Sequencing Strategy
 
 1. **Epic 0 runs continuously** from kickoff through closeout — PM, risk, ethics coordination, stakeholder reporting, change management.
 2. **Epic 1 (Inception) is a discrete early phase** — one-time at engagement start. Already closed for this project.
