@@ -19,6 +19,7 @@ import { Button } from '@/components/ui/button';
 import { useLocale } from '@/i18n/locale-context';
 import { localized } from '@/i18n/localized';
 import type { Locale } from '@/i18n/index';
+import { groupVisibleItems, type MatrixGroup } from './group-matrix';
 
 const SECTIONS: SectionModel[] = [
   sectionA,
@@ -104,8 +105,20 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
       ) : null}
 
       {SECTIONS.map((section) => {
-        const rows = section.items.flatMap((item) => rowsForItem(item, values, locale));
-        if (rows.length === 0) return null;
+        const grouped = groupVisibleItems(section.items);
+        type Block = { kind: 'rows'; rows: ReturnType<typeof rowsForItem> } | { kind: 'matrix'; group: MatrixGroup };
+        const blocks: Block[] = [];
+        for (const entry of grouped) {
+          if ('kind' in entry && entry.kind === 'matrix') {
+            // Only include the matrix if at least one row has a value
+            const hasAny = entry.items.some((it) => formatValue(values[it.id]) !== '');
+            if (hasAny) blocks.push({ kind: 'matrix', group: entry });
+          } else {
+            const rows = rowsForItem(entry, values, locale);
+            if (rows.length > 0) blocks.push({ kind: 'rows', rows });
+          }
+        }
+        if (blocks.length === 0) return null;
         return (
           <section key={section.id} className="flex flex-col gap-2">
             <header className="flex items-center justify-between">
@@ -120,12 +133,36 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
               </Button>
             </header>
             <dl className="divide-y divide-slate-200 rounded border border-slate-200">
-              {rows.map((r) => (
-                <div key={r.key} className="grid grid-cols-3 gap-3 px-3 py-2 text-sm">
-                  <dt className="col-span-2 text-slate-700">{r.label}</dt>
-                  <dd className="text-slate-900">{r.value}</dd>
-                </div>
-              ))}
+              {blocks.flatMap((block, blockIdx) =>
+                block.kind === 'matrix'
+                  ? [
+                      <div
+                        key={`m-${blockIdx}`}
+                        className="px-3 py-2"
+                      >
+                        <table className="w-full text-sm">
+                          <tbody>
+                            {block.group.items.map((it) => (
+                              <tr key={it.id}>
+                                <td className="py-1 pr-2 text-slate-700">
+                                  {it.id} {localized(it.label, locale)}
+                                </td>
+                                <td className="py-1 text-slate-900">
+                                  {formatValue(values[it.id])}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>,
+                    ]
+                  : block.rows.map((r) => (
+                      <div key={r.key} className="grid grid-cols-3 gap-3 px-3 py-2 text-sm">
+                        <dt className="col-span-2 text-slate-700">{r.label}</dt>
+                        <dd className="text-slate-900">{r.value}</dd>
+                      </div>
+                    )),
+              )}
             </dl>
           </section>
         );

@@ -74,4 +74,28 @@ describe('<ReviewSection>', () => {
     await user.click(editButtons[0]);
     expect(onEdit).toHaveBeenCalledWith('A');
   });
+
+  it('renders Section G Q75-Q81 as a compact mini-table in review', () => {
+    const values = {
+      Q5: 'Physician/Doctor',
+      Q75: '5',
+      Q76: '4',
+      Q77: '3',
+      Q78: '2',
+      Q79: '1',
+      Q80: '5',
+      Q81: '4',
+    };
+    render(
+      <LocaleProvider>
+        <ReviewSection values={values} onEdit={vi.fn()} onSubmit={vi.fn()} />
+      </LocaleProvider>,
+    );
+    // The mini-table for Q75-Q81 shows the selected values
+    // (one row per item with the value as the second cell)
+    expect(screen.getByText(/Q75/)).toBeInTheDocument();
+    // The selected scale label (5) appears
+    const fives = screen.getAllByText('5');
+    expect(fives.length).toBeGreaterThan(0);
+  });
 });
