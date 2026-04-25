@@ -1,0 +1,83 @@
+name: UAT Slack — Real-time events
+
+on:
+  issues:
+    types: [opened, closed, reopened, labeled]
+  milestone:
+    types: [closed]
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      ISSUE_NUMBER: ${{ github.event.issue.number }}
+      ISSUE_TITLE: ${{ github.event.issue.title }}
+      ISSUE_URL: ${{ github.event.issue.html_url }}
+      ISSUE_USER: ${{ github.event.issue.user.login }}
+      LABEL_NAME: ${{ github.event.label.name }}
+      MILESTONE_TITLE: ${{ github.event.milestone.title }}
+      MILESTONE_URL: ${{ github.event.milestone.html_url }}
+      STAGING_URL: https://5466a539.f2-pwa-staging.pages.dev
+      PROJECT_URL: https://github.com/users/cplreyes/projects/7
+
+    steps:
+      - name: New issue opened
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        run: |
+          payload=$(jq -nc \
+            --arg n "$ISSUE_NUMBER" --arg t "$ISSUE_TITLE" --arg u "$ISSUE_URL" --arg user "$ISSUE_USER" \
+            '{text: ":incoming_envelope: *New UAT issue filed by* `\($user)`: <\($u)|#\($n) \($t)>\n_Triage in progress — labels and severity will be set shortly._"}')
+          curl -sS -X POST -H 'Content-Type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
+
+      - name: Severity critical labeled
+        if: github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'severity:critical'
+        run: |
+          payload=$(jq -nc \
+            --arg n "$ISSUE_NUMBER" --arg t "$ISSUE_TITLE" --arg u "$ISSUE_URL" \
+            '{text: ":rotating_light: *Critical issue:* <\($u)|#\($n) \($t)> — flagged for priority handling."}')
+          curl -sS -X POST -H 'Content-Type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
+
+      - name: Investigation started
+        if: github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'status:investigating'
+        run: |
+          payload=$(jq -nc \
+            --arg n "$ISSUE_NUMBER" --arg t "$ISSUE_TITLE" --arg u "$ISSUE_URL" \
+            '{text: ":mag: *Investigating:* <\($u)|#\($n) \($t)> — root cause analysis in progress."}')
+          curl -sS -X POST -H 'Content-Type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
+
+      - name: Fix shipped, please verify
+        if: github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'status:fixed-pending-verify'
+        run: |
+          payload=$(jq -nc \
+            --arg n "$ISSUE_NUMBER" --arg t "$ISSUE_TITLE" --arg u "$ISSUE_URL" --arg s "$STAGING_URL" \
+            '{text: ":white_check_mark: *Fix shipped to staging — please verify:* <\($u)|#\($n) \($t)>\nStaging URL: \($s)"}')
+          curl -sS -X POST -H 'Content-Type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
+
+      - name: Issue closed
+        if: github.event_name == 'issues' && github.event.action == 'closed'
+        run: |
+          payload=$(jq -nc \
+            --arg n "$ISSUE_NUMBER" --arg t "$ISSUE_TITLE" --arg u "$ISSUE_URL" \
+            '{text: ":dart: *Resolved:* <\($u)|#\($n) \($t)>"}')
+          curl -sS -X POST -H 'Content-Type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
+
+      - name: Issue reopened
+        if: github.event_name == 'issues' && github.event.action == 'reopened'
+        run: |
+          payload=$(jq -nc \
+            --arg n "$ISSUE_NUMBER" --arg t "$ISSUE_TITLE" --arg u "$ISSUE_URL" \
+            '{text: ":arrows_counterclockwise: *Reopened:* <\($u)|#\($n) \($t)> — needs another pass."}')
+          curl -sS -X POST -H 'Content-Type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
+
+      - name: Milestone closed
+        if: github.event_name == 'milestone' && github.event.action == 'closed'
+        run: |
+          payload=$(jq -nc \
+            --arg t "$MILESTONE_TITLE" --arg u "$MILESTONE_URL" --arg p "$PROJECT_URL" \
+            '{text: ":tada: *Milestone complete:* <\($u)|\($t)> — fix batch is done.\nProject board: \($p)"}')
+          curl -sS -X POST -H 'Content-Type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"

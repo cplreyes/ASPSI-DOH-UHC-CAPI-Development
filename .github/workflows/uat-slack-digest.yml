@@ -1,0 +1,31 @@
+name: UAT Slack — Daily digest
+
+on:
+  schedule:
+    # 09:00 Manila time (UTC+8) → 01:00 UTC
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Post even if no active UAT round"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Post UAT digest to Slack
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          ONLY_WHEN_ACTIVE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.force == 'true' && '0' || '1' }}
+        run: |
+          python3 .github/scripts/uat_slack_digest.py

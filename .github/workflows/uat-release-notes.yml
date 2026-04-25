@@ -1,0 +1,52 @@
+name: UAT release notes — milestone closed
+
+on:
+  milestone:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      milestone_title:
+        description: "Milestone title (e.g. 'v1.1.1 — UAT Round 2')"
+        required: true
+
+permissions:
+  contents: write   # to commit CHANGELOG.md and create the release
+  issues: read
+
+jobs:
+  release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Need write access to push the CHANGELOG update back
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate release notes + post to Slack
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TITLE="${{ inputs.milestone_title }}"
+          else
+            TITLE="${{ github.event.milestone.title }}"
+          fi
+          python3 .github/scripts/generate_release_notes.py \
+            --milestone-title "$TITLE" \
+            --update-changelog \
+            --create-release
+
+      - name: Commit CHANGELOG.md if changed
+        run: |
+          if [ -n "$(git status --porcelain CHANGELOG.md 2>/dev/null)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add CHANGELOG.md
+            git commit -m "chore(changelog): add notes for ${{ github.event.milestone.title || inputs.milestone_title }}"
+            git push
+          else
+            echo "No CHANGELOG changes — already up to date."
+          fi
