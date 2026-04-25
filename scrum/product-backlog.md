@@ -492,7 +492,7 @@ That gives ASPSI ops + DOH a single dashboard URL showing both tracks in one vie
 
 ### 5.5 Open dependencies
 
-- **Shared codebook** — needs to be authored before any instrument enters production fieldwork. Ideal trigger: F1 sign-off (Sprint 003) — start the codebook from the F1 dimensions, extend as F3/F4 reach Build phase. F2 dimensions retrofitted from current `items.ts` since the PWA is already in production.
+- **Shared codebook** — **draft v0.1 published 2026-04-25** at `deliverables/data-harmonization/codebook.md`. Covers all 13 cross-instrument dimensions audited against current spec/dcf state. Surfaces 8 open items (15.A–15.H) requiring ASPSI / instrument-design decisions before fieldwork. Codebook will iterate as F1 sign-off lands and F3/F4 Designer passes complete.
 - **Facility master list** — single source for `facility_id`, `facility_type`, PSGC codes; used by F1 (cover block), F2 (facility selection), F3 (PSU sampling), F4 (cluster linkage). ASPSI to provide. Currently F2 PWA uses a placeholder facility list.
 - **PSGC value-set vintage** — pin one PSGC release (e.g. PSA 2023Q4) for the entire engagement; all instruments use the same.
 - **AAPOR ↔ PWA disposition mapping** — small but necessary; document before the harmonization ETL is built.
