@@ -32,3 +32,10 @@ desktop.ini
 # Python bytecode caches
 __pycache__/
 *.pyc
+
+# Editor / IDE local state
+.vscode/
+
+# Cloudflare wrangler local cache
+.wrangler/
+**/.wrangler/
