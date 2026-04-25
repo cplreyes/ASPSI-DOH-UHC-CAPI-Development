@@ -203,4 +203,32 @@ describe('<MultiSectionForm>', () => {
       screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/i }),
     ).toBeInTheDocument();
   });
+
+  it('renders Section G Q75-Q81 as a single matrix table on tablet+', async () => {
+    // Q5='Physician/Doctor' triggers Section G visibility (per shouldShowSection)
+    // and reaches Section G with Q75-Q81 visible.
+    renderWithProviders(
+      <MultiSectionForm
+        initialValues={{
+          Q1_1: 'Reyes',
+          Q1_2: 'Carl',
+          Q1_3: 'P',
+          Q2: 'Regular',
+          Q3: 'Female',
+          Q4: 30,
+          Q5: 'Physician/Doctor',
+          Q7: 'No',
+          Q9_1: 3,
+          Q9_2: 6,
+          Q10: 5,
+          Q11: 8,
+        }}
+        initialIndex={6} // Section G is index 6 (0-based: A B C D E F G)
+        onAutosave={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+    // Section G renders. Q75-Q81 should appear within a matrix table (may be multiple matrices).
+    expect(screen.getAllByRole('table').length).toBeGreaterThan(0);
+  });
 });

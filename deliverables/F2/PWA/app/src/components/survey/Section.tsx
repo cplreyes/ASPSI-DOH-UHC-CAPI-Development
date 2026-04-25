@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { useLocale } from '@/i18n/locale-context';
 import { localized } from '@/i18n/localized';
 import { Question } from './Question';
+import { MatrixQuestion } from './MatrixQuestion';
+import { groupVisibleItems } from './group-matrix';
 
 function stripNulls(values: unknown): unknown {
   if (values === null || values === '') return undefined;
@@ -89,9 +91,17 @@ export function Section<T extends Record<string, unknown>>({
           <p className="text-sm text-muted-foreground">{localized(section.preamble, locale)}</p>
         ) : null}
 
-        {(items ?? section.items).map((item) => (
-          <Question key={item.id} item={item} />
-        ))}
+        {groupVisibleItems(items ?? section.items).map((entry, idx) =>
+          'kind' in entry && entry.kind === 'matrix' ? (
+            <MatrixQuestion
+              key={`matrix-${entry.items[0].id}`}
+              items={entry.items}
+              choices={entry.choices}
+            />
+          ) : (
+            <Question key={entry.id} item={entry} />
+          ),
+        )}
 
         {!hideSubmit ? (
           <div className="pt-4">
