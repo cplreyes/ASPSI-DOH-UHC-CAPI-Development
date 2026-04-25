@@ -91,7 +91,7 @@ export function Section<T extends Record<string, unknown>>({
           <p className="text-sm text-muted-foreground">{localized(section.preamble, locale)}</p>
         ) : null}
 
-        {groupVisibleItems(items ?? section.items).map((entry, idx) =>
+        {groupVisibleItems(items ?? section.items).map((entry) =>
           'kind' in entry && entry.kind === 'matrix' ? (
             <MatrixQuestion
               key={`matrix-${entry.items[0].id}`}
