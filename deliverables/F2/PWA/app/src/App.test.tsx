@@ -4,6 +4,27 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 import { db, type SubmissionRow } from '@/lib/db';
 
+/**
+ * Build a fake JWT shaped like what the Worker would mint. parseClaimsUnsafe in
+ * auth-context only reads `exp` to gate enrollment; signature is never verified
+ * client-side, so a hand-rolled string is sufficient for tests.
+ */
+function makeFakeDeviceToken(overrides: Record<string, unknown> = {}): string {
+  const b64url = (s: string) =>
+    btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const header = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+  const claims = {
+    jti: 'test-jti',
+    tablet_id: 'test-tablet',
+    facility_id: 'F-001',
+    iat: Math.floor(Date.now() / 1000),
+    exp: Math.floor(Date.now() / 1000) + 86400,
+    ...overrides,
+  };
+  const payload = b64url(JSON.stringify(claims));
+  return `${header}.${payload}.fake-signature`;
+}
+
 async function seedEnrollment() {
   if (!db.isOpen()) await db.open();
   await db.facilities.clear();
@@ -23,6 +44,7 @@ async function seedEnrollment() {
     facility_id: 'F-001',
     facility_type: 'Hospital',
     enrolled_at: 1,
+    device_token: makeFakeDeviceToken(),
   });
 }
 

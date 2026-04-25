@@ -1,21 +1,22 @@
+/**
+ * Frontend env access. After the auth re-arch (spec 2026-04-26-f2-pwa-auth-rearch-design.md),
+ * the only secret-shaped value the PWA knows is the device JWT (per-tablet, stored in Dexie).
+ *
+ * VITE_F2_HMAC_SECRET no longer exists — the HMAC is held only by the Cloudflare Worker.
+ */
+
 export interface SyncEnv {
-  backendUrl: string;
-  hmacSecret: string;
+  /** Cloudflare Worker origin, e.g. https://f2-pwa-worker.<account>.workers.dev. Public, fine in bundle. */
+  proxyUrl: string;
 }
 
 export function getSyncEnv(): SyncEnv {
-  const backendUrl = import.meta.env.VITE_F2_BACKEND_URL;
-  const hmacSecret = import.meta.env.VITE_F2_HMAC_SECRET;
+  const proxyUrl = import.meta.env.VITE_F2_PROXY_URL;
 
-  if (!backendUrl) {
+  if (!proxyUrl) {
     throw new Error(
-      'VITE_F2_BACKEND_URL is not set. Copy .env.example to .env.local and fill in the Apps Script /exec URL.',
+      'VITE_F2_PROXY_URL is not set. Copy .env.example to .env.local and fill in the Cloudflare Worker origin.',
     );
   }
-  if (!hmacSecret) {
-    throw new Error(
-      'VITE_F2_HMAC_SECRET is not set. Copy .env.example to .env.local and paste the HMAC secret from the backend ScriptProperties.',
-    );
-  }
-  return { backendUrl, hmacSecret };
+  return { proxyUrl };
 }

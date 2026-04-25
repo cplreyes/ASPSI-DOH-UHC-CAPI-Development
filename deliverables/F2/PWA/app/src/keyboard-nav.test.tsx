@@ -7,7 +7,7 @@ import { AuthProvider } from '@/lib/auth-context';
 import { EnrollmentScreen } from '@/components/enrollment/EnrollmentScreen';
 
 describe('keyboard nav', () => {
-  it('Tab reaches HCW input first', async () => {
+  it('Tab reaches the tablet-token textarea first (Step 1 of enrollment)', async () => {
     const user = userEvent.setup();
     render(
       <I18nextProvider i18n={i18n}>
@@ -17,6 +17,10 @@ describe('keyboard nav', () => {
       </I18nextProvider>,
     );
     await user.tab();
-    expect(document.activeElement?.tagName).toBe('INPUT');
+    // Token paste is the first focusable control after the auth re-arch.
+    expect(document.activeElement?.tagName).toBe('TEXTAREA');
+    expect((document.activeElement as HTMLElement).getAttribute('data-testid')).toBe(
+      'enrollment-token-input',
+    );
   });
 });

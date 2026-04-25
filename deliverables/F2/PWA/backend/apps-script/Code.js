@@ -2,12 +2,7 @@ var PROP_HMAC_SECRET = 'HMAC_SECRET';
 var PROP_SPREADSHEET_ID = 'SPREADSHEET_ID';
 
 function doGet(e) {
-  var action = (e && e.parameter && e.parameter.action) || '';
-  if (action === 'admin') {
-    return HtmlService.createTemplateFromFile('Admin').evaluate()
-      .setTitle('F2 Admin')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.DEFAULT);
-  }
+  // Admin UI moved to the Cloudflare Worker. See worker/src/admin-html.ts.
   return _serve('GET', e);
 }
 

@@ -2,8 +2,7 @@ import '@testing-library/jest-dom/vitest';
 import 'fake-indexeddb/auto';
 import { afterEach } from 'vitest';
 
-import.meta.env.VITE_F2_BACKEND_URL = 'https://test.invalid/exec';
-import.meta.env.VITE_F2_HMAC_SECRET = 'test-secret';
+import.meta.env.VITE_F2_PROXY_URL = 'https://test.invalid';
 
 afterEach(async () => {
   const dbs = await indexedDB.databases();
