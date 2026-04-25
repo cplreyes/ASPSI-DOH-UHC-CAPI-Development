@@ -137,7 +137,7 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
                 block.kind === 'matrix'
                   ? [
                       <div
-                        key={`m-${blockIdx}`}
+                        key={`matrix-${block.group.items[0].id}`}
                         className="px-3 py-2"
                       >
                         <table className="w-full text-sm">
