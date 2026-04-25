@@ -1,0 +1,22 @@
+name = "f2-pwa-worker"
+main = "src/index.ts"
+compatibility_date = "2026-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Secrets (set via `wrangler secret put <NAME>`):
+#   JWT_SIGNING_KEY        - 32-byte random, base64url. Mint with: openssl rand -base64 32 | tr -d '=' | tr '+/' '-_'
+#   APPS_SCRIPT_HMAC       - mirrors the production Apps Script PROP_HMAC_SECRET (rotated at cutover)
+#   ADMIN_PASSWORD_HASH    - PBKDF2-SHA256 hash of the admin password. Format: "<saltB64url>:<iterations>:<hashB64url>"
+#                            Generate via the helper in scripts/hash-admin-password.mjs
+#   APPS_SCRIPT_URL        - https://script.google.com/macros/s/<id>/exec  (production deployment URL)
+
+# KV namespace for revocation list + token audit.
+# Run `wrangler kv:namespace create F2_AUTH` and paste the returned id below.
+[[kv_namespaces]]
+binding = "F2_AUTH"
+id = "REPLACE_ME_WITH_KV_ID"
+preview_id = "REPLACE_ME_WITH_PREVIEW_KV_ID"
+
+# Logs go to the Cloudflare dashboard. Add a logpush destination later if needed.
+[observability]
+enabled = true
