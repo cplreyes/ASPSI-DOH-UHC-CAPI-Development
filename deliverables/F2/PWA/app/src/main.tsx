@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
+import './lib/zod-error-map';
 import { registerSW } from 'virtual:pwa-register';
 
 // Prompt-style SW registration. Full update UX lands in M11.
