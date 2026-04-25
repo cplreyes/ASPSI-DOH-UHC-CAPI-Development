@@ -39,3 +39,6 @@ __pycache__/
 # Cloudflare wrangler local cache
 .wrangler/
 **/.wrangler/
+
+# Superpowers brainstorming session artefacts
+.superpowers/
