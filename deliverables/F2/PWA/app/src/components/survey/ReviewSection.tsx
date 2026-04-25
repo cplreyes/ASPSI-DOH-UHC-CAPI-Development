@@ -132,38 +132,40 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
                 {t('review.edit')}
               </Button>
             </header>
-            <dl className="divide-y divide-slate-200 rounded border border-slate-200">
-              {blocks.flatMap((block) =>
-                block.kind === 'matrix'
-                  ? [
-                      <div
-                        key={`matrix-${block.group.items[0].id}`}
-                        className="px-3 py-2"
-                      >
-                        <table className="w-full text-sm">
-                          <tbody>
-                            {block.group.items.map((it) => (
-                              <tr key={it.id}>
-                                <td className="py-1 pr-2 text-slate-700">
-                                  {it.id} {localized(it.label, locale)}
-                                </td>
-                                <td className="py-1 text-slate-900">
-                                  {formatValue(values[it.id])}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>,
-                    ]
-                  : block.rows.map((r) => (
+            <div className="divide-y divide-slate-200 rounded border border-slate-200">
+              {blocks.map((block, blockIdx) =>
+                block.kind === 'matrix' ? (
+                  <div
+                    key={`matrix-${block.group.items[0].id}`}
+                    className="px-3 py-2"
+                  >
+                    <table className="w-full text-sm">
+                      <tbody>
+                        {block.group.items.map((it) => (
+                          <tr key={it.id}>
+                            <td className="py-1 pr-2 text-slate-700">
+                              {it.id} {localized(it.label, locale)}
+                            </td>
+                            <td className="py-1 text-slate-900">
+                              {formatValue(values[it.id])}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <dl key={`rows-${blockIdx}`} className="divide-y divide-slate-200">
+                    {block.rows.map((r) => (
                       <div key={r.key} className="grid grid-cols-3 gap-3 px-3 py-2 text-sm">
                         <dt className="col-span-2 text-slate-700">{r.label}</dt>
                         <dd className="text-slate-900">{r.value}</dd>
                       </div>
-                    )),
+                    ))}
+                  </dl>
+                ),
               )}
-            </dl>
+            </div>
           </section>
         );
       })}
