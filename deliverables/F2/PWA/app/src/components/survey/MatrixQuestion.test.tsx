@@ -54,8 +54,9 @@ describe('<MatrixQuestion>', () => {
 
   it('renders one row per item with the localised statement text', () => {
     render(<Harness items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]} choices={scale15} />);
-    expect(screen.getByText(/fairness ZBB/)).toBeInTheDocument();
-    expect(screen.getByText(/fairness NBB/)).toBeInTheDocument();
+    // Both desktop table and mobile card render in the DOM; use getAllByText
+    expect(screen.getAllByText(/fairness ZBB/).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByText(/fairness NBB/).length).toBeGreaterThanOrEqual(1);
   });
 
   it('clicking a radio in row Q75 sets only that row\'s value', async () => {
@@ -77,9 +78,10 @@ describe('<MatrixQuestion>', () => {
       );
     }
     render(<CaptureHarness items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]} choices={scale15} />);
-    // Each row's radios share name = item.id; click the "5" radio in row Q75
+    // Each row's radios share name = item.id; desktop + mobile = 10 total for Q75
     const q75Radios = screen.getAllByRole('radio').filter((el) => (el as HTMLInputElement).name === 'Q75');
-    expect(q75Radios).toHaveLength(5);
+    expect(q75Radios).toHaveLength(10);
+    // Click the last "5" radio in the desktop table (index 4)
     await user.click(q75Radios[4]);
     await user.click(screen.getByText('snapshot'));
     expect(captured).toMatchObject({ Q75: '5' });
@@ -110,6 +112,22 @@ describe('<MatrixQuestion>', () => {
       );
     }
     render(<ErrHarness items={[row('Q75', 'A', scale15), row('Q76', 'B', scale15)]} choices={scale15} />);
-    expect(await screen.findByRole('alert')).toHaveTextContent(/required/i);
+    // Both desktop table and mobile card show alerts; check at least one has the message
+    const alerts = await screen.findAllByRole('alert');
+    expect(alerts.length).toBeGreaterThanOrEqual(1);
+    expect(alerts[0]).toHaveTextContent(/required/i);
+  });
+
+  it('renders a stacked card per row alongside the table (responsive)', () => {
+    render(<Harness items={[row('Q75', 'fairness ZBB', scale15)]} choices={scale15} />);
+    // Table is rendered for desktop (hidden on mobile via md:table)
+    expect(screen.getByRole('table')).toBeInTheDocument();
+    // Mobile reflow: an additional radiogroup with the row's accessible name
+    const groups = screen.getAllByRole('radiogroup');
+    expect(groups.length).toBeGreaterThanOrEqual(1);
+    // Statement label appears in mobile block too
+    const statementMatches = screen.getAllByText(/fairness ZBB/);
+    // Once in the table, once in the mobile block
+    expect(statementMatches.length).toBeGreaterThanOrEqual(2);
   });
 });

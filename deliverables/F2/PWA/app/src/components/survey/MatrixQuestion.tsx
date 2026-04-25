@@ -20,7 +20,7 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
 
   return (
     <div className="flex flex-col gap-2 py-3">
-      {/* Desktop / tablet: a real <table>. Hidden on phones via md:table. */}
+      {/* Desktop / tablet (md and up): real <table> */}
       <table className="hidden w-full border-collapse text-sm md:table">
         <thead>
           <tr className="border-b">
@@ -70,6 +70,42 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
           })}
         </tbody>
       </table>
+
+      {/* Mobile (below md): stacked card per row */}
+      <div className="flex flex-col gap-3 md:hidden">
+        {items.map((item) => {
+          const error = errors[item.id];
+          const errorMessage = typeof error?.message === 'string' ? error.message : undefined;
+          const groupId = `${item.id}-statement`;
+          return (
+            <div key={item.id} className="flex flex-col gap-2 border-t pt-3">
+              <p id={groupId} className="text-sm font-medium">
+                <span className="mr-1 text-muted-foreground">{item.id}.</span>
+                {localized(item.label, locale)}
+                {item.required ? <span className="ml-1 text-red-600">*</span> : null}
+              </p>
+              <div role="radiogroup" aria-labelledby={groupId} className="flex flex-wrap gap-3">
+                {choices.map((c) => (
+                  <label key={c.value} className="flex items-center gap-1 text-sm">
+                    <input
+                      type="radio"
+                      value={c.value}
+                      aria-label={`${item.id} ${localized(c.label, locale)}`}
+                      {...register(item.id)}
+                    />
+                    {localized(c.label, locale)}
+                  </label>
+                ))}
+              </div>
+              {errorMessage || error ? (
+                <p role="alert" className="text-xs text-red-600">
+                  {errorMessage ?? t('question.requiredFallback')}
+                </p>
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
