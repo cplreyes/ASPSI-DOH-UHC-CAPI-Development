@@ -26,6 +26,12 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     if (i18n.language !== locale) {
       void i18n.changeLanguage(locale);
     }
+    // Reflect the active locale on <html lang="…"> for screen readers and so any
+    // CSS / browser feature keying on `:lang(...)` updates. Skip when running
+    // in non-DOM environments (vitest happy-dom is fine; node may not have it).
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = locale;
+    }
   }, [locale]);
 
   const setLocale = (next: Locale) => {

@@ -35,7 +35,7 @@ const SyncPage = lazy(() =>
   import('@/components/sync/SyncPage').then((m) => ({ default: m.SyncPage })),
 );
 
-type Status = 'loading' | 'editing' | 'submitted';
+type Status = 'loading' | 'editing' | 'submitted' | 'submit_failed';
 type View = 'form' | 'sync';
 
 const APP_VERSION = __APP_VERSION__;
@@ -123,6 +123,8 @@ function AppShell() {
   const [view, setView] = useState<View>('form');
   const [draftId, setDraftId] = useState<string>('');
   const [initialValues, setInitialValues] = useState<FormValues>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [pendingValuesRef, setPendingValuesRef] = useState<FormValues | null>(null);
   const runSyncRef = useRef<() => Promise<SyncRunSummary>>(noopRunSync);
 
   const enrollmentInfo: EnrollmentInfo | null = useMemo(
@@ -183,13 +185,43 @@ function AppShell() {
   };
 
   const handleSubmit = async (values: FormValues) => {
-    if (!draftId || !enrollmentInfo) return;
-    if (runtimeConfig.kill_switch) return;
-    if (specDrift) return;
-    await saveDraft(draftId, values, enrollmentInfo);
-    await submitDraft(draftId, enrollmentInfo);
-    setStatus('submitted');
-    void runSyncRef.current();
+    if (!draftId || !enrollmentInfo) {
+      console.warn('[F2] submit blocked: missing draftId or enrollment');
+      return;
+    }
+    if (runtimeConfig.kill_switch) {
+      console.warn('[F2] submit blocked: kill_switch active');
+      setSubmitError(t('chrome.submitBlockedKillSwitch'));
+      setPendingValuesRef(values);
+      setStatus('submit_failed');
+      return;
+    }
+    if (specDrift) {
+      console.warn('[F2] submit blocked: spec_version drift');
+      setSubmitError(t('chrome.submitBlockedSpecDrift'));
+      setPendingValuesRef(values);
+      setStatus('submit_failed');
+      return;
+    }
+    try {
+      await saveDraft(draftId, values, enrollmentInfo);
+      await submitDraft(draftId, enrollmentInfo);
+      setSubmitError(null);
+      setPendingValuesRef(null);
+      setStatus('submitted');
+      void runSyncRef.current();
+    } catch (err) {
+      console.error('[F2] submit failed:', err);
+      setSubmitError(t('chrome.submitFailedBody'));
+      setPendingValuesRef(values);
+      setStatus('submit_failed');
+    }
+  };
+
+  const handleRetrySubmit = () => {
+    if (pendingValuesRef) {
+      void handleSubmit(pendingValuesRef);
+    }
   };
 
   return (
@@ -236,6 +268,27 @@ function AppShell() {
         <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
           <h2 className="text-2xl font-semibold">{t('chrome.thankYouHeading')}</h2>
           <p className="text-sm text-muted-foreground">{t('chrome.thankYouBody')}</p>
+          <div className="flex items-center gap-3">
+            <Button variant="outline" size="sm" onClick={() => setView('sync')}>
+              {t('sync.viewQueue')}
+            </Button>
+            <PendingCount />
+          </div>
+        </section>
+      ) : status === 'submit_failed' ? (
+        <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
+          <h2 className="text-2xl font-semibold text-red-700">
+            {t('chrome.submitFailedHeading')}
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            {submitError ?? t('chrome.submitFailedBody')}
+          </p>
+          <div className="flex items-center gap-3">
+            <Button onClick={handleRetrySubmit}>{t('chrome.submitFailedRetry')}</Button>
+            <Button variant="outline" onClick={() => setStatus('editing')}>
+              {t('review.edit')}
+            </Button>
+          </div>
         </section>
       ) : (
         <MultiSectionForm

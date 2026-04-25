@@ -29,7 +29,7 @@ import {
   sectionISchema,
   sectionJSchema,
 } from '@/generated/schema';
-import { shouldShow, type FormValues } from '@/lib/skip-logic';
+import { shouldShow, shouldShowSection, type FormValues } from '@/lib/skip-logic';
 import { Section } from './Section';
 import { ProgressBar } from './ProgressBar';
 import { ReviewSection } from './ReviewSection';
@@ -76,7 +76,11 @@ function getSectionStatus(section: SectionConfig, values: FormValues): SectionSt
   const allRequiredFilled = visibleItems.every((it) => {
     if (!it.required) return true;
     if (it.type === 'multi-field' && it.subFields) {
-      return it.subFields.every((sf) => hasValue(values[sf.id]));
+      // A subfield is required only if the parent is required AND its own required
+      // flag isn't explicitly false. Optional subfields don't block completion.
+      return it.subFields.every(
+        (sf) => sf.required === false || hasValue(values[sf.id]),
+      );
     }
     return hasValue(values[it.id]);
   });
@@ -129,6 +133,19 @@ export function MultiSectionForm({
     () => SECTIONS.map((s) => getSectionStatus(s, merged)),
     [merged],
   );
+
+  const visibleSectionEntries = useMemo(
+    () => SECTIONS.reduce<Array<{ config: SectionConfig; originalIndex: number }>>(
+      (acc, s, i) => {
+        if (shouldShowSection(s.id, merged)) acc.push({ config: s, originalIndex: i });
+        return acc;
+      },
+      [],
+    ),
+    [merged],
+  );
+
+  const visibleIndex = visibleSectionEntries.findIndex((e) => e.originalIndex === index);
 
   const visibleItems: Item[] = useMemo(() => {
     if (!current) return [];
@@ -193,7 +210,10 @@ export function MultiSectionForm({
   const handleSectionValid = (values: FormValues) => {
     const next = { ...merged, ...values };
     setMerged(next);
-    const nextIndex = index + 1;
+    let nextIndex = index + 1;
+    while (nextIndex < SECTIONS.length && !shouldShowSection(SECTIONS[nextIndex]!.id, next)) {
+      nextIndex++;
+    }
     setMaxVisitedIndex((prev) => Math.max(prev, nextIndex));
     directionRef.current = 'forward';
     setAnimKey((k) => k + 1);
@@ -203,9 +223,13 @@ export function MultiSectionForm({
 
   const handlePrev = () => {
     if (isFirst) return;
+    let prevIndex = index - 1;
+    while (prevIndex > 0 && !shouldShowSection(SECTIONS[prevIndex]!.id, merged)) {
+      prevIndex--;
+    }
     directionRef.current = 'back';
     setAnimKey((k) => k + 1);
-    setIndex(index - 1);
+    setIndex(prevIndex);
     window.scrollTo(0, 0);
   };
 
@@ -263,11 +287,11 @@ export function MultiSectionForm({
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex lg:flex-col lg:w-56 lg:shrink-0 lg:border-r lg:sticky lg:top-0 lg:self-start lg:h-screen lg:overflow-y-auto">
         <SectionTree
-          sections={SECTIONS}
-          currentIndex={index}
-          statuses={sectionStatuses}
-          maxVisitedIndex={maxVisitedIndex}
-          onNavigate={handleNavigate}
+          sections={visibleSectionEntries.map((e) => e.config)}
+          currentIndex={visibleIndex}
+          statuses={visibleSectionEntries.map((e) => sectionStatuses[e.originalIndex]!)}
+          maxVisitedIndex={visibleSectionEntries.filter((e) => e.originalIndex <= maxVisitedIndex).length - 1}
+          onNavigate={(i) => handleNavigate(visibleSectionEntries[i]!.originalIndex)}
         />
       </aside>
 
@@ -286,11 +310,11 @@ export function MultiSectionForm({
             onClick={(e) => e.stopPropagation()}
           >
             <SectionTree
-              sections={SECTIONS}
-              currentIndex={index}
-              statuses={sectionStatuses}
-              maxVisitedIndex={maxVisitedIndex}
-              onNavigate={(i) => { handleNavigate(i); setDrawerOpen(false); }}
+              sections={visibleSectionEntries.map((e) => e.config)}
+              currentIndex={visibleIndex}
+              statuses={visibleSectionEntries.map((e) => sectionStatuses[e.originalIndex]!)}
+              maxVisitedIndex={visibleSectionEntries.filter((e) => e.originalIndex <= maxVisitedIndex).length - 1}
+              onNavigate={(i) => { handleNavigate(visibleSectionEntries[i]!.originalIndex); setDrawerOpen(false); }}
               onClose={() => setDrawerOpen(false)}
             />
           </aside>
@@ -348,7 +372,7 @@ export function MultiSectionForm({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <ProgressBar current={index + 1} total={SECTIONS.length} className="flex-1 px-0 pt-0" />
+            <ProgressBar current={visibleIndex + 1} total={visibleSectionEntries.length} className="flex-1 px-0 pt-0" />
             {/* Save Draft — upper right */}
             <button
               type="button"

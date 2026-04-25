@@ -26,25 +26,33 @@ describe('shouldShow', () => {
 
   describe('Section B', () => {
     it('hides Q14 when Q13 is a No variant', () => {
-      expect(shouldShow('B', 'Q14', { Q13: 'No, and no plans in next 1–2 years' })).toBe(false);
+      expect(shouldShow('B', 'Q14', { Q12: 'Yes', Q13: 'No, and no plans in next 1–2 years' })).toBe(false);
     });
 
-    it('shows Q14 when Q13 starts with Yes', () => {
-      expect(shouldShow('B', 'Q14', { Q13: 'Yes, direct result of UHC Act' })).toBe(true);
+    it('shows Q14 when Q12 is Yes and Q13 starts with Yes', () => {
+      expect(shouldShow('B', 'Q14', { Q12: 'Yes', Q13: 'Yes, direct result of UHC Act' })).toBe(true);
     });
 
     it('hides Q14 when Q13 is unanswered', () => {
-      expect(shouldShow('B', 'Q14', {})).toBe(false);
+      expect(shouldShow('B', 'Q14', { Q12: 'Yes' })).toBe(false);
+    });
+
+    it('hides Q14 when Q12 is No (entire Q13–Q30 block hidden)', () => {
+      expect(shouldShow('B', 'Q14', { Q12: 'No', Q13: 'Yes, direct result of UHC Act' })).toBe(false);
     });
   });
 
   describe('Section C', () => {
     it('hides Q36 when Q34 is not Yes', () => {
-      expect(shouldShow('C', 'Q36', { Q34: 'No' })).toBe(false);
+      expect(shouldShow('C', 'Q36', { Q31: 'Yes', Q34: 'No' })).toBe(false);
     });
 
-    it('shows Q36 when Q34 is Yes', () => {
-      expect(shouldShow('C', 'Q36', { Q34: 'Yes' })).toBe(true);
+    it('shows Q36 when Q31 is Yes and Q34 is Yes', () => {
+      expect(shouldShow('C', 'Q36', { Q31: 'Yes', Q34: 'Yes' })).toBe(true);
+    });
+
+    it('hides Q36 when Q31 is No (entire Q32–Q40 block hidden)', () => {
+      expect(shouldShow('C', 'Q36', { Q31: 'No', Q34: 'Yes' })).toBe(false);
     });
   });
 

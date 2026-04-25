@@ -53,7 +53,7 @@ export function Section<T extends Record<string, unknown>>({
 
   const methods = useForm<T>({
     resolver,
-    mode: 'onSubmit',
+    mode: 'onChange',
     ...(defaultValues ? { defaultValues } : {}),
   });
 

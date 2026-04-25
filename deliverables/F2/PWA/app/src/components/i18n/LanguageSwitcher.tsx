@@ -7,23 +7,40 @@ export function LanguageSwitcher() {
   const { locale, setLocale } = useLocale();
 
   return (
-    <div className="flex items-center gap-1" role="group" aria-label={t('language.label')}>
+    <div
+      className="flex items-center gap-1"
+      role="group"
+      aria-label={t('language.label')}
+      data-testid="language-switcher"
+    >
       <Button
         size="sm"
         variant={locale === 'en' ? 'default' : 'outline'}
         aria-pressed={locale === 'en'}
+        aria-label={t('language.en')}
         onClick={() => setLocale('en')}
+        className={locale === 'en' ? 'font-bold ring-2 ring-primary/40' : ''}
       >
-        {t('language.en')}
+        EN
       </Button>
       <Button
         size="sm"
         variant={locale === 'fil' ? 'default' : 'outline'}
         aria-pressed={locale === 'fil'}
+        aria-label={t('language.fil')}
         onClick={() => setLocale('fil')}
+        className={locale === 'fil' ? 'font-bold ring-2 ring-primary/40' : ''}
       >
-        {t('language.fil')}
+        FIL
       </Button>
+      <span
+        role="status"
+        aria-live="polite"
+        className="sr-only"
+        data-testid="active-locale"
+      >
+        {locale === 'en' ? t('language.en') : t('language.fil')}
+      </span>
     </div>
   );
 }

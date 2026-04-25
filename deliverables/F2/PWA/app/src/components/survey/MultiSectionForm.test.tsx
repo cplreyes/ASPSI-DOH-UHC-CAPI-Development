@@ -17,7 +17,8 @@ describe('<MultiSectionForm>', () => {
     expect(
       screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Section 1 of 10/)).toBeInTheDocument();
+    // Section G is hidden when Q5 is not a prescribing role (or unset), so total visible = 9
+    expect(screen.getByText(/Section 1 of 9/)).toBeInTheDocument();
   });
 
   it('blocks Next when Section A validation fails and advances when it passes', async () => {
@@ -46,7 +47,8 @@ describe('<MultiSectionForm>', () => {
     await waitFor(() =>
       expect(screen.getByRole('heading', { name: /Section B/ })).toBeInTheDocument(),
     );
-    expect(screen.getByText(/Section 2 of 10/)).toBeInTheDocument();
+    // Q5='Nurse' is not a prescribing role → Section G hidden → 9 visible sections total
+    expect(screen.getByText(/Section 2 of 9/)).toBeInTheDocument();
   });
 
   it('applies intra-section skip logic — Q8 appears when Q7 = Yes', async () => {

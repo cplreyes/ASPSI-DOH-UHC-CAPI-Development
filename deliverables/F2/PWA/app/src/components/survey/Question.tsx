@@ -1,8 +1,9 @@
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, type FieldErrors } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocale } from '@/i18n/locale-context';
 import { localized } from '@/i18n/localized';
 import type { Locale } from '@/i18n/index';
+import { filterChoices } from '@/lib/skip-logic';
 import type { Item } from '@/types/survey';
 
 interface QuestionProps {
@@ -18,9 +19,13 @@ export function Question({ item }: QuestionProps) {
     formState: { errors },
   } = useFormContext();
   const currentValue = watch(item.id);
+  const allValues = watch();
+  const visibleChoices = item.choices
+    ? filterChoices(item.section, item.id, allValues, item.choices)
+    : undefined;
   const showSpecify =
     (item.hasOtherSpecify &&
-      item.choices?.some((c) => {
+      visibleChoices?.some((c) => {
         if (!c.isOtherSpecify) return false;
         if (Array.isArray(currentValue)) return currentValue.includes(c.value);
         return c.value === currentValue;
@@ -39,7 +44,7 @@ export function Question({ item }: QuestionProps) {
       {item.help ? (
         <p className="text-xs text-muted-foreground">{localized(item.help, locale)}</p>
       ) : null}
-      {renderControl(item, register, showSpecify, t, locale)}
+      {renderControl(item, register, showSpecify, t, locale, errors, visibleChoices)}
       {errorMessage ? (
         <p role="alert" className="text-xs text-red-600">
           {errorMessage}
@@ -53,13 +58,26 @@ export function Question({ item }: QuestionProps) {
   );
 }
 
+// Block characters HTML5 number inputs accept but we don't want for survey integers
+// (e.g. age, months, days): scientific notation `e`/`E`, sign `+`/`-`, decimal `.`.
+// Survey items expect non-negative integers; min/max are enforced separately by Zod.
+function blockNonNumericKeys(event: React.KeyboardEvent<HTMLInputElement>) {
+  if (['e', 'E', '+', '-', '.'].includes(event.key)) {
+    event.preventDefault();
+  }
+}
+
 function renderControl(
   item: Item,
   register: ReturnType<typeof useFormContext>['register'],
   showSpecify: boolean,
   t: ReturnType<typeof useTranslation>['t'],
   locale: Locale,
+  errors: FieldErrors,
+  visibleChoices?: Item['choices'],
 ) {
+  // Use filtered choices if provided (e.g., A.Q6 specialty narrowed by Q5 role).
+  const choices = visibleChoices ?? item.choices;
   switch (item.type) {
     case 'short-text':
       return (
@@ -86,6 +104,8 @@ function renderControl(
           type="number"
           min={item.min}
           max={item.max}
+          inputMode="numeric"
+          onKeyDown={blockNonNumericKeys}
           className="rounded border border-input bg-background px-3 py-2"
           {...register(item.id)}
         />
@@ -94,7 +114,7 @@ function renderControl(
       return (
         <div className="flex flex-col gap-1">
           <fieldset className="flex flex-col gap-1">
-            {item.choices?.map((choice, idx) => (
+            {choices?.map((choice, idx) => (
               <label key={choice.value} className="flex items-center gap-2 text-sm">
                 <input
                   type="radio"
@@ -125,7 +145,7 @@ function renderControl(
       return (
         <div className="flex flex-col gap-1">
           <fieldset className="flex flex-col gap-1">
-            {item.choices?.map((choice, idx) => (
+            {choices?.map((choice, idx) => (
               <label key={choice.value} className="flex items-center gap-2 text-sm">
                 <input
                   type="checkbox"
@@ -164,19 +184,38 @@ function renderControl(
     case 'multi-field':
       return (
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-          {item.subFields?.map((sf) => (
-            <div key={sf.id} className="flex flex-col gap-1">
-              <label htmlFor={sf.id} className="text-xs text-muted-foreground">
-                {localized(sf.label, locale)}
-              </label>
-              <input
-                id={sf.id}
-                type={sf.kind === 'number' ? 'number' : 'text'}
-                className="rounded border border-input bg-background px-3 py-2"
-                {...register(sf.id)}
-              />
-            </div>
-          ))}
+          {item.subFields?.map((sf) => {
+            const sfError = errors[sf.id];
+            const sfErrorMessage =
+              typeof sfError?.message === 'string' ? sfError.message : undefined;
+            return (
+              <div key={sf.id} className="flex flex-col gap-1">
+                <label htmlFor={sf.id} className="text-xs text-muted-foreground">
+                  {localized(sf.label, locale)}
+                </label>
+                <input
+                  id={sf.id}
+                  type={sf.kind === 'number' ? 'number' : 'text'}
+                  min={sf.min}
+                  max={sf.max}
+                  {...(sf.kind === 'number'
+                    ? { inputMode: 'numeric', onKeyDown: blockNonNumericKeys }
+                    : {})}
+                  className="rounded border border-input bg-background px-3 py-2"
+                  {...register(sf.id)}
+                />
+                {sfErrorMessage ? (
+                  <p role="alert" className="text-xs text-red-600">
+                    {sfErrorMessage}
+                  </p>
+                ) : sfError ? (
+                  <p role="alert" className="text-xs text-red-600">
+                    {t('question.requiredFallback')}
+                  </p>
+                ) : null}
+              </div>
+            );
+          })}
         </div>
       );
   }

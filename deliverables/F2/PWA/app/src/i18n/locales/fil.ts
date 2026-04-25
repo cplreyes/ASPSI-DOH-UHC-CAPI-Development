@@ -13,6 +13,13 @@ export const fil: EnBundle = {
     syncView: 'Sync',
     thankYouHeading: 'Thank you',
     thankYouBody: 'Your response is saved on this device and will sync when the app is online.',
+    submitFailedHeading: 'Submission failed',
+    submitFailedBody:
+      'Your response could not be saved. Tap retry to try again. If the problem persists, your draft is still on the previous screen.',
+    submitFailedRetry: 'Retry',
+    submitBlockedKillSwitch:
+      'Submissions are temporarily paused by the administrator. Your progress is saved locally and will sync when submissions resume.',
+    submitBlockedSpecDrift: 'A required app update is available. Please reload before submitting.',
     killSwitchTitle: 'Submissions temporarily paused',
     killSwitchBody:
       'The administrator has paused submissions. Your progress is saved locally and will sync when submissions resume.',
@@ -68,6 +75,7 @@ export const fil: EnBundle = {
   sync: {
     heading: 'Sync',
     none: 'No submissions yet.',
+    viewQueue: 'View pending submissions',
     runButton: 'Sync now',
     runningButton: 'Syncing…',
     syncedSummary: 'Synced {{count}}',
