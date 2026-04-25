@@ -37,16 +37,18 @@ jobs:
           python3 .github/scripts/generate_release_notes.py \
             --milestone-title "$TITLE" \
             --update-changelog \
+            --update-package-json \
             --create-release
 
-      - name: Commit CHANGELOG.md if changed
+      - name: Commit CHANGELOG + package.json bump if changed
         run: |
-          if [ -n "$(git status --porcelain CHANGELOG.md 2>/dev/null)" ]; then
+          PACKAGE_JSON=deliverables/F2/PWA/app/package.json
+          if [ -n "$(git status --porcelain CHANGELOG.md $PACKAGE_JSON 2>/dev/null)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add CHANGELOG.md
-            git commit -m "chore(changelog): add notes for ${{ github.event.milestone.title || inputs.milestone_title }}"
+            git add CHANGELOG.md $PACKAGE_JSON
+            git commit -m "chore(release): ${{ github.event.milestone.title || inputs.milestone_title }} — sync CHANGELOG + version"
             git push
           else
-            echo "No CHANGELOG changes — already up to date."
+            echo "No CHANGELOG / package.json changes — already up to date."
           fi

@@ -43,6 +43,17 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 CHANGELOG = ROOT / "CHANGELOG.md"
+PACKAGE_JSON = ROOT / "deliverables" / "F2" / "PWA" / "app" / "package.json"
+
+# Versioning policy (documented here for reference and applied by --update-package-json):
+# The milestone TITLE is the source of truth for the release version. The CI workflow
+# parses the leading `vX.Y.Z` token and writes it into package.json so that the F2 PWA
+# header (built from `pkg.version`) always reflects the latest closed milestone. There
+# is no automatic semver bump derivation — choosing the right MAJOR/MINOR/PATCH is the
+# milestone author's job:
+#   - PATCH (vX.Y.Z+1): bug-fix-only milestone (e.g. UAT round addressing reported defects)
+#   - MINOR (vX.Y+1.0): backwards-compatible features added
+#   - MAJOR (vX+1.0.0): breaking changes (rare for this project)
 
 SECTION_LABELS = {
     "Fixed": ("type:bug", "type:validation", "type:skip-logic", "type:sync", "type:i18n", "bug"),
@@ -207,6 +218,34 @@ CHANGELOG_INTRO = (
 )
 
 
+VERSION_FROM_TITLE = re.compile(r"v(\d+\.\d+\.\d+)")
+
+
+def update_package_json(milestone_title: str) -> bool:
+    """Write the milestone's version into the F2 PWA package.json.
+
+    Returns True if the file was changed (so the caller knows to commit it).
+    """
+    match = VERSION_FROM_TITLE.search(milestone_title)
+    if not match:
+        print(f"No vX.Y.Z token in milestone title — skipping package.json bump.", file=sys.stderr)
+        return False
+    version = match.group(1)
+    if not PACKAGE_JSON.exists():
+        print(f"package.json not found at {PACKAGE_JSON}; skipping bump.", file=sys.stderr)
+        return False
+    text = PACKAGE_JSON.read_text(encoding="utf-8")
+    new_text, n = re.subn(r'("version"\s*:\s*")[^"]+(")', rf"\g<1>{version}\g<2>", text, count=1)
+    if n == 0:
+        print("No `version` field in package.json; leaving file alone.", file=sys.stderr)
+        return False
+    if new_text == text:
+        return False
+    PACKAGE_JSON.write_text(new_text, encoding="utf-8")
+    print(f"Bumped package.json version -> {version}")
+    return True
+
+
 def update_changelog(entry_md: str) -> None:
     """Prepend `entry_md` above any existing `## ` entries, keeping the intro intact.
     Idempotent: a duplicate heading is detected and the file is left unchanged."""
@@ -271,6 +310,7 @@ def main() -> int:
     parser.add_argument("--milestone-title")
     parser.add_argument("--milestone-number", type=int)
     parser.add_argument("--update-changelog", action="store_true")
+    parser.add_argument("--update-package-json", action="store_true")
     parser.add_argument("--create-release", action="store_true")
     parser.add_argument("--skip-slack", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
@@ -296,6 +336,9 @@ def main() -> int:
 
     if args.update_changelog and not args.dry_run:
         update_changelog(md)
+
+    if args.update_package_json and not args.dry_run:
+        update_package_json(milestone["title"])
 
     blocks = build_slack_blocks(milestone, issues, release_url)
     if args.dry_run:
