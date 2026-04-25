@@ -1,7 +1,7 @@
 ---
 project: UHC Survey Year 2 — CAPI Development
 artifact: Shared Codebook (cross-instrument harmonization spec)
-version: 0.1 (draft, 2026-04-25)
+version: 0.2 (draft, 2026-04-25)
 status: draft
 owners: Carl Patrick L. Reyes (data programmer)
 covers: F1 Facility Head, F2 Healthcare Worker (PWA), F3 Patient, F4 Household
@@ -255,12 +255,12 @@ F3 and F4 already use identical codes — passthrough. F1 / F2 do not collect em
 |---|---|---|
 | F1 | `CONSENT_GIVEN` (FIELD_CONTROL) | numeric `1` / `2`; if `2` → ENUM_RESULT = Refused, interview ends |
 | F2 | not stored as a survey item — implicit click-through | refusal redirects out before any data is captured (see open item §15.B) |
-| F3 | not found in F3 spec / dcf grep | gate is procedural; consent not captured as data field (see §15.B) |
-| F4 | not found in F4 spec / dcf grep | gate is procedural; consent not captured as data field (see §15.B) |
+| F3 | `CONSENT_GIVEN` (FIELD_CONTROL) ✓ verified 2026-04-25 | numeric `1` / `2`; same shape as F1 |
+| F4 | `CONSENT_GIVEN` (FIELD_CONTROL) ✓ verified 2026-04-25 | numeric `1` / `2`; same shape as F1 |
 
-**Alignment risk**: only F1 has an auditable consent record. Others treat consent as a precondition for the row to exist. For ethics-board audit purposes, this asymmetry is awkward.
+**Alignment risk**: F1 / F3 / F4 all capture consent identically. **Only F2 PWA lacks an explicit consent field** — refusal in F2 means the user never reaches the form (no row created), so there's no audit trail of who declined.
 
-**Open item §15.B**: should F2 / F3 / F4 add an explicit `consent_given` field? Recommend yes — adds one item, gives audit parity with F1, and lets analysts filter on consent without scanning external logs.
+**Open item §15.B (narrowed)**: should F2 add an explicit `consent_given` field for audit parity? Recommend yes — captures explicit refusal (instead of just "no row exists"), enables ethics-board audit symmetry, and is a small PWA change (a checkbox + a submission-payload field). F3 / F4 already aligned with F1.
 
 ---
 
@@ -277,14 +277,14 @@ F3 and F4 already use identical codes — passthrough. F1 / F2 do not collect em
 
 | Instrument | Source | Recode |
 |---|---|---|
-| F1 | `DATE_STARTED` (YYYYMMDD numeric) + `TIME_STARTED` (HHMMSS numeric) → `survey_started_at`; `DATE_OF_FINAL_VISIT_TO_THE_FACILITY` + visit time → `survey_submitted_at` | concatenate + parse to ISO; F1's multi-visit model means `survey_submitted_at` = final visit date |
+| F1 | `DATE_STARTED` (YYYYMMDD numeric) + `TIME_STARTED` (HHMMSS numeric) → `survey_started_at`; `DATE_FIRST_VISITED_THE_FACILITY` + `DATE_OF_FINAL_VISIT_TO_THE_FACILITY` for multi-visit; the final-visit date → `survey_submitted_at` | concatenate + parse to ISO; F1's multi-visit model means `survey_submitted_at` = final visit date |
 | F2 | client-side timestamp at submit (PWA) + server-side receipt timestamp at Apps Script | use server-side receipt as `survey_submitted_at` for authoritative ordering |
-| F3 | not found in F3 dcf grep — see §15.C | (assume backend submission log; needs verification) |
-| F4 | not found in F4 dcf grep — see §15.C | (assume backend submission log; needs verification) |
+| F3 | `DATE_STARTED` + `TIME_STARTED` (FIELD_CONTROL) ✓ verified 2026-04-25; multi-visit also supported via `DATE_FIRST_VISITED` + `DATE_FINAL_VISIT` | same recode as F1 |
+| F4 | `DATE_STARTED` + `TIME_STARTED` (FIELD_CONTROL) ✓ verified 2026-04-25; multi-visit also supported via `DATE_FIRST_VISITED` + `DATE_FINAL_VISIT` | same recode as F1 |
 
-**Alignment risk**: F1 uniquely supports multi-visit interviews (revisit a facility days later). F2 / F3 / F4 are single-session. Treat F1's `survey_submitted_at` as "final-visit date" semantically; treat F2 / F3 / F4's as "single-session submit date".
+**Alignment risk** (revised 2026-04-25): all three CAPI instruments (F1 / F3 / F4) support multi-visit interviews and capture both first-visit and final-visit dates. **Only F2 PWA is single-session** — its `survey_submitted_at` is one timestamp from the Apps Script receipt log. The asymmetry is intentional: a self-admin web form completed in one sitting doesn't need multi-visit semantics.
 
-**Open item §15.C**: confirm F3 / F4 dcf actually has explicit start/submit datetime fields. The audit found no grep hits — may be implicit only.
+**Open item §15.C — RESOLVED 2026-04-25**: F3 and F4 dcfs both have `DATE_STARTED`, `TIME_STARTED`, `DATE_FIRST_VISITED`, and `DATE_FINAL_VISIT`. No new fields needed.
 
 ---
 
@@ -334,11 +334,23 @@ F3 and F4 already use identical codes — passthrough. F1 / F2 do not collect em
 | Instrument | Source | Recode |
 |---|---|---|
 | F1 | `AAPOR_DISPOSITION` (FIELD_CONTROL) | passthrough |
-| F2 | not currently captured — only implicit `submitted` vs `pending_sync` (see §15.D) | derive from submission status: `synced` → `110`; `pending_sync` for >48h → `120`; abandoned draft → `220` |
-| F3 | assumed `AAPOR_DISPOSITION`; verify in dcf | passthrough |
-| F4 | assumed `AAPOR_DISPOSITION`; verify in dcf | passthrough |
+| F2 | not currently captured as a survey item — derive from joined distribution-list × IndexedDB-state × submission-row data (see derivation rule below) | apply derivation rule at ETL time |
+| F3 | `AAPOR_DISPOSITION` (FIELD_CONTROL) ✓ verified 2026-04-25 | passthrough |
+| F4 | `AAPOR_DISPOSITION` (FIELD_CONTROL) ✓ verified 2026-04-25 | passthrough |
 
-**Open item §15.D**: F2 has no AAPOR field. Either add one (manual classifier in admin dashboard for non-completed submissions) or document the derivation rule the ETL applies.
+**Open item §15.D — RESOLVED 2026-04-25 (Carl-owned)**: ETL derivation rule for F2, applied at harmonization time over the joined `(distribution_list × submission_row)`:
+
+| Observed state | AAPOR code | Label |
+|---|---|---|
+| Submission row exists, `status='synced'` | `110` | Complete |
+| Submission row exists, never reached `synced` (stuck >48h in `pending_sync` or `retry_scheduled`) | `120` | Partial / break-off — sync issue, not respondent issue, but treated as partial for analytical conservatism |
+| HCW in distribution list, draft exists in IndexedDB but never submitted, last update <24h | `000` | In progress |
+| HCW in distribution list, draft exists, last update 24h–7d | `230` | Other eligible non-interview (likely abandoned but within return-window) |
+| HCW in distribution list, draft exists, last update ≥7d | `220` | Non-contact / abandoned |
+| HCW in distribution list, no draft, no submission | `220` | Non-contact (never opened the form) |
+| Explicit refusal flag | `210` | Refusal — respondent (only available if §15.B is implemented; until then, refusals are indistinguishable from non-contact) |
+
+The "draft last update" timestamp is observable from the F2 admin dashboard's IndexedDB-replicated state, which we'll need to expose in the response sheet (small Apps Script change to record `draft_last_updated_at` on each interim submission attempt — call it §15.D.1 if scoped as a follow-up).
 
 ---
 
@@ -354,12 +366,14 @@ F3 and F4 already use identical codes — passthrough. F1 / F2 do not collect em
 
 | Instrument | Source | Notes |
 |---|---|---|
-| F1 | not currently captured | implicit from CSPro form's `setlanguage()` call; recommend adding `LANGUAGE_USED` to FIELD_CONTROL (§15.E) |
-| F2 | not currently captured as item | available at runtime via `useLocale()`; auto-inject into submission payload as `survey_language` (§15.E) |
-| F3 | not currently captured | same as F1 — recommend adding |
-| F4 | not currently captured | same as F1 — recommend adding |
+| F1 | not currently captured | implicit from CSPro form's `setlanguage()` call; **proposal: add `LANGUAGE_USED` to FIELD_CONTROL** (numeric `1`=en / `2`=fil; captured at submit via `getlanguage()`) |
+| F2 | not currently captured as item | **Carl-owned change — to ship in F2 v1.2.0**: auto-inject `survey_language` from `useLocale()` value into the submission payload at submit time (single line addition to `App.handleSubmit`; backend response sheet adds the column) |
+| F3 | not currently captured | same proposal as F1 |
+| F4 | not currently captured | same proposal as F1 |
 
-**Open item §15.E**: none of the four instruments currently store language as a survey item. Recommend adding `survey_language` to all four (F2: auto-inject from locale state; F1 / F3 / F4: capture from `getlanguage()` at submit). Without this, post-hoc language-stratified analysis is impossible.
+**Open item §15.E — PARTIALLY RESOLVED 2026-04-25**:
+- **F2 implementation** is Carl-owned: ship `survey_language` capture as part of v1.2.0 (Round 3 batch). Field name: `survey_language` (string, values `'en'` / `'fil'`).
+- **F1 / F3 / F4 implementation** still needs ASPSI sign-off — see ASPSI open items doc. Adding a field to FIELD_CONTROL is a small instrument-design change but should be confirmed with the instrument-design owner before Carl edits the dcfs.
 
 ---
 
@@ -402,20 +416,30 @@ The actual implementation lives in `deliverables/data-harmonization/etl/` (to be
 
 ---
 
-## 15. Open items / decisions needed before fieldwork
+## 15. Open items / decisions
 
-These need answers before the harmonization ETL can be implemented end-to-end. None block instrument design today; all block production data delivery later.
+### 15.0 Resolved 2026-04-25 (Carl-owned, no ASPSI input needed)
+
+| # | Item | Resolution |
+|---|---|---|
+| **15.C** | Confirm F3/F4 explicit start/submit datetime fields | ✓ Verified — F3 and F4 dcfs both have `DATE_STARTED`, `TIME_STARTED`, `DATE_FIRST_VISITED`, `DATE_FINAL_VISIT`. Multi-visit semantics already supported. No new fields needed. |
+| **15.D** | F2 AAPOR derivation strategy | ✓ Defined ETL derivation rule over joined `(distribution_list × IndexedDB draft state × submission row)`. See §12 above for the full code-mapping table. Refusal capture deferred until §15.B is decided. |
+| **15.E (F2 portion)** | F2 `survey_language` capture | ✓ Will ship as part of F2 v1.2.0 — `App.handleSubmit` auto-injects `useLocale()` value into submission payload; backend response sheet adds column. No ASPSI sign-off needed for F2's own field. |
+
+### 15.A Pending — needs ASPSI / instrument-design decision
+
+The remaining open items have been split into a separate stakeholder-facing artefact at `deliverables/data-harmonization/open-items-for-aspsi.md`. They block production data delivery (not current instrument design):
 
 | # | Item | Decision needed | Owner |
 |---|---|---|---|
 | **15.A** | F4 respondent `Q3_SEX` allows `'Other'`; F1/F2/F3 do not | Map `'Other'` → canonical code `3`, treat as `.c`, or carry as separate `sex_other` flag? | ASPSI (instrument design) |
-| **15.B** | F2 / F3 / F4 don't capture consent as a data field | Add explicit `consent_given` to F2/F3/F4 for audit parity with F1? | ASPSI / ethics; recommend yes |
-| **15.C** | F3 / F4 dcf may not have explicit start/submit datetime fields | Verify in dcf; if missing, add `DATE_STARTED` / `TIME_STARTED` / `DATE_SUBMITTED` to FIELD_CONTROL | Carl + ASPSI |
-| **15.D** | F2 has no AAPOR disposition code | Add a manual classifier in F2 admin dashboard, or codify the ETL derivation rule (`synced` → `110`, etc.)? | Carl |
-| **15.E** | None of the four instruments stores `survey_language` | Add to FIELD_CONTROL (CAPI) and submission payload (PWA)? | Carl + ASPSI |
+| **15.B** | F2 PWA does not capture consent as a data field (F1/F3/F4 already do via `CONSENT_GIVEN`) | Add explicit `consent_given` to F2 for audit parity? | ASPSI / ethics; recommend yes |
+| **15.E (F1/F3/F4 portion)** | Add `LANGUAGE_USED` to FIELD_CONTROL across the three CAPI instruments | Sign-off on the field add (small change, big analytical value) | ASPSI (instrument-design owner) |
 | **15.F** | PSGC vintage to pin | Pick one PSA release (e.g. 2023Q4) and freeze for the engagement | ASPSI |
-| **15.G** | Facility master list | ASPSI to publish single canonical list; F2 PWA must consume it (currently uses placeholder) | ASPSI |
+| **15.G** | Facility master list publication | ASPSI to publish single canonical list; F2 PWA must consume it (currently uses placeholder) | ASPSI |
 | **15.H** | F1 `QUESTIONNAIRE_NO` ≡ master list `facility_id`? | Confirm F1's QUESTIONNAIRE_NO scheme matches the master list id scheme; otherwise F1↔F2/F3/F4 joins fail silently | Carl + ASPSI |
+
+See `open-items-for-aspsi.md` for cover note + per-item context to send to Juvy / Dr Claro.
 
 ---
 
@@ -433,3 +457,4 @@ Bump the `version` field at the top with every substantive change, and record th
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-04-25 | Initial draft. Covers F1 / F2 / F3 / F4. Identifies 8 open items. Aligned to current spec/dcf state. |
+| 0.2 | 2026-04-25 | Corrections after deeper dcf grep: F3 + F4 dcfs DO have `CONSENT_GIVEN`, `AAPOR_DISPOSITION`, `DATE_STARTED`/`TIME_STARTED`, and `DATE_FIRST_VISITED`/`DATE_FINAL_VISIT` (initial v0.1 audit was overly pessimistic on these). 15.C closed. 15.D resolved with ETL derivation rule for F2 disposition. 15.E split into Carl-owned F2 portion (resolved — ships in v1.2.0) and ASPSI-owned F1/F3/F4 portion (pending). 15.B narrowed to F2 only (F3/F4 already capture consent). Open items shrunk from 8 to 6 (5 ASPSI-owned + 1 mixed Carl/ASPSI). Stakeholder-facing open-items doc created at `open-items-for-aspsi.md`. |
