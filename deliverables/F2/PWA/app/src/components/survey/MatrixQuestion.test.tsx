@@ -83,7 +83,9 @@ describe('<MatrixQuestion>', () => {
     await user.click(q75Radios[4]);
     await user.click(screen.getByText('snapshot'));
     expect(captured).toMatchObject({ Q75: '5' });
-    expect(captured).not.toHaveProperty('Q76');
+    // Q76 is registered but untouched — RHF may represent it as null or undefined
+    const q76 = (captured as Record<string, unknown>).Q76;
+    expect(q76 == null).toBe(true);
   });
 
   it('renders a row\'s required error inline when triggered', async () => {

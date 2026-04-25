@@ -14,7 +14,7 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const {
-    setValue,
+    register,
     formState: { errors },
   } = useFormContext();
 
@@ -49,15 +49,9 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
                   <td key={c.value} className="py-2 px-1 text-center">
                     <input
                       type="radio"
-                      name={item.id}
                       value={c.value}
                       aria-label={`${item.id} ${localized(c.label, locale)}`}
-                      onChange={(e) => {
-                        setValue(item.id, e.target.value, {
-                          shouldValidate: true,
-                          shouldDirty: true,
-                        });
-                      }}
+                      {...register(item.id)}
                     />
                   </td>
                 ))}
