@@ -42,3 +42,4 @@ __pycache__/
 
 # Superpowers brainstorming session artefacts
 .superpowers/
+.gstack/
