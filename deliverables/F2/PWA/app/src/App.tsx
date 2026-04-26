@@ -248,8 +248,8 @@ function AppShell() {
       <BroadcastBanner message={runtimeConfig.broadcast_message} />
       <header className="flex items-center justify-between border-b px-6 py-3">
         <div className="flex flex-col">
-          <h1 className="text-2xl font-bold tracking-tight">{t('chrome.appTitle')}</h1>
-          <span className="text-xs leading-none text-muted-foreground">
+          <h1 className="font-serif text-2xl font-medium tracking-tight">{t('chrome.appTitle')}</h1>
+          <span className="font-mono text-xs leading-none text-muted-foreground">
             v{APP_VERSION} · spec {LOCAL_SPEC_VERSION}
           </span>
         </div>
@@ -287,7 +287,9 @@ function AppShell() {
         <p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>
       ) : status === 'submitted' ? (
         <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
-          <h2 className="text-2xl font-semibold">{t('chrome.thankYouHeading')}</h2>
+          <h2 className="font-serif text-2xl font-medium tracking-tight">
+            {t('chrome.thankYouHeading')}
+          </h2>
           <p className="text-sm text-muted-foreground">{t('chrome.thankYouBody')}</p>
           <div className="flex items-center gap-3">
             <Button variant="outline" size="sm" onClick={() => setView('sync')}>
@@ -298,7 +300,7 @@ function AppShell() {
         </section>
       ) : status === 'submit_failed' ? (
         <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
-          <h2 className="text-2xl font-semibold text-red-700">
+          <h2 className="font-serif text-2xl font-medium tracking-tight text-destructive">
             {t('chrome.submitFailedHeading')}
           </h2>
           <p className="text-sm text-muted-foreground">

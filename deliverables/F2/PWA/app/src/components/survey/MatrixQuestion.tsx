@@ -43,7 +43,7 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
                 <th scope="row" className="py-2 pr-2 text-left text-sm font-normal">
                   <span className="mr-1 text-muted-foreground">{item.id}.</span>
                   {localized(item.label, locale)}
-                  {item.required ? <span className="ml-1 text-red-600">*</span> : null}
+                  {item.required ? <span className="ml-1 text-destructive">*</span> : null}
                 </th>
                 {choices.map((c) => (
                   <td key={c.value} className="py-2 px-1 text-center">
@@ -60,7 +60,11 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
             if (errorMessage || error) {
               out.push(
                 <tr key={`${item.id}-err`}>
-                  <td colSpan={choices.length + 1} className="py-1 text-xs text-red-600" role="alert">
+                  <td
+                    colSpan={choices.length + 1}
+                    className="py-1 text-xs text-destructive"
+                    role="alert"
+                  >
                     {errorMessage ?? t('question.requiredFallback')}
                   </td>
                 </tr>,
@@ -82,7 +86,7 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
               <p id={groupId} className="text-sm font-medium">
                 <span className="mr-1 text-muted-foreground">{item.id}.</span>
                 {localized(item.label, locale)}
-                {item.required ? <span className="ml-1 text-red-600">*</span> : null}
+                {item.required ? <span className="ml-1 text-destructive">*</span> : null}
               </p>
               <div role="radiogroup" aria-labelledby={groupId} className="flex flex-wrap gap-3">
                 {choices.map((c) => (
@@ -98,7 +102,7 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
                 ))}
               </div>
               {errorMessage || error ? (
-                <p role="alert" className="text-xs text-red-600">
+                <p role="alert" className="text-xs text-destructive">
                   {errorMessage ?? t('question.requiredFallback')}
                 </p>
               ) : null}

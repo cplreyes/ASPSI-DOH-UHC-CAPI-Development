@@ -78,9 +78,7 @@ function getSectionStatus(section: SectionConfig, values: FormValues): SectionSt
     if (it.type === 'multi-field' && it.subFields) {
       // A subfield is required only if the parent is required AND its own required
       // flag isn't explicitly false. Optional subfields don't block completion.
-      return it.subFields.every(
-        (sf) => sf.required === false || hasValue(values[sf.id]),
-      );
+      return it.subFields.every((sf) => sf.required === false || hasValue(values[sf.id]));
     }
     return hasValue(values[it.id]);
   });
@@ -135,13 +133,11 @@ export function MultiSectionForm({
   );
 
   const visibleSectionEntries = useMemo(
-    () => SECTIONS.reduce<Array<{ config: SectionConfig; originalIndex: number }>>(
-      (acc, s, i) => {
+    () =>
+      SECTIONS.reduce<Array<{ config: SectionConfig; originalIndex: number }>>((acc, s, i) => {
         if (shouldShowSection(s.id, merged)) acc.push({ config: s, originalIndex: i });
         return acc;
-      },
-      [],
-    ),
+      }, []),
     [merged],
   );
 
@@ -176,7 +172,7 @@ export function MultiSectionForm({
   // Reset entry status when navigating to a new section (must be before the auto-advance effect)
   useEffect(() => {
     entryStatusRef.current = sectionStatuses[index] ?? 'empty';
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
   // Auto-advance when current section transitions from non-complete to complete
@@ -190,7 +186,7 @@ export function MultiSectionForm({
       handleNext();
     }, 400);
     return () => clearTimeout(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionStatuses]);
 
   const showLockMsg = () => {
@@ -290,7 +286,9 @@ export function MultiSectionForm({
           sections={visibleSectionEntries.map((e) => e.config)}
           currentIndex={visibleIndex}
           statuses={visibleSectionEntries.map((e) => sectionStatuses[e.originalIndex]!)}
-          maxVisitedIndex={visibleSectionEntries.filter((e) => e.originalIndex <= maxVisitedIndex).length - 1}
+          maxVisitedIndex={
+            visibleSectionEntries.filter((e) => e.originalIndex <= maxVisitedIndex).length - 1
+          }
           onNavigate={(i) => handleNavigate(visibleSectionEntries[i]!.originalIndex)}
         />
       </aside>
@@ -313,8 +311,13 @@ export function MultiSectionForm({
               sections={visibleSectionEntries.map((e) => e.config)}
               currentIndex={visibleIndex}
               statuses={visibleSectionEntries.map((e) => sectionStatuses[e.originalIndex]!)}
-              maxVisitedIndex={visibleSectionEntries.filter((e) => e.originalIndex <= maxVisitedIndex).length - 1}
-              onNavigate={(i) => { handleNavigate(visibleSectionEntries[i]!.originalIndex); setDrawerOpen(false); }}
+              maxVisitedIndex={
+                visibleSectionEntries.filter((e) => e.originalIndex <= maxVisitedIndex).length - 1
+              }
+              onNavigate={(i) => {
+                handleNavigate(visibleSectionEntries[i]!.originalIndex);
+                setDrawerOpen(false);
+              }}
               onClose={() => setDrawerOpen(false)}
             />
           </aside>
@@ -331,7 +334,15 @@ export function MultiSectionForm({
           isFirst && 'invisible',
         )}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
@@ -348,7 +359,15 @@ export function MultiSectionForm({
             : 'bg-background/90 hover:bg-muted',
         )}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -368,11 +387,27 @@ export function MultiSectionForm({
               className="shrink-0 rounded p-1 hover:bg-muted lg:hidden"
               onClick={() => setDrawerOpen(true)}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </button>
-            <ProgressBar current={visibleIndex + 1} total={visibleSectionEntries.length} className="flex-1 px-0 pt-0" />
+            <ProgressBar
+              current={visibleIndex + 1}
+              total={visibleSectionEntries.length}
+              className="flex-1 px-0 pt-0"
+            />
             {/* Save Draft — upper right */}
             <button
               type="button"
@@ -380,7 +415,7 @@ export function MultiSectionForm({
               className="shrink-0 rounded border px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-muted"
             >
               {showSaved ? (
-                <span className="text-green-600">{t('navigator.draftSaved')}</span>
+                <span className="text-primary">{t('navigator.draftSaved')}</span>
               ) : (
                 t('navigator.saveDraft')
               )}
@@ -395,7 +430,7 @@ export function MultiSectionForm({
           ) : null}
 
           <div className="mx-auto max-w-xl px-6 pb-2">
-            <h2 className="text-xl font-semibold tracking-tight">
+            <h2 className="font-serif text-xl font-medium tracking-tight">
               {t('review.sectionHeading', {
                 id: current!.id,
                 title: localized(current!.section.title, locale),
