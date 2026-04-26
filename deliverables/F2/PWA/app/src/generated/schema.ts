@@ -9,17 +9,17 @@ export const sectionASchema = z.object({
   Q2: z.enum(['Regular', 'Casual', 'Seasonal', 'Probationary', 'Project', 'Fixed-term', 'Other, specify']),
   Q2_other: z.string().optional(),
   Q3: z.enum(['Male', 'Female']),
-  Q4: z.coerce.number().min(18).max(99),
+  Q4: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(18).max(99),
   Q5: z.enum(['Administrator', 'Physician/Doctor', 'Physician assistant', 'Nurse', 'Nursing assistant', 'Pharmacist/Dispenser', 'Midwife', 'Laboratory technician', 'Medical/ radiologic technologist', 'Health promotion officer', 'Nutrition action officer/ coordinator', 'Physical Therapist', 'Dentist', 'Dentist aide', 'Barangay Health Worker', 'Other (specify)']),
   Q5_other: z.string().optional(),
   Q6: z.enum(['No specialty', 'Anesthesia', 'Dermatology', 'Emergency Medicine', 'Family Medicine', 'General Surgery', 'Internal Medicine', 'Neurology', 'Nuclear Medicine', 'Obstetrics and Gynecology', 'Occupational Medicine', 'Ophthalmology', 'Orthopedics', 'Otorhinolaryngology (ENT)', 'Pathology', 'Pediatrics', 'Physical and Rehabilitation Medicine', 'Psychiatry', 'Public health', 'Radiology', 'Research', 'Others (specify)']).optional(),
   Q6_other: z.string().optional(),
   Q7: z.enum(['Yes', 'No']).optional(),
   Q8: z.enum(['I spend all of my time in private practice', 'I spend over half, but not all of my time in private practice', 'I spend my time equally in private and public practice', 'I spend over half, but not all of my time in public practice', 'I spend all of my time in public practice', 'I don\'t know']).optional(),
-  Q9_1: z.coerce.number().min(0).max(99),
-  Q9_2: z.coerce.number().min(0).max(11).optional(),
-  Q10: z.coerce.number().min(1).max(7),
-  Q11: z.coerce.number().min(1).max(24),
+  Q9_1: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(0).max(99),
+  Q9_2: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(0).max(11).optional(),
+  Q10: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(1).max(7),
+  Q11: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(1).max(24),
 }).superRefine((data, ctx) => {
   if (data.Q2 === 'Other, specify' && !(typeof data.Q2_other === 'string' && data.Q2_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q2_other'], message: 'Please specify' });
