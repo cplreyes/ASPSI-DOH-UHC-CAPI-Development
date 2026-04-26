@@ -11,6 +11,17 @@ work — those live in `deliverables/{F1,F3,F4}/` and follow the CSPro generator
 workflow, not the PWA git/PR flow. `/ship` for this app must NOT bump version
 or write CHANGELOG (the release-notes workflow owns those).
 
+## Design System
+
+Always read [`DESIGN.md`](./DESIGN.md) before making any visual, UI, color, type,
+spacing, or motion decision in this app. Memorable thing anchor:
+**"This is real software, not a government form."** Palette: Verde Manual
+(DOH-anchored emerald + pale verde paper). Type: Newsreader display + Public Sans
+Variable body + JetBrains Mono data. Layout: hairline-divided, no cards,
+marginal mono question numbers. Do not deviate without explicit user approval and
+without adding a row to the Decisions Log in `DESIGN.md`. In QA mode, flag any code
+that doesn't match.
+
 ## Skill routing
 
 When the user's request matches an available skill, invoke it via the Skill tool. The
