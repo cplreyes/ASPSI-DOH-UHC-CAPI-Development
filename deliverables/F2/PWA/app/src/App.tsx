@@ -276,7 +276,7 @@ function AppShell() {
       {authStatus === 'loading' ? (
         <p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>
       ) : authStatus === 'unenrolled' ? (
-        <EnrollmentScreen onRefresh={refresh} />
+        <EnrollmentScreen />
       ) : view === 'sync' ? (
         <Suspense
           fallback={<p className="p-6 text-sm text-muted-foreground">{t('chrome.loading')}</p>}
