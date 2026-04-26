@@ -23,7 +23,7 @@ export function PendingCount() {
   return (
     <span
       data-testid="pending-count"
-      className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800"
+      className="inline-flex items-center rounded-full border border-warning/30 bg-warning/10 px-2.5 py-0.5 text-xs font-medium text-warning"
     >
       {t('sync.pendingBadge', { count })}
     </span>
