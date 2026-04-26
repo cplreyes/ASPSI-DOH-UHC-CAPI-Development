@@ -15,7 +15,9 @@ export function Navigator({ onSaveDraft, showSaved }: NavigatorProps) {
         {t('navigator.saveDraft')}
       </Button>
       {showSaved ? (
-        <span className="whitespace-nowrap text-sm text-green-600">{t('navigator.draftSaved')}</span>
+        <span className="whitespace-nowrap text-sm text-green-600">
+          {t('navigator.draftSaved')}
+        </span>
       ) : null}
     </div>
   );

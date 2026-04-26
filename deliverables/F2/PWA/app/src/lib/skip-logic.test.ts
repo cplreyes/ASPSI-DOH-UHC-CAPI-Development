@@ -26,11 +26,15 @@ describe('shouldShow', () => {
 
   describe('Section B', () => {
     it('hides Q14 when Q13 is a No variant', () => {
-      expect(shouldShow('B', 'Q14', { Q12: 'Yes', Q13: 'No, and no plans in next 1–2 years' })).toBe(false);
+      expect(
+        shouldShow('B', 'Q14', { Q12: 'Yes', Q13: 'No, and no plans in next 1–2 years' }),
+      ).toBe(false);
     });
 
     it('shows Q14 when Q12 is Yes and Q13 starts with Yes', () => {
-      expect(shouldShow('B', 'Q14', { Q12: 'Yes', Q13: 'Yes, direct result of UHC Act' })).toBe(true);
+      expect(shouldShow('B', 'Q14', { Q12: 'Yes', Q13: 'Yes, direct result of UHC Act' })).toBe(
+        true,
+      );
     });
 
     it('hides Q14 when Q13 is unanswered', () => {
@@ -38,7 +42,9 @@ describe('shouldShow', () => {
     });
 
     it('hides Q14 when Q12 is No (entire Q13–Q30 block hidden)', () => {
-      expect(shouldShow('B', 'Q14', { Q12: 'No', Q13: 'Yes, direct result of UHC Act' })).toBe(false);
+      expect(shouldShow('B', 'Q14', { Q12: 'No', Q13: 'Yes, direct result of UHC Act' })).toBe(
+        false,
+      );
     });
   });
 
@@ -153,8 +159,8 @@ describe('shouldShow', () => {
 
     it('shows Q71 when either Q69 or Q70 is Yes', () => {
       expect(shouldShow('G', 'Q71', { Q69: 'Yes' })).toBe(true);
-      expect(shouldShow('G', 'Q71', { 'Q70': 'Yes' })).toBe(true);
-      expect(shouldShow('G', 'Q71', { Q69: 'No', 'Q70': 'No' })).toBe(false);
+      expect(shouldShow('G', 'Q71', { Q70: 'Yes' })).toBe(true);
+      expect(shouldShow('G', 'Q71', { Q69: 'No', Q70: 'No' })).toBe(false);
     });
 
     it('shows Q73 only when Q72 is No', () => {
@@ -164,8 +170,8 @@ describe('shouldShow', () => {
 
     it('shows Q89 when either Q87 or Q88 is Yes', () => {
       expect(shouldShow('G', 'Q89', { Q87: 'Yes' })).toBe(true);
-      expect(shouldShow('G', 'Q89', { 'Q88': 'Yes' })).toBe(true);
-      expect(shouldShow('G', 'Q89', { Q87: 'No', 'Q88': 'No' })).toBe(false);
+      expect(shouldShow('G', 'Q89', { Q88: 'Yes' })).toBe(true);
+      expect(shouldShow('G', 'Q89', { Q87: 'No', Q88: 'No' })).toBe(false);
     });
   });
 

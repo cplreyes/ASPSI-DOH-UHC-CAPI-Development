@@ -5,3 +5,7 @@ node_modules/
 public/icons/
 test-results/
 playwright-report/
+src/generated/
+spec/
+scripts/_one-shot-*.mjs
+CHANGELOG.md

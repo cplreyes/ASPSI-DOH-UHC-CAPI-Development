@@ -162,12 +162,7 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
             <Button type="submit" disabled={!canSubmit}>
               {t('enrollment.enrollButton')}
             </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleRefresh}
-              disabled={refreshing}
-            >
+            <Button type="button" variant="outline" onClick={handleRefresh} disabled={refreshing}>
               {refreshing ? t('enrollment.refreshingButton') : t('enrollment.refreshButton')}
             </Button>
           </div>

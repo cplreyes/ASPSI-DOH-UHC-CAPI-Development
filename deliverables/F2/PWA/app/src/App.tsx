@@ -298,9 +298,7 @@ function AppShell() {
         </section>
       ) : status === 'submit_failed' ? (
         <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
-          <h2 className="text-2xl font-semibold text-red-700">
-            {t('chrome.submitFailedHeading')}
-          </h2>
+          <h2 className="text-2xl font-semibold text-red-700">{t('chrome.submitFailedHeading')}</h2>
           <p className="text-sm text-muted-foreground">
             {submitError ?? t('chrome.submitFailedBody')}
           </p>

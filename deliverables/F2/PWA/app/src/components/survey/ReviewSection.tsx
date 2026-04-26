@@ -106,7 +106,9 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
 
       {SECTIONS.map((section) => {
         const grouped = groupVisibleItems(section.items);
-        type Block = { kind: 'rows'; rows: ReturnType<typeof rowsForItem> } | { kind: 'matrix'; group: MatrixGroup };
+        type Block =
+          | { kind: 'rows'; rows: ReturnType<typeof rowsForItem> }
+          | { kind: 'matrix'; group: MatrixGroup };
         const blocks: Block[] = [];
         for (const entry of grouped) {
           if (isMatrixGroup(entry)) {
@@ -135,10 +137,7 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
             <div className="divide-y divide-slate-200 rounded border border-slate-200">
               {blocks.map((block, blockIdx) =>
                 block.kind === 'matrix' ? (
-                  <div
-                    key={`matrix-${block.group.items[0].id}`}
-                    className="px-3 py-2"
-                  >
+                  <div key={`matrix-${block.group.items[0].id}`} className="px-3 py-2">
                     <table className="w-full text-sm">
                       <tbody>
                         {block.group.items.map((it) => (
@@ -146,9 +145,7 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
                             <td className="py-1 pr-2 text-slate-700">
                               {it.id} {localized(it.label, locale)}
                             </td>
-                            <td className="py-1 text-slate-900">
-                              {formatValue(values[it.id])}
-                            </td>
+                            <td className="py-1 text-slate-900">{formatValue(values[it.id])}</td>
                           </tr>
                         ))}
                       </tbody>

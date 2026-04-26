@@ -91,18 +91,26 @@ function blockNonNumericKeys(event: React.KeyboardEvent<HTMLInputElement>) {
 //   is no longer accurate).
 export function nextMultiValue(
   current: string[],
-  clicked: { value: string; isExclusive?: boolean; isSelectAll?: boolean; isOtherSpecify?: boolean },
+  clicked: {
+    value: string;
+    isExclusive?: boolean;
+    isSelectAll?: boolean;
+    isOtherSpecify?: boolean;
+  },
   willBeChecked: boolean,
-  allChoices: ReadonlyArray<{ value: string; isExclusive?: boolean; isSelectAll?: boolean; isOtherSpecify?: boolean }>,
+  allChoices: ReadonlyArray<{
+    value: string;
+    isExclusive?: boolean;
+    isSelectAll?: boolean;
+    isOtherSpecify?: boolean;
+  }>,
 ): string[] {
   const findChoice = (v: string) => allChoices.find((c) => c.value === v);
 
   if (willBeChecked) {
     if (clicked.isExclusive) return [clicked.value];
     if (clicked.isSelectAll) {
-      return allChoices
-        .filter((c) => !c.isExclusive && !c.isOtherSpecify)
-        .map((c) => c.value);
+      return allChoices.filter((c) => !c.isExclusive && !c.isOtherSpecify).map((c) => c.value);
     }
     const filtered = current.filter((v) => {
       const c = findChoice(v);
@@ -222,16 +230,13 @@ function renderControl(
                     checked={isChecked}
                     onChange={(e) => {
                       if (!onChange) return;
-                      const next = nextMultiValue(
-                        selected,
-                        choice,
-                        e.target.checked,
-                        allChoices,
-                      );
+                      const next = nextMultiValue(selected, choice, e.target.checked, allChoices);
                       onChange(next);
                     }}
                     onBlur={reg.onBlur}
-                    {...(idx === 0 ? { id: item.id, ref: reg.ref, name: reg.name } : { name: reg.name })}
+                    {...(idx === 0
+                      ? { id: item.id, ref: reg.ref, name: reg.name }
+                      : { name: reg.name })}
                   />
                   {localized(choice.label, locale)}
                 </label>

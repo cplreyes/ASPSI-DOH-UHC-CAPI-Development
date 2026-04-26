@@ -92,7 +92,9 @@ describe('<EnrollmentScreen>', () => {
     setup();
     await user.type(screen.getByTestId('enrollment-token-input'), FAKE_TOKEN);
     await user.click(screen.getByRole('button', { name: /verify token/i }));
-    await waitFor(() => expect(screen.getByTestId('enrollment-token-accepted')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByTestId('enrollment-token-accepted')).toBeInTheDocument(),
+    );
     expect(screen.getByLabelText(/HCW ID/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /^enroll$/i })).toBeInTheDocument();
     // The accepted message names the facility from the token's claim.

@@ -43,7 +43,12 @@ const scale15: Choice[] = [
 
 describe('<MatrixQuestion>', () => {
   it('renders one column header per choice plus a Statement header', () => {
-    render(<Harness items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]} choices={scale15} />);
+    render(
+      <Harness
+        items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]}
+        choices={scale15}
+      />,
+    );
     // Column headers
     expect(screen.getByText(/Statement/i)).toBeInTheDocument();
     for (const c of scale15) {
@@ -52,13 +57,18 @@ describe('<MatrixQuestion>', () => {
   });
 
   it('renders one row per item with the localised statement text', () => {
-    render(<Harness items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]} choices={scale15} />);
+    render(
+      <Harness
+        items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]}
+        choices={scale15}
+      />,
+    );
     // Both desktop table and mobile card render in the DOM; use getAllByText
     expect(screen.getAllByText(/fairness ZBB/).length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText(/fairness NBB/).length).toBeGreaterThanOrEqual(1);
   });
 
-  it('clicking a radio in row Q75 sets only that row\'s value', async () => {
+  it("clicking a radio in row Q75 sets only that row's value", async () => {
     const user = userEvent.setup();
     let captured: Record<string, unknown> = {};
     function CaptureHarness({ items, choices }: { items: Item[]; choices: Choice[] }) {
@@ -70,15 +80,24 @@ describe('<MatrixQuestion>', () => {
           <FormProvider {...methods}>
             <form>
               <MatrixQuestion items={items} choices={choices} />
-              <button type="button" onClick={() => (captured = methods.getValues())}>snapshot</button>
+              <button type="button" onClick={() => (captured = methods.getValues())}>
+                snapshot
+              </button>
             </form>
           </FormProvider>
         </LocaleProvider>
       );
     }
-    render(<CaptureHarness items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]} choices={scale15} />);
+    render(
+      <CaptureHarness
+        items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]}
+        choices={scale15}
+      />,
+    );
     // Each row's radios share name = item.id; desktop + mobile = 10 total for Q75
-    const q75Radios = screen.getAllByRole('radio').filter((el) => (el as HTMLInputElement).name === 'Q75');
+    const q75Radios = screen
+      .getAllByRole('radio')
+      .filter((el) => (el as HTMLInputElement).name === 'Q75');
     expect(q75Radios).toHaveLength(10);
     // Click the last "5" radio in the desktop table (index 4)
     await user.click(q75Radios[4]);
@@ -89,7 +108,7 @@ describe('<MatrixQuestion>', () => {
     expect(q76 == null).toBe(true);
   });
 
-  it('renders a row\'s required error inline when triggered', async () => {
+  it("renders a row's required error inline when triggered", async () => {
     function ErrHarness({ items, choices }: { items: Item[]; choices: Choice[] }) {
       const methods = useForm<Record<string, unknown>>({
         defaultValues: {},
@@ -98,7 +117,7 @@ describe('<MatrixQuestion>', () => {
       // mount and doesn't trigger an infinite re-render loop.
       useEffect(() => {
         methods.setError('Q76', { type: 'required', message: 'This field is required.' });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
       return (
         <LocaleProvider>
@@ -110,7 +129,9 @@ describe('<MatrixQuestion>', () => {
         </LocaleProvider>
       );
     }
-    render(<ErrHarness items={[row('Q75', 'A', scale15), row('Q76', 'B', scale15)]} choices={scale15} />);
+    render(
+      <ErrHarness items={[row('Q75', 'A', scale15), row('Q76', 'B', scale15)]} choices={scale15} />,
+    );
     // Both desktop table and mobile card show alerts; check at least one has the message
     const alerts = await screen.findAllByRole('alert');
     expect(alerts.length).toBeGreaterThanOrEqual(1);

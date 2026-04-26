@@ -60,7 +60,11 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
             if (errorMessage || error) {
               out.push(
                 <tr key={`${item.id}-err`}>
-                  <td colSpan={choices.length + 1} className="py-1 text-xs text-red-600" role="alert">
+                  <td
+                    colSpan={choices.length + 1}
+                    className="py-1 text-xs text-red-600"
+                    role="alert"
+                  >
                     {errorMessage ?? t('question.requiredFallback')}
                   </td>
                 </tr>,
