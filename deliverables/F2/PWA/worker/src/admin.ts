@@ -15,7 +15,7 @@ const ADMIN_SESSION_TABLET_ID = '__admin_session__';
 
 // ---------- Password hashing (PBKDF2-SHA256) ----------
 
-const PBKDF2_DEFAULT_ITERS = 100_000;
+const PBKDF2_DEFAULT_ITERS = 600_000;
 
 function b64urlEncode(bytes: Uint8Array): string {
   let s = '';

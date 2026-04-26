@@ -12,7 +12,7 @@
 import { webcrypto } from 'node:crypto';
 import readline from 'node:readline';
 
-const ITERATIONS = 100_000;
+const ITERATIONS = 600_000;
 
 function b64url(bytes) {
   return Buffer.from(bytes).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
