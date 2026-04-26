@@ -2,6 +2,18 @@
 
 Chronological record of all wiki operations.
 
+## 2026-04-26 (gstack adopted for F2 PWA workstream)
+
+- **Ingested** [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - gstack Claude Code Skill Pack]] — Garry Tan's 23-skill Claude Code pack already installed in `~/.claude/skills/gstack/`. README clipped to `raw/` and summarized.
+- **New concept page** [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/gstack F2 PWA Workflow]] — adopted skill subset for F2 PWA only (Vite/React/TypeScript/Tailwind/Playwright stack). Maps `/investigate` → `/review` → `/qa` → `/ship` to existing F2 PWA loop. **Out of scope for F1/F3/F4 CSPro tracks** (no Designer/CSPro awareness in gstack).
+- **Constraint:** `/ship` must NOT bump `package.json` or write `CHANGELOG.md` — those are owned by `.github/workflows/uat-release-notes.yml` on milestone close. Use `/ship` for branch + PR only.
+- **Windows note:** Bun + Playwright pipe transport bug ([bun#4253](https://github.com/oven-sh/bun/issues/4253)) — gstack auto-falls-back to Node.js. Carl's box has Node 22 on PATH.
+- **Index updated:** added source under Sources; added concept under Concepts > Working conventions.
+- **Skills NOT adopted (with rationale):** `/office-hours`, `/plan-ceo-review` (scope locked), `/design-consultation`, `/design-shotgun`, `/design-html` (design system shipped), `/plan-devex-review`, `/devex-review` (F2 is end-user-facing not developer-facing), `/land-and-deploy` (Cloudflare Pages auto-deploys on `main`), `/setup-gbrain` (Obsidian wiki is the KB).
+- **Open questions resolved (same session):** continuous-checkpoint = off (Slack notifier spam risk); `/cso` = one-off before audience expansion, not recurring; `/learn` = off (duplicates Obsidian wiki + auto-memory).
+- **9 usage best-practices encoded** in concept page under "How to use gstack on this project": pipeline-not-à-la-carte; `/investigate` first on UAT bugs; split `/qa` (fix) vs `/qa-only` (report) by UAT context; `/freeze deliverables/F2/PWA/app/` while debugging; `/benchmark` baseline at v1.1.1 before Round 3; `/document-release` after every merge; `/codex` only for high-stakes PRs; hard-avoid planning skills (scope locked); `/ship` = branch + PR only.
+- **`/benchmark` baseline captured** at `https://f2-pwa.pages.dev/` (v1.1.1, Apr 20 spec). Warm cache: TTFB 2ms / FCP 140ms / Load 73ms / 0 bytes transfer (PWA fully cached). Cold start: 157 KB JS bundle, 4.7 KB CSS, 5 requests, 161 KB total transfer. Files: `.gstack/benchmark-reports/baselines/baseline.json` + `.gstack/benchmark-reports/2026-04-26-benchmark.md` (gitignored). Round 3 PRs compare against this; regression threshold = JS bundle > 200 KB or warm-cache FCP > 500ms.
+
 ## 2026-04-25 (F2 PWA UAT Rounds 1 + 2 closed; production live at v1.1.1)
 
 - **UAT Round 1 closed.** Shan Rykel Lait (ASPSI) signed off "Pass with comments" on 2026-04-24 with 12 GitHub Issues + a DOCX comment attachment. Triage on 2026-04-25 added severity / type / round / status labels, milestones (`v1.1.0`, `v1.1.1`), and project-board fields (Status / Round / Severity / UAT Verified). Filed umbrella issue `#13 — Mid-section skip logic` after re-reading the DOCX exposed 10 conditional jumps not split out into individual issues. **All 7 Round 1 issues closed and verified on staging same day**: #4 (Q4 age max 99), #5 (Q9 months max 11), #6 (Q12 UHC skip), #8 (Q25 sub-question gating), #10 (auto-advance bug), #11 (Section G nurse hide), #13 (mid-section skip umbrella). Milestone `v1.1.0 — UAT Round 1` closed.
