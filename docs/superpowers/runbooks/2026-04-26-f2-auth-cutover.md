@@ -229,15 +229,20 @@ gh pr view 31 --json mergeable -q .mergeable
 
 Should be `MERGEABLE`. If not, rebase against `staging`.
 
-### D.2 — Confirm the worker URL hardcoded in the PWA matches A.8
+### D.2 — Set `VITE_F2_PROXY_URL` on Cloudflare Pages
 
-Search the PWA source for the URL the new bundle calls:
+The PWA reads the worker URL from `VITE_F2_PROXY_URL` (`deliverables/F2/PWA/app/src/lib/env.ts`). It is NOT hardcoded in source; it's a build-time env var picked up by Vite from Cloudflare Pages's environment.
 
-```bash
-grep -rn "workers.dev\|f2-pwa-worker" deliverables/F2/PWA/app/src/
-```
+Cloudflare dashboard → Pages → your project → Settings → Environment variables. Set:
 
-If the URL doesn't match A.8, update the source file, commit, push to the branch. CI will re-run; wait for green.
+| Environment | Variable | Value |
+|---|---|---|
+| **Preview** (staging) | `VITE_F2_PROXY_URL` | the worker URL from A.8 |
+| **Production** (post Phase F) | `VITE_F2_PROXY_URL` | the production worker URL (set during Phase F.1) |
+
+If `VITE_F2_PROXY_URL` is unset at build time, `getSyncEnv()` throws and the PWA fails to render — that's the safety net. There is no fallback to direct Apps Script in the code (HMAC-in-bundle was removed in commit `2a165c0`); the worker is the only path.
+
+Confirm it's set BEFORE the next step (D.3 merge) — the merge auto-triggers a Pages rebuild, and the build will fail without this env var.
 
 ### D.3 — Merge PR #31 to staging
 
@@ -370,6 +375,7 @@ HMAC no longer in client bundle. Worker URL: <A.8>.
 After Phase F succeeds:
 
 - [ ] Delete `VITE_F2_HMAC_SECRET` from Cloudflare Pages env var settings.
+- [ ] Clean up local `deliverables/F2/PWA/app/.env.local` — remove the stale `VITE_F2_BACKEND_URL` and `VITE_F2_HMAC_SECRET` lines (no longer read by the code), add `VITE_F2_PROXY_URL` for local dev.
 - [ ] Delete the `?action=admin` HTML and `PROP_ADMIN_SECRET` from Apps Script per spec §3.
 - [ ] Lower `ttl_days` max from 365 → 90 in `worker/src/admin.ts:143` (P2 finding from `/review`).
 - [ ] Add `purpose` claim to JwtClaims, drop the `__admin_session__` sentinel (P2 finding from `/review`).
