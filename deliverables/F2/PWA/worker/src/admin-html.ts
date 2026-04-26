@@ -5,6 +5,13 @@
  * XSS posture: all dynamic data (tablet_label, facility_id, etc.) is inserted via
  * textContent only. innerHTML is used exclusively for static template strings within
  * this file, never for user-supplied or API-returned data.
+ *
+ * Token sharing posture: the freshly minted JWT NEVER leaves this origin. Ops
+ * copies the token text via the Copy button and pastes into the tablet's
+ * enrollment screen ("Paste token" mode, spec §4.2). QR-scan mode is
+ * intentionally deferred — see TODO at the issue handler. Do NOT add any
+ * external service that receives the token (chart.googleapis.com, third-party
+ * QR APIs, etc.); they log requests and the token is the credential.
  */
 
 export function renderAdminHtml(): string {
@@ -33,7 +40,6 @@ th { background: #f0f0f0; font-weight: 600; }
 .muted { color: var(--muted); font-size: 12px; }
 .hidden { display: none; }
 .error { color: var(--danger); margin: 8px 0; }
-#qr { margin-top: 12px; }
 </style>
 </head>
 <body>
@@ -56,9 +62,9 @@ th { background: #f0f0f0; font-weight: 600; }
   <div class="row"><label for="ttl">TTL (days)</label><input type="number" id="ttl" value="30" min="1" max="365"></div>
   <div class="row"><button id="issue-btn">Issue token</button></div>
   <div id="issue-result" class="hidden">
-    <p class="muted">Copy this token and paste into the tablet's enrollment screen, or scan the QR code.</p>
+    <p class="muted">Copy this token and paste into the tablet's enrollment screen ("Paste token" mode).</p>
     <div class="token" id="token-display"></div>
-    <div id="qr"></div>
+    <div class="row"><button id="copy-btn">Copy token</button><span class="muted" id="copy-status"></span></div>
   </div>
 
   <h2>Active tokens</h2>
@@ -120,17 +126,33 @@ document.getElementById('issue-btn').onclick = async function () {
       body: JSON.stringify({ facility_id: facility_id, tablet_label: tablet_label, ttl_days: ttl_days }),
     });
     document.getElementById('token-display').textContent = resp.token;
+    document.getElementById('copy-status').textContent = '';
     document.getElementById('issue-result').classList.remove('hidden');
-    // QR via Google Charts (no bundled JS lib). The token is URL-encoded.
-    var qrEl = document.getElementById('qr');
-    while (qrEl.firstChild) qrEl.removeChild(qrEl.firstChild);
-    var img = document.createElement('img');
-    img.alt = 'Token QR';
-    img.src = 'https://chart.googleapis.com/chart?cht=qr&chs=240x240&chl=' + encodeURIComponent(resp.token);
-    qrEl.appendChild(img);
+    // TODO: Re-add QR-scan enrollment mode (spec §4.2 step 5). Must render
+    // the QR locally — the token is the credential, never share with an
+    // external service. Plan: bundle a no-dep QR encoder (qrcode-generator)
+    // via either (a) a stringified UMD inlined into this template at module
+    // load, or (b) a separate /admin/qr.js Worker route serving the lib.
     refreshTokens();
   } catch (err) {
     alert('Issue failed: ' + err.message);
+  }
+};
+
+document.getElementById('copy-btn').onclick = async function () {
+  var token = document.getElementById('token-display').textContent || '';
+  var status = document.getElementById('copy-status');
+  try {
+    await navigator.clipboard.writeText(token);
+    status.textContent = 'Copied. Paste into tablet enrollment.';
+  } catch (err) {
+    // Fallback for older browsers / non-secure contexts.
+    var range = document.createRange();
+    range.selectNodeContents(document.getElementById('token-display'));
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    status.textContent = 'Selected — press Ctrl+C to copy.';
   }
 };
 
