@@ -103,11 +103,13 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
 
   return (
     <form onSubmit={handleEnroll} className="mx-auto flex max-w-md flex-col gap-4 p-6">
-      <h2 className="text-2xl font-semibold tracking-tight">{t('enrollment.heading')}</h2>
+      <h2 className="font-serif text-2xl font-medium tracking-tight">{t('enrollment.heading')}</h2>
 
       {/* Step 1 — Tablet token */}
-      <section className="flex flex-col gap-2 rounded-md border border-border p-4">
-        <h3 className="text-sm font-semibold">{t('enrollment.tokenStep')}</h3>
+      <section className="flex flex-col gap-2 border-t border-border pt-4">
+        <h3 className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+          {t('enrollment.tokenStep')}
+        </h3>
         <p className="text-sm text-muted-foreground">{t('enrollment.tokenHelper')}</p>
 
         <label className="flex flex-col gap-1 text-sm">
@@ -118,7 +120,7 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
             placeholder={t('enrollment.tokenPlaceholder')}
             rows={3}
             disabled={!!verifiedToken}
-            className="rounded-md border border-input px-3 py-2 font-mono text-xs"
+            className="border border-input bg-background px-3 py-2 font-mono text-xs"
             data-testid="enrollment-token-input"
           />
         </label>
@@ -128,7 +130,7 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
             {verifying ? t('enrollment.verifyingTokenButton') : t('enrollment.verifyTokenButton')}
           </Button>
         ) : (
-          <p className="text-sm text-green-700" data-testid="enrollment-token-accepted">
+          <p className="text-sm text-primary" data-testid="enrollment-token-accepted">
             {t('enrollment.tokenAccepted', {
               facility: facilityFromToken?.facility_name ?? tokenFacilityId,
             })}
@@ -138,8 +140,10 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
 
       {/* Step 2 — Identity (only after token verified) */}
       {verifiedToken ? (
-        <section className="flex flex-col gap-2 rounded-md border border-border p-4">
-          <h3 className="text-sm font-semibold">{t('enrollment.identityStep')}</h3>
+        <section className="flex flex-col gap-2 border-t border-border pt-4">
+          <h3 className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+            {t('enrollment.identityStep')}
+          </h3>
 
           <label className="flex flex-col gap-1 text-sm">
             {t('enrollment.hcwIdLabel')}
@@ -147,7 +151,7 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
               type="text"
               value={hcwId}
               onChange={(e) => setHcwId(e.target.value)}
-              className="rounded-md border border-input px-3 py-2 text-sm"
+              className="border border-input bg-background px-3 py-2 text-sm"
               autoComplete="off"
             />
           </label>
@@ -162,19 +166,14 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
             <Button type="submit" disabled={!canSubmit}>
               {t('enrollment.enrollButton')}
             </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleRefresh}
-              disabled={refreshing}
-            >
+            <Button type="button" variant="outline" onClick={handleRefresh} disabled={refreshing}>
               {refreshing ? t('enrollment.refreshingButton') : t('enrollment.refreshButton')}
             </Button>
           </div>
         </section>
       ) : null}
 
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      {error ? <p className="text-sm text-destructive">{error}</p> : null}
     </form>
   );
 }
