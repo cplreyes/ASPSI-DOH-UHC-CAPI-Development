@@ -33,6 +33,12 @@
     --destructive: 0 70.2% 42.2%; /* #B72020 */
     --destructive-foreground: 85.7 25.9% 94.7%;
 
+    /* Warning — ochre. Used for storage-quota warnings, near-stale drafts,
+     * the lock-notification strip, the broadcast banner, and Review-section
+     * 'warn' severity alerts. */
+    --warning: 36.3 62.3% 47.8%; /* #C68A2E */
+    --warning-foreground: 85.7 25.9% 94.7%; /* paper */
+
     /* Highlight — DOH yellow inner rim. Used very sparingly (save toasts only).
      * Not yet bound to a Tailwind utility; consume via hsl(var(--highlight)). */
     --highlight: 42 76.6% 56.5%; /* #E5B23B */
@@ -60,6 +66,9 @@
 
     --destructive: 1.7 62.7% 56.9%; /* #D6504C */
     --destructive-foreground: 90 20% 86.3%;
+
+    --warning: 35 70% 58%; /* shifted brighter for dark mode */
+    --warning-foreground: 132 14.3% 6.9%; /* graphite ground */
 
     --highlight: 43.9 84.2% 65.3%; /* #F1C95C */
   }
