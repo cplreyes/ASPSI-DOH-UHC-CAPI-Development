@@ -2,24 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design tokens — Verde Manual.
+ * See ../DESIGN.md for the full system, palette rationale, and DOH brand caveats.
+ * Hex values are best-fit approximations of the DOH "Verde Vision" palette;
+ * refine when the official brand-book PDF is available.
+ */
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --primary: 173 80% 26%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --ring: 173 80% 26%;
-    --radius: 0.5rem;
+    /* Surfaces */
+    --background: 85.7 25.9% 94.7%; /* #F2F5EE paper */
+    --foreground: 120 8.8% 11.2%; /* #1A1F1A ink */
+    --muted: 86 24% 92%; /* slightly darker paper tint */
+    --muted-foreground: 120 5.8% 37.5%; /* #5A655A */
+    --secondary: 86 24% 92%;
+    --secondary-foreground: 120 8.8% 11.2%;
+    --accent: 86 24% 92%;
+    --accent-foreground: 120 8.8% 11.2%;
+
+    /* Lines */
+    --border: 88.7 15.4% 70.8%; /* #B5C0A9 hairline */
+    --input: 88.7 15.4% 70.8%;
+    --ring: 155.3 100% 21%; /* signal — focus ring */
+
+    /* Signal — DOH emerald */
+    --primary: 155.3 100% 21%; /* #006B3F */
+    --primary-foreground: 85.7 25.9% 94.7%;
+
+    /* Destructive — cherry red, references the cross at the seal's center */
+    --destructive: 0 70.2% 42.2%; /* #B72020 */
+    --destructive-foreground: 85.7 25.9% 94.7%;
+
+    /* Warning — ochre. Used for storage-quota warnings, near-stale drafts,
+     * the lock-notification strip, the broadcast banner, and Review-section
+     * 'warn' severity alerts. */
+    --warning: 36.3 62.3% 47.8%; /* #C68A2E */
+    --warning-foreground: 85.7 25.9% 94.7%; /* paper */
+
+    /* Highlight — DOH yellow inner rim. Used very sparingly (save toasts only).
+     * Not yet bound to a Tailwind utility; consume via hsl(var(--highlight)). */
+    --highlight: 42 76.6% 56.5%; /* #E5B23B */
+
+    /* Radius — Verde Manual caps at 4px; default is 2px */
+    --radius: 0.25rem;
+  }
+
+  .dark {
+    --background: 132 14.3% 6.9%; /* #0F1410 graphite */
+    --foreground: 90 20% 86.3%; /* #DCE3D5 */
+    --muted: 120 6% 12%;
+    --muted-foreground: 120 4.2% 52.9%; /* #828C82 */
+    --secondary: 120 6% 12%;
+    --secondary-foreground: 90 20% 86.3%;
+    --accent: 120 6% 12%;
+    --accent-foreground: 90 20% 86.3%;
+
+    --border: 109.1 12.1% 17.8%; /* #2A3328 */
+    --input: 109.1 12.1% 17.8%;
+    --ring: 155 55.1% 36.7%;
+
+    --primary: 155 55.1% 36.7%; /* #2A9166 — emerald shifted brighter for dark */
+    --primary-foreground: 90 20% 86.3%;
+
+    --destructive: 1.7 62.7% 56.9%; /* #D6504C */
+    --destructive-foreground: 90 20% 86.3%;
+
+    --warning: 35 70% 58%; /* shifted brighter for dark mode */
+    --warning-foreground: 132 14.3% 6.9%; /* graphite ground */
+
+    --highlight: 43.9 84.2% 65.3%; /* #F1C95C */
   }
 }
 

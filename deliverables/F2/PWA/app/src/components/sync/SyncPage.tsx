@@ -58,7 +58,7 @@ export function SyncPage({ runSync }: SyncPageProps) {
   if (rows.length === 0) {
     return (
       <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
-        <h2 className="text-2xl font-semibold">{t('sync.heading')}</h2>
+        <h2 className="font-serif text-2xl font-medium tracking-tight">{t('sync.heading')}</h2>
         <p className="text-sm text-muted-foreground">{t('sync.none')}</p>
         <SyncButton runSync={runSync} />
         <ChangeEnrollmentButton />
@@ -72,7 +72,7 @@ export function SyncPage({ runSync }: SyncPageProps) {
 
   return (
     <section className="mx-auto flex max-w-xl flex-col gap-4 p-6">
-      <h2 className="text-2xl font-semibold">{t('sync.heading')}</h2>
+      <h2 className="font-serif text-2xl font-medium tracking-tight">{t('sync.heading')}</h2>
       <SyncButton runSync={runSync} />
       <ChangeEnrollmentButton />
       {STATUS_ORDER.map((s) => {

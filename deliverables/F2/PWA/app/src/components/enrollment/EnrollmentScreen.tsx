@@ -50,7 +50,7 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
 
   return (
     <form onSubmit={handleEnroll} className="mx-auto flex max-w-md flex-col gap-4 p-6">
-      <h2 className="text-2xl font-semibold tracking-tight">{t('enrollment.heading')}</h2>
+      <h2 className="font-serif text-2xl font-medium tracking-tight">{t('enrollment.heading')}</h2>
       <p className="text-sm text-muted-foreground">{t('enrollment.helper')}</p>
 
       <label className="flex flex-col gap-1 text-sm">
@@ -86,7 +86,7 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
         )}
       </label>
 
-      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+      {error ? <p className="text-sm text-destructive">{error}</p> : null}
 
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={!canSubmit}>
