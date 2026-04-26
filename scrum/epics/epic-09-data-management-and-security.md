@@ -3,7 +3,7 @@ epic: 9
 title: Data Management and Security
 phase: continuous
 status: governance-active
-last_updated: 2026-04-10
+last_updated: 2026-04-26
 ---
 
 # Epic 9 — Data Management and Security
@@ -37,6 +37,8 @@ Continuous governance workstream covering data privacy compliance, security arch
 
 ### Infrastructure Security
 
+- [x] **E9-019** F2 PWA HMAC-in-bundle finding closed via auth re-arch (PR #31, staging cutover 2026-04-26) `status::done` `priority::critical`
+  - Surfaced 2026-04-25 by `/gstack-cso` audit: `VITE_F2_HMAC_SECRET` was inlined into `dist/assets/*.js`, exposing the HMAC to anyone who downloaded the bundle. Closed by replacing with Cloudflare Worker JWT proxy (E4-PWA-008). Bundle scan now reports `check-bundle-secrets: OK`. Production closure pending Phase F (E4-PWA-013).
 - [ ] **E9-020** Encryption at rest specification (tablet storage, server storage) `status::todo` `priority::high` `estimate::2h`
 - [ ] **E9-021** Encryption in transit specification (sync channel tablet → CSWeb) `status::todo` `priority::high` `estimate::2h`
 - [ ] **E9-022** CSWeb server access control policy (who can read, who can export, who can admin) `status::todo` `priority::high` `estimate::3h`

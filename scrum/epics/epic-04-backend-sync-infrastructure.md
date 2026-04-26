@@ -3,12 +3,12 @@ epic: 4
 title: Backend & Sync Infrastructure
 phase: per-track
 status: in-progress
-last_updated: 2026-04-25
+last_updated: 2026-04-26
 ---
 
 # Epic 4 — Backend & Sync Infrastructure
 
-Server-side and synchronization layer for both survey tracks: **Apps Script + Cloudflare Pages** for the F2 self-admin PWA, and **CSWeb** for the F1/F3/F4 CSPro CAPI track. Covers authentication, data ingestion, storage, and integration ETL between the two tracks.
+Server-side and synchronization layer for both survey tracks: **Apps Script + Cloudflare Pages + Cloudflare Worker (JWT proxy)** for the F2 self-admin PWA, and **CSWeb** for the F1/F3/F4 CSPro CAPI track. Covers authentication, data ingestion, storage, and integration ETL between the two tracks.
 
 **Ties to Product Backlog:** [[../product-backlog#Epic 4 — Backend & Sync Infrastructure|PB Epic 4]]
 **Methodology:** [[../../../../2_Areas/IT-Standards/templates/CAPI-Development-Workflow|CAPI Development Workflow]]
@@ -31,7 +31,19 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
 - [x] **E4-PWA-005** FacilityMasterList provisioning sheet + `?action=facilities` endpoint `status::done` `priority::high`
 - [x] **E4-PWA-006** Submission audit log + de-duplication via `client_submission_id` `status::done` `priority::medium`
 - [x] **E4-PWA-007** Runtime config endpoint with kill-switch + spec-drift signal `status::done` `priority::medium`
-- [ ] **E4-PWA-010** Backend secrets rotation policy documented (HMAC, Apps Script deploy ID) `status::todo` `priority::medium` `estimate::2h`
+- [x] **E4-PWA-008** Auth re-arch — Cloudflare Worker JWT proxy replaces HMAC-in-bundle (PR #31) `status::done` `priority::critical`
+  - Done 2026-04-26. Mitigates CRITICAL finding from 2026-04-25 `/gstack-cso` audit. Worker at `deliverables/F2/PWA/worker/`, deployed to `https://f2-pwa-worker.hcw.workers.dev`. Spec at `docs/superpowers/specs/2026-04-26-f2-pwa-auth-rearch-design.md`. Runbook at `docs/superpowers/runbooks/2026-04-26-f2-auth-cutover.md`.
+- [x] **E4-PWA-009** Staging cutover executed (Phase A–E of auth re-arch runbook) `status::done` `priority::critical`
+  - Done 2026-04-26 ~17:50 PHT. Worker provisioned (KV + 4 secrets + deploy), HMAC rotated in Apps Script, PR #31 merged to staging, manual `wrangler pages deploy` to staging (auto-deploy didn't fire — see #34), end-to-end smoke test passed (worker → Apps Script `batch-submit` returned 200, spreadsheet row written). Disruption window ~18 min.
+- [x] **E4-PWA-012** EnrollmentScreen pre-refresh hot-fix (PR #32) `status::done` `priority::high`
+  - Done 2026-04-26. PR #32 deployed manually to staging during cutover smoke test. Auto-seeds facility cache on token verify so users don't hit the catch-22 between Refresh-needs-deviceToken and Enroll-needs-facility-cache.
+- [ ] **E4-PWA-013** Phase F — production cutover to Worker JWT proxy `status::blocked` `priority::critical` `estimate::1h`
+  - Blocked on: ≥24 hr clean staging soak (earliest start 2026-04-27 ~17:35 PHT) + GitHub #33 (Section F/G multi-select bug) + GitHub #34 (CF Pages auto-deploy regression) resolution.
+- [ ] **E4-PWA-014** Investigate Cloudflare Pages auto-deploy regression on `staging` push (GitHub #34) `status::todo` `priority::high` `estimate::2h`
+  - Phase F blocker if not fixed; otherwise Phase F runbook needs rewrite to make manual `wrangler pages deploy` the documented step.
+- [ ] **E4-PWA-015** Lower Worker PBKDF2 default to 100k (Workers runtime cap) — GitHub #35 `status::todo` `priority::medium` `estimate::1h`
+  - Two-line code change in `worker/scripts/hash-admin-password.mjs` + `worker/src/admin.ts`; add a vitest that documents the cap as test-enforced contract.
+- [ ] **E4-PWA-010** Backend secrets rotation policy documented (HMAC, JWT_SIGNING_KEY, Apps Script deploy ID) `status::todo` `priority::medium` `estimate::2h`
 - [ ] **E4-PWA-011** Backup + restore runbook for FacilityMasterList + submissions sheets `status::todo` `priority::medium` `estimate::3h`
 
 ### CSWeb Track *(not started)*

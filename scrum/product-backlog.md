@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-04-25
+last_updated: 2026-04-26
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -23,7 +23,9 @@ last_updated: 2026-04-25
 
 ### Headline (this week)
 
-**Inter-sprint, Sat 2026-04-25 — F2 PWA Rounds 1 + 2 closed; Sprint 003 starts Mon 2026-04-28.** Tranche 2 (40%) was due 2026-04-24; ASPSI confirmed extension in effect, official revised deadline pending from DOH. Sprint 002 closed 2026-04-24 with F3 + F4 specs Build-ready and F1 DCF Designer-ready. Today's heavy lift was the F2 PWA UAT closure (see F2 PWA section below).
+**Inter-sprint, Sun 2026-04-26 — F2 PWA auth re-arch cut over to staging.** PR #31 (Cloudflare Worker JWT proxy replacing HMAC-in-bundle) merged to `staging` and live on `f2-pwa-staging.pages.dev`. Mitigates the **CRITICAL** finding from the 2026-04-25 `/gstack-cso` audit (HMAC was inlined into the Vite bundle, exposing it to anyone who downloaded the staging build). Worker URL: `https://f2-pwa-worker.hcw.workers.dev`. Disruption window ~18 min (longer than runbook's 4–6 min — see Issue #34). Three Round 3 issues filed during the cutover smoke test: **#33** Section F/G multi-select state pollution (Phase F blocker), **#34** CF Pages auto-deploy not firing on staging push (Phase F blocker or runbook rewrite), **#35** Worker PBKDF2 600k iters exceeds Workers' 100k cap (operational gotcha, fixed at runtime). PR #32 hot-fix opened for the EnrollmentScreen pre-refresh regression (deployed manually). **Phase F (production cutover) gated on ≥24 hours of clean staging soak + #33/#34 resolution; earliest window ~17:35 PHT 2026-04-27.**
+
+**Inter-sprint, Sat 2026-04-25 — F2 PWA Rounds 1 + 2 closed; Sprint 003 starts Mon 2026-04-28.** Tranche 2 (40%) was due 2026-04-24; ASPSI confirmed extension in effect, official revised deadline pending from DOH. Sprint 002 closed 2026-04-24 with F3 + F4 specs Build-ready and F1 DCF Designer-ready. Heavy lift on the 25th was the F2 PWA UAT closure (see F2 PWA section below).
 
 **F3 and F4 skip-logic + validation specs both landed 2026-04-21 (Sprint 002 Day 2 overdelivery).** F3 spec reviewed at 1133 lines — all 12 sections A–L, 14 sanity findings, 15 CSPro PROC templates, 6 open questions dispositioned (1 routed to Juvy: Q31 IP_GROUP; 5 spec-decisions with override clause). F4 spec drafted at 904 lines — all 17 sections A–Q, 13 sanity findings (findings #1/#2 CLOSED-BY-VERIFICATION 2026-04-21: `C_HOUSEHOLD_ROSTER` already repeating at `max_occurs=20`, `J_HEALTH_SEEKING` intentionally respondent-level per Apr 20 source), 11 CSPro PROC templates, 8 open questions dispositioned (3 routed to ASPSI, 5 spec-decisions). Both F3 and F4 are **Build-ready**. Deliverables at `deliverables/CSPro/F3/` and `deliverables/CSPro/F4/`.
 
@@ -52,7 +54,7 @@ Comms infrastructure fully provisioned (project mailbox + Viber group both live,
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
 | **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Design — Designer round 2 / sign-off next; **F3 Build-ready, F4 Build-ready** — specs complete 2026-04-21; F2 data model lives inside the PWA spec; PLF Source Captured) | F1 sign-off (E2-F1-010); F3/F4 Designer validation (E2-F3-010, E2-F4-010) |
 | **3** | CAPI Application Development | **In Progress** (F2 **PWA in production at v1.1.1**, Rounds 1+2 closed, Round 3 v1.2.0 queued; F1 CSPro build pending Designer sign-off; F3/F4 Build-ready) | F1 `FacilityHeadSurvey.fmf` Section A layout (Sprint 003); F3/F4 build slots TBD; F2 Round 3 features when slot opens |
-| **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Apps Script + Cloudflare Pages for PWA) | **In Progress** (PWA backend live and serving production v1.1.1; CSWeb track Not Started) | CSWeb provisioning + integration ETL spec drafted |
+| **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Apps Script + Cloudflare Pages + Worker for PWA) | **In Progress** (PWA staging on auth re-arch v1.2.0 via Worker JWT proxy; production still on v1.1.1 awaiting Phase F cutover; CSWeb track Not Started) | Phase F production cutover (≥24 hr staging soak + #33/#34 resolved); CSWeb provisioning + integration ETL spec drafted |
 | **5** | Field Distribution & Device Management (tablets for CAPI; URL distribution + PWA install + reminder ops for F2) | **In Progress** (PWA distribution model proven via UAT; CAPI tablet provisioning Not Started) | Tablet provisioning SOP drafted; F2 distribution-list SOP drafted |
 | **6** | Testing and Pilot | **Mode-aware:** PWA test stack live (vitest + Playwright + cross-platform QA; UAT Rounds 1+2 closed). CAPI track Not Started. | F1 desk test (follows Epic 3); QA Tester (Shan) handoff workflow extended to CAPI |
 | **7** | Training and Documentation | Not Started | Survey manual outline (tied to D2); F2 self-admin one-pager + in-app help review |
