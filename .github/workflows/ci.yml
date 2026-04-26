@@ -1,0 +1,50 @@
+name: CI — F2 PWA
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main, staging]
+
+# Cancel superseded runs on the same PR/branch.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: typecheck + vitest + build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: deliverables/F2/PWA/app
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      # actions/setup-node pinned by tag; checkout is SHA-pinned per the
+      # 2e11f16 security pass. If you want to also SHA-pin setup-node, run
+      # `gh api repos/actions/setup-node/git/refs/tags/v4 -q .object.sha`
+      # and replace `@v4` below.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: deliverables/F2/PWA/app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit + integration tests
+        run: npm test
+
+      - name: Build (includes bundle-secrets check)
+        run: npm run build
