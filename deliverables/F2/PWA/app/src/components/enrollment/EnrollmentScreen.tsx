@@ -2,22 +2,22 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/lib/auth-context';
-import { listFacilities, type RefreshResult } from '@/lib/facilities-cache';
+import { listFacilities, refreshFacilities } from '@/lib/facilities-cache';
 import type { FacilityRow } from '@/lib/db';
 import { getSyncEnv } from '@/lib/env';
+import { getFacilities } from '@/lib/facilities-client';
 import { verifyDeviceToken } from '@/lib/verify-token-client';
-
-interface EnrollmentScreenProps {
-  onRefresh: () => Promise<RefreshResult>;
-}
 
 /**
  * Two-step enrollment after the auth re-arch (spec §4.2):
  *   Step 1: paste tablet token, verify against Worker, store claims locally.
  *   Step 2: pick yourself from the facility's roster (facility is pre-locked
  *           by the token's `facility_id` claim — only the HCW ID picker is shown).
+ *
+ * Refresh uses the just-verified token directly — pre-enrollment there's no
+ * deviceToken in auth-context yet, so we can't rely on App.tsx's refresh.
  */
-export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
+export function EnrollmentScreen() {
   const { t } = useTranslation();
   const { enroll } = useAuth();
 
@@ -62,6 +62,25 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
       }
       setVerifiedToken(token);
       setTokenFacilityId(result.claims.facility_id);
+      // Auto-seed the facility cache so the user can enroll without an extra
+      // Refresh click. Pre-cutover, the bundle had its own HMAC and refresh
+      // worked at any time; post-cutover the only cred we have is this just-
+      // verified token.
+      try {
+        const refreshResult = await refreshFacilities({
+          fetcher: () =>
+            getFacilities({
+              proxyUrl: env.proxyUrl,
+              deviceToken: token,
+              fetchImpl: fetch.bind(globalThis),
+            }),
+        });
+        if (refreshResult.ok) {
+          setFacilities(await listFacilities());
+        }
+      } catch {
+        // Non-fatal — user can click Refresh manually if auto-seed fails.
+      }
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -70,10 +89,19 @@ export function EnrollmentScreen({ onRefresh }: EnrollmentScreenProps) {
   };
 
   const handleRefresh = async () => {
+    if (!verifiedToken) return;
     setRefreshing(true);
     setError(null);
     try {
-      const result = await onRefresh();
+      const env = getSyncEnv();
+      const result = await refreshFacilities({
+        fetcher: () =>
+          getFacilities({
+            proxyUrl: env.proxyUrl,
+            deviceToken: verifiedToken,
+            fetchImpl: fetch.bind(globalThis),
+          }),
+      });
       if (!result.ok) {
         setError(result.error.message);
       }
