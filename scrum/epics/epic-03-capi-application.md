@@ -3,7 +3,7 @@ epic: 3
 title: CAPI Application Development (CSPro + CSEntry / PWA)
 phase: per-instrument
 status: in-progress
-last_updated: 2026-04-23
+last_updated: 2026-04-26
 ---
 
 # Epic 3 — CAPI Application Development (CSPro + CSEntry / PWA)
@@ -13,12 +13,12 @@ Per-instrument application build workstream. Turns the validated data dictionary
 **Ties to Product Backlog:** [[../product-backlog#Epic 3 — CAPI Application Development|PB Epic 3]]
 **Methodology:** [[../../../../2_Areas/IT-Standards/templates/CAPI-Development-Workflow|CAPI Development Workflow]] Phase 6
 
-## Status snapshot (2026-04-23)
+## Status snapshot (2026-04-26)
 
 | Instrument | Mode | Build state |
 |---|---|---|
 | F1 | CSPro CAPI | In progress — DCF stable at 12 records / 671 items; Designer sign-off (E2-F1-010) pending; FMF build deferred to Sprint 003 |
-| F2 | **PWA** (self-admin; CSPro-encoder and Google Forms fallbacks retired; **CSPro F2 track = least priority**) | **Production live at v1.1.1 (2026-04-25).** UAT Rounds 1 + 2 both closed (13 issues fixed across both rounds). Production: https://f2-pwa.pages.dev. UAT automation pipeline in place (Slack events + daily digest + release notes). Round 3 (v1.2.0) backlog queued: #16/#17/#18 enhancements + Verde Manual visual-identity migration (DESIGN.md committed 2026-04-26; PRs #37 tokens + #38 fonts open; PR 3 layout deferred). |
+| F2 | **PWA** (self-admin; CSPro-encoder and Google Forms fallbacks retired; **CSPro F2 track = least priority**) | **Production live at v1.1.1 codebase + Verde Manual visual identity since 2026-04-26.** UAT Rounds 1 + 2 both closed (13 issues fixed across both rounds). Production: https://f2-pwa.pages.dev (Verde Manual ported via PR #42 path B + manual `wrangler pages deploy`). UAT automation pipeline in place (Slack events + daily digest + release notes). Round 3 (v1.2.0) UX backlog queued (#16/#17/#18); Verde Manual visual-identity migration shipped end-to-end (5 PRs on staging, ported to main as #42); auth re-arch (PR #31) on staging awaiting Phase F. |
 | F3 | CSPro CAPI | Build-ready — DCF built 2026-04-16, skip-logic+validation spec reviewed 2026-04-21 |
 | F4 | CSPro CAPI (roster-heavy) | Build-ready — DCF built 2026-04-16, skip-logic+validation spec drafted 2026-04-21; schema verified |
 | PLF | Recruitment form (mode TBD) | Source captured |
@@ -98,7 +98,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 **F2 PWA Epic 3 build is COMPLETE as of 2026-04-23.** M0–M11 shipped 2026-04-17/18; auto-advance + section-lock UX shipped post-M11; 3/3 Playwright E2E tests pass. The prior Google Forms track (E3-F2-GF-001..008) and the deferred CSPro-encoder track are both **RETIRED / SUPERSEDED**. **The CSPro F2 track is the least priority item in this engagement — do not reopen without explicit decision reversal.**
 
 **Build location:** `deliverables/F2/PWA/app/`
-**Production:** `https://f2-pwa.pages.dev` (Cloudflare Pages, branch `main`, v1.1.1 as of 2026-04-25)
+**Production:** `https://f2-pwa.pages.dev` (Cloudflare Pages, branch `main`, v1.1.1 codebase + Verde Manual visual identity since 2026-04-26 via PR #42 path-B port + manual `wrangler pages deploy`. Auto-deploy on push currently broken — see [#34](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/34))
 **Staging (SUT):** `https://b1e46a55.f2-pwa-staging.pages.dev` (Cloudflare Pages, branch `staging` — deploy URL rotates per push; canonical alias is the project root)
 **GitHub repo:** `github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development` (public)
 **UAT coordination:** Slack `#f2-pwa-uat` (C0AV19GB05P) + GitHub Issues + project board #7
@@ -148,6 +148,8 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [x] **E3-F2-PWA-DESIGN-002** PR #38 — fonts via Bunny CDN with workbox `runtimeCaching` for offline use (Newsreader + Public Sans Variable + JetBrains Mono; Tailwind `font-{serif,sans,mono}` mapped). Merged 2026-04-26 as `c1a97bb`. `status::done` `priority::high` `actual::2026-04-26`
 - [x] **E3-F2-PWA-DESIGN-003** PR #39 — layout & components refactor (`<Question>` 80px gutter + JetBrains Mono margin id; `<ProgressBar>` → typographic ledger; killed card patterns in `<EnrollmentScreen>` / `<ReviewSection>`; raw `text-red-*`/`text-green-*` swept to `text-destructive` / `text-primary`; Newsreader applied to all h1/h2 chrome; JetBrains Mono on version subtitle + section eyebrows). Merged 2026-04-26 as `4fd2d92`. 308/308 tests pass; visual smoke confirmed Newsreader + Public Sans + JetBrains Mono all loaded on staging. `status::done` `priority::high` `actual::2026-04-26`
 - [x] **E3-F2-PWA-DESIGN-006** Sweep remaining raw Tailwind colors in `PendingCount.tsx` / `BroadcastBanner.tsx` / `SectionTree.tsx` / ReviewSection `warn` severity. Extended `tailwind.config.ts` to alpha-aware HSL slot syntax + new `warning` token; added `--warning` + `--warning-foreground` to `src/index.css`. PR [#40](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/40) merged 2026-04-26 as `1458f29`. Bonus: also fixed a quiet pre-existing bug where `bg-primary/10` in SectionTree was producing malformed CSS in the old non-alpha config. `status::done` `priority::low` `actual::2026-04-26`
+- [x] **E3-F2-PWA-DESIGN-007** Polish PR3 punts — Button.tsx shadcn primitive flattened (no shadows on default/destructive/outline/secondary variants), SpecDriftOverlay/KillSwitchOverlay use bg-background + hairline border (no shadow-lg), MultiSectionForm fixed-side nav arrows softened from shadow-md to shadow-sm. PR [#41](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/41) merged 2026-04-26 as `7bfc28a`. `status::done` `priority::low` `actual::2026-04-26`
+- [x] **E3-F2-PWA-DESIGN-008** Path-B port to production — cherry-picked the 5 staging Verde Manual commits onto a branch off `main`, resolved EnrollmentScreen and App.tsx conflicts (kept main's pre-auth-rearch single-step Enroll logic + applied Verde styling intent), opened PR [#42](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/42) merged 2026-04-26 as `a1c4a3e`. CF Pages auto-deploy didn't fire on the merge (confirms #34 affects main pushes too); manually deployed via `wrangler pages deploy dist --project-name=f2-pwa --branch=main --commit-hash=a1c4a3ea` (deployment `4f61356a`). Verde Manual now live at `https://f2-pwa.pages.dev`. `status::done` `priority::high` `actual::2026-04-26`
 - [ ] **E3-F2-PWA-DESIGN-004** Self-host fonts under `public/fonts/*.woff2` (replaces CDN path from PR #38). **Gated on `pyftsubset`/fontTools tooling** for proper Latin Extended subsetting; lands as a follow-up after Round 3 if Bunny CDN proves problematic. `status::deferred` `priority::low`
 - [ ] **E3-F2-PWA-DESIGN-005** Refine Verde Manual hex values from official DOH brand-book PDF (Department Order 2020-0011, Verde Vision 2023+). Current values are best-fit approximations of the visible seal + documented background tint `#e7efe7`. **Async on ASPSI** for PDF acquisition. `status::blocked-external` `priority::low`
 
@@ -198,7 +200,7 @@ F4 inherits the standard template **plus a roster engine**. The household roster
 
 ## Notes
 
-- **F2 PWA Epic 3 build is COMPLETE (2026-04-23) and in production at v1.1.1 (2026-04-25).** UAT Rounds 1 + 2 both closed; 13 issues fixed; production live at https://f2-pwa.pages.dev. Round 3 (v1.2.0) UX enhancements queued: #16/#17/#18 on the project board. Verde Manual visual-identity migration in flight: DESIGN.md committed 2026-04-26; PRs #37 (tokens) + #38 (fonts) open and validated; PR 3 (layout & components) deferred until #37 + #38 merge so its visual smoke runs against full Verde + fonts. **CSPro F2 track is least priority — do not reopen.**
+- **F2 PWA Epic 3 build is COMPLETE (2026-04-23) and in production at v1.1.1 codebase + Verde Manual visual identity (2026-04-26).** UAT Rounds 1 + 2 both closed; 13 issues fixed; production live at https://f2-pwa.pages.dev. Round 3 (v1.2.0) UX enhancements queued: #16/#17/#18 on the project board. **Verde Manual visual-identity migration COMPLETE end-to-end:** 5 staging PRs (#37/#38/#39/#40/#41) + path-B port to main as #42 + manual `wrangler pages deploy` (CF auto-deploy broken per #34). DESIGN.md is the visual source of truth at `deliverables/F2/PWA/app/DESIGN.md`. **CSPro F2 track is least priority — do not reopen.**
 - **F1 is the priority CSPro instrument.** Its task breakdown above is the template for F3 and F4.
 - **F3 and F4 are Build-ready** as of 2026-04-21; form-layout plans also landed 2026-04-21 ([[../../deliverables/CSPro/Form-Layout-Principles|shared principles]] + per-instrument F1/F3/F4 plans). E3-F4-000 schema patch closed by verification on the same day — the generator and DCF were already correct.
 - Reusable CSPro patterns live in `deliverables/CSPro/` as includable `.apc` fragments:

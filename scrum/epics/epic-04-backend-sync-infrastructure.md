@@ -22,7 +22,7 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
 
 ## Tasks
 
-### F2 PWA Track *(live in production at v1.1.1, 2026-04-25)*
+### F2 PWA Track *(live in production at v1.1.1 codebase + Verde Manual visual identity since 2026-04-26)*
 
 - [x] **E4-PWA-001** Apps Script backend scaffold (router, handlers, schema) `status::done` `priority::critical`
 - [x] **E4-PWA-002** Cloudflare Pages staging + production deploy targets configured `status::done` `priority::critical`
@@ -39,8 +39,10 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
   - Done 2026-04-26. PR #32 deployed manually to staging during cutover smoke test. Auto-seeds facility cache on token verify so users don't hit the catch-22 between Refresh-needs-deviceToken and Enroll-needs-facility-cache.
 - [ ] **E4-PWA-013** Phase F — production cutover to Worker JWT proxy `status::blocked` `priority::critical` `estimate::1h`
   - Blocked on: ≥24 hr clean staging soak (earliest start 2026-04-27 ~17:35 PHT) + GitHub #33 (Section F/G multi-select bug) + GitHub #34 (CF Pages auto-deploy regression) resolution.
-- [ ] **E4-PWA-014** Investigate Cloudflare Pages auto-deploy regression on `staging` push (GitHub #34) `status::todo` `priority::high` `estimate::2h`
-  - Phase F blocker if not fixed; otherwise Phase F runbook needs rewrite to make manual `wrangler pages deploy` the documented step.
+- [ ] **E4-PWA-014** Investigate Cloudflare Pages auto-deploy regression on **both** `staging` and `main` pushes (GitHub #34) `status::todo` `priority::high` `estimate::2h`
+  - Confirmed 2026-04-26 evening that #34 also affects `main` pushes — PR #42 merge to main did not auto-deploy; manual `wrangler pages deploy dist --project-name=f2-pwa --branch=main --commit-hash=a1c4a3ea` was required to ship Verde Manual to production.
+  - Phase F blocker if not fixed; otherwise Phase F runbook needs rewrite to make manual `wrangler pages deploy` the documented step for both branches.
+  - Likely root cause to try first: disconnect/reconnect the GitHub integration in CF Pages dashboard (Settings → Builds & deployments) to refresh the webhook subscription.
 - [ ] **E4-PWA-015** Lower Worker PBKDF2 default to 100k (Workers runtime cap) — GitHub #35 `status::todo` `priority::medium` `estimate::1h`
   - Two-line code change in `worker/scripts/hash-admin-password.mjs` + `worker/src/admin.ts`; add a vitest that documents the cap as test-enforced contract.
 - [ ] **E4-PWA-010** Backend secrets rotation policy documented (HMAC, JWT_SIGNING_KEY, Apps Script deploy ID) `status::todo` `priority::medium` `estimate::2h`
