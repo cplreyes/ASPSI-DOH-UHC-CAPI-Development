@@ -43,6 +43,20 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      fontFamily: {
+        // Verde Manual. See DESIGN.md.
+        // `serif` overrides the Tailwind default so `font-serif` resolves to Newsreader.
+        serif: ['Newsreader', 'Georgia', '"Times New Roman"', 'serif'],
+        sans: [
+          'Public Sans',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          'sans-serif',
+        ],
+        mono: ['"JetBrains Mono"', '"SF Mono"', 'Menlo', 'Consolas', 'monospace'],
+      },
     },
   },
   plugins: [tailwindcssAnimate],
