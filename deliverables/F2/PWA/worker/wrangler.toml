@@ -14,8 +14,8 @@ compatibility_flags = ["nodejs_compat"]
 # Run `wrangler kv:namespace create F2_AUTH` and paste the returned id below.
 [[kv_namespaces]]
 binding = "F2_AUTH"
-id = "REPLACE_ME_WITH_KV_ID"
-preview_id = "REPLACE_ME_WITH_PREVIEW_KV_ID"
+id = "9b293e0c661d4f60b513facc61b11e0b"
+preview_id = "6cfb9d57e0ff4334a094661d96e1bf2e"
 
 # Logs go to the Cloudflare dashboard. Add a logpush destination later if needed.
 [observability]
