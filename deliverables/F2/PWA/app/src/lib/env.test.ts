@@ -11,27 +11,15 @@ describe('getSyncEnv', () => {
     Object.assign(import.meta.env, originalEnv);
   });
 
-  it('returns the URL and secret when both env vars are set', async () => {
-    import.meta.env.VITE_F2_BACKEND_URL = 'https://example.com/exec';
-    import.meta.env.VITE_F2_HMAC_SECRET = 'deadbeef';
+  it('returns the proxyUrl when VITE_F2_PROXY_URL is set', async () => {
+    import.meta.env.VITE_F2_PROXY_URL = 'https://worker.example.workers.dev';
     const { getSyncEnv } = await import('./env');
-    expect(getSyncEnv()).toEqual({
-      backendUrl: 'https://example.com/exec',
-      hmacSecret: 'deadbeef',
-    });
+    expect(getSyncEnv()).toEqual({ proxyUrl: 'https://worker.example.workers.dev' });
   });
 
-  it('throws with a clear message when VITE_F2_BACKEND_URL is missing', async () => {
-    import.meta.env.VITE_F2_BACKEND_URL = '';
-    import.meta.env.VITE_F2_HMAC_SECRET = 'x';
+  it('throws with a clear message when VITE_F2_PROXY_URL is missing', async () => {
+    import.meta.env.VITE_F2_PROXY_URL = '';
     const { getSyncEnv } = await import('./env');
-    expect(() => getSyncEnv()).toThrow(/VITE_F2_BACKEND_URL/);
-  });
-
-  it('throws with a clear message when VITE_F2_HMAC_SECRET is missing', async () => {
-    import.meta.env.VITE_F2_BACKEND_URL = 'https://x/exec';
-    import.meta.env.VITE_F2_HMAC_SECRET = '';
-    const { getSyncEnv } = await import('./env');
-    expect(() => getSyncEnv()).toThrow(/VITE_F2_HMAC_SECRET/);
+    expect(() => getSyncEnv()).toThrow(/VITE_F2_PROXY_URL/);
   });
 });

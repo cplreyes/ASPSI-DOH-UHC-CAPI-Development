@@ -3,6 +3,7 @@ import type { EnrollmentRow } from './db';
 import {
   clearEnrollment,
   getEnrollment,
+  parseJwtClaimsUnsafe,
   setEnrollment,
   type SetEnrollmentInput,
 } from './enrollment';
@@ -25,8 +26,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     getEnrollment()
-      .then((row) => {
+      .then(async (row) => {
         if (cancelled) return;
+        // Spec §4.2 step 6: treat a row with missing/expired device_token as unenrolled.
+        // Clearing the row forces the user back through the enrollment flow.
+        if (row && !isDeviceTokenStillValid(row.device_token)) {
+          await clearEnrollment();
+          if (cancelled) return;
+          setEnrollmentState(null);
+          setStatus('unenrolled');
+          return;
+        }
         setEnrollmentState(row);
         setStatus(row ? 'enrolled' : 'unenrolled');
       })
@@ -67,4 +77,12 @@ export function useAuth(): AuthContextValue {
     throw new Error('useAuth must be used within an <AuthProvider>');
   }
   return ctx;
+}
+
+function isDeviceTokenStillValid(token: string | undefined): boolean {
+  if (!token) return false;
+  const claims = parseJwtClaimsUnsafe(token);
+  if (!claims || typeof claims.exp !== 'number') return false;
+  const nowS = Math.floor(Date.now() / 1000);
+  return claims.exp > nowS;
 }

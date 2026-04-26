@@ -3,15 +3,16 @@ import { getConfig } from './config-client';
 
 describe('getConfig', () => {
   const baseDeps = {
-    backendUrl: 'https://example.com/exec',
-    hmacSecret: 'secret',
-    hmacSign: async () => 'deadbeef',
-    nowMs: () => 1_700_000_000_000,
+    proxyUrl: 'https://worker.example.workers.dev',
+    deviceToken: 'eyJabc.eyJdef.sigxyz',
   };
 
-  it('returns parsed config on 200 ok envelope', async () => {
-    const fetchImpl = async (url: string) => {
-      expect(url).toContain('action=config');
+  it('hits /exec?action=config with Bearer header', async () => {
+    let capturedUrl = '';
+    let capturedAuth = '';
+    const fetchImpl = async (url: string, init?: RequestInit) => {
+      capturedUrl = url;
+      capturedAuth = (init?.headers as Record<string, string> | undefined)?.['Authorization'] ?? '';
       return new Response(
         JSON.stringify({
           ok: true,
@@ -27,6 +28,8 @@ describe('getConfig', () => {
       );
     };
     const r = await getConfig({ ...baseDeps, fetchImpl: fetchImpl as unknown as typeof fetch });
+    expect(capturedUrl).toBe('https://worker.example.workers.dev/exec?action=config');
+    expect(capturedAuth).toBe('Bearer eyJabc.eyJdef.sigxyz');
     expect(r.ok).toBe(true);
     if (r.ok) expect(r.config.current_spec_version).toBe('2026-04-17-m1');
   });
@@ -40,7 +43,18 @@ describe('getConfig', () => {
     if (!r.ok) expect(r.transport).toBe(true);
   });
 
-  it('returns backend error envelope verbatim', async () => {
+  it('surfaces Worker auth error code (E_TOKEN_REVOKED) verbatim', async () => {
+    const fetchImpl = async () =>
+      new Response(
+        JSON.stringify({ ok: false, error: { code: 'E_TOKEN_REVOKED', message: 'revoked' } }),
+        { status: 401 },
+      );
+    const r = await getConfig({ ...baseDeps, fetchImpl: fetchImpl as unknown as typeof fetch });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error.code).toBe('E_TOKEN_REVOKED');
+  });
+
+  it('returns backend error envelope verbatim on 200 with ok:false', async () => {
     const fetchImpl = async () =>
       new Response(JSON.stringify({ ok: false, error: { code: 'E_INTERNAL', message: 'boom' } }), {
         status: 200,
@@ -50,7 +64,7 @@ describe('getConfig', () => {
     if (!r.ok) expect(r.error.code).toBe('E_INTERNAL');
   });
 
-  it('returns transport error on HTTP 5xx', async () => {
+  it('returns transport error on HTTP 5xx without a parseable body', async () => {
     const fetchImpl = async () => new Response('err', { status: 500 });
     const r = await getConfig({ ...baseDeps, fetchImpl: fetchImpl as unknown as typeof fetch });
     expect(r.ok).toBe(false);

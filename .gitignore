@@ -42,3 +42,7 @@ __pycache__/
 
 # Superpowers brainstorming session artefacts
 .superpowers/
+.gstack/
+
+# Vitest last-run artefact (per-run, not meant to be tracked)
+deliverables/F2/PWA/app/test-results/.last-run.json

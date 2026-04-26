@@ -44,8 +44,6 @@ Production: https://f2-pwa.pages.dev. App header shows `v1.1.1 · spec 2026-04-1
 
 Comms infrastructure fully provisioned (project mailbox + Viber group both live, Shan onboarded as QA tester, Juvy confirmed as DOH-routing gate per the Apr 13 Team Communication Protocol).
 
-Comms infrastructure fully provisioned (project mailbox + Viber group both live, Shan onboarded as QA tester, Juvy confirmed as DOH-routing gate per the Apr 13 Team Communication Protocol).
-
 ### By Workstream Epic
 
 | # | Epic | Current State | Next Milestone |

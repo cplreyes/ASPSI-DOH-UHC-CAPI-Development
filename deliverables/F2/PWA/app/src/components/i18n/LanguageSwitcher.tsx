@@ -2,9 +2,17 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/i18n/locale-context';
 
+// Hide the switcher until ASPSI delivers real Filipino translations.
+// fil.ts ships placeholder-equal-to-English values, so toggling FIL today
+// changes nothing visible to the user — exposing the button reads as broken.
+// Flip VITE_FIL_READY=true once the fil bundle has real strings.
 export function LanguageSwitcher() {
   const { t } = useTranslation();
   const { locale, setLocale } = useLocale();
+
+  if (import.meta.env.VITE_FIL_READY !== 'true') {
+    return null;
+  }
 
   return (
     <div

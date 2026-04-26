@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { LocaleProvider } from '@/i18n/locale-context';
@@ -7,6 +7,22 @@ import { LanguageSwitcher } from './LanguageSwitcher';
 describe('<LanguageSwitcher>', () => {
   beforeEach(() => {
     localStorage.clear();
+    vi.stubEnv('VITE_FIL_READY', 'true');
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('renders nothing when VITE_FIL_READY is unset (Filipino translations not ready)', () => {
+    vi.stubEnv('VITE_FIL_READY', '');
+    const { container } = render(
+      <LocaleProvider>
+        <LanguageSwitcher />
+      </LocaleProvider>,
+    );
+    expect(container.firstChild).toBeNull();
+    expect(screen.queryByRole('button', { name: /filipino/i })).not.toBeInTheDocument();
   });
 
   it('renders both EN and FIL buttons', () => {

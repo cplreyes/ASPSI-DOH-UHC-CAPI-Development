@@ -42,7 +42,9 @@ describe('emitSchema', () => {
     expect(code).toContain("import { z } from 'zod';");
     expect(code).toContain('export const sectionASchema = z.object({');
     expect(code).toContain("Q3: z.enum(['Male', 'Female'])");
-    expect(code).toContain('Q4: z.coerce.number().min(18)');
+    expect(code).toContain(
+      "Q4: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(18)",
+    );
     expect(code).toContain('export type SectionAValues = z.infer<typeof sectionASchema>;');
   });
 
@@ -133,7 +135,9 @@ describe('emitSchema', () => {
       ],
       unsupported: [],
     };
-    expect(emitSchema(result)).toContain('Q11: z.coerce.number().min(1).max(24)');
+    expect(emitSchema(result)).toContain(
+      "Q11: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(1).max(24)",
+    );
   });
 
   it('quotes keys that are not valid JS identifiers', () => {
@@ -294,8 +298,12 @@ describe('emitSchema', () => {
     const out = emitSchema(result);
     expect(out).toContain('Q1_1: z.string().min(1)');
     expect(out).toContain('Q1_2: z.string().min(1)');
-    expect(out).toContain('Q9_1: z.coerce.number().optional()');
-    expect(out).toContain('Q9_2: z.coerce.number().optional()');
+    expect(out).toContain(
+      "Q9_1: z.coerce.number({ invalid_type_error: 'This field is required.' }).optional()",
+    );
+    expect(out).toContain(
+      "Q9_2: z.coerce.number({ invalid_type_error: 'This field is required.' }).optional()",
+    );
   });
 
   it('emits long-text with .min(1) when required', () => {

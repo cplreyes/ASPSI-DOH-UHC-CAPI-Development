@@ -1,4 +1,6 @@
-var PROP_ADMIN_SECRET = 'ADMIN_SECRET';
+// PROP_ADMIN_SECRET removed: admin moved to the Cloudflare Worker (see worker/).
+// At cutover (spec §10), clean it from Script Properties:
+//   PropertiesService.getScriptProperties().deleteProperty('ADMIN_SECRET');
 
 function setupBackend() {
   var props = PropertiesService.getScriptProperties();
@@ -34,15 +36,6 @@ function setupBackend() {
     Logger.log('HMAC_SECRET already set (first 6 chars): ' + secret.slice(0, 6) + '…');
   }
 
-  var adminSecret = props.getProperty(PROP_ADMIN_SECRET);
-  if (!adminSecret) {
-    adminSecret = _generateSecret();
-    props.setProperty(PROP_ADMIN_SECRET, adminSecret);
-    Logger.log('Generated new ADMIN_SECRET (first 6 chars): ' + adminSecret.slice(0, 6) + '…');
-  } else {
-    Logger.log('ADMIN_SECRET already set (first 6 chars): ' + adminSecret.slice(0, 6) + '…');
-  }
-
   Logger.log('Setup complete.');
   Logger.log('Spreadsheet URL: ' + ss.getUrl());
   Logger.log('Next: Deploy → New deployment → Web app. Save the deployment URL.');
@@ -54,14 +47,6 @@ function rotateSecret() {
   props.setProperty(PROP_HMAC_SECRET, newSecret);
   Logger.log('Rotated HMAC_SECRET. New secret starts: ' + newSecret.slice(0, 6) + '…');
   Logger.log('Update the PWA build-time env var VITE_F2_HMAC_SECRET and redeploy.');
-}
-
-function rotateAdminSecret() {
-  var props = PropertiesService.getScriptProperties();
-  var newSecret = _generateSecret();
-  props.setProperty(PROP_ADMIN_SECRET, newSecret);
-  Logger.log('Rotated ADMIN_SECRET. New secret starts: ' + newSecret.slice(0, 6) + '…');
-  Logger.log('Distribute to ops team out-of-band. Operators must re-enter on next admin login.');
 }
 
 function getSpreadsheetUrl() {
