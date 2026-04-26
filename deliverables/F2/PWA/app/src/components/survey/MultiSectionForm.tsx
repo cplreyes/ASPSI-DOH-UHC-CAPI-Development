@@ -424,7 +424,7 @@ export function MultiSectionForm({
 
           {/* Lock notification strip */}
           {lockMsg ? (
-            <div className="border-t border-amber-200 bg-amber-50 px-4 py-1.5 text-xs text-amber-700">
+            <div className="border-t border-warning/30 bg-warning/10 px-4 py-1.5 text-xs text-warning">
               {lockMsg}
             </div>
           ) : null}

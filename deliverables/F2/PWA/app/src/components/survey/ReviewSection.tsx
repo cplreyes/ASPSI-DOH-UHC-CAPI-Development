@@ -75,11 +75,9 @@ function rowsForItem(
 }
 
 // Hairline-bordered alerts with a colored left border (no full background fill).
-// `warn` keeps amber pending a `--warning` Tailwind binding (TODO: extend
-// theme.colors with `warning` from --warning, see DESIGN.md § Color).
 const SEVERITY_STYLES: Record<Warning['severity'], string> = {
   error: 'border-border border-l-4 border-l-destructive text-foreground',
-  warn: 'border-border border-l-4 border-l-amber-600 text-foreground',
+  warn: 'border-border border-l-4 border-l-warning text-foreground',
   clean: 'border-border border-l-4 border-l-primary text-foreground',
   info: 'border-border border-l-4 border-l-muted-foreground text-foreground',
 };
