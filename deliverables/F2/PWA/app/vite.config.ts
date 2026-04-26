@@ -41,6 +41,27 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest}'],
         navigateFallback: '/index.html',
         cleanupOutdatedCaches: true,
+        // Verde Manual fonts. See DESIGN.md. CDN now, self-host follow-up.
+        // CSS = StaleWhileRevalidate (refresh when online); woff2 = CacheFirst.
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.bunny\.net\/css/,
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'bunny-fonts-css',
+              expiration: { maxEntries: 5, maxAgeSeconds: 60 * 60 * 24 * 365 },
+            },
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.bunny\.net\/.*\.(woff2?|ttf|otf)$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'bunny-fonts-files',
+              expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+        ],
       },
       devOptions: {
         enabled: false,
