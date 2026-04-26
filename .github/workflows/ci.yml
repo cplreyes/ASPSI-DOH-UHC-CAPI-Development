@@ -30,7 +30,9 @@ jobs:
       # and replace `@v4` below.
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # Node 22: rollup-plugin-visualizer requires it, and the lockfile was
+          # generated under Node 22's npm so older versions see drift.
+          node-version: 22
           cache: npm
           cache-dependency-path: deliverables/F2/PWA/app/package-lock.json
 
