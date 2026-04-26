@@ -36,35 +36,46 @@ export function Question({ item }: QuestionProps) {
   const errorMessage = typeof error?.message === 'string' ? error.message : undefined;
 
   return (
-    <div className="flex flex-col gap-2 py-3">
-      <label htmlFor={item.id} className="text-sm font-medium">
-        <span className="mr-1 text-muted-foreground">{item.id}.</span>
-        {localized(item.label, locale)}
-        {item.required ? <span className="ml-1 text-red-600">*</span> : null}
-      </label>
-      {item.help ? (
-        <p className="text-xs text-muted-foreground">{localized(item.help, locale)}</p>
-      ) : null}
-      {renderControl(
-        item,
-        register,
-        showSpecify,
-        t,
-        locale,
-        errors,
-        visibleChoices,
-        currentValue,
-        (next) => setValue(item.id, next, { shouldValidate: true, shouldDirty: true }),
-      )}
-      {errorMessage ? (
-        <p role="alert" className="text-xs text-red-600">
-          {errorMessage}
-        </p>
-      ) : error ? (
-        <p role="alert" className="text-xs text-red-600">
-          {t('question.requiredFallback')}
-        </p>
-      ) : null}
+    <div className="grid grid-cols-1 gap-y-2 py-3 sm:grid-cols-[80px_1fr]">
+      <span
+        aria-hidden="true"
+        className="font-mono text-sm text-muted-foreground sm:pt-1 sm:pr-4 sm:text-right sm:text-base sm:leading-snug"
+      >
+        {item.id}
+      </span>
+      <div className="flex min-w-0 flex-col gap-2">
+        <label htmlFor={item.id} className="text-base font-medium leading-snug">
+          <span className="sr-only">
+            {item.id}
+            {'. '}
+          </span>
+          {localized(item.label, locale)}
+          {item.required ? <span className="ml-1 text-destructive">*</span> : null}
+        </label>
+        {item.help ? (
+          <p className="text-xs text-muted-foreground">{localized(item.help, locale)}</p>
+        ) : null}
+        {renderControl(
+          item,
+          register,
+          showSpecify,
+          t,
+          locale,
+          errors,
+          visibleChoices,
+          currentValue,
+          (next) => setValue(item.id, next, { shouldValidate: true, shouldDirty: true }),
+        )}
+        {errorMessage ? (
+          <p role="alert" className="text-xs text-destructive">
+            {errorMessage}
+          </p>
+        ) : error ? (
+          <p role="alert" className="text-xs text-destructive">
+            {t('question.requiredFallback')}
+          </p>
+        ) : null}
+      </div>
     </div>
   );
 }
@@ -91,18 +102,26 @@ function blockNonNumericKeys(event: React.KeyboardEvent<HTMLInputElement>) {
 //   is no longer accurate).
 export function nextMultiValue(
   current: string[],
-  clicked: { value: string; isExclusive?: boolean; isSelectAll?: boolean; isOtherSpecify?: boolean },
+  clicked: {
+    value: string;
+    isExclusive?: boolean;
+    isSelectAll?: boolean;
+    isOtherSpecify?: boolean;
+  },
   willBeChecked: boolean,
-  allChoices: ReadonlyArray<{ value: string; isExclusive?: boolean; isSelectAll?: boolean; isOtherSpecify?: boolean }>,
+  allChoices: ReadonlyArray<{
+    value: string;
+    isExclusive?: boolean;
+    isSelectAll?: boolean;
+    isOtherSpecify?: boolean;
+  }>,
 ): string[] {
   const findChoice = (v: string) => allChoices.find((c) => c.value === v);
 
   if (willBeChecked) {
     if (clicked.isExclusive) return [clicked.value];
     if (clicked.isSelectAll) {
-      return allChoices
-        .filter((c) => !c.isExclusive && !c.isOtherSpecify)
-        .map((c) => c.value);
+      return allChoices.filter((c) => !c.isExclusive && !c.isOtherSpecify).map((c) => c.value);
     }
     const filtered = current.filter((v) => {
       const c = findChoice(v);
@@ -144,7 +163,7 @@ function renderControl(
         <input
           id={item.id}
           type="text"
-          className="rounded border border-input bg-background px-3 py-2"
+          className="rounded-md border border-input bg-background px-3 py-2"
           {...register(item.id)}
         />
       );
@@ -153,7 +172,7 @@ function renderControl(
         <textarea
           id={item.id}
           rows={4}
-          className="rounded border border-input bg-background px-3 py-2"
+          className="rounded-md border border-input bg-background px-3 py-2"
           {...register(item.id)}
         />
       );
@@ -166,7 +185,7 @@ function renderControl(
           max={item.max}
           inputMode="numeric"
           onKeyDown={blockNonNumericKeys}
-          className="rounded border border-input bg-background px-3 py-2"
+          className="rounded-md border border-input bg-background px-3 py-2"
           {...register(item.id)}
         />
       );
@@ -194,7 +213,7 @@ function renderControl(
               <input
                 id={`${item.id}_other`}
                 type="text"
-                className="rounded border border-input bg-background px-3 py-2"
+                className="rounded-md border border-input bg-background px-3 py-2"
                 {...register(`${item.id}_other`)}
               />
             </div>
@@ -222,16 +241,13 @@ function renderControl(
                     checked={isChecked}
                     onChange={(e) => {
                       if (!onChange) return;
-                      const next = nextMultiValue(
-                        selected,
-                        choice,
-                        e.target.checked,
-                        allChoices,
-                      );
+                      const next = nextMultiValue(selected, choice, e.target.checked, allChoices);
                       onChange(next);
                     }}
                     onBlur={reg.onBlur}
-                    {...(idx === 0 ? { id: item.id, ref: reg.ref, name: reg.name } : { name: reg.name })}
+                    {...(idx === 0
+                      ? { id: item.id, ref: reg.ref, name: reg.name }
+                      : { name: reg.name })}
                   />
                   {localized(choice.label, locale)}
                 </label>
@@ -246,7 +262,7 @@ function renderControl(
               <input
                 id={`${item.id}_other`}
                 type="text"
-                className="rounded border border-input bg-background px-3 py-2"
+                className="rounded-md border border-input bg-background px-3 py-2"
                 {...register(`${item.id}_other`)}
               />
             </div>
@@ -259,7 +275,7 @@ function renderControl(
         <input
           id={item.id}
           type="date"
-          className="rounded border border-input bg-background px-3 py-2"
+          className="rounded-md border border-input bg-background px-3 py-2"
           {...register(item.id)}
         />
       );
@@ -283,15 +299,15 @@ function renderControl(
                   {...(sf.kind === 'number'
                     ? { inputMode: 'numeric', onKeyDown: blockNonNumericKeys }
                     : {})}
-                  className="rounded border border-input bg-background px-3 py-2"
+                  className="rounded-md border border-input bg-background px-3 py-2"
                   {...register(sf.id)}
                 />
                 {sfErrorMessage ? (
-                  <p role="alert" className="text-xs text-red-600">
+                  <p role="alert" className="text-xs text-destructive">
                     {sfErrorMessage}
                   </p>
                 ) : sfError ? (
-                  <p role="alert" className="text-xs text-red-600">
+                  <p role="alert" className="text-xs text-destructive">
                     {t('question.requiredFallback')}
                   </p>
                 ) : null}

@@ -74,11 +74,14 @@ function rowsForItem(
   return rows;
 }
 
+// Hairline-bordered alerts with a colored left border (no full background fill).
+// `warn` keeps amber pending a `--warning` Tailwind binding (TODO: extend
+// theme.colors with `warning` from --warning, see DESIGN.md § Color).
 const SEVERITY_STYLES: Record<Warning['severity'], string> = {
-  error: 'border-red-300 bg-red-50 text-red-900',
-  warn: 'border-amber-300 bg-amber-50 text-amber-900',
-  clean: 'border-blue-300 bg-blue-50 text-blue-900',
-  info: 'border-slate-200 bg-slate-50 text-slate-700',
+  error: 'border-border border-l-4 border-l-destructive text-foreground',
+  warn: 'border-border border-l-4 border-l-amber-600 text-foreground',
+  clean: 'border-border border-l-4 border-l-primary text-foreground',
+  info: 'border-border border-l-4 border-l-muted-foreground text-foreground',
 };
 
 export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) {
@@ -88,16 +91,13 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6 p-6">
-      <h2 className="text-2xl font-semibold tracking-tight">{t('review.heading')}</h2>
+      <h2 className="font-serif text-2xl font-medium tracking-tight">{t('review.heading')}</h2>
 
       {warnings.length > 0 ? (
         <section aria-label={t('review.crossFieldRegion')} className="flex flex-col gap-2">
           {warnings.map((w) => (
-            <div
-              key={w.id}
-              className={`rounded-md border px-3 py-2 text-sm ${SEVERITY_STYLES[w.severity]}`}
-            >
-              <strong className="mr-2">{w.id}</strong>
+            <div key={w.id} className={`border px-3 py-2 text-sm ${SEVERITY_STYLES[w.severity]}`}>
+              <strong className="mr-2 font-mono text-xs uppercase tracking-wide">{w.id}</strong>
               {t(w.message.key, w.message.values ?? {})}
             </div>
           ))}
@@ -106,7 +106,9 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
 
       {SECTIONS.map((section) => {
         const grouped = groupVisibleItems(section.items);
-        type Block = { kind: 'rows'; rows: ReturnType<typeof rowsForItem> } | { kind: 'matrix'; group: MatrixGroup };
+        type Block =
+          | { kind: 'rows'; rows: ReturnType<typeof rowsForItem> }
+          | { kind: 'matrix'; group: MatrixGroup };
         const blocks: Block[] = [];
         for (const entry of grouped) {
           if (isMatrixGroup(entry)) {
@@ -132,34 +134,29 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
                 {t('review.edit')}
               </Button>
             </header>
-            <div className="divide-y divide-slate-200 rounded border border-slate-200">
+            <div className="divide-y divide-border border border-border">
               {blocks.map((block, blockIdx) =>
                 block.kind === 'matrix' ? (
-                  <div
-                    key={`matrix-${block.group.items[0].id}`}
-                    className="px-3 py-2"
-                  >
+                  <div key={`matrix-${block.group.items[0].id}`} className="px-3 py-2">
                     <table className="w-full text-sm">
                       <tbody>
                         {block.group.items.map((it) => (
                           <tr key={it.id}>
-                            <td className="py-1 pr-2 text-slate-700">
+                            <td className="py-1 pr-2 text-muted-foreground">
                               {it.id} {localized(it.label, locale)}
                             </td>
-                            <td className="py-1 text-slate-900">
-                              {formatValue(values[it.id])}
-                            </td>
+                            <td className="py-1 text-foreground">{formatValue(values[it.id])}</td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
                 ) : (
-                  <dl key={`rows-${blockIdx}`} className="divide-y divide-slate-200">
+                  <dl key={`rows-${blockIdx}`} className="divide-y divide-border">
                     {block.rows.map((r) => (
                       <div key={r.key} className="grid grid-cols-3 gap-3 px-3 py-2 text-sm">
-                        <dt className="col-span-2 text-slate-700">{r.label}</dt>
-                        <dd className="text-slate-900">{r.value}</dd>
+                        <dt className="col-span-2 text-muted-foreground">{r.label}</dt>
+                        <dd className="text-foreground">{r.value}</dd>
                       </div>
                     ))}
                   </dl>

@@ -20,4 +20,12 @@ describe('<ProgressBar>', () => {
     render(<ProgressBar current={3} total={3} />);
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100');
   });
+
+  it('renders the typographic ledger with zero-padded counters', () => {
+    render(<ProgressBar current={4} total={35} />);
+    const bar = screen.getByRole('progressbar');
+    // Zero-padded to total's width: 35 → 2 chars, so 4 → '04'
+    expect(bar.textContent).toContain('04');
+    expect(bar.textContent).toContain('35');
+  });
 });
