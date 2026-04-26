@@ -330,7 +330,7 @@ export function MultiSectionForm({
         aria-label="Previous section"
         onClick={handlePrev}
         className={cn(
-          'fixed top-1/2 left-1 z-30 -translate-y-1/2 rounded-full border bg-background/90 p-2 shadow-md transition-colors hover:bg-muted lg:left-[232px]',
+          'fixed top-1/2 left-1 z-30 -translate-y-1/2 rounded-full border border-border bg-background/90 p-2 shadow-sm transition-colors hover:bg-muted lg:left-[232px]',
           isFirst && 'invisible',
         )}
       >
@@ -353,7 +353,7 @@ export function MultiSectionForm({
         aria-label="Next section"
         onClick={handleNext}
         className={cn(
-          'fixed top-1/2 right-1 z-30 -translate-y-1/2 rounded-full border p-2 shadow-md transition-colors',
+          'fixed top-1/2 right-1 z-30 -translate-y-1/2 rounded-full border border-border p-2 shadow-sm transition-colors',
           isLastSection
             ? 'bg-primary text-primary-foreground hover:bg-primary/90'
             : 'bg-background/90 hover:bg-muted',
