@@ -38,10 +38,23 @@ Good morning po. Below are the tablet specifications for the CAPI fieldwork. The
 
 Good price-performance for PH field surveys — for reference, not exhaustive. Prices are SRP estimates as of Q2 2026; please confirm against current vendor quotes:
 
+### Recommended tier (best balance of reliability + form factor)
+
 - Samsung Galaxy Tab A9+ (11", 4/64 GB, LTE) — **₱14,000 – ₱17,000**
 - Samsung Galaxy Tab A8 (10.5", 4/64 GB) — **₱11,000 – ₱14,000**
 - Lenovo Tab M10 Plus, 3rd Gen (10.6", 4/64 GB) — **₱12,000 – ₱15,000**
 - Honor Pad X9 (11.5", 4/128 GB) — **₱11,000 – ₱13,000**
+
+### More affordable alternatives (~₱8,000 – ₱11,000)
+
+These still meet the minimum spec, but please confirm **GPS is included** with the seller before ordering — some Wi-Fi-only budget SKUs drop the GNSS chip, and we need GPS for per-case auto-coordinate capture:
+
+- Lenovo Tab M9, 3rd Gen (9", 4/64 GB) — **₱7,500 – ₱9,500**
+- Honor Pad X8a (11.5", 4/128 GB, LTE variant for GPS) — **₱9,000 – ₱11,000**
+- Xiaomi Redmi Pad SE 8.7" LTE (8.7", 4/128 GB, Android 14) — **₱8,500 – ₱10,500** (GPS on the LTE version only)
+- Refurbished Samsung Galaxy Tab A8 (10.5", 4/64 GB) — **₱8,000 – ₱10,000** (require warranty + battery health check from vendor)
+
+> Going below ~₱8,000 per unit usually means dropping below the minimum spec — older Android, 3 GB RAM, no GPS, or no security updates. Please avoid no-name brands (Teclast, Blackview, Doogee, etc.); build quality and security update support are not viable for a multi-month engagement, and field replacement costs offset the upfront savings.
 
 ## Required accessories per tablet (with indicative price range)
 
@@ -50,7 +63,12 @@ Good price-performance for PH field surveys — for reference, not exhaustive. P
 - 20W or higher fast charger + USB-C cable — **₱500 – ₱1,000** (often bundled; spec a spare set per unit)
 - 64 GB microSD card, optional buffer for photo overflow — **₱400 – ₱700**
 
-**Indicative total per unit (tablet + accessories):** ~₱13,000 – ₱20,000 depending on model and bundle. Add ~10–15% on top for the spare-ratio units.
+**Indicative total per unit (tablet + accessories):**
+
+- Recommended tier: ~₱13,000 – ₱20,000 per unit
+- Affordable tier: ~₱9,500 – ₱14,000 per unit
+
+Add ~10–15% on top of total quantity for the spare-ratio units.
 
 ## Procurement notes
 
