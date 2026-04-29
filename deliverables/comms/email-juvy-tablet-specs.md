@@ -34,21 +34,23 @@ Good morning po. Below are the tablet specifications for the CAPI fieldwork. The
 - **Browser:** Latest Chrome with Service Worker + IndexedDB support (required for F2 PWA)
 - **Touch:** Capacitive, 10-point multi-touch
 
-## Suggested models
+## Suggested models with indicative price range
 
-Good price-performance for PH field surveys — for reference, not exhaustive:
+Good price-performance for PH field surveys — for reference, not exhaustive. Prices are SRP estimates as of Q2 2026; please confirm against current vendor quotes:
 
-- Samsung Galaxy Tab A9+ (11", 4/64 GB, LTE)
-- Samsung Galaxy Tab A8 (10.5", 4/64 GB)
-- Lenovo Tab M10 Plus, 3rd Gen (10.6")
-- Honor Pad X9 (11.5")
+- Samsung Galaxy Tab A9+ (11", 4/64 GB, LTE) — **₱14,000 – ₱17,000**
+- Samsung Galaxy Tab A8 (10.5", 4/64 GB) — **₱11,000 – ₱14,000**
+- Lenovo Tab M10 Plus, 3rd Gen (10.6", 4/64 GB) — **₱12,000 – ₱15,000**
+- Honor Pad X9 (11.5", 4/128 GB) — **₱11,000 – ₱13,000**
 
-## Required accessories per tablet
+## Required accessories per tablet (with indicative price range)
 
-- Rugged carrying case with hand strap
-- Tempered-glass screen protector
-- 20W or higher fast charger + USB-C cable
-- 64 GB microSD card (optional buffer for photo overflow)
+- Rugged carrying case with hand strap — **₱500 – ₱1,500**
+- Tempered-glass screen protector — **₱200 – ₱500**
+- 20W or higher fast charger + USB-C cable — **₱500 – ₱1,000** (often bundled; spec a spare set per unit)
+- 64 GB microSD card, optional buffer for photo overflow — **₱400 – ₱700**
+
+**Indicative total per unit (tablet + accessories):** ~₱13,000 – ₱20,000 depending on model and bundle. Add ~10–15% on top for the spare-ratio units.
 
 ## Procurement notes
 
