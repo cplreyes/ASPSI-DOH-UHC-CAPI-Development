@@ -31,6 +31,8 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 - [x] **E0-005** Build `/daily-standup` slash command reading PB + sprint backlog `status::done` `priority::medium`
 - [ ] **E0-006** Keep Product Backlog `last_updated` current each sprint close `status::ongoing` `priority::medium`
 - [ ] **E0-007** Maintain epic files as tasks activate or mature `status::ongoing` `priority::medium`
+- [ ] **E0-008** Auto-standup retro-injection — extend `.claude/scripts/generate_standup.py` to read the prior sprint's `## Retrospective` Q4 ("One thing to change in Sprint N+1") and surface it as a Day 1 banner in the next sprint's first standup `status::todo` `priority::medium` `estimate::1h`
+  - Closes the recurring ritual gap observed Sprint 001→002 (artifact-reference rule) and Sprint 002→003 (Day 1 ritual): retro Q4 action items get captured in `sprint-current.md` Daily Notes but not surfaced in the daily ceremony itself. Sprint 003 stretch.
 
 ### Sprint-Linked Meetings
 

@@ -76,6 +76,36 @@ archived: 2026-04-25
 
 - **F2 PWA Epic 3 build closed.** Auto-advance + section-lock UX shipped earlier this sprint; today: 3/3 Playwright E2E tests passing (golden path, section lock, language switch); two production bugs fixed (`multi` checkbox array defaulting + empty-string Zod stripping); SUT deployed to Cloudflare Pages staging (`5466a539.f2-pwa-staging.pages.dev`). UAT Round 1 launched — `#f2-pwa-uat` Slack channel live, `docs/F2-PWA-UAT-Guide.md` published, GitHub Issues templates active. GitHub repo renamed to `ASPSI-DOH-UHC-CAPI-Development` and made public; remote URL updated. CSPro F2 track explicitly deprioritised as least priority in all scrum files.
 
+## Inter-Sprint Activity (2026-04-25 Sat → 2026-04-27 Mon AM)
+
+> Work that landed between Sprint 002 close (Fri 2026-04-24) and Sprint 003 start (Mon 2026-04-27). Tracked here for velocity bookkeeping; not part of Sprint 002 commitments. Items requiring follow-through carry into Sprint 003 as new commitments (see E4-PWA-013).
+
+### 2026-04-25 (Sat) — F2 PWA UAT closure + automation
+
+- **UAT Round 1 (v1.1.0) closed** with 7 fixes (auto-advance bug, mid-section skip logic, Section G role-hide, max-value enforcement on age + tenure fields). Round opened 2026-04-23 by Shan (ASPSI), closed with "Pass with comments" 2026-04-24, comments addressed and verified 2026-04-25.
+- **UAT Round 2 (v1.1.1) closed** with 6 fixes (gate-question navigation regression Q12=No / Q31=No, specialty filter by role, real-time validation tooltips, language switcher visibility, silent submit-failure fix). Production deployed to `f2-pwa.pages.dev`; release notes published as `v1.1.0` and `v1.1.1`; CHANGELOG.md auto-maintained.
+- **UAT automation infrastructure** went live on `main`: `uat-slack-events.yml` (real-time issue/milestone events to `#f2-pwa-uat`), `uat-slack-digest.yml` (09:00 MNL daily snapshot when active), `uat-release-notes.yml` (milestone-closed → CHANGELOG + GitHub Release + Slack post + auto-bump `package.json`).
+- **`/gstack-cso` security audit** flagged a CRITICAL finding: HMAC inlined into the Vite bundle, exposing it to anyone who downloaded the staging build. Auth re-arch design drafted (`docs/superpowers/specs/2026-04-26-f2-pwa-auth-rearch-design.md`).
+- **Sprint 002 archived** end of day; `sprint-current.md` reset for Sprint 003.
+
+### 2026-04-26 (Sun) — F2 PWA design system + auth re-arch + Verde Manual to production
+
+- **F2 PWA design system codified.** `/gstack-design-consultation` produced `deliverables/F2/PWA/app/DESIGN.md` — visual source of truth anchored on *"This is real software, not a government form."* Direction: **Verde Manual** — clinical stationery + utility on DOH "Verde Vision / Berde para sa bayan" institutional palette. App-level `CLAUDE.md` added at `deliverables/F2/PWA/app/CLAUDE.md` to scope gstack to the F2 PWA workstream.
+- **Visual-identity migration shipped to staging in 5 PRs** (all merged): #37 tokens, #38 fonts, #39 layout & components, #40 DESIGN-006 sweep + alpha-aware HSL slot syntax + raw-Tailwind-color sweep, #41 polish (flattened buttons, hairline-edged modals).
+- **F2 PWA auth re-architecture cut over to staging.** PR #31 (Cloudflare Worker JWT proxy replacing HMAC-in-bundle) merged to `staging` and live on `f2-pwa-staging.pages.dev`, mitigating the 2026-04-25 CSO CRITICAL finding. Worker URL: `https://f2-pwa-worker.hcw.workers.dev`. Disruption window ~18 min (longer than runbook's 4–6 min — see Issue #34). Runbook at `docs/superpowers/runbooks/2026-04-26-f2-auth-cutover.md`.
+- **Three Round 3 issues filed** during the cutover smoke test:
+  - **#33** Section F/G multi-select state pollution — Phase F blocker.
+  - **#34** CF Pages auto-deploy not firing on staging push (later confirmed broken on main too) — Phase F blocker or runbook rewrite.
+  - **#35** Worker PBKDF2 600k iters exceeds Workers' 100k cap — operational gotcha, fixed at runtime.
+- **PR #32 hot-fix** opened for the EnrollmentScreen pre-refresh regression (deployed manually).
+- **Verde Manual visual identity LIVE in production via path B.** Cherry-picked the 5 staging Verde commits onto `main` via PR #42 (`a1c4a3e`); resolved conflicts in `App.tsx` (h1 styling) and `EnrollmentScreen.tsx` (kept main's pre-auth-rearch single-step logic + applied Verde styling intent). Auth re-arch (PR #31) intentionally NOT in this port — stays on staging awaiting Phase F gate. GitHub auto-deploy didn't fire on the merge to main (confirms #34 affects main too). Manually deployed via `wrangler pages deploy dist --project-name=f2-pwa --branch=main --commit-hash=a1c4a3ea` after `npm install -g wrangler` (deployment `4f61356a-51fb-4ea2-aeb0-647edc678be0`). Canonical `f2-pwa.pages.dev` now serves Verde Manual.
+
+### Carry-into-Sprint 003
+
+- **E4-PWA-013** F2 PWA auth re-arch Phase F production cutover decision — gated on #33 + #34 resolution + ≥24h clean staging soak; earliest window ~17:35 PHT 2026-04-27. Added to Sprint 003 committed items.
+- **E3-F2-PWA-DESIGN-004** self-host fonts (gated on `pyftsubset`) — backlog, not yet sprinted.
+- **E3-F2-PWA-DESIGN-005** refine hex from official DOH brand-book PDF — blocked-external on ASPSI.
+
 ## Retrospective — Sprint 002
 
 > 5-minute time-box. Four questions, fixed order. Written, not thought-through-only.
