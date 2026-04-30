@@ -58,7 +58,13 @@ export interface EnrollmentRow {
   id: 'singleton';
   hcw_id: string;
   facility_id: string;
-  facility_type: string;
+  /**
+   * Optional. Populated from the local facilities cache at enroll time when
+   * available. On a fresh tablet whose facility cache is empty (Issue #46),
+   * enrollment still completes; `facility_type` is filled later when the
+   * facilities sync runs (consumers fall back to '' or look it up live).
+   */
+  facility_type?: string;
   enrolled_at: number;
   /**
    * Per-tablet JWT issued by the Cloudflare Worker (spec §5).

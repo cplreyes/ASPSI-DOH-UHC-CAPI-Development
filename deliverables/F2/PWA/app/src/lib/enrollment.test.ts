@@ -44,10 +44,36 @@ describe('enrollment store', () => {
     expect(reloaded).toEqual(row);
   });
 
-  it('setEnrollment throws if the facility_id is unknown to the cache', async () => {
-    await expect(
-      setEnrollment({ hcw_id: 'HCW-1', facility_id: 'F-XXX', device_token: FAKE_TOKEN }),
-    ).rejects.toThrow(/facility F-XXX/i);
+  // Issue #46: enrollment must succeed on a fresh tablet whose facilities
+  // cache is empty. The cache populates from /facilities (authenticated)
+  // after enrollment completes, so requiring it pre-enroll deadlocks first
+  // use. The verified JWT (already server-checked by /verify-token before
+  // setEnrollment is called) is the authoritative facility_id source; the
+  // local cache lookup was a soft check, not a security boundary.
+  it('setEnrollment succeeds when the facility is not in the local cache (fresh-tablet path)', async () => {
+    const row = await setEnrollment({
+      hcw_id: 'HCW-1',
+      facility_id: 'F-XXX',
+      device_token: FAKE_TOKEN,
+    });
+    expect(row).toMatchObject({
+      id: 'singleton',
+      hcw_id: 'HCW-1',
+      facility_id: 'F-XXX',
+      device_token: FAKE_TOKEN,
+    });
+    // facility_type is omitted entirely when the facility isn't cached.
+    expect('facility_type' in row && row.facility_type !== undefined).toBe(false);
+  });
+
+  it('setEnrollment populates facility_type when the facility IS cached', async () => {
+    // F-001 is in the cache via beforeEach.
+    const row = await setEnrollment({
+      hcw_id: 'HCW-2',
+      facility_id: 'F-001',
+      device_token: FAKE_TOKEN,
+    });
+    expect(row.facility_type).toBe('Hospital');
   });
 
   it('setEnrollment throws on empty hcw_id', async () => {
