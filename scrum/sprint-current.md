@@ -23,8 +23,9 @@ deliverable_anchor: E2-F1-010 / Tranche 2 (deadline TBC from DOH)
 
 ### Recurring (every sprint)
 
-- [ ] **E0-020** SJREB application status check via ASPSI `status::todo` `priority::critical`
 - [ ] **E0-032** Track D2/D3/Tranche 2 deadline exposure this week — confirm official revised deadline from DOH; submit package immediately on confirmation `status::todo` `priority::high`
+
+> **E0-020 (SJREB application status check) removed from Carl's recurring commitments 2026-04-30** per role-scope clarification — SJREB tracking is in ASPSI ops / PI lane (Dr Claro, Dr Paunlagui, Juvy as PMO), not Data Programmer scope. SJREB remains a project-level dependency for downstream pretesting / fieldwork timelines and stays visible in `wiki/entities/SJREB.md` and the risk register, but is not a sprint commitment. See memory `feedback_sjreb_out_of_scope`.
 
 ### New for Sprint 003
 
@@ -41,7 +42,7 @@ deliverable_anchor: E2-F1-010 / Tranche 2 (deadline TBC from DOH)
 
 | Class | Items | Estimate |
 |---|---|---|
-| **Committed (must-finish)** | E2-F1-010, E0-010, E0-032a, E0-020, E0-032, E3-F1-001, E4-PWA-013 | ~14–15h + E0-032a unbounded |
+| **Committed (must-finish)** | E2-F1-010, E0-010, E0-032a, E0-032, E3-F1-001, E4-PWA-013 | ~14–15h + E0-032a unbounded |
 | **Stretch** | E2-F3-010, E2-F4-010, E0-008 | ~7h |
 
 > Capacity: ~25h solo-dev week. Hard commits are ~14–15h (including E4-PWA-013 Phase F decision today) leaving room for E0-032a if it arrives heavy, or pulling stretch Designer validations (E2-F3-010 / E2-F4-010) into the week.

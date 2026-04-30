@@ -50,8 +50,8 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 
 ### Ethics Coordination
 
-- [ ] **E0-020** SJREB application status check (via ASPSI) — ongoing tracking until clearance received `status::in-progress` `priority::critical` `estimate::ongoing`
-  - Notes: long-pole blocker for Epic 6 (Testing and Pilot) pretest phase
+- [ ] **E0-020** ~~SJREB application status check (via ASPSI)~~ **out-of-scope for Data Programmer 2026-04-30** `status::out-of-scope` `priority::n/a`
+  - **Re-scoped 2026-04-30:** SJREB tracking is in ASPSI ops / PI lane (Dr Claro, Dr Paunlagui, Juvy as PMO), not Data Programmer scope per the signed CSA's TOR + Personnel Schedule. SJREB remains a project-level dependency for Epic 6 (Testing and Pilot) pretest timelines and stays visible in `wiki/entities/SJREB.md` and the risk register, but is no longer a Carl-owned recurring task. See memory `feedback_sjreb_out_of_scope`.
 - [x] **E0-021** PSA sampling endorsement captured in approved Inception Report `status::done` `priority::critical`
 
 ### Risk & Change Management
@@ -78,4 +78,4 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 ## Notes
 
 - This epic has a high proportion of `recurring` and `ongoing` tasks because it's a continuous workstream. Sprint planning should pull in the **active recurring ceremonies** plus any open one-time items relevant to the sprint period.
-- Tasks E0-020 and E0-032 should appear in every sprint until resolved.
+- Task E0-032 (Tranche/deliverable deadline tracking) should appear in every sprint until resolved. E0-020 (SJREB) was re-scoped out of Data Programmer concern 2026-04-30 — see the Ethics Coordination section above.
