@@ -42,6 +42,10 @@ jobs:
 
       - name: Build
         working-directory: deliverables/F2/PWA/app
+        # VITE_F2_PROXY_URL is the post-auth-rearch worker origin (Issue #45).
+        # vite.config.ts fails the build fast if it's missing or REPLACE_ME.
+        env:
+          VITE_F2_PROXY_URL: ${{ secrets.VITE_F2_PROXY_URL }}
         run: npm run build
 
       - name: Resolve project name from branch
