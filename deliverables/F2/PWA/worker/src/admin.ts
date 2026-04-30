@@ -15,7 +15,12 @@ const ADMIN_SESSION_TABLET_ID = '__admin_session__';
 
 // ---------- Password hashing (PBKDF2-SHA256) ----------
 
-const PBKDF2_DEFAULT_ITERS = 600_000;
+// Cloudflare Workers caps `crypto.subtle.deriveBits` PBKDF2 iterations at 100,000;
+// values above throw `NotSupportedError: iteration counts above 100000 are not supported`
+// at runtime. NIST 2023 recommends 600k for SHA-256 — we accept 100k below that bar
+// because (a) admin password is high-entropy + rate-limited at the Worker, and
+// (b) anything higher silently soft-bricks `/admin/login`. Issue #35 tracked this.
+export const MAX_PBKDF2_ITERS = 100_000;
 
 function b64urlEncode(bytes: Uint8Array): string {
   let s = '';
@@ -53,13 +58,20 @@ async function pbkdf2Derive(password: string, salt: Uint8Array, iterations: numb
  * Verify a plaintext admin password against the stored hash.
  * Stored format: `<saltB64url>:<iterations>:<hashB64url>`.
  * Note: spec §7.3 says "bcrypt"; we use PBKDF2-SHA256 because it's native to Workers.
+ *
+ * Returns false (without throwing) for malformed hashes, iteration counts below
+ * the 10k floor, or iteration counts above the Workers cap (`MAX_PBKDF2_ITERS`).
+ * The Workers-cap check is a fail-fast guard: if a future operator generates a
+ * hash with too-high iterations and ships it as the secret, login fails cleanly
+ * rather than throwing `NotSupportedError` mid-request.
  */
-async function verifyAdminPassword(plaintext: string, storedHash: string): Promise<boolean> {
+export async function verifyAdminPassword(plaintext: string, storedHash: string): Promise<boolean> {
   const parts = storedHash.split(':');
   if (parts.length !== 3) return false;
   const [saltB64, iterStr, expectedB64] = parts as [string, string, string];
   const iterations = parseInt(iterStr, 10);
   if (!iterations || iterations < 10_000) return false;
+  if (iterations > MAX_PBKDF2_ITERS) return false;
   const salt = b64urlDecode(saltB64);
   const expected = b64urlDecode(expectedB64);
   const actual = await pbkdf2Derive(plaintext, salt, iterations);
