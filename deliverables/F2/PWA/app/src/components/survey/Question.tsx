@@ -221,12 +221,22 @@ function renderControl(
         </div>
       );
     case 'multi': {
-      // Controlled checkboxes — exclusivity ("I don't know") and select-all
-      // ("All of the above") rules computed via nextMultiValue().
+      // Fully controlled checkboxes. Exclusivity ("I don't know") and
+      // select-all ("All of the above") rules are computed in nextMultiValue().
+      //
+      // Issue #33: do NOT attach RHF's `name`/`ref` (from register()) to
+      // these checkbox inputs. When several inputs share a single `name`,
+      // RHF treats them as a checkbox group and re-derives the field value
+      // from the DOM during its internal updateValid pass — which fires on
+      // *any* other field's change. That re-derivation clobbers the array
+      // we set via setValue() back to `false`/`[]`, wiping previous
+      // selections when the user answers a different question in the same
+      // section. We register the field (so dirty/validation state is
+      // tracked) but bind the ref to a focus-only sentinel (the first
+      // checkbox carries `id={item.id}` so the question's <label> still
+      // focuses it on click).
       const selected: string[] = Array.isArray(currentValue) ? (currentValue as string[]) : [];
       const allChoices = choices ?? [];
-      // Register the array field so RHF knows about it (default value handling
-      // + form lifecycle), but skip the rendered input via `style: hidden`.
       const reg = register(item.id);
       return (
         <div className="flex flex-col gap-1">
@@ -244,10 +254,8 @@ function renderControl(
                       const next = nextMultiValue(selected, choice, e.target.checked, allChoices);
                       onChange(next);
                     }}
-                    onBlur={reg.onBlur}
-                    {...(idx === 0
-                      ? { id: item.id, ref: reg.ref, name: reg.name }
-                      : { name: reg.name })}
+                    onBlur={idx === 0 ? reg.onBlur : undefined}
+                    {...(idx === 0 ? { id: item.id, ref: reg.ref } : {})}
                   />
                   {localized(choice.label, locale)}
                 </label>
