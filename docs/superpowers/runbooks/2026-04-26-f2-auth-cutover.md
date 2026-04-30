@@ -254,13 +254,35 @@ Or merge via GitHub UI if you prefer.
 
 ### D.4 — Watch the Cloudflare Pages deploy
 
+CF Pages' native git integration is broken on this account (Issue #34 —
+`wrangler pages project list` shows `Git Provider: No`). The `CF Pages
+deploy — F2 PWA` GitHub Actions workflow at
+`.github/workflows/cf-pages-deploy.yml` is the deploy mechanism: it runs
+`wrangler pages deploy` after CI succeeds on push to staging/main. Watch:
+
 ```bash
-# Cloudflare Pages auto-deploys on push to staging branch.
-# Watch the deploy via the dashboard or:
-gh run watch
+# Watch the most recent run on this branch.
+gh run watch --exit-status
 ```
 
-Wait until staging shows the new deploy is live (~3 min). The Pages URL is `https://f2-pwa-staging.pages.dev` per `wiki/sources` notes (or whatever's in your Cloudflare Pages config).
+The workflow needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` repo
+secrets (see Settings → Secrets → Actions). If the deploy step fails with
+an auth error, those are missing or wrong.
+
+Wait until staging shows the new deploy is live (~4–6 min: CI + build +
+deploy). The Pages URL is `https://f2-pwa-staging.pages.dev` per
+`wiki/sources` notes (or whatever's in your Cloudflare Pages config).
+
+**Fallback if GitHub Actions is unavailable** (account suspension, action
+quota, network issue): manual `wrangler pages deploy` works the same way.
+From `deliverables/F2/PWA/app/`:
+
+```bash
+npm ci && npm run build
+npx wrangler pages deploy dist --project-name=f2-pwa-staging --branch=staging --commit-hash=$(git rev-parse HEAD)
+```
+
+(For production cutover: `--project-name=f2-pwa --branch=main`.)
 
 ### D.5 — STOP YOUR STOPWATCH
 
