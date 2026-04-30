@@ -58,7 +58,8 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 
 - [ ] **E0-030** Maintain risk register in Product Backlog §5 `status::ongoing` `priority::high` `estimate::recurring`
 - [ ] **E0-031** Define change request protocol for mid-engagement questionnaire revisions (intake form, impact assessment, backlog refresh) `status::todo` `priority::high` `estimate::4h`
-- [ ] **E0-032** Track timeline vs deliverable deadlines (D2, D3, D4, D5, D6) weekly `status::ongoing` `priority::high` `estimate::recurring`
+- [ ] **E0-032** ~~Track timeline vs deliverable deadlines (D2, D3, D4, D5, D6) weekly~~ **out-of-scope for Data Programmer 2026-04-30** `status::out-of-scope` `priority::n/a`
+  - **Re-scoped 2026-04-30:** Tranche / deliverable deadline tracking is in ASPSI ops / PI / PMO lane, not Data Programmer scope. Tranche state can appear in the weekly internal snapshot's *Tranche / deliverable position* section as informational project context (Carl needs awareness for his own work planning), but active tracking, deadline confirmations from DOH, and submission timing are not Carl's concern. See memory `feedback_tranche_tracking_out_of_scope`.
 - [ ] **E0-033** Set up late delivery penalty tracker (1% of total per calendar day per CSA §5) — calculates exposure if deadlines slip `status::todo` `priority::medium` `estimate::2h`
 
 ### Project Governance (already done — baseline)
@@ -78,4 +79,4 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 ## Notes
 
 - This epic has a high proportion of `recurring` and `ongoing` tasks because it's a continuous workstream. Sprint planning should pull in the **active recurring ceremonies** plus any open one-time items relevant to the sprint period.
-- Task E0-032 (Tranche/deliverable deadline tracking) should appear in every sprint until resolved. E0-020 (SJREB) was re-scoped out of Data Programmer concern 2026-04-30 — see the Ethics Coordination section above.
+- ~~Task E0-032 should appear in every sprint until resolved.~~ **Both E0-020 (SJREB) and E0-032 (Tranche tracking) were re-scoped out of Data Programmer concern 2026-04-30** — see the Ethics Coordination and Risk & Change Management sections above. Other recurring tasks in this epic (E0-011 weekly status sends, etc.) may also need a role-scope review at the next sprint plan.
