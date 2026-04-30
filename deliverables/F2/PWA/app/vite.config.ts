@@ -1,11 +1,30 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { visualizer } from 'rollup-plugin-visualizer';
 import path from 'node:path';
 import pkg from './package.json' with { type: 'json' };
 
-export default defineConfig({
+// Build-time guard for required env vars (Issue #45). Production builds without
+// VITE_F2_PROXY_URL silently embed an unset value and the deployed PWA renders
+// a "VITE_F2_PROXY_URL is not set" error at the enrollment screen — broken for
+// every user. Caught at build now so it can't slip through to deploy.
+function assertRequiredEnv(mode: string): void {
+  if (mode !== 'production') return;
+  const env = loadEnv(mode, __dirname, '');
+  if (!env.VITE_F2_PROXY_URL || env.VITE_F2_PROXY_URL.includes('REPLACE_ME')) {
+    throw new Error(
+      'VITE_F2_PROXY_URL is required for production builds and is unset (or still ' +
+        "the .env.example placeholder). Set it in .env.local OR pass inline:\n\n" +
+        '  VITE_F2_PROXY_URL=https://f2-pwa-worker.<account>.workers.dev npm run build\n\n' +
+        'See .env.example for the canonical worker-origin shape.',
+    );
+  }
+}
+
+export default defineConfig(({ mode }) => {
+  assertRequiredEnv(mode);
+  return {
   plugins: [
     react(),
     process.env.BUNDLE_VISUALIZE === '1'
@@ -74,4 +93,5 @@ export default defineConfig({
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
   },
+  };
 });
