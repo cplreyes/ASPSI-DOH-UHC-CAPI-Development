@@ -49,6 +49,12 @@ jobs:
         run: npm test
 
       - name: Build (includes bundle-secrets check)
+        # vite.config.ts now requires VITE_F2_PROXY_URL on production builds
+        # (Issue #45). The staging Worker URL is public — fine to hardcode
+        # for CI build verification. Real deploys (cf-pages-deploy.yml)
+        # read from the repo secret.
+        env:
+          VITE_F2_PROXY_URL: https://f2-pwa-worker.hcw.workers.dev
         run: npm run build
 
   worker:
