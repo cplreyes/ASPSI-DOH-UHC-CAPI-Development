@@ -93,6 +93,7 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 ### Analyses
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Project Intelligence Brief]] — Full project timeline, decisions, scope changes, blockers, stakeholder dynamics, Carl's positioning
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Apr 20 DCF Generator Audit]] — Per-generator patch targets for F1/F3/F4 DCF generators + F2 Google-Forms spec, mapped to Annex G remarks
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - DOH-PMSMD Matrix Feedback Triage]] — Sprint 003 triage of Annex G's 23 PMSMD/ADB/EXECOM remarks against current F1/F2/F3/F4 build state; closes E0-032a (1 verification ask remains for ASPSI Mgmt — F2 HCW reduction-vs-removal)
 
 ## Deliverables
 
