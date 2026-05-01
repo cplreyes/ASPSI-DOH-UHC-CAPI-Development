@@ -247,11 +247,11 @@ function AppShell() {
   };
 
   return (
-    <main className="mx-auto flex min-h-screen-dvh w-full max-w-screen-2xl flex-col">
+    <main className="mx-auto flex min-h-screen-dvh w-full max-w-screen-xl flex-col">
       <BroadcastBanner message={runtimeConfig.broadcast_message} />
       <header className="flex items-center justify-between border-b px-6 py-3">
         <div className="flex flex-col">
-          <h1 className="font-serif text-2xl font-medium tracking-tight">{t('chrome.appTitle')}</h1>
+          <h1 className="font-serif text-3xl font-medium tracking-tight">{t('chrome.appTitle')}</h1>
           <span className="font-mono text-xs leading-none text-muted-foreground">
             v{APP_VERSION} · spec {LOCAL_SPEC_VERSION}
           </span>
