@@ -14,6 +14,7 @@ import { LocaleProvider } from '@/i18n/locale-context';
 import { db } from '@/lib/db';
 import { EnrollmentScreen } from './EnrollmentScreen';
 import * as verifyClient from '@/lib/verify-token-client';
+import * as facilitiesClient from '@/lib/facilities-client';
 
 const FAKE_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJ0In0.fake-sig';
 
@@ -28,14 +29,28 @@ function mockVerifyOk(facilityId = 'F-001') {
   });
 }
 
-function setup(props: Partial<React.ComponentProps<typeof EnrollmentScreen>> = {}) {
+function mockGetFacilitiesOk(facilities = [
+  {
+    facility_id: 'F-NEW',
+    facility_name: 'Newly Fetched',
+    facility_type: 'RHU',
+    region: 'NCR',
+    province: 'Metro Manila',
+    city_mun: 'Quezon City',
+    barangay: 'Test',
+  },
+]) {
+  return vi.spyOn(facilitiesClient, 'getFacilities').mockResolvedValue({
+    ok: true,
+    facilities,
+  });
+}
+
+function setup() {
   return render(
     <LocaleProvider>
       <AuthProvider>
-        <EnrollmentScreen
-          onRefresh={vi.fn().mockResolvedValue({ ok: true, count: 1 })}
-          {...props}
-        />
+        <EnrollmentScreen />
       </AuthProvider>
     </LocaleProvider>,
   );
@@ -160,15 +175,29 @@ describe('<EnrollmentScreen>', () => {
     });
   });
 
-  it('calls onRefresh when the refresh button is clicked (after token verify)', async () => {
+  it('refreshes facilities via the verified token when Refresh is clicked', async () => {
     mockVerifyOk('F-001');
-    const onRefresh = vi.fn().mockResolvedValue({ ok: true, count: 2 });
+    const getFacilitiesSpy = mockGetFacilitiesOk();
     const user = userEvent.setup();
-    setup({ onRefresh });
+    setup();
     await user.type(screen.getByTestId('enrollment-token-input'), FAKE_TOKEN);
     await user.click(screen.getByRole('button', { name: /verify token/i }));
     await waitFor(() => screen.getByLabelText(/HCW ID/i));
+    // The verify path auto-seeds the cache, so call count is 1 after verify.
+    // Clicking Refresh again should bump to 2 and pass the verified token.
     await user.click(screen.getByRole('button', { name: /refresh/i }));
-    expect(onRefresh).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(getFacilitiesSpy).toHaveBeenCalledTimes(2));
+    expect(getFacilitiesSpy.mock.calls[1]?.[0]?.deviceToken).toBe(FAKE_TOKEN);
+  });
+
+  it('auto-seeds the facility cache on token verify (no manual Refresh needed)', async () => {
+    mockVerifyOk('F-001');
+    const getFacilitiesSpy = mockGetFacilitiesOk();
+    const user = userEvent.setup();
+    setup();
+    await user.type(screen.getByTestId('enrollment-token-input'), FAKE_TOKEN);
+    await user.click(screen.getByRole('button', { name: /verify token/i }));
+    await waitFor(() => expect(getFacilitiesSpy).toHaveBeenCalledTimes(1));
+    expect(getFacilitiesSpy.mock.calls[0]?.[0]?.deviceToken).toBe(FAKE_TOKEN);
   });
 });

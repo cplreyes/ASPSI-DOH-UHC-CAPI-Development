@@ -12,7 +12,7 @@ describe('keyboard nav', () => {
     render(
       <I18nextProvider i18n={i18n}>
         <AuthProvider>
-          <EnrollmentScreen onRefresh={async () => ({ ok: true, count: 0 })} />
+          <EnrollmentScreen />
         </AuthProvider>
       </I18nextProvider>,
     );
