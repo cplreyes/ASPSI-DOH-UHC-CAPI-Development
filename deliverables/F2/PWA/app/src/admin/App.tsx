@@ -14,6 +14,8 @@ import { RouterProvider, useRouter, matchRoute } from './lib/pages-router';
 import { AdminAuthProvider, useAdminAuth } from './lib/auth-context';
 import { Login } from './Login';
 import { Layout } from './Layout';
+import { EncodeQueue } from './encode/EncodeQueue';
+import { EncodePage } from './encode/EncodePage';
 
 interface AdminAppProps {
   apiBaseUrl: string;
@@ -42,7 +44,9 @@ const PAGES: PageRoute[] = [
   { path: '/admin/apps', title: 'Files & Settings', element: <Placeholder title="Apps" subtitle="File library · Versioning · Data settings" /> },
   { path: '/admin/users', title: 'Users', element: <Placeholder title="Users" subtitle="Admin user accounts" /> },
   { path: '/admin/roles', title: 'Roles', element: <Placeholder title="Roles" subtitle="Permission matrix" /> },
-  { path: '/admin/encode', title: 'Encode', element: <Placeholder title="Paper Encoder" subtitle="Submit paper-collected responses" /> },
+  // /admin/encode and /admin/encode/:hcw_id are dispatched directly in
+  // AdminRoot below (param-bearing routes don't fit the simple matchRoute
+  // table). Listed here only so the Configuration nav highlight stays sane.
   { path: '/admin/me/change-password', title: 'Change password', element: <Placeholder title="Change password" subtitle="Required for newly-created accounts" /> },
 ];
 
@@ -71,6 +75,27 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
   if (!isAuthenticated) {
     // Render nothing during the redirect tick — useEffect above will navigate.
     return <></>;
+  }
+
+  // Encode routes carry an :hcw_id param.
+  if (pathname === '/admin/encode' || pathname === '/admin/encode/') {
+    return (
+      <Layout>
+        <EncodeQueue />
+      </Layout>
+    );
+  }
+  const encodeMatch = /^\/admin\/encode\/([^/]+)\/?$/.exec(pathname);
+  if (encodeMatch) {
+    return (
+      <Layout>
+        <EncodePage
+          apiBaseUrl={apiBaseUrl}
+          hcwId={decodeURIComponent(encodeMatch[1]!)}
+          {...(fetchImpl ? { fetchImpl } : {})}
+        />
+      </Layout>
+    );
   }
 
   const route = matchRoute(PAGES, pathname);

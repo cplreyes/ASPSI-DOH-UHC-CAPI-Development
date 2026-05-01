@@ -129,6 +129,23 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
         <p className="font-mono text-xs leading-relaxed text-muted-foreground">
           Sessions are held in memory. Closing the tab or reloading signs you out.
         </p>
+        {import.meta.env.DEV ? (
+          <button
+            type="button"
+            onClick={() =>
+              setAuth('dev-preview', {
+                token: 'dev-preview-token',
+                role: 'Administrator',
+                role_version: 0,
+                expires_at: Math.floor(Date.now() / 1000) + 3600,
+                password_must_change: false,
+              })
+            }
+            className="mt-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+          >
+            Preview portal (dev only — no backend)
+          </button>
+        ) : null}
       </footer>
     </main>
   );
