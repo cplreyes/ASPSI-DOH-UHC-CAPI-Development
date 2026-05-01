@@ -156,6 +156,38 @@ describe('requirePerm', () => {
     expect(r.errorCode).toBe('E_AUTH_EXPIRED');
   });
 
+  it('rejects 401 E_AUTH_EXPIRED when JWT.iat predates revoked_user timestamp (admin force-logout)', async () => {
+    const token = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    // Decode the JWT iat so the revoke timestamp is provably AFTER mint.
+    const parts = token.split('.');
+    const padded = parts[1]!.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((parts[1]!.length + 3) % 4);
+    const payload = JSON.parse(atob(padded)) as { iat: number };
+    const kv = makeKv();
+    kv._store.set(`revoked_user:alice`, String(payload.iat + 1));
+    const r = await requirePerm(reqWithToken(token), 'dash_data', {
+      secret: KEY,
+      cache: new RoleVersionCache(),
+      rolesListFn: async () => ({ ok: true, data: { roles: ROLES } }),
+      kv,
+    });
+    expect(r.status).toBe(401);
+    expect(r.errorCode).toBe('E_AUTH_EXPIRED');
+  });
+
+  it('allows tokens minted AFTER a revoked_user timestamp (admin reset → user re-logged in)', async () => {
+    const token = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const kv = makeKv();
+    // Revoke timestamp from before the JWT was minted — JWT.iat will be > revokedAt.
+    kv._store.set(`revoked_user:alice`, '1');
+    const r = await requirePerm(reqWithToken(token), 'dash_data', {
+      secret: KEY,
+      cache: new RoleVersionCache(),
+      rolesListFn: async () => ({ ok: true, data: { roles: ROLES } }),
+      kv,
+    });
+    expect(r.ok).toBe(true);
+  });
+
   it('rejects 401 E_AUTH_EXPIRED when JWT jti is in revoked_jti KV', async () => {
     const token = await mintAdminJwt(KEY, { sub: 'carl', role: 'Administrator', role_version: 1 });
     // Decode jti from the minted token (middle segment, base64url JSON).

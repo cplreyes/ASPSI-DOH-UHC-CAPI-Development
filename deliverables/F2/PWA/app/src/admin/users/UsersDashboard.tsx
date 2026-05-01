@@ -148,6 +148,33 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
     }
   };
 
+  const onRevoke = async (username: string) => {
+    if (
+      !window.confirm(
+        `Force-logout ${username}? Every JWT they currently hold stops working on its next request. Lockout lasts 24 hours.`,
+      )
+    ) {
+      return;
+    }
+    const r = await adminFetch(
+      `${apiBaseUrl}/admin/api/dashboards/users/${encodeURIComponent(username)}/revoke-sessions`,
+      { method: 'POST' },
+      {
+        ...(token ? { token } : {}),
+        onUnauthorized: () => {
+          clearAuth();
+          navigate('/admin/login');
+        },
+        ...(fetchImpl ? { fetchImpl } : {}),
+      },
+    );
+    if (r.ok) {
+      window.alert(`${username}'s sessions revoked. They'll be bounced to login on next request.`);
+    } else {
+      window.alert(`Revoke failed: ${r.error.message ?? r.error.code}`);
+    }
+  };
+
   return (
     <section className="flex flex-col gap-4 py-2">
       <header className="flex items-start justify-between border-b border-hairline pb-3">
@@ -187,6 +214,7 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
             rows={state.data.users}
             onEdit={(u) => setEditor({ kind: 'edit', user: u })}
             onDelete={onDelete}
+            onRevoke={onRevoke}
           />
         </>
       ) : null}
@@ -225,10 +253,12 @@ function UsersTable({
   rows,
   onEdit,
   onDelete,
+  onRevoke,
 }: {
   rows: UserRow[];
   onEdit: (u: UserRow) => void;
   onDelete: (username: string) => void;
+  onRevoke: (username: string) => void;
 }): JSX.Element {
   return (
     <div className="overflow-x-auto">
@@ -268,6 +298,14 @@ function UsersTable({
                     className="font-mono text-xs uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
                   >
                     Edit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onRevoke(u.username)}
+                    className="font-mono text-xs uppercase tracking-wider text-warning underline-offset-4 hover:underline"
+                    title="Force-logout every active session for this user"
+                  >
+                    Revoke
                   </button>
                   <button
                     type="button"

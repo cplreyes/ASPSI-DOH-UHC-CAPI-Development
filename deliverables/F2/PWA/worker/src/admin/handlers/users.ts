@@ -235,6 +235,36 @@ export async function handleDeleteUser(
   return new Response(null, { status: 204 });
 }
 
+// ----- Revoke sessions (Tasks 3.13, 3.16, 3.17) ---------------------------
+
+export interface RevokeKv {
+  put(key: string, value: string, opts?: { expirationTtl?: number }): Promise<void>;
+}
+
+/**
+ * Force-logout every JWT held by `username`. Writes
+ * `revoked_user:<username>` to KV with the current Unix timestamp; rbac
+ * compares against JWT.iat so any token minted BEFORE the revocation
+ * fails authentication on its next request. Tokens minted AFTER (e.g.
+ * the user re-logs in following an admin-initiated password reset)
+ * pass through normally.
+ *
+ * TTL: 24h. Long enough to cover the JWT TTL (4h per spec §6.3) plus
+ * a generous buffer for clock skew, while still letting KV reclaim the
+ * key automatically. If a longer lockout is needed, admin re-revokes.
+ */
+export async function handleRevokeSessions(
+  username: string,
+  kv: RevokeKv,
+): Promise<Response> {
+  if (!USERNAME_RE.test(username)) {
+    return errorJson('E_VALIDATION', 'invalid username path param', 400);
+  }
+  const nowSec = Math.floor(Date.now() / 1000);
+  await kv.put(`revoked_user:${username}`, String(nowSec), { expirationTtl: 24 * 3600 });
+  return new Response(null, { status: 204 });
+}
+
 // ----- Roles mutations (Tasks 3.21, 3.22, 3.23) ---------------------------
 
 const ROLE_NAME_RE = /^[A-Za-z][A-Za-z0-9 _-]{0,63}$/;

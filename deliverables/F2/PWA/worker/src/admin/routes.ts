@@ -49,6 +49,7 @@ import {
   handleCreateUser,
   handleUpdateUser,
   handleDeleteUser,
+  handleRevokeSessions,
   handleCreateRole,
   handleUpdateRole,
   handleDeleteRole,
@@ -82,6 +83,7 @@ const REPORT_SYNC_RE = /^\/admin\/api\/dashboards\/report\/sync\/?$/;
 const REPORT_MAP_RE = /^\/admin\/api\/dashboards\/report\/map\/?$/;
 const USERS_LIST_RE = /^\/admin\/api\/dashboards\/users\/?$/;
 const USERS_BY_NAME_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/?$/;
+const USERS_REVOKE_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/revoke-sessions\/?$/;
 const ROLES_LIST_RE = /^\/admin\/api\/dashboards\/roles\/?$/;
 const ROLES_BY_NAME_RE = /^\/admin\/api\/dashboards\/roles\/([A-Za-z][A-Za-z0-9 _\-]{0,63})\/?$/;
 
@@ -388,6 +390,26 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleCreateUser(body, { username: auth.payload!.sub }, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  const userRevokeMatch = USERS_REVOKE_RE.exec(url.pathname);
+  if (req.method === 'POST' && userRevokeMatch) {
+    const auth = await requirePerm(req, 'dash_users', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const targetUser = userRevokeMatch[1]!;
+    const r = await handleRevokeSessions(targetUser, env.F2_AUTH);
+    // Fire-and-forget audit row noting who revoked whom.
+    auditFn({
+      event_type: 'admin_revoke_sessions',
+      actor_username: auth.payload!.sub,
+      actor_jti: auth.payload!.jti,
+      actor_role: auth.payload!.role,
+      client_ip_hash: ipHash,
+      event_resource: targetUser,
+    });
     return withRequestId(r, requestId);
   }
 

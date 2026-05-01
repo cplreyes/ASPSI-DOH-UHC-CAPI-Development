@@ -48,17 +48,25 @@ export type UsersListFn = () => Promise<AppsScriptResponse<{ users: AdminUserRow
 export type RolesListFn = () => Promise<AppsScriptResponse<{ roles: AdminRoleRow[] }>>;
 
 /**
- * Audit context emitted from a successful login or logout, to be forwarded
- * fire-and-forget to Apps Script `admin_audit_write` by the route layer.
- * The handler doesn't know about request_id (route layer adds it) and
- * never blocks the user response on the audit write.
+ * Audit context emitted by an admin action (login, logout, revoke
+ * sessions, future RBAC-touching mutations), forwarded fire-and-forget
+ * to Apps Script `admin_audit_write` by the route layer. The handler
+ * doesn't know about request_id (route layer adds it) and never blocks
+ * the user response on the audit write.
+ *
+ * `event_type` is a string rather than a union so route-layer audit
+ * stamps for new actions don't require widening this contract every
+ * time. Known values: admin_login, admin_logout, admin_revoke_sessions,
+ * admin_user_create, admin_user_update, admin_user_delete,
+ * admin_role_create, admin_role_update, admin_role_delete.
  */
 export interface AuthAuditCtx {
-  event_type: 'admin_login' | 'admin_logout';
+  event_type: string;
   actor_username: string;
   actor_jti: string;
   actor_role: string;
   client_ip_hash: string;
+  event_resource?: string;
 }
 export type AuthAuditFn = (ctx: AuthAuditCtx) => void;
 

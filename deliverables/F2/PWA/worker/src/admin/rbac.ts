@@ -84,8 +84,21 @@ export async function requirePerm(req: Request, perm: string, opts: RbacOpts): P
   if (!v.ok) return { ok: false, status: 401, errorCode: 'E_AUTH_EXPIRED' };
 
   const payload = v.payload;
-  const revoked = await opts.kv.get(`revoked_jti:${payload.jti}`);
-  if (revoked) return { ok: false, status: 401, errorCode: 'E_AUTH_EXPIRED' };
+  // Per-token revocation (logout, /admin/api/logout from this user).
+  const revokedJti = await opts.kv.get(`revoked_jti:${payload.jti}`);
+  if (revokedJti) return { ok: false, status: 401, errorCode: 'E_AUTH_EXPIRED' };
+  // Per-user revocation (admin-initiated revoke-sessions; force-logout
+  // every JWT held by `payload.sub` regardless of jti). Issued_at vs
+  // revoked-at comparison: a token minted AFTER the revoke timestamp
+  // is allowed through (admin issued a fresh password reset, user
+  // logged in again, the new JWT predates revocation).
+  const revokedUser = await opts.kv.get(`revoked_user:${payload.sub}`);
+  if (revokedUser) {
+    const revokedAt = Number(revokedUser);
+    if (Number.isFinite(revokedAt) && payload.iat < revokedAt) {
+      return { ok: false, status: 401, errorCode: 'E_AUTH_EXPIRED' };
+    }
+  }
 
   let role = opts.cache.get(payload.role, payload.role_version);
   if (!role) {
