@@ -18,6 +18,7 @@ const ORDER = [
   // apps-script/AdminGlue.js was removed in PR #31 (auth re-arch).
   'apps-script/Migrations.js',
   'apps-script/AdminAudit.js',
+  'apps-script/AdminHCWs.js',
   'apps-script/Code.js',
 ];
 
