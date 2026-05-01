@@ -9,7 +9,7 @@
  */
 import { describe, expect, it, vi } from 'vitest';
 import { adminRouter } from '../../src/admin/routes';
-import { hashPassword } from '../../src/admin/auth';
+import { hashPassword, mintAdminJwt } from '../../src/admin/auth';
 import type { Env } from '../../src/types';
 
 interface FakeKV {
@@ -110,6 +110,20 @@ describe('adminRouter', () => {
     } finally {
       fetchSpy.mockRestore();
     }
+  });
+
+  it('routes POST /admin/api/logout to handleLogout and stamps X-Request-Id', async () => {
+    const kv = makeKv();
+    const env = makeEnv(kv);
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const req = new Request('https://x/admin/api/logout', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${tok}` },
+    });
+    const r = await adminRouter(req, env);
+    expect(r).not.toBeNull();
+    expect(r!.status).toBe(204);
+    expect(r!.headers.get('X-Request-Id')).toMatch(/^[0-9a-f-]{36}$/);
   });
 
   it('hashes cf-connecting-ip into ipHash (not echoed in response)', async () => {

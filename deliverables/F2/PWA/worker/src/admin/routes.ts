@@ -9,7 +9,7 @@
  * propagated end-to-end through Apps Script for cross-system trace.
  */
 import type { Env } from '../types';
-import { handleLogin, type AdminUserRow, type AdminRoleRow } from './handlers/auth';
+import { handleLogin, handleLogout, type AdminUserRow, type AdminRoleRow } from './handlers/auth';
 import { callAppsScript } from './apps-script-client';
 
 const enc = new TextEncoder();
@@ -71,6 +71,11 @@ export async function adminRouter(req: Request, env: Env, _ctx?: ExecutionContex
         requestId,
       );
     const r = await handleLogin(body as Record<string, unknown>, ipHash, env, usersList, rolesList);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'POST' && url.pathname === '/admin/api/logout') {
+    const r = await handleLogout(req, env);
     return withRequestId(r, requestId);
   }
 

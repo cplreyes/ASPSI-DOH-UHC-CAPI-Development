@@ -18,7 +18,7 @@
  */
 import type { Env } from '../../types';
 import { jsonResponse } from '../../types';
-import { mintAdminJwt, verifyPassword, type AdminJwtPayload } from '../auth';
+import { mintAdminJwt, verifyAdminJwt, verifyPassword, type AdminJwtPayload } from '../auth';
 import {
   checkLoginThrottle,
   recordFailedLogin,
@@ -162,4 +162,42 @@ export async function handleLogin(
     password_must_change: isTruthy(user.password_must_change),
   };
   return jsonResponse(success, 200);
+}
+
+const BEARER_RE = /^Bearer (.+)$/;
+
+export interface LogoutKv {
+  put(key: string, value: string, opts?: { expirationTtl?: number }): Promise<void>;
+}
+
+/**
+ * Revoke the bearer token by recording its jti in KV with a TTL that
+ * outlives the JWT's own exp by 60 seconds (clock-skew buffer). The
+ * RBAC middleware checks `revoked_jti:<jti>` on every request, so any
+ * cached/copied token stops working immediately.
+ *
+ * Expired/invalid tokens get 401 — there's nothing meaningful to revoke
+ * and the caller should clear their local state via the login redirect
+ * the 401 already triggers.
+ */
+export async function handleLogout(
+  req: Request,
+  env: Pick<Env, 'JWT_SIGNING_KEY' | 'F2_AUTH'>,
+): Promise<Response> {
+  const auth = req.headers.get('Authorization') || '';
+  const m = BEARER_RE.exec(auth);
+  if (!m) return errorJson('E_AUTH_INVALID', 'Authorization header missing or malformed', 401);
+
+  const v = await verifyAdminJwt(env.JWT_SIGNING_KEY, m[1]!);
+  if (!v.ok) {
+    const code = v.error === 'expired' ? 'E_AUTH_EXPIRED' : 'E_AUTH_INVALID';
+    return errorJson(code, 'Token invalid or expired', 401);
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+  const ttl = Math.max(60, v.payload.exp - now + 60);
+  const kv = env.F2_AUTH as unknown as LogoutKv;
+  await kv.put(`revoked_jti:${v.payload.jti}`, '1', { expirationTtl: ttl });
+
+  return new Response(null, { status: 204 });
 }

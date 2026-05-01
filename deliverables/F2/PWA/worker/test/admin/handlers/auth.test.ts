@@ -10,8 +10,8 @@
  * failure passthrough (E_BACKEND 502), and per-user reset on success.
  */
 import { describe, expect, it } from 'vitest';
-import { handleLogin } from '../../../src/admin/handlers/auth';
-import { hashPassword, verifyAdminJwt } from '../../../src/admin/auth';
+import { handleLogin, handleLogout } from '../../../src/admin/handlers/auth';
+import { hashPassword, mintAdminJwt, verifyAdminJwt } from '../../../src/admin/auth';
 import { recordFailedLogin } from '../../../src/admin/throttle';
 
 interface FakeKV {
@@ -225,5 +225,105 @@ describe('handleLogin', () => {
     const winStart = Math.floor(Date.now() / 1000 / (15 * 60)) * (15 * 60);
     expect(kv._store.has(`throttle:login:user:alice:${winStart}`)).toBe(false);
     expect(kv._store.has(`throttle:login:ip:iphash-1:${winStart}`)).toBe(true);
+  });
+});
+
+describe('handleLogout', () => {
+  it('returns 401 E_AUTH_INVALID when Authorization header is missing', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const req = new Request('https://x/admin/api/logout', { method: 'POST' });
+    const r = await handleLogout(req, env);
+    expect(r.status).toBe(401);
+    const body = await r.json() as { error: { code: string } };
+    expect(body.error.code).toBe('E_AUTH_INVALID');
+  });
+
+  it('returns 401 E_AUTH_INVALID on malformed Authorization header', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const req = new Request('https://x/admin/api/logout', {
+      method: 'POST',
+      headers: { Authorization: 'Token xyz' },
+    });
+    const r = await handleLogout(req, env);
+    expect(r.status).toBe(401);
+    const body = await r.json() as { error: { code: string } };
+    expect(body.error.code).toBe('E_AUTH_INVALID');
+  });
+
+  it('returns 401 E_AUTH_INVALID on bad signature', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const tampered = tok.slice(0, -2) + 'xx';
+    const req = new Request('https://x/admin/api/logout', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${tampered}` },
+    });
+    const r = await handleLogout(req, env);
+    expect(r.status).toBe(401);
+  });
+
+  it('returns 401 E_AUTH_EXPIRED for already-expired token (no revocation needed)', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 }, { ttl: -1 });
+    const req = new Request('https://x/admin/api/logout', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${tok}` },
+    });
+    const r = await handleLogout(req, env);
+    expect(r.status).toBe(401);
+    const body = await r.json() as { error: { code: string } };
+    expect(body.error.code).toBe('E_AUTH_EXPIRED');
+    expect(kv._puts.length).toBe(0);
+  });
+
+  it('returns 204 and writes revoked_jti to KV with TTL = exp - now + 60 buffer', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 }, { ttl: 4 * 3600 });
+    const req = new Request('https://x/admin/api/logout', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${tok}` },
+    });
+    const r = await handleLogout(req, env);
+    expect(r.status).toBe(204);
+
+    // Decode the jti and assert KV write.
+    const parts = tok.split('.');
+    const padded = parts[1]!.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((parts[1]!.length + 3) % 4);
+    const payload = JSON.parse(atob(padded)) as { jti: string; exp: number };
+    expect(kv._puts.length).toBe(1);
+    expect(kv._puts[0]!.key).toBe(`revoked_jti:${payload.jti}`);
+    expect(kv._puts[0]!.value).toBe('1');
+
+    const now = Math.floor(Date.now() / 1000);
+    const expectedTtl = payload.exp - now + 60;
+    const actualTtl = kv._puts[0]!.ttl!;
+    expect(actualTtl).toBeGreaterThanOrEqual(expectedTtl - 5);
+    expect(actualTtl).toBeLessThanOrEqual(expectedTtl + 5);
+  });
+
+  it('revoked token then fails RBAC check (integration-style)', async () => {
+    // Verifies the round-trip: logout writes the same key shape rbac.ts reads.
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const req = new Request('https://x/admin/api/logout', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${tok}` },
+    });
+    await handleLogout(req, env);
+
+    const parts = tok.split('.');
+    const padded = parts[1]!.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((parts[1]!.length + 3) % 4);
+    const payload = JSON.parse(atob(padded)) as { jti: string };
+    expect(await kv.get(`revoked_jti:${payload.jti}`)).toBe('1');
+
+    // JWT itself still verifies (sig OK, not expired) — revocation lives in KV.
+    const v = await verifyAdminJwt(KEY, tok);
+    expect(v.ok).toBe(true);
   });
 });
