@@ -30,6 +30,7 @@ import {
   handleListTokens,
   handleRevokeToken,
 } from './admin';
+import { adminRouter } from './admin/routes';
 
 const PUBLIC_ROUTES = new Set(['/exec', '/verify-token']);
 
@@ -47,11 +48,18 @@ function withCors(resp: Response): Response {
 }
 
 export default {
-  async fetch(req: Request, env: Env): Promise<Response> {
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(req.url);
     const path = url.pathname.replace(/\/+$/, '') || '/';
     const method = req.method.toUpperCase();
     const isPublic = PUBLIC_ROUTES.has(path);
+
+    // F2 Admin Portal routes (/admin/api/*) — handled by adminRouter.
+    // Returns null for non-admin paths so we fall through to the legacy
+    // router below. Same-origin (PWA frontend served from this Worker),
+    // no CORS wrap needed.
+    const adminResp = await adminRouter(req, env, ctx);
+    if (adminResp) return adminResp;
 
     // CORS preflight for public routes only.
     if (method === 'OPTIONS' && isPublic) {
