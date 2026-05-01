@@ -26,6 +26,7 @@ import {
   handleGetResponseById,
   handleListAudit,
   handleListDlq,
+  handleListHcws,
   type ListFilters,
   type ListResponsesData,
   type ResponseRow,
@@ -33,6 +34,8 @@ import {
   type ListAuditData,
   type DlqFilters,
   type ListDlqData,
+  type HcwFilters,
+  type ListHcwsData,
 } from './handlers/data';
 import { callAppsScript } from './apps-script-client';
 import { RoleVersionCache, requirePerm, type Role, type RolesListResp, type RbacOpts } from './rbac';
@@ -50,6 +53,7 @@ const RESPONSES_LIST_RE = /^\/admin\/api\/dashboards\/data\/responses\/?$/;
 const RESPONSES_BY_ID_RE = /^\/admin\/api\/dashboards\/data\/responses\/([A-Za-z0-9_\-]+)\/?$/;
 const AUDIT_LIST_RE = /^\/admin\/api\/dashboards\/data\/audit\/?$/;
 const DLQ_LIST_RE = /^\/admin\/api\/dashboards\/data\/dlq\/?$/;
+const HCWS_LIST_RE = /^\/admin\/api\/dashboards\/data\/hcws\/?$/;
 
 /**
  * Build RbacOpts that's stable for one request. Most rbac-protected handlers
@@ -268,6 +272,23 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleListDlq(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && HCWS_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_data', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = (filters: HcwFilters) =>
+      callAppsScript<ListHcwsData>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_hcws_list',
+        filters as unknown as Record<string, unknown>,
+        requestId,
+      );
+    const r = await handleListHcws(url, asCall);
     return withRequestId(r, requestId);
   }
 

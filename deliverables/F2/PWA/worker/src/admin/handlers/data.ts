@@ -250,3 +250,66 @@ export async function handleListDlq(
   }
   return jsonResponse(r.data, 200);
 }
+
+// ----- HCWs lookup (Task 2.9) ---------------------------------------------
+
+export interface HcwRow {
+  hcw_id: string;
+  facility_id: string;
+  facility_name: string;
+  enrollment_token_jti: string;
+  token_issued_at: string;
+  token_revoked_at: string;
+  status: string;
+  created_at: string;
+}
+
+export interface ListHcwsData {
+  rows: HcwRow[];
+  total: number;
+  has_more: boolean;
+}
+
+export interface HcwFilters {
+  facility_id?: string;
+  status?: string;
+  hcw_id?: string;
+  q?: string;
+  limit?: number;
+  offset?: number;
+}
+
+export type ListHcwsAsCallable = (filters: HcwFilters) => Promise<AppsScriptResponse<ListHcwsData>>;
+
+function parseHcwFilters(params: URLSearchParams): HcwFilters {
+  const out: HcwFilters = {};
+  const facility = params.get('facility_id');
+  const status = params.get('status');
+  const hcwId = params.get('hcw_id');
+  const q = params.get('q');
+  const limit = params.get('limit');
+  const offset = params.get('offset');
+  if (facility) out.facility_id = facility;
+  if (status) out.status = status;
+  if (hcwId) out.hcw_id = hcwId;
+  if (q) out.q = q;
+  if (limit && /^\d+$/.test(limit)) out.limit = Number(limit);
+  if (offset && /^\d+$/.test(offset)) out.offset = Number(offset);
+  return out;
+}
+
+export async function handleListHcws(
+  url: URL,
+  asCallable: ListHcwsAsCallable,
+): Promise<Response> {
+  const filters = parseHcwFilters(url.searchParams);
+  const r = await asCallable(filters);
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      502,
+    );
+  }
+  return jsonResponse(r.data, 200);
+}

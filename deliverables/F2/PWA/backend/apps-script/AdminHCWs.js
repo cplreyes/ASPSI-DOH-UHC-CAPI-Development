@@ -83,6 +83,65 @@ function adminHcwsCreate(payload) {
 }
 
 /**
+ * Read RPC for the Data dashboard's HCWs tab and the encoder queue.
+ * Filters: facility_id, status, hcw_id (exact), q (substring across row),
+ * limit ≤ 500, offset. Newest-first by created_at.
+ *
+ * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 2.9)
+ */
+function adminHcwsList(filters) {
+  filters = filters || {};
+  var f = {
+    facility_id: filters.facility_id || null,
+    status: filters.status || null,
+    hcw_id: filters.hcw_id || null,
+    q: filters.q ? String(filters.q).toLowerCase() : null,
+    limit: Math.min(Number(filters.limit) || 50, 500),
+    offset: Math.max(Number(filters.offset) || 0, 0),
+  };
+
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName('F2_HCWs');
+  if (!sh) throw new Error('F2_HCWs sheet not found — run runAllMigrations() first');
+  var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  var lastRow = sh.getLastRow();
+  if (lastRow < 2) {
+    return { ok: true, data: { rows: [], total: 0, has_more: false } };
+  }
+  var data = sh.getRange(2, 1, lastRow - 1, headers.length).getValues();
+  var rows = data.map(function (r) {
+    var obj = {};
+    for (var i = 0; i < headers.length; i++) obj[headers[i]] = r[i];
+    return obj;
+  });
+
+  var matched = [];
+  for (var k = 0; k < rows.length; k++) {
+    var row = rows[k];
+    if (f.facility_id && row.facility_id !== f.facility_id) continue;
+    if (f.status && row.status !== f.status) continue;
+    if (f.hcw_id && row.hcw_id !== f.hcw_id) continue;
+    if (f.q) {
+      var hay = JSON.stringify(row).toLowerCase();
+      if (hay.indexOf(f.q) === -1) continue;
+    }
+    matched.push(row);
+  }
+  matched.sort(function (a, b) {
+    var ka = a.created_at || '';
+    var kb = b.created_at || '';
+    if (ka < kb) return 1;
+    if (ka > kb) return -1;
+    return 0;
+  });
+  var page = matched.slice(f.offset, f.offset + f.limit);
+  return {
+    ok: true,
+    data: { rows: page, total: matched.length, has_more: f.offset + page.length < matched.length },
+  };
+}
+
+/**
  * Operator helper. Scans F2_Responses + F2_Audit for distinct hcw_ids,
  * appends F2_HCWs rows for any not already tracked. The earliest server
  * timestamp seen for each HCW is used as created_at. enrollment_token_jti

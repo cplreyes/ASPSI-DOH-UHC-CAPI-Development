@@ -9,6 +9,7 @@ import { useRouter } from '../lib/pages-router';
 import { ResponsesTab } from './ResponsesTab';
 import { AuditTab } from './AuditTab';
 import { DLQTab } from './DLQTab';
+import { HCWsTab } from './HCWsTab';
 
 type TabKey = 'responses' | 'audit' | 'dlq' | 'hcws';
 
@@ -70,6 +71,8 @@ export function DataDashboard({ apiBaseUrl, fetchImpl }: DataDashboardProps): JS
           <AuditTab apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
         ) : activeTab === 'dlq' ? (
           <DLQTab apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+        ) : activeTab === 'hcws' ? (
+          <HCWsTab apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
         ) : (
           <TabComingSoon name={TABS.find(t => t.key === activeTab)!.label} />
         )}
