@@ -21,6 +21,7 @@ import { ResponseDetail } from './data/ResponseDetail';
 import { ReportDashboard } from './report/ReportDashboard';
 import { UsersDashboard } from './users/UsersDashboard';
 import { RolesDashboard } from './roles/RolesDashboard';
+import { AppsDashboard } from './apps/AppsDashboard';
 
 interface AdminAppProps {
   apiBaseUrl: string;
@@ -47,7 +48,7 @@ const PAGES: PageRoute[] = [
   // /admin/data is dispatched directly in AdminRoot (the DataDashboard
   // tabs accept apiBaseUrl + fetchImpl props).
   // /admin/report dispatched directly in AdminRoot below.
-  { path: '/admin/apps', title: 'Files & Settings', element: <Placeholder title="Apps" subtitle="File library · Versioning · Data settings" /> },
+  // /admin/apps dispatched directly in AdminRoot below.
   // /admin/users and /admin/roles dispatched directly in AdminRoot
   // (they accept apiBaseUrl + fetchImpl props and render real data).
   // /admin/encode and /admin/encode/:hcw_id are dispatched directly in
@@ -96,6 +97,13 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
     return (
       <Layout>
         <ReportDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+      </Layout>
+    );
+  }
+  if (pathname === '/admin/apps' || pathname === '/admin/apps/') {
+    return (
+      <Layout>
+        <AppsDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
       </Layout>
     );
   }

@@ -29,6 +29,7 @@ import {
   handleListHcws,
   handleSyncReport,
   handleMapReport,
+  handleVersion,
   type ListFilters,
   type ListResponsesData,
   type ResponseRow,
@@ -42,6 +43,7 @@ import {
   type SyncReportData,
   type MapReportFilters,
   type MapReportData,
+  type FormRevisionsData,
 } from './handlers/data';
 import {
   handleListUsers,
@@ -81,6 +83,7 @@ const DLQ_LIST_RE = /^\/admin\/api\/dashboards\/data\/dlq\/?$/;
 const HCWS_LIST_RE = /^\/admin\/api\/dashboards\/data\/hcws\/?$/;
 const REPORT_SYNC_RE = /^\/admin\/api\/dashboards\/report\/sync\/?$/;
 const REPORT_MAP_RE = /^\/admin\/api\/dashboards\/report\/map\/?$/;
+const APPS_VERSION_RE = /^\/admin\/api\/dashboards\/apps\/version\/?$/;
 const USERS_LIST_RE = /^\/admin\/api\/dashboards\/users\/?$/;
 const USERS_BY_NAME_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/?$/;
 const USERS_REVOKE_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/revoke-sessions\/?$/;
@@ -338,6 +341,29 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleSyncReport(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && APPS_VERSION_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = () =>
+      callAppsScript<FormRevisionsData>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_form_revisions',
+        {},
+        requestId,
+      );
+    // Pull versioning from worker env (fallback strings if unset).
+    const versionEnv = env as unknown as {
+      PWA_VERSION?: string;
+      PWA_BUILD_SHA?: string;
+      WORKER_VERSION?: string;
+    };
+    const r = await handleVersion(versionEnv, asCall);
     return withRequestId(r, requestId);
   }
 

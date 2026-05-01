@@ -12,6 +12,7 @@ const {
   adminReadResponseById,
   adminReadAudit,
   adminReadDlq,
+  adminFormRevisions,
 } = require('../src/AdminData.js');
 
 function row(overrides) {
@@ -232,6 +233,39 @@ describe('adminReadAudit', () => {
     const p3 = adminReadAudit({ limit: 2, offset: 4 }, ctx);
     expect(p3.data.rows).toHaveLength(1);
     expect(p3.data.has_more).toBe(false);
+  });
+});
+
+describe('adminFormRevisions', () => {
+  it('aggregates F2_Responses by spec_version with counts + last_seen_at', () => {
+    const ctx = makeCtx([
+      row({ spec_version: '2026-04-17-m1', submitted_at_server: '2026-05-01T10:00:00.000Z' }),
+      row({ spec_version: '2026-04-17-m1', submitted_at_server: '2026-05-02T10:00:00.000Z' }),
+      row({ spec_version: '2026-05-01-m2', submitted_at_server: '2026-05-03T10:00:00.000Z' }),
+    ]);
+    const r = adminFormRevisions({}, ctx);
+    expect(r.ok).toBe(true);
+    expect(r.data.total).toBe(3);
+    // newest spec_version first
+    expect(r.data.revisions[0].spec_version).toBe('2026-05-01-m2');
+    expect(r.data.revisions[0].count).toBe(1);
+    expect(r.data.revisions[1].spec_version).toBe('2026-04-17-m1');
+    expect(r.data.revisions[1].count).toBe(2);
+    expect(r.data.revisions[1].last_seen_at).toBe('2026-05-02T10:00:00.000Z');
+  });
+
+  it('groups missing spec_version under (unknown)', () => {
+    const ctx = makeCtx([row({ spec_version: '' }), row({ spec_version: '' })]);
+    const r = adminFormRevisions({}, ctx);
+    expect(r.data.revisions[0].spec_version).toBe('(unknown)');
+    expect(r.data.revisions[0].count).toBe(2);
+  });
+
+  it('returns empty list when there are no responses', () => {
+    const ctx = makeCtx([]);
+    const r = adminFormRevisions({}, ctx);
+    expect(r.data.revisions).toEqual([]);
+    expect(r.data.total).toBe(0);
   });
 });
 

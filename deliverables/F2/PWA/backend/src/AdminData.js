@@ -216,6 +216,49 @@ function adminReadDlq(filters, ctx) {
   };
 }
 
+// ----- Versioning aggregation (Task 3.6) ----------------------------------
+
+/**
+ * Aggregate F2_Responses by spec_version for the Apps dashboard's
+ * Versioning panel. The bundle SHA + PWA version come from the worker
+ * (build-time env), not from AS — AS knows about spec_version (the
+ * questionnaire revision) and submission counts at each.
+ *
+ * Returns `{ revisions: [{ spec_version, count, last_seen_at }], total }`
+ * sorted with the most recent spec_version first (string compare on
+ * ISO-prefixed spec versions like 2026-04-17-m1 sorts correctly).
+ */
+function adminFormRevisions(_filters, ctx) {
+  var all = ctx.responses.readAll(SCAN_CAP, 0);
+  var byVersion = {};
+  for (var i = 0; i < all.length; i++) {
+    var row = all[i];
+    var v = row.spec_version || '(unknown)';
+    if (!byVersion[v]) {
+      byVersion[v] = { spec_version: v, count: 0, last_seen_at: '' };
+    }
+    byVersion[v].count++;
+    var ts = row.submitted_at_server || '';
+    if (ts > byVersion[v].last_seen_at) byVersion[v].last_seen_at = ts;
+  }
+  var revisions = [];
+  for (var k in byVersion) {
+    if (Object.prototype.hasOwnProperty.call(byVersion, k)) revisions.push(byVersion[k]);
+  }
+  revisions.sort(function (a, b) {
+    if (a.spec_version < b.spec_version) return 1;
+    if (a.spec_version > b.spec_version) return -1;
+    return 0;
+  });
+  return {
+    ok: true,
+    data: {
+      revisions: revisions,
+      total: revisions.reduce(function (n, r) { return n + r.count; }, 0),
+    },
+  };
+}
+
 if (typeof module !== 'undefined') {
   module.exports = {
     adminReadResponses: adminReadResponses,
@@ -223,5 +266,6 @@ if (typeof module !== 'undefined') {
     adminReadResponseById: adminReadResponseById,
     adminReadAudit: adminReadAudit,
     adminReadDlq: adminReadDlq,
+    adminFormRevisions: adminFormRevisions,
   };
 }

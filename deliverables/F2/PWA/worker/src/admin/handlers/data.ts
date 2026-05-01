@@ -420,3 +420,53 @@ export async function handleMapReport(
   }
   return jsonResponse(r.data, 200);
 }
+
+// ----- Versioning (Task 3.6) ----------------------------------------------
+
+export interface FormRevision {
+  spec_version: string;
+  count: number;
+  last_seen_at: string;
+}
+
+export interface FormRevisionsData {
+  revisions: FormRevision[];
+  total: number;
+}
+
+export interface VersionData {
+  pwa_version: string;
+  pwa_build_sha: string;
+  worker_version: string;
+  form_revisions: FormRevision[];
+  total_submissions: number;
+  last_pages_deploy_at: string | null;
+}
+
+export type FormRevisionsAsCallable = () => Promise<AppsScriptResponse<FormRevisionsData>>;
+
+export interface VersionEnv {
+  PWA_VERSION?: string;
+  PWA_BUILD_SHA?: string;
+  WORKER_VERSION?: string;
+}
+
+export async function handleVersion(
+  env: VersionEnv,
+  asCallable: FormRevisionsAsCallable,
+): Promise<Response> {
+  const r = await asCallable();
+  // Versioning is a status panel — degrade gracefully if AS is down so
+  // admins can still see the worker + PWA build SHAs.
+  const revisions = r.ok && r.data ? r.data.revisions : [];
+  const total = r.ok && r.data ? r.data.total : 0;
+  const body: VersionData = {
+    pwa_version: env.PWA_VERSION ?? 'unknown',
+    pwa_build_sha: env.PWA_BUILD_SHA ?? 'unknown',
+    worker_version: env.WORKER_VERSION ?? 'unknown',
+    form_revisions: revisions,
+    total_submissions: total,
+    last_pages_deploy_at: null,
+  };
+  return jsonResponse(body, 200);
+}
