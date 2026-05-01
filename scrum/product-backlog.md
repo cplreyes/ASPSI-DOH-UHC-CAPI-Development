@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-04-27
+last_updated: 2026-05-01
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -23,7 +23,9 @@ last_updated: 2026-04-27
 
 ### Headline (this week)
 
-**Sprint 003, Day 1 — Mon 2026-04-27. Scrum artifact alignment pass + new commitments.** Sprint 003 dates corrected to 2026-04-27 → 2026-05-01 (Mon-Fri, parity with Sprint 002 cadence — earlier `sprint-current.md` had off-by-one `04-28 → 05-02`). Two new Sprint 003 items added: **E4-PWA-013** (F2 PWA auth re-arch Phase F production cutover decision — gated on Issue #33 + #34 resolution + ≥24h clean staging soak; earliest window ~17:35 PHT today; *critical*) and **E0-008** (auto-standup retro-injection tooling — closes the recurring ritual gap where retro Q4 action items get captured in `sprint-current.md` Daily Notes but not in the Day 1 daily standup; *stretch*). Sprint 002 backfilled with an Inter-Sprint Activity section (Sat 2026-04-25 + Sun 2026-04-26) and a reconstructed Apr 24 Fri standup; all four Sprint 002 standups (Apr 20–23) patched for sprint-status / project-name / goal-banner consistency. Sprint goal anchor unchanged: **close E2-F1-010 (F1 Designer sign-off — two-sprint carry-forward)**.
+**Sprint 003 close — Fri 2026-05-01. Scope-discipline cleanup: E0-020 / E0-032 / E0-032a removed from sprint board as out-of-Data-Programmer-scope per CSA D1–D6.** Three Epic 0 items had leaked back into Sprint 003 (E0-020 SJREB tracking + E0-032 Tranche/deadline tracking as Recurring; E0-032a DOH-PMSMD matrix triage as Carry-forward critical) despite the umbrella scope memory. Cleaned up at sprint close: dropped from `sprint-current.md` Committed/Recurring; annotated in `epic-00-project-management.md` with `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`; reframed in this Backlog's Epic 0 In-flight section as ASPSI/PI/PMO-lane informational. Audit-on-detection discipline added to the SJREB + Tranche memories so this doesn't slip again. Honest Sprint 003 board after cleanup: 4 committed (E2-F1-010, E0-010 internal-only, E3-F1-001, E4-PWA-013) + 3 stretch (E2-F3-010, E2-F4-010, E0-008); none closed at sprint end — F1 Designer sign-off carries to Sprint 004 as a three-sprint carry.
+
+**Sprint 003, Day 1 — Mon 2026-04-27. Scrum artifact alignment pass + new commitments.** Sprint 003 dates corrected to 2026-04-27 → 2026-05-01 (Mon-Fri, parity with Sprint 002 cadence — earlier `sprint-current.md` had off-by-one `04-28 → 05-02`). Two new Sprint 003 items added: **E4-PWA-013** (F2 PWA auth re-arch Phase F production cutover decision — gated on Issue #33 + #34 resolution + ≥24h clean staging soak; *critical*) and **E0-008** (auto-standup retro-injection tooling — closes the recurring ritual gap where retro Q4 action items get captured in `sprint-current.md` Daily Notes but not in the Day 1 daily standup; *stretch*). Sprint 002 backfilled with an Inter-Sprint Activity section (Sat 2026-04-25 + Sun 2026-04-26) and a reconstructed Apr 24 Fri standup; all four Sprint 002 standups (Apr 20–23) patched for sprint-status / project-name / goal-banner consistency. Sprint goal anchor unchanged: **close E2-F1-010 (F1 Designer sign-off — two-sprint carry-forward)**.
 
 **Inter-sprint, Sun 2026-04-26 (latest) — F2 PWA Verde Manual LIVE on production via path B; CF Pages auto-deploy confirmed broken on main too.** Cherry-picked the 5 Verde Manual commits (#37 tokens / #38 fonts / #39 layout & components / #40 DESIGN-006 sweep / #41 polish — staging SHAs `47e1553` / `c1a97bb` / `4fd2d92` / `1458f29` / `7bfc28a`) onto `main` via PR [#42](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/42) (`a1c4a3e`), resolving conflicts in `App.tsx` (h1 styling) and `EnrollmentScreen.tsx` (kept main's pre-auth-rearch single-step logic + applied Verde styling intent). Auth re-arch (PR #31) intentionally NOT in this port — stays on staging awaiting Phase F gate. **Production deploy:** GitHub auto-deploy didn't fire on the merge to main (confirms Issue #34 affects main pushes too, not just staging). Manually deployed via `wrangler pages deploy dist --project-name=f2-pwa --branch=main --commit-hash=a1c4a3ea` after `npm install -g wrangler` (deployment `4f61356a-51fb-4ea2-aeb0-647edc678be0`). Canonical `f2-pwa.pages.dev` now serves Verde Manual: pale verde paper `#F2F5EE`, DOH emerald `#006B3F`, Newsreader serif h1/h2, Public Sans body, JetBrains Mono on version subtitle + eyebrows. Existing F2 PWA installs with the old service worker get an "Update available" prompt on next launch (per `vite.config.ts` `registerType: 'prompt'`). DESIGN-006 also closed today (PR #40) — `--warning` token added, alpha-aware HSL slot syntax migration, raw Tailwind colors swept. Polish PR (#41) flattened buttons, hairline-edged modals.
 
@@ -146,13 +148,17 @@ Each epic below is a long-running workstream that spans its portion of the engag
 - **Comms infrastructure live:** ASPSI project mailbox (`aspsi.doh.uhc.survey2.data@gmail.com`) for artifacts and decisions of record; CAPI Viber group for real-time coordination
 - **Team structure clarified:** Carl as Data Programmer; Shan (ASPSI RA) as QA Tester for the CAPI build
 
-**In flight:**
-- SJREB ethics clearance coordination (via ASPSI)
-- Ongoing risk tracking and stakeholder communication
+**In flight (Data Programmer scope):**
 - Product Backlog maintenance (this document)
-- Authoring the weekly status update format for ASPSI Management Committee — Carl-controlled narrative, not a coordination ask
+- Defining the internal weekly status format (E0-010) — Carl-controlled internal tracking, *not* a recurring send to ASPSI Mgmt or DOH (per `feedback_weekly_status_internal_only.md`)
+- Sprint cadence + scrum artifact upkeep (Sprint 003 closing 2026-05-01)
 
-**Next milestone:** First weekly status update shipped to ASPSI Management Committee.
+**ASPSI / PI / PMO lane — informational only (NOT Data Programmer scope per CSA D1–D6):**
+- SJREB ethics clearance coordination (E0-020) — owned by ASPSI ops / PI; long-pole dependency for Epic 6 pretest
+- D2 / D3 / Tranche 2 timeline + deadline tracking (E0-032) — owned by ASPSI ops / PI / PMO; Carl produces the deliverables, ASPSI manages submission timing
+- DOH-PMSMD matrix feedback coordination (E0-032a) — owned by ASPSI ops / PI; CAPI-side revisions fold into the relevant E2/E3 instrument task
+
+**Next milestone:** Internal weekly status format defined (E0-010), used for Carl's tracking and the project record.
 
 **Ties to:** Cross-cutting across all other epics. Anchors D1 (ongoing governance).
 
