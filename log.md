@@ -2,6 +2,22 @@
 
 Chronological record of all wiki operations.
 
+## 2026-05-01 (Sprint 003 close — F2 PWA Phase F production cutover)
+
+- **Sprint 003 scope-discipline cleanup at sprint close.** Removed E0-020 (SJREB), E0-032 (Tranche/deadline tracking), E0-032a (DOH-PMSMD matrix triage) from the sprint board — all are ASPSI/PI/PMO lane per CSA D1–D6 Data Programmer scope, not Carl-owned. They had leaked back into Sprint 003 despite the umbrella memory rule. Audit-on-detection discipline added to the SJREB + Tranche memories so this doesn't slip again. Annotated remaining E0 items in `epic-00-project-management.md` (E0-011 / E0-012 / E0-013 / E0-014 / E0-033 / E0-050 / E0-051 + E0-032 / E0-032a) with `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`.
+- **F2 PWA "fix all today" — 18 issues closed, Phase F cutover executed.** Carl directed full F2 PWA shipment for ASPSI Round 4 readiness. Sequence:
+  1. Merged 3 Phase F-blocker PRs to staging: #47 PBKDF2 100k cap (closes #35), #48 VITE_F2_PROXY_URL build guard (closes #45), #49 enroll on empty facility cache (closes #46).
+  2. Verified #19 Zod NaN leak + #22 disabled-button contrast + #30 header subtitle low-contrast were already-fixed by Verde Manual migration (PR #31 zod-error-map import, PR #41 polish disabled state, App.tsx already uses text-muted-foreground). Closed those issues with verification notes.
+  3. Merged PR #50 to staging — H1 hierarchy bumped to text-3xl, frame max-width capped at screen-xl (1280px) per DESIGN.md, default Button height bumped to h-11 (44px) for tablet touch, focus-visible upgraded to ring-2 ring-offset-2 (#20 #21 #23 #24).
+  4. Merged PR #51 to staging — Q1_3 Middle Initial optional via spec `[optional]` keyword, "Other (specify)" canonical form globally, SectionTree locked sections get aria-disabled + sr-only reason, refreshFacilities filters `/^Test\b/i` in PROD as safety net, mobile prev/next side arrows hidden under sm breakpoint (#25 #26 #27 #28 #29).
+  5. Manual `wrangler pages deploy` to staging (auto-deploy workflow only on staging branch, not main — see #34 follow-up below).
+  6. **Phase F production cutover (E4-PWA-013 — Sprint 003 critical commit, soak gate explicitly waived):** merged staging→main with 5 conflict files (App.tsx, EnrollmentScreen.tsx, MultiSectionForm.tsx, Question.tsx, button.tsx) resolved by taking staging wholesale per memory `project_main_staging_diverged_phase_f.md` (staging holds the canonical post-auth-rearch + Verde + today's-fixes state). Pushed main. Manual `wrangler pages deploy --project-name=f2-pwa --branch=main`. Production canonical `f2-pwa.pages.dev` now serves Worker JWT proxy + Verde Manual + 13 v1.3.0 fixes. Smoke: 200 OK, bundle hash CGY3qRWK.
+  7. Closed v1.3.0 milestone (17 closed, 0 open) → triggered `uat-release-notes.yml` auto-pipeline: CHANGELOG bump, `package.json` 1.1.1→1.3.0, GitHub Release `v1.3.0` published, Slack post fired to `#f2-pwa-uat`.
+  8. v1.2.0 milestone left open with #16 / #17 / #18 (`status:fixed-pending-verify`) — ASPSI Round 4 verifies these in production.
+- **Sprint 003 board after Phase F:** 1/4 committed done (E4-PWA-013). E2-F1-010 carries to Sprint 004 as a three-sprint carry. E0-010 (internal weekly status format), E3-F1-001 (F1 FMF Section A) carry to Sprint 004. Stretch (E2-F3-010, E2-F4-010, E0-008) defers.
+- **Open manual step (Carl's hands-on):** admin password rotation via `deliverables/F2/PWA/worker/scripts/hash-admin-password.mjs` (interactive, prompts for password) → `wrangler secret put ADMIN_PASSWORD_HASH`. Per memory `project_admin_password_rotation_pending.md`.
+- **Issue #34 follow-up:** the GitHub Actions wrangler workflow that replaces broken CF Pages auto-deploy now lives on `main` (came along with the Phase F merge), so `workflow_run` triggers will fire on subsequent pushes to main/staging. Manual wrangler is no longer the everyday path; only needed for hotfix-out-of-band deploys.
+
 ## 2026-04-26 (gstack adopted for F2 PWA workstream)
 
 - **Ingested** [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - gstack Claude Code Skill Pack]] — Garry Tan's 23-skill Claude Code pack already installed in `~/.claude/skills/gstack/`. README clipped to `raw/` and summarized.

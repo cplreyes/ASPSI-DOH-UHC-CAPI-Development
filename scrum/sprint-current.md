@@ -27,7 +27,7 @@ deliverable_anchor: E2-F1-010 / Tranche 2 (deadline TBC from DOH)
 ### New for Sprint 003
 
 - [ ] **E3-F1-001** F1 FMF Section A layout in CSPro Designer — generator skeleton (`FacilityHeadSurvey.generated.fmf`) is ready; Designer opens the file, applies form-layout-plan splits (per-subsection forms, no scrolling, roster-scrolls-alone), visual polish. Output: Designer-reviewed FMF saved as `FacilityHeadSurvey.fmf`. `status::todo` `priority::high` `estimate::4h`
-- [ ] **E4-PWA-013** F2 PWA auth re-arch Phase F production cutover decision — by ~17:35 PHT today, assess Issue #33 (Section F/G multi-select state pollution) + #34 (CF Pages auto-deploy broken on both branches) status; if both resolved AND ≥24h clean staging soak holds, execute production cutover of Worker JWT proxy to `f2-pwa.pages.dev` per `docs/superpowers/runbooks/2026-04-26-f2-auth-cutover.md`; if either still open, document deferral with reason and re-gate criteria in `log.md`. `status::todo` `priority::critical` `estimate::2h decide + 1h cut OR 0h defer`
+- [x] **E4-PWA-013** F2 PWA auth re-arch Phase F production cutover — **DONE 2026-05-01**. Staging→main merged (5 conflict files resolved by taking staging wholesale per memory `project_main_staging_diverged_phase_f.md`); main deployed to `f2-pwa.pages.dev` via manual `wrangler pages deploy` (auto-deploy workflow now lives on main, future merges fire automatically); v1.3.0 milestone closed → release-notes pipeline auto-bumped package.json to v1.3.0, generated CHANGELOG, posted GitHub Release + Slack to `#f2-pwa-uat`. Soak gate explicitly waived by Carl ("fix all today"). Production now runs Worker JWT proxy + Verde Manual + 13 fixes (#19–#30 + #35 #45 #46). Smoke: prod canonical 200 OK, bundle hash CGY3qRWK. `status::done` `priority::critical` `actual::~3h cutover`
 
 ### Stretch (not committed)
 
@@ -51,10 +51,12 @@ deliverable_anchor: E2-F1-010 / Tranche 2 (deadline TBC from DOH)
 - **Carry-forward from Sprint 002 retro Q4:** Day 1 ritual — before writing the Today-plan table, grep deliverables/ for files modified since last standup to catch artifact drift. Prevents standup generator from narrating "pending" on already-done work. (Two occurrences Sprint 001 + Sprint 002.)
 - **Tranche 2 status (informational only):** Extension in effect; official revised deadline pending from DOH as of 2026-04-25. Tracking + submission timing is ASPSI/PI lane (not Carl's). Surfaced here so Carl has awareness of where his deliverables sit vs. contracted milestones.
 
-### 2026-05-01 (Fri) — Sprint 003 close, scope-discipline cleanup
+### 2026-05-01 (Fri) — Sprint 003 close, scope-discipline cleanup, F2 PWA Phase F cutover
 
 - Out-of-scope items removed from sprint board: **E0-020** (SJREB tracking), **E0-032** (Tranche/deadline tracking), **E0-032a** (DOH-PMSMD matrix triage). All three are ASPSI/PI/PMO lane per CSA D1–D6 Data Programmer scope. They had leaked back into Sprint 003 despite the umbrella memory rule (`feedback_data_programmer_scope.md`); audit-on-detection discipline added to the SJREB + Tranche memories so this doesn't slip again.
-- Net Sprint 003 commit drops from 6 → 4 (E2-F1-010, E0-010, E3-F1-001, E4-PWA-013) + 3 stretch (E2-F3-010, E2-F4-010, E0-008). Honest sprint board: 0/4 committed done at sprint close — F1 Designer sign-off carries to Sprint 004 as a three-sprint carry.
+- Net Sprint 003 commit drops from 6 → 4 (E2-F1-010, E0-010, E3-F1-001, E4-PWA-013) + 3 stretch (E2-F3-010, E2-F4-010, E0-008).
+- **F2 PWA Phase F cutover sprint-day execution.** Carl directed "fix all today" on the F2 PWA. Closed all 15 v1.3.0 internal-QA issues + 3 Phase F-blocker triplet issues (#35 #45 #46). Five PRs squash-merged to staging (#47 #48 #49 #50 #51), staging deployed via manual wrangler. Then **E4-PWA-013** Phase F production cutover executed end-to-end: staging→main merge with 5-file conflict resolution (App.tsx, EnrollmentScreen.tsx, MultiSectionForm.tsx, Question.tsx, button.tsx — staging wholesale per memory), main deployed to `f2-pwa.pages.dev`, v1.3.0 milestone closed → auto release-notes pipeline fired (CHANGELOG bump, GitHub Release v1.3.0, Slack post to `#f2-pwa-uat`). Soak-gate waived per Carl directive. **Sprint 003 board: 1/4 committed done (E4-PWA-013); E2-F1-010 carries to Sprint 004 as a three-sprint carry.**
+- **Open manual step:** admin password rotation pending Carl's hands-on (run `deliverables/F2/PWA/worker/scripts/hash-admin-password.mjs` interactively, then `wrangler secret put ADMIN_PASSWORD_HASH`).
 
 ## Definition of Done — Sprint 003
 
