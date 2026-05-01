@@ -96,3 +96,107 @@ export async function verifyPassword(password: string, stored: string): Promise<
   const computed = await pbkdf2(password, salt, iters);
   return timingSafeEqual(computed, expected);
 }
+
+// ---------------------------------------------------------------------------
+// Admin JWT — mint + verify
+// ---------------------------------------------------------------------------
+
+/**
+ * Admin JWT payload shape per spec §6.3.
+ *
+ * Distinct from the existing HCW JWT (`tablet_id` + `facility_id` claims)
+ * via the `aud` claim. Both share the JWT_SIGNING_KEY but verify routines
+ * check `aud` to prevent cross-use (HCW token rejected by admin verifier
+ * and vice-versa).
+ */
+export interface AdminJwtPayload {
+  iss: string;
+  aud: 'admin';
+  sub: string;
+  role: string;
+  role_version: number;
+  iat: number;
+  exp: number;
+  jti: string;
+}
+
+export interface MintAdminJwtOpts {
+  /** Time-to-live in seconds. Default 4 * 3600 (4 hours per spec §6.3). */
+  ttl?: number;
+  /** Issuer claim. Default 'f2-pwa-worker'. */
+  iss?: string;
+}
+
+async function importJwtKey(rawB64url: string): Promise<CryptoKey> {
+  return crypto.subtle.importKey(
+    'raw',
+    b64urlDecode(rawB64url),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign', 'verify'],
+  );
+}
+
+/**
+ * Mint an admin JWT. The signing key is the existing JWT_SIGNING_KEY
+ * (base64url-encoded raw bytes; same as HCW JWT minting).
+ */
+export async function mintAdminJwt(
+  signingKeyB64url: string,
+  claims: Pick<AdminJwtPayload, 'sub' | 'role' | 'role_version'>,
+  opts: MintAdminJwtOpts = {},
+): Promise<string> {
+  const ttl = opts.ttl ?? 4 * 60 * 60;
+  const iat = Math.floor(Date.now() / 1000);
+  const payload: AdminJwtPayload = {
+    iss: opts.iss ?? 'f2-pwa-worker',
+    aud: 'admin',
+    sub: claims.sub,
+    role: claims.role,
+    role_version: claims.role_version,
+    iat,
+    exp: iat + ttl,
+    jti: crypto.randomUUID(),
+  };
+  const header = { alg: 'HS256', typ: 'JWT' };
+  const encJson = (o: object) => b64urlEncode(enc.encode(JSON.stringify(o)));
+  const signingInput = `${encJson(header)}.${encJson(payload)}`;
+  const key = await importJwtKey(signingKeyB64url);
+  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(signingInput));
+  return `${signingInput}.${b64urlEncode(new Uint8Array(sig))}`;
+}
+
+export type AdminJwtVerifyResult =
+  | { ok: true; payload: AdminJwtPayload }
+  | { ok: false; error: 'malformed' | 'badsig' | 'expired' | 'wrongaud' };
+
+/**
+ * Verify an admin JWT. Checks signature, aud=='admin', and exp > now.
+ * Does NOT check revocation — caller does that against KV (revoked_jti / revoked_user).
+ */
+export async function verifyAdminJwt(signingKeyB64url: string, token: string): Promise<AdminJwtVerifyResult> {
+  if (!token) return { ok: false, error: 'malformed' };
+  const parts = token.split('.');
+  if (parts.length !== 3) return { ok: false, error: 'malformed' };
+  const [headerEnc, payloadEnc, sigEnc] = parts as [string, string, string];
+  let payload: AdminJwtPayload;
+  try {
+    const headerJson = JSON.parse(new TextDecoder().decode(b64urlDecode(headerEnc))) as { alg?: string };
+    if (headerJson.alg !== 'HS256') return { ok: false, error: 'malformed' };
+    payload = JSON.parse(new TextDecoder().decode(b64urlDecode(payloadEnc))) as AdminJwtPayload;
+  } catch {
+    return { ok: false, error: 'malformed' };
+  }
+  let sigBytes: Uint8Array;
+  try {
+    sigBytes = b64urlDecode(sigEnc);
+  } catch {
+    return { ok: false, error: 'malformed' };
+  }
+  const key = await importJwtKey(signingKeyB64url);
+  const valid = await crypto.subtle.verify('HMAC', key, sigBytes, enc.encode(`${headerEnc}.${payloadEnc}`));
+  if (!valid) return { ok: false, error: 'badsig' };
+  if (payload.aud !== 'admin') return { ok: false, error: 'wrongaud' };
+  if (Math.floor(Date.now() / 1000) >= payload.exp) return { ok: false, error: 'expired' };
+  return { ok: true, payload };
+}
