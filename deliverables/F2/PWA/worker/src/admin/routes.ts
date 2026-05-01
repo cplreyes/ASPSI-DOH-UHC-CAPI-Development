@@ -49,12 +49,17 @@ import {
   handleCreateUser,
   handleUpdateUser,
   handleDeleteUser,
+  handleCreateRole,
+  handleUpdateRole,
+  handleDeleteRole,
   type UsersListFilters,
   type ListUsersData,
   type ListRolesData,
   type CreateUserBody,
   type UpdateUserBody,
   type UserRow,
+  type RoleMutationBody,
+  type RoleRow,
 } from './handlers/users';
 import { callAppsScript } from './apps-script-client';
 import { RoleVersionCache, requirePerm, type Role, type RolesListResp, type RbacOpts } from './rbac';
@@ -78,6 +83,7 @@ const REPORT_MAP_RE = /^\/admin\/api\/dashboards\/report\/map\/?$/;
 const USERS_LIST_RE = /^\/admin\/api\/dashboards\/users\/?$/;
 const USERS_BY_NAME_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/?$/;
 const ROLES_LIST_RE = /^\/admin\/api\/dashboards\/roles\/?$/;
+const ROLES_BY_NAME_RE = /^\/admin\/api\/dashboards\/roles\/([A-Za-z][A-Za-z0-9 _\-]{0,63})\/?$/;
 
 /**
  * Build RbacOpts that's stable for one request. Most rbac-protected handlers
@@ -432,6 +438,57 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleListRoles(asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'POST' && ROLES_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_roles', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const body = (await req.json().catch(() => ({}))) as RoleMutationBody;
+    const asCall = (payload: Record<string, unknown>) =>
+      callAppsScript<{ role: RoleRow }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_roles_create',
+        payload,
+        requestId,
+      );
+    const r = await handleCreateRole(body, { username: auth.payload!.sub }, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  const roleByNameMatch = ROLES_BY_NAME_RE.exec(url.pathname);
+  if (roleByNameMatch && (req.method === 'PATCH' || req.method === 'DELETE')) {
+    const auth = await requirePerm(req, 'dash_roles', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const name = decodeURIComponent(roleByNameMatch[1]!);
+    if (req.method === 'PATCH') {
+      const body = (await req.json().catch(() => ({}))) as RoleMutationBody;
+      const asCall = (payload: Record<string, unknown>) =>
+        callAppsScript<{ role: RoleRow; changed: boolean }>(
+          env.APPS_SCRIPT_URL,
+          env.APPS_SCRIPT_HMAC,
+          'admin_roles_update',
+          payload,
+          requestId,
+        );
+      const r = await handleUpdateRole(name, body, asCall);
+      return withRequestId(r, requestId);
+    }
+    // DELETE
+    const asCall = (payload: { name: string }) =>
+      callAppsScript<{ name: string }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_roles_delete',
+        payload,
+        requestId,
+      );
+    const r = await handleDeleteRole(name, asCall);
     return withRequestId(r, requestId);
   }
 

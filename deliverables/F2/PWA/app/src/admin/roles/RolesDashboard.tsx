@@ -9,10 +9,11 @@
  * and create/delete actions land in follow-up commits; this is the
  * read-only matrix view.
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
+import { RoleEditor } from './RoleEditor';
 
 interface RoleRow {
   name: string;
@@ -53,23 +54,33 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
     | { kind: 'loaded'; data: ListRolesData }
     | { kind: 'failed'; error: ApiError }
   >({ kind: 'loading' });
+  const [editor, setEditor] = useState<
+    | { kind: 'create' }
+    | { kind: 'edit'; role: RoleRow }
+    | null
+  >(null);
+  const [reloadTick, setReloadTick] = useState(0);
+
+  const load = useCallback(async () => {
+    return adminFetch<ListRolesData>(
+      `${apiBaseUrl}/admin/api/dashboards/roles`,
+      {},
+      {
+        ...(token ? { token } : {}),
+        onUnauthorized: () => {
+          clearAuth();
+          navigate('/admin/login');
+        },
+        ...(fetchImpl ? { fetchImpl } : {}),
+      },
+    );
+  }, [apiBaseUrl, token, fetchImpl, clearAuth, navigate]);
 
   useEffect(() => {
     let cancelled = false;
     setState({ kind: 'loading' });
     void (async () => {
-      const r = await adminFetch<ListRolesData>(
-        `${apiBaseUrl}/admin/api/dashboards/roles`,
-        {},
-        {
-          ...(token ? { token } : {}),
-          onUnauthorized: () => {
-            clearAuth();
-            navigate('/admin/login');
-          },
-          ...(fetchImpl ? { fetchImpl } : {}),
-        },
-      );
+      const r = await load();
       if (cancelled) return;
       if (r.ok) setState({ kind: 'loaded', data: r.data });
       else setState({ kind: 'failed', error: r.error });
@@ -77,17 +88,49 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
     return () => {
       cancelled = true;
     };
-  }, [apiBaseUrl, token]);
+  }, [load, reloadTick]);
+
+  const onDelete = async (name: string) => {
+    if (!window.confirm(`Delete role "${name}"? This cannot be undone.`)) return;
+    const r = await adminFetch(
+      `${apiBaseUrl}/admin/api/dashboards/roles/${encodeURIComponent(name)}`,
+      { method: 'DELETE' },
+      {
+        ...(token ? { token } : {}),
+        onUnauthorized: () => {
+          clearAuth();
+          navigate('/admin/login');
+        },
+        ...(fetchImpl ? { fetchImpl } : {}),
+      },
+    );
+    if (r.ok) {
+      setReloadTick((n) => n + 1);
+    } else if (r.error.code === 'E_CONFLICT') {
+      window.alert('Cannot delete: this role is still assigned to one or more users.');
+    } else {
+      window.alert(`Delete failed: ${r.error.message ?? r.error.code}`);
+    }
+  };
 
   return (
     <section className="flex flex-col gap-4 py-2">
-      <header className="border-b border-hairline pb-3">
-        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
-        <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Roles</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Permission matrix. Built-in roles pinned first. Editor + create/delete actions land in
-          follow-up commits.
-        </p>
+      <header className="flex items-start justify-between border-b border-hairline pb-3">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
+          <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Roles</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Permission matrix. Built-in roles pinned first. Saving an edit auto-bumps version and
+            forces affected users to re-login.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => setEditor({ kind: 'create' })}
+          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        >
+          + Add role
+        </button>
       </header>
 
       {state.kind === 'loading' ? (
@@ -101,14 +144,37 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
           <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
             {state.data.total} role{state.data.total === 1 ? '' : 's'}
           </p>
-          <RoleMatrix roles={state.data.roles} />
+          <RoleMatrix
+            roles={state.data.roles}
+            onEdit={(r) => setEditor({ kind: 'edit', role: r })}
+            onDelete={onDelete}
+          />
         </>
+      ) : null}
+
+      {editor ? (
+        <RoleEditor
+          apiBaseUrl={apiBaseUrl}
+          {...(fetchImpl ? { fetchImpl } : {})}
+          mode={editor.kind}
+          {...(editor.kind === 'edit' ? { initial: editor.role } : {})}
+          onClose={() => setEditor(null)}
+          onSaved={() => setReloadTick((n) => n + 1)}
+        />
       ) : null}
     </section>
   );
 }
 
-function RoleMatrix({ roles }: { roles: RoleRow[] }): JSX.Element {
+function RoleMatrix({
+  roles,
+  onEdit,
+  onDelete,
+}: {
+  roles: RoleRow[];
+  onEdit: (r: RoleRow) => void;
+  onDelete: (name: string) => void;
+}): JSX.Element {
   const dashCols = useMemo(() => PERM_COLUMNS.filter((c) => c.group === 'dash'), []);
   const dictCols = useMemo(() => PERM_COLUMNS.filter((c) => c.group === 'dict'), []);
 
@@ -135,6 +201,9 @@ function RoleMatrix({ roles }: { roles: RoleRow[] }): JSX.Element {
             >
               Instrument access (↑ write / ↓ read)
             </th>
+            <th className="border-l border-hairline px-3 py-2 text-left font-mono text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+              Actions
+            </th>
           </tr>
           <tr className="border-b border-hairline">
             <th />
@@ -155,38 +224,69 @@ function RoleMatrix({ roles }: { roles: RoleRow[] }): JSX.Element {
                 {c.label}
               </th>
             ))}
+            <th className="border-l border-hairline" />
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">
-          {roles.map((r) => (
-            <tr key={r.name}>
-              <td className="px-3 py-2">
-                <span className="font-mono text-xs">{r.name}</span>
-                {isTruthy(r.is_builtin) ? (
-                  <span className="ml-2 rounded-full border border-hairline px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                    built-in
-                  </span>
-                ) : null}
-              </td>
-              <td className="px-3 py-2 font-mono text-xs text-muted-foreground">v{r.version}</td>
-              {dashCols.map((c, i) => (
-                <td
-                  key={c.key}
-                  className={`px-2 py-2 text-center ${i === 0 ? 'border-l border-hairline' : ''}`}
-                >
-                  <PermDot active={isTruthy(r[c.key])} />
+          {roles.map((r) => {
+            const builtin = isTruthy(r.is_builtin);
+            return (
+              <tr key={r.name}>
+                <td className="px-3 py-2">
+                  <span className="font-mono text-xs">{r.name}</span>
+                  {builtin ? (
+                    <span className="ml-2 rounded-full border border-hairline px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                      built-in
+                    </span>
+                  ) : null}
                 </td>
-              ))}
-              {dictCols.map((c, i) => (
-                <td
-                  key={c.key}
-                  className={`px-2 py-2 text-center ${i === 0 ? 'border-l border-hairline' : ''}`}
-                >
-                  <PermDot active={isTruthy(r[c.key])} />
+                <td className="px-3 py-2 font-mono text-xs text-muted-foreground">v{r.version}</td>
+                {dashCols.map((c, i) => (
+                  <td
+                    key={c.key}
+                    className={`px-2 py-2 text-center ${i === 0 ? 'border-l border-hairline' : ''}`}
+                  >
+                    <PermDot active={isTruthy(r[c.key])} />
+                  </td>
+                ))}
+                {dictCols.map((c, i) => (
+                  <td
+                    key={c.key}
+                    className={`px-2 py-2 text-center ${i === 0 ? 'border-l border-hairline' : ''}`}
+                  >
+                    <PermDot active={isTruthy(r[c.key])} />
+                  </td>
+                ))}
+                <td className="border-l border-hairline px-3 py-2">
+                  <div className="flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      onClick={() => onEdit(r)}
+                      className="font-mono text-xs uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+                    >
+                      Edit
+                    </button>
+                    {builtin ? (
+                      <span
+                        className="font-mono text-xs uppercase tracking-wider text-muted-foreground/50"
+                        title="Built-in roles cannot be deleted"
+                      >
+                        Delete
+                      </span>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => onDelete(r.name)}
+                        className="font-mono text-xs uppercase tracking-wider text-error underline-offset-4 hover:underline"
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </div>
                 </td>
-              ))}
-            </tr>
-          ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

@@ -234,3 +234,113 @@ export async function handleDeleteUser(
   }
   return new Response(null, { status: 204 });
 }
+
+// ----- Roles mutations (Tasks 3.21, 3.22, 3.23) ---------------------------
+
+const ROLE_NAME_RE = /^[A-Za-z][A-Za-z0-9 _-]{0,63}$/;
+
+export interface RoleMutationBody {
+  name?: unknown;
+  dash_data?: unknown;
+  dash_report?: unknown;
+  dash_apps?: unknown;
+  dash_users?: unknown;
+  dash_roles?: unknown;
+  dict_self_admin_up?: unknown;
+  dict_self_admin_down?: unknown;
+  dict_paper_encoded_up?: unknown;
+  dict_paper_encoded_down?: unknown;
+  dict_capi_up?: unknown;
+  dict_capi_down?: unknown;
+}
+
+export type CreateRoleAsCallable = (
+  payload: Record<string, unknown>,
+) => Promise<AppsScriptResponse<{ role: RoleRow }>>;
+
+export type UpdateRoleAsCallable = (
+  payload: Record<string, unknown>,
+) => Promise<AppsScriptResponse<{ role: RoleRow; changed: boolean }>>;
+
+export type DeleteRoleAsCallable = (
+  payload: { name: string },
+) => Promise<AppsScriptResponse<{ name: string }>>;
+
+const PERM_KEYS = [
+  'dash_data', 'dash_report', 'dash_apps', 'dash_users', 'dash_roles',
+  'dict_self_admin_up', 'dict_self_admin_down',
+  'dict_paper_encoded_up', 'dict_paper_encoded_down',
+  'dict_capi_up', 'dict_capi_down',
+] as const;
+
+function buildRolePayload(body: RoleMutationBody): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const k of PERM_KEYS) {
+    const v = (body as Record<string, unknown>)[k];
+    if (typeof v === 'boolean') out[k] = v;
+  }
+  return out;
+}
+
+export async function handleCreateRole(
+  body: RoleMutationBody,
+  actor: { username: string },
+  asCallable: CreateRoleAsCallable,
+): Promise<Response> {
+  const name = typeof body.name === 'string' ? body.name.trim() : '';
+  if (!ROLE_NAME_RE.test(name)) {
+    return errorJson(
+      'E_VALIDATION',
+      'role name must start with a letter; up to 64 chars [A-Za-z0-9 _-]',
+      400,
+    );
+  }
+  const payload = { name, ...buildRolePayload(body), created_by: actor.username };
+  const r = await asCallable(payload);
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
+export async function handleUpdateRole(
+  name: string,
+  body: RoleMutationBody,
+  asCallable: UpdateRoleAsCallable,
+): Promise<Response> {
+  if (!ROLE_NAME_RE.test(name)) {
+    return errorJson('E_VALIDATION', 'invalid role name path param', 400);
+  }
+  const payload = { name, ...buildRolePayload(body) };
+  const r = await asCallable(payload);
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
+export async function handleDeleteRole(
+  name: string,
+  asCallable: DeleteRoleAsCallable,
+): Promise<Response> {
+  if (!ROLE_NAME_RE.test(name)) {
+    return errorJson('E_VALIDATION', 'invalid role name path param', 400);
+  }
+  const r = await asCallable({ name });
+  if (!r.ok) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return new Response(null, { status: 204 });
+}
