@@ -58,6 +58,65 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
 - [ ] **E4-CSWeb-006** Backup strategy for CSWeb data (frequency, retention, restore drill) `status::todo` `priority::medium` `estimate::4h`
 - [ ] **E4-CSWeb-007** Monitoring dashboard — sync health, submission counts, field-device status `status::todo` `priority::medium` `estimate::1d`
 
+### F2 Admin Portal Track *(planning complete 2026-05-01 — CSWeb-mirror admin for the F2 PWA stack)*
+
+> Spec: [`docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md`](../../docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md) (v0.2)
+> Plan: [`docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md`](../../docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md) (4 sprints, 80 sub-tasks)
+>
+> Replaces the abandoned M10 plan (single-`ADMIN_SECRET` Apps-Script-HtmlService). Mirrors CSWeb's documented permission model 1:1: 5 dashboards (data/report/apps/users/roles) × 5 IR-aligned roles × 6 per-instrument flags. Adds modest F2 PWA extensions (GPS capture at submission, source_path tagging, paper-encoder workflow, F2_HCWs sheet, versioning endpoint, role-equivalence docs). One tranche, parallel build (admin portal + PWA extensions same sprint window). ~4 weeks at 1-week solo+AI Scrum cadence.
+
+#### Sprint AP1 — foundation (week 1)
+
+- [ ] **E4-APRT-001** Wrangler R2 binding + cron trigger configured `status::todo` `priority::critical` `estimate::1h`
+- [ ] **E4-APRT-002** Apps Script schema migration (5 new sheets + F2_Responses/F2_Audit column extensions) `status::todo` `priority::critical` `estimate::3h`
+- [ ] **E4-APRT-003** Worker HMAC + request_id Apps Script client + AS doPost dispatcher (admin_ping round-trip) `status::todo` `priority::critical` `estimate::4h`
+- [ ] **E4-APRT-004** Web Crypto PBKDF2 (600k iters) hash + verify + JWT mint/verify with role_version `status::todo` `priority::critical` `estimate::3h`
+- [ ] **E4-APRT-005** Two-axis login throttle (per-username + per-IP via KV) `status::todo` `priority::high` `estimate::2h`
+- [ ] **E4-APRT-006** RBAC middleware + role_version cache + revoked_jti / revoked_user honor `status::todo` `priority::critical` `estimate::3h`
+- [ ] **E4-APRT-007** /admin/api/login + /logout routes wired in Worker; audit log writes `status::todo` `priority::critical` `estimate::3h`
+- [ ] **E4-APRT-008** Admin + Standard User built-in roles seeded; 2 Administrators seeded interactively (Carl + ASPSI Director) `status::todo` `priority::critical` `estimate::1h`
+- [ ] **E4-APRT-009** Sprint AP1 staging smoke test: login + revoked_jti round-trip end-to-end `status::todo` `priority::high` `estimate::1h`
+
+#### Sprint AP2 — data + report dashboards + PWA GPS (week 2)
+
+- [ ] **E4-APRT-010** Apps Script admin reads (responses/audit/dlq/hcws) with filters + pagination `status::todo` `priority::critical` `estimate::4h`
+- [ ] **E4-APRT-011** Worker /admin/api/dashboards/data/* routes (responses, audit, dlq, hcws) gated by dash_data `status::todo` `priority::critical` `estimate::4h`
+- [ ] **E4-APRT-012** F2 PWA Geolocation helper + consent disclosure + submit-flow integration `status::todo` `priority::high` `estimate::3h`
+- [ ] **E4-APRT-013** Apps Script writes submission_lat/lng + source_path; backfill self_admin on existing rows `status::todo` `priority::high` `estimate::2h`
+- [ ] **E4-APRT-014** F2_HCWs sheet wired at enrollment + backfill from F2_Responses+F2_Audit union `status::todo` `priority::high` `estimate::3h`
+- [ ] **E4-APRT-015** Apps Script admin_sync_report + admin_map_report (PSGC region/province aggregations) `status::todo` `priority::high` `estimate::4h`
+- [ ] **E4-APRT-016** Worker /admin/api/dashboards/report/sync + /map gated by dash_report `status::todo` `priority::high` `estimate::3h`
+- [ ] **E4-APRT-017** Frontend admin shell (Login + Layout + AuthContext + role-aware nav) `status::todo` `priority::high` `estimate::1d`
+- [ ] **E4-APRT-018** Frontend data dashboard (Responses/Audit/DLQ/HCWs tabs + ResponseDetail + empty states) `status::todo` `priority::high` `estimate::2d`
+- [ ] **E4-APRT-019** Frontend SyncReport + MapReport (Leaflet clustering) `status::todo` `priority::high` `estimate::1d`
+
+#### Sprint AP3 — apps + users + roles + cron break-out (week 3)
+
+- [ ] **E4-APRT-020** Apps Script admin_files_* CRUD + R2 upload allowlist (no SVG/HTML/JS, ≤100MB) `status::todo` `priority::high` `estimate::3h`
+- [ ] **E4-APRT-021** Apps Script admin_settings_* + admin_settings_run_due (cron break-out builder) `status::todo` `priority::high` `estimate::4h`
+- [ ] **E4-APRT-022** Worker scheduled() cron dispatcher (5-min) reading next_run_at; R2 writes `status::todo` `priority::high` `estimate::3h`
+- [ ] **E4-APRT-023** Frontend apps dashboard (Versioning + Files + DataSettings + QuotaWidget) `status::todo` `priority::high` `estimate::1d`
+- [ ] **E4-APRT-024** Apps Script users CRUD + bulk_create (chunked ≤500) + revoke_sessions `status::todo` `priority::high` `estimate::4h`
+- [ ] **E4-APRT-025** Worker users routes + bulk import + revoke-sessions wired to KV `status::todo` `priority::high` `estimate::4h`
+- [ ] **E4-APRT-026** Frontend users dashboard (List + Editor + BulkImport CSV preview) `status::todo` `priority::high` `estimate::1d`
+- [ ] **E4-APRT-027** Apps Script roles CRUD with version auto-bump; rejects builtin delete `status::todo` `priority::high` `estimate::3h`
+- [ ] **E4-APRT-028** Worker roles routes + frontend roles dashboard with checkbox grid `status::todo` `priority::high` `estimate::1d`
+- [ ] **E4-APRT-029** PWA versioning endpoint backing data (build SHA injection + Worker /version aggregator) `status::todo` `priority::medium` `estimate::2h`
+
+#### Sprint AP4 — paper-encoder + reissue + cutover + v2.0.0 (week 4)
+
+- [ ] **E4-APRT-030** F2 PWA Form refactored to accept onSubmit prop + mode='hcw'/'encoded' `status::todo` `priority::critical` `estimate::4h`
+- [ ] **E4-APRT-031** Apps Script admin_encode_submit + Worker /admin/api/encode/:hcw_id `status::todo` `priority::critical` `estimate::3h`
+- [ ] **E4-APRT-032** Frontend EncodeQueue + EncodePage with auto-advance + IndexedDB autosave `status::todo` `priority::critical` `estimate::1d`
+- [ ] **E4-APRT-033** Apps Script admin_hcws_reissue_token (CAS via prev_jti); Worker /hcws/:id/reissue-token `status::todo` `priority::critical` `estimate::3h`
+- [ ] **E4-APRT-034** Frontend ReissueModal with mono URL + Copy + QR + 409 handling `status::todo` `priority::high` `estimate::4h`
+- [ ] **E4-APRT-035** Cross-platform QA pass (Chrome/Firefox/Safari × Win/Mac × desktop/tablet ≥768px) `status::todo` `priority::high` `estimate::4h`
+- [ ] **E4-APRT-036** Security testing (throttle / RBAC isolation / HMAC tampering / file-upload XSS vectors) `status::todo` `priority::critical` `estimate::4h`
+- [ ] **E4-APRT-037** Concurrency tests (two-admin reissue race / bulk import + role edit / cron + PWA submit) `status::todo` `priority::high` `estimate::3h`
+- [ ] **E4-APRT-038** UX gates (Anti-Slop checklist pass / `/design-review` audit / screenshot diff vs F2 PWA / keyboard-only walkthrough recorded) `status::todo` `priority::high` `estimate::4h`
+- [ ] **E4-APRT-039** M10 sunset — smoke + 7-day soak + offline backup of ADMIN_PASSWORD_HASH + secret deletion `status::todo` `priority::critical` `estimate::1h`
+- [ ] **E4-APRT-040** v2.0.0 release (CHANGELOG + version bump + staging→main + production deploy + #capi-scrum announce) `status::todo` `priority::critical` `estimate::2h`
+
 ### Integration ETL *(not started — feeds Epic 8 monitoring + Epic 10 cleaning)*
 
 - [ ] **E4-INT-001** ETL spec drafted — CSWeb (F1/F3/F4) + F2 PWA backend → unified analysis store `status::todo` `priority::high` `estimate::1d`
