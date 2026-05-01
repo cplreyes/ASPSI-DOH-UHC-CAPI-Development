@@ -2,6 +2,68 @@
 
 Chronological record of all wiki operations.
 
+## 2026-05-01 (E2-F1-010 F1 DCF Designer walkthrough — sign-off)
+
+- **Scope walked**: `deliverables/CSPro/F1/FacilityHeadSurvey.dcf` — 12 records / 671 items / 166 questions. Walkthrough covered the Apr 21 case-control extension and the GPS+photo capture record alongside the prior baseline.
+
+### Records inspected (in DCF traversal order)
+
+| # | Record | Type | Items | Pass? | Notes |
+|---|---|:-:|---:|:-:|---|
+| 1 | `FACILITYHEADSURVEY_REC` | 1 | 0 | ☐ | Root header — no items |
+| 2 | `FIELD_CONTROL` | A | 15 | ☐ | Case-control block (SURVEY_CODE / INTERVIEWER_ID / DATE_STARTED / TIME_STARTED / AAPOR_DISPOSITION) + visit + CONSENT_GIVEN |
+| 3 | `HEALTH_FACILITY_AND_GEOGRAPHIC_IDENTIFICATION` | B | 9 | ☐ | CLASSIFICATION + 4 PSGC + FACILITY_NAME (alpha-100) + FACILITY_ADDRESS (alpha-200) + legacy LATITUDE / LONGITUDE — see Finding 3 below |
+| 4 | `REC_FACILITY_CAPTURE` | Z | 9 | ☐ | Off-form: 6 GPS items + capture trigger + photo filename + photo trigger |
+| 5 | `A_FACILITY_HEAD_PROFILE` | 2 | 12 | ☐ | |
+| 6 | `B_FACILITY_PROFILE` | 3 | 2 | ☐ | Q7 ownership + Q8 service level (drives Q121 / Q130 / Q132–134 gates) |
+| 7 | `C_UHC_IMPLEMENTATION` | 4 | 122 | ☐ | UHC9 skip pattern items; Q31 NA-skip per LSS-closed default |
+| 8 | `D_YAKAP_KONSULTA` | 5 | 198 | ☐ | Q51 master gate; Q80 5-way branch |
+| 9 | `E_BUCAS_GAMOT` | 6 | 40 | ☐ | |
+| 10 | `F_DOH_LICENSING` | 7 | 147 | ☐ | Q121 hospital/PCF gating |
+| 11 | `G_SERVICE_DELIVERY` | 8 | 92 | ☐ | |
+| 12 | `H_HUMAN_RESOURCES` | 9 | 25 | ☐ | Q166 nurse PD list (audits omitted, per LSS-closed default) |
+
+**Totals confirmed by parser:** 12 records · 671 items (0 + 15 + 9 + 9 + 12 + 2 + 122 + 198 + 40 + 147 + 92 + 25).
+
+### Pre-walkthrough findings from DCF parity check
+
+- **Finding 1 (spec drift, no Designer action):** No `SEC_*` stub records exist in the DCF. F1 spec §1.A and the `SECONDARY_DATA_AS_STUBS = True` default still describe four. Reconcile spec post-walkthrough.
+- **Finding 2 (clarification):** PSGC + FACILITY_NAME/ADDRESS live in `HEALTH_FACILITY_AND_GEOGRAPHIC_IDENTIFICATION` (type B), not in FIELD_CONTROL. Spec §3.1 lumps them under "Field Control & Geographic ID" but the DCF separates them — confirm Designer renders them as two distinct records.
+- **Finding 3 (real bug-list candidate):** Two lat/long pairs in the DCF — legacy `LATITUDE` / `LONGITUDE` (alpha-12) inside the type-B geo record AND `FACILITY_GPS_LATITUDE` / `FACILITY_GPS_LONGITUDE` (alpha-12) inside `REC_FACILITY_CAPTURE`. Spec §3.1.1 only documents the GPS pair. Decision in Designer: keep both (manual fallback if GPS fails) and update spec, or remove legacy from `generate_dcf.py` and regenerate.
+
+### Case-control block verification
+
+- [ ] AAPOR value set has 11 entries (110/120/210/220/230/240/310/320/410/420/540)
+- [ ] `SURVEY_CODE` literal default = `"F1"` (alpha-2)
+- [ ] `INTERVIEWER_ID` numeric-4, no prefill
+- [ ] `DATE_STARTED` numeric YYYYMMDD, prefill spec'd in §4.17
+- [ ] `TIME_STARTED` numeric HHMMSS
+- [ ] `FACILITY_NAME` alpha-100 + `FACILITY_ADDRESS` alpha-200 in geo block
+
+### Bug-list disposition
+
+LSS-closed per E2-F1-009b (2026-04-17) — all six `PENDING_DESIGN_*` defaults stand as final. No new bugs raised in walkthrough  /  Bugs raised this session and routed to `generate_dcf.py` (list below).
+
+| Source | Item | Disposition | Action |
+|---|---|---|---|
+| (none / TBD) | | | |
+
+### NA-code convention spot-check
+
+- [ ] NA = `9` (length-1 items)
+- [ ] NA = `99` (length-2 items)
+- [ ] NA = `999` (length-3 items)
+
+### Sign-off
+
+**E2-F1-010 status:** ☐ closed / ☐ deferred with reason
+
+- **Generator (`generate_dcf.py`):** unchanged this session  /  patched (commit `…`)
+- **Regenerated DCF:** N/A this session  /  12 records / 671 items confirmed
+- **Next step:** open Epic 3 — E3-F1-001 F1 FMF Section A layout in CSPro Designer (generator skeleton `FacilityHeadSurvey.generated.fmf` ready)
+
+---
+
 ## 2026-04-26 (gstack adopted for F2 PWA workstream)
 
 - **Ingested** [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - gstack Claude Code Skill Pack]] — Garry Tan's 23-skill Claude Code pack already installed in `~/.claude/skills/gstack/`. README clipped to `raw/` and summarized.
