@@ -16,6 +16,7 @@ import { Login } from './Login';
 import { Layout } from './Layout';
 import { EncodeQueue } from './encode/EncodeQueue';
 import { EncodePage } from './encode/EncodePage';
+import { DataDashboard } from './data/DataDashboard';
 
 interface AdminAppProps {
   apiBaseUrl: string;
@@ -39,7 +40,8 @@ interface PageRoute {
 }
 
 const PAGES: PageRoute[] = [
-  { path: '/admin/data', title: 'Data', element: <Placeholder title="Data Dashboard" subtitle="Responses · Audit · DLQ · Healthcare workers" /> },
+  // /admin/data is dispatched directly in AdminRoot (the DataDashboard
+  // tabs accept apiBaseUrl + fetchImpl props).
   { path: '/admin/report', title: 'Reports', element: <Placeholder title="Report Dashboard" subtitle="Sync timeline · Submission map" /> },
   { path: '/admin/apps', title: 'Files & Settings', element: <Placeholder title="Apps" subtitle="File library · Versioning · Data settings" /> },
   { path: '/admin/users', title: 'Users', element: <Placeholder title="Users" subtitle="Admin user accounts" /> },
@@ -75,6 +77,15 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
   if (!isAuthenticated) {
     // Render nothing during the redirect tick — useEffect above will navigate.
     return <></>;
+  }
+
+  // Data dashboard route (param-bearing path comes via :submission_id below).
+  if (pathname === '/admin/data' || pathname === '/admin/data/') {
+    return (
+      <Layout>
+        <DataDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+      </Layout>
+    );
   }
 
   // Encode routes carry an :hcw_id param.
