@@ -52,6 +52,75 @@ describe('handleSubmit', () => {
     expect(JSON.parse(ctx._appended[0].values_json)).toEqual({ Q2: 'Regular', Q3: 'Female' });
   });
 
+  it('defaults source_path to self_admin and writes empty lat/lng when values omit them', () => {
+    const ctx = makeCtx();
+    handleSubmit(
+      {
+        client_submission_id: 'cli-no-gps',
+        spec_version: '2026-04-17-m1',
+        values: { Q3: 'Male' },
+      },
+      ctx,
+    );
+    expect(ctx._appended[0].source_path).toBe('self_admin');
+    expect(ctx._appended[0].submission_lat).toBe('');
+    expect(ctx._appended[0].submission_lng).toBe('');
+    expect(ctx._appended[0].encoded_by).toBe('');
+    expect(ctx._appended[0].encoded_at).toBe('');
+  });
+
+  it('reads submission_lat/lng from values dict when PWA injects them at submit time', () => {
+    const ctx = makeCtx();
+    handleSubmit(
+      {
+        client_submission_id: 'cli-gps',
+        spec_version: '2026-04-17-m1',
+        values: { Q3: 'Female', submission_lat: 14.5995, submission_lng: 120.9842 },
+      },
+      ctx,
+    );
+    expect(ctx._appended[0].submission_lat).toBe(14.5995);
+    expect(ctx._appended[0].submission_lng).toBe(120.9842);
+    expect(ctx._appended[0].source_path).toBe('self_admin');
+  });
+
+  it('drops non-numeric submission_lat (e.g. null from declined geolocation) to empty', () => {
+    const ctx = makeCtx();
+    handleSubmit(
+      {
+        client_submission_id: 'cli-null-gps',
+        spec_version: '2026-04-17-m1',
+        values: { Q3: 'Male', submission_lat: null, submission_lng: null },
+      },
+      ctx,
+    );
+    expect(ctx._appended[0].submission_lat).toBe('');
+    expect(ctx._appended[0].submission_lng).toBe('');
+  });
+
+  it('honors top-level encoder fields over values (paper-encoded write path)', () => {
+    const ctx = makeCtx();
+    handleSubmit(
+      {
+        client_submission_id: 'cli-encoded',
+        spec_version: '2026-04-17-m1',
+        source_path: 'paper_encoded',
+        encoded_by: 'admin-alice',
+        encoded_at: 1700000005000,
+        submission_lat: 12.345,
+        submission_lng: 67.89,
+        values: { Q3: 'Male', submission_lat: 99.99 },
+      },
+      ctx,
+    );
+    expect(ctx._appended[0].source_path).toBe('paper_encoded');
+    expect(ctx._appended[0].encoded_by).toBe('admin-alice');
+    expect(ctx._appended[0].encoded_at).toBe(new Date(1700000005000).toISOString());
+    // Top-level lat wins over the (stale) value-dict lat.
+    expect(ctx._appended[0].submission_lat).toBe(12.345);
+    expect(ctx._appended[0].submission_lng).toBe(67.89);
+  });
+
   it('returns duplicate status for a repeated client_submission_id', () => {
     const ctx = makeCtx({
       responses: {

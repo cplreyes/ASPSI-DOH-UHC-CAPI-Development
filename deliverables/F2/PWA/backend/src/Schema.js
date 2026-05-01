@@ -12,6 +12,13 @@ var F2_RESPONSES_COLUMNS = [
   'sync_attempt_count',
   'status',
   'values_json',
+  // Admin Portal extensions (Tasks 2.6, 2.7, 4.2). Order MUST match the
+  // physical column order produced by Migrations.migrateExtendF2ResponsesColumns.
+  'submission_lat',
+  'submission_lng',
+  'source_path',
+  'encoded_by',
+  'encoded_at',
 ];
 
 var F2_AUDIT_COLUMNS = [

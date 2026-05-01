@@ -135,3 +135,41 @@ function runAllMigrations() {
   console.log('Migrations complete: ' + JSON.stringify(summary));
   return summary;
 }
+
+/**
+ * Backfill source_path = 'self_admin' on F2_Responses rows where the column
+ * is empty. Idempotent — only touches rows whose source_path is currently
+ * blank, so re-runs after the encoder write path (Task 4.2) starts populating
+ * 'paper_encoded' values won't overwrite them.
+ *
+ * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 2.7)
+ *
+ * Run from the AS editor after migrations land. Returns {updated, skipped}.
+ */
+function backfillSourcePath() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName('F2_Responses');
+  if (!sh) throw new Error('F2_Responses sheet not found');
+  var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  var sourcePathCol = headers.indexOf('source_path') + 1;
+  if (sourcePathCol === 0) {
+    throw new Error('source_path column missing — run migrateExtendF2ResponsesColumns first');
+  }
+  var lastRow = sh.getLastRow();
+  if (lastRow < 2) return { updated: 0, skipped: 0 };
+  var range = sh.getRange(2, sourcePathCol, lastRow - 1, 1);
+  var values = range.getValues();
+  var updated = 0;
+  var skipped = 0;
+  for (var i = 0; i < values.length; i++) {
+    if (values[i][0] === '' || values[i][0] === null) {
+      values[i][0] = 'self_admin';
+      updated++;
+    } else {
+      skipped++;
+    }
+  }
+  range.setValues(values);
+  console.log('backfillSourcePath: updated=' + updated + ' skipped=' + skipped);
+  return { updated: updated, skipped: skipped };
+}

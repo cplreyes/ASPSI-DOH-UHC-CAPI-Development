@@ -15,7 +15,9 @@ const ORDER = [
   'src/AdminHandlers.js',
   'src/Router.js',
   'apps-script/Setup.js',
-  'apps-script/AdminGlue.js',
+  // apps-script/AdminGlue.js was removed in PR #31 (auth re-arch).
+  'apps-script/Migrations.js',
+  'apps-script/AdminAudit.js',
   'apps-script/Code.js',
 ];
 
@@ -47,8 +49,8 @@ async function main() {
   const manifest = await readFile(resolve(root, 'apps-script/appsscript.json'), 'utf8');
   await writeFile(resolve(distDir, 'appsscript.json'), manifest, 'utf8');
 
-  const adminHtml = await readFile(resolve(root, 'apps-script/Admin.html'), 'utf8');
-  await writeFile(resolve(distDir, 'Admin.html'), adminHtml, 'utf8');
+  // Admin.html was removed in PR #31 (auth re-arch — admin UI moved to the
+  // Cloudflare Worker / Pages frontend). The copy step is a no-op now.
 
   console.log(`Wrote ${outPath} (${parts.join('\n').length} chars)`);
 }

@@ -2,7 +2,13 @@ function _requireString(obj, key) {
   return typeof obj[key] === 'string' && obj[key].length > 0;
 }
 
+function _coordOrEmpty(v) {
+  if (typeof v === 'number' && isFinite(v)) return v;
+  return '';
+}
+
 function _buildResponseRow(payload, serverSubmissionId, ctx) {
+  var values = payload.values || {};
   return {
     submission_id: serverSubmissionId,
     client_submission_id: payload.client_submission_id,
@@ -18,7 +24,18 @@ function _buildResponseRow(payload, serverSubmissionId, ctx) {
     device_fingerprint: payload.device_fingerprint || '',
     sync_attempt_count: payload.sync_attempt_count != null ? String(payload.sync_attempt_count) : '1',
     status: 'stored',
-    values_json: JSON.stringify(payload.values || {}),
+    values_json: JSON.stringify(values),
+    // Admin Portal columns (Task 2.7). PWA submits insert lat/lng into the
+    // values dict (Task 2.6); the encoder write path (Task 4.2) sends them
+    // as top-level fields plus encoded_by/encoded_at and source_path='paper_encoded'.
+    // Top-level wins over values to keep the encoder path explicit.
+    submission_lat: _coordOrEmpty(payload.submission_lat != null ? payload.submission_lat : values.submission_lat),
+    submission_lng: _coordOrEmpty(payload.submission_lng != null ? payload.submission_lng : values.submission_lng),
+    source_path: payload.source_path || values.source_path || 'self_admin',
+    encoded_by: payload.encoded_by || '',
+    encoded_at: payload.encoded_at
+      ? new Date(payload.encoded_at).toISOString()
+      : '',
   };
 }
 
