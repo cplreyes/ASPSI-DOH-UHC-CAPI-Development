@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
+import AdminApp from '@/admin/App';
 import { MultiSectionForm } from '@/components/survey/MultiSectionForm';
 import { EnrollmentScreen } from '@/components/enrollment/EnrollmentScreen';
 import { PendingCount } from '@/components/sync/PendingCount';
@@ -335,6 +336,19 @@ function AppShell() {
 }
 
 export default function App() {
+  // Delegate /admin/* to the admin portal (Task 2.14). Shares the Pages
+  // domain but uses a separate provider tree — admin auth is JWT-in-memory,
+  // not the Dexie-backed tablet enrollment used by the PWA below.
+  if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) {
+    let proxyUrl = '';
+    try {
+      proxyUrl = getSyncEnv().proxyUrl;
+    } catch {
+      // VITE_F2_PROXY_URL unset — admin will surface E_NETWORK on login.
+    }
+    return <AdminApp apiBaseUrl={proxyUrl} />;
+  }
+
   let fetcher: () => Promise<GetConfigResponse>;
   try {
     fetcher = buildConfigFetcher();
