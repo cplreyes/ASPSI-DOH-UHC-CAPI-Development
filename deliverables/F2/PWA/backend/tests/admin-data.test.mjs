@@ -6,7 +6,13 @@
 import { describe, it, expect } from 'vitest';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const { adminReadResponses, adminCountResponses, adminReadResponseById } = require('../src/AdminData.js');
+const {
+  adminReadResponses,
+  adminCountResponses,
+  adminReadResponseById,
+  adminReadAudit,
+  adminReadDlq,
+} = require('../src/AdminData.js');
 
 function row(overrides) {
   return Object.assign(
@@ -149,5 +155,104 @@ describe('adminReadResponseById', () => {
     const r = adminReadResponseById({}, ctx);
     expect(r.ok).toBe(false);
     expect(r.error.code).toBe('E_VALIDATION');
+  });
+});
+
+function auditRow(overrides) {
+  return Object.assign(
+    {
+      audit_id: 'aud-' + Math.random().toString(36).slice(2, 8),
+      occurred_at_server: '2026-05-01T12:00:00.000Z',
+      occurred_at_client: '2026-05-01T12:00:00.000Z',
+      event_type: 'submit',
+      hcw_id: 'hcw-1',
+      facility_id: 'fac-1',
+      actor_username: '',
+      app_version: '1.0',
+      payload_json: '{}',
+    },
+    overrides || {},
+  );
+}
+
+function dlqRow(overrides) {
+  return Object.assign(
+    {
+      dlq_id: 'dlq-' + Math.random().toString(36).slice(2, 8),
+      received_at_server: '2026-05-01T12:00:00.000Z',
+      client_submission_id: 'cli-1',
+      reason: 'values must be an object',
+      payload_json: '{"foo":"bar"}',
+    },
+    overrides || {},
+  );
+}
+
+function makeAuditCtx(rows) {
+  return { audit: { readAll: () => rows.slice() } };
+}
+
+function makeDlqCtx(rows) {
+  return { dlq: { readAll: () => rows.slice() } };
+}
+
+describe('adminReadAudit', () => {
+  it('returns rows newest-first by occurred_at_server', () => {
+    const ctx = makeAuditCtx([
+      auditRow({ audit_id: 'a', occurred_at_server: '2026-05-01T10:00:00.000Z' }),
+      auditRow({ audit_id: 'b', occurred_at_server: '2026-05-01T12:00:00.000Z' }),
+      auditRow({ audit_id: 'c', occurred_at_server: '2026-05-01T11:00:00.000Z' }),
+    ]);
+    const r = adminReadAudit({}, ctx);
+    expect(r.data.rows.map(x => x.audit_id)).toEqual(['b', 'c', 'a']);
+  });
+
+  it('filters by event_type, hcw_id, and actor_username', () => {
+    const ctx = makeAuditCtx([
+      auditRow({ audit_id: 'a', event_type: 'submit', hcw_id: 'hcw-1' }),
+      auditRow({ audit_id: 'b', event_type: 'admin_login', hcw_id: '', actor_username: 'alice' }),
+      auditRow({ audit_id: 'c', event_type: 'admin_logout', hcw_id: '', actor_username: 'alice' }),
+      auditRow({ audit_id: 'd', event_type: 'admin_login', hcw_id: '', actor_username: 'bob' }),
+    ]);
+    expect(adminReadAudit({ event_type: 'admin_login' }, ctx).data.total).toBe(2);
+    expect(adminReadAudit({ actor_username: 'alice' }, ctx).data.total).toBe(2);
+    expect(adminReadAudit({ event_type: 'admin_login', actor_username: 'alice' }, ctx).data.total).toBe(1);
+    expect(adminReadAudit({ hcw_id: 'hcw-1' }, ctx).data.total).toBe(1);
+  });
+
+  it('paginates and reports has_more correctly', () => {
+    const rows = [];
+    for (let i = 0; i < 5; i++) {
+      rows.push(auditRow({ audit_id: 'a' + i, occurred_at_server: '2026-05-01T1' + i + ':00:00.000Z' }));
+    }
+    const ctx = makeAuditCtx(rows);
+    const p1 = adminReadAudit({ limit: 2, offset: 0 }, ctx);
+    expect(p1.data.rows).toHaveLength(2);
+    expect(p1.data.has_more).toBe(true);
+    const p3 = adminReadAudit({ limit: 2, offset: 4 }, ctx);
+    expect(p3.data.rows).toHaveLength(1);
+    expect(p3.data.has_more).toBe(false);
+  });
+});
+
+describe('adminReadDlq', () => {
+  it('returns rows newest-first by received_at_server', () => {
+    const ctx = makeDlqCtx([
+      dlqRow({ dlq_id: 'a', received_at_server: '2026-05-01T10:00:00.000Z' }),
+      dlqRow({ dlq_id: 'b', received_at_server: '2026-05-02T10:00:00.000Z' }),
+      dlqRow({ dlq_id: 'c', received_at_server: '2026-04-30T10:00:00.000Z' }),
+    ]);
+    const r = adminReadDlq({}, ctx);
+    expect(r.data.rows.map(x => x.dlq_id)).toEqual(['b', 'a', 'c']);
+  });
+
+  it('filters by date range and full-text q', () => {
+    const ctx = makeDlqCtx([
+      dlqRow({ dlq_id: 'a', received_at_server: '2026-04-29T00:00:00.000Z', reason: 'X' }),
+      dlqRow({ dlq_id: 'b', received_at_server: '2026-05-01T00:00:00.000Z', reason: 'spec_version too old' }),
+      dlqRow({ dlq_id: 'c', received_at_server: '2026-05-03T00:00:00.000Z', reason: 'values must be an object' }),
+    ]);
+    expect(adminReadDlq({ from: '2026-05-01', to: '2026-05-02' }, ctx).data.total).toBe(1);
+    expect(adminReadDlq({ q: 'spec_version' }, ctx).data.total).toBe(1);
   });
 });

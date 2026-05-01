@@ -119,3 +119,134 @@ export async function handleGetResponseById(
 
 // Re-exported for the routes layer to compose ListFilters from request params.
 export { parseFilters as _parseFilters };
+
+// ----- Audit + DLQ list handlers (Task 2.4) -------------------------------
+
+export interface AuditRow {
+  audit_id: string;
+  occurred_at_server: string;
+  occurred_at_client: string;
+  event_type: string;
+  hcw_id: string;
+  facility_id: string;
+  app_version: string;
+  payload_json: string;
+  actor_username?: string;
+  actor_jti?: string;
+  actor_role?: string;
+  event_resource?: string;
+  event_payload_json?: string;
+  client_ip_hash?: string;
+  request_id?: string;
+}
+
+export interface ListAuditData {
+  rows: AuditRow[];
+  total: number;
+  has_more: boolean;
+}
+
+export interface AuditFilters {
+  from?: string;
+  to?: string;
+  event_type?: string;
+  hcw_id?: string;
+  actor_username?: string;
+  q?: string;
+  limit?: number;
+  offset?: number;
+}
+
+export type ListAuditAsCallable = (filters: AuditFilters) => Promise<AppsScriptResponse<ListAuditData>>;
+
+function parseAuditFilters(params: URLSearchParams): AuditFilters {
+  const out: AuditFilters = {};
+  const from = params.get('from');
+  const to = params.get('to');
+  const eventType = params.get('event_type');
+  const hcwId = params.get('hcw_id');
+  const actor = params.get('actor_username');
+  const q = params.get('q');
+  const limit = params.get('limit');
+  const offset = params.get('offset');
+  if (from) out.from = from;
+  if (to) out.to = to;
+  if (eventType) out.event_type = eventType;
+  if (hcwId) out.hcw_id = hcwId;
+  if (actor) out.actor_username = actor;
+  if (q) out.q = q;
+  if (limit && /^\d+$/.test(limit)) out.limit = Number(limit);
+  if (offset && /^\d+$/.test(offset)) out.offset = Number(offset);
+  return out;
+}
+
+export async function handleListAudit(
+  url: URL,
+  asCallable: ListAuditAsCallable,
+): Promise<Response> {
+  const filters = parseAuditFilters(url.searchParams);
+  const r = await asCallable(filters);
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      502,
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
+export interface DlqRow {
+  dlq_id: string;
+  received_at_server: string;
+  client_submission_id: string;
+  reason: string;
+  payload_json: string;
+}
+
+export interface ListDlqData {
+  rows: DlqRow[];
+  total: number;
+  has_more: boolean;
+}
+
+export interface DlqFilters {
+  from?: string;
+  to?: string;
+  q?: string;
+  limit?: number;
+  offset?: number;
+}
+
+export type ListDlqAsCallable = (filters: DlqFilters) => Promise<AppsScriptResponse<ListDlqData>>;
+
+function parseDlqFilters(params: URLSearchParams): DlqFilters {
+  const out: DlqFilters = {};
+  const from = params.get('from');
+  const to = params.get('to');
+  const q = params.get('q');
+  const limit = params.get('limit');
+  const offset = params.get('offset');
+  if (from) out.from = from;
+  if (to) out.to = to;
+  if (q) out.q = q;
+  if (limit && /^\d+$/.test(limit)) out.limit = Number(limit);
+  if (offset && /^\d+$/.test(offset)) out.offset = Number(offset);
+  return out;
+}
+
+export async function handleListDlq(
+  url: URL,
+  asCallable: ListDlqAsCallable,
+): Promise<Response> {
+  const filters = parseDlqFilters(url.searchParams);
+  const r = await asCallable(filters);
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      502,
+    );
+  }
+  return jsonResponse(r.data, 200);
+}

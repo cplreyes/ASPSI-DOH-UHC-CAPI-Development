@@ -115,10 +115,113 @@ function adminReadResponseById(payload, ctx) {
   return { ok: false, error: { code: 'E_NOT_FOUND', message: 'submission ' + id + ' not found' } };
 }
 
+// ----- Audit + DLQ readers (Task 2.3) -------------------------------------
+
+function _matchesAuditFilters(row, f) {
+  if (f.from && row.occurred_at_server && row.occurred_at_server < f.from) return false;
+  if (f.to && row.occurred_at_server && row.occurred_at_server > f.to) return false;
+  if (f.event_type && row.event_type !== f.event_type) return false;
+  if (f.hcw_id && row.hcw_id !== f.hcw_id) return false;
+  if (f.actor_username && row.actor_username !== f.actor_username) return false;
+  if (f.q) {
+    var hay = JSON.stringify(row).toLowerCase();
+    if (hay.indexOf(f.q) === -1) return false;
+  }
+  return true;
+}
+
+function _normalizeAuditFilters(filters) {
+  filters = filters || {};
+  return {
+    from: filters.from || null,
+    to: filters.to || null,
+    event_type: filters.event_type || null,
+    hcw_id: filters.hcw_id || null,
+    actor_username: filters.actor_username || null,
+    q: filters.q ? String(filters.q).toLowerCase() : null,
+    limit: Math.min(Number(filters.limit) || DEFAULT_LIMIT, MAX_LIMIT),
+    offset: Math.max(Number(filters.offset) || 0, 0),
+  };
+}
+
+function _sortAuditNewestFirst(rows) {
+  rows.sort(function (a, b) {
+    var ka = a.occurred_at_server || '';
+    var kb = b.occurred_at_server || '';
+    if (ka < kb) return 1;
+    if (ka > kb) return -1;
+    return 0;
+  });
+  return rows;
+}
+
+function adminReadAudit(filters, ctx) {
+  var f = _normalizeAuditFilters(filters);
+  var all = ctx.audit.readAll(SCAN_CAP, 0);
+  var matched = [];
+  for (var i = 0; i < all.length; i++) {
+    if (_matchesAuditFilters(all[i], f)) matched.push(all[i]);
+  }
+  _sortAuditNewestFirst(matched);
+  var page = matched.slice(f.offset, f.offset + f.limit);
+  return {
+    ok: true,
+    data: { rows: page, total: matched.length, has_more: f.offset + page.length < matched.length },
+  };
+}
+
+function _matchesDlqFilters(row, f) {
+  if (f.from && row.received_at_server && row.received_at_server < f.from) return false;
+  if (f.to && row.received_at_server && row.received_at_server > f.to) return false;
+  if (f.q) {
+    var hay = JSON.stringify(row).toLowerCase();
+    if (hay.indexOf(f.q) === -1) return false;
+  }
+  return true;
+}
+
+function _normalizeDlqFilters(filters) {
+  filters = filters || {};
+  return {
+    from: filters.from || null,
+    to: filters.to || null,
+    q: filters.q ? String(filters.q).toLowerCase() : null,
+    limit: Math.min(Number(filters.limit) || DEFAULT_LIMIT, MAX_LIMIT),
+    offset: Math.max(Number(filters.offset) || 0, 0),
+  };
+}
+
+function adminReadDlq(filters, ctx) {
+  var f = _normalizeDlqFilters(filters);
+  var all = ctx.dlq.readAll
+    ? ctx.dlq.readAll(SCAN_CAP, 0)
+    // Code.js's _buildDlqCtx exposed readAll() with no args; tolerate either shape.
+    : ctx.dlq.readAll();
+  var matched = [];
+  for (var i = 0; i < all.length; i++) {
+    if (_matchesDlqFilters(all[i], f)) matched.push(all[i]);
+  }
+  // DLQ sorted newest-first by received_at_server.
+  matched.sort(function (a, b) {
+    var ka = a.received_at_server || '';
+    var kb = b.received_at_server || '';
+    if (ka < kb) return 1;
+    if (ka > kb) return -1;
+    return 0;
+  });
+  var page = matched.slice(f.offset, f.offset + f.limit);
+  return {
+    ok: true,
+    data: { rows: page, total: matched.length, has_more: f.offset + page.length < matched.length },
+  };
+}
+
 if (typeof module !== 'undefined') {
   module.exports = {
     adminReadResponses: adminReadResponses,
     adminCountResponses: adminCountResponses,
     adminReadResponseById: adminReadResponseById,
+    adminReadAudit: adminReadAudit,
+    adminReadDlq: adminReadDlq,
   };
 }

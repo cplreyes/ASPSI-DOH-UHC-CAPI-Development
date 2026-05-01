@@ -7,6 +7,8 @@
 import { useMemo, type ReactNode } from 'react';
 import { useRouter } from '../lib/pages-router';
 import { ResponsesTab } from './ResponsesTab';
+import { AuditTab } from './AuditTab';
+import { DLQTab } from './DLQTab';
 
 type TabKey = 'responses' | 'audit' | 'dlq' | 'hcws';
 
@@ -64,6 +66,10 @@ export function DataDashboard({ apiBaseUrl, fetchImpl }: DataDashboardProps): JS
       <div className="pt-2">
         {activeTab === 'responses' ? (
           <ResponsesTab apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+        ) : activeTab === 'audit' ? (
+          <AuditTab apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+        ) : activeTab === 'dlq' ? (
+          <DLQTab apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
         ) : (
           <TabComingSoon name={TABS.find(t => t.key === activeTab)!.label} />
         )}

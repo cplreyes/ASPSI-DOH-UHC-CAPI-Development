@@ -24,9 +24,15 @@ import {
 import {
   handleListResponses,
   handleGetResponseById,
+  handleListAudit,
+  handleListDlq,
   type ListFilters,
   type ListResponsesData,
   type ResponseRow,
+  type AuditFilters,
+  type ListAuditData,
+  type DlqFilters,
+  type ListDlqData,
 } from './handlers/data';
 import { callAppsScript } from './apps-script-client';
 import { RoleVersionCache, requirePerm, type Role, type RolesListResp, type RbacOpts } from './rbac';
@@ -42,6 +48,8 @@ const roleCache = new RoleVersionCache();
 const ENCODE_RE = /^\/admin\/api\/encode\/([A-Za-z0-9_\-]+)\/?$/;
 const RESPONSES_LIST_RE = /^\/admin\/api\/dashboards\/data\/responses\/?$/;
 const RESPONSES_BY_ID_RE = /^\/admin\/api\/dashboards\/data\/responses\/([A-Za-z0-9_\-]+)\/?$/;
+const AUDIT_LIST_RE = /^\/admin\/api\/dashboards\/data\/audit\/?$/;
+const DLQ_LIST_RE = /^\/admin\/api\/dashboards\/data\/dlq\/?$/;
 
 /**
  * Build RbacOpts that's stable for one request. Most rbac-protected handlers
@@ -226,6 +234,40 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleGetResponseById(id, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && AUDIT_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_data', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = (filters: AuditFilters) =>
+      callAppsScript<ListAuditData>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_read_audit',
+        filters as unknown as Record<string, unknown>,
+        requestId,
+      );
+    const r = await handleListAudit(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && DLQ_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_data', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = (filters: DlqFilters) =>
+      callAppsScript<ListDlqData>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_read_dlq',
+        filters as unknown as Record<string, unknown>,
+        requestId,
+      );
+    const r = await handleListDlq(url, asCall);
     return withRequestId(r, requestId);
   }
 
