@@ -21,17 +21,23 @@ export async function setEnrollment(input: SetEnrollmentInput): Promise<Enrollme
   if (trimmedToken.length === 0) {
     throw new Error('device_token is required');
   }
+  // Issue #46: a fresh tablet's local facilities cache is empty until the
+  // first authenticated /facilities sync (which itself needs the device
+  // token from a completed enrollment — chicken-and-egg). Don't gate
+  // enrollment on the cache lookup; populate facility_type when the
+  // facility happens to be cached, otherwise leave it undefined and let
+  // the post-enrollment sync backfill it. The verified JWT (already
+  // server-checked by /verify-token before this call) is the authoritative
+  // source of facility_id, so the local cache check was a soft check, not
+  // a security boundary.
   const facility = await db.facilities.get(input.facility_id);
-  if (!facility) {
-    throw new Error(`Unknown facility ${input.facility_id}`);
-  }
   const row: EnrollmentRow = {
     id: 'singleton',
     hcw_id: trimmedHcw,
-    facility_id: facility.facility_id,
-    facility_type: facility.facility_type,
+    facility_id: facility?.facility_id ?? input.facility_id,
     enrolled_at: Date.now(),
     device_token: trimmedToken,
+    ...(facility?.facility_type ? { facility_type: facility.facility_type } : {}),
   };
   await db.enrollment.put(row);
   return row;

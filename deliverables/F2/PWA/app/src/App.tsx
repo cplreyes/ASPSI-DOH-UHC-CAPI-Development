@@ -139,7 +139,10 @@ function AppShell() {
         ? {
             hcw_id: enrollment.hcw_id,
             facility_id: enrollment.facility_id,
-            facility_type: enrollment.facility_type,
+            // facility_type is optional on EnrollmentRow (Issue #46); only
+            // include the field if populated so exactOptionalPropertyTypes
+            // is happy.
+            ...(enrollment.facility_type ? { facility_type: enrollment.facility_type } : {}),
           }
         : null,
     [enrollment],
