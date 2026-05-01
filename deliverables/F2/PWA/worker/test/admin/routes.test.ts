@@ -112,6 +112,93 @@ describe('adminRouter', () => {
     }
   });
 
+  it('fires audit-write via ctx.waitUntil on successful login', async () => {
+    const kv = makeKv();
+    const env = makeEnv(kv);
+    const passwordHash = await hashPassword('CorrectPw1');
+    const calls: Array<{ url: string; action: string }> = [];
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (url, init) => {
+      const body = JSON.parse((init as RequestInit).body as string) as { action: string };
+      calls.push({ url: String(url), action: body.action });
+      if (body.action === 'admin_users_list') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { users: [{ username: 'alice', password_hash: passwordHash, password_must_change: false, role: 'Administrator' }] },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_roles_list') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { roles: [{ name: 'Administrator', version: 1, manage_users: true }] },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_audit_write') {
+        return new Response(JSON.stringify({ ok: true, data: { ok: true } }), { status: 200 });
+      }
+      return new Response('{}', { status: 500 });
+    });
+
+    const waitUntilPromises: Promise<unknown>[] = [];
+    const ctx: ExecutionContext = {
+      waitUntil: (p: Promise<unknown>) => { waitUntilPromises.push(p); },
+      passThroughOnException: () => undefined,
+    } as unknown as ExecutionContext;
+
+    try {
+      const req = new Request('https://x/admin/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'cf-connecting-ip': '203.0.113.5' },
+        body: JSON.stringify({ username: 'alice', password: 'CorrectPw1' }),
+      });
+      const r = await adminRouter(req, env, ctx);
+      expect(r!.status).toBe(200);
+
+      // Drain waitUntil promises so the audit fetch completes.
+      await Promise.all(waitUntilPromises);
+
+      const auditCalls = calls.filter(c => c.action === 'admin_audit_write');
+      expect(auditCalls).toHaveLength(1);
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
+  it('skips audit-write when ctx is absent (no ExecutionContext)', async () => {
+    const kv = makeKv();
+    const env = makeEnv(kv);
+    const passwordHash = await hashPassword('CorrectPw1');
+    const calls: Array<{ action: string }> = [];
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => {
+      const body = JSON.parse((init as RequestInit).body as string) as { action: string };
+      calls.push({ action: body.action });
+      if (body.action === 'admin_users_list') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { users: [{ username: 'alice', password_hash: passwordHash, password_must_change: false, role: 'Administrator' }] },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_roles_list') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { roles: [{ name: 'Administrator', version: 1, manage_users: true }] },
+        }), { status: 200 });
+      }
+      return new Response('{}', { status: 500 });
+    });
+
+    try {
+      const req = new Request('https://x/admin/api/login', {
+        method: 'POST',
+        body: JSON.stringify({ username: 'alice', password: 'CorrectPw1' }),
+      });
+      const r = await adminRouter(req, env); // no ctx
+      expect(r!.status).toBe(200);
+      expect(calls.some(c => c.action === 'admin_audit_write')).toBe(false);
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
   it('routes POST /admin/api/logout to handleLogout and stamps X-Request-Id', async () => {
     const kv = makeKv();
     const env = makeEnv(kv);

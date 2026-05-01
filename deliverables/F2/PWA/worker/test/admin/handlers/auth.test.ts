@@ -9,8 +9,8 @@
  * increments), success (200 + token + role + password_must_change), backend
  * failure passthrough (E_BACKEND 502), and per-user reset on success.
  */
-import { describe, expect, it } from 'vitest';
-import { handleLogin, handleLogout } from '../../../src/admin/handlers/auth';
+import { describe, expect, it, vi } from 'vitest';
+import { handleLogin, handleLogout, type AuthAuditCtx } from '../../../src/admin/handlers/auth';
 import { hashPassword, mintAdminJwt, verifyAdminJwt } from '../../../src/admin/auth';
 import { recordFailedLogin } from '../../../src/admin/throttle';
 
@@ -209,6 +209,44 @@ describe('handleLogin', () => {
     expect(r.status).toBe(502);
   });
 
+  it('fires auditFn with admin_login context on success and skips it on failures', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('alice', 'CorrectPw1', 'Administrator', false);
+    const auditFn = vi.fn<(ctx: AuthAuditCtx) => void>();
+
+    // Success → auditFn called once with admin_login context.
+    const ok = await handleLogin(
+      { username: 'alice', password: 'CorrectPw1' },
+      'iphash-1',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      auditFn,
+    );
+    expect(ok.status).toBe(200);
+    expect(auditFn).toHaveBeenCalledTimes(1);
+    const ctx = auditFn.mock.calls[0]![0]!;
+    expect(ctx.event_type).toBe('admin_login');
+    expect(ctx.actor_username).toBe('alice');
+    expect(ctx.actor_role).toBe('Administrator');
+    expect(ctx.client_ip_hash).toBe('iphash-1');
+    expect(ctx.actor_jti).toMatch(/^[0-9a-f-]{36}$/);
+
+    // Failure (wrong password) → auditFn not called.
+    auditFn.mockClear();
+    const bad = await handleLogin(
+      { username: 'alice', password: 'WrongPw1' },
+      'iphash-1',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      auditFn,
+    );
+    expect(bad.status).toBe(401);
+    expect(auditFn).not.toHaveBeenCalled();
+  });
+
   it('resets per-user throttle on successful login but leaves per-IP intact', async () => {
     const kv = makeKv();
     for (let i = 0; i < 5; i++) await recordFailedLogin(kv, 'alice', 'iphash-1');
@@ -233,7 +271,7 @@ describe('handleLogout', () => {
     const kv = makeKv();
     const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
     const req = new Request('https://x/admin/api/logout', { method: 'POST' });
-    const r = await handleLogout(req, env);
+    const r = await handleLogout(req, 'iphash-test', env);
     expect(r.status).toBe(401);
     const body = await r.json() as { error: { code: string } };
     expect(body.error.code).toBe('E_AUTH_INVALID');
@@ -246,7 +284,7 @@ describe('handleLogout', () => {
       method: 'POST',
       headers: { Authorization: 'Token xyz' },
     });
-    const r = await handleLogout(req, env);
+    const r = await handleLogout(req, 'iphash-test', env);
     expect(r.status).toBe(401);
     const body = await r.json() as { error: { code: string } };
     expect(body.error.code).toBe('E_AUTH_INVALID');
@@ -261,7 +299,7 @@ describe('handleLogout', () => {
       method: 'POST',
       headers: { Authorization: `Bearer ${tampered}` },
     });
-    const r = await handleLogout(req, env);
+    const r = await handleLogout(req, 'iphash-test', env);
     expect(r.status).toBe(401);
   });
 
@@ -273,7 +311,7 @@ describe('handleLogout', () => {
       method: 'POST',
       headers: { Authorization: `Bearer ${tok}` },
     });
-    const r = await handleLogout(req, env);
+    const r = await handleLogout(req, 'iphash-test', env);
     expect(r.status).toBe(401);
     const body = await r.json() as { error: { code: string } };
     expect(body.error.code).toBe('E_AUTH_EXPIRED');
@@ -288,7 +326,7 @@ describe('handleLogout', () => {
       method: 'POST',
       headers: { Authorization: `Bearer ${tok}` },
     });
-    const r = await handleLogout(req, env);
+    const r = await handleLogout(req, 'iphash-test', env);
     expect(r.status).toBe(204);
 
     // Decode the jti and assert KV write.
@@ -306,6 +344,35 @@ describe('handleLogout', () => {
     expect(actualTtl).toBeLessThanOrEqual(expectedTtl + 5);
   });
 
+  it('fires auditFn with admin_logout context on success and skips it on failures', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const auditFn = vi.fn<(ctx: AuthAuditCtx) => void>();
+
+    // Success → auditFn fires with admin_logout context.
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const okReq = new Request('https://x/admin/api/logout', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${tok}` },
+    });
+    const ok = await handleLogout(okReq, 'iphash-7', env, auditFn);
+    expect(ok.status).toBe(204);
+    expect(auditFn).toHaveBeenCalledTimes(1);
+    const ctx = auditFn.mock.calls[0]![0]!;
+    expect(ctx.event_type).toBe('admin_logout');
+    expect(ctx.actor_username).toBe('alice');
+    expect(ctx.actor_role).toBe('Administrator');
+    expect(ctx.client_ip_hash).toBe('iphash-7');
+    expect(ctx.actor_jti).toMatch(/^[0-9a-f-]{36}$/);
+
+    // Failure (no Authorization header) → auditFn not called.
+    auditFn.mockClear();
+    const noAuth = new Request('https://x/admin/api/logout', { method: 'POST' });
+    const bad = await handleLogout(noAuth, 'iphash-7', env, auditFn);
+    expect(bad.status).toBe(401);
+    expect(auditFn).not.toHaveBeenCalled();
+  });
+
   it('revoked token then fails RBAC check (integration-style)', async () => {
     // Verifies the round-trip: logout writes the same key shape rbac.ts reads.
     const kv = makeKv();
@@ -315,7 +382,7 @@ describe('handleLogout', () => {
       method: 'POST',
       headers: { Authorization: `Bearer ${tok}` },
     });
-    await handleLogout(req, env);
+    await handleLogout(req, 'iphash-test', env);
 
     const parts = tok.split('.');
     const padded = parts[1]!.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((parts[1]!.length + 3) % 4);

@@ -47,6 +47,21 @@ export interface AdminRoleRow {
 export type UsersListFn = () => Promise<AppsScriptResponse<{ users: AdminUserRow[] }>>;
 export type RolesListFn = () => Promise<AppsScriptResponse<{ roles: AdminRoleRow[] }>>;
 
+/**
+ * Audit context emitted from a successful login or logout, to be forwarded
+ * fire-and-forget to Apps Script `admin_audit_write` by the route layer.
+ * The handler doesn't know about request_id (route layer adds it) and
+ * never blocks the user response on the audit write.
+ */
+export interface AuthAuditCtx {
+  event_type: 'admin_login' | 'admin_logout';
+  actor_username: string;
+  actor_jti: string;
+  actor_role: string;
+  client_ip_hash: string;
+}
+export type AuthAuditFn = (ctx: AuthAuditCtx) => void;
+
 interface LoginBody {
   username?: unknown;
   password?: unknown;
@@ -86,6 +101,7 @@ export async function handleLogin(
   env: Pick<Env, 'JWT_SIGNING_KEY' | 'F2_AUTH'>,
   usersListFn: UsersListFn,
   rolesListFn: RolesListFn,
+  auditFn?: AuthAuditFn,
 ): Promise<Response> {
   const username = typeof body.username === 'string' ? body.username.trim() : '';
   const password = typeof body.password === 'string' ? body.password : '';
@@ -153,6 +169,22 @@ export async function handleLogin(
 
   await resetLoginThrottle(kv, username);
 
+  if (auditFn) {
+    // Re-verify the just-minted token to extract jti without re-implementing
+    // the base64url decoder. Always succeeds (we just signed it with our key);
+    // the verification cost is one HMAC, negligible vs the PBKDF2 above.
+    const v = await verifyAdminJwt(env.JWT_SIGNING_KEY, token);
+    if (v.ok) {
+      auditFn({
+        event_type: 'admin_login',
+        actor_username: username,
+        actor_jti: v.payload.jti,
+        actor_role: role.name,
+        client_ip_hash: ipHash,
+      });
+    }
+  }
+
   const expiresAt = Math.floor(Date.now() / 1000) + JWT_TTL_SECONDS;
   const success: LoginSuccess = {
     token,
@@ -182,7 +214,9 @@ export interface LogoutKv {
  */
 export async function handleLogout(
   req: Request,
+  ipHash: string,
   env: Pick<Env, 'JWT_SIGNING_KEY' | 'F2_AUTH'>,
+  auditFn?: AuthAuditFn,
 ): Promise<Response> {
   const auth = req.headers.get('Authorization') || '';
   const m = BEARER_RE.exec(auth);
@@ -198,6 +232,16 @@ export async function handleLogout(
   const ttl = Math.max(60, v.payload.exp - now + 60);
   const kv = env.F2_AUTH as unknown as LogoutKv;
   await kv.put(`revoked_jti:${v.payload.jti}`, '1', { expirationTtl: ttl });
+
+  if (auditFn) {
+    auditFn({
+      event_type: 'admin_logout',
+      actor_username: v.payload.sub,
+      actor_jti: v.payload.jti,
+      actor_role: v.payload.role,
+      client_ip_hash: ipHash,
+    });
+  }
 
   return new Response(null, { status: 204 });
 }

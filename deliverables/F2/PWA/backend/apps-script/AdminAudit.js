@@ -44,3 +44,28 @@ function writeAuditRow(ctx) {
   });
   sh.appendRow(row);
 }
+
+/**
+ * RPC entry point invoked from the admin doPost dispatcher (Task 1.5).
+ * Wraps writeAuditRow in a document-level lock so concurrent admin events
+ * (logins from multiple admins, simultaneous logout + role-change) can't
+ * corrupt the F2_Audit sheet via interleaved appendRow calls.
+ *
+ * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 1.18)
+ *
+ * Returns `{ ok: true }` on success or throws E_LOCK_TIMEOUT on contention
+ * (caller — Worker — fires this via waitUntil so a thrown error logs but
+ * never fails the user-facing login/logout response).
+ */
+function adminAuditWrite(payload) {
+  var lock = LockService.getDocumentLock();
+  if (!lock.tryLock(30000)) {
+    throw new Error('E_LOCK_TIMEOUT');
+  }
+  try {
+    writeAuditRow(payload);
+    return { ok: true };
+  } finally {
+    lock.releaseLock();
+  }
+}
