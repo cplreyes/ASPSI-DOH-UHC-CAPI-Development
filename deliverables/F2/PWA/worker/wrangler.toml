@@ -17,6 +17,19 @@ binding = "F2_AUTH"
 id = "9b293e0c661d4f60b513facc61b11e0b"
 preview_id = "6cfb9d57e0ff4334a094661d96e1bf2e"
 
+# R2 bucket for admin file uploads + scheduled break-out CSVs (F2 Admin Portal).
+# Bucket creation: `wrangler r2 bucket create f2-admin` and `wrangler r2 bucket create f2-admin-preview`
+# (requires R2 to be enabled in the Cloudflare dashboard; see admin-portal spec §13.2).
+[[r2_buckets]]
+binding = "F2_ADMIN_R2"
+bucket_name = "f2-admin"
+preview_bucket_name = "f2-admin-preview"
+
+# Cron trigger fires every 5 minutes; the scheduled handler reads F2_DataSettings
+# rows whose next_run_at <= now and dispatches break-out CSV writes to R2.
+[triggers]
+crons = ["*/5 * * * *"]
+
 # Logs go to the Cloudflare dashboard. Add a logpush destination later if needed.
 [observability]
 enabled = true
