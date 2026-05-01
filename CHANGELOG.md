@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## v1.2.0 — UAT Round 3 / Feature batch (2026-05-01)
+
+### Improved
+- Render scale-style questions as a 2-way matrix instead of one-by-one ([#18](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/18))
+- All of the above should auto-select all other options ([#17](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/17))
+- I don't know option should be exclusive in multi-select questions ([#16](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/16))
+
 ## v1.3.0 — Round 3 Internal QA (2026-05-01)
 
 ### Fixed
