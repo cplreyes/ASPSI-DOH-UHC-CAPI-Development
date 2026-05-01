@@ -366,3 +366,57 @@ export async function handleSyncReport(
   }
   return jsonResponse(r.data, 200);
 }
+
+// ----- Map Report (Task 2.13) ---------------------------------------------
+
+export interface MapMarker {
+  submission_id: string;
+  hcw_id: string;
+  facility_id: string;
+  lat: number;
+  lng: number;
+  submitted_at: string;
+}
+
+export interface MapReportData {
+  markers: MapMarker[];
+  no_gps_count: number;
+}
+
+export interface MapReportFilters {
+  from?: string;
+  to?: string;
+  region_id?: string;
+  province_id?: string;
+}
+
+export type MapReportAsCallable = (filters: MapReportFilters) => Promise<AppsScriptResponse<MapReportData>>;
+
+function parseMapFilters(params: URLSearchParams): MapReportFilters {
+  const out: MapReportFilters = {};
+  const from = params.get('from');
+  const to = params.get('to');
+  const region = params.get('region_id');
+  const province = params.get('province_id');
+  if (from) out.from = from;
+  if (to) out.to = to;
+  if (region) out.region_id = region;
+  if (province) out.province_id = province;
+  return out;
+}
+
+export async function handleMapReport(
+  url: URL,
+  asCallable: MapReportAsCallable,
+): Promise<Response> {
+  const filters = parseMapFilters(url.searchParams);
+  const r = await asCallable(filters);
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      502,
+    );
+  }
+  return jsonResponse(r.data, 200);
+}

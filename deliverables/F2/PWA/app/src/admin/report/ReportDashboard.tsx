@@ -4,9 +4,10 @@
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Tasks 2.21, 2.22)
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.7, §7.8)
  */
-import { useMemo, type ReactNode } from 'react';
+import { useMemo } from 'react';
 import { useRouter } from '../lib/pages-router';
 import { SyncReport } from './SyncReport';
+import { MapReport } from './MapReport';
 
 type TabKey = 'sync' | 'map';
 
@@ -63,21 +64,9 @@ export function ReportDashboard({ apiBaseUrl, fetchImpl }: ReportDashboardProps)
         {activeTab === 'sync' ? (
           <SyncReport apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
         ) : (
-          <MapComingSoon />
+          <MapReport apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
         )}
       </div>
     </section>
-  );
-}
-
-function MapComingSoon(): ReactNode {
-  return (
-    <div className="border border-hairline bg-secondary/20 px-4 py-6">
-      <p className="font-serif text-lg">Map Report</p>
-      <p className="mt-1 text-sm text-muted-foreground">
-        The submission map (lat/lng marker clustering at the national / regional level) lands with
-        a follow-up Sprint 2 task. The Sync Report tab is live above with real region-level pacing.
-      </p>
-    </div>
   );
 }
