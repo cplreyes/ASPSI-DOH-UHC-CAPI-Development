@@ -20,22 +20,22 @@ const sampleEnvelope = {
 
 function buildDeps(fetchImpl: typeof fetch) {
   return {
-    backendUrl: 'https://script.example/exec',
-    hmacSecret: 'secret',
-    hmacSign: vi.fn().mockResolvedValue('SIGNATURE'),
-    nowMs: () => 1_700_000_000_000,
+    proxyUrl: 'https://worker.example.workers.dev',
+    deviceToken: 'eyJabc.eyJdef.sigxyz',
     fetchImpl,
   };
 }
 
 describe('getFacilities', () => {
-  it('signs the request with GET|facilities|<ts>|', async () => {
-    const fetchImpl = vi
-      .fn()
-      .mockResolvedValue(new Response(JSON.stringify(sampleEnvelope), { status: 200 }));
-    const deps = buildDeps(fetchImpl);
-    await getFacilities(deps);
-    expect(deps.hmacSign).toHaveBeenCalledWith('secret', 'GET|facilities|1700000000000|');
+  it('hits /exec?action=facilities with Bearer header', async () => {
+    const fetchImpl = vi.fn(async (url: string, init?: RequestInit) => {
+      expect(url).toBe('https://worker.example.workers.dev/exec?action=facilities');
+      const auth = (init?.headers as Record<string, string> | undefined)?.['Authorization'] ?? '';
+      expect(auth).toBe('Bearer eyJabc.eyJdef.sigxyz');
+      return new Response(JSON.stringify(sampleEnvelope), { status: 200 });
+    });
+    await getFacilities(buildDeps(fetchImpl as unknown as typeof fetch));
+    expect(fetchImpl).toHaveBeenCalled();
   });
 
   it('returns the facilities array on a 200 ok envelope', async () => {
@@ -56,7 +56,24 @@ describe('getFacilities', () => {
     });
   });
 
-  it('returns transport error on non-2xx', async () => {
+  it('surfaces Worker auth error code on 401', async () => {
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValue(
+        new Response(
+          JSON.stringify({ ok: false, error: { code: 'E_TOKEN_EXPIRED', message: 'expired' } }),
+          { status: 401 },
+        ),
+      );
+    const out = await getFacilities(buildDeps(fetchImpl));
+    expect(out).toMatchObject({
+      ok: false,
+      transport: true,
+      error: { code: 'E_TOKEN_EXPIRED' },
+    });
+  });
+
+  it('returns transport error on non-2xx without parseable body', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(new Response('nope', { status: 500 }));
     const out = await getFacilities(buildDeps(fetchImpl));
     expect(out).toMatchObject({ ok: false, transport: true, error: { code: 'E_HTTP_500' } });

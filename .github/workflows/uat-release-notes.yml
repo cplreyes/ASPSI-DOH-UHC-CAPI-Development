@@ -17,7 +17,7 @@ jobs:
   release-notes:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           # Need write access to push the CHANGELOG update back
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -41,13 +41,15 @@ jobs:
             --create-release
 
       - name: Commit CHANGELOG + package.json bump if changed
+        env:
+          TITLE: ${{ github.event.milestone.title || inputs.milestone_title }}
         run: |
           PACKAGE_JSON=deliverables/F2/PWA/app/package.json
           if [ -n "$(git status --porcelain CHANGELOG.md $PACKAGE_JSON 2>/dev/null)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add CHANGELOG.md $PACKAGE_JSON
-            git commit -m "chore(release): ${{ github.event.milestone.title || inputs.milestone_title }} — sync CHANGELOG + version"
+            git commit -m "chore(release): $TITLE — sync CHANGELOG + version"
             git push
           else
             echo "No CHANGELOG / package.json changes — already up to date."

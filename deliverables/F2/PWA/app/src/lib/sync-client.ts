@@ -17,10 +17,8 @@ export interface BatchSubmitResultItem {
 }
 
 export interface SyncClientDeps {
-  backendUrl: string;
-  hmacSecret: string;
-  hmacSign: (secret: string, message: string) => Promise<string>;
-  nowMs: () => number;
+  proxyUrl: string;
+  deviceToken: string;
   fetchImpl: typeof fetch;
 }
 
@@ -33,17 +31,16 @@ export async function postBatchSubmit(
   deps: SyncClientDeps,
 ): Promise<BatchSubmitResponse> {
   const body = JSON.stringify({ responses: items });
-  const ts = deps.nowMs();
-  const canonical = `POST|batch-submit|${ts}|${body}`;
-  const sig = await deps.hmacSign(deps.hmacSecret, canonical);
-  const params = new URLSearchParams({ action: 'batch-submit', ts: String(ts), sig });
-  const url = `${deps.backendUrl}?${params.toString()}`;
+  const url = `${deps.proxyUrl}/exec?action=batch-submit`;
 
   let response: Response;
   try {
     response = await deps.fetchImpl(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
+      headers: {
+        'Content-Type': 'text/plain',
+        Authorization: `Bearer ${deps.deviceToken}`,
+      },
       body,
     });
   } catch (err) {
@@ -55,10 +52,20 @@ export async function postBatchSubmit(
   }
 
   if (!response.ok) {
+    let workerErr: { code?: string; message?: string } | undefined;
+    try {
+      const errBody = (await response.json()) as { error?: { code?: string; message?: string } };
+      workerErr = errBody.error;
+    } catch {
+      /* fall through */
+    }
     return {
       ok: false,
       transport: true,
-      error: { code: 'E_HTTP_' + response.status, message: `HTTP ${response.status}` },
+      error: {
+        code: workerErr?.code ?? 'E_HTTP_' + response.status,
+        message: workerErr?.message ?? `HTTP ${response.status}`,
+      },
     };
   }
 

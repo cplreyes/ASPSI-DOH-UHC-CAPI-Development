@@ -48,6 +48,17 @@ export const fil: EnBundle = {
     changeConfirm: 'Sign out of this device? You can re-enroll afterward.',
     changeConfirmWithDraft:
       'You have an unfinished draft. Changing enrollment will discard it. Continue?',
+    tokenStep: 'Step 1: Tablet token',
+    tokenHelper:
+      'Paste the token from your ASPSI ops contact. They generated it for this tablet during provisioning.',
+    tokenLabel: 'Tablet token',
+    tokenPlaceholder: 'eyJhbGc...',
+    verifyTokenButton: 'Verify token',
+    verifyingTokenButton: 'Verifying…',
+    tokenInvalid: 'Token rejected. Contact ASPSI ops for a new one.',
+    tokenRevoked: 'This tablet has been revoked. Contact ASPSI ops.',
+    identityStep: 'Step 2: Identify yourself',
+    tokenAccepted: 'Token accepted for facility {{facility}}. Pick yourself from the roster below.',
   },
   navigator: {
     previous: 'Previous',

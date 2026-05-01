@@ -5,13 +5,36 @@ import { AuthProvider, useAuth } from './auth-context';
 import { db } from './db';
 import * as enrollmentModule from './enrollment';
 
+/** Hand-rolled JWT for tests; auth-context only reads `exp` via parseClaimsUnsafe. */
+function fakeDeviceToken(expEpochS = Math.floor(Date.now() / 1000) + 86400): string {
+  const b64url = (s: string) =>
+    btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const header = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+  const payload = b64url(
+    JSON.stringify({
+      jti: 'test-jti',
+      tablet_id: 'test-tablet',
+      facility_id: 'F-001',
+      iat: Math.floor(Date.now() / 1000),
+      exp: expEpochS,
+    }),
+  );
+  return `${header}.${payload}.fake-sig`;
+}
+
 function Probe() {
   const { status, enrollment, enroll, unenroll } = useAuth();
   return (
     <div>
       <span data-testid="status">{status}</span>
       <span data-testid="hcw">{enrollment?.hcw_id ?? '-'}</span>
-      <button onClick={() => void enroll({ hcw_id: 'HCW-1', facility_id: 'F-001' })}>enroll</button>
+      <button
+        onClick={() =>
+          void enroll({ hcw_id: 'HCW-1', facility_id: 'F-001', device_token: fakeDeviceToken() })
+        }
+      >
+        enroll
+      </button>
       <button onClick={() => void unenroll()}>unenroll</button>
     </div>
   );
@@ -50,6 +73,7 @@ describe('<AuthProvider>', () => {
       facility_id: 'F-001',
       facility_type: 'Hospital',
       enrolled_at: 1,
+      device_token: fakeDeviceToken(),
     });
     render(
       <AuthProvider>
@@ -97,6 +121,7 @@ describe('<AuthProvider>', () => {
       facility_id: 'F-001',
       facility_type: 'Hospital',
       enrolled_at: 1,
+      device_token: fakeDeviceToken(),
     });
     const user = userEvent.setup();
     render(

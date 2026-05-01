@@ -5,23 +5,23 @@ import { z } from 'zod';
 export const sectionASchema = z.object({
   Q1_1: z.string().min(1),
   Q1_2: z.string().min(1),
-  Q1_3: z.string().min(1),
-  Q2: z.enum(['Regular', 'Casual', 'Seasonal', 'Probationary', 'Project', 'Fixed-term', 'Other, specify']),
+  Q1_3: z.string().optional(),
+  Q2: z.enum(['Regular', 'Casual', 'Seasonal', 'Probationary', 'Project', 'Fixed-term', 'Other (specify)']),
   Q2_other: z.string().optional(),
   Q3: z.enum(['Male', 'Female']),
-  Q4: z.coerce.number().min(18).max(99),
+  Q4: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(18).max(99),
   Q5: z.enum(['Administrator', 'Physician/Doctor', 'Physician assistant', 'Nurse', 'Nursing assistant', 'Pharmacist/Dispenser', 'Midwife', 'Laboratory technician', 'Medical/ radiologic technologist', 'Health promotion officer', 'Nutrition action officer/ coordinator', 'Physical Therapist', 'Dentist', 'Dentist aide', 'Barangay Health Worker', 'Other (specify)']),
   Q5_other: z.string().optional(),
   Q6: z.enum(['No specialty', 'Anesthesia', 'Dermatology', 'Emergency Medicine', 'Family Medicine', 'General Surgery', 'Internal Medicine', 'Neurology', 'Nuclear Medicine', 'Obstetrics and Gynecology', 'Occupational Medicine', 'Ophthalmology', 'Orthopedics', 'Otorhinolaryngology (ENT)', 'Pathology', 'Pediatrics', 'Physical and Rehabilitation Medicine', 'Psychiatry', 'Public health', 'Radiology', 'Research', 'Others (specify)']).optional(),
   Q6_other: z.string().optional(),
   Q7: z.enum(['Yes', 'No']).optional(),
   Q8: z.enum(['I spend all of my time in private practice', 'I spend over half, but not all of my time in private practice', 'I spend my time equally in private and public practice', 'I spend over half, but not all of my time in public practice', 'I spend all of my time in public practice', 'I don\'t know']).optional(),
-  Q9_1: z.coerce.number().min(0).max(99),
-  Q9_2: z.coerce.number().min(0).max(11).optional(),
-  Q10: z.coerce.number().min(1).max(7),
-  Q11: z.coerce.number().min(1).max(24),
+  Q9_1: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(0).max(99),
+  Q9_2: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(0).max(11).optional(),
+  Q10: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(1).max(7),
+  Q11: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(1).max(24),
 }).superRefine((data, ctx) => {
-  if (data.Q2 === 'Other, specify' && !(typeof data.Q2_other === 'string' && data.Q2_other.trim().length > 0)) {
+  if (data.Q2 === 'Other (specify)' && !(typeof data.Q2_other === 'string' && data.Q2_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q2_other'], message: 'Please specify' });
   }
   if (data.Q5 === 'Other (specify)' && !(typeof data.Q5_other === 'string' && data.Q5_other.trim().length > 0)) {
@@ -113,7 +113,7 @@ export const sectionCSchema = z.object({
   Q37: z.array(z.enum(['No time', 'Ongoing application', 'Other (specify)'])).optional(),
   Q37_other: z.string().optional(),
   Q38: z.enum(['Yes', 'No', 'Not a physician/dentist']).optional(),
-  Q39: z.array(z.enum(['Predictable revenue due to capitation', 'YAKAP is more comprehensive', 'High volume of patients', 'Other, specify', 'Not a physician/dentist'])).optional(),
+  Q39: z.array(z.enum(['Predictable revenue due to capitation', 'YAKAP is more comprehensive', 'High volume of patients', 'Other (specify)', 'Not a physician/dentist'])).optional(),
   Q39_other: z.string().optional(),
   Q40: z.string().optional(),
 }).superRefine((data, ctx) => {
@@ -126,7 +126,7 @@ export const sectionCSchema = z.object({
   if (Array.isArray(data.Q37) && data.Q37.includes('Other (specify)') && !(typeof data.Q37_other === 'string' && data.Q37_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q37_other'], message: 'Please specify' });
   }
-  if (Array.isArray(data.Q39) && data.Q39.includes('Other, specify') && !(typeof data.Q39_other === 'string' && data.Q39_other.trim().length > 0)) {
+  if (Array.isArray(data.Q39) && data.Q39.includes('Other (specify)') && !(typeof data.Q39_other === 'string' && data.Q39_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q39_other'], message: 'Please specify' });
   }
 });

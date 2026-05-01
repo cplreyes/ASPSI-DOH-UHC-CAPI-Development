@@ -8,6 +8,22 @@ import { ChangeEnrollmentButton } from './ChangeEnrollmentButton';
 import { DRAFT_ID_KEY } from '@/lib/draft';
 import { db } from '@/lib/db';
 
+function fakeDeviceToken(): string {
+  const b64url = (s: string) =>
+    btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const header = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+  const payload = b64url(
+    JSON.stringify({
+      jti: 't',
+      tablet_id: 't',
+      facility_id: 'F-001',
+      iat: Math.floor(Date.now() / 1000),
+      exp: Math.floor(Date.now() / 1000) + 86400,
+    }),
+  );
+  return `${header}.${payload}.fake`;
+}
+
 async function seedEnrollment() {
   if (!db.isOpen()) await db.open();
   await db.facilities.clear();
@@ -27,6 +43,7 @@ async function seedEnrollment() {
     facility_id: 'F-001',
     facility_type: 'Hospital',
     enrolled_at: 1,
+    device_token: fakeDeviceToken(),
   });
 }
 

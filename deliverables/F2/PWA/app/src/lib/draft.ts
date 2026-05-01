@@ -6,7 +6,13 @@ export const LOCAL_SPEC_VERSION = '2026-04-17-m1';
 export interface EnrollmentInfo {
   hcw_id: string;
   facility_id: string;
-  facility_type: string;
+  /**
+   * Optional — see EnrollmentRow comment in db.ts. Submissions made before
+   * the facilities cache populates carry an empty `facility_type`; backend
+   * tolerates this and the value can be backfilled from facility_id at
+   * analysis time.
+   */
+  facility_type?: string;
 }
 
 export function getOrCreateDraftId(): string {
@@ -43,7 +49,7 @@ export async function submitDraft(id: string, enrollment: EnrollmentInfo): Promi
     const valuesWithFacility = {
       ...draft.values,
       facility_id: enrollment.facility_id,
-      facility_type: enrollment.facility_type,
+      facility_type: enrollment.facility_type ?? '',
     };
 
     const submission: SubmissionRow = {

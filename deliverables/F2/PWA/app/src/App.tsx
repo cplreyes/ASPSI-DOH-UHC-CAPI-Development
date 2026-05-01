@@ -21,7 +21,7 @@ import {
   type EnrollmentInfo,
 } from '@/lib/draft';
 import { getSyncEnv } from '@/lib/env';
-import { hmacSha256Hex } from '@/lib/hmac';
+import { getDeviceToken } from '@/lib/enrollment';
 import { isServerNewer } from '@/lib/spec-version';
 import { postBatchSubmit } from '@/lib/sync-client';
 import { runSync, type SyncRunSummary } from '@/lib/sync-orchestrator';
@@ -51,17 +51,15 @@ function getOrCreateDeviceFingerprint(): string {
   return fresh;
 }
 
-function buildRunSync(): () => Promise<SyncRunSummary> {
+function buildRunSync(deviceToken: string): () => Promise<SyncRunSummary> {
   const env = getSyncEnv();
   const fingerprint = getOrCreateDeviceFingerprint();
   return () =>
     runSync({
       postBatchSubmit: (items) =>
         postBatchSubmit(items, {
-          backendUrl: env.backendUrl,
-          hmacSecret: env.hmacSecret,
-          hmacSign: hmacSha256Hex,
-          nowMs: Date.now,
+          proxyUrl: env.proxyUrl,
+          deviceToken,
           fetchImpl: fetch.bind(globalThis),
         }),
       nowMs: Date.now,
@@ -81,31 +79,38 @@ const noopRunSync: () => Promise<SyncRunSummary> = async () => ({
   alreadyRunning: false,
 });
 
-function buildRefreshFacilities(): () => Promise<RefreshResult> {
+function buildRefreshFacilities(deviceToken: string): () => Promise<RefreshResult> {
   const env = getSyncEnv();
   return () =>
     refreshFacilities({
       fetcher: () =>
         getFacilities({
-          backendUrl: env.backendUrl,
-          hmacSecret: env.hmacSecret,
-          hmacSign: hmacSha256Hex,
-          nowMs: Date.now,
+          proxyUrl: env.proxyUrl,
+          deviceToken,
           fetchImpl: fetch.bind(globalThis),
         }),
     });
 }
 
+/**
+ * Config fetcher reads the latest device token from Dexie on each call. This avoids
+ * the chicken-and-egg of needing the token at App-mount time (when AuthProvider
+ * hasn't loaded enrollment yet) and naturally pauses config polls until a tablet
+ * is enrolled.
+ */
 function buildConfigFetcher(): () => Promise<GetConfigResponse> {
   const env = getSyncEnv();
-  return () =>
-    getConfig({
-      backendUrl: env.backendUrl,
-      hmacSecret: env.hmacSecret,
-      hmacSign: hmacSha256Hex,
-      nowMs: Date.now,
+  return async () => {
+    const tokenInfo = await getDeviceToken();
+    if (!tokenInfo) {
+      return { ok: false, transport: false, error: { code: 'E_ENV', message: 'No device token' } };
+    }
+    return getConfig({
+      proxyUrl: env.proxyUrl,
+      deviceToken: tokenInfo.token,
       fetchImpl: fetch.bind(globalThis),
     });
+  };
 }
 
 const noopConfigFetcher: () => Promise<GetConfigResponse> = async () => ({
@@ -134,7 +139,10 @@ function AppShell() {
         ? {
             hcw_id: enrollment.hcw_id,
             facility_id: enrollment.facility_id,
-            facility_type: enrollment.facility_type,
+            // facility_type is optional on EnrollmentRow (Issue #46); only
+            // include the field if populated so exactOptionalPropertyTypes
+            // is happy.
+            ...(enrollment.facility_type ? { facility_type: enrollment.facility_type } : {}),
           }
         : null,
     [enrollment],
@@ -152,10 +160,16 @@ function AppShell() {
     });
   }, [authStatus]);
 
+  const deviceToken = enrollment?.device_token ?? '';
+
   useEffect(() => {
     let triggers: { stop: () => void } | null = null;
+    if (!deviceToken) {
+      runSyncRef.current = noopRunSync;
+      return () => {};
+    }
     try {
-      runSyncRef.current = buildRunSync();
+      runSyncRef.current = buildRunSync(deviceToken);
       triggers = installSyncTriggers({
         runSync: runSyncRef.current,
         intervalMs: SYNC_INTERVAL_MS,
@@ -166,19 +180,22 @@ function AppShell() {
     return () => {
       triggers?.stop();
     };
-  }, []);
+  }, [deviceToken]);
 
   const refresh = useMemo<() => Promise<RefreshResult>>(() => {
+    if (!deviceToken) {
+      return async () => ({ ok: false, error: { code: 'E_ENV', message: 'No device token' } });
+    }
     try {
-      return buildRefreshFacilities();
+      return buildRefreshFacilities(deviceToken);
     } catch {
       return async () => ({ ok: false, error: { code: 'E_ENV', message: 'Backend env missing' } });
     }
-  }, []);
+  }, [deviceToken]);
 
   useEffect(() => {
-    void refresh();
-  }, [refresh]);
+    if (deviceToken) void refresh();
+  }, [refresh, deviceToken]);
 
   const handleAutosave = (values: FormValues) => {
     if (!draftId || !enrollmentInfo) return;
@@ -230,11 +247,11 @@ function AppShell() {
   };
 
   return (
-    <main className="flex min-h-screen-dvh flex-col">
+    <main className="mx-auto flex min-h-screen-dvh w-full max-w-screen-xl flex-col">
       <BroadcastBanner message={runtimeConfig.broadcast_message} />
       <header className="flex items-center justify-between border-b px-6 py-3">
         <div className="flex flex-col">
-          <h1 className="font-serif text-2xl font-medium tracking-tight">{t('chrome.appTitle')}</h1>
+          <h1 className="font-serif text-3xl font-medium tracking-tight">{t('chrome.appTitle')}</h1>
           <span className="font-mono text-xs leading-none text-muted-foreground">
             v{APP_VERSION} · spec {LOCAL_SPEC_VERSION}
           </span>

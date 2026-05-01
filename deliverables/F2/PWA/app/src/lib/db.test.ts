@@ -2,9 +2,9 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { db, type SubmissionRow } from './db';
 
 describe('db', () => {
-  it('opens at version 4 with the spec §7.2 schema + enrollment store', async () => {
+  it('opens at version 5 with the auth-rearch schema (device_token on enrollment)', async () => {
     await db.open();
-    expect(db.verno).toBe(4);
+    expect(db.verno).toBe(5);
     const names = db.tables.map((t) => t.name).sort();
     expect(names).toEqual(
       ['audit', 'config', 'drafts', 'enrollment', 'facilities', 'submissions'].sort(),

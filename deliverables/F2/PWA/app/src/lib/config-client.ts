@@ -7,10 +7,10 @@ export interface ConfigValue {
 }
 
 export interface GetConfigDeps {
-  backendUrl: string;
-  hmacSecret: string;
-  hmacSign: (secret: string, message: string) => Promise<string>;
-  nowMs: () => number;
+  /** Cloudflare Worker origin (e.g. https://f2-pwa-worker.example.workers.dev). */
+  proxyUrl: string;
+  /** Per-tablet device JWT, sent as Authorization: Bearer <token>. */
+  deviceToken: string;
   fetchImpl: typeof fetch;
 }
 
@@ -19,15 +19,14 @@ export type GetConfigResponse =
   | { ok: false; transport: boolean; error: { code: string; message: string } };
 
 export async function getConfig(deps: GetConfigDeps): Promise<GetConfigResponse> {
-  const ts = deps.nowMs();
-  const canonical = `GET|config|${ts}|`;
-  const sig = await deps.hmacSign(deps.hmacSecret, canonical);
-  const params = new URLSearchParams({ action: 'config', ts: String(ts), sig });
-  const url = `${deps.backendUrl}?${params.toString()}`;
+  const url = `${deps.proxyUrl}/exec?action=config`;
 
   let response: Response;
   try {
-    response = await deps.fetchImpl(url, { method: 'GET' });
+    response = await deps.fetchImpl(url, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${deps.deviceToken}` },
+    });
   } catch (err) {
     return {
       ok: false,
@@ -37,10 +36,22 @@ export async function getConfig(deps: GetConfigDeps): Promise<GetConfigResponse>
   }
 
   if (!response.ok) {
+    // Auth-class errors come from the Worker as JSON; surface their code so the PWA
+    // can route to re-enrolment (E_TOKEN_*) or backoff (E_BACKEND_BUSY).
+    let workerErr: { code?: string; message?: string } | undefined;
+    try {
+      const body = (await response.json()) as { error?: { code?: string; message?: string } };
+      workerErr = body.error;
+    } catch {
+      /* fall through to generic */
+    }
     return {
       ok: false,
       transport: true,
-      error: { code: 'E_HTTP_' + response.status, message: `HTTP ${response.status}` },
+      error: {
+        code: workerErr?.code ?? 'E_HTTP_' + response.status,
+        message: workerErr?.message ?? `HTTP ${response.status}`,
+      },
     };
   }
 

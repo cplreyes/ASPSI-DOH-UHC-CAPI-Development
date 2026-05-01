@@ -70,6 +70,8 @@ export function SectionTree({
               key={s.id}
               type="button"
               aria-current={isCurrent ? 'step' : undefined}
+              aria-disabled={isLocked || undefined}
+              aria-describedby={isLocked ? `${s.id}-locked-reason` : undefined}
               onClick={() => onNavigate(i)}
               className={cn(
                 'flex w-full items-start gap-3 px-4 py-2 text-left text-sm transition-colors hover:bg-muted',
@@ -77,6 +79,11 @@ export function SectionTree({
                 isLocked && 'opacity-50 cursor-not-allowed hover:bg-transparent',
               )}
             >
+              {isLocked ? (
+                <span id={`${s.id}-locked-reason`} className="sr-only">
+                  Section locked. Complete earlier sections to unlock.
+                </span>
+              ) : null}
               {/* Status / lock badge */}
               <span
                 className={cn(

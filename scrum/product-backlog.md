@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-04-25
+last_updated: 2026-05-01
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -23,20 +23,32 @@ last_updated: 2026-04-25
 
 ### Headline (this week)
 
-**Inter-sprint, Sat 2026-04-25 — F2 PWA Rounds 1 + 2 closed; Sprint 003 starts Mon 2026-04-28.** Tranche 2 (40%) was due 2026-04-24; ASPSI confirmed extension in effect, official revised deadline pending from DOH. Sprint 002 closed 2026-04-24 with F3 + F4 specs Build-ready and F1 DCF Designer-ready. Today's heavy lift was the F2 PWA UAT closure (see F2 PWA section below).
+**Sprint 003 close — Fri 2026-05-01. Scope-discipline cleanup: E0-020 / E0-032 / E0-032a removed from sprint board as out-of-Data-Programmer-scope per CSA D1–D6.** Three Epic 0 items had leaked back into Sprint 003 (E0-020 SJREB tracking + E0-032 Tranche/deadline tracking as Recurring; E0-032a DOH-PMSMD matrix triage as Carry-forward critical) despite the umbrella scope memory. Cleaned up at sprint close: dropped from `sprint-current.md` Committed/Recurring; annotated in `epic-00-project-management.md` with `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`; reframed in this Backlog's Epic 0 In-flight section as ASPSI/PI/PMO-lane informational. Audit-on-detection discipline added to the SJREB + Tranche memories so this doesn't slip again. Honest Sprint 003 board after cleanup: 4 committed (E2-F1-010, E0-010 internal-only, E3-F1-001, E4-PWA-013) + 3 stretch (E2-F3-010, E2-F4-010, E0-008); none closed at sprint end — F1 Designer sign-off carries to Sprint 004 as a three-sprint carry.
+
+**Sprint 003, Day 1 — Mon 2026-04-27. Scrum artifact alignment pass + new commitments.** Sprint 003 dates corrected to 2026-04-27 → 2026-05-01 (Mon-Fri, parity with Sprint 002 cadence — earlier `sprint-current.md` had off-by-one `04-28 → 05-02`). Two new Sprint 003 items added: **E4-PWA-013** (F2 PWA auth re-arch Phase F production cutover decision — gated on Issue #33 + #34 resolution + ≥24h clean staging soak; *critical*) and **E0-008** (auto-standup retro-injection tooling — closes the recurring ritual gap where retro Q4 action items get captured in `sprint-current.md` Daily Notes but not in the Day 1 daily standup; *stretch*). Sprint 002 backfilled with an Inter-Sprint Activity section (Sat 2026-04-25 + Sun 2026-04-26) and a reconstructed Apr 24 Fri standup; all four Sprint 002 standups (Apr 20–23) patched for sprint-status / project-name / goal-banner consistency. Sprint goal anchor unchanged: **close E2-F1-010 (F1 Designer sign-off — two-sprint carry-forward)**.
+
+**Inter-sprint, Sun 2026-04-26 (latest) — F2 PWA Verde Manual LIVE on production via path B; CF Pages auto-deploy confirmed broken on main too.** Cherry-picked the 5 Verde Manual commits (#37 tokens / #38 fonts / #39 layout & components / #40 DESIGN-006 sweep / #41 polish — staging SHAs `47e1553` / `c1a97bb` / `4fd2d92` / `1458f29` / `7bfc28a`) onto `main` via PR [#42](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/42) (`a1c4a3e`), resolving conflicts in `App.tsx` (h1 styling) and `EnrollmentScreen.tsx` (kept main's pre-auth-rearch single-step logic + applied Verde styling intent). Auth re-arch (PR #31) intentionally NOT in this port — stays on staging awaiting Phase F gate. **Production deploy:** GitHub auto-deploy didn't fire on the merge to main (confirms Issue #34 affects main pushes too, not just staging). Manually deployed via `wrangler pages deploy dist --project-name=f2-pwa --branch=main --commit-hash=a1c4a3ea` after `npm install -g wrangler` (deployment `4f61356a-51fb-4ea2-aeb0-647edc678be0`). Canonical `f2-pwa.pages.dev` now serves Verde Manual: pale verde paper `#F2F5EE`, DOH emerald `#006B3F`, Newsreader serif h1/h2, Public Sans body, JetBrains Mono on version subtitle + eyebrows. Existing F2 PWA installs with the old service worker get an "Update available" prompt on next launch (per `vite.config.ts` `registerType: 'prompt'`). DESIGN-006 also closed today (PR #40) — `--warning` token added, alpha-aware HSL slot syntax migration, raw Tailwind colors swept. Polish PR (#41) flattened buttons, hairline-edged modals.
+
+**Inter-sprint, Sun 2026-04-26 (earlier) — F2 PWA design system codified; staging migration shipped.** `/gstack-design-consultation` produced [`deliverables/F2/PWA/app/DESIGN.md`](../deliverables/F2/PWA/app/DESIGN.md) — visual source of truth anchored on *"This is real software, not a government form."* Direction: **Verde Manual** — clinical stationery + utility on DOH "Verde Vision / Berde para sa bayan" institutional palette. End-to-end staging migration delivered in 5 focused PRs (#37/#38/#39/#40/#41), all merged. App-level CLAUDE.md added at `deliverables/F2/PWA/app/CLAUDE.md` to scope gstack to the F2 PWA workstream. **Two design follow-ups still open:** `E3-F2-PWA-DESIGN-004` (self-host fonts, gated on `pyftsubset`), `E3-F2-PWA-DESIGN-005` (refine hex from official DOH brand-book PDF, blocked-external on ASPSI). DESIGN-006 closed.
+
+**Inter-sprint, Sun 2026-04-26 — F2 PWA auth re-arch cut over to staging.** PR #31 (Cloudflare Worker JWT proxy replacing HMAC-in-bundle) merged to `staging` and live on `f2-pwa-staging.pages.dev`. Mitigates the **CRITICAL** finding from the 2026-04-25 `/gstack-cso` audit (HMAC was inlined into the Vite bundle, exposing it to anyone who downloaded the staging build). Worker URL: `https://f2-pwa-worker.hcw.workers.dev`. Disruption window ~18 min (longer than runbook's 4–6 min — see Issue #34). Three Round 3 issues filed during the cutover smoke test: **#33** Section F/G multi-select state pollution (Phase F blocker), **#34** CF Pages auto-deploy not firing on staging push (Phase F blocker or runbook rewrite), **#35** Worker PBKDF2 600k iters exceeds Workers' 100k cap (operational gotcha, fixed at runtime). PR #32 hot-fix opened for the EnrollmentScreen pre-refresh regression (deployed manually). **Phase F (production cutover) gated on ≥24 hours of clean staging soak + #33/#34 resolution; earliest window ~17:35 PHT 2026-04-27.**
+
+**Inter-sprint, Sat 2026-04-25 — F2 PWA Rounds 1 + 2 closed; Sprint 003 starts Mon 2026-04-27.** Tranche 2 (40%) was due 2026-04-24; ASPSI confirmed extension in effect, official revised deadline pending from DOH. Sprint 002 closed 2026-04-24 with F3 + F4 specs Build-ready and F1 DCF Designer-ready. Heavy lift on the 25th was the F2 PWA UAT closure (see F2 PWA section below).
 
 **F3 and F4 skip-logic + validation specs both landed 2026-04-21 (Sprint 002 Day 2 overdelivery).** F3 spec reviewed at 1133 lines — all 12 sections A–L, 14 sanity findings, 15 CSPro PROC templates, 6 open questions dispositioned (1 routed to Juvy: Q31 IP_GROUP; 5 spec-decisions with override clause). F4 spec drafted at 904 lines — all 17 sections A–Q, 13 sanity findings (findings #1/#2 CLOSED-BY-VERIFICATION 2026-04-21: `C_HOUSEHOLD_ROSTER` already repeating at `max_occurs=20`, `J_HEALTH_SEEKING` intentionally respondent-level per Apr 20 source), 11 CSPro PROC templates, 8 open questions dispositioned (3 routed to ASPSI, 5 spec-decisions). Both F3 and F4 are **Build-ready**. Deliverables at `deliverables/CSPro/F3/` and `deliverables/CSPro/F4/`.
 
 **F1 skip-logic + validation spec aligned with F3/F4 on 2026-04-21.** F1 spec rewrite added GPS capture via `REC_FACILITY_CAPTURE` (uses `ReadGPSReading()` helper) + verification-photo capture (filename-reference pattern, `TakeVerificationPhoto()` helper) + PSGC cascade (`onfocus` + `loadcase()` + `setvalueset()` via `PSGC-Cascade.apc`). F1 DCF now at **12 records / 671 items**. Shared `.apc` fragments live under `deliverables/CSPro/Capture-Helpers.apc` and `deliverables/CSPro/PSGC-Cascade.apc` — F3/F4 will consume the same helpers. Designer round 2 / sign-off (E2-F1-010) remains the carry-forward from Sprint 001. PSGC value sets still blocked on ASPSI.
 
-**F2 PWA — Production live 2026-04-25 at v1.1.1.** Both UAT rounds closed:
+**F2 PWA — Production at v1.1.1 codebase, Verde Manual visual identity since 2026-04-26.** Both UAT rounds closed:
 
 - **v1.1.0 — UAT Round 1** (closed 2026-04-25): 7 issues fixed including the auto-advance bug, mid-section skip logic, Section G role-hide, max-value enforcement on age + tenure fields. Round opened 2026-04-23 by Shan (ASPSI), closed with "Pass with comments" 2026-04-24, all comments addressed and verified 2026-04-25.
 - **v1.1.1 — UAT Round 2** (closed 2026-04-25): 6 issues fixed including the gate-question navigation regression (Q12=No / Q31=No couldn't proceed), specialty filter by role (Dentists no longer see medical specialties), real-time validation tooltips, language switcher visibility, and the silent submit-failure fix.
 
-Production: https://f2-pwa.pages.dev. App header shows `v1.1.1 · spec 2026-04-17-m1`. Release notes at GitHub Releases [v1.1.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.1.0) and [v1.1.1](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.1.1); CHANGELOG.md auto-maintained.
+Production: https://f2-pwa.pages.dev. App header shows `v1.1.1 · spec 2026-04-17-m1`. Release notes at GitHub Releases [v1.1.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.1.0) and [v1.1.1](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.1.1); CHANGELOG.md auto-maintained. Verde Manual visual identity ported via PR #42 (path B, 2026-04-26) — auth re-arch stays on staging awaiting Phase F.
 
 **Round 3 (v1.2.0) backlog queued** — 3 enhancement issues on the [project board](https://github.com/users/cplreyes/projects/7): exclusive "I don't know" multi-select, "All of the above" auto-select, and matrix view for scale-style questions. ASPSI translation delivery (Filipino + others queued on their side) is the gating dependency for full localisation; switcher architecture is in place to drop them in without code changes.
+
+**Visual-identity migration (Verde Manual) — LIVE in production 2026-04-26.** All five migration PRs merged on staging (#37 tokens, #38 fonts, #39 layout & components, #40 DESIGN-006 sweep, #41 polish), then ported to main via path-B PR #42 and manually deployed via `wrangler pages deploy` (CF Pages auto-deploy is broken — see #34). See `deliverables/F2/PWA/app/DESIGN.md` for the full system. Two follow-ups still open: `E3-F2-PWA-DESIGN-004` (self-host fonts, gated on `pyftsubset`), `E3-F2-PWA-DESIGN-005` (refine hex from official DOH brand-book PDF, blocked-external on ASPSI).
 
 **Automation in place** (all on `main` since 2026-04-25): GitHub Actions `uat-slack-events.yml` (real-time issue/milestone events to `#f2-pwa-uat`), `uat-slack-digest.yml` (09:00 MNL daily snapshot when a round is active), `uat-release-notes.yml` (milestone-closed → CHANGELOG + GitHub Release + Slack post + auto-bump `package.json`).
 
@@ -44,20 +56,18 @@ Production: https://f2-pwa.pages.dev. App header shows `v1.1.1 · spec 2026-04-1
 
 Comms infrastructure fully provisioned (project mailbox + Viber group both live, Shan onboarded as QA tester, Juvy confirmed as DOH-routing gate per the Apr 13 Team Communication Protocol).
 
-Comms infrastructure fully provisioned (project mailbox + Viber group both live, Shan onboarded as QA tester, Juvy confirmed as DOH-routing gate per the Apr 13 Team Communication Protocol).
-
 ### By Workstream Epic
 
 | # | Epic | Current State | Next Milestone |
 |---|---|---|---|
-| **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** | First weekly status update shipped to ASPSI Mgmt Committee |
+| **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** (Sprint 003 committed: E0-010 weekly status format; stretch: E0-008 auto-standup retro-injection tooling) | E0-010 weekly status update format drafted + first send to ASPSI Mgmt Committee; E0-008 lands in `.claude/scripts/generate_standup.py` |
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
 | **2** | Survey Questionnaire Design & Dictionary | **In Progress** (F1 Design — Designer round 2 / sign-off next; **F3 Build-ready, F4 Build-ready** — specs complete 2026-04-21; F2 data model lives inside the PWA spec; PLF Source Captured) | F1 sign-off (E2-F1-010); F3/F4 Designer validation (E2-F3-010, E2-F4-010) |
-| **3** | CAPI Application Development | **In Progress** (F2 **PWA in production at v1.1.1**, Rounds 1+2 closed, Round 3 v1.2.0 queued; F1 CSPro build pending Designer sign-off; F3/F4 Build-ready) | F1 `FacilityHeadSurvey.fmf` Section A layout (Sprint 003); F3/F4 build slots TBD; F2 Round 3 features when slot opens |
-| **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Apps Script + Cloudflare Pages for PWA) | **In Progress** (PWA backend live and serving production v1.1.1; CSWeb track Not Started) | CSWeb provisioning + integration ETL spec drafted |
-| **5** | Field Distribution & Device Management (tablets for CAPI; URL distribution + PWA install + reminder ops for F2) | **In Progress** (PWA distribution model proven via UAT; CAPI tablet provisioning Not Started) | Tablet provisioning SOP drafted; F2 distribution-list SOP drafted |
+| **3** | CAPI Application Development | **In Progress** (F2 **PWA in production at v1.1.1 with Verde Manual visual identity since 2026-04-26**, Rounds 1+2 closed, Round 3 v1.2.0 UX backlog queued; F1 CSPro build pending Designer sign-off; F3/F4 Build-ready) | F1 `FacilityHeadSurvey.fmf` Section A layout (Sprint 003); F3/F4 build slots TBD; F2 Round 3 UX features (#16/#17/#18) when slot opens |
+| **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Apps Script + Cloudflare Pages + Worker for PWA) | **In Progress** (PWA staging on auth re-arch v1.2.0 via Worker JWT proxy; production on v1.1.1 + Verde Manual visual port via #42, auth re-arch awaiting Phase F cutover; CF Pages auto-deploy confirmed broken on both branches via #34, manual `wrangler pages deploy` is current workaround; CSWeb track Not Started) | **E4-PWA-013** Phase F production cutover decision (≥24 hr staging soak + #33/#34 resolved; Sprint 003 committed *critical*; decision window ~17:35 PHT 2026-04-27); CSWeb provisioning + integration ETL spec drafted |
+| **5** | Field Distribution & Device Management (tablets for CAPI; URL distribution + PWA install + reminder ops for F2) | **In Progress** (PWA distribution model proven via UAT; CAPI tablet spec drafted 2026-04-29 — E5-CAPI-001 in-progress, awaiting procurement confirmation from ASPSI ops) | Tablet provisioning SOP drafted; F2 distribution-list SOP drafted |
 | **6** | Testing and Pilot | **Mode-aware:** PWA test stack live (vitest + Playwright + cross-platform QA; UAT Rounds 1+2 closed). CAPI track Not Started. | F1 desk test (follows Epic 3); QA Tester (Shan) handoff workflow extended to CAPI |
-| **7** | Training and Documentation | Not Started | Survey manual outline (tied to D2); F2 self-admin one-pager + in-app help review |
+| **7** | Training and Documentation | **In Progress** (Survey Manual CAPI section + 2 appendices drafted 2026-04-29 for Kidd's review; training decks Not Started) | Kidd's review on E7-DOC-001 draft; resolve open questions (questionnaire-number scheme, F2 manual scope, PAPI fallback); CAPI training deck E7-TRAIN-001 |
 | **8** | Fieldwork Monitoring and Quality Control | Not Started (activates at fieldwork) | Cross-track BI dashboard scaffolded (CSWeb + F2 backend in one view) |
 | **9** | Data Management and Security | **Governance Active** (NDU + privacy compliance ongoing) | Secure sync + backup strategy defined for both tracks |
 | **10** | Data Cleaning and Processing | Not Started | Shared codebook + harmonization ETL spec drafted alongside instrument design |
@@ -69,7 +79,7 @@ Comms infrastructure fully provisioned (project mailbox + Viber group both live,
 | Instrument | Mode | Pages | Current State |
 |---|---|---|---|
 | **F1 — Facility Head** | Interviewer-administered (CSPro CAPI) | 34 | **Design — closing** — DCF at 12 records / 671 items (post Apr 21 GPS+photo+PSGC-cascade pass); E2-F1-009b closed 2026-04-17; skip-logic spec aligned with F3/F4 on 2026-04-21; PSGC value sets still blocked on ASPSI; Designer round 2 / sign-off (E2-F1-010) is the next milestone |
-| **F2 — Healthcare Worker** | **Self-admin — PWA (primary). Google Forms + CSPro-encoder fallbacks retired 2026-04-17. CSPro F2 track: least priority — do not reopen.** | 14 | **Production live at v1.1.1 (2026-04-25).** UAT Rounds 1 + 2 both closed (13 issues fixed). PWA at `deliverables/F2/PWA/app/`; production https://f2-pwa.pages.dev; staging https://b1e46a55.f2-pwa-staging.pages.dev. UAT automation live (Slack events + daily digest + release-notes pipeline). Round 3 (v1.2.0) backlog queued: 3 enhancement items on the project board. |
+| **F2 — Healthcare Worker** | **Self-admin — PWA (primary). Google Forms + CSPro-encoder fallbacks retired 2026-04-17. CSPro F2 track: least priority — do not reopen.** | 14 | **Production live at v1.1.1 (2026-04-25).** UAT Rounds 1 + 2 both closed (13 issues fixed). PWA at `deliverables/F2/PWA/app/`; production https://f2-pwa.pages.dev; staging https://b1e46a55.f2-pwa-staging.pages.dev. UAT automation live (Slack events + daily digest + release-notes pipeline). Round 3 (v1.2.0) backlog queued: 3 enhancement items + Verde Manual visual-identity migration (DESIGN.md committed 2026-04-26, PRs #37 tokens + #38 fonts open, PR 3 layout deferred). |
 | **F3 — Patient** | Interviewer-administered (CSPro CAPI) | 23 | **Design — Build-ready 2026-04-21** (18 records / 840 items, sections A–L). Skip-logic + validation spec reviewed at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md`; 1 question to Juvy (Q31 IP_GROUP). |
 | **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2; CSPro CAPI) | 26 | **Design — Build-ready 2026-04-21** (22 records / 623 items, sections A–Q; skip-logic + validation spec at `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md`; `C_HOUSEHOLD_ROSTER` already repeating at `max_occurs=20`, `J_HEALTH_SEEKING` intentionally respondent-level — assumed schema patch closed by verification). |
 | **PLF — Patient Listing Form** | Recruitment form | 1 | Source Captured |
@@ -138,13 +148,17 @@ Each epic below is a long-running workstream that spans its portion of the engag
 - **Comms infrastructure live:** ASPSI project mailbox (`aspsi.doh.uhc.survey2.data@gmail.com`) for artifacts and decisions of record; CAPI Viber group for real-time coordination
 - **Team structure clarified:** Carl as Data Programmer; Shan (ASPSI RA) as QA Tester for the CAPI build
 
-**In flight:**
-- SJREB ethics clearance coordination (via ASPSI)
-- Ongoing risk tracking and stakeholder communication
+**In flight (Data Programmer scope):**
 - Product Backlog maintenance (this document)
-- Authoring the weekly status update format for ASPSI Management Committee — Carl-controlled narrative, not a coordination ask
+- Defining the internal weekly status format (E0-010) — Carl-controlled internal tracking, *not* a recurring send to ASPSI Mgmt or DOH (per `feedback_weekly_status_internal_only.md`)
+- Sprint cadence + scrum artifact upkeep (Sprint 003 closing 2026-05-01)
 
-**Next milestone:** First weekly status update shipped to ASPSI Management Committee.
+**ASPSI / PI / PMO lane — informational only (NOT Data Programmer scope per CSA D1–D6):**
+- SJREB ethics clearance coordination (E0-020) — owned by ASPSI ops / PI; long-pole dependency for Epic 6 pretest
+- D2 / D3 / Tranche 2 timeline + deadline tracking (E0-032) — owned by ASPSI ops / PI / PMO; Carl produces the deliverables, ASPSI manages submission timing
+- DOH-PMSMD matrix feedback coordination (E0-032a) — owned by ASPSI ops / PI; CAPI-side revisions fold into the relevant E2/E3 instrument task
+
+**Next milestone:** Internal weekly status format defined (E0-010), used for Carl's tracking and the project record.
 
 **Ties to:** Cross-cutting across all other epics. Anchors D1 (ongoing governance).
 
@@ -274,7 +288,7 @@ Each epic below is a long-running workstream that spans its portion of the engag
 - **Backup & recovery** — IndexedDB persists drafts across navigations and offline; backend retains all `pending_sync` rows until acknowledgement; service worker auto-updates on next session.
 - **Distribution rights** — no per-HCW token currently (any HCW ID once facility selected); upgrade path documented as M11 deferred work.
 
-**Current state:** PWA distribution model proven via UAT Rounds 1+2 (Shan as tester, structured Slack + GitHub Issues coordination). CAPI tablet provisioning Not Started.
+**Current state:** PWA distribution model proven via UAT Rounds 1+2 (Shan as tester, structured Slack + GitHub Issues coordination). CAPI tablet specification drafted 2026-04-29 (E5-CAPI-001 in-progress; awaiting procurement confirmation from ASPSI ops); imaging SOP still ahead.
 
 **Next milestone:** Tablet provisioning SOP drafted (Epic 5.A); F2 distribution-list SOP formalised for production fieldwork (Epic 5.B — currently lives in `#f2-pwa-uat` channel conventions, needs documenting as a runbook).
 

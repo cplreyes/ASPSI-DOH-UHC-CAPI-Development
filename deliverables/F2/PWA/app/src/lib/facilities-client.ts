@@ -1,10 +1,8 @@
 import type { FacilityRow } from './db';
 
 export interface FacilitiesClientDeps {
-  backendUrl: string;
-  hmacSecret: string;
-  hmacSign: (secret: string, message: string) => Promise<string>;
-  nowMs: () => number;
+  proxyUrl: string;
+  deviceToken: string;
   fetchImpl: typeof fetch;
 }
 
@@ -13,15 +11,14 @@ export type GetFacilitiesResponse =
   | { ok: false; transport: boolean; error: { code: string; message: string } };
 
 export async function getFacilities(deps: FacilitiesClientDeps): Promise<GetFacilitiesResponse> {
-  const ts = deps.nowMs();
-  const canonical = `GET|facilities|${ts}|`;
-  const sig = await deps.hmacSign(deps.hmacSecret, canonical);
-  const params = new URLSearchParams({ action: 'facilities', ts: String(ts), sig });
-  const url = `${deps.backendUrl}?${params.toString()}`;
+  const url = `${deps.proxyUrl}/exec?action=facilities`;
 
   let response: Response;
   try {
-    response = await deps.fetchImpl(url, { method: 'GET' });
+    response = await deps.fetchImpl(url, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${deps.deviceToken}` },
+    });
   } catch (err) {
     return {
       ok: false,
@@ -31,10 +28,20 @@ export async function getFacilities(deps: FacilitiesClientDeps): Promise<GetFaci
   }
 
   if (!response.ok) {
+    let workerErr: { code?: string; message?: string } | undefined;
+    try {
+      const body = (await response.json()) as { error?: { code?: string; message?: string } };
+      workerErr = body.error;
+    } catch {
+      /* fall through */
+    }
     return {
       ok: false,
       transport: true,
-      error: { code: 'E_HTTP_' + response.status, message: `HTTP ${response.status}` },
+      error: {
+        code: workerErr?.code ?? 'E_HTTP_' + response.status,
+        message: workerErr?.message ?? `HTTP ${response.status}`,
+      },
     };
   }
 

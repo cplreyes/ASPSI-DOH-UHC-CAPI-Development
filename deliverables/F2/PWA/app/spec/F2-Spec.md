@@ -77,8 +77,8 @@ The Apr 20 PDF still uses interviewer-style cover blocks (consent-read-aloud, fi
 
 | pdf_q | legacy_q | type | required | label (verbatim) | choices / notes | gate | skip | gf_risk |
 |---|---|---|---|---|---|---|---|---|
-| Q1 | Q1 | short-text ×3 | Y | What is your name? | Last Name / First Name / Middle Initial | — | — | OK (consider removing — identity risk; see cover-block draft) |
-| Q2 | Q2 | single + specify | Y | What type of employment do you have at this health facility? | Regular · Casual · Seasonal · Probationary · Project · Fixed-term · Other, specify | — | — | OK (definitions go in help text — 7-item note block in PDF) |
+| Q1 | Q1 | short-text ×3 | Y | What is your name? | Last Name / First Name / Middle Initial [optional] | — | — | OK (consider removing — identity risk; see cover-block draft) |
+| Q2 | Q2 | single + specify | Y | What type of employment do you have at this health facility? | Regular · Casual · Seasonal · Probationary · Project · Fixed-term · Other (specify) | — | — | OK (definitions go in help text — 7-item note block in PDF) |
 | Q3 | Q3 | single | Y | What is your sex at birth? | Male · Female | — | — | OK |
 | Q4 | Q4 | number | Y | How old are you as of your last birthday (in years)? | integer, min 18, max 99 | — | — | OK |
 | Q5 | Q5 | single + specify | Y | What is your role at this health facility? | Administrator · Physician/Doctor · Physician assistant · Nurse · Nursing assistant · Pharmacist/Dispenser · Midwife · Laboratory technician · Medical/ radiologic technologist · Health promotion officer · Nutrition action officer/ coordinator · Physical Therapist · Dentist · Dentist aide · Barangay Health Worker · Other (specify) | — | — | **SECTION** — Q5 drives gating for Sections C, D, E1, E2, G. Must branch to role-specific sections. |
@@ -151,7 +151,7 @@ The Apr 20 PDF still uses interviewer-style cover blocks (consent-read-aloud, fi
 | Q36 | Q32 | single + specify | conditional | Why is your facility applying to become an accredited YAKAP/Konsulta provider? | Predictable revenue due to capitation · YAKAP is more comprehensive · High volume of patients · Other (specify) | all answers → Q41 | only if Q34 = Yes; all answers jump to Q41 (skips Section C tail) |
 | Q37 | Q33 | multi + specify | conditional | Why is your facility not accredited? | No time · Ongoing application · Other (specify) | — | only if Q34 = No or Q34 = "I don't know…" |
 | Q38 | Q34 | single | Y | Under UHC, there is a thrust towards primary health care. Part of this is the implementation of the YAKAP/Konsulta or primary care package. Would your facility consider becoming accredited as a YAKAP/Konsulta or primary care provider? | Yes · No · Not a physician/dentist | Yes → Q39 then skip to Q41 · No → Q40 · Not a physician/dentist → Q41 | **SECTION** — 3-way branch |
-| Q39 | Q35 | multi + specify | conditional | Why would your facility consider it? | Predictable revenue due to capitation · YAKAP is more comprehensive · High volume of patients · Other, specify · Not a physician/dentist | "Not a physician/dentist" → Q41 | only if Q38 = Yes |
+| Q39 | Q35 | multi + specify | conditional | Why would your facility consider it? | Predictable revenue due to capitation · YAKAP is more comprehensive · High volume of patients · Other (specify) · Not a physician/dentist | "Not a physician/dentist" → Q41 | only if Q38 = Yes |
 | Q40 | Q36 | long-text | conditional | What might convince your facility to become a primary care provider? | — | — | only if Q38 = No |
 
 ---

@@ -58,8 +58,20 @@ export interface EnrollmentRow {
   id: 'singleton';
   hcw_id: string;
   facility_id: string;
-  facility_type: string;
+  /**
+   * Optional. Populated from the local facilities cache at enroll time when
+   * available. On a fresh tablet whose facility cache is empty (Issue #46),
+   * enrollment still completes; `facility_type` is filled later when the
+   * facilities sync runs (consumers fall back to '' or look it up live).
+   */
+  facility_type?: string;
   enrolled_at: number;
+  /**
+   * Per-tablet JWT issued by the Cloudflare Worker (spec §5).
+   * Optional in the type for v4-era rows; runtime-required for sync.
+   * Claims (facility_id, exp) are parsed from the JWT on demand, not cached.
+   */
+  device_token?: string;
 }
 
 export class F2Database extends Dexie {
@@ -100,6 +112,20 @@ export class F2Database extends Dexie {
     this.version(4).stores({
       facilities: 'facility_id, facility_type, region, province',
     });
+    // v5: device_token added to enrollment row (auth re-arch, spec 2026-04-26).
+    // No index change; the upgrade clears any pre-v5 enrollment that lacks a
+    // device_token so the PWA lands on the enrollment screen and the enumerator
+    // re-enrols with a Worker-issued JWT.
+    this.version(5)
+      .stores({})
+      .upgrade(async (tx) => {
+        const rows = await tx.table<EnrollmentRow, string>('enrollment').toArray();
+        for (const row of rows) {
+          if (!row.device_token) {
+            await tx.table<EnrollmentRow, string>('enrollment').delete(row.id);
+          }
+        }
+      });
   }
 }
 

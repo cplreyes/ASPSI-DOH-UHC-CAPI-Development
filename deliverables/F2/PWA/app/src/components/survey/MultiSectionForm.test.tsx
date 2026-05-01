@@ -115,7 +115,10 @@ describe('<MultiSectionForm>', () => {
         onSubmit={vi.fn()}
       />,
     );
-    await user.click(screen.getByLabelText('Other (specify)'));
+    // Q2 and Q5 both have an "Other (specify)" choice; Q5's is the second instance
+    // in document order and the one this test is actually exercising.
+    const otherChoices = screen.getAllByLabelText('Other (specify)');
+    await user.click(otherChoices[otherChoices.length - 1]!);
     await user.click(screen.getByRole('button', { name: /next/i }));
     expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
   });
