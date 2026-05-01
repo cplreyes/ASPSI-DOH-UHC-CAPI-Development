@@ -142,6 +142,102 @@ function adminHcwsList(filters) {
 }
 
 /**
+ * Compare-and-swap reissue: rotate the F2_HCWs row's enrollment_token_jti
+ * from prev_jti to new_jti, but ONLY if the row currently holds prev_jti.
+ * If two admins both click Reissue on the same HCW concurrently, the
+ * second one sees prev_jti != current and gets E_CAS_FAILED instead of
+ * overwriting the first admin's freshly-issued token.
+ *
+ * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 4.5)
+ * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.5)
+ *
+ * Caller (worker) generates new_jti before calling so the new JWT can
+ * be minted with that jti after this returns ok. Sets token_revoked_at
+ * on the row to flag the prev token (KV-side revocation lands as a
+ * follow-up — for now just records the timestamp for audit).
+ */
+function adminHcwsReissueToken(payload) {
+  if (!payload || !payload.hcw_id) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'hcw_id required' } };
+  }
+  if (!payload.new_jti) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'new_jti required' } };
+  }
+  var hcwId = String(payload.hcw_id).trim();
+
+  var lock = LockService.getDocumentLock();
+  if (!lock.tryLock(30000)) {
+    return { ok: false, error: { code: 'E_LOCK_TIMEOUT', message: 'busy, retry' } };
+  }
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sh = ss.getSheetByName('F2_HCWs');
+    if (!sh) throw new Error('F2_HCWs sheet not found — run runAllMigrations() first');
+    var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+    var hcwIdIdx = headers.indexOf('hcw_id');
+    var jtiIdx = headers.indexOf('enrollment_token_jti');
+    var issuedIdx = headers.indexOf('token_issued_at');
+    var revokedIdx = headers.indexOf('token_revoked_at');
+    var statusIdx = headers.indexOf('status');
+    if (hcwIdIdx === -1 || jtiIdx === -1) {
+      throw new Error('F2_HCWs schema missing required columns');
+    }
+    var lastRow = sh.getLastRow();
+    if (lastRow < 2) {
+      return { ok: false, error: { code: 'E_NOT_FOUND', message: 'hcw_id ' + hcwId + ' not found' } };
+    }
+    var data = sh.getRange(2, 1, lastRow - 1, headers.length).getValues();
+    var rowNumber = -1;
+    var rowObj = null;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i][hcwIdIdx] === hcwId) {
+        rowNumber = i + 2;
+        rowObj = {};
+        for (var j = 0; j < headers.length; j++) rowObj[headers[j]] = data[i][j];
+        break;
+      }
+    }
+    if (rowNumber === -1) {
+      return { ok: false, error: { code: 'E_NOT_FOUND', message: 'hcw_id ' + hcwId + ' not found' } };
+    }
+    // CAS: prev_jti must match what's currently on the row.
+    // If prev_jti is empty/null in the request AND the row has no jti yet
+    // (backfilled row, never had a token), accept the first issuance.
+    var currentJti = rowObj.enrollment_token_jti || '';
+    var expectedPrev = payload.prev_jti || '';
+    if (currentJti !== expectedPrev) {
+      return {
+        ok: false,
+        error: {
+          code: 'E_CAS_FAILED',
+          message: 'token already reissued by another admin; refresh and retry',
+        },
+      };
+    }
+    // Update row.
+    var nowIso = new Date().toISOString();
+    rowObj.enrollment_token_jti = payload.new_jti;
+    if (issuedIdx !== -1) rowObj.token_issued_at = nowIso;
+    if (revokedIdx !== -1 && currentJti) rowObj.token_revoked_at = nowIso;
+    if (statusIdx !== -1) rowObj.status = 'enrolled';
+    var rowArr = headers.map(function (h) { return rowObj[h] != null ? rowObj[h] : ''; });
+    sh.getRange(rowNumber, 1, 1, headers.length).setValues([rowArr]);
+    return {
+      ok: true,
+      data: {
+        hcw_id: hcwId,
+        facility_id: rowObj.facility_id,
+        new_jti: payload.new_jti,
+        old_jti: currentJti,
+        token_issued_at: nowIso,
+      },
+    };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/**
  * Operator helper. Scans F2_Responses + F2_Audit for distinct hcw_ids,
  * appends F2_HCWs rows for any not already tracked. The earliest server
  * timestamp seen for each HCW is used as created_at. enrollment_token_jti

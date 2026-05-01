@@ -17,6 +17,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { Link, useRouter } from '../lib/pages-router';
+import { ReissueTokenModal } from './ReissueTokenModal';
 
 interface HcwRow {
   hcw_id: string;
@@ -77,6 +78,7 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
   >({ kind: 'loading' });
 
   const apiQuery = useMemo(() => buildApiQuery(filters), [filters]);
+  const [reissueTarget, setReissueTarget] = useState<HcwRow | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -131,8 +133,19 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
             {state.data.total} HCW{state.data.total === 1 ? '' : 's'}
             {state.data.has_more ? ' (showing first 200)' : ''}
           </p>
-          <HcwsTable rows={state.data.rows} />
+          <HcwsTable rows={state.data.rows} onReissue={setReissueTarget} />
         </>
+      ) : null}
+
+      {reissueTarget ? (
+        <ReissueTokenModal
+          apiBaseUrl={apiBaseUrl}
+          {...(fetchImpl ? { fetchImpl } : {})}
+          hcwId={reissueTarget.hcw_id}
+          {...(reissueTarget.facility_name ? { facilityName: reissueTarget.facility_name } : {})}
+          {...(reissueTarget.enrollment_token_jti ? { prevJti: reissueTarget.enrollment_token_jti } : {})}
+          onClose={() => setReissueTarget(null)}
+        />
       ) : null}
     </div>
   );
@@ -168,7 +181,7 @@ function PillToggle({ active, onClick, children }: { active: boolean; onClick: (
   );
 }
 
-function HcwsTable({ rows }: { rows: HcwRow[] }): JSX.Element {
+function HcwsTable({ rows, onReissue }: { rows: HcwRow[]; onReissue: (r: HcwRow) => void }): JSX.Element {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
@@ -209,6 +222,14 @@ function HcwsTable({ rows }: { rows: HcwRow[] }): JSX.Element {
                   >
                     Encode
                   </Link>
+                  <button
+                    type="button"
+                    onClick={() => onReissue(r)}
+                    className="font-mono text-xs uppercase tracking-wider text-warning underline-offset-4 hover:underline"
+                    title="Issue a new enrollment token (CAS-protected; admin only)"
+                  >
+                    Reissue
+                  </button>
                 </div>
               </Td>
             </tr>

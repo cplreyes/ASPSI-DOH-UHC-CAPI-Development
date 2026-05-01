@@ -46,6 +46,10 @@ import {
   type FormRevisionsData,
 } from './handlers/data';
 import {
+  handleReissueToken,
+  type ReissueRequestBody,
+} from './handlers/hcws';
+import {
   handleListUsers,
   handleListRoles,
   handleCreateUser,
@@ -81,6 +85,7 @@ const RESPONSES_BY_ID_RE = /^\/admin\/api\/dashboards\/data\/responses\/([A-Za-z
 const AUDIT_LIST_RE = /^\/admin\/api\/dashboards\/data\/audit\/?$/;
 const DLQ_LIST_RE = /^\/admin\/api\/dashboards\/data\/dlq\/?$/;
 const HCWS_LIST_RE = /^\/admin\/api\/dashboards\/data\/hcws\/?$/;
+const HCWS_REISSUE_RE = /^\/admin\/api\/hcws\/([A-Za-z0-9_\-]+)\/reissue-token\/?$/;
 const REPORT_SYNC_RE = /^\/admin\/api\/dashboards\/report\/sync\/?$/;
 const REPORT_MAP_RE = /^\/admin\/api\/dashboards\/report\/map\/?$/;
 const APPS_VERSION_RE = /^\/admin\/api\/dashboards\/apps\/version\/?$/;
@@ -537,6 +542,44 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleDeleteRole(name, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  const reissueMatch = HCWS_REISSUE_RE.exec(url.pathname);
+  if (req.method === 'POST' && reissueMatch) {
+    const auth = await requirePerm(req, 'dash_users', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const hcwId = decodeURIComponent(reissueMatch[1]!);
+    const body = (await req.json().catch(() => ({}))) as ReissueRequestBody;
+    const asCall = (payload: { hcw_id: string; new_jti: string; prev_jti: string }) =>
+      callAppsScript<{
+        hcw_id: string;
+        facility_id: string;
+        new_jti: string;
+        old_jti: string;
+        token_issued_at: string;
+      }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_hcws_reissue_token',
+        payload as unknown as Record<string, unknown>,
+        requestId,
+      );
+    // Origin of the PWA — request comes from the admin browser, which is
+    // same-origin with the PWA in production. Falls back to a sensible
+    // default if Origin is missing (curl, etc).
+    const pwaOrigin = req.headers.get('Origin') ?? 'https://f2-pwa.pages.dev';
+    const r = await handleReissueToken(hcwId, body, env.JWT_SIGNING_KEY, pwaOrigin, asCall, env.F2_AUTH);
+    auditFn({
+      event_type: 'admin_hcws_reissue_token',
+      actor_username: auth.payload!.sub,
+      actor_jti: auth.payload!.jti,
+      actor_role: auth.payload!.role,
+      client_ip_hash: ipHash,
+      event_resource: hcwId,
+    });
     return withRequestId(r, requestId);
   }
 
