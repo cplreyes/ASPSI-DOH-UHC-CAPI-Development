@@ -48,18 +48,24 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 - [ ] **E0-013** Prepare monthly stakeholder brief `status::todo` `priority::medium` `estimate::recurring`
 - [ ] **E0-014** Define ad-hoc client escalation protocol (what triggers escalation, who owns the call) `status::todo` `priority::medium` `estimate::2h`
 
-### Ethics Coordination
+### Ethics Coordination *(ASPSI/PI lane — NOT Data Programmer scope)*
 
-- [ ] **E0-020** SJREB application status check (via ASPSI) — ongoing tracking until clearance received `status::in-progress` `priority::critical` `estimate::ongoing`
-  - Notes: long-pole blocker for Epic 6 (Testing and Pilot) pretest phase
+> **Scope:** Ethics coordination is owned by ASPSI ops / PI (Dr Claro, Dr Paunlagui, Juvy as PMO) per the signed CSA D1–D6 (TOR + Personnel Schedule). Items below are tracked here for project-level visibility; do not pull into Carl's sprint backlog. See `feedback_sjreb_out_of_scope.md` and `feedback_data_programmer_scope.md`.
+
+- [ ] **E0-020** SJREB application status check (via ASPSI) — ongoing tracking until clearance received `status::in-progress` `priority::critical` `estimate::ongoing` `out_of_scope::data_programmer` `owner::aspsi-pi`
+  - Notes: long-pole blocker for Epic 6 (Testing and Pilot) pretest phase. Project-level dependency, not Carl-actionable.
 - [x] **E0-021** PSA sampling endorsement captured in approved Inception Report `status::done` `priority::critical`
 
 ### Risk & Change Management
 
-- [ ] **E0-030** Maintain risk register in Product Backlog §5 `status::ongoing` `priority::high` `estimate::recurring`
-- [ ] **E0-031** Define change request protocol for mid-engagement questionnaire revisions (intake form, impact assessment, backlog refresh) `status::todo` `priority::high` `estimate::4h`
-- [ ] **E0-032** Track timeline vs deliverable deadlines (D2, D3, D4, D5, D6) weekly `status::ongoing` `priority::high` `estimate::recurring`
-- [ ] **E0-033** Set up late delivery penalty tracker (1% of total per calendar day per CSA §5) — calculates exposure if deadlines slip `status::todo` `priority::medium` `estimate::2h`
+- [ ] **E0-030** Maintain risk register in Product Backlog §5 `status::ongoing` `priority::high` `estimate::recurring` *(informational consumption only — active risk-register stewardship is PM/PI work)*
+- [ ] **E0-031** Define change request protocol for mid-engagement questionnaire revisions (intake form, impact assessment, backlog refresh) `status::todo` `priority::high` `estimate::4h` *(protocol-design is PM lane; CAPI-side revisions arising from CRs land under E2/E3 instrument tasks)*
+- [ ] **E0-032** Track timeline vs deliverable deadlines (D2, D3, D4, D5, D6) weekly `status::ongoing` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+  - Tranche / deadline tracking owned by ASPSI ops / PI / PMO. Carl is responsible for *production* of the deliverables (D1–D6), not the schedule on which they are accepted and paid. Project-level dependency only; surface in PIB / risk register, not in Carl's sprint backlog. See `feedback_tranche_tracking_out_of_scope.md`.
+- [ ] **E0-032a** DOH-PMSMD matrix feedback triage — route requested revisions through the appropriate workstream `status::ongoing` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+  - Coordination overhead (matrix dispositioning, DOH-side comms) is ASPSI/PI lane. CAPI-technical fallout (specific F1/F2/F3/F4 revisions) folds into the relevant E2/E3 instrument task — not tracked under E0-032a. See `feedback_e0_032a_out_of_scope.md`.
+- [ ] **E0-033** Set up late delivery penalty tracker (1% of total per calendar day per CSA §5) — calculates exposure if deadlines slip `status::todo` `priority::medium` `estimate::2h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+  - Financial / penalty exposure tracking is PM/PI/PMO lane. See `feedback_data_programmer_scope.md`.
 
 ### Project Governance (already done — baseline)
 
@@ -77,5 +83,6 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 
 ## Notes
 
-- This epic has a high proportion of `recurring` and `ongoing` tasks because it's a continuous workstream. Sprint planning should pull in the **active recurring ceremonies** plus any open one-time items relevant to the sprint period.
-- Tasks E0-020 and E0-032 should appear in every sprint until resolved.
+- This epic has a high proportion of `recurring` and `ongoing` tasks because it's a continuous workstream. **Most are NOT Data Programmer scope** — they're tracked here for project-level visibility but should not auto-pull into Carl's sprints. Sprint planning should pull in the **active recurring ceremonies that are explicitly in Data Programmer scope** (currently: E0-001 sprint planning, E0-002 retros, E0-006 PB upkeep, E0-007 epic upkeep) plus any open one-time items.
+- **Out-of-scope guard:** Items annotated `out_of_scope::data_programmer` (currently E0-020, E0-032, E0-032a, E0-033, plus the close-out items E0-050 / E0-051) must NOT be added to `sprint-current.md` as Carl-owned tasks. They live in ASPSI ops / PI / PMO lane (Juvy / Dr Claro / Dr Paunlagui). See `feedback_data_programmer_scope.md` umbrella for the full IN/OUT-of-scope reference.
+- Sprint 003 (2026-04-27 → 2026-05-01) leaked E0-020, E0-032, and E0-032a back into the sprint board despite the umbrella memory rule; cleanup performed at sprint close 2026-05-01. Audit-on-detection discipline added to the relevant memory files so this doesn't slip again.

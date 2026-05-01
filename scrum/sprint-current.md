@@ -11,7 +11,7 @@ deliverable_anchor: E2-F1-010 / Tranche 2 (deadline TBC from DOH)
 
 ## Sprint Goal
 
-> **Close E2-F1-010 (F1 Designer sign-off) — two-sprint carry, must not leave this week.** Once F1 sign-off lands, open the FMF build in CSPro Designer for F1 (E3-F1-001 — generator skeleton is ready). Submit Tranche 2 the moment DOH issues the official revised deadline. E0-010 (weekly status format for ASPSI Mgmt Committee) closes this sprint with no further deferral.
+> **Close E2-F1-010 (F1 Designer sign-off) — two-sprint carry, must not leave this week.** Once F1 sign-off lands, open the FMF build in CSPro Designer for F1 (E3-F1-001 — generator skeleton is ready). E0-010 (define internal weekly status format) closes this sprint with no further deferral. Tranche 2 submission timing is ASPSI/PI lane, not a Sprint 003 deliverable for Carl.
 
 ## Committed Items
 
@@ -19,12 +19,10 @@ deliverable_anchor: E2-F1-010 / Tranche 2 (deadline TBC from DOH)
 
 - [ ] **E2-F1-010** F1 DCF opened in CSPro Designer, full validation walkthrough (including new case-control block: `SURVEY_CODE`, `INTERVIEWER_ID`, `DATE_STARTED`, `TIME_STARTED`, `AAPOR_DISPOSITION`, `FACILITY_NAME`, `FACILITY_ADDRESS`), bug list closed or explicitly deferred, sign-off note recorded `status::todo` `priority::critical` `estimate::4h`
 - [ ] **E0-010** Define weekly status update format for ASPSI Management Committee (Carl → Juvy / Dr Claro / Dr Paunlagui) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E0-032a** DOH-PMSMD matrix feedback triage — route any requested revisions into F1/F2 build state or explicitly defer with rationale `status::todo` `priority::critical` `estimate::TBD`
 
-### Recurring (every sprint)
+### ASPSI / PI / PMO lane — informational only (NOT Data Programmer scope)
 
-- [ ] **E0-020** SJREB application status check via ASPSI `status::todo` `priority::critical`
-- [ ] **E0-032** Track D2/D3/Tranche 2 deadline exposure this week — confirm official revised deadline from DOH; submit package immediately on confirmation `status::todo` `priority::high`
+> Scope discipline: **E0-020** (SJREB status), **E0-032** (D2/D3/Tranche deadline tracking), **E0-032a** (DOH-PMSMD matrix coordination triage) are explicitly **not** Carl-owned per the signed CSA D1–D6 (Data Programmer scope = production of CAPI deliverables). They live in ASPSI ops / PI / PMO lane (Juvy / Dr Claro / Dr Paunlagui). Surface as project-level dependencies in `product-backlog.md` and the risk register, not as sprint-board commitments. CAPI-side fallout from the DOH matrix (specific F1/F2/F3/F4 revisions) is folded into the relevant E2/E3 instrument task — not tracked under E0-032a. (Memory: `feedback_data_programmer_scope.md`, `feedback_sjreb_out_of_scope.md`, `feedback_tranche_tracking_out_of_scope.md`, `feedback_e0_032a_out_of_scope.md`.)
 
 ### New for Sprint 003
 
@@ -41,24 +39,27 @@ deliverable_anchor: E2-F1-010 / Tranche 2 (deadline TBC from DOH)
 
 | Class | Items | Estimate |
 |---|---|---|
-| **Committed (must-finish)** | E2-F1-010, E0-010, E0-032a, E0-020, E0-032, E3-F1-001, E4-PWA-013 | ~14–15h + E0-032a unbounded |
+| **Committed (must-finish)** | E2-F1-010, E0-010, E3-F1-001, E4-PWA-013 | ~12–13h |
 | **Stretch** | E2-F3-010, E2-F4-010, E0-008 | ~7h |
 
-> Capacity: ~25h solo-dev week. Hard commits are ~14–15h (including E4-PWA-013 Phase F decision today) leaving room for E0-032a if it arrives heavy, or pulling stretch Designer validations (E2-F3-010 / E2-F4-010) into the week.
+> Capacity: ~25h solo-dev week. Hard commits are ~12–13h (including E4-PWA-013 Phase F decision Mon 2026-04-27) leaving room to pull stretch Designer validations (E2-F3-010 / E2-F4-010) into the week. Sprint board re-scoped 2026-05-01 (sprint close): E0-020 / E0-032 / E0-032a removed as out-of-Data-Programmer-scope; see "ASPSI / PI / PMO lane" section above.
 
 ## Daily Notes
 
 ### 2026-04-27 (Mon) — Sprint 003 kickoff
 
 - **Carry-forward from Sprint 002 retro Q4:** Day 1 ritual — before writing the Today-plan table, grep deliverables/ for files modified since last standup to catch artifact drift. Prevents standup generator from narrating "pending" on already-done work. (Two occurrences Sprint 001 + Sprint 002.)
-- **Tranche 2 status:** Extension in effect; official revised deadline not yet received from DOH as of 2026-04-25. Monitor and submit immediately on confirmation.
+- **Tranche 2 status (informational only):** Extension in effect; official revised deadline pending from DOH as of 2026-04-25. Tracking + submission timing is ASPSI/PI lane (not Carl's). Surfaced here so Carl has awareness of where his deliverables sit vs. contracted milestones.
+
+### 2026-05-01 (Fri) — Sprint 003 close, scope-discipline cleanup
+
+- Out-of-scope items removed from sprint board: **E0-020** (SJREB tracking), **E0-032** (Tranche/deadline tracking), **E0-032a** (DOH-PMSMD matrix triage). All three are ASPSI/PI/PMO lane per CSA D1–D6 Data Programmer scope. They had leaked back into Sprint 003 despite the umbrella memory rule (`feedback_data_programmer_scope.md`); audit-on-detection discipline added to the SJREB + Tranche memories so this doesn't slip again.
+- Net Sprint 003 commit drops from 6 → 4 (E2-F1-010, E0-010, E3-F1-001, E4-PWA-013) + 3 stretch (E2-F3-010, E2-F4-010, E0-008). Honest sprint board: 0/4 committed done at sprint close — F1 Designer sign-off carries to Sprint 004 as a three-sprint carry.
 
 ## Definition of Done — Sprint 003
 
 - [ ] **E2-F1-010** closed: F1 DCF walkthrough complete in CSPro Designer (including case-control block), bug list closed or deferred with rationale, sign-off note appended to `log.md`.
 - [ ] **E3-F1-001** closed: F1 FMF Designer pass complete; `FacilityHeadSurvey.fmf` saved and reviewed.
-- [ ] **E0-010** closed: weekly status update format defined and first draft sent to ASPSI Mgmt Committee.
-- [ ] **E0-032a** closed or explicitly deferred: DOH-PMSMD matrix feedback dispositioned.
+- [ ] **E0-010** closed: weekly status update format defined for Carl's internal tracking (per `feedback_weekly_status_internal_only.md`).
 - [ ] **E4-PWA-013** closed: F2 PWA Phase F cutover decision recorded in `log.md` — either Worker JWT proxy promoted to production, OR deferral with reason + re-gate criteria documented.
-- [ ] **Tranche 2** submitted if official revised deadline is issued this week.
 - [ ] **Sprint 003 retrospective** (4 questions) filled in `sprint-current.md` by EOD Fri 2026-05-01; sprint archived to `scrum/sprints/sprint-003.md`; `sprint-current.md` reset for Sprint 004.
