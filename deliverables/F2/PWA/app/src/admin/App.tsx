@@ -17,6 +17,7 @@ import { Layout } from './Layout';
 import { EncodeQueue } from './encode/EncodeQueue';
 import { EncodePage } from './encode/EncodePage';
 import { DataDashboard } from './data/DataDashboard';
+import { ResponseDetail } from './data/ResponseDetail';
 
 interface AdminAppProps {
   apiBaseUrl: string;
@@ -79,11 +80,23 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
     return <></>;
   }
 
-  // Data dashboard route (param-bearing path comes via :submission_id below).
+  // Data dashboard + drilled-in response detail.
   if (pathname === '/admin/data' || pathname === '/admin/data/') {
     return (
       <Layout>
         <DataDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+      </Layout>
+    );
+  }
+  const responseDetailMatch = /^\/admin\/data\/responses\/([^/]+)\/?$/.exec(pathname);
+  if (responseDetailMatch) {
+    return (
+      <Layout>
+        <ResponseDetail
+          apiBaseUrl={apiBaseUrl}
+          submissionId={decodeURIComponent(responseDetailMatch[1]!)}
+          {...(fetchImpl ? { fetchImpl } : {})}
+        />
       </Layout>
     );
   }
