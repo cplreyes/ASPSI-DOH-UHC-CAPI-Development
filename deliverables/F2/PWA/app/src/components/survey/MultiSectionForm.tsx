@@ -324,13 +324,13 @@ export function MultiSectionForm({
         </div>
       ) : null}
 
-      {/* Fixed side arrow — Previous */}
+      {/* Fixed side arrow — Previous (hidden on mobile; swipe gestures handle nav there) */}
       <button
         type="button"
         aria-label="Previous section"
         onClick={handlePrev}
         className={cn(
-          'fixed top-1/2 left-1 z-30 -translate-y-1/2 rounded-full border border-border bg-background/90 p-2 shadow-sm transition-colors hover:bg-muted lg:left-[232px]',
+          'fixed top-1/2 left-1 z-30 hidden -translate-y-1/2 rounded-full border border-border bg-background/90 p-2 shadow-sm transition-colors hover:bg-muted sm:flex lg:left-[232px]',
           isFirst && 'invisible',
         )}
       >
@@ -347,13 +347,13 @@ export function MultiSectionForm({
         </svg>
       </button>
 
-      {/* Fixed side arrow — Next / Submit */}
+      {/* Fixed side arrow — Next / Submit (hidden on mobile; swipe gestures handle nav there) */}
       <button
         type="button"
         aria-label="Next section"
         onClick={handleNext}
         className={cn(
-          'fixed top-1/2 right-1 z-30 -translate-y-1/2 rounded-full border border-border p-2 shadow-sm transition-colors',
+          'fixed top-1/2 right-1 z-30 hidden -translate-y-1/2 rounded-full border border-border p-2 shadow-sm transition-colors sm:flex',
           isLastSection
             ? 'bg-primary text-primary-foreground hover:bg-primary/90'
             : 'bg-background/90 hover:bg-muted',
