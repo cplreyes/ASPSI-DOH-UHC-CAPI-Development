@@ -66,12 +66,18 @@ describe('<ReviewSection>', () => {
     expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 
-  it('renders the GPS consent disclosure near the submit button', () => {
+  it('renders the GPS consent disclosure near the submit button in default (hcw) mode', () => {
     renderWithProviders(<ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={vi.fn()} />);
     expect(screen.getByText(/your device location will be recorded/i)).toBeInTheDocument();
-    // Disclosure must be rendered, even when no warnings are present (the
-    // submit button stays visible regardless of cross-field warning state).
     expect(screen.getByText(/decline the location prompt/i)).toBeInTheDocument();
+  });
+
+  it('suppresses the GPS consent disclosure in encoded (admin paper-encoder) mode', () => {
+    renderWithProviders(
+      <ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={vi.fn()} mode="encoded" />,
+    );
+    expect(screen.queryByText(/your device location will be recorded/i)).toBeNull();
+    expect(screen.getByRole('button', { name: /^submit$/i })).toBeInTheDocument();
   });
 
   it('calls onEdit with the section id when an Edit button is clicked', async () => {

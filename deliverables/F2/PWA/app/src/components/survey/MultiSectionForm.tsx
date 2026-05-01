@@ -86,12 +86,30 @@ function getSectionStatus(section: SectionConfig, values: FormValues): SectionSt
   return allRequiredFilled ? 'complete' : 'incomplete';
 }
 
+/**
+ * Submission mode. `hcw` is the default — healthcare worker self-administers
+ * the form on their device; the GPS consent disclosure is shown and the
+ * caller is expected to capture geolocation at submit time. `encoded` is
+ * the admin paper-encoder path (Sprint 4 Task 4.3): the consent disclosure
+ * is suppressed (paper consent already collected) and the caller's onSubmit
+ * routes through `/admin/api/encode/:hcw_id` instead of the PWA submit path.
+ */
+export type FormMode = 'hcw' | 'encoded';
+
+/**
+ * onSubmit returns void for the HCW path (App.tsx fires submitDraft and
+ * surfaces errors via setStatus) or a Promise<{submission_id}> for the
+ * encoder path (EncodePage awaits to drive the "Open next HCW" toast).
+ * The Form itself doesn't read the return value; encoder integration
+ * lands in Task 4.3.
+ */
 interface MultiSectionFormProps {
   initialValues: FormValues;
   initialIndex?: number;
   onAutosave: (values: FormValues) => void;
-  onSubmit: (values: FormValues) => void;
+  onSubmit: (values: FormValues) => void | Promise<unknown>;
   onSaveDraft?: () => void;
+  mode?: FormMode;
 }
 
 export function MultiSectionForm({
@@ -100,6 +118,7 @@ export function MultiSectionForm({
   onAutosave,
   onSubmit,
   onSaveDraft,
+  mode = 'hcw',
 }: MultiSectionFormProps) {
   const { t } = useTranslation();
   const { locale } = useLocale();
@@ -275,7 +294,9 @@ export function MultiSectionForm({
   };
 
   if (isReview) {
-    return <ReviewSection values={merged} onEdit={handleEdit} onSubmit={handleFinalSubmit} />;
+    return (
+      <ReviewSection values={merged} onEdit={handleEdit} onSubmit={handleFinalSubmit} mode={mode} />
+    );
   }
 
   return (

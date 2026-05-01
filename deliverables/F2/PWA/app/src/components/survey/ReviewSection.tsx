@@ -34,10 +34,20 @@ const SECTIONS: SectionModel[] = [
   sectionJ,
 ];
 
+/**
+ * Submission mode (mirrors MultiSectionForm's FormMode). Default 'hcw'
+ * preserves the existing self-admin experience. 'encoded' is the admin
+ * paper-encoder path — the GPS consent disclosure is suppressed because
+ * the location captured at admin click would be the encoder's office,
+ * not the HCW's facility, and paper consent is already on file.
+ */
+export type ReviewMode = 'hcw' | 'encoded';
+
 interface ReviewSectionProps {
   values: FormValues;
   onEdit: (sectionId: string) => void;
   onSubmit: () => void;
+  mode?: ReviewMode;
 }
 
 function formatValue(v: unknown): string {
@@ -82,7 +92,7 @@ const SEVERITY_STYLES: Record<Warning['severity'], string> = {
   info: 'border-border border-l-4 border-l-muted-foreground text-foreground',
 };
 
-export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) {
+export function ReviewSection({ values, onEdit, onSubmit, mode = 'hcw' }: ReviewSectionProps) {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const warnings = useMemo(() => evaluateCrossField(values), [values]);
@@ -166,9 +176,11 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
       })}
 
       <div className="flex flex-col gap-3 pt-2">
-        <p className="text-xs leading-relaxed text-muted-foreground">
-          {t('consent.gps_disclosure')}
-        </p>
+        {mode === 'hcw' ? (
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            {t('consent.gps_disclosure')}
+          </p>
+        ) : null}
         <Button type="button" onClick={onSubmit}>
           {t('review.submit')}
         </Button>
