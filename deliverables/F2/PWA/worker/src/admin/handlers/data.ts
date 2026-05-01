@@ -313,3 +313,56 @@ export async function handleListHcws(
   }
   return jsonResponse(r.data, 200);
 }
+
+// ----- Sync Report (Task 2.11) --------------------------------------------
+
+export type SyncLevel = 'region' | 'province' | 'facility';
+
+export interface SyncPivotRow {
+  key: string;
+  submitted: number;
+  expected: number | null;
+  percent_complete: number | null;
+  last_submitted_at: string;
+}
+
+export interface SyncReportData {
+  level: SyncLevel;
+  pivot: SyncPivotRow[];
+  totals: { submitted: number; expected: number | null; keys: number };
+}
+
+export interface SyncReportFilters {
+  level?: SyncLevel;
+  from?: string;
+  to?: string;
+}
+
+export type SyncReportAsCallable = (filters: SyncReportFilters) => Promise<AppsScriptResponse<SyncReportData>>;
+
+function parseSyncFilters(params: URLSearchParams): SyncReportFilters {
+  const out: SyncReportFilters = {};
+  const lvl = params.get('level');
+  const from = params.get('from');
+  const to = params.get('to');
+  if (lvl === 'region' || lvl === 'province' || lvl === 'facility') out.level = lvl;
+  if (from) out.from = from;
+  if (to) out.to = to;
+  return out;
+}
+
+export async function handleSyncReport(
+  url: URL,
+  asCallable: SyncReportAsCallable,
+): Promise<Response> {
+  const filters = parseSyncFilters(url.searchParams);
+  const r = await asCallable(filters);
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      502,
+    );
+  }
+  return jsonResponse(r.data, 200);
+}

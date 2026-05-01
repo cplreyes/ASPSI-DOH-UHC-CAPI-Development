@@ -27,6 +27,7 @@ import {
   handleListAudit,
   handleListDlq,
   handleListHcws,
+  handleSyncReport,
   type ListFilters,
   type ListResponsesData,
   type ResponseRow,
@@ -36,6 +37,8 @@ import {
   type ListDlqData,
   type HcwFilters,
   type ListHcwsData,
+  type SyncReportFilters,
+  type SyncReportData,
 } from './handlers/data';
 import { callAppsScript } from './apps-script-client';
 import { RoleVersionCache, requirePerm, type Role, type RolesListResp, type RbacOpts } from './rbac';
@@ -54,6 +57,7 @@ const RESPONSES_BY_ID_RE = /^\/admin\/api\/dashboards\/data\/responses\/([A-Za-z
 const AUDIT_LIST_RE = /^\/admin\/api\/dashboards\/data\/audit\/?$/;
 const DLQ_LIST_RE = /^\/admin\/api\/dashboards\/data\/dlq\/?$/;
 const HCWS_LIST_RE = /^\/admin\/api\/dashboards\/data\/hcws\/?$/;
+const REPORT_SYNC_RE = /^\/admin\/api\/dashboards\/report\/sync\/?$/;
 
 /**
  * Build RbacOpts that's stable for one request. Most rbac-protected handlers
@@ -289,6 +293,23 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleListHcws(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && REPORT_SYNC_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_report', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = (filters: SyncReportFilters) =>
+      callAppsScript<SyncReportData>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_sync_report',
+        filters as unknown as Record<string, unknown>,
+        requestId,
+      );
+    const r = await handleSyncReport(url, asCall);
     return withRequestId(r, requestId);
   }
 

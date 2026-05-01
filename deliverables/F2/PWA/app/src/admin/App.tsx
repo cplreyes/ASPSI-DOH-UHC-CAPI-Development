@@ -18,6 +18,7 @@ import { EncodeQueue } from './encode/EncodeQueue';
 import { EncodePage } from './encode/EncodePage';
 import { DataDashboard } from './data/DataDashboard';
 import { ResponseDetail } from './data/ResponseDetail';
+import { ReportDashboard } from './report/ReportDashboard';
 
 interface AdminAppProps {
   apiBaseUrl: string;
@@ -43,7 +44,7 @@ interface PageRoute {
 const PAGES: PageRoute[] = [
   // /admin/data is dispatched directly in AdminRoot (the DataDashboard
   // tabs accept apiBaseUrl + fetchImpl props).
-  { path: '/admin/report', title: 'Reports', element: <Placeholder title="Report Dashboard" subtitle="Sync timeline · Submission map" /> },
+  // /admin/report dispatched directly in AdminRoot below.
   { path: '/admin/apps', title: 'Files & Settings', element: <Placeholder title="Apps" subtitle="File library · Versioning · Data settings" /> },
   { path: '/admin/users', title: 'Users', element: <Placeholder title="Users" subtitle="Admin user accounts" /> },
   { path: '/admin/roles', title: 'Roles', element: <Placeholder title="Roles" subtitle="Permission matrix" /> },
@@ -85,6 +86,14 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
     return (
       <Layout>
         <DataDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+      </Layout>
+    );
+  }
+  // Report dashboard (Sync + Map tabs).
+  if (pathname === '/admin/report' || pathname === '/admin/report/') {
+    return (
+      <Layout>
+        <ReportDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
       </Layout>
     );
   }
