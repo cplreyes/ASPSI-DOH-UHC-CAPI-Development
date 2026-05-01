@@ -43,6 +43,13 @@ import {
   type MapReportFilters,
   type MapReportData,
 } from './handlers/data';
+import {
+  handleListUsers,
+  handleListRoles,
+  type UsersListFilters,
+  type ListUsersData,
+  type ListRolesData,
+} from './handlers/users';
 import { callAppsScript } from './apps-script-client';
 import { RoleVersionCache, requirePerm, type Role, type RolesListResp, type RbacOpts } from './rbac';
 
@@ -62,6 +69,8 @@ const DLQ_LIST_RE = /^\/admin\/api\/dashboards\/data\/dlq\/?$/;
 const HCWS_LIST_RE = /^\/admin\/api\/dashboards\/data\/hcws\/?$/;
 const REPORT_SYNC_RE = /^\/admin\/api\/dashboards\/report\/sync\/?$/;
 const REPORT_MAP_RE = /^\/admin\/api\/dashboards\/report\/map\/?$/;
+const USERS_LIST_RE = /^\/admin\/api\/dashboards\/users\/?$/;
+const ROLES_LIST_RE = /^\/admin\/api\/dashboards\/roles\/?$/;
 
 /**
  * Build RbacOpts that's stable for one request. Most rbac-protected handlers
@@ -331,6 +340,40 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleMapReport(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && USERS_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_users', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = (filters: UsersListFilters) =>
+      callAppsScript<ListUsersData>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_list',
+        filters as unknown as Record<string, unknown>,
+        requestId,
+      );
+    const r = await handleListUsers(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && ROLES_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_roles', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = () =>
+      callAppsScript<ListRolesData>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_roles_list',
+        {},
+        requestId,
+      );
+    const r = await handleListRoles(asCall);
     return withRequestId(r, requestId);
   }
 

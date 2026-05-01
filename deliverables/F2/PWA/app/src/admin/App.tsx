@@ -19,6 +19,8 @@ import { EncodePage } from './encode/EncodePage';
 import { DataDashboard } from './data/DataDashboard';
 import { ResponseDetail } from './data/ResponseDetail';
 import { ReportDashboard } from './report/ReportDashboard';
+import { UsersDashboard } from './users/UsersDashboard';
+import { RolesDashboard } from './roles/RolesDashboard';
 
 interface AdminAppProps {
   apiBaseUrl: string;
@@ -46,8 +48,8 @@ const PAGES: PageRoute[] = [
   // tabs accept apiBaseUrl + fetchImpl props).
   // /admin/report dispatched directly in AdminRoot below.
   { path: '/admin/apps', title: 'Files & Settings', element: <Placeholder title="Apps" subtitle="File library · Versioning · Data settings" /> },
-  { path: '/admin/users', title: 'Users', element: <Placeholder title="Users" subtitle="Admin user accounts" /> },
-  { path: '/admin/roles', title: 'Roles', element: <Placeholder title="Roles" subtitle="Permission matrix" /> },
+  // /admin/users and /admin/roles dispatched directly in AdminRoot
+  // (they accept apiBaseUrl + fetchImpl props and render real data).
   // /admin/encode and /admin/encode/:hcw_id are dispatched directly in
   // AdminRoot below (param-bearing routes don't fit the simple matchRoute
   // table). Listed here only so the Configuration nav highlight stays sane.
@@ -94,6 +96,20 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
     return (
       <Layout>
         <ReportDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+      </Layout>
+    );
+  }
+  if (pathname === '/admin/users' || pathname === '/admin/users/') {
+    return (
+      <Layout>
+        <UsersDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
+      </Layout>
+    );
+  }
+  if (pathname === '/admin/roles' || pathname === '/admin/roles/') {
+    return (
+      <Layout>
+        <RolesDashboard apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
       </Layout>
     );
   }
