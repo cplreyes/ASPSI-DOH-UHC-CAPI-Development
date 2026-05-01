@@ -301,6 +301,89 @@ describe('adminRouter', () => {
     }
   });
 
+  it('routes GET /admin/api/dashboards/data/responses with dash_data perm and forwards filters', async () => {
+    const env = makeEnv(makeKv());
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, { sub: 'data-mgr', role: 'Data Manager', role_version: 1 });
+    const calls: Array<{ action: string; payload: unknown }> = [];
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => {
+      const body = JSON.parse((init as RequestInit).body as string) as { action: string; payload: unknown };
+      calls.push({ action: body.action, payload: body.payload });
+      if (body.action === 'admin_roles_list') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { roles: [{ name: 'Data Manager', version: 1, dash_data: true }] },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_read_responses') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { rows: [], total: 0, has_more: false },
+        }), { status: 200 });
+      }
+      return new Response('{}', { status: 500 });
+    });
+    try {
+      const req = new Request('https://x/admin/api/dashboards/data/responses?facility_id=fac-1&limit=10', {
+        headers: { Authorization: `Bearer ${tok}` },
+      });
+      const r = await adminRouter(req, env);
+      expect(r!.status).toBe(200);
+      const readCall = calls.find(c => c.action === 'admin_read_responses');
+      expect(readCall).toBeDefined();
+      expect(readCall!.payload).toEqual({ facility_id: 'fac-1', limit: 10 });
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
+  it('rejects GET /admin/api/dashboards/data/responses without dash_data with 403', async () => {
+    const env = makeEnv(makeKv());
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, { sub: 'newbie', role: 'NoAccess', role_version: 1 });
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async () =>
+      new Response(JSON.stringify({
+        ok: true,
+        data: { roles: [{ name: 'NoAccess', version: 1 }] },
+      }), { status: 200 }),
+    );
+    try {
+      const req = new Request('https://x/admin/api/dashboards/data/responses', {
+        headers: { Authorization: `Bearer ${tok}` },
+      });
+      const r = await adminRouter(req, env);
+      expect(r!.status).toBe(403);
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
+  it('routes GET /admin/api/dashboards/data/responses/:id and surfaces 404 from AS', async () => {
+    const env = makeEnv(makeKv());
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, { sub: 'data-mgr', role: 'Data Manager', role_version: 1 });
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => {
+      const body = JSON.parse((init as RequestInit).body as string) as { action: string };
+      if (body.action === 'admin_roles_list') {
+        return new Response(JSON.stringify({
+          ok: true, data: { roles: [{ name: 'Data Manager', version: 1, dash_data: true }] },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_read_response_by_id') {
+        return new Response(JSON.stringify({
+          ok: false, error: { code: 'E_NOT_FOUND', message: 'no row' },
+        }), { status: 200 });
+      }
+      return new Response('{}', { status: 500 });
+    });
+    try {
+      const req = new Request('https://x/admin/api/dashboards/data/responses/srv-missing', {
+        headers: { Authorization: `Bearer ${tok}` },
+      });
+      const r = await adminRouter(req, env);
+      expect(r!.status).toBe(404);
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
   it('hashes cf-connecting-ip into ipHash (not echoed in response)', async () => {
     // Send two failed login attempts from the same IP and confirm both
     // end up keyed under the same ipHash in throttle storage.

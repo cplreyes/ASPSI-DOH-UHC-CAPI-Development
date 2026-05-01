@@ -21,8 +21,15 @@ import {
   type EncodeRequestBody,
   type EncodeSuccess,
 } from './handlers/encode';
+import {
+  handleListResponses,
+  handleGetResponseById,
+  type ListFilters,
+  type ListResponsesData,
+  type ResponseRow,
+} from './handlers/data';
 import { callAppsScript } from './apps-script-client';
-import { RoleVersionCache, requirePerm, type Role, type RolesListResp } from './rbac';
+import { RoleVersionCache, requirePerm, type Role, type RolesListResp, type RbacOpts } from './rbac';
 
 /**
  * Module-level role cache shared across all RBAC-protected requests in
@@ -33,6 +40,37 @@ import { RoleVersionCache, requirePerm, type Role, type RolesListResp } from './
 const roleCache = new RoleVersionCache();
 
 const ENCODE_RE = /^\/admin\/api\/encode\/([A-Za-z0-9_\-]+)\/?$/;
+const RESPONSES_LIST_RE = /^\/admin\/api\/dashboards\/data\/responses\/?$/;
+const RESPONSES_BY_ID_RE = /^\/admin\/api\/dashboards\/data\/responses\/([A-Za-z0-9_\-]+)\/?$/;
+
+/**
+ * Build RbacOpts that's stable for one request. Most rbac-protected handlers
+ * share the same cache/secret/kv triple; only the perm string varies.
+ */
+function buildRbacOpts(env: Env, requestId: string): RbacOpts {
+  return {
+    secret: env.JWT_SIGNING_KEY,
+    cache: roleCache,
+    kv: env.F2_AUTH,
+    rolesListFn: () =>
+      callAppsScript<{ roles: Role[] }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_roles_list',
+        {},
+        requestId,
+      ).then((r): RolesListResp =>
+        r.ok && r.data ? { ok: true, data: { roles: r.data.roles } } : { ok: false },
+      ),
+  };
+}
+
+function rbacFailureResponse(status: number | undefined, errorCode: string | undefined): Response {
+  return new Response(
+    JSON.stringify({ ok: false, error: { code: errorCode, message: 'access denied' } }),
+    { status: status ?? 401, headers: { 'Content-Type': 'application/json' } },
+  );
+}
 
 const enc = new TextEncoder();
 
@@ -133,31 +171,9 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
   const encodeMatch = ENCODE_RE.exec(url.pathname);
   if (req.method === 'POST' && encodeMatch) {
     const hcwId = decodeURIComponent(encodeMatch[1]!);
-    const rolesList = (): Promise<RolesListResp> =>
-      callAppsScript<{ roles: Role[] }>(
-        env.APPS_SCRIPT_URL,
-        env.APPS_SCRIPT_HMAC,
-        'admin_roles_list',
-        {},
-        requestId,
-      ).then(r => (r.ok && r.data ? { ok: true, data: { roles: r.data.roles } } : { ok: false }));
-    const auth = await requirePerm(req, 'dict_paper_encoded_up', {
-      secret: env.JWT_SIGNING_KEY,
-      cache: roleCache,
-      rolesListFn: rolesList,
-      kv: env.F2_AUTH,
-    });
+    const auth = await requirePerm(req, 'dict_paper_encoded_up', buildRbacOpts(env, requestId));
     if (!auth.ok) {
-      return withRequestId(
-        new Response(
-          JSON.stringify({
-            ok: false,
-            error: { code: auth.errorCode, message: 'access denied' },
-          }),
-          { status: auth.status, headers: { 'Content-Type': 'application/json' } },
-        ),
-        requestId,
-      );
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
     }
     const body = (await req.json().catch(() => ({}))) as EncodeRequestBody;
     const asCall = (payload: Record<string, unknown>) =>
@@ -174,6 +190,42 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
       { username: auth.payload!.sub },
       asCall,
     );
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && RESPONSES_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_data', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = (filters: ListFilters) =>
+      callAppsScript<ListResponsesData>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_read_responses',
+        filters as unknown as Record<string, unknown>,
+        requestId,
+      );
+    const r = await handleListResponses(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  const responseByIdMatch = RESPONSES_BY_ID_RE.exec(url.pathname);
+  if (req.method === 'GET' && responseByIdMatch) {
+    const id = decodeURIComponent(responseByIdMatch[1]!);
+    const auth = await requirePerm(req, 'dash_data', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = (payload: { id: string }) =>
+      callAppsScript<ResponseRow>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_read_response_by_id',
+        payload,
+        requestId,
+      );
+    const r = await handleGetResponseById(id, asCall);
     return withRequestId(r, requestId);
   }
 
