@@ -8,11 +8,19 @@
  *
  * Output format: <saltB64url>:<iterations>:<hashB64url>
  * Verifier in the Worker is in src/admin.ts (verifyAdminPassword).
+ *
+ * Iteration count: capped at 100,000 because Cloudflare Workers'
+ * `crypto.subtle.deriveBits` rejects PBKDF2 above 100k with
+ * `NotSupportedError`. This is below NIST 2023's 600k recommendation, but
+ * required by the Workers runtime — see Issue #35 and the comment on
+ * `MAX_PBKDF2_ITERS` in `worker/src/admin.ts`. The verifier mirrors this
+ * cap and rejects any stored hash above it, so don't bump this value
+ * without coordinating both sides.
  */
 import { webcrypto } from 'node:crypto';
 import readline from 'node:readline';
 
-const ITERATIONS = 600_000;
+const ITERATIONS = 100_000;
 
 function b64url(bytes) {
   return Buffer.from(bytes).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
