@@ -89,10 +89,165 @@ function adminRolesList() {
   return { ok: true, data: { roles: rows, total: rows.length } };
 }
 
+// ----- Mutations (LockService-wrapped) ------------------------------------
+
+var USERNAME_RE = /^[A-Za-z0-9_]{3,32}$/;
+var NAME_RE = /^[A-Za-z][A-Za-z\-' ]*$/;
+
+function _withDocLock(fn) {
+  var lock = LockService.getDocumentLock();
+  if (!lock.tryLock(30000)) {
+    return { ok: false, error: { code: 'E_LOCK_TIMEOUT', message: 'busy, retry' } };
+  }
+  try {
+    return fn();
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function _findUserRow(sh, username) {
+  var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  var unameIdx = headers.indexOf('username');
+  if (unameIdx === -1) throw new Error('username column missing');
+  var lastRow = sh.getLastRow();
+  if (lastRow < 2) return { headers: headers, rowNumber: -1, row: null };
+  var data = sh.getRange(2, 1, lastRow - 1, headers.length).getValues();
+  for (var i = 0; i < data.length; i++) {
+    if (data[i][unameIdx] === username) {
+      var obj = {};
+      for (var j = 0; j < headers.length; j++) obj[headers[j]] = data[i][j];
+      return { headers: headers, rowNumber: i + 2, row: obj };
+    }
+  }
+  return { headers: headers, rowNumber: -1, row: null };
+}
+
+/**
+ * Append a new user row. Worker has already PBKDF2-hashed the password
+ * (spec §7.10 step 4) and set password_must_change=true; AS just persists.
+ *
+ * Returns E_CONFLICT on duplicate username, E_VALIDATION on shape errors.
+ */
+function adminUsersCreate(payload) {
+  if (!payload || typeof payload !== 'object') {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'payload required' } };
+  }
+  var u = String(payload.username || '').trim();
+  if (!USERNAME_RE.test(u)) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'username must be 3-32 chars [A-Za-z0-9_]' } };
+  }
+  if (!payload.password_hash) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'password_hash required (worker should pre-hash)' } };
+  }
+  if (!payload.role_name) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'role_name required' } };
+  }
+  if (payload.first_name && !NAME_RE.test(String(payload.first_name))) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'first_name must be letters' } };
+  }
+  if (payload.last_name && !NAME_RE.test(String(payload.last_name))) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'last_name must be letters' } };
+  }
+
+  return _withDocLock(function () {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sh = ss.getSheetByName('F2_Users');
+    if (!sh) throw new Error('F2_Users sheet not found — run runAllMigrations() first');
+    var found = _findUserRow(sh, u);
+    if (found.row) {
+      return { ok: false, error: { code: 'E_CONFLICT', message: 'username already exists' } };
+    }
+    var nowIso = new Date().toISOString();
+    var row = found.headers.map(function (h) {
+      if (h === 'username') return u;
+      if (h === 'first_name') return payload.first_name || '';
+      if (h === 'last_name') return payload.last_name || '';
+      if (h === 'role_name') return payload.role_name;
+      if (h === 'password_hash') return payload.password_hash;
+      if (h === 'password_must_change') return payload.password_must_change != null ? payload.password_must_change : true;
+      if (h === 'email') return payload.email || '';
+      if (h === 'phone') return payload.phone || '';
+      if (h === 'created_at') return nowIso;
+      if (h === 'created_by') return payload.created_by || '';
+      if (h === 'last_login_at') return '';
+      return '';
+    });
+    sh.appendRow(row);
+    return { ok: true, data: { user: _stripPasswordHash({
+      username: u,
+      first_name: payload.first_name || '',
+      last_name: payload.last_name || '',
+      role_name: payload.role_name,
+      email: payload.email || '',
+      phone: payload.phone || '',
+      password_must_change: payload.password_must_change != null ? payload.password_must_change : true,
+      password_hash: payload.password_hash,
+      created_at: nowIso,
+      created_by: payload.created_by || '',
+      last_login_at: '',
+    }) } };
+  });
+}
+
+/**
+ * Update an existing user. Mutable fields: first_name, last_name,
+ * role_name, email, phone, password_hash (only if worker pre-hashed),
+ * password_must_change. username is the PK and cannot change.
+ */
+function adminUsersUpdate(payload) {
+  if (!payload || typeof payload !== 'object' || !payload.username) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'username required' } };
+  }
+  var u = String(payload.username).trim();
+
+  return _withDocLock(function () {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sh = ss.getSheetByName('F2_Users');
+    if (!sh) throw new Error('F2_Users sheet not found — run runAllMigrations() first');
+    var found = _findUserRow(sh, u);
+    if (!found.row) {
+      return { ok: false, error: { code: 'E_NOT_FOUND', message: 'user ' + u + ' not found' } };
+    }
+    var mutable = ['first_name', 'last_name', 'role_name', 'email', 'phone', 'password_hash', 'password_must_change'];
+    var updated = {};
+    for (var k in found.row) updated[k] = found.row[k];
+    for (var i = 0; i < mutable.length; i++) {
+      var key = mutable[i];
+      if (payload[key] !== undefined) updated[key] = payload[key];
+    }
+    var rowArr = found.headers.map(function (h) { return updated[h] != null ? updated[h] : ''; });
+    sh.getRange(found.rowNumber, 1, 1, found.headers.length).setValues([rowArr]);
+    return { ok: true, data: { user: _stripPasswordHash(updated) } };
+  });
+}
+
+function adminUsersDelete(payload) {
+  if (!payload || !payload.username) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'username required' } };
+  }
+  var u = String(payload.username).trim();
+
+  return _withDocLock(function () {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sh = ss.getSheetByName('F2_Users');
+    if (!sh) throw new Error('F2_Users sheet not found — run runAllMigrations() first');
+    var found = _findUserRow(sh, u);
+    if (!found.row) {
+      return { ok: false, error: { code: 'E_NOT_FOUND', message: 'user ' + u + ' not found' } };
+    }
+    sh.deleteRow(found.rowNumber);
+    return { ok: true, data: { username: u } };
+  });
+}
+
 if (typeof module !== 'undefined') {
   module.exports = {
     adminUsersList: adminUsersList,
     adminRolesList: adminRolesList,
+    adminUsersCreate: adminUsersCreate,
+    adminUsersUpdate: adminUsersUpdate,
+    adminUsersDelete: adminUsersDelete,
     _stripPasswordHash: _stripPasswordHash,
   };
 }

@@ -46,9 +46,15 @@ import {
 import {
   handleListUsers,
   handleListRoles,
+  handleCreateUser,
+  handleUpdateUser,
+  handleDeleteUser,
   type UsersListFilters,
   type ListUsersData,
   type ListRolesData,
+  type CreateUserBody,
+  type UpdateUserBody,
+  type UserRow,
 } from './handlers/users';
 import { callAppsScript } from './apps-script-client';
 import { RoleVersionCache, requirePerm, type Role, type RolesListResp, type RbacOpts } from './rbac';
@@ -70,6 +76,7 @@ const HCWS_LIST_RE = /^\/admin\/api\/dashboards\/data\/hcws\/?$/;
 const REPORT_SYNC_RE = /^\/admin\/api\/dashboards\/report\/sync\/?$/;
 const REPORT_MAP_RE = /^\/admin\/api\/dashboards\/report\/map\/?$/;
 const USERS_LIST_RE = /^\/admin\/api\/dashboards\/users\/?$/;
+const USERS_BY_NAME_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/?$/;
 const ROLES_LIST_RE = /^\/admin\/api\/dashboards\/roles\/?$/;
 
 /**
@@ -357,6 +364,57 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleListUsers(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'POST' && USERS_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_users', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const body = (await req.json().catch(() => ({}))) as CreateUserBody;
+    const asCall = (payload: Record<string, unknown>) =>
+      callAppsScript<{ user: UserRow }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_create',
+        payload,
+        requestId,
+      );
+    const r = await handleCreateUser(body, { username: auth.payload!.sub }, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  const userByNameMatch = USERS_BY_NAME_RE.exec(url.pathname);
+  if (userByNameMatch && (req.method === 'PATCH' || req.method === 'DELETE')) {
+    const auth = await requirePerm(req, 'dash_users', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const username = userByNameMatch[1]!;
+    if (req.method === 'PATCH') {
+      const body = (await req.json().catch(() => ({}))) as UpdateUserBody;
+      const asCall = (payload: Record<string, unknown>) =>
+        callAppsScript<{ user: UserRow }>(
+          env.APPS_SCRIPT_URL,
+          env.APPS_SCRIPT_HMAC,
+          'admin_users_update',
+          payload,
+          requestId,
+        );
+      const r = await handleUpdateUser(username, body, asCall);
+      return withRequestId(r, requestId);
+    }
+    // DELETE
+    const asCall = (payload: { username: string }) =>
+      callAppsScript<{ username: string }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_delete',
+        payload,
+        requestId,
+      );
+    const r = await handleDeleteUser(username, asCall);
     return withRequestId(r, requestId);
   }
 

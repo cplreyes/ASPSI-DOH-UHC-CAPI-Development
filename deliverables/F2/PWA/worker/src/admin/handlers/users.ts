@@ -9,6 +9,7 @@
  * / revoke_sessions and admin_roles_create / update / delete).
  */
 import { jsonResponse } from '../../types';
+import { hashPassword } from '../auth';
 import type { AppsScriptResponse } from '../apps-script-client';
 
 export interface UserRow {
@@ -95,4 +96,141 @@ export async function handleListRoles(asCallable: RolesListAsCallable): Promise<
     );
   }
   return jsonResponse(r.data, 200);
+}
+
+// ----- Mutations (Tasks 3.11, 3.14) ---------------------------------------
+
+const USERNAME_RE = /^[A-Za-z0-9_]{3,32}$/;
+
+export interface CreateUserBody {
+  username?: unknown;
+  password?: unknown;
+  first_name?: unknown;
+  last_name?: unknown;
+  role_name?: unknown;
+  email?: unknown;
+  phone?: unknown;
+}
+
+export interface UpdateUserBody {
+  first_name?: unknown;
+  last_name?: unknown;
+  role_name?: unknown;
+  email?: unknown;
+  phone?: unknown;
+  password?: unknown;            // optional reset
+  password_must_change?: unknown; // optional toggle
+}
+
+export type CreateUserAsCallable = (
+  payload: Record<string, unknown>,
+) => Promise<AppsScriptResponse<{ user: UserRow }>>;
+
+export type UpdateUserAsCallable = (
+  payload: Record<string, unknown>,
+) => Promise<AppsScriptResponse<{ user: UserRow }>>;
+
+export type DeleteUserAsCallable = (
+  payload: { username: string },
+) => Promise<AppsScriptResponse<{ username: string }>>;
+
+function statusForAsError(code: string | undefined): number {
+  if (code === 'E_VALIDATION') return 400;
+  if (code === 'E_NOT_FOUND') return 404;
+  if (code === 'E_CONFLICT') return 409;
+  if (code === 'E_LOCK_TIMEOUT') return 503;
+  return 502;
+}
+
+export async function handleCreateUser(
+  body: CreateUserBody,
+  actor: { username: string },
+  asCallable: CreateUserAsCallable,
+): Promise<Response> {
+  const u = typeof body.username === 'string' ? body.username.trim() : '';
+  const password = typeof body.password === 'string' ? body.password : '';
+  const role = typeof body.role_name === 'string' ? body.role_name.trim() : '';
+  if (!USERNAME_RE.test(u)) {
+    return errorJson('E_VALIDATION', 'username must be 3-32 chars [A-Za-z0-9_]', 400);
+  }
+  if (password.length < 8) {
+    return errorJson('E_VALIDATION', 'password must be at least 8 characters', 400);
+  }
+  if (!role) {
+    return errorJson('E_VALIDATION', 'role_name required', 400);
+  }
+
+  const password_hash = await hashPassword(password);
+  const r = await asCallable({
+    username: u,
+    password_hash,
+    role_name: role,
+    first_name: typeof body.first_name === 'string' ? body.first_name.trim() : '',
+    last_name: typeof body.last_name === 'string' ? body.last_name.trim() : '',
+    email: typeof body.email === 'string' ? body.email.trim() : '',
+    phone: typeof body.phone === 'string' ? body.phone.trim() : '',
+    password_must_change: true,
+    created_by: actor.username,
+  });
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
+export async function handleUpdateUser(
+  username: string,
+  body: UpdateUserBody,
+  asCallable: UpdateUserAsCallable,
+): Promise<Response> {
+  if (!USERNAME_RE.test(username)) {
+    return errorJson('E_VALIDATION', 'invalid username path param', 400);
+  }
+  const payload: Record<string, unknown> = { username };
+  if (typeof body.first_name === 'string') payload.first_name = body.first_name.trim();
+  if (typeof body.last_name === 'string') payload.last_name = body.last_name.trim();
+  if (typeof body.role_name === 'string') payload.role_name = body.role_name.trim();
+  if (typeof body.email === 'string') payload.email = body.email.trim();
+  if (typeof body.phone === 'string') payload.phone = body.phone.trim();
+  if (typeof body.password_must_change === 'boolean') payload.password_must_change = body.password_must_change;
+  if (typeof body.password === 'string' && body.password.length > 0) {
+    if (body.password.length < 8) {
+      return errorJson('E_VALIDATION', 'password must be at least 8 characters', 400);
+    }
+    payload.password_hash = await hashPassword(body.password);
+    // Admin-initiated password reset forces the user to change it on next login.
+    payload.password_must_change = true;
+  }
+
+  const r = await asCallable(payload);
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
+export async function handleDeleteUser(
+  username: string,
+  asCallable: DeleteUserAsCallable,
+): Promise<Response> {
+  if (!USERNAME_RE.test(username)) {
+    return errorJson('E_VALIDATION', 'invalid username path param', 400);
+  }
+  const r = await asCallable({ username });
+  if (!r.ok) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return new Response(null, { status: 204 });
 }

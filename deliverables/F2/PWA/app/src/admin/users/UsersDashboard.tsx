@@ -9,10 +9,11 @@
  * For now this just surfaces the F2_Users sheet so an Administrator
  * can confirm seeded accounts exist after AP0 + seed-admins.mjs run.
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
+import { UserEditor } from './UserEditor';
 
 interface UserRow {
   username: string;
@@ -32,6 +33,9 @@ interface ListUsersData {
   users: UserRow[];
   total: number;
 }
+
+interface RoleRow { name: string }
+interface ListRolesData { roles: RoleRow[]; total: number }
 
 export interface UsersDashboardProps {
   apiBaseUrl: string;
@@ -65,25 +69,37 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
     | { kind: 'loaded'; data: ListUsersData }
     | { kind: 'failed'; error: ApiError }
   >({ kind: 'loading' });
+  const [roles, setRoles] = useState<RoleRow[]>([]);
+  const [editor, setEditor] = useState<
+    | { kind: 'create' }
+    | { kind: 'edit'; user: UserRow }
+    | null
+  >(null);
+  const [reloadTick, setReloadTick] = useState(0);
 
   const apiQuery = useMemo(() => buildApiQuery(filters), [filters]);
+
+  const loadUsers = useCallback(async () => {
+    const r = await adminFetch<ListUsersData>(
+      `${apiBaseUrl}/admin/api/dashboards/users${apiQuery ? `?${apiQuery}` : ''}`,
+      {},
+      {
+        ...(token ? { token } : {}),
+        onUnauthorized: () => {
+          clearAuth();
+          navigate('/admin/login');
+        },
+        ...(fetchImpl ? { fetchImpl } : {}),
+      },
+    );
+    return r;
+  }, [apiQuery, apiBaseUrl, token, clearAuth, navigate, fetchImpl]);
 
   useEffect(() => {
     let cancelled = false;
     setState({ kind: 'loading' });
     void (async () => {
-      const r = await adminFetch<ListUsersData>(
-        `${apiBaseUrl}/admin/api/dashboards/users${apiQuery ? `?${apiQuery}` : ''}`,
-        {},
-        {
-          ...(token ? { token } : {}),
-          onUnauthorized: () => {
-            clearAuth();
-            navigate('/admin/login');
-          },
-          ...(fetchImpl ? { fetchImpl } : {}),
-        },
-      );
+      const r = await loadUsers();
       if (cancelled) return;
       if (r.ok) setState({ kind: 'loaded', data: r.data });
       else setState({ kind: 'failed', error: r.error });
@@ -91,16 +107,64 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
     return () => {
       cancelled = true;
     };
-  }, [apiQuery, apiBaseUrl, token]);
+  }, [loadUsers, reloadTick]);
+
+  // Roles list for the editor's role dropdown. Pulled once and cached.
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const r = await adminFetch<ListRolesData>(
+        `${apiBaseUrl}/admin/api/dashboards/roles`,
+        {},
+        {
+          ...(token ? { token } : {}),
+          ...(fetchImpl ? { fetchImpl } : {}),
+        },
+      );
+      if (cancelled || !r.ok) return;
+      setRoles(r.data.roles);
+    })();
+    return () => { cancelled = true; };
+  }, [apiBaseUrl, token, fetchImpl]);
+
+  const onDelete = async (username: string) => {
+    if (!window.confirm(`Delete user ${username}? This cannot be undone.`)) return;
+    const r = await adminFetch(
+      `${apiBaseUrl}/admin/api/dashboards/users/${encodeURIComponent(username)}`,
+      { method: 'DELETE' },
+      {
+        ...(token ? { token } : {}),
+        onUnauthorized: () => {
+          clearAuth();
+          navigate('/admin/login');
+        },
+        ...(fetchImpl ? { fetchImpl } : {}),
+      },
+    );
+    if (r.ok) {
+      setReloadTick((n) => n + 1);
+    } else {
+      window.alert(`Delete failed: ${r.error.message ?? r.error.code}`);
+    }
+  };
 
   return (
     <section className="flex flex-col gap-4 py-2">
-      <header className="border-b border-hairline pb-3">
-        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
-        <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Users</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Admin portal accounts. Edit / create / bulk-import actions land in follow-up commits.
-        </p>
+      <header className="flex items-start justify-between border-b border-hairline pb-3">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
+          <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Users</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Admin portal accounts. Bulk-import + revoke-sessions actions land in follow-up commits.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => setEditor({ kind: 'create' })}
+          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        >
+          + Add user
+        </button>
       </header>
 
       <div className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3">
@@ -119,8 +183,24 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
             {state.data.total} user{state.data.total === 1 ? '' : 's'}
           </p>
-          <UsersTable rows={state.data.users} />
+          <UsersTable
+            rows={state.data.users}
+            onEdit={(u) => setEditor({ kind: 'edit', user: u })}
+            onDelete={onDelete}
+          />
         </>
+      ) : null}
+
+      {editor ? (
+        <UserEditor
+          apiBaseUrl={apiBaseUrl}
+          {...(fetchImpl ? { fetchImpl } : {})}
+          mode={editor.kind}
+          {...(editor.kind === 'edit' ? { initial: editor.user } : {})}
+          roles={roles}
+          onClose={() => setEditor(null)}
+          onSaved={() => setReloadTick((n) => n + 1)}
+        />
       ) : null}
     </section>
   );
@@ -141,7 +221,15 @@ function FilterText({ label, value, onChange, placeholder }: { label: string; va
   );
 }
 
-function UsersTable({ rows }: { rows: UserRow[] }): JSX.Element {
+function UsersTable({
+  rows,
+  onEdit,
+  onDelete,
+}: {
+  rows: UserRow[];
+  onEdit: (u: UserRow) => void;
+  onDelete: (username: string) => void;
+}): JSX.Element {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
@@ -153,6 +241,7 @@ function UsersTable({ rows }: { rows: UserRow[] }): JSX.Element {
             <Th>Email</Th>
             <Th>Last login</Th>
             <Th>Created</Th>
+            <Th aria-label="actions" />
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">
@@ -171,6 +260,24 @@ function UsersTable({ rows }: { rows: UserRow[] }): JSX.Element {
               <Td>{u.email || '—'}</Td>
               <Td mono>{formatTs(u.last_login_at)}</Td>
               <Td mono>{formatTs(u.created_at)}</Td>
+              <Td>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => onEdit(u)}
+                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onDelete(u.username)}
+                    className="font-mono text-xs uppercase tracking-wider text-error underline-offset-4 hover:underline"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </Td>
             </tr>
           ))}
         </tbody>

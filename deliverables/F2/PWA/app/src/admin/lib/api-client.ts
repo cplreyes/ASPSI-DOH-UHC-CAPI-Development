@@ -18,6 +18,8 @@ export type ErrorCode =
   | 'E_PERM_DENIED'
   | 'E_BACKEND'
   | 'E_NOT_FOUND'
+  | 'E_CONFLICT'
+  | 'E_LOCK_TIMEOUT'
   | 'E_NETWORK'
   | 'E_UNKNOWN';
 
@@ -135,6 +137,8 @@ function normalizeErrorCode(code: unknown): ErrorCode {
     'E_PERM_DENIED',
     'E_BACKEND',
     'E_NOT_FOUND',
+    'E_CONFLICT',
+    'E_LOCK_TIMEOUT',
     'E_NETWORK',
   ];
   if (typeof code === 'string' && (known as string[]).includes(code)) {
