@@ -16,7 +16,23 @@ import {
   type AdminRoleRow,
   type AuthAuditCtx,
 } from './handlers/auth';
+import {
+  handleEncodeSubmit,
+  type EncodeRequestBody,
+  type EncodeSuccess,
+} from './handlers/encode';
 import { callAppsScript } from './apps-script-client';
+import { RoleVersionCache, requirePerm, type Role, type RolesListResp } from './rbac';
+
+/**
+ * Module-level role cache shared across all RBAC-protected requests in
+ * this Worker isolate. TTL is 60 minutes per the cache class default;
+ * a role PATCH bumps F2_Roles.version which naturally invalidates stale
+ * entries (key is `name:version`, see rbac.ts).
+ */
+const roleCache = new RoleVersionCache();
+
+const ENCODE_RE = /^\/admin\/api\/encode\/([A-Za-z0-9_\-]+)\/?$/;
 
 const enc = new TextEncoder();
 
@@ -111,6 +127,53 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
 
   if (req.method === 'POST' && url.pathname === '/admin/api/logout') {
     const r = await handleLogout(req, ipHash, env, auditFn);
+    return withRequestId(r, requestId);
+  }
+
+  const encodeMatch = ENCODE_RE.exec(url.pathname);
+  if (req.method === 'POST' && encodeMatch) {
+    const hcwId = decodeURIComponent(encodeMatch[1]!);
+    const rolesList = (): Promise<RolesListResp> =>
+      callAppsScript<{ roles: Role[] }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_roles_list',
+        {},
+        requestId,
+      ).then(r => (r.ok && r.data ? { ok: true, data: { roles: r.data.roles } } : { ok: false }));
+    const auth = await requirePerm(req, 'dict_paper_encoded_up', {
+      secret: env.JWT_SIGNING_KEY,
+      cache: roleCache,
+      rolesListFn: rolesList,
+      kv: env.F2_AUTH,
+    });
+    if (!auth.ok) {
+      return withRequestId(
+        new Response(
+          JSON.stringify({
+            ok: false,
+            error: { code: auth.errorCode, message: 'access denied' },
+          }),
+          { status: auth.status, headers: { 'Content-Type': 'application/json' } },
+        ),
+        requestId,
+      );
+    }
+    const body = (await req.json().catch(() => ({}))) as EncodeRequestBody;
+    const asCall = (payload: Record<string, unknown>) =>
+      callAppsScript<EncodeSuccess>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_encode_submit',
+        payload,
+        requestId,
+      );
+    const r = await handleEncodeSubmit(
+      hcwId,
+      body,
+      { username: auth.payload!.sub },
+      asCall,
+    );
     return withRequestId(r, requestId);
   }
 

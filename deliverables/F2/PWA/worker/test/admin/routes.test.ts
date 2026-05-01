@@ -213,6 +213,94 @@ describe('adminRouter', () => {
     expect(r!.headers.get('X-Request-Id')).toMatch(/^[0-9a-f-]{36}$/);
   });
 
+  it('rejects POST /admin/api/encode/:hcw_id with no Authorization header (401)', async () => {
+    const env = makeEnv(makeKv());
+    const req = new Request('https://x/admin/api/encode/hcw-1', {
+      method: 'POST',
+      body: JSON.stringify({ client_submission_id: 'c1', spec_version: '2026-04-17-m1', values: {} }),
+    });
+    const r = await adminRouter(req, env);
+    expect(r!.status).toBe(401);
+    const body = await r!.json() as { error: { code: string } };
+    expect(body.error.code).toBe('E_AUTH_INVALID');
+  });
+
+  it('rejects POST /admin/api/encode/:hcw_id with 403 when role lacks dict_paper_encoded_up', async () => {
+    const env = makeEnv(makeKv());
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, { sub: 'standard', role: 'Standard User', role_version: 1 });
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => {
+      const body = JSON.parse((init as RequestInit).body as string) as { action: string };
+      if (body.action === 'admin_roles_list') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { roles: [{ name: 'Standard User', version: 1, dash_data: true }] },
+        }), { status: 200 });
+      }
+      return new Response('{}', { status: 500 });
+    });
+    try {
+      const req = new Request('https://x/admin/api/encode/hcw-1', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${tok}` },
+        body: JSON.stringify({ client_submission_id: 'c1', spec_version: '2026-04-17-m1', values: {} }),
+      });
+      const r = await adminRouter(req, env);
+      expect(r!.status).toBe(403);
+      const body = await r!.json() as { error: { code: string } };
+      expect(body.error.code).toBe('E_PERM_DENIED');
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
+  it('routes a permitted encode request to handleEncodeSubmit and forwards to AS', async () => {
+    const env = makeEnv(makeKv());
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, { sub: 'admin-alice', role: 'Operator', role_version: 1 });
+    const calls: Array<{ action: string; payload: unknown }> = [];
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => {
+      const body = JSON.parse((init as RequestInit).body as string) as { action: string; payload: unknown };
+      calls.push({ action: body.action, payload: body.payload });
+      if (body.action === 'admin_roles_list') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { roles: [{ name: 'Operator', version: 1, dict_paper_encoded_up: true }] },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_encode_submit') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { submission_id: 'srv-99', status: 'accepted', server_timestamp: '2026-05-01T00:00:00Z' },
+        }), { status: 200 });
+      }
+      return new Response('{}', { status: 500 });
+    });
+    try {
+      const req = new Request('https://x/admin/api/encode/hcw-from-path', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${tok}`, 'cf-connecting-ip': '203.0.113.5' },
+        body: JSON.stringify({
+          client_submission_id: 'cli-1',
+          spec_version: '2026-04-17-m1',
+          values: { Q3: 'Female' },
+        }),
+      });
+      const r = await adminRouter(req, env);
+      expect(r!.status).toBe(200);
+      expect(r!.headers.get('X-Request-Id')).toMatch(/^[0-9a-f-]{36}$/);
+      const body = await r!.json() as { submission_id: string; status: string };
+      expect(body.submission_id).toBe('srv-99');
+
+      // Confirm the AS got the right enriched payload.
+      const submitCall = calls.find(c => c.action === 'admin_encode_submit');
+      expect(submitCall).toBeDefined();
+      const sent = submitCall!.payload as { hcw_id: string; encoded_by: string };
+      expect(sent.hcw_id).toBe('hcw-from-path');
+      expect(sent.encoded_by).toBe('admin-alice');
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
   it('hashes cf-connecting-ip into ipHash (not echoed in response)', async () => {
     // Send two failed login attempts from the same IP and confirm both
     // end up keyed under the same ipHash in throttle storage.
