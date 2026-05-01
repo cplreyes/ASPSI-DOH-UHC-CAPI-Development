@@ -96,4 +96,25 @@ describe('submitDraft', () => {
   it('throws if the draft does not exist', async () => {
     await expect(submitDraft('nope', ENROLLMENT)).rejects.toThrow(/not found/i);
   });
+
+  it('records null submission_lat/submission_lng when no coords are provided', async () => {
+    await saveDraft('draft-2', { Q3: 'Female' }, ENROLLMENT);
+    const submission = await submitDraft('draft-2', ENROLLMENT);
+    expect(submission.values.submission_lat).toBeNull();
+    expect(submission.values.submission_lng).toBeNull();
+  });
+
+  it('records submission_lat/submission_lng when coords are provided', async () => {
+    await saveDraft('draft-3', { Q3: 'Female' }, ENROLLMENT);
+    const submission = await submitDraft('draft-3', ENROLLMENT, { lat: 14.5995, lng: 120.9842 });
+    expect(submission.values.submission_lat).toBe(14.5995);
+    expect(submission.values.submission_lng).toBe(120.9842);
+  });
+
+  it('records null when coords are explicitly null (geolocation declined)', async () => {
+    await saveDraft('draft-4', { Q3: 'Male' }, ENROLLMENT);
+    const submission = await submitDraft('draft-4', ENROLLMENT, null);
+    expect(submission.values.submission_lat).toBeNull();
+    expect(submission.values.submission_lng).toBeNull();
+  });
 });

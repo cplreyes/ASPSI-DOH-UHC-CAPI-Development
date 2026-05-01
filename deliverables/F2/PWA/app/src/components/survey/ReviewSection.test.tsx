@@ -66,6 +66,14 @@ describe('<ReviewSection>', () => {
     expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 
+  it('renders the GPS consent disclosure near the submit button', () => {
+    renderWithProviders(<ReviewSection values={baseValues} onEdit={vi.fn()} onSubmit={vi.fn()} />);
+    expect(screen.getByText(/your device location will be recorded/i)).toBeInTheDocument();
+    // Disclosure must be rendered, even when no warnings are present (the
+    // submit button stays visible regardless of cross-field warning state).
+    expect(screen.getByText(/decline the location prompt/i)).toBeInTheDocument();
+  });
+
   it('calls onEdit with the section id when an Edit button is clicked', async () => {
     const onEdit = vi.fn();
     const user = userEvent.setup();

@@ -23,6 +23,7 @@ import {
 } from '@/lib/draft';
 import { getSyncEnv } from '@/lib/env';
 import { getDeviceToken } from '@/lib/enrollment';
+import { getGeolocation } from '@/lib/geolocation';
 import { isServerNewer } from '@/lib/spec-version';
 import { postBatchSubmit } from '@/lib/sync-client';
 import { runSync, type SyncRunSummary } from '@/lib/sync-orchestrator';
@@ -228,7 +229,12 @@ function AppShell() {
       // codebook §13 (survey_language) and §15.E.
       const valuesWithMeta: FormValues = { ...values, survey_language: locale };
       await saveDraft(draftId, valuesWithMeta, enrollmentInfo);
-      await submitDraft(draftId, enrollmentInfo);
+      // Capture GPS at the click moment (5s timeout, all failures map to null).
+      // Per spec §9 the disclosure is shown on the review screen near submit.
+      // Submission rides through with null coords if the user declines or the
+      // browser doesn't support geolocation — admin Map Report tolerates it.
+      const coords = await getGeolocation();
+      await submitDraft(draftId, enrollmentInfo, coords);
       setSubmitError(null);
       setPendingValuesRef(null);
       setStatus('submitted');

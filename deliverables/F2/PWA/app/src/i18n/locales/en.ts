@@ -79,6 +79,10 @@ export const en = {
     edit: 'Edit',
     submit: 'Submit',
   },
+  consent: {
+    gps_disclosure:
+      'When you submit, your device location will be recorded so DOH can map responses to facilities. If you decline the location prompt, your answers are still submitted without coordinates.',
+  },
   matrix: {
     statementHeader: 'Statement',
   },

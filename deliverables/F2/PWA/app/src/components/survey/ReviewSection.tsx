@@ -165,7 +165,10 @@ export function ReviewSection({ values, onEdit, onSubmit }: ReviewSectionProps) 
         );
       })}
 
-      <div className="pt-2">
+      <div className="flex flex-col gap-3 pt-2">
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          {t('consent.gps_disclosure')}
+        </p>
         <Button type="button" onClick={onSubmit}>
           {t('review.submit')}
         </Button>

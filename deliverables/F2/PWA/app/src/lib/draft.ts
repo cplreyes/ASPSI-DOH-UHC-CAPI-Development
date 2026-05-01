@@ -41,7 +41,22 @@ export async function saveDraft(
   await db.drafts.put(row);
 }
 
-export async function submitDraft(id: string, enrollment: EnrollmentInfo): Promise<SubmissionRow> {
+/**
+ * GPS coordinates captured at submit time. `null` (or omitted) means the
+ * device couldn't acquire a fix — the submission still rides through with
+ * `submission_lat`/`submission_lng` set to null. Admin Map Report tolerates
+ * null rows; spec §9 — graceful degradation over forced location capture.
+ */
+export interface SubmitCoords {
+  lat: number;
+  lng: number;
+}
+
+export async function submitDraft(
+  id: string,
+  enrollment: EnrollmentInfo,
+  coords: SubmitCoords | null = null,
+): Promise<SubmissionRow> {
   return db.transaction('rw', db.drafts, db.submissions, async () => {
     const draft = await db.drafts.get(id);
     if (!draft) throw new Error(`Draft ${id} not found`);
@@ -50,6 +65,8 @@ export async function submitDraft(id: string, enrollment: EnrollmentInfo): Promi
       ...draft.values,
       facility_id: enrollment.facility_id,
       facility_type: enrollment.facility_type ?? '',
+      submission_lat: coords ? coords.lat : null,
+      submission_lng: coords ? coords.lng : null,
     };
 
     const submission: SubmissionRow = {
