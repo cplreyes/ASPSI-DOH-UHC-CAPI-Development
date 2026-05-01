@@ -881,7 +881,7 @@ Worker submit handler tags `source_path` (`self_admin` for PWA path, `paper_enco
 | 8 | Token reissue race | CAS-style `prev_jti` precondition in Apps Script |
 | 9 | M10 sunset disaster | Backed-up `ADMIN_PASSWORD_HASH` offline; 7-day post-cutover wait (§13.3 step 5) |
 
-**PBKDF2 iteration choice:** OWASP 2023+ recommends ≥600k for PBKDF2-SHA256. Web Crypto `crypto.subtle.deriveBits` is native and runs ~600k in <100ms even in V8 isolates — fits the Worker CPU budget. **Choice: 600k iterations using Web Crypto.** Rationale documented in F2_Users `password_hash` format spec (§5.4).
+**PBKDF2 iteration choice:** OWASP 2023+ recommends ≥600k for PBKDF2-SHA256, but **Cloudflare Workers caps `crypto.subtle.deriveBits` PBKDF2 iterations at 100,000**; values above throw `NotSupportedError` at runtime (verified during M10-era admin work; see existing `src/admin.ts` and Issue #35). The runtime constraint wins. **Choice: 100,000 iterations** documented in F2_Users `password_hash` format spec (§5.4). Mitigations for the lower-than-OWASP iteration count: (a) high-entropy admin passwords ≥8 chars enforced by Worker validation; (b) two-axis login throttle (per-username + per-IP) makes brute force impractical even after offline hash exfiltration; (c) PBKDF2 floor of 10k enforced in `verifyPassword` so degraded hashes are rejected; (d) hash format `<saltB64url>:<iters>:<hashB64url>` carries the iteration count, enabling future bump if Workers raises the cap.
 
 ### 10.2 Secret inventory
 
