@@ -111,13 +111,13 @@ No DCF generator. F2 is handled via the [[F2 Google Forms Track]] — HCW self-a
 
 | Priority | Artifact | Change | Annex G driver |
 |---|---|---|---|
-| **P1** | `deliverables/F2/F2-Spec.md` | Re-audit 114-item spec against Apr 20 PDF (125 items). Expect +11 items — likely in Sections D (NBB+ZBB explicit naming), E (BUCAS+GAMOT explicit naming). | #1 |
+| **P1** ✅ DONE | `deliverables/F2/F2-Spec.md` | ~~Re-audit 114-item spec against Apr 20 PDF (125 items). Expect +11 items — likely in Sections D (NBB+ZBB explicit naming), E (BUCAS+GAMOT explicit naming).~~ Audit completed during Apr 20 ingest; F2-Spec is now the 124-item Apr 20 build (Q1–Q125 with Q108 gap). | #1 |
 | **P1** | `deliverables/F2/F2-Skip-Logic.md` | Regenerate routing graph against new item numbering. | — |
 | P1 | `deliverables/F2/F2-Validation.md` | Refresh required-flag + numeric-range inventory for +11 new items. | — |
 | P2 | `deliverables/F2/F2-Cross-Field.md` | Verify 20 POST rules still apply post-renumbering. | — |
 | P2 | `f2-pwa/` | Regenerate question tree from Apr 20 spec. | — |
 | P3 | Burnout block Q114–122 | **Decision gate** — Annex G #23 says reduce/remove. Apr 20 retains. Flag for Dr. Claro before build. | #23 |
-| — | F2 cover-block rewrite | **No longer a build gate** per [[`feedback_f2_admin_model_self_admin_first.md` memory]] — field-work is self-admin-first with guided-interviewer fallback; PDF cover-block text is formality only. | — |
+| — | F2 cover-block rewrite | **No longer a build gate** — F2 is self-admin-first (Google Forms / PWA) with guided-interviewer fallback; the PDF's interviewer-style cover-block text is formality only. | — |
 
 ## Cross-cutting: PSGC
 

@@ -35,7 +35,7 @@ All drafted 2026-04-15 in `deliverables/F2/`:
 
 - **`F2-0_Tooling-and-Access-Model-Decision-Memo.md`** — 8 decisions for ASPSI review (platform, access model, reminder cadence, facility ID, PSGC dropdowns, paper fallback, staff encoder workflow, response custody).
 - **`F2-Cover-Block-Rewrite-Draft.md`** — Rewrites the April 8 PDF's interviewer-style cover blocks (consent, duration, FIELD CONTROL, facility ID) for self-admin. Resolves the cover-block contradiction documented in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire|Source - Annex F2]].
-- **`F2-Spec.md`** — 114-item verbatim body spec with original question numbers, 18 SECTION + 9 SPLIT Google Forms routing risks flagged.
+- **`F2-Spec.md`** — Verbatim body spec with original question numbers, 18 SECTION + 9 SPLIT Google Forms routing risks flagged. Initial 2026-04-15 draft was 114 items (Apr 8 source PDF); since rebased to 124 items (125 numbered slots with Q108 gap) per the Apr 20 source ingest. Now also serves as the canonical spec for the F2 PWA primary build (`deliverables/F2/PWA/app/`).
 - **`F2-Skip-Logic.md`** — Section graph + normalised routing table + POST-processing triage, restructured for Google Forms' "last-item-of-section" branching constraint.
 - **`F2-Validation.md`** — 4 hard-required fields inventory, numeric range inventory, Q103 lifted from grid to standalone.
 - **`F2-Cross-Field.md`** — 20 POST rules for `onFormSubmit` + nightly `cleanSheet()` (6 rule groups: response source, consent, section gates, facility-type splits, profile, disposition).
