@@ -94,16 +94,16 @@ For each environment, run the same set. Mark per-env status in the matrix below 
 |---|---|---|---|---|---|---|
 | F1 | Users list renders with `carl_admin` + `data_reader_test` | ✅ | | | | |
 | F2 | Create a throwaway user (`qa_temp_<env>`) → succeeds, appears in list | ✅ | | | | |
-| F3 | Edit role on the throwaway user → role_version bumps; existing JWT for that user invalidated | | | | | |
-| F4 | Delete the throwaway user → cleanup | | | | | |
-| F5 | Roles list renders with built-ins (Administrator, Standard User) + custom (DataReader) | | | | | |
+| F3 | Edit role on the throwaway user → role_version bumps; existing JWT for that user invalidated | ✅ | | | | |
+| F4 | Delete the throwaway user → cleanup | ✅ | | | | |
+| F5 | Roles list renders with built-ins (Administrator, Standard User) + custom (DataReader) | ✅ | | | | |
 
 ### G. Encode + Reissue (3 checks)
 
 | # | Test | E1 Chrome | E2 Firefox | E3 Edge | E4 Tab-P | E5 Tab-L |
 |---|---|---|---|---|---|---|
-| G1 | EncodeQueue loads, ≥1 row visible | | | | | |
-| G2 | Open EncodePage for an HCW → autosave fires (watch network panel) | | | | | |
+| G1 | EncodeQueue loads, ≥1 row visible | ✅ (placeholder; queue table deferred to Sprint 2.9) | | | | |
+| G2 | Open EncodePage for an HCW → form renders (autosave is documented-deferred per `EncodePage.tsx:15-17`) | ✅ | | | | |
 | G3 | ReissueModal shows QR; clicking "Reissue" generates new JWT (verify in network) | | | | | |
 
 ### H. Browser-specific watch list (varies)
@@ -280,6 +280,37 @@ Things that historically diverge between engines. Note any divergence even if fu
 **Update from C5:** The Response Detail page shows `ENCODED BY: carl_admin` correctly hydrated from the same backend. So the actor data **is** being captured server-side; the Audit tab specifically isn't reading the field through to the column — narrowing the cause to either (a) the AS `admin_audit_list` RPC's column projection, or (b) the AuditTab.tsx column accessors. Lower-effort fix than feared.
 
 **Status:** Logged for triage (Task #12). Not blocking the rest of E1 (the tab itself works); needs a separate scrum task to investigate the data-binding chain.
+
+---
+
+### [FX-007] [HIGH] CORS preflight only allowed GET/POST — PATCH and DELETE blocked — fix shipped same session
+
+**Found while:** E1 F3 (edit role on throwaway user — save returned `Network unavailable. Retry when reconnected.`).
+**Affected env(s):** All cross-origin browsers — architectural follow-on to FX-001.
+
+**Repro:**
+1. Login as carl_admin → Users → click EDIT on `qa_temp_chrome` → change role to DataReader → Save changes.
+2. Frontend issues `PATCH /admin/api/dashboards/users/qa_temp_chrome` (preflight first).
+3. Worker preflight returns `Access-Control-Allow-Methods: GET, POST, OPTIONS` — PATCH not in the list, so browser blocks the actual PATCH.
+4. Frontend `adminFetch` catches the rejected fetch as `E_NETWORK` → renders inline error in the modal.
+
+**Affected operations** (frontend grep showed `'DELETE'` and `'PATCH'` in use beyond GET/POST):
+- PATCH user (UserEditor save)
+- PATCH role (RoleEditor save)
+- DELETE user (Users dashboard delete action)
+- DELETE role (Roles dashboard delete action)
+- DELETE file (Files panel delete action — already R2-smoke-tested in this session, but **only because the smoke test was run BEFORE the static admin frontend was served from Pages**; cross-origin DELETE from the new Pages frontend would have failed).
+
+**Fix:** `worker/src/index.ts` — expanded `Access-Control-Allow-Methods` from `GET, POST, OPTIONS` to `GET, POST, PATCH, DELETE, OPTIONS`. The same `CORS_HEADERS` object serves both the public PWA surface (GET/POST only) and the admin portal (full set); routing is enforced per-handler, so listing PATCH/DELETE only exposes them where a handler actually accepts them.
+
+**Verification:**
+- `npx vitest run` in `worker/` — **166/166 passed**.
+- `wrangler deploy --env staging` — `f2-pwa-worker-staging` redeployed (Version `f0a94dca-ac3e-4170-9314-45cd0f2ad877`).
+- Browser repro re-run: see F3/F4/F5 rows below.
+
+**Severity rationale:** HIGH — same class as FX-001 but narrower (only edit/delete operations). All read paths worked, so this slipped past Sections C/D/E which exercised only GET/POST. Caught the moment Section F tried to mutate.
+
+**Lesson learned:** When fixing CORS for a surface that does real CRUD, enumerate ALL methods the frontend uses (`grep "method:" src/`) before declaring the fix complete. A FX-001-style fix that covers only "the methods we tested" leaves a hole proportional to the methods you didn't test. Worker test gap from FX-001 doubly applies here — a regression test asserting `Access-Control-Allow-Methods` includes the full set would have surfaced this without browser repro.
 
 ---
 

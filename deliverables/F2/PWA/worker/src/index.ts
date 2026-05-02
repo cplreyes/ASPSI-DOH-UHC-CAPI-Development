@@ -44,7 +44,12 @@ const PUBLIC_ROUTES = new Set(['/exec', '/verify-token']);
 
 const CORS_HEADERS: Record<string, string> = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  // Admin portal uses PATCH for user/role edits and DELETE for user/role/file
+  // removal; public PWA routes only need GET/POST. Listing all four here lets
+  // the same CORS_HEADERS object serve both surfaces — the worker still
+  // enforces method routing per-handler, so listing PATCH/DELETE only
+  // exposes them where the route actually accepts them.
+  'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Authorization, Content-Type',
   'Access-Control-Max-Age': '86400',
 };
