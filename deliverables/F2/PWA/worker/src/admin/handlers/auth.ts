@@ -34,7 +34,11 @@ export interface AdminUserRow {
   username: string;
   password_hash: string;
   password_must_change: boolean | string | number;
-  role: string;
+  // Sheet column is `role_name`; legacy AdminUserRow exposed `role`. Both
+  // are accepted so the lookup works regardless of which the AS handler
+  // emits — `role_name` is canonical going forward.
+  role_name?: string;
+  role?: string;
   active?: boolean | string;
 }
 
@@ -159,11 +163,12 @@ export async function handleLogin(
     );
   }
 
-  const role = rolesResp.data.roles.find(r => r.name === user.role);
+  const userRoleName = user.role_name ?? user.role;
+  const role = rolesResp.data.roles.find(r => r.name === userRoleName);
   if (!role) {
     return errorJson(
       'E_BACKEND',
-      `Role "${user.role}" not found for user "${username}"`,
+      `Role "${userRoleName}" not found for user "${username}"`,
       502,
     );
   }
