@@ -27,7 +27,7 @@ Two long-running F2 HCW PWA blockers cleared this week — both production cutov
 - **CAPI tablet specifications submitted (E5-CAPI-001).** Email to Juvy 2026-04-29 with three pricing tiers (recommended ~₱13–20K, affordable ~₱9.5–14K, modest ~₱7–12K), recommended models, accessory list, 10–15% spare-ratio recommendation. Awaiting procurement steer.
 - **Survey Manual — CSPro CAPI section + 2 appendices drafted (E7-DOC-001).** Drafts at `deliverables/Survey-Manual/CSPro-Section-Draft_2026-04-29.md` ready for Kidd. SPEED 2023 legacy cleaned out of the rewrite. Open questions tracked: questionnaire-numbering scheme, F2 manual scope, PAPI fallback policy.
 - **F1 Designer dictionary walkthrough preparation complete.** Bug list (5 closed-in-code, 1 PARTIAL pending ASPSI Q166, 2 deferred-with-rationale per spec §5) and case-control block disposition finalized. Designer-side sign-off pass queued — work bounded, just needs Carl in CSPro Designer.
-- **DOH/ADB/EXECOM matrix feedback triaged (E0-032a).** All 23 Annex G remarks routed against current build state: 14 DONE in build, 5 DEFERRED-WITH-RATIONALE (analysis-layer / sampling-frame, flagged for Epic 11 + IR), 3 VERIFY pending ASPSI spot-check, 1 OPEN sub-question (F2 burnout/satisfaction reduction-vs-removal — current build is *more conservative* than Annex G commitment). No new CAPI-schema work falls out. Triage at `wiki/analyses/Analysis - DOH-PMSMD Matrix Feedback Triage.md`.
+- **DOH/ADB/EXECOM matrix feedback (E0-032a) — out of Data Programmer scope per CSA D1–D6.** Coordination is ASPSI/PI/PMO lane. Any specific F1/F2/F3/F4 revisions arising from matrix feedback fold into the relevant E2/E3 instrument task, not into a Carl-owned E0 item.
 - **Weekly status format defined (E0-010).** Template + this first instance. Internal snapshot, not Mgmt-facing.
 
 ### In flight (next week — Sprint 004 carry-forwards)
@@ -36,7 +36,6 @@ Two long-running F2 HCW PWA blockers cleared this week — both production cutov
 - **E3-F1-001 — F1 Form file Section A layout in Designer.** Generator skeleton in place; Designer pass unblocks on F1 sign-off. Owner: Carl. Bounded ~4h.
 - **E4-PWA-013 — F2 PWA Phase F production cutover** (gated on soak staying clean through Friday afternoon). Owner: Carl, executes per `docs/superpowers/runbooks/2026-04-26-f2-auth-cutover.md`.
 - **E7-DOC-001 — Survey Manual review iteration with Kidd.** Owner: Kidd; Carl on standby for clarifications.
-- **E0-032a follow-up — F2 burnout reduction-vs-removal confirmation.** Owner: ASPSI internal review (Esmeralda / Kidd). Default if no response by mid-Sprint-004: full removal stands and the triage closes.
 
 ### Open items / decisions owed
 
