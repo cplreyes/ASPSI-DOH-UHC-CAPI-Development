@@ -18,6 +18,7 @@ export type ErrorCode =
   | 'E_PERM_DENIED'
   | 'E_BACKEND'
   | 'E_NOT_FOUND'
+  | 'E_NOT_CONFIGURED'
   | 'E_CONFLICT'
   | 'E_CAS_FAILED'
   | 'E_LOCK_TIMEOUT'
@@ -147,6 +148,7 @@ function normalizeErrorCode(code: unknown): ErrorCode {
     'E_PERM_DENIED',
     'E_BACKEND',
     'E_NOT_FOUND',
+    'E_NOT_CONFIGURED',
     'E_CONFLICT',
     'E_CAS_FAILED',
     'E_LOCK_TIMEOUT',

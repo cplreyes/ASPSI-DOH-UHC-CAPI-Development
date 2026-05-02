@@ -150,9 +150,21 @@ export async function handleListFiles(
 export async function handleUploadFile(
   req: Request,
   actor: { username: string },
-  r2: FilesR2,
+  r2: FilesR2 | undefined,
   asCallable: FilesCreateAsCallable,
 ): Promise<Response> {
+  // Staging environments without R2 enabled (and any other env where the
+  // [[r2_buckets]] binding is omitted) leave env.F2_ADMIN_R2 undefined.
+  // Returning a specific error code here is much clearer than the generic
+  // "Backend unavailable" the frontend would otherwise show after the
+  // worker crashed on r2.put.
+  if (!r2) {
+    return errorJson(
+      'E_NOT_CONFIGURED',
+      'File storage is not configured for this environment',
+      503,
+    );
+  }
   const ct = req.headers.get('content-type') || '';
   if (!ct.toLowerCase().startsWith('multipart/form-data')) {
     return errorJson('E_VALIDATION', 'multipart/form-data body required', 400);
@@ -243,9 +255,16 @@ export async function handleUploadFile(
  */
 export async function handleDownloadFile(
   fileId: string,
-  r2: FilesR2,
+  r2: FilesR2 | undefined,
   asCallable: FilesGetAsCallable,
 ): Promise<Response> {
+  if (!r2) {
+    return errorJson(
+      'E_NOT_CONFIGURED',
+      'File storage is not configured for this environment',
+      503,
+    );
+  }
   if (!fileId) return errorJson('E_VALIDATION', 'file_id required', 400);
 
   const meta = await asCallable({ file_id: fileId });
@@ -283,9 +302,16 @@ export async function handleDownloadFile(
  */
 export async function handleDeleteFile(
   fileId: string,
-  r2: FilesR2,
+  r2: FilesR2 | undefined,
   asCallable: FilesDeleteAsCallable,
 ): Promise<Response> {
+  if (!r2) {
+    return errorJson(
+      'E_NOT_CONFIGURED',
+      'File storage is not configured for this environment',
+      503,
+    );
+  }
   if (!fileId) return errorJson('E_VALIDATION', 'file_id required', 400);
 
   const r = await asCallable({ file_id: fileId });

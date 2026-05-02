@@ -313,6 +313,7 @@ function friendlyError(err: ApiError, fallback: string): string {
   if (err.code === 'E_PERM_DENIED') return 'Your role lacks dash_apps. Contact an Administrator.';
   if (err.code === 'E_NETWORK') return 'Network unavailable. Try again.';
   if (err.code === 'E_BACKEND') return 'Backend unavailable - Apps Script staging may be unreachable.';
+  if (err.code === 'E_NOT_CONFIGURED') return 'File storage is not configured for this environment. Files require R2 to be enabled.';
   return err.message || fallback;
 }
 
