@@ -73,7 +73,7 @@ function _parseIncludedColumns(s, fallback) {
  *   { ran: [{setting_id, output_path, csv}], errors: [{setting_id, message}] }
  */
 function adminSettingsRunDue() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var settingsSh = ss.getSheetByName('F2_DataSettings');
   if (!settingsSh) {
     return { ok: false, error: { code: 'E_INTERNAL', message: 'F2_DataSettings missing' } };
@@ -176,7 +176,7 @@ function adminSettingsMarkComplete(payload) {
     return { ok: false, error: { code: 'E_LOCK_TIMEOUT', message: 'busy, retry' } };
   }
   try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getF2Spreadsheet();
     var sh = ss.getSheetByName('F2_DataSettings');
     if (!sh) return { ok: false, error: { code: 'E_INTERNAL', message: 'F2_DataSettings missing' } };
     var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];

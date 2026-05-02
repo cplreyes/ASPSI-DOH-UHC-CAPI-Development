@@ -26,7 +26,7 @@
  * via adminAuditWrite (see admin RPC dispatcher).
  */
 function writeAuditRow(ctx) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var sh = ss.getSheetByName('F2_Audit');
   if (!sh) throw new Error('F2_Audit sheet not found');
   var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];

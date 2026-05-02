@@ -37,6 +37,44 @@ function nowMs() {
   return Date.now();
 }
 
+/**
+ * Resolve the F2 backend Spreadsheet handle, regardless of whether the
+ * Apps Script project is bound to the workbook (Extensions -> Apps
+ * Script from inside Sheets) or standalone (script.google.com -> New
+ * project, with a SPREADSHEET_ID Script Property).
+ *
+ * Bound projects: SpreadsheetApp.getActiveSpreadsheet() returns the
+ * bound workbook. Standalone projects: it returns null, which historically
+ * crashed every admin handler (Migrations, AdminUsers, AdminFiles, etc.)
+ * with `Cannot read properties of null (reading 'getSheetByName')`.
+ *
+ * Try active first (cheap, no extra ScriptProperties read on hot paths),
+ * fall back to openById from PROP_SPREADSHEET_ID. Throws a clear error
+ * if neither path resolves so the failure mode is explicit instead of
+ * a null-deref four call frames deep.
+ */
+function getF2Spreadsheet() {
+  var ss = null;
+  try {
+    ss = SpreadsheetApp.getActiveSpreadsheet();
+  } catch (e) {
+    ss = null;
+  }
+  if (ss) return ss;
+  var ssId = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
+  if (!ssId) {
+    throw new Error('No active spreadsheet and SPREADSHEET_ID script property not set. Run setupBackend() or bind the script to a workbook.');
+  }
+  return SpreadsheetApp.openById(ssId);
+}
+
 if (typeof module !== 'undefined') {
-  module.exports = { ok: ok, fail: fail, timingSafeEq: timingSafeEq, generateUuid: generateUuid, nowMs: nowMs };
+  module.exports = {
+    ok: ok,
+    fail: fail,
+    timingSafeEq: timingSafeEq,
+    generateUuid: generateUuid,
+    nowMs: nowMs,
+    getF2Spreadsheet: getF2Spreadsheet,
+  };
 }

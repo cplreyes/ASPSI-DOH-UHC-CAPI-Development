@@ -13,7 +13,7 @@
 var ADMIN_USERS_SCAN_CAP = 50000;
 
 function _readSheetAsObjects(sheetName) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var sh = ss.getSheetByName(sheetName);
   if (!sh) throw new Error(sheetName + ' sheet not found — run runAllMigrations() first');
   var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
@@ -151,7 +151,7 @@ function adminUsersCreate(payload) {
   }
 
   return _withDocLock(function () {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getF2Spreadsheet();
     var sh = ss.getSheetByName('F2_Users');
     if (!sh) throw new Error('F2_Users sheet not found — run runAllMigrations() first');
     var found = _findUserRow(sh, u);
@@ -202,7 +202,7 @@ function adminUsersUpdate(payload) {
   var u = String(payload.username).trim();
 
   return _withDocLock(function () {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getF2Spreadsheet();
     var sh = ss.getSheetByName('F2_Users');
     if (!sh) throw new Error('F2_Users sheet not found — run runAllMigrations() first');
     var found = _findUserRow(sh, u);
@@ -229,7 +229,7 @@ function adminUsersDelete(payload) {
   var u = String(payload.username).trim();
 
   return _withDocLock(function () {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getF2Spreadsheet();
     var sh = ss.getSheetByName('F2_Users');
     if (!sh) throw new Error('F2_Users sheet not found — run runAllMigrations() first');
     var found = _findUserRow(sh, u);

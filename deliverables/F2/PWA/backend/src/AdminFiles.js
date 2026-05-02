@@ -18,7 +18,7 @@
  */
 
 function _fileMetaSheet() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var sh = ss.getSheetByName('F2_FileMeta');
   if (!sh) throw new Error('F2_FileMeta sheet not found — run runAllMigrations() first');
   return sh;

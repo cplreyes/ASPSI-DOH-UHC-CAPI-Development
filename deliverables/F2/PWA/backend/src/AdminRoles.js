@@ -78,7 +78,7 @@ function adminRolesCreate(payload) {
   }
 
   return _withRolesLock(function () {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getF2Spreadsheet();
     var sh = ss.getSheetByName('F2_Roles');
     if (!sh) throw new Error('F2_Roles sheet not found — run runAllMigrations() first');
     var found = _findRoleRow(sh, name);
@@ -120,7 +120,7 @@ function adminRolesUpdate(payload) {
   var name = String(payload.name).trim();
 
   return _withRolesLock(function () {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getF2Spreadsheet();
     var sh = ss.getSheetByName('F2_Roles');
     if (!sh) throw new Error('F2_Roles sheet not found — run runAllMigrations() first');
     var found = _findRoleRow(sh, name);
@@ -156,7 +156,7 @@ function adminRolesDelete(payload) {
   var name = String(payload.name).trim();
 
   return _withRolesLock(function () {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getF2Spreadsheet();
     var sh = ss.getSheetByName('F2_Roles');
     if (!sh) throw new Error('F2_Roles sheet not found — run runAllMigrations() first');
     var found = _findRoleRow(sh, name);

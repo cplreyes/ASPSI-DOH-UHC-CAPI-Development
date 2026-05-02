@@ -38,7 +38,7 @@ function adminHcwsCreate(payload) {
   if (!hcwId) return { ok: false, error: { code: 'E_VALIDATION', message: 'hcw_id required' } };
   if (!facilityId) return { ok: false, error: { code: 'E_VALIDATION', message: 'facility_id required' } };
 
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var sh = ss.getSheetByName('F2_HCWs');
   if (!sh) throw new Error('F2_HCWs sheet not found — run runAllMigrations() first');
 
@@ -100,7 +100,7 @@ function adminHcwsList(filters) {
     offset: Math.max(Number(filters.offset) || 0, 0),
   };
 
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var sh = ss.getSheetByName('F2_HCWs');
   if (!sh) throw new Error('F2_HCWs sheet not found — run runAllMigrations() first');
   var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
@@ -170,7 +170,7 @@ function adminHcwsReissueToken(payload) {
     return { ok: false, error: { code: 'E_LOCK_TIMEOUT', message: 'busy, retry' } };
   }
   try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = getF2Spreadsheet();
     var sh = ss.getSheetByName('F2_HCWs');
     if (!sh) throw new Error('F2_HCWs sheet not found — run runAllMigrations() first');
     var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
@@ -247,7 +247,7 @@ function adminHcwsReissueToken(payload) {
  * Returns { added, skipped }. Idempotent.
  */
 function backfillHcws() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var hcwsSh = ss.getSheetByName('F2_HCWs');
   if (!hcwsSh) throw new Error('F2_HCWs sheet not found — run runAllMigrations() first');
 

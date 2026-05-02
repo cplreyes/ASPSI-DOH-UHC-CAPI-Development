@@ -13,7 +13,7 @@
  * Each is created with header row + frozen first row.
  */
 function migrateAddAdminSheets() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var newSheets = [
     {
       name: 'F2_Users',
@@ -76,7 +76,7 @@ function migrateAddAdminSheets() {
  *   submission_lat, submission_lng, source_path, encoded_by, encoded_at
  */
 function migrateExtendF2ResponsesColumns() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var sh = ss.getSheetByName('F2_Responses');
   if (!sh) throw new Error('F2_Responses sheet not found');
   var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
@@ -100,7 +100,7 @@ function migrateExtendF2ResponsesColumns() {
  * is only meaningful for admin events, which are emitted post-migration).
  */
 function migrateExtendF2AuditColumns() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var sh = ss.getSheetByName('F2_Audit');
   if (!sh) throw new Error('F2_Audit sheet not found');
   var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
@@ -147,7 +147,7 @@ function runAllMigrations() {
  * Run from the AS editor after migrations land. Returns {updated, skipped}.
  */
 function backfillSourcePath() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getF2Spreadsheet();
   var sh = ss.getSheetByName('F2_Responses');
   if (!sh) throw new Error('F2_Responses sheet not found');
   var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
