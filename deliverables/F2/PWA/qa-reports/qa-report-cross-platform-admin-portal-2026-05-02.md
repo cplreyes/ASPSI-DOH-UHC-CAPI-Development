@@ -86,7 +86,7 @@ For each environment, run the same set. Mark per-env status in the matrix below 
 | E2f | Files: download via row action → bytes match | ✅ | | | | |
 | E3f | Files: delete → row disappears, R2 object_count returns to baseline | ✅ | | | | |
 | E4f | DataSettings: list renders, scheduled break-out config visible | ✅ | | | | |
-| E5f | QuotaWidget: AS quota counter visible + sane (`as_quota:<UTC-date>`) | | | | | |
+| E5f | QuotaWidget: AS quota counter visible + sane (`as_quota:<UTC-date>`) | ✅ | | | | |
 
 ### F. Users + Roles (5 checks)
 
