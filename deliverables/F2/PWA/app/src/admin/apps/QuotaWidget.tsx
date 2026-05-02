@@ -88,7 +88,7 @@ function QuotaBar({ data }: { data: QuotaData }): JSX.Element {
           ({data.percent}%)
         </span>
       </p>
-      <div className="mt-2 h-1 w-full overflow-hidden bg-secondary/30" aria-hidden="true">
+      <div className="mt-2 h-1 w-full overflow-hidden bg-hairline/40" aria-hidden="true">
         <div
           className={`h-full ${warn ? 'bg-error' : 'bg-foreground'}`}
           style={{ width: `${Math.min(100, data.percent)}%` }}

@@ -59,7 +59,16 @@ export async function adminFetch<T = unknown>(
   const fetchImpl = opts.fetchImpl ?? fetch;
   const headers = new Headers(init.headers);
   if (opts.token) headers.set('Authorization', `Bearer ${opts.token}`);
-  if (init.body && !headers.has('Content-Type')) {
+  // Default to JSON for string bodies. NEVER set Content-Type when the body
+  // is FormData / Blob / URLSearchParams - the browser/runtime auto-sets the
+  // correct multipart boundary or form-encoded type, and overriding it
+  // strips the boundary and breaks the upload (Files panel surfaced this:
+  // worker rejected with "multipart/form-data body required").
+  const bodyIsFormDataLike =
+    typeof FormData !== 'undefined' && init.body instanceof FormData ||
+    typeof Blob !== 'undefined' && init.body instanceof Blob ||
+    typeof URLSearchParams !== 'undefined' && init.body instanceof URLSearchParams;
+  if (init.body && !bodyIsFormDataLike && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json');
   }
 

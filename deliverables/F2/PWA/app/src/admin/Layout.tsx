@@ -5,7 +5,7 @@
  * Design: deliverables/F2/PWA/app/DESIGN.md — Verde Manual.
  *
  * Two nav groups per spec §7: Operations (always-visible: Data, Reports)
- * and Configuration (Files & Settings, Users, Roles — folded behind a
+ * and Configuration (Apps & Settings, Users, Roles — folded behind a
  * dropdown to keep the bar quiet, opens on click). Active link uses the
  * signal color underline; everything else stays muted.
  *
@@ -120,7 +120,7 @@ function ConfigDropdown(): JSX.Element {
           onClick={() => setOpen(false)}
         >
           <Link to="/admin/apps" className="px-3 py-2 text-sm hover:bg-secondary">
-            Files &amp; Settings
+            Apps &amp; Settings
           </Link>
           <Link to="/admin/users" className="px-3 py-2 text-sm hover:bg-secondary">
             Users
