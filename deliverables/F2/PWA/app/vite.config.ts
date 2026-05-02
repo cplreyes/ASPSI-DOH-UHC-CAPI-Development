@@ -93,5 +93,22 @@ export default defineConfig(({ mode }) => {
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
   },
+  // Dev-only proxy. /admin/api/* is forwarded to the staging Worker so
+  // localhost:5173/admin/login can dogfood the portal end-to-end without
+  // running into CORS (admin routes are deliberately not CORS-enabled —
+  // they're meant to be same-origin with the PWA in production).
+  //
+  // Override the staging URL via VITE_ADMIN_PROXY_TARGET in .env.local
+  // when running against a different worker (e.g., production).
+  server: {
+    proxy: {
+      '/admin/api': {
+        target: process.env.VITE_ADMIN_PROXY_TARGET
+          || 'https://f2-pwa-worker-staging.hcw.workers.dev',
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
   };
 });
