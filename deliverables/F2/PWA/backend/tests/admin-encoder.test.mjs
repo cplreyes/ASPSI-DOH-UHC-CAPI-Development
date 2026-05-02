@@ -44,13 +44,27 @@ describe('adminEncodeSubmit', () => {
     expect(r.error.message).toMatch(/hcw_id/);
   });
 
-  it('rejects when ctx is missing actor_username', () => {
+  it('rejects when neither ctx.actor_username nor payload.encoded_by is set', () => {
     const r = adminEncodeSubmit(
       { hcw_id: 'hcw-1', client_submission_id: 'cli-1', spec_version: '2026-04-17-m1', values: {} },
       makeCtx({ actor_username: undefined }),
     );
     expect(r.ok).toBe(false);
     expect(r.error.code).toBe('E_VALIDATION');
+  });
+
+  it('accepts payload.encoded_by when ctx.actor_username is missing (production path)', () => {
+    const r = adminEncodeSubmit(
+      {
+        hcw_id: 'hcw-1',
+        client_submission_id: 'cli-pe-1',
+        spec_version: '2026-04-17-m1',
+        values: { Q1: 'a' },
+        encoded_by: 'admin-bob',
+      },
+      makeCtx({ actor_username: undefined }),
+    );
+    expect(r.ok).toBe(true);
   });
 
   it('appends a row with source_path=paper_encoded and encoder identity', () => {
