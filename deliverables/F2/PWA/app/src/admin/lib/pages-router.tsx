@@ -19,6 +19,8 @@ const PATH_CHANGE_EVENT = 'f2admin:pathchange';
 
 interface RouterCtx {
   pathname: string;
+  /** URL search portion incl. leading "?" (or "" if none). Re-renders on tab/filter changes. */
+  search: string;
   navigate: (to: string) => void;
 }
 
@@ -28,9 +30,15 @@ export function RouterProvider({ children }: { children: ReactNode }): JSX.Eleme
   const [pathname, setPathname] = useState<string>(() =>
     typeof window !== 'undefined' ? window.location.pathname : '/',
   );
+  const [search, setSearch] = useState<string>(() =>
+    typeof window !== 'undefined' ? window.location.search : '',
+  );
 
   useEffect(() => {
-    const onChange = () => setPathname(window.location.pathname);
+    const onChange = () => {
+      setPathname(window.location.pathname);
+      setSearch(window.location.search);
+    };
     window.addEventListener('popstate', onChange);
     window.addEventListener(PATH_CHANGE_EVENT, onChange);
     return () => {
@@ -40,12 +48,16 @@ export function RouterProvider({ children }: { children: ReactNode }): JSX.Eleme
   }, []);
 
   const navigate = (to: string) => {
-    if (to === window.location.pathname) return;
+    // Compare against the full URL (pathname + search) so tab/filter
+    // navigations like /admin/data?tab=audit aren't bailed out of just
+    // because the pathname matches.
+    const current = window.location.pathname + window.location.search;
+    if (to === current) return;
     window.history.pushState({}, '', to);
     window.dispatchEvent(new Event(PATH_CHANGE_EVENT));
   };
 
-  return <RouterContext.Provider value={{ pathname, navigate }}>{children}</RouterContext.Provider>;
+  return <RouterContext.Provider value={{ pathname, search, navigate }}>{children}</RouterContext.Provider>;
 }
 
 export function useRouter(): RouterCtx {

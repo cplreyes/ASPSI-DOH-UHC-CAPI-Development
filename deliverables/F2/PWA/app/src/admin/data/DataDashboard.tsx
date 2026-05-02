@@ -26,15 +26,15 @@ export interface DataDashboardProps {
 }
 
 export function DataDashboard({ apiBaseUrl, fetchImpl }: DataDashboardProps): JSX.Element {
-  const { pathname, navigate } = useRouter();
+  const { pathname, search, navigate } = useRouter();
   const activeTab = useMemo<TabKey>(() => {
-    const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+    const params = new URLSearchParams(search);
     const t = params.get('tab');
     return (TABS.some(x => x.key === t) ? (t as TabKey) : 'responses');
-  }, [pathname]);
+  }, [search]);
 
   const switchTab = (key: TabKey) => {
-    const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+    const params = new URLSearchParams(search);
     params.set('tab', key);
     navigate(`${pathname}?${params.toString()}`);
   };

@@ -16,8 +16,15 @@
  *
  * CORS: public routes accept cross-origin requests from the PWA (which lives on
  * Cloudflare Pages, a different origin). The Authorization header makes the request
- * "non-simple", so OPTIONS preflight is handled here. Admin routes are same-origin
- * (admin UI is served from this Worker), so they don't need CORS.
+ * "non-simple", so OPTIONS preflight is handled here.
+ *
+ * Admin /admin/api/* routes ALSO need CORS — the F2 Admin Portal frontend is
+ * served from `f2-pwa.pages.dev` (and staging `*.f2-pwa-staging.pages.dev`)
+ * but calls the Worker at `f2-pwa-worker[-staging].hcw.workers.dev`. Auth is
+ * bearer-token in `Authorization`, not cookies, so a `*` origin is safe (the
+ * browser doesn't expose the token to other origins; Allow-Credentials is NOT
+ * set). Static admin endpoints served by the Worker itself (legacy /admin/login
+ * etc.) remain same-origin.
  */
 import type { Env } from './types';
 import { errorResponse } from './types';
@@ -54,13 +61,20 @@ export default {
     const path = url.pathname.replace(/\/+$/, '') || '/';
     const method = req.method.toUpperCase();
     const isPublic = PUBLIC_ROUTES.has(path);
+    const isAdminApi = path.startsWith('/admin/api/');
+
+    // CORS preflight for /admin/api/* — must run before adminRouter so OPTIONS
+    // gets a 204 with allow-headers, not a 404 from the route table.
+    if (method === 'OPTIONS' && isAdminApi) {
+      return new Response(null, { status: 204, headers: CORS_HEADERS });
+    }
 
     // F2 Admin Portal routes (/admin/api/*) — handled by adminRouter.
     // Returns null for non-admin paths so we fall through to the legacy
-    // router below. Same-origin (PWA frontend served from this Worker),
-    // no CORS wrap needed.
+    // router below. Wrap with CORS so the Pages-served frontend can call
+    // this Worker cross-origin.
     const adminResp = await adminRouter(req, env, ctx);
-    if (adminResp) return adminResp;
+    if (adminResp) return isAdminApi ? withCors(adminResp) : adminResp;
 
     // CORS preflight for public routes only.
     if (method === 'OPTIONS' && isPublic) {
