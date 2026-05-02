@@ -19,6 +19,8 @@ const ORDER = [
   'src/AdminUsers.js',
   'src/AdminRoles.js',
   'src/AdminFiles.js',
+  'src/AdminSettings.js',
+  'src/AdminBreakout.js',
   'src/Router.js',
   'apps-script/Setup.js',
   // apps-script/AdminGlue.js was removed in PR #31 (auth re-arch).
