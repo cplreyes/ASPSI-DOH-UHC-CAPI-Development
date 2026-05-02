@@ -4,12 +4,14 @@
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Tasks 3.6–3.10)
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.6, §7.9)
  *
- * Lands Versioning + Files. Data Settings (cron-driven CSV exports)
- * and QuotaWidget are still placeholders pointing at the relevant
- * Sprint 3 tasks.
+ * Lands Versioning + Files + Data Settings + Quota. All Sprint 3 Apps
+ * dashboard sub-tasks are now wired; cron + AS still need AP0 to
+ * round-trip end-to-end, but the UI surface is complete.
  */
 import { Versioning } from './Versioning';
 import { Files } from './Files';
+import { DataSettings } from './DataSettings';
+import { QuotaWidget } from './QuotaWidget';
 
 export interface AppsDashboardProps {
   apiBaseUrl: string;
@@ -31,24 +33,9 @@ export function AppsDashboard({ apiBaseUrl, fetchImpl }: AppsDashboardProps): JS
 
       <Files apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
 
-      <ComingSoonPanel
-        title="Data Settings"
-        body="Scheduled break-out CSV exports configured per instrument. Lands with the cron dispatcher (Sprint 3.3, 3.4, 3.5). Generates CSVs to R2 on a per-row interval."
-      />
+      <DataSettings apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
 
-      <ComingSoonPanel
-        title="Apps Script Quota"
-        body="Daily quota widget showing consumed / remaining quota across the AS deployment. Lands with Sprint 3.9 — turns red at 80% of daily limit."
-      />
-    </section>
-  );
-}
-
-function ComingSoonPanel({ title, body }: { title: string; body: string }): JSX.Element {
-  return (
-    <section className="border-l-2 border-hairline pl-4">
-      <h3 className="font-serif text-lg font-medium tracking-tight">{title}</h3>
-      <p className="mt-1 text-sm text-muted-foreground">{body}</p>
+      <QuotaWidget apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
     </section>
   );
 }
