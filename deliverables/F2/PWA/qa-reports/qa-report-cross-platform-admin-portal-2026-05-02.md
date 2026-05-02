@@ -92,7 +92,7 @@ For each environment, run the same set. Mark per-env status in the matrix below 
 
 | # | Test | E1 Chrome | E2 Firefox | E3 Edge | E4 Tab-P | E5 Tab-L |
 |---|---|---|---|---|---|---|
-| F1 | Users list renders with `carl_admin` + `data_reader_test` | | | | | |
+| F1 | Users list renders with `carl_admin` + `data_reader_test` | ✅ | | | | |
 | F2 | Create a throwaway user (`qa_temp_<env>`) → succeeds, appears in list | | | | | |
 | F3 | Edit role on the throwaway user → role_version bumps; existing JWT for that user invalidated | | | | | |
 | F4 | Delete the throwaway user → cleanup | | | | | |
