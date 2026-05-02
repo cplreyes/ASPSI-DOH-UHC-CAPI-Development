@@ -15,8 +15,9 @@
  * Worker drives the R2 write between the two; AS never sees R2.
  *
  * The pure helpers (column filtering, CSV escaping, output path
- * resolution) live with `if (typeof module !== 'undefined')` exports
- * so backend Vitest can exercise them without an Apps Script runtime.
+ * resolution) are exported via the standard CJS-export tail at the
+ * bottom of this file so backend Vitest can require() them outside
+ * an Apps Script runtime.
  */
 
 function _renderOutputPath(template, ctx) {

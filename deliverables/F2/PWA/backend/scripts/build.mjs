@@ -32,7 +32,12 @@ const ORDER = [
 ];
 
 function stripCjsExport(source) {
-  return source.replace(/\n?if \(typeof module !== ['"]undefined['"]\)[\s\S]*$/, '\n');
+  // Anchor to a newline + start-of-line `if (` so we only match the actual
+  // CJS-export tail of each module, never text inside doc comments
+  // (AdminBreakout.js prose mentioned `if (typeof module ...)` in backticks
+  // and the previous `\n?` regex matched it, silently stripping every
+  // function definition after it from the dist bundle).
+  return source.replace(/\nif \(typeof module !== ['"]undefined['"]\)[\s\S]*$/, '\n');
 }
 
 async function main() {
