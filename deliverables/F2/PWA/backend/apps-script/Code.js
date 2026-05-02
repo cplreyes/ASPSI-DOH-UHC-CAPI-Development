@@ -22,6 +22,30 @@ function _serve(method, e) {
       return _jsonOut({ ok: false, error: { code: 'E_INTERNAL', message: 'HMAC secret not configured. Run setupBackend().' } });
     }
 
+    // Admin Portal envelope path: when no URL-param action is set and the
+    // body parses as `{action: 'admin_*', ts, request_id, payload, hmac}`,
+    // route through the AdminDispatch HMAC verifier + handler table.
+    // Falls through to legacy verifyRequest + dispatch for tablet traffic.
+    if (method === 'POST' && !action && body) {
+      var parsedBody = null;
+      try { parsedBody = JSON.parse(body); } catch (e1) { parsedBody = null; }
+      var envelope = parsedBody ? _isAdminEnvelope(parsedBody) : null;
+      if (envelope) {
+        var adminCtx = buildCtx();
+        // Admin RPCs that mutate sheets manage their own LockService scope
+        // (LockService.getDocumentLock at the handler level), so doPost
+        // doesn't need to wrap the whole call in a script lock - that
+        // would serialize unrelated reads and burn AS quota.
+        var adminResult = dispatchAdminAction(
+          envelope,
+          secret,
+          adminCtx,
+          { hmacSha256Hex: _gasHmacHex, nowMs: Date.now },
+        );
+        return _jsonOut(adminResult);
+      }
+    }
+
     var verifyResult = verifyRequest(
       { method: method, action: action, ts: ts, sig: sig, body: body },
       secret,
