@@ -42,7 +42,7 @@ function adminHcwsCreate(payload) {
   var sh = ss.getSheetByName('F2_HCWs');
   if (!sh) throw new Error('F2_HCWs sheet not found — run runAllMigrations() first');
 
-  var lock = LockService.getDocumentLock();
+  var lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) {
     return { ok: false, error: { code: 'E_LOCK_TIMEOUT', message: 'busy, retry' } };
   }
@@ -165,7 +165,7 @@ function adminHcwsReissueToken(payload) {
   }
   var hcwId = String(payload.hcw_id).trim();
 
-  var lock = LockService.getDocumentLock();
+  var lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) {
     return { ok: false, error: { code: 'E_LOCK_TIMEOUT', message: 'busy, retry' } };
   }
@@ -293,7 +293,7 @@ function backfillHcws() {
   ingest('F2_Responses', 'submitted_at_server');
   ingest('F2_Audit', 'occurred_at_server');
 
-  var lock = LockService.getDocumentLock();
+  var lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) throw new Error('E_LOCK_TIMEOUT');
   try {
     var added = 0;

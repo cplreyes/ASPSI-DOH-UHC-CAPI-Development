@@ -83,7 +83,7 @@ function adminSettingsRunDue() {
     return { ok: false, error: { code: 'E_INTERNAL', message: 'F2_Responses missing' } };
   }
 
-  var lock = LockService.getDocumentLock();
+  var lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) {
     return { ok: false, error: { code: 'E_LOCK_TIMEOUT', message: 'busy, retry' } };
   }
@@ -171,7 +171,7 @@ function adminSettingsMarkComplete(payload) {
   var sid = String(payload.setting_id);
   var errMsg = String(payload.error_message || '');
 
-  var lock = LockService.getDocumentLock();
+  var lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) {
     return { ok: false, error: { code: 'E_LOCK_TIMEOUT', message: 'busy, retry' } };
   }

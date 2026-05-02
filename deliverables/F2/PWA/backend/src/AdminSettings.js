@@ -37,7 +37,7 @@ function _readSettings() {
 }
 
 function _withSettingsLock(fn) {
-  var lock = LockService.getDocumentLock();
+  var lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) {
     return { ok: false, error: { code: 'E_LOCK_TIMEOUT', message: 'busy, retry' } };
   }

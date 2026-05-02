@@ -95,7 +95,7 @@ var USERNAME_RE = /^[A-Za-z0-9_]{3,32}$/;
 var NAME_RE = /^[A-Za-z][A-Za-z\-' ]*$/;
 
 function _withDocLock(fn) {
-  var lock = LockService.getDocumentLock();
+  var lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) {
     return { ok: false, error: { code: 'E_LOCK_TIMEOUT', message: 'busy, retry' } };
   }

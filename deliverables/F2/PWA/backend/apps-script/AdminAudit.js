@@ -22,7 +22,7 @@
  *   }
  *
  * The helper assigns occurred_at_server itself (server-side timestamp).
- * For thread-safety, callers should wrap this in LockService.getDocumentLock()
+ * For thread-safety, callers should wrap this in LockService.getScriptLock()
  * via adminAuditWrite (see admin RPC dispatcher).
  */
 function writeAuditRow(ctx) {
@@ -58,7 +58,7 @@ function writeAuditRow(ctx) {
  * never fails the user-facing login/logout response).
  */
 function adminAuditWrite(payload) {
-  var lock = LockService.getDocumentLock();
+  var lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) {
     throw new Error('E_LOCK_TIMEOUT');
   }
