@@ -18,7 +18,13 @@
  */
 import type { Env } from '../../types';
 import { jsonResponse } from '../../types';
-import { mintAdminJwt, verifyAdminJwt, verifyPassword, type AdminJwtPayload } from '../auth';
+import {
+  mintAdminJwt,
+  verifyAdminJwt,
+  verifyPassword,
+  getDummyPasswordHash,
+  type AdminJwtPayload,
+} from '../auth';
 import {
   checkLoginThrottle,
   recordFailedLogin,
@@ -143,20 +149,16 @@ export async function handleLogin(
     );
   }
 
+  // Username-enumeration defense in two layers: throttle (counters bump
+  // even on bad-username — see the 595036d commit) and timing equalization
+  // (always run PBKDF2 verify, using a dummy hash when the user doesn't
+  // exist). Without both, an attacker who can observe response timing can
+  // distinguish "user doesn't exist" (~0ms) from "user exists, bad pass"
+  // (~100ms PBKDF2) at one IP per 15-min window before throttle kicks in.
   const user = usersResp.data.users.find(u => u.username === username);
-  if (!user) {
-    // Bump throttle counters even when the username doesn't exist. Without
-    // this, an attacker can enumerate usernames at unlimited rate (the
-    // per-IP cap of 50 attempts/15min only triggers on bad-password
-    // against a real user, leaving bogus-username traffic uncounted).
-    // The per-username key for a non-existent name will accumulate and
-    // TTL-evict — minor KV churn, worth the enumeration block.
-    await recordFailedLogin(kv, username, ipHash);
-    return errorJson('E_AUTH_INVALID', 'Invalid username or password', 401);
-  }
-
-  const ok = await verifyPassword(password, user.password_hash);
-  if (!ok) {
+  const stored = user ? user.password_hash : await getDummyPasswordHash();
+  const ok = await verifyPassword(password, stored);
+  if (!user || !ok) {
     await recordFailedLogin(kv, username, ipHash);
     return errorJson('E_AUTH_INVALID', 'Invalid username or password', 401);
   }

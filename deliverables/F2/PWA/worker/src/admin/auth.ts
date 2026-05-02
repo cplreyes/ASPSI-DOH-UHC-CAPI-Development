@@ -71,6 +71,29 @@ export async function hashPassword(password: string): Promise<string> {
 }
 
 /**
+ * Lazy-cached dummy password hash for timing-equalized verifyPassword
+ * calls when the username doesn't exist. Uses a fixed all-zero salt
+ * and a probe string that no real user would have. Computed once per
+ * Worker isolate, cached afterwards (the cache is the Worker-process
+ * scope, so cold-start eats one PBKDF2 — same as a real first login).
+ *
+ * Security goal: collapse the bad-username vs bad-password timing
+ * difference. Without this, a bad-username path skips PBKDF2 entirely
+ * (~0ms) while a bad-password path runs PBKDF2 (~100ms). That timing
+ * delta is a username-enumeration oracle survivable past the throttle
+ * fix (an attacker still gets one timing observation per IP block).
+ */
+let dummyHashCache: string | null = null;
+export async function getDummyPasswordHash(): Promise<string> {
+  if (dummyHashCache) return dummyHashCache;
+  const salt = new Uint8Array(SALT_LEN); // all zeros, intentional
+  const probe = '__F2_PWA_ADMIN_DUMMY_HASH_PROBE_v1__';
+  const hash = await pbkdf2(probe, salt, PBKDF2_ITERATIONS);
+  dummyHashCache = `${b64urlEncode(salt)}:${PBKDF2_ITERATIONS}:${b64urlEncode(hash)}`;
+  return dummyHashCache;
+}
+
+/**
  * Verify a plaintext password against a stored hash. Returns false (without
  * throwing) for malformed hashes or out-of-range iteration counts.
  *
