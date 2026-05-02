@@ -83,7 +83,7 @@ For each environment, run the same set. Mark per-env status in the matrix below 
 | # | Test | E1 Chrome | E2 Firefox | E3 Edge | E4 Tab-P | E5 Tab-L |
 |---|---|---|---|---|---|---|
 | E1f | Files: upload a small file (PDF or image, <5 MB) → appears in list | ✅ | | | | |
-| E2f | Files: download via row action → bytes match | | | | | |
+| E2f | Files: download via row action → bytes match | ✅ | | | | |
 | E3f | Files: delete → row disappears, R2 object_count returns to baseline | | | | | |
 | E4f | DataSettings: list renders, scheduled break-out config visible | | | | | |
 | E5f | QuotaWidget: AS quota counter visible + sane (`as_quota:<UTC-date>`) | | | | | |
