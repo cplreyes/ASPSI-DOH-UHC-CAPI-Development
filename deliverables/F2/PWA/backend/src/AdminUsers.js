@@ -43,6 +43,12 @@ function _stripPasswordHash(user) {
 
 function adminUsersList(filters) {
   filters = filters || {};
+  // password_hash is normally stripped from list responses to keep secrets
+  // off the UI wire. The worker's login handler is the ONLY caller that
+  // legitimately needs it (to verifyPassword). Setting include_password_hash
+  // is HMAC-gated at the envelope layer (only the worker has the secret),
+  // so this flag is safe to honor.
+  var includeHash = filters.include_password_hash === true;
   var data = _readSheetAsObjects('F2_Users');
   var matched = [];
   var q = filters.q ? String(filters.q).toLowerCase() : null;
@@ -59,7 +65,7 @@ function adminUsersList(filters) {
       ).toLowerCase();
       if (hay.indexOf(q) === -1) continue;
     }
-    matched.push(_stripPasswordHash(u));
+    matched.push(includeHash ? u : _stripPasswordHash(u));
   }
   // Newest first by created_at (ISO string compares correctly).
   matched.sort(function (a, b) {

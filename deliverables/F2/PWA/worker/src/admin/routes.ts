@@ -219,12 +219,19 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
 
   if (req.method === 'POST' && url.pathname === '/admin/api/login') {
     const body = await req.json().catch(() => ({}));
+    const loginUsername = typeof (body as { username?: unknown }).username === 'string'
+      ? (body as { username: string }).username.trim()
+      : '';
     const usersList = () =>
       callAppsScript<{ users: AdminUserRow[] }>(
         env.APPS_SCRIPT_URL,
         env.APPS_SCRIPT_HMAC,
         'admin_users_list',
-        {},
+        // include_password_hash is HMAC-gated at the AS dispatcher; only the
+        // worker (sole HMAC holder) can ask for the hash. Filter by username
+        // so we don't transfer the whole user table over the wire on each
+        // login attempt.
+        { include_password_hash: true, username: loginUsername },
         requestId,
       );
     const rolesList = () =>
