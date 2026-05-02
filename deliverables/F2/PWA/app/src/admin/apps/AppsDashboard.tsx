@@ -4,11 +4,12 @@
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Tasks 3.6–3.10)
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.6, §7.9)
  *
- * Lands the Versioning panel today. Files (R2-backed, blocked on R2
- * purchase), Data Settings (cron-driven CSV exports), and QuotaWidget
- * are scaffolded as placeholders pointing at the relevant Sprint 3 tasks.
+ * Lands Versioning + Files. Data Settings (cron-driven CSV exports)
+ * and QuotaWidget are still placeholders pointing at the relevant
+ * Sprint 3 tasks.
  */
 import { Versioning } from './Versioning';
+import { Files } from './Files';
 
 export interface AppsDashboardProps {
   apiBaseUrl: string;
@@ -28,10 +29,7 @@ export function AppsDashboard({ apiBaseUrl, fetchImpl }: AppsDashboardProps): JS
 
       <Versioning apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
 
-      <ComingSoonPanel
-        title="Files"
-        body="File library lands once R2 is enabled on the ASPSI Cloudflare account (Sprint 3.1, 3.2). Allowlisted MIME types: PDF, ZIP, PNG, JPEG, GIF."
-      />
+      <Files apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
 
       <ComingSoonPanel
         title="Data Settings"
