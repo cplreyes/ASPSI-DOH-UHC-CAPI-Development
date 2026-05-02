@@ -37,12 +37,18 @@ function fakeKey(): string {
 }
 
 function makeEnv(kv: FakeKV): Env {
+  const r2 = {
+    put: async () => undefined,
+    get: async () => null,
+    delete: async () => undefined,
+  } as unknown as R2Bucket;
   return {
     ADMIN_PASSWORD_HASH: 'unused',
     APPS_SCRIPT_HMAC: 'test-hmac',
     APPS_SCRIPT_URL: 'https://script.example/exec',
     JWT_SIGNING_KEY: fakeKey(),
     F2_AUTH: kv as unknown as KVNamespace,
+    F2_ADMIN_R2: r2,
   };
 }
 

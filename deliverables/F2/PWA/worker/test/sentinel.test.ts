@@ -24,12 +24,18 @@ function makeEnv(): Env {
     delete: async () => undefined,
     list: async () => ({ keys: [], list_complete: true, cursor: '' }),
   } as unknown as KVNamespace;
+  const r2 = {
+    put: async () => undefined,
+    get: async () => null,
+    delete: async () => undefined,
+  } as unknown as R2Bucket;
   return {
     JWT_SIGNING_KEY: TEST_KEY,
     APPS_SCRIPT_HMAC: 'unused-in-sentinel-path',
     APPS_SCRIPT_URL: 'http://unreachable.invalid/',
     ADMIN_PASSWORD_HASH: 'unused',
     F2_AUTH: kv,
+    F2_ADMIN_R2: r2,
   };
 }
 

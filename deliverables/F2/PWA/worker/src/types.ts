@@ -14,6 +14,8 @@ export interface Env {
   JWT_SIGNING_KEY: string;
   /** KV namespace for revocation list + token audit. */
   F2_AUTH: KVNamespace;
+  /** R2 bucket for admin file uploads + scheduled break-out CSVs (Task 1.1). */
+  F2_ADMIN_R2: R2Bucket;
 }
 
 /** Claims embedded in every device JWT. */

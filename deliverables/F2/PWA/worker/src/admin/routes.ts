@@ -68,6 +68,15 @@ import {
   type RoleMutationBody,
   type RoleRow,
 } from './handlers/users';
+import {
+  handleListFiles,
+  handleUploadFile,
+  handleDownloadFile,
+  handleDeleteFile,
+  type FileMetaRow,
+  type FilesListFilters,
+  type ListFilesData,
+} from './handlers/apps';
 import { callAppsScript } from './apps-script-client';
 import { RoleVersionCache, requirePerm, type Role, type RolesListResp, type RbacOpts } from './rbac';
 
@@ -94,6 +103,8 @@ const USERS_BY_NAME_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})
 const USERS_REVOKE_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/revoke-sessions\/?$/;
 const ROLES_LIST_RE = /^\/admin\/api\/dashboards\/roles\/?$/;
 const ROLES_BY_NAME_RE = /^\/admin\/api\/dashboards\/roles\/([A-Za-z][A-Za-z0-9 _\-]{0,63})\/?$/;
+const FILES_LIST_RE = /^\/admin\/api\/dashboards\/apps\/files\/?$/;
+const FILES_BY_ID_RE = /^\/admin\/api\/dashboards\/apps\/files\/([A-Za-z0-9_\-]+)\/?$/;
 
 /**
  * Build RbacOpts that's stable for one request. Most rbac-protected handlers
@@ -346,6 +357,71 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleSyncReport(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && FILES_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = (filters: FilesListFilters) =>
+      callAppsScript<ListFilesData>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_files_list',
+        filters as unknown as Record<string, unknown>,
+        requestId,
+      );
+    const r = await handleListFiles(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'POST' && FILES_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = (payload: Record<string, unknown>) =>
+      callAppsScript<{ file: FileMetaRow }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_files_create',
+        payload,
+        requestId,
+      );
+    const r = await handleUploadFile(req, { username: auth.payload!.sub }, env.F2_ADMIN_R2, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  const fileByIdMatch = FILES_BY_ID_RE.exec(url.pathname);
+  if (fileByIdMatch && (req.method === 'GET' || req.method === 'DELETE')) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const fileId = decodeURIComponent(fileByIdMatch[1]!);
+    if (req.method === 'GET') {
+      const asCall = (payload: { file_id: string }) =>
+        callAppsScript<{ file: FileMetaRow }>(
+          env.APPS_SCRIPT_URL,
+          env.APPS_SCRIPT_HMAC,
+          'admin_files_get',
+          payload,
+          requestId,
+        );
+      const r = await handleDownloadFile(fileId, env.F2_ADMIN_R2, asCall);
+      return withRequestId(r, requestId);
+    }
+    const asCall = (payload: { file_id: string }) =>
+      callAppsScript<{ file_id: string; deleted_at: string }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_files_delete',
+        payload,
+        requestId,
+      );
+    const r = await handleDeleteFile(fileId, env.F2_ADMIN_R2, asCall);
     return withRequestId(r, requestId);
   }
 
