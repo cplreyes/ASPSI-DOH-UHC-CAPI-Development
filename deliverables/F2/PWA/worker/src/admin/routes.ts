@@ -73,9 +73,18 @@ import {
   handleUploadFile,
   handleDownloadFile,
   handleDeleteFile,
+  handleListSettings,
+  handleCreateSetting,
+  handleUpdateSetting,
+  handleDeleteSetting,
+  handleRunNowSetting,
+  handleGetQuota,
   type FileMetaRow,
   type FilesListFilters,
   type ListFilesData,
+  type ListSettingsData,
+  type SettingRow,
+  type SettingMutationBody,
 } from './handlers/apps';
 import { callAppsScript } from './apps-script-client';
 import { RoleVersionCache, requirePerm, type Role, type RolesListResp, type RbacOpts } from './rbac';
@@ -105,6 +114,10 @@ const ROLES_LIST_RE = /^\/admin\/api\/dashboards\/roles\/?$/;
 const ROLES_BY_NAME_RE = /^\/admin\/api\/dashboards\/roles\/([A-Za-z][A-Za-z0-9 _\-]{0,63})\/?$/;
 const FILES_LIST_RE = /^\/admin\/api\/dashboards\/apps\/files\/?$/;
 const FILES_BY_ID_RE = /^\/admin\/api\/dashboards\/apps\/files\/([A-Za-z0-9_\-]+)\/?$/;
+const SETTINGS_LIST_RE = /^\/admin\/api\/dashboards\/apps\/data-settings\/?$/;
+const SETTINGS_BY_ID_RE = /^\/admin\/api\/dashboards\/apps\/data-settings\/([A-Za-z0-9_\-]+)\/?$/;
+const SETTINGS_RUN_NOW_RE = /^\/admin\/api\/dashboards\/apps\/data-settings\/([A-Za-z0-9_\-]+)\/run-now\/?$/;
+const APPS_QUOTA_RE = /^\/admin\/api\/dashboards\/apps\/quota\/?$/;
 
 /**
  * Build RbacOpts that's stable for one request. Most rbac-protected handlers
@@ -422,6 +435,103 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
       );
     const r = await handleDeleteFile(fileId, env.F2_ADMIN_R2, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && APPS_QUOTA_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const r = await handleGetQuota(env.F2_AUTH);
+    return withRequestId(r, requestId);
+  }
+
+  // Run-now must come before generic by-id so the path is matched
+  // specifically. Path: /admin/api/dashboards/apps/data-settings/:id/run-now
+  const runNowMatch = SETTINGS_RUN_NOW_RE.exec(url.pathname);
+  if (req.method === 'POST' && runNowMatch) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const sid = decodeURIComponent(runNowMatch[1]!);
+    const asCall = (payload: Record<string, unknown>) =>
+      callAppsScript<{ setting: SettingRow }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_settings_run_now',
+        payload,
+        requestId,
+      );
+    const r = await handleRunNowSetting(sid, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'GET' && SETTINGS_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const asCall = () =>
+      callAppsScript<ListSettingsData>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_settings_list',
+        {},
+        requestId,
+      );
+    const r = await handleListSettings(asCall);
+    return withRequestId(r, requestId);
+  }
+
+  if (req.method === 'POST' && SETTINGS_LIST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const body = (await req.json().catch(() => ({}))) as SettingMutationBody;
+    const asCall = (payload: Record<string, unknown>) =>
+      callAppsScript<{ setting: SettingRow }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_settings_create',
+        payload,
+        requestId,
+      );
+    const r = await handleCreateSetting(body, { username: auth.payload!.sub }, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  const settingByIdMatch = SETTINGS_BY_ID_RE.exec(url.pathname);
+  if (settingByIdMatch && (req.method === 'PATCH' || req.method === 'DELETE')) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const sid = decodeURIComponent(settingByIdMatch[1]!);
+    if (req.method === 'PATCH') {
+      const body = (await req.json().catch(() => ({}))) as SettingMutationBody;
+      const asCall = (payload: Record<string, unknown>) =>
+        callAppsScript<{ setting: SettingRow }>(
+          env.APPS_SCRIPT_URL,
+          env.APPS_SCRIPT_HMAC,
+          'admin_settings_update',
+          payload,
+          requestId,
+        );
+      const r = await handleUpdateSetting(sid, body, asCall);
+      return withRequestId(r, requestId);
+    }
+    const asCall = (payload: { setting_id: string }) =>
+      callAppsScript<{ setting_id: string }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_settings_delete',
+        payload,
+        requestId,
+      );
+    const r = await handleDeleteSetting(sid, asCall);
     return withRequestId(r, requestId);
   }
 

@@ -305,3 +305,188 @@ export async function handleDeleteFile(
   }
   return new Response(null, { status: 204 });
 }
+
+// ===== Data Settings (Tasks 3.4, 3.5) =====================================
+
+export interface SettingRow {
+  setting_id: string;
+  instrument: string;
+  included_columns: string;
+  interval_minutes: number;
+  next_run_at: string;
+  output_path_template: string;
+  last_run_at?: string;
+  last_run_status?: string;
+  last_run_error?: string;
+  enabled: boolean;
+  created_by?: string;
+  created_at?: string;
+}
+
+export interface ListSettingsData {
+  settings: SettingRow[];
+  total: number;
+}
+
+export type SettingsListAsCallable = () => Promise<AppsScriptResponse<ListSettingsData>>;
+
+export type SettingsMutateAsCallable = (
+  payload: Record<string, unknown>,
+) => Promise<AppsScriptResponse<{ setting: SettingRow }>>;
+
+export type SettingsDeleteAsCallable = (
+  payload: { setting_id: string },
+) => Promise<AppsScriptResponse<{ setting_id: string }>>;
+
+export interface SettingMutationBody {
+  instrument?: unknown;
+  included_columns?: unknown;
+  interval_minutes?: unknown;
+  output_path_template?: unknown;
+  enabled?: unknown;
+}
+
+const SETTING_ID_RE = /^[A-Za-z0-9_\-]{3,64}$/;
+
+function parseSettingMutation(body: SettingMutationBody): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  if (body.instrument !== undefined) out.instrument = body.instrument;
+  if (body.included_columns !== undefined) out.included_columns = body.included_columns;
+  if (body.interval_minutes !== undefined) out.interval_minutes = body.interval_minutes;
+  if (body.output_path_template !== undefined) out.output_path_template = body.output_path_template;
+  if (body.enabled !== undefined) out.enabled = !!body.enabled;
+  return out;
+}
+
+export async function handleListSettings(
+  asCallable: SettingsListAsCallable,
+): Promise<Response> {
+  const r = await asCallable();
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
+export async function handleCreateSetting(
+  body: SettingMutationBody,
+  actor: { username: string },
+  asCallable: SettingsMutateAsCallable,
+): Promise<Response> {
+  if (!actor.username) {
+    return errorJson('E_INTERNAL', 'actor username missing from RBAC context', 500);
+  }
+  const payload = { ...parseSettingMutation(body), created_by: actor.username };
+  const r = await asCallable(payload);
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse(r.data, 201);
+}
+
+export async function handleUpdateSetting(
+  settingId: string,
+  body: SettingMutationBody,
+  asCallable: SettingsMutateAsCallable,
+): Promise<Response> {
+  if (!SETTING_ID_RE.test(settingId)) {
+    return errorJson('E_VALIDATION', 'invalid setting_id path param', 400);
+  }
+  const payload = { setting_id: settingId, ...parseSettingMutation(body) };
+  const r = await asCallable(payload);
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
+export async function handleDeleteSetting(
+  settingId: string,
+  asCallable: SettingsDeleteAsCallable,
+): Promise<Response> {
+  if (!SETTING_ID_RE.test(settingId)) {
+    return errorJson('E_VALIDATION', 'invalid setting_id path param', 400);
+  }
+  const r = await asCallable({ setting_id: settingId });
+  if (!r.ok) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return new Response(null, { status: 204 });
+}
+
+export async function handleRunNowSetting(
+  settingId: string,
+  asCallable: SettingsMutateAsCallable,
+): Promise<Response> {
+  if (!SETTING_ID_RE.test(settingId)) {
+    return errorJson('E_VALIDATION', 'invalid setting_id path param', 400);
+  }
+  const r = await asCallable({ setting_id: settingId });
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
+// ===== Quota (Task 3.9) ===================================================
+
+export interface QuotaKv {
+  get(key: string): Promise<string | null>;
+}
+
+export interface QuotaData {
+  date_utc: string;
+  count: number;
+  cap: number;
+  percent: number;
+}
+
+/**
+ * Default Apps Script daily URL fetch cap on a Google Workspace account.
+ * The widget turns red at 80% of this in the UI.
+ */
+export const APPS_SCRIPT_DAILY_CAP = 20000;
+
+function utcDateKey(now: Date): string {
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${now.getUTCFullYear()}-${pad(now.getUTCMonth() + 1)}-${pad(now.getUTCDate())}`;
+}
+
+/**
+ * Read today's AS-call counter from KV at `as_quota:<YYYY-MM-DD>`. The
+ * counter increment side is wired up in a follow-up commit (every
+ * callAppsScript will bump it). Until then, this returns 0/cap which
+ * is the correct empty-state.
+ */
+export async function handleGetQuota(kv: QuotaKv, now: Date = new Date()): Promise<Response> {
+  const key = utcDateKey(now);
+  const raw = await kv.get(`as_quota:${key}`);
+  const count = raw ? Number(raw) || 0 : 0;
+  const data: QuotaData = {
+    date_utc: key,
+    count,
+    cap: APPS_SCRIPT_DAILY_CAP,
+    percent: Math.min(100, Math.round((count / APPS_SCRIPT_DAILY_CAP) * 100)),
+  };
+  return jsonResponse(data, 200);
+}

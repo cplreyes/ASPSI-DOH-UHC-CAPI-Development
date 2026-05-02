@@ -31,6 +31,7 @@ import {
   handleRevokeToken,
 } from './admin';
 import { adminRouter } from './admin/routes';
+import { runDueSettings, depsFromEnv } from './admin/cron';
 
 const PUBLIC_ROUTES = new Set(['/exec', '/verify-token']);
 
@@ -95,5 +96,19 @@ export default {
 
     // Add CORS headers to public-route responses (admin routes are same-origin).
     return isPublic ? withCors(resp) : resp;
+  },
+
+  /**
+   * Cron trigger: every 5 minutes (wrangler.toml [triggers].crons).
+   * Drives the F2_DataSettings break-out CSV exports. Failures are
+   * logged but never thrown - a stuck cron tick mustn't poison the
+   * Worker isolate.
+   */
+  async scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+    ctx.waitUntil(
+      runDueSettings(depsFromEnv(env)).catch((err) => {
+        console.error('[scheduled] runDueSettings threw', err);
+      }),
+    );
   },
 } satisfies ExportedHandler<Env>;
