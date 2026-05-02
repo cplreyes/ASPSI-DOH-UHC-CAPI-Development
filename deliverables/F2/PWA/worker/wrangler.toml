@@ -33,3 +33,45 @@ crons = ["*/5 * * * *"]
 # Logs go to the Cloudflare dashboard. Add a logpush destination later if needed.
 [observability]
 enabled = true
+
+# ============================================================================
+# Staging environment (F2 Admin Portal AP0 — see docs/superpowers/runbooks/
+# 2026-05-01-ap0-apps-script-staging-setup.md). Deploys to a separate Worker
+# `f2-pwa-worker-staging` so production traffic is untouched. Bindings are
+# explicitly declared per Wrangler 4.x — top-level config is NOT inherited
+# into env scopes.
+#
+# R2 + cron deferred for the initial Sprint 1 login smoke test. Add them
+# back once R2 is enabled on the Cloudflare account and we want to exercise
+# the scheduled break-out path.
+# ============================================================================
+
+[env.staging]
+name = "f2-pwa-worker-staging"
+
+[[env.staging.kv_namespaces]]
+binding = "F2_AUTH"
+id = "4235ee802d3546b8a20dffa7a5af5ad3"
+preview_id = "7fa57b2ff0a94dc7bd05fdc74da760b9"
+
+# R2 deferred for staging. The Env type declares F2_ADMIN_R2 as required,
+# but that's a TypeScript-only constraint; at runtime the binding will be
+# undefined and any code path that reads it (file upload/download/delete,
+# cron CSV writes) will crash. Sprint 1 smoke (login) doesn't exercise R2.
+# Uncomment + create the bucket once Sprint 3 settings UI / file upload UI
+# is being smoke-tested against staging:
+#   wrangler r2 bucket create f2-admin-staging
+#   wrangler r2 bucket create f2-admin-staging-preview
+# [[env.staging.r2_buckets]]
+# binding = "F2_ADMIN_R2"
+# bucket_name = "f2-admin-staging"
+# preview_bucket_name = "f2-admin-staging-preview"
+
+# Cron deferred for staging — the scheduled handler writes CSVs to R2 which
+# isn't bound yet. Without [env.staging.triggers], scheduled() is exported
+# but never fires.
+# [env.staging.triggers]
+# crons = ["*/5 * * * *"]
+
+[env.staging.observability]
+enabled = true
