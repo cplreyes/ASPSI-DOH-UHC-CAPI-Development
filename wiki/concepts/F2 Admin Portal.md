@@ -67,8 +67,9 @@ f6ca9b3 fix(apps-script): adminEncodeSubmit accepts payload.encoded_by
 
 - **Sheet:** `15CWE9uQtKXKLYzPLxec9dfMTp2YsdBUOGXebZ626DBU` (workbook "F2 PWA Backend — Staging")
 - **AS project:** `F2-PWA-Backend-Staging` deployed at `https://script.google.com/macros/s/AKfycbws8vvypU0WGd9jZ0QZFKYSGFPf-PN9YWtRPOgsgmzV0HMlfPOFmew0VS-Axj9sIYuW/exec`
-- **Worker:** `https://f2-pwa-worker-staging.hcw.workers.dev`
+- **Worker:** `https://f2-pwa-worker-staging.hcw.workers.dev` (re-deployed 2026-05-02 with R2 binding + 5-min cron)
 - **KV staging:** `4235ee802d3546b8a20dffa7a5af5ad3` (binding `F2_AUTH`)
+- **R2 staging:** `f2-admin-staging` + `f2-admin-staging-preview` (binding `F2_ADMIN_R2`, APAC, created 2026-05-02)
 - **Bootstrap admin:** `carl_admin` (Administrator role)
 - **Test fixtures still on staging:** `DataReader` role (with `dash_apps:true` from RBAC PATCH test), user `data_reader_test`, HCW `HCW-TEST-001` (paper-encoded test response), data setting `s-346535ac`
 
@@ -106,8 +107,8 @@ Mocks couldn't catch any of these — all surfaced only on the live stack:
 
 ## Outstanding (NOT coding tasks)
 
-- **Cloudflare R2 plan** — must be enabled on `Aspsi.doh.uhc.survey2.data@gmail.com's Account` (`b0887ce8ba4e531c00abfe0127b4bc5b`). Free tier covers staging usage; CF dashboard gate. Unblocks file upload + cron CSV writes.
-- **Production cutover** — runbook at `docs/superpowers/runbooks/2026-05-02-f2-admin-portal-prod-cutover.md` (308 lines). Run after PR merges + R2 + 7-day staging soak.
+- ~~**Cloudflare R2 plan**~~ — **CLEARED 2026-05-02.** R2 enabled on `Aspsi.doh.uhc.survey2.data@gmail.com's Account` (`b0887ce8ba4e531c00abfe0127b4bc5b`); four buckets created (`f2-admin-staging`, `f2-admin-staging-preview`, `f2-admin`, `f2-admin-preview`); staging worker redeployed with R2 + cron bindings; full upload/list/download/delete cycle smoke-tested green on `f2-pwa-worker-staging`. Production buckets pre-provisioned, sit empty until PR #54 deploy.
+- **Production cutover** — runbook at `docs/superpowers/runbooks/2026-05-02-f2-admin-portal-prod-cutover.md` (308 lines). Part 3a (bucket creation) already done. Run remaining parts after PR merges + cross-platform QA + 7-day staging soak.
 - **Cross-platform QA** (Sprint 4 Task 4.6) — manual half-day across browsers/OS.
 - **M10 sunset** (Sprint 4 Task 4.9) — 7-day soak after prod cutover, then delete `ADMIN_PASSWORD_HASH` secret + dead `src/admin.ts` routes.
 - **v2.0.0 release** (Sprint 4 Task 4.10) — gated on all of the above.

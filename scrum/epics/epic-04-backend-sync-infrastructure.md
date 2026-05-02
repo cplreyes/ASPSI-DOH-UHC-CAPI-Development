@@ -3,7 +3,7 @@ epic: 4
 title: Backend & Sync Infrastructure
 phase: per-track
 status: in-progress
-last_updated: 2026-04-26
+last_updated: 2026-05-02
 ---
 
 # Epic 4 — Backend & Sync Infrastructure
@@ -67,7 +67,8 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
 
 #### Sprint AP1 — foundation (week 1)
 
-- [ ] **E4-APRT-001** Wrangler R2 binding + cron trigger configured `status::todo` `priority::critical` `estimate::1h`
+- [x] **E4-APRT-001** Wrangler R2 binding + cron trigger configured `status::done` `priority::critical` `estimate::1h`
+  - Done 2026-05-02. Top-level production bindings declared in `deliverables/F2/PWA/worker/wrangler.toml` since AP1 (`F2_ADMIN_R2` → `f2-admin`/`f2-admin-preview`, cron `*/5 * * * *`). Staging mirror (`[env.staging]` block) re-enabled today after R2 was turned on for the account; staging worker redeployed with `F2_ADMIN_R2` → `f2-admin-staging`/`f2-admin-staging-preview` and matching cron. All four R2 buckets exist (APAC, Standard). Full upload/list/download/delete smoke green on staging. Prod buckets pre-provisioned; prod worker redeploy deferred to PR #54 cutover.
 - [ ] **E4-APRT-002** Apps Script schema migration (5 new sheets + F2_Responses/F2_Audit column extensions) `status::todo` `priority::critical` `estimate::3h`
 - [ ] **E4-APRT-003** Worker HMAC + request_id Apps Script client + AS doPost dispatcher (admin_ping round-trip) `status::todo` `priority::critical` `estimate::4h`
 - [ ] **E4-APRT-004** Web Crypto PBKDF2 (600k iters) hash + verify + JWT mint/verify with role_version `status::todo` `priority::critical` `estimate::3h`

@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-05-01
+last_updated: 2026-05-02
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -22,6 +22,8 @@ last_updated: 2026-05-01
 ## 1. Status at a Glance
 
 ### Headline (this week)
+
+**Inter-sprint, Sat 2026-05-02 — F2 Admin Portal R2 gate CLEARED.** Cloudflare R2 enabled on `aspsi.doh.uhc.survey2.data@gmail.com`'s account; four buckets created (`f2-admin-staging`, `f2-admin-staging-preview`, `f2-admin`, `f2-admin-preview`, all APAC, Standard storage class). Staging worker `f2-pwa-worker-staging` redeployed with `F2_ADMIN_R2` binding + `*/5 * * * *` cron trigger; `wrangler.toml` `[env.staging]` block updated to declare both. End-to-end Files-app smoke test green on staging: upload → list → download → delete with no R2 orphans (bucket back to 0 objects post-delete). Production buckets pre-provisioned but production worker NOT redeployed — `main` branch's `wrangler.toml` still doesn't declare R2 (admin portal bindings ride along with PR #54 when it lands). Cutover runbook Part 3a annotated as done. **Remaining v2.0.0 gates:** cross-platform QA (Sprint 4 Task 4.6) + 7-day staging soak (Sprint 4 Task 4.9, M10 sunset).
 
 **F2 Admin Portal — comprehensive plan landed Fri 2026-05-01. CSWeb-mirror admin for the F2 PWA stack queued as Sprints AP1–AP4 under Epic 4 (40 sub-tasks E4-APRT-001..040).** Spec at `docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md` (v0.2 — eng + design review incorporated); implementation plan at `docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md` (~1264 lines, TDD-shaped). Replaces abandoned M10 (single-`ADMIN_SECRET` Apps-Script-HtmlService); mirrors CSWeb's documented permission model 1:1 (5 dashboards × 5 IR-aligned roles × per-instrument flags); adds modest F2 PWA extensions (GPS capture, source_path tagging, paper-encoder workflow, F2_HCWs sheet). One tranche, parallel build (admin + PWA extensions same sprint window). ~4 weeks at 1-week solo+AI Scrum cadence; v2.0.0 release at AP4 close.
 

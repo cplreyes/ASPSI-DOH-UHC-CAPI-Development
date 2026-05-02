@@ -157,6 +157,14 @@ Store the breakglass password in 1Password / a sealed envelope. Update the email
 
 ### 3a. Create production R2 buckets
 
+> **DONE 2026-05-02** — R2 enabled on the account; `f2-admin` + `f2-admin-preview` (and the staging mirrors `f2-admin-staging` + `f2-admin-staging-preview`) created via `wrangler r2 bucket create`. Verify with:
+>
+> ```powershell
+> wrangler r2 bucket list
+> ```
+>
+> Expect all four buckets present, APAC region, default Standard storage class. If anything's missing, rerun the `create` commands below.
+
 ```powershell
 cd C:\Users\analy\Documents\analytiflow\1_Projects\ASPSI-DOH-CAPI-CSPro-Development\deliverables\F2\PWA\worker
 wrangler r2 bucket create f2-admin
