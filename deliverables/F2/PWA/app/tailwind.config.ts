@@ -43,6 +43,18 @@ export default {
           DEFAULT: 'hsl(var(--warning) / <alpha-value>)',
           foreground: 'hsl(var(--warning-foreground) / <alpha-value>)',
         },
+        // Verde Manual aliases. The CSS vars in index.css are documented with
+        // these names ("paper", "ink", "hairline", "signal") and the admin
+        // portal code consumes them via `bg-paper`, `text-ink`,
+        // `border-hairline`, `border-signal`, `text-error` etc. Without
+        // these aliases those classes silently drop and modals render
+        // background-less (surfaced during AP0 dogfood — modal panels
+        // appeared transparent because bg-paper resolved to nothing).
+        paper: 'hsl(var(--background) / <alpha-value>)',
+        ink: 'hsl(var(--foreground) / <alpha-value>)',
+        hairline: 'hsl(var(--border) / <alpha-value>)',
+        signal: 'hsl(var(--primary) / <alpha-value>)',
+        error: 'hsl(var(--destructive) / <alpha-value>)',
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -118,7 +118,7 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
       role="dialog"
       aria-modal="true"
       aria-label={mode === 'create' ? 'Create user' : `Edit user ${form.username}`}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/70 px-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
