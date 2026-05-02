@@ -145,6 +145,13 @@ export async function handleLogin(
 
   const user = usersResp.data.users.find(u => u.username === username);
   if (!user) {
+    // Bump throttle counters even when the username doesn't exist. Without
+    // this, an attacker can enumerate usernames at unlimited rate (the
+    // per-IP cap of 50 attempts/15min only triggers on bad-password
+    // against a real user, leaving bogus-username traffic uncounted).
+    // The per-username key for a non-existent name will accumulate and
+    // TTL-evict — minor KV churn, worth the enumeration block.
+    await recordFailedLogin(kv, username, ipHash);
     return errorJson('E_AUTH_INVALID', 'Invalid username or password', 401);
   }
 
