@@ -79,8 +79,43 @@ export interface AppsScriptResponse<T = unknown> {
 }
 
 /**
+ * Minimal KV surface for the per-day quota counter. Accepting an interface
+ * (not the full KVNamespace) keeps tests trivial - production wiring still
+ * passes env.F2_AUTH which structurally satisfies this.
+ */
+export interface QuotaKv {
+  get(key: string): Promise<string | null>;
+  put(key: string, value: string, opts?: { expirationTtl?: number }): Promise<void>;
+}
+
+/**
+ * Per-UTC-day Apps Script quota counter. Reads `as_quota:<YYYY-MM-DD>`,
+ * increments by 1, writes back with a 7-day TTL so old keys self-evict.
+ *
+ * Errors are swallowed - a counter blip must never fail the underlying
+ * AS request. The QuotaWidget tolerates an occasional miss.
+ */
+export async function bumpAdminQuota(kv: QuotaKv, now: Date = new Date()): Promise<void> {
+  try {
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const ymd = `${now.getUTCFullYear()}-${pad(now.getUTCMonth() + 1)}-${pad(now.getUTCDate())}`;
+    const key = `as_quota:${ymd}`;
+    const raw = await kv.get(key);
+    const next = (raw ? Number(raw) || 0 : 0) + 1;
+    await kv.put(key, String(next), { expirationTtl: 7 * 86400 });
+  } catch {
+    // never propagate - counter is observability, not load-bearing
+  }
+}
+
+/**
  * Call an Apps Script admin RPC. Returns the parsed envelope.
  * On HTTP failure, returns `{ ok: false, error: { code: 'E_BACKEND', ... }}`.
+ *
+ * Pass `kv` to bump the per-day quota counter on each invocation (read by
+ * the QuotaWidget endpoint). Bump runs after the fetch but before the
+ * envelope is returned, so it counts every AS round-trip whether the
+ * envelope is ok or not (failures still consume Google's daily quota).
  */
 export async function callAppsScript<T = unknown>(
   url: string,
@@ -88,6 +123,7 @@ export async function callAppsScript<T = unknown>(
   action: string,
   payload: unknown,
   requestId: string,
+  kv?: QuotaKv,
 ): Promise<AppsScriptResponse<T>> {
   const ts = Math.floor(Date.now() / 1000);
   const hmac = await signRequest(secret, action, ts, requestId, payload);
@@ -97,6 +133,7 @@ export async function callAppsScript<T = unknown>(
     headers: { 'Content-Type': 'application/json' },
     body,
   });
+  if (kv) await bumpAdminQuota(kv);
   if (!r.ok) {
     return { ok: false, error: { code: 'E_BACKEND', message: `Apps Script ${r.status}` } };
   }

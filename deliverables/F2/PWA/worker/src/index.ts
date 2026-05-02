@@ -104,7 +104,7 @@ export default {
    * logged but never thrown - a stuck cron tick mustn't poison the
    * Worker isolate.
    */
-  async scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+  async scheduled(_event: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
     ctx.waitUntil(
       runDueSettings(depsFromEnv(env)).catch((err) => {
         console.error('[scheduled] runDueSettings threw', err);

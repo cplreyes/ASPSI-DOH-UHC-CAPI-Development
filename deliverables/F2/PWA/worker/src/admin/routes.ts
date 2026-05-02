@@ -135,6 +135,7 @@ function buildRbacOpts(env: Env, requestId: string): RbacOpts {
         'admin_roles_list',
         {},
         requestId,
+        env.F2_AUTH,
       ).then((r): RolesListResp =>
         r.ok && r.data ? { ok: true, data: { roles: r.data.roles } } : { ok: false },
       ),
@@ -197,6 +198,7 @@ function buildAuditDispatcher(
         'admin_audit_write',
         payload,
         requestId,
+        env.F2_AUTH,
       ).catch(() => undefined),
     );
   };
@@ -233,6 +235,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         // login attempt.
         { include_password_hash: true, username: loginUsername },
         requestId,
+        env.F2_AUTH,
       );
     const rolesList = () =>
       callAppsScript<{ roles: AdminRoleRow[] }>(
@@ -241,6 +244,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_roles_list',
         {},
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleLogin(body as Record<string, unknown>, ipHash, env, usersList, rolesList, auditFn);
     return withRequestId(r, requestId);
@@ -266,6 +270,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_encode_submit',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleEncodeSubmit(
       hcwId,
@@ -288,6 +293,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_read_responses',
         filters as unknown as Record<string, unknown>,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleListResponses(url, asCall);
     return withRequestId(r, requestId);
@@ -307,6 +313,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_read_response_by_id',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleGetResponseById(id, asCall);
     return withRequestId(r, requestId);
@@ -324,6 +331,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_read_audit',
         filters as unknown as Record<string, unknown>,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleListAudit(url, asCall);
     return withRequestId(r, requestId);
@@ -341,6 +349,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_read_dlq',
         filters as unknown as Record<string, unknown>,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleListDlq(url, asCall);
     return withRequestId(r, requestId);
@@ -358,6 +367,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_hcws_list',
         filters as unknown as Record<string, unknown>,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleListHcws(url, asCall);
     return withRequestId(r, requestId);
@@ -375,6 +385,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_sync_report',
         filters as unknown as Record<string, unknown>,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleSyncReport(url, asCall);
     return withRequestId(r, requestId);
@@ -392,6 +403,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_files_list',
         filters as unknown as Record<string, unknown>,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleListFiles(url, asCall);
     return withRequestId(r, requestId);
@@ -409,6 +421,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_files_create',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleUploadFile(req, { username: auth.payload!.sub }, env.F2_ADMIN_R2, asCall);
     return withRequestId(r, requestId);
@@ -429,6 +442,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
           'admin_files_get',
           payload,
           requestId,
+          env.F2_AUTH,
         );
       const r = await handleDownloadFile(fileId, env.F2_ADMIN_R2, asCall);
       return withRequestId(r, requestId);
@@ -440,6 +454,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_files_delete',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleDeleteFile(fileId, env.F2_ADMIN_R2, asCall);
     return withRequestId(r, requestId);
@@ -470,6 +485,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_settings_run_now',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleRunNowSetting(sid, asCall);
     return withRequestId(r, requestId);
@@ -487,6 +503,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_settings_list',
         {},
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleListSettings(asCall);
     return withRequestId(r, requestId);
@@ -505,6 +522,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_settings_create',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleCreateSetting(body, { username: auth.payload!.sub }, asCall);
     return withRequestId(r, requestId);
@@ -526,6 +544,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
           'admin_settings_update',
           payload,
           requestId,
+          env.F2_AUTH,
         );
       const r = await handleUpdateSetting(sid, body, asCall);
       return withRequestId(r, requestId);
@@ -537,6 +556,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_settings_delete',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleDeleteSetting(sid, asCall);
     return withRequestId(r, requestId);
@@ -554,6 +574,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_form_revisions',
         {},
         requestId,
+        env.F2_AUTH,
       );
     // Pull versioning from worker env (fallback strings if unset).
     const versionEnv = env as unknown as {
@@ -577,6 +598,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_map_report',
         filters as unknown as Record<string, unknown>,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleMapReport(url, asCall);
     return withRequestId(r, requestId);
@@ -594,6 +616,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_users_list',
         filters as unknown as Record<string, unknown>,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleListUsers(url, asCall);
     return withRequestId(r, requestId);
@@ -612,6 +635,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_users_create',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleCreateUser(body, { username: auth.payload!.sub }, asCall);
     return withRequestId(r, requestId);
@@ -653,6 +677,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
           'admin_users_update',
           payload,
           requestId,
+          env.F2_AUTH,
         );
       const r = await handleUpdateUser(username, body, asCall);
       return withRequestId(r, requestId);
@@ -665,6 +690,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_users_delete',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleDeleteUser(username, asCall);
     return withRequestId(r, requestId);
@@ -682,6 +708,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_roles_list',
         {},
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleListRoles(asCall);
     return withRequestId(r, requestId);
@@ -700,6 +727,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_roles_create',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleCreateRole(body, { username: auth.payload!.sub }, asCall);
     return withRequestId(r, requestId);
@@ -721,6 +749,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
           'admin_roles_update',
           payload,
           requestId,
+          env.F2_AUTH,
         );
       const r = await handleUpdateRole(name, body, asCall);
       return withRequestId(r, requestId);
@@ -733,6 +762,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_roles_delete',
         payload,
         requestId,
+        env.F2_AUTH,
       );
     const r = await handleDeleteRole(name, asCall);
     return withRequestId(r, requestId);
@@ -759,6 +789,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         'admin_hcws_reissue_token',
         payload as unknown as Record<string, unknown>,
         requestId,
+        env.F2_AUTH,
       );
     // Origin of the PWA — request comes from the admin browser, which is
     // same-origin with the PWA in production. Falls back to a sensible

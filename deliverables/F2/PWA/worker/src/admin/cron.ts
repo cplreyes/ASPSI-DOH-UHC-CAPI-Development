@@ -23,7 +23,7 @@
  *   'failed' in the Settings UI.
  */
 import type { Env } from '../types';
-import { callAppsScript } from './apps-script-client';
+import { callAppsScript, type QuotaKv } from './apps-script-client';
 
 interface RanItem {
   setting_id: string;
@@ -48,6 +48,8 @@ export interface RunDueDeps {
   appsScriptUrl: string;
   appsScriptHmac: string;
   r2: CronR2;
+  /** Optional KV for the per-day AS-quota counter (Task 3.9). */
+  kv?: QuotaKv;
 }
 
 /**
@@ -63,6 +65,7 @@ export async function runDueSettings(deps: RunDueDeps): Promise<void> {
     'admin_settings_run_due',
     {},
     requestId,
+    deps.kv,
   );
   if (!due.ok || !due.data) {
     console.warn('[cron] admin_settings_run_due failed', due.error);
@@ -88,6 +91,7 @@ export async function runDueSettings(deps: RunDueDeps): Promise<void> {
       'admin_settings_mark_complete',
       { setting_id: item.setting_id, status, error_message: errorMessage },
       requestId,
+      deps.kv,
     );
     if (!ack.ok) {
       console.warn('[cron] mark_complete failed', item.setting_id, ack.error);
@@ -103,6 +107,7 @@ export async function runDueSettings(deps: RunDueDeps): Promise<void> {
       'admin_settings_mark_complete',
       { setting_id: err.setting_id, status: 'failed', error_message: err.message },
       requestId,
+      deps.kv,
     );
     if (!ack.ok) {
       console.warn('[cron] mark_complete after AS error failed', err.setting_id, ack.error);
@@ -115,5 +120,6 @@ export function depsFromEnv(env: Env): RunDueDeps {
     appsScriptUrl: env.APPS_SCRIPT_URL,
     appsScriptHmac: env.APPS_SCRIPT_HMAC,
     r2: env.F2_ADMIN_R2,
+    kv: env.F2_AUTH,
   };
 }
