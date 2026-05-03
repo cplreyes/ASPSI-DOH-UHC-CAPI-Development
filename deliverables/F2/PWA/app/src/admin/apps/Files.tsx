@@ -179,6 +179,12 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
   );
 }
 
+// FX-009 (2026-05-03): keep this allowlist in sync with ALLOWED_MIME above
+// and the worker's apps.ts ALLOWED_MIME. Browsers honor `accept` as a hint
+// (filters the OS picker by default) so it doesn't replace server-side
+// validation but does close the UX gap where users could pick anything.
+const ACCEPT_ATTR = '.pdf,.zip,.png,.jpg,.jpeg,.gif,application/pdf,application/zip,image/png,image/jpeg,image/gif';
+
 function UploadRow({
   uploading,
   error,
@@ -190,12 +196,62 @@ function UploadRow({
   fileInputRef: React.MutableRefObject<HTMLInputElement | null>;
   onPick: (file: File) => void | Promise<void>;
 }): JSX.Element {
+  // FX-010 (2026-05-03): drag-and-drop support so admins can drop a file
+  // onto the upload zone instead of clicking through the OS picker. The
+  // existing click-to-pick path still works; drag-drop is additive.
+  const [dragActive, setDragActive] = useState(false);
+  const dragDepth = useRef(0);
+
+  function handleDragEnter(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (uploading) return;
+    dragDepth.current += 1;
+    setDragActive(true);
+  }
+
+  function handleDragLeave(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    dragDepth.current -= 1;
+    if (dragDepth.current <= 0) {
+      dragDepth.current = 0;
+      setDragActive(false);
+    }
+  }
+
+  function handleDragOver(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!uploading) e.dataTransfer.dropEffect = 'copy';
+  }
+
+  function handleDrop(e: React.DragEvent<HTMLDivElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    dragDepth.current = 0;
+    setDragActive(false);
+    if (uploading) return;
+    const f = e.dataTransfer.files?.[0];
+    if (f) void onPick(f);
+  }
+
   return (
-    <div className="flex flex-col gap-2 border-l-2 border-hairline pl-4">
+    <div
+      className={
+        'flex flex-col gap-2 border-l-2 pl-4 transition-colors ' +
+        (dragActive ? 'border-signal bg-secondary/20' : 'border-hairline')
+      }
+      onDragEnter={handleDragEnter}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
       <div className="flex items-center gap-3">
         <input
           ref={fileInputRef}
           type="file"
+          accept={ACCEPT_ATTR}
           disabled={uploading}
           onChange={(e) => {
             const f = e.target.files?.[0];
@@ -203,9 +259,9 @@ function UploadRow({
           }}
           className="text-sm"
         />
-        {uploading ? (
-          <span className="font-mono text-xs text-muted-foreground">Uploading...</span>
-        ) : null}
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          {uploading ? 'Uploading…' : dragActive ? 'Drop to upload' : 'Or drop a file here'}
+        </span>
       </div>
       {error ? (
         <p role="alert" className="text-sm text-error">
@@ -242,8 +298,13 @@ function FilesTable({
           {rows.map((r) => (
             <tr key={r.file_id}>
               <Td>
+                {/* FX-013 (2026-05-03): `download` attr is defense-in-depth; the
+                    worker already sets Content-Disposition: attachment, but
+                    listing `download` here makes the save-dialog deterministic
+                    across browsers and surfaces the filename in the prompt. */}
                 <a
                   href={downloadUrl(r.file_id)}
+                  download={r.filename}
                   className="underline decoration-hairline underline-offset-4 hover:decoration-foreground"
                 >
                   {r.filename}
