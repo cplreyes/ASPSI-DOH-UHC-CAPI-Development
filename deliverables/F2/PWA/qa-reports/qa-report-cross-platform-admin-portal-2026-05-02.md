@@ -104,7 +104,7 @@ For each environment, run the same set. Mark per-env status in the matrix below 
 |---|---|---|---|---|---|---|
 | G1 | EncodeQueue loads, ≥1 row visible | ✅ (placeholder; queue table deferred to Sprint 2.9) | | | | |
 | G2 | Open EncodePage for an HCW → form renders (autosave is documented-deferred per `EncodePage.tsx:15-17`) | ✅ | | | | |
-| G3 | ReissueModal shows QR; clicking "Reissue" generates new JWT (verify in network) | | | | | |
+| G3 | ReissueModal shows QR; clicking "Reissue" generates new JWT (verify in network) | ⚠️ JWT ✅ / QR deferred (FX-008) | | | | |
 
 ### H. Browser-specific watch list (varies)
 
@@ -112,22 +112,22 @@ Things that historically diverge between engines. Note any divergence even if fu
 
 | # | Watch | E1 Chrome | E2 Firefox | E3 Edge | E4 Tab-P | E5 Tab-L |
 |---|---|---|---|---|---|---|
-| H1 | File picker UI / drag-drop styling | | | | | |
-| H2 | `<input type="file">` accept attribute behavior | | | | | |
-| H3 | CSV download triggers a real Save dialog (Blob + `download` attr) | | | | | |
-| H4 | IndexedDB + localStorage persist across reload | | | | | |
-| H5 | Focus rings visible on Tab nav (FF often differs from Chrome) | | | | | |
-| H6 | Sticky table headers don't overlap modals | | | | | |
-| H7 | Date / number inputs render natively (FF sometimes hides spinners) | | | | | |
+| H1 | File picker UI / drag-drop styling | ⚠️ native btn, no Verde, no DnD (FX-010) | | | | |
+| H2 | `<input type="file">` accept attribute behavior | ❌ accept="" empty despite UI hint (FX-009) | | | | |
+| H3 | CSV download triggers a real Save dialog (Blob + `download` attr) | ❌ no CSV export anywhere (FX-012); file link no `download` attr (FX-013) | | | | |
+| H4 | IndexedDB + localStorage persist across reload | ✅ both persist; auth in-memory by design | | | | |
+| H5 | Focus rings visible on Tab nav (FF often differs from Chrome) | ⚠️ visible but browser-default `outline:auto 1px`, not Verde `ring-2 ring-offset-2` | | | | |
+| H6 | Sticky table headers don't overlap modals | ✅ N/A — `thead` is `position:static`, modal `z-50` over `bg-ink/70` scrim | | | | |
+| H7 | Date / number inputs render natively (FF sometimes hides spinners) | ✅ native date spinbuttons (mm/dd/yyyy + picker btn) | | | | |
 | H8 | Touch-target size ≥44px on tablet emul (B/G/H tabs) | — | — | — | | |
 
 ### Z. Performance + console hygiene (3 checks)
 
 | # | Test | E1 Chrome | E2 Firefox | E3 Edge | E4 Tab-P | E5 Tab-L |
 |---|---|---|---|---|---|---|
-| Z1 | First contentful paint < 2s on a warm cache | | | | | |
-| Z2 | Console clean (no errors / no warnings beyond expected service-worker / vite-dev noise) | | | | | |
-| Z3 | Network panel: no 5xx; no aborted requests on golden-path nav | | | | | |
+| Z1 | First contentful paint < 2s on a warm cache | ✅ FCP 560ms on hard reload (TTFB 95ms, DOMInteractive 110ms; warm cache will be faster) | | | | |
+| Z2 | Console clean (no errors / no warnings beyond expected service-worker / vite-dev noise) | ⚠️ 1 issue: form fields w/o id/name (count 4) — FX-014 | | | | |
+| Z3 | Network panel: no 5xx; no aborted requests on golden-path nav | ✅ all requests 200/304 across login + Data + Apps + Users + Audit + Response Detail (no 5xx, no aborts) | | | | |
 
 ---
 
@@ -311,6 +311,200 @@ Things that historically diverge between engines. Note any divergence even if fu
 **Severity rationale:** HIGH — same class as FX-001 but narrower (only edit/delete operations). All read paths worked, so this slipped past Sections C/D/E which exercised only GET/POST. Caught the moment Section F tried to mutate.
 
 **Lesson learned:** When fixing CORS for a surface that does real CRUD, enumerate ALL methods the frontend uses (`grep "method:" src/`) before declaring the fix complete. A FX-001-style fix that covers only "the methods we tested" leaves a hole proportional to the methods you didn't test. Worker test gap from FX-001 doubly applies here — a regression test asserting `Access-Control-Allow-Methods` includes the full set would have surfaced this without browser repro.
+
+---
+
+## Findings — Resume session 2026-05-03 (E1 Chrome G3 + Section H + Section Z)
+
+> Tester: Claude (driving via Chrome DevTools MCP). Fresh session resumed from 2026-05-02 ~00:30 PHT pause. Carl approved the resume + delegation in chat.
+
+### [FX-008] [MEDIUM] Reissue token modal: QR rendering deferred
+
+**Found while:** E1 G3 (HCWs → REISSUE on HCW-TEST-001 → "Issue new token").
+**Affected env(s):** All — backend serves the URL + token; frontend modal copy explicitly defers QR rendering.
+
+**Repro:**
+1. Login as carl_admin → Data → HCWs → click REISSUE on HCW-TEST-001.
+2. Confirmation modal renders (Verde-styled, `position:fixed z-50` over `bg-ink/70` scrim) — copy: "Issue a new enrollment token for HCW-TEST-001? The previous token stops working as soon as the HCW switches devices."
+3. Click "Issue new token". POST `/admin/api/hcws/HCW-TEST-001/reissue-token` returns 200 with `{old_jti, new_jti, new_token, expires_at, enroll_url}` — verified in Network panel.
+4. Modal flips to success state showing **enrollment URL + raw token (for manual paste)** — both rendered as copy-buttons (proper Verde styling).
+5. Modal copy reads literally: *"QR rendering lands in a follow-up. For now, paste the URL into a QR generator the HCW can scan, or have them paste the token into the enrollment screen on their device."*
+
+**Expected per QA matrix G3:** "ReissueModal shows QR; clicking 'Reissue' generates new JWT (verify in network)."
+**Actual:** JWT generation works end-to-end (CAS-protected, prev_jti → old_jti round-trip verified), but **no QR is rendered** — copy explicitly defers.
+
+**Severity rationale:** MEDIUM. The QR was the friction-reducing UX for handing over enrollment links to HCWs in the field; without it, every reissue requires the admin to either (a) manually copy the URL into a third-party QR generator (operational risk: external service exposure of the token), or (b) verbally relay the token (operational risk: paste error on a 200-char JWT). For v2.0.0 of an "operations console" the absence is felt. NOT a bug per se — clearly scoped and labelled in the modal — but this is the v2.0.0 release; the "follow-up" needs to be explicitly tracked as a post-v2.0.0 commitment or pulled in.
+
+**Counterpoint to FX-003 partial scope:** the Reissue *confirmation* modal IS proper Verde-styled (not native `window.confirm`). FX-003's claim that "destructive admin actions use native dialogs" applies to REVOKE on Users, not to Reissue token. Worth grepping `confirm(`/`alert(` to enumerate which destructive actions still use native dialogs vs already use Verde modals.
+
+**Status:** Logged for triage. Decision needed: ship v2.0.0 with a tracked post-v2.0.0 follow-up, or pull QR rendering into the v2.0.0 sprint window. Effort estimate: ~2h to wire `qrcode` (or similar) into the existing modal — the data is already there (`enroll_url` in the response).
+
+**Evidence:** `screens/2026-05-03-e1-g3-reissue-modal-confirm.png`, `screens/2026-05-03-e1-g3-reissue-modal-issued-no-qr.png`.
+
+---
+
+### [FX-009] [LOW–MEDIUM] File picker `accept` attribute is empty despite UI hint promising "PDF / ZIP / PNG / JPEG / GIF"
+
+**Found while:** E1 H2 (Apps → Files panel — DOM inspection of the `<input type="file">`).
+**Affected env(s):** All — DOM-level config issue, browser-agnostic.
+
+**Repro:**
+1. Login as carl_admin → Configuration → Apps & Settings → Files panel.
+2. Inspect the file input via DevTools: `document.querySelector('input[type="file"]')`.
+3. UI hint above the picker reads "PDF / ZIP / PNG / JPEG / GIF, UP TO 100.0 MB".
+4. Actual `input.accept` value: `""` (empty string).
+5. Clicking "Choose File" opens a system file dialog with NO type filter — user can pick any file (`.exe`, `.txt`, `.docx`, etc.).
+
+**Expected:** `accept="application/pdf,application/zip,image/png,image/jpeg,image/gif"` (or extension-based equivalent).
+**Actual:** `accept=""` — no client-side filter; relies entirely on worker-side validation to reject mismatched types.
+
+**Severity rationale:** LOW–MEDIUM. Not a security vulnerability (worker enforcement is the actual gate), but UX regression: user picks a non-allowed file, hits Upload, gets a (presumably) generic 400 from the worker, and has to re-pick. UI lying about what's filterable. Server-side enforcement should be verified separately — the absence of client-side `accept` is just "doubled up" defense-in-depth missing.
+
+**Status:** Logged for triage. ~30 min fix to populate the `accept` attribute from the same allow-list the worker uses.
+
+**Evidence:** `screens/2026-05-03-e1-h1-files-picker.png`.
+
+---
+
+### [FX-010] [LOW] Files panel has no drag-drop UI; native browser button only
+
+**Found while:** E1 H1 (Apps → Files panel — visual + DOM inspection).
+**Affected env(s):** All — design/UX scope choice.
+
+**Repro:**
+1. Apps → Files panel renders a single native browser "Choose File" button + UI hint text.
+2. DOM scan for drop zones: `document.querySelectorAll('[ondrop], .drop-zone, [data-drop]')` returns 0 elements.
+3. No drag-and-drop affordance — drag a file onto the page, nothing happens (browser navigates to the file).
+
+**Expected per DESIGN.md "real software, not a government form":** A Verde-styled drop-zone with hairline border, "Drop files here or click to browse" copy, hover-state thicker border, drag-over state ink-tinted background.
+**Actual:** Native browser file-input button — same as a Bootstrap 3 admin in 2014.
+
+**Severity rationale:** LOW. Functional, accessible (native input is a11y-clean), and the UX gap matters more for HCW/end-user touchpoints than for admin operators. But the admin portal is also where designers/PMs will look first to assess "does this product feel professional" — the native button is the most jarring chrome on the page and stands next to otherwise-polished Verde styling. Cosmetic-blocking-for-v2.0.0-bar candidate.
+
+**Status:** Logged for triage. ~1h fix to wire `react-dropzone` (or hand-roll) onto the existing input. Pairs naturally with FX-009 (populate `accept` at the same time).
+
+---
+
+### [FX-011] [HIGH] Soft reload / fresh URL navigation renders blank page on admin frontend (service-worker race or shell-cache bug)
+
+**Found while:** E1 H4 (reload after setting a localStorage sentinel) — reproducible on every soft reload thereafter, AND on every fresh `window.location.href = '/admin/users'` style navigation.
+**Affected env(s):** All — service-worker / Workbox issue, not Chrome-specific (would also hit Firefox/Edge once SW is registered).
+
+**Repro:**
+1. First-ever load of `/admin/login` (no prior SW): Verde paper background renders; `<div id="root">` is empty for ~2s, then login form appears OR stays blank (race-conditional).
+2. After hard reload (Ctrl+Shift+R / `ignoreCache: true`): login form renders deterministically.
+3. Login → land on Data dashboard. Click any SPA link (Configuration → Apps, Data → Audit) — works fine (same React tree, no full reload).
+4. Press Ctrl+R / soft reload anywhere: `<div id="root">` empty, `document.readyState === 'complete'`, **no console errors**, no failed requests, all bundle assets 200/304. Page just doesn't mount.
+5. Press Ctrl+Shift+R / hard reload: renders correctly.
+6. Type a fresh URL in the address bar (`location.href = '/admin/users'`): blank again. Hard reload: renders.
+
+**Console signature on the broken loads:** zero messages. No React errors, no "rendered nothing" warnings, no SW activation events. Failure is silent.
+
+**Network signature:** all assets return 200 (or 304 for cached PNG). The Vite bundle (`/assets/index-DmcDRmNZ.js`) loads. The CSS loads. Workbox's offline message ("[PWA] Ready to work offline") fires on first load only.
+
+**Likely cause** (need source-dive to confirm):
+- `vite.config.ts` per memory `project_f2_verde_manual_prod.md` has `registerType: 'prompt'` for the F2 PWA. The admin frontend may share the same vite-plugin-pwa config, which means the SW is in prompt mode and the client-side update flow expects a user action before activating the new SW.
+- Possible interaction with the Workbox service worker pre-caching the *previous* `index.html` shell that referenced an old bundle hash, so soft reloads serve the stale shell + the new bundle assets — but the React root mounts inside a stale element tree that doesn't exist in the new bundle, silently failing.
+- OR: the SW is intercepting `/admin/login` (and other routes) and returning a cached blank shell that has no `<script>` tag pointing to the current bundle.
+
+**Severity rationale:** HIGH. **Every user who reloads the page sees a blank screen** — and "reload" includes Ctrl+R, pull-to-refresh on tablets (E4/E5), and the auto-update prompt that the SW itself triggers. Even if hard-reload restores the page, no operator will diagnose this — they'll close the tab and re-navigate, then re-login (per in-memory session policy), losing context. For a v2.0.0 "operations console" this is a flat-out regression vs the legacy M10 single-page admin (which had no SW caching admin routes).
+
+**v2.0.0 disposition:** **Blocker.** Either (a) exclude `/admin/*` routes from SW pre-caching (simplest), or (b) move the admin to a non-PWA chunk served at `/admin/` with its own `index.html` outside Workbox scope, or (c) fix the registration flow so soft reloads reliably mount.
+
+**Verification gap:** No test currently exercises soft-reload / fresh-URL navigation on the deployed admin. Frontend tests run with vitest's jsdom (no SW); E2E doesn't exist for the admin yet. Worth filing a follow-up to add a Playwright spec that opens `/admin/login`, logs in, hits Ctrl+R, and asserts the dashboard re-renders.
+
+---
+
+### [FX-012] [MEDIUM] No CSV / data export anywhere in the admin frontend
+
+**Found while:** E1 H3 (DOM scan across Users, Audit, Responses, DLQ, Apps for `download/export/csv` controls — 0 matches on every page).
+**Affected env(s):** All — feature scope, not browser-specific.
+
+**Repro:**
+1. Login as carl_admin → walk every dashboard tab.
+2. Audit (48 events): no Export. Responses (1 row): no Export. DLQ: no Export visible. HCWs: no Export. Users: no Export. Roles: no Export.
+3. Apps → Data Settings has a `RUN NOW` button on the scheduled break-out export, but that triggers the worker → R2 export pipeline; **no UI to download the resulting R2 file** appears anywhere (Files panel only shows non-export uploads).
+
+**Expected (per CSWeb mirror promise + Sprint AP4 spec §12.4):** At minimum, CSV export for Audit (forensic/compliance) and Responses (data review). DLQ export would be nice for incident analysis.
+**Actual:** No data egress UI. Operators can read on-screen but can't pull data out of the portal for offline analysis without going to the underlying spreadsheet directly — which defeats the purpose of having an admin portal.
+
+**Severity rationale:** MEDIUM. Sprint AP4 spec §12.4 may legitimately scope this as "v2.1.0 feature" (need to re-read), in which case it's a known scope gap, not a bug. But for "CSWeb-mirror operations console" this is a gaping product hole — CSWeb's primary export surface (Excel / CSV per dashboard) is what makes it useful; an admin portal that can't export its own data is structurally weaker than the legacy SPEED-2023 spreadsheet workflow.
+
+**Status:** Logged for triage. Decision needed: (a) defer to v2.1.0 with explicit roadmap entry, (b) add CSV export to Audit + Responses as a v2.0.0 commitment (~half-day each = ~1 day), or (c) settle for the scheduled break-out R2 exports as the official egress path and add a Files-panel "Browse exports" view (~half-day).
+
+---
+
+### [FX-013] [LOW] Files filename link is a raw `<a href>` without `download` attribute
+
+**Found while:** E1 H3 (DOM inspection of the existing file row in the Files panel).
+**Affected env(s):** All — relies on Worker `Content-Disposition: attachment` header behavior, which varies subtly across browsers.
+
+**Repro:**
+1. Apps → Files panel → existing file (`Screenshot 2026-05-02 163453.png`).
+2. DOM: `<a href="https://f2-pwa-worker-staging.hcw.workers.dev/admin/api/dashboards/apps/files/c7f339c6-...">Screenshot 2026-05-02 163453.png</a>`.
+3. No `download` attribute. No `target` attribute. No `rel`. No onclick handler.
+4. Behavior depends entirely on the worker's response Content-Disposition header — not verified in this session.
+
+**Expected:** Either `<a download>` (forces save dialog with proposed filename) OR a JS click handler that fetches the URL as a Blob and uses `URL.createObjectURL` + a temporary anchor with `download`. Both patterns are robust across browsers/engines and decouple from Content-Disposition.
+**Actual:** Bare `<a href>`. If the worker omits Content-Disposition, browsers will inline-render the image (or PDF, or text) instead of saving it. Save-dialog behavior is not guaranteed.
+
+**Severity rationale:** LOW. Worker-side may already set Content-Disposition correctly (E5f passed earlier this session). But it's a fragile coupling — moves a frontend-controllable behavior into worker config. One-line fix.
+
+**Status:** Logged for triage. Worth verifying the worker actually sets `Content-Disposition: attachment; filename="..."` on file responses; if so, the frontend `download` attr is just defense-in-depth. If not, this is the actual bug surfacing.
+
+---
+
+### [FX-014] [LOW] Form fields without `id` or `name` attributes (Chrome DevTools Issues panel: count 4)
+
+**Found while:** E1 Z2 (console review at session end).
+**Affected env(s):** All — DOM-level a11y/best-practice issue.
+
+**Repro:**
+1. Open DevTools → Issues panel after login + dashboard nav.
+2. One issue group: "A form field element should have an id or name attribute" with count 4.
+3. Likely candidates (would need DOM grep to pinpoint): the date inputs (`Date "FROM"` etc), or the search/facility/role textboxes, or the unlabelled email/phone fields in the user-edit modal.
+
+**Expected:** Every form field has either an `id` (paired with a `<label for=>`) or a `name` (paired with a label parent) — for a11y, autofill, form-reset, and password-manager support.
+**Actual:** 4 fields lack both.
+
+**Severity rationale:** LOW. Functional + accessible at the visible-label level (the snapshot shows labels rendered correctly), but breaks browser autofill / password-manager heuristics, and risks downstream a11y test failures.
+
+**Status:** Logged for triage. ~30 min fix once the 4 fields are pinpointed (`grep -n 'type="text"' src/admin/`).
+
+---
+
+### [FX-015] [MEDIUM] Versioning telemetry empty: PWA version, Build SHA, Worker version all read "unknown"
+
+**Found while:** E1 — Apps & Settings → Versioning panel renders all "unknown".
+**Affected env(s):** All — worker-side env-var injection gap, not browser-specific.
+
+**Repro:**
+1. Login as carl_admin → Configuration → Apps & Settings → Versioning panel.
+2. Renders: PWA VERSION `unknown` · PWA BUILD SHA `unknown` · WORKER VERSION `unknown` · LAST PAGES DEPLOY `—`.
+3. Network: GET `/admin/api/dashboards/apps/version` returns 200 with body `{"pwa_version":"unknown","pwa_build_sha":"unknown","worker_version":"unknown","form_revisions":[...],"total_submissions":1,"last_pages_deploy_at":null}`.
+
+**Expected:** Worker injects the `package.json` version + git SHA + worker deploy timestamp at build time, dashboard reads those values. Last Pages deploy should come from the CF Pages API (or be cached by the deploy workflow).
+**Actual:** Worker returns the literal string `"unknown"` for every version field. Build pipeline is not injecting version metadata.
+
+**Severity rationale:** MEDIUM. Quality-bar gap: when production is at v2.0.0 and an incident hits, the first thing operators ask is "what version is running?" — the answer needs to come from the portal, not from `wrangler deployments list`. Also breaks the mental model of "this admin portal is the operations console" — an ops console that can't tell you what's running is half a console.
+
+**Status:** Logged for triage. Two tracks to fix: (a) build-time injection in the worker (`wrangler.toml` `[vars]` block + `package.json.version` read at deploy time, ~30 min), and (b) frontend equivalent (`PWA_BUILD_SHA` env var threaded through Vite, ~30 min). Last Pages deploy timestamp can come from a `pages-deploy-info.json` written by the deploy workflow (~30 min).
+
+---
+
+## E1 Chrome — Final tally (resume session 2026-05-03)
+
+**Tests run this session:** G3, H1, H2, H3, H4, H5, H6, H7, Z1, Z2, Z3 (11 tests).
+**H8 N/A on desktop** (defers to E4/E5 tablet emulation).
+
+**Disposition:**
+- ✅ Pass: H4, H6, H7, Z1, Z3 (5)
+- ⚠️ Partial / minor: G3, H1, H5, Z2 (4)
+- ❌ Fail / new finding: H2, H3 (2)
+
+**E1 Chrome end state:** 28/30 tests run (Sections A–G + H1–H7 + Z1–Z3). 25 pass / 3 partial / 2 fail. Plus 8 new findings filed (FX-008 through FX-015).
+
+**Cumulative finding pool across both sessions:** 15 findings (FX-001 fixed, FX-004 fixed, FX-007 fixed; FX-005 process note; FX-002, FX-003, FX-006, FX-008, FX-009, FX-010, FX-011, FX-012, FX-013, FX-014, FX-015 open for triage).
 
 ---
 
