@@ -508,6 +508,38 @@ Things that historically diverge between engines. Note any divergence even if fu
 
 ---
 
+## Fix dispositions — 2026-05-03 implementation pass
+
+| ID | Severity | Disposition | Commit | Pending |
+|---|---|---|---|---|
+| FX-001 | HIGH | ✅ shipped 2026-05-02 | (prior session) | — |
+| FX-002 | MED | ⏸ deferred — half-day refactor (usePerms hook + RequirePerm wrapper). Defense-in-depth UX, not security-blocking. | — | follow-up session |
+| FX-003 | LOW | ⏸ deferred to v2.1.0 — cosmetic native-confirm sweep. | — | follow-up |
+| FX-004 | HIGH | ✅ shipped 2026-05-02 | (prior session) | — |
+| FX-005 | LOW | n/a — process note | — | — |
+| FX-006 | MED | ✅ fix shipped — `F2_AUDIT_COLUMNS` extended in `src/Schema.js` to include the 7 admin-context columns the migration added. | `3bd62dd` | AS deploy: `npm run build` in backend/ + push `dist/Code.gs` to AS via clasp/manual paste |
+| FX-007 | HIGH | ✅ shipped 2026-05-02 | (prior session) | — |
+| FX-008 | MED | ✅ fix shipped — added `qrcode.react` (~3KB), wired `<QRCodeSVG value={enroll_url} size={192}/>` into the success state. Removed the "follow-up" copy. | `a260800` | wrangler pages deploy |
+| FX-009 | LOW–MED | ✅ fix shipped — `accept` attr on file input matches worker MIME allowlist + extension list. | `f413930` | wrangler pages deploy |
+| FX-010 | LOW | ✅ fix shipped — drag-drop wired on UploadRow with dragenter/over/leave/drop + visual feedback (border-signal + bg-secondary/20 on active). | `f413930` | wrangler pages deploy |
+| FX-011 | HIGH | ✅ fix shipped — `navigateFallbackDenylist: [/^\/admin(\/|$)/]` in `vite.config.ts`; admin nav requests bypass SW fallback, fetch fresh HTML from CF Pages. | `d3e2bc1` | wrangler pages deploy + browser hard-reload to clear stale SW |
+| FX-012 | MED | ⏸ scope decision — defer to v2.1.0 OR add minimal CSV export to Audit + Responses (~1 day). Awaiting product call. | — | scope call |
+| FX-013 | LOW | ✅ fix shipped — `download={r.filename}` attr on filename anchors in Files panel. Defense-in-depth alongside Worker Content-Disposition. | `f413930` | wrangler pages deploy |
+| FX-014 | LOW | ✅ fix shipped (partial coverage) — `name` attr derived from label slug on `FilterDate` + `FilterText` in `ResponsesTab` + `AuditTab`. Same shape duplicated in DLQTab/HCWsTab/UsersDashboard/MapReport/SyncReport — sweep on next QA pass if Issues panel still flags those. | `5b8445e` | wrangler pages deploy |
+| FX-015 | MED | ✅ fix shipped — `[vars]` + `[env.staging.vars]` blocks in `wrangler.toml` populate PWA_VERSION / PWA_BUILD_SHA / WORKER_VERSION (static defaults; per-deploy SHA via `--var` override). | `697dfc0` | wrangler deploy --env staging (then production) |
+
+**Tests after fixes:** backend 173/173 ✅, worker 166/166 ✅, app 356/356 ✅. App typecheck clean. Worker typecheck shows a pre-existing `Uint8Array<ArrayBufferLike>` overload error unrelated to this batch.
+
+**Deploy checklist (Carl-driven):**
+1. **Worker:** `cd deliverables/F2/PWA/worker && wrangler deploy --env staging --var PWA_BUILD_SHA:$(git rev-parse --short HEAD)`. Picks up FX-015 [vars] + the existing FX-001/004/007 source.
+2. **Apps Script:** `cd deliverables/F2/PWA/backend && npm run build` (already done — `dist/Code.gs` regenerated 2026-05-03), then push `dist/Code.gs` to the AS project via clasp or manual paste, then click Deploy → Manage Deployments → New version. Picks up FX-006 schema fix.
+3. **Pages frontend:** `cd deliverables/F2/PWA/app && $env:VITE_F2_PROXY_URL='https://f2-pwa-worker-staging.hcw.workers.dev'; npm run build && wrangler pages deploy dist --project-name=f2-pwa --branch=staging`. Picks up FX-008/009/010/011/013/014.
+4. **Browser re-verify:** hard-reload to clear stale SW, then run E1 G3 / H1–H7 / Z1–Z3 again. FX-011 should now mount on soft reload; FX-008 QR should render; FX-014 issue panel should show ≤ 0 form-field flags on the Data dashboard.
+
+**FX-002 follow-up:** ~half-day. Add `usePerms()` hook reading the JWT's `perms` claim (or role-version cache); add `<RequirePerm perm="dash_X">{children}</RequirePerm>` wrapper; gate nav entries in `Layout.tsx` and per-dashboard "+ Add" / Edit / Delete CTAs. Worth doing before v2.0.0 ships but not strictly blocking — API-side enforcement is the actual security gate.
+
+---
+
 ## Sign-off
 
 - [ ] All 5 environments green or with only LOW findings
