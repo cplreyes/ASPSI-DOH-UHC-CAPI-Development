@@ -30,6 +30,17 @@ var F2_AUDIT_COLUMNS = [
   'facility_id',
   'app_version',
   'payload_json',
+  // Admin-context extensions (added by migrateExtendF2AuditColumns 2026-05-01;
+  // FX-006 2026-05-03: previously missing here, so _buildAuditCtx.readAll
+  // skipped these columns and the Audit dashboard rendered them empty even
+  // though AdminAudit.writeAuditRow had been populating them on the sheet).
+  'actor_username',
+  'actor_jti',
+  'actor_role',
+  'event_resource',
+  'event_payload_json',
+  'client_ip_hash',
+  'request_id',
 ];
 
 var F2_CONFIG_COLUMNS = ['key', 'value'];
