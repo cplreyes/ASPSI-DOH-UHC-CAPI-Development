@@ -59,6 +59,15 @@ export default defineConfig(({ mode }) => {
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest}'],
         navigateFallback: '/index.html',
+        // FX-011 (2026-05-03): admin portal routes must NOT be served from
+        // the cached HCW-PWA shell. Workbox's navigateFallback otherwise
+        // serves the previous deploy's `/index.html` to admin nav requests,
+        // and that stale shell can reference a JS bundle whose route table
+        // lacks `/admin/*` — React mounts nothing, page goes blank with no
+        // console error. CF Pages already SPA-routes /admin/* to the live
+        // index.html, so denying the SW fallback for admin routes lets the
+        // browser fetch fresh HTML pointing at the current bundle hash.
+        navigateFallbackDenylist: [/^\/admin(\/|$)/],
         cleanupOutdatedCaches: true,
         // Verde Manual fonts. See DESIGN.md. CDN now, self-host follow-up.
         // CSS = StaleWhileRevalidate (refresh when online); woff2 = CacheFirst.
