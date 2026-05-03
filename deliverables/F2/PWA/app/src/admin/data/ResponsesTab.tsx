@@ -43,8 +43,8 @@ export interface ResponsesTabProps {
 }
 
 interface UiFilters {
-  from: string;       // YYYY-MM-DD or ''
-  to: string;         // YYYY-MM-DD or ''
+  from: string; // YYYY-MM-DD or ''
+  to: string; // YYYY-MM-DD or ''
   facility_id: string;
   source_path: string; // '' | 'self_admin' | 'paper_encoded' | 'capi'
   errors_only: boolean;
@@ -59,7 +59,14 @@ function defaultFromIso(): string {
 
 function readFiltersFromUrl(): UiFilters {
   if (typeof window === 'undefined') {
-    return { from: defaultFromIso(), to: '', facility_id: '', source_path: '', errors_only: false, q: '' };
+    return {
+      from: defaultFromIso(),
+      to: '',
+      facility_id: '',
+      source_path: '',
+      errors_only: false,
+      q: '',
+    };
   }
   const p = new URLSearchParams(window.location.search);
   return {
@@ -155,19 +162,47 @@ export function ResponsesTab({ apiBaseUrl, fetchImpl }: ResponsesTabProps): JSX.
 
   return (
     <div className="flex flex-col gap-4">
-      <form onSubmit={onFilterSubmit} className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3">
-        <FilterDate label="From" value={filters.from} onChange={(v) => setFilters({ ...filters, from: v })} />
-        <FilterDate label="To" value={filters.to} onChange={(v) => setFilters({ ...filters, to: v })} />
-        <FilterText label="Facility ID" value={filters.facility_id} onChange={(v) => setFilters({ ...filters, facility_id: v })} />
-        <FilterText label="Search" value={filters.q} onChange={(v) => setFilters({ ...filters, q: v })} />
+      <form
+        onSubmit={onFilterSubmit}
+        className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3"
+      >
+        <FilterDate
+          label="From"
+          value={filters.from}
+          onChange={(v) => setFilters({ ...filters, from: v })}
+        />
+        <FilterDate
+          label="To"
+          value={filters.to}
+          onChange={(v) => setFilters({ ...filters, to: v })}
+        />
+        <FilterText
+          label="Facility ID"
+          value={filters.facility_id}
+          onChange={(v) => setFilters({ ...filters, facility_id: v })}
+        />
+        <FilterText
+          label="Search"
+          value={filters.q}
+          onChange={(v) => setFilters({ ...filters, q: v })}
+        />
         <div className="flex items-center gap-2">
-          <PillToggle active={filters.source_path === 'self_admin'} onClick={() => togglePill('source_path', 'self_admin')}>
+          <PillToggle
+            active={filters.source_path === 'self_admin'}
+            onClick={() => togglePill('source_path', 'self_admin')}
+          >
             Self-admin
           </PillToggle>
-          <PillToggle active={filters.source_path === 'paper_encoded'} onClick={() => togglePill('source_path', 'paper_encoded')}>
+          <PillToggle
+            active={filters.source_path === 'paper_encoded'}
+            onClick={() => togglePill('source_path', 'paper_encoded')}
+          >
             Paper-encoded
           </PillToggle>
-          <PillToggle active={filters.errors_only} onClick={() => setFilters({ ...filters, errors_only: !filters.errors_only })}>
+          <PillToggle
+            active={filters.errors_only}
+            onClick={() => setFilters({ ...filters, errors_only: !filters.errors_only })}
+          >
             Errors only
           </PillToggle>
         </div>
@@ -196,14 +231,29 @@ export function ResponsesTab({ apiBaseUrl, fetchImpl }: ResponsesTabProps): JSX.
 // "form field should have an id or name" issue panel stays clean and so
 // browser autofill / password managers have something to key on.
 function slugifyLabel(label: string): string {
-  return label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'field';
+  return (
+    label
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '') || 'field'
+  );
 }
 
-function FilterDate({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
+function FilterDate({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}): JSX.Element {
   const name = slugifyLabel(label);
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="date"
         name={name}
@@ -215,11 +265,21 @@ function FilterDate({ label, value, onChange }: { label: string; value: string; 
   );
 }
 
-function FilterText({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
+function FilterText({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}): JSX.Element {
   const name = slugifyLabel(label);
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="text"
         name={name}
@@ -231,7 +291,15 @@ function FilterText({ label, value, onChange }: { label: string; value: string; 
   );
 }
 
-function PillToggle({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }): JSX.Element {
+function PillToggle({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}): JSX.Element {
   return (
     <button
       type="button"
@@ -267,8 +335,12 @@ function ResponsesTable({ rows }: { rows: ResponseRow[] }): JSX.Element {
               <Td mono>{formatTs(r.submitted_at_server)}</Td>
               <Td mono>{r.hcw_id}</Td>
               <Td>{r.facility_id}</Td>
-              <Td><SourcePill value={r.source_path} /></Td>
-              <Td><StatusText value={r.status} /></Td>
+              <Td>
+                <SourcePill value={r.source_path} />
+              </Td>
+              <Td>
+                <StatusText value={r.status} />
+              </Td>
               <Td>
                 <Link
                   to={`/admin/data/responses/${encodeURIComponent(r.submission_id)}`}
@@ -285,23 +357,39 @@ function ResponsesTable({ rows }: { rows: ResponseRow[] }): JSX.Element {
   );
 }
 
-function Th({ children, ...rest }: { children?: React.ReactNode } & React.ThHTMLAttributes<HTMLTableCellElement>): JSX.Element {
+function Th({
+  children,
+  ...rest
+}: { children?: React.ReactNode } & React.ThHTMLAttributes<HTMLTableCellElement>): JSX.Element {
   return (
-    <th {...rest} className="px-3 py-2 font-mono text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+    <th
+      {...rest}
+      className="px-3 py-2 font-mono text-[10px] font-medium uppercase tracking-wider text-muted-foreground"
+    >
       {children}
     </th>
   );
 }
 
-function Td({ children, mono = false }: { children?: React.ReactNode; mono?: boolean }): JSX.Element {
-  return (
-    <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>
-  );
+function Td({
+  children,
+  mono = false,
+}: {
+  children?: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
+  return <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>;
 }
 
 function SourcePill({ value }: { value: string }): JSX.Element {
   const label =
-    value === 'self_admin' ? 'Self-admin' : value === 'paper_encoded' ? 'Paper' : value === 'capi' ? 'CAPI' : value || '—';
+    value === 'self_admin'
+      ? 'Self-admin'
+      : value === 'paper_encoded'
+        ? 'Paper'
+        : value === 'capi'
+          ? 'CAPI'
+          : value || '—';
   return (
     <span className="rounded-full border border-hairline px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
       {label}

@@ -113,11 +113,32 @@ export function AuditTab({ apiBaseUrl, fetchImpl }: AuditTabProps): JSX.Element 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3">
-        <FilterDate label="From" value={filters.from} onChange={(v) => setFilters({ ...filters, from: v })} />
-        <FilterDate label="To" value={filters.to} onChange={(v) => setFilters({ ...filters, to: v })} />
-        <FilterText label="Event type" value={filters.event_type} onChange={(v) => setFilters({ ...filters, event_type: v })} placeholder="admin_login" />
-        <FilterText label="Actor" value={filters.actor_username} onChange={(v) => setFilters({ ...filters, actor_username: v })} />
-        <FilterText label="Search" value={filters.q} onChange={(v) => setFilters({ ...filters, q: v })} />
+        <FilterDate
+          label="From"
+          value={filters.from}
+          onChange={(v) => setFilters({ ...filters, from: v })}
+        />
+        <FilterDate
+          label="To"
+          value={filters.to}
+          onChange={(v) => setFilters({ ...filters, to: v })}
+        />
+        <FilterText
+          label="Event type"
+          value={filters.event_type}
+          onChange={(v) => setFilters({ ...filters, event_type: v })}
+          placeholder="admin_login"
+        />
+        <FilterText
+          label="Actor"
+          value={filters.actor_username}
+          onChange={(v) => setFilters({ ...filters, actor_username: v })}
+        />
+        <FilterText
+          label="Search"
+          value={filters.q}
+          onChange={(v) => setFilters({ ...filters, q: v })}
+        />
       </div>
 
       {state.kind === 'loading' ? (
@@ -142,14 +163,29 @@ export function AuditTab({ apiBaseUrl, fetchImpl }: AuditTabProps): JSX.Element 
 // FX-014 (2026-05-03): inputs derive `name` from the label so Chrome's
 // "form field should have an id or name" issue panel stays clean.
 function slugifyLabel(label: string): string {
-  return label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'field';
+  return (
+    label
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '') || 'field'
+  );
 }
 
-function FilterDate({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
+function FilterDate({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}): JSX.Element {
   const name = slugifyLabel(label);
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="date"
         name={name}
@@ -161,11 +197,23 @@ function FilterDate({ label, value, onChange }: { label: string; value: string; 
   );
 }
 
-function FilterText({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }): JSX.Element {
+function FilterText({
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}): JSX.Element {
   const name = slugifyLabel(label);
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="text"
         name={name}
@@ -221,7 +269,13 @@ function Th({ children }: { children?: React.ReactNode }): JSX.Element {
   );
 }
 
-function Td({ children, mono = false }: { children?: React.ReactNode; mono?: boolean }): JSX.Element {
+function Td({
+  children,
+  mono = false,
+}: {
+  children?: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
   return <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>;
 }
 
@@ -238,7 +292,8 @@ function EmptyBanner(): JSX.Element {
     <div className="border border-hairline bg-secondary/20 px-4 py-6">
       <p className="font-serif text-lg">No audit events match the current filters.</p>
       <p className="mt-1 text-sm text-muted-foreground">
-        Audit captures admin logins, logouts, role changes, and HCW token reissues. Widen the date range to see more.
+        Audit captures admin logins, logouts, role changes, and HCW token reissues. Widen the date
+        range to see more.
       </p>
     </div>
   );

@@ -106,7 +106,9 @@ export function ReissueTokenModal({
           </p>
           <h3 className="mt-1 font-serif text-xl font-medium tracking-tight">
             <span className="font-mono">{hcwId}</span>
-            {facilityName ? <span className="ml-2 text-muted-foreground">· {facilityName}</span> : null}
+            {facilityName ? (
+              <span className="ml-2 text-muted-foreground">· {facilityName}</span>
+            ) : null}
           </h3>
         </header>
 
@@ -277,7 +279,9 @@ function FailureView({ error, onCancel }: { error: ApiError; onCancel: () => voi
 function Field({ label, children }: { label: string; children: React.ReactNode }): JSX.Element {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       {children}
     </label>
   );

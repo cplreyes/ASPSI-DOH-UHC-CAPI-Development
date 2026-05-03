@@ -183,7 +183,8 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
 // and the worker's apps.ts ALLOWED_MIME. Browsers honor `accept` as a hint
 // (filters the OS picker by default) so it doesn't replace server-side
 // validation but does close the UX gap where users could pick anything.
-const ACCEPT_ATTR = '.pdf,.zip,.png,.jpg,.jpeg,.gif,application/pdf,application/zip,image/png,image/jpeg,image/gif';
+const ACCEPT_ATTR =
+  '.pdf,.zip,.png,.jpg,.jpeg,.gif,application/pdf,application/zip,image/png,image/jpeg,image/gif';
 
 function UploadRow({
   uploading,
@@ -335,9 +336,8 @@ function EmptyState(): JSX.Element {
   return (
     <div className="border border-hairline bg-secondary/20 px-4 py-4">
       <p className="text-sm text-muted-foreground">
-        No files uploaded yet. Reference documents (PDF protocols, training packets,
-        ZIP exports) live here. Uploads are streamed to R2 with the original filename
-        preserved on download.
+        No files uploaded yet. Reference documents (PDF protocols, training packets, ZIP exports)
+        live here. Uploads are streamed to R2 with the original filename preserved on download.
       </p>
     </div>
   );
@@ -351,7 +351,13 @@ function Th({ children }: { children?: React.ReactNode }): JSX.Element {
   );
 }
 
-function Td({ children, mono = false }: { children?: React.ReactNode; mono?: boolean }): JSX.Element {
+function Td({
+  children,
+  mono = false,
+}: {
+  children?: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
   return <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>;
 }
 
@@ -373,8 +379,10 @@ function formatTs(iso: string): string {
 function friendlyError(err: ApiError, fallback: string): string {
   if (err.code === 'E_PERM_DENIED') return 'Your role lacks dash_apps. Contact an Administrator.';
   if (err.code === 'E_NETWORK') return 'Network unavailable. Try again.';
-  if (err.code === 'E_BACKEND') return 'Backend unavailable - Apps Script staging may be unreachable.';
-  if (err.code === 'E_NOT_CONFIGURED') return 'File storage is not configured for this environment. Files require R2 to be enabled.';
+  if (err.code === 'E_BACKEND')
+    return 'Backend unavailable - Apps Script staging may be unreachable.';
+  if (err.code === 'E_NOT_CONFIGURED')
+    return 'File storage is not configured for this environment. Files require R2 to be enabled.';
   return err.message || fallback;
 }
 
