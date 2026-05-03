@@ -5,15 +5,15 @@
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.5)
  *
  * Two-stage modal: confirmation prompt → POST to worker → renders the
- * new token + enrollment URL with copy buttons. The HCW visits the URL
- * on their device or pastes the token into the enrollment screen.
+ * new token + enrollment URL with copy buttons + a scannable QR. The HCW
+ * scans the QR on their device, or pastes the URL/token manually.
  *
- * QR rendering deferred — adding `qrcode` as a dep is a separate
- * decision; the URL + token-as-text already let the HCW enroll. A
- * follow-up commit can drop a QRCanvas component into the success
- * state without touching this flow.
+ * FX-008 (2026-05-03): wired QRCodeSVG so admins don't have to bounce
+ * the URL through a third-party QR generator (operational risk: token
+ * exposure to external service).
  */
 import { useState } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -194,9 +194,19 @@ function SuccessView({
       <div className="border-l-2 border-signal pl-3">
         <p className="font-mono text-xs uppercase tracking-wider text-signal">Token issued</p>
         <p className="mt-1 text-sm">
-          Hand this URL or token to the HCW. Expires{' '}
+          Have the HCW scan the QR below, or hand them the URL or token. Expires{' '}
           <span className="font-mono">{formatExpiry(data.expires_at)}</span>.
         </p>
+      </div>
+
+      <div className="flex justify-center border border-hairline bg-paper p-4">
+        <QRCodeSVG
+          value={data.enroll_url}
+          size={192}
+          level="M"
+          marginSize={2}
+          aria-label={`Enrollment QR code for ${data.hcw_id}`}
+        />
       </div>
 
       <Field label="Enrollment URL">
@@ -228,11 +238,6 @@ function SuccessView({
           </button>
         </div>
       </Field>
-
-      <p className="font-mono text-[10px] text-muted-foreground">
-        QR rendering lands in a follow-up. For now, paste the URL into a QR generator the HCW can
-        scan, or have them paste the token into the enrollment screen on their device.
-      </p>
 
       <div className="mt-2">
         <button
