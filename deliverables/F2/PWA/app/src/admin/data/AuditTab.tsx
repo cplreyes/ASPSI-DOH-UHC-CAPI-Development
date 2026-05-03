@@ -139,12 +139,20 @@ export function AuditTab({ apiBaseUrl, fetchImpl }: AuditTabProps): JSX.Element 
   );
 }
 
+// FX-014 (2026-05-03): inputs derive `name` from the label so Chrome's
+// "form field should have an id or name" issue panel stays clean.
+function slugifyLabel(label: string): string {
+  return label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'field';
+}
+
 function FilterDate({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
+  const name = slugifyLabel(label);
   return (
     <label className="flex flex-col gap-1">
       <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
       <input
         type="date"
+        name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
@@ -154,11 +162,13 @@ function FilterDate({ label, value, onChange }: { label: string; value: string; 
 }
 
 function FilterText({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }): JSX.Element {
+  const name = slugifyLabel(label);
   return (
     <label className="flex flex-col gap-1">
       <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
       <input
         type="text"
+        name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
