@@ -13,11 +13,35 @@ import { HCWsTab } from './HCWsTab';
 
 type TabKey = 'responses' | 'audit' | 'dlq' | 'hcws';
 
-const TABS: Array<{ key: TabKey; label: string }> = [
-  { key: 'responses', label: 'Responses' },
-  { key: 'audit', label: 'Audit' },
-  { key: 'dlq', label: 'DLQ' },
-  { key: 'hcws', label: 'HCWs' },
+// `description` is rendered as the native browser tooltip on hover/focus
+// (also announced by screen readers) — first-time operators don't have to
+// guess what each tab does. Pattern mirrors HCWsTab.tsx's REISSUE button
+// title= usage. Kept short — full operator docs live in the spec.
+const TABS: Array<{ key: TabKey; label: string; description: string }> = [
+  {
+    key: 'responses',
+    label: 'Responses',
+    description:
+      'All HCW survey submissions. Filter by date / facility / source path. Click a row to see the full answer set.',
+  },
+  {
+    key: 'audit',
+    label: 'Audit',
+    description:
+      'Forensic event log. Every admin action and HCW submission writes a row here — actor, resource, request_id traceable.',
+  },
+  {
+    key: 'dlq',
+    label: 'DLQ',
+    description:
+      'Dead-Letter Queue. Submissions that failed processing (validation, schema drift, lock timeout) are parked here for triage + replay instead of dropped.',
+  },
+  {
+    key: 'hcws',
+    label: 'HCWs',
+    description:
+      'Healthcare worker enrollment registry. One row per HCW with token state and submission status. Reissue tokens, re-encode paper responses from here.',
+  },
 ];
 
 export interface DataDashboardProps {
@@ -47,12 +71,14 @@ export function DataDashboard({ apiBaseUrl, fetchImpl }: DataDashboardProps): JS
       </header>
 
       <nav className="flex flex-wrap gap-6 text-sm" aria-label="Data dashboard tabs">
-        {TABS.map(({ key, label }) => (
+        {TABS.map(({ key, label, description }) => (
           <button
             type="button"
             key={key}
             onClick={() => switchTab(key)}
             aria-current={activeTab === key ? 'page' : undefined}
+            title={description}
+            aria-label={`${label} — ${description}`}
             className={
               activeTab === key
                 ? 'border-b-2 border-signal pb-1 text-ink'

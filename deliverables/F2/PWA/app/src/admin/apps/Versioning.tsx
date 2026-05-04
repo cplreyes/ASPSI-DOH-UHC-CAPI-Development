@@ -70,7 +70,13 @@ export function Versioning({ apiBaseUrl, fetchImpl }: VersioningProps): JSX.Elem
 
   return (
     <section className="flex flex-col gap-3">
-      <h3 className="font-serif text-lg font-medium tracking-tight">Versioning</h3>
+      <header className="flex flex-col">
+        <h3 className="font-serif text-lg font-medium tracking-tight">Versioning</h3>
+        <p className="text-xs text-muted-foreground">
+          Live build identifiers (PWA bundle, Worker, Apps Script) and per-spec submission counts.
+          First place to look during incident triage — answers “what version is in front of users right now?”
+        </p>
+      </header>
 
       {state.kind === 'loading' ? (
         <p className="text-sm text-muted-foreground">Loading…</p>

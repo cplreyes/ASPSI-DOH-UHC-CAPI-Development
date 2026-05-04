@@ -101,3 +101,99 @@
   min-height: 100vh;
   min-height: 100dvh;
 }
+
+/* Hard-clipped viewport-height variant for fixed-chrome / scrolling-main
+   layouts (admin portal sidebar pattern). Caller must also set
+   `overflow-hidden` on the same element to prevent the body scroll. */
+.h-screen-dvh {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* ============================================================
+ * Leaflet — Verde Manual styling overlay (admin Map Report).
+ * Tones default OSM tiles into the Verde paper-and-ink range so the
+ * map doesn't fight the rest of the portal's hairline aesthetic.
+ * ============================================================ */
+/* Carto Positron is already in a soft grayscale tone, so we apply only a
+   light contrast nudge instead of the full `grayscale(0.4) saturate(0.65)`
+   that the default OSM tiles needed. Keeps labels crisp + readable. */
+.verde-leaflet-wrap .leaflet-tile-pane {
+  filter: contrast(0.95) saturate(0.92);
+}
+.verde-leaflet-wrap .leaflet-control-attribution {
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-size: 10px;
+  background: hsl(var(--background) / 0.85);
+  color: hsl(var(--muted-foreground));
+}
+.verde-leaflet-wrap .leaflet-control-attribution a {
+  color: hsl(var(--primary));
+}
+.verde-leaflet-wrap .leaflet-control-zoom {
+  border: 1px solid hsl(var(--border));
+  box-shadow: none;
+}
+.verde-leaflet-wrap .leaflet-control-zoom a {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  border-bottom: 1px solid hsl(var(--border));
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+}
+.verde-leaflet-wrap .leaflet-control-zoom a:hover {
+  background: hsl(var(--secondary) / 0.5);
+}
+
+/* Verde marker — built from divIcon HTML, see MapReport.tsx VERDE_MARKER_ICON.
+   Sized to read clearly against Carto Positron's pale tone: 18px signal-green
+   dot, 3px paper ring, 1.5px ink hairline outside the ring. The triple
+   border stack gives the marker a well-defined edge regardless of whether
+   it lands on a road, building, water, or empty land tile. */
+.verde-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.verde-marker__dot {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: hsl(var(--primary));
+  border: 3px solid hsl(var(--background));
+  box-shadow:
+    0 0 0 1.5px hsl(var(--foreground)),
+    0 1px 2px hsl(var(--foreground) / 0.25);
+}
+.verde-marker:hover .verde-marker__dot,
+.verde-marker:focus-visible .verde-marker__dot {
+  background: hsl(var(--foreground));
+  box-shadow:
+    0 0 0 2px hsl(var(--primary)),
+    0 1px 4px hsl(var(--foreground) / 0.4);
+}
+
+/* (West Philippine Sea overlay removed — Carto Positron's tiles render
+   the WPS label natively at the demo zoom level within PH's EEZ.) */
+
+/* Verde popup — match the rest of the portal's hairline aesthetic. */
+.verde-leaflet-wrap .leaflet-popup-content-wrapper {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0;
+  box-shadow: 0 1px 0 hsl(var(--border));
+}
+.verde-leaflet-wrap .leaflet-popup-tip {
+  background: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  box-shadow: none;
+}
+.verde-leaflet-wrap .leaflet-popup-content {
+  margin: 10px 14px;
+  font-family: inherit;
+}
+.verde-leaflet-wrap .leaflet-popup-close-button {
+  color: hsl(var(--muted-foreground));
+}

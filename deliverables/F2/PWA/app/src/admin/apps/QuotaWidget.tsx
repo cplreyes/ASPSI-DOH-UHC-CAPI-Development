@@ -62,6 +62,9 @@ export function QuotaWidget({ apiBaseUrl, fetchImpl }: QuotaWidgetProps): JSX.El
   return (
     <section className="flex flex-col gap-2">
       <h3 className="font-serif text-lg font-medium tracking-tight">Apps Script Quota</h3>
+      <p className="text-xs text-muted-foreground">
+        Daily Apps Script execution count vs the 20,000-call limit. Hard ceiling — when this hits 100% the backend rejects writes until UTC rollover. Watch this during enumerator surge windows.
+      </p>
       {state.kind === 'loading' ? (
         <p className="text-sm text-muted-foreground">Loading...</p>
       ) : state.kind === 'failed' ? (

@@ -73,6 +73,18 @@ export default defineConfig(({ mode }) => {
           // index.html, so denying the SW fallback for admin routes lets the
           // browser fetch fresh HTML pointing at the current bundle hash.
           navigateFallbackDenylist: [/^\/admin(\/|$)/],
+          // FX-011 follow-up (2026-05-04): the denylist alone doesn't help
+          // users who already have a stale SW (no-denylist) registered from
+          // an earlier deploy — `registerType: 'prompt'` keeps the old SW in
+          // control until tabs close OR the user accepts an update prompt
+          // that workbox-window never auto-shows. skipWaiting+clientsClaim
+          // makes the new SW take control immediately on activation, so
+          // every page load past install gets the latest precache manifest
+          // and routing rules. Safe for the HCW PWA (no offline submit-queue
+          // state survives across SW versions in any case — the PWA submits
+          // on online + retries on next online).
+          skipWaiting: true,
+          clientsClaim: true,
           cleanupOutdatedCaches: true,
           // Verde Manual fonts. See DESIGN.md. CDN now, self-host follow-up.
           // CSS = StaleWhileRevalidate (refresh when online); woff2 = CacheFirst.

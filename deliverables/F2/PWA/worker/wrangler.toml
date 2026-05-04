@@ -43,9 +43,9 @@ enabled = true
 # Follow-up (post-v2.0.0): wire `[version_metadata]` binding so worker_version
 # reflects the Cloudflare-assigned deploy ID with no manual override needed.
 [vars]
-PWA_VERSION = "1.2.0"
+PWA_VERSION = "2.0.0"
 PWA_BUILD_SHA = "unknown"
-WORKER_VERSION = "0.1.0"
+WORKER_VERSION = "2.0.0"
 
 # ============================================================================
 # Staging environment (F2 Admin Portal AP0 — see docs/superpowers/runbooks/
@@ -86,6 +86,6 @@ enabled = true
 # Versioning telemetry mirror for staging (FX-015). Same pattern as top-level;
 # override PWA_BUILD_SHA via `--var` at deploy time for accurate per-deploy SHA.
 [env.staging.vars]
-PWA_VERSION = "1.2.0"
+PWA_VERSION = "2.0.0"
 PWA_BUILD_SHA = "unknown"
-WORKER_VERSION = "0.1.0-staging"
+WORKER_VERSION = "2.0.0-staging"

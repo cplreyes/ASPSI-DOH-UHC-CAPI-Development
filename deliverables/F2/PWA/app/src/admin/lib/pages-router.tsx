@@ -13,7 +13,7 @@
  * Link clicks and programmatic navigate() calls update without a full
  * page reload. popstate (browser back/forward) is also wired up.
  */
-import { createContext, useContext, useEffect, useState, type ReactNode, type MouseEvent } from 'react';
+import React, { createContext, useContext, useEffect, useState, type ReactNode, type MouseEvent } from 'react';
 
 const PATH_CHANGE_EVENT = 'f2admin:pathchange';
 
@@ -80,14 +80,16 @@ export function matchRoute<T extends { path: string }>(routes: T[], pathname: st
   return prefixCandidates[0] ?? null;
 }
 
-interface LinkProps {
+// LinkProps extends the standard anchor attributes (title, aria-label,
+// aria-current, etc.) so Layout can pass tooltip + a11y labels through
+// without each consumer having to redeclare the prop surface. `to` replaces
+// `href`; everything else flows through to the underlying <a>.
+type LinkProps = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'onClick'> & {
   to: string;
   children: ReactNode;
-  className?: string;
-  'aria-current'?: 'page' | 'true' | undefined;
-}
+};
 
-export function Link({ to, children, className, ...rest }: LinkProps): JSX.Element {
+export function Link({ to, children, ...rest }: LinkProps): JSX.Element {
   const { navigate } = useRouter();
   const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
     // Respect new-tab / cmd-click intent.
@@ -96,7 +98,7 @@ export function Link({ to, children, className, ...rest }: LinkProps): JSX.Eleme
     navigate(to);
   };
   return (
-    <a href={to} onClick={onClick} className={className} {...rest}>
+    <a href={to} onClick={onClick} {...rest}>
       {children}
     </a>
   );

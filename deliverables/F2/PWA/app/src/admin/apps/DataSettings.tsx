@@ -208,6 +208,10 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
           {form ? 'Cancel' : '+ Add setting'}
         </button>
       </div>
+      <p className="text-xs text-muted-foreground">
+        Scheduled break-out exports of F2_Responses to R2 (CSV per facility, per region, etc).
+        The Worker cron fires every 5 min and runs settings whose <code>next_run_at</code> has elapsed. Use “Run now” to trigger out-of-band.
+      </p>
 
       {form ? (
         <SettingForm

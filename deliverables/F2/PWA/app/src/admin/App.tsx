@@ -22,6 +22,7 @@ import { ReportDashboard } from './report/ReportDashboard';
 import { UsersDashboard } from './users/UsersDashboard';
 import { RolesDashboard } from './roles/RolesDashboard';
 import { AppsDashboard } from './apps/AppsDashboard';
+import { HelpPage } from './help/HelpPage';
 
 interface AdminAppProps {
   apiBaseUrl: string;
@@ -75,13 +76,34 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
     }
   }, [isAuthenticated, pathname, navigate]);
 
-  if (pathname === '/admin/login') {
-    return <Login apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />;
+  // Help is intentionally available without auth — first-time operators
+  // who haven't logged in yet should still be able to read the operator
+  // guide. Render Help BEFORE the auth gate so unauthenticated visits to
+  // /admin/help work.
+  if (pathname === '/admin/help' || pathname === '/admin/help/') {
+    return (
+      <Layout>
+        <HelpPage />
+      </Layout>
+    );
   }
 
-  if (!isAuthenticated) {
-    // Render nothing during the redirect tick — useEffect above will navigate.
-    return <></>;
+  // FX-016 (2026-05-04): show Login when either on /admin/login OR
+  // unauthenticated on any protected route. The previous shape returned
+  // `<></>` on unauthenticated + relied on the useEffect above to navigate
+  // to /admin/login — but that race lost the first event dispatch (child
+  // useEffect fires before RouterProvider's listener registration in
+  // pages-router.tsx, since child effects run before parent effects), so
+  // the URL changed via pushState but the router state never updated and
+  // AdminRoot stayed stuck on the empty fragment, producing a blank page on
+  // every full-page navigation to /admin/* without auth (typed URL,
+  // bookmarked deep link, fresh tab, soft reload). Driving the Login render
+  // off the auth state directly removes the dependency on URL synchronization
+  // and gives us deep-link-after-login as a side benefit (URL preserves the
+  // protected route the user wanted; once they authenticate, AdminRoot falls
+  // through to that route's render).
+  if (pathname === '/admin/login' || !isAuthenticated) {
+    return <Login apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />;
   }
 
   // Data dashboard + drilled-in response detail.

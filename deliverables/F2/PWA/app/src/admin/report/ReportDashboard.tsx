@@ -11,9 +11,21 @@ import { MapReport } from './MapReport';
 
 type TabKey = 'sync' | 'map';
 
-const TABS: Array<{ key: TabKey; label: string }> = [
-  { key: 'sync', label: 'Sync Report' },
-  { key: 'map', label: 'Map Report' },
+// `description` renders as the native browser tooltip + screen-reader aria-label.
+// Same pattern as DataDashboard.tsx tabs.
+const TABS: Array<{ key: TabKey; label: string; description: string }> = [
+  {
+    key: 'sync',
+    label: 'Sync Report',
+    description:
+      'Submission counts aggregated by region / province / facility. Snapshot view of fieldwork coverage.',
+  },
+  {
+    key: 'map',
+    label: 'Map Report',
+    description:
+      'Geographic distribution of submissions plotted from GPS captured at submit time. Markers cluster by area; click for facility-level detail.',
+  },
 ];
 
 export interface ReportDashboardProps {
@@ -43,12 +55,14 @@ export function ReportDashboard({ apiBaseUrl, fetchImpl }: ReportDashboardProps)
       </header>
 
       <nav className="flex flex-wrap gap-6 text-sm" aria-label="Report tabs">
-        {TABS.map(({ key, label }) => (
+        {TABS.map(({ key, label, description }) => (
           <button
             type="button"
             key={key}
             onClick={() => switchTab(key)}
             aria-current={activeTab === key ? 'page' : undefined}
+            title={description}
+            aria-label={`${label} — ${description}`}
             className={
               activeTab === key
                 ? 'border-b-2 border-signal pb-1 text-ink'

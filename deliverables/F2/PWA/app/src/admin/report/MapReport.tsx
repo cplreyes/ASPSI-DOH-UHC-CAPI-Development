@@ -1,21 +1,33 @@
 /**
- * F2 Admin Portal — Map Report.
+ * F2 Admin Portal — Map Report (Leaflet + OpenStreetMap).
  *
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 2.22)
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.8)
  *
- * Hand-rolled SVG plot of submission lat/lng over a Philippine bounding
- * box. Avoiding Leaflet keeps the bundle lean and matches Verde Manual:
- * a sparse data plot with hairline rules and signal-color markers, not
- * a colorful tile-based GIS map. The spec calls for clustering at zoom
- * <12 to handle 13K markers; that's a future concern when the dataset
- * grows — for now (≤ a few hundred markers) the SVG renders fine.
+ * Switched 2026-05-04 from hand-rolled SVG to Leaflet + OSM tiles per
+ * ASPSI directive. OSM chosen over Google Maps because:
+ *   - Zero ongoing cost (no API key, no $200/mo credit billing surface)
+ *   - Cleaner privacy posture for a health-survey ops console
+ *   - No vendor lock-in (tile provider is one-line swap)
+ *   - Bundle weight comparable to Google's loader for our use case
+ * Verde Manual aesthetic preserved via a CSS `filter: grayscale(0.4)
+ * saturate(0.7)` overlay on the tile layer — gives the map an ink-paper
+ * tone that doesn't fight the rest of the portal's hairline aesthetic.
  *
- * Sidebar shows per-region submission counts. Clicking a region marker
- * opens a tooltip with hcw_id + facility_id + submitted_at; clicking
- * again navigates to /admin/data/responses/:id (the detail page).
+ * Sidebar shows per-region submission counts. Clicking a marker opens a
+ * Popup with hcw_id + facility_id + submitted_at + "View full case" link
+ * to ResponseDetail.
+ *
+ * Marker clustering is NOT yet implemented — current ≤100-marker
+ * production scale renders cleanly without it. When the dataset crosses
+ * ~500 markers, wire `leaflet.markercluster` (already in package.json) by
+ * wrapping the marker layer in a MarkerClusterGroup. Until then, the
+ * cluster overhead isn't worth the bundle bytes.
  */
 import { useEffect, useMemo, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { Link, useRouter } from '../lib/pages-router';
@@ -45,19 +57,32 @@ interface UiFilters {
   region_id: string;
 }
 
-// Philippine bounding box, generously padded.
-const LNG_MIN = 116.5;
-const LNG_MAX = 127.0;
-const LAT_MIN = 4.5;
-const LAT_MAX = 21.5;
-const SVG_WIDTH = 600;
-const SVG_HEIGHT = 800;
+// Philippine bounding box, tight — covers the archipelago from the Sulu
+// Sea up to Batanes without padding into Taiwan / Hong Kong / SCS chrome
+// that doesn't matter for ASPSI fieldwork. MapContainer fitBounds() uses
+// this on initial load; user pan/zoom is unconstrained after that.
+const PH_BOUNDS: L.LatLngBoundsExpression = [
+  [5.0, 117.0],
+  [19.5, 126.5],
+];
 
-function project(lat: number, lng: number): { x: number; y: number } {
-  const x = ((lng - LNG_MIN) / (LNG_MAX - LNG_MIN)) * SVG_WIDTH;
-  const y = SVG_HEIGHT - ((lat - LAT_MIN) / (LAT_MAX - LAT_MIN)) * SVG_HEIGHT;
-  return { x, y };
-}
+// Custom Verde-themed marker — signal-green dot with a contrasting ring
+// stack. Sized 18px so it stands out clearly against Carto Positron's
+// already-paper-toned tile palette (the previous 12px got lost). Built
+// once at module load; reused across all markers (Leaflet's `divIcon` is
+// HTML-based, no separate sprite/asset to manage).
+const VERDE_MARKER_ICON = L.divIcon({
+  className: 'verde-marker',
+  html: '<span class="verde-marker__dot" aria-hidden="true"></span>',
+  iconSize: [22, 22],
+  iconAnchor: [11, 11],
+  popupAnchor: [0, -11],
+});
+
+// (No "West Philippine Sea" overlay needed — Carto Positron's tiles render
+// "West Philippine Sea" natively at the demo zoom level inside PH's EEZ.
+// At very-zoomed-out views Carto falls back to the multilingual SCS stack,
+// which is acceptable for the rare case the user zooms beyond PH bounds.)
 
 function defaultFromIso(): string {
   return new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
@@ -201,68 +226,63 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
   );
 }
 
-function MapPlot({ markers, hovered, onHover }: {
+function MapPlot({ markers, onHover }: {
   markers: Marker[];
   hovered: Marker | null;
   onHover: (m: Marker | null) => void;
 }): JSX.Element {
   return (
-    <div className="border border-hairline bg-paper">
-      <svg
-        viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`}
+    <div className="verde-leaflet-wrap border border-hairline bg-paper">
+      <MapContainer
+        bounds={PH_BOUNDS}
+        scrollWheelZoom
         className="aspect-[3/4] w-full"
-        role="img"
-        aria-label="Submission locations across the Philippines"
+        attributionControl
       >
-        {/* Hairline grid (5° lat/lng). Provides geographic context without tiles. */}
-        {[5, 10, 15, 20].map((lat) => {
-          const { y } = project(lat, LNG_MIN);
-          return (
-            <g key={`lat-${lat}`}>
-              <line x1={0} y1={y} x2={SVG_WIDTH} y2={y} stroke="hsl(var(--border))" strokeWidth={0.5} strokeDasharray="2 4" />
-              <text x={4} y={y - 2} className="fill-muted-foreground" fontSize={9} fontFamily="ui-monospace, monospace">
-                {lat}°N
-              </text>
-            </g>
-          );
-        })}
-        {[118, 121, 124, 127].map((lng) => {
-          const { x } = project(LAT_MIN, lng);
-          return (
-            <g key={`lng-${lng}`}>
-              <line x1={x} y1={0} x2={x} y2={SVG_HEIGHT} stroke="hsl(var(--border))" strokeWidth={0.5} strokeDasharray="2 4" />
-              <text x={x + 2} y={SVG_HEIGHT - 4} className="fill-muted-foreground" fontSize={9} fontFamily="ui-monospace, monospace">
-                {lng}°E
-              </text>
-            </g>
-          );
-        })}
-        {/* Marker plot — signal color circles, hairline stroke. */}
-        {markers.map((m) => {
-          const { x, y } = project(m.lat, m.lng);
-          const isHovered = hovered?.submission_id === m.submission_id;
-          return (
-            <circle
-              key={m.submission_id}
-              cx={x}
-              cy={y}
-              r={isHovered ? 6 : 3}
-              className={isHovered ? 'fill-signal stroke-ink' : 'fill-signal/70 stroke-signal'}
-              strokeWidth={1}
-              onMouseEnter={() => onHover(m)}
-              onMouseLeave={() => onHover(null)}
-              onFocus={() => onHover(m)}
-              onBlur={() => onHover(null)}
-              style={{ cursor: 'pointer' }}
-              tabIndex={0}
-            >
-              <title>
-                {m.hcw_id} · {m.facility_id}
-              </title>
-            </circle>
-          );
-        })}
-      </svg>
+        {/* Carto Positron tiles — same OSM data, but Carto's stylesheet
+            uses `name:en` when available so labels render in English
+            (default OSM tiles served Hong Kong as 香港 etc.). Already in
+            a soft grayscale tone, so the `.verde-leaflet-wrap` CSS filter
+            is reduced to a light contrast nudge instead of full grayscale.
+            Free, no API key, used in production by many admin/ops consoles
+            (Linear, Stripe-adjacent, many gov dashboards). */}
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          subdomains={['a', 'b', 'c', 'd']}
+          maxZoom={19}
+        />
+        {markers.map((m) => (
+          <Marker
+            key={m.submission_id}
+            position={[m.lat, m.lng]}
+            icon={VERDE_MARKER_ICON}
+            eventHandlers={{
+              click: () => onHover(m),
+              popupclose: () => onHover(null),
+            }}
+          >
+            <Popup>
+              <div className="flex flex-col gap-1 font-mono text-xs">
+                <p className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                  Submission
+                </p>
+                <p className="text-sm">{m.hcw_id}</p>
+                <p className="text-muted-foreground">{m.facility_id}</p>
+                <p className="text-muted-foreground">
+                  {formatTs(m.submitted_at)} · {m.lat.toFixed(3)}, {m.lng.toFixed(3)}
+                </p>
+                <Link
+                  to={`/admin/data/responses/${encodeURIComponent(m.submission_id)}`}
+                  className="mt-1 self-start text-[10px] uppercase tracking-wider text-signal underline-offset-4 hover:underline"
+                >
+                  View full case →
+                </Link>
+              </div>
+            </Popup>
+          </Marker>
+        ))}
+      </MapContainer>
     </div>
   );
 }
