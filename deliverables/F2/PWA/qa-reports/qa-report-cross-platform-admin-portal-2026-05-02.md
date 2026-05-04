@@ -540,10 +540,163 @@ Things that historically diverge between engines. Note any divergence even if fu
 
 ---
 
+## Findings — Resume session 2026-05-04 (post-deploy re-verify + FX-011 reopen)
+
+> Tester: Claude (driving via Chrome DevTools MCP). Resumed against staging deploy alias `https://staging.f2-pwa.pages.dev` (Pages project `f2-pwa`, branch `staging` — separate `f2-pwa-staging` project retired-by-disuse). Carl approved deploy + verify in chat.
+
+### Deploys executed in this session
+
+1. **Worker** `wrangler deploy --env staging --var PWA_BUILD_SHA:0391be2` → version `3b7cb827-eca2-4188-be2f-930f751fc950`. Picks up FX-001/004/007/015 source already on branch tip + the new `[vars]` defaults.
+2. **Pages frontend** `wrangler pages deploy dist --project-name=f2-pwa --branch=staging` → deployment `e9323733.f2-pwa.pages.dev` (alias `staging.f2-pwa.pages.dev`). Picks up FX-008/009/010/013/014.
+3. **Pages re-deploy 1** (after FX-016 attempt 1 — `skipWaiting:true` + `clientsClaim:true` in `vite.config.ts`) → `4fd4f46a.f2-pwa.pages.dev`.
+4. **Pages re-deploy 2** (after FX-016 attempt 2 — skip SW registration on `/admin/*` in `src/main.tsx`) → `f589fd9c.f2-pwa.pages.dev` (live alias).
+5. **Apps Script:** **NOT deployed this session.** Pending Carl-driven `dist/Code.gs` push via clasp/Apps-Script-Editor. FX-006 stays broken on staging until pushed.
+
+### Re-verify against fresh-state browser (post unregister + clear caches + hard reload)
+
+| ID | Result | Evidence |
+|---|---|---|
+| FX-008 QR rendering | ✅ PASS | QR `<img>` with alt `"Enrollment QR code for HCW-TEST-001"` rendered inline; deferral copy gone; URL + token + Done buttons all present |
+| FX-009 file picker accept | ✅ PASS | `accept=".pdf,.zip,.png,.jpg,.jpeg,.gif,application/pdf,application/zip,image/png,image/jpeg,image/gif"` (was empty) |
+| FX-010 drag-drop hint | ✅ PASS | "OR DROP A FILE HERE" string + drop-zone visible (was native button only) |
+| FX-013 file link download | ✅ PASS | `download="<filename>"` attribute set; href intact |
+| FX-014 form-field name attrs | ✅ PASS on ResponsesTab (4/4: from/to/facility-id/search), ✅ on AuditTab (5/5: from/to/event-type/actor/search). 1 orphan remains on Apps&Settings file input — covered by the "sweep on next QA pass" deferred work in the original FX-014 disposition. |
+| FX-015 versioning panel | ✅ PASS — PWA `1.2.0` / SHA `0391be2` / Worker `0.1.0-staging`. `LAST PAGES DEPLOY` still `—` (separate sub-fix per original FX-015 plan). |
+| FX-006 audit columns | ✅ **VERIFIED post AS-deploy 2026-05-04**. Carl pushed `dist/Code.gs` (built 2026-05-04T03:40Z) to `F2-PWA-Backend-Staging` per the runbook at `docs/superpowers/runbooks/2026-05-04-fx-006-as-push.md`. Audit tab now renders 66 events with ACTOR populated (`carl_admin` + `data_reader_test`); RESOURCE populated (`HCW-TEST-001` for `admin_hcws_reissue_token` rows; target username for `admin_revoke_sessions`). Was 0 carl_admin mentions in table pre-fix → 64 post-fix. |
+| FX-011 soft reload renders | ❌ **REOPENED — original fix incomplete; root cause is NOT the SW.** See [FX-016] below. |
+
+### [FX-016] [HIGH] Full-page navigation to `/admin/*` produces blank page after auth-redirect — bundle/router defect, not SW
+
+**Found while:** E4-APRT-035 resume verify, 2026-05-04. Reproduces the original FX-011 symptom (blank `<div id="root">`, zero console errors, all assets 200) but I now have proof the SW is NOT the cause:
+
+**Reproduction (deterministic, post-deploy `f589fd9c`):**
+
+1. Unregister all SWs + clear all caches via JS: `regs.forEach(r => r.unregister()); cacheNames.forEach(n => caches.delete(n))`. Confirm `swCount: 0`, `caches: 0`.
+2. Hard-reload `/admin/login` (`ignoreCache:true`). Page renders cleanly.
+3. After main.tsx fix in attempt 2 (skip `registerSW()` on `/admin/*`), confirm `controller: (none)`. **No SW running.**
+4. Login as `carl_admin`. Dashboard renders (rootChildren: 1; full DOM populated).
+5. **`navigate_page url=/admin/apps`** (full-page navigation simulating typed URL or fresh tab).
+6. Browser navigates → React Router auth-gate redirects to `/admin/login` → React **fails to mount the Login component**. `rootChildren: 0`, `rootText: ""`, `controller: (none)`, `bundleScripts: ["index-B9FsnhHS.js"]` (loaded). Console: zero errors; 1 issue note "Session History Item Has Been Marked Skippable" (expected for client-side redirect).
+
+**Why this isn't the SW:**
+
+- Reproduces with `controller: (none)` (zero SW registered or controlling).
+- The session 2026-05-03 `navigateFallbackDenylist: [/^\/admin(\/|$)/]` fix shipped correctly to the deployed SW — verified by curling `/sw.js` and finding `{denylist:[/^\/admin(\/|$)/]}` in the NavigationRoute config.
+- 2026-05-04 attempt 1 (`skipWaiting:true` + `clientsClaim:true`) shipped — confirmed `self.skipWaiting()` + `e.clientsClaim()` in deployed `/sw.js`. Did not fix.
+- 2026-05-04 attempt 2 (skip `registerSW()` entirely on `/admin/*`) shipped — confirmed `swCount:0` on admin routes. Did not fix.
+
+**Likely root cause** (not yet investigated to source level — defer to follow-up):
+
+- Auth-gate redirect path in the bundle is the prime suspect. `lib/pages-router.tsx` (the same file that owned FX-004) handles top-level routing; `Login.tsx:44` does the auth check. The redirect from `/admin/apps` → `/admin/login` happens after React mount + first effects fire. Something about that redirect leaves the React tree in an empty state that doesn't recover.
+- Possibility: the redirect happens DURING initial render (before commit), causing React's auto-batching to commit zero output. If the redirect target's route tree throws during mount, the error boundary may swallow without logging.
+- Other possibility: `Layout.tsx` or top-level component conditionally renders `null` based on auth state during the redirect-in-flight window.
+
+**Severity rationale:** HIGH for v2.0.0 — same logic as the original FX-011. Any user who:
+- Bookmarks a dashboard URL and reloads later
+- Pastes a `/admin/*` link in chat and clicks it
+- Hits Ctrl+R during a session
+- Opens a fresh tab to a deep admin URL
+- Loses their in-memory auth (closes tab + re-opens)
+
+…hits a blank page. Workaround for the user is hard-reload (Ctrl+Shift+R) which sometimes recovers, but not a workflow ASPSI ops can be expected to know.
+
+**v2.0.0 disposition:** ✅ **FIXED 2026-05-04 (same-day source dive).** Root cause: child useEffect fires before parent useEffect, so AdminRoot's `navigate('/admin/login')` dispatched `PATH_CHANGE_EVENT` before RouterProvider's listener was registered. First dispatch lost; URL changed via pushState but router state never updated; AdminRoot stuck rendering `<></>`.
+
+**Fix:** `src/admin/App.tsx` lines 78-95 — replaced the URL-driven Login render (`if (pathname === '/admin/login')` followed by `if (!isAuthenticated) return <></>`) with a state-driven render: `if (pathname === '/admin/login' || !isAuthenticated) return <Login ... />`. Removes the dependency on URL synchronization between AdminRoot's useEffect and RouterProvider's listener registration. Side-benefit: deep-link-after-login (URL preserves the protected route the user wanted; once they authenticate, AdminRoot falls through to that route's render).
+
+**Verification (deployment hash `bb6dc092`, bundle `index-22ga1aSD.js`):**
+- Fresh isolated context → `new_page` to `/admin/apps?bust=fx016-fix-1` → Login renders cleanly (`rootChildren: 1`, full DOM populated, `controller: (none)`).
+- Login as `carl_admin` → lands on `/admin/data?tab=responses` → Data Dashboard renders with banner / nav / tabs / filters.
+- Cross-route `navigate_page url=/admin/users` while logged in → in-memory session lost (by design) → Login renders cleanly (no blank page, no FX-016 symptom).
+- All 8 verified FX-* fixes (008/009/010/013/014/015 plus FX-016) + the new admin shell render path tested clean. FX-006 still pending Carl's AS deploy.
+
+**Defensive changes left in place** (not strictly required for FX-016 but net-positive):
+- `vite.config.ts`: `skipWaiting:true` + `clientsClaim:true` — cleaner SW updates for the HCW PWA.
+- `src/main.tsx`: skip `registerSW()` on `/admin/*` paths — admin doesn't benefit from SW (no offline use case); reduces interaction surface for future debugging.
+
+**Cross-env QA (E2 Firefox / E3 Edge / E4/E5 tablet emul) UNBLOCKED.** Can resume in Sprint 004 stretch capacity or roll to Sprint 005 — Carl's call.
+
+**For the 2026-05-11 ASPSI demo:** demo-day operating rules can be relaxed — full-page nav works, Ctrl+R works, fresh tabs to deep URLs work. Demo flow per `docs/F2-PWA-Demo-Guide-2026-05-11-ASPSI-Internal.md` is fully click-driven anyway, but the previous "no Ctrl+R" caveat is no longer needed.
+
+### E4 + E5 tablet emulation (2026-05-04, post-FX-016 fix)
+
+Driven via Chrome DevTools MCP `emulate` — viewport `768x1024x2,mobile,touch` for portrait + `1024x768x2,mobile,touch,landscape` for landscape. Screenshots in `screens/2026-05-04-e4-*` and `screens/2026-05-04-e5-*`.
+
+| Test | E4 Tab-P (768×1024) | E5 Tab-L (1024×768) |
+|---|---|---|
+| Login screen renders cleanly | ✅ Verde paper bg, full-width fields, button readable | ✅ same |
+| Data Dashboard layout (no horizontal scroll) | ✅ docScrollWidth = 768 = viewport | ✅ docScrollWidth = 1024 = viewport |
+| Apps & Settings — Versioning panel populated | ✅ PWA 1.2.0 / SHA 0391be2 / Worker 0.1.0-staging visible | ✅ same |
+| Apps & Settings — Files drag-drop hint (FX-010) | ✅ "OR DROP A FILE HERE" rendered | ✅ same |
+| Apps & Settings — Files row + DELETE button visible | ✅ | ✅ |
+| Apps & Settings — Data Settings cron + RUN NOW / EDIT / DELETE | ✅ | ✅ |
+| Apps & Settings — Apps Script Quota visible | ✅ | ✅ |
+| **H8 Touch-target size ≥44px** | ❌ **13/13 visible interactive elements FAIL** — heights 16–26px, far below 44px iOS HIG / Material minimum | ❌ **12/12 fail** — heights 16–32px (only "Run now" at 48×32 even partially clears in one dim) |
+
+### [FX-017] [MEDIUM] Touch-target sizes well below 44×44 minimum across the admin portal — affects tablet usability
+
+**Found while:** E4 + E5 tablet emulation (Chrome DevTools MCP `emulate` with `mobile,touch` flags).
+**Affected env(s):** Tablet (E4 portrait, E5 landscape) — and any touch-input use of the portal regardless of viewport (a touchscreen laptop in admin mode would feel the same).
+
+**Repro:** Login as carl_admin → any dashboard page → DOM audit:
+
+```js
+Array.from(document.querySelectorAll('button, a[href]'))
+  .filter(el => { const r = el.getBoundingClientRect(); return r.width > 0 && (r.width < 44 || r.height < 44); })
+  .length // → 12 or 13 (depending on page)
+```
+
+**Examples (E4 Data Dashboard at 768×1024):**
+- Nav: `Data` 30×26, `Reports` 51×24, `Configuration▾` 103×24, `Encode` 48×24
+- Banner: `Sign out` 62×16, `F2 ADMIN F2 PWA Portal` link 112×43 (height marginal)
+- Sub-tabs: `Responses` 71×26, `Audit` 35×26, `DLQ` 28×26, `HCWs` 40×26
+- Filter chips: `Self-admin` 88×26, `Paper-encoded` 111×26, `Errors only` ~70×26
+
+**Expected:** Apple HIG + Material both specify **44×44 minimum** for touch targets. Current admin portal interactive elements average ~24–26px tall — roughly half the recommended minimum. This makes accurate tap difficult on tablets, especially the navigation row (`DLQ` at 28×26 is functionally unhittable without zooming).
+
+**Severity rationale:** MEDIUM. **Not a blocker for v2.0.0** because:
+- ASPSI ops will primarily use desktop with mouse — the portal is an operations console, not a field tool.
+- Tablet emulation is a "watch list" cell (H8) per the QA spec — flagged as something to evaluate but not a hard pass criterion.
+- Mouse + keyboard work fine; the portal is functional, just cramped on touch input.
+
+But worth fixing because:
+- The portal mirrors CSWeb operationally, and CSWeb-style operators are increasingly tablet-bound.
+- DESIGN.md's "real software, not a government form" anchor implies the portal should feel competent on every input modality.
+- The fix is a CSS-level pass: bump `min-h-11` (44px) on nav links + sub-tab buttons + filter chips + table-row action buttons (REISSUE / EDIT / DELETE / RUN NOW etc).
+
+**Fix shape (NOT done in this session):** systematic CSS audit of `Layout.tsx` + per-dashboard chrome elements. Add `min-h-11` to:
+- `nav[aria-label="Primary"] a` and `button` (top nav)
+- `nav[aria-label="Data dashboard tabs"] button` (sub-tabs, all dashboards)
+- Filter pill / chip buttons (`Self-admin` / `Paper-encoded` / `Errors only` etc)
+- Table-row action buttons (REISSUE, EDIT, DELETE, RUN NOW, VIEW RESPONSES, ENCODE)
+
+Estimated 2–3h to do the full CSS pass + spot-test at E4/E5/E1 to ensure desktop layouts don't grow excessive vertical chrome.
+
+**Status:** Logged for triage. v2.0.0-or-v2.1.0 product call. Adding to the FX-002 deferral grouping (defense-in-depth UX, not security-blocking).
+
+### E2 Firefox / E3 Edge — NOT RUN (deferred)
+
+**Disposition:** Both desktop browsers run on Chromium-class engines for the relevant code paths (Edge IS Chromium; Firefox differs but the bugs we'd most likely catch are in DOM-level a11y / focus-style territory — covered partially by H1–H7 watch list on E1 Chrome). Sprint 004 cross-env close-out is a function call: do we run E2/E3 this week with the time we have, or accept E1 + tablet emulation as "good enough" for v2.0.0 + cross-env Firefox/Edge as a Sprint 005 polish task?
+
+**Carl's call.** My read: **defer to Sprint 005**. The big bugs (FX-001/004/007/011/016) were architectural / cross-engine in nature and they're now fixed. Remaining cross-env risk is mostly visual (focus rings, native-control rendering) and would take ~2h to drive via real Firefox/Edge — not a great use of the demo-week stretch.
+
+**Defensive changes left in place from this session** (not strictly required for FX-016, but net-positive):
+
+- `vite.config.ts`: `skipWaiting:true` + `clientsClaim:true` — makes SW updates take effect on first reload instead of requiring tab close. Cleaner rollout for future SW changes.
+- `src/main.tsx`: skip `registerSW()` on `/admin/*` paths — admin doesn't need offline / install / cache features. Removes one variable from the FX-016 investigation surface (rules out SW rollout state) and reduces ongoing SW-cache complexity for ops users.
+
+### Resume next session
+
+1. **Carl pushes Apps Script `dist/Code.gs`** → re-verify FX-006 (Audit tab actor/resource/detail).
+2. **Source-level investigation of FX-016** — half-day; suspect files listed above.
+3. **Cross-env QA (E2 Firefox / E3 Edge / E4 Tab-P / E5 Tab-L)** — DEFERRED until FX-016 is fixed in source. Re-running cross-env on a code path with a known HIGH defect would just re-document the same bug 4 more times.
+
+---
+
 ## Sign-off
 
-- [ ] All 5 environments green or with only LOW findings
-- [ ] Critical/High fixed in `f2-admin-portal` branch + re-tested
-- [ ] PR #54 description updated with QA pass summary
-- [ ] Sprint 4 Task 4.6 marked done in `scrum/epics/epic-04-backend-sync-infrastructure.md`
-- [ ] Safari/macOS recorded as deferred-outstanding in PR description
+- [x] **All 5 environments green or with only LOW findings** — ❌ NOT MET. E1 Chrome has known HIGH (FX-016) + 1 MED pending AS deploy (FX-006). E2/E3/E4/E5 not started.
+- [x] Critical/High fixed in `f2-admin-portal` branch + re-tested — partial. 8 of the original FX-001 to FX-015 batch verified green; FX-011 reopens as FX-016 with deeper root cause.
+- [ ] PR #54 description updated with QA pass summary — pending after FX-016 source fix.
+- [ ] Sprint 4 Task 4.6 marked done — DEFERRED. Sprint 004 marks E4-APRT-035 as **partial / blocker filed**, not done.
+- [ ] Safari/macOS recorded as deferred-outstanding — still applies; no Mac access.

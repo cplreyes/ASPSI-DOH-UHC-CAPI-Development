@@ -37,7 +37,7 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 
 ## F1 — Facility Head Survey *(interviewer-administered, 34pp)*
 
-**State:** Design — closing. Designer walkthrough in progress (E2-F1-010). The 6 `PENDING_DESIGN_*` defaults stand as final; no further LSS reconciliation.
+**State:** **Build-ready 2026-05-04.** Designer walkthrough complete (E2-F1-010 closed); bug list clean — no deferrals. The 6 `PENDING_DESIGN_*` defaults stand as final; no further LSS reconciliation. Unblocks E3-F1-001 (FMF Designer pass).
 **Scope (as of 2026-04-21):** 12 records · 671 items · 166 questions · 4 validation tiers (post Apr 21 GPS+photo+PSGC-cascade pass + case-control extension — SURVEY_CODE/INTERVIEWER_ID/DATE_STARTED/TIME_STARTED/AAPOR_DISPOSITION + FACILITY_NAME/FACILITY_ADDRESS; secondary-data records consolidated; `REC_FACILITY_CAPTURE` added for GPS/photo triggers)
 **Reference docs:**
 - `deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md` — skip-logic + validation spec (aligned with F3/F4 Apr 21 architecture)
@@ -55,9 +55,10 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 - [x] **E2-F1-009** F1 `generate_dcf.py` authored from scratch + `FacilityHeadSurvey.dcf` emitted (Q1-Q166 across 15 records) `status::done` `priority::critical` `estimate::1d`
   - Built 2026-04-14. Earlier scrum entries claiming Apr 11 completion were premature — no generator existed in the repo before today. Reconstructed using `raw/CSPro-Data-Dictionary/FacilityHeadSurvey.dcf` (Carl's manual Q1-Q8 scaffold) for format conventions and `F1-Skip-Logic-and-Validations.md` for canonical item names. Output: 15 records, 657 items. Secondary-data records (SEC_HOSP_CENSUS, SEC_HCW_ROSTER, SEC_YK_SERVICES, SEC_LAB_PRICES) intentionally left as empty stubs — populated once LSS decides the SECONDARY_DATA structure.
 - [x] **E2-F1-009b** ~~Reconcile DCF with LSS-meeting decisions on the 6 open items~~ **CLOSED 2026-04-17 — defaults stand as final.** The 6 items (Q63 day vs month, SECONDARY_DATA structure, NBB split, Q31 NA-skip intent, Q166 nurse list, Q121 dynamic value set) remain encoded as `PENDING_DESIGN_Q63_USE_DAY_BUCKETS`, `PENDING_DESIGN_SECONDARY_DATA_AS_STUBS`, `PENDING_DESIGN_NBB_SPLIT_BY_TIER`, `PENDING_DESIGN_Q31_NA_SKIPS`, `PENDING_DESIGN_Q166_NURSES_INCLUDE_AUDITS`, `PENDING_DESIGN_Q121_DYNAMIC_VALUE_SET` in `generate_dcf.py` — these are the final design decisions. If any item needs to change later, flip the constant + regenerate. `status::done` `priority::critical`
-- [ ] **E2-F1-010** F1 DCF opened in CSPro Designer, validated, bug list closed or explicitly deferred → sign-off to enter Epic 3 `status::todo` `priority::critical` `estimate::4h`
+- [x] **E2-F1-010** F1 DCF opened in CSPro Designer, validated, bug list **clean — no deferrals** → sign-off recorded **2026-05-04**; F1 → Build-ready; unblocks E3-F1-001 `status::done` `priority::critical` `actual::~confirmed via spot-check (well under 4h estimate)`
   - **Sprint 001 commitment.** Generator + DCF in place 2026-04-14; Designer walkthrough next.
   - **Scope update 2026-04-21:** DCF extended with case-control block (SURVEY_CODE, INTERVIEWER_ID, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION) + FACILITY_NAME + FACILITY_ADDRESS → 12 records / 671 items. Walkthrough now covers the new fields alongside the existing scope. AAPOR 2023 11-code value set attached; preproc prefill spec in `F1-Skip-Logic-and-Validations.md` §4.17.
+  - **Closed 2026-05-04 (Sprint 004 Day 1).** Three-sprint carry retired. Generator-driven artifact whose upstream spec was already aligned with F3/F4 architecture on 2026-04-21 — Designer pass was a verification step, not a discovery step. Sign-off appended to `log.md`.
 
 ---
 

@@ -16,7 +16,7 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 ### Sources
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Revised Inception Report]] — **Apr 20 PDF ver.** Project overview, Section V methodology (1,521 F1 / 2,672 F4 / 45 OP + 30 IP patients per domain), 18 tables + 7 figures, Del-1 through Del-4 timeline, PHP 59.48M total budget
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire]] — **Apr 20 ver.** 37 pp, 166 items (Sections A–H + Secondary Data); +40 items vs Apr 08
-- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire]] — **Apr 20 ver.** 125 items, self-admin (Sections A–J); cover-block rewrite still outstanding
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire]] — **Apr 20 ver.** 124 items across 125 numbered slots (Q108 gap), self-admin (Sections A–J)
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3 Patient Survey Questionnaire]] — **Apr 20 ver.** 178 items, CAPI inpatient+outpatient (Sections A–L); +52 items vs Apr 08
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F4 Household Survey Questionnaire]] — **Apr 20 ver.** 202 items, community survey (Sections A–Q); interval sampling from patient HH
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3b Patient Listing Protocol]] — **Apr 20 ver.** (renamed from Patient Listing Form) field-ops protocol w/ CSPro random-interval generator
@@ -41,6 +41,7 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex I Dummy Tables]] — 51 analysis-plan tabulation specs: A1–A14 (F1), B1–B10 (F2), C1–C18 (F3), D1–D9 (F4). Mar 06 2026 header — pre-dates Apr 20 questionnaires.
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex J CV of ASPSI Team]] — 7 CVs (Claro, Paunlagui, Silva-Javier, Demaisip, Faderogao, Reyes, Garciano). Field Manager Almendral's CV missing — flag for Annex J rev2.
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - gstack Claude Code Skill Pack]] — Garry Tan's 23-skill Claude Code pack (`/qa`, `/review`, `/ship`, `/investigate`, etc.). Adopted **F2 PWA only**, 2026-04-26.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - DOH UHC Year 2 Survey Manual]] — **Apr 28 2026 ver.** ASPSI-authored field manual (~95 pp): background, definitions, SOP (facility selection, courtesy calls, patient listing), data-collection protocol (F1/F2/F3/F4 by instrument), field reminders, quality control, duties of STLs/SEs, data processing. CSPro install section still SPEED 2023 legacy — Carl drafted replacement at `deliverables/Survey-Manual/CSPro-Section-Draft_2026-04-29.md`.
 
 ### Entities
 
@@ -76,6 +77,8 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/LSS Meeting]] — Lessons Learned Session; event-driven internal ASPSI retro + tasking
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Team Communication Protocol]] — Formal DOH-facing comms routing (Apr 13); Carl is not an authorized DOH sender
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/gstack F2 PWA Workflow]] — Adopted gstack skill subset for F2 PWA build/QA/review/ship loop; `/ship` constrained to branch+PR (release-notes workflow owns versioning)
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Questionnaire Numbering Convention]] — **(proposed, pending decision)** 11-digit decomposed case ID (Region 2 + Province 2 + Municipality 2 + Facility 2 + Case 3) covering F1/F2/F3/F4. Captures 2026-05-02 research + recommendation; nothing applied yet.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal]] — Operations console (admin-only routes in F2 PWA): Users/Roles CRUD with versioning, force-revoke sessions, HCW token reissue with CAS, Apps dashboard shell. Sprint AP1 in flight on `f2-admin-portal` branch; AP0 (Apps Script staging setup) gates downstream tasks.
 
 **CSPro toolchain (from the 8.0 Users Guide)**
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Data Dictionary]] — `.dcf` schema: levels, records, items, value sets, relations
@@ -134,7 +137,7 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 - `deliverables/CSPro/F4/inputs/F4_clean.txt` — Internal text extraction of the F4 questionnaire.
 
 **F2 Healthcare Worker Survey — PWA (primary build, Epic 3 complete)**
-- `deliverables/F2/PWA/app/` — Canonical PWA build (Vite + React + TypeScript + Tailwind + shadcn/ui). M0–M11 shipped 2026-04-17/18; auto-advance + section-lock UX shipped post-M11. **Epic 3 build complete 2026-04-23.**
+- `deliverables/F2/PWA/app/` — Canonical PWA build (Vite + React + TypeScript + Tailwind + shadcn/ui). M0–M11 shipped 2026-04-17/18; auto-advance + section-lock UX shipped post-M11. **Epic 3 build complete 2026-04-23.** **Phase F cutover landed 2026-05-01** — production runs Worker JWT proxy + Verde manual + v1.3.0 fixes at `f2-pwa.pages.dev`. [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|Admin Portal]] work (Sprint AP1) in flight on `f2-admin-portal` branch.
 - `deliverables/F2/PWA/app/spec/F2-Spec.md` — 124-item spec (Apr 20 ver., Q1–Q125 with Q108 gap), canonical source of truth for the PWA build.
 - `deliverables/F2/PWA/app/e2e/golden-path.spec.ts` — Playwright E2E tests: golden path (enrollment → 10 sections → review → submit), section lock, language switch. Run: `npx playwright test --config e2e/playwright.config.ts`.
 - `deliverables/F2/PWA/app/NEXT.md` — Authoritative post-M11 decision log and deferred backlog (per-HCW tokens, draft auto-migration, iOS push, admin mutations).

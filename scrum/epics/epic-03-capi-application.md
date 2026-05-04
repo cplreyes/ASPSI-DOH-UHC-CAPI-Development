@@ -17,7 +17,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 | Instrument | Mode | Build state |
 |---|---|---|
-| F1 | CSPro CAPI | In progress — DCF stable at 12 records / 671 items; Designer sign-off (E2-F1-010) pending; FMF build deferred to Sprint 003 |
+| F1 | CSPro CAPI | **Designer sign-off DONE 2026-05-04 (E2-F1-010 closed Day 1 of Sprint 004)**; DCF Build-ready at 12 records / 671 items; **E3-F1-001 (FMF Designer pass) UNBLOCKED** — generator skeleton ready, in-flight Sprint 004 |
 | F2 | **PWA** (self-admin; CSPro-encoder and Google Forms fallbacks retired; **CSPro F2 track = least priority**) | **Production live at v1.1.1 codebase + Verde Manual visual identity since 2026-04-26.** UAT Rounds 1 + 2 both closed (13 issues fixed across both rounds). Production: https://f2-pwa.pages.dev (Verde Manual ported via PR #42 path B + manual `wrangler pages deploy`). UAT automation pipeline in place (Slack events + daily digest + release notes). Round 3 (v1.2.0) UX backlog queued (#16/#17/#18); Verde Manual visual-identity migration shipped end-to-end (5 PRs on staging, ported to main as #42); auth re-arch (PR #31) on staging awaiting Phase F. |
 | F3 | CSPro CAPI | Build-ready — DCF built 2026-04-16, skip-logic+validation spec reviewed 2026-04-21 |
 | F4 | CSPro CAPI (roster-heavy) | Build-ready — DCF built 2026-04-16, skip-logic+validation spec drafted 2026-04-21; schema verified |
