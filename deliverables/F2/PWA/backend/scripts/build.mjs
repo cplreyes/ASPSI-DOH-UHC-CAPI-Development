@@ -28,6 +28,7 @@ const ORDER = [
   'apps-script/Migrations.js',
   'apps-script/AdminAudit.js',
   'apps-script/AdminHCWs.js',
+  'apps-script/SeedDemo.js',
   'apps-script/Code.js',
 ];
 
