@@ -74,7 +74,8 @@ export function Versioning({ apiBaseUrl, fetchImpl }: VersioningProps): JSX.Elem
         <h3 className="font-serif text-lg font-medium tracking-tight">Versioning</h3>
         <p className="text-xs text-muted-foreground">
           Live build identifiers (PWA bundle, Worker, Apps Script) and per-spec submission counts.
-          First place to look during incident triage — answers “what version is in front of users right now?”
+          First place to look during incident triage — answers “what version is in front of users
+          right now?”
         </p>
       </header>
 
@@ -95,10 +96,18 @@ export function Versioning({ apiBaseUrl, fetchImpl }: VersioningProps): JSX.Elem
 function BuildIdentifiers({ data }: { data: VersionData }): JSX.Element {
   return (
     <dl className="grid grid-cols-1 gap-y-2 border-l-2 border-hairline pl-4 sm:grid-cols-2 sm:gap-x-6">
-      <Field label="PWA version" mono>{data.pwa_version}</Field>
-      <Field label="PWA build SHA" mono>{shortSha(data.pwa_build_sha)}</Field>
-      <Field label="Worker version" mono>{data.worker_version}</Field>
-      <Field label="Last Pages deploy" mono>{data.last_pages_deploy_at ?? '—'}</Field>
+      <Field label="PWA version" mono>
+        {data.pwa_version}
+      </Field>
+      <Field label="PWA build SHA" mono>
+        {shortSha(data.pwa_build_sha)}
+      </Field>
+      <Field label="Worker version" mono>
+        {data.worker_version}
+      </Field>
+      <Field label="Last Pages deploy" mono>
+        {data.last_pages_deploy_at ?? '—'}
+      </Field>
     </dl>
   );
 }
@@ -142,10 +151,20 @@ function RevisionsTable({ rows, total }: { rows: FormRevision[]; total: number }
   );
 }
 
-function Field({ label, children, mono = false }: { label: string; children: React.ReactNode; mono?: boolean }): JSX.Element {
+function Field({
+  label,
+  children,
+  mono = false,
+}: {
+  label: string;
+  children: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
   return (
     <div className="flex flex-col">
-      <dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{label}</dt>
+      <dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+        {label}
+      </dt>
       <dd className={mono ? 'font-mono text-xs' : ''}>{children}</dd>
     </div>
   );
@@ -159,7 +178,13 @@ function Th({ children }: { children?: React.ReactNode }): JSX.Element {
   );
 }
 
-function Td({ children, mono = false }: { children?: React.ReactNode; mono?: boolean }): JSX.Element {
+function Td({
+  children,
+  mono = false,
+}: {
+  children?: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
   return <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>;
 }
 

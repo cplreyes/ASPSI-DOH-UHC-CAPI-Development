@@ -71,7 +71,8 @@ const NAV_GROUPS: NavGroup[] = [
       {
         to: '/admin/encode',
         label: 'Encode',
-        description: 'Paper-response transcription flow. Used when an HCW completed the survey on paper.',
+        description:
+          'Paper-response transcription flow. Used when an HCW completed the survey on paper.',
         icon: IconEdit,
       },
     ],
@@ -82,7 +83,8 @@ const NAV_GROUPS: NavGroup[] = [
       {
         to: '/admin/apps',
         label: 'Apps & Settings',
-        description: 'Build versions, file uploads, scheduled break-out exports, Apps Script quota.',
+        description:
+          'Build versions, file uploads, scheduled break-out exports, Apps Script quota.',
         icon: IconSliders,
       },
       {

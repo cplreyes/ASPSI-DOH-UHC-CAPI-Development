@@ -125,9 +125,7 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
       form.output_path_template.includes('\\') ||
       form.output_path_template.includes('..')
     ) {
-      setFormError(
-        'Output path required (no leading slash, no backslash, no .. path traversal).',
-      );
+      setFormError('Output path required (no leading slash, no backslash, no .. path traversal).');
       return;
     }
 
@@ -209,8 +207,9 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
         </button>
       </div>
       <p className="text-xs text-muted-foreground">
-        Scheduled break-out exports of F2_Responses to R2 (CSV per facility, per region, etc).
-        The Worker cron fires every 5 min and runs settings whose <code>next_run_at</code> has elapsed. Use “Run now” to trigger out-of-band.
+        Scheduled break-out exports of F2_Responses to R2 (CSV per facility, per region, etc). The
+        Worker cron fires every 5 min and runs settings whose <code>next_run_at</code> has elapsed.
+        Use “Run now” to trigger out-of-band.
       </p>
 
       {form ? (
@@ -400,10 +399,9 @@ function EmptyState(): JSX.Element {
   return (
     <div className="border border-hairline bg-secondary/20 px-4 py-4">
       <p className="text-sm text-muted-foreground">
-        No scheduled break-outs yet. Add one to export F2 responses to R2 on an
-        interval (default 60 minutes). The output path supports{' '}
-        <code className="font-mono text-xs">{'{{date}}'}</code> and{' '}
-        <code className="font-mono text-xs">{'{{setting_id}}'}</code> placeholders.
+        No scheduled break-outs yet. Add one to export F2 responses to R2 on an interval (default 60
+        minutes). The output path supports <code className="font-mono text-xs">{'{{date}}'}</code>{' '}
+        and <code className="font-mono text-xs">{'{{setting_id}}'}</code> placeholders.
       </p>
     </div>
   );
@@ -417,7 +415,13 @@ function Th({ children }: { children?: React.ReactNode }): JSX.Element {
   );
 }
 
-function Td({ children, mono = false }: { children?: React.ReactNode; mono?: boolean }): JSX.Element {
+function Td({
+  children,
+  mono = false,
+}: {
+  children?: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
   return <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>;
 }
 
@@ -432,7 +436,8 @@ function formatTs(iso: string): string {
 function friendlyError(err: ApiError, fallback: string): string {
   if (err.code === 'E_PERM_DENIED') return 'Your role lacks dash_apps. Contact an Administrator.';
   if (err.code === 'E_NETWORK') return 'Network unavailable. Try again.';
-  if (err.code === 'E_BACKEND') return 'Backend unavailable - Apps Script staging may be unreachable.';
+  if (err.code === 'E_BACKEND')
+    return 'Backend unavailable - Apps Script staging may be unreachable.';
   if (err.code === 'E_CONFLICT') return err.message || 'This setting is already running.';
   return err.message || fallback;
 }

@@ -38,7 +38,7 @@ export function ReportDashboard({ apiBaseUrl, fetchImpl }: ReportDashboardProps)
   const activeTab = useMemo<TabKey>(() => {
     const params = new URLSearchParams(search);
     const t = params.get('tab');
-    return TABS.some(x => x.key === t) ? (t as TabKey) : 'sync';
+    return TABS.some((x) => x.key === t) ? (t as TabKey) : 'sync';
   }, [search]);
 
   const switchTab = (key: TabKey) => {

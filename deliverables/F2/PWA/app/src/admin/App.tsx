@@ -55,7 +55,11 @@ const PAGES: PageRoute[] = [
   // /admin/encode and /admin/encode/:hcw_id are dispatched directly in
   // AdminRoot below (param-bearing routes don't fit the simple matchRoute
   // table). Listed here only so the Configuration nav highlight stays sane.
-  { path: '/admin/me/change-password', title: 'Change password', element: <Placeholder title="Change password" subtitle="Required for newly-created accounts" /> },
+  {
+    path: '/admin/me/change-password',
+    title: 'Change password',
+    element: <Placeholder title="Change password" subtitle="Required for newly-created accounts" />,
+  },
 ];
 
 function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
@@ -178,11 +182,7 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
   }
 
   const route = matchRoute(PAGES, pathname);
-  return (
-    <Layout>
-      {route ? route.element : <NotFound />}
-    </Layout>
-  );
+  return <Layout>{route ? route.element : <NotFound />}</Layout>;
 }
 
 function Placeholder({ title, subtitle }: { title: string; subtitle: string }): JSX.Element {

@@ -54,7 +54,7 @@ export function DataDashboard({ apiBaseUrl, fetchImpl }: DataDashboardProps): JS
   const activeTab = useMemo<TabKey>(() => {
     const params = new URLSearchParams(search);
     const t = params.get('tab');
-    return (TABS.some(x => x.key === t) ? (t as TabKey) : 'responses');
+    return TABS.some((x) => x.key === t) ? (t as TabKey) : 'responses';
   }, [search]);
 
   const switchTab = (key: TabKey) => {
@@ -100,7 +100,7 @@ export function DataDashboard({ apiBaseUrl, fetchImpl }: DataDashboardProps): JS
         ) : activeTab === 'hcws' ? (
           <HCWsTab apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />
         ) : (
-          <TabComingSoon name={TABS.find(t => t.key === activeTab)!.label} />
+          <TabComingSoon name={TABS.find((t) => t.key === activeTab)!.label} />
         )}
       </div>
     </section>
@@ -110,8 +110,8 @@ export function DataDashboard({ apiBaseUrl, fetchImpl }: DataDashboardProps): JS
 function TabComingSoon({ name }: { name: string }): ReactNode {
   return (
     <p className="text-sm text-muted-foreground">
-      The <strong>{name}</strong> tab lands with a later Sprint 2 task. The Responses tab is
-      live above; switch back to see real data once the backend is reachable.
+      The <strong>{name}</strong> tab lands with a later Sprint 2 task. The Responses tab is live
+      above; switch back to see real data once the backend is reachable.
     </p>
   );
 }
