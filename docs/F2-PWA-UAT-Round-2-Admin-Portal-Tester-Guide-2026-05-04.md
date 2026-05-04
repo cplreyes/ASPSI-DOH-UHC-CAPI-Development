@@ -33,18 +33,20 @@
 
 **Each tester gets their own admin credential — no shared logins.** Audit columns must show who clicked what; sharing a single login collapses attribution.
 
+Both Shan and Kidd test the **Admin Portal side** (this guide) AND the **HCW Survey side** (companion guide). The two guides are split for clarity, not for tester assignment — please walk both.
+
 ### Primary roster
 
-| Tester | Role | Username | Initial password |
-|---|---|---|---|
-| **Kidd** (ASPSI main RA) | Admin Portal exhaustive pass — primary tester | `kidd_admin` | _DM from coordinator_ |
-| _additional admin testers TBD_ | _Carl to fill_ | _e.g., `<name>_admin`_ | _coordinator provisions + DMs_ |
+| Tester | Username | Initial password |
+|---|---|---|
+| **Shan** (ASPSI RA) | `shan_admin` | _shared in `#f2-pwa-uat`_ |
+| **Kidd** (ASPSI main RA) | `kidd_admin` | _shared in `#f2-pwa-uat`_ |
 
 ### RBAC test credential (shared — only used for Section 5.13 RBAC scenarios)
 
 | Username | Password | Role | Why |
 |---|---|---|---|
-| `data_reader_uat` | _DM from coordinator_ | DataReader | Use this to exercise the RBAC story — login as DataReader, confirm Users / Roles dashboards are hidden, mutations are blocked. |
+| `data_reader_uat` | _shared in `#f2-pwa-uat`_ | DataReader | Use this to exercise the RBAC story — login as DataReader, confirm Users / Roles dashboards are hidden, mutations are blocked. |
 
 > All 3 accounts have `password_must_change=true` — on first login, the portal forces you to set a new password (≥8 chars). After your first reset, the initial password is dead.
 

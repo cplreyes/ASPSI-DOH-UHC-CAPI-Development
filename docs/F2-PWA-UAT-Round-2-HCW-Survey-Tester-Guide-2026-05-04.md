@@ -32,10 +32,12 @@
 
 ## 2. Tester Roster
 
-| Tester | Focus | Test devices to use |
+Both Shan and Kidd test the **HCW Survey side** (this guide) AND the **Admin Portal side** (companion guide). The two guides are split for clarity, not for tester assignment — please walk both.
+
+| Tester | HCW Survey assignment (this guide) | Test devices to use |
 |---|---|---|
-| **Shan** (ASPSI RA) | Primary HCW Survey tester — exhaustive question-by-question pass | Tablet (Android or iPad) primary; desktop Chrome secondary |
-| _additional testers TBD_ | _Carl to fill_ | _per assignment_ |
+| **Shan** (ASPSI RA) | Primary HCW: `DEMO-HCW-004` (Pharmacist persona — clean baseline). Spares listed in Section 3. | Tablet (Android or iPad) primary; desktop Chrome secondary |
+| **Kidd** (ASPSI main RA) | Primary HCW: `DEMO-HCW-007` (DH-INFANTA, IV-A — different region for cross-facility coverage) | Tablet (Android or iPad) primary; desktop Chrome secondary |
 
 If you're a tester not listed here, ping coordinator before testing — token assignment is per-tester.
 
@@ -47,13 +49,14 @@ Each row below is **one prod-signed enrollment URL** for one demo HCW on the pro
 
 > **DO NOT share these URLs publicly.** Each token mints a session for that specific HCW. If a token leaks, anyone with the URL can submit on behalf of that HCW. Coordinator can revoke/reissue if needed.
 
-### Primary assignment — Shan
+### Primary assignments
 
-| HCW ID | Persona (from seed) | Facility | Status pre-test | Enrollment URL |
-|---|---|---|---|---|
-| `DEMO-HCW-004` | Garcia, Roberto · **Pharmacist/Dispenser** · Male · 29 | DEMO-FAC-RHU-QC-1 (NCR / QC RHU) | enrolled, no submission yet | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkYmUzYTU0ZS03OTIzLTQzYjAtYTk4MS0yYmY1ODQzNGU3N2EiLCJ0YWJsZXRfaWQiOiI1MGE1M2QzYy02ZDE2LTRlYWYtODY3ZC0wNTFlMmEzYzJiZWQiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLVJIVS1RQy0xIiwiaWF0IjoxNzc3ODg2OTE5LCJleHAiOjE3ODA0Nzg5MTl9.6ytd1Hu66lABXpCuEMdhgl4c3cIgIpLbkwnRTM8P36A` |
+| Tester | HCW ID | Persona (from seed) | Facility | Status pre-test | Enrollment URL |
+|---|---|---|---|---|---|
+| **Shan** | `DEMO-HCW-004` | Garcia, Roberto · **Pharmacist/Dispenser** · Male · 29 | DEMO-FAC-RHU-QC-1 (NCR / QC RHU) | enrolled, no submission yet | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkYmUzYTU0ZS03OTIzLTQzYjAtYTk4MS0yYmY1ODQzNGU3N2EiLCJ0YWJsZXRfaWQiOiI1MGE1M2QzYy02ZDE2LTRlYWYtODY3ZC0wNTFlMmEzYzJiZWQiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLVJIVS1RQy0xIiwiaWF0IjoxNzc3ODg2OTE5LCJleHAiOjE3ODA0Nzg5MTl9.6ytd1Hu66lABXpCuEMdhgl4c3cIgIpLbkwnRTM8P36A` |
+| **Kidd** | `DEMO-HCW-007` | (DH-INFANTA HCW) | DEMO-FAC-DH-INFANTA (IV-A District Hospital) | enrolled, no submission yet | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMjUzN2YzMy1mNTI2LTQ0ZDYtOGFiYS0yZmM3MzQxZDA0OTIiLCJ0YWJsZXRfaWQiOiI0YjliZDljYi04ZjBhLTQ1MTQtYTE4Yi00Y2ZlZjBmNjA0Y2MiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLURILUlORkFOVEEiLCJpYXQiOjE3Nzc4ODY5NDEsImV4cCI6MTc4MDQ3ODk0MX0.GXkvyAuKYsDdfbG9PhaKKA1kYMv-jKAh6kAnDBmMVlE` |
 
-> **Why this HCW:** Pharmacist role doesn't trigger the role-conditional gates for Sections C / D / E1 / E2 / G — clean baseline run. Status is `enrolled` (no prior submission), so you'll exercise the full happy-path flow without colliding with seeded responses.
+> **Why these HCWs:** Both rows are pre-test status `enrolled` (no prior submission), so testers exercise the full happy-path flow without colliding with seeded responses. Different facilities + roles cover cross-region + role-gating variants — Shan's Pharmacist persona doesn't trigger Sections C / D / E1 / E2 / G; Kidd's HCW (whatever role you pick at the role-select screen) can exercise those gates.
 
 ### Spare HCWs (for additional testers or re-test scenarios)
 
@@ -64,7 +67,6 @@ Each row below is **one prod-signed enrollment URL** for one demo HCW on the pro
 | `DEMO-HCW-003` | Reyes, Ana · **Midwife** · Female · 38 | DEMO-FAC-RHU-QC-1 | submitted (seed) | Use for: Midwife-role gating. | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1YzcwMDY4OS1lNjMyLTQxYWMtYWZlOC0wZWI5YzVlNjNmNjYiLCJ0YWJsZXRfaWQiOiIzNTBlZmRlZS02N2ZhLTQzM2QtYjI1Zi0wOWExYTdjMmEyMmEiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLVJIVS1RQy0xIiwiaWF0IjoxNzc3ODg2OTEzLCJleHAiOjE3ODA0Nzg5MTN9.Z4ldTlYvXG1JD-YkcdNbMGSNJDfMJrbJrRMBJH37Mds` |
 | `DEMO-HCW-005` | Bautista, Lorna · **Barangay Health Worker** · Female · 51 | DEMO-FAC-RHU-QC-1 | submitted (seed) | Use for: BHW-role gating (most sections gated off). | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyNDYxYTVkZS1mNjc5LTQ1ODQtODU2OS0wYTEzMTFkZTQ1YjYiLCJ0YWJsZXRfaWQiOiJkZjYyY2U1NS04OGQ0LTRkOGItOGE1MC1iNGE0YjlhNGYwMDIiLCJpYXQiOjE3Nzc4ODY5MjksImV4cCI6MTc4MDQ3ODkyOSwiZmFjaWxpdHlfaWQiOiJERU1PLUZBQy1SSFUtUUMtMSJ9.7hmKYy0XIxH8cu9jGh24x4nP3VDJCFWLZIvw_Hwj98o` |
 | `DEMO-HCW-006` | Mendoza, Liza · **Physician/Doctor** · Female · 47 | **DEMO-FAC-DH-INFANTA** (IV-A District Hospital) | submitted (seed) | Use for: cross-facility testing — different region, different facility-type gates. | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkMWUxOWVjNC0yOWEzLTQ1MDAtOGNmNy1lMmNkODI5MzU5NjciLCJ0YWJsZXRfaWQiOiJiYTUyNzRkZi0zZGVjLTRhNTgtYTgzMS1lZWY5OGQ4YWIwZGUiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLURILUlORkFOVEEiLCJpYXQiOjE3Nzc4ODY5MzUsImV4cCI6MTc4MDQ3ODkzNX0.ZmfhDGpwrR6uLPYM1RYX2u-3PmYMhWXEoc4lL3IgJ9g` |
-| `DEMO-HCW-007` | (DH-INFANTA HCW) | DEMO-FAC-DH-INFANTA | enrolled, no submission yet | Spare for additional Round 2 testers. | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMjUzN2YzMy1mNTI2LTQ0ZDYtOGFiYS0yZmM3MzQxZDA0OTIiLCJ0YWJsZXRfaWQiOiI0YjliZDljYi04ZjBhLTQ1MTQtYTE4Yi00Y2ZlZjBmNjA0Y2MiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLURILUlORkFOVEEiLCJpYXQiOjE3Nzc4ODY5NDEsImV4cCI6MTc4MDQ3ODk0MX0.GXkvyAuKYsDdfbG9PhaKKA1kYMv-jKAh6kAnDBmMVlE` |
 | `DEMO-HCW-008` | (DH-INFANTA HCW) | DEMO-FAC-DH-INFANTA | enrolled, no submission yet | Spare for additional Round 2 testers. | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2ZDVmMjQ4Zi1kN2VhLTRiMTMtOTkzMC1lODc3YmU3MzJkZmQiLCJ0YWJsZXRfaWQiOiI5YmJiY2YwMy04MWI2LTQ5YmMtOGJkYy0yZGM5MDhiNjFlZmMiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLURILUlORkFOVEEiLCJpYXQiOjE3Nzc4ODY5NDgsImV4cCI6MTc4MDQ3ODk0OH0.e7HWJJmea2bBr9cDdDouPAyHl6RdEYowcpOBTRsaOu4` |
 
 **Tokens are 30-day TTL** (issued 2026-05-04, expire 2026-06-03). If a token expires before you finish testing, ping coordinator for a fresh issue.
