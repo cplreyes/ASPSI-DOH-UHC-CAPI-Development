@@ -54,6 +54,12 @@ export default {
         ink: 'hsl(var(--foreground) / <alpha-value>)',
         hairline: 'hsl(var(--border) / <alpha-value>)',
         signal: 'hsl(var(--primary) / <alpha-value>)',
+        // 10%-alpha emerald tint per DESIGN.md token table. Used by filter-pill
+        // active state in admin tabs (ResponsesTab/HCWsTab/SyncReport). Was
+        // previously a dead class — Tailwind silently dropped `bg-signal-bg`
+        // because it wasn't declared here, so active-pill background rendered
+        // transparent. Surfaced 2026-05-05 by /design-review audit Finding H-1.
+        'signal-bg': 'hsl(var(--primary) / 0.1)',
         error: 'hsl(var(--destructive) / <alpha-value>)',
       },
       borderRadius: {
