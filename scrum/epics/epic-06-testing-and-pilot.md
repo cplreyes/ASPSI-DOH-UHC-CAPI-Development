@@ -30,7 +30,7 @@ Pre-production verification and limited-scale field pilot before full rollout. C
 - [x] **E6-PWA-004** UAT Round 1 (v1.1.0) — opened by Shan 2026-04-23, closed 2026-04-24, 7 issues fixed `status::done` `priority::critical`
 - [x] **E6-PWA-005** UAT Round 2 (v1.1.1) — opened 2026-04-25, closed same day, 6 issues fixed `status::done` `priority::critical`
 - [x] **E6-PWA-006** Internal QA + design-review pass (Round 3 internal-QA) — 12 issues filed as #19-#30, milestone v1.3.0 2026-04-25 `status::done` `priority::high`
-- [ ] **E6-PWA-007** UAT Round 3 (v1.2.0) — exclusive "I don't know", "All of the above" auto-select, scale-style matrix (#16/#17/#18) `status::todo` `priority::high` `estimate::TBD`
+- [~] **E6-PWA-007** UAT Round 3 (v1.2.0) — exclusive "I don't know", "All of the above" auto-select, scale-style matrix (#16/#17/#18). Code shipped in v2.0.0 (Phase F cutover merge `2a6dd34`); GH issues closed 2026-05-01 as `status:fixed-pending-verify`. **Folded into the UAT Round 2 reopened against v2.0.0** (Shan + Kidd) rather than a separate Round 3 — close milestone v1.2.0 after sign-off to fire the auto-release-notes pipeline (or fold into v2.0.0 release notes). `status::in-progress` `priority::high`
 - [ ] **E6-PWA-008** F2 production pilot batch — small facility cohort, success criteria, go/no-go to full rollout `status::todo` `priority::high` `estimate::1d`
 - [ ] **E6-PWA-009** axe-core / Lighthouse a11y audit — full report, AA compliance gate `status::todo` `priority::medium` `estimate::4h`
 - [ ] **E6-PWA-010** Performance baseline — Core Web Vitals, bundle size budget, regression tracking `status::todo` `priority::medium` `estimate::4h`
@@ -50,4 +50,4 @@ Pre-production verification and limited-scale field pilot before full rollout. C
 - E6-CAPI-001..003 require Epic 3 builds complete (F1 awaits E2-F1-010 sign-off; F3/F4 are Build-ready).
 - E6-CAPI-004 requires E4-CSWeb-001..005.
 - E6-CAPI-006 requires E0-020 SJREB clearance (long-pole blocker).
-- E6-PWA-007 (Round 3) depends on Epic 3 v1.2.0 implementation.
+- E6-PWA-007 (Round 3) — Epic 3 v1.2.0 implementation done; verification folded into UAT Round 2 reopened against v2.0.0.

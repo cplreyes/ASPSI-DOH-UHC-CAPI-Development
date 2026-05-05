@@ -18,7 +18,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 | Instrument | Mode | Build state |
 |---|---|---|
 | F1 | CSPro CAPI | **Designer sign-off DONE 2026-05-04 (E2-F1-010 closed Day 1 of Sprint 004)**; DCF Build-ready at 12 records / 671 items; **E3-F1-001 (FMF Designer pass) UNBLOCKED** — generator skeleton ready, in-flight Sprint 004 |
-| F2 | **PWA** (self-admin; CSPro-encoder and Google Forms fallbacks retired; **CSPro F2 track = least priority**) | **Production live at v1.1.1 codebase + Verde Manual visual identity since 2026-04-26.** UAT Rounds 1 + 2 both closed (13 issues fixed across both rounds). Production: https://f2-pwa.pages.dev (Verde Manual ported via PR #42 path B + manual `wrangler pages deploy`). UAT automation pipeline in place (Slack events + daily digest + release notes). Round 3 (v1.2.0) UX backlog queued (#16/#17/#18); Verde Manual visual-identity migration shipped end-to-end (5 PRs on staging, ported to main as #42); auth re-arch (PR #31) on staging awaiting Phase F. |
+| F2 | **PWA** (self-admin; CSPro-encoder and Google Forms fallbacks retired; **CSPro F2 track = least priority**) | **Production live at v2.0.0 since 2026-05-04 evening** (Phase F cutover — auth re-arch JWT proxy + Verde Manual + v1.2.0/v1.3.0 fixes + admin portal demo-polish bundle). UAT Rounds 1 + 2 closed at v1.1.1 (13 issues fixed across both rounds); UAT Round 2 reopened against v2.0.0 for Shan + Kidd. Production: https://f2-pwa.pages.dev. UAT automation pipeline in place (Slack events + daily digest + release notes). Round 3 enhancements (#16/#17/#18) all shipped in v2.0.0 — milestone v1.2.0 still open pending UAT sign-off in the reopened Round 2. Verde Manual visual identity LIVE since 2026-04-26 (path-B PR #42). |
 | F3 | CSPro CAPI | Build-ready — DCF built 2026-04-16, skip-logic+validation spec reviewed 2026-04-21 |
 | F4 | CSPro CAPI (roster-heavy) | Build-ready — DCF built 2026-04-16, skip-logic+validation spec drafted 2026-04-21; schema verified |
 | PLF | Recruitment form (mode TBD) | Source captured |
@@ -133,13 +133,13 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [x] **E3-F2-PWA-QA-002** Shan / ASPSI staff UAT dry-run — UAT Rounds 1 + 2 both closed 2026-04-25; 13 issues filed and fixed across the two rounds. `status::done` `priority::high` `actual::2026-04-23..2026-04-25`
 - [x] **E3-F2-PWA-PILOT-001** Pilot decision — **UAT Round 1 is the pilot.** Decision: run pilot via ASPSI staff UAT before production promote. `status::done` `priority::high` `actual::2026-04-23`
 
-### Round 3 / v1.2.0 backlog *(landing window: queued; gating not yet committed to a sprint)*
+### Round 3 / v1.2.0 backlog *(code shipped to production in v2.0.0; milestone v1.2.0 open pending UAT sign-off)*
 
-**UX enhancements** (project board #16/#17/#18, `[github]/projects/7`):
+**UX enhancements** (project board #16/#17/#18, `[github]/projects/7` — all three shipped in v2.0.0 via Phase F cutover merge `2a6dd34`; reachable from tags `v1.2.0` / `v1.3.0` / `v2.0.0`):
 
-- [ ] **E3-F2-PWA-R3-001** Issue #16 — exclusive "I don't know" multi-select option (selecting it clears other selections; selecting any other clears it) `status::todo` `priority::medium` `estimate::3h`
-- [ ] **E3-F2-PWA-R3-002** Issue #17 — "All of the above" auto-select (selecting it auto-selects all other options; deselecting any deselects it) `status::todo` `priority::medium` `estimate::3h`
-- [ ] **E3-F2-PWA-R3-003** Issue #18 — matrix view for scale-style questions (one prompt per row, shared response columns) `status::todo` `priority::medium` `estimate::6h`
+- [x] **E3-F2-PWA-R3-001** Issue #16 — exclusive "I don't know" multi-select option (selecting it clears other selections; selecting any other clears it). Closed on GitHub 2026-05-01; labeled `status:fixed-pending-verify`. `status::done` `priority::medium` `actual::2026-05-01`
+- [x] **E3-F2-PWA-R3-002** Issue #17 — "All of the above" auto-select (selecting it auto-selects all other options; deselecting any deselects it). Closed on GitHub 2026-05-01; labeled `status:fixed-pending-verify`. `status::done` `priority::medium` `actual::2026-05-01`
+- [x] **E3-F2-PWA-R3-003** Issue #18 — matrix view for scale-style questions (one prompt per row, shared response columns). Closed on GitHub 2026-05-01; labeled `status:fixed-pending-verify`. `status::done` `priority::medium` `actual::2026-05-01`
 
 **Verde Manual visual-identity migration** (anchor: [`deliverables/F2/PWA/app/DESIGN.md`](../../deliverables/F2/PWA/app/DESIGN.md); memorable thing: *"This is real software, not a government form"*):
 
@@ -200,7 +200,7 @@ F4 inherits the standard template **plus a roster engine**. The household roster
 
 ## Notes
 
-- **F2 PWA Epic 3 build is COMPLETE (2026-04-23) and in production at v1.1.1 codebase + Verde Manual visual identity (2026-04-26).** UAT Rounds 1 + 2 both closed; 13 issues fixed; production live at https://f2-pwa.pages.dev. Round 3 (v1.2.0) UX enhancements queued: #16/#17/#18 on the project board. **Verde Manual visual-identity migration COMPLETE end-to-end:** 5 staging PRs (#37/#38/#39/#40/#41) + path-B port to main as #42 + manual `wrangler pages deploy` (CF auto-deploy broken per #34). DESIGN.md is the visual source of truth at `deliverables/F2/PWA/app/DESIGN.md`. **CSPro F2 track is least priority — do not reopen.**
+- **F2 PWA Epic 3 build is COMPLETE (2026-04-23) and in production at v2.0.0 since 2026-05-04 evening** (Phase F cutover — auth re-arch JWT proxy + Verde Manual + v1.2.0/v1.3.0 fixes + admin portal demo-polish bundle). UAT Rounds 1 + 2 closed at v1.1.1 (13 issues fixed); UAT Round 2 reopened against v2.0.0 for Shan + Kidd. Production live at https://f2-pwa.pages.dev. Round 3 UX enhancements (#16/#17/#18) all shipped in v2.0.0 via merge `2a6dd34`; milestone v1.2.0 still open pending UAT sign-off in the reopened Round 2. **Verde Manual visual-identity migration COMPLETE end-to-end:** 5 staging PRs (#37/#38/#39/#40/#41) + path-B port to main as #42 + manual `wrangler pages deploy` (CF auto-deploy now resolved via `cf-pages-deploy.yml`). DESIGN.md is the visual source of truth at `deliverables/F2/PWA/app/DESIGN.md`. **CSPro F2 track is least priority — do not reopen.**
 - **F1 is the priority CSPro instrument.** Its task breakdown above is the template for F3 and F4.
 - **F3 and F4 are Build-ready** as of 2026-04-21; form-layout plans also landed 2026-04-21 ([[../../deliverables/CSPro/Form-Layout-Principles|shared principles]] + per-instrument F1/F3/F4 plans). E3-F4-000 schema patch closed by verification on the same day — the generator and DCF were already correct.
 - Reusable CSPro patterns live in `deliverables/CSPro/` as includable `.apc` fragments:
