@@ -6,35 +6,33 @@ sender: Carl Patrick L. Reyes
 date_drafted: 2026-05-05
 status: draft
 related_task: E7-SM-CAPI-INPUTS
-tags: [survey-manual, methodology, capi, e7]
+tags: [survey-manual, capi, e7]
 ---
 
-# Draft Email — Survey Manual CAPI Inputs Package
+# Draft Email — Survey Manual CAPI Inputs
 
 **To:** Kidd <aspsi.doh.uhc.survey2@gmail.com>, Daisy <tdemaisip@gmail.com>
 **Cc:** Dr. Myra <mcsilva@up.edu.ph>, Dr. Paulyn <paclaro@up.edu.ph>, Dr. Merlyne <merlynepaunlagui@gmail.com>
 **From:** Carl Patrick L. Reyes <clreyes6@up.edu.ph>
-**Subject:** Survey Manual — CAPI / Data Programmer inputs (with annexes)
+**Subject:** Survey Manual — CAPI / Data Programmer inputs
 
 ---
 
 Good day po,
 
-Sharing the CAPI / Data Programmer inputs to the Apr 28 Survey Manual draft, plus the supporting annexes and a separate document of methodology clarification requests for the V2 Protocol.
+Sharing the CAPI / Data Programmer inputs to the Apr 28 Survey Manual draft. All three documents are in this Google Drive folder (shared from the project mailbox `aspsi.doh.uhc.survey2.data@gmail.com`):
 
-The package is in three parts:
+**📁 https://drive.google.com/drive/folders/1crI7-6AZtJuNDcvT5vlsAJlTcDDDYMth?usp=sharing**
 
-1. **Survey Manual edits** — proposed inputs to the Apr 28 draft, in two forms: a clean-add list organized by Manual section, and a track-changes view of the affected sections for direct review in Word or Google Docs.
+The package has three documents, written in the Manual's own voice so each section can be incorporated directly into the Apr 28 draft:
 
-2. **Methodology Clarification Requests** — six items where CAPI implementation surfaced questions that need decision from the methodology team before some Manual sections (and the corresponding F3a build) can be finalized. The most consequential is the patient intercept procedure in Protocol §IX, where the random-time-interval approach is not implementable natively in CSPro; we propose adopting the Year 1 IDinsight list-everyone-in-window pattern instead, which the Protocol already cites as its baseline elsewhere.
+1. **Survey Manual — CAPI Sections for Year 2** *(primary)* — proposed Manual content for the CAPI-related sections, organized in Manual order. Most are operational (the CSEntry installation guide, the Healthcare Worker Survey guide, data transfer, bench testing, the Supervisor App reference under Survey Team Leaders). A small number involve operational refinements that may benefit from a corresponding minor Protocol amendment; these are flagged in plain prose at the end of the document, with the most consequential being the Patient Listing Protocol (which follows the methodology validated in the UHC Survey Year 1 to preserve longitudinal comparability).
 
-3. **Annexes A through I** — operational and technical references that the Manual edits point to (tablet specifications, troubleshooting, F2 and F0 operations, data transmission and storage, bench testing, versioning, refusal/replacement logging, and the application architecture reference).
+2. **Annex 1 — Field Operations** — reference for field teams: troubleshooting, Healthcare Worker Survey operations, and Supervisor App operations.
 
-A short reading order and full document inventory is in the cover note (`Survey-Manual-CAPI-Inputs_Send-Package_2026-05-05`).
+3. **Annex 2 — Technical Reference** — reference for technical reviewers: data transmission and storage, bench testing protocol, versioning and amendment governance, refusal and replacement logging, and the CAPI application architecture.
 
-Suggested next step: a 30-minute methodology-team discussion to walk through the four items affecting F3a bench testing (M1–M4 in the Methodology Clarification Requests). The remaining two items (M5, M6) can be resolved by email. Once those are decided, the Manual edits can be finalized and the annexes locked.
+If the team concurs with the proposed sections, the cascade can proceed in one coordinated pass (Protocol amendment for the few items that need it, Manual finalization, Informed Consent Form updates for the verification photo, and the start of bench testing). Any item is open to revision; happy to adjust the Manual text and CAPI build to match the team's call.
 
-Happy to clarify any line item or join whenever the team can meet po.
-
-Thank you,
+Thank you po,
 Carl
