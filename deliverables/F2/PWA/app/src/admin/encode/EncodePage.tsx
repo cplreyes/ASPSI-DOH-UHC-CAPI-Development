@@ -91,9 +91,9 @@ export function EncodePage({ apiBaseUrl, hcwId, fetchImpl }: EncodePageProps): J
           Encoding for HCW <span className="font-mono text-base">{hcwId}</span>
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Transcribe the paper survey below. The submission is recorded with
-          your admin username as <code className="font-mono">encoded_by</code> and
-          marked <code className="font-mono">source_path=paper_encoded</code>.
+          Transcribe the paper survey below. The submission is recorded with your admin username as{' '}
+          <code className="font-mono">encoded_by</code> and marked{' '}
+          <code className="font-mono">source_path=paper_encoded</code>.
         </p>
       </header>
 
@@ -117,9 +117,7 @@ function EncodedSuccess({ submissionId }: { submissionId: string }): JSX.Element
   return (
     <section className="flex flex-col gap-4 py-8">
       <header className="border-b border-hairline pb-4">
-        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          Recorded
-        </p>
+        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Recorded</p>
         <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">
           Encoded successfully
         </h2>

@@ -66,9 +66,7 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
   return (
     <main className="mx-auto flex min-h-screen-dvh w-full max-w-md flex-col justify-center px-6 py-12">
       <header className="mb-10">
-        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          F2 Admin
-        </p>
+        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">F2 Admin</p>
         <h1 className="mt-1 font-serif text-3xl font-medium tracking-tight">Sign in</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Restricted to authorized ASPSI personnel.
@@ -113,9 +111,7 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
           <div role="alert" className="border-l-2 border-error pl-3 py-2">
             <p className="text-sm text-error">{errorMessageFor(error)}</p>
             {error.requestId ? (
-              <p className="mt-1 font-mono text-xs text-muted-foreground">
-                ref {error.requestId}
-              </p>
+              <p className="mt-1 font-mono text-xs text-muted-foreground">ref {error.requestId}</p>
             ) : null}
           </div>
         ) : null}

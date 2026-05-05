@@ -6,13 +6,16 @@ import { installMockBackend, defaultState } from './fixtures/mock-backend';
 // without triggering optional conditional branches unnecessarily.
 const COMPLETE_ANSWERS: Record<string, unknown> = {
   // Section A — Healthcare Worker Profile
-  Q1_1: 'Dela Cruz', Q1_2: 'Juan', Q1_3: 'P',
+  Q1_1: 'Dela Cruz',
+  Q1_2: 'Juan',
+  Q1_3: 'P',
   Q2: 'Regular',
   Q3: 'Female',
   Q4: 32,
   Q5: 'Nurse',
   Q7: 'No',
-  Q9_1: 2, Q9_2: 6,
+  Q9_1: 2,
+  Q9_2: 6,
   Q10: 5,
   Q11: 8,
 
@@ -58,9 +61,15 @@ const COMPLETE_ANSWERS: Record<string, unknown> = {
   Q66: 'Yes',
   Q72: 'Yes',
   Q74: 'UAT test answer',
-  Q77: '1', Q78: '1', Q79: '1', Q80: '1', Q81: '1',
+  Q77: '1',
+  Q78: '1',
+  Q79: '1',
+  Q80: '1',
+  Q81: '1',
   Q82: 'UAT test answer',
-  Q83: 'Never', Q84: 'Never', Q85: 'Never',
+  Q83: 'Never',
+  Q84: 'Never',
+  Q85: 'Never',
   Q86: 'UAT test answer',
   Q90: 'UAT test answer',
 
@@ -75,24 +84,33 @@ const COMPLETE_ANSWERS: Record<string, unknown> = {
   Q96: 'Yes',
 
   // Section J — Job Satisfaction
-  Q98: 'Strongly Agree', Q99: 'Strongly Agree', Q100: 'Strongly Agree',
-  Q101: 'Strongly Agree', Q102: 'Strongly Agree', Q103: 'Strongly Agree',
-  Q104: 'Strongly Agree', Q105: 'Strongly Agree', Q106: 'Strongly Agree',
+  Q98: 'Strongly Agree',
+  Q99: 'Strongly Agree',
+  Q100: 'Strongly Agree',
+  Q101: 'Strongly Agree',
+  Q102: 'Strongly Agree',
+  Q103: 'Strongly Agree',
+  Q104: 'Strongly Agree',
+  Q105: 'Strongly Agree',
+  Q106: 'Strongly Agree',
   Q107: 'Strongly Agree',
   Q109: 'UAT test answer',
   Q110: ['Professional development opportunities'],
   Q111: ['Seminars, conferences, workshops'],
   Q112: ['Clinical audits'],
   Q113: ['Clinical audits'],
-  Q114: 'Always', Q115: 'Always', Q116: 'Always', Q117: 'Always',
-  Q118: 'Always', Q119: 'Always', Q120: 'Always', Q121: 'Always',
+  Q114: 'Always',
+  Q115: 'Always',
+  Q116: 'Always',
+  Q117: 'Always',
+  Q118: 'Always',
+  Q119: 'Always',
+  Q120: 'Always',
+  Q121: 'Always',
   Q123: "Yes, I've thought about it and have definite plans to leave",
 };
 
-async function seedDraft(
-  page: import('@playwright/test').Page,
-  values: Record<string, unknown>,
-) {
+async function seedDraft(page: import('@playwright/test').Page, values: Record<string, unknown>) {
   await page.evaluate(async (vals) => {
     const draftId = localStorage.getItem('f2_current_draft_id');
     if (!draftId) throw new Error('No draft ID in localStorage');
@@ -148,7 +166,9 @@ test('golden path: enrollment → all sections complete → review → submit', 
   // Wait for each section heading before clicking Next to avoid race conditions.
   const sectionIds = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
   for (const id of sectionIds) {
-    await expect(page.getByRole('heading', { name: new RegExp(`Section ${id}`) })).toBeVisible({ timeout: 5000 });
+    await expect(page.getByRole('heading', { name: new RegExp(`Section ${id}`) })).toBeVisible({
+      timeout: 5000,
+    });
     await page.getByRole('button', { name: 'Next section' }).click();
   }
 
@@ -156,7 +176,9 @@ test('golden path: enrollment → all sections complete → review → submit', 
 
   // Review shows all 10 sections
   for (const id of ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']) {
-    await expect(page.getByRole('heading', { name: new RegExp(`Section ${id}`, 'i') })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: new RegExp(`Section ${id}`, 'i') }),
+    ).toBeVisible();
   }
 
   // 4. Submit
@@ -178,7 +200,11 @@ test('section lock: cannot navigate to an unvisited section via tree', async ({ 
   await expect(page.getByRole('heading', { name: /Section A/i })).toBeVisible({ timeout: 5000 });
 
   // Try to jump to Section J via the desktop sidebar (Section A is index 0, J is index 9)
-  await page.locator('aside').first().getByRole('button', { name: /Job Satisfaction/i }).click();
+  await page
+    .locator('aside')
+    .first()
+    .getByRole('button', { name: /Job Satisfaction/i })
+    .click();
 
   // Lock message should appear
   await expect(page.getByText(/complete sections in order/i)).toBeVisible({ timeout: 3000 });

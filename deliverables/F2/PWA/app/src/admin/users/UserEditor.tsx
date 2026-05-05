@@ -224,7 +224,9 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
             <div role="alert" className="border-l-2 border-error pl-3 py-2">
               <p className="text-sm text-error">{errorMessageFor(error)}</p>
               {error.requestId ? (
-                <p className="mt-1 font-mono text-xs text-muted-foreground">ref {error.requestId}</p>
+                <p className="mt-1 font-mono text-xs text-muted-foreground">
+                  ref {error.requestId}
+                </p>
               ) : null}
             </div>
           ) : null}
@@ -264,7 +266,9 @@ function Field({
 }): JSX.Element {
   return (
     <label className={`flex flex-col gap-1 ${className ?? ''}`}>
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       {children}
       {hint ? <span className="font-mono text-[10px] text-muted-foreground">{hint}</span> : null}
     </label>

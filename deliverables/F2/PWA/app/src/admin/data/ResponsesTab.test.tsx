@@ -5,7 +5,10 @@ import { AdminAuthProvider } from '../lib/auth-context';
 import { RouterProvider } from '../lib/pages-router';
 
 function jsonResponse(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
 
 function renderTab(fetchImpl: typeof fetch) {

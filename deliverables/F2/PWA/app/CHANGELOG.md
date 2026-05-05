@@ -8,6 +8,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [1.0.0] — 2026-04-23
 
 ### Added
+
 - **Section tree sidebar** — sticky desktop sidebar + responsive burger-menu drawer listing all 10 sections; badges show current (teal), completed (green checkmark), and upcoming (muted) states
 - **Side arrow navigation** — fixed prev/next chevron buttons at vertical center of screen; on desktop the left arrow clears the sidebar; right arrow turns primary color on the last section to signal finish
 - **Swipe gesture** — horizontal swipe >50 px (dominant axis) navigates between sections on mobile and tablet
@@ -19,12 +20,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **App icon** — replaced with the official DOH Philippines seal
 
 ### Fixed
+
 - **Backend build** — `stripCjsExport` regex now correctly removes the entire `if (typeof module !== 'undefined')` block, fixing a syntax error in the generated `Code.gs`
 - **Sync CORS** — POST requests now use `Content-Type: text/plain` to avoid the OPTIONS preflight that Apps Script cannot handle
 
 ## [2.0.0] — 2026-05-04
 
 ### Added
+
 - wire staging R2 + cron, clear R2 cutover gate
 - wire AS quota counter to bump on every admin RPC
 - admin RPC dispatcher (Task 1.5 — keystone)
@@ -68,12 +71,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - add migration script for admin sheets and column extensions
 
 ### Fixed
+
 - file picker — accept attr + drag-drop + download attr (FX-009/010/013)
 - wire QR rendering into Reissue token modal (FX-008)
 - derive name from label on filter inputs (FX-014)
 - extend F2_AUDIT_COLUMNS with admin-context fields (FX-006)
 - populate versioning [vars] (FX-015)
-- exclude /admin/* from SW navigateFallback (FX-011)
+- exclude /admin/\* from SW navigateFallback (FX-011)
 - adminEncodeSubmit accepts payload.encoded_by
 - equalize verifyPassword timing for non-existent users (S2)
 - build script no longer truncates bundle on comment trap
@@ -88,7 +92,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - pre-enrollment refresh uses verified token (#53)
 
 ### Changed
+
 - MultiSectionForm gains mode prop + Promise-tolerant onSubmit
 - add F2_ADMIN_R2 binding and 5-minute cron trigger
 - v1.2.0 — UAT Round 3 / Feature batch — sync CHANGELOG + version
-

@@ -48,11 +48,9 @@ describe('<Login />', () => {
   it('surfaces a typed error message on E_AUTH_INVALID', async () => {
     const user = userEvent.setup();
     const fetchImpl = vi.fn(async () =>
-      jsonResponse(
-        { ok: false, error: { code: 'E_AUTH_INVALID', message: 'bad' } },
-        401,
-        { 'X-Request-Id': 'req-7' },
-      ),
+      jsonResponse({ ok: false, error: { code: 'E_AUTH_INVALID', message: 'bad' } }, 401, {
+        'X-Request-Id': 'req-7',
+      }),
     ) as unknown as typeof fetch;
     renderLogin(fetchImpl);
 

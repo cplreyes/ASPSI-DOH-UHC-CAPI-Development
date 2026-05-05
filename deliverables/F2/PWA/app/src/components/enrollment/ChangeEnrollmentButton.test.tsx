@@ -9,8 +9,7 @@ import { DRAFT_ID_KEY } from '@/lib/draft';
 import { db } from '@/lib/db';
 
 function fakeDeviceToken(): string {
-  const b64url = (s: string) =>
-    btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const b64url = (s: string) => btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
   const header = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
   const payload = b64url(
     JSON.stringify({

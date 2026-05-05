@@ -64,7 +64,13 @@ describe('getGeolocation', () => {
   it('returns null when the user denies permission (PERMISSION_DENIED)', async () => {
     setGeolocation({
       getCurrentPosition: (_success: PositionCallback, error: PositionErrorCallback) => {
-        error({ code: 1, message: 'User denied geolocation', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 } as GeolocationPositionError);
+        error({
+          code: 1,
+          message: 'User denied geolocation',
+          PERMISSION_DENIED: 1,
+          POSITION_UNAVAILABLE: 2,
+          TIMEOUT: 3,
+        } as GeolocationPositionError);
       },
     });
     expect(await getGeolocation()).toBeNull();
@@ -73,7 +79,13 @@ describe('getGeolocation', () => {
   it('returns null on timeout (TIMEOUT)', async () => {
     setGeolocation({
       getCurrentPosition: (_success: PositionCallback, error: PositionErrorCallback) => {
-        error({ code: 3, message: 'Timeout', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 } as GeolocationPositionError);
+        error({
+          code: 3,
+          message: 'Timeout',
+          PERMISSION_DENIED: 1,
+          POSITION_UNAVAILABLE: 2,
+          TIMEOUT: 3,
+        } as GeolocationPositionError);
       },
     });
     expect(await getGeolocation()).toBeNull();
@@ -82,7 +94,13 @@ describe('getGeolocation', () => {
   it('returns null on POSITION_UNAVAILABLE', async () => {
     setGeolocation({
       getCurrentPosition: (_success: PositionCallback, error: PositionErrorCallback) => {
-        error({ code: 2, message: 'Unavailable', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 } as GeolocationPositionError);
+        error({
+          code: 2,
+          message: 'Unavailable',
+          PERMISSION_DENIED: 1,
+          POSITION_UNAVAILABLE: 2,
+          TIMEOUT: 3,
+        } as GeolocationPositionError);
       },
     });
     expect(await getGeolocation()).toBeNull();
@@ -91,9 +109,19 @@ describe('getGeolocation', () => {
   it('passes a 5000ms timeout to the browser API', async () => {
     let capturedOptions: PositionOptions | undefined;
     setGeolocation({
-      getCurrentPosition: (_success: PositionCallback, _error: PositionErrorCallback, options?: PositionOptions) => {
+      getCurrentPosition: (
+        _success: PositionCallback,
+        _error: PositionErrorCallback,
+        options?: PositionOptions,
+      ) => {
         capturedOptions = options;
-        _error({ code: 3, message: 'Timeout', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 } as GeolocationPositionError);
+        _error({
+          code: 3,
+          message: 'Timeout',
+          PERMISSION_DENIED: 1,
+          POSITION_UNAVAILABLE: 2,
+          TIMEOUT: 3,
+        } as GeolocationPositionError);
       },
     });
     await getGeolocation();
@@ -105,14 +133,30 @@ describe('getGeolocation', () => {
     setGeolocation({
       getCurrentPosition: (success: PositionCallback, error: PositionErrorCallback) => {
         success({
-          coords: { latitude: 1, longitude: 2, accuracy: 10, altitude: null, altitudeAccuracy: null, heading: null, speed: null },
+          coords: {
+            latitude: 1,
+            longitude: 2,
+            accuracy: 10,
+            altitude: null,
+            altitudeAccuracy: null,
+            heading: null,
+            speed: null,
+          },
           timestamp: Date.now(),
         } as GeolocationPosition);
         // Buggy browsers might also fire error; the helper must ignore it.
         try {
-          error({ code: 3, message: 'Timeout', PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3 } as GeolocationPositionError);
+          error({
+            code: 3,
+            message: 'Timeout',
+            PERMISSION_DENIED: 1,
+            POSITION_UNAVAILABLE: 2,
+            TIMEOUT: 3,
+          } as GeolocationPositionError);
           secondInvocation = true;
-        } catch { /* ignore */ }
+        } catch {
+          /* ignore */
+        }
       },
     });
     const result = await getGeolocation();

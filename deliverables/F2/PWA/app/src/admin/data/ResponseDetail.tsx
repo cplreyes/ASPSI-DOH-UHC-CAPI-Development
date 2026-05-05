@@ -50,7 +50,11 @@ export interface ResponseDetailProps {
   fetchImpl?: typeof fetch;
 }
 
-export function ResponseDetail({ apiBaseUrl, submissionId, fetchImpl }: ResponseDetailProps): JSX.Element {
+export function ResponseDetail({
+  apiBaseUrl,
+  submissionId,
+  fetchImpl,
+}: ResponseDetailProps): JSX.Element {
   return (
     <LocaleProvider>
       <ResponseDetailInner
@@ -62,13 +66,15 @@ export function ResponseDetail({ apiBaseUrl, submissionId, fetchImpl }: Response
   );
 }
 
-function ResponseDetailInner({ apiBaseUrl, submissionId, fetchImpl }: ResponseDetailProps): JSX.Element {
+function ResponseDetailInner({
+  apiBaseUrl,
+  submissionId,
+  fetchImpl,
+}: ResponseDetailProps): JSX.Element {
   const { token, clearAuth } = useAdminAuth();
   const { navigate } = useRouter();
   const [state, setState] = useState<
-    | { kind: 'loading' }
-    | { kind: 'loaded'; row: ResponseRow }
-    | { kind: 'failed'; error: ApiError }
+    { kind: 'loading' } | { kind: 'loaded'; row: ResponseRow } | { kind: 'failed'; error: ApiError }
   >({ kind: 'loading' });
 
   useEffect(() => {
@@ -139,7 +145,7 @@ function DetailBody({ row }: { row: ResponseRow }): JSX.Element {
           Raw values_json
         </summary>
         <pre className="mt-2 max-h-96 overflow-auto border border-hairline bg-secondary/20 p-3 font-mono text-xs text-muted-foreground">
-{JSON.stringify(values, null, 2)}
+          {JSON.stringify(values, null, 2)}
         </pre>
       </details>
     </>
@@ -150,10 +156,18 @@ function ProvenanceBlock({ row }: { row: ResponseRow }): JSX.Element {
   const isEncoded = row.source_path === 'paper_encoded';
   return (
     <dl className="grid grid-cols-1 gap-y-2 border-l-2 border-hairline pl-4 text-sm sm:grid-cols-2 sm:gap-x-6">
-      <Field label="Submitted (server)" mono>{formatTs(row.submitted_at_server)}</Field>
-      <Field label="HCW" mono>{row.hcw_id || '—'}</Field>
-      <Field label="Facility" mono>{row.facility_id || '—'}</Field>
-      <Field label="Source path" mono>{row.source_path || '—'}</Field>
+      <Field label="Submitted (server)" mono>
+        {formatTs(row.submitted_at_server)}
+      </Field>
+      <Field label="HCW" mono>
+        {row.hcw_id || '—'}
+      </Field>
+      <Field label="Facility" mono>
+        {row.facility_id || '—'}
+      </Field>
+      <Field label="Source path" mono>
+        {row.source_path || '—'}
+      </Field>
       <Field label="Status">
         <span className={row.status === 'rejected' ? 'text-error' : 'text-muted-foreground'}>
           {row.status || '—'}
@@ -169,23 +183,42 @@ function ProvenanceBlock({ row }: { row: ResponseRow }): JSX.Element {
       ) : null}
       {isEncoded ? (
         <Field label="Encoded by" mono>
-          {row.encoded_by || '—'} <span className="text-muted-foreground">@ {formatTs(row.encoded_at)}</span>
+          {row.encoded_by || '—'}{' '}
+          <span className="text-muted-foreground">@ {formatTs(row.encoded_at)}</span>
         </Field>
       ) : null}
     </dl>
   );
 }
 
-function Field({ label, children, mono = false }: { label: string; children: React.ReactNode; mono?: boolean }): JSX.Element {
+function Field({
+  label,
+  children,
+  mono = false,
+}: {
+  label: string;
+  children: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
   return (
     <div className="flex flex-col">
-      <dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">{label}</dt>
+      <dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+        {label}
+      </dt>
       <dd className={mono ? 'font-mono text-xs' : ''}>{children}</dd>
     </div>
   );
 }
 
-function SectionDetail({ section, values, locale }: { section: SectionModel; values: Record<string, unknown>; locale: string }): JSX.Element | null {
+function SectionDetail({
+  section,
+  values,
+  locale,
+}: {
+  section: SectionModel;
+  values: Record<string, unknown>;
+  locale: string;
+}): JSX.Element | null {
   const rows = collectRows(section.items, values, locale);
   if (rows.length === 0) return null;
 
@@ -213,7 +246,11 @@ function SectionDetail({ section, values, locale }: { section: SectionModel; val
   );
 }
 
-function collectRows(items: Item[], values: Record<string, unknown>, locale: string): Array<{ key: string; id: string; label: string; value: string }> {
+function collectRows(
+  items: Item[],
+  values: Record<string, unknown>,
+  locale: string,
+): Array<{ key: string; id: string; label: string; value: string }> {
   const out: Array<{ key: string; id: string; label: string; value: string }> = [];
   const lc = locale as 'en' | 'fil';
   for (const item of items) {
@@ -286,8 +323,8 @@ function ErrorPanel({ error }: { error: ApiError }): JSX.Element {
       <div className="border border-hairline bg-secondary/20 px-4 py-6">
         <p className="font-serif text-lg">Submission not found</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          The ID may be stale or the submission was rejected before reaching F2_Responses.
-          Check the DLQ tab for malformed submissions.
+          The ID may be stale or the submission was rejected before reaching F2_Responses. Check the
+          DLQ tab for malformed submissions.
         </p>
       </div>
     );

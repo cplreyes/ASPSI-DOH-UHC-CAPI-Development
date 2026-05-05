@@ -47,9 +47,7 @@ describe('a11y pages', () => {
   });
 
   it('enrollment screen has no violations', async () => {
-    const { container } = render(
-      wrap(<EnrollmentScreen />),
-    );
+    const { container } = render(wrap(<EnrollmentScreen />));
     expect(await axe(container, AXE_COMPONENT_CONFIG)).toHaveNoViolations();
   });
 

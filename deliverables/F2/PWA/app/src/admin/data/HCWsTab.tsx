@@ -112,12 +112,29 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3">
-        <FilterText label="Facility ID" value={filters.facility_id} onChange={(v) => setFilters({ ...filters, facility_id: v })} />
-        <FilterText label="Search" value={filters.q} onChange={(v) => setFilters({ ...filters, q: v })} />
+        <FilterText
+          label="Facility ID"
+          value={filters.facility_id}
+          onChange={(v) => setFilters({ ...filters, facility_id: v })}
+        />
+        <FilterText
+          label="Search"
+          value={filters.q}
+          onChange={(v) => setFilters({ ...filters, q: v })}
+        />
         <div className="flex items-center gap-2">
-          <PillToggle active={filters.status === 'enrolled'} onClick={() => togglePill('enrolled')}>Enrolled</PillToggle>
-          <PillToggle active={filters.status === 'submitted'} onClick={() => togglePill('submitted')}>Submitted</PillToggle>
-          <PillToggle active={filters.status === 'revoked'} onClick={() => togglePill('revoked')}>Revoked</PillToggle>
+          <PillToggle active={filters.status === 'enrolled'} onClick={() => togglePill('enrolled')}>
+            Enrolled
+          </PillToggle>
+          <PillToggle
+            active={filters.status === 'submitted'}
+            onClick={() => togglePill('submitted')}
+          >
+            Submitted
+          </PillToggle>
+          <PillToggle active={filters.status === 'revoked'} onClick={() => togglePill('revoked')}>
+            Revoked
+          </PillToggle>
         </div>
       </div>
 
@@ -143,7 +160,9 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
           {...(fetchImpl ? { fetchImpl } : {})}
           hcwId={reissueTarget.hcw_id}
           {...(reissueTarget.facility_name ? { facilityName: reissueTarget.facility_name } : {})}
-          {...(reissueTarget.enrollment_token_jti ? { prevJti: reissueTarget.enrollment_token_jti } : {})}
+          {...(reissueTarget.enrollment_token_jti
+            ? { prevJti: reissueTarget.enrollment_token_jti }
+            : {})}
           onClose={() => setReissueTarget(null)}
         />
       ) : null}
@@ -151,10 +170,20 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
   );
 }
 
-function FilterText({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
+function FilterText({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}): JSX.Element {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="text"
         value={value}
@@ -165,7 +194,15 @@ function FilterText({ label, value, onChange }: { label: string; value: string; 
   );
 }
 
-function PillToggle({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }): JSX.Element {
+function PillToggle({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}): JSX.Element {
   return (
     <button
       type="button"
@@ -181,7 +218,13 @@ function PillToggle({ active, onClick, children }: { active: boolean; onClick: (
   );
 }
 
-function HcwsTable({ rows, onReissue }: { rows: HcwRow[]; onReissue: (r: HcwRow) => void }): JSX.Element {
+function HcwsTable({
+  rows,
+  onReissue,
+}: {
+  rows: HcwRow[];
+  onReissue: (r: HcwRow) => void;
+}): JSX.Element {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
@@ -201,7 +244,9 @@ function HcwsTable({ rows, onReissue }: { rows: HcwRow[]; onReissue: (r: HcwRow)
               <Td>
                 <span>{r.facility_name || r.facility_id}</span>
                 {r.facility_name ? (
-                  <span className="ml-2 font-mono text-[10px] text-muted-foreground">{r.facility_id}</span>
+                  <span className="ml-2 font-mono text-[10px] text-muted-foreground">
+                    {r.facility_id}
+                  </span>
                 ) : null}
               </Td>
               <Td>
@@ -240,15 +285,27 @@ function HcwsTable({ rows, onReissue }: { rows: HcwRow[]; onReissue: (r: HcwRow)
   );
 }
 
-function Th({ children, ...rest }: { children?: React.ReactNode } & React.ThHTMLAttributes<HTMLTableCellElement>): JSX.Element {
+function Th({
+  children,
+  ...rest
+}: { children?: React.ReactNode } & React.ThHTMLAttributes<HTMLTableCellElement>): JSX.Element {
   return (
-    <th {...rest} className="px-3 py-2 font-mono text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+    <th
+      {...rest}
+      className="px-3 py-2 font-mono text-[10px] font-medium uppercase tracking-wider text-muted-foreground"
+    >
       {children}
     </th>
   );
 }
 
-function Td({ children, mono = false }: { children?: React.ReactNode; mono?: boolean }): JSX.Element {
+function Td({
+  children,
+  mono = false,
+}: {
+  children?: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
   return <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>;
 }
 
@@ -260,7 +317,9 @@ function StatusPill({ value }: { value: string }): JSX.Element {
         ? 'border-signal text-signal'
         : 'border-hairline text-muted-foreground';
   return (
-    <span className={`rounded-full border ${tone} px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider`}>
+    <span
+      className={`rounded-full border ${tone} px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider`}
+    >
       {value || '—'}
     </span>
   );
@@ -279,8 +338,8 @@ function EmptyBanner(): JSX.Element {
     <div className="border border-hairline bg-secondary/20 px-4 py-6">
       <p className="font-serif text-lg">No healthcare workers match the current filters.</p>
       <p className="mt-1 text-sm text-muted-foreground">
-        F2_HCWs populates from token issuance + the backfillHcws helper. If this is empty,
-        run backfillHcws on the staging sheet (Task 2.8).
+        F2_HCWs populates from token issuance + the backfillHcws helper. If this is empty, run
+        backfillHcws on the staging sheet (Task 2.8).
       </p>
     </div>
   );

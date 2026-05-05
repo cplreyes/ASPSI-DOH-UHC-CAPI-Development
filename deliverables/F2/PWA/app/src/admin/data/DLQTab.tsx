@@ -103,9 +103,21 @@ export function DLQTab({ apiBaseUrl, fetchImpl }: DLQTabProps): JSX.Element {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3">
-        <FilterDate label="From" value={filters.from} onChange={(v) => setFilters({ ...filters, from: v })} />
-        <FilterDate label="To" value={filters.to} onChange={(v) => setFilters({ ...filters, to: v })} />
-        <FilterText label="Search" value={filters.q} onChange={(v) => setFilters({ ...filters, q: v })} />
+        <FilterDate
+          label="From"
+          value={filters.from}
+          onChange={(v) => setFilters({ ...filters, from: v })}
+        />
+        <FilterDate
+          label="To"
+          value={filters.to}
+          onChange={(v) => setFilters({ ...filters, to: v })}
+        />
+        <FilterText
+          label="Search"
+          value={filters.q}
+          onChange={(v) => setFilters({ ...filters, q: v })}
+        />
       </div>
 
       {state.kind === 'loading' ? (
@@ -127,10 +139,20 @@ export function DLQTab({ apiBaseUrl, fetchImpl }: DLQTabProps): JSX.Element {
   );
 }
 
-function FilterDate({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
+function FilterDate({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}): JSX.Element {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="date"
         value={value}
@@ -141,10 +163,20 @@ function FilterDate({ label, value, onChange }: { label: string; value: string; 
   );
 }
 
-function FilterText({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
+function FilterText({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}): JSX.Element {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="text"
         value={value}
@@ -196,7 +228,13 @@ function Th({ children }: { children?: React.ReactNode }): JSX.Element {
   );
 }
 
-function Td({ children, mono = false }: { children?: React.ReactNode; mono?: boolean }): JSX.Element {
+function Td({
+  children,
+  mono = false,
+}: {
+  children?: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
   return <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>;
 }
 

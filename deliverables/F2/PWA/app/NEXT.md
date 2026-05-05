@@ -3,6 +3,7 @@
 **Current phase:** Round 1 + Round 2 fully closed 2026-04-25. v1.1.0 + v1.1.1 milestones complete. Round 3 (v1.2.0) is queued with 3 UX features: "I don't know" exclusivity (#16), "All of the above" auto-select (#17), scale-question matrix view (#18).
 
 **Closed batches:**
+
 - v1.1.0 — UAT Round 1: 7 issues (skip-logic gates, Section G hide, max constraints, age letter input, etc.)
 - v1.1.1 — UAT Round 2: 7 issues (specialty filter, real-time tooltips, conditional-required generator, submit error UX, Q9 Month optional, gate navigation regression fix)
 
@@ -12,26 +13,26 @@
 
 ### ✅ Addressed in fix batch `3003c253` (shipped 2026-04-25, awaits verification)
 
-| Issue | Title | Verification |
-|---|---|---|
-| #4 | Q4 age — max 99 | Try Q4=120 → blocked |
-| #5 / #7 (dup) | Q9_2 months — max 11 | Try Q9_2=15 → blocked |
-| #6 / #9 (dup) | Q12 UHC skip logic | Q12=No → Q13–Q30 skipped |
-| #11 | Section G hidden for Nurse | Q5=Nurse → Section G not in tree |
-| (also) | Section C Q31-gate | Q31=No → Q32–Q40 skipped |
-| (also) | Section H Q91-gate | Q91='never happened' → Q92–Q95 skipped |
+| Issue         | Title                      | Verification                           |
+| ------------- | -------------------------- | -------------------------------------- |
+| #4            | Q4 age — max 99            | Try Q4=120 → blocked                   |
+| #5 / #7 (dup) | Q9_2 months — max 11       | Try Q9_2=15 → blocked                  |
+| #6 / #9 (dup) | Q12 UHC skip logic         | Q12=No → Q13–Q30 skipped               |
+| #11           | Section G hidden for Nurse | Q5=Nurse → Section G not in tree       |
+| (also)        | Section C Q31-gate         | Q31=No → Q32–Q40 skipped               |
+| (also)        | Section H Q91-gate         | Q91='never happened' → Q92–Q95 skipped |
 
 **Verify these on staging:** https://c9765fdf.f2-pwa-staging.pages.dev — then close issues #4/#5/#6/#7/#9/#11 with reference to commit + verification screenshot.
 
 ### ⏳ NOT yet addressed — Round 2 fix batch needed
 
-| Issue | Title | Type | Notes |
-|---|---|---|---|
-| #2 | Specialty filter by role (Q5 → specialty list) | UX/data | e.g., Q5=Dentist → hide Dermatology. Pure filter, no schema change. |
-| #8 | Q25 sub-question gating | Skip-logic | Salary only → Q27–Q30 unanswerable; #patients only → Q26 + Q28–Q30 unanswerable; both → Q28–Q30 unanswerable |
-| #10 | Auto-advance on required questions | **Bug — needs investigation** | Form jumps to next section after one required answer (Q25, Q96/Q97, Q123–Q125) when sibling required fields still pending. Likely `MultiSectionForm.tsx` `handleSectionValid` or section-completion predicate. |
-| #12 TC-005 | Language switch failure | Bug | Read `LanguageSwitcher.tsx` + i18n setup |
-| #12 TC-010 | Submission flow ("No Submission yet" / "Nothing to Sync") | Bug | Read `App.tsx` `handleFinalSubmit` → `onSubmit` → IndexedDB write path |
+| Issue      | Title                                                     | Type                          | Notes                                                                                                                                                                                                          |
+| ---------- | --------------------------------------------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| #2         | Specialty filter by role (Q5 → specialty list)            | UX/data                       | e.g., Q5=Dentist → hide Dermatology. Pure filter, no schema change.                                                                                                                                            |
+| #8         | Q25 sub-question gating                                   | Skip-logic                    | Salary only → Q27–Q30 unanswerable; #patients only → Q26 + Q28–Q30 unanswerable; both → Q28–Q30 unanswerable                                                                                                   |
+| #10        | Auto-advance on required questions                        | **Bug — needs investigation** | Form jumps to next section after one required answer (Q25, Q96/Q97, Q123–Q125) when sibling required fields still pending. Likely `MultiSectionForm.tsx` `handleSectionValid` or section-completion predicate. |
+| #12 TC-005 | Language switch failure                                   | Bug                           | Read `LanguageSwitcher.tsx` + i18n setup                                                                                                                                                                       |
+| #12 TC-010 | Submission flow ("No Submission yet" / "Nothing to Sync") | Bug                           | Read `App.tsx` `handleFinalSubmit` → `onSubmit` → IndexedDB write path                                                                                                                                         |
 
 ### Suggested Round 2 batch sequence
 
@@ -52,6 +53,7 @@
 ## Deploy commands
 
 **Redeploy staging:**
+
 ```bash
 cd deliverables/F2/PWA/app
 npm run build
@@ -59,6 +61,7 @@ npx wrangler pages deploy dist --project-name f2-pwa-staging --commit-dirty=true
 ```
 
 **Redeploy production (only after final UAT sign-off):**
+
 ```bash
 cd deliverables/F2/PWA/app
 npm run build
@@ -66,6 +69,7 @@ npx wrangler pages deploy dist --project-name f2-pwa --branch main --commit-dirt
 ```
 
 **Redeploy backend (Apps Script):**
+
 ```bash
 cd deliverables/F2/PWA/backend
 npm run build
