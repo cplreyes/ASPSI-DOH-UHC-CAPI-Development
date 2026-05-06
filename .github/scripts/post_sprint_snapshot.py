@@ -1,24 +1,22 @@
-"""Post sprint kickoff/closeout snapshot to Slack #capi-scrum.
+"""Post cross-sprint summary snapshot to Slack #capi-scrum.
 
-Triggers:
-  start   - Monday morning kickoff: sprint goal + committed items + stretch
-  close   - Friday EOD closeout:    Done/Open split + throughput + carry-forwards
-  test    - Local dry-run: prints to stdout, does NOT post to Slack
+Queries GH Project #8 (UHC CAPI - Backlog) for all cards, aggregates by
+Sprint Slot x Status, and posts a monospace summary table.
 
-Sources:
-  scrum/sprint-current.md        sprint frontmatter + committed/stretch items
-  GH Project #8 (optional)        live Status field per card (uses PROJECTS_PAT if set;
-                                  falls back to markdown checkbox state otherwise)
+Modes (controls header framing only; table contents identical):
+  start   Monday morning sprint kickoff: ":rocket: Sprint NNN kickoff snapshot"
+  close   Friday EOD sprint closeout:    ":bar_chart: Sprint NNN closeout snapshot"
+  test    Local dry-run: prints to stdout, does NOT post to Slack
+
+Env:
+  SLACK_WEBHOOK_URL   required for non-test modes
+  GH_PROJECTS_TOKEN   required PAT with `read:project` scope (or `project` for classic)
+  GITHUB_WORKSPACE    set in Actions; falls back to script's repo root locally
 
 Usage:
   python .github/scripts/post_sprint_snapshot.py start
   python .github/scripts/post_sprint_snapshot.py close
   python .github/scripts/post_sprint_snapshot.py test [start|close]
-
-Env:
-  SLACK_WEBHOOK_URL  required for non-test modes
-  PROJECTS_PAT       optional GH PAT with read:project to enrich with live board state
-  GITHUB_WORKSPACE   set in Actions; falls back to script's repo root locally
 """
 from __future__ import annotations
 
@@ -27,219 +25,207 @@ import os
 import re
 import sys
 import urllib.request
+from collections import defaultdict
 from pathlib import Path
 
 REPO_ROOT = Path(os.environ.get("GITHUB_WORKSPACE") or Path(__file__).resolve().parents[2])
 SPRINT_CURRENT = REPO_ROOT / "scrum" / "sprint-current.md"
-SPRINTS_DIR = REPO_ROOT / "scrum" / "sprints"
 
-PROJECT_URL = "https://github.com/users/cplreyes/projects/8"
+OWNER = "cplreyes"
+PROJECT_NUMBER = 8
+PROJECT_URL = f"https://github.com/users/{OWNER}/projects/{PROJECT_NUMBER}"
 
-FRONTMATTER_RE = re.compile(r"^---\n(.+?)\n---", re.DOTALL)
-TASK_RE = re.compile(
-    r"^- \[([x ])\]\s*\*\*([A-Z][A-Za-z0-9-]+)\*\*\s*(.+?)\s*$"
-)
-INLINE_FIELD = re.compile(r"`([a-z_]+)::\s*([^`]+?)\s*`")
-H2_RE = re.compile(r"^## (.+?)\s*$")
-H3_RE = re.compile(r"^### (.+?)\s*$")
-
-
-def parse_frontmatter(text: str) -> dict:
-    m = FRONTMATTER_RE.search(text)
-    if not m:
-        return {}
-    out = {}
-    for line in m.group(1).splitlines():
-        if ":" in line:
-            k, v = line.split(":", 1)
-            out[k.strip()] = v.strip()
-    return out
+# Order to display rows (Sprint Slot column).
+SPRINT_ORDER = [
+    "sprint-001", "sprint-002", "sprint-003", "sprint-004",
+    "sprint-005", "sprint-006", "sprint-007", "sprint-008",
+]
 
 
-def parse_sprint_md(path: Path) -> dict:
-    """Extract sprint metadata + committed/stretch items from a sprint markdown file."""
-    text = path.read_text(encoding="utf-8")
-    fm = parse_frontmatter(text)
+def gh_token() -> str:
+    tok = os.environ.get("GH_PROJECTS_TOKEN") or os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    if not tok:
+        print("ERROR: no GH token in env (set GH_PROJECTS_TOKEN with `read:project` scope).", file=sys.stderr)
+        sys.exit(1)
+    return tok
 
-    # Pull goal line: first H1 followed by `## Sprint Goal` block's first quoted line.
-    title = ""
-    title_match = re.search(r"^# (.+?)$", text, re.MULTILINE)
-    if title_match:
-        title = title_match.group(1).strip()
 
-    goal = ""
-    goal_match = re.search(r"^## Sprint Goal\n+>\s*(.+?)$", text, re.MULTILINE)
-    if goal_match:
-        goal = re.sub(r"\*\*", "*", goal_match.group(1).strip())  # Slack uses * not **
-        # Strip leading "Goal A —" prefix noise if too long
-        if len(goal) > 200:
-            goal = goal[:197] + "..."
+def gh_graphql(query: str, variables: dict | None = None) -> dict:
+    payload = json.dumps({"query": query, "variables": variables or {}}).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.github.com/graphql",
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {gh_token()}",
+            "Content-Type": "application/json",
+            "Accept": "application/vnd.github+json",
+            "User-Agent": "uhc-capi-sprint-snapshot",
+        },
+    )
+    with urllib.request.urlopen(req, timeout=30) as r:
+        body = json.loads(r.read())
+    if "errors" in body:
+        print(f"GraphQL errors: {body['errors']}", file=sys.stderr)
+        sys.exit(1)
+    return body["data"]
 
-    # Walk lines, group items by current section header.
-    # Only collect tasks while inside `## Committed Items` (covers its `###` subsections
-    # like Goal A / Goal B / Stretch). Skip everything else (Daily Notes, Definition of
-    # Done, Retrospective).
-    items = {"committed": [], "stretch": [], "other": []}
-    in_committed_section = False
-    current_bucket = "committed"
-    for line in text.splitlines():
-        m_h2 = H2_RE.match(line)
-        if m_h2:
-            in_committed_section = "committed items" in m_h2.group(1).lower()
-            current_bucket = "committed"
-            continue
-        if not in_committed_section:
-            continue
-        m_h3 = H3_RE.match(line)
-        if m_h3:
-            heading = m_h3.group(1).lower()
-            if "stretch" in heading or "not committed" in heading:
-                current_bucket = "stretch"
-            else:
-                current_bucket = "committed"
-            continue
-        m_task = TASK_RE.match(line)
-        if not m_task:
-            continue
-        if current_bucket == "other":
-            continue
-        box, tid, body = m_task.group(1), m_task.group(2), m_task.group(3)
-        fields = dict(INLINE_FIELD.findall(line))
-        # Strip inline fields from body for clean display
-        clean_body = INLINE_FIELD.sub("", body).strip().rstrip("—-").strip()
-        if len(clean_body) > 80:
-            clean_body = clean_body[:77] + "..."
-        items[current_bucket].append({
-            "task_id": tid,
-            "done": box == "x",
-            "title": clean_body,
-            "priority": fields.get("priority", "").lower(),
-            "estimate": fields.get("estimate", ""),
-        })
 
-    return {
-        "frontmatter": fm,
-        "title": title,
-        "goal": goal,
-        "items": items,
+def fetch_project_items() -> list[dict]:
+    """Return list of {sprint_slot, status} for every card on Project #8."""
+    q = """
+    query($cursor: String) {
+      user(login: "%s") {
+        projectV2(number: %d) {
+          items(first: 100, after: $cursor) {
+            pageInfo { hasNextPage endCursor }
+            nodes {
+              fieldValues(first: 30) {
+                nodes {
+                  ... on ProjectV2ItemFieldSingleSelectValue {
+                    field { ... on ProjectV2SingleSelectField { name } }
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
+    """ % (OWNER, PROJECT_NUMBER)
+
+    items = []
+    cursor = None
+    while True:
+        data = gh_graphql(q, {"cursor": cursor})
+        page = data["user"]["projectV2"]["items"]
+        for it in page["nodes"]:
+            fields = {}
+            for fv in it["fieldValues"]["nodes"]:
+                if fv and fv.get("field") and fv.get("name"):
+                    fields[fv["field"]["name"]] = fv["name"]
+            items.append({
+                "sprint_slot": fields.get("Sprint Slot"),
+                "status": fields.get("Status"),
+            })
+        if not page["pageInfo"]["hasNextPage"]:
+            break
+        cursor = page["pageInfo"]["endCursor"]
+    return items
 
 
-def hours_estimate(items: list[dict]) -> str:
-    """Sum estimate strings like '4h', '30m', '1d', 'recurring'. Returns rough total."""
-    total_hours = 0.0
-    has_recurring = False
+def aggregate(items: list[dict]) -> tuple[dict, int, int, int]:
+    """Returns (counts_by_slot, total_done, total_todo, grand_total).
+
+    counts_by_slot[slot] = {"done": N, "todo": M, "in_progress": K}
+    """
+    counts = defaultdict(lambda: {"done": 0, "todo": 0, "in_progress": 0, "review": 0})
     for it in items:
-        e = it.get("estimate", "").strip().lower()
-        if not e:
-            continue
-        if "recurring" in e or "ongoing" in e or "tbd" in e:
-            has_recurring = True
-            continue
-        m = re.match(r"([\d.]+)\s*([hmd])", e)
-        if not m:
-            continue
-        val = float(m.group(1))
-        unit = m.group(2)
-        if unit == "h":
-            total_hours += val
-        elif unit == "m":
-            total_hours += val / 60
-        elif unit == "d":
-            total_hours += val * 8  # nominal 8h/day
-    if total_hours == 0 and not has_recurring:
-        return "—"
-    suffix = "+ recurring" if has_recurring else ""
-    return f"~{total_hours:.0f}h{suffix}".strip()
+        slot = it.get("sprint_slot") or "(no slot)"
+        status = (it.get("status") or "Todo").lower().replace(" ", "_")
+        # Bucket: Done vs anything-else (Todo / In Progress / Review)
+        if status == "done":
+            counts[slot]["done"] += 1
+        elif status == "in_progress":
+            counts[slot]["in_progress"] += 1
+        elif status == "review":
+            counts[slot]["review"] += 1
+        else:
+            counts[slot]["todo"] += 1
+
+    total_done = sum(c["done"] for c in counts.values())
+    total_open = sum(c["todo"] + c["in_progress"] + c["review"] for c in counts.values())
+    grand_total = sum(c["done"] + c["todo"] + c["in_progress"] + c["review"] for c in counts.values())
+    return dict(counts), total_done, total_open, grand_total
 
 
-def render_start(sprint: dict) -> str:
-    fm = sprint["frontmatter"]
-    n = fm.get("sprint", "?")
-    start = fm.get("start", "?")
-    end = fm.get("end", "?")
-    committed = sprint["items"]["committed"]
-    stretch = sprint["items"]["stretch"]
+def get_current_sprint_number() -> str:
+    """Best-effort: read sprint number from sprint-current.md frontmatter."""
+    if not SPRINT_CURRENT.exists():
+        return "?"
+    text = SPRINT_CURRENT.read_text(encoding="utf-8")
+    m = re.search(r"^sprint:\s*(\d+)", text, re.MULTILINE)
+    return m.group(1) if m else "?"
 
+
+def render_table(counts: dict, total_done: int, total_open: int, grand_total: int) -> str:
+    """Monospace table fitted for Slack code block."""
+    rows = []
+    rows.append(("Sprint", "Done", "Open", "Total"))
+    rows.append(("-" * 12, "-" * 4, "-" * 4, "-" * 5))
+
+    # Pre-defined sprint slots in order
+    slots_seen = set()
+    for slot in SPRINT_ORDER:
+        if slot not in counts:
+            continue
+        c = counts[slot]
+        open_n = c["todo"] + c["in_progress"] + c["review"]
+        done_n = c["done"]
+        total = open_n + done_n
+        done_str = str(done_n) if done_n else "-"
+        open_str = str(open_n) if open_n else "-"
+        rows.append((slot, done_str, open_str, str(total)))
+        slots_seen.add(slot)
+
+    # Any other slots (unscheduled, no-slot, future labels)
+    for slot in sorted(counts.keys()):
+        if slot in slots_seen:
+            continue
+        c = counts[slot]
+        open_n = c["todo"] + c["in_progress"] + c["review"]
+        done_n = c["done"]
+        total = open_n + done_n
+        done_str = str(done_n) if done_n else "-"
+        open_str = str(open_n) if open_n else "-"
+        rows.append((slot, done_str, open_str, str(total)))
+
+    rows.append(("-" * 12, "-" * 4, "-" * 4, "-" * 5))
+    rows.append(("TOTAL", str(total_done), str(total_open), str(grand_total)))
+
+    # Compute column widths
+    widths = [max(len(row[i]) for row in rows) for i in range(4)]
     lines = []
-    lines.append(f":rocket: *Sprint {n} — Day 1 kickoff*")
-    lines.append(f"{start} → {end}  ·  5 working days")
-    if sprint["goal"]:
-        lines.append(f"_{sprint['goal']}_")
-    lines.append("")
-
-    open_committed = [i for i in committed if not i["done"]]
-    closed_committed = [i for i in committed if i["done"]]
-    if closed_committed:
-        lines.append(f"*Carry-in (already done before kickoff):* {len(closed_committed)}")
-
-    lines.append(f"*Committed* ({len(open_committed)} open, {hours_estimate(open_committed)}):")
-    for it in open_committed[:10]:
-        pri = f"[{it['priority']}]" if it["priority"] else ""
-        est = f" · {it['estimate']}" if it["estimate"] else ""
-        lines.append(f"  • `{it['task_id']}` {pri} {it['title']}{est}".rstrip())
-    if len(open_committed) > 10:
-        lines.append(f"  _…+{len(open_committed) - 10} more_")
-
-    if stretch:
-        open_stretch = [i for i in stretch if not i["done"]]
-        lines.append("")
-        lines.append(f"*Stretch* ({len(open_stretch)} open, {hours_estimate(open_stretch)}):")
-        for it in open_stretch[:5]:
-            pri = f"[{it['priority']}]" if it["priority"] else ""
-            est = f" · {it['estimate']}" if it["estimate"] else ""
-            lines.append(f"  • `{it['task_id']}` {pri} {it['title']}{est}".rstrip())
-        if len(open_stretch) > 5:
-            lines.append(f"  _…+{len(open_stretch) - 5} more_")
-
-    lines.append("")
-    lines.append(f"*Board:* {PROJECT_URL}")
+    for row in rows:
+        lines.append(f"{row[0]:<{widths[0]}}  {row[1]:>{widths[1]}}  {row[2]:>{widths[2]}}  {row[3]:>{widths[3]}}")
     return "\n".join(lines)
 
 
-def render_close(sprint: dict) -> str:
-    fm = sprint["frontmatter"]
-    n = fm.get("sprint", "?")
-    start = fm.get("start", "?")
-    end = fm.get("end", "?")
-    committed = sprint["items"]["committed"]
-    stretch = sprint["items"]["stretch"]
+def render_breakdown_by_status(counts: dict) -> str:
+    """If any sprint has cards in In Progress or Review, surface that."""
+    in_progress_total = sum(c["in_progress"] for c in counts.values())
+    review_total = sum(c["review"] for c in counts.values())
+    if in_progress_total + review_total == 0:
+        return ""
+    parts = []
+    if in_progress_total:
+        parts.append(f":hammer_and_wrench: {in_progress_total} In Progress")
+    if review_total:
+        parts.append(f":mag: {review_total} Review")
+    return " · ".join(parts)
 
-    done_committed = [i for i in committed if i["done"]]
-    open_committed = [i for i in committed if not i["done"]]
-    done_stretch = [i for i in stretch if i["done"]]
-    open_stretch = [i for i in stretch if not i["done"]]
 
-    pct = (len(done_committed) * 100 // len(committed)) if committed else 0
+def render_message(mode: str, counts: dict, total_done: int, total_open: int, grand_total: int) -> str:
+    sprint_n = get_current_sprint_number()
 
-    lines = []
-    lines.append(f":bar_chart: *Sprint {n} — Day 5 closeout*")
-    lines.append(f"{start} → {end}")
+    if mode == "start":
+        header = f":rocket: *Sprint {sprint_n} — kickoff snapshot* (active backlog state)"
+    elif mode == "close":
+        header = f":bar_chart: *Sprint {sprint_n} — closeout snapshot* (active backlog state)"
+    else:
+        header = f":clipboard: *Backlog snapshot — Sprint {sprint_n}* (manual run)"
+
+    table = render_table(counts, total_done, total_open, grand_total)
+    breakdown = render_breakdown_by_status(counts)
+
+    lines = [header, ""]
+    lines.append("```")
+    lines.append(table)
+    lines.append("```")
+    if breakdown:
+        lines.append(breakdown)
     lines.append("")
-    lines.append(f"*Done: {len(done_committed)}/{len(committed)} committed* ({pct}% throughput)")
-    for it in done_committed[:10]:
-        lines.append(f"  • :white_check_mark: `{it['task_id']}` {it['title']}".rstrip())
-    if len(done_committed) > 10:
-        lines.append(f"  _…+{len(done_committed) - 10} more_")
-
-    if open_committed:
-        lines.append("")
-        lines.append(f"*Open at close (carry to next sprint): {len(open_committed)}*")
-        for it in open_committed:
-            pri = f"[{it['priority']}]" if it["priority"] else ""
-            lines.append(f"  • :arrow_right: `{it['task_id']}` {pri} {it['title']}".rstrip())
-
-    if stretch:
-        lines.append("")
-        lines.append(f"*Stretch: {len(done_stretch)}/{len(stretch)} closed*")
-        for it in done_stretch[:5]:
-            lines.append(f"  • :white_check_mark: `{it['task_id']}` {it['title']}".rstrip())
-        if open_stretch:
-            for it in open_stretch[:3]:
-                lines.append(f"  • :arrow_right: `{it['task_id']}` {it['title']}".rstrip())
-
-    lines.append("")
-    lines.append(f"*Board:* {PROJECT_URL}")
+    lines.append(f"<{PROJECT_URL}|Open board on GitHub Projects>")
     return "\n".join(lines)
 
 
@@ -265,18 +251,17 @@ def main() -> None:
     mode = sys.argv[1]
     submode = sys.argv[2] if len(sys.argv) >= 3 else "start"
 
-    if not SPRINT_CURRENT.exists():
-        print(f"ERROR: {SPRINT_CURRENT} not found", file=sys.stderr)
-        sys.exit(1)
-
-    sprint = parse_sprint_md(SPRINT_CURRENT)
+    items = fetch_project_items()
+    counts, total_done, total_open, grand_total = aggregate(items)
+    text = render_message(
+        submode if mode == "test" else mode,
+        counts, total_done, total_open, grand_total,
+    )
 
     if mode in ("start", "close"):
-        text = render_start(sprint) if mode == "start" else render_close(sprint)
         post_to_slack(text)
         print(f"Posted {mode} snapshot to Slack ({len(text)} chars).")
     elif mode == "test":
-        text = render_start(sprint) if submode == "start" else render_close(sprint)
         print(text)
     else:
         print(f"Unknown mode: {mode}", file=sys.stderr)
