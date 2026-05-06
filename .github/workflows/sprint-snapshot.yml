@@ -1,0 +1,54 @@
+name: Sprint Snapshot to Slack
+
+# Posts a sprint kickoff or closeout summary to Slack #capi-scrum.
+#
+# Schedules (cron is UTC; Asia/Manila = UTC+8):
+#   Monday  08:00 PHT  = Monday  00:00 UTC  -> sprint kickoff
+#   Friday  18:00 PHT  = Friday  10:00 UTC  -> sprint closeout
+#
+# Manual dispatch:
+#   GitHub UI -> Actions -> "Sprint Snapshot to Slack" -> Run workflow -> mode (start|close)
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'   # Mon 00:00 UTC = Mon 08:00 PHT
+    - cron: '0 10 * * 5'  # Fri 10:00 UTC = Fri 18:00 PHT
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Snapshot mode'
+        required: true
+        default: 'start'
+        type: choice
+        options:
+          - start
+          - close
+
+jobs:
+  post-snapshot:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Determine mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ github.event.inputs.mode }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "0 0 * * 1" ]; then
+            echo "mode=start" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=close" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Post snapshot to Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          python .github/scripts/post_sprint_snapshot.py "${{ steps.mode.outputs.mode }}"
