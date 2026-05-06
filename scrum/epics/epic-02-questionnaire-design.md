@@ -115,7 +115,7 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 - [x] **E2-F3-007** F3 cross-field consistency rules `status::done` `priority::high`
 - [x] **E2-F3-008** F3 sanity check findings → 14 findings; 5 spec-decisions closed with ASPSI override clause `status::done` `priority::high`
 - [x] **E2-F3-009** F3 corrections + DCF refresh through Apr 20 source update (18 records / 840 items) `status::done` `priority::high`
-- [ ] **E2-F3-010** F3 Designer validation + sign-off `status::todo` `priority::high` `estimate::2h`
+- [ ] **E2-F3-010** F3 Designer validation + sign-off `status::todo` `priority::high` `estimate::2h` `scrum::sprint-004`
   - **Scope update 2026-04-21:** DCF extended with case-control block (SURVEY_CODE, INTERVIEWER_ID, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION) → 18 records / 840 items. Preproc spec in `F3-Skip-Logic-and-Validations.md` §4.16.
   - Pending Juvy confirmation on Q31 IP_GROUP (coded list vs alpha).
 
@@ -136,7 +136,7 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 - [x] **E2-F4-007** F4 cross-field consistency rules (within-member + cross-member) `status::done` `priority::high`
 - [x] **E2-F4-008** F4 sanity check findings → 13 findings (findings #1, #2 later reclassified as stale — see E2-F4-009) `status::done` `priority::high`
 - [x] **E2-F4-009** ~~F4 corrections — patch `generate_dcf.py` to flip `C_HOUSEHOLD_ROSTER` + `J_HEALTH_SEEKING` to repeating records~~ **CLOSED-BY-VERIFICATION 2026-04-21.** Re-inspected the generator and the emitted DCF before starting the patch: `C_HOUSEHOLD_ROSTER` already emits `max_occurs=20` with `MEMBER_LINE_NO` id-item (`generate_dcf.py:487`, `HouseholdSurvey.dcf:2836`). `J_HEALTH_SEEKING` correctly stays at `max_occurs=1` — respondent-level per the Apr 20 source rephrase ("singular you/your household member"; `generate_dcf.py:984–989`). F4 spec §1.A findings #1 and #2 were stale against the generator; spec updated. No code change. `status::done` `priority::critical`
-- [ ] **E2-F4-010** F4 Designer validation + sign-off `status::todo` `priority::high` `estimate::4h`
+- [ ] **E2-F4-010** F4 Designer validation + sign-off `status::todo` `priority::high` `estimate::4h` `scrum::sprint-004`
   - **Scope update 2026-04-21:** DCF extended with case-control block (SURVEY_CODE, INTERVIEWER_ID, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION) → 22 records / 623 items. Preproc spec in `F4-Skip-Logic-and-Validations.md` §4.12.
   - Pending ASPSI confirmation on Q15 IP_GROUP list.
 
@@ -148,10 +148,10 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 
 - [x] **E2-PLF-001** PLF form PDF ingested `status::done` `priority::medium`
 - [x] **E2-PLF-002** PLF wiki source page `status::done` `priority::medium`
-- [ ] **E2-PLF-003** Implementation decision: lightweight CAPI vs paper-only `status::todo` `priority::medium` `estimate::2h`
-- [ ] **E2-PLF-004** If CAPI: `generate_dcf.py` + DCF v1 (minimal, single-record) `status::todo` `priority::medium` `estimate::4h`
-- [ ] **E2-PLF-005** If CAPI: minimal skip logic + validation rules `status::todo` `priority::medium` `estimate::2h`
-- [ ] **E2-PLF-006** If CAPI: Designer validation + sign-off `status::todo` `priority::medium` `estimate::1h`
+- [ ] **E2-PLF-003** Implementation decision: lightweight CAPI vs paper-only `status::todo` `priority::medium` `estimate::2h` `scrum::unscheduled`
+- [ ] **E2-PLF-004** If CAPI: `generate_dcf.py` + DCF v1 (minimal, single-record) `status::todo` `priority::medium` `estimate::4h` `scrum::unscheduled`
+- [ ] **E2-PLF-005** If CAPI: minimal skip logic + validation rules `status::todo` `priority::medium` `estimate::2h` `scrum::unscheduled`
+- [ ] **E2-PLF-006** If CAPI: Designer validation + sign-off `status::todo` `priority::medium` `estimate::1h` `scrum::unscheduled`
 
 ## Notes
 

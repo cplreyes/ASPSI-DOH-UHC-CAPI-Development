@@ -51,45 +51,45 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ### Form layout & UX
 
-- [ ] **E3-F1-001** Create form file (`FacilityHeadSurvey.fmf`); lay out Section A (Identification & Cover Page) `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F1-002** Lay out Sections B–H with grouped screens matching interviewer flow `status::todo` `priority::high` `estimate::2d`
-- [ ] **E3-F1-003** Assign capture types per field (radio, drop-down, number pad, date picker) to optimize tablet entry speed `status::todo` `priority::high` `estimate::1d`
+- [ ] **E3-F1-001** Create form file (`FacilityHeadSurvey.fmf`); lay out Section A (Identification & Cover Page) `status::todo` `priority::high` `estimate::4h` `scrum::sprint-004`
+- [ ] **E3-F1-002** Lay out Sections B–H with grouped screens matching interviewer flow `status::todo` `priority::high` `estimate::2d` `scrum::unscheduled`
+- [ ] **E3-F1-003** Assign capture types per field (radio, drop-down, number pad, date picker) to optimize tablet entry speed `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
 
 ### Question text + language
 
-- [ ] **E3-F1-010** Populate English question text from questionnaire; use `~~item~~` fills for personalized text (facility name, respondent name) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F1-011** Add Filipino translations for all question labels and option text `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F1-012** Set up multi-language switching (`setlanguage`, language-select on cover page) `status::todo` `priority::high` `estimate::2h`
+- [ ] **E3-F1-010** Populate English question text from questionnaire; use `~~item~~` fills for personalized text (facility name, respondent name) `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
+- [ ] **E3-F1-011** Add Filipino translations for all question labels and option text `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
+- [ ] **E3-F1-012** Set up multi-language switching (`setlanguage`, language-select on cover page) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
 
 ### Skip logic + validation wiring (`.apc`)
 
-- [ ] **E3-F1-020** Implement master skip gates (section-level eligibility filters) `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F1-021** Implement field-level skip logic per `F1-Skip-Logic-and-Validations.md` skip table `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F1-022** Wire hard validations: `errmsg` + `reenter` per rule (age ≥ 18, registered ≤ eligible, date ranges, lat/lon bounds) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F1-023** Wire soft validations: `accept()` overrides per rule (capitation ceilings, unusual values) `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F1-024** Wire display gates: conditional visibility via `postproc` / `onfocus` `status::todo` `priority::high` `estimate::4h`
+- [ ] **E3-F1-020** Implement master skip gates (section-level eligibility filters) `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
+- [ ] **E3-F1-021** Implement field-level skip logic per `F1-Skip-Logic-and-Validations.md` skip table `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
+- [ ] **E3-F1-022** Wire hard validations: `errmsg` + `reenter` per rule (age ≥ 18, registered ≤ eligible, date ranges, lat/lon bounds) `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
+- [ ] **E3-F1-023** Wire soft validations: `accept()` overrides per rule (capitation ceilings, unusual values) `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
+- [ ] **E3-F1-024** Wire display gates: conditional visibility via `postproc` / `onfocus` `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
 
 ### Dynamic behavior
 
-- [ ] **E3-F1-030** Implement dynamic value sets (`setvalueset()`) for facility-type-dependent option lists `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F1-031** Implement cross-field consistency checks (e.g., tenure ≤ age − 15) `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F1-032** Implement conditional question text fills (facility name, respondent name in follow-up questions) `status::todo` `priority::medium` `estimate::2h`
+- [ ] **E3-F1-030** Implement dynamic value sets (`setvalueset()`) for facility-type-dependent option lists `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
+- [ ] **E3-F1-031** Implement cross-field consistency checks (e.g., tenure ≤ age − 15) `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
+- [ ] **E3-F1-032** Implement conditional question text fills (facility name, respondent name in follow-up questions) `status::todo` `priority::medium` `estimate::2h` `scrum::unscheduled`
 
 ### FIELD_CONTROL block
 
-- [ ] **E3-F1-040** Informed consent capture screen (with explicit accept/refuse + timestamp) `status::todo` `priority::critical` `estimate::3h`
-- [ ] **E3-F1-041** Eligibility screen (must pass before main questionnaire loads) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E3-F1-042** AAPOR-aligned disposition codes (completed, partial, refused, ineligible, contact attempt, etc.) `status::todo` `priority::high` `estimate::3h`
-- [ ] **E3-F1-043** GPS capture at start of interview — uses `ReadGPSReading()` helper from `Capture-Helpers.apc`; writes `FACILITY_GPS_*` items via `REC_FACILITY_CAPTURE` trigger block (see F1 spec §3.1.1 / §4.16) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E3-F1-043a** Verification photo capture — uses `TakeVerificationPhoto()` helper, writes `VERIFICATION_PHOTO_FILENAME` with pattern `case-{QUESTIONNAIRE_NO}-verification.jpg` (F1 spec §3.1.2) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E3-F1-043b** PSGC cascade wiring — `onfocus` + `loadcase()` + `setvalueset()` per `PSGC-Cascade.apc`; external lookup dictionaries for REGION/PROVINCE_HUC/CITY_MUNICIPALITY/BARANGAY (F1 spec §4.15); blocked on ASPSI PSGC value-set confirmation `status::blocked` `priority::high` `estimate::3h`
-- [ ] **E3-F1-044** Interviewer ID + Supervisor ID capture `status::todo` `priority::high` `estimate::1h`
-- [ ] **E3-F1-045** Date/time stamps (start, end, duration) `status::todo` `priority::medium` `estimate::1h`
+- [ ] **E3-F1-040** Informed consent capture screen (with explicit accept/refuse + timestamp) `status::todo` `priority::critical` `estimate::3h` `scrum::unscheduled`
+- [ ] **E3-F1-041** Eligibility screen (must pass before main questionnaire loads) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E3-F1-042** AAPOR-aligned disposition codes (completed, partial, refused, ineligible, contact attempt, etc.) `status::todo` `priority::high` `estimate::3h` `scrum::unscheduled`
+- [ ] **E3-F1-043** GPS capture at start of interview — uses `ReadGPSReading()` helper from `Capture-Helpers.apc`; writes `FACILITY_GPS_*` items via `REC_FACILITY_CAPTURE` trigger block (see F1 spec §3.1.1 / §4.16) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E3-F1-043a** Verification photo capture — uses `TakeVerificationPhoto()` helper, writes `VERIFICATION_PHOTO_FILENAME` with pattern `case-{QUESTIONNAIRE_NO}-verification.jpg` (F1 spec §3.1.2) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E3-F1-043b** PSGC cascade wiring — `onfocus` + `loadcase()` + `setvalueset()` per `PSGC-Cascade.apc`; external lookup dictionaries for REGION/PROVINCE_HUC/CITY_MUNICIPALITY/BARANGAY (F1 spec §4.15); blocked on ASPSI PSGC value-set confirmation `status::blocked` `priority::high` `estimate::3h` `scrum::unscheduled`
+- [ ] **E3-F1-044** Interviewer ID + Supervisor ID capture `status::todo` `priority::high` `estimate::1h` `scrum::unscheduled`
+- [ ] **E3-F1-045** Date/time stamps (start, end, duration) `status::todo` `priority::medium` `estimate::1h` `scrum::unscheduled`
 
 ### Resilience + smoke test
 
-- [ ] **E3-F1-050** Partial save / resume behavior configured (what happens mid-interview) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E3-F1-060** CSEntry Windows smoke test: happy path from cover page to last question `status::todo` `priority::high` `estimate::2h`
+- [ ] **E3-F1-050** Partial save / resume behavior configured (what happens mid-interview) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E3-F1-060** CSEntry Windows smoke test: happy path from cover page to last question `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
 
 ---
 
@@ -122,10 +122,10 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ### Deferred from M11 (decision required)
 
-- [ ] **E3-F2-PWA-M12a** Per-HCW tokens (replace email-based identity) `status::deferred`
-- [ ] **E3-F2-PWA-M12b** Draft auto-migration across spec versions `status::deferred`
-- [ ] **E3-F2-PWA-M12c** iOS push notifications `status::deferred`
-- [ ] **E3-F2-PWA-M12d** Admin mutations (beyond read-only) `status::deferred`
+- [ ] **E3-F2-PWA-M12a** Per-HCW tokens (replace email-based identity) `status::deferred` `scrum::unscheduled`
+- [ ] **E3-F2-PWA-M12b** Draft auto-migration across spec versions `status::deferred` `scrum::unscheduled`
+- [ ] **E3-F2-PWA-M12c** iOS push notifications `status::deferred` `scrum::unscheduled`
+- [ ] **E3-F2-PWA-M12d** Admin mutations (beyond read-only) `status::deferred` `scrum::unscheduled`
 
 ### Pilot readiness
 
@@ -150,8 +150,8 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [x] **E3-F2-PWA-DESIGN-006** Sweep remaining raw Tailwind colors in `PendingCount.tsx` / `BroadcastBanner.tsx` / `SectionTree.tsx` / ReviewSection `warn` severity. Extended `tailwind.config.ts` to alpha-aware HSL slot syntax + new `warning` token; added `--warning` + `--warning-foreground` to `src/index.css`. PR [#40](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/40) merged 2026-04-26 as `1458f29`. Bonus: also fixed a quiet pre-existing bug where `bg-primary/10` in SectionTree was producing malformed CSS in the old non-alpha config. `status::done` `priority::low` `actual::2026-04-26`
 - [x] **E3-F2-PWA-DESIGN-007** Polish PR3 punts — Button.tsx shadcn primitive flattened (no shadows on default/destructive/outline/secondary variants), SpecDriftOverlay/KillSwitchOverlay use bg-background + hairline border (no shadow-lg), MultiSectionForm fixed-side nav arrows softened from shadow-md to shadow-sm. PR [#41](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/41) merged 2026-04-26 as `7bfc28a`. `status::done` `priority::low` `actual::2026-04-26`
 - [x] **E3-F2-PWA-DESIGN-008** Path-B port to production — cherry-picked the 5 staging Verde Manual commits onto a branch off `main`, resolved EnrollmentScreen and App.tsx conflicts (kept main's pre-auth-rearch single-step Enroll logic + applied Verde styling intent), opened PR [#42](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/42) merged 2026-04-26 as `a1c4a3e`. CF Pages auto-deploy didn't fire on the merge (confirms #34 affects main pushes too); manually deployed via `wrangler pages deploy dist --project-name=f2-pwa --branch=main --commit-hash=a1c4a3ea` (deployment `4f61356a`). Verde Manual now live at `https://f2-pwa.pages.dev`. `status::done` `priority::high` `actual::2026-04-26`
-- [ ] **E3-F2-PWA-DESIGN-004** Self-host fonts under `public/fonts/*.woff2` (replaces CDN path from PR #38). **Gated on `pyftsubset`/fontTools tooling** for proper Latin Extended subsetting; lands as a follow-up after Round 3 if Bunny CDN proves problematic. `status::deferred` `priority::low`
-- [ ] **E3-F2-PWA-DESIGN-005** Refine Verde Manual hex values from official DOH brand-book PDF (Department Order 2020-0011, Verde Vision 2023+). Current values are best-fit approximations of the visible seal + documented background tint `#e7efe7`. **Async on ASPSI** for PDF acquisition. `status::blocked-external` `priority::low`
+- [ ] **E3-F2-PWA-DESIGN-004** Self-host fonts under `public/fonts/*.woff2` (replaces CDN path from PR #38). **Gated on `pyftsubset`/fontTools tooling** for proper Latin Extended subsetting; lands as a follow-up after Round 3 if Bunny CDN proves problematic. `status::deferred` `priority::low` `scrum::unscheduled`
+- [ ] **E3-F2-PWA-DESIGN-005** Refine Verde Manual hex values from official DOH brand-book PDF (Department Order 2020-0011, Verde Vision 2023+). Current values are best-fit approximations of the visible seal + documented background tint `#e7efe7`. **Async on ASPSI** for PDF acquisition. `status::blocked-external` `priority::low` `scrum::unscheduled`
 
 ### Retired tracks *(do not re-open without explicit decision reversal)*
 
@@ -165,8 +165,8 @@ Per-instrument application build workstream. Turns the validated data dictionary
 **Prerequisite:** Form-layout plan (shared with F1/F4 — Sprint 003 prerequisite).
 **Current DCF state (2026-04-21):** 18 records / 840 items, sections A–L. Skip-logic + validation spec reviewed 2026-04-21 at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (1 question routed to Juvy — Q31 IP_GROUP; 5 spec-decisions closed with override clause). **Build-ready.**
 
-- [ ] **E3-F3-001..060** Standard template; reuses F1's interviewer-administered patterns (PSGC cascade + consent + GPS/photo via `Capture-Helpers.apc`)
-- [ ] **E3-F3-015** Outpatient vs inpatient branching at eligibility screen `status::todo` `priority::high` `estimate::4h`
+- [ ] **E3-F3-001..060** Standard template; reuses F1's interviewer-administered patterns (PSGC cascade + consent + GPS/photo via `Capture-Helpers.apc`) `scrum::unscheduled`
+- [ ] **E3-F3-015** Outpatient vs inpatient branching at eligibility screen `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
 
 *(Full task list to be expanded when F3 enters a sprint.)*
 
@@ -180,13 +180,13 @@ Per-instrument application build workstream. Turns the validated data dictionary
 F4 inherits the standard template **plus a roster engine**. The household roster loop is the primary technical challenge in this instrument.
 
 - [x] **E3-F4-000** ~~Schema patch — flip `C_HOUSEHOLD_ROSTER` and `J_HEALTH_SEEKING` to repeating records~~ **CLOSED-BY-VERIFICATION 2026-04-21.** Re-inspected generator + emitted DCF before starting patch: `C_HOUSEHOLD_ROSTER` already at `max_occurs=20`, `J_HEALTH_SEEKING` correctly respondent-level per Apr 20 source. No code change. `status::done` `priority::critical`
-- [ ] **E3-F4-001..060** Standard template per F1
-- [ ] **E3-F4-070** Household roster grid: add-member, edit-member, remove-member, reorder `status::todo` `priority::critical` `estimate::2d`
-- [ ] **E3-F4-071** Per-member sub-questionnaire loop (conditional on age/relation/etc.) `status::todo` `priority::critical` `estimate::2d`
-- [ ] **E3-F4-072** Cross-member consistency rules (e.g., only one household head, spouse implies head exists) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F4-073** Max roster size validation + soft warning at unusual sizes `status::todo` `priority::high` `estimate::2h`
-- [ ] **E3-F4-074** WHO expenditure grid + catastrophic-expenditure check (Section N flat batteries) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F4-075** Bill-recall chain (Section N) `status::todo` `priority::high` `estimate::4h`
+- [ ] **E3-F4-001..060** Standard template per F1 `scrum::unscheduled`
+- [ ] **E3-F4-070** Household roster grid: add-member, edit-member, remove-member, reorder `status::todo` `priority::critical` `estimate::2d` `scrum::unscheduled`
+- [ ] **E3-F4-071** Per-member sub-questionnaire loop (conditional on age/relation/etc.) `status::todo` `priority::critical` `estimate::2d` `scrum::unscheduled`
+- [ ] **E3-F4-072** Cross-member consistency rules (e.g., only one household head, spouse implies head exists) `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
+- [ ] **E3-F4-073** Max roster size validation + soft warning at unusual sizes `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E3-F4-074** WHO expenditure grid + catastrophic-expenditure check (Section N flat batteries) `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
+- [ ] **E3-F4-075** Bill-recall chain (Section N) `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
 
 *(Full task list to be expanded when F4 enters a sprint.)*
 
@@ -196,7 +196,7 @@ F4 inherits the standard template **plus a roster engine**. The household roster
 
 **Prerequisite:** E2-PLF-006 (implementation decision + any dictionary work)
 
-- [ ] **E3-PLF-001** If CAPI: minimal form with facility selector + patient entries grid `status::todo` `priority::medium` `estimate::4h`
+- [ ] **E3-PLF-001** If CAPI: minimal form with facility selector + patient entries grid `status::todo` `priority::medium` `estimate::4h` `scrum::unscheduled`
 
 ## Notes
 

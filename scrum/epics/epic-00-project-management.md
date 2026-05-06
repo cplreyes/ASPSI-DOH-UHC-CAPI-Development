@@ -23,15 +23,15 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 
 ### Scrum & Backlog Discipline
 
-- [ ] **E0-001** Run sprint planning ceremony each sprint (select items from epic files → sprint-current.md, set sprint goal, confirm dates) `status::ongoing` `priority::high` `estimate::recurring`
+- [ ] **E0-001** Run sprint planning ceremony each sprint (select items from epic files → sprint-current.md, set sprint goal, confirm dates) `status::ongoing` `priority::high` `estimate::recurring` `scrum::unscheduled`
   - Sprint 001 planned 2026-04-13 — first execution of this ceremony.
-- [ ] **E0-002** Run sprint review + retrospective each sprint close (archive sprint to `sprints/`, capture lessons, update backlog) `status::todo` `priority::high` `estimate::recurring`
-- [ ] **E0-003** Backlog grooming session mid-sprint (refine upcoming epic tasks, adjust estimates) `status::todo` `priority::medium` `estimate::recurring`
+- [ ] **E0-002** Run sprint review + retrospective each sprint close (archive sprint to `sprints/`, capture lessons, update backlog) `status::todo` `priority::high` `estimate::recurring` `scrum::unscheduled`
+- [ ] **E0-003** Backlog grooming session mid-sprint (refine upcoming epic tasks, adjust estimates) `status::todo` `priority::medium` `estimate::recurring` `scrum::unscheduled`
 - [x] **E0-004** Adopt Scrum discipline with per-project Product Backlog, Sprint Backlog, standups `status::done` `priority::high`
 - [x] **E0-005** Build `/daily-standup` slash command reading PB + sprint backlog `status::done` `priority::medium`
-- [ ] **E0-006** Keep Product Backlog `last_updated` current each sprint close `status::ongoing` `priority::medium`
-- [ ] **E0-007** Maintain epic files as tasks activate or mature `status::ongoing` `priority::medium`
-- [ ] **E0-008** Auto-standup retro-injection — extend `.claude/scripts/generate_standup.py` to read the prior sprint's `## Retrospective` Q4 ("One thing to change in Sprint N+1") and surface it as a Day 1 banner in the next sprint's first standup `status::todo` `priority::medium` `estimate::1h`
+- [ ] **E0-006** Keep Product Backlog `last_updated` current each sprint close `status::ongoing` `priority::medium` `scrum::unscheduled`
+- [ ] **E0-007** Maintain epic files as tasks activate or mature `status::ongoing` `priority::medium` `scrum::unscheduled`
+- [ ] **E0-008** Auto-standup retro-injection — extend `.claude/scripts/generate_standup.py` to read the prior sprint's `## Retrospective` Q4 ("One thing to change in Sprint N+1") and surface it as a Day 1 banner in the next sprint's first standup `status::todo` `priority::medium` `estimate::1h` `scrum::sprint-004`
   - Closes the recurring ritual gap observed Sprint 001→002 (artifact-reference rule) and Sprint 002→003 (Day 1 ritual): retro Q4 action items get captured in `sprint-current.md` Daily Notes but not surfaced in the daily ceremony itself. Sprint 003 stretch.
 
 ### Sprint-Linked Meetings
@@ -45,32 +45,32 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 > **Scope split:** Carl owns the *internal* status format (E0-010) for his own tracking + project record per `feedback_weekly_status_internal_only.md`. Recurring stakeholder-facing sends, brief preparation, and escalation-protocol design are PM/PI/PMO lane (Juvy / Dr Claro / Dr Paunlagui) per `feedback_data_programmer_scope.md` and `feedback_comms_lane_discipline.md`.
 
 - [x] **E0-010** Define weekly status update format — *internal-only* (Carl's tracking + project record, not for ASPSI Mgmt or DOH send). **Closed 2026-05-04 (Sprint 004 Day 1).** Template at `deliverables/comms/_weekly-status-template.md` v1.0 stable; week-1 instance at `weekly-status-2026-05-01.md` proved the structure; refinements folded back into template. `status::done` `priority::high` `actual::~30m close (template was already mature from partial-start in Sprint 003)`
-- [ ] **E0-011** Send weekly status updates to ASPSI `status::todo` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+- [ ] **E0-011** Send weekly status updates to ASPSI `status::todo` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo` `scrum::unscheduled`
   - Recurring stakeholder-facing send. Per `feedback_weekly_status_internal_only.md`, no recurring send happens from Carl; the internal artifact (E0-010) stays internal. If/when ASPSI wants a stakeholder-facing weekly, ASPSI/PMO authors and ships it.
-- [ ] **E0-012** Define monthly stakeholder brief format (DOH / ADB touchpoint) `status::todo` `priority::medium` `estimate::2h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+- [ ] **E0-012** Define monthly stakeholder brief format (DOH / ADB touchpoint) `status::todo` `priority::medium` `estimate::2h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo` `scrum::unscheduled`
   - Stakeholder-facing brief format design. PM/PI lane.
-- [ ] **E0-013** Prepare monthly stakeholder brief `status::todo` `priority::medium` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+- [ ] **E0-013** Prepare monthly stakeholder brief `status::todo` `priority::medium` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo` `scrum::unscheduled`
   - Recurring stakeholder-facing send to DOH / ADB. Out per `feedback_comms_lane_discipline.md`.
-- [ ] **E0-014** Define ad-hoc client escalation protocol (what triggers escalation, who owns the call) `status::todo` `priority::medium` `estimate::2h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+- [ ] **E0-014** Define ad-hoc client escalation protocol (what triggers escalation, who owns the call) `status::todo` `priority::medium` `estimate::2h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo` `scrum::unscheduled`
   - Escalation-protocol design = PM/PI lane per `feedback_data_programmer_scope.md`.
 
 ### Ethics Coordination *(ASPSI/PI lane — NOT Data Programmer scope)*
 
 > **Scope:** Ethics coordination is owned by ASPSI ops / PI (Dr Claro, Dr Paunlagui, Juvy as PMO) per the signed CSA D1–D6 (TOR + Personnel Schedule). Items below are tracked here for project-level visibility; do not pull into Carl's sprint backlog. See `feedback_sjreb_out_of_scope.md` and `feedback_data_programmer_scope.md`.
 
-- [ ] **E0-020** SJREB application status check (via ASPSI) — ongoing tracking until clearance received `status::in-progress` `priority::critical` `estimate::ongoing` `out_of_scope::data_programmer` `owner::aspsi-pi`
+- [ ] **E0-020** SJREB application status check (via ASPSI) — ongoing tracking until clearance received `status::in-progress` `priority::critical` `estimate::ongoing` `out_of_scope::data_programmer` `owner::aspsi-pi` `scrum::unscheduled`
   - Notes: long-pole blocker for Epic 6 (Testing and Pilot) pretest phase. Project-level dependency, not Carl-actionable.
 - [x] **E0-021** PSA sampling endorsement captured in approved Inception Report `status::done` `priority::critical`
 
 ### Risk & Change Management
 
-- [ ] **E0-030** Maintain risk register in Product Backlog §5 `status::ongoing` `priority::high` `estimate::recurring` *(informational consumption only — active risk-register stewardship is PM/PI work)*
-- [ ] **E0-031** Define change request protocol for mid-engagement questionnaire revisions (intake form, impact assessment, backlog refresh) `status::todo` `priority::high` `estimate::4h` *(protocol-design is PM lane; CAPI-side revisions arising from CRs land under E2/E3 instrument tasks)*
-- [ ] **E0-032** Track timeline vs deliverable deadlines (D2, D3, D4, D5, D6) weekly `status::ongoing` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+- [ ] **E0-030** Maintain risk register in Product Backlog §5 `status::ongoing` `priority::high` `estimate::recurring` *(informational consumption only — active risk-register stewardship is PM/PI work)* `scrum::unscheduled`
+- [ ] **E0-031** Define change request protocol for mid-engagement questionnaire revisions (intake form, impact assessment, backlog refresh) `status::todo` `priority::high` `estimate::4h` *(protocol-design is PM lane; CAPI-side revisions arising from CRs land under E2/E3 instrument tasks)* `scrum::unscheduled`
+- [ ] **E0-032** Track timeline vs deliverable deadlines (D2, D3, D4, D5, D6) weekly `status::ongoing` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo` `scrum::unscheduled`
   - Tranche / deadline tracking owned by ASPSI ops / PI / PMO. Carl is responsible for *production* of the deliverables (D1–D6), not the schedule on which they are accepted and paid. Project-level dependency only; surface in PIB / risk register, not in Carl's sprint backlog. See `feedback_tranche_tracking_out_of_scope.md`.
-- [ ] **E0-032a** DOH-PMSMD matrix feedback triage — route requested revisions through the appropriate workstream `status::ongoing` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+- [ ] **E0-032a** DOH-PMSMD matrix feedback triage — route requested revisions through the appropriate workstream `status::ongoing` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo` `scrum::unscheduled`
   - Coordination overhead (matrix dispositioning, DOH-side comms) is ASPSI/PI lane. CAPI-technical fallout (specific F1/F2/F3/F4 revisions) folds into the relevant E2/E3 instrument task — not tracked under E0-032a. See `feedback_e0_032a_out_of_scope.md`.
-- [ ] **E0-033** Set up late delivery penalty tracker (1% of total per calendar day per CSA §5) — calculates exposure if deadlines slip `status::todo` `priority::medium` `estimate::2h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+- [ ] **E0-033** Set up late delivery penalty tracker (1% of total per calendar day per CSA §5) — calculates exposure if deadlines slip `status::todo` `priority::medium` `estimate::2h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo` `scrum::unscheduled`
   - Financial / penalty exposure tracking is PM/PI/PMO lane. See `feedback_data_programmer_scope.md`.
 
 ### Project Governance (already done — baseline)
@@ -86,8 +86,8 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 
 > **Scope:** Stakeholder-facing close-out artifacts are PM/PI/PMO lane per `feedback_data_programmer_scope.md`. Carl's close-out work lives in Epic 12 (system handover package, technical runbook, knowledge-transfer sessions, NDU file disposition, retrospective writeback) — *not* the stakeholder-facing brief or acceptance-letter checklist.
 
-- [ ] **E0-050** Stakeholder-facing close-out brief template `status::todo` `priority::low` `estimate::3h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
-- [ ] **E0-051** Final acceptance letter checklist (what must the client sign off on) `status::todo` `priority::low` `estimate::2h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
+- [ ] **E0-050** Stakeholder-facing close-out brief template `status::todo` `priority::low` `estimate::3h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo` `scrum::unscheduled`
+- [ ] **E0-051** Final acceptance letter checklist (what must the client sign off on) `status::todo` `priority::low` `estimate::2h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo` `scrum::unscheduled`
 
 ## Notes
 
