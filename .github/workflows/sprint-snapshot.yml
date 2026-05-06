@@ -50,5 +50,7 @@ jobs:
       - name: Post snapshot to Slack
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GH_PROJECTS_TOKEN: ${{ secrets.GH_PROJECTS_TOKEN }}
+          PYTHONIOENCODING: utf-8
         run: |
           python .github/scripts/post_sprint_snapshot.py "${{ steps.mode.outputs.mode }}"
