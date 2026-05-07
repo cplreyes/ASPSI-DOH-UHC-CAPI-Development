@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-05-05
+last_updated: 2026-05-07
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -47,12 +47,12 @@ last_updated: 2026-05-05
 
 **F1 skip-logic + validation spec aligned with F3/F4 on 2026-04-21.** F1 spec rewrite added GPS capture via `REC_FACILITY_CAPTURE` (uses `ReadGPSReading()` helper) + verification-photo capture (filename-reference pattern, `TakeVerificationPhoto()` helper) + PSGC cascade (`onfocus` + `loadcase()` + `setvalueset()` via `PSGC-Cascade.apc`). F1 DCF now at **12 records / 671 items**. Shared `.apc` fragments live under `deliverables/CSPro/Capture-Helpers.apc` and `deliverables/CSPro/PSGC-Cascade.apc` — F3/F4 will consume the same helpers. Designer round 2 / sign-off (E2-F1-010) remains the carry-forward from Sprint 001. PSGC value sets still blocked on ASPSI.
 
-**F2 PWA — Production at v1.1.1 codebase, Verde Manual visual identity since 2026-04-26.** Both UAT rounds closed:
+**F2 PWA — Production at v2.0.0 (HCW Survey + Admin Portal layers) since 2026-05-04 evening, Verde Manual visual identity since 2026-04-26.** Original UAT Rounds 1 + 2 closed at v1.1.1 (HCW Survey side); Round 2 reopened against v2.0.0 cutover (Shan + Kidd, both sides — Survey + Admin Portal):
 
 - **v1.1.0 — UAT Round 1** (closed 2026-04-25): 7 issues fixed including the auto-advance bug, mid-section skip logic, Section G role-hide, max-value enforcement on age + tenure fields. Round opened 2026-04-23 by Shan (ASPSI), closed with "Pass with comments" 2026-04-24, all comments addressed and verified 2026-04-25.
 - **v1.1.1 — UAT Round 2** (closed 2026-04-25): 6 issues fixed including the gate-question navigation regression (Q12=No / Q31=No couldn't proceed), specialty filter by role (Dentists no longer see medical specialties), real-time validation tooltips, language switcher visibility, and the silent submit-failure fix.
 
-Production: https://f2-pwa.pages.dev. App header shows `v1.1.1 · spec 2026-04-17-m1`. Release notes at GitHub Releases [v1.1.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.1.0) and [v1.1.1](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.1.1); CHANGELOG.md auto-maintained. Verde Manual visual identity ported via PR #42 (path B, 2026-04-26) — auth re-arch stays on staging awaiting Phase F.
+Production: https://f2-pwa.pages.dev. App header shows `v2.0.0 · spec 2026-04-17-m1`. Release notes at GitHub Releases [v1.1.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.1.0), [v1.1.1](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.1.1), [v1.2.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.2.0), [v1.3.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.3.0), [v2.0.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v2.0.0); CHANGELOG.md auto-maintained. Verde Manual visual identity ported via PR #42 (path B, 2026-04-26); auth re-arch (Worker JWT proxy) cut over to prod 2026-05-01 (Phase F); Admin Portal layer shipped 2026-05-04 evening at v2.0.0.
 
 **Round 3 enhancements (#16/#17/#18) shipped to production in v2.0.0.** Code rode the Phase F cutover merge (`2a6dd34 — auth re-arch + Verde + v1.2.0+v1.3.0 fixes`) and is reachable from tags `v1.2.0` / `v1.3.0` / `v2.0.0` — exclusive "I don't know" multi-select (#16), "All of the above" auto-select (#17), and matrix view for scale-style questions (#18) all live at https://f2-pwa.pages.dev. GitHub issues closed 2026-05-01, labeled `status:fixed-pending-verify`. Milestone **v1.2.0 — UAT Round 3 / Feature batch** still open pending UAT sign-off; verification rolled into the Round 2 reopened against v2.0.0 (Shan + Kidd) rather than a separate Round 3 — close milestone after sign-off to fire the auto-release-notes pipeline (or fold into v2.0.0 release notes). ASPSI translation delivery (Filipino + others queued on their side) remains the gating dependency for full localisation; switcher architecture is in place to drop them in without code changes.
 
@@ -68,11 +68,11 @@ Comms infrastructure fully provisioned (project mailbox + Viber group both live,
 
 | # | Epic | Current State | Next Milestone |
 |---|---|---|---|
-| **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** (Sprint 003 committed: E0-010 weekly status format; stretch: E0-008 auto-standup retro-injection tooling) | E0-010 weekly status update format drafted + first send to ASPSI Mgmt Committee; E0-008 lands in `.claude/scripts/generate_standup.py` |
+| **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** (Sprint 004 active 2026-05-04 → 2026-05-08; E0-010 internal weekly status format CLOSED Day 1 — v1.0 stable template; E0-008 auto-standup retro-injection in stretch) | E0-008 lands in `.claude/scripts/generate_standup.py`; ongoing PB + scrum artifact grooming at each sprint close |
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
 | **2** | Survey Questionnaire Design & Dictionary | **In Progress** (**F1 Build-ready 2026-05-04** — E2-F1-010 sign-off closed Day 1 of Sprint 004; **F3 Build-ready, F4 Build-ready** — specs complete 2026-04-21; F2 data model lives inside the PWA spec; PLF Source Captured) | F3/F4 Designer validation (E2-F3-010, E2-F4-010 — Sprint 004 stretch) |
 | **3** | CAPI Application Development | **In Progress** (F2 **PWA + Admin Portal in production at v2.0.0 since 2026-05-04 evening** — Verde Manual + Worker JWT proxy + admin portal demo-polish bundle; Rounds 1+2 closed (PWA), **UAT Round 2 OPEN** for v2.0.0 cutover validation (Shan + Kidd, both sides); **F1 Build-ready** — Designer sign-off DONE 2026-05-04; F3/F4 Build-ready) | **E3-F1-001** F1 `FacilityHeadSurvey.fmf` Section A layout (Sprint 004 — UNBLOCKED Day 1); F3/F4 build slots TBD; **E4-APRT-041** Create-HCW UI v2.0.1 patch (Sprint 005); milestone v1.2.0 close after UAT sign-off (#16/#17/#18 already shipped in v2.0.0) |
-| **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Apps Script + Cloudflare Pages + Worker for PWA) | **In Progress** (PWA + Admin Portal at **v2.0.0 in production since 2026-05-04 evening**; prod Worker `f2-pwa-worker` at `2.0.0+0f2fb0e`; prod AS `F2-PWA-Backend` carries FX-006 audit columns + SeedDemo guarded; `runAllMigrations()` ran on prod sheet; CF Pages auto-deploy via `cf-pages-deploy.yml` working on staging + main; CSWeb track Not Started) | **E4-APRT-035** cross-platform QA — E2 Firefox / E3 Edge / G3/H/Z still untested; **E4-APRT-042** per-tester admin user accounts hardening (Sprint 005); production-side ADMIN_PASSWORD_HASH sunset (Sprint 005 v2.0.1); CSWeb provisioning + integration ETL spec drafted |
+| **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Apps Script + Cloudflare Pages + Worker for PWA) | **In Progress** (PWA + Admin Portal at **v2.0.0 in production since 2026-05-04 evening**; prod Worker `f2-pwa-worker` at `2.0.0+0f2fb0e`; prod AS `F2-PWA-Backend` carries FX-006 audit columns + SeedDemo guarded; `runAllMigrations()` ran on prod sheet; CF Pages auto-deploy via `cf-pages-deploy.yml` working on staging + main; CSWeb track Not Started) | **v2.0.1 hotfix queue (Sprint 005)** ahead of E4-APRT-041: **E4-APRT-050** orphan-admin guard, **E4-APRT-051** change-password UI (pairs with **E4-APRT-045** server-enforce), **E4-APRT-044** RBAC role-version cache fix, **E4-APRT-048** `last_login_at` write path, **E4-APRT-043** prod ADMIN_PASSWORD_HASH sunset; then **E4-APRT-041** Create-HCW UI + **E4-APRT-042** per-tester admin accounts; **E4-APRT-049** design-review sweep; E2 Firefox / E3 Edge cross-env polish; CSWeb provisioning + integration ETL spec (Epic 10) |
 | **5** | Field Distribution & Device Management (tablets for CAPI; URL distribution + PWA install + reminder ops for F2) | **In Progress** (PWA distribution model proven via UAT; CAPI tablet spec drafted 2026-04-29 — E5-CAPI-001 in-progress, awaiting procurement confirmation from ASPSI ops) | Tablet provisioning SOP drafted; F2 distribution-list SOP drafted |
 | **6** | Testing and Pilot | **Mode-aware:** PWA test stack live (vitest + Playwright + cross-platform QA; UAT Rounds 1+2 closed). CAPI track Not Started. | F1 desk test (follows Epic 3); QA Tester (Shan) handoff workflow extended to CAPI |
 | **7** | Training and Documentation | **In Progress** (Survey Manual CAPI section + 2 appendices drafted 2026-04-29 for Kidd's review; training decks Not Started) | Kidd's review on E7-DOC-001 draft; resolve open questions (questionnaire-number scheme, F2 manual scope, PAPI fallback); CAPI training deck E7-TRAIN-001 |
@@ -152,21 +152,22 @@ Each epic below is a long-running workstream that spans its portion of the engag
 - Project Intelligence Brief authored (timeline, decisions, stakeholder dynamics)
 - 12-phase CAPI Development Workflow codified into IT Standards as a reusable template
 - PSA sampling endorsement captured in the approved Inception Report
-- Scrum discipline adopted with per-project Product Backlog and 1-week sprint cadence (Sprint 001 active)
-- **Comms infrastructure live:** ASPSI project mailbox (`aspsi.doh.uhc.survey2.data@gmail.com`) for artifacts and decisions of record; CAPI Viber group for real-time coordination
-- **Team structure clarified:** Carl as Data Programmer; Shan (ASPSI RA) as QA Tester for the CAPI build
+- Scrum discipline adopted with per-project Product Backlog and 1-week sprint cadence (Sprint 004 active 2026-05-04 → 2026-05-08)
+- **Comms infrastructure live:** ASPSI project mailbox (`aspsi.doh.uhc.survey2.data@gmail.com`) for artifacts and decisions of record; CAPI Viber group for real-time coordination; `#capi-scrum` Slack channel with daily standup poster + per-commit task-change notifier
+- **Team structure clarified:** Carl as Data Programmer; Shan (ASPSI RA) as QA Tester for the CAPI build; Kidd (ASPSI RA) as primary internal contact for Survey Manual + fieldwork-protocol artifacts
+- **Internal weekly status update format (E0-010) closed Sprint 004 Day 1 — v1.0 stable** at `deliverables/comms/_weekly-status-template.md`; week-1 instance proved structure end-to-end; two refinements folded back from week-1 lessons. Internal-only per `feedback_weekly_status_internal_only.md`
 
 **In flight (Data Programmer scope):**
 - Product Backlog maintenance (this document)
-- Defining the internal weekly status format (E0-010) — Carl-controlled internal tracking, *not* a recurring send to ASPSI Mgmt or DOH (per `feedback_weekly_status_internal_only.md`)
-- Sprint cadence + scrum artifact upkeep (Sprint 003 closing 2026-05-01)
+- E0-008 — Auto-standup retro-injection tooling (Sprint 004 stretch); extends `.claude/scripts/generate_standup.py` to read prior sprint's Retro Q4 + adds no-work-since-last-run branch
+- Sprint cadence + scrum artifact upkeep (Sprint 004 closing 2026-05-08)
 
 **ASPSI / PI / PMO lane — informational only (NOT Data Programmer scope per CSA D1–D6):**
 - SJREB ethics clearance coordination (E0-020) — owned by ASPSI ops / PI; long-pole dependency for Epic 6 pretest
 - D2 / D3 / Tranche 2 timeline + deadline tracking (E0-032) — owned by ASPSI ops / PI / PMO; Carl produces the deliverables, ASPSI manages submission timing
 - DOH-PMSMD matrix feedback coordination (E0-032a) — owned by ASPSI ops / PI; CAPI-side revisions fold into the relevant E2/E3 instrument task
 
-**Next milestone:** Internal weekly status format defined (E0-010), used for Carl's tracking and the project record.
+**Next milestone:** E0-008 auto-standup retro-injection lands in `.claude/scripts/generate_standup.py` (Sprint 004 stretch); ongoing PB + scrum artifact grooming at each sprint close.
 
 **Ties to:** Cross-cutting across all other epics. Anchors D1 (ongoing governance).
 
@@ -227,7 +228,7 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 **Per-instrument status:** F2 PWA in production at v2.0.0 (Rounds 1 + 2 closed at v1.1.1; Round 3 #16/#17/#18 shipped in v2.0.0, milestone v1.2.0 pending UAT sign-off in the reopened Round 2); F1 CSPro pending Designer sign-off + FMF kickoff (FMF deferred to Sprint 003 pending form-layout plan); F3/F4 DCFs built and skip-logic + validation specs complete 2026-04-21, CSPro build slots not yet scheduled.
 
-**Next milestone:** F1 form file (`FacilityHeadSurvey.fmf`) Section A layout after E2-F1-010 sign-off (Sprint 003); F2 milestone v1.2.0 close after UAT sign-off in the reopened Round 2 (#16 exclusive multi-select, #17 all-of-the-above auto-select, #18 matrix view all shipped in v2.0.0).
+**Next milestone:** **E3-F1-001** F1 form file (`FacilityHeadSurvey.fmf`) Section A layout — UNBLOCKED 2026-05-04 since E2-F1-010 closed Day 1 of Sprint 004; F2 milestone v1.2.0 close after UAT sign-off in the reopened Round 2 against v2.0.0 (#16 exclusive multi-select, #17 all-of-the-above auto-select, #18 matrix view all shipped in v2.0.0); F3/F4 build slots TBD; **E4-APRT-041** Create-HCW UI v2.0.1 patch (Sprint 005, after the orphan-admin/change-password v2.0.1 hotfixes land).
 
 **Sequencing strategy (CSPro CAPI track):**
 1. F1 first as the reference instrument (largest, exercises the full range of patterns) — currently Design-closing, awaiting Designer sign-off; spec aligned with F3/F4 on 2026-04-21 with shared `Capture-Helpers.apc` + `PSGC-Cascade.apc`
@@ -262,14 +263,23 @@ Each epic below is a long-running workstream that spans its portion of the engag
 
 #### 4.B — PWA track (F2)
 
-- **Backend** — Google Apps Script Web App (`AKfycb...zETS9D9fQ7ovD`), HMAC-signed batch submit endpoint, idempotency keys, response-sheet write target. Health-check endpoint for monitoring.
+**HCW Survey layer (public, self-administered):**
+- **Backend** — Google Apps Script Web App (`F2-PWA-Backend`), HMAC-signed batch submit endpoint, idempotency keys, response-sheet write target. Health-check endpoint for monitoring.
+- **Auth (post-Phase-F)** — Cloudflare Worker JWT proxy at `https://f2-pwa-worker.hcw.workers.dev` mints HCW enrollment tokens; HMAC secret no longer in Vite bundle (CRITICAL finding from 2026-04-25 /cso audit mitigated 2026-04-26 staging, prod-cutover 2026-05-01 Phase F).
 - **Hosting** — Cloudflare Pages with two projects: `f2-pwa-staging` (branch `staging`) and `f2-pwa` (branch `main`, production at https://f2-pwa.pages.dev).
 - **Service worker / PWA manifest** — vite-plugin-pwa, `skipWaiting` + `clientsClaim` upgrade flow, precache for shell, runtime cache for `/config` and facility list.
 - **Runtime config** — `kill_switch`, `broadcast_message`, `min_accepted_spec_version` editable from the Apps Script Config sheet without redeploy.
 
-**Current state:** PWA backend (4.B) live and serving production v1.1.1 since 2026-04-25. CSWeb track (4.A) Not Started.
+**Admin Portal layer (CSWeb-mirror admin — shipped v2.0.0 2026-05-04 evening):**
+- **5 dashboards** — Data (Responses + Audit + DLQ + HCWs), Report (Maps + Sync), Apps (Files + Versioning + Quota + DataSettings), Users, Roles.
+- **5 IR-aligned roles** — Administrator, Coordinator, Supervisor, Encoder, DataReader; per-instrument flags for `self_admin` / `paper_encoded` / `capi` up/down permissions; per-dashboard flags `dash_data` / `dash_report` / `dash_apps` / `dash_users` / `dash_roles`.
+- **Auth** — same Worker (`f2-pwa-worker`) routes `/admin/api/*` for admin operations; in-memory token storage on client (spec §10.4 — limits blast radius if admin walks away from a shared machine); revocation list + JTI-replay protection in KV (`F2_AUTH` namespace `9b293e0c...`); two-axis throttle on login (per-username + per-IP).
+- **R2 storage** — `f2-admin` (prod) + `f2-admin-preview` for admin file uploads + scheduled break-out CSVs; cron `*/5 * * * *` dispatches break-out writes to R2 with quota-aware retention.
+- **Audit pipeline** — F2_Audit sheet captures every admin mutation; FX-006 columns Actor/Resource/Detail populated end-to-end (verified post AS-deploy 2026-05-04).
 
-**Next milestone:** CSWeb provisioned for CAPI track + integration ETL spec drafted (lands in Epic 10) so both tracks export to the same downstream format.
+**Current state:** Both layers in production at v2.0.0 since 2026-05-04 evening. UAT Round 2 reopened against v2.0.0 cutover (Shan + Kidd, both PWA + Admin Portal sides). CSWeb track (4.A) Not Started.
+
+**Next milestone:** **v2.0.1 hotfix queue (Sprint 005)** ahead of E4-APRT-041 Create-HCW UI: orphan-admin guard (E4-APRT-050), change-password UI (E4-APRT-051), JWT password_must_change server-enforce (E4-APRT-045), RBAC role-version cache fix (E4-APRT-044), `last_login_at` write path (E4-APRT-048), prod ADMIN_PASSWORD_HASH sunset (E4-APRT-043). Then E4-APRT-041 Create-HCW UI + E4-APRT-042 per-tester admin accounts. Then E4-APRT-049 design-review sweep + E2 Firefox / E3 Edge cross-env polish. CSWeb provisioning for CAPI track (4.A) + integration ETL spec drafted (Epic 10) remain unscheduled.
 
 **Dependencies:** CSWeb provisioning blocks F1/F3/F4 fieldwork. PWA backend already in production.
 
@@ -296,7 +306,7 @@ Each epic below is a long-running workstream that spans its portion of the engag
 - **Backup & recovery** — IndexedDB persists drafts across navigations and offline; backend retains all `pending_sync` rows until acknowledgement; service worker auto-updates on next session.
 - **Distribution rights** — no per-HCW token currently (any HCW ID once facility selected); upgrade path documented as M11 deferred work.
 
-**Current state:** PWA distribution model proven via UAT Rounds 1+2 (Shan as tester, structured Slack + GitHub Issues coordination). CAPI tablet specification drafted 2026-04-29 (E5-CAPI-001 in-progress; awaiting procurement confirmation from ASPSI ops); imaging SOP still ahead.
+**Current state:** PWA distribution model proven via UAT Rounds 1+2 closed at v1.1.1 (Shan as tester, structured Slack + GitHub Issues coordination); **UAT Round 2 currently OPEN against v2.0.0 cutover** (Shan + Kidd, both HCW Survey + Admin Portal sides). CAPI tablet specification drafted 2026-04-29 (E5-CAPI-001 in-progress; awaiting procurement confirmation from ASPSI ops); imaging SOP still ahead.
 
 **Next milestone:** Tablet provisioning SOP drafted (Epic 5.A); F2 distribution-list SOP formalised for production fieldwork (Epic 5.B — currently lives in `#f2-pwa-uat` channel conventions, needs documenting as a runbook).
 
@@ -526,12 +536,12 @@ That gives ASPSI ops + DOH a single dashboard URL showing both tracks in one vie
 | Risk | Likelihood | Impact | Mitigation | Affected Epics |
 |---|---|---|---|---|
 | SJREB ethics clearance delay | Medium | High — blocks all pretesting and fieldwork | ASPSI actively coordinating; tracked as the long-pole dependency; remains the single most important external dependency | 0, 6 |
-| Timeline pressure on D2 / D3 extended window / Tranche 2 | High (Tranche 2 due Fri 2026-04-24) | High — late delivery penalty applies (1% of total per calendar day if no further extension) | Apr 14 matrices + Word tools submission enacted the "submit what's ready and negotiate" mitigation; PMSMD feedback expected Apr 20 → 4-day turnaround if revisions come back. F1/F3/F4 DCFs stable; F2 PWA pilot-ready. | 2, 3, 6, 7 |
+| Timeline pressure on D2 / D3 extended window / Tranche 2 | High (Tranche 2 was due 2026-04-24; ASPSI confirmed extension in effect 2026-04-25, official revised deadline from DOH still pending as of 2026-05-07) | High — late delivery penalty applies (1% of total per calendar day if no further extension) | F1 Designer sign-off DONE 2026-05-04 (Sprint 004 Day 1 — three-sprint carry retired); F3/F4 Build-ready 2026-04-21; F2 PWA + Admin Portal at v2.0.0 in prod since 2026-05-04; UAT Round 2 OPEN against v2.0.0. ASPSI/PI/PMO-lane per `feedback_tranche_tracking_out_of_scope.md`, informational here. | 2, 3, 6, 7 |
 | Late questionnaire revisions from client | Low–Medium | Medium | Script-generated data models (F1/F3/F4) re-run in minutes; PWA generator regenerates from `F2-Spec.md`. Reproducible generators absorb revisions cheaply across all four instruments. | 2, 3 |
 | Household roster complexity (F4) | Low | Medium | F4 skip-logic + validation spec complete 2026-04-21. Schema verified: `C_HOUSEHOLD_ROSTER` already repeating (`max_occurs=20`, id-item `MEMBER_LINE_NO`); `J_HEALTH_SEEKING` intentionally respondent-level per Apr 20 source rephrase (no roster loop needed for Q101–Q107). WHO expenditure grid + catastrophic-expenditure check + bill-recall chain modeled. | 2, 3 |
 | F2 PWA pilot readiness — unfamiliar deployment model for ASPSI ops | **Mitigated 2026-04-25** | Low — UAT closure verified the model works | UAT Rounds 1 + 2 closed cleanly (Shan as tester, GitHub Issues for formal feedback, Slack `#f2-pwa-uat` for coordination). 13 real bugs surfaced + fixed; production at v1.1.1. Slack-bot automation now keeps stakeholders informed for future rounds. Pilot model proved out — keep this row open as a watch item until field deployment, then retire. | 3, 6 |
 | F2 PWA deferred-M11 tech debt (per-HCW tokens, draft auto-migration, iOS push, admin mutations) | Low | Low–Medium — mitigations in place, slot in only if pilot feedback demands | Current posture: static enrollment (any HCW ID once facility selected); drift modal forces reload on spec-version change; drafts survive in IndexedDB but may fail validation on breaking schema shifts; admin can edit Config sheet directly. | 3 |
-| F2 questionnaire cover blocks authored interviewer-style | High (confirmed) | Low — PWA renders its own cover blocks from spec; print-mode / paper fallback still gated on ASPSI review of the rewrite draft | Draft at `deliverables/F2/F2-Cover-Block-Rewrite-Draft.md` is sitting with ASPSI. PWA primary build proceeds; rewrite feeds any future paper-mode or Google Forms fallback. | 2 |
+| F2 questionnaire cover blocks authored interviewer-style | High (confirmed) | Low — *materially closed per `feedback_f2_admin_model_self_admin_first.md`* | Field-work rule wins (self-admin first; interviewer-admin as guided fallback); PDF cover blocks are formality. PWA renders its own cover blocks from spec. Cover-block rewrite is no longer a build gate. | 2 |
 | QA bandwidth / Shan ramp-up time | Low–Medium | Medium | Shan's first handoff target shifted from the Google Forms Apps Script bundle to the PWA cross-platform QA checklist + (eventually) F1 CSPro bench testing. Handoffs are authored as opinionated walkthroughs, not raw artifacts. | 6 |
 | Tablet device failure in field | Low | Medium | Backup/recovery plan required before deployment; partial-save patterns built into every instrument | 5, 8 |
 | Sync connectivity in remote clusters | Medium | Medium | Sync architecture decision will weigh offline tolerance; multiple fallback transports available | 4 |
@@ -637,7 +647,8 @@ CAPI development follows a 12-phase workflow codified from industry best practic
 | **Project mailbox** (`aspsi.doh.uhc.survey2.data@gmail.com`) | Artifacts and decisions of record; ASPSI-custody Drive for CAPI files | Carl, Shan, ASPSI staff (multi-user shared) |
 | **CAPI Viber group** | Real-time coordination, ping-velocity questions, build/test handoff notifications | Carl, Shan, ASPSI dev support staff (DOH not in this group) |
 | **Local repo** (`C:/Users/analy/Documents/analytiflow/1_Projects/ASPSI-DOH-CAPI-CSPro-Development/`) | **System of record** for all CAPI artifacts. Mailbox/Drive is a mirror, not the canonical store. | Carl |
-| **Weekly status update to ASPSI Mgmt Committee** (E0-010, in flight) | Carl-authored narrative of CAPI progress, risks, asks | ASPSI Management Committee |
+| **Internal weekly status update** (E0-010, v1.0 stable since Sprint 004 Day 1) | Carl-authored CAPI progress + risks + asks; *internal-only — Carl's tracking and the project record per `feedback_weekly_status_internal_only.md`*; template at `deliverables/comms/_weekly-status-template.md` | Carl (and the project record); never sent to ASPSI Mgmt or DOH |
+| **`#capi-scrum` Slack channel** | Daily standup poster (cloud trigger 8am MNL); per-commit task-change notifications via local post-commit hook | Carl (workspace `ASPSI DOH UHC Survey 2`) |
 
 ---
 
