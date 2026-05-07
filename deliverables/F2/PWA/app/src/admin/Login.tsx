@@ -159,7 +159,7 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
 function errorMessageFor(error: ApiError): string {
   switch (error.code) {
     case 'E_AUTH_INVALID':
-      return 'Username or password is incorrect.';
+      return 'Invalid credentials.';
     case 'E_AUTH_LOCKED':
       return 'Too many failed attempts. Try again in a few minutes.';
     case 'E_VALIDATION':

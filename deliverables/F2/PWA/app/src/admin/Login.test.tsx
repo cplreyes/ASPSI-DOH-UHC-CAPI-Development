@@ -59,7 +59,7 @@ describe('<Login />', () => {
     await user.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => {
-      expect(screen.getByRole('alert')).toHaveTextContent(/username or password is incorrect/i);
+      expect(screen.getByRole('alert')).toHaveTextContent(/invalid credentials/i);
     });
     expect(screen.getByText(/req-7/i)).toBeInTheDocument();
   });
