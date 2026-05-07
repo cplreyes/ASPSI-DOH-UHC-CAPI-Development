@@ -170,17 +170,33 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
             </Field>
           </div>
 
-          <Field label="Role">
+          <Field
+            label="Role"
+            {...(roles.length === 0
+              ? {
+                  hint: 'No roles available — seed F2_Roles or check the Roles dashboard before creating a user.',
+                }
+              : {})}
+          >
             <select
               value={form.role_name}
               onChange={(e) => setForm({ ...form, role_name: e.target.value })}
-              className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+              disabled={roles.length === 0}
+              className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal disabled:text-muted-foreground"
             >
-              {roles.map((r) => (
-                <option key={r.name} value={r.name}>
-                  {r.name}
-                </option>
-              ))}
+              {roles.length === 0 ? (
+                // UAT R2 #99: native <select> with zero options is a degenerate
+                // dropdown — testers saw "no selectable options" with no signal
+                // why. Surface the empty state explicitly so the failure mode
+                // is obvious instead of mysterious.
+                <option value="">— No roles available —</option>
+              ) : (
+                roles.map((r) => (
+                  <option key={r.name} value={r.name}>
+                    {r.name}
+                  </option>
+                ))
+              )}
             </select>
           </Field>
 
@@ -224,7 +240,9 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
             <div role="alert" className="border-l-2 border-error pl-3 py-2">
               <p className="text-sm text-error">{errorMessageFor(error)}</p>
               {error.requestId ? (
-                <p className="mt-1 font-mono text-xs text-muted-foreground">ref {error.requestId}</p>
+                <p className="mt-1 font-mono text-xs text-muted-foreground">
+                  ref {error.requestId}
+                </p>
               ) : null}
             </div>
           ) : null}
@@ -232,7 +250,10 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
           <div className="mt-2 flex flex-wrap gap-3">
             <button
               type="submit"
-              disabled={submitting}
+              // UAT R2 #99/#102: block Save when role_name is empty so the form
+              // doesn't post an invalid payload that the backend will silently
+              // reject — testers read that as "submission does not proceed."
+              disabled={submitting || !form.role_name}
               className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground"
             >
               {submitting ? 'Saving…' : mode === 'create' ? 'Create user' : 'Save changes'}
@@ -264,7 +285,9 @@ function Field({
 }): JSX.Element {
   return (
     <label className={`flex flex-col gap-1 ${className ?? ''}`}>
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       {children}
       {hint ? <span className="font-mono text-[10px] text-muted-foreground">{hint}</span> : null}
     </label>

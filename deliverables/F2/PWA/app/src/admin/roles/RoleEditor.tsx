@@ -112,7 +112,10 @@ export function RoleEditor(props: RoleEditorProps): JSX.Element {
     e.preventDefault();
     if (submitting) return;
     if (mode === 'create' && !ROLE_NAME_RE.test(name)) {
-      setError({ code: 'E_VALIDATION', message: 'Role name must start with a letter; up to 64 chars.' });
+      setError({
+        code: 'E_VALIDATION',
+        message: 'Role name must start with a letter; up to 64 chars.',
+      });
       return;
     }
     if (!Object.values(perms).some(Boolean)) {
@@ -176,7 +179,8 @@ export function RoleEditor(props: RoleEditorProps): JSX.Element {
           </h3>
           {mode === 'edit' ? (
             <p className="mt-1 font-mono text-[10px] text-muted-foreground">
-              v{initial?.version} · saving auto-bumps version → users with this role re-login on next request
+              v{initial?.version} · saving auto-bumps version → users with this role re-login on
+              next request
             </p>
           ) : null}
         </header>
@@ -221,7 +225,9 @@ export function RoleEditor(props: RoleEditorProps): JSX.Element {
             <div role="alert" className="border-l-2 border-error pl-3 py-2">
               <p className="text-sm text-error">{errorMessageFor(error)}</p>
               {error.requestId ? (
-                <p className="mt-1 font-mono text-xs text-muted-foreground">ref {error.requestId}</p>
+                <p className="mt-1 font-mono text-xs text-muted-foreground">
+                  ref {error.requestId}
+                </p>
               ) : null}
             </div>
           ) : null}
@@ -248,10 +254,20 @@ export function RoleEditor(props: RoleEditorProps): JSX.Element {
   );
 }
 
-function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }): JSX.Element {
+function Field({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: React.ReactNode;
+}): JSX.Element {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       {children}
       {hint ? <span className="font-mono text-[10px] text-muted-foreground">{hint}</span> : null}
     </label>
@@ -260,9 +276,10 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
 
 function errorMessageFor(error: ApiError): string {
   if (error.code === 'E_VALIDATION') return error.message ?? 'Some fields are invalid.';
-  if (error.code === 'E_CONFLICT') return error.message?.includes('users')
-    ? 'Cannot delete: this role is still assigned to one or more users.'
-    : 'A role with that name already exists.';
+  if (error.code === 'E_CONFLICT')
+    return error.message?.includes('users')
+      ? 'Cannot delete: this role is still assigned to one or more users.'
+      : 'A role with that name already exists.';
   if (error.code === 'E_NOT_FOUND') return 'That role no longer exists. Refresh the list.';
   if (error.code === 'E_PERM_DENIED') return 'Your role lacks dash_roles.';
   if (error.code === 'E_NETWORK') return 'Network unavailable. Retry when reconnected.';

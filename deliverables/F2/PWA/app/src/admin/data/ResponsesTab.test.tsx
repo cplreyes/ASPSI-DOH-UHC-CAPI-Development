@@ -5,7 +5,10 @@ import { AdminAuthProvider } from '../lib/auth-context';
 import { RouterProvider } from '../lib/pages-router';
 
 function jsonResponse(body: unknown, status = 200): Response {
-  return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
 
 function renderTab(fetchImpl: typeof fetch) {
@@ -78,7 +81,7 @@ describe('<ResponsesTab />', () => {
     });
   });
 
-  it('attaches default 24h-from filter to the API call', async () => {
+  it('does NOT auto-apply a date filter on cold load (UAT R2 #78)', async () => {
     let captured: string | null = null;
     const fetchImpl = vi.fn(async (url) => {
       captured = String(url);
@@ -86,7 +89,7 @@ describe('<ResponsesTab />', () => {
     }) as unknown as typeof fetch;
     renderTab(fetchImpl);
     await waitFor(() => expect(fetchImpl).toHaveBeenCalled());
-    expect(captured).toMatch(/from=\d{4}-\d{2}-\d{2}/);
+    expect(captured).not.toMatch(/from=\d{4}-\d{2}-\d{2}/);
     expect(captured).toMatch(/limit=200/);
   });
 });

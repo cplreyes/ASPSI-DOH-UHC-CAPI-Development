@@ -451,9 +451,7 @@ const EXCLUSIVE_VALUES = new Set([
 
 // Multi-select option values that should auto-select all other non-exclusive
 // non-otherSpecify options when checked.
-const SELECT_ALL_VALUES = new Set([
-  'All of the above',
-]);
+const SELECT_ALL_VALUES = new Set(['All of the above']);
 
 function parseChoiceList(text: string, hasOtherSpecify: boolean): Choice[] | undefined {
   if (!text) return undefined;

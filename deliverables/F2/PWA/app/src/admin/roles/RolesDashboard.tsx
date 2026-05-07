@@ -54,11 +54,9 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
     | { kind: 'loaded'; data: ListRolesData }
     | { kind: 'failed'; error: ApiError }
   >({ kind: 'loading' });
-  const [editor, setEditor] = useState<
-    | { kind: 'create' }
-    | { kind: 'edit'; role: RoleRow }
-    | null
-  >(null);
+  const [editor, setEditor] = useState<{ kind: 'create' } | { kind: 'edit'; role: RoleRow } | null>(
+    null,
+  );
   const [reloadTick, setReloadTick] = useState(0);
 
   const load = useCallback(async () => {
@@ -117,7 +115,9 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
     <section className="flex flex-col gap-4 py-2">
       <header className="flex items-start justify-between border-b border-hairline pb-3">
         <div>
-          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
+          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            Section
+          </p>
           <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Roles</h2>
           <p className="mt-1 text-sm text-muted-foreground">
             Permission matrix. Built-in roles pinned first. Saving an edit auto-bumps version and

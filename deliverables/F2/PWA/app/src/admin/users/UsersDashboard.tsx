@@ -34,8 +34,13 @@ interface ListUsersData {
   total: number;
 }
 
-interface RoleRow { name: string }
-interface ListRolesData { roles: RoleRow[]; total: number }
+interface RoleRow {
+  name: string;
+}
+interface ListRolesData {
+  roles: RoleRow[];
+  total: number;
+}
 
 export interface UsersDashboardProps {
   apiBaseUrl: string;
@@ -70,11 +75,10 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
     | { kind: 'failed'; error: ApiError }
   >({ kind: 'loading' });
   const [roles, setRoles] = useState<RoleRow[]>([]);
-  const [editor, setEditor] = useState<
-    | { kind: 'create' }
-    | { kind: 'edit'; user: UserRow }
-    | null
-  >(null);
+  const [rolesLoadError, setRolesLoadError] = useState<ApiError | null>(null);
+  const [editor, setEditor] = useState<{ kind: 'create' } | { kind: 'edit'; user: UserRow } | null>(
+    null,
+  );
   const [reloadTick, setReloadTick] = useState(0);
 
   const apiQuery = useMemo(() => buildApiQuery(filters), [filters]);
@@ -110,6 +114,9 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
   }, [loadUsers, reloadTick]);
 
   // Roles list for the editor's role dropdown. Pulled once and cached.
+  // UAT R2 #99/#102: surface a fetch failure instead of swallowing it —
+  // an empty roles list silently broke the create-user dropdown and the
+  // tester read it as "Add User submission does not proceed."
   useEffect(() => {
     let cancelled = false;
     void (async () => {
@@ -121,10 +128,17 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
-      if (cancelled || !r.ok) return;
-      setRoles(r.data.roles);
+      if (cancelled) return;
+      if (r.ok) {
+        setRoles(r.data.roles);
+        setRolesLoadError(null);
+      } else {
+        setRolesLoadError(r.error);
+      }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [apiBaseUrl, token, fetchImpl]);
 
   const onDelete = async (username: string) => {
@@ -179,10 +193,13 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
     <section className="flex flex-col gap-4 py-2">
       <header className="flex items-start justify-between border-b border-hairline pb-3">
         <div>
-          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
+          <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+            Section
+          </p>
           <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Users</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Admin portal accounts. Bulk-import + revoke-sessions actions land in follow-up commits.
+            Admin portal accounts. Bulk-import lands in a follow-up commit; revoke-sessions, edit,
+            and delete are wired below.
           </p>
         </div>
         <button
@@ -195,9 +212,37 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
       </header>
 
       <div className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3">
-        <FilterText label="Search" value={filters.q} onChange={(v) => setFilters({ ...filters, q: v })} />
-        <FilterText label="Role" value={filters.role_name} onChange={(v) => setFilters({ ...filters, role_name: v })} placeholder="Administrator" />
+        <FilterText
+          label="Search"
+          value={filters.q}
+          onChange={(v) => setFilters({ ...filters, q: v })}
+        />
+        <FilterText
+          label="Role"
+          value={filters.role_name}
+          onChange={(v) => setFilters({ ...filters, role_name: v })}
+          placeholder="Administrator"
+        />
       </div>
+
+      {rolesLoadError ? (
+        <div role="alert" className="border-l-2 border-warning bg-warning/10 px-3 py-2">
+          <p className="text-sm">
+            Roles list could not be loaded — Add user / Edit user will not be able to assign a role
+            until this clears.
+          </p>
+          <p className="mt-1 font-mono text-xs text-muted-foreground">
+            {rolesLoadError.code}
+            {rolesLoadError.requestId ? ` · ref ${rolesLoadError.requestId}` : ''}
+          </p>
+        </div>
+      ) : roles.length === 0 ? (
+        <div role="alert" className="border-l-2 border-warning bg-warning/10 px-3 py-2">
+          <p className="text-sm">
+            F2_Roles is empty — seed at least one role in the Roles dashboard before creating users.
+          </p>
+        </div>
+      ) : null}
 
       {state.kind === 'loading' ? (
         <p className="text-sm text-muted-foreground">Loading…</p>
@@ -234,10 +279,22 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
   );
 }
 
-function FilterText({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }): JSX.Element {
+function FilterText({
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}): JSX.Element {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="text"
         value={value}
@@ -332,7 +389,13 @@ function Th({ children }: { children?: React.ReactNode }): JSX.Element {
   );
 }
 
-function Td({ children, mono = false }: { children?: React.ReactNode; mono?: boolean }): JSX.Element {
+function Td({
+  children,
+  mono = false,
+}: {
+  children?: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
   return <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>;
 }
 
@@ -358,8 +421,8 @@ function EmptyBanner(): JSX.Element {
     <div className="border border-hairline bg-secondary/20 px-4 py-6">
       <p className="font-serif text-lg">No admin users yet.</p>
       <p className="mt-1 text-sm text-muted-foreground">
-        Run <code className="font-mono text-xs">scripts/seed-admins.mjs</code> after AP0 to seed
-        the initial Administrator accounts (Task 1.13).
+        Run <code className="font-mono text-xs">scripts/seed-admins.mjs</code> after AP0 to seed the
+        initial Administrator accounts (Task 1.13).
       </p>
     </div>
   );

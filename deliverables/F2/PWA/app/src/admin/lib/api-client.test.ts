@@ -45,11 +45,9 @@ describe('adminFetch', () => {
 
   it('triggers onUnauthorized on 401 and returns the typed error code', async () => {
     const fetchImpl = vi.fn(async () =>
-      jsonResponse(
-        { ok: false, error: { code: 'E_AUTH_INVALID', message: 'bad creds' } },
-        401,
-        { 'X-Request-Id': 'req-1' },
-      ),
+      jsonResponse({ ok: false, error: { code: 'E_AUTH_INVALID', message: 'bad creds' } }, 401, {
+        'X-Request-Id': 'req-1',
+      }),
     ) as unknown as typeof fetch;
     const onUnauthorized = vi.fn();
     const r = await adminFetch('/x', {}, { fetchImpl, onUnauthorized });
@@ -83,8 +81,8 @@ describe('adminFetch', () => {
   });
 
   it('handles 204 No Content responses (logout)', async () => {
-    const fetchImpl = vi.fn(async () =>
-      new Response(null, { status: 204, headers: { 'X-Request-Id': 'req-9' } }),
+    const fetchImpl = vi.fn(
+      async () => new Response(null, { status: 204, headers: { 'X-Request-Id': 'req-9' } }),
     ) as unknown as typeof fetch;
     const r = await adminFetch('/x', {}, { fetchImpl });
     expect(r.ok).toBe(true);

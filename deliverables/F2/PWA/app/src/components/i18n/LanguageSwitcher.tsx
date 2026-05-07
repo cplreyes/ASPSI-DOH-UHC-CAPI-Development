@@ -41,12 +41,7 @@ export function LanguageSwitcher() {
       >
         FIL
       </Button>
-      <span
-        role="status"
-        aria-live="polite"
-        className="sr-only"
-        data-testid="active-locale"
-      >
+      <span role="status" aria-live="polite" className="sr-only" data-testid="active-locale">
         {locale === 'en' ? t('language.en') : t('language.fil')}
       </span>
     </div>

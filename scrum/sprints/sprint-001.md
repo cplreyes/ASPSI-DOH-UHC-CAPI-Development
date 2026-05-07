@@ -24,7 +24,7 @@ Why this goal: F1 is the reference instrument for F3/F4 CSPro builds — every d
 
 ### Epic 0 — PM & Stakeholder (recurring + one-off)
 
-- [ ] **E0-001** Sprint 001 planning ceremony — set goal, dates, commit items `status::in-progress` `priority::high`
+- [x] **E0-001** Sprint 001 planning ceremony — set goal, dates, commit items `status::done` `priority::high`
 - [ ] **E0-020** SJREB application status check via ASPSI (carry into every sprint until clearance) `status::in-progress` `priority::critical`
 - [ ] **E0-032** Track D2/D3 deadline exposure this week `status::in-progress` `priority::high`
 - [x] **E0-060** Attend Apr 13 LSS meeting (3:00 PM); capture decisions on the 6 open F1 items into a meeting note in `scrum/standups/` and feed back to F1 spec `status::done` `priority::critical` `estimate::3h`
@@ -34,8 +34,9 @@ Why this goal: F1 is the reference instrument for F3/F4 CSPro builds — every d
 
 - [x] **E2-F1-009** Author `generate_dcf.py` and emit `FacilityHeadSurvey.dcf` covering Q1-Q166 across 15 records `status::done` `priority::critical`
   - Built 2026-04-14. Earlier scrum entries (Apr 11) claiming this was done were premature — no generator existed in the repo. Reconstructed from scratch using `raw/CSPro-Data-Dictionary/FacilityHeadSurvey.dcf` (Carl's manual Q1-Q8 scaffold) as format reference and `F1-Skip-Logic-and-Validations.md` for canonical item names. Output: 15 records, 657 items. Secondary-data records (SEC_HOSP_CENSUS, SEC_HCW_ROSTER, SEC_YK_SERVICES, SEC_LAB_PRICES) intentionally left as empty stubs pending LSS decision.
-- [ ] **E2-F1-009b** Reconcile DCF with LSS-meeting decisions on the 6 open items (Q63 day vs month, SECONDARY_DATA structure, NBB split, Q31 NA-skip intent, Q166 nurse list, Q121 dynamic value set) `status::todo` `priority::critical` `estimate::4h`
-  - **REOPENED 2026-04-14.** Apr 13 LSS meeting did NOT actually discuss the 6 open items (correction from Carl). The 6 items are encoded as `PENDING_DESIGN_*` constants in `generate_dcf.py` with default assumptions; flipping any constant regenerates the affected schema. Blocked until the items land on an LSS agenda.
+- [x] **E2-F1-009b** Reconcile DCF with LSS-meeting decisions on the 6 open items (Q63 day vs month, SECONDARY_DATA structure, NBB split, Q31 NA-skip intent, Q166 nurse list, Q121 dynamic value set) `status::done` `priority::critical`
+  - **REOPENED 2026-04-14.** Apr 13 LSS meeting did NOT actually discuss the 6 open items (correction from Carl). The 6 items are encoded as `PENDING_DESIGN_*` constants in `generate_dcf.py` with default assumptions; flipping any constant regenerates the affected schema.
+  - **CLOSED 2026-04-17** — defaults stand as final per memory `feedback_lss_closed.md`; the 6 `PENDING_DESIGN_*` constants in `generate_dcf.py` are the canonical decisions. Sprint-001 historical record updated 2026-05-06 to reflect the eventual close.
 - [ ] **E2-F1-010** F1 DCF opened in CSPro Designer, full validation walkthrough, bug list closed or explicitly deferred, sign-off note recorded → enters Epic 3 `status::todo` `priority::critical` `estimate::4h`
   - Generator + DCF in place 2026-04-14. Designer walkthrough next.
 

@@ -24,48 +24,48 @@ Continuous governance workstream covering data privacy compliance, security arch
 - [x] **E9-001** Non-Disclosure Undertaking signed (2025-12-12) `status::done` `priority::critical`
 - [x] **E9-002** RA 10173 (Data Privacy Act), RA 8293 (IP Code), RA 10175 (Cybercrime Prevention) obligations acknowledged under NDU `status::done` `priority::critical`
 - [x] **E9-003** CSA confidentiality clauses (§10g, §11) in force `status::done` `priority::critical`
-- [ ] **E9-004** Maintain NDU compliance throughout engagement (no disclosure of project materials without ASPSI/DOH written consent) `status::ongoing` `priority::critical`
+- [ ] **E9-004** Maintain NDU compliance throughout engagement (no disclosure of project materials without ASPSI/DOH written consent) `status::ongoing` `priority::critical` `scrum::unscheduled`
 
 ### Privacy & PII Policy
 
-- [ ] **E9-010** PII inventory per instrument — what personally identifiable data does each questionnaire collect? `status::todo` `priority::high` `estimate::4h`
+- [ ] **E9-010** PII inventory per instrument — what personally identifiable data does each questionnaire collect? `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
   - Depends on: E2 design passes for each instrument
-- [ ] **E9-011** Data minimization review — are there fields we collect but don't need? `status::todo` `priority::medium` `estimate::2h`
-- [ ] **E9-012** PII handling protocol document (in transit, at rest, in analysis) `status::todo` `priority::high` `estimate::4h`
-- [ ] **E9-013** Data subject rights procedure per RA 10173 (access, rectification, erasure, objection) — how respondents exercise rights during/after fieldwork `status::todo` `priority::medium` `estimate::3h`
-- [ ] **E9-014** Consent form wording review with privacy in mind (what are respondents consenting to?) `status::todo` `priority::high` `estimate::2h`
+- [ ] **E9-011** Data minimization review — are there fields we collect but don't need? `status::todo` `priority::medium` `estimate::2h` `scrum::unscheduled`
+- [ ] **E9-012** PII handling protocol document (in transit, at rest, in analysis) `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
+- [ ] **E9-013** Data subject rights procedure per RA 10173 (access, rectification, erasure, objection) — how respondents exercise rights during/after fieldwork `status::todo` `priority::medium` `estimate::3h` `scrum::unscheduled`
+- [ ] **E9-014** Consent form wording review with privacy in mind (what are respondents consenting to?) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
 
 ### Infrastructure Security
 
 - [x] **E9-019** F2 PWA HMAC-in-bundle finding closed via auth re-arch (PR #31, staging cutover 2026-04-26) `status::done` `priority::critical`
   - Surfaced 2026-04-25 by `/gstack-cso` audit: `VITE_F2_HMAC_SECRET` was inlined into `dist/assets/*.js`, exposing the HMAC to anyone who downloaded the bundle. Closed by replacing with Cloudflare Worker JWT proxy (E4-PWA-008). Bundle scan now reports `check-bundle-secrets: OK`. Production closure pending Phase F (E4-PWA-013).
-- [ ] **E9-020** Encryption at rest specification (tablet storage, server storage) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E9-021** Encryption in transit specification (sync channel tablet → CSWeb) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E9-022** CSWeb server access control policy (who can read, who can export, who can admin) `status::todo` `priority::high` `estimate::3h`
+- [ ] **E9-020** Encryption at rest specification (tablet storage, server storage) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E9-021** Encryption in transit specification (sync channel tablet → CSWeb) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E9-022** CSWeb server access control policy (who can read, who can export, who can admin) `status::todo` `priority::high` `estimate::3h` `scrum::unscheduled`
   - Depends on: Epic 4 CSWeb stand-up
-- [ ] **E9-023** Authentication model — define roles (interviewer / supervisor / admin / analyst) and credentials per role `status::todo` `priority::high` `estimate::3h`
-- [ ] **E9-024** Audit trail design — what data access events are logged, retention of log `status::todo` `priority::medium` `estimate::2h`
-- [ ] **E9-025** Tablet lock-screen + device encryption policy for enumerators `status::todo` `priority::high` `estimate::2h`
+- [ ] **E9-023** Authentication model — define roles (interviewer / supervisor / admin / analyst) and credentials per role `status::todo` `priority::high` `estimate::3h` `scrum::unscheduled`
+- [ ] **E9-024** Audit trail design — what data access events are logged, retention of log `status::todo` `priority::medium` `estimate::2h` `scrum::unscheduled`
+- [ ] **E9-025** Tablet lock-screen + device encryption policy for enumerators `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
 
 ### Backup & Recovery
 
-- [ ] **E9-030** Backup strategy for server-side data (frequency, location, redundancy) `status::todo` `priority::high` `estimate::3h`
-- [ ] **E9-031** Backup strategy for tablet-side data mid-interview (partial save, auto-save) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E9-032** Recovery test protocol — can we actually restore from backup? `status::todo` `priority::medium` `estimate::4h`
-- [ ] **E9-033** Off-site backup decision (is local backup sufficient? does DOH require a secondary copy?) `status::todo` `priority::medium` `estimate::1h`
+- [ ] **E9-030** Backup strategy for server-side data (frequency, location, redundancy) `status::todo` `priority::high` `estimate::3h` `scrum::unscheduled`
+- [ ] **E9-031** Backup strategy for tablet-side data mid-interview (partial save, auto-save) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E9-032** Recovery test protocol — can we actually restore from backup? `status::todo` `priority::medium` `estimate::4h` `scrum::unscheduled`
+- [ ] **E9-033** Off-site backup decision (is local backup sufficient? does DOH require a secondary copy?) `status::todo` `priority::medium` `estimate::1h` `scrum::unscheduled`
 
 ### Data Retention & Destruction
 
-- [ ] **E9-040** Data retention policy — how long is respondent data held? Whose policy governs (DOH? RA 10173 default?) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E9-041** Audit log retention policy `status::todo` `priority::medium` `estimate::1h`
-- [ ] **E9-042** NDU-compliant file turn-over / destruction plan for project close (covers Epic 12 Handover) `status::todo` `priority::high` `estimate::3h`
+- [ ] **E9-040** Data retention policy — how long is respondent data held? Whose policy governs (DOH? RA 10173 default?) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E9-041** Audit log retention policy `status::todo` `priority::medium` `estimate::1h` `scrum::unscheduled`
+- [ ] **E9-042** NDU-compliant file turn-over / destruction plan for project close (covers Epic 12 Handover) `status::todo` `priority::high` `estimate::3h` `scrum::unscheduled`
   - Defines: what transfers to client, what is destroyed, what (if anything) Carl retains under what terms
-- [ ] **E9-043** Secure destruction procedure for tablets post-fieldwork (factory reset + cryptographic wipe) `status::todo` `priority::medium` `estimate::2h`
+- [ ] **E9-043** Secure destruction procedure for tablets post-fieldwork (factory reset + cryptographic wipe) `status::todo` `priority::medium` `estimate::2h` `scrum::unscheduled`
 
 ### Incident Response
 
-- [ ] **E9-050** Data breach response protocol (what if a tablet is lost? what if server is compromised?) `status::todo` `priority::medium` `estimate::3h`
-- [ ] **E9-051** Incident escalation chain (Carl → ASPSI → DOH → NPC reporting if required) `status::todo` `priority::medium` `estimate::2h`
+- [ ] **E9-050** Data breach response protocol (what if a tablet is lost? what if server is compromised?) `status::todo` `priority::medium` `estimate::3h` `scrum::unscheduled`
+- [ ] **E9-051** Incident escalation chain (Carl → ASPSI → DOH → NPC reporting if required) `status::todo` `priority::medium` `estimate::2h` `scrum::unscheduled`
 
 ## Notes
 

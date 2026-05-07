@@ -59,12 +59,20 @@ interface UiFilters {
 
 // Philippine bounding box, tight — covers the archipelago from the Sulu
 // Sea up to Batanes without padding into Taiwan / Hong Kong / SCS chrome
-// that doesn't matter for ASPSI fieldwork. MapContainer fitBounds() uses
-// this on initial load; user pan/zoom is unconstrained after that.
+// that doesn't matter for ASPSI fieldwork. Used both for the initial
+// fitBounds() and for `maxBounds` so user pan is clamped — UAT R2 (#89/#90)
+// found the unconstrained pan/zoom let testers drag the map into HK /
+// Taiwan / SCS chrome, exposing the multilingual fallback labels Carto
+// Positron emits outside PH's "name:en" coverage.
 const PH_BOUNDS: L.LatLngBoundsExpression = [
   [5.0, 117.0],
   [19.5, 126.5],
 ];
+
+// Minimum zoom level chosen so the PH archipelago always fills most of
+// the viewport — below z=5 the rendered area expands enough to expose
+// SCS / Taiwan / HK labels, which is what UAT R2 #90 caught.
+const PH_MIN_ZOOM = 5;
 
 // Custom Verde-themed marker — signal-green dot with a contrasting ring
 // stack. Sized 18px so it stands out clearly against Carto Positron's
@@ -81,8 +89,9 @@ const VERDE_MARKER_ICON = L.divIcon({
 
 // (No "West Philippine Sea" overlay needed — Carto Positron's tiles render
 // "West Philippine Sea" natively at the demo zoom level inside PH's EEZ.
-// At very-zoomed-out views Carto falls back to the multilingual SCS stack,
-// which is acceptable for the rare case the user zooms beyond PH bounds.)
+// The maxBounds + PH_MIN_ZOOM clamp on MapContainer below keeps the user
+// inside that zoom band so the multilingual fallback labels at very-zoomed-out
+// views never appear.)
 
 function defaultFromIso(): string {
   return new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
@@ -245,6 +254,9 @@ function MapPlot({
     <div className="verde-leaflet-wrap border border-hairline bg-paper">
       <MapContainer
         bounds={PH_BOUNDS}
+        maxBounds={PH_BOUNDS}
+        maxBoundsViscosity={1.0}
+        minZoom={PH_MIN_ZOOM}
         scrollWheelZoom
         className="aspect-[3/4] w-full"
         attributionControl

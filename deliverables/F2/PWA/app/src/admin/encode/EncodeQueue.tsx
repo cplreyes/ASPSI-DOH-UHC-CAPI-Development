@@ -27,13 +27,11 @@ export function EncodeQueue(): JSX.Element {
   return (
     <section className="flex flex-col gap-6 py-8">
       <header className="border-b border-hairline pb-4">
-        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-          Section
-        </p>
+        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
         <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Encode queue</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          HCWs eligible for paper-encoding will appear here once the Sprint 2.9 backend is live.
-          For now you can type an HCW ID directly.
+          HCWs eligible for paper-encoding will appear here once the Sprint 2.9 backend is live. For
+          now you can type an HCW ID directly.
         </p>
       </header>
 

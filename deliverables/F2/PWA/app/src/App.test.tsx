@@ -10,8 +10,7 @@ import { db, type SubmissionRow } from '@/lib/db';
  * client-side, so a hand-rolled string is sufficient for tests.
  */
 function makeFakeDeviceToken(overrides: Record<string, unknown> = {}): string {
-  const b64url = (s: string) =>
-    btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  const b64url = (s: string) => btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
   const header = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
   const claims = {
     jti: 'test-jti',

@@ -15,8 +15,7 @@ const single = (id: string, choices: Choice[], extra: Partial<Item> = {}): Item 
   ...extra,
 });
 
-const isMatrix = (e: Item | MatrixGroup): e is MatrixGroup =>
-  (e as MatrixGroup).kind === 'matrix';
+const isMatrix = (e: Item | MatrixGroup): e is MatrixGroup => (e as MatrixGroup).kind === 'matrix';
 
 describe('groupVisibleItems', () => {
   it('returns an empty array for empty input', () => {
@@ -73,18 +72,12 @@ describe('groupVisibleItems', () => {
   });
 
   it('does not group items if choices differ in order', () => {
-    const items = [
-      single('Q1', ch(['Yes', 'No'])),
-      single('Q2', ch(['No', 'Yes'])),
-    ];
+    const items = [single('Q1', ch(['Yes', 'No'])), single('Q2', ch(['No', 'Yes']))];
     expect(groupVisibleItems(items)).toEqual(items);
   });
 
   it('does not group items if choices differ in length', () => {
-    const items = [
-      single('Q1', ch(['1', '2', '3', '4', '5'])),
-      single('Q2', ch(['1', '2', '3'])),
-    ];
+    const items = [single('Q1', ch(['1', '2', '3', '4', '5'])), single('Q2', ch(['1', '2', '3']))];
     expect(groupVisibleItems(items)).toEqual(items);
   });
 
@@ -105,9 +98,7 @@ describe('groupVisibleItems', () => {
 
   it('groups a long realistic Likert cluster (Q75-Q81)', () => {
     const ch15 = ch(['1', '2', '3', '4', '5']);
-    const items = ['Q75', 'Q76', 'Q77', 'Q78', 'Q79', 'Q80', 'Q81'].map((id) =>
-      single(id, ch15),
-    );
+    const items = ['Q75', 'Q76', 'Q77', 'Q78', 'Q79', 'Q80', 'Q81'].map((id) => single(id, ch15));
     const out = groupVisibleItems(items);
     expect(out).toHaveLength(1);
     if (isMatrix(out[0])) {
@@ -131,9 +122,7 @@ describe('groupVisibleItems', () => {
       'Disagree',
       'Strongly Disagree',
     ]);
-    const items = ['Q108', 'Q109', 'Q110', 'Q111', 'Q112'].map((id) =>
-      single(id, agreement),
-    );
+    const items = ['Q108', 'Q109', 'Q110', 'Q111', 'Q112'].map((id) => single(id, agreement));
     const out = groupVisibleItems(items);
     expect(out).toHaveLength(1);
   });

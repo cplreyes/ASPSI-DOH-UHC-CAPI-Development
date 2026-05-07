@@ -112,12 +112,26 @@ export function SyncReport({ apiBaseUrl, fetchImpl }: SyncReportProps): JSX.Elem
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3">
-        <FilterDate label="From" value={filters.from} onChange={(v) => setFilters({ ...filters, from: v })} />
-        <FilterDate label="To" value={filters.to} onChange={(v) => setFilters({ ...filters, to: v })} />
+        <FilterDate
+          label="From"
+          value={filters.from}
+          onChange={(v) => setFilters({ ...filters, from: v })}
+        />
+        <FilterDate
+          label="To"
+          value={filters.to}
+          onChange={(v) => setFilters({ ...filters, to: v })}
+        />
         <div className="flex items-center gap-2">
-          <PillToggle active={filters.level === 'region'} onClick={() => setLevel('region')}>Region</PillToggle>
-          <PillToggle active={filters.level === 'province'} onClick={() => setLevel('province')}>Province</PillToggle>
-          <PillToggle active={filters.level === 'facility'} onClick={() => setLevel('facility')}>Facility</PillToggle>
+          <PillToggle active={filters.level === 'region'} onClick={() => setLevel('region')}>
+            Region
+          </PillToggle>
+          <PillToggle active={filters.level === 'province'} onClick={() => setLevel('province')}>
+            Province
+          </PillToggle>
+          <PillToggle active={filters.level === 'facility'} onClick={() => setLevel('facility')}>
+            Facility
+          </PillToggle>
         </div>
       </div>
 
@@ -131,7 +145,9 @@ export function SyncReport({ apiBaseUrl, fetchImpl }: SyncReportProps): JSX.Elem
         <>
           <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
             {state.data.totals.submitted} submission{state.data.totals.submitted === 1 ? '' : 's'}
-            {' across '}{state.data.totals.keys} {state.data.level === 'region' ? 'region' : state.data.level}{state.data.totals.keys === 1 ? '' : 's'}
+            {' across '}
+            {state.data.totals.keys} {state.data.level === 'region' ? 'region' : state.data.level}
+            {state.data.totals.keys === 1 ? '' : 's'}
           </p>
           <PivotTable level={state.data.level} rows={state.data.pivot} />
         </>
@@ -140,10 +156,20 @@ export function SyncReport({ apiBaseUrl, fetchImpl }: SyncReportProps): JSX.Elem
   );
 }
 
-function FilterDate({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
+function FilterDate({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}): JSX.Element {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="date"
         value={value}
@@ -154,7 +180,15 @@ function FilterDate({ label, value, onChange }: { label: string; value: string; 
   );
 }
 
-function PillToggle({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }): JSX.Element {
+function PillToggle({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}): JSX.Element {
   return (
     <button
       type="button"
@@ -219,7 +253,13 @@ function Th({ children }: { children?: React.ReactNode }): JSX.Element {
   );
 }
 
-function Td({ children, mono = false }: { children?: React.ReactNode; mono?: boolean }): JSX.Element {
+function Td({
+  children,
+  mono = false,
+}: {
+  children?: React.ReactNode;
+  mono?: boolean;
+}): JSX.Element {
   return <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>;
 }
 

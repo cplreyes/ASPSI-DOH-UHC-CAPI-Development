@@ -100,6 +100,16 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
       setUploadError(`MIME type ${mime} not allowed. Allowed: PDF, ZIP, PNG, JPEG, GIF.`);
       return;
     }
+    // UAT R2 #92: warn before stacking duplicates. The backend doesn't dedupe
+    // by filename (file_id is a UUID), so without this guard two files with
+    // the same name end up in the list and admins can't tell them apart.
+    if (state.kind === 'loaded' && state.data.files.some((row) => row.filename === file.name)) {
+      setUploadError(
+        `A file named "${file.name}" already exists. Rename it and try again, or delete the existing one first.`,
+      );
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      return;
+    }
 
     setUploading(true);
     try {
@@ -316,13 +326,26 @@ function FilesTable({
               <Td mono>{r.uploaded_by}</Td>
               <Td mono>{formatTs(r.uploaded_at)}</Td>
               <Td>
-                <button
-                  type="button"
-                  onClick={() => void onDelete(r)}
-                  className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-error"
-                >
-                  Delete
-                </button>
+                <div className="flex flex-wrap gap-3">
+                  {/* UAT R2 #91: explicit Download action so admins don't
+                      have to discover that the filename column is a download
+                      link. The href + download attr below mirror the column
+                      link so server semantics stay identical. */}
+                  <a
+                    href={downloadUrl(r.file_id)}
+                    download={r.filename}
+                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+                  >
+                    Download
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => void onDelete(r)}
+                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-error"
+                  >
+                    Delete
+                  </button>
+                </div>
               </Td>
             </tr>
           ))}

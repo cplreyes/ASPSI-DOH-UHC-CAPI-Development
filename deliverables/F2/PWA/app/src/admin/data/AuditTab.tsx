@@ -44,17 +44,17 @@ interface UiFilters {
   q: string;
 }
 
-function defaultFromIso(): string {
-  return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-}
-
+// UAT R2 #82: cold load no longer auto-applies a 7d filter — testers read
+// it as data loss because there was no visible indicator the list was being
+// trimmed. Date pickers remain available; they're opt-in. Revisit once
+// production audit volume justifies a default recency window.
 function readFiltersFromUrl(): UiFilters {
   if (typeof window === 'undefined') {
-    return { from: defaultFromIso(), to: '', event_type: '', actor_username: '', q: '' };
+    return { from: '', to: '', event_type: '', actor_username: '', q: '' };
   }
   const p = new URLSearchParams(window.location.search);
   return {
-    from: p.get('from') ?? defaultFromIso(),
+    from: p.get('from') ?? '',
     to: p.get('to') ?? '',
     event_type: p.get('event_type') ?? '',
     actor_username: p.get('actor_username') ?? '',
@@ -236,6 +236,9 @@ function AuditTable({ rows }: { rows: AuditRow[] }): JSX.Element {
             <Th>Event</Th>
             <Th>Actor</Th>
             <Th>Resource</Th>
+            {/* UAT R2 #79: Request ID column was missing from the table even
+                though the AuditRow shape carries request_id from the server. */}
+            <Th>Request</Th>
             <Th>Detail</Th>
           </tr>
         </thead>
@@ -247,10 +250,32 @@ function AuditTable({ rows }: { rows: AuditRow[] }): JSX.Element {
               <Td mono>{r.actor_username ?? r.hcw_id ?? '—'}</Td>
               <Td mono>{r.event_resource ?? '—'}</Td>
               <Td>
+                {r.request_id ? (
+                  <span
+                    className="font-mono text-[10px] text-muted-foreground"
+                    title={r.request_id}
+                  >
+                    {r.request_id.slice(0, 8)}…
+                  </span>
+                ) : (
+                  <span className="text-muted-foreground">—</span>
+                )}
+              </Td>
+              <Td>
+                {/* UAT R2 #80: native <details> gives an inline-expand affordance
+                    so the full payload is one click away. Lighter than a modal
+                    detail panel; still accessible (keyboard + screen reader). */}
                 {r.event_payload_json ? (
-                  <code className="block max-w-md truncate font-mono text-xs text-muted-foreground">
-                    {r.event_payload_json}
-                  </code>
+                  <details className="group">
+                    <summary className="cursor-pointer list-none">
+                      <span className="block max-w-md truncate font-mono text-xs text-muted-foreground group-open:text-ink">
+                        {r.event_payload_json}
+                      </span>
+                    </summary>
+                    <pre className="mt-2 max-w-md overflow-x-auto rounded border border-hairline bg-secondary/20 p-2 font-mono text-[10px] text-ink">
+                      {prettyJson(r.event_payload_json)}
+                    </pre>
+                  </details>
                 ) : null}
               </Td>
             </tr>
@@ -259,6 +284,14 @@ function AuditTable({ rows }: { rows: AuditRow[] }): JSX.Element {
       </table>
     </div>
   );
+}
+
+function prettyJson(raw: string): string {
+  try {
+    return JSON.stringify(JSON.parse(raw), null, 2);
+  } catch {
+    return raw;
+  }
 }
 
 function Th({ children }: { children?: React.ReactNode }): JSX.Element {
