@@ -172,11 +172,11 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
 
           <Field
             label="Role"
-            hint={
-              roles.length === 0
-                ? 'No roles available — seed F2_Roles or check the Roles dashboard before creating a user.'
-                : undefined
-            }
+            {...(roles.length === 0
+              ? {
+                  hint: 'No roles available — seed F2_Roles or check the Roles dashboard before creating a user.',
+                }
+              : {})}
           >
             <select
               value={form.role_name}
