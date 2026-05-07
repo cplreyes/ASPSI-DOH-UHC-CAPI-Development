@@ -53,6 +53,10 @@ type ListState =
 interface FormState {
   setting_id?: string;
   instrument: string;
+  // Comma-separated UI representation. Serialized to a string[] on submit
+  // because the backend stores it as JSON.stringify(string[]) per
+  // AdminSettings.js. Empty string => no column filter (all columns).
+  included_columns: string;
   interval_minutes: string;
   output_path_template: string;
   enabled: boolean;
@@ -60,10 +64,26 @@ interface FormState {
 
 const EMPTY_FORM: FormState = {
   instrument: 'F2',
+  included_columns: '',
   interval_minutes: '60',
   output_path_template: 'exports/{{date}}/{{setting_id}}.csv',
   enabled: true,
 };
+
+// included_columns is stored on the row as a JSON-encoded array string
+// (per AdminSettings.js). Parse back to a comma-separated UI string for
+// editing and table display.
+function parseIncludedColumns(raw: string | undefined): string[] {
+  if (!raw) return [];
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (Array.isArray(parsed)) return parsed.map((x) => String(x));
+  } catch {
+    /* fall through */
+  }
+  // Some legacy rows may store a comma-separated string directly.
+  return raw.split(',').map((s) => s.trim()).filter(Boolean);
+}
 
 export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.Element {
   const { token, clearAuth } = useAdminAuth();
@@ -114,6 +134,13 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
     e.preventDefault();
     if (!form) return;
     setFormError(null);
+    // UAT R2 #96: empty Instrument used to slip through, surface as a clear
+    // validation error instead of silently posting whatever EMPTY_FORM had.
+    const instrument = form.instrument.trim();
+    if (!instrument) {
+      setFormError('Instrument is required.');
+      return;
+    }
     const interval = Number(form.interval_minutes);
     if (!Number.isInteger(interval) || interval < 5 || interval > 1440) {
       setFormError('Interval must be an integer between 5 and 1440 minutes.');
@@ -128,6 +155,13 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
       setFormError('Output path required (no leading slash, no backslash, no .. path traversal).');
       return;
     }
+    // UAT R2 #94: Included Columns is now a first-class form field. Empty
+    // means "all columns"; populated means an allowlist enforced by
+    // AdminSettings.js / AdminBreakout.js.
+    const includedColumns = form.included_columns
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
 
     setSubmitting(true);
     try {
@@ -140,7 +174,8 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
         {
           method: isEdit ? 'PATCH' : 'POST',
           body: JSON.stringify({
-            instrument: form.instrument,
+            instrument,
+            included_columns: includedColumns,
             interval_minutes: interval,
             output_path_template: form.output_path_template,
             enabled: form.enabled,
@@ -157,6 +192,22 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
     } finally {
       setSubmitting(false);
     }
+  }
+
+  // UAT R2 #95: one-click enable/disable so admins don't have to drill into
+  // Edit just to flip the switch. Mirrors HCWsTab/UsersDashboard's per-row
+  // action pattern.
+  async function handleToggleEnabled(row: SettingRow): Promise<void> {
+    const r = await adminFetch<{ setting: SettingRow }>(
+      `${apiBaseUrl}/admin/api/dashboards/apps/data-settings/${encodeURIComponent(row.setting_id)}`,
+      {
+        method: 'PATCH',
+        body: JSON.stringify({ enabled: !row.enabled }),
+      },
+      authOpts(),
+    );
+    if (r.ok) setReloadTick((n) => n + 1);
+    else window.alert(friendlyError(r.error, 'Toggle failed.'));
   }
 
   async function handleDelete(row: SettingRow): Promise<void> {
@@ -184,6 +235,7 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
     setForm({
       setting_id: row.setting_id,
       instrument: row.instrument,
+      included_columns: parseIncludedColumns(row.included_columns).join(', '),
       interval_minutes: String(row.interval_minutes),
       output_path_template: row.output_path_template,
       enabled: !!row.enabled,
@@ -234,6 +286,7 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
           onEdit={startEdit}
           onDelete={handleDelete}
           onRunNow={handleRunNow}
+          onToggleEnabled={handleToggleEnabled}
         />
       )}
     </section>
@@ -258,9 +311,19 @@ function SettingForm({
       <FormRow label="Instrument">
         <input
           type="text"
+          required
           value={form.instrument}
           onChange={(e) => setForm({ ...form, instrument: e.target.value })}
           className="border-b border-hairline bg-transparent px-1 py-0.5 font-mono text-xs"
+        />
+      </FormRow>
+      <FormRow label="Included columns (comma-separated; empty = all)">
+        <input
+          type="text"
+          value={form.included_columns}
+          onChange={(e) => setForm({ ...form, included_columns: e.target.value })}
+          placeholder="e.g. submission_id, hcw_id, facility_id, submitted_at_server"
+          className="w-full border-b border-hairline bg-transparent px-1 py-0.5 font-mono text-xs"
         />
       </FormRow>
       <FormRow label="Interval (minutes)">
@@ -322,11 +385,13 @@ function SettingsTable({
   onEdit,
   onDelete,
   onRunNow,
+  onToggleEnabled,
 }: {
   rows: SettingRow[];
   onEdit: (row: SettingRow) => void;
   onDelete: (row: SettingRow) => void | Promise<void>;
   onRunNow: (row: SettingRow) => void | Promise<void>;
+  onToggleEnabled: (row: SettingRow) => void | Promise<void>;
 }): JSX.Element {
   return (
     <div className="overflow-x-auto">
@@ -335,6 +400,9 @@ function SettingsTable({
           <tr>
             <Th>Setting</Th>
             <Th>Instrument</Th>
+            {/* UAT R2 #94: Included Columns column was missing — testers
+                couldn't tell which subset a setting was filtering down to. */}
+            <Th>Included columns</Th>
             <Th>Every</Th>
             <Th>Output path</Th>
             <Th>Last run</Th>
@@ -343,52 +411,73 @@ function SettingsTable({
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">
-          {rows.map((r) => (
-            <tr key={r.setting_id} className={!r.enabled ? 'opacity-60' : ''}>
-              <Td mono>
-                {r.setting_id}
-                {!r.enabled ? <span className="ml-1 text-muted-foreground">(off)</span> : null}
-              </Td>
-              <Td mono>{r.instrument}</Td>
-              <Td mono>{r.interval_minutes}m</Td>
-              <Td mono>{r.output_path_template}</Td>
-              <Td mono>
-                {r.last_run_status ? (
-                  <span className={r.last_run_status === 'failed' ? 'text-error' : ''}>
-                    {r.last_run_status} {formatTs(r.last_run_at || '')}
-                  </span>
-                ) : (
-                  '-'
-                )}
-              </Td>
-              <Td mono>{formatTs(r.next_run_at)}</Td>
-              <Td>
-                <div className="flex gap-2">
-                  <button
-                    type="button"
-                    onClick={() => void onRunNow(r)}
-                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
-                  >
-                    Run now
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onEdit(r)}
-                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => void onDelete(r)}
-                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-error"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </Td>
-            </tr>
-          ))}
+          {rows.map((r) => {
+            const cols = parseIncludedColumns(r.included_columns);
+            return (
+              <tr key={r.setting_id} className={!r.enabled ? 'opacity-60' : ''}>
+                <Td mono>
+                  {r.setting_id}
+                  {!r.enabled ? <span className="ml-1 text-muted-foreground">(off)</span> : null}
+                </Td>
+                <Td mono>{r.instrument}</Td>
+                <Td>
+                  {cols.length === 0 ? (
+                    <span className="font-mono text-xs text-muted-foreground">all columns</span>
+                  ) : (
+                    <span className="font-mono text-xs" title={cols.join(', ')}>
+                      {cols.length} col{cols.length === 1 ? '' : 's'}: {cols.slice(0, 3).join(', ')}
+                      {cols.length > 3 ? `, +${cols.length - 3} more` : ''}
+                    </span>
+                  )}
+                </Td>
+                <Td mono>{r.interval_minutes}m</Td>
+                <Td mono>{r.output_path_template}</Td>
+                <Td mono>
+                  {r.last_run_status ? (
+                    <span className={r.last_run_status === 'failed' ? 'text-error' : ''}>
+                      {r.last_run_status} {formatTs(r.last_run_at || '')}
+                    </span>
+                  ) : (
+                    '-'
+                  )}
+                </Td>
+                <Td mono>{formatTs(r.next_run_at)}</Td>
+                <Td>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => void onRunNow(r)}
+                      className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
+                    >
+                      Run now
+                    </button>
+                    {/* UAT R2 #95: one-click enable/disable, no Edit drill. */}
+                    <button
+                      type="button"
+                      onClick={() => void onToggleEnabled(r)}
+                      className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
+                    >
+                      {r.enabled ? 'Disable' : 'Enable'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onEdit(r)}
+                      className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => void onDelete(r)}
+                      className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-error"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </Td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
