@@ -3,7 +3,7 @@ epic: 3
 title: CAPI Application Development (CSPro + CSEntry / PWA)
 phase: per-instrument
 status: in-progress
-last_updated: 2026-04-26
+last_updated: 2026-05-08
 ---
 
 # Epic 3 — CAPI Application Development (CSPro + CSEntry / PWA)
@@ -60,6 +60,13 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [ ] **E3-F1-010** Populate English question text from questionnaire; use `~~item~~` fills for personalized text (facility name, respondent name) `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
 - [ ] **E3-F1-011** Add Filipino translations for all question labels and option text `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
 - [ ] **E3-F1-012** Set up multi-language switching (`setlanguage`, language-select on cover page) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E3-F1-013** Externalize errmsg()/reenter strings to Messages tab with numbered IDs + `%s`/`%d`/`%f` format specifiers (per Khurshid 2022-06-22) `status::todo` `priority::high` `estimate::3h` `scrum::sprint-005`
+  - **Trigger:** May 8 audit gap. With 7 dialects coming, inline `errmsg("...")` strings would mean 7 copies of every PROC. Messages tab moves all 7 versions into one numbered table, switched by `setlanguage()`.
+  - **References:** [[../../deliverables/UHC-Survey-CAPI-Guide/04-Phase-6-Build-CAPI-App|Phase 6 guide §6.7]].
+- [ ] **E3-F1-014** Per-language value-set naming convention `<item>_vs1_<lang>` + three-stack language model wiring (dictionary + CAPI text + Messages tab) `status::todo` `priority::high` `estimate::4h` `scrum::sprint-005`
+  - **Trigger:** May 8 audit gap. Per Khurshid 2022-09-26 *Multi Languages for CAPI and Valuesets* — three-stack model needs the value-set naming convention locked into `cspro_helpers.py` BEFORE any value set is hand-written for a non-English locale.
+  - **Deliverable:** Helper extension that emits `FACILITY_TYPE_vs1_en`, `FACILITY_TYPE_vs1_fil`, `FACILITY_TYPE_vs1_bis` etc. from a single source. Plus `setvalueset()` switcher wiring on language change.
+  - **References:** [[../../deliverables/UHC-Survey-CAPI-Guide/04-Phase-6-Build-CAPI-App|Phase 6 guide §6.13]].
 
 ### Skip logic + validation wiring (`.apc`)
 
@@ -89,6 +96,10 @@ Per-instrument application build workstream. Turns the validated data dictionary
 ### Resilience + smoke test
 
 - [ ] **E3-F1-050** Partial save / resume behavior configured (what happens mid-interview) `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
+- [ ] **E3-F1-051** OnStop + savepartial wiring across F1/F3/F4 (durable resume on accidental tablet exit) `status::todo` `priority::high` `estimate::2h` `scrum::sprint-005`
+  - **Trigger:** May 8 audit gap. Per Khurshid 2022-09-21 *Working with Blocks*. UHC F4 household interviews can run 60–90 min; F1 facility-head 45–60; F3 patient 30–45. Without OnStop+savepartial, "tablet died at minute 35" is a recurring data-loss scenario (2–5% of cases).
+  - **Deliverable:** `Resume-Handlers.apc` shared helper with `OnStop()` global calling `savepartial()`; included in F1/F3/F4 entry apps. Plus `forcase` + `case_status` filter to enumerate partial cases on relaunch.
+  - **References:** [[../../deliverables/UHC-Survey-CAPI-Guide/04-Phase-6-Build-CAPI-App|Phase 6 guide §6.12]].
 - [ ] **E3-F1-060** CSEntry Windows smoke test: happy path from cover page to last question `status::todo` `priority::high` `estimate::2h` `scrum::unscheduled`
 
 ---
@@ -163,7 +174,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 ## F3 — Patient Survey
 
 **Prerequisite:** Form-layout plan (shared with F1/F4 — Sprint 003 prerequisite).
-**Current DCF state (2026-04-21):** 18 records / 840 items, sections A–L. Skip-logic + validation spec reviewed 2026-04-21 at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (1 question routed to Juvy — Q31 IP_GROUP; 5 spec-decisions closed with override clause). **Build-ready.**
+**Current DCF state (2026-04-21):** 18 records / 806 items, sections A–L. Skip-logic + validation spec reviewed 2026-04-21 at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (1 question routed to Juvy — Q31 IP_GROUP; 5 spec-decisions closed with override clause). **Build-ready.**
 
 - [ ] **E3-F3-001..060** Standard template; reuses F1's interviewer-administered patterns (PSGC cascade + consent + GPS/photo via `Capture-Helpers.apc`) `scrum::unscheduled`
 - [ ] **E3-F3-015** Outpatient vs inpatient branching at eligibility screen `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`

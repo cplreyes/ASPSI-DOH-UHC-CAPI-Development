@@ -3,7 +3,7 @@ epic: 0
 title: CAPI Project Management & Stakeholder Engagement
 phase: continuous
 status: active-ongoing
-last_updated: 2026-05-01
+last_updated: 2026-05-08
 ---
 
 # Epic 0 — CAPI Project Management & Stakeholder Engagement
@@ -84,6 +84,14 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 - [x] **E0-043** 12-phase CAPI Development Workflow codified into IT Standards as reusable template `status::done`
 - [x] **E0-044** 13-epic service lifecycle derived from workflow and captured in Product Backlog `status::done`
 - [x] **E0-045** Service Offerings area scaffolded at `2_Areas/Service-Offerings/CAPI-Development/` `status::done`
+
+### Knowledge Base & Living Document Maintenance *(post-2026-05-08 audit)*
+
+- [ ] **E0-070** Fold May 8 audit findings into the workflow template living-doc log `status::todo` `priority::high` `estimate::1h` `scrum::sprint-005`
+  - **Trigger:** UHC-Survey-CAPI-Guide drafting + 5-gap audit completed 2026-05-08. The `2_Areas/IT-Standards/templates/CAPI-Development-Workflow.md` is a living document; per `project_capi_workflow.md` memory, learnings from each engagement compound into it.
+  - **Deliverable:** Append a row to the "Living-document log" table at the end of the template covering: (a) the 5 audit gaps surfaced + their resolutions; (b) the new "Phases vs Epics" naming convention codified in scrum/README; (c) cross-link to the UHC-Year-2 instance at `1_Projects/ASPSI-DOH-CAPI-CSPro-Development/deliverables/UHC-Survey-CAPI-Guide/`.
+- [x] **E0-080** Phase ↔ Epic cross-walk note in scrum/README.md `status::done` `priority::medium` `actual::2026-05-08`
+  - Done 2026-05-08 alongside Bucket A scrum cleanup. Cross-walk codified at `scrum/README.md` "Phases vs epics" section.
 
 ### Handoff Preparation *(activates near project close — ASPSI/PI/PMO lane)*
 

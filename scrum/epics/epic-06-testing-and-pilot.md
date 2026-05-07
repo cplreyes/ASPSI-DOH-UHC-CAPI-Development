@@ -3,7 +3,7 @@ epic: 6
 title: Testing and Pilot
 phase: per-track
 status: in-progress
-last_updated: 2026-04-25
+last_updated: 2026-05-08
 ---
 
 # Epic 6 — Testing and Pilot
@@ -44,6 +44,14 @@ Pre-production verification and limited-scale field pilot before full rollout. C
 - [ ] **E6-CAPI-005** QA Tester (Shan) handoff workflow extended to CAPI — bug-report template, severity rubric, milestone label `status::todo` `priority::high` `estimate::3h` `scrum::unscheduled`
 - [ ] **E6-CAPI-006** Pretest pilot — 1-cluster live run with real enumerators on real respondents (gated by SJREB clearance, see E0-020) `status::blocked` `priority::critical` `estimate::1w` `scrum::unscheduled`
 - [ ] **E6-CAPI-007** Pretest debrief + bug triage → Epic 3 fix batch `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
+- [ ] **E6-CAPI-008** Phase 7 bench-testing artefact set — `test-cases/` per F-series with mock cases for regression-as-data discipline `status::todo` `priority::high` `estimate::1d` `scrum::sprint-005`
+  - **Trigger:** May 8 audit gap (also flagged in May 6 Working File integration gaps). Closes the regression-replay loop after every dcf regen.
+  - **Deliverable:** `deliverables/CSPro/F1/test-cases/`, `deliverables/CSPro/F3/test-cases/`, `deliverables/CSPro/F4/test-cases/` — each with: `cases/*.csdb` mock files (youngest eligible, oldest eligible, refusal at every gate, "None of the above" on every multi-select, every Other-specify, max roster, every dynamic value-set branch, multi-language switch mid-interview, partial-save+resume), `regression-log.md`, `regression-replay.bat`, `README.md`.
+  - **References:** [[../../deliverables/UHC-Survey-CAPI-Guide/05-Phase-7-Testing|Phase 7 guide §7.3 + §7.11]].
+- [ ] **E6-CAPI-009** Android file-based trace setup — per Khurshid 2023-09-19 rule that window-based trace is ignored on Android `status::todo` `priority::medium` `estimate::3h` `scrum::sprint-005`
+  - **Trigger:** May 8 audit gap. Critical for tablet-side debugging during pretest + production fieldwork.
+  - **Deliverable:** `setupTrace()` PROC GLOBAL in F1/F3/F4 `.apc` files using `getos()` branch — `trace_path = pathname(path_type_csentry_external) + "/trace.txt"; trace(on, file=trace_path)` on Android, fallback to window on Windows. Plus a 1-page note on how STL pulls trace.txt from a tablet via ADB or file-share.
+  - **References:** [[../../deliverables/UHC-Survey-CAPI-Guide/05-Phase-7-Testing|Phase 7 guide §7.5]].
 
 ## Dependencies
 

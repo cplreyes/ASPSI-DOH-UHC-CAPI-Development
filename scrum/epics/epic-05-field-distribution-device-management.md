@@ -3,7 +3,7 @@ epic: 5
 title: Field Distribution & Device Management
 phase: per-track
 status: in-progress
-last_updated: 2026-04-29
+last_updated: 2026-05-08
 ---
 
 # Epic 5 — Field Distribution & Device Management
@@ -24,7 +24,8 @@ Getting survey instruments into enumerator hands and keeping them running in the
 
 ### CAPI Tablet Track *(spec drafted 2026-04-29)*
 
-- [ ] **E5-CAPI-001** Tablet specification finalized — model, OS, storage, accessories per enumerator team `status::in-progress` `priority::high` `estimate::4h` *(spec drafted; awaiting procurement confirmation from ASPSI ops)* `scrum::unscheduled`
+- [ ] **E5-CAPI-001** Tablet specification finalized — model, OS, storage, accessories per enumerator team `status::ongoing` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-ops` `scrum::unscheduled`
+  - Tablet procurement is ASPSI ops lane (per CSA D1–D6 — Carl produces deliverables, ASPSI ops handles procurement + spec sign-off with vendor). Spec drafted 2026-04-29; surface in PIB / risk register as a project-level dependency, not in Carl's sprint backlog. Mirrors the E0-020 / E0-032 / E0-032a out-of-scope discipline. Pairs with E4-CSWeb-009 (tablet bring-up SOP) which IS in Data Programmer scope — the SOP runs on whatever model ASPSI procures.
 - [ ] **E5-CAPI-002** Tablet procurement + receipt — count matches enumerator headcount + spares `status::todo` `priority::high` `estimate::TBD` `scrum::unscheduled`
 - [ ] **E5-CAPI-003** Imaging SOP — base config, MDM enrollment, CSEntry install, security baseline `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
 - [ ] **E5-CAPI-004** Per-tablet enrollment — bind tablet ID to enumerator ID, push initial CSPro app + dictionary `status::todo` `priority::high` `estimate::recurring` `scrum::unscheduled`

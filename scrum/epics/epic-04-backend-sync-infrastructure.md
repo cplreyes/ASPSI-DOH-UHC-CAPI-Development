@@ -3,7 +3,7 @@ epic: 4
 title: Backend & Sync Infrastructure
 phase: per-track
 status: in-progress
-last_updated: 2026-05-02
+last_updated: 2026-05-08
 ---
 
 # Epic 4 — Backend & Sync Infrastructure
@@ -55,6 +55,14 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
 - [ ] **E4-CSWeb-005** Field-tablet sync configuration — endpoint URLs, sync schedule, conflict policy `status::todo` `priority::high` `estimate::3h` `scrum::unscheduled`
 - [ ] **E4-CSWeb-006** Backup strategy for CSWeb data (frequency, retention, restore drill) `status::todo` `priority::medium` `estimate::4h` `scrum::unscheduled`
 - [ ] **E4-CSWeb-007** Monitoring dashboard — sync health, submission counts, field-device status `status::todo` `priority::medium` `estimate::1d` `scrum::unscheduled`
+- [ ] **E4-CSWeb-008** Phase 8 CSWeb provisioning runbook — Wampserver 3.2.6 + MySQL backing DB + CSWeb 7.7 install per Khurshid 2022-03-14 `status::todo` `priority::critical` `estimate::1d` `scrum::sprint-005`
+  - **Trigger:** May 8 audit gap — Phase 8 CSWeb stack is paper concept, not provisioned. Needed before Aug 1st-week supervisor training; deadline-anchored to ~Jul 1st-week for tablet provisioning runway.
+  - **Deliverable:** `deliverables/CSWeb/Provisioning-Runbook.md` covering: hardware/VM specs, Wampserver 3.2.6 64-bit install with VC++ prereqs, CSWeb 7.7 deployment to `C:\wamp64\www\csweb\`, MySQL DB + dedicated `csweb_user` (not root), web setup script, network exposure (DNS over raw IP, HTTPS via Let's Encrypt, "live IP not localhost" rule), CSWeb roles model + UHC role matrix (ASPSI_ADMIN / ASPSI_OPS / STL_REGION / ENUMERATOR / DOH_VIEWER).
+  - **References:** [[../../deliverables/UHC-Survey-CAPI-Guide/06-Phase-8-CSWeb-and-Tablets|Phase 8 guide §8.2–8.4]]; Khurshid 2022-03-14, 2022-04-30, 2022-05-05.
+- [ ] **E4-CSWeb-009** Tablet bring-up SOP — end-to-end provisioning of N tablets `status::todo` `priority::critical` `estimate::1d` `scrum::sprint-005`
+  - **Trigger:** May 8 audit gap. Pairs with E4-CSWeb-008 + E5-CAPI-001 (tablet procurement, ASPSI ops lane).
+  - **Deliverable:** `deliverables/CSWeb/Tablet-Bringup-SOP.md` — 10-step checklist per tablet (CSEntry install, sync URL config, credentials, smoke test, sticker labelling, hand-off to STL).
+  - **References:** [[../../deliverables/UHC-Survey-CAPI-Guide/06-Phase-8-CSWeb-and-Tablets|Phase 8 guide §8.15]].
 
 ### F2 Admin Portal Track *(planning complete 2026-05-01 — CSWeb-mirror admin for the F2 PWA stack)*
 

@@ -103,7 +103,7 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 ## F3 — Patient Survey *(interviewer-administered, 23pp, outpatient + inpatient)*
 
 **State:** Design — Build-ready as of 2026-04-21.
-**Scope (as of 2026-04-21):** 18 records · 840 items · sections A–L · dual-population eligibility (post case-control extension — SURVEY_CODE/INTERVIEWER_ID/DATE_STARTED/TIME_STARTED/AAPOR_DISPOSITION).
+**Scope (as of 2026-04-21):** 18 records · 806 items · sections A–L · dual-population eligibility (post case-control extension — SURVEY_CODE/INTERVIEWER_ID/DATE_STARTED/TIME_STARTED/AAPOR_DISPOSITION).
 **Reference doc:** `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (reviewed 2026-04-21; 14 sanity findings; 15 CSPro PROC templates; 1 question routed to Juvy — Q31 IP_GROUP).
 
 - [x] **E2-F3-001** F3 questionnaire PDF ingested `status::done` `priority::high`
@@ -114,9 +114,9 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 - [x] **E2-F3-006** F3 validation rule inventory (HARD/SOFT/GATE) `status::done` `priority::high`
 - [x] **E2-F3-007** F3 cross-field consistency rules `status::done` `priority::high`
 - [x] **E2-F3-008** F3 sanity check findings → 14 findings; 5 spec-decisions closed with ASPSI override clause `status::done` `priority::high`
-- [x] **E2-F3-009** F3 corrections + DCF refresh through Apr 20 source update (18 records / 840 items) `status::done` `priority::high`
+- [x] **E2-F3-009** F3 corrections + DCF refresh through Apr 20 source update (18 records / 806 items) `status::done` `priority::high`
 - [ ] **E2-F3-010** F3 Designer validation + sign-off `status::todo` `priority::high` `estimate::2h` `scrum::sprint-004`
-  - **Scope update 2026-04-21:** DCF extended with case-control block (SURVEY_CODE, INTERVIEWER_ID, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION) → 18 records / 840 items. Preproc spec in `F3-Skip-Logic-and-Validations.md` §4.16.
+  - **Scope update 2026-04-21:** DCF extended with case-control block (SURVEY_CODE, INTERVIEWER_ID, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION) → 18 records / 806 items. Preproc spec in `F3-Skip-Logic-and-Validations.md` §4.16.
   - Pending Juvy confirmation on Q31 IP_GROUP (coded list vs alpha).
 
 ---
