@@ -4,11 +4,15 @@
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 2.15)
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.1)
  *
- * Reads filters from URL query params so the view is shareable; defaults
- * to last-24h when no `from` is specified. Fetches GET /admin/api/dashboards/
- * data/responses on mount and on filter change. Renders a hairline-divided
- * Verde Manual table — no card chrome, mono for IDs, monospace for ISO
- * timestamps, signal color reserved for the source-path pills.
+ * Reads filters from URL query params so the view is shareable. Cold load
+ * (no URL params) shows the unfiltered list — UAT R2 #78 caught the
+ * previous "default to last-24h" behavior silently hiding data on refresh,
+ * which testers read as data loss. Date filters remain available; they're
+ * just opt-in now. Revisit when production data volume justifies a default
+ * recency window again. Fetches GET /admin/api/dashboards/data/responses on
+ * mount and on filter change. Renders a hairline-divided Verde Manual table
+ * — no card chrome, mono for IDs, monospace for ISO timestamps, signal
+ * color reserved for the source-path pills.
  *
  * Virtualization is intentionally NOT wired here; F2_Responses caps at
  * ~30K rows, the API caps page size at 500, and the typical default-24h
@@ -51,16 +55,10 @@ interface UiFilters {
   q: string;
 }
 
-function defaultFromIso(): string {
-  // Default to 24h ago, formatted as YYYY-MM-DD for the date input.
-  const d = new Date(Date.now() - 24 * 60 * 60 * 1000);
-  return d.toISOString().slice(0, 10);
-}
-
 function readFiltersFromUrl(): UiFilters {
   if (typeof window === 'undefined') {
     return {
-      from: defaultFromIso(),
+      from: '',
       to: '',
       facility_id: '',
       source_path: '',
@@ -70,7 +68,7 @@ function readFiltersFromUrl(): UiFilters {
   }
   const p = new URLSearchParams(window.location.search);
   return {
-    from: p.get('from') ?? defaultFromIso(),
+    from: p.get('from') ?? '',
     to: p.get('to') ?? '',
     facility_id: p.get('facility_id') ?? '',
     source_path: p.get('source_path') ?? '',

@@ -208,9 +208,20 @@ function DlqTable({ rows }: { rows: DlqRow[] }): JSX.Element {
                 <span className="text-error">{r.reason}</span>
               </Td>
               <Td>
-                <code className="block max-w-md truncate font-mono text-xs text-muted-foreground">
-                  {r.payload_json}
-                </code>
+                {/* UAT R2 #83: inline-expand the payload so admins can read
+                    the malformed submission without leaving the table. */}
+                {r.payload_json ? (
+                  <details className="group">
+                    <summary className="cursor-pointer list-none">
+                      <span className="block max-w-md truncate font-mono text-xs text-muted-foreground group-open:text-ink">
+                        {r.payload_json}
+                      </span>
+                    </summary>
+                    <pre className="mt-2 max-w-md overflow-x-auto rounded border border-hairline bg-secondary/20 p-2 font-mono text-[10px] text-ink">
+                      {prettyJson(r.payload_json)}
+                    </pre>
+                  </details>
+                ) : null}
               </Td>
             </tr>
           ))}
@@ -236,6 +247,14 @@ function Td({
   mono?: boolean;
 }): JSX.Element {
   return <td className={`px-3 py-2 align-top ${mono ? 'font-mono text-xs' : ''}`}>{children}</td>;
+}
+
+function prettyJson(raw: string): string {
+  try {
+    return JSON.stringify(JSON.parse(raw), null, 2);
+  } catch {
+    return raw;
+  }
 }
 
 function formatTs(iso: string): string {

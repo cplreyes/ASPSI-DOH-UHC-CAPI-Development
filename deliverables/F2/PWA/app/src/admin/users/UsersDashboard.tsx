@@ -75,6 +75,7 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
     | { kind: 'failed'; error: ApiError }
   >({ kind: 'loading' });
   const [roles, setRoles] = useState<RoleRow[]>([]);
+  const [rolesLoadError, setRolesLoadError] = useState<ApiError | null>(null);
   const [editor, setEditor] = useState<{ kind: 'create' } | { kind: 'edit'; user: UserRow } | null>(
     null,
   );
@@ -113,6 +114,9 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
   }, [loadUsers, reloadTick]);
 
   // Roles list for the editor's role dropdown. Pulled once and cached.
+  // UAT R2 #99/#102: surface a fetch failure instead of swallowing it —
+  // an empty roles list silently broke the create-user dropdown and the
+  // tester read it as "Add User submission does not proceed."
   useEffect(() => {
     let cancelled = false;
     void (async () => {
@@ -124,8 +128,13 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
-      if (cancelled || !r.ok) return;
-      setRoles(r.data.roles);
+      if (cancelled) return;
+      if (r.ok) {
+        setRoles(r.data.roles);
+        setRolesLoadError(null);
+      } else {
+        setRolesLoadError(r.error);
+      }
     })();
     return () => {
       cancelled = true;
@@ -189,7 +198,8 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           </p>
           <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Users</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Admin portal accounts. Bulk-import + revoke-sessions actions land in follow-up commits.
+            Admin portal accounts. Bulk-import lands in a follow-up commit; revoke-sessions, edit,
+            and delete are wired below.
           </p>
         </div>
         <button
@@ -214,6 +224,25 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           placeholder="Administrator"
         />
       </div>
+
+      {rolesLoadError ? (
+        <div role="alert" className="border-l-2 border-warning bg-warning/10 px-3 py-2">
+          <p className="text-sm">
+            Roles list could not be loaded — Add user / Edit user will not be able to assign a role
+            until this clears.
+          </p>
+          <p className="mt-1 font-mono text-xs text-muted-foreground">
+            {rolesLoadError.code}
+            {rolesLoadError.requestId ? ` · ref ${rolesLoadError.requestId}` : ''}
+          </p>
+        </div>
+      ) : roles.length === 0 ? (
+        <div role="alert" className="border-l-2 border-warning bg-warning/10 px-3 py-2">
+          <p className="text-sm">
+            F2_Roles is empty — seed at least one role in the Roles dashboard before creating users.
+          </p>
+        </div>
+      ) : null}
 
       {state.kind === 'loading' ? (
         <p className="text-sm text-muted-foreground">Loading…</p>
