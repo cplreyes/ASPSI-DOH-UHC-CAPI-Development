@@ -22,15 +22,19 @@ export interface LoginProps {
 
 export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
   const { setAuth, isAuthenticated } = useAdminAuth();
-  const { navigate } = useRouter();
+  const { pathname, navigate } = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<ApiError | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  // If already authenticated (e.g., user navigated to /admin/login by
-  // accident with an active session), bounce to the operations dashboard.
-  if (isAuthenticated) {
+  // If already authenticated AND sitting on /admin/login, bounce to the
+  // operations dashboard. We do NOT bounce when the URL already points at a
+  // protected deep link — the post-login flow below relies on AdminRoot
+  // falling through to that route on the next render. Without this guard,
+  // setAuth() would re-render Login, hit `isAuthenticated`, and clobber the
+  // preserved deep link with /admin/data (UAT R2 #71 L.A2).
+  if (isAuthenticated && (pathname === '/admin/login' || pathname === '/admin/login/')) {
     navigate('/admin/data');
   }
 
@@ -58,9 +62,14 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
     setAuth(username.trim(), r.data);
     if (r.data.password_must_change) {
       navigate('/admin/me/change-password');
-    } else {
+    } else if (pathname === '/admin/login' || pathname === '/admin/login/') {
+      // User came in cold to /admin/login — land them on the default dashboard.
       navigate('/admin/data');
     }
+    // Otherwise the URL already holds the protected route the user originally
+    // requested (FX-016: AdminRoot keeps the deep link in window.location even
+    // while showing Login). Letting `pathname` stand makes AdminRoot fall
+    // through to the deep-linked route on the next render — fixes UAT R2 L.A2.
   };
 
   return (
@@ -123,7 +132,7 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
 
       <footer className="mt-16 border-t border-hairline pt-4">
         <p className="font-mono text-xs leading-relaxed text-muted-foreground">
-          Sessions are held in memory. Closing the tab or reloading signs you out.
+          Sessions stay open within this browser tab. Closing the tab signs you out.
         </p>
         {import.meta.env.DEV ? (
           <button

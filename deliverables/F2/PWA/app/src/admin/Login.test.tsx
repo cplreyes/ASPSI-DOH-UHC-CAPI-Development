@@ -39,10 +39,10 @@ describe('<Login />', () => {
     expect(screen.getByRole('button', { name: /sign in/i })).toBeDisabled();
   });
 
-  it('shows the in-memory session disclosure', () => {
+  it('shows the per-tab session disclosure', () => {
     const fetchImpl = vi.fn() as unknown as typeof fetch;
     renderLogin(fetchImpl);
-    expect(screen.getByText(/sessions are held in memory/i)).toBeInTheDocument();
+    expect(screen.getByText(/sessions stay open within this browser tab/i)).toBeInTheDocument();
   });
 
   it('surfaces a typed error message on E_AUTH_INVALID', async () => {
@@ -91,7 +91,7 @@ describe('<Login />', () => {
         token: 't.t.t',
         role: 'Administrator',
         role_version: 1,
-        expires_at: 1700000000,
+        expires_at: Math.floor(Date.now() / 1000) + 3600,
         password_must_change: false,
       });
     }) as unknown as typeof fetch;
@@ -102,5 +102,50 @@ describe('<Login />', () => {
     await user.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => expect(fetchImpl).toHaveBeenCalled());
+  });
+
+  it('preserves the deep-linked URL after re-login (UAT R2 #71 L.A2)', async () => {
+    const user = userEvent.setup();
+    // Simulate the user being on a protected route — AdminRoot keeps the URL
+    // intact while showing Login (FX-016). Login should NOT clobber it.
+    window.history.replaceState({}, '', '/admin/data/responses/HCW-42');
+    const fetchImpl = vi.fn(async () =>
+      jsonResponse({
+        token: 't.t.t',
+        role: 'Administrator',
+        role_version: 1,
+        expires_at: Math.floor(Date.now() / 1000) + 3600,
+        password_must_change: false,
+      }),
+    ) as unknown as typeof fetch;
+    renderLogin(fetchImpl);
+
+    await user.type(screen.getByRole('textbox', { name: /username/i }), 'alice');
+    await user.type(screen.getByLabelText(/password/i), 'CorrectPw1');
+    await user.click(screen.getByRole('button', { name: /sign in/i }));
+
+    await waitFor(() => expect(fetchImpl).toHaveBeenCalled());
+    expect(window.location.pathname).toBe('/admin/data/responses/HCW-42');
+  });
+
+  it('bounces to /admin/data when login is reached cold (no deep link)', async () => {
+    const user = userEvent.setup();
+    window.history.replaceState({}, '', '/admin/login');
+    const fetchImpl = vi.fn(async () =>
+      jsonResponse({
+        token: 't.t.t',
+        role: 'Administrator',
+        role_version: 1,
+        expires_at: Math.floor(Date.now() / 1000) + 3600,
+        password_must_change: false,
+      }),
+    ) as unknown as typeof fetch;
+    renderLogin(fetchImpl);
+
+    await user.type(screen.getByRole('textbox', { name: /username/i }), 'alice');
+    await user.type(screen.getByLabelText(/password/i), 'CorrectPw1');
+    await user.click(screen.getByRole('button', { name: /sign in/i }));
+
+    await waitFor(() => expect(window.location.pathname).toBe('/admin/data'));
   });
 });
