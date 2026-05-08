@@ -28,7 +28,7 @@ end;
 
 function send_data_to_server()
    if syncconnect(CSWeb, csweb_url) then
-      synchronize_data(put, FACILITYHEADSURVEY_DICT);
+      syncdata(put, FACILITYHEADSURVEY_DICT);
       syncdisconnect();
    else
       errmsg("Could not reach the sync server. Check Wi-Fi.");
