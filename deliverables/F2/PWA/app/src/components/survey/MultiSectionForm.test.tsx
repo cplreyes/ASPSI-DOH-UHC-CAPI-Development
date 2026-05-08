@@ -209,6 +209,68 @@ describe('<MultiSectionForm>', () => {
     ).toBeInTheDocument();
   });
 
+  it('R2-#118+#119: blocks advance when Section B Q25 (multi, conditional, required) is an empty array', async () => {
+    // Pre-fix: hasValue([]) returned true (since [] !== '') so a multi-type
+    // required field initialized to [] in sectionDefaults appeared filled.
+    // getSectionStatus returned 'complete', auto-advance fired, and the
+    // form sailed past Section B with Q25 unanswered. Same shape on
+    // J.Q124/J.Q125 — tester reported submission proceeded with Q124/Q125
+    // empty.
+    //
+    // After the fix: hasValue handles Array.isArray + length, so Q25 = []
+    // is detected as not-filled. Section B status = 'incomplete'.
+    // handleSectionValid's runtime gate refuses to advance.
+    const user = userEvent.setup();
+    renderWithProviders(
+      <MultiSectionForm
+        initialValues={{
+          // Section A — fill everything required so we can land on B
+          Q1_1: 'Reyes',
+          Q1_2: 'Carl',
+          Q1_3: 'P',
+          Q2: 'Regular',
+          Q3: 'Female',
+          Q4: 30,
+          Q5: 'Nurse',
+          Q7: 'No',
+          Q9_1: 3,
+          Q9_2: 6,
+          Q10: 5,
+          Q11: 8,
+          // Section B — Q12=Yes opens Q13–Q30. Fill all visible required
+          // (Q13/Q15='No' hides Q14/Q16). Leave Q25 as [] — the bug surface.
+          Q12: 'Yes',
+          Q13: 'No',
+          Q15: 'No',
+          Q17: 'something',
+          Q18: 'something',
+          Q19: 'something',
+          Q20: 'something',
+          Q21: 'something',
+          Q22: 'something',
+          Q23: 'something',
+          Q24: 'something',
+          Q25: [],
+        }}
+        initialIndex={1}
+        onAutosave={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+
+    expect(
+      screen.getByRole('heading', { name: /Section B/ }),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: /next/i }));
+
+    // After fix: form stays on B because Q25=[] is correctly detected as
+    // unfilled. Pre-fix this would have advanced to Section C.
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: /Section B/ })).toBeInTheDocument(),
+    );
+  });
+
   it('renders Section G Q75-Q81 as a single matrix table on tablet+', async () => {
     // Q5='Physician/Doctor' triggers Section G visibility (per shouldShowSection)
     // and reaches Section G with Q75-Q81 visible.
