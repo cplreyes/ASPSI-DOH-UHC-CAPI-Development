@@ -16,6 +16,8 @@ One-time bring-up of an Android tablet for UHC Survey CAPI. After this, the tabl
 - ✅ MySQL `csweb` DB populated with full schema (27 tables)
 - ✅ Carl has admin credentials for CSWeb UI
 - ✅ All 3 instrument `.ent` files generated for UAT env with LAN IP spliced in
+- ✅ **Login + menu DCFs use real CSPro 8.0 schema** (commit `11fe5d3`) — Designer should accept them at F7 without rejection
+- ✅ **Password plaintext workaround applied** (commit `11fe5d3`) — `user_roster.dat` regenerated with `--plaintext` mode; login_app.ent.apc plaintext compare will work
 
 ## What you (Carl) still need to do
 
@@ -29,7 +31,7 @@ deliverables/CSPro/UHC-Survey-System/106_menu/menu_app.ent         → menu_app.
 deliverables/CSPro/UHC-Survey-System/107_F1/FacilityHeadSurvey.ent → FacilityHeadSurvey.pen
 ```
 
-If Designer rejects the login or menu `.ent` due to schema-shape differences (login + menu use a simplified shape vs F1's real CSPro 8.0 shape), the fix is in `101_login/generate_dcf.py` and `106_menu/generate_dcf.py` — bring the schema into line with F1's (use `labels: [{text: ...}]` arrays, `contentType` not `type`, `ids: {items: [...]}`).
+As of commit `11fe5d3`, the schema fix is pre-applied — login + menu DCFs match F1's real CSPro 8.0 shape, so Designer should accept all three at F7 without rejection. If you still see a schema error, it's a different issue; capture the exact error text and we'll patch.
 
 ### Step 2: Upload `.pen` files to CSWeb
 
@@ -85,7 +87,7 @@ On tablet:
 5. F1 form should open. Walk through the first form (Field Control items), enter a few fields, save
 6. Return to menu, exit
 
-> **Phase 1 password gap (per spec §7):** the .apc currently does plaintext compare. The user_roster.dat stores SHA-256 hashes. Before this works end-to-end, either: (a) re-run `shared/build_username_dict.py` after temporarily changing `_hash_password()` to `_pad_alpha(plaintext, 64)`, or (b) hand-update user_roster.dat to plaintext-padded passwords. Phase 2 will fix this properly via CSPro 8.0's Action Invoker `Hash.createHash`.
+> **Phase 1 password gap (per spec §7) — pre-applied as of commit `11fe5d3`.** `user_roster.dat` is now in plaintext mode (passwords padded to 64 chars), aligned with the .apc plaintext compare. If you ever regenerate the user roster, remember to use `python shared/build_username_dict.py --plaintext` (NOT the bare default, which writes SHA-256 hashes). Phase 2 will fix this properly via CSPro 8.0's Action Invoker `Hash.createHash`.
 
 ### Step 7: Sync cases back to CSWeb
 
