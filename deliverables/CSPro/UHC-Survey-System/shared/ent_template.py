@@ -54,7 +54,7 @@ def canonical_properties() -> dict:
         "decimalMark": "dot",
         "displayCodesAlongsideLabels": False,
         "notes": {"delete": "all", "edit": "all"},
-        "partialSave": {"operatorEnabled": False},
+        "partialSave": {"operatorEnabled": True},
         "showEndCaseMessage": True,
         "showOnlyDiscreteValuesInComboBoxes": True,
         "showFieldLabels": True,
