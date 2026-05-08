@@ -79,17 +79,46 @@ describe('shouldShow', () => {
   });
 
   describe('Section E (BUCAS half)', () => {
+    // Tests use Q5='Nurse' (in SECTION_CDE_ROLES) so the R2-#117 role gate
+    // doesn't suppress E1. The role-gating tests for Q48-Q52 live in the
+    // shouldShowSection block below.
     it('hides Q52 when Q48 is No', () => {
-      expect(shouldShow('E', 'Q52', { Q48: 'No', Q49: 'Yes' })).toBe(false);
+      expect(shouldShow('E', 'Q52', { Q5: 'Nurse', Q48: 'No', Q49: 'Yes' })).toBe(false);
     });
 
     it("hides Q52 when Q49 is No or I don't know", () => {
-      expect(shouldShow('E', 'Q52', { Q48: 'Yes', Q49: 'No' })).toBe(false);
-      expect(shouldShow('E', 'Q52', { Q48: 'Yes', Q49: "I don't know" })).toBe(false);
+      expect(shouldShow('E', 'Q52', { Q5: 'Nurse', Q48: 'Yes', Q49: 'No' })).toBe(false);
+      expect(shouldShow('E', 'Q52', { Q5: 'Nurse', Q48: 'Yes', Q49: "I don't know" })).toBe(false);
     });
 
     it('shows Q52 when both Q48 and Q49 are Yes', () => {
-      expect(shouldShow('E', 'Q52', { Q48: 'Yes', Q49: 'Yes' })).toBe(true);
+      expect(shouldShow('E', 'Q52', { Q5: 'Nurse', Q48: 'Yes', Q49: 'Yes' })).toBe(true);
+    });
+
+    // R2-#117: Q48-Q52 hidden for Pharmacist/Dispenser even with Q48/Q49=Yes
+    it('R2-#117: hides Q48 (BUCAS gate) for Pharmacist/Dispenser', () => {
+      expect(shouldShow('E', 'Q48', { Q5: 'Pharmacist/Dispenser' })).toBe(false);
+    });
+
+    it('R2-#117: hides Q52 for Pharmacist/Dispenser even with Q48/Q49=Yes', () => {
+      expect(
+        shouldShow('E', 'Q52', { Q5: 'Pharmacist/Dispenser', Q48: 'Yes', Q49: 'Yes' }),
+      ).toBe(false);
+    });
+
+    it('R2-#117: shows Q48 for the 7 CDE roles (admin, doctor, PA, nurse, midwife, dentist, nutrition)', () => {
+      const cdeRoles = [
+        'Administrator',
+        'Physician/Doctor',
+        'Physician assistant',
+        'Nurse',
+        'Midwife',
+        'Dentist',
+        'Nutrition action officer/ coordinator',
+      ];
+      for (const role of cdeRoles) {
+        expect(shouldShow('E', 'Q48', { Q5: role })).toBe(true);
+      }
     });
   });
 

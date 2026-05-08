@@ -101,11 +101,23 @@ const predicates: Record<string, Record<string, Predicate>> = {
     Q46: (v) => isYes(v.Q44),
     Q47: (v) => isYes(v.Q44),
   },
+  // R2-#117: Section E sub-divides into two role-segregated halves.
+  // E1 (BUCAS) = Q48-Q52, restricted to SECTION_CDE_ROLES.
+  // E2 (GAMOT) = Q53-Q55, available to SECTION_E_ROLES (CDE + pharmacist).
+  // Pre-fix Q48 always showed within Section E for any role that reached
+  // the section, so pharmacists answered BUCAS questions despite being
+  // outside the patient-care role set for E1. Tester (Shan, 2026-05-07)
+  // suggested splitting: "for pharmacists/dispensers and assistant
+  // pharmacists, the form should proceed directly to Section E2 -
+  // Question 53." Implemented as item-level role gates inside Section
+  // E rather than a structural section split (the latter would touch
+  // SECTIONS array + 2 schemas + section-numbering across the app).
   E: {
-    Q49: (v) => isYes(v.Q48),
-    Q50: (v) => isYes(v.Q48) && isYes(v.Q49),
-    Q51: (v) => isYes(v.Q48) && isYes(v.Q49),
-    Q52: (v) => isYes(v.Q48) && isYes(v.Q49),
+    Q48: (v) => typeof v.Q5 === 'string' && SECTION_CDE_ROLES.has(v.Q5),
+    Q49: (v) => typeof v.Q5 === 'string' && SECTION_CDE_ROLES.has(v.Q5) && isYes(v.Q48),
+    Q50: (v) => typeof v.Q5 === 'string' && SECTION_CDE_ROLES.has(v.Q5) && isYes(v.Q48) && isYes(v.Q49),
+    Q51: (v) => typeof v.Q5 === 'string' && SECTION_CDE_ROLES.has(v.Q5) && isYes(v.Q48) && isYes(v.Q49),
+    Q52: (v) => typeof v.Q5 === 'string' && SECTION_CDE_ROLES.has(v.Q5) && isYes(v.Q48) && isYes(v.Q49),
     Q54: (v) => isYes(v.Q53),
     Q55: (v) => isYes(v.Q53) && isYes(v.Q54),
   },
