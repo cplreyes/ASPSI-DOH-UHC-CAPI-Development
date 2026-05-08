@@ -1,7 +1,7 @@
-[FormFile]
+﻿[FormFile]
 Version=CSPro 8.0
 Name=MENU_FF
-Label=Menu
+Label=MenuDictionary
 DefaultTextFont=-013 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 Arial
 FieldEntryFont=0018 0000 0000 0000 0600 0000 0000 0000 0000 0000 0000 0000 0000 Courier New
 Type=SystemControlled
@@ -11,6 +11,25 @@ File=.\menu_app.dcf
   
 [Form]
 Name=FORM000
+Label=(Id Items)
+Level=1
+Size=2200,500
+  
+Item=MENU_APP_ID
+  
+[EndForm]
+  
+[Form]
+Name=FORM001
+Label=MenuDictionary Record
+Level=1
+Size=2200,500
+  
+  
+[EndForm]
+  
+[Form]
+Name=FORM002
 Label=Menu
 Level=1
 Size=2200,500
@@ -23,77 +42,112 @@ Item=APP_VERSION
   
 [EndForm]
   
+[Level]
+Name=MENU_LEVEL
+Label=MenuDictionary Level
+  
+[Group]
+Required=Yes
+Name=IDS0_FORM
+Label=(Id Items)
+Form=1
+Max=1
+  
+[Field]
+Name=MENU_APP_ID
+Position=1695,30,1895,50
+Item=MENU_APP_ID,MENU_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,30,1695,46
+Text=Menu App ID
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=MENU_REC_FORM
+Label=MenuDictionary Record
+Form=2
+Max=1
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=MENU_REC_DATA
+Label=Menu
+Form=3
+Max=1
+  
 [Field]
 Name=MENU_LOGIN_ID
 Position=1695,30,2665,50
 Item=MENU_LOGIN_ID,MENU_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=0
+Form=3
   
-
 [Text]
 Position=50,30,1695,46
 Text=Logged in as (RA ID):
  
   
-
 [Field]
 Name=MENU_LOGIN_NAME
 Position=1695,60,2665,80
 Item=MENU_LOGIN_NAME,MENU_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=0
+Form=3
   
-
 [Text]
 Position=50,60,1695,76
 Text=Name:
  
   
-
 [Field]
 Name=MENU_ROLE
 Position=1695,90,2665,110
 Item=MENU_ROLE,MENU_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=0
+Form=3
   
-
 [Text]
 Position=50,90,1695,106
 Text=Role:
  
   
-
 [Field]
 Name=MENU_SUP_ID
 Position=1695,120,2665,140
 Item=MENU_SUP_ID,MENU_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=0
+Form=3
   
-
 [Text]
 Position=50,120,1695,136
 Text=Supervisor ID:
  
   
-
 [Field]
 Name=APP_VERSION
 Position=1695,150,2665,170
 Item=APP_VERSION,MENU_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=0
+Form=3
   
-
 [Text]
 Position=50,150,1695,166
 Text=App version:
  
+  
+[EndGroup]
   

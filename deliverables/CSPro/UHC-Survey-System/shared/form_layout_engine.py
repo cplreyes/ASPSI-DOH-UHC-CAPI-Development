@@ -55,6 +55,34 @@ def pick_capture_type(value_set_size: int, item_type: str, item_length: int) -> 
     return "DropDown"
 
 
+def emit_level_block(level_name: str, level_label: str) -> str:
+    """Emit the [Level] header that opens the field-blocks region."""
+    return (
+        f"[Level]\n"
+        f"Name={level_name}\n"
+        f"Label={level_label}\n"
+        f"  \n"
+    )
+
+
+def emit_group_open(name: str, label: str, form_index_one_based: int, max_occurs: int = 1) -> str:
+    """Emit a [Group] header. form_index_one_based is the 1-based index of the
+    referenced [Form] block (matches CSPro 8.0 Designer convention)."""
+    return (
+        f"[Group]\n"
+        f"Required=Yes\n"
+        f"Name={name}\n"
+        f"Label={label}\n"
+        f"Form={form_index_one_based}\n"
+        f"Max={max_occurs}\n"
+        f"  \n"
+    )
+
+
+def emit_group_close() -> str:
+    return "[EndGroup]\n  \n"
+
+
 def emit_field_block(
     item_name: str,
     dict_name: str,

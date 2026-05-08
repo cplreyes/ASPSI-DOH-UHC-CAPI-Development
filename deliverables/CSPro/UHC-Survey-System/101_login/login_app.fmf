@@ -1,7 +1,7 @@
-[FormFile]
+﻿[FormFile]
 Version=CSPro 8.0
 Name=LOGIN_FF
-Label=Login
+Label=LoginDictionary
 DefaultTextFont=-013 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 Arial
 FieldEntryFont=0018 0000 0000 0000 0600 0000 0000 0000 0000 0000 0000 0000 0000 Courier New
 Type=SystemControlled
@@ -11,6 +11,25 @@ File=.\login_app.dcf
   
 [Form]
 Name=FORM000
+Label=(Id Items)
+Level=1
+Size=2200,500
+  
+Item=LOGIN_APP_ID
+  
+[EndForm]
+  
+[Form]
+Name=FORM001
+Label=LoginDictionary Record
+Level=1
+Size=2200,500
+  
+  
+[EndForm]
+  
+[Form]
+Name=FORM002
 Label=Login
 Level=1
 Size=2200,500
@@ -23,76 +42,111 @@ Item=APP_VERSION
   
 [EndForm]
   
+[Level]
+Name=LOGIN_LEVEL
+Label=LoginDictionary Level
+  
+[Group]
+Required=Yes
+Name=IDS0_FORM
+Label=(Id Items)
+Form=1
+Max=1
+  
+[Field]
+Name=LOGIN_APP_ID
+Position=1695,30,1895,50
+Item=LOGIN_APP_ID,LOGIN_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,30,1695,46
+Text=Login App ID
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=LOGIN_REC_FORM
+Label=LoginDictionary Record
+Form=2
+Max=1
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=LOGIN_REC_DATA
+Label=Login
+Form=3
+Max=1
+  
 [Field]
 Name=LOGIN_RA_ID
 Position=1695,30,2665,50
 Item=LOGIN_RA_ID,LOGIN_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=0
+Form=3
   
-
 [Text]
 Position=50,30,1695,46
 Text=Enter your RA ID:
  
   
-
 [Field]
 Name=LOGIN_PW
 Position=1695,60,2665,80
 Item=LOGIN_PW,LOGIN_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=0
+Form=3
   
-
 [Text]
 Position=50,60,1695,76
 Text=Enter your password:
  
   
-
 [Field]
 Name=LOGIN_NAME
 Position=1695,90,2665,110
 Item=LOGIN_NAME,LOGIN_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=0
+Form=3
   
-
 [Text]
 Position=50,90,1695,106
 Text=Name:
  
   
-
 [Field]
 Name=LOGIN_ROLE
 Position=1695,120,1724,140
 Item=LOGIN_ROLE,LOGIN_DICT
 DataCaptureType=RadioButton
-Form=0
+Form=3
   
-
 [Text]
 Position=50,120,1695,136
 Text=Role:
  
   
-
 [Field]
 Name=APP_VERSION
 Position=1695,150,2665,170
 Item=APP_VERSION,LOGIN_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=0
+Form=3
   
-
 [Text]
 Position=50,150,1695,166
 Text=App version:
  
+  
+[EndGroup]
   
