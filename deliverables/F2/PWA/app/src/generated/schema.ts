@@ -17,7 +17,7 @@ export const sectionASchema = z.object({
   Q7: z.enum(['Yes', 'No']).optional(),
   Q8: z.enum(['I spend all of my time in private practice', 'I spend over half, but not all of my time in private practice', 'I spend my time equally in private and public practice', 'I spend over half, but not all of my time in public practice', 'I spend all of my time in public practice', 'I don\'t know']).optional(),
   Q9_1: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(0).max(99),
-  Q9_2: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(0).max(11).optional(),
+  Q9_2: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(0).max(11),
   Q10: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(1).max(7),
   Q11: z.coerce.number({ invalid_type_error: 'This field is required.' }).min(1).max(24),
 }).superRefine((data, ctx) => {
