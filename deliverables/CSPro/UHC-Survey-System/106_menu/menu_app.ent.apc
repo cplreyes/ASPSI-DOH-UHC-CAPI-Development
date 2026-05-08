@@ -4,8 +4,6 @@
 
 PROC GLOBAL
 
-config string csweb_url;             { from .ent userSettings, spliced by build_all }
-
 PFF F1_pff;
 numeric cell_option;
 
@@ -16,35 +14,23 @@ function launch_F1()
    F1_pff.setProperty("StartMode", "add");
    F1_pff.setProperty("FullScreen", "yes");
    F1_pff.setProperty("Application", "..\107_F1\FacilityHeadSurvey.pen");
-   F1_pff.setProperty("InputData", "F1.csdb");      { CSPro DB format -> supports sync }
+   F1_pff.setProperty("InputData", "F1.csdb");
    F1_pff.setProperty("OnExit", "..\106_menu\menu_app.pff");
    F1_pff.exec();
 end;
 
 
-function send_data_to_server()
-   if syncconnect(CSWeb, csweb_url) then
-      syncdata(put, FACILITYHEADSURVEY_DICT);
-      syncdisconnect();
-   else
-      errmsg("Could not reach the sync server. Check Wi-Fi.");
-   endif;
-end;
-
-
 function view_menu()
-   { Phase 1: 2 enumerator choices. Phase 2 expands to supervisor menu. }
+   { Phase 1: 1 enumerator choice. Sync happens automatically from inside    }
+   { F1 (level postproc) so we don't need a separate Send menu choice here.  }
    cell_option = accept(
       "UHC Survey - Enumerator Menu",
-      "Conduct facility interview (F1)",
-      "Send data to server"
+      "Conduct facility interview (F1)"
    );
    if cell_option = 0 then
       errmsg("Please select an option.");
    elseif cell_option = 1 then
       launch_F1();
-   elseif cell_option = 2 then
-      send_data_to_server();
    endif;
 end;
 

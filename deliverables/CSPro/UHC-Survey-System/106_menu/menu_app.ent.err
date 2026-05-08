@@ -1,8 +1,0 @@
-﻿Application     C:\Users\analy\Documents\analytiflow\1_Projects\ASPSI-DOH-CAPI-CSPro-Development\.claude\worktrees\f3-uhc-survey-build\deliverables\CSPro\UHC-Survey-System\106_menu\menu_app.ent
-Type            Entry
-Date            May 08, 2026
-Time            17:42:07
-
-CSPro Error Summary
-
-WARNING(GLOBAL, 7): The setting csweb_url was not found in the Common Store settings file
