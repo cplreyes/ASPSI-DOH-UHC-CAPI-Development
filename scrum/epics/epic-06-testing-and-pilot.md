@@ -37,8 +37,8 @@ Pre-production verification and limited-scale field pilot before full rollout. C
 
 ### CAPI Track *(not started — depends on Epic 3 sign-off + Epic 5 tablets)*
 
-- [ ] **E6-CAPI-001** F1 desk test — DCF + FMF walkthrough on CSEntry tablet, sample data entry `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
-- [ ] **E6-CAPI-002** F3 desk test — full A–L walkthrough with sanity scenarios `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
+- [ ] **E6-CAPI-001** F1 desk test — DCF + FMF walkthrough on CSEntry tablet, sample data entry. **Pre-tagged for Sprint 006** — Phase 1 build pipeline + tablet proof-of-life landed Sprint 004; once Phase 1 sync mechanic closes (Sprint 005 E3-F1-088), F1 desk-test becomes activatable. `status::todo` `priority::high` `estimate::1d` `scrum::sprint-006`
+- [ ] **E6-CAPI-002** F3 desk test — full A–L walkthrough with sanity scenarios. **Pre-tagged for Sprint 006** — follows F1 desk test (E6-CAPI-001); reuses interviewer-administered patterns. `status::todo` `priority::high` `estimate::1d` `scrum::sprint-006`
 - [ ] **E6-CAPI-003** F4 desk test — household roster + interval sampling sanity, full A–Q `status::todo` `priority::high` `estimate::1d` `scrum::unscheduled`
 - [ ] **E6-CAPI-004** Sync round-trip test — tablet → CSWeb → ETL → unified store `status::todo` `priority::high` `estimate::4h` `scrum::unscheduled`
 - [ ] **E6-CAPI-005** QA Tester (Shan) handoff workflow extended to CAPI — bug-report template, severity rubric, milestone label `status::todo` `priority::high` `estimate::3h` `scrum::unscheduled`

@@ -1,7 +1,7 @@
 ---
 title: Backlog Grooming View
 purpose: PO-level visibility into all open tasks across all epics, grouped by sprint slot
-last_updated: 2026-05-06
+last_updated: 2026-05-08
 generated_by: dataviewjs (queries) + `.claude/scripts/tag_backlog_slots.py` (slot tags)
 ---
 
@@ -20,12 +20,12 @@ generated_by: dataviewjs (queries) + `.claude/scripts/tag_backlog_slots.py` (slo
 >
 > Inline fields are wrapped in backticks per project convention (`` `status::todo` ``, `` `priority::high` ``, etc.), so these queries use **dataviewjs** + regex on `t.text` to extract them — same pattern as `scrum/sprint-board.md`.
 
-## Active Sprint — Sprint 004 (2026-05-04 → 2026-05-08)
+## Active Sprint — Sprint 005 (2026-05-11 → 2026-05-15)
 
 ```dataviewjs
 const tasks = dv.pages('"1_Projects/ASPSI-DOH-CAPI-CSPro-Development/scrum/epics"').file.tasks
-  .where(t => !t.completed && /scrum::\s*sprint-004/.test(t.text));
-if (tasks.length === 0) { dv.paragraph("_(no open tasks tagged sprint-004)_"); }
+  .where(t => !t.completed && /scrum::\s*sprint-005/.test(t.text));
+if (tasks.length === 0) { dv.paragraph("_(no open tasks tagged sprint-005)_"); }
 else { dv.taskList(tasks, false); }
 ```
 

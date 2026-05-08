@@ -39,18 +39,17 @@ deliverable_anchor: Goal A — E3-F1-088 (Phase 1 sync mechanic resolution) + Ph
 
 - [ ] **E4-APRT-049** Design-review 5-fix sweep — button focus rings (#59) + input focus rings (#60) + `rounded-full` sweep (#61) + QuotaWidget warning token (#62) + ReissueTokenModal Escape handler (design-M-4). `status::todo` `priority::medium` `estimate::40m`
 - [ ] **E4-APRT-037** Concurrency tests — two-admin reissue race / bulk import + role edit / cron + PWA submit. `status::todo` `priority::medium` `estimate::3h`
-- [ ] **E2-F3-010** F3 DCF Designer validation pass *(carry-forward from Sprint 003/004 stretch — only pull if Goal A closes light and v2.0.1 cutover is on track)*. `status::todo` `priority::medium` `estimate::3h`
-- [ ] **E2-F4-010** F4 DCF Designer validation pass *(same carry-forward)*. `status::todo` `priority::medium` `estimate::3h`
-- [ ] **E0-008** Auto-standup retro-injection — extend `.claude/scripts/generate_standup.py` to read prior sprint's Retro Q4 + surface as Day 1 banner; add "no-work-since-last-run" branch *(carry-forward from Sprint 003/004 stretch)*. `status::todo` `priority::medium` `estimate::1h base + 30m for no-work branch`
+
+> **Demoted to `unscheduled` 2026-05-08 (3-sprint stretch fatigue):** E2-F3-010, E2-F4-010, E0-008 — never pulled across Sprints 003/004/005. Re-pullable via planning when their gating context becomes pertinent (E2-F3-010/F4-010: F3/F4 instrument build slot opens; E0-008: when Day-1 retro-injection becomes valuable for a new tooling sprint).
 
 ## Sprint Backlog Sizing
 
 | Class | Items | Estimate |
 |---|---|---|
 | **Committed (must-finish)** | E3-F1-088, E3-F1-PHASE2-PLAN, E4-APRT-050/051/045/044/043, E4-APRT-048/041/042 | ~15h |
-| **Stretch** | E4-APRT-049, E4-APRT-037, E2-F3-010, E2-F4-010, E0-008 | ~10.5h |
+| **Stretch** | E4-APRT-049, E4-APRT-037 | ~3.5h |
 
-> Capacity: ~25h solo-dev week. Committed ~15h leaves ~10h headroom for stretch + R2/R3 bug-fix capacity. Plan doc: [`docs/superpowers/plans/2026-05-11-sprint-005-v2-0-1-plan.md`](../docs/superpowers/plans/2026-05-11-sprint-005-v2-0-1-plan.md).
+> Capacity: ~25h solo-dev week. Committed ~15h + stretch ~3.5h leaves ~6.5h headroom for R2/R3 bug-fix capacity + new findings during the v2.0.1 release. 3-sprint stretch carry-forwards (E2-F3-010, E2-F4-010, E0-008) demoted to `unscheduled` per Sprint 004 retro Q4 — sprint board should reflect intent, not aspirational placeholders. Plan doc: [`docs/superpowers/plans/2026-05-11-sprint-005-v2-0-1-plan.md`](../docs/superpowers/plans/2026-05-11-sprint-005-v2-0-1-plan.md).
 
 ## Daily Notes
 

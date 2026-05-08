@@ -18,7 +18,7 @@ source: scrum/epics/*.md (`scrum::` slot field)
 const tasks = dv.pages('"1_Projects/ASPSI-DOH-CAPI-CSPro-Development/scrum/epics"').file.tasks
   .where(t => !t.completed);
 
-const cols = ["sprint-004", "sprint-005", "unscheduled"];
+const cols = ["sprint-005", "sprint-006", "unscheduled"];
 const grouped = Object.fromEntries(cols.map(c => [c, []]));
 
 for (const t of tasks) {
@@ -54,11 +54,11 @@ dv.table(
 
 ## Sprint-004 board (status:: pivot of just the active sprint)
 
-> The same kanban shape as `scrum/sprint-board.md`, but filtered to `scrum::sprint-004` items only — gives you both views in one place.
+> The same kanban shape as `scrum/sprint-board.md`, but filtered to `scrum::sprint-005` items only — gives you both views in one place.
 
 ```dataviewjs
 const tasks = dv.pages('"1_Projects/ASPSI-DOH-CAPI-CSPro-Development/scrum/epics"').file.tasks
-  .where(t => !t.completed && /scrum::\s*sprint-004/.test(t.text));
+  .where(t => !t.completed && /scrum::\s*sprint-005/.test(t.text));
 
 const cols = ["todo", "in-progress", "blocked", "done"];
 const grouped = Object.fromEntries(cols.map(c => [c, []]));
