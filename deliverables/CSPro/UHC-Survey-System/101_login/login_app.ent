@@ -10,10 +10,6 @@
       "type": "input",
       "path": "login_app.dcf",
       "parent": "login_app.fmf"
-    },
-    {
-      "type": "external",
-      "path": "..\\102_EXT_DIC\\user_roster.dcf"
     }
   ],
   "forms": [

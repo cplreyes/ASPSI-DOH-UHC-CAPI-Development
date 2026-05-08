@@ -16,8 +16,10 @@ ENT = {
     "type": "entry",
     "name": "LOGIN_APP", "label": "UHC Login",
     "dictionaries": [
-        {"type": "input",    "path": "login_app.dcf", "parent": "login_app.fmf"},
-        {"type": "external", "path": r"..\102_EXT_DIC\user_roster.dcf"},
+        {"type": "input", "path": "login_app.dcf", "parent": "login_app.fmf"},
+        # user_roster.dcf reference removed — Phase 1 bypasses the lookup.
+        # Phase 2 will restore it once CSPro Android external-dict path
+        # resolution is debugged.
     ],
     "forms": ["login_app.fmf"],
     "questionText": ["login_app.ent.qsf"],
