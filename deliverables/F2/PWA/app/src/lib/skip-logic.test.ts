@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { shouldShow } from './skip-logic';
+import { shouldShow, shouldShowSection } from './skip-logic';
 
 describe('shouldShow', () => {
   it('returns true when no predicate is registered for the item', () => {
@@ -198,6 +198,156 @@ describe('shouldShow', () => {
       const yes = "Yes, I've thought about it and have definite plans to leave";
       expect(shouldShow('J', 'Q124', { Q123: yes })).toBe(true);
       expect(shouldShow('J', 'Q125', { Q123: yes })).toBe(true);
+    });
+  });
+});
+
+// R2-#114: prior to this regression-prevention block, shouldShowSection
+// only gated Section G; sections C/D/E always returned true regardless
+// of Q5 role. Tester (Shan, 2026-05-07 R2) saw C/D/E visible to all 3
+// personas tested (Pharmacist/Dispenser, Physician/Doctor, Dentist aide).
+//
+// Spec (per UAT R2 tester guide notes):
+//   C/D/E (full):      Administrator, Physician/Doctor, Physician
+//                      assistant, Nurse, Midwife, Dentist, Nutrition
+//                      action officer/coordinator
+//   E only (E2 half):  Pharmacist/Dispenser. Until #117 splits
+//                      E1 (Q48–Q52) from E2 (Q53–Q55), pharmacists
+//                      see all of E (the E1 leak is #117's surface).
+//   None of C/D/E:     all other roles (Nursing assistant, Lab tech,
+//                      Med tech, Dentist aide, BHW, etc.) — proceed to F.
+describe('shouldShowSection', () => {
+  describe('Section G — prescribing roles only (existing behavior)', () => {
+    it('shows G for Physician/Doctor', () => {
+      expect(shouldShowSection('G', { Q5: 'Physician/Doctor' })).toBe(true);
+    });
+
+    it('shows G for Physician assistant', () => {
+      expect(shouldShowSection('G', { Q5: 'Physician assistant' })).toBe(true);
+    });
+
+    it('shows G for Dentist', () => {
+      expect(shouldShowSection('G', { Q5: 'Dentist' })).toBe(true);
+    });
+
+    it('hides G for Nurse', () => {
+      expect(shouldShowSection('G', { Q5: 'Nurse' })).toBe(false);
+    });
+
+    it('hides G for Pharmacist/Dispenser', () => {
+      expect(shouldShowSection('G', { Q5: 'Pharmacist/Dispenser' })).toBe(false);
+    });
+
+    it('hides G when Q5 is unset', () => {
+      expect(shouldShowSection('G', {})).toBe(false);
+    });
+  });
+
+  describe('Section C — patient-care roles only', () => {
+    it.each([
+      'Administrator',
+      'Physician/Doctor',
+      'Physician assistant',
+      'Nurse',
+      'Midwife',
+      'Dentist',
+      'Nutrition action officer/ coordinator',
+    ])('shows C for %s', (role) => {
+      expect(shouldShowSection('C', { Q5: role })).toBe(true);
+    });
+
+    it.each([
+      'Pharmacist/Dispenser',
+      'Nursing assistant',
+      'Laboratory technician',
+      'Medical/ radiologic technologist',
+      'Dentist aide',
+      'Barangay Health Worker',
+      'Other (specify)',
+    ])('hides C for %s', (role) => {
+      expect(shouldShowSection('C', { Q5: role })).toBe(false);
+    });
+
+    it('hides C when Q5 is unset', () => {
+      expect(shouldShowSection('C', {})).toBe(false);
+    });
+  });
+
+  describe('Section D — patient-care roles only (same set as C)', () => {
+    it('shows D for Nurse', () => {
+      expect(shouldShowSection('D', { Q5: 'Nurse' })).toBe(true);
+    });
+
+    it('hides D for Pharmacist/Dispenser', () => {
+      expect(shouldShowSection('D', { Q5: 'Pharmacist/Dispenser' })).toBe(false);
+    });
+
+    it('hides D for Dentist aide', () => {
+      expect(shouldShowSection('D', { Q5: 'Dentist aide' })).toBe(false);
+    });
+  });
+
+  describe('Section E — patient-care + pharmacists (broader than C/D)', () => {
+    it.each([
+      'Administrator',
+      'Physician/Doctor',
+      'Physician assistant',
+      'Nurse',
+      'Midwife',
+      'Dentist',
+      'Nutrition action officer/ coordinator',
+      'Pharmacist/Dispenser', // E2 GAMOT half — until #117 splits, sees all of E
+    ])('shows E for %s', (role) => {
+      expect(shouldShowSection('E', { Q5: role })).toBe(true);
+    });
+
+    it.each([
+      'Nursing assistant',
+      'Laboratory technician',
+      'Dentist aide',
+      'Barangay Health Worker',
+    ])('hides E for %s', (role) => {
+      expect(shouldShowSection('E', { Q5: role })).toBe(false);
+    });
+  });
+
+  describe('Always-shown sections', () => {
+    it.each(['A', 'B', 'F', 'H', 'I', 'J'])('shows %s regardless of Q5', (sectionId) => {
+      expect(shouldShowSection(sectionId, { Q5: 'Dentist aide' })).toBe(true);
+      expect(shouldShowSection(sectionId, { Q5: 'Nurse' })).toBe(true);
+      expect(shouldShowSection(sectionId, {})).toBe(true);
+    });
+  });
+
+  describe('Three personas Shan tested (R2 #114 reproduction)', () => {
+    it('Pharmacist/Dispenser sees A,B,E,F,H,I,J — not C,D,G', () => {
+      const v = { Q5: 'Pharmacist/Dispenser' };
+      expect(shouldShowSection('A', v)).toBe(true);
+      expect(shouldShowSection('B', v)).toBe(true);
+      expect(shouldShowSection('C', v)).toBe(false); // was the bug
+      expect(shouldShowSection('D', v)).toBe(false); // was the bug
+      expect(shouldShowSection('E', v)).toBe(true); // E2 path
+      expect(shouldShowSection('F', v)).toBe(true);
+      expect(shouldShowSection('G', v)).toBe(false);
+      expect(shouldShowSection('H', v)).toBe(true);
+    });
+
+    it('Physician/Doctor sees all sections', () => {
+      const v = { Q5: 'Physician/Doctor' };
+      for (const id of ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']) {
+        expect(shouldShowSection(id, v)).toBe(true);
+      }
+    });
+
+    it('Dentist aide sees A,B,F,H,I,J — not C,D,E,G (skip to F)', () => {
+      const v = { Q5: 'Dentist aide' };
+      expect(shouldShowSection('A', v)).toBe(true);
+      expect(shouldShowSection('B', v)).toBe(true);
+      expect(shouldShowSection('C', v)).toBe(false); // was the bug
+      expect(shouldShowSection('D', v)).toBe(false); // was the bug
+      expect(shouldShowSection('E', v)).toBe(false); // was the bug
+      expect(shouldShowSection('F', v)).toBe(true);
+      expect(shouldShowSection('G', v)).toBe(false);
     });
   });
 });

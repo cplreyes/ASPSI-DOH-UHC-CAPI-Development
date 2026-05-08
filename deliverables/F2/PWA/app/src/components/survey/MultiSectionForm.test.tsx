@@ -17,8 +17,10 @@ describe('<MultiSectionForm>', () => {
     expect(
       screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
     ).toBeInTheDocument();
-    // Section G is hidden when Q5 is not a prescribing role (or unset), so total visible = 9
-    expect(screen.getByText(/Section 1 of 9/)).toBeInTheDocument();
+    // With Q5 unset on initial render: Sections C/D/E (R2-#114 patient-care
+    // gating) + G (prescribing-role gating) are all hidden. Visible: A, B, F,
+    // H, I, J = 6.
+    expect(screen.getByText(/Section 1 of 6/)).toBeInTheDocument();
   });
 
   it('blocks Next when Section A validation fails and advances when it passes', async () => {

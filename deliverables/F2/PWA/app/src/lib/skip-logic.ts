@@ -3,6 +3,31 @@ type Predicate = (values: FormValues) => boolean;
 
 const SECTION_G_ROLES = new Set(['Physician/Doctor', 'Physician assistant', 'Dentist']);
 
+// R2-#114: sections C/D/E are role-gated to patient-care roles. Pre-fix
+// shouldShowSection returned true for everything except G; tester saw
+// C/D/E visible to Pharmacist/Dispenser, Physician/Doctor, and Dentist
+// aide (1 of 3 should see them — Doctor only).
+//
+// Per UAT R2 tester guide spec:
+//   - C/D/E: admin, doctor, physician assistant, nurse, midwife, dentist,
+//            nutrition action officer/coordinator
+//   - E only (E2 GAMOT half): pharmacists/dispensers — they should skip
+//            E1 (Q48–Q52) but see E2 (Q53–Q55). Until #117 splits E1/E2,
+//            pharmacists see all of E (acceptable trade for v2.0.1; the
+//            E1 leak is #117's surface).
+//   - All other roles (Nursing assistant, Lab tech, Med tech, Dentist
+//            aide, BHW, Other): proceed straight to F.
+const SECTION_CDE_ROLES = new Set([
+  'Administrator',
+  'Physician/Doctor',
+  'Physician assistant',
+  'Nurse',
+  'Midwife',
+  'Dentist',
+  'Nutrition action officer/ coordinator',
+]);
+const SECTION_E_ROLES = new Set([...SECTION_CDE_ROLES, 'Pharmacist/Dispenser']);
+
 const ROLES_WITH_SPECIALTY = new Set([
   'Administrator',
   'Physician/Doctor',
@@ -122,8 +147,15 @@ export function shouldShow(sectionId: string, itemId: string, values: FormValues
 
 // Section-level skip: returns false if the whole section should be skipped
 export function shouldShowSection(sectionId: string, values: FormValues): boolean {
+  const role = typeof values.Q5 === 'string' ? values.Q5 : null;
   if (sectionId === 'G') {
-    return typeof values.Q5 === 'string' && SECTION_G_ROLES.has(values.Q5);
+    return role !== null && SECTION_G_ROLES.has(role);
+  }
+  if (sectionId === 'C' || sectionId === 'D') {
+    return role !== null && SECTION_CDE_ROLES.has(role);
+  }
+  if (sectionId === 'E') {
+    return role !== null && SECTION_E_ROLES.has(role);
   }
   return true;
 }
