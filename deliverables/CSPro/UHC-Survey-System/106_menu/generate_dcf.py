@@ -9,7 +9,7 @@ from cspro_helpers import numeric, alpha, record, build_dictionary, write_dcf
 
 
 menu_rec = record(
-    name="MENU_REC", label="Menu Record", record_type="",
+    name="MENU_REC", label="Menu Record", record_type="M",
     items=[
         numeric("MENU_LOGIN_ID",   "Login ID",      length=4, zero_fill=True),
         alpha  ("MENU_LOGIN_NAME", "Login Name",    length=40),

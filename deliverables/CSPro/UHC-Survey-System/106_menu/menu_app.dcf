@@ -50,7 +50,7 @@
               "text": "Menu Record"
             }
           ],
-          "recordType": "",
+          "recordType": "M",
           "occurrences": {
             "required": true,
             "maximum": 1

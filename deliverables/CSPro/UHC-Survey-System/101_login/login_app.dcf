@@ -50,7 +50,7 @@
               "text": "Login Record"
             }
           ],
-          "recordType": "",
+          "recordType": "L",
           "occurrences": {
             "required": true,
             "maximum": 1

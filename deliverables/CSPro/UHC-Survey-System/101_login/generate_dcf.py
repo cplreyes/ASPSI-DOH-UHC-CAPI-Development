@@ -21,7 +21,7 @@ ROLE_OPTIONS = [
 
 
 login_rec = record(
-    name="LOGIN_REC", label="Login Record", record_type="",
+    name="LOGIN_REC", label="Login Record", record_type="L",
     items=[
         numeric("LOGIN_RA_ID", "RA ID",      length=4, zero_fill=True),
         alpha  ("LOGIN_PW",    "Password",   length=40),

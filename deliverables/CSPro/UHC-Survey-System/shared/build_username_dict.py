@@ -88,7 +88,7 @@ def build_user_roster(src_xlsx: Path, dcf_path: Path, dat_path: Path,
 
     # Emit .dcf via cspro_helpers
     user_rec = record(
-        name="USER_REC", label="User Record", record_type="",
+        name="USER_REC", label="User Record", record_type="U",
         items=[
             alpha  ("RA_NAME",       "RA Name",        length=FIELD_RA_NAME),
             alpha  ("PASSWORD_HASH", "Password Hash",  length=FIELD_PASSWORD_HASH),
