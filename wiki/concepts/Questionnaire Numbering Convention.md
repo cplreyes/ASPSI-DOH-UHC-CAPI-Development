@@ -1,17 +1,32 @@
 ---
 type: concept
-status: adopted
+status: adopted-with-divergence
 date_drafted: 2026-05-02
 date_adopted: 2026-05-05
-last_updated: 2026-05-05
-tags: [capi, cspro, dictionary, case-id, questionnaire-numbering, working-convention, adopted]
-source_count: 4
+last_updated: 2026-05-07
+tags: [capi, cspro, dictionary, case-id, questionnaire-numbering, working-convention, adopted, divergence-flagged]
+source_count: 6
 related_task: E7-DOC-001
 ---
 
 # Questionnaire Numbering Convention
 
-> **Status: ADOPTED 2026-05-05.** Carl approved the decomposed scheme on 2026-05-05 in response to Kidd's coding question. Width verification against PSA 1Q 2026 PSGC + Inception-Report Table 1 (same date) revised the proposal from 11 to **12 digits** because the PSGC city/municipality slot is 3 digits, not 2 — the manual's legacy `035401` example used the pre-2008 PSGC, while the F-series build is anchored on PSA 1Q 2026. The convention below reflects the adopted, verified widths. A brief for Kidd is at `deliverables/Survey-Manual/Case-ID-Convention-Brief_2026-05-05.{md,docx}`. Implementation footprint (cspro_helpers + F1/F3/F4 generators + F2 PWA case-ID issuer + manual addendum) remains pending sprint scheduling.
+> **Status: ADOPTED 2026-05-05** with two ASPSI-side artifacts now in circulation. Carl approved the decomposed scheme on 2026-05-05 in response to Kidd's coding question. Width verification against PSA 1Q 2026 PSGC + Inception-Report Table 1 (same date) revised the proposal from 11 to **12 digits** because the PSGC city/municipality slot is 3 digits, not 2 — the manual's legacy `035401` example used the pre-2008 PSGC, while the F-series build is anchored on PSA 1Q 2026. A brief for Kidd is at `deliverables/Survey-Manual/Case-ID-Convention-Brief_2026-05-05.{md,docx}`. Implementation footprint (cspro_helpers + F1/F3/F4 generators + F2 PWA case-ID issuer + manual addendum) remains pending sprint scheduling.
+
+> [!info] Two ASPSI artifacts diverge on the last 5 digits — internal copy-paste inconsistency, deferred per Myra-edit-wait policy
+> The 2026-05-06 ingest of [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Survey Manual Working File (2026-05-06 Kidd)|Kidd's Survey Manual Working File]] revealed two ASPSI artifacts have **diverging decompositions** of the last 5 digits of the 12-digit case ID:
+>
+> 1. **Carl's brief + [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Survey Manual Appendix D — Case ID Format + Facility Master|Appendix D]]:** `RR-PP-MMM-FF-CCC` — Facility 2 + **Sequence 3 (per facility per instrument)** with partition rule (001–699 active / 700–899 replacement / 900–999 refused). Refusal-band tagging tied to AAPOR disposition.
+> 2. **Working File body §5 (L1313–L1382):** `RRPPMMM-FF-CC-CCC` — Facility 2 + **Respondent Type 2 (11/22/33/44 doubled-digit codes)** + Sequence 3 (per respondent type per facility). Example: `035401-01-22-03` = Region III / Pampanga / Magalang / 1st sampled facility / 22=HCW / 3rd HCW respondent. **Loses the active/replacement/refused partition headroom**, but makes cross-instrument deduplication explicit at the ID level.
+>
+> Operational behavior of refusal handling is **identical** in both schemes (refused/cancelled get a different number outside the designated set; emptied slots filled from ASPSI replacement DB). Only the digit layout differs.
+>
+> **Reconciliation options (for when Myra's pass settles):**
+> - (a) accept Working File scheme + retire the partition; respondent type embedded in ID;
+> - (b) push Carl's brief through; respondent type implicit in instrument file;
+> - (c) keep both with documented mapping.
+>
+> The Working File and Appendix D are **same-day ASPSI artifacts** — Kidd controls both — so this looks like an internal copy-paste inconsistency rather than a formal protocol change. **Held per `feedback_defer_clarifications_during_upstream_review.md`:** Myra has an active edit pass on the Survey Manual; documenting the divergence here is sufficient until her pass resolves it. No parallel CAPI-side clarification email to Kidd.
 
 This document specifies the case-identifier (questionnaire-number) format for every instrument in the UHC Survey Year 2 — F1 (Facility Head, CSPro), F2 (Healthcare Worker, PWA), F3 (Patient, CSPro), F4 (Household, CSPro). It exists because the master Survey Manual (March 2026 / Apr 28 working version) prescribes a 9-digit composite that doesn't quite fit a multi-instrument health-facility survey, and because the current F-series dictionaries use a different shape (single 6-digit `QUESTIONNAIRE_NO` ID item) that under-specifies the case key.
 

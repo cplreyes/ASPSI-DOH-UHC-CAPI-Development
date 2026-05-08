@@ -6,9 +6,9 @@ source_count: 0
 
 # F-Series Value Set Conventions
 
-Coding conventions that apply across the F-series CSPro dictionaries (F1 Facility Head, F2/F3/F4 when built). These are project-internal decisions, not CSPro mandates — they exist to keep coding consistent across instruments and to give analysts a predictable codebook.
+Coding conventions that apply across the F-series CSPro dictionaries (F1 Facility Head + F3 Patient + F4 Household — all Build-ready as of 2026-04-21, F1 Designer sign-off CLOSED 2026-05-04). F2 went the PWA route in 2026-04-17 and does not have a CSPro dictionary; the same NA-coding intent is preserved in the F2 spec where applicable. These are project-internal decisions, not CSPro mandates — they exist to keep coding consistent across instruments and to give analysts a predictable codebook.
 
-Decided during the `E2-F1-010` Designer walkthrough on 2026-04-14 (see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/log]] entry for that date).
+Decided during the F1 Designer walkthrough on 2026-04-14 (see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/log]] entry for that date) and ratified at E2-F1-010 sign-off 2026-05-04.
 
 ## "Not Applicable" coding
 

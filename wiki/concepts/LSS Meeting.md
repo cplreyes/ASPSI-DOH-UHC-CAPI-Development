@@ -37,16 +37,15 @@ Agenda (verbatim from slides): **Lessons Learned → Communication Lines → Tas
 
 Carl was cc'd on the invite but did not attend; attendance roll excluded him.
 
-## Relationship to the 6 open F1 items — resolved category confusion
+## Relationship to the 6 open F1 items — CLOSED 2026-04-17
 
-> [!warning] Prior mental-model error (corrected 2026-04-15)
-> Between 2026-04-10 and 2026-04-15 the project operated under the assumption that the Apr 13 LSS meeting would decide the **6 open F1 technical items**: Q63 day-vs-month, SECONDARY_DATA structure, NBB hospital census split, Q31 NA-skip intent, Q166 PD nurses list, Q121 dynamic value set. After reading the actual Apr 13 meeting minutes on Apr 15, this was recognized as a category error. **Those 6 items were never in LSS scope** — they're technical design decisions on instrument logic, which LSS explicitly excludes. Booking them on a future LSS agenda won't work; they need a different forum.
+> [!info] Topic closed
+> The 6 formerly-open F1 items (Q63 day-vs-month, SECONDARY_DATA structure, NBB hospital census split, Q31 NA-skip intent, Q166 PD nurses list, Q121 dynamic value set) were resolved without a separate technical design review. Carl's 2026-04-17 call: keep the encoded defaults as final; no further escalation needed. **E2-F1-009b is `status::done`**; the F1 DCF Designer sign-off (E2-F1-010) closed cleanly 2026-05-04 with no deferrals tracing to these items. Memory: `feedback_lss_closed.md`.
 
-**Correct routing for the 6 items:** a narrowly-scoped **technical design review meeting** (working title: "F1 Design Decision Review") with Dr. Paunlagui and whoever owns the substantive content for each section. Carl requests this as a separate agenda item, not as an extension of LSS.
+> [!warning] Prior mental-model error (recorded 2026-04-15, superseded 2026-04-17)
+> Between 2026-04-10 and 2026-04-15 the project operated under the assumption that the Apr 13 LSS meeting would decide these 6 items. After reading the actual Apr 13 meeting minutes on Apr 15, this was recognized as a category error — those items are technical design decisions on instrument logic, which LSS explicitly excludes. The proposed remediation at the time was to convene a separate "F1 Design Decision Review." That review never had to happen: Carl's 2026-04-17 call to keep the encoded defaults closed the topic.
 
-**Code-side impact:** the 6 items are encoded as `PENDING_DESIGN_*` constants in `deliverables/CSPro/F1/generate_dcf.py` (renamed from `PENDING_LSS_*` on 2026-04-15 to reflect the corrected routing). Flipping any constant + regenerating updates the affected schema.
-
-**Scrum-side impact:** `E2-F1-009b` remains `status::blocked`, but the blocker text is updated — no longer waiting on an LSS, waiting on the convened technical design review.
+**Code-side residue:** the 6 items remain encoded as `PENDING_DESIGN_*` constants in `deliverables/CSPro/F1/generate_dcf.py` (renamed from `PENDING_LSS_*` on 2026-04-15). The constants are now treated as final values, not as pending markers. Flipping any of them would be a substantive question revision, requiring fresh ASPSI agreement — no longer a PENDING-flag flip.
 
 ## Cadence
 

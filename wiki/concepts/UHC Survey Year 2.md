@@ -19,15 +19,15 @@ Generate evidence on how Filipinos and health facilities experience the UHC roll
 | Implementer | [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/IDinsight\|IDinsight]] | [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASPSI\|ASPSI]] |
 | Coverage | 70 UHC Integration Sites | 120 sites (107 UHC IS + 13 non-UHC IS) |
 | Survey modules | 3 (Facility Head, HCW, Patient — household component derived from patient exit listing) | 4 (Facility Head, HCW, Patient, **standalone Household survey**) |
-| Data collection | SurveyCTO | [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro\|CSPro]] / CAPI |
+| Data collection | SurveyCTO | [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro\|CSPro]] CAPI for F1/F3/F4 (interviewer-administered) + Vite+React PWA for F2 (self-administered) |
 | Sample (facilities) | ~1,135 | 1,521 (914 RHUs + 607 hospitals) |
 | New indicators | — | BUCAS, GAMOT, NBB, ZBB awareness; catastrophic health expenditure (CHE) |
 
 ## Four Survey Modules
 
 1. **Facility Head (F1)** — facility resources, accreditation, YAKAP/Konsulta implementation, service delivery, PhilHealth benefits impact. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire]] and [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Facility Head Data Dictionary and Value Sets]].
-2. **Healthcare Worker (F2)** — UHC awareness, HCPNs, satisfaction, compensation, PhilHealth benefits impact. Self-administered (Google Forms/paper). See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire]].
-3. **Patient (F3)** — UHC awareness, PhilHealth/YAKAP/BUCAS/GAMOT/NBB/ZBB, health-seeking behavior, quality of care, OOP costs, referral process. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3 Patient Survey Questionnaire]] and the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Patient Listing Form]].
+2. **Healthcare Worker (F2)** — UHC awareness, HCPNs, satisfaction, compensation, PhilHealth benefits impact. Self-administered via the **F2 PWA** (Cloudflare Pages + Worker JWT proxy + Apps Script backend; production at v2.0.0 since 2026-05-04, UAT Round 2 in flight). The earlier Google Forms primary track + paper-encoder fallback + CSPro encoder track were all retired 2026-04-17. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire]] and [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]].
+3. **Patient (F3)** — UHC awareness, PhilHealth/YAKAP/BUCAS/GAMOT/NBB/ZBB, health-seeking behavior, quality of care, OOP costs, referral process. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3 Patient Survey Questionnaire]] and the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3b Patient Listing Protocol]].
 4. **Household (F4)** — population-level UHC awareness, health-seeking behavior, household expenditure, financial risk protection. New in Year 2. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F4 Household Survey Questionnaire]].
 
 ## Conceptual Framework

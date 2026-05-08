@@ -8,6 +8,9 @@ source_count: 1
 
 The official UHC Survey Year 2 schedule, as defined in **Table 14** of the Revised Inception Report (Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Revised Inception Report]]). Covers the 9-month engagement from **Notice to Proceed (Nov 14, 2025)** to **project close (Aug 14, 2026)**.
 
+> [!warning] Original-plan dates — actual execution has slipped
+> The deliverable target dates below are the **as-written original plan**. Actual execution as of 2026-05-06: D1 was approved-extension-bumped through Apr 20 and is **>4 months overdue** vs the ~Dec 5, 2025 target; D2 was extended Mar 13 → **Apr 24, 2026** via DOH-approved no-cost extension Mar 30, and **the Apr 24 deadline passed without delivery** — official revised D2 deadline pending DOH approval (Apr 29 PMSMD: still under direct oversight review). For current state, see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Project Intelligence Brief|Analysis - Project Intelligence Brief]].
+
 > [!note] Source format
 > Table 14 is embedded in the Inception Report as two PNG images (rId23 and rId26), not as a Word table. Week-by-week shading is only viewable in the source PDF/DOCX. This page captures the structured content; refer to the original for the visual Gantt.
 

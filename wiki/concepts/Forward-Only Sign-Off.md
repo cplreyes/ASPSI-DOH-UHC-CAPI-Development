@@ -21,21 +21,37 @@ Standing working convention on this project: **design stages drive through to a 
 - Every artifact in the F2 pipeline (spec → skip logic → validation → cross-field → Apps Script → live Form) is derived from the previous one. A defect in any layer surfaces loudest in testing, so testing is treated as the acceptance feedback loop.
 - The artifacts are **reproducible from source**: the F1 DCF regenerates from `generate_dcf.py`, the F2 Form regenerates from `Spec.gs`. Re-running a build after a source fix is cheap.
 
-## How it shows up in the F2 pipeline
+## How it shows up in current pipelines
 
-- `deliverables/F2/F2-Build-Handoff.md` ships [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Shan Lait|Shan]] a **bug-routing table** keyed by symptom → source doc:
+The rule applies wherever a generator + spec produces a regenerable artifact. Two live examples:
 
-  | Symptom | Fix in |
-  |---|---|
-  | Wrong label text, missing question, wrong choices | `F2-Spec.md` + `apps-script/Spec.gs` |
-  | Wrong section routing, skip logic doesn't fire | `F2-Skip-Logic.md` + `apps-script/Spec.gs` (branchTo map) |
-  | Wrong required flag, numeric range rejects valid values | `F2-Validation.md` + `apps-script/Spec.gs` |
-  | POST rule mis-fires (wrong flag, wrong drop) | `F2-Cross-Field.md` + `apps-script/OnSubmit.gs` |
-  | Apps Script crashes, routing mis-wires | `apps-script/FormBuilder.gs` or `Code.gs` |
-  | Consent or cover-block wording | `F2-Cover-Block-Rewrite-Draft.md` + `apps-script/Spec.gs` (SEC-COVER) |
+### F1 CSPro CAPI (in flight)
 
-- After a fix, `rebuildForm()` trashes the old Form + Sheet and rebuilds fresh. Shan's test submissions on the old Form are expected to be lost — every rebuild cycle starts clean.
-- Sprint 001 Day 3 (2026-04-15) proceeded straight from design bundle (013/014/015/016) into the E3-F2-GF Apps Script generator **without waiting** on Shan's review of the design bundle, per this rule. Test bugs will route back to the owning source doc as usual.
+`deliverables/CSPro/F1/generate_dcf.py` regenerates `FacilityHeadSurvey.dcf` from `F1-Skip-Logic-and-Validations.md` + `cspro_helpers.py`. Bug-routing pattern:
+
+| Symptom | Fix in |
+|---|---|
+| Wrong item label, missing question, wrong choices | `F1-Skip-Logic-and-Validations.md` + `generate_dcf.py` |
+| Wrong skip logic, validation misfires | `F1-Skip-Logic-and-Validations.md` + `cspro_helpers.py` |
+| GPS / photo capture wiring | `shared/Capture-Helpers.apc` + `generate_dcf.py` |
+| PSGC cascade item options | `shared/PSGC-Cascade.apc` + external lookup dicts |
+
+Rule: **never hand-edit `FacilityHeadSurvey.dcf` in CSPro Designer** — patch the generator and regenerate. F3/F4 follow the same pattern via their respective `generate_dcf.py` files. Memory: `feedback_f1_dcf_generator_source_of_truth.md`.
+
+### F2 PWA (production at v2.0.0)
+
+`deliverables/F2/PWA/app/spec/F2-Spec.md` is the canonical spec; the PWA codebase under `app/src/` consumes it. Bug-routing pattern:
+
+| Symptom | Fix in |
+|---|---|
+| Wrong item label, missing question, wrong choices | `app/spec/F2-Spec.md` + spec-driven render |
+| Wrong section routing, skip logic doesn't fire | `app/spec/F2-Spec.md` + `app/src/lib/router.tsx` |
+| Wrong validation, range rejects valid values | `app/spec/F2-Spec.md` + `app/src/lib/validation.ts` |
+| Submit failure, missing audit row | `worker/src/` (Worker JWT proxy) + `backend/src/` (Apps Script) |
+| Admin Portal RBAC misfires | `worker/src/admin/rbac.ts` + `backend/src/Admin*.js` |
+| Visual identity drift | `app/DESIGN.md` + `tailwind.config.ts` Verde aliases |
+
+The earlier Google Forms / Apps-Script F2 pipeline (`F2-Spec.md` + `F2-Build-Handoff.md` + `apps-script/`) was retired 2026-04-17 alongside the track itself; old `F2-Build-Handoff.md` references in the wiki are kept for historical context only. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]] for the superseded design.
 
 ## How this differs from conventional Scrum
 
