@@ -37,8 +37,27 @@ def test_build_user_roster_passwords_hashed_not_plaintext(tmp_path):
     src = make_fixture_xlsx(tmp_path)
     dcf_path = tmp_path / "user_roster.dcf"
     dat_path = tmp_path / "user_roster.dat"
-    build_user_roster(src, dcf_path, dat_path)
+    build_user_roster(src, dcf_path, dat_path)   # default sha256
 
     dat_text = dat_path.read_text(encoding="utf-8")
     assert "p-sup" not in dat_text
     assert "p-ra"  not in dat_text
+
+
+def test_build_user_roster_plaintext_mode(tmp_path):
+    src = make_fixture_xlsx(tmp_path)
+    dcf_path = tmp_path / "user_roster.dcf"
+    dat_path = tmp_path / "user_roster.dat"
+    build_user_roster(src, dcf_path, dat_path, password_mode="plaintext")
+
+    dat_text = dat_path.read_text(encoding="utf-8")
+    # Plaintext mode: passwords appear as-is in .dat, padded to 64 chars
+    assert "p-sup" in dat_text
+    assert "p-ra"  in dat_text
+
+
+def test_build_user_roster_unknown_mode_raises(tmp_path):
+    import pytest
+    src = make_fixture_xlsx(tmp_path)
+    with pytest.raises(ValueError, match="unknown password_mode"):
+        build_user_roster(src, tmp_path / "x.dcf", tmp_path / "x.dat", password_mode="bcrypt")

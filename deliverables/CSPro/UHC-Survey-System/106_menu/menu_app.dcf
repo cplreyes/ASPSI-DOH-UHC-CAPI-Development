@@ -3,58 +3,97 @@
   "version": 8.0,
   "fileType": "dictionary",
   "name": "MENU_DICT",
-  "label": "Menu Dictionary",
+  "labels": [
+    {
+      "text": "Menu Dictionary"
+    }
+  ],
   "valueSets": [],
   "levels": [
     {
       "name": "MENU_LEVEL",
-      "label": "Menu Level",
-      "ids": [
+      "labels": [
         {
-          "name": "MENU_APP_ID",
-          "label": "Menu App ID",
-          "type": "numeric",
-          "length": 4,
-          "zeroFill": true
+          "text": "Menu Level"
         }
       ],
+      "ids": {
+        "items": [
+          {
+            "name": "MENU_APP_ID",
+            "labels": [
+              {
+                "text": "Menu App ID"
+              }
+            ],
+            "contentType": "numeric",
+            "length": 4,
+            "zeroFill": true
+          }
+        ]
+      },
       "records": [
         {
           "name": "MENU_REC",
-          "label": "Menu Record",
+          "labels": [
+            {
+              "text": "Menu Record"
+            }
+          ],
           "recordType": "",
           "required": true,
+          "occurrences": 1,
           "items": [
             {
               "name": "MENU_LOGIN_ID",
-              "label": "Login ID",
-              "type": "numeric",
+              "labels": [
+                {
+                  "text": "Login ID"
+                }
+              ],
+              "contentType": "numeric",
               "length": 4,
               "zeroFill": true
             },
             {
               "name": "MENU_LOGIN_NAME",
-              "label": "Login Name",
-              "type": "alpha",
+              "labels": [
+                {
+                  "text": "Login Name"
+                }
+              ],
+              "contentType": "alpha",
               "length": 40
             },
             {
               "name": "MENU_ROLE",
-              "label": "Role",
-              "type": "numeric",
+              "labels": [
+                {
+                  "text": "Role"
+                }
+              ],
+              "contentType": "numeric",
               "length": 1
             },
             {
               "name": "MENU_SUP_ID",
-              "label": "Supervisor ID",
-              "type": "numeric",
+              "labels": [
+                {
+                  "text": "Supervisor ID"
+                }
+              ],
+              "contentType": "numeric",
               "length": 4,
               "zeroFill": true
             },
             {
               "name": "APP_VERSION",
-              "label": "App Version",
-              "type": "alpha",
+              "labels": [
+                {
+                  "text": "App Version"
+                }
+              ],
+              "contentType": "alpha",
               "length": 16
             }
           ]
