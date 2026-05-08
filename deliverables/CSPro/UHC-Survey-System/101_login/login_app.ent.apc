@@ -1,0 +1,51 @@
+{ login_app.ent.apc — authenticate against USER_ROSTER_DICT, savesetting,    }
+{ then PFF-launch ..\106_menu\menu_app.pen.                                   }
+
+#include "..\shared\Expiration-Guard.apc"
+
+PROC GLOBAL
+
+PFF menu_app_pff;
+
+
+function start_menu()
+   menu_app_pff.setProperty("Version", "CSPro 8.0");
+   menu_app_pff.setProperty("ApplicationType", "entry");
+   menu_app_pff.setProperty("StartMode", "add");
+   menu_app_pff.setProperty("FullScreen", "yes");
+   menu_app_pff.setProperty("Application", r"..\106_menu\menu_app.pen");
+   menu_app_pff.setProperty("InputData", "none");
+   menu_app_pff.setProperty("OnExit", r"..\101_login\login_app.pff");
+   menu_app_pff.execute();
+end;
+
+
+PROC LOGIN_LEVEL
+preproc
+   check_expiration();
+   APP_VERSION = maketext("v%d", publishdate() / 1000);
+   LOGIN_APP_ID = 1;
+
+
+PROC LOGIN_PW
+postproc
+   if not loadcase(USER_ROSTER_DICT, LOGIN_RA_ID) then
+      errmsg("Unknown RA ID — please re-enter.");
+      reenter LOGIN_RA_ID;
+   endif;
+
+   { Phase 1 fallback: plaintext compare. Phase 2 will SHA-256 via Action     }
+   { Invoker. See login_app.spec.md "Phase 1 password gap" for context.       }
+   if LOGIN_PW <> USER_ROSTER_DICT.PASSWORD_HASH then
+      errmsg("Incorrect password.");
+      reenter;
+   endif;
+
+   LOGIN_NAME = USER_ROSTER_DICT.RA_NAME;
+   LOGIN_ROLE = USER_ROSTER_DICT.ROLE;
+
+   savesetting("login_id", LOGIN_RA_ID);
+   savesetting("login_roll", LOGIN_ROLE);
+   savesetting("supervisor_id", USER_ROSTER_DICT.SUPERVISOR_ID);
+
+   start_menu();

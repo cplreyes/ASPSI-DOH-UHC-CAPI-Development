@@ -1,0 +1,84 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "LOGIN_DICT",
+  "label": "Login Dictionary",
+  "valueSets": [
+    {
+      "name": "VS_ROLE_LABEL",
+      "label": "Role",
+      "values": [
+        {
+          "value": "1",
+          "label": "Supervisor"
+        },
+        {
+          "value": "2",
+          "label": "Enumerator"
+        },
+        {
+          "value": "3",
+          "label": "Ops"
+        }
+      ]
+    }
+  ],
+  "levels": [
+    {
+      "name": "LOGIN_LEVEL",
+      "label": "Login Level",
+      "ids": [
+        {
+          "name": "LOGIN_APP_ID",
+          "label": "Login App ID",
+          "type": "numeric",
+          "length": 4,
+          "zeroFill": true
+        }
+      ],
+      "records": [
+        {
+          "name": "LOGIN_REC",
+          "label": "Login Record",
+          "recordType": "",
+          "required": true,
+          "items": [
+            {
+              "name": "LOGIN_RA_ID",
+              "label": "RA ID",
+              "type": "numeric",
+              "length": 4,
+              "zeroFill": true
+            },
+            {
+              "name": "LOGIN_PW",
+              "label": "Password",
+              "type": "alpha",
+              "length": 40
+            },
+            {
+              "name": "LOGIN_ROLE",
+              "label": "Role",
+              "type": "numeric",
+              "length": 1,
+              "valueSet": "VS_ROLE_LABEL"
+            },
+            {
+              "name": "LOGIN_NAME",
+              "label": "Name",
+              "type": "alpha",
+              "length": 40
+            },
+            {
+              "name": "APP_VERSION",
+              "label": "App Version",
+              "type": "alpha",
+              "length": 16
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
