@@ -1,12 +1,19 @@
-"""build_all.py — orchestrate generators + CSDeploy across all UHC instruments.
+"""build_all.py — orchestrate generators across all UHC instruments + emit a
+compile manifest for the human-driven `.ent` -> `.pen` step.
+
+Why a human step? CSPro 8.0 has no documented CLI for compiling `.ent` to `.pen`.
+The compile is done by CSPro Designer's *File -> Publish Entry Application (F7)*.
+See docs/superpowers/runbooks/cspro-publish-entry-runbook.md for the manual SOP.
 
 Usage:
-    python build_all.py --env=dev               # all .pen for dev
+    python build_all.py --env=dev               # generate all sources for dev env
     python build_all.py --env=dev --only=F1     # iterate on F1 alone
-    python build_all.py --env=uat               # for tablet upload
+    python build_all.py --env=uat               # generate for UAT (LAN IP)
     python build_all.py --env=prod              # post-VPS, when ready
 
-Outputs to dist/<env>/<NN>_<name>.pen.
+After this script runs successfully, you open each emitted `.ent` in CSPro
+Designer and press F7 to produce the `.pen`. The script prints the file list
+at the end as a checklist.
 """
 import argparse
 import hashlib
@@ -18,7 +25,6 @@ from shared.env_loader import load_env, splice_user_settings
 
 
 WORKSPACE = Path(__file__).resolve().parent
-CSDEPLOY = Path(r"C:\Program Files (x86)\CSPro 8.0\CSDeploy.exe")
 
 # (numeric_prefix, short_name, dir_name, ent_filename)
 # Phase 1 builds 3 instruments. Phase 2 will append PLF, F3, F4_listing, F4.
@@ -43,45 +49,34 @@ def run_generators(inst_dir: Path) -> None:
             raise RuntimeError(f"{gen.name} failed (exit {result.returncode})")
 
 
-def deploy(ent_path: Path, out_pen: Path) -> None:
-    """Invoke CSDeploy.exe to compile ent -> pen."""
-    out_pen.parent.mkdir(parents=True, exist_ok=True)
-    result = subprocess.run(
-        [str(CSDEPLOY), str(ent_path), "-out", str(out_pen)],
-        capture_output=True, text=True,
-    )
-    if result.returncode != 0:
-        print(result.stdout)
-        print(result.stderr, file=sys.stderr)
-        raise RuntimeError(f"CSDeploy failed for {ent_path.name} (exit {result.returncode})")
-
-
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
 
 
-def build_one(inst, env_config, dist_dir):
+def build_one(inst, env_config):
+    """Run generators for one instrument and splice env config into its .ent.
+
+    Returns the absolute .ent path so main() can list all emitted files at the
+    end as the F7-checklist for the human compile step.
+    """
     prefix, short, dir_name, ent_name = inst
     inst_dir = WORKSPACE / dir_name
     ent_path = inst_dir / f"{ent_name}.ent"
-    out_pen = dist_dir / f"{prefix}_{short}.pen"
 
     print(f"[{prefix}_{short}] generating sources ...")
     run_generators(inst_dir)
 
-    if ent_path.exists():
-        print(f"[{prefix}_{short}] splicing env config into {ent_path.name}")
-        splice_user_settings(ent_path, {
-            "csweb_url": env_config["csweb_url"],
-            "expiration_days": env_config["expiration_days"],
-        })
-    else:
+    if not ent_path.exists():
         raise RuntimeError(f"{ent_path} not produced by generators")
 
-    print(f"[{prefix}_{short}] compiling -> {out_pen.relative_to(WORKSPACE)}")
-    deploy(ent_path, out_pen)
+    print(f"[{prefix}_{short}] splicing env config into {ent_path.name}")
+    splice_user_settings(ent_path, {
+        "csweb_url": env_config["csweb_url"],
+        "expiration_days": env_config["expiration_days"],
+    })
 
-    print(f"[{prefix}_{short}] OK ({sha256(out_pen)})")
+    print(f"[{prefix}_{short}] OK (sources at {inst_dir.relative_to(WORKSPACE)})")
+    return prefix, short, ent_path
 
 
 def main():
@@ -91,7 +86,6 @@ def main():
     args = p.parse_args()
 
     env_config = load_env(args.env, WORKSPACE / "urls.yaml")
-    dist_dir = WORKSPACE / "dist" / args.env
 
     targets = INSTRUMENTS
     if args.only:
@@ -99,10 +93,25 @@ def main():
         if not targets:
             sys.exit(f"--only={args.only} matched no instrument; have {[i[1] for i in INSTRUMENTS]}")
 
-    for inst in targets:
-        build_one(inst, env_config, dist_dir)
+    built = [build_one(inst, env_config) for inst in targets]
 
-    print(f"\nBuilt {len(targets)} instrument(s) for env={args.env} -> {dist_dir}")
+    print()
+    print(f"Generated sources for {len(built)} instrument(s), env={args.env}.")
+    print()
+    print("=" * 72)
+    print("NEXT STEP — manual compile in CSPro Designer:")
+    print("=" * 72)
+    print("CSPro 8.0 has no headless `.ent` -> `.pen` CLI. Open each .ent below")
+    print("in CSPro Designer and press F7 (File -> Publish Entry Application).")
+    print("Save the resulting .pen alongside the .ent.")
+    print()
+    print("See docs/superpowers/runbooks/cspro-publish-entry-runbook.md for SOP.")
+    print()
+    print(f"{'#':>4}  {'name':<8}  ent path")
+    print(f"{'-' * 4}  {'-' * 8}  {'-' * 60}")
+    for prefix, short, ent_path in built:
+        print(f"{prefix:>4}  {short:<8}  {ent_path.relative_to(WORKSPACE)}")
+    print()
 
 
 if __name__ == "__main__":

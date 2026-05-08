@@ -4,7 +4,9 @@
 
 **Goal:** Prove the script-only build pipeline + Khurshid-canonical login → menu → instrument chain + local CSWeb sync end-to-end against F1 (Facility Head Survey), the first vertical slice of a 5-instrument UHC Survey system. After this plan lands, replicating to PLF/F3/F4_listing/F4 in Phase 2 is mechanical.
 
-**Architecture:** Python generators emit CSPro source files (`.dcf`/`.fmf`/`.ent`/`.apc`) → `CSDeploy.exe` compiles to `.pen` → local CSWeb on Wampserver64 receives sync from real Android tablet. Three `.pen` apps in the chain: `101_login`, `106_menu` (enumerator-only for Phase 1), `107_F1`. Environment selection (`dev`/`uat`/`prod`) drives only the embedded sync URL — same source code, three builds.
+**Architecture:** Python generators emit CSPro source files (`.dcf`/`.fmf`/`.ent`/`.apc`) → human runs **CSPro Designer F7 (Publish Entry Application)** to compile each `.ent` to `.pen` (the only manual step — see [runbook](../runbooks/2026-05-08-cspro-publish-entry-runbook.md) — CSPro 8.0 has no headless compile CLI) → local CSWeb on Wampserver64 receives sync from real Android tablet. Three `.pen` apps in the chain: `101_login`, `106_menu` (enumerator-only for Phase 1), `107_F1`. Environment selection (`dev`/`uat`/`prod`) drives only the embedded sync URL — same source code, three builds.
+
+**Update 2026-05-08:** Earlier draft assumed `CSDeploy.exe` was a CLI compiler. Investigation confirmed it is the GUI Deploy Application wizard. The actual `.ent`→`.pen` compile is **File → Publish Entry Application (F7)** inside CSPro Designer. `build_all.py` now runs all generators + env splice headlessly and emits a checklist of `.ent` files to F7-publish. Per-build manual time: ~30 sec (Phase 1) / ~60 sec (Phase 2).
 
 **Tech Stack:** Python 3.13 (generators), CSPro 8.0 toolchain (CSDeploy/CSEntry/CSBatch/CSExport at `C:\Program Files (x86)\CSPro 8.0\`), Wampserver64 at `C:\wamp64\` (Apache 2.4 + PHP + MySQL), CSWeb PHP package, CSPro Android (sideloaded), PowerShell + Bash (provisioning scripts), pytest (generator tests).
 
@@ -642,7 +644,7 @@ git commit -m "feat(UHC-build): add build_all.py orchestrator skeleton"
 **Files:**
 - Create: `deliverables/CSPro/UHC-Survey-System/107_F1/generate_stub.py` (DELETED at end of task)
 
-This task proves the harness can actually drive `CSDeploy.exe` to produce a `.pen`. We use a deliberately minimal stub so the build runs without the full generator chain.
+This task proves the harness can run all generators, splice env config, and emit the F7 checklist. **Does NOT call CSDeploy** — see runbook for the F7 step. We use a deliberately minimal stub so the harness runs without the full generator chain.
 
 - [ ] **Step 1: Write a throwaway stub generator**
 
@@ -691,36 +693,36 @@ print(f"  stub: wrote FacilityHeadSurvey.dcf + FacilityHeadSurvey.ent")
 - [ ] **Step 2: Run build_all on F1 only**
 
 Run: `python build_all.py --env=dev --only=F1`
-Expected output last line: `[107_F1] OK (<16-char-hash>)` and a file at `dist/dev/107_F1.pen`.
+Expected: stub generator runs, env config splices into `.ent`, script ends with the F7 checklist banner listing `107_F1/FacilityHeadSurvey.ent`.
 
-- [ ] **Step 3: Verify the embedded csweb_url is dev's localhost**
+- [ ] **Step 3: Inspect the spliced .ent for dev's localhost URL**
 
-```bash
-# A .pen is a packaged zip; extract and grep for the embedded url
-unzip -p dist/dev/107_F1.pen | strings | grep -i cswebtest | head -5
-```
+Run: `grep -A1 csweb_url deliverables/CSPro/UHC-Survey-System/107_F1/FacilityHeadSurvey.ent`
+Expected: a line containing `"value": "http://localhost/cswebtest/api"`.
 
-Expected: a line containing `http://localhost/cswebtest/api`.
+- [ ] **Step 4: Run for UAT and verify the URL changes**
 
-- [ ] **Step 4: Run for UAT and verify the embedded URL changes**
+Run: `python build_all.py --env=uat --only=F1 && grep -A1 csweb_url deliverables/CSPro/UHC-Survey-System/107_F1/FacilityHeadSurvey.ent`
+Expected: line contains `192.168.` (your LAN IP), proving per-env splice works.
 
-Run: `python build_all.py --env=uat --only=F1 && unzip -p dist/uat/107_F1.pen | strings | grep -i cswebtest | head -5`
-Expected: a line containing `192.168.` (your LAN IP), proving the per-env splice works.
+- [ ] **Step 5: (Optional) Walk through the F7 step once manually**
 
-- [ ] **Step 5: Delete the stub generator**
+Per the runbook (`docs/superpowers/runbooks/2026-05-08-cspro-publish-entry-runbook.md`), open the stubbed `.ent` in CSPro Designer and press F7. Confirms the manual compile step works on a stub. After this task, you'll repeat F7 for each real instrument.
+
+- [ ] **Step 6: Delete the stub generator and its outputs**
 
 ```bash
 rm deliverables/CSPro/UHC-Survey-System/107_F1/generate_stub.py \
    deliverables/CSPro/UHC-Survey-System/107_F1/FacilityHeadSurvey.dcf \
    deliverables/CSPro/UHC-Survey-System/107_F1/FacilityHeadSurvey.ent
+# Also delete the stub .pen if you ran the F7 step
+rm -f deliverables/CSPro/UHC-Survey-System/107_F1/FacilityHeadSurvey.pen
 ```
 
-- [ ] **Step 6: Commit (just the build_all results — no stub file should remain)**
-
-The previous build_all.py commit is enough; this task produces no new files. Optionally:
+- [ ] **Step 7: Confirm working tree clean**
 
 ```bash
-git status   # confirm working tree is clean
+git status   # should show no untracked stub files
 ```
 
 ---
