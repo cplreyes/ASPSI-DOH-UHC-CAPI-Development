@@ -237,6 +237,7 @@ function AuditTable({ rows }: { rows: AuditRow[] }): JSX.Element {
             <Th>Actor</Th>
             <Th>Resource</Th>
             <Th>Detail</Th>
+            <Th>Actions</Th>
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">
@@ -253,12 +254,48 @@ function AuditTable({ rows }: { rows: AuditRow[] }): JSX.Element {
                   </code>
                 ) : null}
               </Td>
+              <Td>
+                {r.event_payload_json ? (
+                  <button
+                    type="button"
+                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+                    onClick={() => downloadPayload(`audit-${r.audit_id}.json`, r.event_payload_json!)}
+                    aria-label={`Download audit payload ${r.audit_id}`}
+                  >
+                    Download
+                  </button>
+                ) : (
+                  <span className="font-mono text-xs text-muted-foreground">—</span>
+                )}
+              </Td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
+}
+
+// R2-#102 sub-bug 3 (no download for audit / DLQ payloads): emit the
+// row's payload_json as a downloadable .json file. Pretty-printed if
+// the value parses; otherwise falls back to the raw string.
+function downloadPayload(filename: string, payloadJson: string): void {
+  if (typeof window === 'undefined') return;
+  let body = payloadJson;
+  try {
+    body = JSON.stringify(JSON.parse(payloadJson), null, 2);
+  } catch {
+    /* keep raw — admin still gets the source string */
+  }
+  const blob = new Blob([body], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function Th({ children }: { children?: React.ReactNode }): JSX.Element {

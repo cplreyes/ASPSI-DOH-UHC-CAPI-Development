@@ -272,6 +272,15 @@ function DlqTable({ rows, busyId, onReplay, onDelete }: DlqTableProps): JSX.Elem
                     </button>
                     <button
                       type="button"
+                      className="rounded border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-foreground transition-colors hover:bg-muted disabled:opacity-50"
+                      disabled={busy || !r.payload_json}
+                      onClick={() => downloadPayload(`dlq-${r.dlq_id}.json`, r.payload_json)}
+                      aria-label={`Download DLQ payload ${r.dlq_id}`}
+                    >
+                      Download
+                    </button>
+                    <button
+                      type="button"
                       className="rounded border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-error transition-colors hover:bg-error/10 disabled:opacity-50"
                       disabled={busy}
                       onClick={() => onDelete(r.dlq_id)}
@@ -288,6 +297,28 @@ function DlqTable({ rows, busyId, onReplay, onDelete }: DlqTableProps): JSX.Elem
       </table>
     </div>
   );
+}
+
+// R2-#102 sub-bug 3: emit the row's payload_json as a downloadable .json
+// file. Pretty-printed if the value parses; otherwise falls back to the
+// raw string.
+function downloadPayload(filename: string, payloadJson: string): void {
+  if (typeof window === 'undefined') return;
+  let body = payloadJson;
+  try {
+    body = JSON.stringify(JSON.parse(payloadJson), null, 2);
+  } catch {
+    /* keep raw — admin still gets the source string */
+  }
+  const blob = new Blob([body], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function Th({ children }: { children?: React.ReactNode }): JSX.Element {
