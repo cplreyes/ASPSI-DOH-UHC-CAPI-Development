@@ -151,6 +151,25 @@ describe('<EnrollmentScreen>', () => {
     );
   });
 
+  it('on offline (E_NETWORK), shows the offline-specific copy with retry guidance (R2-#109)', async () => {
+    // R2-#109: tester (Shan, 2026-05-07 A.1.E3) verified token while
+    // offline and saw the generic "Token rejected" copy. The actual
+    // failure mode is a network outage, so the offline-specific copy
+    // (with retry guidance) is more honest than blaming the token.
+    vi.spyOn(verifyClient, 'verifyDeviceToken').mockResolvedValue({
+      ok: false,
+      transport: true,
+      error: { code: 'E_NETWORK', message: 'Failed to fetch' },
+    });
+    const user = userEvent.setup();
+    setup();
+    await user.type(screen.getByTestId('enrollment-token-input'), FAKE_TOKEN);
+    await user.click(screen.getByRole('button', { name: /verify token/i }));
+    await waitFor(() =>
+      expect(screen.getByText(/You're offline\. Check your connection and retry/)).toBeInTheDocument(),
+    );
+  });
+
   it('Enroll is disabled until HCW ID is filled in Step 2', async () => {
     mockVerifyOk('F-001');
     const user = userEvent.setup();

@@ -57,6 +57,7 @@ export const fil: EnBundle = {
     verifyingTokenButton: 'Verifying…',
     tokenInvalid: 'Token malformed. Contact ASPSI ops for a new one.',
     tokenRevoked: 'This tablet has been revoked. Contact ASPSI ops.',
+    tokenOffline: "You're offline. Check your connection and retry.",
     identityStep: 'Step 2: Identify yourself',
     tokenAccepted: 'Token accepted for facility {{facility}}. Pick yourself from the roster below.',
   },
