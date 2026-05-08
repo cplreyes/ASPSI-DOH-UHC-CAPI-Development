@@ -27,7 +27,7 @@ function view_menu()
       );
       if cell_option = 0 then
          errmsg("Please select an option.");
-      else if cell_option = 1 then
+      elseif cell_option = 1 then
          launch_F1();
       endif;
    else
@@ -47,9 +47,9 @@ preproc
    if loadcase(USER_ROSTER_DICT, MENU_LOGIN_ID) then
       MENU_LOGIN_NAME = USER_ROSTER_DICT.RA_NAME;
    endif;
-   setattributes(MENU_LOGIN_ID,   protect, on);
-   setattributes(MENU_LOGIN_NAME, protect, on);
-   setattributes(MENU_ROLE,       protect, on);
-   setattributes(MENU_SUP_ID,     protect, on);
-   setattributes(APP_VERSION,     protect, on);
+   protect(MENU_LOGIN_ID, true);
+   protect(MENU_LOGIN_NAME, true);
+   protect(MENU_ROLE, true);
+   protect(MENU_SUP_ID, true);
+   protect(APP_VERSION, true);
    view_menu();
