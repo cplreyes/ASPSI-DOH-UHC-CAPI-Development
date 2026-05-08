@@ -1,77 +1,87 @@
 {
-  "software": "CSPro", 
-  "version": 8.0, 
-  "fileType": "application", 
-  "type": "entry", 
-  "name": "LOGIN_APP", 
-  "label": "UHC Login", 
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "application",
+  "type": "entry",
+  "name": "LOGIN_APP",
+  "label": "UHC Login",
   "dictionaries": [
     {
-      "type": "input", 
-      "path": "login_app.dcf", 
+      "type": "input",
+      "path": "login_app.dcf",
       "parent": "login_app.fmf"
     }
-  ], 
+  ],
   "forms": [
     "login_app.fmf"
-  ], 
+  ],
   "questionText": [
     "login_app.ent.qsf"
-  ], 
+  ],
   "code": [
     {
-      "type": "main", 
+      "type": "main",
       "path": "login_app.ent.apc"
     }
-  ], 
+  ],
   "messages": [
     "login_app.ent.mgf"
-  ], 
+  ],
   "logicSettings": {
-    "version": 2.0, 
+    "version": 2.0,
     "caseSensitive": {
       "symbols": false
-    }, 
+    },
     "actionInvoker": {
-      "accessFromExternalCaller": "promptIfNoValidAccessToken", 
+      "accessFromExternalCaller": "promptIfNoValidAccessToken",
       "convertResultsForLogic": true
     }
-  }, 
+  },
   "properties": {
-    "askOperatorId": false, 
-    "autoAdvanceOnSelection": false, 
-    "caseTree": "mobileOnly", 
-    "centerForms": false, 
-    "createListing": false, 
-    "createLog": false, 
-    "decimalMark": "dot", 
-    "displayCodesAlongsideLabels": false, 
+    "askOperatorId": false,
+    "autoAdvanceOnSelection": false,
+    "caseTree": "mobileOnly",
+    "centerForms": false,
+    "createListing": false,
+    "createLog": false,
+    "decimalMark": "dot",
+    "displayCodesAlongsideLabels": false,
     "notes": {
-      "delete": "all", 
+      "delete": "all",
       "edit": "all"
-    }, 
+    },
     "partialSave": {
       "operatorEnabled": true
-    }, 
-    "showEndCaseMessage": true, 
-    "showOnlyDiscreteValuesInComboBoxes": true, 
-    "showFieldLabels": true, 
-    "showErrorMessageNumbers": false, 
-    "showQuestionText": true, 
-    "showRefusals": true, 
+    },
+    "showEndCaseMessage": true,
+    "showOnlyDiscreteValuesInComboBoxes": true,
+    "showFieldLabels": true,
+    "showErrorMessageNumbers": false,
+    "showQuestionText": true,
+    "showRefusals": true,
     "verify": {
-      "frequency": 1, 
+      "frequency": 1,
       "start": 1
-    }, 
-    "htmlDialogs": true, 
+    },
+    "htmlDialogs": true,
     "paradata": {
-      "collection": "all", 
-      "recordCoordinates": false, 
-      "recordInitialPropertyValues": false, 
-      "recordIteratorLoadCases": false, 
-      "recordValues": false, 
+      "collection": "all",
+      "recordCoordinates": false,
+      "recordInitialPropertyValues": false,
+      "recordIteratorLoadCases": false,
+      "recordValues": false,
       "deviceStateIntervalMinutes": 5
-    }, 
+    },
     "useHtmlComponentsInsteadOfNativeVersions": false
-  }
+  },
+  "userSettings": [
+    {
+      "name": "csweb_url",
+      "value": "http://192.168.1.168/csweb8.0.1/api"
+    },
+    {
+      "name": "expiration_days",
+      "value": "7"
+    }
+  ]
 }
