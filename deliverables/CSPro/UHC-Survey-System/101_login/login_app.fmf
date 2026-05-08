@@ -55,17 +55,15 @@ Max=1
   
 [Field]
 Name=LOGIN_APP_ID
-Position=1695,30,1895,50
+Position=1695,30,1752,50
 Item=LOGIN_APP_ID,LOGIN_DICT
-UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=1
   
 [Text]
-Position=50,30,1695,46
+Position=50,30,132,46
 Text=Login App ID
  
-  
 [EndGroup]
   
 [Group]
@@ -74,7 +72,6 @@ Name=LOGIN_REC_FORM
 Label=LoginDictionary Record
 Form=2
 Max=1
-  
 [EndGroup]
   
 [Group]
@@ -86,14 +83,13 @@ Max=1
   
 [Field]
 Name=LOGIN_RA_ID
-Position=1695,30,2665,50
+Position=1695,30,1752,50
 Item=LOGIN_RA_ID,LOGIN_DICT
-UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,30,1695,46
+Position=50,30,158,46
 Text=Enter your RA ID:
  
   
@@ -106,7 +102,7 @@ DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,60,1695,76
+Position=50,60,183,76
 Text=Enter your password:
  
   
@@ -119,19 +115,19 @@ DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,90,1695,106
+Position=50,90,91,106
 Text=Name:
  
   
 [Field]
 Name=LOGIN_ROLE
-Position=1695,120,1724,140
+Position=1695,120,1710,140
 Item=LOGIN_ROLE,LOGIN_DICT
 DataCaptureType=RadioButton
 Form=3
   
 [Text]
-Position=50,120,1695,136
+Position=50,120,83,136
 Text=Role:
  
   
@@ -144,9 +140,8 @@ DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,150,1695,166
+Position=50,150,129,166
 Text=App version:
  
-  
 [EndGroup]
   
