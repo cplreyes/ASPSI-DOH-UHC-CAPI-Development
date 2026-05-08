@@ -51,7 +51,7 @@
       "edit": "all"
     },
     "partialSave": {
-      "operatorEnabled": false
+      "operatorEnabled": true
     },
     "showEndCaseMessage": true,
     "showOnlyDiscreteValuesInComboBoxes": true,
