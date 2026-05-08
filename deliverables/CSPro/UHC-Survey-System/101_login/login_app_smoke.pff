@@ -1,0 +1,7 @@
+[Run Information]
+Version=CSPro 8.0
+AppType=Entry
+
+[Files]
+Application=.\login_app.ent
+InputData=.\login_smoke.csdb
