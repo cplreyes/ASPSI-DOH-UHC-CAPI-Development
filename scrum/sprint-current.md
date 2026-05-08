@@ -11,7 +11,7 @@ deliverable_anchor: Goal A — E3-F1-088 (Phase 1 sync mechanic resolution) + Ph
 
 ## Sprint Goal
 
-> **Goal A — UHC Survey System CSPro track:** Close **E3-F1-088** (Phase 1 sync mechanic resolution) — pick Path A (separate "send" app w/ external dict + CSDB binding via `dataFile` property in `.ent` or `setfile()` in code, ~2h) or Path B (accept Phase 1 sync gap, ship Plan 1 substantially proven, revisit sync architecture in Phase 2). On Goal A close: merge worktree `worktree-f3-uhc-survey-build` to `main`; begin Phase 2 (PLF / F3 / F4_listing / F4 / supervisor menu / EA fence / daily audit Slack) per the build plan.
+> **Goal A — UHC Survey System CSPro track:** Close **E3-F1-088** (Phase 1 sync mechanic resolution) — pick Path A (separate "send" app w/ external dict + CSDB binding via `dataFile` property in `.ent` or `setfile()` in code, ~2h) or Path B (accept Phase 1 sync gap, ship Plan 1 substantially proven, revisit sync architecture in Phase 2). On Goal A close: merge worktree `feature/uhc-survey-system-build` to `main`; begin Phase 2 (PLF / F3 / F4_listing / F4 / supervisor menu / EA fence / daily audit Slack) per the build plan.
 > **Goal B — F2 PWA + Admin Portal v2.0.1:** Ship Tier 1 hotfixes (lockout-prevention + audit-completeness — E4-APRT-050 / 051 / 045 / 044 / 043) Mon, Tier 2 visible-UX-gap features (E4-APRT-048 / 041 / 042) Wed-Thu, cutover staging→main Fri tagged `v2.0.1`. Run **UAT Round 3 against staging** in parallel with R2 wind-down on prod, both rounds finish clean by Fri 2026-05-15.
 
 ## Committed Items
@@ -64,7 +64,7 @@ deliverable_anchor: Goal A — E3-F1-088 (Phase 1 sync mechanic resolution) + Ph
 
 - [ ] **E3-F1-088** closed: Phase 1 sync mechanic disposition (Path A or B) decided + executed; if Path A, supervisor "send" app sync round-trip verified; if Path B, Phase 2 sync revisit task filed.
 - [ ] **E3-F1-PHASE2-PLAN** closed: Phase 2 plan doc saved at `docs/superpowers/plans/`; Phase 2 task IDs filed in epic-03 + Project #8.
-- [ ] **Worktree merged:** `worktree-f3-uhc-survey-build` → `main` (or kept open with explicit reason in retro).
+- [ ] **Worktree merged:** `feature/uhc-survey-system-build` → `main` (or kept open with explicit reason in retro).
 - [ ] **Tier 1 closed:** E4-APRT-050 + E4-APRT-051 + E4-APRT-045 + E4-APRT-044 + E4-APRT-043 all shipped + verified on staging.
 - [ ] **Tier 2 closed:** E4-APRT-048 + E4-APRT-041 + E4-APRT-042 all shipped + verified on staging.
 - [ ] **v2.0.1 cutover:** staging ff-merge to main Fri 2026-05-15; tag `v2.0.1` pushed; CF Pages auto-deploy fires; prod Worker deployed via `wrangler deploy`; `f2-pwa.pages.dev/admin` Versioning panel reports `v2.0.1`.
