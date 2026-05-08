@@ -1,0 +1,58 @@
+{ menu_app.ent.apc — role-conditional menu, PFF-launch chosen instrument.    }
+
+#include "..\shared\Expiration-Guard.apc"
+
+PROC GLOBAL
+
+PFF F1_pff;
+numeric cell_option;
+
+
+function launch_F1()
+   F1_pff.setProperty("Version", "CSPro 8.0");
+   F1_pff.setProperty("ApplicationType", "entry");
+   F1_pff.setProperty("StartMode", "add");
+   F1_pff.setProperty("FullScreen", "yes");
+   F1_pff.setProperty("Application", r"..\107_F1\FacilityHeadSurvey.pen");
+   F1_pff.setProperty("OnExit", r"..\106_menu\menu_app.pff");
+   F1_pff.execute();
+end;
+
+
+function view_menu()
+   if MENU_ROLE = 2 then
+      { Enumerator — Phase 1 has 1 choice }
+      cell_option = accept(
+         concat("Welcome ", strip(MENU_LOGIN_NAME), " - Enumerator Menu"),
+         "Conduct facility interview (F1)"
+      );
+      if cell_option = 0 then
+         errmsg("Please select an option.");
+      else if cell_option = 1 then
+         launch_F1();
+      endif;
+   else
+      { Supervisor / Ops — Phase 2 will populate this branch }
+      errmsg("Supervisor menu not yet enabled (Phase 2).");
+      stop(0);
+   endif;
+end;
+
+
+PROC MENU_LEVEL
+preproc
+   check_expiration();
+   APP_VERSION = maketext("v%d", publishdate() / 1000);
+   MENU_APP_ID = 1;
+   MENU_LOGIN_ID = tonumber(loadsetting("login_id"));
+   MENU_ROLE     = tonumber(loadsetting("login_roll"));
+   MENU_SUP_ID   = tonumber(loadsetting("supervisor_id"));
+   if loadcase(USER_ROSTER_DICT, MENU_LOGIN_ID) then
+      MENU_LOGIN_NAME = USER_ROSTER_DICT.RA_NAME;
+   endif;
+   setattributes(MENU_LOGIN_ID,   protect, on);
+   setattributes(MENU_LOGIN_NAME, protect, on);
+   setattributes(MENU_ROLE,       protect, on);
+   setattributes(MENU_SUP_ID,     protect, on);
+   setattributes(APP_VERSION,     protect, on);
+   view_menu();
