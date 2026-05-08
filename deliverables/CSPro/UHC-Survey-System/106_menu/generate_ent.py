@@ -15,8 +15,8 @@ ENT = {
     "software": "CSPro", "version": 8.0, "fileType": "application",
     "type": "entry", "name": "MENU_APP", "label": "UHC Menu",
     "dictionaries": [
-        {"type": "input",    "path": "menu_app.dcf", "parent": "menu_app.fmf"},
-        {"type": "external", "path": r"..\102_EXT_DIC\user_roster.dcf"},
+        {"type": "input",    "path": "menu_app.dcf",                     "parent": "menu_app.fmf"},
+        {"type": "external", "path": r"..\107_F1\FacilityHeadSurvey.dcf"},
     ],
     "forms": ["menu_app.fmf"],
     "questionText": ["menu_app.ent.qsf"],
