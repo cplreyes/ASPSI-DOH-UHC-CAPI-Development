@@ -20,7 +20,7 @@ function start_menu()
    menu_app_pff.setProperty("Application", "..\106_menu\menu_app.pen");
    menu_app_pff.setProperty("InputData", "none");
    menu_app_pff.setProperty("OnExit", "..\101_login\login_app.pff");
-   menu_app_pff.execute();
+   menu_app_pff.exec();
 end;
 
 
