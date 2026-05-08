@@ -2,6 +2,18 @@
 
 Chronological record of all wiki operations.
 
+## 2026-05-09 (UAT Round 2 tester feedback ingest)
+
+### Two tester docs ingested + cross-referenced against 27 existing GH issues; off-sprint backlog triage prep
+
+- **Trigger.** Carl: "do off-sprint backlogs" → "triage the ~64 backlog" → "before triage, ingest UAT R2 issues from testers in GH and Downloads."
+- **Ingest.** Two .docx files staged into `raw/UAT-Round-2-2026-05-tester-feedback/`: `ROUND 2 (HCW Test Survey).docx` (14 HCW Survey observations from Shan, A.1.E2 through S.E2 across Sections A–J + Sync) + `Admin Portal side Feedback and Observation.docx` (~30 observations across 16 sub-areas: Layout / Login / Responses / Audit / DLQ / HCWs / Map / Files / Data Settings / Quota / Users / RBAC / Sidebar / Encode). Pandoc-converted to /tmp scratch for read-through.
+- **Surprise finding.** Tester observations are **already filed as 27 individual GH issues** (#68–#122 range, opened 2026-05-07). Each issue body matches tester docx near-verbatim with screenshots uploaded as GitHub user-attachments. .docx files were NOT yet in `raw/` and there was no wiki source-summary tying them together — that gap closed today.
+- **Source summary created.** `wiki/sources/Source - UAT Round 2 Tester Feedback (2026-05) - HCW Survey + Admin Portal.md` synthesizes both docs into one canonical record with HCW Survey (14-row) + Admin Portal (38-row) cross-reference tables mapping tester codes (A.1.E2, L.H2, R.H2, etc.) → GH issue numbers. Themes section identifies (1) session-refresh dominant, (2) copy-string drift, (3) skip-logic regressions, (4) data loss in Sections G/J (likely shared root cause), (5) admin write-paths missing UI, (6) filter persistence quirks.
+- **Triage findings flagged.** (a) Stale `status:blocked` label on #97 #104 #105 — PR #113 (merged Sprint 004) cascade-fixes them via sessionStorage auth; should be `status:fixed-pending-verify`. (b) Title/body mismatch on #118 — title says "KAP on Fees Q63–Q90", body is "KAP on Professional Setting Q87–Q88"; resolve before closing. (c) #111 (B.E1) is a PASS observation, not a bug — close with PASS comment OR keep as audit record. (d) ~15 placeholder issues missing `round:2` / `from-uat-round-2-2026-05` / `surface:admin-portal` labels.
+- **Index updated.** New source entry appended after `Source - Survey Manual Appendix F`.
+- **Next.** GH mutation pass to fix labels + #118 title + stale-blocked, then proceed with full off-sprint triage report covering all 54 non-Sprint-005 issues.
+
 ## 2026-05-08 (Wiki lint pass — post-Sprint-004-close)
 
 ### Wiki lint — 2 fixes applied; deferred items unchanged from 2026-05-07 pass
