@@ -20,3 +20,6 @@ __pycache__/
 
 # CSBatch / CSExport intermediates
 118_csbatch/edit_report_*.txt
+
+# Compiled CSPro applications (regenerable from .ent + Designer F7)
+**/*.pen
