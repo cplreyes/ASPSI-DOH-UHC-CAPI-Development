@@ -1,5 +1,6 @@
 from shared.form_layout_engine import (
     next_row_position, FieldPosition, TextPosition, RowPosition,
+    pick_capture_type,
 )
 
 
@@ -24,3 +25,31 @@ def test_text_width_clamps_to_left_of_field():
 def test_field_width_overridable_for_textbox():
     pos = next_row_position(prev_y=0, field_w=970)
     assert pos.field.w == 970
+
+
+def test_pick_capture_type_yes_no_is_radiobutton():
+    assert pick_capture_type(value_set_size=2, item_type="numeric", item_length=1) == "RadioButton"
+
+
+def test_pick_capture_type_5_option_single_select_is_radiobutton():
+    assert pick_capture_type(value_set_size=5, item_type="numeric", item_length=1) == "RadioButton"
+
+
+def test_pick_capture_type_10_option_single_select_is_dropdown():
+    assert pick_capture_type(value_set_size=10, item_type="numeric", item_length=2) == "DropDown"
+
+
+def test_pick_capture_type_short_alpha_is_textbox():
+    assert pick_capture_type(value_set_size=0, item_type="alpha", item_length=80) == "TextBox"
+
+
+def test_pick_capture_type_long_alpha_is_multiline_textbox():
+    assert pick_capture_type(value_set_size=0, item_type="alpha", item_length=200) == "TextBox"
+
+
+def test_pick_capture_type_numeric_no_value_set_is_textbox():
+    assert pick_capture_type(value_set_size=0, item_type="numeric", item_length=4) == "TextBox"
+
+
+def test_pick_capture_type_multi_select_is_checkbox():
+    assert pick_capture_type(value_set_size=5, item_type="multi", item_length=1) == "CheckBox"

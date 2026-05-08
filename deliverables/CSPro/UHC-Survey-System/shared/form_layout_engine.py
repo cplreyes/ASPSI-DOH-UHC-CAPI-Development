@@ -37,6 +37,24 @@ class RowPosition:
     text: TextPosition
 
 
+def pick_capture_type(value_set_size: int, item_type: str, item_length: int) -> str:
+    """Return the CSPro DataCaptureType for a dictionary item.
+
+    Per Form-Layout-Principles.md sec 4:
+      - value_set_size == 0  -> TextBox (numeric uses numpad, alpha uses keyboard)
+      - value_set_size 2-7   -> RadioButton
+      - value_set_size 8+    -> DropDown
+      - multi-select         -> CheckBox  (caller signals via item_type='multi')
+    """
+    if item_type == "multi":
+        return "CheckBox"
+    if value_set_size == 0:
+        return "TextBox"
+    if value_set_size <= 7:
+        return "RadioButton"
+    return "DropDown"
+
+
 def next_row_position(prev_y: int, field_w: int = 29) -> RowPosition:
     """Compute the (x, y, w, h) for the next row's label and control.
 
