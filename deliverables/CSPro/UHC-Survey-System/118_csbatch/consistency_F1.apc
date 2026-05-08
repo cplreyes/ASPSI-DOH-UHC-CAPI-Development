@@ -1,0 +1,34 @@
+{ consistency_F1.apc — Phase 1 minimal consistency checks for F1.            }
+{ Runs against synced F1 case data; emits errmsg lines per failed check.     }
+{ Phase 2 will spec-drive these rules from F1-Skip-Logic-and-Validations.md. }
+
+PROC FACILITYHEADSURVEY_LEVEL
+postproc
+
+   { Required IDs }
+   if QUESTIONNAIRE_NO = notappl then
+      errmsg("F1: case missing QUESTIONNAIRE_NO");
+   endif;
+
+   { Required FIELD_CONTROL items }
+   if SURVEY_TEAM_LEADER_S_NAME = "" then
+      errmsg("F1: case missing SURVEY_TEAM_LEADER_S_NAME");
+   endif;
+
+   if ENUMERATOR_S_NAME = "" then
+      errmsg("F1: case missing ENUMERATOR_S_NAME");
+   endif;
+
+   { Geographic ID cross-checks }
+   if REGION = notappl then
+      errmsg("F1: case missing REGION (Geographic Identification)");
+   endif;
+
+   if BARANGAY = notappl then
+      errmsg("F1: case missing BARANGAY (Geographic Identification)");
+   endif;
+
+   { Section A — facility head profile must have at least respondent name }
+   if RESP_NAME = "" then
+      errmsg("F1: case missing RESP_NAME (Section A facility head)");
+   endif;
