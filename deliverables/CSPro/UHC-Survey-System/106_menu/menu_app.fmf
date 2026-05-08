@@ -55,17 +55,15 @@ Max=1
   
 [Field]
 Name=MENU_APP_ID
-Position=1695,30,1895,50
+Position=1695,30,1752,50
 Item=MENU_APP_ID,MENU_DICT
-UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=1
   
 [Text]
-Position=50,30,1695,46
+Position=50,30,131,46
 Text=Menu App ID
  
-  
 [EndGroup]
   
 [Group]
@@ -74,7 +72,6 @@ Name=MENU_REC_FORM
 Label=MenuDictionary Record
 Form=2
 Max=1
-  
 [EndGroup]
   
 [Group]
@@ -86,14 +83,13 @@ Max=1
   
 [Field]
 Name=MENU_LOGIN_ID
-Position=1695,30,2665,50
+Position=1695,30,1752,50
 Item=MENU_LOGIN_ID,MENU_DICT
-UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,30,1695,46
+Position=50,30,183,46
 Text=Logged in as (RA ID):
  
   
@@ -106,33 +102,31 @@ DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,60,1695,76
+Position=50,60,91,76
 Text=Name:
  
   
 [Field]
 Name=MENU_ROLE
-Position=1695,90,2665,110
+Position=1695,90,1710,110
 Item=MENU_ROLE,MENU_DICT
-UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,90,1695,106
+Position=50,90,83,106
 Text=Role:
  
   
 [Field]
 Name=MENU_SUP_ID
-Position=1695,120,2665,140
+Position=1695,120,1752,140
 Item=MENU_SUP_ID,MENU_DICT
-UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,120,1695,136
+Position=50,120,139,136
 Text=Supervisor ID:
  
   
@@ -145,9 +139,8 @@ DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,150,1695,166
+Position=50,150,129,166
 Text=App version:
  
-  
 [EndGroup]
   
