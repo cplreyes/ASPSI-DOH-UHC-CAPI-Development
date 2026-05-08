@@ -14,6 +14,7 @@ import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
 import { UserEditor } from './UserEditor';
+import { BulkImportModal } from './BulkImportModal';
 
 interface UserRow {
   username: string;
@@ -75,6 +76,8 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
     | { kind: 'edit'; user: UserRow }
     | null
   >(null);
+  // R2-#98: Bulk import modal state.
+  const [bulkOpen, setBulkOpen] = useState(false);
   const [reloadTick, setReloadTick] = useState(0);
 
   const apiQuery = useMemo(() => buildApiQuery(filters), [filters]);
@@ -182,16 +185,27 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
           <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Users</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Admin portal accounts. Bulk-import + revoke-sessions actions land in follow-up commits.
+            Admin portal accounts. Use Bulk import to onboard many users at once via CSV; use Edit
+            on a row to reset password or change role.
           </p>
         </div>
-        <button
-          type="button"
-          onClick={() => setEditor({ kind: 'create' })}
-          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-        >
-          + Add user
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => setBulkOpen(true)}
+            className="inline-flex h-10 items-center justify-center rounded-md border border-hairline bg-background px-4 text-sm font-medium text-foreground hover:bg-muted"
+            aria-label="Bulk import users from CSV"
+          >
+            Bulk import
+          </button>
+          <button
+            type="button"
+            onClick={() => setEditor({ kind: 'create' })}
+            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          >
+            + Add user
+          </button>
+        </div>
       </header>
 
       <div className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3">
@@ -228,6 +242,15 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           roles={roles}
           onClose={() => setEditor(null)}
           onSaved={() => setReloadTick((n) => n + 1)}
+        />
+      ) : null}
+
+      {bulkOpen ? (
+        <BulkImportModal
+          apiBaseUrl={apiBaseUrl}
+          {...(fetchImpl ? { fetchImpl } : {})}
+          onClose={() => setBulkOpen(false)}
+          onImported={() => setReloadTick((n) => n + 1)}
         />
       ) : null}
     </section>

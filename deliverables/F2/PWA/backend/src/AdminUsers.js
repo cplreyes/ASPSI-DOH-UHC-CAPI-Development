@@ -247,6 +247,60 @@ function adminUsersDelete(payload) {
   });
 }
 
+/**
+ * Bulk-create admin users (R2-#98). Worker has already PBKDF2-hashed
+ * each password and validated structurally. AS iterates and calls
+ * adminUsersCreate for each row, collecting per-row results so the
+ * UI can render successes alongside rejection reasons.
+ *
+ * Payload: `{ rows: [{username, password_hash, role_name, ...}] }`
+ * Returns: `{ ok: true, data: { results: [{username, status, error?}] } }`
+ *
+ * status: 'created' | 'rejected'. On rejection, `error` mirrors the
+ * adminUsersCreate error shape so the UI can attribute the failure.
+ */
+function adminUsersBulkImport(payload) {
+  if (!payload || !Array.isArray(payload.rows)) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'payload.rows must be an array' } };
+  }
+  if (payload.rows.length === 0) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'rows must not be empty' } };
+  }
+  if (payload.rows.length > 100) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'max 100 rows per bulk import' } };
+  }
+  var results = [];
+  var createdCount = 0;
+  var rejectedCount = 0;
+  for (var i = 0; i < payload.rows.length; i++) {
+    var row = payload.rows[i] || {};
+    var r = adminUsersCreate(row);
+    if (r.ok) {
+      createdCount++;
+      results.push({
+        username: row.username || '',
+        status: 'created',
+      });
+    } else {
+      rejectedCount++;
+      results.push({
+        username: row.username || '',
+        status: 'rejected',
+        error: r.error || { code: 'E_INTERNAL', message: 'Unknown failure' },
+      });
+    }
+  }
+  return {
+    ok: true,
+    data: {
+      results: results,
+      total: payload.rows.length,
+      created: createdCount,
+      rejected: rejectedCount,
+    },
+  };
+}
+
 if (typeof module !== 'undefined') {
   module.exports = {
     adminUsersList: adminUsersList,
@@ -254,6 +308,7 @@ if (typeof module !== 'undefined') {
     adminUsersCreate: adminUsersCreate,
     adminUsersUpdate: adminUsersUpdate,
     adminUsersDelete: adminUsersDelete,
+    adminUsersBulkImport: adminUsersBulkImport,
     _stripPasswordHash: _stripPasswordHash,
   };
 }

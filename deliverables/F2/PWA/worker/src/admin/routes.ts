@@ -53,6 +53,8 @@ import {
   handleListUsers,
   handleListRoles,
   handleCreateUser,
+  handleBulkImportUsers,
+  type BulkImportBody,
   handleUpdateUser,
   handleDeleteUser,
   handleRevokeSessions,
@@ -112,6 +114,9 @@ const REPORT_SYNC_RE = /^\/admin\/api\/dashboards\/report\/sync\/?$/;
 const REPORT_MAP_RE = /^\/admin\/api\/dashboards\/report\/map\/?$/;
 const APPS_VERSION_RE = /^\/admin\/api\/dashboards\/apps\/version\/?$/;
 const USERS_LIST_RE = /^\/admin\/api\/dashboards\/users\/?$/;
+// R2-#98: Bulk import endpoint sits as a sibling of /users so the list
+// route's regex doesn't false-match the longer /bulk-import path.
+const USERS_BULK_IMPORT_RE = /^\/admin\/api\/dashboards\/users\/bulk-import\/?$/;
 const USERS_BY_NAME_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/?$/;
 const USERS_REVOKE_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/revoke-sessions\/?$/;
 const ROLES_LIST_RE = /^\/admin\/api\/dashboards\/roles\/?$/;
@@ -623,6 +628,32 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleListUsers(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  // R2-#98: bulk import — must come before the single-user POST route so
+  // the longer /bulk-import path matches first.
+  if (req.method === 'POST' && USERS_BULK_IMPORT_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_users', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const body = (await req.json().catch(() => ({}))) as BulkImportBody;
+    const asCall = (payload: { rows: Record<string, unknown>[] }) =>
+      callAppsScript<{
+        results: Array<{ username: string; status: 'created' | 'rejected'; error?: { code: string; message: string } }>;
+        total: number;
+        created: number;
+        rejected: number;
+      }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_bulk_import',
+        payload as unknown as Record<string, unknown>,
+        requestId,
+        env.F2_AUTH,
+      );
+    const r = await handleBulkImportUsers(body, { username: auth.payload!.sub }, asCall);
     return withRequestId(r, requestId);
   }
 

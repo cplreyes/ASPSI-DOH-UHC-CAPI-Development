@@ -121,6 +121,7 @@ function _adminHandlers() {
       admin_users_create: typeof adminUsersCreate !== 'undefined' ? adminUsersCreate : null,
       admin_users_update: typeof adminUsersUpdate !== 'undefined' ? adminUsersUpdate : null,
       admin_users_delete: typeof adminUsersDelete !== 'undefined' ? adminUsersDelete : null,
+      admin_users_bulk_import: typeof adminUsersBulkImport !== 'undefined' ? adminUsersBulkImport : null,
       admin_roles_list: typeof adminRolesList !== 'undefined' ? adminRolesList : null,
       admin_roles_create: typeof adminRolesCreate !== 'undefined' ? adminRolesCreate : null,
       admin_roles_update: typeof adminRolesUpdate !== 'undefined' ? adminRolesUpdate : null,
