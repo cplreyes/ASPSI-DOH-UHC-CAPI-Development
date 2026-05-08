@@ -1,0 +1,45 @@
+{ Expiration-Guard.apc — refuses launch if .pen is older than expiration_days.   }
+{ Source: Tutorial on PublishDate() Function                                     }
+{   https://www.youtube.com/watch?v=766_D7Z2fJU                                  }
+{                                                                                }
+{ Each instrument's level-preproc inserts:                                       }
+{   #include "..\shared\Expiration-Guard.apc"                                    }
+{ The expiration_days value comes from urls.yaml via env_loader.py.              }
+
+PROC GLOBAL
+
+config expiration_days expiration_days;    { build-time config attribute }
+numeric publish_day, days_left;
+array app_months(12) string;
+
+
+function init_app_months()
+   app_months( 1) = "January";   app_months( 2) = "February"; app_months( 3) = "March";
+   app_months( 4) = "April";     app_months( 5) = "May";      app_months( 6) = "June";
+   app_months( 7) = "July";      app_months( 8) = "August";   app_months( 9) = "September";
+   app_months(10) = "October";   app_months(11) = "November"; app_months(12) = "December";
+end;
+
+
+function check_expiration()
+   init_app_months();
+   publish_day = publishdate() / 1000;     { strip time-of-day, keep date }
+
+   if datediff(systemdate(), publish_day, days) > expiration_days then
+      errmsg("Application has expired. Please pull the latest from your supervisor.");
+      stop(1);
+   else
+      days_left = expiration_days - datediff(systemdate(), publish_day, days);
+      if days_left = 0 then
+         warning("After today midnight you will be unable to access the application.");
+      else
+         warning(maketext(
+            "%d day(s) left. Please update by %d %s %d.",
+            days_left,
+            day(systemdate() + days_left),
+            app_months(month(systemdate() + days_left)),
+            year(systemdate() + days_left)
+         ));
+      endif;
+   endif;
+end;
