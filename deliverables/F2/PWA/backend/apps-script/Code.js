@@ -232,7 +232,21 @@ function _buildFacilitiesCtx(sheet) {
 }
 
 function _gasHmacHex(secret, message) {
-  var bytes = Utilities.computeHmacSha256Signature(message, secret);
+  // R2-#93: pre-encode message + secret as UTF-8 bytes before HMAC.
+  // Apps Script's Utilities.computeHmacSha256Signature(string, string)
+  // converts strings to bytes using a charset that's NOT UTF-8 in many
+  // runtime configurations (US-ASCII or ISO-8859-1 depending on the
+  // environment). Cloudflare Workers' TextEncoder always emits UTF-8.
+  // For ASCII-only canonical strings the bytes match anyway; the
+  // mismatch surfaces for non-ASCII filenames like "Plano-Q1-Niño.pdf"
+  // — Worker hashes 5 bytes for "ñ" (UTF-8: C3 B1), AS hashes 1 byte
+  // (Latin-1: F1) or replaces with "?" (US-ASCII: 3F). Result: HMAC
+  // mismatch → user sees E_SIG_INVALID "Signature mismatch".
+  // Fix: Utilities.newBlob(string).getBytes() always emits UTF-8 bytes,
+  // matching the Worker side regardless of AS runtime charset default.
+  var messageBytes = Utilities.newBlob(message).getBytes();
+  var secretBytes = Utilities.newBlob(secret).getBytes();
+  var bytes = Utilities.computeHmacSha256Signature(messageBytes, secretBytes);
   var hex = '';
   for (var i = 0; i < bytes.length; i++) {
     var b = bytes[i];
