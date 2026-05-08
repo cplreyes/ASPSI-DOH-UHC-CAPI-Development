@@ -20,19 +20,17 @@ end;
 
 
 function view_menu()
-   if MENU_ROLE = 2 then
-      cell_option = accept(
-         concat("Welcome ", strip(MENU_LOGIN_NAME), " - Enumerator Menu"),
-         "Conduct facility interview (F1)"
-      );
-      if cell_option = 0 then
-         errmsg("Please select an option.");
-      elseif cell_option = 1 then
-         launch_F1();
-      endif;
-   else
-      errmsg("Supervisor menu not yet enabled (Phase 2).");
-      stop(0);
+   { Phase 1 SIMPLIFICATION: skip role check entirely. Phase 2 will           }
+   { reintroduce role-conditional dispatch once savesetting/loadsetting       }
+   { cross-pen persistence is debugged on Android.                            }
+   cell_option = accept(
+      "UHC Survey - Enumerator Menu",
+      "Conduct facility interview (F1)"
+   );
+   if cell_option = 0 then
+      errmsg("Please select an option.");
+   elseif cell_option = 1 then
+      launch_F1();
    endif;
 end;
 
