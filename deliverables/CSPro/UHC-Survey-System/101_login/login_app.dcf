@@ -5,51 +5,25 @@
   "name": "LOGIN_DICT",
   "labels": [
     {
-      "text": "Login Dictionary"
+      "text": "LoginDictionary"
     }
   ],
-  "valueSets": [
-    {
-      "name": "VS_ROLE_LABEL",
-      "labels": [
-        {
-          "text": "Role"
-        }
-      ],
-      "values": [
-        {
-          "value": "1",
-          "labels": [
-            {
-              "text": "Supervisor"
-            }
-          ]
-        },
-        {
-          "value": "2",
-          "labels": [
-            {
-              "text": "Enumerator"
-            }
-          ]
-        },
-        {
-          "value": "3",
-          "labels": [
-            {
-              "text": "Ops"
-            }
-          ]
-        }
-      ]
-    }
-  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 1,
+    "length": 1
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": false
+  },
+  "relativePositions": true,
   "levels": [
     {
       "name": "LOGIN_LEVEL",
       "labels": [
         {
-          "text": "Login Level"
+          "text": "LoginDictionary Level"
         }
       ],
       "ids": {
@@ -62,6 +36,7 @@
               }
             ],
             "contentType": "numeric",
+            "start": 2,
             "length": 4,
             "zeroFill": true
           }
@@ -76,8 +51,10 @@
             }
           ],
           "recordType": "",
-          "required": true,
-          "occurrences": 1,
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
           "items": [
             {
               "name": "LOGIN_RA_ID",
@@ -109,9 +86,53 @@
               ],
               "contentType": "numeric",
               "length": 1,
+              "zeroFill": false,
               "valueSets": [
                 {
-                  "name": "VS_ROLE_LABEL"
+                  "name": "LOGIN_ROLE_VS1",
+                  "labels": [
+                    {
+                      "text": "Role"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Supervisor"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Enumerator"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Ops"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },

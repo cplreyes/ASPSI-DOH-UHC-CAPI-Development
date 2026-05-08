@@ -1,5 +1,7 @@
 """build_username_dict.py — generate user_roster.dcf + user_roster.dat from XLSX.
 
+Uses cspro_helpers for the canonical CSPro 8.0 DCF schema.
+
 Khurshid pattern: external single-level dict (Tutorial 1: Create Login Application
 in CSPro @ 01:57 — "An external file dictionary can contain only one level").
 The login app loads this via loadcase(USER_ROSTER_DICT, RA_ID).
@@ -11,9 +13,15 @@ Invoker Hash.createHash gets wired up in Phase 2.
 """
 import argparse
 import hashlib
-import json
-import openpyxl
+import sys
 from pathlib import Path
+
+import openpyxl
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+
+from cspro_helpers import alpha, numeric, record, build_dictionary, write_dcf
 
 
 # Field widths — sized for the largest expected value
@@ -66,7 +74,7 @@ def build_user_roster(src_xlsx: Path, dcf_path: Path, dat_path: Path,
         ra_id, name, pw, role, sup_id, region = row
         if password_mode == "sha256":
             pw_field = _hash_password(str(pw))
-        else:  # plaintext
+        else:
             pw_field = _pad_alpha(str(pw), FIELD_PASSWORD_HASH)
         dat_lines.append(
             _pad_num(int(ra_id), FIELD_RA_ID)
@@ -78,36 +86,27 @@ def build_user_roster(src_xlsx: Path, dcf_path: Path, dat_path: Path,
         )
     dat_path.write_text("\n".join(dat_lines), encoding="utf-8")
 
-    # Emit .dcf
-    dcf = {
-        "software": "CSPro",
-        "version": 8.0,
-        "fileType": "dictionary",
-        "name": "USER_ROSTER_DICT",
-        "label": "User Roster",
-        "levels": [{
-            "name": "USER_LEVEL",
-            "label": "User Level",
-            "ids": [{
-                "name": "RA_ID", "label": "RA ID",
-                "type": "numeric", "length": FIELD_RA_ID, "zeroFill": True,
-            }],
-            "records": [{
-                "name": "USER_REC",
-                "label": "User Record",
-                "recordType": "",
-                "required": True,
-                "items": [
-                    {"name": "RA_NAME",       "label": "RA Name",        "type": "alpha",   "length": FIELD_RA_NAME},
-                    {"name": "PASSWORD_HASH", "label": "Password Hash",  "type": "alpha",   "length": FIELD_PASSWORD_HASH},
-                    {"name": "ROLE",          "label": "Role",           "type": "numeric", "length": FIELD_ROLE},
-                    {"name": "SUPERVISOR_ID", "label": "Supervisor ID",  "type": "numeric", "length": FIELD_SUPERVISOR_ID, "zeroFill": True},
-                    {"name": "REGION_CODE",   "label": "Region Code",    "type": "numeric", "length": FIELD_REGION_CODE,   "zeroFill": True},
-                ],
-            }],
-        }],
-    }
-    dcf_path.write_text(json.dumps(dcf, indent=2), encoding="utf-8")
+    # Emit .dcf via cspro_helpers
+    user_rec = record(
+        name="USER_REC", label="User Record", record_type="",
+        items=[
+            alpha  ("RA_NAME",       "RA Name",        length=FIELD_RA_NAME),
+            alpha  ("PASSWORD_HASH", "Password Hash",  length=FIELD_PASSWORD_HASH),
+            numeric("ROLE",          "Role",           length=FIELD_ROLE),
+            numeric("SUPERVISOR_ID", "Supervisor ID",  length=FIELD_SUPERVISOR_ID, zero_fill=True),
+            numeric("REGION_CODE",   "Region Code",    length=FIELD_REGION_CODE,   zero_fill=True),
+        ],
+    )
+
+    dictionary = build_dictionary(
+        dict_name="USER_ROSTER_DICT",
+        dict_label="UserRoster",
+        id_item_name="RA_ID",
+        id_item_label="RA ID",
+        id_length=FIELD_RA_ID,
+        records=[user_rec],
+    )
+    write_dcf(dictionary, dcf_path)
 
 
 if __name__ == "__main__":

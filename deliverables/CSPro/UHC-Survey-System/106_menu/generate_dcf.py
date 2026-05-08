@@ -1,54 +1,31 @@
-"""generate_dcf.py — emit menu_app.dcf per menu_app.spec.md.
-
-Uses the real CSPro 8.0 JSON schema (see 101_login/generate_dcf.py for the
-canonical pattern reference).
-"""
-import json
+"""generate_dcf.py — emit menu_app.dcf using shared cspro_helpers."""
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent / "shared"))
+
+from cspro_helpers import numeric, alpha, record, build_dictionary, write_dcf
 
 
-def _item(name, label_text, content_type, length, **kwargs):
-    item = {
-        "name": name,
-        "labels": [{"text": label_text}],
-        "contentType": content_type,
-        "length": length,
-    }
-    item.update(kwargs)
-    return item
+menu_rec = record(
+    name="MENU_REC", label="Menu Record", record_type="",
+    items=[
+        numeric("MENU_LOGIN_ID",   "Login ID",      length=4, zero_fill=True),
+        alpha  ("MENU_LOGIN_NAME", "Login Name",    length=40),
+        numeric("MENU_ROLE",       "Role",          length=1),
+        numeric("MENU_SUP_ID",     "Supervisor ID", length=4, zero_fill=True),
+        alpha  ("APP_VERSION",     "App Version",   length=16),
+    ],
+)
 
+dictionary = build_dictionary(
+    dict_name="MENU_DICT",
+    dict_label="MenuDictionary",
+    id_item_name="MENU_APP_ID",
+    id_item_label="Menu App ID",
+    id_length=4,
+    records=[menu_rec],
+)
 
-DCF = {
-    "software": "CSPro", "version": 8.0, "fileType": "dictionary",
-    "name": "MENU_DICT",
-    "labels": [{"text": "Menu Dictionary"}],
-    "valueSets": [],
-    "levels": [{
-        "name": "MENU_LEVEL",
-        "labels": [{"text": "Menu Level"}],
-        "ids": {
-            "items": [
-                _item("MENU_APP_ID", "Menu App ID", "numeric", 4, zeroFill=True),
-            ],
-        },
-        "records": [{
-            "name": "MENU_REC",
-            "labels": [{"text": "Menu Record"}],
-            "recordType": "",
-            "required": True,
-            "occurrences": 1,
-            "items": [
-                _item("MENU_LOGIN_ID",   "Login ID",      "numeric", 4, zeroFill=True),
-                _item("MENU_LOGIN_NAME", "Login Name",    "alpha",   40),
-                _item("MENU_ROLE",       "Role",          "numeric", 1),
-                _item("MENU_SUP_ID",     "Supervisor ID", "numeric", 4, zeroFill=True),
-                _item("APP_VERSION",     "App Version",   "alpha",   16),
-            ],
-        }],
-    }],
-}
-
-(HERE / "menu_app.dcf").write_text(json.dumps(DCF, indent=2), encoding="utf-8")
-print("wrote menu_app.dcf (CSPro 8.0 schema)")
+write_dcf(dictionary, HERE / "menu_app.dcf")

@@ -26,7 +26,8 @@ def test_build_user_roster_emits_dcf_and_dat(tmp_path):
 
     dcf = json.loads(dcf_path.read_text(encoding="utf-8"))
     assert dcf["name"] == "USER_ROSTER_DICT"
-    assert dcf["levels"][0]["ids"][0]["name"] == "RA_ID"
+    # CSPro 8.0 schema: ids is {"items": [...]}, items have "labels" + "contentType"
+    assert dcf["levels"][0]["ids"]["items"][0]["name"] == "RA_ID"
 
     dat = dat_path.read_text(encoding="utf-8").splitlines()
     assert len(dat) == 2          # 2 users in fixture
