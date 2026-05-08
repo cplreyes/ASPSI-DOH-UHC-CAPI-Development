@@ -148,6 +148,9 @@ function _adminHandlers() {
       admin_read_response_by_id: typeof adminReadResponseById !== 'undefined' ? adminReadResponseById : null,
       admin_read_audit: typeof adminReadAudit !== 'undefined' ? adminReadAudit : null,
       admin_read_dlq: typeof adminReadDlq !== 'undefined' ? adminReadDlq : null,
+      // R2-#84: replay (re-attempt submit) + delete a DLQ row.
+      admin_dlq_replay: typeof adminDlqReplay !== 'undefined' ? adminDlqReplay : null,
+      admin_dlq_delete: typeof adminDlqDelete !== 'undefined' ? adminDlqDelete : null,
       admin_form_revisions: typeof adminFormRevisions !== 'undefined' ? adminFormRevisions : null,
       admin_sync_report: typeof adminSyncReport !== 'undefined' ? adminSyncReport : null,
       admin_map_report: typeof adminMapReport !== 'undefined' ? adminMapReport : null,

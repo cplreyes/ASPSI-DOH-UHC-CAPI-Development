@@ -153,6 +153,7 @@ function _buildResponsesCtx(sheet) {
 
 function _buildDlqCtx(sheet) {
   var cols = F2_DLQ_COLUMNS;
+  var dlqIdIdx = cols.indexOf('dlq_id');
   return {
     appendRow: function (rowObj) {
       var arr = cols.map(function (c) { return rowObj[c] != null ? rowObj[c] : ''; });
@@ -167,6 +168,28 @@ function _buildDlqCtx(sheet) {
         for (var i = 0; i < cols.length; i++) obj[cols[i]] = row[i];
         return obj;
       });
+    },
+    // R2-#84: extends dlqCtx with row-level read + delete for replay/delete
+    // operations from the Admin Portal. Sheet row numbers are 1-indexed and
+    // header is row 1, so data starts at row 2.
+    findByDlqId: function (dlqId) {
+      if (!dlqId || dlqIdIdx < 0) return null;
+      var last = sheet.getLastRow();
+      if (last < 2) return null;
+      var idCol = sheet.getRange(2, dlqIdIdx + 1, last - 1, 1).getValues();
+      for (var i = 0; i < idCol.length; i++) {
+        if (idCol[i][0] === dlqId) {
+          var rowNumber = i + 2;
+          var rowData = sheet.getRange(rowNumber, 1, 1, cols.length).getValues()[0];
+          var obj = { _rowNumber: rowNumber };
+          for (var j = 0; j < cols.length; j++) obj[cols[j]] = rowData[j];
+          return obj;
+        }
+      }
+      return null;
+    },
+    deleteRow: function (rowNumber) {
+      sheet.deleteRow(rowNumber);
     },
   };
 }

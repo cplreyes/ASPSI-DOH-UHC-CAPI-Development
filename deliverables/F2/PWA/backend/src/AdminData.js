@@ -216,6 +216,83 @@ function adminReadDlq(filters, ctx) {
   };
 }
 
+// ----- DLQ replay + delete (R2-#84) ---------------------------------------
+
+/**
+ * Replay a DLQ row: re-attempt submit through the standard handleSubmit
+ * path. If the underlying validation issue is fixed (e.g., values is now
+ * a proper object, or the schema accepts the payload), the row moves to
+ * F2_Responses and the DLQ entry is deleted. If submit still fails, the
+ * DLQ entry stays put and the error is surfaced to the caller — operators
+ * can then decide whether to delete or fix the source data.
+ *
+ * Payload: `{ dlq_id }`. Returns `{ ok, data: { submission_id, status } }`
+ * on success or `{ ok: false, error }` when the replay submit also fails.
+ */
+function adminDlqReplay(payload, ctx) {
+  if (!payload || typeof payload.dlq_id !== 'string' || !payload.dlq_id) {
+    return { ok: false, error: { code: 'E_PAYLOAD_INVALID', message: 'Missing dlq_id' } };
+  }
+  if (!ctx.dlq.findByDlqId || !ctx.dlq.deleteRow) {
+    return { ok: false, error: { code: 'E_NOT_CONFIGURED', message: 'DLQ ops require the extended dlq context (findByDlqId/deleteRow)' } };
+  }
+  var row = ctx.dlq.findByDlqId(payload.dlq_id);
+  if (!row) {
+    return { ok: false, error: { code: 'E_NOT_FOUND', message: 'DLQ row not found: ' + payload.dlq_id } };
+  }
+  var parsed;
+  try {
+    parsed = JSON.parse(row.payload_json);
+  } catch (e) {
+    return { ok: false, error: { code: 'E_DLQ_CORRUPT', message: 'DLQ payload_json is not valid JSON: ' + (e && e.message) } };
+  }
+  // handleSubmit lives in Handlers.js and is the canonical entry point;
+  // tolerate both global (Apps Script bundle) and module (test harness) shapes.
+  var doSubmit = typeof handleSubmit !== 'undefined'
+    ? handleSubmit
+    : (typeof require !== 'undefined' ? require('./Handlers.js').handleSubmit : null);
+  if (!doSubmit) {
+    return { ok: false, error: { code: 'E_INTERNAL', message: 'handleSubmit not in scope' } };
+  }
+  var result = doSubmit(parsed, ctx);
+  if (!result || !result.ok) {
+    // Replay still fails — leave the DLQ row so operators can inspect.
+    return result || { ok: false, error: { code: 'E_INTERNAL', message: 'Replay returned undefined' } };
+  }
+  // Replay succeeded — clean up the DLQ row.
+  ctx.dlq.deleteRow(row._rowNumber);
+  return {
+    ok: true,
+    data: {
+      submission_id: result.data ? result.data.submission_id : null,
+      status: 'replayed',
+      dlq_id: payload.dlq_id,
+    },
+  };
+}
+
+/**
+ * Hard-delete a DLQ row. Operators use this when the source data is
+ * unrecoverable or when the row is genuinely stale (e.g., a one-off
+ * client bug from an old PWA build).
+ *
+ * Payload: `{ dlq_id }`. Returns `{ ok, data: { dlq_id, status: 'deleted' } }`.
+ */
+function adminDlqDelete(payload, ctx) {
+  if (!payload || typeof payload.dlq_id !== 'string' || !payload.dlq_id) {
+    return { ok: false, error: { code: 'E_PAYLOAD_INVALID', message: 'Missing dlq_id' } };
+  }
+  if (!ctx.dlq.findByDlqId || !ctx.dlq.deleteRow) {
+    return { ok: false, error: { code: 'E_NOT_CONFIGURED', message: 'DLQ ops require the extended dlq context (findByDlqId/deleteRow)' } };
+  }
+  var row = ctx.dlq.findByDlqId(payload.dlq_id);
+  if (!row) {
+    return { ok: false, error: { code: 'E_NOT_FOUND', message: 'DLQ row not found: ' + payload.dlq_id } };
+  }
+  ctx.dlq.deleteRow(row._rowNumber);
+  return { ok: true, data: { dlq_id: payload.dlq_id, status: 'deleted' } };
+}
+
 // ----- Versioning aggregation (Task 3.6) ----------------------------------
 
 /**
@@ -266,6 +343,8 @@ if (typeof module !== 'undefined') {
     adminReadResponseById: adminReadResponseById,
     adminReadAudit: adminReadAudit,
     adminReadDlq: adminReadDlq,
+    adminDlqReplay: adminDlqReplay,
+    adminDlqDelete: adminDlqDelete,
     adminFormRevisions: adminFormRevisions,
   };
 }

@@ -91,11 +91,13 @@ function errorJson(code: string, message: string, status: number): Response {
   return jsonResponse({ ok: false, error: { code, message } }, status);
 }
 
-function statusForAsError(code: string | undefined): number {
+export function statusForAsError(code: string | undefined): number {
   if (code === 'E_VALIDATION') return 400;
+  if (code === 'E_PAYLOAD_INVALID') return 400;
   if (code === 'E_NOT_FOUND') return 404;
   if (code === 'E_CONFLICT') return 409;
   if (code === 'E_LOCK_TIMEOUT') return 503;
+  if (code === 'E_DLQ_CORRUPT') return 422;
   return 502;
 }
 

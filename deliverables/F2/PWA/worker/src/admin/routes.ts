@@ -79,6 +79,7 @@ import {
   handleDeleteSetting,
   handleRunNowSetting,
   handleGetQuota,
+  statusForAsError,
   type FileMetaRow,
   type FilesListFilters,
   type ListFilesData,
@@ -102,6 +103,9 @@ const RESPONSES_LIST_RE = /^\/admin\/api\/dashboards\/data\/responses\/?$/;
 const RESPONSES_BY_ID_RE = /^\/admin\/api\/dashboards\/data\/responses\/([A-Za-z0-9_\-]+)\/?$/;
 const AUDIT_LIST_RE = /^\/admin\/api\/dashboards\/data\/audit\/?$/;
 const DLQ_LIST_RE = /^\/admin\/api\/dashboards\/data\/dlq\/?$/;
+// R2-#84: DLQ replay + delete (per-row by dlq_id).
+const DLQ_REPLAY_RE = /^\/admin\/api\/dashboards\/data\/dlq\/([^/]+)\/replay\/?$/;
+const DLQ_DELETE_RE = /^\/admin\/api\/dashboards\/data\/dlq\/([^/]+)\/?$/;
 const HCWS_LIST_RE = /^\/admin\/api\/dashboards\/data\/hcws\/?$/;
 const HCWS_REISSUE_RE = /^\/admin\/api\/hcws\/([A-Za-z0-9_\-]+)\/reissue-token\/?$/;
 const REPORT_SYNC_RE = /^\/admin\/api\/dashboards\/report\/sync\/?$/;
