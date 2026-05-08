@@ -1,0 +1,22 @@
+# Per-machine env config — never commit your real LAN IPs / VPS URLs
+urls.yaml
+
+# Build outputs
+dist/
+
+# Generated external dicts (regenerable from /104_excel)
+102_EXT_DIC/*.dcf
+102_EXT_DIC/*.dat
+103_EXT_DATA/
+
+# Per-instrument case storage
+108_F1_data/*.csdb
+108_F1_data/*.cslog
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# CSBatch / CSExport intermediates
+118_csbatch/edit_report_*.txt

@@ -1,0 +1,19 @@
+# Copy this to urls.yaml and fill in your environment's actual values.
+# urls.yaml is gitignored — your local URLs never leak into the repo.
+#
+# Used by build_all.py via --env=<dev|uat|prod>:
+#   csweb_url       — bound at .pen build time to the `csweb_url` config attribute
+#   expiration_days — bound to the `expiration_days` config attribute, drives
+#                     publishdate() expiration window (Khurshid pattern)
+
+dev:
+  csweb_url: "http://localhost/cswebtest/api"
+  expiration_days: 30          # generous during dev — don't fight publishdate
+
+uat:
+  csweb_url: "http://192.168.1.42/cswebtest/api"   # YOUR LAPTOP'S LAN IP
+  expiration_days: 7
+
+prod:
+  csweb_url: "https://uhc-sync.example.com/cswebtest/api"   # VPS, when ready
+  expiration_days: 3           # tight during fieldwork — force fresh pulls
