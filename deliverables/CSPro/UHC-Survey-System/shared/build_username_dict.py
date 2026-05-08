@@ -66,7 +66,8 @@ def build_user_roster(src_xlsx: Path, dcf_path: Path, dat_path: Path,
     if header != expected:
         raise ValueError(f"unexpected header {header!r}; want {expected!r}")
 
-    # Emit .dat — fixed-width records
+    # Emit .dat — fixed-width records, prefixed with the "U" record-type marker
+    # at position 1 (DCF schema: recordType.start=1, length=1; USER_REC.recordType="U")
     dat_lines = []
     for row in rows[1:]:
         if row[0] is None:
@@ -77,14 +78,16 @@ def build_user_roster(src_xlsx: Path, dcf_path: Path, dat_path: Path,
         else:
             pw_field = _pad_alpha(str(pw), FIELD_PASSWORD_HASH)
         dat_lines.append(
-            _pad_num(int(ra_id), FIELD_RA_ID)
+            "U"                                                  # record type marker
+            + _pad_num(int(ra_id), FIELD_RA_ID)
             + _pad_alpha(str(name), FIELD_RA_NAME)
             + pw_field
             + _pad_num(int(role), FIELD_ROLE)
             + _pad_num(int(sup_id), FIELD_SUPERVISOR_ID)
             + _pad_num(int(region), FIELD_REGION_CODE)
         )
-    dat_path.write_text("\n".join(dat_lines), encoding="utf-8")
+    # LF line endings (not CRLF) — CSPro Android external-dict parser is sensitive
+    dat_path.write_bytes("\n".join(dat_lines).encode("utf-8") + b"\n")
 
     # Emit .dcf via cspro_helpers
     user_rec = record(
