@@ -35,6 +35,10 @@
     "version": 2.0,
     "caseSensitive": {
       "symbols": false
+    },
+    "actionInvoker": {
+      "accessFromExternalCaller": "promptIfNoValidAccessToken",
+      "convertResultsForLogic": true
     }
   },
   "properties": {
@@ -47,8 +51,32 @@
     "decimalMark": "dot",
     "displayCodesAlongsideLabels": false,
     "notes": {
-      "delete": "all"
-    }
+      "delete": "all",
+      "edit": "all"
+    },
+    "partialSave": {
+      "operatorEnabled": false
+    },
+    "showEndCaseMessage": true,
+    "showOnlyDiscreteValuesInComboBoxes": true,
+    "showFieldLabels": true,
+    "showErrorMessageNumbers": false,
+    "showQuestionText": true,
+    "showRefusals": true,
+    "verify": {
+      "frequency": 1,
+      "start": 1
+    },
+    "htmlDialogs": true,
+    "paradata": {
+      "collection": "all",
+      "recordCoordinates": false,
+      "recordInitialPropertyValues": false,
+      "recordIteratorLoadCases": false,
+      "recordValues": false,
+      "deviceStateIntervalMinutes": 5
+    },
+    "useHtmlComponentsInsteadOfNativeVersions": false
   },
   "userSettings": [
     {

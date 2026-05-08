@@ -1,8 +1,13 @@
 """generate_ent.py — emit menu_app.ent + .qsf + .mgf."""
 import json
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent))
+
+from shared.ent_template import canonical_logic_settings, canonical_properties
+
 
 ENT = {
     "software": "CSPro", "version": 8.0, "fileType": "application",
@@ -15,14 +20,8 @@ ENT = {
     "questionText": ["menu_app.ent.qsf"],
     "code": [{"type": "main", "path": "menu_app.ent.apc"}],
     "messages": ["menu_app.ent.mgf"],
-    "logicSettings": {"version": 2.0, "caseSensitive": {"symbols": False}},
-    "properties": {
-        "askOperatorId": False, "autoAdvanceOnSelection": False,
-        "caseTree": "mobileOnly", "centerForms": False,
-        "createListing": False, "createLog": False, "decimalMark": "dot",
-        "displayCodesAlongsideLabels": False,
-        "notes": {"delete": "all"},
-    },
+    "logicSettings": canonical_logic_settings(),
+    "properties":    canonical_properties(),
     "userSettings": [
         {"name": "csweb_url", "value": "PLACEHOLDER"},
         {"name": "expiration_days", "value": "30"},
