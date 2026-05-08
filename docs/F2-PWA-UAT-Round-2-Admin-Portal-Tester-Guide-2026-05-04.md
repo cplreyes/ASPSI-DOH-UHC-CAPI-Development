@@ -257,7 +257,7 @@ Walk every dashboard, every sub-tab. Test the RBAC story by switching personas m
 - **U.A1** — Edit your own first_name → persists.
 - **U.A2** — Use **Bulk Import** CSV → preview UI shows valid rows + rejection reasons for invalid; confirm only valid rows import.
 - **U.A3** — Use **Force-revoke sessions** on a user → next time they hit the API, their JWT is rejected; they must re-login.
-- **U.E1** — Try to delete `carl_admin` (the only original Administrator) → blocked: "cannot orphan the last Administrator".
+- **U.E1** — ~~Try to delete `carl_admin` (the only original Administrator) → blocked: "cannot orphan the last Administrator".~~ **FAIL — guard not implemented.** Shan executed this step on prod 2026-05-07 ~10:30 PHT and the row was hard-deleted from F2_Users; Carl was locked out. Recovery: shan_admin recreated the account via Create User; Carl rotated password via Worker API two-step PATCH. Tracked as **E4-APRT-050** (Sprint 005 v2.0.1). **Skip this step until fix lands.** Note: by Round 2 there are 3 Administrator-equivalent accounts (`carl_admin` + `shan_admin` + `kidd_admin`), so even with the guard implemented, deleting any single one would not orphan the role — the guard fires only when admin-count ≤ 1.
 - **U.E2** — Try to set yourself to a non-existent role → rejected.
 - **U.E3** — Bulk Import with all-invalid rows → nothing imports; clear error report.
 - **U.E4** — Try to create a user with a username that already exists → reject "username taken".
