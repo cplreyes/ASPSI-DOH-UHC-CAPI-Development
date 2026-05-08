@@ -15,8 +15,11 @@ ENT = {
     "software": "CSPro", "version": 8.0, "fileType": "application",
     "type": "entry", "name": "MENU_APP", "label": "UHC Menu",
     "dictionaries": [
-        {"type": "input",    "path": "menu_app.dcf",                     "parent": "menu_app.fmf"},
-        {"type": "external", "path": r"..\107_F1\FacilityHeadSurvey.dcf"},
+        {"type": "input", "path": "menu_app.dcf", "parent": "menu_app.fmf"},
+        # F1's main dict reference removed — menu_app's startup check requires
+        # an existing CSDB data file for any externally-referenced sync dict,
+        # and F1.csdb only exists after F1 first runs. Sync is moved into F1
+        # itself (level postproc) where the dict has its native CSDB source.
     ],
     "forms": ["menu_app.fmf"],
     "questionText": ["menu_app.ent.qsf"],
