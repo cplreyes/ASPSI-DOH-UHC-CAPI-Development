@@ -6,7 +6,9 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent))
 
-from shared.ent_template import canonical_logic_settings, canonical_properties
+from shared.ent_template import (
+    canonical_logic_settings, canonical_properties, QSF_TEMPLATE, mgf_template,
+)
 
 
 ENT = {
@@ -29,6 +31,6 @@ ENT = {
 }
 
 (HERE / "menu_app.ent").write_text(json.dumps(ENT, indent=2), encoding="utf-8")
-(HERE / "menu_app.ent.qsf").write_text("[QSF]\nVersion=CSPro 8.0\n", encoding="utf-8")
-(HERE / "menu_app.ent.mgf").write_text("[MessageFile]\nVersion=CSPro 8.0\n", encoding="utf-8")
+(HERE / "menu_app.ent.qsf").write_text(QSF_TEMPLATE, encoding="utf-8")
+(HERE / "menu_app.ent.mgf").write_text(mgf_template("UHC Menu"), encoding="utf-8")
 print("wrote menu_app.ent + .qsf + .mgf")
