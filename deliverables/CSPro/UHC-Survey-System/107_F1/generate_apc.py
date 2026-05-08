@@ -19,7 +19,7 @@ config string csweb_url;             { from .ent userSettings, spliced by build_
 
 function send_to_server()
    if syncconnect(CSWeb, csweb_url) then
-      syncdata(put, FACILITYHEADSURVEY_DICT);
+      syncdata(PUT, FACILITYHEADSURVEY_DICT);
       syncdisconnect();
    else
       errmsg("Could not reach the sync server. Case saved locally; will retry next sync.");
