@@ -51,7 +51,7 @@ export const en = {
     tokenPlaceholder: 'eyJhbGc...',
     verifyTokenButton: 'Verify token',
     verifyingTokenButton: 'Verifying…',
-    tokenInvalid: 'Token rejected. Contact ASPSI ops for a new one.',
+    tokenInvalid: 'Token malformed. Contact ASPSI ops for a new one.',
     tokenRevoked: 'This tablet has been revoked. Contact ASPSI ops.',
     identityStep: 'Step 2: Identify yourself',
     tokenAccepted: 'Token accepted for facility {{facility}}. Pick yourself from the roster below.',

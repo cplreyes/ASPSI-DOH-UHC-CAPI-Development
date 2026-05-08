@@ -114,7 +114,13 @@ describe('<EnrollmentScreen>', () => {
     expect(screen.getByTestId('enrollment-token-accepted').textContent).toMatch(/Manila General/);
   });
 
-  it('on rejected token, stays on Step 1 and shows an error', async () => {
+  it('on malformed token (E_TOKEN_INVALID), stays on Step 1 and shows the malformed-token error (R2-#108)', async () => {
+    // R2-#108: tester pasted a truncated token and saw "Token rejected.
+    // Contact ASPSI ops..." which felt off — the token was structurally
+    // bad, not "rejected" in the access-control sense. Renamed copy to
+    // "Token malformed..." to better describe what's actually wrong.
+    // Server still returns E_TOKEN_INVALID for bad-signature/wrong-format;
+    // the client just renders it more honestly.
     vi.spyOn(verifyClient, 'verifyDeviceToken').mockResolvedValue({
       ok: false,
       transport: false,
@@ -125,7 +131,7 @@ describe('<EnrollmentScreen>', () => {
     await user.type(screen.getByTestId('enrollment-token-input'), FAKE_TOKEN);
     await user.click(screen.getByRole('button', { name: /verify token/i }));
     await waitFor(() =>
-      expect(screen.getByText(/Token rejected\. Contact ASPSI ops/)).toBeInTheDocument(),
+      expect(screen.getByText(/Token malformed\. Contact ASPSI ops/)).toBeInTheDocument(),
     );
     expect(screen.queryByLabelText(/HCW ID/i)).not.toBeInTheDocument();
   });
