@@ -7,13 +7,13 @@
 #                     publishdate() expiration window (Khurshid pattern)
 
 dev:
-  csweb_url: "http://localhost/cswebtest/api"
+  csweb_url: "http://localhost/csweb8.0.1/api"
   expiration_days: 30          # generous during dev — don't fight publishdate
 
 uat:
-  csweb_url: "http://192.168.1.42/cswebtest/api"   # YOUR LAPTOP'S LAN IP
+  csweb_url: "http://192.168.1.42/csweb8.0.1/api"   # YOUR LAPTOP'S LAN IP
   expiration_days: 7
 
 prod:
-  csweb_url: "https://uhc-sync.example.com/cswebtest/api"   # VPS, when ready
+  csweb_url: "https://uhc-sync.example.com/csweb8.0.1/api"   # VPS, when ready
   expiration_days: 3           # tight during fieldwork — force fresh pulls
