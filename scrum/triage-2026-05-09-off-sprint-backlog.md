@@ -16,8 +16,8 @@ prerequisite_completed: UAT Round 2 tester docs ingested (raw + wiki source-summ
 | Sprint 005 committed (Goal A + Goal B) | 10 | No action — already on the docket |
 | UAT R2 fixed-pending-verify (PR #113 cascade) | 25 | Batch-close on Shan/Kidd R2 sign-off |
 | UAT R2 still-blocked | 2 | Auto-resolves with E4-APRT-041 (Sprint 005 Tier 2) |
-| UAT R2 open work — survey-side (F2 HCW) | 14 | Slate for **Sprint 006 v2.0.2** (or v2.0.1 stretch) |
-| UAT R2 open work — admin-portal | 6 | Slate for **Sprint 006 v2.0.2** (or v2.0.1 stretch) |
+| UAT R2 open work — survey-side (F2 HCW) | 14 | Slate for **Sprint 006 v2.0.2 (Mon 2026-05-18 → Fri 2026-05-22)** (or v2.0.1 stretch) |
+| UAT R2 open work — admin-portal | 6 | Slate for **Sprint 006 v2.0.2 (Mon 2026-05-18 → Fri 2026-05-22)** (or v2.0.1 stretch) |
 | CAPI / Phase 2 follow-ups | 2 | Sprint 005 Goal A (#131) + Phase 2 plan (#135) |
 | **Total open issues** | **64** | |
 | **Total off-Sprint-005 (true triage scope)** | **54** | |
@@ -80,7 +80,7 @@ All resolved by **PR #113** (sessionStorage auth + deep-link + map clamp), merge
 
 ## Bucket 3 — UAT R2 open work, F2 HCW Survey side (14 issues)
 
-These are genuine open bugs not addressed by PR #113 or Sprint 005 v2.0.1. **Recommended target: Sprint 006 v2.0.2** (or pull as Sprint 005 stretch if headroom allows).
+These are genuine open bugs not addressed by PR #113 or Sprint 005 v2.0.1. **Recommended target: Sprint 006 v2.0.2 (Mon 2026-05-18 → Fri 2026-05-22)** (or pull as Sprint 005 stretch if headroom allows).
 
 ### 3a — Skip-logic / role-gating regressions (5)
 
@@ -141,7 +141,7 @@ These are genuine open bugs not addressed by PR #113 or Sprint 005 v2.0.1. **Rec
 | #84 | D.A1, D.E2 | medium | DLQ replay + delete buttons missing |
 | #69 | L.E2/E3/E4 (header) | low (copy-string) | Section-header issue covering throttle msg + copy-string + L.E4 incomplete data |
 
-**Recommended action**: Slate for Sprint 006 v2.0.2 batch. #102 may largely auto-resolve with Sprint 005 #56 (RBAC role-version cache fix) — re-verify after Sprint 005 closes.
+**Recommended action**: Slate for Sprint 006 v2.0.2 (Mon 2026-05-18 → Fri 2026-05-22) batch. #102 may largely auto-resolve with Sprint 005 #56 (RBAC role-version cache fix) — re-verify after Sprint 005 closes.
 
 ---
 
@@ -162,7 +162,7 @@ Both already in Sprint 005's Goal A scope per `scrum/sprint-current.md`.
 2. **Disposition #111** — close with PASS comment or keep as audit record.
 3. **Resolve #118 title mismatch** — verify whether v2.0.0 questionnaire's Section G is "KAP on Fees" or "KAP on Professional Setting"; rename title accordingly.
 4. **Pull stretch into v2.0.1** — if Sprint 005 headroom realized: candidates are **#118 + #119** (data loss in G/J — critical, likely shared root cause investigation) and **#114** (role-gating regression — critical for data integrity).
-5. **Plan Sprint 006 v2.0.2 milestone** — slate Buckets 3 + 4 minus anything pulled into Sprint 005 stretch. Likely ~20 issues.
+5. **Plan Sprint 006 v2.0.2 (Mon 2026-05-18 → Fri 2026-05-22) milestone** — slate Buckets 3 + 4 minus anything pulled into Sprint 005 stretch. Likely ~20 issues.
 6. **R2 sign-off plan** — coordinate with Shan + Kidd to schedule the verification pass for the 25 `status:fixed-pending-verify` issues; batch-close on sign-off.
 7. **#106 / #107 re-test** — schedule for after E4-APRT-041 lands (Wed-Thu Sprint 005).
 
@@ -177,8 +177,15 @@ Both already in Sprint 005's Goal A scope per `scrum/sprint-current.md`.
 
 R2 label coverage: was 27, now 47 issues. Status breakdown: 25 fixed-pending-verify, 20 no-status (need triage), 2 blocked.
 
-## Open Questions for Carl
+## Open Questions for Carl — Resolved 2026-05-09
 
-- **Pull #118 + #119 (G/J data loss) into Sprint 005?** Both are `severity:critical` and may share root cause — combined investigation could be 2–4h, fits 14h headroom. Single PR resolves two of the worst R2 findings before R3 testers see them.
-- **#114 role-gating regression** (C/D/E visible to all personas) — also critical; 3h estimate. Pull into Sprint 005 alongside #118/#119 OR slate for v2.0.2?
-- **Sprint 006 v2.0.2 cadence** — if Sprint 005 closes Fri 2026-05-15 with v2.0.1 cutover, v2.0.2 sprint runs Mon 2026-05-18 → Fri 2026-05-22? Confirm window before backlog filing.
+All originally-flagged decisions resolved during the same Saturday triage session:
+
+- ~~**Pull #118 + #119 (G/J data loss) into Sprint 005?**~~ — **PULLED 2026-05-09** as Tier 1.5 R2 critical pull-ins. Combined investigation, 3–6h. See Sprint 005 plan §Tier 1.5.
+- ~~**#114 role-gating regression**~~ — **PULLED 2026-05-09** as Tier 1.5. 2–3h estimate.
+- ~~**#122 double-submit dedup**~~ — **PULLED 2026-05-09** as Tier 1.5. 1–2h estimate. (Added to pull-ins; was implicit critical from severity sweep.)
+- ~~**#118 title rename**~~ — **RENAMED 2026-05-09** to "Section G — back-nav loses answers at Q87/Q88 + X icon despite ✓ + redirect to F (KAP on Professional Setting, Charging, And Reimbursement)" using canonical v2.0.0 spec heading from `deliverables/F2/PWA/app/src/generated/items.ts:2371`.
+- ~~**#111 (B.E1 PASS) disposition**~~ — **CLOSED 2026-05-09** with PASS comment citing tester verbatim + cross-reference to wiki source-summary.
+- ~~**Sprint 006 cadence**~~ — **CONFIRMED 2026-05-09:** Sprint 006 v2.0.2 runs Mon 2026-05-18 → Fri 2026-05-22 (rolling 1-week Mon-Fri cadence following Sprint 005 close). Plan doc to be drafted at Sprint 005 close.
+
+Sprint 005 budget grew from ~15h committed to ~21–26h committed after the 4 Tier 1.5 pulls; headroom now 0–4h. Tier 3 polish (#132 design sweep, #63 concurrency tests) defers to v2.0.2 if Sprint 005 schedule slips.
