@@ -49,11 +49,11 @@
   "userSettings": [
     {
       "name": "csweb_url",
-      "value": "http://localhost/cswebtest/api"
+      "value": "http://192.168.1.168/csweb8.0.1/api"
     },
     {
       "name": "expiration_days",
-      "value": "30"
+      "value": "7"
     }
   ]
 }
