@@ -21,7 +21,8 @@ import openpyxl
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from cspro_helpers import alpha, numeric, record, build_dictionary, write_dcf
+import json
+from cspro_helpers import alpha, numeric, record, write_dcf
 
 
 # Field widths — sized for the largest expected value
@@ -66,8 +67,8 @@ def build_user_roster(src_xlsx: Path, dcf_path: Path, dat_path: Path,
     if header != expected:
         raise ValueError(f"unexpected header {header!r}; want {expected!r}")
 
-    # Emit .dat — fixed-width records, prefixed with the "U" record-type marker
-    # at position 1 (DCF schema: recordType.start=1, length=1; USER_REC.recordType="U")
+    # Emit .dat — fixed-width records, NO record-type marker (single-record
+    # external lookup dict; the custom DCF below sets recordType.length=0).
     dat_lines = []
     for row in rows[1:]:
         if row[0] is None:
@@ -78,20 +79,21 @@ def build_user_roster(src_xlsx: Path, dcf_path: Path, dat_path: Path,
         else:
             pw_field = _pad_alpha(str(pw), FIELD_PASSWORD_HASH)
         dat_lines.append(
-            "U"                                                  # record type marker
-            + _pad_num(int(ra_id), FIELD_RA_ID)
+            _pad_num(int(ra_id), FIELD_RA_ID)
             + _pad_alpha(str(name), FIELD_RA_NAME)
             + pw_field
             + _pad_num(int(role), FIELD_ROLE)
             + _pad_num(int(sup_id), FIELD_SUPERVISOR_ID)
             + _pad_num(int(region), FIELD_REGION_CODE)
         )
-    # LF line endings (not CRLF) — CSPro Android external-dict parser is sensitive
     dat_path.write_bytes("\n".join(dat_lines).encode("utf-8") + b"\n")
 
-    # Emit .dcf via cspro_helpers
+    # Emit .dcf — hand-crafted for external-lookup single-record dict.
+    # Diff from cspro_helpers.build_dictionary: recordType.length = 0 (no marker
+    # byte in the .dat) and record.recordType = "" (empty). RA_ID starts at
+    # position 1 (no marker prefix).
     user_rec = record(
-        name="USER_REC", label="User Record", record_type="U",
+        name="USER_REC", label="User Record", record_type="",
         items=[
             alpha  ("RA_NAME",       "RA Name",        length=FIELD_RA_NAME),
             alpha  ("PASSWORD_HASH", "Password Hash",  length=FIELD_PASSWORD_HASH),
@@ -101,15 +103,39 @@ def build_user_roster(src_xlsx: Path, dcf_path: Path, dat_path: Path,
         ],
     )
 
-    dictionary = build_dictionary(
-        dict_name="USER_ROSTER_DICT",
-        dict_label="UserRoster",
-        id_item_name="RA_ID",
-        id_item_label="RA ID",
-        id_length=FIELD_RA_ID,
-        records=[user_rec],
-    )
-    write_dcf(dictionary, dcf_path)
+    dcf_obj = {
+        "software":          "CSPro",
+        "version":           8.0,
+        "fileType":          "dictionary",
+        "name":              "USER_ROSTER_DICT",
+        "labels":            [{"text": "UserRoster"}],
+        "readOptimization":  True,
+        "recordType":        {"start": 1, "length": 0},     # NO record-type marker
+        "defaults":          {"decimalMark": True, "zeroFill": False},
+        "relativePositions": True,
+        "levels": [
+            {
+                "name":   "USER_ROSTER_LEVEL",
+                "labels": [{"text": "UserRoster Level"}],
+                "ids": {
+                    "items": [
+                        {
+                            "name":        "RA_ID",
+                            "labels":      [{"text": "RA ID"}],
+                            "contentType": "numeric",
+                            "start":       1,                # ID at byte 1 (no marker prefix)
+                            "length":      FIELD_RA_ID,
+                            "zeroFill":    True,
+                        }
+                    ]
+                },
+                "records": [user_rec],
+            }
+        ],
+    }
+    dcf_path.write_text(json.dumps(dcf_obj, indent=2), encoding="utf-8")
+    print(f"  Records: 1 (single-record external lookup, no recordType marker)")
+    print(f"  Items:   {len(user_rec['items'])}")
 
 
 if __name__ == "__main__":
