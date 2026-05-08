@@ -154,7 +154,12 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
 function errorMessageFor(error: ApiError): string {
   switch (error.code) {
     case 'E_AUTH_INVALID':
-      return 'Username or password is incorrect.';
+      // R2-#69 (Shan, 2026-05-07 L.E1/L.E3): tester expected "Invalid
+      // credentials" per the admin portal tester guide. The longer copy
+      // also leaks which side of the username+password pair is wrong on
+      // close reading; "Invalid credentials" is the canonical neutral
+      // phrasing.
+      return 'Invalid credentials.';
     case 'E_AUTH_LOCKED':
       return 'Too many failed attempts. Try again in a few minutes.';
     case 'E_VALIDATION':
