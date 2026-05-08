@@ -13,6 +13,7 @@ export const fil: EnBundle = {
     syncView: 'Sync',
     thankYouHeading: 'Thank you',
     thankYouBody: 'Your response is saved on this device and will sync when the app is online.',
+    startNewSurvey: 'Start new survey',
     submitFailedHeading: 'Submission failed',
     submitFailedBody:
       'Your response could not be saved. Tap retry to try again. If the problem persists, your draft is still on the previous screen.',

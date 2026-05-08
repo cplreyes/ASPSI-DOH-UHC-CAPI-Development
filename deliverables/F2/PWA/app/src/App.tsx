@@ -19,6 +19,7 @@ import {
   saveDraft,
   submitDraft,
   LOCAL_SPEC_VERSION,
+  COMPLETED_CSID_KEY,
   type EnrollmentInfo,
 } from '@/lib/draft';
 import { getSyncEnv } from '@/lib/env';
@@ -154,6 +155,15 @@ function AppShell() {
 
   useEffect(() => {
     if (authStatus !== 'enrolled') return;
+    // R2-#120 S.A2: persist submitted state across refresh. After a
+    // successful submit, COMPLETED_CSID_KEY is written to localStorage.
+    // On refresh, short-circuit to status='submitted' so the user lands
+    // back on the thank-you screen (not Section A) until they click
+    // "Start new survey".
+    if (typeof localStorage !== 'undefined' && localStorage.getItem(COMPLETED_CSID_KEY)) {
+      setStatus('submitted');
+      return;
+    }
     const id = getOrCreateDraftId();
     setDraftId(id);
     void loadDraft(id).then((row) => {
@@ -234,7 +244,17 @@ function AppShell() {
       // Submission rides through with null coords if the user declines or the
       // browser doesn't support geolocation — admin Map Report tolerates it.
       const coords = await getGeolocation();
-      await submitDraft(draftId, enrollmentInfo, coords);
+      const submission = await submitDraft(draftId, enrollmentInfo, coords);
+      // R2-#120 S.A2: persist the submitted state across refresh.
+      // The thank-you screen reads COMPLETED_CSID_KEY on next mount.
+      try {
+        localStorage.setItem(COMPLETED_CSID_KEY, submission.client_submission_id);
+      } catch {
+        // localStorage can throw in private-mode Safari etc.; the
+        // in-memory status='submitted' below still renders the thank-
+        // you screen for the current session, just without refresh
+        // persistence. Non-blocking.
+      }
       setSubmitError(null);
       setPendingValuesRef(null);
       setStatus('submitted');
@@ -251,6 +271,25 @@ function AppShell() {
     if (pendingValuesRef) {
       void handleSubmit(pendingValuesRef);
     }
+  };
+
+  // R2-#120 S.A2: clear the submitted-persistence flag and start a
+  // fresh survey. Also clears DRAFT_ID_KEY so getOrCreateDraftId
+  // mints a new draft id; otherwise the previous draft id (already
+  // submitted, so its draft was deleted) would resolve to nothing
+  // and the form would still render but empty.
+  const handleStartNewSurvey = () => {
+    try {
+      localStorage.removeItem(COMPLETED_CSID_KEY);
+    } catch {
+      /* private-mode Safari etc. — non-blocking */
+    }
+    const id = getOrCreateDraftId();
+    setDraftId(id);
+    setInitialValues({});
+    setSubmitError(null);
+    setPendingValuesRef(null);
+    setStatus('editing');
   };
 
   return (
@@ -301,7 +340,8 @@ function AppShell() {
             {t('chrome.thankYouHeading')}
           </h2>
           <p className="text-sm text-muted-foreground">{t('chrome.thankYouBody')}</p>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <Button onClick={handleStartNewSurvey}>{t('chrome.startNewSurvey')}</Button>
             <Button variant="outline" size="sm" onClick={() => setView('sync')}>
               {t('sync.viewQueue')}
             </Button>
