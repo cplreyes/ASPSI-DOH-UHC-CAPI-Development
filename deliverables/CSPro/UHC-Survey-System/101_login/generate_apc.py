@@ -32,13 +32,13 @@ preproc
 
 PROC LOGIN_PW
 postproc
-   if not loadcase(USER_ROSTER_DICT, LOGIN_RA_ID) then
-      errmsg("Unknown RA ID — please re-enter.");
-      reenter LOGIN_RA_ID;
+   if loadcase(USER_ROSTER_DICT, LOGIN_RA_ID) = 0 then
+      errmsg("Unknown RA ID - please re-enter.");
+      move to(LOGIN_RA_ID);
    endif;
 
-   { Phase 1 fallback: plaintext compare. Phase 2 will SHA-256 via Action     }
-   { Invoker. See login_app.spec.md "Phase 1 password gap" for context.       }
+   { Phase 1 fallback: plaintext compare against PASSWORD_HASH column.        }
+   { Phase 2 will SHA-256 via CSPro 8.0 Action Invoker Hash.createHash.       }
    if LOGIN_PW <> USER_ROSTER_DICT.PASSWORD_HASH then
       errmsg("Incorrect password.");
       reenter;
