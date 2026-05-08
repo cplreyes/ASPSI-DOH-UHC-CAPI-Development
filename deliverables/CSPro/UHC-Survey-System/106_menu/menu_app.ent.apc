@@ -4,7 +4,7 @@
 
 PROC GLOBAL
 
-config string csweb_url csweb_url;   { from .ent userSettings, spliced by build_all }
+config string csweb_url;             { from .ent userSettings, spliced by build_all }
 
 PFF F1_pff;
 numeric cell_option;
