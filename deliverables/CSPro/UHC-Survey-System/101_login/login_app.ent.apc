@@ -29,7 +29,7 @@ PROC LOGIN_PW
 postproc
    if loadcase(USER_ROSTER_DICT, LOGIN_RA_ID) = 0 then
       errmsg("Unknown RA ID - please re-enter.");
-      move to(LOGIN_RA_ID);
+      move to LOGIN_RA_ID;
    endif;
 
    { Phase 1 fallback: plaintext compare against PASSWORD_HASH column.        }
