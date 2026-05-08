@@ -1,6 +1,6 @@
 from shared.form_layout_engine import (
     next_row_position, FieldPosition, TextPosition, RowPosition,
-    pick_capture_type,
+    pick_capture_type, emit_field_block, emit_text_block,
 )
 
 
@@ -53,3 +53,41 @@ def test_pick_capture_type_numeric_no_value_set_is_textbox():
 
 def test_pick_capture_type_multi_select_is_checkbox():
     assert pick_capture_type(value_set_size=5, item_type="multi", item_length=1) == "CheckBox"
+
+
+def test_emit_field_block_radio():
+    result = emit_field_block(
+        item_name="Q4_SEX",
+        dict_name="FACILITYHEADSURVEY_DICT",
+        position=FieldPosition(x=1695, y=120, w=29, h=20),
+        capture_type="RadioButton",
+        form_index=8,
+    )
+    assert "[Field]" in result
+    assert "Name=Q4_SEX" in result
+    assert "Position=1695,120,1724,140" in result
+    assert "Item=Q4_SEX,FACILITYHEADSURVEY_DICT" in result
+    assert "DataCaptureType=RadioButton" in result
+    assert "Form=8" in result
+
+
+def test_emit_field_block_textbox_unicode_marker():
+    result = emit_field_block(
+        item_name="Q15_OTHER_TXT",
+        dict_name="FACILITYHEADSURVEY_DICT",
+        position=FieldPosition(x=1695, y=387, w=970, h=20),
+        capture_type="TextBox",
+        form_index=8,
+    )
+    assert "UseUnicodeTextBox=Yes" in result
+    assert "DataCaptureType=TextBox" in result
+
+
+def test_emit_text_block():
+    result = emit_text_block(
+        position=TextPosition(x=50, y=120, w_max=1645, h=16),
+        text="4. What is your sex?",
+    )
+    assert result.startswith("[Text]\n")
+    assert "Position=50,120," in result
+    assert "Text=4. What is your sex?" in result

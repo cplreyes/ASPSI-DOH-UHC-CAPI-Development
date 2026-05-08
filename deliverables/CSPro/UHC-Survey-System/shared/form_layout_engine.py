@@ -55,6 +55,44 @@ def pick_capture_type(value_set_size: int, item_type: str, item_length: int) -> 
     return "DropDown"
 
 
+def emit_field_block(
+    item_name: str,
+    dict_name: str,
+    position: FieldPosition,
+    capture_type: str,
+    form_index: int,
+) -> str:
+    """Emit one [Field] block in the format the existing F1 .fmf uses."""
+    x2 = position.x + position.w
+    y2 = position.y + position.h
+    extra = ""
+    if capture_type == "TextBox":
+        extra = "UseUnicodeTextBox=Yes\n"
+    return (
+        f"[Field]\n"
+        f"Name={item_name}\n"
+        f"Position={position.x},{position.y},{x2},{y2}\n"
+        f"Item={item_name},{dict_name}\n"
+        f"{extra}"
+        f"DataCaptureType={capture_type}\n"
+        f"Form={form_index}\n"
+        f"  \n"
+    )
+
+
+def emit_text_block(position: TextPosition, text: str) -> str:
+    """Emit one [Text] block. Text is the verbatim question text."""
+    x2 = position.x + position.w_max
+    y2 = position.y + position.h
+    return (
+        f"[Text]\n"
+        f"Position={position.x},{position.y},{x2},{y2}\n"
+        f"Text={text}\n"
+        f" \n"
+        f"  \n"
+    )
+
+
 def next_row_position(prev_y: int, field_w: int = 29) -> RowPosition:
     """Compute the (x, y, w, h) for the next row's label and control.
 
