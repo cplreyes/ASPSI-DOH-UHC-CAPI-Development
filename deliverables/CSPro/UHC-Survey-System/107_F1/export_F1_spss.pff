@@ -1,0 +1,11 @@
+[Run Information]
+Version=CSPro 8.0
+AppType=Export
+
+[Files]
+Application=.\FacilityHeadSurvey.ent
+InputData=..\108_F1_data\F1.csdb
+OutputData=..\108_F1_data\F1.sav
+
+[Parameters]
+ExportFormat=SPSS
