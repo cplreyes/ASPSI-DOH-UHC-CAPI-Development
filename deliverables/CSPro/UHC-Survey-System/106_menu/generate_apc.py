@@ -21,6 +21,7 @@ function launch_F1()
    F1_pff.setProperty("StartMode", "add");
    F1_pff.setProperty("FullScreen", "yes");
    F1_pff.setProperty("Application", "..\107_F1\FacilityHeadSurvey.pen");
+   F1_pff.setProperty("InputData", "F1.csdb");      { CSPro DB format -> supports sync }
    F1_pff.setProperty("OnExit", "..\106_menu\menu_app.pff");
    F1_pff.exec();
 end;
