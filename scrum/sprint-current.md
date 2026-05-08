@@ -35,6 +35,14 @@ deliverable_anchor: Goal A — E3-F1-088 (Phase 1 sync mechanic resolution) + Ph
 - [ ] **E4-APRT-041** Create-HCW UI in Admin Portal — Data dashboard → HCWs → "+ Create HCW" button + `CreateHCWModal.tsx` + AS `admin_hcws_create` + Worker `POST /admin/api/hcws` route. `status::todo` `priority::high` `estimate::3h` `scrum::sprint-005`
 - [ ] **E4-APRT-042** Per-tester admin user accounts hardening — documented onboarding pattern + (re-)seed `shan_admin` + `kidd_admin` on staging F2_Users via `seed-staging-admin.mjs`; runbook at `docs/runbooks/admin-onboarding.md`. `status::todo` `priority::high` `estimate::1h` `scrum::sprint-005`
 
+### Goal B — F2 v2.0.1 release (Tier 1.5 — UAT R2 critical pull-ins, added 2026-05-09)
+
+Pulled from `scrum/triage-2026-05-09-off-sprint-backlog.md` after the off-sprint Saturday triage surfaced 4 `severity:critical` R2 data-integrity bugs. R3 testers will hit these on staging if not resolved before v2.0.1 cuts over.
+
+- [ ] **R2-#118+#119** F2 PWA — Section G + Section J data loss on back-nav (combined investigation; likely shared root cause in long-section state handler). Both sections retain answers; section-complete check (X icon vs ✓) reflects actual state. `status::todo` `priority::critical` `estimate::3-6h` `scrum::sprint-005` `severity::critical` `surface::f2-pwa-survey`
+- [ ] **R2-#114** F2 PWA — Sections C/D/E role-gating regression (visible to all 3 personas tested). Pharmacist/Dispenser sees C hidden; non-gated personas redirect from /section/c URL; integration test all 5 role buckets per spec. `status::todo` `priority::critical` `estimate::2-3h` `scrum::sprint-005` `severity::critical` `surface::f2-pwa-survey`
+- [ ] **R2-#122** F2 PWA — Double-submit dedup on `client_submission_id`. Server-side idempotency check rejects duplicate with `E_DUPLICATE` (not 200); F2_Audit records the rejected duplicate; vitest covers double-submit case. `status::todo` `priority::critical` `estimate::1-2h` `scrum::sprint-005` `severity::critical` `surface::f2-pwa-survey`
+
 ### Stretch (not committed)
 
 - [ ] **E4-APRT-049** Design-review 5-fix sweep — button focus rings (#59) + input focus rings (#60) + `rounded-full` sweep (#61) + QuotaWidget warning token (#62) + ReissueTokenModal Escape handler (design-M-4). `status::todo` `priority::medium` `estimate::40m`
@@ -46,10 +54,10 @@ deliverable_anchor: Goal A — E3-F1-088 (Phase 1 sync mechanic resolution) + Ph
 
 | Class | Items | Estimate |
 |---|---|---|
-| **Committed (must-finish)** | E3-F1-088, E3-F1-PHASE2-PLAN, E4-APRT-050/051/045/044/043, E4-APRT-048/041/042 | ~15h |
+| **Committed (must-finish)** | E3-F1-088, E3-F1-PHASE2-PLAN, E4-APRT-050/051/045/044/043, E4-APRT-048/041/042, **R2-#118+#119, R2-#114, R2-#122 (Tier 1.5 pull-ins)** | ~21–26h |
 | **Stretch** | E4-APRT-049, E4-APRT-037 | ~3.5h |
 
-> Capacity: ~25h solo-dev week. Committed ~15h + stretch ~3.5h leaves ~6.5h headroom for R2/R3 bug-fix capacity + new findings during the v2.0.1 release. 3-sprint stretch carry-forwards (E2-F3-010, E2-F4-010, E0-008) demoted to `unscheduled` per Sprint 004 retro Q4 — sprint board should reflect intent, not aspirational placeholders. Plan doc: [`docs/superpowers/plans/2026-05-11-sprint-005-v2-0-1-plan.md`](../docs/superpowers/plans/2026-05-11-sprint-005-v2-0-1-plan.md).
+> Capacity: ~25h solo-dev week. Committed ~21–26h leaves 0–4h headroom (tight). Tier 1.5 R2 critical pull-ins (added 2026-05-09 triage — `scrum/triage-2026-05-09-off-sprint-backlog.md`) take priority over Tier 3 polish if schedule slips. 3-sprint stretch carry-forwards (E2-F3-010, E2-F4-010, E0-008) demoted to `unscheduled` per Sprint 004 retro Q4 — sprint board should reflect intent, not aspirational placeholders. Plan doc: [`docs/superpowers/plans/2026-05-11-sprint-005-v2-0-1-plan.md`](../docs/superpowers/plans/2026-05-11-sprint-005-v2-0-1-plan.md).
 
 ## Daily Notes
 
@@ -67,6 +75,7 @@ deliverable_anchor: Goal A — E3-F1-088 (Phase 1 sync mechanic resolution) + Ph
 - [ ] **Worktree merged:** `feature/uhc-survey-system-build` → `main` (or kept open with explicit reason in retro).
 - [ ] **Tier 1 closed:** E4-APRT-050 + E4-APRT-051 + E4-APRT-045 + E4-APRT-044 + E4-APRT-043 all shipped + verified on staging.
 - [ ] **Tier 2 closed:** E4-APRT-048 + E4-APRT-041 + E4-APRT-042 all shipped + verified on staging.
+- [ ] **Tier 1.5 closed:** R2-#118+#119 (G/J data loss) + R2-#114 (C/D/E role-gating) + R2-#122 (double-submit dedup) all shipped + verified on staging; GH issues closed or in `status:fixed-pending-verify`.
 - [ ] **v2.0.1 cutover:** staging ff-merge to main Fri 2026-05-15; tag `v2.0.1` pushed; CF Pages auto-deploy fires; prod Worker deployed via `wrangler deploy`; `f2-pwa.pages.dev/admin` Versioning panel reports `v2.0.1`.
 - [ ] **UAT R2 wind-down + R3 closure:** both rounds signed off by EOD Fri; v2.0.1 milestone closed → `uat-release-notes.yml` fires → CHANGELOG + GH Release + Slack post.
 - [ ] **Sprint 005 retrospective** (4 questions) filled in `sprint-current.md` by EOD Fri 2026-05-15; sprint archived to `scrum/sprints/sprint-005.md`; `sprint-current.md` reset for Sprint 006.

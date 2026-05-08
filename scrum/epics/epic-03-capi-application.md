@@ -178,6 +178,14 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [ ] **E3-F2-PWA-DESIGN-004** Self-host fonts under `public/fonts/*.woff2` (replaces CDN path from PR #38). **Gated on `pyftsubset`/fontTools tooling** for proper Latin Extended subsetting; lands as a follow-up after Round 3 if Bunny CDN proves problematic. `status::deferred` `priority::low` `scrum::unscheduled`
 - [ ] **E3-F2-PWA-DESIGN-005** Refine Verde Manual hex values from official DOH brand-book PDF (Department Order 2020-0011, Verde Vision 2023+). Current values are best-fit approximations of the visible seal + documented background tint `#e7efe7`. **Async on ASPSI** for PDF acquisition. `status::blocked-external` `priority::low` `scrum::unscheduled`
 
+### v2.0.1 Tier 1.5 — UAT R2 critical pull-ins *(Sprint 005, added 2026-05-09 from off-sprint triage)*
+
+Pulled from `scrum/triage-2026-05-09-off-sprint-backlog.md`. All 4 issues `severity:critical`; R3 testers will hit these on staging if not resolved before v2.0.1 cutover.
+
+- [ ] **E3-F2-PWA-R2-118-119** Section G + Section J data loss on back-nav (combined investigation; likely shared root cause in long-section state handler). Sources: GH #118 (Section G — Q87/Q88 redirect-to-F + answers vanish + X icon despite complete) + GH #119 (Section J — Q98–Q125 redirect-to-I + matrix-grid answers vanish + submit before Q124/Q125). Done when both sections retain answers across back-nav and tab-switch; section-complete check (X vs ✓) reflects actual state; vitest covers the back-nav restore path. `status::todo` `priority::critical` `severity::critical` `estimate::3-6h` `scrum::sprint-005`
+- [ ] **E3-F2-PWA-R2-114** Sections C/D/E role-gating regression (visible to all 3 personas tested: pharmacist, physician, dentist aide). Source: GH #114. Spec: only admin/doctor/nurse/midwife/dentist/nutritionist-dietician should see C/D/E; pharmacists/dispensers should skip C/D/E1 and proceed to E2; force-nav to /section/c URL should redirect when role-gated off. Done when integration test covers all 5 role buckets per spec. `status::todo` `priority::critical` `severity::critical` `estimate::2-3h` `scrum::sprint-005`
+- [ ] **E3-F2-PWA-R2-122** Double-submit dedup on `client_submission_id`. Source: GH #122 (S.E2 — two F2_Responses rows recorded on rapid double-tap). Done when server-side idempotency check rejects duplicate with `E_DUPLICATE` (not 200); F2_Audit row records the rejected duplicate; vitest covers the double-submit case. `status::todo` `priority::critical` `severity::critical` `estimate::1-2h` `scrum::sprint-005`
+
 ### Retired tracks *(do not re-open without explicit decision reversal)*
 
 - **Google Forms track (E3-F2-GF-001..015):** Superseded 2026-04-17 by PWA pivot. 8 tasks (GF-001..008) closed before supersede; remaining (GF-009..015) retired unbuilt. Prior artifacts under `deliverables/F2/apps-script/` retained for reference only.
