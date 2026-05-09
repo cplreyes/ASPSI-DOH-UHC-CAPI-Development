@@ -17,8 +17,8 @@ import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
 
-const HCW_ID_RE = /^[A-Za-z0-9_\-]{1,64}$/;
-const FACILITY_ID_RE = /^[A-Za-z0-9_\-]{1,32}$/;
+const HCW_ID_RE = /^[A-Za-z0-9_-]{1,64}$/;
+const FACILITY_ID_RE = /^[A-Za-z0-9_-]{1,32}$/;
 
 export interface CreateHCWModalProps {
   apiBaseUrl: string;
