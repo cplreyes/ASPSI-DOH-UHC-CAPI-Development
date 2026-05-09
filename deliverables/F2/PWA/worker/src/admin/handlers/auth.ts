@@ -80,6 +80,13 @@ export interface AuthAuditCtx {
 }
 export type AuthAuditFn = (ctx: AuthAuditCtx) => void;
 
+/**
+ * Fire-and-forget callback invoked on successful login. Wired by the route
+ * layer to call the AS `admin_users_touch_last_login` RPC via ctx.waitUntil
+ * so the user response doesn't wait. R2-#66 (E4-APRT-048).
+ */
+export type LastLoginFn = (username: string) => void;
+
 interface LoginBody {
   username?: unknown;
   password?: unknown;
@@ -120,6 +127,7 @@ export async function handleLogin(
   usersListFn: UsersListFn,
   rolesListFn: RolesListFn,
   auditFn?: AuthAuditFn,
+  lastLoginFn?: LastLoginFn,
 ): Promise<Response> {
   const username = typeof body.username === 'string' ? body.username.trim() : '';
   const password = typeof body.password === 'string' ? body.password : '';
@@ -190,6 +198,11 @@ export async function handleLogin(
   const token = await mintAdminJwt(env.JWT_SIGNING_KEY, claims, { ttl: JWT_TTL_SECONDS });
 
   await resetLoginThrottle(kv, username);
+
+  // R2-#66: stamp last_login_at on F2_Users. Fire-and-forget — the user
+  // response shouldn't wait for the AS round-trip. Route layer wraps in
+  // ctx.waitUntil; in tests where lastLoginFn isn't passed, this is a no-op.
+  if (lastLoginFn) lastLoginFn(username);
 
   if (auditFn) {
     // Re-verify the just-minted token to extract jti without re-implementing

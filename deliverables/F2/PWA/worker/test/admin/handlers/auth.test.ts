@@ -10,7 +10,7 @@
  * failure passthrough (E_BACKEND 502), and per-user reset on success.
  */
 import { describe, expect, it, vi } from 'vitest';
-import { handleLogin, handleLogout, type AuthAuditCtx } from '../../../src/admin/handlers/auth';
+import { handleLogin, handleLogout, type AuthAuditCtx, type LastLoginFn } from '../../../src/admin/handlers/auth';
 import { hashPassword, mintAdminJwt, verifyAdminJwt } from '../../../src/admin/auth';
 import { recordFailedLogin } from '../../../src/admin/throttle';
 
@@ -245,6 +245,41 @@ describe('handleLogin', () => {
     );
     expect(bad.status).toBe(401);
     expect(auditFn).not.toHaveBeenCalled();
+  });
+
+  it('fires lastLoginFn with username on success and skips it on failures (R2-#66)', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('alice', 'CorrectPw1', 'Administrator', false);
+    const lastLoginFn = vi.fn<LastLoginFn>();
+
+    // Success → lastLoginFn called once with the username.
+    const ok = await handleLogin(
+      { username: 'alice', password: 'CorrectPw1' },
+      'iphash-1',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      undefined,
+      lastLoginFn,
+    );
+    expect(ok.status).toBe(200);
+    expect(lastLoginFn).toHaveBeenCalledTimes(1);
+    expect(lastLoginFn).toHaveBeenCalledWith('alice');
+
+    // Failure (wrong password) → lastLoginFn not called.
+    lastLoginFn.mockClear();
+    const bad = await handleLogin(
+      { username: 'alice', password: 'WrongPw1' },
+      'iphash-1',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      undefined,
+      lastLoginFn,
+    );
+    expect(bad.status).toBe(401);
+    expect(lastLoginFn).not.toHaveBeenCalled();
   });
 
   it('resets per-user throttle on successful login but leaves per-IP intact', async () => {

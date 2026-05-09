@@ -259,6 +259,37 @@ function adminUsersDelete(payload) {
   });
 }
 
+/**
+ * R2-#66 (E4-APRT-048): write last_login_at on successful login.
+ *
+ * Called fire-and-forget from the Worker after JWT mint via ctx.waitUntil,
+ * so the user response doesn't wait on this. Single-cell write — no
+ * LockService needed (idempotent: a later login overwrites with a newer
+ * timestamp). If the column is missing or the user vanished mid-flight,
+ * silently no-op rather than fail the login flow.
+ *
+ * F2_Audit row is written separately by the Worker's auditFn pipeline;
+ * this RPC handles only the cell write.
+ */
+function adminUsersTouchLastLogin(payload) {
+  if (!payload || !payload.username) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'username required' } };
+  }
+  var u = String(payload.username).trim();
+  var ts = payload.ts ? String(payload.ts) : new Date().toISOString();
+
+  var ss = getF2Spreadsheet();
+  var sh = ss.getSheetByName('F2_Users');
+  if (!sh) return { ok: true, data: { username: u, written: false } };
+  var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  var llIdx = headers.indexOf('last_login_at');
+  if (llIdx === -1) return { ok: true, data: { username: u, written: false } };
+  var found = _findUserRow(sh, u);
+  if (!found.row) return { ok: true, data: { username: u, written: false } };
+  sh.getRange(found.rowNumber, llIdx + 1).setValue(ts);
+  return { ok: true, data: { username: u, written: true, ts: ts } };
+}
+
 function _countAdmins(sh) {
   var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
   var roleIdx = headers.indexOf('role_name');

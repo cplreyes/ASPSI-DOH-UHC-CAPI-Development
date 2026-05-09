@@ -214,6 +214,31 @@ function buildAuditDispatcher(
 }
 
 /**
+ * R2-#66 (E4-APRT-048): fire-and-forget AS RPC stamping last_login_at on
+ * F2_Users after successful login. No-op when ctx is unavailable (test
+ * environments) so handler unit tests stay independent.
+ */
+function buildLastLoginDispatcher(
+  env: Env,
+  requestId: string,
+  ctx?: ExecutionContext,
+): (username: string) => void {
+  return (username) => {
+    if (!ctx) return;
+    ctx.waitUntil(
+      callAppsScript(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_touch_last_login',
+        { username, ts: new Date().toISOString() },
+        requestId,
+        env.F2_AUTH,
+      ).catch(() => undefined),
+    );
+  };
+}
+
+/**
  * Returns the response for an /admin/api/ request, or null when the path
  * isn't an admin-portal route (so the caller can fall through to legacy).
  *
@@ -227,6 +252,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
   const ipHash = await sha256Hex(req.headers.get('cf-connecting-ip') || '');
   const requestId = crypto.randomUUID();
   const auditFn = buildAuditDispatcher(env, requestId, ctx);
+  const lastLoginFn = buildLastLoginDispatcher(env, requestId, ctx);
 
   if (req.method === 'POST' && url.pathname === '/admin/api/login') {
     const body = await req.json().catch(() => ({}));
@@ -255,7 +281,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
         env.F2_AUTH,
       );
-    const r = await handleLogin(body as Record<string, unknown>, ipHash, env, usersList, rolesList, auditFn);
+    const r = await handleLogin(body as Record<string, unknown>, ipHash, env, usersList, rolesList, auditFn, lastLoginFn);
     return withRequestId(r, requestId);
   }
 
