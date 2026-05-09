@@ -141,7 +141,7 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
 
 - [ ] **E4-INT-001** ETL spec drafted — CSWeb (F1/F3/F4) + F2 PWA backend → unified analysis store `status::todo` `priority::high` `estimate::1d`
 - [ ] **E4-INT-002** Looker Studio (or equivalent) dashboard prototype over the unified store `status::todo` `priority::medium` `estimate::1d`
-- [ ] **E4-INT-003** Codebook-driven harmonization (per `concepts/aspsi-data-harmonization`) wired into ETL `status::todo` `priority::medium` `estimate::TBD`
+- [ ] **E4-INT-003** Codebook-driven harmonization (per `concepts/aspsi-data-harmonization`) wired into ETL `status::todo` `priority::medium` `estimate::1d` *(scope sized assuming codebook spec exists; refine after E4-INT-001 lands)*
 
 ## Dependencies
 

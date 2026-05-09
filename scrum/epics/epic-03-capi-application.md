@@ -101,8 +101,8 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [x] **E3-F1-085** Phase 1 — local CSWeb deploy proven (F7 → Deploy Application wizard) `status::done` `priority::critical`
 - [x] **E3-F1-086** Phase 1 — CSEntry tablet sync chain proven (login → menu → F1, end-to-end on real device) `status::done` `priority::critical`
 - [x] **E3-F1-087** Phase 1 — CSPro 8.0 syntax gotchas catalog (Phase 2 / F3 / F4 reference) `status::done` `priority::high`
-- [ ] **E3-F1-088** Phase 1 sync mechanic resolution — `syncdata` external-dict + CSDB binding `status::todo` `priority::critical` `estimate::TBD`
-- [ ] **E3-F1-PHASE2-PLAN** Phase 2 plan + scope confirmation (PLF + F3 + F4_listing + F4 + supervisor menu + EA fence + daily audit Slack) `status::todo` `priority::high` `estimate::TBD`
+- [ ] **E3-F1-088** Phase 1 sync mechanic resolution — `syncdata` external-dict + CSDB binding `status::todo` `priority::critical` `estimate::6h` *(handoff says ~5% of Plan 1 remaining; investigation + tablet test cycle)*
+- [ ] **E3-F1-PHASE2-PLAN** Phase 2 plan + scope confirmation (PLF + F3 + F4_listing + F4 + supervisor menu + EA fence + daily audit Slack) `status::todo` `priority::high` `estimate::4h` *(planning + scope writeup; gates F3/F4/PLF builds)*
 
 ---
 

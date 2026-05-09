@@ -30,7 +30,7 @@ Pre-production verification and limited-scale field pilot before full rollout. C
 - [x] **E6-PWA-004** UAT Round 1 (v1.1.0) — opened by Shan 2026-04-23, closed 2026-04-24, 7 issues fixed `status::done` `priority::critical`
 - [x] **E6-PWA-005** UAT Round 2 (v1.1.1) — opened 2026-04-25, closed same day, 6 issues fixed `status::done` `priority::critical`
 - [x] **E6-PWA-006** Internal QA + design-review pass (Round 3 internal-QA) — 12 issues filed as #19-#30, milestone v1.3.0 2026-04-25 `status::done` `priority::high`
-- [ ] **E6-PWA-007** UAT Round 3 (v1.2.0) — exclusive "I don't know", "All of the above" auto-select, scale-style matrix (#16/#17/#18) `status::todo` `priority::high` `estimate::TBD`
+- [ ] **E6-PWA-007** UAT Round 3 (v1.2.0) — exclusive "I don't know", "All of the above" auto-select, scale-style matrix (#16/#17/#18) `status::todo` `priority::high` `estimate::4h` *(UAT cycle; implementation effort is in E3-F2-PWA-R3-001/2/3 = 12h separately)*
 - [ ] **E6-PWA-008** F2 production pilot batch — small facility cohort, success criteria, go/no-go to full rollout `status::todo` `priority::high` `estimate::1d`
 - [ ] **E6-PWA-009** axe-core / Lighthouse a11y audit — full report, AA compliance gate `status::todo` `priority::medium` `estimate::4h`
 - [ ] **E6-PWA-010** Performance baseline — Core Web Vitals, bundle size budget, regression tracking `status::todo` `priority::medium` `estimate::4h`

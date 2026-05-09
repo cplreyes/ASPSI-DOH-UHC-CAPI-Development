@@ -25,7 +25,7 @@ Getting survey instruments into enumerator hands and keeping them running in the
 ### CAPI Tablet Track *(spec drafted 2026-04-29)*
 
 - [ ] **E5-CAPI-001** Tablet specification finalized — model, OS, storage, accessories per enumerator team `status::in-progress` `priority::high` `estimate::4h` *(spec drafted; awaiting procurement confirmation from ASPSI ops)*
-- [ ] **E5-CAPI-002** Tablet procurement + receipt — count matches enumerator headcount + spares `status::todo` `priority::high` `estimate::TBD`
+- [ ] **E5-CAPI-002** Tablet procurement + receipt — count matches enumerator headcount + spares `status::todo` `priority::high` `estimate::2h` *(active receipt work only; calendar-time gated on ASPSI procurement)*
 - [ ] **E5-CAPI-003** Imaging SOP — base config, MDM enrollment, CSEntry install, security baseline `status::todo` `priority::high` `estimate::1d`
 - [ ] **E5-CAPI-004** Per-tablet enrollment — bind tablet ID to enumerator ID, push initial CSPro app + dictionary `status::todo` `priority::high` `estimate::recurring`
 - [ ] **E5-CAPI-005** Field replacement protocol — how to swap a broken/lost tablet without losing in-flight data `status::todo` `priority::high` `estimate::3h`
