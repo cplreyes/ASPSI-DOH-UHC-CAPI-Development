@@ -191,10 +191,16 @@ export async function handleLogin(
     );
   }
 
-  const claims: Pick<AdminJwtPayload, 'sub' | 'role' | 'role_version'> = {
+  // R2-#57 (E4-APRT-045): if the user owes a password change, stamp the pwc
+  // claim on the JWT so requirePerm rejects every gated route except the
+  // password-rotation endpoint. Without this the temp credential yields a
+  // full 4h working session even if the user never visits /me/change-password.
+  const mustChange = isTruthy(user.password_must_change);
+  const claims: Pick<AdminJwtPayload, 'sub' | 'role' | 'role_version'> & { pwc?: boolean } = {
     sub: username,
     role: role.name,
     role_version: role.version,
+    ...(mustChange ? { pwc: true } : {}),
   };
   const token = await mintAdminJwt(env.JWT_SIGNING_KEY, claims, { ttl: JWT_TTL_SECONDS });
 

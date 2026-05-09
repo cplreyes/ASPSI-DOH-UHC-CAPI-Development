@@ -16,6 +16,7 @@ export type ErrorCode =
   | 'E_AUTH_LOCKED'
   | 'E_AUTH_EXPIRED'
   | 'E_PERM_DENIED'
+  | 'E_PASSWORD_CHANGE_REQUIRED'
   | 'E_BACKEND'
   | 'E_NOT_FOUND'
   | 'E_NOT_CONFIGURED'
@@ -39,6 +40,13 @@ export type ApiResult<T> =
 export interface AdminFetchOptions {
   token?: string | null;
   onUnauthorized?: () => void;
+  /**
+   * R2-#57 (E4-APRT-045): fired when the worker rejects with 403 +
+   * E_PASSWORD_CHANGE_REQUIRED. The route layer should redirect to
+   * /admin/me/change-password — the user owes a rotation before any other
+   * gated endpoint will respond.
+   */
+  onPasswordChangeRequired?: () => void;
   fetchImpl?: typeof fetch;
 }
 
@@ -94,6 +102,20 @@ export async function adminFetch<T = unknown>(
   if (resp.status === 401) {
     opts.onUnauthorized?.();
   }
+  // 403 + E_PASSWORD_CHANGE_REQUIRED: token is otherwise valid but the user
+  // owes a password rotation. Don't logout — just redirect to the change
+  // page. R2-#57.
+  if (resp.status === 403) {
+    // Peek the body for the code without consuming the stream — clone first.
+    try {
+      const peek = (await resp.clone().json()) as ErrorEnvelope;
+      if (peek?.error?.code === 'E_PASSWORD_CHANGE_REQUIRED') {
+        opts.onPasswordChangeRequired?.();
+      }
+    } catch {
+      // Non-JSON 403 — let the standard error-envelope path handle it.
+    }
+  }
 
   if (resp.status === 204) {
     return { ok: true, data: undefined as T, ...reqIdSpread };
@@ -146,6 +168,7 @@ function normalizeErrorCode(code: unknown): ErrorCode {
     'E_AUTH_LOCKED',
     'E_AUTH_EXPIRED',
     'E_PERM_DENIED',
+    'E_PASSWORD_CHANGE_REQUIRED',
     'E_BACKEND',
     'E_NOT_FOUND',
     'E_NOT_CONFIGURED',

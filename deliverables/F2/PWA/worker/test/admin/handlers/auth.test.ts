@@ -254,6 +254,50 @@ describe('handleLogin', () => {
     expect(auditFn).not.toHaveBeenCalled();
   });
 
+  it('stamps pwc claim on JWT when user.password_must_change is true (R2-#57)', async () => {
+    // Server-enforce password rotation. A token issued to a user under
+    // password_must_change carries pwc:true, which requirePerm reads to
+    // reject every gated route until the rotation endpoint clears it.
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('newbie', 'TempPw123', 'Standard User', true);
+    const r = await handleLogin(
+      { username: 'newbie', password: 'TempPw123' },
+      'iphash-1',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+    );
+    expect(r.status).toBe(200);
+    const body = (await r.json()) as { token: string };
+    const v = await verifyAdminJwt(KEY, body.token);
+    expect(v.ok).toBe(true);
+    if (v.ok) {
+      expect(v.payload.pwc).toBe(true);
+    }
+  });
+
+  it('omits pwc claim when user.password_must_change is false (R2-#57)', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('alice', 'CorrectPw1', 'Administrator', false);
+    const r = await handleLogin(
+      { username: 'alice', password: 'CorrectPw1' },
+      'iphash-1',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+    );
+    expect(r.status).toBe(200);
+    const body = (await r.json()) as { token: string };
+    const v = await verifyAdminJwt(KEY, body.token);
+    expect(v.ok).toBe(true);
+    if (v.ok) {
+      // Optional claim should be absent on regular tokens.
+      expect(v.payload.pwc).toBeUndefined();
+    }
+  });
+
   it('fires lastLoginFn with username on success and skips it on failures (R2-#66)', async () => {
     const kv = makeKv();
     const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
@@ -566,11 +610,15 @@ describe('handleChangeMyPassword — R2-#134', () => {
     expect(arg.password_hash.length).toBeGreaterThan(20);
 
     // Fresh token verifies and the new sub/role/role_version match.
+    // R2-#57: the freshly-minted JWT must NOT carry pwc:true even though
+    // the user originally had password_must_change=true — that's the
+    // whole point of the rotation flow.
     const v = await verifyAdminJwt(KEY, body.token);
     expect(v.ok).toBe(true);
     if (v.ok) {
       expect(v.payload.sub).toBe('alice');
       expect(v.payload.role).toBe('Administrator');
+      expect(v.payload.pwc).toBeUndefined();
     }
   });
 

@@ -56,6 +56,7 @@ export function Versioning({ apiBaseUrl, fetchImpl }: VersioningProps): JSX.Elem
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );

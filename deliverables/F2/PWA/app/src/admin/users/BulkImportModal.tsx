@@ -119,6 +119,7 @@ export function BulkImportModal({
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );

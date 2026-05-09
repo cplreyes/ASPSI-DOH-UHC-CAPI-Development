@@ -135,6 +135,7 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );

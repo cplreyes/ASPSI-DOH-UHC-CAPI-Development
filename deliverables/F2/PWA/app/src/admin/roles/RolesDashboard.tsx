@@ -72,6 +72,7 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );
@@ -102,6 +103,7 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );

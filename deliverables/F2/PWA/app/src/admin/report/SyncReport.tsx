@@ -96,6 +96,7 @@ export function SyncReport({ apiBaseUrl, fetchImpl }: SyncReportProps): JSX.Elem
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );

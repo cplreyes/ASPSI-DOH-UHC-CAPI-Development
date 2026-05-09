@@ -140,6 +140,7 @@ export function ResponsesTab({ apiBaseUrl, fetchImpl }: ResponsesTabProps): JSX.
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );

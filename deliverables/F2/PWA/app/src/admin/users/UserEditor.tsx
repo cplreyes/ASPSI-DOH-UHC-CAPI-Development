@@ -101,6 +101,7 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );

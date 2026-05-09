@@ -88,6 +88,7 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -107,6 +108,7 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
         clearAuth();
         navigate('/admin/login');
       },
+      onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
       ...(fetchImpl ? { fetchImpl } : {}),
     };
   }

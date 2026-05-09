@@ -141,6 +141,13 @@ export interface AdminJwtPayload {
   iat: number;
   exp: number;
   jti: string;
+  /**
+   * R2-#57 (E4-APRT-045): server-enforce password rotation. Present and `true`
+   * when the user must change their password before any RBAC-gated endpoint
+   * is allowed; absent (or `false`) on tokens minted post-rotation. Compact
+   * key name keeps the JWT under the 4 KB header limit even for long roles.
+   */
+  pwc?: boolean;
 }
 
 export interface MintAdminJwtOpts {
@@ -166,7 +173,7 @@ async function importJwtKey(rawB64url: string): Promise<CryptoKey> {
  */
 export async function mintAdminJwt(
   signingKeyB64url: string,
-  claims: Pick<AdminJwtPayload, 'sub' | 'role' | 'role_version'>,
+  claims: Pick<AdminJwtPayload, 'sub' | 'role' | 'role_version'> & { pwc?: boolean },
   opts: MintAdminJwtOpts = {},
 ): Promise<string> {
   const ttl = opts.ttl ?? 4 * 60 * 60;
@@ -180,6 +187,7 @@ export async function mintAdminJwt(
     iat,
     exp: iat + ttl,
     jti: crypto.randomUUID(),
+    ...(claims.pwc ? { pwc: true } : {}),
   };
   const header = { alg: 'HS256', typ: 'JWT' };
   const encJson = (o: object) => b64urlEncode(enc.encode(JSON.stringify(o)));

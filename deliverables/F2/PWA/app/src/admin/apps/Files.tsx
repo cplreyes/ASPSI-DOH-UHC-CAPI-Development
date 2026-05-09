@@ -78,6 +78,7 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -115,6 +116,7 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -140,6 +142,7 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );

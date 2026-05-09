@@ -94,6 +94,7 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );

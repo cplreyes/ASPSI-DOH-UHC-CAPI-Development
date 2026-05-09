@@ -84,6 +84,7 @@ function ResponseDetailInner({ apiBaseUrl, submissionId, fetchImpl }: ResponseDe
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );

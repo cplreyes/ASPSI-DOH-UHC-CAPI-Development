@@ -95,6 +95,35 @@ describe('requirePerm', () => {
     expect(r.payload?.sub).toBe('carl');
   });
 
+  it('rejects 403 E_PASSWORD_CHANGE_REQUIRED when JWT pwc claim is true (R2-#57)', async () => {
+    // Token issued to a user who owes a password rotation. Server must reject
+    // every gated route until they hit /admin/api/me/password (which bypasses
+    // requirePerm by design) and rotate.
+    const token = await mintAdminJwt(KEY, { sub: 'carl', role: 'Administrator', role_version: 1, pwc: true });
+    const r = await requirePerm(reqWithToken(token), 'dash_data', {
+      secret: KEY,
+      cache: new RoleVersionCache(),
+      rolesListFn: async () => ({ ok: true, data: { roles: ROLES } }),
+      kv: makeKv(),
+    });
+    expect(r.ok).toBe(false);
+    expect(r.status).toBe(403);
+    expect(r.errorCode).toBe('E_PASSWORD_CHANGE_REQUIRED');
+  });
+
+  it('does NOT reject when pwc claim is absent or false (R2-#57)', async () => {
+    // Tokens minted post-rotation lack the pwc claim entirely; perm check
+    // proceeds normally.
+    const token = await mintAdminJwt(KEY, { sub: 'carl', role: 'Administrator', role_version: 1 });
+    const r = await requirePerm(reqWithToken(token), 'dash_data', {
+      secret: KEY,
+      cache: new RoleVersionCache(),
+      rolesListFn: async () => ({ ok: true, data: { roles: ROLES } }),
+      kv: makeKv(),
+    });
+    expect(r.ok).toBe(true);
+  });
+
   it('rejects 403 E_PERM_DENIED when role lacks the perm', async () => {
     const token = await mintAdminJwt(KEY, { sub: 'sue', role: 'Standard User', role_version: 1 });
     const r = await requirePerm(reqWithToken(token), 'manage_users', {

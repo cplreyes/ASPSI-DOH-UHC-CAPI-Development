@@ -99,6 +99,7 @@ export function AuditTab({ apiBaseUrl, fetchImpl }: AuditTabProps): JSX.Element 
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );

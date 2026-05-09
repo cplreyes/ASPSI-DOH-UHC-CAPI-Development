@@ -68,6 +68,7 @@ export function EncodePage({ apiBaseUrl, hcwId, fetchImpl }: EncodePageProps): J
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );

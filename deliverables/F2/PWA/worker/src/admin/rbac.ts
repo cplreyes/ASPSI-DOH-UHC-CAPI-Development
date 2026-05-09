@@ -100,6 +100,16 @@ export async function requirePerm(req: Request, perm: string, opts: RbacOpts): P
     }
   }
 
+  // R2-#57 (E4-APRT-045): a token issued to a user who owes a password
+  // change is barred from every RBAC-gated route. The password-rotation
+  // endpoint (`PATCH /admin/api/me/password`) bypasses this gate by design
+  // — it does its own JWT verify and never calls requirePerm. Frontend
+  // intercepts E_PASSWORD_CHANGE_REQUIRED on the api-client side and
+  // redirects to /admin/me/change-password.
+  if (payload.pwc === true) {
+    return { ok: false, status: 403, errorCode: 'E_PASSWORD_CHANGE_REQUIRED' };
+  }
+
   let role = opts.cache.get(payload.role, payload.role_version);
   if (!role) {
     const rl = await opts.rolesListFn();

@@ -93,6 +93,7 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );
@@ -142,6 +143,7 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );
@@ -169,6 +171,7 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );

@@ -47,6 +47,7 @@ export function QuotaWidget({ apiBaseUrl, fetchImpl }: QuotaWidgetProps): JSX.El
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
