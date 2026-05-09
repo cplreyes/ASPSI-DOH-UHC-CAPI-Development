@@ -848,6 +848,10 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
           env.F2_AUTH,
         );
       const r = await handleUpdateRole(name, body, asCall);
+      // R2-#56: invalidate cached role on successful mutation so the next
+      // request for any user holding this role refetches authoritative
+      // F2_Roles data instead of trusting the now-stale entry.
+      if (r.status >= 200 && r.status < 300) roleCache.invalidate(name);
       return withRequestId(r, requestId);
     }
     // DELETE
@@ -861,6 +865,9 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleDeleteRole(name, asCall);
+    // R2-#56: deleting a role evicts the cache entry too — any extant JWT
+    // for this role will fall through to refetch + 401 (role not in list).
+    if (r.status >= 200 && r.status < 300) roleCache.invalidate(name);
     return withRequestId(r, requestId);
   }
 

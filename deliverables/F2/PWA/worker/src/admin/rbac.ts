@@ -1,15 +1,30 @@
 /**
- * F2 Admin Portal — RBAC middleware + role-version-keyed perm cache.
+ * F2 Admin Portal — RBAC middleware + role perm cache.
  *
  * Plan: docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md (Task 1.12)
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§6.4, §10)
  *
- * Cache key is `name:version` so a role PATCH (which bumps F2_Roles.version)
- * naturally invalidates stale entries: a JWT minted under v1 won't match a
- * v2 cache entry, the lookup misses, and the fresh roles list is fetched.
- * Tokens minted before the bump fail with E_AUTH_EXPIRED — clients re-login
- * and get a token with the new role_version. TTL is a backstop in case AS
- * pushes a role-version update we haven't seen via cache invalidation.
+ * Cache invariant: holds at most one entry per role name (the latest version
+ * the worker has seen). Two layers of staleness defense:
+ *
+ * 1. Active eviction — every successful role mutation (POST/PATCH/DELETE on
+ *    `/admin/api/dashboards/roles/...`) invalidates the entry for that name
+ *    in routes.ts, so the next request for any user holding that role
+ *    refetches authoritative data from F2_Roles.
+ * 2. Per-request version validation — on every cache hit, requirePerm
+ *    compares the cached role's version to the JWT's `role_version`. A JWT
+ *    minted before a version bump (with `role_version=v1`) is rejected
+ *    against a cached v2 entry with E_AUTH_EXPIRED, even if the active-
+ *    eviction step somehow missed.
+ * 3. TTL backstop — entries older than `TTL_MS` (5 min) are treated as
+ *    expired regardless. Bounds worst-case staleness when neither active
+ *    eviction nor a fresh-token request has happened recently.
+ *
+ * R2-#56 (E4-APRT-044): the prior shape keyed entries on `name:version`,
+ * which meant a v1 JWT lookup hit the v1 cache entry directly without
+ * triggering the version-mismatch detection — revoked perms persisted up
+ * to 60 minutes. Reshaped to key-by-name + explicit version validation +
+ * shorter TTL.
  */
 import { verifyAdminJwt, type AdminJwtPayload } from './auth';
 
@@ -21,21 +36,36 @@ export interface Role {
 
 export class RoleVersionCache {
   private cache = new Map<string, { role: Role; cachedAt: number }>();
-  private TTL_MS = 60 * 60 * 1000;
+  private TTL_MS = 5 * 60 * 1000;
 
-  private key(name: string, version: number): string {
-    return `${name}:${version}`;
-  }
-
-  get(name: string, version: number): Role | undefined {
-    const e = this.cache.get(this.key(name, version));
+  /**
+   * Returns the latest cached role for `name`, or undefined when absent or
+   * past TTL. Caller is responsible for verifying the cached `role.version`
+   * against the JWT's `role_version` — the cache itself never compares
+   * versions, since that comparison is the security gate.
+   */
+  get(name: string): Role | undefined {
+    const e = this.cache.get(name);
     if (!e) return undefined;
     if (Date.now() - e.cachedAt > this.TTL_MS) return undefined;
     return e.role;
   }
 
+  /**
+   * Overwrites the entry for `role.name` with the given role. Latest write
+   * wins — version is stored on the entry but not in the key.
+   */
   set(role: Role): void {
-    this.cache.set(this.key(role.name, role.version), { role, cachedAt: Date.now() });
+    this.cache.set(role.name, { role, cachedAt: Date.now() });
+  }
+
+  /**
+   * Active eviction. Called by routes.ts after a successful role mutation
+   * so the next request for any user holding `name` refetches authoritative
+   * data from F2_Roles. Idempotent — no-op when the entry is absent.
+   */
+  invalidate(name: string): void {
+    this.cache.delete(name);
   }
 }
 
@@ -110,15 +140,31 @@ export async function requirePerm(req: Request, perm: string, opts: RbacOpts): P
     return { ok: false, status: 403, errorCode: 'E_PASSWORD_CHANGE_REQUIRED' };
   }
 
-  let role = opts.cache.get(payload.role, payload.role_version);
-  if (!role) {
+  // R2-#56 (E4-APRT-044): per-request version validation. Cache hit only
+  // when the cached version exactly matches the JWT — a stale JWT (lower
+  // version than cache) gets caught here without an AS round-trip; a stale
+  // cache (higher JWT version than cache) falls through to refetch. The
+  // refetch path also catches the case where active-eviction missed (cache
+  // and JWT both stale together): authoritative AS data wins, mismatch
+  // rejected.
+  const cached = opts.cache.get(payload.role);
+  let role: Role | undefined;
+  if (cached && cached.version === payload.role_version) {
+    role = cached;
+  } else {
     const rl = await opts.rolesListFn();
     if (!rl.ok || !rl.data) return { ok: false, status: 502, errorCode: 'E_BACKEND' };
     const found = rl.data.roles.find(r => r.name === payload.role);
-    if (!found || found.version !== payload.role_version) {
+    if (!found) {
       return { ok: false, status: 401, errorCode: 'E_AUTH_EXPIRED' };
     }
+    // Always update the cache with the authoritative latest, even when the
+    // JWT turns out to be stale — the next caller benefits from a fresh
+    // entry instead of repeating the same AS round-trip.
     opts.cache.set(found);
+    if (found.version !== payload.role_version) {
+      return { ok: false, status: 401, errorCode: 'E_AUTH_EXPIRED' };
+    }
     role = found;
   }
 
