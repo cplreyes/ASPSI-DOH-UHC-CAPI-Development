@@ -5,6 +5,7 @@
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.7, §7.8)
  */
 import { useMemo } from 'react';
+import { Button } from '@/components/ui/button';
 import { useRouter } from '../lib/pages-router';
 import { SyncReport } from './SyncReport';
 import { MapReport } from './MapReport';
@@ -56,8 +57,10 @@ export function ReportDashboard({ apiBaseUrl, fetchImpl }: ReportDashboardProps)
 
       <nav className="flex flex-wrap gap-6 text-sm" aria-label="Report tabs">
         {TABS.map(({ key, label, description }) => (
-          <button
+          <Button
             type="button"
+            variant="tableAction"
+            size="tableAction"
             key={key}
             onClick={() => switchTab(key)}
             aria-current={activeTab === key ? 'page' : undefined}
@@ -65,12 +68,12 @@ export function ReportDashboard({ apiBaseUrl, fetchImpl }: ReportDashboardProps)
             aria-label={`${label} — ${description}`}
             className={
               activeTab === key
-                ? 'border-b-2 border-signal pb-1 text-ink'
-                : 'pb-1 text-muted-foreground hover:text-ink'
+                ? 'border-b-2 border-signal pb-1 font-sans text-sm normal-case tracking-normal text-ink no-underline hover:no-underline'
+                : 'pb-1 font-sans text-sm normal-case tracking-normal text-muted-foreground no-underline hover:text-ink hover:no-underline'
             }
           >
             {label}
-          </button>
+          </Button>
         ))}
       </nav>
 

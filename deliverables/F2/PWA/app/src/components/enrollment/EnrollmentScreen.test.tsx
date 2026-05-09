@@ -114,7 +114,13 @@ describe('<EnrollmentScreen>', () => {
     expect(screen.getByTestId('enrollment-token-accepted').textContent).toMatch(/Manila General/);
   });
 
-  it('on rejected token, stays on Step 1 and shows an error', async () => {
+  it('on malformed token (E_TOKEN_INVALID), stays on Step 1 and shows the malformed-token error (R2-#108)', async () => {
+    // R2-#108: tester pasted a truncated token and saw "Token rejected.
+    // Contact ASPSI ops..." which felt off — the token was structurally
+    // bad, not "rejected" in the access-control sense. Renamed copy to
+    // "Token malformed..." to better describe what's actually wrong.
+    // Server still returns E_TOKEN_INVALID for bad-signature/wrong-format;
+    // the client just renders it more honestly.
     vi.spyOn(verifyClient, 'verifyDeviceToken').mockResolvedValue({
       ok: false,
       transport: false,
@@ -125,7 +131,7 @@ describe('<EnrollmentScreen>', () => {
     await user.type(screen.getByTestId('enrollment-token-input'), FAKE_TOKEN);
     await user.click(screen.getByRole('button', { name: /verify token/i }));
     await waitFor(() =>
-      expect(screen.getByText(/Token rejected\. Contact ASPSI ops/)).toBeInTheDocument(),
+      expect(screen.getByText(/Token malformed\. Contact ASPSI ops/)).toBeInTheDocument(),
     );
     expect(screen.queryByLabelText(/HCW ID/i)).not.toBeInTheDocument();
   });
@@ -142,6 +148,25 @@ describe('<EnrollmentScreen>', () => {
     await user.click(screen.getByRole('button', { name: /verify token/i }));
     await waitFor(() =>
       expect(screen.getByText(/This tablet has been revoked/)).toBeInTheDocument(),
+    );
+  });
+
+  it('on offline (E_NETWORK), shows the offline-specific copy with retry guidance (R2-#109)', async () => {
+    // R2-#109: tester (Shan, 2026-05-07 A.1.E3) verified token while
+    // offline and saw the generic "Token rejected" copy. The actual
+    // failure mode is a network outage, so the offline-specific copy
+    // (with retry guidance) is more honest than blaming the token.
+    vi.spyOn(verifyClient, 'verifyDeviceToken').mockResolvedValue({
+      ok: false,
+      transport: true,
+      error: { code: 'E_NETWORK', message: 'Failed to fetch' },
+    });
+    const user = userEvent.setup();
+    setup();
+    await user.type(screen.getByTestId('enrollment-token-input'), FAKE_TOKEN);
+    await user.click(screen.getByRole('button', { name: /verify token/i }));
+    await waitFor(() =>
+      expect(screen.getByText(/You're offline\. Check your connection and retry/)).toBeInTheDocument(),
     );
   });
 

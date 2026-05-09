@@ -56,8 +56,19 @@ const SECTIONS: SectionConfig[] = [
 
 const REVIEW_INDEX = SECTIONS.length;
 
+// R2-#118+#119: an empty array `[]` is not a filled value. Pre-fix this
+// returned true for `[]` (since [] !== ''), so multi-type required
+// fields like J.Q124/Q125 appeared "filled" the moment they were
+// initialized to [] in sectionDefaults — auto-advance fired and the
+// form proceeded to submission with empty Q124/Q125. Same shape with
+// whitespace-only strings.  Mirrors the canonical isFilled in
+// `lib/cross-field.ts` (kept inline rather than refactored to keep
+// the v2.0.1 fix surface minimal).
 function hasValue(v: unknown): boolean {
-  return v !== undefined && v !== null && v !== '';
+  if (v === undefined || v === null) return false;
+  if (typeof v === 'string') return v.trim().length > 0;
+  if (Array.isArray(v)) return v.length > 0;
+  return true;
 }
 
 function getSectionStatus(section: SectionConfig, values: FormValues): SectionStatus {
@@ -225,6 +236,17 @@ export function MultiSectionForm({
   const handleSectionValid = (values: FormValues) => {
     const next = { ...merged, ...values };
     setMerged(next);
+    // R2-#118+#119: even when zod validates (which it does for
+    // conditional items by design — they're .optional() so the schema
+    // accepts undefined when hidden), runtime completeness must still
+    // gate advance. Otherwise a Section J with Q123='Yes,...' and
+    // empty Q124/Q125 (multi, conditional, runtime-required) advances
+    // to REVIEW and submission proceeds with empty answers. Block here
+    // so the user stays on the section and the SectionTree's X icon
+    // surfaces which questions remain.
+    if (getSectionStatus(SECTIONS[index]!, next) !== 'complete') {
+      return;
+    }
     let nextIndex = index + 1;
     while (nextIndex < SECTIONS.length && !shouldShowSection(SECTIONS[nextIndex]!.id, next)) {
       nextIndex++;

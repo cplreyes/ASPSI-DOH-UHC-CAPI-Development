@@ -101,6 +101,39 @@ describe('<App>', () => {
       expect(screen.getByRole('heading', { name: /enrol|enroll/i })).toBeInTheDocument(),
     );
   });
+
+  it('R2-#120 S.A2: persists submitted state across refresh via COMPLETED_CSID_KEY', async () => {
+    // Pre-fix the tester reported "After refreshing, the form redirects
+    // back to Section A" because the App init effect always created a
+    // fresh draft. Now: if localStorage has f2_completed_csid, the
+    // init effect short-circuits to status='submitted' and renders the
+    // thank-you screen with a "Start new survey" button.
+    localStorage.setItem('f2_completed_csid', 'srv-csid-test');
+    render(<App />);
+    expect(
+      await screen.findByRole('heading', { name: /thank you/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /start new survey/i })).toBeInTheDocument();
+  });
+
+  it('R2-#120 S.A2: "Start new survey" clears the persistence flag and returns to Section A', async () => {
+    const user = userEvent.setup();
+    localStorage.setItem('f2_completed_csid', 'srv-csid-test');
+    render(<App />);
+    await screen.findByRole('button', { name: /start new survey/i });
+
+    await user.click(screen.getByRole('button', { name: /start new survey/i }));
+
+    await waitFor(() =>
+      expect(
+        screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/ }),
+      ).toBeInTheDocument(),
+    );
+    expect(localStorage.getItem('f2_completed_csid')).toBeNull();
+  });
 });
 
 describe('App — sync integration', () => {

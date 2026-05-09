@@ -81,9 +81,7 @@ describe('submitDraft', () => {
       facility_id: 'F-001',
       facility_type: 'Hospital',
     });
-    expect(submission.client_submission_id).toMatch(
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
-    );
+    expect(submission.client_submission_id).toBe('draft-1');
     expect(submission.spec_version).toBe('2026-04-17-m1');
 
     expect(await loadDraft('draft-1')).toBeUndefined();
@@ -116,5 +114,19 @@ describe('submitDraft', () => {
     const submission = await submitDraft('draft-4', ENROLLMENT, null);
     expect(submission.values.submission_lat).toBeNull();
     expect(submission.values.submission_lng).toBeNull();
+  });
+
+  // R2-#122: client_submission_id must derive from the draft id, not a fresh
+  // random UUID per call. Otherwise rapid double-tap on Submit (within the
+  // 5s getGeolocation window in App.tsx handleSubmit) generates two
+  // submissions with different client_submission_ids — server-side
+  // findExisting can't dedup, two F2_Responses rows recorded.
+  // Anchoring to draft id makes IDB submissions.put() upsert on primary
+  // key (only one local row per draft) and keeps server-side findExisting
+  // useful as a second line of defense.
+  it('uses the draft id as the client_submission_id (idempotency anchor)', async () => {
+    await saveDraft('draft-idem', { Q3: 'Female' }, ENROLLMENT);
+    const submission = await submitDraft('draft-idem', ENROLLMENT);
+    expect(submission.client_submission_id).toBe('draft-idem');
   });
 });

@@ -131,7 +131,7 @@ export type UpdateUserAsCallable = (
 ) => Promise<AppsScriptResponse<{ user: UserRow }>>;
 
 export type DeleteUserAsCallable = (
-  payload: { username: string },
+  payload: { username: string; actor_username: string },
 ) => Promise<AppsScriptResponse<{ username: string }>>;
 
 function statusForAsError(code: string | undefined): number {
@@ -140,6 +140,154 @@ function statusForAsError(code: string | undefined): number {
   if (code === 'E_CONFLICT') return 409;
   if (code === 'E_LOCK_TIMEOUT') return 503;
   return 502;
+}
+
+// R2-#98: Bulk import — batch-create admin users from a CSV. Worker
+// validates each row + PBKDF2-hashes each password (parallel via
+// Promise.all), then sends a single envelope to AS which iterates and
+// returns per-row results. Capped at 100 rows / batch by the AS handler
+// to keep PBKDF2 work + AS quota cost predictable.
+export interface BulkImportRow {
+  username: string;
+  password: string;
+  role_name: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  phone?: string;
+}
+
+export interface BulkImportBody {
+  rows: BulkImportRow[];
+}
+
+interface BulkImportResultRow {
+  username: string;
+  status: 'created' | 'rejected';
+  error?: { code: string; message: string };
+}
+
+export type BulkImportAsCallable = (
+  payload: { rows: Record<string, unknown>[] },
+) => Promise<
+  AppsScriptResponse<{
+    results: BulkImportResultRow[];
+    total: number;
+    created: number;
+    rejected: number;
+  }>
+>;
+
+export async function handleBulkImportUsers(
+  body: BulkImportBody,
+  actor: { username: string },
+  asCallable: BulkImportAsCallable,
+): Promise<Response> {
+  if (!body || !Array.isArray(body.rows)) {
+    return errorJson('E_VALIDATION', 'body.rows must be an array', 400);
+  }
+  if (body.rows.length === 0) {
+    return errorJson('E_VALIDATION', 'rows must not be empty', 400);
+  }
+  if (body.rows.length > 100) {
+    return errorJson('E_VALIDATION', 'max 100 rows per bulk import', 400);
+  }
+
+  // Two-pass: first surface client-side validation errors so the UI can
+  // keep them out of the AS round-trip; remaining rows get hashed in
+  // parallel and sent. The AS handler still validates server-side as
+  // defense in depth.
+  const clientResults: BulkImportResultRow[] = [];
+  const toHash: { idx: number; row: BulkImportRow }[] = [];
+  body.rows.forEach((raw, idx) => {
+    const row: BulkImportRow = {
+      username: typeof raw.username === 'string' ? raw.username.trim() : '',
+      password: typeof raw.password === 'string' ? raw.password : '',
+      role_name: typeof raw.role_name === 'string' ? raw.role_name.trim() : '',
+      ...(typeof raw.first_name === 'string' ? { first_name: raw.first_name.trim() } : {}),
+      ...(typeof raw.last_name === 'string' ? { last_name: raw.last_name.trim() } : {}),
+      ...(typeof raw.email === 'string' ? { email: raw.email.trim() } : {}),
+      ...(typeof raw.phone === 'string' ? { phone: raw.phone.trim() } : {}),
+    };
+    if (!USERNAME_RE.test(row.username)) {
+      clientResults[idx] = {
+        username: row.username,
+        status: 'rejected',
+        error: { code: 'E_VALIDATION', message: 'username must be 3-32 chars [A-Za-z0-9_]' },
+      };
+      return;
+    }
+    if (row.password.length < 8) {
+      clientResults[idx] = {
+        username: row.username,
+        status: 'rejected',
+        error: { code: 'E_VALIDATION', message: 'password must be at least 8 characters' },
+      };
+      return;
+    }
+    if (!row.role_name) {
+      clientResults[idx] = {
+        username: row.username,
+        status: 'rejected',
+        error: { code: 'E_VALIDATION', message: 'role_name required' },
+      };
+      return;
+    }
+    toHash.push({ idx, row });
+  });
+
+  // Hash valid passwords in parallel.
+  const hashed = await Promise.all(
+    toHash.map(async ({ idx, row }) => ({
+      idx,
+      payload: {
+        username: row.username,
+        password_hash: await hashPassword(row.password),
+        role_name: row.role_name,
+        first_name: row.first_name ?? '',
+        last_name: row.last_name ?? '',
+        email: row.email ?? '',
+        phone: row.phone ?? '',
+        password_must_change: true,
+        created_by: actor.username,
+      },
+    })),
+  );
+
+  let serverResults: BulkImportResultRow[] = [];
+  let total = body.rows.length;
+  let created = 0;
+  let rejected = clientResults.filter((r) => r != null).length;
+
+  if (hashed.length > 0) {
+    const r = await asCallable({ rows: hashed.map((h) => h.payload) });
+    if (!r.ok || !r.data) {
+      return errorJson(
+        r.error?.code ?? 'E_BACKEND',
+        r.error?.message ?? 'Apps Script unavailable',
+        statusForAsError(r.error?.code),
+      );
+    }
+    serverResults = r.data.results;
+    created = r.data.created;
+    rejected += r.data.rejected;
+  }
+
+  // Re-thread server results back to original row indices so the UI can
+  // line up clientResults + serverResults in input order.
+  const merged: BulkImportResultRow[] = new Array(body.rows.length);
+  clientResults.forEach((res, idx) => {
+    if (res) merged[idx] = res;
+  });
+  hashed.forEach(({ idx }, i) => {
+    merged[idx] = serverResults[i] ?? {
+      username: body.rows[idx]!.username,
+      status: 'rejected',
+      error: { code: 'E_INTERNAL', message: 'Server returned no result for this row' },
+    };
+  });
+
+  return jsonResponse({ ok: true, data: { results: merged, total, created, rejected } }, 200);
 }
 
 export async function handleCreateUser(
@@ -219,12 +367,18 @@ export async function handleUpdateUser(
 
 export async function handleDeleteUser(
   username: string,
+  actorUsername: string,
   asCallable: DeleteUserAsCallable,
 ): Promise<Response> {
   if (!USERNAME_RE.test(username)) {
     return errorJson('E_VALIDATION', 'invalid username path param', 400);
   }
-  const r = await asCallable({ username });
+  // Self-delete guard — fail fast before round-tripping to AS. AS still
+  // re-validates as defense-in-depth. R2-#133 (E4-APRT-050).
+  if (username === actorUsername) {
+    return errorJson('E_CONFLICT', 'cannot delete your own account', 409);
+  }
+  const r = await asCallable({ username, actor_username: actorUsername });
   if (!r.ok) {
     return errorJson(
       r.error?.code ?? 'E_BACKEND',

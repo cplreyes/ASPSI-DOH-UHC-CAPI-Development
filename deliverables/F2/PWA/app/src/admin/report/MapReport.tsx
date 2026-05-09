@@ -25,6 +25,7 @@
  * cluster overhead isn't worth the bundle bytes.
  */
 import { useEffect, useMemo, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -134,6 +135,7 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -213,13 +215,15 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
                   .sort((a, b) => b[1] - a[1])
                   .map(([region, count]) => (
                     <li key={region} className="flex items-center justify-between py-2 text-sm">
-                      <button
+                      <Button
                         type="button"
+                        variant="tableAction"
+                        size="tableAction"
                         onClick={() => setFilters({ ...filters, region_id: region })}
-                        className="font-mono text-xs underline-offset-4 hover:underline"
+                        className="font-mono text-xs normal-case tracking-normal"
                       >
                         {region}
-                      </button>
+                      </Button>
                       <span className="font-mono text-xs text-muted-foreground">{count}</span>
                     </li>
                   ))}
@@ -313,13 +317,15 @@ function HoveredCard({ marker, onClear }: { marker: Marker; onClear: () => void 
         >
           View full case
         </Link>
-        <button
+        <Button
           type="button"
+          variant="tableAction"
+          size="tableAction"
           onClick={onClear}
-          className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-ink"
+          className="text-muted-foreground no-underline hover:text-ink hover:no-underline"
         >
           Dismiss
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -343,7 +349,7 @@ function FilterDate({
         type="date"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -370,7 +376,7 @@ function FilterText({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );

@@ -19,12 +19,18 @@ const buttonVariants = cva(
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
+        // Mono-uppercase row-action style. Caller supplies the text color via
+        // className (e.g. text-muted-foreground / text-warning / text-error).
+        tableAction:
+          'font-mono text-xs uppercase tracking-wider underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-11 px-4 py-2',
         sm: 'h-8 rounded-md px-3 text-xs',
         lg: 'h-12 rounded-md px-8',
         icon: 'h-11 w-11',
+        // Inline row actions — auto height, no padding.
+        tableAction: 'h-auto px-0 py-0',
       },
     },
     defaultVariants: {

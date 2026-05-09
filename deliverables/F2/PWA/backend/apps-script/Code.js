@@ -153,6 +153,7 @@ function _buildResponsesCtx(sheet) {
 
 function _buildDlqCtx(sheet) {
   var cols = F2_DLQ_COLUMNS;
+  var dlqIdIdx = cols.indexOf('dlq_id');
   return {
     appendRow: function (rowObj) {
       var arr = cols.map(function (c) { return rowObj[c] != null ? rowObj[c] : ''; });
@@ -167,6 +168,28 @@ function _buildDlqCtx(sheet) {
         for (var i = 0; i < cols.length; i++) obj[cols[i]] = row[i];
         return obj;
       });
+    },
+    // R2-#84: extends dlqCtx with row-level read + delete for replay/delete
+    // operations from the Admin Portal. Sheet row numbers are 1-indexed and
+    // header is row 1, so data starts at row 2.
+    findByDlqId: function (dlqId) {
+      if (!dlqId || dlqIdIdx < 0) return null;
+      var last = sheet.getLastRow();
+      if (last < 2) return null;
+      var idCol = sheet.getRange(2, dlqIdIdx + 1, last - 1, 1).getValues();
+      for (var i = 0; i < idCol.length; i++) {
+        if (idCol[i][0] === dlqId) {
+          var rowNumber = i + 2;
+          var rowData = sheet.getRange(rowNumber, 1, 1, cols.length).getValues()[0];
+          var obj = { _rowNumber: rowNumber };
+          for (var j = 0; j < cols.length; j++) obj[cols[j]] = rowData[j];
+          return obj;
+        }
+      }
+      return null;
+    },
+    deleteRow: function (rowNumber) {
+      sheet.deleteRow(rowNumber);
     },
   };
 }
@@ -232,7 +255,21 @@ function _buildFacilitiesCtx(sheet) {
 }
 
 function _gasHmacHex(secret, message) {
-  var bytes = Utilities.computeHmacSha256Signature(message, secret);
+  // R2-#93: pre-encode message + secret as UTF-8 bytes before HMAC.
+  // Apps Script's Utilities.computeHmacSha256Signature(string, string)
+  // converts strings to bytes using a charset that's NOT UTF-8 in many
+  // runtime configurations (US-ASCII or ISO-8859-1 depending on the
+  // environment). Cloudflare Workers' TextEncoder always emits UTF-8.
+  // For ASCII-only canonical strings the bytes match anyway; the
+  // mismatch surfaces for non-ASCII filenames like "Plano-Q1-Niño.pdf"
+  // — Worker hashes 5 bytes for "ñ" (UTF-8: C3 B1), AS hashes 1 byte
+  // (Latin-1: F1) or replaces with "?" (US-ASCII: 3F). Result: HMAC
+  // mismatch → user sees E_SIG_INVALID "Signature mismatch".
+  // Fix: Utilities.newBlob(string).getBytes() always emits UTF-8 bytes,
+  // matching the Worker side regardless of AS runtime charset default.
+  var messageBytes = Utilities.newBlob(message).getBytes();
+  var secretBytes = Utilities.newBlob(secret).getBytes();
+  var bytes = Utilities.computeHmacSha256Signature(messageBytes, secretBytes);
   var hex = '';
   for (var i = 0; i < bytes.length; i++) {
     var b = bytes[i];

@@ -55,8 +55,17 @@ export function EnrollmentScreen() {
       });
       if (!result.ok) {
         const code = result.error.code;
+        // R2-#109: distinguish offline (E_NETWORK from verify-token-client's
+        // catch-block) from server-side rejection. Tester reported the
+        // generic "Token malformed" copy was misleading when the actual
+        // failure was a network-offline state — the user thinks the token
+        // is bad and contacts ops, when really they just need to reconnect.
         const msg =
-          code === 'E_TOKEN_REVOKED' ? t('enrollment.tokenRevoked') : t('enrollment.tokenInvalid');
+          code === 'E_TOKEN_REVOKED'
+            ? t('enrollment.tokenRevoked')
+            : code === 'E_NETWORK'
+              ? t('enrollment.tokenOffline')
+              : t('enrollment.tokenInvalid');
         setError(msg);
         return;
       }

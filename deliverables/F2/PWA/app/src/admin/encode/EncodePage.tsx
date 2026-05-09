@@ -18,6 +18,7 @@
  */
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
 import { LocaleProvider } from '@/i18n/locale-context';
 import { MultiSectionForm } from '@/components/survey/MultiSectionForm';
 import type { FormValues } from '@/lib/skip-logic';
@@ -67,6 +68,7 @@ export function EncodePage({ apiBaseUrl, hcwId, fetchImpl }: EncodePageProps): J
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );
@@ -161,13 +163,15 @@ function EncodeError({
       {error.requestId ? (
         <p className="mt-1 font-mono text-xs text-muted-foreground">ref {error.requestId}</p>
       ) : null}
-      <button
+      <Button
         type="button"
+        variant="tableAction"
+        size="tableAction"
         onClick={onDismiss}
-        className="mt-2 font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-ink"
+        className="mt-2 text-muted-foreground no-underline hover:text-ink hover:no-underline"
       >
         Dismiss
-      </button>
+      </Button>
     </div>
   );
 }

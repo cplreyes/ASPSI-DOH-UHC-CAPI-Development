@@ -9,6 +9,7 @@ export const en = {
     syncView: 'Sync',
     thankYouHeading: 'Thank you',
     thankYouBody: 'Your response is saved on this device and will sync when the app is online.',
+    startNewSurvey: 'Start new survey',
     submitFailedHeading: 'Submission failed',
     submitFailedBody:
       'Your response could not be saved. Tap retry to try again. If the problem persists, your draft is still on the previous screen.',
@@ -51,8 +52,9 @@ export const en = {
     tokenPlaceholder: 'eyJhbGc...',
     verifyTokenButton: 'Verify token',
     verifyingTokenButton: 'Verifying…',
-    tokenInvalid: 'Token rejected. Contact ASPSI ops for a new one.',
+    tokenInvalid: 'Token malformed. Contact ASPSI ops for a new one.',
     tokenRevoked: 'This tablet has been revoked. Contact ASPSI ops.',
+    tokenOffline: "You're offline. Check your connection and retry.",
     identityStep: 'Step 2: Identify yourself',
     tokenAccepted: 'Token accepted for facility {{facility}}. Pick yourself from the roster below.',
   },

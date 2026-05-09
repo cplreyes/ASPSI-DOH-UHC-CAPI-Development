@@ -15,6 +15,7 @@
  * sign themselves out of an in-flight session.
  */
 import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -139,6 +140,7 @@ export function RoleEditor(props: RoleEditorProps): JSX.Element {
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );
@@ -190,7 +192,7 @@ export function RoleEditor(props: RoleEditorProps): JSX.Element {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+                className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
               />
             </Field>
           ) : null}
@@ -227,20 +229,17 @@ export function RoleEditor(props: RoleEditorProps): JSX.Element {
           ) : null}
 
           <div className="mt-2 flex flex-wrap gap-3">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground"
-            >
+            <Button type="submit" disabled={submitting} className="h-10">
               {submitting ? 'Saving…' : mode === 'create' ? 'Create role' : 'Save & bump version'}
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              variant="outline"
               onClick={onClose}
-              className="inline-flex h-10 items-center justify-center rounded-md border border-hairline px-4 text-sm hover:bg-secondary"
+              className="h-10 border-hairline hover:bg-secondary"
             >
               Cancel
-            </button>
+            </Button>
           </div>
         </form>
       </div>

@@ -11,6 +11,7 @@
  * (HCW not found, already submitted) surface from the backend at submit.
  */
 import { useState, type FormEvent } from 'react';
+import { Button } from '@/components/ui/button';
 import { useRouter } from '../lib/pages-router';
 
 export function EncodeQueue(): JSX.Element {
@@ -49,18 +50,14 @@ export function EncodeQueue(): JSX.Element {
             autoCapitalize="none"
             autoCorrect="off"
             spellCheck={false}
-            className="border-0 border-b border-hairline bg-transparent py-2 font-mono text-sm outline-none focus:border-signal"
+            className="border-0 border-b border-hairline bg-transparent py-2 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
             placeholder="e.g. hcw-001"
           />
         </label>
         <div>
-          <button
-            type="submit"
-            disabled={!hcwId.trim()}
-            className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground"
-          >
+          <Button type="submit" disabled={!hcwId.trim()}>
             Open encoder
-          </button>
+          </Button>
         </div>
       </form>
 

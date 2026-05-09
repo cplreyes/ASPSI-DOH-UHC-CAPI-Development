@@ -12,6 +12,7 @@ import type { Env } from '../types';
 import {
   handleLogin,
   handleLogout,
+  handleChangeMyPassword,
   type AdminUserRow,
   type AdminRoleRow,
   type AuthAuditCtx,
@@ -47,12 +48,16 @@ import {
 } from './handlers/data';
 import {
   handleReissueToken,
+  handleCreateHcw,
   type ReissueRequestBody,
+  type CreateHcwBody,
 } from './handlers/hcws';
 import {
   handleListUsers,
   handleListRoles,
   handleCreateUser,
+  handleBulkImportUsers,
+  type BulkImportBody,
   handleUpdateUser,
   handleDeleteUser,
   handleRevokeSessions,
@@ -79,6 +84,7 @@ import {
   handleDeleteSetting,
   handleRunNowSetting,
   handleGetQuota,
+  statusForAsError,
   type FileMetaRow,
   type FilesListFilters,
   type ListFilesData,
@@ -102,12 +108,19 @@ const RESPONSES_LIST_RE = /^\/admin\/api\/dashboards\/data\/responses\/?$/;
 const RESPONSES_BY_ID_RE = /^\/admin\/api\/dashboards\/data\/responses\/([A-Za-z0-9_\-]+)\/?$/;
 const AUDIT_LIST_RE = /^\/admin\/api\/dashboards\/data\/audit\/?$/;
 const DLQ_LIST_RE = /^\/admin\/api\/dashboards\/data\/dlq\/?$/;
+// R2-#84: DLQ replay + delete (per-row by dlq_id).
+const DLQ_REPLAY_RE = /^\/admin\/api\/dashboards\/data\/dlq\/([^/]+)\/replay\/?$/;
+const DLQ_DELETE_RE = /^\/admin\/api\/dashboards\/data\/dlq\/([^/]+)\/?$/;
 const HCWS_LIST_RE = /^\/admin\/api\/dashboards\/data\/hcws\/?$/;
+const HCWS_CREATE_RE = /^\/admin\/api\/hcws\/?$/;
 const HCWS_REISSUE_RE = /^\/admin\/api\/hcws\/([A-Za-z0-9_\-]+)\/reissue-token\/?$/;
 const REPORT_SYNC_RE = /^\/admin\/api\/dashboards\/report\/sync\/?$/;
 const REPORT_MAP_RE = /^\/admin\/api\/dashboards\/report\/map\/?$/;
 const APPS_VERSION_RE = /^\/admin\/api\/dashboards\/apps\/version\/?$/;
 const USERS_LIST_RE = /^\/admin\/api\/dashboards\/users\/?$/;
+// R2-#98: Bulk import endpoint sits as a sibling of /users so the list
+// route's regex doesn't false-match the longer /bulk-import path.
+const USERS_BULK_IMPORT_RE = /^\/admin\/api\/dashboards\/users\/bulk-import\/?$/;
 const USERS_BY_NAME_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/?$/;
 const USERS_REVOKE_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\/revoke-sessions\/?$/;
 const ROLES_LIST_RE = /^\/admin\/api\/dashboards\/roles\/?$/;
@@ -205,6 +218,31 @@ function buildAuditDispatcher(
 }
 
 /**
+ * R2-#66 (E4-APRT-048): fire-and-forget AS RPC stamping last_login_at on
+ * F2_Users after successful login. No-op when ctx is unavailable (test
+ * environments) so handler unit tests stay independent.
+ */
+function buildLastLoginDispatcher(
+  env: Env,
+  requestId: string,
+  ctx?: ExecutionContext,
+): (username: string) => void {
+  return (username) => {
+    if (!ctx) return;
+    ctx.waitUntil(
+      callAppsScript(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_touch_last_login',
+        { username, ts: new Date().toISOString() },
+        requestId,
+        env.F2_AUTH,
+      ).catch(() => undefined),
+    );
+  };
+}
+
+/**
  * Returns the response for an /admin/api/ request, or null when the path
  * isn't an admin-portal route (so the caller can fall through to legacy).
  *
@@ -218,6 +256,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
   const ipHash = await sha256Hex(req.headers.get('cf-connecting-ip') || '');
   const requestId = crypto.randomUUID();
   const auditFn = buildAuditDispatcher(env, requestId, ctx);
+  const lastLoginFn = buildLastLoginDispatcher(env, requestId, ctx);
 
   if (req.method === 'POST' && url.pathname === '/admin/api/login') {
     const body = await req.json().catch(() => ({}));
@@ -246,12 +285,46 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
         env.F2_AUTH,
       );
-    const r = await handleLogin(body as Record<string, unknown>, ipHash, env, usersList, rolesList, auditFn);
+    const r = await handleLogin(body as Record<string, unknown>, ipHash, env, usersList, rolesList, auditFn, lastLoginFn);
     return withRequestId(r, requestId);
   }
 
   if (req.method === 'POST' && url.pathname === '/admin/api/logout') {
     const r = await handleLogout(req, ipHash, env, auditFn);
+    return withRequestId(r, requestId);
+  }
+
+  // R2-#134 (E4-APRT-051): user-self password rotation. JWT-only gate (no
+  // perm) so any authenticated admin can rotate their own credential.
+  if (req.method === 'PATCH' && url.pathname === '/admin/api/me/password') {
+    const usersList = () =>
+      callAppsScript<{ users: AdminUserRow[] }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_list',
+        { include_password_hash: true },
+        requestId,
+        env.F2_AUTH,
+      );
+    const rolesList = () =>
+      callAppsScript<{ roles: AdminRoleRow[] }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_roles_list',
+        {},
+        requestId,
+        env.F2_AUTH,
+      );
+    const changePwAsCall = (payload: { username: string; password_hash: string }) =>
+      callAppsScript<{ username: string }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_change_password',
+        payload,
+        requestId,
+        env.F2_AUTH,
+      );
+    const r = await handleChangeMyPassword(req, env, usersList, rolesList, changePwAsCall, auditFn, ipHash);
     return withRequestId(r, requestId);
   }
 
@@ -622,6 +695,32 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
     return withRequestId(r, requestId);
   }
 
+  // R2-#98: bulk import — must come before the single-user POST route so
+  // the longer /bulk-import path matches first.
+  if (req.method === 'POST' && USERS_BULK_IMPORT_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_users', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const body = (await req.json().catch(() => ({}))) as BulkImportBody;
+    const asCall = (payload: { rows: Record<string, unknown>[] }) =>
+      callAppsScript<{
+        results: Array<{ username: string; status: 'created' | 'rejected'; error?: { code: string; message: string } }>;
+        total: number;
+        created: number;
+        rejected: number;
+      }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_bulk_import',
+        payload as unknown as Record<string, unknown>,
+        requestId,
+        env.F2_AUTH,
+      );
+    const r = await handleBulkImportUsers(body, { username: auth.payload!.sub }, asCall);
+    return withRequestId(r, requestId);
+  }
+
   if (req.method === 'POST' && USERS_LIST_RE.test(url.pathname)) {
     const auth = await requirePerm(req, 'dash_users', buildRbacOpts(env, requestId));
     if (!auth.ok) {
@@ -683,7 +782,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
       return withRequestId(r, requestId);
     }
     // DELETE
-    const asCall = (payload: { username: string }) =>
+    const asCall = (payload: { username: string; actor_username: string }) =>
       callAppsScript<{ username: string }>(
         env.APPS_SCRIPT_URL,
         env.APPS_SCRIPT_HMAC,
@@ -692,7 +791,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
         env.F2_AUTH,
       );
-    const r = await handleDeleteUser(username, asCall);
+    const r = await handleDeleteUser(username, auth.payload!.sub, asCall);
     return withRequestId(r, requestId);
   }
 
@@ -752,6 +851,10 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
           env.F2_AUTH,
         );
       const r = await handleUpdateRole(name, body, asCall);
+      // R2-#56: invalidate cached role on successful mutation so the next
+      // request for any user holding this role refetches authoritative
+      // F2_Roles data instead of trusting the now-stale entry.
+      if (r.status >= 200 && r.status < 300) roleCache.invalidate(name);
       return withRequestId(r, requestId);
     }
     // DELETE
@@ -765,6 +868,41 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleDeleteRole(name, asCall);
+    // R2-#56: deleting a role evicts the cache entry too — any extant JWT
+    // for this role will fall through to refetch + 401 (role not in list).
+    if (r.status >= 200 && r.status < 300) roleCache.invalidate(name);
+    return withRequestId(r, requestId);
+  }
+
+  // R2-#58 (E4-APRT-041): first-class Create HCW. RBAC-gated on dash_users
+  // (same as reissue-token — both mutate F2_HCWs and are Administrator-only
+  // in practice). Audit row written on success only.
+  if (req.method === 'POST' && HCWS_CREATE_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_users', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const body = (await req.json().catch(() => ({}))) as CreateHcwBody;
+    const asCall = (payload: { hcw_id: string; facility_id: string; facility_name?: string; status?: string }) =>
+      callAppsScript<{ hcw_id: string }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_hcws_create',
+        payload as unknown as Record<string, unknown>,
+        requestId,
+        env.F2_AUTH,
+      );
+    const r = await handleCreateHcw(body, asCall);
+    if (r.status >= 200 && r.status < 300) {
+      auditFn({
+        event_type: 'admin_hcws_create',
+        actor_username: auth.payload!.sub,
+        actor_jti: auth.payload!.jti,
+        actor_role: auth.payload!.role,
+        client_ip_hash: ipHash,
+        event_resource: typeof body.hcw_id === 'string' ? body.hcw_id : '',
+      });
+    }
     return withRequestId(r, requestId);
   }
 

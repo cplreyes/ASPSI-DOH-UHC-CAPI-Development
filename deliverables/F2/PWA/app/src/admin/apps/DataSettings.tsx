@@ -16,6 +16,7 @@
  * count is bounded (one per instrument, ~3 expected).
  */
 import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -87,6 +88,7 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -106,6 +108,7 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
         clearAuth();
         navigate('/admin/login');
       },
+      onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
       ...(fetchImpl ? { fetchImpl } : {}),
     };
   }
@@ -195,16 +198,18 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
     <section className="flex flex-col gap-3">
       <div className="flex items-baseline justify-between">
         <h3 className="font-serif text-lg font-medium tracking-tight">Data Settings</h3>
-        <button
+        <Button
           type="button"
+          variant="tableAction"
+          size="tableAction"
           onClick={() => {
             setForm(form ? null : { ...EMPTY_FORM });
             setFormError(null);
           }}
-          className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
+          className="text-muted-foreground no-underline hover:text-foreground hover:no-underline"
         >
           {form ? 'Cancel' : '+ Add setting'}
-        </button>
+        </Button>
       </div>
       <p className="text-xs text-muted-foreground">
         Scheduled break-out exports of F2_Responses to R2 (CSV per facility, per region, etc). The
@@ -294,13 +299,14 @@ function SettingForm({
         </p>
       ) : null}
       <div className="flex gap-3">
-        <button
+        <Button
           type="submit"
+          variant="outline"
           disabled={submitting}
-          className="border border-foreground px-3 py-1 font-mono text-xs uppercase tracking-wider hover:bg-foreground hover:text-background disabled:opacity-50"
+          className="border-foreground px-3 py-1 font-mono text-xs uppercase tracking-wider hover:bg-foreground hover:text-background disabled:opacity-50"
         >
           {submitting ? 'Saving...' : form.setting_id ? 'Save' : 'Create'}
-        </button>
+        </Button>
       </div>
     </form>
   );
@@ -364,27 +370,33 @@ function SettingsTable({
               <Td mono>{formatTs(r.next_run_at)}</Td>
               <Td>
                 <div className="flex gap-2">
-                  <button
+                  <Button
                     type="button"
+                    variant="tableAction"
+                    size="tableAction"
                     onClick={() => void onRunNow(r)}
-                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
+                    className="text-muted-foreground no-underline hover:text-foreground hover:no-underline"
                   >
                     Run now
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="tableAction"
+                    size="tableAction"
                     onClick={() => onEdit(r)}
-                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground"
+                    className="text-muted-foreground no-underline hover:text-foreground hover:no-underline"
                   >
                     Edit
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="tableAction"
+                    size="tableAction"
                     onClick={() => void onDelete(r)}
-                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-error"
+                    className="text-muted-foreground no-underline hover:text-error hover:no-underline"
                   >
                     Delete
-                  </button>
+                  </Button>
                 </div>
               </Td>
             </tr>

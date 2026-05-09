@@ -12,8 +12,9 @@
  * the URL through a third-party QR generator (operational risk: token
  * exposure to external service).
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -55,6 +56,14 @@ export function ReissueTokenModal({
   >({ kind: 'confirm' });
   const [copied, setCopied] = useState<'token' | 'url' | null>(null);
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && state.kind !== 'submitting') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose, state.kind]);
+
   const onConfirm = async () => {
     setState({ kind: 'submitting' });
     const r = await adminFetch<ReissueResponse>(
@@ -69,6 +78,7 @@ export function ReissueTokenModal({
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );
@@ -157,22 +167,18 @@ function Confirm({
         <li>If two admins reissue concurrently, only the first one wins (CAS-protected).</li>
       </ul>
       <div className="mt-2 flex flex-wrap gap-3">
-        <button
-          type="button"
-          onClick={onConfirm}
-          disabled={submitting}
-          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground"
-        >
+        <Button type="button" onClick={onConfirm} disabled={submitting} className="h-10">
           {submitting ? 'Issuing…' : 'Issue new token'}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="outline"
           onClick={onCancel}
           disabled={submitting}
-          className="inline-flex h-10 items-center justify-center rounded-md border border-hairline px-4 text-sm hover:bg-secondary disabled:opacity-50"
+          className="h-10 border-hairline hover:bg-secondary disabled:opacity-50"
         >
           Cancel
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -216,13 +222,14 @@ function SuccessView({
           <code className="flex-1 break-all rounded border border-hairline bg-secondary/20 p-2 font-mono text-xs">
             {data.enroll_url}
           </code>
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={onCopyUrl}
-            className="inline-flex h-9 shrink-0 items-center justify-center rounded-md border border-hairline px-3 text-xs font-medium hover:bg-secondary"
+            className="h-9 shrink-0 border-hairline px-3 text-xs hover:bg-secondary"
           >
             {copied === 'url' ? 'Copied' : 'Copy URL'}
-          </button>
+          </Button>
         </div>
       </Field>
 
@@ -231,24 +238,26 @@ function SuccessView({
           <code className="flex-1 break-all rounded border border-hairline bg-secondary/20 p-2 font-mono text-[10px] leading-tight">
             {data.new_token}
           </code>
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={onCopyToken}
-            className="inline-flex h-9 shrink-0 items-center justify-center rounded-md border border-hairline px-3 text-xs font-medium hover:bg-secondary"
+            className="h-9 shrink-0 border-hairline px-3 text-xs hover:bg-secondary"
           >
             {copied === 'token' ? 'Copied' : 'Copy'}
-          </button>
+          </Button>
         </div>
       </Field>
 
       <div className="mt-2">
-        <button
+        <Button
           type="button"
+          variant="outline"
           onClick={onClose}
-          className="inline-flex h-10 items-center justify-center rounded-md border border-hairline px-4 text-sm hover:bg-secondary"
+          className="h-10 border-hairline hover:bg-secondary"
         >
           Done
-        </button>
+        </Button>
       </div>
     </div>
   );
@@ -264,13 +273,14 @@ function FailureView({ error, onCancel }: { error: ApiError; onCancel: () => voi
         ) : null}
       </div>
       <div>
-        <button
+        <Button
           type="button"
+          variant="outline"
           onClick={onCancel}
-          className="inline-flex h-10 items-center justify-center rounded-md border border-hairline px-4 text-sm hover:bg-secondary"
+          className="h-10 border-hairline hover:bg-secondary"
         >
           Close
-        </button>
+        </Button>
       </div>
     </div>
   );

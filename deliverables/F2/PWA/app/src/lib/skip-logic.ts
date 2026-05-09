@@ -3,6 +3,31 @@ type Predicate = (values: FormValues) => boolean;
 
 const SECTION_G_ROLES = new Set(['Physician/Doctor', 'Physician assistant', 'Dentist']);
 
+// R2-#114: sections C/D/E are role-gated to patient-care roles. Pre-fix
+// shouldShowSection returned true for everything except G; tester saw
+// C/D/E visible to Pharmacist/Dispenser, Physician/Doctor, and Dentist
+// aide (1 of 3 should see them — Doctor only).
+//
+// Per UAT R2 tester guide spec:
+//   - C/D/E: admin, doctor, physician assistant, nurse, midwife, dentist,
+//            nutrition action officer/coordinator
+//   - E only (E2 GAMOT half): pharmacists/dispensers — they should skip
+//            E1 (Q48–Q52) but see E2 (Q53–Q55). Until #117 splits E1/E2,
+//            pharmacists see all of E (acceptable trade for v2.0.1; the
+//            E1 leak is #117's surface).
+//   - All other roles (Nursing assistant, Lab tech, Med tech, Dentist
+//            aide, BHW, Other): proceed straight to F.
+const SECTION_CDE_ROLES = new Set([
+  'Administrator',
+  'Physician/Doctor',
+  'Physician assistant',
+  'Nurse',
+  'Midwife',
+  'Dentist',
+  'Nutrition action officer/ coordinator',
+]);
+const SECTION_E_ROLES = new Set([...SECTION_CDE_ROLES, 'Pharmacist/Dispenser']);
+
 const ROLES_WITH_SPECIALTY = new Set([
   'Administrator',
   'Physician/Doctor',
@@ -76,11 +101,23 @@ const predicates: Record<string, Record<string, Predicate>> = {
     Q46: (v) => isYes(v.Q44),
     Q47: (v) => isYes(v.Q44),
   },
+  // R2-#117: Section E sub-divides into two role-segregated halves.
+  // E1 (BUCAS) = Q48-Q52, restricted to SECTION_CDE_ROLES.
+  // E2 (GAMOT) = Q53-Q55, available to SECTION_E_ROLES (CDE + pharmacist).
+  // Pre-fix Q48 always showed within Section E for any role that reached
+  // the section, so pharmacists answered BUCAS questions despite being
+  // outside the patient-care role set for E1. Tester (Shan, 2026-05-07)
+  // suggested splitting: "for pharmacists/dispensers and assistant
+  // pharmacists, the form should proceed directly to Section E2 -
+  // Question 53." Implemented as item-level role gates inside Section
+  // E rather than a structural section split (the latter would touch
+  // SECTIONS array + 2 schemas + section-numbering across the app).
   E: {
-    Q49: (v) => isYes(v.Q48),
-    Q50: (v) => isYes(v.Q48) && isYes(v.Q49),
-    Q51: (v) => isYes(v.Q48) && isYes(v.Q49),
-    Q52: (v) => isYes(v.Q48) && isYes(v.Q49),
+    Q48: (v) => typeof v.Q5 === 'string' && SECTION_CDE_ROLES.has(v.Q5),
+    Q49: (v) => typeof v.Q5 === 'string' && SECTION_CDE_ROLES.has(v.Q5) && isYes(v.Q48),
+    Q50: (v) => typeof v.Q5 === 'string' && SECTION_CDE_ROLES.has(v.Q5) && isYes(v.Q48) && isYes(v.Q49),
+    Q51: (v) => typeof v.Q5 === 'string' && SECTION_CDE_ROLES.has(v.Q5) && isYes(v.Q48) && isYes(v.Q49),
+    Q52: (v) => typeof v.Q5 === 'string' && SECTION_CDE_ROLES.has(v.Q5) && isYes(v.Q48) && isYes(v.Q49),
     Q54: (v) => isYes(v.Q53),
     Q55: (v) => isYes(v.Q53) && isYes(v.Q54),
   },
@@ -122,8 +159,15 @@ export function shouldShow(sectionId: string, itemId: string, values: FormValues
 
 // Section-level skip: returns false if the whole section should be skipped
 export function shouldShowSection(sectionId: string, values: FormValues): boolean {
+  const role = typeof values.Q5 === 'string' ? values.Q5 : null;
   if (sectionId === 'G') {
-    return typeof values.Q5 === 'string' && SECTION_G_ROLES.has(values.Q5);
+    return role !== null && SECTION_G_ROLES.has(role);
+  }
+  if (sectionId === 'C' || sectionId === 'D') {
+    return role !== null && SECTION_CDE_ROLES.has(role);
+  }
+  if (sectionId === 'E') {
+    return role !== null && SECTION_E_ROLES.has(role);
   }
   return true;
 }

@@ -8,6 +8,7 @@
  * present so admins can scan event details without expanding each row.
  */
 import { useEffect, useMemo, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -98,6 +99,7 @@ export function AuditTab({ apiBaseUrl, fetchImpl }: AuditTabProps): JSX.Element 
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -191,7 +193,7 @@ function FilterDate({
         name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -220,7 +222,7 @@ function FilterText({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -237,6 +239,7 @@ function AuditTable({ rows }: { rows: AuditRow[] }): JSX.Element {
             <Th>Actor</Th>
             <Th>Resource</Th>
             <Th>Detail</Th>
+            <Th>Actions</Th>
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">
@@ -253,12 +256,50 @@ function AuditTable({ rows }: { rows: AuditRow[] }): JSX.Element {
                   </code>
                 ) : null}
               </Td>
+              <Td>
+                {r.event_payload_json ? (
+                  <Button
+                    type="button"
+                    variant="tableAction"
+                    size="tableAction"
+                    className="text-muted-foreground hover:text-ink"
+                    onClick={() => downloadPayload(`audit-${r.audit_id}.json`, r.event_payload_json!)}
+                    aria-label={`Download audit payload ${r.audit_id}`}
+                  >
+                    Download
+                  </Button>
+                ) : (
+                  <span className="font-mono text-xs text-muted-foreground">—</span>
+                )}
+              </Td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
+}
+
+// R2-#102 sub-bug 3 (no download for audit / DLQ payloads): emit the
+// row's payload_json as a downloadable .json file. Pretty-printed if
+// the value parses; otherwise falls back to the raw string.
+function downloadPayload(filename: string, payloadJson: string): void {
+  if (typeof window === 'undefined') return;
+  let body = payloadJson;
+  try {
+    body = JSON.stringify(JSON.parse(payloadJson), null, 2);
+  } catch {
+    /* keep raw — admin still gets the source string */
+  }
+  const blob = new Blob([body], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function Th({ children }: { children?: React.ReactNode }): JSX.Element {

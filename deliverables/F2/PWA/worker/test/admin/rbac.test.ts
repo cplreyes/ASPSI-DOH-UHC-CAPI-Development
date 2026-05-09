@@ -52,33 +52,48 @@ function reqWithToken(token: string): Request {
 }
 
 describe('RoleVersionCache', () => {
-  it('round-trips set/get', () => {
+  it('round-trips set/get keyed by name (R2-#56)', () => {
     const c = new RoleVersionCache();
     c.set(ROLES[0]!);
-    expect(c.get('Administrator', 1)).toEqual(ROLES[0]);
+    expect(c.get('Administrator')).toEqual(ROLES[0]);
   });
 
-  it('treats different versions as separate entries', () => {
+  it('overwrites when set is called with the same name and a newer version (R2-#56)', () => {
+    // Prior shape kept v1 + v2 as separate entries — that's the bug.
+    // New shape: latest write wins. requirePerm enforces version match.
     const c = new RoleVersionCache();
     c.set({ name: 'X', version: 1, p: true });
     c.set({ name: 'X', version: 2, p: false });
-    expect(c.get('X', 1)).toEqual({ name: 'X', version: 1, p: true });
-    expect(c.get('X', 2)).toEqual({ name: 'X', version: 2, p: false });
+    expect(c.get('X')).toEqual({ name: 'X', version: 2, p: false });
   });
 
   it('returns undefined when entry missing', () => {
     const c = new RoleVersionCache();
-    expect(c.get('Ghost', 1)).toBeUndefined();
+    expect(c.get('Ghost')).toBeUndefined();
   });
 
-  it('treats entries beyond TTL as expired', () => {
+  it('treats entries beyond TTL as expired (TTL = 5 min)', () => {
     const c = new RoleVersionCache();
     c.set(ROLES[0]!);
-    // Force expiry by mutating cachedAt directly.
     const internal = (c as unknown as { cache: Map<string, { role: Role; cachedAt: number }> }).cache;
-    const entry = internal.get('Administrator:1')!;
-    entry.cachedAt = Date.now() - (60 * 60 * 1000 + 1);
-    expect(c.get('Administrator', 1)).toBeUndefined();
+    const entry = internal.get('Administrator')!;
+    entry.cachedAt = Date.now() - (5 * 60 * 1000 + 1);
+    expect(c.get('Administrator')).toBeUndefined();
+  });
+
+  it('invalidate(name) removes the entry (R2-#56)', () => {
+    const c = new RoleVersionCache();
+    c.set(ROLES[0]!);
+    expect(c.get('Administrator')).toBeDefined();
+    c.invalidate('Administrator');
+    expect(c.get('Administrator')).toBeUndefined();
+  });
+
+  it('invalidate(name) is idempotent on missing entries (R2-#56)', () => {
+    const c = new RoleVersionCache();
+    // Doesn't throw, doesn't write a tombstone.
+    c.invalidate('NeverWasThere');
+    expect(c.get('NeverWasThere')).toBeUndefined();
   });
 });
 
@@ -93,6 +108,35 @@ describe('requirePerm', () => {
     });
     expect(r.ok).toBe(true);
     expect(r.payload?.sub).toBe('carl');
+  });
+
+  it('rejects 403 E_PASSWORD_CHANGE_REQUIRED when JWT pwc claim is true (R2-#57)', async () => {
+    // Token issued to a user who owes a password rotation. Server must reject
+    // every gated route until they hit /admin/api/me/password (which bypasses
+    // requirePerm by design) and rotate.
+    const token = await mintAdminJwt(KEY, { sub: 'carl', role: 'Administrator', role_version: 1, pwc: true });
+    const r = await requirePerm(reqWithToken(token), 'dash_data', {
+      secret: KEY,
+      cache: new RoleVersionCache(),
+      rolesListFn: async () => ({ ok: true, data: { roles: ROLES } }),
+      kv: makeKv(),
+    });
+    expect(r.ok).toBe(false);
+    expect(r.status).toBe(403);
+    expect(r.errorCode).toBe('E_PASSWORD_CHANGE_REQUIRED');
+  });
+
+  it('does NOT reject when pwc claim is absent or false (R2-#57)', async () => {
+    // Tokens minted post-rotation lack the pwc claim entirely; perm check
+    // proceeds normally.
+    const token = await mintAdminJwt(KEY, { sub: 'carl', role: 'Administrator', role_version: 1 });
+    const r = await requirePerm(reqWithToken(token), 'dash_data', {
+      secret: KEY,
+      cache: new RoleVersionCache(),
+      rolesListFn: async () => ({ ok: true, data: { roles: ROLES } }),
+      kv: makeKv(),
+    });
+    expect(r.ok).toBe(true);
   });
 
   it('rejects 403 E_PERM_DENIED when role lacks the perm', async () => {
@@ -231,6 +275,68 @@ describe('requirePerm', () => {
     });
     expect(r.ok).toBe(true);
     expect(calls).toBe(0);
+  });
+
+  it('refetches and rejects when cache.invalidate cleared a stale entry (R2-#56)', async () => {
+    // Models the active-eviction path: admin PATCHes a role, routes.ts
+    // calls roleCache.invalidate(name), and the next request for any user
+    // holding a stale JWT for that role refetches authoritative data and
+    // hits the version-mismatch guard.
+    const cache = new RoleVersionCache();
+    cache.set({ name: 'Administrator', version: 1, dash_data: true });
+    cache.invalidate('Administrator');
+
+    // AS truth has bumped to v2 with permissions tightened.
+    const bumped: Role[] = [{ name: 'Administrator', version: 2, dash_data: false }];
+    const v1Token = await mintAdminJwt(KEY, { sub: 'carl', role: 'Administrator', role_version: 1 });
+    let calls = 0;
+    const r = await requirePerm(reqWithToken(v1Token), 'dash_data', {
+      secret: KEY,
+      cache,
+      rolesListFn: async () => { calls++; return { ok: true, data: { roles: bumped } }; },
+      kv: makeKv(),
+    });
+    expect(r.ok).toBe(false);
+    expect(r.status).toBe(401);
+    expect(r.errorCode).toBe('E_AUTH_EXPIRED');
+    expect(calls).toBe(1);
+
+    // The refetch also seeded the cache with v2 — next request for a v2
+    // JWT-holder hits cache without a fresh AS round-trip.
+    const v2Token = await mintAdminJwt(KEY, { sub: 'carl', role: 'Administrator', role_version: 2 });
+    calls = 0;
+    const r2 = await requirePerm(reqWithToken(v2Token), 'dash_data', {
+      secret: KEY,
+      cache,
+      rolesListFn: async () => { calls++; return { ok: true, data: { roles: bumped } }; },
+      kv: makeKv(),
+    });
+    // dash_data was set to false in the bumped role; expect E_PERM_DENIED.
+    expect(r2.ok).toBe(false);
+    expect(r2.status).toBe(403);
+    expect(r2.errorCode).toBe('E_PERM_DENIED');
+    expect(calls).toBe(0);
+  });
+
+  it('refetches when JWT version is higher than cached (cache stale, JWT fresh) (R2-#56)', async () => {
+    // The cache has v1, but a user with a v2 JWT (already minted from a
+    // bumped role) hits the worker before any invalidation. The cache miss
+    // (version mismatch) triggers refetch, which finds v2 + updates cache.
+    const cache = new RoleVersionCache();
+    cache.set({ name: 'Administrator', version: 1, dash_data: true });
+    const v2Roles: Role[] = [{ name: 'Administrator', version: 2, dash_data: true }];
+    const token = await mintAdminJwt(KEY, { sub: 'carl', role: 'Administrator', role_version: 2 });
+    let calls = 0;
+    const r = await requirePerm(reqWithToken(token), 'dash_data', {
+      secret: KEY,
+      cache,
+      rolesListFn: async () => { calls++; return { ok: true, data: { roles: v2Roles } }; },
+      kv: makeKv(),
+    });
+    expect(r.ok).toBe(true);
+    expect(calls).toBe(1);
+    // Cache now holds v2 (the seeding side-effect).
+    expect(cache.get('Administrator')).toEqual(v2Roles[0]);
   });
 
   it('rejects 401 E_AUTH_EXPIRED when JWT role is missing entirely from current roles', async () => {

@@ -233,6 +233,12 @@ function adminUsersDelete(payload) {
     return { ok: false, error: { code: 'E_VALIDATION', message: 'username required' } };
   }
   var u = String(payload.username).trim();
+  var actor = payload.actor_username ? String(payload.actor_username).trim() : '';
+
+  // Self-delete guard — defense-in-depth (worker also blocks this). R2-#133.
+  if (actor && u === actor) {
+    return { ok: false, error: { code: 'E_CONFLICT', message: 'cannot delete your own account' } };
+  }
 
   return _withDocLock(function () {
     var ss = getF2Spreadsheet();
@@ -242,9 +248,147 @@ function adminUsersDelete(payload) {
     if (!found.row) {
       return { ok: false, error: { code: 'E_NOT_FOUND', message: 'user ' + u + ' not found' } };
     }
+    // Orphan-admin guard — refuse to delete the last Administrator. UAT R2
+    // recovery incident (Sprint 004 Day 4): carl_admin was hard-deleted from
+    // prod F2_Users with no guard, locking Carl out of the portal. R2-#133.
+    if (String(found.row.role_name || '') === 'Administrator' && _countAdmins(sh) <= 1) {
+      return { ok: false, error: { code: 'E_CONFLICT', message: 'cannot orphan the last Administrator' } };
+    }
     sh.deleteRow(found.rowNumber);
     return { ok: true, data: { username: u } };
   });
+}
+
+/**
+ * R2-#134 (E4-APRT-051): user-self password rotation.
+ *
+ * Distinct from `adminUsersUpdate` because the worker route that calls this
+ * (`PATCH /admin/api/me/password`) is gated only on a valid JWT — no
+ * dash_users perm — so a non-administrator can rotate their own password.
+ * Worker has already verified the current password (PBKDF2) and pre-hashed
+ * the new one. AS only persists the new hash + clears `password_must_change`.
+ */
+function adminUsersChangePassword(payload) {
+  if (!payload || !payload.username || !payload.password_hash) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'username and password_hash required' } };
+  }
+  var u = String(payload.username).trim();
+
+  return _withDocLock(function () {
+    var ss = getF2Spreadsheet();
+    var sh = ss.getSheetByName('F2_Users');
+    if (!sh) throw new Error('F2_Users sheet not found — run runAllMigrations() first');
+    var found = _findUserRow(sh, u);
+    if (!found.row) {
+      return { ok: false, error: { code: 'E_NOT_FOUND', message: 'user ' + u + ' not found' } };
+    }
+    var updated = {};
+    for (var k in found.row) updated[k] = found.row[k];
+    updated.password_hash = payload.password_hash;
+    updated.password_must_change = false;
+    var rowArr = found.headers.map(function (h) { return updated[h] != null ? updated[h] : ''; });
+    sh.getRange(found.rowNumber, 1, 1, found.headers.length).setValues([rowArr]);
+    return { ok: true, data: { username: u } };
+  });
+}
+
+/**
+ * R2-#66 (E4-APRT-048): write last_login_at on successful login.
+ *
+ * Called fire-and-forget from the Worker after JWT mint via ctx.waitUntil,
+ * so the user response doesn't wait on this. Single-cell write — no
+ * LockService needed (idempotent: a later login overwrites with a newer
+ * timestamp). If the column is missing or the user vanished mid-flight,
+ * silently no-op rather than fail the login flow.
+ *
+ * F2_Audit row is written separately by the Worker's auditFn pipeline;
+ * this RPC handles only the cell write.
+ */
+function adminUsersTouchLastLogin(payload) {
+  if (!payload || !payload.username) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'username required' } };
+  }
+  var u = String(payload.username).trim();
+  var ts = payload.ts ? String(payload.ts) : new Date().toISOString();
+
+  var ss = getF2Spreadsheet();
+  var sh = ss.getSheetByName('F2_Users');
+  if (!sh) return { ok: true, data: { username: u, written: false } };
+  var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  var llIdx = headers.indexOf('last_login_at');
+  if (llIdx === -1) return { ok: true, data: { username: u, written: false } };
+  var found = _findUserRow(sh, u);
+  if (!found.row) return { ok: true, data: { username: u, written: false } };
+  sh.getRange(found.rowNumber, llIdx + 1).setValue(ts);
+  return { ok: true, data: { username: u, written: true, ts: ts } };
+}
+
+function _countAdmins(sh) {
+  var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  var roleIdx = headers.indexOf('role_name');
+  if (roleIdx === -1) return 0;
+  var lastRow = sh.getLastRow();
+  if (lastRow < 2) return 0;
+  var data = sh.getRange(2, 1, lastRow - 1, headers.length).getValues();
+  var count = 0;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i][roleIdx] === 'Administrator') count++;
+  }
+  return count;
+}
+
+/**
+ * Bulk-create admin users (R2-#98). Worker has already PBKDF2-hashed
+ * each password and validated structurally. AS iterates and calls
+ * adminUsersCreate for each row, collecting per-row results so the
+ * UI can render successes alongside rejection reasons.
+ *
+ * Payload: `{ rows: [{username, password_hash, role_name, ...}] }`
+ * Returns: `{ ok: true, data: { results: [{username, status, error?}] } }`
+ *
+ * status: 'created' | 'rejected'. On rejection, `error` mirrors the
+ * adminUsersCreate error shape so the UI can attribute the failure.
+ */
+function adminUsersBulkImport(payload) {
+  if (!payload || !Array.isArray(payload.rows)) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'payload.rows must be an array' } };
+  }
+  if (payload.rows.length === 0) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'rows must not be empty' } };
+  }
+  if (payload.rows.length > 100) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'max 100 rows per bulk import' } };
+  }
+  var results = [];
+  var createdCount = 0;
+  var rejectedCount = 0;
+  for (var i = 0; i < payload.rows.length; i++) {
+    var row = payload.rows[i] || {};
+    var r = adminUsersCreate(row);
+    if (r.ok) {
+      createdCount++;
+      results.push({
+        username: row.username || '',
+        status: 'created',
+      });
+    } else {
+      rejectedCount++;
+      results.push({
+        username: row.username || '',
+        status: 'rejected',
+        error: r.error || { code: 'E_INTERNAL', message: 'Unknown failure' },
+      });
+    }
+  }
+  return {
+    ok: true,
+    data: {
+      results: results,
+      total: payload.rows.length,
+      created: createdCount,
+      rejected: rejectedCount,
+    },
+  };
 }
 
 if (typeof module !== 'undefined') {
@@ -254,6 +398,7 @@ if (typeof module !== 'undefined') {
     adminUsersCreate: adminUsersCreate,
     adminUsersUpdate: adminUsersUpdate,
     adminUsersDelete: adminUsersDelete,
+    adminUsersBulkImport: adminUsersBulkImport,
     _stripPasswordHash: _stripPasswordHash,
   };
 }

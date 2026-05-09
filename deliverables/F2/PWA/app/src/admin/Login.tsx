@@ -90,7 +90,7 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="border-0 border-b border-hairline bg-transparent py-2 text-base outline-none focus:border-signal focus:ring-0"
+            className="border-0 border-b border-hairline bg-transparent py-2 text-base outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal focus:ring-0"
           />
         </label>
 
@@ -105,7 +105,7 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border-0 border-b border-hairline bg-transparent py-2 text-base outline-none focus:border-signal focus:ring-0"
+            className="border-0 border-b border-hairline bg-transparent py-2 text-base outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal focus:ring-0"
           />
         </label>
 
@@ -130,8 +130,10 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
           Sessions are held in memory. Closing the tab or reloading signs you out.
         </p>
         {import.meta.env.DEV ? (
-          <button
+          <Button
             type="button"
+            variant="tableAction"
+            size="tableAction"
             onClick={() =>
               setAuth('dev-preview', {
                 token: 'dev-preview-token',
@@ -141,10 +143,10 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
                 password_must_change: false,
               })
             }
-            className="mt-3 font-mono text-[10px] uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+            className="mt-3 self-start text-[10px] text-muted-foreground hover:text-ink"
           >
             Preview portal (dev only — no backend)
-          </button>
+          </Button>
         ) : null}
       </footer>
     </main>
@@ -154,7 +156,12 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
 function errorMessageFor(error: ApiError): string {
   switch (error.code) {
     case 'E_AUTH_INVALID':
-      return 'Username or password is incorrect.';
+      // R2-#69 (Shan, 2026-05-07 L.E1/L.E3): tester expected "Invalid
+      // credentials" per the admin portal tester guide. The longer copy
+      // also leaks which side of the username+password pair is wrong on
+      // close reading; "Invalid credentials" is the canonical neutral
+      // phrasing.
+      return 'Invalid credentials.';
     case 'E_AUTH_LOCKED':
       return 'Too many failed attempts. Try again in a few minutes.';
     case 'E_VALIDATION':

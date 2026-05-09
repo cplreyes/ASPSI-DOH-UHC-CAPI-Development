@@ -22,6 +22,7 @@ import { ReportDashboard } from './report/ReportDashboard';
 import { UsersDashboard } from './users/UsersDashboard';
 import { RolesDashboard } from './roles/RolesDashboard';
 import { AppsDashboard } from './apps/AppsDashboard';
+import { ChangePasswordPage } from './me/ChangePasswordPage';
 import { HelpPage } from './help/HelpPage';
 
 interface AdminAppProps {
@@ -55,11 +56,7 @@ const PAGES: PageRoute[] = [
   // /admin/encode and /admin/encode/:hcw_id are dispatched directly in
   // AdminRoot below (param-bearing routes don't fit the simple matchRoute
   // table). Listed here only so the Configuration nav highlight stays sane.
-  {
-    path: '/admin/me/change-password',
-    title: 'Change password',
-    element: <Placeholder title="Change password" subtitle="Required for newly-created accounts" />,
-  },
+  // /admin/me/change-password also dispatched directly (needs apiBaseUrl).
 ];
 
 function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
@@ -147,6 +144,12 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
       </Layout>
     );
   }
+  // Change-password sits OUTSIDE the Layout chrome — same shape as Login,
+  // since the user is mid-rotation (often on first login under
+  // password_must_change) and shouldn't be distracted by sidebar nav.
+  if (pathname === '/admin/me/change-password' || pathname === '/admin/me/change-password/') {
+    return <ChangePasswordPage apiBaseUrl={apiBaseUrl} {...(fetchImpl ? { fetchImpl } : {})} />;
+  }
   const responseDetailMatch = /^\/admin\/data\/responses\/([^/]+)\/?$/.exec(pathname);
   if (responseDetailMatch) {
     return (
@@ -183,22 +186,6 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
 
   const route = matchRoute(PAGES, pathname);
   return <Layout>{route ? route.element : <NotFound />}</Layout>;
-}
-
-function Placeholder({ title, subtitle }: { title: string; subtitle: string }): JSX.Element {
-  return (
-    <section className="flex flex-col gap-4 py-8">
-      <header className="border-b border-hairline pb-4">
-        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
-        <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">{title}</h2>
-        <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>
-      </header>
-      <p className="text-sm text-muted-foreground">
-        This view is being built in a later sprint. Once the backing endpoints land, this
-        placeholder is replaced with the real dashboard.
-      </p>
-    </section>
-  );
 }
 
 function NotFound(): JSX.Element {

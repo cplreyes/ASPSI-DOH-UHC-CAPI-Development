@@ -10,6 +10,7 @@
  * client-side to give immediate feedback before paying the round trip.
  */
 import { useEffect, useRef, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -77,6 +78,7 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -114,6 +116,7 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -139,6 +142,7 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );
@@ -316,13 +320,15 @@ function FilesTable({
               <Td mono>{r.uploaded_by}</Td>
               <Td mono>{formatTs(r.uploaded_at)}</Td>
               <Td>
-                <button
+                <Button
                   type="button"
+                  variant="tableAction"
+                  size="tableAction"
                   onClick={() => void onDelete(r)}
-                  className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-error"
+                  className="text-muted-foreground no-underline hover:text-error hover:no-underline"
                 >
                   Delete
-                </button>
+                </Button>
               </Td>
             </tr>
           ))}

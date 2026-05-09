@@ -10,7 +10,14 @@
  * failure passthrough (E_BACKEND 502), and per-user reset on success.
  */
 import { describe, expect, it, vi } from 'vitest';
-import { handleLogin, handleLogout, type AuthAuditCtx } from '../../../src/admin/handlers/auth';
+import {
+  handleLogin,
+  handleLogout,
+  handleChangeMyPassword,
+  type AuthAuditCtx,
+  type ChangeMyPasswordAsCallable,
+  type LastLoginFn,
+} from '../../../src/admin/handlers/auth';
 import { hashPassword, mintAdminJwt, verifyAdminJwt } from '../../../src/admin/auth';
 import { recordFailedLogin } from '../../../src/admin/throttle';
 
@@ -247,6 +254,85 @@ describe('handleLogin', () => {
     expect(auditFn).not.toHaveBeenCalled();
   });
 
+  it('stamps pwc claim on JWT when user.password_must_change is true (R2-#57)', async () => {
+    // Server-enforce password rotation. A token issued to a user under
+    // password_must_change carries pwc:true, which requirePerm reads to
+    // reject every gated route until the rotation endpoint clears it.
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('newbie', 'TempPw123', 'Standard User', true);
+    const r = await handleLogin(
+      { username: 'newbie', password: 'TempPw123' },
+      'iphash-1',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+    );
+    expect(r.status).toBe(200);
+    const body = (await r.json()) as { token: string };
+    const v = await verifyAdminJwt(KEY, body.token);
+    expect(v.ok).toBe(true);
+    if (v.ok) {
+      expect(v.payload.pwc).toBe(true);
+    }
+  });
+
+  it('omits pwc claim when user.password_must_change is false (R2-#57)', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('alice', 'CorrectPw1', 'Administrator', false);
+    const r = await handleLogin(
+      { username: 'alice', password: 'CorrectPw1' },
+      'iphash-1',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+    );
+    expect(r.status).toBe(200);
+    const body = (await r.json()) as { token: string };
+    const v = await verifyAdminJwt(KEY, body.token);
+    expect(v.ok).toBe(true);
+    if (v.ok) {
+      // Optional claim should be absent on regular tokens.
+      expect(v.payload.pwc).toBeUndefined();
+    }
+  });
+
+  it('fires lastLoginFn with username on success and skips it on failures (R2-#66)', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('alice', 'CorrectPw1', 'Administrator', false);
+    const lastLoginFn = vi.fn<LastLoginFn>();
+
+    // Success → lastLoginFn called once with the username.
+    const ok = await handleLogin(
+      { username: 'alice', password: 'CorrectPw1' },
+      'iphash-1',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      undefined,
+      lastLoginFn,
+    );
+    expect(ok.status).toBe(200);
+    expect(lastLoginFn).toHaveBeenCalledTimes(1);
+    expect(lastLoginFn).toHaveBeenCalledWith('alice');
+
+    // Failure (wrong password) → lastLoginFn not called.
+    lastLoginFn.mockClear();
+    const bad = await handleLogin(
+      { username: 'alice', password: 'WrongPw1' },
+      'iphash-1',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      undefined,
+      lastLoginFn,
+    );
+    expect(bad.status).toBe(401);
+    expect(lastLoginFn).not.toHaveBeenCalled();
+  });
+
   it('resets per-user throttle on successful login but leaves per-IP intact', async () => {
     const kv = makeKv();
     for (let i = 0; i < 5; i++) await recordFailedLogin(kv, 'alice', 'iphash-1');
@@ -392,5 +478,170 @@ describe('handleLogout', () => {
     // JWT itself still verifies (sig OK, not expired) — revocation lives in KV.
     const v = await verifyAdminJwt(KEY, tok);
     expect(v.ok).toBe(true);
+  });
+});
+
+describe('handleChangeMyPassword — R2-#134', () => {
+  async function makeReq(token: string, body: Record<string, unknown>): Promise<Request> {
+    return new Request('https://x/admin/api/me/password', {
+      method: 'PATCH',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+  }
+
+  it('returns 401 E_AUTH_INVALID without Authorization header', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const req = new Request('https://x/admin/api/me/password', {
+      method: 'PATCH',
+      body: JSON.stringify({ current_password: 'a', new_password: 'b' }),
+    });
+    const r = await handleChangeMyPassword(
+      req,
+      env,
+      async () => ({ ok: true, data: { users: [] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      async () => ({ ok: true, data: { username: '' } }),
+    );
+    expect(r.status).toBe(401);
+  });
+
+  it('returns 400 E_VALIDATION on missing fields', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const req = await makeReq(tok, {});
+    const r = await handleChangeMyPassword(
+      req,
+      env,
+      async () => ({ ok: true, data: { users: [] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      async () => ({ ok: true, data: { username: '' } }),
+    );
+    expect(r.status).toBe(400);
+    const body = (await r.json()) as { error: { code: string } };
+    expect(body.error.code).toBe('E_VALIDATION');
+  });
+
+  it('returns 400 E_VALIDATION when new_password < 8 characters', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const req = await makeReq(tok, { current_password: 'CorrectPw1', new_password: 'short' });
+    const r = await handleChangeMyPassword(
+      req,
+      env,
+      async () => ({ ok: true, data: { users: [] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      async () => ({ ok: true, data: { username: '' } }),
+    );
+    expect(r.status).toBe(400);
+  });
+
+  it('returns 400 E_VALIDATION when new_password equals current_password', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const req = await makeReq(tok, { current_password: 'SamePw1234', new_password: 'SamePw1234' });
+    const r = await handleChangeMyPassword(
+      req,
+      env,
+      async () => ({ ok: true, data: { users: [] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      async () => ({ ok: true, data: { username: '' } }),
+    );
+    expect(r.status).toBe(400);
+  });
+
+  it('returns 401 E_AUTH_INVALID when current_password is wrong', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('alice', 'CorrectPw1', 'Administrator', false);
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const req = await makeReq(tok, { current_password: 'WrongPw1', new_password: 'NewSafePw1' });
+    const r = await handleChangeMyPassword(
+      req,
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      async () => ({ ok: true, data: { username: 'alice' } }),
+    );
+    expect(r.status).toBe(401);
+    const body = (await r.json()) as { error: { code: string } };
+    expect(body.error.code).toBe('E_AUTH_INVALID');
+  });
+
+  it('returns 200 + fresh JWT with password_must_change=false on happy path', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('alice', 'CorrectPw1', 'Administrator', true);
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const asCall = vi.fn<ChangeMyPasswordAsCallable>().mockResolvedValue({
+      ok: true,
+      data: { username: 'alice' },
+    });
+    const req = await makeReq(tok, { current_password: 'CorrectPw1', new_password: 'BrandNewPw1' });
+    const r = await handleChangeMyPassword(
+      req,
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      asCall,
+    );
+    expect(r.status).toBe(200);
+    const body = (await r.json()) as {
+      token: string;
+      role: string;
+      role_version: number;
+      password_must_change: boolean;
+    };
+    expect(body.password_must_change).toBe(false);
+    expect(body.role).toBe('Administrator');
+    expect(body.role_version).toBe(1);
+    expect(body.token).toMatch(/.+\..+\..+/);
+
+    // AS RPC was called with the freshly-hashed new password (not equal to
+    // the input), and with the actor's username from the JWT.
+    expect(asCall).toHaveBeenCalledOnce();
+    const arg = asCall.mock.calls[0]![0]!;
+    expect(arg.username).toBe('alice');
+    expect(arg.password_hash).not.toBe('BrandNewPw1');
+    expect(arg.password_hash.length).toBeGreaterThan(20);
+
+    // Fresh token verifies and the new sub/role/role_version match.
+    // R2-#57: the freshly-minted JWT must NOT carry pwc:true even though
+    // the user originally had password_must_change=true — that's the
+    // whole point of the rotation flow.
+    const v = await verifyAdminJwt(KEY, body.token);
+    expect(v.ok).toBe(true);
+    if (v.ok) {
+      expect(v.payload.sub).toBe('alice');
+      expect(v.payload.role).toBe('Administrator');
+      expect(v.payload.pwc).toBeUndefined();
+    }
+  });
+
+  it('fires auditFn with admin_password_change context on success', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('alice', 'CorrectPw1', 'Administrator', true);
+    const tok = await mintAdminJwt(KEY, { sub: 'alice', role: 'Administrator', role_version: 1 });
+    const auditFn = vi.fn<(ctx: AuthAuditCtx) => void>();
+    const req = await makeReq(tok, { current_password: 'CorrectPw1', new_password: 'BrandNewPw1' });
+    await handleChangeMyPassword(
+      req,
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: ROLES } }),
+      async () => ({ ok: true, data: { username: 'alice' } }),
+      auditFn,
+      'iphash-9',
+    );
+    expect(auditFn).toHaveBeenCalledTimes(1);
+    const ctx = auditFn.mock.calls[0]![0]!;
+    expect(ctx.event_type).toBe('admin_password_change');
+    expect(ctx.actor_username).toBe('alice');
+    expect(ctx.client_ip_hash).toBe('iphash-9');
   });
 });

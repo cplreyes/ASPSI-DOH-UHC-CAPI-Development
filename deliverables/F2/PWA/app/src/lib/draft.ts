@@ -1,6 +1,12 @@
 import { db, type DraftRow, type SubmissionRow } from './db';
 
 export const DRAFT_ID_KEY = 'f2_current_draft_id';
+// R2-#120 S.A2: tester refreshed after submit, expected the thank-you
+// screen to persist; got redirected to Section A (fresh survey). Tracking
+// the most-recent client_submission_id in localStorage lets the App init
+// short-circuit to status='submitted' on refresh, until the user
+// explicitly starts a new survey.
+export const COMPLETED_CSID_KEY = 'f2_completed_csid';
 export const LOCAL_SPEC_VERSION = '2026-04-17-m1';
 
 export interface EnrollmentInfo {
@@ -70,7 +76,16 @@ export async function submitDraft(
     };
 
     const submission: SubmissionRow = {
-      client_submission_id: crypto.randomUUID(),
+      // Anchor on the draft id, not a fresh UUID. R2-#122: the App.tsx
+      // submit handler has no isSubmitting guard and getGeolocation
+      // can take 5s, so a rapid double-tap can drive submitDraft twice
+      // before the first transaction commits. Random UUIDs gave the two
+      // resulting submissions different client_submission_ids — server's
+      // findExisting couldn't dedup, two F2_Responses rows got recorded.
+      // Anchoring on draft id makes IDB submissions.put() upsert on
+      // primary key (one local row per draft) and keeps the server-side
+      // findExisting useful as belt-and-suspenders.
+      client_submission_id: id,
       hcw_id: enrollment.hcw_id,
       status: 'pending_sync',
       synced_at: null,

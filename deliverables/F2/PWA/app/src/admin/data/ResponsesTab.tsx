@@ -16,6 +16,7 @@
  * justify a react-window dep. Revisit if scale outgrows this.
  */
 import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { Link, useRouter } from '../lib/pages-router';
@@ -139,6 +140,7 @@ export function ResponsesTab({ apiBaseUrl, fetchImpl }: ResponsesTabProps): JSX.
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -259,7 +261,7 @@ function FilterDate({
         name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -285,7 +287,7 @@ function FilterText({
         name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -301,17 +303,18 @@ function PillToggle({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
       onClick={onClick}
       className={
         active
-          ? 'rounded-full border border-signal bg-signal-bg px-3 py-1 text-xs text-signal'
-          : 'rounded-full border border-hairline px-3 py-1 text-xs text-muted-foreground hover:text-ink'
+          ? 'h-auto rounded-sm border-signal bg-signal-bg px-3 py-1 text-xs text-signal hover:bg-signal-bg'
+          : 'h-auto rounded-sm border-hairline bg-transparent px-3 py-1 text-xs text-muted-foreground hover:bg-transparent hover:text-ink'
       }
     >
       {children}
-    </button>
+    </Button>
   );
 }
 
@@ -391,7 +394,7 @@ function SourcePill({ value }: { value: string }): JSX.Element {
           ? 'CAPI'
           : value || '—';
   return (
-    <span className="rounded-full border border-hairline px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+    <span className="rounded-sm border border-hairline px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
       {label}
     </span>
   );

@@ -47,6 +47,7 @@ export function QuotaWidget({ apiBaseUrl, fetchImpl }: QuotaWidgetProps): JSX.El
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate('/admin/me/change-password'),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -89,11 +90,11 @@ function QuotaBar({ data }: { data: QuotaData }): JSX.Element {
       </p>
       <p className="mt-1 font-mono text-sm">
         {data.count.toLocaleString()} / {data.cap.toLocaleString()}{' '}
-        <span className={warn ? 'text-error' : 'text-muted-foreground'}>({data.percent}%)</span>
+        <span className={warn ? 'text-warning' : 'text-muted-foreground'}>({data.percent}%)</span>
       </p>
       <div className="mt-2 h-1 w-full overflow-hidden bg-hairline/40" aria-hidden="true">
         <div
-          className={`h-full ${warn ? 'bg-error' : 'bg-foreground'}`}
+          className={`h-full ${warn ? 'bg-warning' : 'bg-foreground'}`}
           style={{ width: `${Math.min(100, data.percent)}%` }}
         />
       </div>

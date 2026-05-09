@@ -33,6 +33,7 @@
  * visible to every authenticated user; Worker enforces 403 on actual access.
  */
 import { type ReactNode, type SVGProps } from 'react';
+import { Button } from '@/components/ui/button';
 import { Link, useRouter } from './lib/pages-router';
 import { useAdminAuth } from './lib/auth-context';
 
@@ -165,7 +166,7 @@ export function Layout({ children }: LayoutProps): JSX.Element {
           <div className="flex items-center gap-3">
             <div
               aria-hidden="true"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-hairline bg-secondary/40 font-mono text-sm text-ink"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border border-hairline bg-secondary/40 font-mono text-sm text-ink"
             >
               {initial}
             </div>
@@ -176,13 +177,14 @@ export function Layout({ children }: LayoutProps): JSX.Element {
               </p>
             </div>
           </div>
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={onLogout}
-            className="flex h-9 w-full items-center justify-center border border-hairline font-mono text-xs uppercase tracking-wider text-muted-foreground hover:bg-secondary/40 hover:text-ink"
+            className="h-9 w-full border-hairline font-mono text-xs uppercase tracking-wider text-muted-foreground hover:bg-secondary/40 hover:text-ink"
           >
             Sign out
-          </button>
+          </Button>
           <p className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
             v0.1.0-staging
           </p>
@@ -203,13 +205,15 @@ export function Layout({ children }: LayoutProps): JSX.Element {
           </Link>
           <div className="flex items-center gap-3">
             <span className="text-sm">{username ?? '—'}</span>
-            <button
+            <Button
               type="button"
+              variant="tableAction"
+              size="tableAction"
               onClick={onLogout}
-              className="font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-ink"
+              className="text-muted-foreground no-underline hover:text-ink hover:no-underline"
             >
               Sign out
-            </button>
+            </Button>
           </div>
         </div>
         <nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm" aria-label="Primary (mobile)">

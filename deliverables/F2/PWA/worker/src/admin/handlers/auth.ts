@@ -19,6 +19,7 @@
 import type { Env } from '../../types';
 import { jsonResponse } from '../../types';
 import {
+  hashPassword,
   mintAdminJwt,
   verifyAdminJwt,
   verifyPassword,
@@ -80,6 +81,13 @@ export interface AuthAuditCtx {
 }
 export type AuthAuditFn = (ctx: AuthAuditCtx) => void;
 
+/**
+ * Fire-and-forget callback invoked on successful login. Wired by the route
+ * layer to call the AS `admin_users_touch_last_login` RPC via ctx.waitUntil
+ * so the user response doesn't wait. R2-#66 (E4-APRT-048).
+ */
+export type LastLoginFn = (username: string) => void;
+
 interface LoginBody {
   username?: unknown;
   password?: unknown;
@@ -120,6 +128,7 @@ export async function handleLogin(
   usersListFn: UsersListFn,
   rolesListFn: RolesListFn,
   auditFn?: AuthAuditFn,
+  lastLoginFn?: LastLoginFn,
 ): Promise<Response> {
   const username = typeof body.username === 'string' ? body.username.trim() : '';
   const password = typeof body.password === 'string' ? body.password : '';
@@ -182,14 +191,25 @@ export async function handleLogin(
     );
   }
 
-  const claims: Pick<AdminJwtPayload, 'sub' | 'role' | 'role_version'> = {
+  // R2-#57 (E4-APRT-045): if the user owes a password change, stamp the pwc
+  // claim on the JWT so requirePerm rejects every gated route except the
+  // password-rotation endpoint. Without this the temp credential yields a
+  // full 4h working session even if the user never visits /me/change-password.
+  const mustChange = isTruthy(user.password_must_change);
+  const claims: Pick<AdminJwtPayload, 'sub' | 'role' | 'role_version'> & { pwc?: boolean } = {
     sub: username,
     role: role.name,
     role_version: role.version,
+    ...(mustChange ? { pwc: true } : {}),
   };
   const token = await mintAdminJwt(env.JWT_SIGNING_KEY, claims, { ttl: JWT_TTL_SECONDS });
 
   await resetLoginThrottle(kv, username);
+
+  // R2-#66: stamp last_login_at on F2_Users. Fire-and-forget — the user
+  // response shouldn't wait for the AS round-trip. Route layer wraps in
+  // ctx.waitUntil; in tests where lastLoginFn isn't passed, this is a no-op.
+  if (lastLoginFn) lastLoginFn(username);
 
   if (auditFn) {
     // Re-verify the just-minted token to extract jti without re-implementing
@@ -266,4 +286,125 @@ export async function handleLogout(
   }
 
   return new Response(null, { status: 204 });
+}
+
+// ----- R2-#134 (E4-APRT-051): user-self password change ---------------------
+
+interface ChangeMyPasswordBody {
+  current_password?: unknown;
+  new_password?: unknown;
+}
+
+export type ChangeMyPasswordAsCallable = (
+  payload: { username: string; password_hash: string },
+) => Promise<AppsScriptResponse<{ username: string }>>;
+
+const NEW_PASSWORD_MIN = 8;
+
+/**
+ * User-self password rotation. Gated only on a valid JWT — no RBAC perm —
+ * so any authenticated admin can rotate their own credential without needing
+ * dash_users. Verifies the current password (PBKDF2) at the worker layer,
+ * pre-hashes the new one, asks AS to persist it + clear password_must_change,
+ * then mints a fresh JWT so the client can drop password_must_change from
+ * its in-memory auth state without needing a re-login round trip.
+ *
+ * Pairs with E4-APRT-045 (server-enforce password_must_change).
+ */
+export async function handleChangeMyPassword(
+  req: Request,
+  env: Pick<Env, 'JWT_SIGNING_KEY' | 'F2_AUTH'>,
+  usersListFn: UsersListFn,
+  rolesListFn: RolesListFn,
+  changePasswordAsCallable: ChangeMyPasswordAsCallable,
+  auditFn?: AuthAuditFn,
+  ipHash = '',
+): Promise<Response> {
+  const auth = req.headers.get('Authorization') || '';
+  const m = BEARER_RE.exec(auth);
+  if (!m) return errorJson('E_AUTH_INVALID', 'Authorization header missing or malformed', 401);
+
+  const v = await verifyAdminJwt(env.JWT_SIGNING_KEY, m[1]!);
+  if (!v.ok) {
+    const code = v.error === 'expired' ? 'E_AUTH_EXPIRED' : 'E_AUTH_INVALID';
+    return errorJson(code, 'Token invalid or expired', 401);
+  }
+
+  const body = (await req.json().catch(() => ({}))) as ChangeMyPasswordBody;
+  const currentPw = typeof body.current_password === 'string' ? body.current_password : '';
+  const newPw = typeof body.new_password === 'string' ? body.new_password : '';
+  if (!currentPw || !newPw) {
+    return errorJson('E_VALIDATION', 'current_password and new_password are required', 400);
+  }
+  if (newPw.length < NEW_PASSWORD_MIN) {
+    return errorJson('E_VALIDATION', `new_password must be at least ${NEW_PASSWORD_MIN} characters`, 400);
+  }
+  if (newPw === currentPw) {
+    return errorJson('E_VALIDATION', 'new_password must differ from current_password', 400);
+  }
+
+  const username = v.payload.sub;
+
+  const usersResp = await usersListFn();
+  if (!usersResp.ok || !usersResp.data) {
+    return errorJson('E_BACKEND', usersResp.error?.message || 'Apps Script unavailable', 502);
+  }
+  const user = usersResp.data.users.find((u) => u.username === username);
+  if (!user) {
+    return errorJson('E_AUTH_INVALID', 'User no longer exists', 401);
+  }
+
+  const ok = await verifyPassword(currentPw, user.password_hash);
+  if (!ok) {
+    return errorJson('E_AUTH_INVALID', 'current_password does not match', 401);
+  }
+
+  const newHash = await hashPassword(newPw);
+  const writeResp = await changePasswordAsCallable({ username, password_hash: newHash });
+  if (!writeResp.ok) {
+    return errorJson(
+      writeResp.error?.code ?? 'E_BACKEND',
+      writeResp.error?.message ?? 'Apps Script unavailable',
+      502,
+    );
+  }
+
+  const rolesResp = await rolesListFn();
+  if (!rolesResp.ok || !rolesResp.data) {
+    return errorJson('E_BACKEND', rolesResp.error?.message || 'Apps Script unavailable', 502);
+  }
+  const role = rolesResp.data.roles.find((r) => r.name === v.payload.role);
+  if (!role) {
+    return errorJson('E_BACKEND', `Role "${v.payload.role}" not found for user "${username}"`, 502);
+  }
+
+  const claims: Pick<AdminJwtPayload, 'sub' | 'role' | 'role_version'> = {
+    sub: username,
+    role: role.name,
+    role_version: role.version,
+  };
+  const token = await mintAdminJwt(env.JWT_SIGNING_KEY, claims, { ttl: JWT_TTL_SECONDS });
+
+  if (auditFn) {
+    const fresh = await verifyAdminJwt(env.JWT_SIGNING_KEY, token);
+    if (fresh.ok) {
+      auditFn({
+        event_type: 'admin_password_change',
+        actor_username: username,
+        actor_jti: fresh.payload.jti,
+        actor_role: role.name,
+        client_ip_hash: ipHash,
+      });
+    }
+  }
+
+  const expiresAt = Math.floor(Date.now() / 1000) + JWT_TTL_SECONDS;
+  const success: LoginSuccess = {
+    token,
+    role: role.name,
+    role_version: role.version,
+    expires_at: expiresAt,
+    password_must_change: false,
+  };
+  return jsonResponse(success, 200);
 }

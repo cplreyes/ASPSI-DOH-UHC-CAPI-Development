@@ -10,6 +10,7 @@
  * read-only matrix view.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -71,6 +72,7 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );
@@ -101,6 +103,7 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
           clearAuth();
           navigate('/admin/login');
         },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
         ...(fetchImpl ? { fetchImpl } : {}),
       },
     );
@@ -124,13 +127,13 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
             forces affected users to re-login.
           </p>
         </div>
-        <button
+        <Button
           type="button"
           onClick={() => setEditor({ kind: 'create' })}
-          className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          className="h-10"
         >
           + Add role
-        </button>
+        </Button>
       </header>
 
       {state.kind === 'loading' ? (
@@ -235,7 +238,7 @@ function RoleMatrix({
                 <td className="px-3 py-2">
                   <span className="font-mono text-xs">{r.name}</span>
                   {builtin ? (
-                    <span className="ml-2 rounded-full border border-hairline px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <span className="ml-2 rounded-sm border border-hairline px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
                       built-in
                     </span>
                   ) : null}
@@ -259,13 +262,15 @@ function RoleMatrix({
                 ))}
                 <td className="border-l border-hairline px-3 py-2">
                   <div className="flex flex-wrap gap-3">
-                    <button
+                    <Button
                       type="button"
+                      variant="tableAction"
+                      size="tableAction"
                       onClick={() => onEdit(r)}
-                      className="font-mono text-xs uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+                      className="text-muted-foreground hover:text-ink"
                     >
                       Edit
-                    </button>
+                    </Button>
                     {builtin ? (
                       <span
                         className="font-mono text-xs uppercase tracking-wider text-muted-foreground/50"
@@ -274,13 +279,15 @@ function RoleMatrix({
                         Delete
                       </span>
                     ) : (
-                      <button
+                      <Button
                         type="button"
+                        variant="tableAction"
+                        size="tableAction"
                         onClick={() => onDelete(r.name)}
-                        className="font-mono text-xs uppercase tracking-wider text-error underline-offset-4 hover:underline"
+                        className="text-error"
                       >
                         Delete
-                      </button>
+                      </Button>
                     )}
                   </div>
                 </td>

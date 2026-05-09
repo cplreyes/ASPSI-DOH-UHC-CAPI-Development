@@ -9,6 +9,7 @@
  * client-side bugs or schema drift between PWA bundles.
  */
 import { useEffect, useMemo, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -74,6 +75,10 @@ export function DLQTab({ apiBaseUrl, fetchImpl }: DLQTabProps): JSX.Element {
   >({ kind: 'loading' });
 
   const apiQuery = useMemo(() => buildApiQuery(filters), [filters]);
+  // R2-#84: bump on successful replay/delete to refetch the list.
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [actionMsg, setActionMsg] = useState<{ kind: 'ok' | 'err'; text: string } | null>(null);
+  const [busyId, setBusyId] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -88,6 +93,7 @@ export function DLQTab({ apiBaseUrl, fetchImpl }: DLQTabProps): JSX.Element {
             clearAuth();
             navigate('/admin/login');
           },
+          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -98,7 +104,66 @@ export function DLQTab({ apiBaseUrl, fetchImpl }: DLQTabProps): JSX.Element {
     return () => {
       cancelled = true;
     };
-  }, [apiQuery, apiBaseUrl, token]);
+  }, [apiQuery, apiBaseUrl, token, refreshKey]);
+
+  // R2-#84: Replay re-attempts the submit through the AS handleSubmit
+  // path. If the underlying validation issue has been fixed (e.g., the
+  // PWA bundle was patched and the original payload is now valid), the
+  // row moves to F2_Responses and the DLQ entry is deleted server-side.
+  // If replay still fails, the DLQ row stays put and we surface the
+  // error in actionMsg so operators can inspect.
+  const handleReplay = async (dlqId: string) => {
+    setBusyId(dlqId);
+    setActionMsg(null);
+    const r = await adminFetch<{ submission_id: string | null; status: string; dlq_id: string }>(
+      `${apiBaseUrl}/admin/api/dashboards/data/dlq/${encodeURIComponent(dlqId)}/replay`,
+      { method: 'POST' },
+      {
+        ...(token ? { token } : {}),
+        onUnauthorized: () => {
+          clearAuth();
+          navigate('/admin/login');
+        },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
+        ...(fetchImpl ? { fetchImpl } : {}),
+      },
+    );
+    setBusyId(null);
+    if (r.ok) {
+      setActionMsg({ kind: 'ok', text: `Replayed ${dlqId.slice(0, 8)}… → ${r.data.submission_id ?? '(no id)'}` });
+      setRefreshKey((k) => k + 1);
+    } else {
+      setActionMsg({ kind: 'err', text: `Replay failed: ${r.error.message ?? r.error.code}` });
+    }
+  };
+
+  // R2-#84: Hard-delete a DLQ row after operator confirmation. Used when
+  // the source data is unrecoverable or the row is genuinely stale.
+  const handleDelete = async (dlqId: string) => {
+    if (typeof window !== 'undefined' && !window.confirm(`Delete DLQ row ${dlqId}? This is irreversible.`)) return;
+    setBusyId(dlqId);
+    setActionMsg(null);
+    const r = await adminFetch<{ dlq_id: string; status: string }>(
+      `${apiBaseUrl}/admin/api/dashboards/data/dlq/${encodeURIComponent(dlqId)}`,
+      { method: 'DELETE' },
+      {
+        ...(token ? { token } : {}),
+        onUnauthorized: () => {
+          clearAuth();
+          navigate('/admin/login');
+        },
+        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
+        ...(fetchImpl ? { fetchImpl } : {}),
+      },
+    );
+    setBusyId(null);
+    if (r.ok) {
+      setActionMsg({ kind: 'ok', text: `Deleted ${dlqId.slice(0, 8)}…` });
+      setRefreshKey((k) => k + 1);
+    } else {
+      setActionMsg({ kind: 'err', text: `Delete failed: ${r.error.message ?? r.error.code}` });
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -120,7 +185,15 @@ export function DLQTab({ apiBaseUrl, fetchImpl }: DLQTabProps): JSX.Element {
             {state.data.total} dead-letter row{state.data.total === 1 ? '' : 's'}
             {state.data.has_more ? ' (showing first 200)' : ''}
           </p>
-          <DlqTable rows={state.data.rows} />
+          {actionMsg ? (
+            <p
+              className={`font-mono text-xs ${actionMsg.kind === 'ok' ? 'text-primary' : 'text-error'}`}
+              role="status"
+            >
+              {actionMsg.text}
+            </p>
+          ) : null}
+          <DlqTable rows={state.data.rows} busyId={busyId} onReplay={handleReplay} onDelete={handleDelete} />
         </>
       ) : null}
     </div>
@@ -135,7 +208,7 @@ function FilterDate({ label, value, onChange }: { label: string; value: string; 
         type="date"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -149,13 +222,20 @@ function FilterText({ label, value, onChange }: { label: string; value: string; 
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
 }
 
-function DlqTable({ rows }: { rows: DlqRow[] }): JSX.Element {
+interface DlqTableProps {
+  rows: DlqRow[];
+  busyId: string | null;
+  onReplay: (dlqId: string) => void;
+  onDelete: (dlqId: string) => void;
+}
+
+function DlqTable({ rows, busyId, onReplay, onDelete }: DlqTableProps): JSX.Element {
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
@@ -165,27 +245,87 @@ function DlqTable({ rows }: { rows: DlqRow[] }): JSX.Element {
             <Th>Client ID</Th>
             <Th>Reason</Th>
             <Th>Payload</Th>
+            <Th>Actions</Th>
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">
-          {rows.map((r) => (
-            <tr key={r.dlq_id}>
-              <Td mono>{formatTs(r.received_at_server)}</Td>
-              <Td mono>{r.client_submission_id}</Td>
-              <Td>
-                <span className="text-error">{r.reason}</span>
-              </Td>
-              <Td>
-                <code className="block max-w-md truncate font-mono text-xs text-muted-foreground">
-                  {r.payload_json}
-                </code>
-              </Td>
-            </tr>
-          ))}
+          {rows.map((r) => {
+            const busy = busyId === r.dlq_id;
+            return (
+              <tr key={r.dlq_id}>
+                <Td mono>{formatTs(r.received_at_server)}</Td>
+                <Td mono>{r.client_submission_id}</Td>
+                <Td>
+                  <span className="text-error">{r.reason}</span>
+                </Td>
+                <Td>
+                  <code className="block max-w-md truncate font-mono text-xs text-muted-foreground">
+                    {r.payload_json}
+                  </code>
+                </Td>
+                <Td>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="h-auto rounded border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-foreground hover:bg-muted disabled:opacity-50"
+                      disabled={busy}
+                      onClick={() => onReplay(r.dlq_id)}
+                      aria-label={`Replay DLQ row ${r.dlq_id}`}
+                    >
+                      {busy ? '…' : 'Replay'}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="h-auto rounded border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-foreground hover:bg-muted disabled:opacity-50"
+                      disabled={busy || !r.payload_json}
+                      onClick={() => downloadPayload(`dlq-${r.dlq_id}.json`, r.payload_json)}
+                      aria-label={`Download DLQ payload ${r.dlq_id}`}
+                    >
+                      Download
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="h-auto rounded border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-error hover:bg-error/10 disabled:opacity-50"
+                      disabled={busy}
+                      onClick={() => onDelete(r.dlq_id)}
+                      aria-label={`Delete DLQ row ${r.dlq_id}`}
+                    >
+                      {busy ? '…' : 'Delete'}
+                    </Button>
+                  </div>
+                </Td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
   );
+}
+
+// R2-#102 sub-bug 3: emit the row's payload_json as a downloadable .json
+// file. Pretty-printed if the value parses; otherwise falls back to the
+// raw string.
+function downloadPayload(filename: string, payloadJson: string): void {
+  if (typeof window === 'undefined') return;
+  let body = payloadJson;
+  try {
+    body = JSON.stringify(JSON.parse(payloadJson), null, 2);
+  } catch {
+    /* keep raw — admin still gets the source string */
+  }
+  const blob = new Blob([body], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function Th({ children }: { children?: React.ReactNode }): JSX.Element {
