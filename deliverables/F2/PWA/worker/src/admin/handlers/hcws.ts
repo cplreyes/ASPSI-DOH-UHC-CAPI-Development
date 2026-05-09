@@ -64,6 +64,7 @@ function statusForAsError(code: string | undefined): number {
   if (code === 'E_VALIDATION') return 400;
   if (code === 'E_NOT_FOUND') return 404;
   if (code === 'E_CAS_FAILED') return 409;
+  if (code === 'E_CONFLICT') return 409;
   if (code === 'E_LOCK_TIMEOUT') return 503;
   return 502;
 }
@@ -141,4 +142,59 @@ export async function handleReissueToken(
     enroll_url: enrollUrl,
   };
   return jsonResponse(success, 200);
+}
+
+// ----- R2-#58 (E4-APRT-041): first-class Create HCW form -------------------
+
+const HCW_ID_RE = /^[A-Za-z0-9_\-]{1,64}$/;
+const FACILITY_ID_RE = /^[A-Za-z0-9_\-]{1,32}$/;
+
+export interface CreateHcwBody {
+  hcw_id?: unknown;
+  facility_id?: unknown;
+  facility_name?: unknown;
+  status?: unknown;
+}
+
+export type CreateHcwAsCallable = (
+  payload: { hcw_id: string; facility_id: string; facility_name?: string; status?: string },
+) => Promise<AppsScriptResponse<{ hcw_id: string }>>;
+
+/**
+ * Append a new HCW row to F2_HCWs. Worker validates shape; AS dedupes
+ * against active rows (any status != 'revoked') and returns E_CONFLICT
+ * if hcw_id already exists. New rows default to status='pending' per
+ * the issue spec (the existing AS handler defaults to 'enrolled' for
+ * the legacy reissue-flow caller; this route forces 'pending' so the
+ * provisioning lifecycle is Create → Reissue → enrolled).
+ */
+export async function handleCreateHcw(
+  body: CreateHcwBody,
+  asCallable: CreateHcwAsCallable,
+): Promise<Response> {
+  const hcwId = typeof body.hcw_id === 'string' ? body.hcw_id.trim() : '';
+  const facilityId = typeof body.facility_id === 'string' ? body.facility_id.trim() : '';
+  const facilityName = typeof body.facility_name === 'string' ? body.facility_name.trim() : '';
+
+  if (!HCW_ID_RE.test(hcwId)) {
+    return errorJson('E_VALIDATION', 'hcw_id must be 1-64 chars [A-Za-z0-9_-]', 400);
+  }
+  if (!FACILITY_ID_RE.test(facilityId)) {
+    return errorJson('E_VALIDATION', 'facility_id must be 1-32 chars [A-Za-z0-9_-]', 400);
+  }
+
+  const r = await asCallable({
+    hcw_id: hcwId,
+    facility_id: facilityId,
+    ...(facilityName ? { facility_name: facilityName } : {}),
+    status: 'pending',
+  });
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse({ hcw_id: r.data.hcw_id, facility_id: facilityId, status: 'pending' }, 201);
 }

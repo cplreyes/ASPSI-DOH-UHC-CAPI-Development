@@ -48,7 +48,9 @@ import {
 } from './handlers/data';
 import {
   handleReissueToken,
+  handleCreateHcw,
   type ReissueRequestBody,
+  type CreateHcwBody,
 } from './handlers/hcws';
 import {
   handleListUsers,
@@ -110,6 +112,7 @@ const DLQ_LIST_RE = /^\/admin\/api\/dashboards\/data\/dlq\/?$/;
 const DLQ_REPLAY_RE = /^\/admin\/api\/dashboards\/data\/dlq\/([^/]+)\/replay\/?$/;
 const DLQ_DELETE_RE = /^\/admin\/api\/dashboards\/data\/dlq\/([^/]+)\/?$/;
 const HCWS_LIST_RE = /^\/admin\/api\/dashboards\/data\/hcws\/?$/;
+const HCWS_CREATE_RE = /^\/admin\/api\/hcws\/?$/;
 const HCWS_REISSUE_RE = /^\/admin\/api\/hcws\/([A-Za-z0-9_\-]+)\/reissue-token\/?$/;
 const REPORT_SYNC_RE = /^\/admin\/api\/dashboards\/report\/sync\/?$/;
 const REPORT_MAP_RE = /^\/admin\/api\/dashboards\/report\/map\/?$/;
@@ -868,6 +871,38 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
     // R2-#56: deleting a role evicts the cache entry too — any extant JWT
     // for this role will fall through to refetch + 401 (role not in list).
     if (r.status >= 200 && r.status < 300) roleCache.invalidate(name);
+    return withRequestId(r, requestId);
+  }
+
+  // R2-#58 (E4-APRT-041): first-class Create HCW. RBAC-gated on dash_users
+  // (same as reissue-token — both mutate F2_HCWs and are Administrator-only
+  // in practice). Audit row written on success only.
+  if (req.method === 'POST' && HCWS_CREATE_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_users', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const body = (await req.json().catch(() => ({}))) as CreateHcwBody;
+    const asCall = (payload: { hcw_id: string; facility_id: string; facility_name?: string; status?: string }) =>
+      callAppsScript<{ hcw_id: string }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_hcws_create',
+        payload as unknown as Record<string, unknown>,
+        requestId,
+        env.F2_AUTH,
+      );
+    const r = await handleCreateHcw(body, asCall);
+    if (r.status >= 200 && r.status < 300) {
+      auditFn({
+        event_type: 'admin_hcws_create',
+        actor_username: auth.payload!.sub,
+        actor_jti: auth.payload!.jti,
+        actor_role: auth.payload!.role,
+        client_ip_hash: ipHash,
+        event_resource: typeof body.hcw_id === 'string' ? body.hcw_id : '',
+      });
+    }
     return withRequestId(r, requestId);
   }
 

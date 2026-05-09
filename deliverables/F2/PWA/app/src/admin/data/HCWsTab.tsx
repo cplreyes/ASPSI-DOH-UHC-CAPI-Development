@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { Link, useRouter } from '../lib/pages-router';
+import { CreateHCWModal } from './CreateHCWModal';
 import { ReissueTokenModal } from './ReissueTokenModal';
 
 interface HcwRow {
@@ -80,6 +81,9 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
 
   const apiQuery = useMemo(() => buildApiQuery(filters), [filters]);
   const [reissueTarget, setReissueTarget] = useState<HcwRow | null>(null);
+  // R2-#58: Create HCW modal state.
+  const [createOpen, setCreateOpen] = useState(false);
+  const [reloadTick, setReloadTick] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -105,7 +109,7 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
     return () => {
       cancelled = true;
     };
-  }, [apiQuery, apiBaseUrl, token]);
+  }, [apiQuery, apiBaseUrl, token, reloadTick]);
 
   const togglePill = (value: string) => {
     setFilters((prev) => ({ ...prev, status: prev.status === value ? '' : value }));
@@ -113,14 +117,19 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3">
-        <FilterText label="Facility ID" value={filters.facility_id} onChange={(v) => setFilters({ ...filters, facility_id: v })} />
-        <FilterText label="Search" value={filters.q} onChange={(v) => setFilters({ ...filters, q: v })} />
-        <div className="flex items-center gap-2">
-          <PillToggle active={filters.status === 'enrolled'} onClick={() => togglePill('enrolled')}>Enrolled</PillToggle>
-          <PillToggle active={filters.status === 'submitted'} onClick={() => togglePill('submitted')}>Submitted</PillToggle>
-          <PillToggle active={filters.status === 'revoked'} onClick={() => togglePill('revoked')}>Revoked</PillToggle>
+      <div className="flex flex-wrap items-end justify-between gap-3 border-b border-hairline pb-3">
+        <div className="flex flex-wrap items-end gap-3">
+          <FilterText label="Facility ID" value={filters.facility_id} onChange={(v) => setFilters({ ...filters, facility_id: v })} />
+          <FilterText label="Search" value={filters.q} onChange={(v) => setFilters({ ...filters, q: v })} />
+          <div className="flex items-center gap-2">
+            <PillToggle active={filters.status === 'enrolled'} onClick={() => togglePill('enrolled')}>Enrolled</PillToggle>
+            <PillToggle active={filters.status === 'submitted'} onClick={() => togglePill('submitted')}>Submitted</PillToggle>
+            <PillToggle active={filters.status === 'revoked'} onClick={() => togglePill('revoked')}>Revoked</PillToggle>
+          </div>
         </div>
+        <Button type="button" onClick={() => setCreateOpen(true)} className="h-10">
+          + Create HCW
+        </Button>
       </div>
 
       {state.kind === 'loading' ? (
@@ -137,6 +146,15 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
           </p>
           <HcwsTable rows={state.data.rows} onReissue={setReissueTarget} />
         </>
+      ) : null}
+
+      {createOpen ? (
+        <CreateHCWModal
+          apiBaseUrl={apiBaseUrl}
+          {...(fetchImpl ? { fetchImpl } : {})}
+          onClose={() => setCreateOpen(false)}
+          onCreated={() => setReloadTick((n) => n + 1)}
+        />
       ) : null}
 
       {reissueTarget ? (
