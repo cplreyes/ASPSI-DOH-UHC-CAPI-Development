@@ -12,6 +12,7 @@ import type { Env } from '../types';
 import {
   handleLogin,
   handleLogout,
+  handleChangeMyPassword,
   type AdminUserRow,
   type AdminRoleRow,
   type AuthAuditCtx,
@@ -287,6 +288,40 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
 
   if (req.method === 'POST' && url.pathname === '/admin/api/logout') {
     const r = await handleLogout(req, ipHash, env, auditFn);
+    return withRequestId(r, requestId);
+  }
+
+  // R2-#134 (E4-APRT-051): user-self password rotation. JWT-only gate (no
+  // perm) so any authenticated admin can rotate their own credential.
+  if (req.method === 'PATCH' && url.pathname === '/admin/api/me/password') {
+    const usersList = () =>
+      callAppsScript<{ users: AdminUserRow[] }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_list',
+        { include_password_hash: true },
+        requestId,
+        env.F2_AUTH,
+      );
+    const rolesList = () =>
+      callAppsScript<{ roles: AdminRoleRow[] }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_roles_list',
+        {},
+        requestId,
+        env.F2_AUTH,
+      );
+    const changePwAsCall = (payload: { username: string; password_hash: string }) =>
+      callAppsScript<{ username: string }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_users_change_password',
+        payload,
+        requestId,
+        env.F2_AUTH,
+      );
+    const r = await handleChangeMyPassword(req, env, usersList, rolesList, changePwAsCall, auditFn, ipHash);
     return withRequestId(r, requestId);
   }
 

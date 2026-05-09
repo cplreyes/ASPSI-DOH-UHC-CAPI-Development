@@ -123,6 +123,7 @@ function _adminHandlers() {
       admin_users_delete: typeof adminUsersDelete !== 'undefined' ? adminUsersDelete : null,
       admin_users_bulk_import: typeof adminUsersBulkImport !== 'undefined' ? adminUsersBulkImport : null,
       admin_users_touch_last_login: typeof adminUsersTouchLastLogin !== 'undefined' ? adminUsersTouchLastLogin : null,
+      admin_users_change_password: typeof adminUsersChangePassword !== 'undefined' ? adminUsersChangePassword : null,
       admin_roles_list: typeof adminRolesList !== 'undefined' ? adminRolesList : null,
       admin_roles_create: typeof adminRolesCreate !== 'undefined' ? adminRolesCreate : null,
       admin_roles_update: typeof adminRolesUpdate !== 'undefined' ? adminRolesUpdate : null,

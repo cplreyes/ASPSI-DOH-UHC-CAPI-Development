@@ -260,6 +260,39 @@ function adminUsersDelete(payload) {
 }
 
 /**
+ * R2-#134 (E4-APRT-051): user-self password rotation.
+ *
+ * Distinct from `adminUsersUpdate` because the worker route that calls this
+ * (`PATCH /admin/api/me/password`) is gated only on a valid JWT — no
+ * dash_users perm — so a non-administrator can rotate their own password.
+ * Worker has already verified the current password (PBKDF2) and pre-hashed
+ * the new one. AS only persists the new hash + clears `password_must_change`.
+ */
+function adminUsersChangePassword(payload) {
+  if (!payload || !payload.username || !payload.password_hash) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'username and password_hash required' } };
+  }
+  var u = String(payload.username).trim();
+
+  return _withDocLock(function () {
+    var ss = getF2Spreadsheet();
+    var sh = ss.getSheetByName('F2_Users');
+    if (!sh) throw new Error('F2_Users sheet not found — run runAllMigrations() first');
+    var found = _findUserRow(sh, u);
+    if (!found.row) {
+      return { ok: false, error: { code: 'E_NOT_FOUND', message: 'user ' + u + ' not found' } };
+    }
+    var updated = {};
+    for (var k in found.row) updated[k] = found.row[k];
+    updated.password_hash = payload.password_hash;
+    updated.password_must_change = false;
+    var rowArr = found.headers.map(function (h) { return updated[h] != null ? updated[h] : ''; });
+    sh.getRange(found.rowNumber, 1, 1, found.headers.length).setValues([rowArr]);
+    return { ok: true, data: { username: u } };
+  });
+}
+
+/**
  * R2-#66 (E4-APRT-048): write last_login_at on successful login.
  *
  * Called fire-and-forget from the Worker after JWT mint via ctx.waitUntil,
