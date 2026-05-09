@@ -8,10 +8,10 @@ source_count: 0
 
 The F2 Admin Portal is the **operations console** for the F2 PWA stack — admin-only routes layered on top of the existing PWA at `f2-pwa.pages.dev`. It mirrors [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSWeb]]'s permission model 1:1 so the F2 backend has the same governance shape as the CSPro F1/F3/F4 stack served by CSWeb. The portal replaces the abandoned **M10 single-`ADMIN_SECRET` Apps-Script-HtmlService** approach.
 
-> **Branch:** `f2-admin-portal` (feature branch, not yet on `main` or `staging`)
+> **Branch:** `f2-admin-portal` (PR #54 merged to `main` 2026-05-04; v2.0.0 cut to prod the same evening, soak waived)
 > **Spec:** `docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md` (v0.2)
 > **Plan:** `docs/superpowers/plans/2026-05-01-f2-admin-portal-impl.md` — 4 sprints, 80 sub-tasks
-> **Tracked under:** Epic 4 (`scrum/epics/epic-04-backend-sync-infrastructure.md` → "F2 Admin Portal Track", task IDs `E4-APRT-001..040`)
+> **Tracked under:** Epic 4 (`scrum/epics/epic-04-backend-sync-infrastructure.md` → "F2 Admin Portal Track", task IDs `E4-APRT-001..045`)
 
 ## Why a portal (and not just M10)
 
@@ -43,9 +43,9 @@ The F2 Admin Portal is the **operations console** for the F2 PWA stack — admin
 | **AP3** — apps + users + roles + cron break-out | week 3 | E4-APRT-020..029 | Files CRUD + R2 upload allowlist, settings + cron break-out builder, scheduled() dispatcher, Versioning + Files + DataSettings + QuotaWidget, Users CRUD + bulk_create + revoke_sessions, Roles CRUD with auto-version-bump, PWA versioning endpoint |
 | **AP4** — paper-encoder + reissue + cutover + v2.0.0 | week 4 | E4-APRT-030..040 | F2 PWA Form refactor for `mode='hcw'/'encoded'`, encode submit, EncodeQueue + EncodePage with autosave, **HCW token reissue with CAS** (prev_jti), ReissueModal with QR + 409 handling, cross-platform QA, security testing, concurrency tests, UX gates, M10 sunset (7-day soak + secret deletion), v2.0.0 release |
 
-## Build state (2026-05-02 evening)
+## Build state (2026-05-04 — v2.0.0 live in prod)
 
-Sprint AP1–AP4 **functionally complete and end-to-end verified** on staging. Draft PR #54 against `main`. ~60 commits, ~19k LOC.
+Sprints AP1–AP4 **functionally complete, end-to-end verified on staging, and cut to production 2026-05-04 evening** (PR #54 merged 15:49 PHT; v2.0.0 cutover same evening, 7-day soak explicitly waived). UAT Round 2 opened to Shan + Kidd with embedded prod-signed enrollment URLs and per-tester admin credentials. ~60 commits, ~19k LOC across the merged branch.
 
 ```
 beee13e docs(runbook): production cutover runbook
@@ -107,11 +107,18 @@ Mocks couldn't catch any of these — all surfaced only on the live stack:
 
 ## Outstanding (NOT coding tasks)
 
-- ~~**Cloudflare R2 plan**~~ — **CLEARED 2026-05-02.** R2 enabled on `Aspsi.doh.uhc.survey2.data@gmail.com's Account` (`b0887ce8ba4e531c00abfe0127b4bc5b`); four buckets created (`f2-admin-staging`, `f2-admin-staging-preview`, `f2-admin`, `f2-admin-preview`); staging worker redeployed with R2 + cron bindings; full upload/list/download/delete cycle smoke-tested green on `f2-pwa-worker-staging`. Production buckets pre-provisioned, sit empty until PR #54 deploy.
-- **Production cutover** — runbook at `docs/superpowers/runbooks/2026-05-02-f2-admin-portal-prod-cutover.md` (308 lines). Part 3a (bucket creation) already done. Run remaining parts after PR merges + cross-platform QA + 7-day staging soak.
-- **Cross-platform QA** (Sprint 4 Task 4.6) — manual half-day across browsers/OS.
-- **M10 sunset** (Sprint 4 Task 4.9) — 7-day soak after prod cutover, then delete `ADMIN_PASSWORD_HASH` secret + dead `src/admin.ts` routes.
-- **v2.0.0 release** (Sprint 4 Task 4.10) — gated on all of the above.
+- ~~**Cloudflare R2 plan**~~ — **CLEARED 2026-05-02.** R2 enabled on `Aspsi.doh.uhc.survey2.data@gmail.com's Account` (`b0887ce8ba4e531c00abfe0127b4bc5b`); four buckets created (`f2-admin-staging`, `f2-admin-staging-preview`, `f2-admin`, `f2-admin-preview`); staging worker redeployed with R2 + cron bindings; full upload/list/download/delete cycle smoke-tested green on `f2-pwa-worker-staging`.
+- ~~**Production cutover**~~ — **DONE 2026-05-04.** Runbook at `docs/superpowers/runbooks/2026-05-02-f2-admin-portal-prod-cutover.md` executed; PR #54 merged to `main` 15:49 PHT and v2.0.0 cut to prod the same evening with 7-day staging soak explicitly waived (Carl's call, given UAT R2 demo timing).
+- ~~**Cross-platform QA**~~ (Sprint 4 Task 4.6 / E4-APRT-035) — **CLOSED 2026-05-05.** All 9 outstanding FX-* findings dispositioned ✅ on E1 Chrome (FX-016 source fix in `src/admin/App.tsx` shipped same day as filing); E2 Firefox / E3 Edge cross-engine pass deferred to Sprint 005 polish (architecturally-clean code; remaining cross-engine risk is visual). FX-017 logged as MEDIUM tablet polish, not a v2.0.0 blocker.
+- **M10 sunset** (Sprint 4 Task 4.9) — staging `ADMIN_PASSWORD_HASH` deleted 2026-05-04 (E4-APRT-039 closed). **Production secret pending Sprint 005 (E4-APRT-040)**, scheduled after Carl's hands-on rotation window. Sunset = delete (not rotate); `src/admin.ts` legacy routes remain to be removed alongside.
+- ~~**v2.0.0 release**~~ (Sprint 4 Task 4.10) — **DONE 2026-05-04 evening.** Tagged + cut; live at `f2-pwa.pages.dev`.
+
+## Sprint 005 polish backlog (filed during Sprint 004 close)
+
+- **E4-APRT-040** — production `ADMIN_PASSWORD_HASH` deletion + `src/admin.ts` cleanup (priority HIGH; gated on Carl's hands-on window).
+- **E4-APRT-044** — RBAC role-version cache stale-entry fix (HIGH, conf 9/10): `worker/src/admin/rbac.ts:22-40,103-115` evict cached `name:v1` entries on role version bump. Estimate 1h.
+- **E4-APRT-045** — `password_must_change=true` server-side enforcement (MEDIUM, conf 9/10): currently client-side only; Worker mints fully-privileged 4h JWT regardless of flag. Estimate 1.5h.
+- **Design-review findings (5 deferred from E4-APRT-038):** H-2 (~36 raw `<button>` elements bypass `<Button>` primitive), H-3 (~22 `<input>`/`<select>` weak focus affordance), M-1 (`rounded-full` on 12 non-radio elements + sidebar avatar), M-3 (`QuotaWidget` uses `--error` for 80% warning, should be `--warning`), M-4 (`ReissueTokenModal` Escape-key dismiss). Total estimate ~40 min sweep.
 
 ## Operational gotchas (captured from AP0)
 

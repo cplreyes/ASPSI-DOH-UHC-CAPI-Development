@@ -162,9 +162,22 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end gap-3 border-b border-hairline pb-3">
-        <FilterDate label="From" value={filters.from} onChange={(v) => setFilters({ ...filters, from: v })} />
-        <FilterDate label="To" value={filters.to} onChange={(v) => setFilters({ ...filters, to: v })} />
-        <FilterText label="Region" value={filters.region_id} onChange={(v) => setFilters({ ...filters, region_id: v })} placeholder="e.g. 05" />
+        <FilterDate
+          label="From"
+          value={filters.from}
+          onChange={(v) => setFilters({ ...filters, from: v })}
+        />
+        <FilterDate
+          label="To"
+          value={filters.to}
+          onChange={(v) => setFilters({ ...filters, to: v })}
+        />
+        <FilterText
+          label="Region"
+          value={filters.region_id}
+          onChange={(v) => setFilters({ ...filters, region_id: v })}
+          placeholder="e.g. 05"
+        />
       </div>
 
       {state.kind === 'loading' ? (
@@ -174,11 +187,7 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
       ) : state.kind === 'loaded' ? (
         <div className="flex flex-col gap-4 lg:flex-row">
           <div className="flex-1">
-            <MapPlot
-              markers={state.data.markers}
-              hovered={hovered}
-              onHover={setHovered}
-            />
+            <MapPlot markers={state.data.markers} hovered={hovered} onHover={setHovered} />
             <p className="mt-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
               {state.data.markers.length} marker{state.data.markers.length === 1 ? '' : 's'}
               {state.data.no_gps_count > 0 ? (
@@ -220,9 +229,7 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
                   ))}
               </ul>
             )}
-            {hovered ? (
-              <HoveredCard marker={hovered} onClear={() => setHovered(null)} />
-            ) : null}
+            {hovered ? <HoveredCard marker={hovered} onClear={() => setHovered(null)} /> : null}
           </aside>
         </div>
       ) : null}
@@ -230,7 +237,10 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
   );
 }
 
-function MapPlot({ markers, onHover }: {
+function MapPlot({
+  markers,
+  onHover,
+}: {
   markers: Marker[];
   hovered: Marker | null;
   onHover: (m: Marker | null) => void;
@@ -321,10 +331,20 @@ function HoveredCard({ marker, onClear }: { marker: Marker; onClear: () => void 
   );
 }
 
-function FilterDate({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }): JSX.Element {
+function FilterDate({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}): JSX.Element {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="date"
         value={value}
@@ -335,10 +355,22 @@ function FilterDate({ label, value, onChange }: { label: string; value: string; 
   );
 }
 
-function FilterText({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string }): JSX.Element {
+function FilterText({
+  label,
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+}): JSX.Element {
   return (
     <label className="flex flex-col gap-1">
-      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
+        {label}
+      </span>
       <input
         type="text"
         value={value}

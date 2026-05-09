@@ -44,7 +44,7 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 
 > **Scope split:** Carl owns the *internal* status format (E0-010) for his own tracking + project record per `feedback_weekly_status_internal_only.md`. Recurring stakeholder-facing sends, brief preparation, and escalation-protocol design are PM/PI/PMO lane (Juvy / Dr Claro / Dr Paunlagui) per `feedback_data_programmer_scope.md` and `feedback_comms_lane_discipline.md`.
 
-- [ ] **E0-010** Define weekly status update format — *internal-only* (Carl's tracking + project record, not for ASPSI Mgmt or DOH send) `status::todo` `priority::high` `estimate::2h`
+- [x] **E0-010** Define weekly status update format — *internal-only* (Carl's tracking + project record, not for ASPSI Mgmt or DOH send). **Closed 2026-05-04 (Sprint 004 Day 1).** Template at `deliverables/comms/_weekly-status-template.md` v1.0 stable; week-1 instance at `weekly-status-2026-05-01.md` proved the structure; refinements folded back into template. `status::done` `priority::high` `actual::~30m close (template was already mature from partial-start in Sprint 003)`
 - [ ] **E0-011** Send weekly status updates to ASPSI `status::todo` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
   - Recurring stakeholder-facing send. Per `feedback_weekly_status_internal_only.md`, no recurring send happens from Carl; the internal artifact (E0-010) stays internal. If/when ASPSI wants a stakeholder-facing weekly, ASPSI/PMO authors and ships it.
 - [ ] **E0-012** Define monthly stakeholder brief format (DOH / ADB touchpoint) `status::todo` `priority::medium` `estimate::2h` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`

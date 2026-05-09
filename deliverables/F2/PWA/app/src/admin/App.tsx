@@ -185,11 +185,7 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
   }
 
   const route = matchRoute(PAGES, pathname);
-  return (
-    <Layout>
-      {route ? route.element : <NotFound />}
-    </Layout>
-  );
+  return <Layout>{route ? route.element : <NotFound />}</Layout>;
 }
 
 function NotFound(): JSX.Element {

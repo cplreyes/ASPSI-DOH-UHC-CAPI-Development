@@ -4,14 +4,19 @@ kind: weekly-status-template
 audience: internal (Carl + project record)
 sender: Carl Patrick L. Reyes
 related_task: E0-010
+status: stable
+version: 1.0
+formalized: 2026-05-04
 tags: [weekly-status, internal, e0-010, e0-011]
 ---
 
-# Weekly Status — Template (Internal)
+# Weekly Status — Template (Internal) · v1.0
 
-> Reusable format for the weekly internal status snapshot, owned by Carl (Data Programmer). **Internal-only** — not sent to ASPSI Mgmt Committee or DOH. Cadence: one snapshot per ASPSI Sprint week, written EOD Friday at sprint close. Each instance is saved as `weekly-status-YYYY-MM-DD.md` in this same folder (gitignored).
+> Reusable format for the weekly internal status snapshot, owned by Carl (Data Programmer). **Internal-only** — not sent to ASPSI Mgmt Committee or DOH. Cadence: one snapshot per ASPSI Sprint week, written EOD Friday at sprint close. Each instance is saved as `weekly-status-YYYY-MM-DD.md` in this same folder.
 >
 > **Purpose:** consolidate the week into a single artifact that survives between standups and the next sprint plan. Useful inputs: future retro Q&A, periodic ad-hoc updates if Mgmt asks, narrative continuity if Carl needs to brief someone fast. Not a comms send.
+>
+> **Stability:** v1.0 locked 2026-05-04 (Sprint 004 Day 1 — E0-010 closed). The week-1 instance at `weekly-status-2026-05-01.md` proved the structure end-to-end. Bump version + record changes here if the structure later evolves.
 
 ## Conventions
 
@@ -53,15 +58,15 @@ tags: [weekly-status, internal, e0-010, e0-011]
 - *[1–3 material risks. One-sentence mitigation status each. Cull anything that's already absorbed or stale.]*
 - *[…]*
 
-### Tranche / deliverable position
+### Deliverable production state (informational)
 
-*[1–2 sentences on where we stand against contracted milestones (D1–D6, Tranches 1–4). Framing: "what's submission-ready on our side" + "what's pending external".]*
+*[1–2 sentences on the production-side state of CAPI deliverables under D1–D6 / Tranches 1–4. Framing: "what's submission-ready on our side" + "what's pending external". Out-of-scope items (tranche acceptance + submission timing) stay informational only per `feedback_tranche_tracking_out_of_scope.md` — no active tracking, no recommendations to chase deadlines.]*
 
 ---
 
 ## Drafter notes
 
-- Pull source material from `scrum/sprint-current.md` (committed items + status), `scrum/product-backlog.md` § Status at a Glance, and the Friday standup. The standup's "Yesterday (Done)" + sprint board snapshot is usually 80% of "Closed this week".
+- Pull source material from `scrum/sprint-current.md` (committed items + status), `scrum/product-backlog.md` § Status at a Glance, the Friday standup, and `log.md` tail. The standup's "Yesterday (Done)" + sprint board snapshot is usually 80% of "Closed this week"; `log.md` adds the inter-sprint and weekend bookkeeping the standup might miss.
 - For "In flight", reuse the next sprint's likely shape (carry-forwards from this sprint + planned next-sprint commits). If next sprint isn't planned yet, lead with the carry-forwards.
 - For "Open items", scan epic files for items still tagged blocked or with external owners. Don't manufacture entries.
 - For "Risks", default to the existing watchlist in `product-backlog.md` (Risks & Watchlist section).

@@ -122,7 +122,7 @@
   filter: contrast(0.95) saturate(0.92);
 }
 .verde-leaflet-wrap .leaflet-control-attribution {
-  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-family: ui-monospace, 'JetBrains Mono', monospace;
   font-size: 10px;
   background: hsl(var(--background) / 0.85);
   color: hsl(var(--muted-foreground));
@@ -138,7 +138,7 @@
   background: hsl(var(--background));
   color: hsl(var(--foreground));
   border-bottom: 1px solid hsl(var(--border));
-  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-family: ui-monospace, 'JetBrains Mono', monospace;
 }
 .verde-leaflet-wrap .leaflet-control-zoom a:hover {
   background: hsl(var(--secondary) / 0.5);

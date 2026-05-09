@@ -47,7 +47,7 @@ export function QuotaWidget({ apiBaseUrl, fetchImpl }: QuotaWidgetProps): JSX.El
             clearAuth();
             navigate('/admin/login');
           },
-          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
+          onPasswordChangeRequired: () => navigate('/admin/me/change-password'),
           ...(fetchImpl ? { fetchImpl } : {}),
         },
       );
@@ -64,7 +64,9 @@ export function QuotaWidget({ apiBaseUrl, fetchImpl }: QuotaWidgetProps): JSX.El
     <section className="flex flex-col gap-2">
       <h3 className="font-serif text-lg font-medium tracking-tight">Apps Script Quota</h3>
       <p className="text-xs text-muted-foreground">
-        Daily Apps Script execution count vs the 20,000-call limit. Hard ceiling — when this hits 100% the backend rejects writes until UTC rollover. Watch this during enumerator surge windows.
+        Daily Apps Script execution count vs the 20,000-call limit. Hard ceiling — when this hits
+        100% the backend rejects writes until UTC rollover. Watch this during enumerator surge
+        windows.
       </p>
       {state.kind === 'loading' ? (
         <p className="text-sm text-muted-foreground">Loading...</p>
@@ -88,9 +90,7 @@ function QuotaBar({ data }: { data: QuotaData }): JSX.Element {
       </p>
       <p className="mt-1 font-mono text-sm">
         {data.count.toLocaleString()} / {data.cap.toLocaleString()}{' '}
-        <span className={warn ? 'text-warning' : 'text-muted-foreground'}>
-          ({data.percent}%)
-        </span>
+        <span className={warn ? 'text-warning' : 'text-muted-foreground'}>({data.percent}%)</span>
       </p>
       <div className="mt-2 h-1 w-full overflow-hidden bg-hairline/40" aria-hidden="true">
         <div

@@ -23,7 +23,9 @@ export function HelpPage(): JSX.Element {
     <section className="mx-auto flex max-w-4xl flex-col gap-8 py-2">
       <header className="border-b border-hairline pb-3">
         <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Section</p>
-        <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">Help &amp; Operator Guide</h2>
+        <h2 className="mt-1 font-serif text-2xl font-medium tracking-tight">
+          Help &amp; Operator Guide
+        </h2>
         <p className="mt-2 text-sm text-muted-foreground">
           What this portal is, what each tab does, and how to do the common things. If you&rsquo;re
           new here, read the <strong>Quick Start</strong> below first; if you&rsquo;re looking up a
@@ -33,10 +35,10 @@ export function HelpPage(): JSX.Element {
 
       <Article id="quick-start" title="Quick Start" eyebrow="Welcome">
         <p>
-          The F2 Admin Portal is the operations console for the F2 Healthcare Worker survey. It mirrors
-          the role-based dashboard pattern ASPSI uses with CSWeb on the CSPro instruments — five
-          dashboards, role-aware navigation, per-instrument permission flags. If you&rsquo;ve used
-          CSWeb, the shape will feel familiar.
+          The F2 Admin Portal is the operations console for the F2 Healthcare Worker survey. It
+          mirrors the role-based dashboard pattern ASPSI uses with CSWeb on the CSPro instruments —
+          five dashboards, role-aware navigation, per-instrument permission flags. If you&rsquo;ve
+          used CSWeb, the shape will feel familiar.
         </p>
         <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm">
           <li>
@@ -202,7 +204,9 @@ export function HelpPage(): JSX.Element {
         <Workflow
           number={5}
           title="Run a scheduled break-out manually"
-          when={'You need a fresh CSV export now (e.g., for a stakeholder request) instead of waiting for the next cron tick.'}
+          when={
+            'You need a fresh CSV export now (e.g., for a stakeholder request) instead of waiting for the next cron tick.'
+          }
           steps={[
             'Configuration → Apps & Settings → Data Settings.',
             'Find the setting (e.g., "F2 daily break-out per region"). Click "Run now".',
@@ -217,8 +221,9 @@ export function HelpPage(): JSX.Element {
       <Article id="roles" title="Roles &amp; permissions" eyebrow="Quick reference">
         <p className="text-sm">
           Roles are CSWeb-style: a flag matrix across dashboards (data / report / apps / users /
-          roles) and per-instrument up/down permissions (self-admin / paper-encoded / capi). Built-in
-          roles cover the typical operating shapes; create custom roles for unusual access patterns.
+          roles) and per-instrument up/down permissions (self-admin / paper-encoded / capi).
+          Built-in roles cover the typical operating shapes; create custom roles for unusual access
+          patterns.
         </p>
         <table className="mt-3 w-full table-auto text-sm">
           <thead className="border-b border-hairline">
@@ -228,16 +233,28 @@ export function HelpPage(): JSX.Element {
             </tr>
           </thead>
           <tbody className="divide-y divide-hairline">
-            <Tr name="Administrator" desc="Full read + write across all dashboards, including users + roles. There must always be at least one. Treat the seat with care; rotate passwords promptly when staff leaves." />
-            <Tr name="Standard User" desc="Read everything except Users + Roles. Cannot mutate; safe default for new staff who need visibility but not admin power." />
-            <Tr name="DataReader (custom)" desc="Read Data + Reports only. No Apps & Settings, no Users / Roles. Useful for analyst access where the analyst should never accidentally toggle a config." />
-            <Tr name="Encoder (custom)" desc="Encode dashboard + read access to Responses for the HCWs they're encoding. No DLQ, no audit, no admin." />
+            <Tr
+              name="Administrator"
+              desc="Full read + write across all dashboards, including users + roles. There must always be at least one. Treat the seat with care; rotate passwords promptly when staff leaves."
+            />
+            <Tr
+              name="Standard User"
+              desc="Read everything except Users + Roles. Cannot mutate; safe default for new staff who need visibility but not admin power."
+            />
+            <Tr
+              name="DataReader (custom)"
+              desc="Read Data + Reports only. No Apps & Settings, no Users / Roles. Useful for analyst access where the analyst should never accidentally toggle a config."
+            />
+            <Tr
+              name="Encoder (custom)"
+              desc="Encode dashboard + read access to Responses for the HCWs they're encoding. No DLQ, no audit, no admin."
+            />
           </tbody>
         </table>
         <p className="mt-3 text-xs text-muted-foreground">
-          Editing a role bumps its <code>role_version</code>. Existing JWTs with the old version
-          are invalidated on next request — the user is bounced to login with their new permission
-          set. This is the mechanism that makes role changes take effect without waiting for token
+          Editing a role bumps its <code>role_version</code>. Existing JWTs with the old version are
+          invalidated on next request — the user is bounced to login with their new permission set.
+          This is the mechanism that makes role changes take effect without waiting for token
           expiry.
         </p>
       </Article>
@@ -253,12 +270,12 @@ export function HelpPage(): JSX.Element {
             here instead of losing the data.
           </Term>
           <Term word="JTI">
-            JWT ID — the unique identifier embedded in each enrollment token. Used to revoke specific
-            tokens without affecting other devices for the same HCW.
+            JWT ID — the unique identifier embedded in each enrollment token. Used to revoke
+            specific tokens without affecting other devices for the same HCW.
           </Term>
           <Term word="RBAC">
-            Role-Based Access Control. The permission system: roles map to flags, users map to roles,
-            requests are gated by the user&rsquo;s effective flags.
+            Role-Based Access Control. The permission system: roles map to flags, users map to
+            roles, requests are gated by the user&rsquo;s effective flags.
           </Term>
           <Term word="source_path">
             How a response entered the system. <code>self_admin</code> = HCW filled the survey on
@@ -344,13 +361,41 @@ function Article({
 
 function DashboardTable(): JSX.Element {
   const rows: Array<{ name: string; permFlag: string; gist: string }> = [
-    { name: 'Data', permFlag: 'dash_data', gist: 'Submissions, audit log, DLQ, HCWs registry. Day-to-day operations live here.' },
-    { name: 'Reports', permFlag: 'dash_report', gist: 'Aggregated coverage reports + geographic map. Read-only summary views.' },
-    { name: 'Apps & Settings', permFlag: 'dash_apps', gist: 'Build versions, file uploads, scheduled break-out exports, quota usage. Operations bookkeeping.' },
-    { name: 'Users', permFlag: 'dash_users', gist: 'CRUD for ops staff accounts. Bulk-import for new cohorts. Force-revoke sessions.' },
-    { name: 'Roles', permFlag: 'dash_roles', gist: 'Permission matrix editor. Built-in roles + custom roles. Editing a role bumps its version and invalidates existing JWTs.' },
-    { name: 'Encode', permFlag: 'dict_paper_encoded_up', gist: 'Paper-response transcription flow. Only used when HCW completed the survey on paper.' },
-    { name: 'Help', permFlag: '— (no perm gate)', gist: 'This guide. Always visible regardless of role.' },
+    {
+      name: 'Data',
+      permFlag: 'dash_data',
+      gist: 'Submissions, audit log, DLQ, HCWs registry. Day-to-day operations live here.',
+    },
+    {
+      name: 'Reports',
+      permFlag: 'dash_report',
+      gist: 'Aggregated coverage reports + geographic map. Read-only summary views.',
+    },
+    {
+      name: 'Apps & Settings',
+      permFlag: 'dash_apps',
+      gist: 'Build versions, file uploads, scheduled break-out exports, quota usage. Operations bookkeeping.',
+    },
+    {
+      name: 'Users',
+      permFlag: 'dash_users',
+      gist: 'CRUD for ops staff accounts. Bulk-import for new cohorts. Force-revoke sessions.',
+    },
+    {
+      name: 'Roles',
+      permFlag: 'dash_roles',
+      gist: 'Permission matrix editor. Built-in roles + custom roles. Editing a role bumps its version and invalidates existing JWTs.',
+    },
+    {
+      name: 'Encode',
+      permFlag: 'dict_paper_encoded_up',
+      gist: 'Paper-response transcription flow. Only used when HCW completed the survey on paper.',
+    },
+    {
+      name: 'Help',
+      permFlag: '— (no perm gate)',
+      gist: 'This guide. Always visible regardless of role.',
+    },
   ];
   return (
     <table className="w-full table-auto text-sm">
@@ -429,7 +474,9 @@ function Workflow({
         <h4 className="font-serif text-base font-medium tracking-tight">{title}</h4>
       </header>
       <p className="text-sm">
-        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">When</span>{' '}
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          When
+        </span>{' '}
         — {when}
       </p>
       <ol className="list-decimal space-y-1 pl-5 text-sm">
@@ -439,8 +486,8 @@ function Workflow({
       </ol>
       {gotcha ? (
         <p className="rounded-sm border-l-2 border-warning bg-secondary/30 px-3 py-2 text-xs text-foreground">
-          <span className="font-mono uppercase tracking-wider text-muted-foreground">Gotcha</span>{' '}
-          — {gotcha}
+          <span className="font-mono uppercase tracking-wider text-muted-foreground">Gotcha</span> —{' '}
+          {gotcha}
         </p>
       ) : null}
     </section>

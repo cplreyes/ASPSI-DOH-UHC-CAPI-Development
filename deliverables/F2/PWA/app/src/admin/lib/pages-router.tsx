@@ -13,7 +13,14 @@
  * Link clicks and programmatic navigate() calls update without a full
  * page reload. popstate (browser back/forward) is also wired up.
  */
-import React, { createContext, useContext, useEffect, useState, type ReactNode, type MouseEvent } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+  type MouseEvent,
+} from 'react';
 
 const PATH_CHANGE_EVENT = 'f2admin:pathchange';
 
@@ -57,7 +64,11 @@ export function RouterProvider({ children }: { children: ReactNode }): JSX.Eleme
     window.dispatchEvent(new Event(PATH_CHANGE_EVENT));
   };
 
-  return <RouterContext.Provider value={{ pathname, search, navigate }}>{children}</RouterContext.Provider>;
+  return (
+    <RouterContext.Provider value={{ pathname, search, navigate }}>
+      {children}
+    </RouterContext.Provider>
+  );
 }
 
 export function useRouter(): RouterCtx {
@@ -72,10 +83,10 @@ export function useRouter(): RouterCtx {
  * route registered as /admin/data). Returns null if nothing matches.
  */
 export function matchRoute<T extends { path: string }>(routes: T[], pathname: string): T | null {
-  const exact = routes.find(r => r.path === pathname);
+  const exact = routes.find((r) => r.path === pathname);
   if (exact) return exact;
   const prefixCandidates = routes
-    .filter(r => pathname === r.path || pathname.startsWith(r.path + '/'))
+    .filter((r) => pathname === r.path || pathname.startsWith(r.path + '/'))
     .sort((a, b) => b.path.length - a.path.length);
   return prefixCandidates[0] ?? null;
 }
