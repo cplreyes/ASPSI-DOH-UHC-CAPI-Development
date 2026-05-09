@@ -30,13 +30,6 @@ import type { Env } from './types';
 import { errorResponse } from './types';
 import { handleExec } from './exec';
 import { handleVerifyToken } from './verify';
-import {
-  handleAdminLogin,
-  handleAdminUi,
-  handleIssueToken,
-  handleListTokens,
-  handleRevokeToken,
-} from './admin';
 import { adminRouter } from './admin/routes';
 import { runDueSettings, depsFromEnv } from './admin/cron';
 
@@ -93,18 +86,6 @@ export default {
         resp = await handleExec(req, env);
       } else if (path === '/verify-token' && method === 'POST') {
         resp = await handleVerifyToken(req, env);
-      }
-      // Admin endpoints (same-origin, no CORS).
-      else if (path === '/admin/login' && method === 'POST') {
-        resp = await handleAdminLogin(req, env);
-      } else if (path === '/admin/issue-token' && method === 'POST') {
-        resp = await handleIssueToken(req, env);
-      } else if (path === '/admin/revoke' && method === 'POST') {
-        resp = await handleRevokeToken(req, env);
-      } else if (path === '/admin/list' && method === 'GET') {
-        resp = await handleListTokens(req, env);
-      } else if ((path === '/admin' || path === '/admin/') && method === 'GET') {
-        resp = handleAdminUi();
       } else {
         resp = errorResponse('E_NOT_FOUND', `No route for ${method} ${path}`, 404);
       }

@@ -110,8 +110,6 @@ src/
   types.ts          - Env, JwtClaims, error helpers
   jwt.ts            - HS256 mint + verify (Web Crypto, zero deps)
   hmac.ts           - HMAC sign for Apps Script forwarding
-  admin.ts          - admin auth (PBKDF2) + admin endpoint handlers
-  admin-html.ts     - admin UI as a static HTML+JS string (XSS-safe via textContent)
   exec.ts           - /exec proxy + Apps Script quota detection
   verify.ts         - /verify-token (public)
 test/
