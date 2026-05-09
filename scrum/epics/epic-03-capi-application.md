@@ -51,13 +51,13 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ### Form layout & UX
 
-- [ ] **E3-F1-001** Create form file (`FacilityHeadSurvey.fmf`); lay out Section A (Identification & Cover Page) `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F1-002** Lay out Sections B–H with grouped screens matching interviewer flow `status::todo` `priority::high` `estimate::2d`
-- [ ] **E3-F1-003** Assign capture types per field (radio, drop-down, number pad, date picker) to optimize tablet entry speed `status::todo` `priority::high` `estimate::1d`
+- [x] **E3-F1-001** Create form file (`FacilityHeadSurvey.fmf`); lay out Section A (Identification & Cover Page) `status::done` `priority::high` `estimate::4h`
+- [x] **E3-F1-002** Lay out Sections B–H with grouped screens matching interviewer flow `status::done` `priority::high` `estimate::2d`
+- [x] **E3-F1-003** Assign capture types per field (radio, drop-down, number pad, date picker) to optimize tablet entry speed `status::done` `priority::high` `estimate::1d`
 
 ### Question text + language
 
-- [ ] **E3-F1-010** Populate English question text from questionnaire; use `~~item~~` fills for personalized text (facility name, respondent name) `status::todo` `priority::high` `estimate::1d`
+- [x] **E3-F1-010** Populate English question text from questionnaire; use `~~item~~` fills for personalized text (facility name, respondent name) `status::done` `priority::high` `estimate::1d`
 - [ ] **E3-F1-011** Add Filipino translations for all question labels and option text `status::todo` `priority::high` `estimate::1d`
 - [ ] **E3-F1-012** Set up multi-language switching (`setlanguage`, language-select on cover page) `status::todo` `priority::high` `estimate::2h`
 
@@ -88,8 +88,21 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ### Resilience + smoke test
 
-- [ ] **E3-F1-050** Partial save / resume behavior configured (what happens mid-interview) `status::todo` `priority::high` `estimate::2h`
+- [x] **E3-F1-050** Partial save / resume behavior configured (what happens mid-interview) `status::done` `priority::high` `estimate::2h`
 - [ ] **E3-F1-060** CSEntry Windows smoke test: happy path from cover page to last question `status::todo` `priority::high` `estimate::2h`
+
+### Phase 1 build *(2026-05-08 worktree session — proven end-to-end on tablet)*
+
+- [x] **E3-F1-080** Phase 1 — Python generator pipeline (canonical CSPro 8.0 source emit) `status::done` `priority::critical`
+- [x] **E3-F1-081** Phase 1 — `build_all.py` orchestrator + env splice (urls.yaml → .env) `status::done` `priority::critical`
+- [x] **E3-F1-082** Phase 1 — `login_app` (101_login) chain entry point `status::done` `priority::critical`
+- [x] **E3-F1-083** Phase 1 — `menu_app` (106_menu) enumerator-only menu `status::done` `priority::critical`
+- [x] **E3-F1-084** Phase 1 — F1 full generator chain (671 items / 12 records, all artifacts emitted) `status::done` `priority::critical`
+- [x] **E3-F1-085** Phase 1 — local CSWeb deploy proven (F7 → Deploy Application wizard) `status::done` `priority::critical`
+- [x] **E3-F1-086** Phase 1 — CSEntry tablet sync chain proven (login → menu → F1, end-to-end on real device) `status::done` `priority::critical`
+- [x] **E3-F1-087** Phase 1 — CSPro 8.0 syntax gotchas catalog (Phase 2 / F3 / F4 reference) `status::done` `priority::high`
+- [ ] **E3-F1-088** Phase 1 sync mechanic resolution — `syncdata` external-dict + CSDB binding `status::todo` `priority::critical` `estimate::TBD`
+- [ ] **E3-F1-PHASE2-PLAN** Phase 2 plan + scope confirmation (PLF + F3 + F4_listing + F4 + supervisor menu + EA fence + daily audit Slack) `status::todo` `priority::high` `estimate::TBD`
 
 ---
 

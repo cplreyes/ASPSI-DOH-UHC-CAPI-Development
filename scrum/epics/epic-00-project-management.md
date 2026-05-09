@@ -64,8 +64,8 @@ Continuous workstream spanning the full engagement. Governs sprint cadence, stak
 
 ### Risk & Change Management
 
-- [ ] **E0-030** Maintain risk register in Product Backlog §5 `status::ongoing` `priority::high` `estimate::recurring` *(informational consumption only — active risk-register stewardship is PM/PI work)*
-- [ ] **E0-031** Define change request protocol for mid-engagement questionnaire revisions (intake form, impact assessment, backlog refresh) `status::todo` `priority::high` `estimate::4h` *(protocol-design is PM lane; CAPI-side revisions arising from CRs land under E2/E3 instrument tasks)*
+- [ ] **E0-030** Maintain risk register in Product Backlog §5 `status::ongoing` `priority::high` `estimate::recurring` *(informational consumption only — active risk-register stewardship is PM/PI work)* `out_of_scope::data_programmer`
+- [ ] **E0-031** Define change request protocol for mid-engagement questionnaire revisions (intake form, impact assessment, backlog refresh) `status::todo` `priority::high` `estimate::4h` *(protocol-design is PM lane; CAPI-side revisions arising from CRs land under E2/E3 instrument tasks)* `out_of_scope::data_programmer`
 - [ ] **E0-032** Track timeline vs deliverable deadlines (D2, D3, D4, D5, D6) weekly `status::ongoing` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
   - Tranche / deadline tracking owned by ASPSI ops / PI / PMO. Carl is responsible for *production* of the deliverables (D1–D6), not the schedule on which they are accepted and paid. Project-level dependency only; surface in PIB / risk register, not in Carl's sprint backlog. See `feedback_tranche_tracking_out_of_scope.md`.
 - [ ] **E0-032a** DOH-PMSMD matrix feedback triage — route requested revisions through the appropriate workstream `status::ongoing` `priority::high` `estimate::recurring` `out_of_scope::data_programmer` `owner::aspsi-pi-pmo`
