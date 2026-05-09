@@ -131,7 +131,7 @@ export type UpdateUserAsCallable = (
 ) => Promise<AppsScriptResponse<{ user: UserRow }>>;
 
 export type DeleteUserAsCallable = (
-  payload: { username: string },
+  payload: { username: string; actor_username: string },
 ) => Promise<AppsScriptResponse<{ username: string }>>;
 
 function statusForAsError(code: string | undefined): number {
@@ -367,12 +367,18 @@ export async function handleUpdateUser(
 
 export async function handleDeleteUser(
   username: string,
+  actorUsername: string,
   asCallable: DeleteUserAsCallable,
 ): Promise<Response> {
   if (!USERNAME_RE.test(username)) {
     return errorJson('E_VALIDATION', 'invalid username path param', 400);
   }
-  const r = await asCallable({ username });
+  // Self-delete guard — fail fast before round-tripping to AS. AS still
+  // re-validates as defense-in-depth. R2-#133 (E4-APRT-050).
+  if (username === actorUsername) {
+    return errorJson('E_CONFLICT', 'cannot delete your own account', 409);
+  }
+  const r = await asCallable({ username, actor_username: actorUsername });
   if (!r.ok) {
     return errorJson(
       r.error?.code ?? 'E_BACKEND',

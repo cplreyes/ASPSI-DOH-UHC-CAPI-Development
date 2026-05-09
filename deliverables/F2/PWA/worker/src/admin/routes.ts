@@ -718,7 +718,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
       return withRequestId(r, requestId);
     }
     // DELETE
-    const asCall = (payload: { username: string }) =>
+    const asCall = (payload: { username: string; actor_username: string }) =>
       callAppsScript<{ username: string }>(
         env.APPS_SCRIPT_URL,
         env.APPS_SCRIPT_HMAC,
@@ -727,7 +727,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         requestId,
         env.F2_AUTH,
       );
-    const r = await handleDeleteUser(username, asCall);
+    const r = await handleDeleteUser(username, auth.payload!.sub, asCall);
     return withRequestId(r, requestId);
   }
 

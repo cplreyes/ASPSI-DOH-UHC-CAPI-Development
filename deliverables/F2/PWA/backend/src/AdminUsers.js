@@ -233,6 +233,12 @@ function adminUsersDelete(payload) {
     return { ok: false, error: { code: 'E_VALIDATION', message: 'username required' } };
   }
   var u = String(payload.username).trim();
+  var actor = payload.actor_username ? String(payload.actor_username).trim() : '';
+
+  // Self-delete guard — defense-in-depth (worker also blocks this). R2-#133.
+  if (actor && u === actor) {
+    return { ok: false, error: { code: 'E_CONFLICT', message: 'cannot delete your own account' } };
+  }
 
   return _withDocLock(function () {
     var ss = getF2Spreadsheet();
@@ -242,9 +248,29 @@ function adminUsersDelete(payload) {
     if (!found.row) {
       return { ok: false, error: { code: 'E_NOT_FOUND', message: 'user ' + u + ' not found' } };
     }
+    // Orphan-admin guard — refuse to delete the last Administrator. UAT R2
+    // recovery incident (Sprint 004 Day 4): carl_admin was hard-deleted from
+    // prod F2_Users with no guard, locking Carl out of the portal. R2-#133.
+    if (String(found.row.role_name || '') === 'Administrator' && _countAdmins(sh) <= 1) {
+      return { ok: false, error: { code: 'E_CONFLICT', message: 'cannot orphan the last Administrator' } };
+    }
     sh.deleteRow(found.rowNumber);
     return { ok: true, data: { username: u } };
   });
+}
+
+function _countAdmins(sh) {
+  var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  var roleIdx = headers.indexOf('role_name');
+  if (roleIdx === -1) return 0;
+  var lastRow = sh.getLastRow();
+  if (lastRow < 2) return 0;
+  var data = sh.getRange(2, 1, lastRow - 1, headers.length).getValues();
+  var count = 0;
+  for (var i = 0; i < data.length; i++) {
+    if (data[i][roleIdx] === 'Administrator') count++;
+  }
+  return count;
 }
 
 /**
