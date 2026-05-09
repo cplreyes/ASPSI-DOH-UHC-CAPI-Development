@@ -4,8 +4,6 @@
  */
 
 export interface Env {
-  /** PBKDF2-SHA256 password hash for the admin UI. Format: `<saltB64url>:<iterations>:<hashB64url>`. */
-  ADMIN_PASSWORD_HASH: string;
   /** HMAC secret shared with the Apps Script backend. Mirrors PROP_HMAC_SECRET. */
   APPS_SCRIPT_HMAC: string;
   /** Apps Script /exec deployment URL. */

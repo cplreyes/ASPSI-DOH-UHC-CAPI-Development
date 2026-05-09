@@ -43,7 +43,6 @@ function makeEnv(kv: FakeKV): Env {
     delete: async () => undefined,
   } as unknown as R2Bucket;
   return {
-    ADMIN_PASSWORD_HASH: 'unused',
     APPS_SCRIPT_HMAC: 'test-hmac',
     APPS_SCRIPT_URL: 'https://script.example/exec',
     JWT_SIGNING_KEY: fakeKey(),

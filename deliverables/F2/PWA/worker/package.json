@@ -12,7 +12,6 @@
     "test:watch": "vitest",
     "secret:put:jwt": "wrangler secret put JWT_SIGNING_KEY",
     "secret:put:hmac": "wrangler secret put APPS_SCRIPT_HMAC",
-    "secret:put:admin": "wrangler secret put ADMIN_PASSWORD_HASH",
     "secret:put:apps-script-url": "wrangler secret put APPS_SCRIPT_URL"
   },
   "devDependencies": {

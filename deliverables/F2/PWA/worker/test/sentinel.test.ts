@@ -33,7 +33,6 @@ function makeEnv(): Env {
     JWT_SIGNING_KEY: TEST_KEY,
     APPS_SCRIPT_HMAC: 'unused-in-sentinel-path',
     APPS_SCRIPT_URL: 'http://unreachable.invalid/',
-    ADMIN_PASSWORD_HASH: 'unused',
     F2_AUTH: kv,
     F2_ADMIN_R2: r2,
   };

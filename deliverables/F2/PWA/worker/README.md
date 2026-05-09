@@ -40,11 +40,6 @@ echo -n "<paste 64-char hex from rotated PROP_HMAC_SECRET>" | npx wrangler secre
 
 # 3. Apps Script /exec URL (production deployment).
 echo -n "https://script.google.com/macros/s/<id>/exec" | npx wrangler secret put APPS_SCRIPT_URL
-
-# 4. Admin password hash. Run the helper, paste the output.
-node scripts/hash-admin-password.mjs
-# Then:
-npx wrangler secret put ADMIN_PASSWORD_HASH
 ```
 
 ## Running locally
@@ -63,7 +58,6 @@ For local dev, secrets come from `.dev.vars` (gitignored). Create one:
 JWT_SIGNING_KEY=<base64url-32-bytes>
 APPS_SCRIPT_HMAC=<staging-hmac-secret>
 APPS_SCRIPT_URL=https://script.google.com/macros/s/<staging-id>/exec
-ADMIN_PASSWORD_HASH=<output-of-hash-admin-password.mjs>
 ```
 
 ## Tests
@@ -115,5 +109,5 @@ src/
 test/
   jwt.test.ts       - JWT unit tests
 scripts/
-  hash-admin-password.mjs  - ops helper for ADMIN_PASSWORD_HASH
+  seed-staging-admin.mjs   - ops helper for staging F2_Users seed
 ```
