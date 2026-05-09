@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-05-09
+last_updated: 2026-05-10
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -22,6 +22,8 @@ last_updated: 2026-05-09
 ## 1. Status at a Glance
 
 ### Headline (this week)
+
+**Inter-sprint, Sun 2026-05-10 — Sprint 004 archived + Sprint 005 plan locked + E0-009 issue-triage commitment slotted.** Sprint 004 retro filled (drafted from log/git evidence — Carl to review/edit before Mon kickoff) and archived to `scrum/sprints/sprint-004.md`; `sprint-current.md` reset to Sprint 005 (Mon 2026-05-11 → Fri 2026-05-15) with Goal A (UHC Phase 1 sync close-out + Phase 2 plan) + Goal B (E0-009 issue-triage Day 1 ritual + Sprint 004 carry close-outs). `scrum/sprints/sprint-005-plan.md` authored capturing the 19-item slot state explicitly (15 Done from PR #136 + 4 Todo + new E0-009). **E0-009** ([#272](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/272)) created + slotted to sprint-005 in Project #8 — first explicit issue-triage ritual item, addresses Sprint 004 retro Q4: Day 1 audit Project #8 sprint-005 slot framing for the 15 PR #136 closes + dispose of the 9 R2 `fixed-pending-verify` + ~100 unscheduled Todo + post triage summary to `#capi-scrum`. Becomes recurring Day 1 ritual once first execution proves format.
 
 **Inter-sprint, Sat 2026-05-09 (off-sprint grind) — F2 Admin Portal v2.0.1 + R2 fixes shipped to prod; 24 issues auto-closed (38 → 14 open).** PR [#136](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/136) squash-merged at `9bab42b` (26 commits, +16,779/-394) after a clean `origin/main` merge resolving 2 content conflicts (`App.tsx` change-password Placeholder dropped — supplanted by the real component shipped via #134; `QuotaWidget.tsx` `text-warning` kept over `text-error` — the design fix from #62). CI green on main → CF Pages + Worker deploy both completed 07:42 UTC; v2.0.1 live at `f2-pwa.pages.dev`. **24 issues auto-closed via `Closes #N` trailers** spanning the v2.0.1 patch bundle (#56 RBAC cache, #57 JWT pwc server-enforce, #58 Create-HCW = E4-APRT-041, #66 last_login_at = E4-APRT-048, #133 orphan-admin guards, #134 user-self password rotation = E4-APRT-051), the design-review 5-fix sweep (#59/#60/#61/#62/#67/#132 = E4-APRT-049), the concurrency suite (#63), and the R2 fix wave from mid-Sprint 004 (#69, #84 DLQ, #93 UTF-8, #98/#100 bulk import, #108/#109/#110/#114/#117/#119/#120/#122). **Remaining open (14):** 9 R2 `status:fixed-pending-verify` awaiting tester re-verify on prod (#68, #80, #83, #102, #112, #115, #116, #118 partial, #121); 4 Carl-actionable — #131/#135 (sprint-005 F1 CSPro work, separate worktree at `.claude/worktrees/uhc-survey-system-build`) and #64/#65 (prod runbooks landed in commit `f17d08e`, source-removal commit for #65 step 4 pre-staged on `main` awaiting wrangler-secret-delete smoke confirmation).
 
