@@ -9,6 +9,7 @@
  * client-side bugs or schema drift between PWA bundles.
  */
 import { useEffect, useMemo, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -204,7 +205,7 @@ function FilterDate({ label, value, onChange }: { label: string; value: string; 
         type="date"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -218,7 +219,7 @@ function FilterText({ label, value, onChange }: { label: string; value: string; 
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -261,33 +262,36 @@ function DlqTable({ rows, busyId, onReplay, onDelete }: DlqTableProps): JSX.Elem
                 </Td>
                 <Td>
                   <div className="flex gap-2">
-                    <button
+                    <Button
                       type="button"
-                      className="rounded border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-foreground transition-colors hover:bg-muted disabled:opacity-50"
+                      variant="outline"
+                      className="h-auto rounded border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-foreground hover:bg-muted disabled:opacity-50"
                       disabled={busy}
                       onClick={() => onReplay(r.dlq_id)}
                       aria-label={`Replay DLQ row ${r.dlq_id}`}
                     >
                       {busy ? '…' : 'Replay'}
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
-                      className="rounded border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-foreground transition-colors hover:bg-muted disabled:opacity-50"
+                      variant="outline"
+                      className="h-auto rounded border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-foreground hover:bg-muted disabled:opacity-50"
                       disabled={busy || !r.payload_json}
                       onClick={() => downloadPayload(`dlq-${r.dlq_id}.json`, r.payload_json)}
                       aria-label={`Download DLQ payload ${r.dlq_id}`}
                     >
                       Download
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
-                      className="rounded border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-error transition-colors hover:bg-error/10 disabled:opacity-50"
+                      variant="outline"
+                      className="h-auto rounded border-hairline px-2 py-1 font-mono text-xs uppercase tracking-wider text-error hover:bg-error/10 disabled:opacity-50"
                       disabled={busy}
                       onClick={() => onDelete(r.dlq_id)}
                       aria-label={`Delete DLQ row ${r.dlq_id}`}
                     >
                       {busy ? '…' : 'Delete'}
-                    </button>
+                    </Button>
                   </div>
                 </Td>
               </tr>

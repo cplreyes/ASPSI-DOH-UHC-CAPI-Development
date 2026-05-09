@@ -11,6 +11,7 @@
  * dashboard shows one focused view at a time.
  */
 import { useMemo, type ReactNode } from 'react';
+import { Button } from '@/components/ui/button';
 import { useRouter } from '../lib/pages-router';
 import { Versioning } from './Versioning';
 import { Files } from './Files';
@@ -79,8 +80,10 @@ export function AppsDashboard({ apiBaseUrl, fetchImpl }: AppsDashboardProps): JS
 
       <nav className="flex flex-wrap gap-6 text-sm" aria-label="Apps & Settings tabs">
         {TABS.map(({ key, label, description }) => (
-          <button
+          <Button
             type="button"
+            variant="tableAction"
+            size="tableAction"
             key={key}
             onClick={() => switchTab(key)}
             aria-current={activeTab === key ? 'page' : undefined}
@@ -88,12 +91,12 @@ export function AppsDashboard({ apiBaseUrl, fetchImpl }: AppsDashboardProps): JS
             aria-label={`${label} — ${description}`}
             className={
               activeTab === key
-                ? 'border-b-2 border-signal pb-1 text-ink'
-                : 'pb-1 text-muted-foreground hover:text-ink'
+                ? 'border-b-2 border-signal pb-1 font-sans text-sm normal-case tracking-normal text-ink no-underline hover:no-underline'
+                : 'pb-1 font-sans text-sm normal-case tracking-normal text-muted-foreground no-underline hover:text-ink hover:no-underline'
             }
           >
             {label}
-          </button>
+          </Button>
         ))}
       </nav>
 

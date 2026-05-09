@@ -13,6 +13,7 @@
  * is ingested — backend stub returns null and frontend shows "—".
  */
 import { useEffect, useMemo, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { Link, useRouter } from '../lib/pages-router';
@@ -148,7 +149,7 @@ function FilterDate({ label, value, onChange }: { label: string; value: string; 
         type="date"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -156,17 +157,18 @@ function FilterDate({ label, value, onChange }: { label: string; value: string; 
 
 function PillToggle({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }): JSX.Element {
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
       onClick={onClick}
       className={
         active
-          ? 'rounded-full border border-signal bg-signal-bg px-3 py-1 text-xs text-signal'
-          : 'rounded-full border border-hairline px-3 py-1 text-xs text-muted-foreground hover:text-ink'
+          ? 'h-auto rounded-sm border-signal bg-signal-bg px-3 py-1 text-xs text-signal hover:bg-signal-bg'
+          : 'h-auto rounded-sm border-hairline bg-transparent px-3 py-1 text-xs text-muted-foreground hover:bg-transparent hover:text-ink'
       }
     >
       {children}
-    </button>
+    </Button>
   );
 }
 

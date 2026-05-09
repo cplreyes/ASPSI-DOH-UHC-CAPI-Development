@@ -10,6 +10,7 @@
  * can confirm seeded accounts exist after AP0 + seed-admins.mjs run.
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -190,21 +191,22 @@ export function UsersDashboard({ apiBaseUrl, fetchImpl }: UsersDashboardProps): 
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={() => setBulkOpen(true)}
-            className="inline-flex h-10 items-center justify-center rounded-md border border-hairline bg-background px-4 text-sm font-medium text-foreground hover:bg-muted"
+            className="h-10 border-hairline hover:bg-muted"
             aria-label="Bulk import users from CSV"
           >
             Bulk import
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => setEditor({ kind: 'create' })}
-            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            className="h-10"
           >
             + Add user
-          </button>
+          </Button>
         </div>
       </header>
 
@@ -266,7 +268,7 @@ function FilterText({ label, value, onChange, placeholder }: { label: string; va
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -303,7 +305,7 @@ function UsersTable({
               <Td mono>
                 {u.username}
                 {isTruthy(u.password_must_change) ? (
-                  <span className="ml-2 rounded-full border border-warning bg-warning/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-warning">
+                  <span className="ml-2 rounded-sm border border-warning bg-warning/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-warning">
                     must reset
                   </span>
                 ) : null}
@@ -315,28 +317,34 @@ function UsersTable({
               <Td mono>{formatTs(u.created_at)}</Td>
               <Td>
                 <div className="flex flex-wrap gap-3">
-                  <button
+                  <Button
                     type="button"
+                    variant="tableAction"
+                    size="tableAction"
                     onClick={() => onEdit(u)}
-                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+                    className="text-muted-foreground hover:text-ink"
                   >
                     Edit
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="tableAction"
+                    size="tableAction"
                     onClick={() => onRevoke(u.username)}
-                    className="font-mono text-xs uppercase tracking-wider text-warning underline-offset-4 hover:underline"
+                    className="text-warning"
                     title="Force-logout every active session for this user"
                   >
                     Revoke
-                  </button>
-                  <button
+                  </Button>
+                  <Button
                     type="button"
+                    variant="tableAction"
+                    size="tableAction"
                     onClick={() => onDelete(u.username)}
-                    className="font-mono text-xs uppercase tracking-wider text-error underline-offset-4 hover:underline"
+                    className="text-error"
                   >
                     Delete
-                  </button>
+                  </Button>
                 </div>
               </Td>
             </tr>

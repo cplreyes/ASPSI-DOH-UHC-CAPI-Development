@@ -14,6 +14,7 @@
  * last_name, email, phone.
  */
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -146,13 +147,15 @@ export function BulkImportModal({
             </p>
             <h3 className="mt-1 font-serif text-xl font-medium tracking-tight">Bulk import</h3>
           </div>
-          <button
+          <Button
             type="button"
+            variant="tableAction"
+            size="tableAction"
             onClick={onClose}
-            className="font-mono text-xs uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+            className="text-muted-foreground hover:text-ink"
           >
             Close
-          </button>
+          </Button>
         </div>
 
         {phase === 'upload' ? (
@@ -259,21 +262,23 @@ export function BulkImportModal({
             ) : null}
 
             <div className="flex justify-end gap-3 border-t border-hairline pt-3">
-              <button
+              <Button
                 type="button"
+                variant="tableAction"
+                size="tableAction"
                 onClick={() => setPhase('upload')}
-                className="font-mono text-xs uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+                className="text-muted-foreground hover:text-ink"
               >
                 Back
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
                 disabled={validRows.length === 0}
                 onClick={() => void handleSubmit()}
-                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
+                className="h-10"
               >
                 Import {validRows.length} row{validRows.length === 1 ? '' : 's'}
-              </button>
+              </Button>
             </div>
           </div>
         ) : phase === 'submitting' ? (
@@ -302,13 +307,9 @@ export function BulkImportModal({
               </details>
             ) : null}
             <div className="flex justify-end border-t border-hairline pt-3">
-              <button
-                type="button"
-                onClick={onClose}
-                className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-              >
+              <Button type="button" onClick={onClose} className="h-10">
                 Done
-              </button>
+              </Button>
             </div>
           </div>
         ) : null}

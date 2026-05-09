@@ -14,6 +14,7 @@
  * then. Skipping it now keeps this commit a clean lookup-only tab.
  */
 import { useEffect, useMemo, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { Link, useRouter } from '../lib/pages-router';
@@ -159,7 +160,7 @@ function FilterText({ label, value, onChange }: { label: string; value: string; 
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -167,17 +168,18 @@ function FilterText({ label, value, onChange }: { label: string; value: string; 
 
 function PillToggle({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }): JSX.Element {
   return (
-    <button
+    <Button
       type="button"
+      variant="outline"
       onClick={onClick}
       className={
         active
-          ? 'rounded-full border border-signal bg-signal-bg px-3 py-1 text-xs text-signal'
-          : 'rounded-full border border-hairline px-3 py-1 text-xs text-muted-foreground hover:text-ink'
+          ? 'h-auto rounded-sm border-signal bg-signal-bg px-3 py-1 text-xs text-signal hover:bg-signal-bg'
+          : 'h-auto rounded-sm border-hairline bg-transparent px-3 py-1 text-xs text-muted-foreground hover:bg-transparent hover:text-ink'
       }
     >
       {children}
-    </button>
+    </Button>
   );
 }
 
@@ -222,14 +224,16 @@ function HcwsTable({ rows, onReissue }: { rows: HcwRow[]; onReissue: (r: HcwRow)
                   >
                     Encode
                   </Link>
-                  <button
+                  <Button
                     type="button"
+                    variant="tableAction"
+                    size="tableAction"
                     onClick={() => onReissue(r)}
-                    className="font-mono text-xs uppercase tracking-wider text-warning underline-offset-4 hover:underline"
+                    className="text-warning"
                     title="Issue a new enrollment token (CAS-protected; admin only)"
                   >
                     Reissue
-                  </button>
+                  </Button>
                 </div>
               </Td>
             </tr>
@@ -260,7 +264,7 @@ function StatusPill({ value }: { value: string }): JSX.Element {
         ? 'border-signal text-signal'
         : 'border-hairline text-muted-foreground';
   return (
-    <span className={`rounded-full border ${tone} px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider`}>
+    <span className={`rounded-sm border ${tone} px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider`}>
       {value || '—'}
     </span>
   );

@@ -8,6 +8,7 @@
  * present so admins can scan event details without expanding each row.
  */
 import { useEffect, useMemo, useState } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -191,7 +192,7 @@ function FilterDate({
         name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -220,7 +221,7 @@ function FilterText({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+        className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
       />
     </label>
   );
@@ -256,14 +257,16 @@ function AuditTable({ rows }: { rows: AuditRow[] }): JSX.Element {
               </Td>
               <Td>
                 {r.event_payload_json ? (
-                  <button
+                  <Button
                     type="button"
-                    className="font-mono text-xs uppercase tracking-wider text-muted-foreground underline-offset-4 hover:text-ink hover:underline"
+                    variant="tableAction"
+                    size="tableAction"
+                    className="text-muted-foreground hover:text-ink"
                     onClick={() => downloadPayload(`audit-${r.audit_id}.json`, r.event_payload_json!)}
                     aria-label={`Download audit payload ${r.audit_id}`}
                   >
                     Download
-                  </button>
+                  </Button>
                 ) : (
                   <span className="font-mono text-xs text-muted-foreground">—</span>
                 )}

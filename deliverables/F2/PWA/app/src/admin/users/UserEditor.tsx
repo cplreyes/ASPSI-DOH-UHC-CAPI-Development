@@ -15,6 +15,7 @@
  * refresh the list.
  */
 import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
@@ -145,7 +146,7 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
                 spellCheck={false}
                 value={form.username}
                 onChange={(e) => setForm({ ...form, username: e.target.value })}
-                className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+                className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
               />
             </Field>
           ) : null}
@@ -157,7 +158,7 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
                 type="text"
                 value={form.first_name}
                 onChange={(e) => setForm({ ...form, first_name: e.target.value })}
-                className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+                className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
               />
             </Field>
             <Field label="Last name" className="flex-1">
@@ -165,7 +166,7 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
                 type="text"
                 value={form.last_name}
                 onChange={(e) => setForm({ ...form, last_name: e.target.value })}
-                className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+                className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
               />
             </Field>
           </div>
@@ -174,7 +175,7 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
             <select
               value={form.role_name}
               onChange={(e) => setForm({ ...form, role_name: e.target.value })}
-              className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+              className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
             >
               {roles.map((r) => (
                 <option key={r.name} value={r.name}>
@@ -189,7 +190,7 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
               type="email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+              className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
             />
           </Field>
 
@@ -198,7 +199,7 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
               type="tel"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal"
+              className="border-0 border-b border-hairline bg-transparent py-1 text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
             />
           </Field>
 
@@ -216,7 +217,7 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
               minLength={mode === 'create' ? 8 : 0}
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal"
+              className="border-0 border-b border-hairline bg-transparent py-1 font-mono text-sm outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
             />
           </Field>
 
@@ -230,20 +231,17 @@ export function UserEditor(props: UserEditorProps): JSX.Element {
           ) : null}
 
           <div className="mt-2 flex flex-wrap gap-3">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground"
-            >
+            <Button type="submit" disabled={submitting} className="h-10">
               {submitting ? 'Saving…' : mode === 'create' ? 'Create user' : 'Save changes'}
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              variant="outline"
               onClick={onClose}
-              className="inline-flex h-10 items-center justify-center rounded-md border border-hairline px-4 text-sm hover:bg-secondary"
+              className="h-10 border-hairline hover:bg-secondary"
             >
               Cancel
-            </button>
+            </Button>
           </div>
         </form>
       </div>
