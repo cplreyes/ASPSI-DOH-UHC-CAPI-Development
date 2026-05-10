@@ -27,11 +27,12 @@ from shared.env_loader import load_env, splice_user_settings
 WORKSPACE = Path(__file__).resolve().parent
 
 # (numeric_prefix, short_name, dir_name, ent_filename)
-# Phase 1 builds 3 instruments. Phase 2 will append PLF, F3, F4_listing, F4.
+# Phase 1 builds 4 instruments. Phase 2 will append PLF, F3, F4_listing, F4.
 INSTRUMENTS = [
-    ("101", "login", "101_login", "login_app"),
-    ("106", "menu",  "106_menu",  "menu_app"),
-    ("107", "F1",    "107_F1",    "FacilityHeadSurvey"),
+    ("101", "login",   "101_login", "login_app"),
+    ("106", "menu",    "106_menu",  "menu_app"),
+    ("107", "F1",      "107_F1",    "FacilityHeadSurvey"),
+    ("109", "sync_F1", "109_sync",  "sync_F1_app"),
 ]
 
 
