@@ -2,7 +2,7 @@
 sprint: 005
 start: 2026-05-11
 end: 2026-05-15
-status: planning
+status: active
 sprint_length: 1 week (5 working days)
 deliverable_anchor: Goal A — E3-F1-088 (Phase 1 sync mechanic close-out, last 5% of UHC build) + E3-F1-PHASE2-PLAN (scope confirmation) · Goal B — E0-009 (issue-triage Day 1 ritual) + carry close-outs (E3-F1-001 FMF Designer, E4-APRT-035 E2/E3 cross-env, E4-PWA-014 verify, E4-PWA-015)
 ---
@@ -43,19 +43,24 @@ deliverable_anchor: Goal A — E3-F1-088 (Phase 1 sync mechanic close-out, last 
 | **Already shipped Sat 2026-05-09 inter-sprint** | E4-APRT-041..051, E4-APRT-049a..e, E4-APRT-037 (15 items via PR #136) | n/a |
 | **Stretch** | E3-F1-011, E3-F1-012, E3-F1-020 | ~11h |
 
-> Capacity: ~25h solo-dev week. Committed ~21h leaves ~4h headroom — pull at most one Sprint 006 candidate as stretch (E3-F1-011 if multilingual is the priority, E3-F1-020 if skip gates are). **15 admin-portal items already Done** in Project #8 sprint-005 slot — framing audit is part of E0-009; treat as either "Sprint 005 admin-portal goal pre-shipped" or "rebill to Sprint 004 Inter-Sprint Activity" depending on Carl's call Day 1.
+> Capacity: ~25h solo-dev week. Committed ~21h leaves ~4h headroom — pull at most one Sprint 006 candidate as stretch (E3-F1-011 if multilingual is the priority, E3-F1-020 if skip gates are). **15 admin-portal items already Done** in Project #8 sprint-005 slot. **Framing decision (E0-009 Day-1 audit, 2026-05-11):** these 15 items (E4-APRT-041..051 + E4-APRT-049a..e + E4-APRT-037) are kept tagged sprint-005 as **"Sprint 005 admin-portal goal pre-shipped via off-sprint Saturday grind 2026-05-09 (PR #136)."** Sprint 005 effectively starts Day 1 with ~75% of slot already Done; remaining sprint scope is the 5 explicit Todo items above (Goal A + Goal B carries). Velocity bookkeeping: PR #136 also documented under Sprint 004 archive Inter-Sprint Activity for cross-reference.
 
 ## Daily Notes
 
 ### 2026-05-11 (Mon) — Sprint 005 kickoff
 
 - **Carry-forward from Sprint 004 retro Q4:** Day 1 = triage-first ritual before Goal A/B work (`E0-009`). Audit Project #8 sprint-005 slot framing first, then dispose of R2 + unscheduled backlog, then start sync close-out.
+- **E0-009 audit findings (Day 1 morning):**
+  - **Slot framing decided:** 15 PR #136 closes kept tagged sprint-005 as "admin-portal goal pre-shipped via off-sprint Saturday grind 2026-05-09" (see Sprint Backlog Sizing note above).
+  - **Sync drift fixes:** #254 (E3-F1-001) reslotted sprint-004 → sprint-005 in Project #8; #240 (E0-001 recurring sprint-planning ritual) reslotted sprint-001 → unscheduled.
+  - **R2 lane moot:** all 30 issues ever tagged `status:fixed-pending-verify` are CLOSED. Sub-task downgraded to label-hygiene cleanup pass (strip stale label from 30 closed issues).
+  - **Open-issue label discipline gap surfaced:** 116 open issues in repo, ZERO have any GitHub-side labels (no `surface:`, `severity:`, `epic:`). Project #8 fields are populated; repo labels are not. Logged as observation; not actioned today.
 
 ## Definition of Done — Sprint 005
 
 - [ ] **E3-F1-088** closed: Phase 1 sync mechanic working end-to-end on tablet — `syncdata` external-dict + CSDB binding pushes F1 case data to staging CSWeb (or chosen sync target) on case end without operator intervention. Sync round-trip smoke recorded in `log.md`.
 - [ ] **E3-F1-PHASE2-PLAN** closed: Phase 2 scope doc written and reviewed. Covers PLF + F3 + F4_listing + F4 + supervisor menu + EA fence + daily audit Slack. Rough estimate per phase. Decisions on listing-app architecture, case-ID final form, F4 barangay listing held per `project_survey_manual_bundle_ingest_2026_05_07` until Myra's edit pass clears.
-- [ ] **E0-009** closed: Project #8 sprint-005 slot framing audited and decision recorded; ≥9 R2 `fixed-pending-verify` issues dispositioned; ≥80% of unscheduled Todo issues either slotted to a sprint or annotated with `unscheduled-by-design` rationale; triage summary posted to `#capi-scrum`.
+- [x] **E0-009** closed 2026-05-11 (Day 1 morning): Project #8 sprint-005 slot framing audited and decision recorded (15 PR #136 closes kept tagged sprint-005 as off-sprint-grind); 30 R2 `fixed-pending-verify` issues confirmed CLOSED + stale label stripped; 101/101 unscheduled Todo dispositioned (4 closed + 2 reslotted to sprint-006 + 95 annotated `unscheduled-by-design` via per-epic boilerplate comments); triage summary Slack post **skipped for first run** (internal-only — durable record in `scrum/triage-2026-05-11.md`; Slack broadcast pattern adopted Sprint 006+).
 - [ ] **E3-F1-001** closed: F1 FMF Designer pass complete; `FacilityHeadSurvey.fmf` saved and reviewed. *(Carries from Sprint 004.)*
 - [ ] **E4-APRT-035** closed: E2 Firefox + E3 Edge cross-env passes complete (or explicitly deferred with rationale); PR #54 merged.
 - [ ] **E4-PWA-014** closed: CF Pages auto-deploy state confirmed (one push to staging + one to main both fire `cf-pages-deploy.yml` workflow without manual `wrangler pages deploy`); #34 closed.
