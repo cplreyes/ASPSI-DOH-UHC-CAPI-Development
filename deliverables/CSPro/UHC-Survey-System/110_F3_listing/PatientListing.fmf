@@ -15,7 +15,12 @@ Label=(Id Items)
 Level=1
 Size=2700,3690
   
-Item=LISTING_SESSION_ID
+Item=REGION_CODE
+Item=PROVINCE_HUC_CODE
+Item=CITY_MUNICIPALITY_CODE
+Item=FACILITY_NO
+Item=LISTING_SESSION_DATE
+Item=LISTING_SESSION_SEQ
   
 [EndForm]
   
@@ -154,16 +159,81 @@ Form=1
 Max=1
   
 [Field]
-Name=LISTING_SESSION_ID
+Name=REGION_CODE
 Position=1695,30,1895,50
-Item=LISTING_SESSION_ID,PATIENTLISTING_DICT
+Item=REGION_CODE,PATIENTLISTING_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=1
   
 [Text]
 Position=50,30,1695,46
-Text=Listing Session Composite ID (stub)
+Text=Region Code
+ 
+  
+[Field]
+Name=PROVINCE_HUC_CODE
+Position=1695,60,1895,80
+Item=PROVINCE_HUC_CODE,PATIENTLISTING_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,60,1695,76
+Text=Province / HUC Code
+ 
+  
+[Field]
+Name=CITY_MUNICIPALITY_CODE
+Position=1695,90,1895,110
+Item=CITY_MUNICIPALITY_CODE,PATIENTLISTING_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,90,1695,106
+Text=City / Municipality Code
+ 
+  
+[Field]
+Name=FACILITY_NO
+Position=1695,120,1895,140
+Item=FACILITY_NO,PATIENTLISTING_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,120,1695,136
+Text=Facility No
+ 
+  
+[Field]
+Name=LISTING_SESSION_DATE
+Position=1695,150,1895,170
+Item=LISTING_SESSION_DATE,PATIENTLISTING_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,150,1695,166
+Text=Listing Session Date (YYYYMMDD)
+ 
+  
+[Field]
+Name=LISTING_SESSION_SEQ
+Position=1695,180,1895,200
+Item=LISTING_SESSION_SEQ,PATIENTLISTING_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,180,1695,196
+Text=Listing Session Sequence (per facility-day)
  
   
 [EndGroup]

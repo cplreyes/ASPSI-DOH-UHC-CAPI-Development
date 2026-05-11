@@ -29,15 +29,85 @@
       "ids": {
         "items": [
           {
-            "name": "LISTING_SESSION_ID",
+            "name": "REGION_CODE",
             "labels": [
               {
-                "text": "Listing Session Composite ID (stub)"
+                "text": "Region Code"
               }
             ],
             "contentType": "numeric",
             "start": 2,
-            "length": 16,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "PROVINCE_HUC_CODE",
+            "labels": [
+              {
+                "text": "Province / HUC Code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 4,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "CITY_MUNICIPALITY_CODE",
+            "labels": [
+              {
+                "text": "City / Municipality Code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 6,
+            "length": 3,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "FACILITY_NO",
+            "labels": [
+              {
+                "text": "Facility No"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 9,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "LISTING_SESSION_DATE",
+            "labels": [
+              {
+                "text": "Listing Session Date (YYYYMMDD)"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 11,
+            "length": 8,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "LISTING_SESSION_SEQ",
+            "labels": [
+              {
+                "text": "Listing Session Sequence (per facility-day)"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 19,
+            "length": 3,
             "zeroFill": true,
             "decimal": 0,
             "decimalChar": false

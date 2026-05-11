@@ -198,7 +198,86 @@ preproc
       preproc consumes this roster occurrence and stamps the assigned
       slot back. }
 
-    { LISTING_TAG computed by PROC LISTING_TAG in commit 8 — invoked
-      from postproc of CONTACT_VERIFIED once all triage inputs are
-      captured. Until commit 8 lands, LISTING_TAG must be entered
-      manually by the operator as a temporary fallback. }
+
+PROC CONTACT_VERIFIED
+postproc
+    { Compute LISTING_TAG once all triage inputs (DISTANCE_TO_HOME_KM,
+      CONTACT_VERIFIED) are captured. TRANSPORT_MODE and
+      HOME_IN_SUBDIVISION are also captured at listing time but are NOT
+      consumed by the Candidate A rule — they are reserved for the
+      future-Myra-rule evolution path.
+
+      Auto-tag rule — Candidate A (Distance-gated):
+        - if CONTACT_VERIFIED <> 1                          -> Tag 3 (ineligible)
+        - elseif DISTANCE_TO_HOME_KM <= TAG1_THRESHOLD_KM   -> Tag 1 (F3 exit same-day)
+        - elseif DISTANCE_TO_HOME_KM <= TAG2_THRESHOLD_KM   -> Tag 2 (F4 home visit)
+        - else                                              -> Tag 3 (outside catchment)
+
+      The PROC is invoked from this postproc rather than from a
+      dedicated trigger field because CONTACT_VERIFIED is the last
+      triage input in the form sequence; running the tag PROC here
+      means the operator sees the assigned tag before leaving the
+      roster row. }
+
+    LISTING_TAG = ComputeListingTag(CONTACT_VERIFIED, DISTANCE_TO_HOME_KM);
+
+    { When the tag is 1 or 3, F4 will never run for this patient — set
+      F4_STATUS to NA=9 so downstream consumers don't pick the row up. }
+    if LISTING_TAG = 1 or LISTING_TAG = 3 then
+        F4_STATUS = 9;
+    endif;
+    { When the tag is 3 (ineligible), F3 also won't run. }
+    if LISTING_TAG = 3 then
+        F3_STATUS = 9;
+    endif;
+
+
+PROC GLOBAL
+
+{ ---- PENDING_DESIGN_AUTO_TAG_RULE ----------------------------------- }
+{                                                                       }
+{ Candidate A — Distance-gated rule. Selected as the working default    }
+{ by Carl in design sign-off (2026-05-12) given that §3a of the May 6   }
+{ Survey Manual Working File is forward-referenced but not authored.    }
+{                                                                       }
+{ Rationale (per wiki/sources/Source - Survey Manual 2026-05-06 -       }
+{ Section 3a.md):                                                       }
+{   - Distance is the only triage input that has a defensible           }
+{     defaulting story: F4 home-visit logistics scale with distance,    }
+{     not transport mode or subdivision flag.                           }
+{   - TAG1 threshold (2.0 km) is roughly "walking-distance home" —      }
+{     patient likely available for same-day exit interview without      }
+{     enumerator follow-up effort.                                      }
+{   - TAG2 threshold (15.0 km) is roughly "within 30-minute drive" —    }
+{     patient reachable by F4 home-visit team in one outing.            }
+{                                                                       }
+{ Thresholds live as named constants so Myra's edit pass on §3a can     }
+{ tune without restructuring. Updating these values requires NO change  }
+{ to the DCF, FMF, or downstream F3/F4 instruments — only the PROC      }
+{ here recompiles.                                                      }
+
+numeric TAG1_THRESHOLD_KM = 2.0;
+numeric TAG2_THRESHOLD_KM = 15.0;
+
+
+function ComputeListingTag(numeric contactVerified, numeric distanceKm)
+    { Returns 1, 2, or 3 per Candidate A — Distance-gated rule. }
+    { See PENDING_DESIGN_AUTO_TAG_RULE block above for rationale. }
+
+    if contactVerified <> 1 then
+        ComputeListingTag = 3;     { ineligible — no functional contact }
+        exit;
+    endif;
+
+    if distanceKm <= TAG1_THRESHOLD_KM then
+        ComputeListingTag = 1;     { exit survey at facility today }
+        exit;
+    endif;
+
+    if distanceKm <= TAG2_THRESHOLD_KM then
+        ComputeListingTag = 2;     { household survey F4 home visit }
+        exit;
+    endif;
+
+    ComputeListingTag = 3;         { ineligible — outside F4 catchment }
+end;

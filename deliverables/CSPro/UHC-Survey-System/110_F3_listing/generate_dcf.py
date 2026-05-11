@@ -48,7 +48,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
 from cspro_helpers import (
     numeric, alpha, record, build_dictionary as build_dictionary_from_helpers,
-    _gps_fields, _photo_block,
+    _gps_fields, _photo_block, build_listing_id_block,
 )
 
 
@@ -432,37 +432,15 @@ def build_listing_photo():
 
 
 # ============================================================
-# ID BLOCK — listing session, distinct from F-series 12-digit case-ID
-# ============================================================
-
-def build_listing_id_block_stub():
-    """Single-item placeholder ID block until build_listing_id_block() lands
-    in shared/cspro_helpers.py (commit 8). For commit 1 we use a temporary
-    16-digit composite ID item so the DCF opens in Designer without errors.
-    The real decomposed 6-item block replaces this in commit 8."""
-    return [{
-        "name":        "LISTING_SESSION_ID",
-        "labels":      [{"text": "Listing Session Composite ID (stub)"}],
-        "contentType": "numeric",
-        "start":       2,
-        "length":      16,
-        "zeroFill":    True,
-        "decimal":     0,
-        "decimalChar": False,
-    }]
-
-
-# ============================================================
 # ASSEMBLE
 # ============================================================
 
 def build_dictionary():
     """Assemble the PatientListing dictionary.
 
-    Commit 1 emits an opening-only structure: a root record (recordType "1"),
-    plus empty stubs for the records that subsequent commits populate.
-    The stubs let CSPro Designer open the .dcf at every intermediate state,
-    which makes the commit-by-commit diff reviewable.
+    Uses the decomposed 6-item listing-session ID block from
+    shared/cspro_helpers.py::build_listing_id_block() (added in commit 8).
+    Replaces the commit-1 single-item placeholder.
     """
     records = [
         # Root record (recordType "1") — required by CSPro hierarchy
@@ -477,7 +455,7 @@ def build_dictionary():
     return build_dictionary_from_helpers(
         dict_name="PATIENTLISTING_DICT",
         dict_label="PatientListing",
-        id_items=build_listing_id_block_stub(),
+        id_items=build_listing_id_block(),
         records=records,
     )
 

@@ -577,6 +577,62 @@ def build_id_block():
     return items
 
 
+def build_listing_id_block():
+    """Return the 6-item listing-session ID block for the 110_F3_listing
+    CSPro app.
+
+    Distinct from the F-series 12-digit case-ID. A listing session is one
+    facility-day; the case-ID block encodes facility (RR+PP+MMM+FF) plus
+    the session date and a per-facility-day session sequence.
+
+    Block layout (16 digits total starting at column 2):
+
+        RR  PP  MMM  FF  YYYYMMDD  SSS
+        ^^  ^^  ^^^  ^^  ^^^^^^^^  ^^^
+        |   |   |    |       |     |__ LISTING_SESSION_SEQ
+        |   |   |    |       |________ Date of listing session
+        |   |   |    |________________ ASPSI facility index
+        |   |   |_____________________ PSGC city/municipality slot
+        |   |_________________________ PSGC province/HUC slot
+        |_____________________________ PSGC region
+
+    LISTING_SESSION_SEQ resets to 1 per facility-day; a second listing
+    session at the same facility on the same date (e.g., AM vs PM crew)
+    becomes session 2. The reset is enforced in the 101_login menu app
+    when the operator starts a new session.
+
+    Returns
+    -------
+    list of dict
+        Six item dicts in session-ID order: REGION_CODE,
+        PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO,
+        LISTING_SESSION_DATE, LISTING_SESSION_SEQ.
+    """
+    spec = [
+        ("REGION_CODE",            "Region Code",                      2),
+        ("PROVINCE_HUC_CODE",      "Province / HUC Code",              2),
+        ("CITY_MUNICIPALITY_CODE", "City / Municipality Code",         3),
+        ("FACILITY_NO",            "Facility No",                      2),
+        ("LISTING_SESSION_DATE",   "Listing Session Date (YYYYMMDD)",  8),
+        ("LISTING_SESSION_SEQ",    "Listing Session Sequence (per facility-day)", 3),
+    ]
+    items = []
+    col = _CASE_ID_START_COLUMN
+    for name, label, length in spec:
+        items.append({
+            "name":        name,
+            "labels":      [{"text": label}],
+            "contentType": "numeric",
+            "start":       col,
+            "length":      length,
+            "zeroFill":    True,
+            "decimal":     0,
+            "decimalChar": False,
+        })
+        col += length
+    return items
+
+
 # ============================================================
 # 5. DICTIONARY ASSEMBLY
 # ============================================================
