@@ -1717,8 +1717,169 @@ def build_section_k():
 
 
 def build_section_l():
-    """L. Experiences and Satisfaction on Referrals (Q162-Q178)."""
-    items = []
+    """L. Experiences and Satisfaction on Referrals (Q162-Q178).
+
+    Skip-routing:
+      - Q162 REFERRED = No  -> hard terminate: ENUM_RESULT set,
+        Section L tail (Q163-Q171) skipped, Q172-Q178 still asked
+        (those concern non-referral visits)
+      - Q169 = "No, not planning" (2) -> Q171 (skip Q170)
+      - Q169 = "Not yet, planning" (3) -> Q171 (skip Q170)
+      - Q169 = Yes (1)               -> Q170, then Q172 (skip Q171)
+      - Q171 always jumps to Q172    -> printed "<Proceed to Q172>"
+    """
+    Q163_CARE_TYPE = [
+        ("Outpatient care (Consultation, procedure, or treatment where the patient visits "
+         "and leaves within the same day)",                                                "01"),
+        ("Emergency care (Care for serious illnesses or injuries that need immediate medical "
+         "attention; usually provided in an emergency room or ER)",                        "02"),
+        ("Inpatient care (Care provided in hospital or another facility where the patient is "
+         "admitted for at least one night)",                                               "03"),
+        ("Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)",   "04"),
+        ("Other facility visits (Care that is provided in a facility that is not a health "
+         "center or hospital, such as independent diagnostic centers, TB dispensaries, etc.)", "05"),
+        ("Special therapy visits (Rehabilitation care or services, such as occupational "
+         "therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics "
+         "and orthotics rehabilitation, or speech and language therapy)",                  "06"),
+        ("Alternative care (Healthcare apart from medical doctors or the formal health care "
+         "system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)", "07"),
+        ("Outreach / medical missions (Care provided by the government or an NGO through an "
+         "outreach or medical mission within a community)",                                "08"),
+        ("Home healthcare (Care that is administered at the patient's home, such as birth "
+         "delivery, checkups, immunization, rehabilitation, etc.)",                        "09"),
+        ("Telemedicine (Remote diagnosis and treatment of patients by means of "
+         "telecommunications technology)",                                                 "10"),
+        ("None of the above",                                                              "11"),
+        ("Other (Specify)",                                                                "12"),
+    ]
+    Q164_SPECIALIST = [
+        ("No specialty",                         "01"),
+        ("Anesthesia",                           "02"),
+        ("Dermatology",                          "03"),
+        ("Emergency Medicine",                   "04"),
+        ("Family Medicine",                      "05"),
+        ("General Surgery",                      "06"),
+        ("Internal Medicine",                    "07"),
+        ("Neurology",                            "08"),
+        ("Nuclear Medicine",                     "09"),
+        ("Obstetrics and Gynecology",            "10"),
+        ("Occupational Medicine",                "11"),
+        ("Ophthalmology",                        "12"),
+        ("Orthopedics",                          "13"),
+        ("Otorhinolaryngology (ENT)",            "14"),
+        ("Pathology",                            "15"),
+        ("Pediatrics",                           "16"),
+        ("Physical and Rehabilitation Medicine", "17"),
+        ("Psychiatry",                           "18"),
+        ("Public health",                        "19"),
+        ("Radiology",                            "20"),
+        ("Research",                             "21"),
+        ("I don't know",                         "22"),
+        ("Other (Specify)",                      "23"),
+    ]
+    Q165_HOW_REFERRED = [
+        ("Physical referral slip",                                   "1"),
+        ("E-referral",                                               "2"),
+        ("Phone call from referring facility to receiving facility", "3"),
+        ("I don't know",                                             "4"),
+        ("Other (Specify)",                                          "5"),
+    ]
+    Q169_VISITED = [
+        ("Yes",                          "1"),
+        ("No, I'm not planning to",      "2"),
+        ("Not yet, but I'm planning to", "3"),
+    ]
+    Q171_WHY_NOT = [
+        ("Facility is too far",                "1"),
+        ("Do not trust the referred facility", "2"),
+        ("No time",                            "3"),
+        ("Worried about additional costs",     "4"),
+        ("Not needed",                         "5"),
+        ("Don't know how to get to facility",  "6"),
+        ("Other (Specify)",                    "7"),
+    ]
+    Q173_PCP_KNOWS = [
+        ("Yes",          "1"),
+        ("No",           "2"),
+        ("I don't know", "3"),
+    ]
+    Q177_WHY_HOSPITAL = [
+        ("Referred by other specialist (doctor in another hospital)",         "01"),
+        ("Nearest facility to house",                                         "02"),
+        ("Facility is usual source of care",                                  "03"),
+        ("Facility is the only place that can perform a certain test",        "04"),
+        ("Referred by BHW/nurse/midwife/other community health professional", "05"),
+        ("Referred by family / friends",                                      "06"),
+        ("Facility offers subsidized or free health services",                "07"),
+        ("ZBB eligibility",                                                   "08"),
+        ("I don't know",                                                      "09"),
+        ("Other (Specify)",                                                   "10"),
+    ]
+    Q178_SAT_REFERRAL = [
+        ("Very Satisfied",                     "1"),
+        ("Satisfied",                          "2"),
+        ("Neither Satisfied nor Dissatisfied", "3"),
+        ("Dissatisfied",                       "4"),
+        ("Very Dissatisfied",                  "5"),
+        ("Not applicable",                     "6"),
+    ]
+    items = [
+        yes_no("Q162_REFERRED",
+               "162. Based on your most recent visit/confinement at [facility_name_input], "
+               "did a healthcare worker refer you to another facility or specialist for "
+               "further care or specialized care?"),
+        *select_all("Q163_CARE_TYPE",
+                    "163. What type of care was the referral for?",
+                    Q163_CARE_TYPE),
+        select_one("Q164_SPECIALIST",
+                   "164. What kind of specialist did they recommend?",
+                   Q164_SPECIALIST, length=2),
+        alpha("Q164_SPECIALIST_OTHER_TXT",
+              "164. Specialist — Other (specify) text", length=120),
+        select_one("Q165_HOW_REFERRED",
+                   "165. How did they refer you to the doctor?",
+                   Q165_HOW_REFERRED, length=1),
+        alpha("Q165_HOW_REFERRED_OTHER_TXT",
+              "165. How referred — Other (specify) text", length=120),
+        yes_no("Q166_DISCUSSED_OPTIONS",
+               "166. Did they discuss with you the different places you could have gone to "
+               "address your health problem?"),
+        yes_no("Q167_HELPED_APPT",
+               "167. Did they help you make the appointment for that visit?"),
+        yes_no("Q168_WROTE_INFO",
+               "168. Did they write down any information for the specialist about the reason "
+               "for that visit?"),
+        select_one("Q169_VISITED",
+                   "169. Have you visited the referred hospital or facility after the "
+                   "referral was made?", Q169_VISITED, length=1),
+        yes_no("Q170_FOLLOWUP",
+               "170. After your visit to the referral hospital/ specialist, did they follow "
+               "up with you about what happened at the visit?"),
+        *select_all("Q171_WHY_NOT",
+                    "171. Why are you NOT planning to visit?",
+                    Q171_WHY_NOT),
+        yes_no("Q172_PCP_REFERRAL",
+               "172. Was the visit to [facility_name_input] a referral from your primary "
+               "care facility?"),
+        select_one("Q173_PCP_KNOWS",
+                   "173. Does your primary care provider know that you made the visit?",
+                   Q173_PCP_KNOWS, length=1),
+        yes_no("Q174_PCP_DISCUSSED",
+               "174. Did your primary care provider discuss with you different places you "
+               "could have gone to get help with your problem?"),
+        yes_no("Q175_PCP_HELPED_APPT",
+               "175. Did your primary care provider (PCP) or someone working with your PCP "
+               "help you make the appointment for that visit?"),
+        yes_no("Q176_PCP_WROTE_INFO",
+               "176. Did your primary care provider write down any information for the "
+               "specialist about the reason for that visit?"),
+        *select_all("Q177_WHY_HOSPITAL",
+                    "177. As it was not a referral, why did you decide to visit a hospital?",
+                    Q177_WHY_HOSPITAL),
+        select_one("Q178_SAT_REFERRAL",
+                   "178. Overall, how would you rate your experience with the referral process?",
+                   Q178_SAT_REFERRAL, length=1),
+    ]
     return record("L_REFERRALS",
                   "L. Experiences and Satisfaction on Referrals", "N", items)
 
