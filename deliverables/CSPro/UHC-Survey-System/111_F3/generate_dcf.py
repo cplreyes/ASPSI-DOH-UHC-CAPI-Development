@@ -601,8 +601,226 @@ def build_section_d():
 
 
 def build_section_e():
-    """E. Primary Care Utilization (Q53-Q82)."""
-    items = []
+    """E. Primary Care Utilization (Q53-Q82) — primary care + YAKAP/Konsulta.
+
+    Skip-routing:
+      - Q53 HAS_PCP = No                            -> Q63 (skip Q54-Q62)
+      - Q60 SCHED_TELECON_OK gated on Q59 including teleconsultation
+      - Q62 CONSULT_TELECON_OK gated on Q61 including teleconsultation
+      - Q63 HAS_USUAL_FACILITY = No                 -> Q65, then skip Q66-Q70
+      - Q63 = Yes + Q66 SAME_AS_USUAL = Yes         -> Q68 (skip Q67)
+      - Q74 KON_HEARD = No                          -> (Section F)
+      - Q77 KON_REGISTERED = No                     -> Q82 (skip Q78-Q81)
+      - Q77 = "Never heard / DK" (3, 4)            -> Section F (skip Q78-Q82)
+    """
+    Q54_PROVIDER = [
+        ("General practitioner",                "1"),
+        ("Specialty Care Provider/ Specialist", "2"),
+        ("Both",                                "3"),
+        ("Other (specify)",                     "4"),
+        ("None",                                "5"),
+    ]
+    COMM_MODES = [
+        ("Face-to-face",     "1"),
+        ("Teleconsultation", "2"),
+        ("Landline",         "3"),
+        ("Cellphone",        "4"),
+        ("Video Conference", "5"),
+    ]
+    Q65_WHY_NOT = [
+        ("I don't get sick",                  "1"),
+        ("I recently moved into the area",    "2"),
+        ("It's expensive",                    "3"),
+        ("I can treat myself",                "4"),
+        ("I don't know where to go for care", "5"),
+        ("I don't know",                      "6"),
+        ("Other (Specify)",                   "7"),
+    ]
+    Q67_WHY_THIS = [
+        ("This facility is more accessible than my usual facility (i.e., nearer, has more "
+         "transportation options to get to, and cheaper to travel to)",  "1"),
+        ("Needed a service/specialist not available at my usual facility", "2"),
+        ("Recommended by friends/family",                                  "3"),
+        ("Wanted to try another facility than my usual",                   "4"),
+        ("Prefer this facility than my usual",                             "5"),
+        ("This was referred to me by my usual facility",                   "6"),
+        ("Usual facility is closed for today",                             "7"),
+        ("Other (Specify)",                                                "8"),
+    ]
+    Q68_FACILITY_TYPE = [
+        ("YAKAP/Konsulta or primary care provider",         "1"),
+        ("Barangay Health Center/ Barangay Health Station", "2"),
+        ("Rural Health Unit / Urban Health Center",         "3"),
+        ("Public Hospital",                                 "4"),
+        ("Private Hospital",                                "5"),
+        ("Private Clinic",                                  "6"),
+        ("Traditional Healer or Manghihilot/ Albularyo",    "7"),
+        ("I don't know",                                    "8"),
+        ("Other (specify)",                                 "9"),
+    ]
+    Q71_NEAREST_TYPE = [
+        ("Barangay Health Center/ Barangay Health Station", "1"),
+        ("Rural Health Unit / Urban Health Center",         "2"),
+        ("Public Hospital",                                 "3"),
+        ("Private Hospital",                                "4"),
+        ("Private Clinic",                                  "5"),
+        ("Traditional Healer or Manghihilot/ Albularyo",    "6"),
+        ("I don't know",                                    "7"),
+        ("Other (specify)",                                 "8"),
+    ]
+    TRANSPORT = [
+        ("Walk",                             "01"),
+        ("Bike",                             "02"),
+        ("Public Bus",                       "03"),
+        ("Jeepney",                          "04"),
+        ("Tricycle",                         "05"),
+        ("Car (including private taxi/cab)", "06"),
+        ("Motorcycle",                       "07"),
+        ("Boat",                             "08"),
+        ("Taxi",                             "09"),
+        ("Pedicab",                          "10"),
+        ("E-bike",                           "11"),
+        ("Other (Specify)",                  "12"),
+    ]
+    Q75_KON_SOURCE = [
+        ("News",                   "1"),
+        ("Legislation",            "2"),
+        ("Social Media",           "3"),
+        ("Friends / Family",       "4"),
+        ("Health center/facility", "5"),
+        ("LGU/Barangay",           "6"),
+        ("I don't know",           "7"),
+        ("Other (Specify)",        "8"),
+    ]
+    Q76_KON_UNDERSTAND = [
+        ("Free primary care consultation (with a registered YAKAP/Konsulta provider)",         "1"),
+        ("Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)", "2"),
+        ("Free selected laboratory / diagnostics examination",                                  "3"),
+        ("Free selected drugs and medicines",                                                   "4"),
+        ("There are no benefits of the package",                                                "5"),
+        ("I don't know",                                                                        "6"),
+        ("Other (Specify)",                                                                     "7"),
+    ]
+    Q77_KON_REGISTERED = [
+        ("Yes",                    "1"),
+        ("No",                     "2"),  # proceed to Q82
+        ("I've never heard of it", "3"),  # proceed to Q83 (Section F)
+        ("I don't know",           "4"),  # proceed to Q83 (Section F)
+    ]
+    Q78_WHEN_REG = [
+        ("Within the past six (6) months",                          "1"),
+        ("More than six (6) months but less than one (1) year ago", "2"),
+        ("One (1) year but less than two (2) years ago",            "3"),
+        ("Two (2) years ago or more",                               "4"),
+    ]
+    Q82_WHY_NOT_REG = [
+        ("Don't know what a YAKAP/Konsulta provider is",                         "01"),
+        ("Don't trust PhilHealth",                                               "02"),
+        ("Don't know how to register",                                           "03"),
+        ("Registration is confusing/time-consuming/inconvenient",                "04"),
+        ("Intend to register but do not have found a time to do it.",            "05"),
+        ("YAKAP/Konsulta is not available in my local area",                     "06"),
+        ("Already have a usual primary care provider that I go to",              "07"),
+        ("Don't have the required PhilHealth ID to register for YAKAP/Konsulta", "08"),
+        ("Don't have the other requirements to register",                        "09"),
+        ("I don't know",                                                         "10"),
+        ("Other (specify)",                                                      "11"),
+    ]
+    items = [
+        yes_no("Q53_HAS_PCP",
+               "53. Do you have a primary care provider?"),
+        select_one("Q54_PCP_TYPE",
+                   "54. Who is your main primary care provider?", Q54_PROVIDER, length=1),
+        alpha("Q54_PCP_TYPE_OTHER_TXT",
+              "54. Primary care provider — Other (specify) text", length=120),
+        yes_no("Q55_LOC_CONVENIENT",
+               "55. Is the location of your main primary care provider convenient for you?"),
+        yes_no("Q56_HOURS_CONVENIENT",
+               "56. Is your main primary care provider's clinic hours (time that your provider/s is/are "
+               "open for medical appointments) convenient for you?"),
+        yes_no("Q57_WAIT_CONVENIENT",
+               "57. Is the usual wait for setting an appointment with your main primary care provider "
+               "convenient for you?"),
+        numeric("Q58_WAIT_DAYS",
+                "58. Wait time to set appointment with main primary care provider — Days", length=3),
+        numeric("Q58_WAIT_MINUTES",
+                "58. Wait time to set appointment with main primary care provider — Minutes", length=4),
+        *select_all("Q59_SCHED_COMM",
+                    "59. What mode/s of communication was/were available to you when scheduling a "
+                    "consultation with your main primary care provider?", COMM_MODES),
+        yes_no("Q60_SCHED_TELECON_OK",
+               "60. If teleconsultation was available, did you succeed in using the teleconsult? (scheduling)"),
+        *select_all("Q61_CONSULT_COMM",
+                    "61. What mode/s of communication was/were available to you when consulting with "
+                    "your main primary care provider?", COMM_MODES),
+        yes_no("Q62_CONSULT_TELECON_OK",
+               "62. If teleconsultation was available, did you succeed in using the teleconsult? (consultation)"),
+        yes_no("Q63_HAS_USUAL_FACILITY",
+               "63. In the past 12 months, do you have a clinic, or health center that you usually go to?"),
+        alpha("Q64_FACILITY_NAME",
+              "64. What is the name of the facility?", length=120),
+        *select_all("Q65_WHY_NO_USUAL",
+                    "65. If none, why do you not have a usual clinic, or health center that you usually go to?",
+                    Q65_WHY_NOT),
+        yes_no("Q66_SAME_AS_USUAL",
+               "66. Is [facility_name_input] the facility you usually go to for general health concerns?"),
+        *select_all("Q67_WHY_THIS_FACILITY",
+                    "67. Why did you go to this facility instead of your usual facility?", Q67_WHY_THIS),
+        alpha("Q67_WHY_THIS_OTHER_TXT",
+              "67. Why this facility — Other (specify) text", length=120),
+        select_one("Q68_USUAL_FAC_TYPE",
+                   "68. What is the type of health facility that you usually go to?",
+                   Q68_FACILITY_TYPE, length=1),
+        alpha("Q68_USUAL_FAC_TYPE_OTHER_TXT",
+              "68. Usual facility type — Other (specify) text", length=120),
+        numeric("Q69_USUAL_TRAVEL_HH",
+                "69. How long does it take you to travel to the health facility you usually go to — Hours",
+                length=2),
+        numeric("Q69_USUAL_TRAVEL_MM",
+                "69. How long does it take you to travel to the health facility you usually go to — Minutes",
+                length=2),
+        *select_all("Q70_USUAL_TRANSPORT",
+                    "70. What mode/s of transportation do you use when travelling to the health facility "
+                    "that you usually go to?", TRANSPORT),
+        select_one("Q71_NEAREST_TYPE",
+                   "71. What is the type of the primary care facility nearest to your house?",
+                   Q71_NEAREST_TYPE, length=1),
+        alpha("Q71_NEAREST_TYPE_OTHER_TXT",
+              "71. Nearest primary care facility type — Other (specify) text", length=120),
+        numeric("Q72_NEAREST_TRAVEL_HH",
+                "72. How long does it take you to travel from your house when going to the nearest "
+                "primary care facility? — Hours", length=2),
+        numeric("Q72_NEAREST_TRAVEL_MM",
+                "72. How long does it take you to travel from your house when going to the nearest "
+                "primary care facility? — Minutes", length=2),
+        *select_all("Q73_NEAREST_TRANSPORT",
+                    "73. What mode/s of transportation do you use when travelling to the nearest "
+                    "primary care facility?", TRANSPORT),
+        yes_no("Q74_KON_HEARD",
+               "74. Have you heard of the term \"YAKAP/ Konsulta package\"?"),
+        *select_all("Q75_KON_SOURCE",
+                    "75. What are your sources of information about the YAKAP/Konsulta package?",
+                    Q75_KON_SOURCE),
+        *select_all("Q76_KON_UNDERSTAND",
+                    "76. What is your understanding about the YAKAP/Konsulta package?",
+                    Q76_KON_UNDERSTAND),
+        select_one("Q77_KON_REGISTERED",
+                   "77. Are you registered with a YAKAP/Konsulta package provider?",
+                   Q77_KON_REGISTERED, length=1),
+        select_one("Q78_KON_WHEN_REG",
+                   "78. When did you register with a YAKAP/Konsulta package provider?",
+                   Q78_WHEN_REG, length=1),
+        yes_no("Q79_KON_HAD_APPT",
+               "79. Since registering, have you had an appointment with your YAKAP/Konsulta package provider?"),
+        yes_no("Q80_KON_KNOWS_BOOKING",
+               "80. When you have a health problem, do you know how to book an appointment at your "
+               "YAKAP/Konsulta package provider?"),
+        yes_no("Q81_KON_APPT_CHECKUP",
+               "81. Was that appointment for a general check-up (i.e. not related to an illness or injury)?"),
+        *select_all("Q82_KON_WHY_NOT_REG",
+                    "82. Why are you NOT registered with a YAKAP/Konsulta package provider?",
+                    Q82_WHY_NOT_REG),
+    ]
     return record("E_PRIMARY_CARE",
                   "E. Primary Care Utilization", "G", items)
 
