@@ -129,9 +129,62 @@ def build_listing_control():
 
 
 def build_random_interval_log():
-    """REC_RANDOM_INTERVAL_LOG — landed in commit 3. Stub for commit 1."""
+    """REC_RANDOM_INTERVAL_LOG — one occurrence per random-interval draw.
+
+    Used to audit the cadence engine: every time the listing app draws a
+    new random wait interval between listing events, an occurrence is
+    appended here. The log lets a desk reviewer verify that the engine
+    actually used random intervals (and within the configured bounds), not
+    convenient round numbers an enumerator could fake.
+
+    Occurrence semantics:
+      - Each occurrence covers ONE wait-and-list cycle.
+      - INTERVAL_SEC is the value drawn (random in [CADENCE_MIN_MIN*60,
+        CADENCE_MAX_MIN*60], inclusive).
+      - The OUTCOME captures what happened at the END of this cycle.
+      - SEED_USED records the pseudorandom seed value rolled into this
+        draw (session timestamp + ENUMERATOR_ID + cycle index, hashed).
+        Audit-only — no security claim; tamper resistance comes from
+        the sync to CSWeb shortly after each draw.
+
+    Max occurrences: 999. A facility-day with >999 draws is operationally
+    implausible (the median target is ~30, with backup-target padding).
+    """
+    RI_OUTCOME_OPTIONS = [
+        ("Listed",                          "1"),
+        ("Refused",                         "2"),
+        ("Excluded (ineligible)",           "3"),
+        ("Timeout — no patient observed",   "4"),
+    ]
+
+    items = [
+        # Sequence within this listing session — 1-based, set by APC.
+        numeric("RI_CYCLE_NO",       "Cycle number within this session",       length=3,
+                zero_fill=True),
+        # When the engine *started* waiting (after the previous listing).
+        numeric("RI_WAIT_START",     "Wait-start time (HHMMSS)",               length=6),
+        # The interval drawn from [min, max] for this cycle, in SECONDS.
+        # Width 5 -> max 99999 sec = 27.7 hours, comfortably above any
+        # plausible cadence-max for a facility-day session.
+        numeric("RI_INTERVAL_SEC",   "Random interval drawn (seconds)",        length=5),
+        # When the engine *signaled* the enumerator to list the next patient.
+        numeric("RI_TRIGGER_TIME",   "Trigger time = wait-start + interval (HHMMSS)",
+                length=6),
+        # Outcome at the end of the cycle.
+        numeric("RI_OUTCOME",        "Outcome of this listing cycle",          length=1,
+                value_set_options=RI_OUTCOME_OPTIONS),
+        # Audit hook — links this log occurrence to the roster occurrence
+        # it produced (if any). Set to 0 if no patient was listed
+        # (RI_OUTCOME in {2,3,4}).
+        numeric("RI_ROSTER_OCC",     "Patient roster occurrence produced (0 if none)",
+                length=3, zero_fill=True),
+        # Pseudorandom seed snapshot for desk audit. Width 10 holds a
+        # 32-bit unsigned mod 10^10.
+        numeric("RI_SEED_USED",      "Seed used for this draw",                length=10,
+                zero_fill=True),
+    ]
     return record("REC_RANDOM_INTERVAL_LOG", "Random-Interval Cadence Log",
-                  "I", [], max_occurs=999, required=False)
+                  "I", items, max_occurs=999, required=False)
 
 
 def build_patient_roster():

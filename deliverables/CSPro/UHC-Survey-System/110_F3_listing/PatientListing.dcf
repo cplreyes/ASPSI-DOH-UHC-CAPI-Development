@@ -333,7 +333,145 @@
             "required": false,
             "maximum": 999
           },
-          "items": []
+          "items": [
+            {
+              "name": "RI_CYCLE_NO",
+              "labels": [
+                {
+                  "text": "Cycle number within this session"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true
+            },
+            {
+              "name": "RI_WAIT_START",
+              "labels": [
+                {
+                  "text": "Wait-start time (HHMMSS)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 6,
+              "zeroFill": false
+            },
+            {
+              "name": "RI_INTERVAL_SEC",
+              "labels": [
+                {
+                  "text": "Random interval drawn (seconds)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 5,
+              "zeroFill": false
+            },
+            {
+              "name": "RI_TRIGGER_TIME",
+              "labels": [
+                {
+                  "text": "Trigger time = wait-start + interval (HHMMSS)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 6,
+              "zeroFill": false
+            },
+            {
+              "name": "RI_OUTCOME",
+              "labels": [
+                {
+                  "text": "Outcome of this listing cycle"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "RI_OUTCOME_VS1",
+                  "labels": [
+                    {
+                      "text": "Outcome of this listing cycle"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Listed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refused"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Excluded (ineligible)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Timeout \u2014 no patient observed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "RI_ROSTER_OCC",
+              "labels": [
+                {
+                  "text": "Patient roster occurrence produced (0 if none)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true
+            },
+            {
+              "name": "RI_SEED_USED",
+              "labels": [
+                {
+                  "text": "Seed used for this draw"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": true
+            }
+          ]
         },
         {
           "name": "REC_PATIENT_ROSTER",
