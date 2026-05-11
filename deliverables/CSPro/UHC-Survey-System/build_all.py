@@ -27,10 +27,15 @@ from shared.env_loader import load_env, splice_user_settings
 WORKSPACE = Path(__file__).resolve().parent
 
 # (numeric_prefix, short_name, dir_name, ent_filename)
-# Phase 1 builds F1 only. Login + menu parked at 101_login/ and 106_menu/
+# Phase 1 builds F1 + F3LIST. Login + menu parked at 101_login/ and 106_menu/
 # (on-disk but not built); reactivated in Phase 2 alongside chain rebuild.
+# F3LIST = the 110_F3_listing patient listing CAPI app (commits 1-11 of the
+# 2026-05-12 build); its compiled .pen is consumed by the listing-side menu
+# launch entry (Phase 2 menu rebuild) and its output PATIENTLISTING_DICT is
+# consumed by F3/F4 entry apps as an EXTERNAL dictionary.
 INSTRUMENTS = [
-    ("107", "F1", "107_F1", "FacilityHeadSurvey"),
+    ("107", "F1",     "107_F1",        "FacilityHeadSurvey"),
+    ("110", "F3LIST", "110_F3_listing", "PatientListing"),
 ]
 
 

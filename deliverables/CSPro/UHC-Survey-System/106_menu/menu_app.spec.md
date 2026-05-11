@@ -3,8 +3,10 @@
 Role-conditional menu. Reads loadsetting("login_roll") to decide which menu to render.
 PFF-launches the chosen instrument.
 
-**Phase 1 scope:** Enumerator menu only, with 1 choice (F1).
-**Phase 2 will add:** PLF, F3, F4_listing, F4 + full Supervisor menu (6 choices).
+**Phase 1 scope:** Enumerator menu with 2 choices — F1 + F3 listing (F3LIST).
+**Phase 2 will add:** PLF, F3 entry, F4_listing, F4 + full Supervisor menu;
+   will also enforce "must-run-listing-before-F3" ordering (currently the
+   operator picks freely between F1 and F3LIST).
 
 ## Dictionary (MENU_DICT)
 
@@ -38,11 +40,16 @@ All fields protected. Welcome banner only.
 - Call `view_menu()`
 
 ### view_menu()
-- If `MENU_ROLE = 2` (enumerator): accept() with 1 choice "Conduct facility interview (F1)"
+- If `MENU_ROLE = 2` (enumerator): accept() with 2 choices:
+    1. "Conduct facility interview (F1)"
+    2. "Patient listing session (F3 listing)"
 - Else (supervisor / ops): errmsg "Supervisor menu not yet enabled (Phase 2)" + stop(0)
 
 ### launch_F1()
 - PFF-launch `..\107_F1\FacilityHeadSurvey.pen` with OnExit returning to menu.
+
+### launch_F3LIST()
+- PFF-launch `..\110_F3_listing\PatientListing.pen` with OnExit returning to menu.
 
 ## Mentor source
 - Role-conditional accept(): Tutorial 2: Create PFF and Menu @ 04:15
