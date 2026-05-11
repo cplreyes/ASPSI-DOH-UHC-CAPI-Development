@@ -1,0 +1,135 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "PATIENTLISTING_DICT",
+  "labels": [
+    {
+      "text": "PatientListing"
+    }
+  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 1,
+    "length": 1
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": false
+  },
+  "relativePositions": true,
+  "levels": [
+    {
+      "name": "PATIENTLISTING_LEVEL",
+      "labels": [
+        {
+          "text": "PatientListing Level"
+        }
+      ],
+      "ids": {
+        "items": [
+          {
+            "name": "LISTING_SESSION_ID",
+            "labels": [
+              {
+                "text": "Listing Session Composite ID (stub)"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 2,
+            "length": 16,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "PATIENTLISTING_REC",
+          "labels": [
+            {
+              "text": "PatientListing Record"
+            }
+          ],
+          "recordType": "1",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "REC_LISTING_CONTROL",
+          "labels": [
+            {
+              "text": "Listing Session Control"
+            }
+          ],
+          "recordType": "A",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "REC_RANDOM_INTERVAL_LOG",
+          "labels": [
+            {
+              "text": "Random-Interval Cadence Log"
+            }
+          ],
+          "recordType": "I",
+          "occurrences": {
+            "required": false,
+            "maximum": 999
+          },
+          "items": []
+        },
+        {
+          "name": "REC_PATIENT_ROSTER",
+          "labels": [
+            {
+              "text": "Patient Listing Roster"
+            }
+          ],
+          "recordType": "P",
+          "occurrences": {
+            "required": false,
+            "maximum": 999
+          },
+          "items": []
+        },
+        {
+          "name": "REC_LISTING_FACILITY_CAPTURE",
+          "labels": [
+            {
+              "text": "Facility GPS Capture (listing session)"
+            }
+          ],
+          "recordType": "Z",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "REC_LISTING_PHOTO",
+          "labels": [
+            {
+              "text": "Listing Session Verification Photo"
+            }
+          ],
+          "recordType": "X",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        }
+      ]
+    }
+  ]
+}
