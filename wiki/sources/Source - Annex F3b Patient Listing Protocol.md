@@ -52,6 +52,15 @@ Field-operations protocol for listing and selecting patient respondents for the 
 - Handshake with F3: listing produces a patient ID + contact info that F3 interview attaches to.
 - Links to the patient replacement protocol (Annex D of the Inception Report).
 
+## Documented divergence — May 6 Survey Manual Working File
+
+> [!note] Listing-methodology divergence (documented, NOT adopted)
+> The Survey Manual Working File at `raw/2026-05-06-survey-manual-bundle/2026-05-06_Survey-Manual-Working-File-Kidd.docx` (Kidd's working draft, still under Myra's edit pass) describes a **PhilHealth-registry-based** patient sampling methodology that diverges from Annex F3b.
+>
+> **Resolution (2026-05-12, Carl):** Build the F3 CAPI quartet and the 110_F3_listing app to Annex F3b — OPD/IPD facility-record-driven sampling, with provenance items capturing facility-internal patient identifiers (OPD case number, ward/bed, admission date for IPD). The PhilHealth-registry approach is documented here for audit trail but is **not adopted** in the CAPI build.
+>
+> Rationale: Annex F3b is the protocol-of-record (Apr 20 DOH-submitted Revised Inception Report). The May 6 Working File is upstream-review-in-progress (Myra has an active edit pass), so we defer any reconciliation per `feedback_defer_clarifications_during_upstream_review.md`. No CAPI-side clarification email to Kidd/Myra at this time; revisit if Myra's pass changes the protocol-of-record.
+
 ## Cross-references
 
 - Paired interview: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3 Patient Survey Questionnaire|F3 Patient Survey]]

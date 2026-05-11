@@ -2,6 +2,15 @@
 
 Chronological record of all wiki operations.
 
+## 2026-05-12 (CAPI build — F3 rebuild kickoff + May 6 divergence audit trail)
+
+### Source update — `Source - Annex F3b Patient Listing Protocol.md`
+
+- **Trigger.** F3 rebuild kickoff (this session). Carl resolved the contested patient-listing-methodology divergence between Annex F3b (Apr 20 protocol-of-record, OPD/IPD facility records) and the May 6 Survey Manual Working File draft (PhilHealth-registry sampling, Kidd's draft still under Myra's edit pass).
+- **Resolution.** Build to **Annex F3b** (OPD/IPD facility records). May 6 PhilHealth-registry approach documented as **divergence, NOT adopted**.
+- **Changes.** Appended `> [!note] Listing-methodology divergence (documented, NOT adopted)` block to `wiki/sources/Source - Annex F3b Patient Listing Protocol.md` capturing the divergence, the resolution, and the rationale (Annex F3b is protocol-of-record; May 6 file is upstream-review-in-progress; defer reconciliation per `feedback_defer_clarifications_during_upstream_review.md`).
+- **No new wiki pages** and no `index.md` change (the F3b page is already indexed).
+
 ## 2026-05-12 (CAPI build — 12-digit case-ID adoption F1 portion)
 
 ### Concept page rollout-footprint update — `Questionnaire Numbering Convention.md`
