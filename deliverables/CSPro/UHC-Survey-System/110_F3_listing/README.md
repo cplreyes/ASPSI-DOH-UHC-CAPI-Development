@@ -62,7 +62,9 @@ This app uses a **session-scoped** case-ID block distinct from the
 12-digit F-series scheme. The listing session is identified by:
 
 ```
-  RR  PP  MMM  FF  YYYYMMDD  SSS
+  RR  PP  MMM  FF  YYYYMMDD  SSS    (20 digits total)
+  ^^  ^^  ^^^  ^^  ^^^^^^^^  ^^^
+   2   2   3    2      8      3
 ```
 
 Where SSS is the per-facility-day session sequence. Use

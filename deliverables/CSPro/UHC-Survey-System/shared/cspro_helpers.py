@@ -585,7 +585,7 @@ def build_listing_id_block():
     facility-day; the case-ID block encodes facility (RR+PP+MMM+FF) plus
     the session date and a per-facility-day session sequence.
 
-    Block layout (16 digits total starting at column 2):
+    Block layout (20 digits total starting at column 2):
 
         RR  PP  MMM  FF  YYYYMMDD  SSS
         ^^  ^^  ^^^  ^^  ^^^^^^^^  ^^^
