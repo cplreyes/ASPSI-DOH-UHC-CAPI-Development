@@ -3,6 +3,11 @@ import type { ConfigValue, GetConfigResponse } from './config-client';
 
 export const RUNTIME_CONFIG_CACHE_KEY = 'f2_runtime_config_v1';
 
+// Constant + hook live alongside Provider for cohesion. HMR's
+// "only-export-components" rule is too strict for the standard
+// React provider+context+hook pattern; splitting across files
+// just to satisfy it adds friction without runtime benefit.
+// eslint-disable-next-line react-refresh/only-export-components
 export const DEFAULT_CONFIG: ConfigValue = {
   current_spec_version: '',
   min_accepted_spec_version: '',
@@ -92,6 +97,7 @@ export function RuntimeConfigProvider({ fetcher, refreshIntervalMs, children }: 
   return <RuntimeConfigContext.Provider value={config}>{children}</RuntimeConfigContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useRuntimeConfig(): ConfigValue {
   return useContext(RuntimeConfigContext);
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { nextMultiValue } from './Question';
+import { nextMultiValue } from './Question.helpers';
 
 const choices = [
   { value: 'Salary' },
