@@ -47,7 +47,7 @@ from pathlib import Path
 # Import shared helpers
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
 from cspro_helpers import (
-    record, build_dictionary as build_dictionary_from_helpers,
+    numeric, alpha, record, build_dictionary as build_dictionary_from_helpers,
 )
 
 
@@ -56,8 +56,76 @@ from cspro_helpers import (
 # ============================================================
 
 def build_listing_control():
-    """REC_LISTING_CONTROL — landed in commit 2. Stub for commit 1."""
-    return record("REC_LISTING_CONTROL", "Listing Session Control", "A", [])
+    """REC_LISTING_CONTROL — listing-session header items.
+
+    One occurrence per listing session (= one facility-day). Captures the
+    enumerator who ran the session, the supervisor on-site, the
+    FACILITY_TARGET (configured per-facility by STL via the user_roster
+    Excel and exposed at runtime through loadsetting()), and the
+    BACKUP_TARGET (= ceil(0.5 * FACILITY_TARGET), minimum 1; computed in
+    preproc and stored here for audit). The session also captures the
+    intended cadence min/max for the random-interval engine — see commit 3
+    for the per-event log record.
+
+    Field-width discipline (project-wide):
+      - DATE items use the standard YYYYMMDD width-8 numeric.
+      - TIME items use HHMMSS width-6 numeric.
+      - SESSION_STATUS NA code = 9 (the highest value at width 1).
+    """
+    SESSION_STATUS_OPTIONS = [
+        ("In progress",                    "1"),
+        ("Closed — target met",            "2"),
+        ("Closed — facility-day ended",    "3"),
+        ("Aborted — operator",             "4"),
+        ("Aborted — error",                "5"),
+        ("Not applicable",                 "9"),
+    ]
+
+    items = [
+        # --- Identity of the listing-session run ----------------------
+        # SURVEY_CODE is "F3L" (listing) — distinct from "F3" so paradata
+        # collators can route listing sessions separately from F3 cases.
+        alpha("SURVEY_CODE",            "Survey Instrument Code (F3L)",       length=3),
+        numeric("DATE_SESSION",         "Date of Listing Session (YYYYMMDD)", length=8),
+        numeric("TIME_SESSION_START",   "Session Start Time (HHMMSS)",        length=6),
+        numeric("TIME_SESSION_END",     "Session End Time (HHMMSS)",          length=6),
+
+        # --- Staff IDs (login-issued by 101_login menu app) -----------
+        # Width-4 zero-fill mirrors the FIELD_CONTROL.INTERVIEWER_ID width
+        # used in F1/F3/F4 (see shared.cspro_helpers._case_control_items).
+        numeric("ENUMERATOR_ID",        "Enumerator ID",                       length=4,
+                zero_fill=True),
+        numeric("SUPERVISOR_ID",        "Survey Team Leader / Supervisor ID",  length=4,
+                zero_fill=True),
+
+        # --- Targets (set via loadsetting() at session start) ---------
+        # FACILITY_TARGET upper-bounds at 999 — accommodates large-volume
+        # facility-days (tertiary OPD) without ballooning width.
+        numeric("FACILITY_TARGET",      "Patients to list at this facility today",
+                length=3),
+        # BACKUP_TARGET computed in preproc as ceil(0.5 * FACILITY_TARGET),
+        # minimum 1. Stored here for audit / replacement-protocol bookkeeping.
+        numeric("BACKUP_TARGET",        "Backup-target sample size",           length=3),
+
+        # --- Random-interval cadence configuration --------------------
+        # Min/max are in MINUTES. Default values are set per-facility-tier
+        # in the menu app via loadsetting(); they appear here so the
+        # audit trail records *what cadence was configured for this session*
+        # even if the operator later overrides at runtime.
+        numeric("CADENCE_MIN_MIN",      "Random-interval minimum (minutes)",   length=3),
+        numeric("CADENCE_MAX_MIN",      "Random-interval maximum (minutes)",   length=3),
+
+        # --- Running counters (maintained by APC during the session) --
+        numeric("LISTED_COUNT",         "Patients listed so far",              length=3),
+        numeric("REFUSED_COUNT",        "Patients who refused listing",        length=3),
+        numeric("EXCLUDED_COUNT",       "Patients excluded (ineligible)",      length=3),
+
+        # --- Session disposition --------------------------------------
+        numeric("SESSION_STATUS",       "Session Disposition",                 length=1,
+                value_set_options=SESSION_STATUS_OPTIONS),
+        alpha("SESSION_NOTES",          "Free-text notes from the enumerator", length=240),
+    ]
+    return record("REC_LISTING_CONTROL", "Listing Session Control", "A", items)
 
 
 def build_random_interval_log():

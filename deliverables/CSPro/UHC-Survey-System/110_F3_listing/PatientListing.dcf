@@ -71,7 +71,255 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "SURVEY_CODE",
+              "labels": [
+                {
+                  "text": "Survey Instrument Code (F3L)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 3
+            },
+            {
+              "name": "DATE_SESSION",
+              "labels": [
+                {
+                  "text": "Date of Listing Session (YYYYMMDD)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "TIME_SESSION_START",
+              "labels": [
+                {
+                  "text": "Session Start Time (HHMMSS)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 6,
+              "zeroFill": false
+            },
+            {
+              "name": "TIME_SESSION_END",
+              "labels": [
+                {
+                  "text": "Session End Time (HHMMSS)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 6,
+              "zeroFill": false
+            },
+            {
+              "name": "ENUMERATOR_ID",
+              "labels": [
+                {
+                  "text": "Enumerator ID"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": true
+            },
+            {
+              "name": "SUPERVISOR_ID",
+              "labels": [
+                {
+                  "text": "Survey Team Leader / Supervisor ID"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": true
+            },
+            {
+              "name": "FACILITY_TARGET",
+              "labels": [
+                {
+                  "text": "Patients to list at this facility today"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "BACKUP_TARGET",
+              "labels": [
+                {
+                  "text": "Backup-target sample size"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "CADENCE_MIN_MIN",
+              "labels": [
+                {
+                  "text": "Random-interval minimum (minutes)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "CADENCE_MAX_MIN",
+              "labels": [
+                {
+                  "text": "Random-interval maximum (minutes)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "LISTED_COUNT",
+              "labels": [
+                {
+                  "text": "Patients listed so far"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "REFUSED_COUNT",
+              "labels": [
+                {
+                  "text": "Patients who refused listing"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "EXCLUDED_COUNT",
+              "labels": [
+                {
+                  "text": "Patients excluded (ineligible)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "SESSION_STATUS",
+              "labels": [
+                {
+                  "text": "Session Disposition"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "SESSION_STATUS_VS1",
+                  "labels": [
+                    {
+                      "text": "Session Disposition"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "In progress"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Closed \u2014 target met"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Closed \u2014 facility-day ended"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Aborted \u2014 operator"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Aborted \u2014 error"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "SESSION_NOTES",
+              "labels": [
+                {
+                  "text": "Free-text notes from the enumerator"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 240
+            }
+          ]
         },
         {
           "name": "REC_RANDOM_INTERVAL_LOG",
