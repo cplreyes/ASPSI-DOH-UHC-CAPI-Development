@@ -494,12 +494,110 @@ def build_geo_id(mode, extra_items=None):
 
 
 # ============================================================
-# 4. DICTIONARY ASSEMBLY
+# 4. CASE-ID BLOCK — adopted 12-digit decomposed scheme
+# ============================================================
+#
+# 5-item case identifier per the Questionnaire Numbering Convention
+# (wiki/concepts/Questionnaire Numbering Convention.md, adopted 2026-05-05).
+# Total width 12 digits, anchored to PSA 1Q 2026 PSGC.
+#
+#   RR  PP  MMM  FF  CCC
+#   ^^  ^^  ^^^  ^^  ^^^
+#   |   |   |    |   |__ Per-facility per-instrument case sequence
+#   |   |   |    |______ ASPSI sampling-frame facility index in municipality
+#   |   |   |___________ PSGC city/municipality slot (positions 5-7)
+#   |   |_______________ PSGC province/HUC slot     (positions 3-4)
+#   |___________________ PSGC region               (positions 1-2)
+#
+# All five items are non-NA — they are required identifying keys, not data
+# fields, so the project-wide NA-at-highest-value convention (9/99/999) does
+# not apply. Range bounds below match the concept page.
+
+# Column positions in the data file. Record-type occupies column 1; case-ID
+# block starts at column 2 and runs through column 13. Downstream records
+# begin at column 14 (handled per-record by CSPro Designer based on the
+# record's items, not pinned here).
+_CASE_ID_START_COLUMN = 2
+
+# Replacement-protocol partitioning of the CASE_SEQ range (per the concept
+# page). Encoded as a constant so F1/F3/F4 PROC code and the F2 PWA case-ID
+# issuer can reference the same numeric boundaries without duplicating magic
+# numbers.
+CASE_SEQ_ACTIVE_RANGE      = (1,   699)   # STL-allocated across enumerators
+CASE_SEQ_REPLACEMENT_RANGE = (700, 899)   # Annex D replacement protocol
+CASE_SEQ_REFUSED_RANGE     = (900, 999)   # Refused / forfeited (no data)
+
+
+def build_id_block():
+    """Return the 5-item case-ID block adopted under the 12-digit
+    decomposed numbering scheme.
+
+    The returned list slots into ``build_dictionary(id_items=...)`` for any
+    F-series instrument. ``CASE_SEQ`` is scoped per-instrument per-facility,
+    so F1 case 001 and F3 case 001 at the same facility do not collide —
+    the dictionaries are separate. Cross-instrument linkage at the same
+    facility falls out of the shared ``REGION_CODE + PROVINCE_HUC_CODE +
+    CITY_MUNICIPALITY_CODE + FACILITY_NO`` prefix.
+
+    Item attributes
+    ---------------
+    - All numeric, zero-fill, decimal=0 (no decimals).
+    - Start positions are explicit (cols 2-3, 4-5, 6-8, 9-10, 11-13)
+      because CSPro 8.0 requires absolute positions for ID items even
+      when ``relativePositions: True`` is set at the dictionary level
+      (that flag governs record items, not ID items).
+
+    Returns
+    -------
+    list of dict
+        Five item dicts in case-ID order: REGION_CODE, PROVINCE_HUC_CODE,
+        CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ.
+    """
+    spec = [
+        ("REGION_CODE",            "Region Code",            2),
+        ("PROVINCE_HUC_CODE",      "Province / HUC Code",    2),
+        ("CITY_MUNICIPALITY_CODE", "City / Municipality Code", 3),
+        ("FACILITY_NO",            "Facility No",            2),
+        ("CASE_SEQ",               "Case Sequence",          3),
+    ]
+    items = []
+    col = _CASE_ID_START_COLUMN
+    for name, label, length in spec:
+        items.append({
+            "name":        name,
+            "labels":      [{"text": label}],
+            "contentType": "numeric",
+            "start":       col,
+            "length":      length,
+            "zeroFill":    True,
+            "decimal":     0,
+            "decimalChar": False,
+        })
+        col += length
+    return items
+
+
+# ============================================================
+# 5. DICTIONARY ASSEMBLY
 # ============================================================
 
-def build_dictionary(dict_name, dict_label, id_item_name, id_item_label,
-                     id_length, records):
+def build_dictionary(dict_name, dict_label,
+                     id_item_name=None, id_item_label=None, id_length=None,
+                     records=None, id_items=None):
     """Assemble a complete CSPro 8.0 dictionary JSON structure.
+
+    Two ID-item shapes are supported:
+
+      - **New (preferred)**: pass ``id_items=`` as a fully-formed list of
+        item dicts. Use ``build_id_block()`` for the adopted 5-item
+        12-digit case ID. The keyword exists so F3/F4/PLF can adopt the
+        same block without code duplication.
+
+      - **Legacy single-item**: pass ``id_item_name``, ``id_item_label``,
+        and ``id_length``. The dictionary is built with one zero-filled
+        numeric ID item starting at column 2. Retained for backwards
+        compatibility with any caller that has not yet migrated; new code
+        should use ``id_items=``.
 
     Parameters
     ----------
@@ -507,21 +605,46 @@ def build_dictionary(dict_name, dict_label, id_item_name, id_item_label,
         Dictionary name (UPPER_SNAKE, e.g. "FACILITYHEADSURVEY_DICT").
     dict_label : str
         Human-readable dictionary label (e.g. "FacilityHeadSurvey").
-    id_item_name : str
-        Name of the level ID item (e.g. "QUESTIONNAIRE_NO").
-    id_item_label : str
-        Label for the level ID item (e.g. "Questionnaire No").
-    id_length : int
-        Numeric length of the level ID item (zero-filled, starts at position 2).
+    id_item_name, id_item_label, id_length
+        Legacy single-ID-item parameters. Mutually exclusive with ``id_items``.
     records : list of dict
         List of record dicts produced by record() / build_field_control() /
         build_geo_id() / etc.
+    id_items : list of dict, optional
+        New-shape ID-item block. Mutually exclusive with the three legacy
+        parameters. Each dict must include name, labels, contentType,
+        start, length, zeroFill.
 
     Returns
     -------
     dict
         Full CSPro 8.0 dictionary object suitable for json.dumps.
     """
+    if records is None:
+        records = []
+
+    if id_items is not None:
+        if id_item_name is not None or id_item_label is not None or id_length is not None:
+            raise ValueError(
+                "build_dictionary: pass either id_items= OR the legacy "
+                "(id_item_name, id_item_label, id_length) triple, not both."
+            )
+        ids_items_block = id_items
+    else:
+        if id_item_name is None or id_item_label is None or id_length is None:
+            raise ValueError(
+                "build_dictionary: must pass id_items= or all of "
+                "(id_item_name, id_item_label, id_length)."
+            )
+        ids_items_block = [{
+            "name":        id_item_name,
+            "labels":      [{"text": id_item_label}],
+            "contentType": "numeric",
+            "start":       2,
+            "length":      id_length,
+            "zeroFill":    True,
+        }]
+
     level_name  = dict_name.replace("_DICT", "_LEVEL")
     level_label = dict_label + " Level"
 
@@ -540,16 +663,7 @@ def build_dictionary(dict_name, dict_label, id_item_name, id_item_label,
                 "name":   level_name,
                 "labels": [{"text": level_label}],
                 "ids": {
-                    "items": [
-                        {
-                            "name":        id_item_name,
-                            "labels":      [{"text": id_item_label}],
-                            "contentType": "numeric",
-                            "start":       2,
-                            "length":      id_length,
-                            "zeroFill":    True,
-                        }
-                    ]
+                    "items": ids_items_block,
                 },
                 "records": records,
             }
