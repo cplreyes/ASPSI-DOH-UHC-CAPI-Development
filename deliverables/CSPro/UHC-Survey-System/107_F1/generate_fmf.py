@@ -48,13 +48,16 @@ def item_type(item):
     return item.get("contentType") or item.get("type", "numeric")
 
 
-def first_id_item(level):
+def all_id_items(level):
+    """Return every ID-item dict for the level, supporting both the new
+    multi-item case-ID block (5 items per the adopted 12-digit scheme)
+    and the legacy single-item shape. CSPro 8.0 accepts both."""
     ids = level.get("ids", {})
     if isinstance(ids, dict):
-        return ids.get("items", [{}])[0]
-    if isinstance(ids, list) and ids:
-        return ids[0]
-    return {}
+        return ids.get("items", []) or []
+    if isinstance(ids, list):
+        return ids
+    return []
 
 
 def main():
@@ -66,13 +69,16 @@ def main():
     valuesets = {vs["name"]: vs for vs in dcf.get("valueSets", [])}
 
     level = dcf["levels"][0]
-    id_item = first_id_item(level)
+    id_items = all_id_items(level)
 
     # Build the form list. forms[i] = (form_name, form_label, group_name, items)
     # Group form_index_one_based = i+1 (1-indexed CSPro convention).
     forms = []
-    if id_item:
-        forms.append(("FORM000", "(Id Items)", "IDS0_FORM", [id_item]))
+    if id_items:
+        # Single (Id Items) form holds all ID items. Under the adopted
+        # 12-digit scheme that is 5 items (REGION_CODE..CASE_SEQ); the
+        # legacy single QUESTIONNAIRE_NO path lands here too as a 1-item form.
+        forms.append(("FORM000", "(Id Items)", "IDS0_FORM", list(id_items)))
     for i, record in enumerate(level.get("records", [])):
         rec_items = list(collect_items(record))
         rec_label = item_label(record) or record["name"]

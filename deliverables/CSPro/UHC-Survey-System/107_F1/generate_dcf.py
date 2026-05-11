@@ -39,6 +39,7 @@ from cspro_helpers import (
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, uhc9_item, record, build_geo_id,
     _gps_fields, _photo_block, _case_control_items,
+    build_id_block, build_dictionary as build_dictionary_from_helpers,
 )
 
 # ============================================================
@@ -1060,6 +1061,16 @@ def build_capture_record():
 
 
 def build_dictionary():
+    """Assemble the F1 dictionary.
+
+    Case-ID block: 5-item 12-digit decomposed scheme adopted 2026-05-05
+    (see wiki/concepts/Questionnaire Numbering Convention.md). Replaced
+    the legacy single 6-digit QUESTIONNAIRE_NO ID item; downstream
+    consumers (PROC code, exports, dashboards) should reference the
+    individual ID-item names (REGION_CODE, PROVINCE_HUC_CODE,
+    CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) rather than the
+    retired composite name.
+    """
     records = [
         # Root record (recordType "1") — required by CSPro hierarchy
         record("FACILITYHEADSURVEY_REC", "FacilityHeadSurvey Record", "1", []),
@@ -1076,36 +1087,12 @@ def build_dictionary():
         build_section_h(),
     ]
 
-    return {
-        "software": "CSPro",
-        "version": 8.0,
-        "fileType": "dictionary",
-        "name": "FACILITYHEADSURVEY_DICT",
-        "labels": [{"text": "FacilityHeadSurvey"}],
-        "readOptimization": True,
-        "recordType": {"start": 1, "length": 1},
-        "defaults": {"decimalMark": True, "zeroFill": False},
-        "relativePositions": True,
-        "levels": [
-            {
-                "name": "FACILITYHEADSURVEY_LEVEL",
-                "labels": [{"text": "FacilityHeadSurvey Level"}],
-                "ids": {
-                    "items": [
-                        {
-                            "name": "QUESTIONNAIRE_NO",
-                            "labels": [{"text": "Questionnaire No"}],
-                            "contentType": "numeric",
-                            "start": 2,
-                            "length": 6,
-                            "zeroFill": True,
-                        }
-                    ]
-                },
-                "records": records,
-            }
-        ],
-    }
+    return build_dictionary_from_helpers(
+        dict_name="FACILITYHEADSURVEY_DICT",
+        dict_label="FacilityHeadSurvey",
+        id_items=build_id_block(),
+        records=records,
+    )
 
 
 def main():

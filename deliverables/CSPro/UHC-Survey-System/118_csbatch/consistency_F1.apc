@@ -5,9 +5,23 @@
 PROC FACILITYHEADSURVEY_LEVEL
 postproc
 
-   { Required IDs }
-   if QUESTIONNAIRE_NO = notappl then
-      errmsg("F1: case missing QUESTIONNAIRE_NO");
+   { Required IDs — 5-item 12-digit case-ID block adopted 2026-05-05.       }
+   { Each ID item is required; CASE_SEQ alone is not sufficient because two }
+   { facilities in the same municipality differ only on FACILITY_NO.        }
+   if REGION_CODE = notappl then
+      errmsg("F1: case missing REGION_CODE");
+   endif;
+   if PROVINCE_HUC_CODE = notappl then
+      errmsg("F1: case missing PROVINCE_HUC_CODE");
+   endif;
+   if CITY_MUNICIPALITY_CODE = notappl then
+      errmsg("F1: case missing CITY_MUNICIPALITY_CODE");
+   endif;
+   if FACILITY_NO = notappl then
+      errmsg("F1: case missing FACILITY_NO");
+   endif;
+   if CASE_SEQ = notappl then
+      errmsg("F1: case missing CASE_SEQ");
    endif;
 
    { Required FIELD_CONTROL items }

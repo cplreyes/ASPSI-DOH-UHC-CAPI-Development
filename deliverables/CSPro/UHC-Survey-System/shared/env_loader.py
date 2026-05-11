@@ -40,4 +40,6 @@ def splice_user_settings(ent_path: Path, settings: dict[str, Any]) -> None:
         else:
             existing.append({"name": name, "value": str(value)})
 
-    ent_path.write_text(json.dumps(ent_data, indent=2), encoding="utf-8")
+    # Force LF newlines so the F1 .gitattributes pin (text eol=lf for *.ent)
+    # does not fight Python's universal-newline translation on Windows.
+    ent_path.write_text(json.dumps(ent_data, indent=2), encoding="utf-8", newline="\n")

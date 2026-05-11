@@ -29,16 +29,74 @@
       "ids": {
         "items": [
           {
-            "name": "QUESTIONNAIRE_NO",
+            "name": "REGION_CODE",
             "labels": [
               {
-                "text": "Questionnaire No"
+                "text": "Region Code"
               }
             ],
             "contentType": "numeric",
             "start": 2,
-            "length": 6,
-            "zeroFill": true
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "PROVINCE_HUC_CODE",
+            "labels": [
+              {
+                "text": "Province / HUC Code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 4,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "CITY_MUNICIPALITY_CODE",
+            "labels": [
+              {
+                "text": "City / Municipality Code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 6,
+            "length": 3,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "FACILITY_NO",
+            "labels": [
+              {
+                "text": "Facility No"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 9,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "CASE_SEQ",
+            "labels": [
+              {
+                "text": "Case Sequence"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 11,
+            "length": 3,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
           }
         ]
       },

@@ -2,6 +2,14 @@
 
 Chronological record of all wiki operations.
 
+## 2026-05-12 (CAPI build — 12-digit case-ID adoption F1 portion)
+
+### Concept page rollout-footprint update — `Questionnaire Numbering Convention.md`
+
+- **Trigger.** Implementation footprint steps 1, 2, partial 6, and F1-scoped 7 landed on branch `feature/uhc-survey-system-build` (worktree `.claude/worktrees/uhc-survey-system-build`).
+- **Changes.** "Implementation footprint (pending sprint scheduling)" heading → "Implementation footprint" + new `[!check] F1 + helper landed 2026-05-12` callout. Step 1 (`build_id_block()` in `shared/cspro_helpers.py`) and step 2 (F1's `generate_dcf.py` rewiring + DCF/fmf/spec.md/consistency_F1.apc/Capture-Helpers.apc sweeps) marked DONE with concrete file refs. Steps 3–5 (F3/F4/F2 PWA) remain pending. Step 6 (manual addendum) flagged as deferred pending Myra's Survey-Manual edit-pass per the `feedback_defer_clarifications_during_upstream_review.md` memory.
+- **No new wiki pages.** Index entry already says "12-digit decomposed case ID" so no `index.md` change needed at the entry level.
+
 ## 2026-05-06 (Wiki lint pass)
 
 ### Wiki lint — 3 stale claims fixed across 2 files

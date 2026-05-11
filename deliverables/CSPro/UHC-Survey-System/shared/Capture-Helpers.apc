@@ -24,7 +24,18 @@
 
       PROC CAPTURE_VERIFICATION_PHOTO
       onfocus
-          string fn = "case-" + maketext("%d", QUESTIONNAIRE_NO) + "-verification.jpg";
+          { Filename embeds the full 12-digit case ID                       }
+          { (REGION_CODE + PROVINCE_HUC_CODE + CITY_MUNICIPALITY_CODE       }
+          {  + FACILITY_NO + CASE_SEQ) so each verification JPG is unique   }
+          { per case across all facilities. Use %02d / %03d zero-fill       }
+          { specifiers to match the dictionary's zero-fill widths.          }
+          string caseId =
+              maketext("%02d", REGION_CODE) +
+              maketext("%02d", PROVINCE_HUC_CODE) +
+              maketext("%03d", CITY_MUNICIPALITY_CODE) +
+              maketext("%02d", FACILITY_NO) +
+              maketext("%03d", CASE_SEQ);
+          string fn = "case-" + caseId + "-verification.jpg";
           if TakeVerificationPhoto(fn) then
               VERIFICATION_PHOTO_FILENAME = fn;
           endif;

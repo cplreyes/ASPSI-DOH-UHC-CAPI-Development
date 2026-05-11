@@ -106,22 +106,23 @@ Drops into *The Survey Questionnaire → Questionnaire Number*, replacing the ex
 | Geographic items `REGION` / `PROVINCE_HUC` / `CITY_MUNICIPALITY` / `BARANGAY` at 10 digits each (full PSA PSGC) | **Keep** — these stay as data items for joining with PSA / DOH datasets at full precision; the 2/2/3-digit ID items are the *within-parent* PSA 1Q 2026 codes derived from the same PSGC source |
 | Manual specifies 9 digits (legacy 6-digit PSGC + 3 sequence) | Manual addendum: 12 digits (PSA 1Q 2026 7-digit PSGC + 2 facility + 3 case) — replaces the legacy PSGC slice entirely |
 
-## Implementation footprint (pending sprint scheduling)
-
-Adopted; not yet executed. When scheduled:
+## Implementation footprint
 
 > [!note] Path rebase 2026-05-12
 > The Apr 20-22 F1/F3/F4 build that this rollout footprint originally referenced was archived under `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/` during the Sprint 005 R3 archive sequence. The active build now lives under `deliverables/CSPro/UHC-Survey-System/`. The rollout steps below have been repointed accordingly — the **semantics are unchanged** (`build_id_block()` still replaces the single `QUESTIONNAIRE_NO` item; F3 drops `F3_FACILITY_ID`; F4 adds `F4_PARENT_F3_CASE_SEQ`), only the file paths shift.
 
-1. **`deliverables/CSPro/UHC-Survey-System/shared/cspro_helpers.py`** — add `build_id_block()` returning the 5 ID items; extend `build_dictionary()` to accept an `id_items=` list (replacing the current `id_item_name` / `id_length` single-item path).
-2. **`deliverables/CSPro/UHC-Survey-System/107_F1/generate_dcf.py`** — replace `id_item_name="QUESTIONNAIRE_NO" / id_length=6` with `id_items=build_id_block()`. Regenerate `FacilityHeadSurvey.dcf`.
+> [!check] F1 + helper landed 2026-05-12
+> Steps 1, 2, 6 (partial — F1 PROC + docs in scaffold; manual addendum still pending Survey-Manual edit-pass resolution), and 7 (F1 only) are **complete on branch `feature/uhc-survey-system-build`** at commit `feat(capi): wire 12-digit case-ID block into F1 generate_dcf.py` (and predecessors). 10 unit tests pin the block shape. F3/F4/PLF generators still pending (not in scope until the F3 rewrite begins).
+
+1. **`deliverables/CSPro/UHC-Survey-System/shared/cspro_helpers.py`** — DONE 2026-05-12. `build_id_block()` returns the 5 ID items; `build_dictionary()` accepts `id_items=` and still supports the legacy single-item triple for backwards compatibility.
+2. **`deliverables/CSPro/UHC-Survey-System/107_F1/generate_dcf.py`** — DONE 2026-05-12. Calls `build_dictionary(..., id_items=build_id_block(), ...)`. `FacilityHeadSurvey.dcf` regenerated; .fmf form FORM000 now renders 5 ID-item fields; F1.spec.md updated with verbatim labels for the new items; `118_csbatch/consistency_F1.apc` updated to validate all 5 items required.
 3. **F3 generator** (path TBD when F3 is reintroduced under UHC-Survey-System; legacy at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F3/generate_dcf.py` for reference) — same replacement; drop `F3_FACILITY_ID` from `PATIENT_GEO_ID` extras (or keep as denormalized convenience). Regenerate `PatientSurvey.dcf`.
 4. **F4 generator** (path TBD when F4 is reintroduced under UHC-Survey-System; legacy at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F4/generate_dcf.py` for reference) — same replacement; add `F4_PARENT_F3_CASE_SEQ` (numeric, length 3) to `HOUSEHOLD_GEO_ID`. Regenerate `HouseholdSurvey.dcf`.
 5. **F2 PWA** — case-ID issuer at submission time concatenates the same 5 fields (facility is known per token; PWA assigns `CASE_SEQ` from the F2_HCWs roster index). Update `apps-script/` writer + Worker schema accordingly.
-6. **Manual addendum** — paste the one-paragraph addendum (above) into the master manual; update `deliverables/Survey-Manual/CSPro-Section-Draft_2026-04-29.md` Section 4 open question #1 to point at this concept page; update `deliverables/Survey-Manual/CAPI-PWA-Stakeholder-Section_2026-05-02.md` §5 / §10 case-identifier mention.
-7. **Logic ramifications** — verify F1/F3/F4 PROC code references to `QUESTIONNAIRE_NO` (search for the literal string); replace where needed.
+6. **Manual addendum** — paste the one-paragraph addendum (above) into the master manual; update `deliverables/Survey-Manual/CSPro-Section-Draft_2026-04-29.md` Section 4 open question #1 to point at this concept page; update `deliverables/Survey-Manual/CAPI-PWA-Stakeholder-Section_2026-05-02.md` §5 / §10 case-identifier mention. (Pending Myra's edit-pass resolution per the defer-clarifications-during-upstream-review feedback memory.)
+7. **Logic ramifications** — verify F1/F3/F4 PROC code references to `QUESTIONNAIRE_NO` (search for the literal string); replace where needed. F1 swept 2026-05-12: live references replaced in `118_csbatch/consistency_F1.apc` and the `shared/Capture-Helpers.apc` filename-pattern example; only doc/test comments retain the literal as historical context. F3/F4 PROC pending those generators' rebuild.
 
-Estimated effort: ~4–6 hours including regen + spot-check Designer open + PWA test.
+Estimated effort: ~4–6 hours including regen + spot-check Designer open + PWA test. F1 portion took ~1.5h.
 
 ## Decisions made on adoption (2026-05-05)
 

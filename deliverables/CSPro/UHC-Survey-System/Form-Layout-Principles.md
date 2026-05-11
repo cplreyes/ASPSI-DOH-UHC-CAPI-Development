@@ -97,7 +97,7 @@ Split at the nearest block boundary in the source questionnaire (Q-number contig
 - Naming convention: trigger field label reads as an action ("Capture GPS", "Take Verification Photo"). The field itself stores a yes/no completion flag.
 - Helpers live in `shared/Capture-Helpers.apc`:
   - `ReadGPSReading()` — writes latitude, longitude, accuracy, timestamp into the capture record.
-  - `TakeVerificationPhoto()` — writes filename using pattern `case-{QUESTIONNAIRE_NO}-verification.jpg`.
+  - `TakeVerificationPhoto()` — writes filename using pattern `case-{REGION_CODE}{PROVINCE_HUC_CODE}{CITY_MUNICIPALITY_CODE}{FACILITY_NO}{CASE_SEQ}-verification.jpg` (the concatenated 12-digit case ID, zero-padded per item width).
 - Placement: put capture triggers on a dedicated capture form near the end of `FIELD_CONTROL` or at a natural break (e.g., after Geographic ID for F1). Do not interleave with data-entry questions.
 
 ---
