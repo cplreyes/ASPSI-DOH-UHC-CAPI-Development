@@ -51,17 +51,15 @@ Max=1
   
 [Field]
 Name=SYNC_APP_ID
-Position=1695,30,1895,50
+Position=1695,30,1752,50
 Item=SYNC_APP_ID,SYNC_DICT
-UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=1
   
 [Text]
-Position=50,30,1695,46
+Position=50,30,127,46
 Text=Sync App ID
  
-  
 [EndGroup]
   
 [Group]
@@ -70,7 +68,6 @@ Name=SYNC_REC_FORM
 Label=SyncDictionary Record
 Form=2
 Max=1
-  
 [EndGroup]
   
 [Group]
@@ -82,16 +79,14 @@ Max=1
   
 [Field]
 Name=SYNC_STATUS
-Position=1695,30,2665,50
+Position=1695,30,1710,50
 Item=SYNC_STATUS,SYNC_DICT
-UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=3
   
 [Text]
-Position=50,30,1695,46
+Position=50,30,93,46
 Text=Status:
  
-  
 [EndGroup]
   
