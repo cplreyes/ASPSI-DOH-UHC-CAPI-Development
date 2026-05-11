@@ -1478,15 +1478,240 @@ def build_section_i():
 
 
 def build_section_j():
-    """J. Satisfaction on Amenities and Medical Care (Q131-Q144)."""
+    """J. Satisfaction on Amenities and Medical Care (Q131-Q144).
+
+    Three rating scales used:
+      - SATISFACTION_5PT (shared) — Q131-Q135, Q144
+      - FREQUENCY_5PT    (Never/Sometimes/Usually/Always/DK) — Q136-Q140
+      - YES_NO_DK        — Q141, Q142
+      - YES_NO           — Q143
+
+    Q134 (amenity Rooms) and Q135 (overall time) are asked for inpatients
+    only — PROC gates them on Q84 SERVICE_TYPE = 2 (Inpatient).
+    """
+    FREQUENCY_5PT = [
+        ("Never",        "1"),
+        ("Sometimes",    "2"),
+        ("Usually",      "3"),
+        ("Always",       "4"),
+        ("I don't know", "5"),
+    ]
+    YES_NO_DK_LOCAL = [
+        ("Yes",          "1"),
+        ("No",           "2"),
+        ("I don't know", "3"),
+    ]
+    AMENITY_ITEMS = [
+        ("Q131_AMEN_WAITING",       "131. Satisfaction with cleanliness and comfort — Waiting areas"),
+        ("Q132_AMEN_BATHROOMS",     "132. Satisfaction with cleanliness and comfort — Bathrooms and toilets"),
+        ("Q133_AMEN_CONSULT_ROOMS", "133. Satisfaction with cleanliness and comfort — Consultation Rooms"),
+        ("Q134_AMEN_ROOMS",         "134. Satisfaction with cleanliness and comfort — Rooms (for inpatients only)"),
+    ]
+    STAFF_FREQ_ITEMS = [
+        ("Q136_STAFF_COURTESY", "136. In most recent visit, how often did the staff treat you with courtesy and respect?"),
+        ("Q137_STAFF_LISTEN",   "137. In most recent visit, how often did the staff listen carefully to what you say or ask?"),
+        ("Q138_STAFF_EXPLAIN",  "138. In most recent visit, how often did the staff explain your condition and procedures in a way you can understand?"),
+        ("Q139_STAFF_DECIDE",   "139. In most recent visit, how often did the staff give you the chance to make decisions about your treatment?"),
+        ("Q140_STAFF_CONSENT",  "140. In most recent visit, how often did the staff ask you for your consent before performing any treatments or tests?"),
+    ]
     items = []
+    for name, label in AMENITY_ITEMS:
+        items.append(select_one(name, label, SATISFACTION_5PT, length=1))
+    items.append(select_one("Q135_SAT_OVERALL_TIME",
+                            "135. Were you satisfied with the overall time spent from registration "
+                            "to exiting the facility? (For inpatients only)",
+                            SATISFACTION_5PT, length=1))
+    for name, label in STAFF_FREQ_ITEMS:
+        items.append(select_one(name, label, FREQUENCY_5PT, length=1))
+    items.extend([
+        select_one("Q141_CONFIDENTIALITY",
+                   "141. In your most recent visit, did the staff assure you that information about the "
+                   "patient's condition will be kept confidential?", YES_NO_DK_LOCAL, length=1),
+        select_one("Q142_PRIVACY",
+                   "142. In your most recent visit, did the staff respect your privacy during the "
+                   "physical consultation?", YES_NO_DK_LOCAL, length=1),
+        yes_no("Q143_RECOMMEND",
+               "143. Overall, would you recommend [facility_name_input] to a friend or relative?"),
+        select_one("Q144_QUALITY",
+                   "144. How would the patient rate the quality of care you received at "
+                   "[facility_name_input]?", SATISFACTION_5PT, length=1),
+    ])
     return record("J_SATISFACTION",
                   "J. Satisfaction on Amenities and Medical Care", "L", items)
 
 
 def build_section_k():
-    """K. Access to Medicines (Q145-Q161)."""
-    items = []
+    """K. Access to Medicines (Q145-Q161) — usual sourcing + GAMOT package.
+
+    Skip-routing:
+      - Q152 GAMOT_HEARD = No   -> skip Q153, Q154
+      - Q155 GAMOT_GOT_MEDS = No -> skip Q156, Q157
+      - Q158 BRAND_GEN_KNOW = No -> Q159 still asked, Q160/Q161 driven
+        off Q159
+      - Q159 = Branded (1)      -> Q161 (skip Q160)
+      - Q159 = Generic (2)      -> Q160 (skip Q161)
+      - Q159 = Both (3)         -> ask both Q160 and Q161
+      - Q159 = Don't know (4) / NA (5) -> skip Q160 and Q161
+    """
+    Q145_FREQ = [
+        ("Weekly",    "1"),
+        ("Bi-weekly", "2"),
+        ("Monthly",   "3"),
+        ("Rarely",    "4"),
+        ("Never",     "5"),
+    ]
+    Q146_RX_TYPE = [
+        ("Prescribed by a doctor",                              "1"),
+        ("Over-the-counter medicine",                           "2"),
+        ("Purchased both prescribed medicine and OTC medicine", "3"),
+        ("I don't know",                                        "4"),
+    ]
+    Q148_CONDITIONS = [
+        ("Upper respiratory infection",                          "01"),
+        ("Hypertension",                                         "02"),
+        ("Immunization",                                         "03"),
+        ("Pregnancy or birth",                                   "04"),
+        ("Flu",                                                  "05"),
+        ("Fever",                                                "06"),
+        ("Joint and muscle pain",                                "07"),
+        ("Asthma or COPD (chronic breathing problem, not cancer)", "08"),
+        ("Diabetes",                                             "09"),
+        ("Heart problem",                                        "10"),
+        ("Kidney problem /Dialysis",                             "11"),
+        ("Cancer (any)",                                         "12"),
+        ("Gastro problem (vomiting, diarrhea, etc.)",            "13"),
+        ("Other infection (e.g. urine, skin, other virus etc.)", "14"),
+        ("Accident/injury (e.g. wound/broken bone)",             "15"),
+        ("Dental",                                               "16"),
+        ("ENT (problem with ear/nose/throat)",                   "17"),
+        ("Allergy",                                              "18"),
+        ("No condition - Regular check-up only",                 "19"),
+        ("Other (Specify)",                                      "20"),
+    ]
+    Q149_WHERE_BUY = [
+        ("Public Hospital",                                              "1"),
+        ("Private Hospital",                                             "2"),
+        ("Chain Pharmacies (e.g. Mercury Drug, Watsons, TGP, Generika)", "3"),
+        ("Local pharmacies",                                             "4"),
+        ("Online stores (e.g. Shopee, Lazada)",                          "5"),
+        ("Barangay Health Station",                                      "6"),
+        ("Rural Health Unit or City Health Office",                      "7"),
+        ("Other (specify)",                                              "8"),
+    ]
+    Q151_EASE = [
+        ("Very difficult", "1"),
+        ("Difficult",      "2"),
+        ("Neutral",        "3"),
+        ("Easy",           "4"),
+        ("Very easy",      "5"),
+    ]
+    Q153_GAMOT_SRC = [
+        ("News",                   "1"),
+        ("Legislation",            "2"),
+        ("Social Media",           "3"),
+        ("Friends / Family",       "4"),
+        ("Health center/facility", "5"),
+        ("LGU/Barangay",           "6"),
+        ("I don't know",           "7"),
+        ("Other (Specify)",        "8"),
+    ]
+    Q154_GAMOT_UNDERSTAND = [
+        ("Provides free or affordable medicines for outpatients",         "1"),
+        ("Ensures continuous availability of essential medicines",        "2"),
+        ("Helps reduce out-of-pocket expenses for medicines",             "3"),
+        ("Supports treatment of common illnesses and chronic conditions", "4"),
+        ("I don't know",                                                  "5"),
+        ("Other (specify)",                                               "6"),
+    ]
+    Q157_WHERE_REST = [
+        ("Purchased from pharmacy",                    "1"),
+        ("Purchased from public hospital",             "2"),
+        ("Purchased from private hospital",            "3"),
+        ("Purchased from primary care provider (PCP)", "4"),
+        ("Received from PCP for free",                 "5"),
+        ("Received from LGU for free",                 "6"),
+        ("Received from public hospital for free",     "7"),
+        ("Received from private hospital for free",    "8"),
+        ("Other (Specify)",                            "9"),
+    ]
+    Q159_BRANDED_GENERIC = [
+        ("Branded",                   "1"),
+        ("Generic",                   "2"),
+        ("Both branded and generic",  "3"),
+        ("Don't know the difference", "4"),
+        ("Not applicable",            "5"),
+    ]
+    Q160_WHY_GENERIC = [
+        ("Lower cost",                               "1"),
+        ("Prescribed by doctor",                     "2"),
+        ("Readily available",                        "3"),
+        ("Given for free",                           "4"),
+        ("More or as effective as branded medicine", "5"),
+        ("I don't know",                             "6"),
+        ("Other (Specify)",                          "7"),
+    ]
+    Q161_WHY_BRANDED = [
+        ("Branded medicine is more effective than generic", "1"),
+        ("Not aware of generic option",                     "2"),
+        ("Prescribed by doctor",                            "3"),
+        ("Given for free",                                  "4"),
+        ("Prefer branded over generic option",              "5"),
+        ("I don't know",                                    "6"),
+        ("Other (Specify)",                                 "7"),
+    ]
+    items = [
+        select_one("Q145_PURCHASE_FREQ",
+                   "145. How often do you purchase or receive medicines?",
+                   Q145_FREQ, length=1),
+        select_one("Q146_RX_OR_OTC",
+                   "146. Was the most recent medicine purchased prescribed by a doctor "
+                   "or over-the-counter (OTC) medicine (no need for a prescription)?",
+                   Q146_RX_TYPE, length=1),
+        alpha("Q147_MEDS_LIST",
+              "147. What are the medications that you usually take?", length=240),
+        *select_all("Q148_CONDITIONS",
+                    "148. What are the medical conditions that you take the medicines for?",
+                    Q148_CONDITIONS),
+        *select_all("Q149_WHERE_BUY",
+                    "149. Where do you usually buy or receive your medicines? "
+                    "Select all that apply.", Q149_WHERE_BUY),
+        numeric("Q150_TRAVEL_HH",
+                "150. Travel time from home to nearest pharmacy — hours (HH)", length=2),
+        numeric("Q150_TRAVEL_MM",
+                "150. Travel time from home to nearest pharmacy — minutes (MM)", length=2),
+        select_one("Q151_PHARM_EASE",
+                   "151. How easy is it for you to access a pharmacy or drugstore?",
+                   Q151_EASE, length=1),
+        yes_no("Q152_GAMOT_HEARD",
+               "152. Have you heard of the Guaranteed and Accessible Medications for "
+               "Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's "
+               "YAKAP/Konsulta or primary care benefit package?"),
+        *select_all("Q153_GAMOT_SOURCE",
+                    "153. If yes, what are your sources of information for GAMOT Package?",
+                    Q153_GAMOT_SRC),
+        *select_all("Q154_GAMOT_UNDERSTAND",
+                    "154. What is your understanding of the GAMOT Package?",
+                    Q154_GAMOT_UNDERSTAND),
+        yes_no("Q155_GAMOT_GOT_MEDS",
+               "155. Did you get the medicines from the GAMOT Package during the past 6 months?"),
+        alpha("Q156_GAMOT_MEDS_LIST",
+              "156. What are the medications that you obtained from the GAMOT Package? [LIST]",
+              length=240),
+        *select_all("Q157_WHERE_REST",
+                    "157. Where did you get the rest of the medicines? Select all that apply.",
+                    Q157_WHERE_REST),
+        yes_no("Q158_BRAND_GEN_KNOW",
+               "158. Do you know the difference between a 'branded' and a 'generic' medicine?"),
+        select_one("Q159_BRAND_GEN_BOUGHT",
+                   "159. Was/were the medicine/s you bought outside of GAMOT pharmacy "
+                   "branded or generic?", Q159_BRANDED_GENERIC, length=1),
+        *select_all("Q160_WHY_GENERIC",
+                    "160. If generic, why did you buy generic medicine?",
+                    Q160_WHY_GENERIC),
+        *select_all("Q161_WHY_BRANDED",
+                    "161. If branded, why did you buy branded medicine?",
+                    Q161_WHY_BRANDED),
+    ]
     return record("K_MEDICINES",
                   "K. Access to Medicines", "M", items)
 
