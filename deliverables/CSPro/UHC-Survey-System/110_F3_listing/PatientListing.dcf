@@ -485,7 +485,1446 @@
             "required": false,
             "maximum": 999
           },
-          "items": []
+          "items": [
+            {
+              "name": "ROSTER_SEQ",
+              "labels": [
+                {
+                  "text": "Listing roster sequence"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true
+            },
+            {
+              "name": "LISTING_TAG",
+              "labels": [
+                {
+                  "text": "Auto-tag (1=F3 exit, 2=F4 home, 3=ineligible)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "LISTING_TAG_VS1",
+                  "labels": [
+                    {
+                      "text": "Auto-tag (1=F3 exit, 2=F4 home, 3=ineligible)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Tag 1 \u2014 for patient exit survey (F3 same-day at facility)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Tag 2 \u2014 for follow-up household survey (F4 home visit)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Tag 3 \u2014 ineligible (outside catchment / no contact)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "F3_STATUS",
+              "labels": [
+                {
+                  "text": "F3 interview status"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "F3_STATUS_VS1",
+                  "labels": [
+                    {
+                      "text": "F3 interview status"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Pending \u2014 not yet attempted"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "0"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Completed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In progress"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refused at F3"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Postponed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "F4_STATUS",
+              "labels": [
+                {
+                  "text": "F4 interview status"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "F4_STATUS_VS1",
+                  "labels": [
+                    {
+                      "text": "F4 interview status"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Pending \u2014 not yet attempted"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "0"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Completed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In progress"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refused at F4"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Postponed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable \u2014 Tag 1 / 3"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ASSIGNED_F3_CASE_SEQ",
+              "labels": [
+                {
+                  "text": "F3 CASE_SEQ once F3 consumes this row"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true
+            },
+            {
+              "name": "ASSIGNED_F4_CASE_SEQ",
+              "labels": [
+                {
+                  "text": "F4 CASE_SEQ once F4 consumes this row"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true
+            },
+            {
+              "name": "P_LAST_NAME",
+              "labels": [
+                {
+                  "text": "Patient last name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 40
+            },
+            {
+              "name": "P_FIRST_NAME",
+              "labels": [
+                {
+                  "text": "Patient first name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 40
+            },
+            {
+              "name": "P_MIDDLE_INIT",
+              "labels": [
+                {
+                  "text": "Patient middle initial (or hyphen if none)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 5
+            },
+            {
+              "name": "P_NAME_EXT",
+              "labels": [
+                {
+                  "text": "Patient name extension (e.g., Jr., III)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 10
+            },
+            {
+              "name": "P_SEX",
+              "labels": [
+                {
+                  "text": "Patient sex at birth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "P_SEX_VS1",
+                  "labels": [
+                    {
+                      "text": "Patient sex at birth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Male"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Female"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "P_AGE",
+              "labels": [
+                {
+                  "text": "Patient age (years, as of last birthday)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "P_TYPE",
+              "labels": [
+                {
+                  "text": "Type of patient"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "P_TYPE_VS1",
+                  "labels": [
+                    {
+                      "text": "Type of patient"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Outpatient"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Inpatient"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "P_MOBILE",
+              "labels": [
+                {
+                  "text": "Patient mobile number"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 20
+            },
+            {
+              "name": "P_LANDLINE",
+              "labels": [
+                {
+                  "text": "Patient landline number (if any)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 20
+            },
+            {
+              "name": "P_EMAIL",
+              "labels": [
+                {
+                  "text": "Patient email (if any)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 60
+            },
+            {
+              "name": "HAS_COMPANION",
+              "labels": [
+                {
+                  "text": "Companion accompanying the patient"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "HAS_COMPANION_VS1",
+                  "labels": [
+                    {
+                      "text": "Companion accompanying the patient"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes \u2014 companion present"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No \u2014 patient is alone"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "COMPANION_LAST_NAME",
+              "labels": [
+                {
+                  "text": "Companion last name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 40
+            },
+            {
+              "name": "COMPANION_FIRST_NAME",
+              "labels": [
+                {
+                  "text": "Companion first name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 40
+            },
+            {
+              "name": "COMPANION_RELATIONSHIP",
+              "labels": [
+                {
+                  "text": "Companion relationship to patient"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "COMPANION_RELATIONSHIP_VS1",
+                  "labels": [
+                    {
+                      "text": "Companion relationship to patient"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Spouse / partner"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Parent"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Child (adult)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Sibling"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other relative"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Friend / neighbour"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Carer / HCW"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "96"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "COMPANION_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "Companion relationship \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 60
+            },
+            {
+              "name": "COMPANION_MOBILE",
+              "labels": [
+                {
+                  "text": "Companion mobile number"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 20
+            },
+            {
+              "name": "DISTANCE_TO_HOME_KM",
+              "labels": [
+                {
+                  "text": "Distance from facility to patient home (km, 1 dp)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": false
+            },
+            {
+              "name": "CONTACT_VERIFIED",
+              "labels": [
+                {
+                  "text": "Contact verified at listing time"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CONTACT_VERIFIED_VS1",
+                  "labels": [
+                    {
+                      "text": "Contact verified at listing time"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes \u2014 at least one channel functional"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No \u2014 no functional contact"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "HOME_IN_SUBDIVISION",
+              "labels": [
+                {
+                  "text": "Patient home is inside a subdivision"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "HOME_IN_SUBDIVISION_VS1",
+                  "labels": [
+                    {
+                      "text": "Patient home is inside a subdivision"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_01",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Walk"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_01_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Walk"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_02",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Bike"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_02_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Bike"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_03",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Public Bus"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_03_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Public Bus"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_04",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Jeepney"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_04_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Jeepney"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_05",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Tricycle"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_05_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Tricycle"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_06",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Car (incl. private taxi/cab)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_06_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Car (incl. private taxi/cab)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_07",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Motorcycle"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_07_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Motorcycle"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_08",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Boat"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_08_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Boat"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_09",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Taxi"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_09_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Taxi"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_10",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Pedicab"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_10_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Pedicab"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_11",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 E-bike"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_11_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 E-bike"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_MODE_96",
+              "labels": [
+                {
+                  "text": "Transport mode to facility \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TRANSPORT_MODE_96_VS1",
+                  "labels": [
+                    {
+                      "text": "Transport mode to facility \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TRANSPORT_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "Transport mode \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 60
+            }
+          ]
         },
         {
           "name": "REC_LISTING_FACILITY_CAPTURE",

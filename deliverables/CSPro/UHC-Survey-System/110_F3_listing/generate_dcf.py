@@ -188,9 +188,206 @@ def build_random_interval_log():
 
 
 def build_patient_roster():
-    """REC_PATIENT_ROSTER — landed in commit 4. Stub for commit 1."""
+    """REC_PATIENT_ROSTER — one occurrence per listed patient.
+
+    This is the record that F3 and F4 entry apps consume at interview
+    time via loadcase() on the external PATIENTLISTING_DICT reference.
+    Each occurrence is a fully-enumerated, distance-triaged, auto-tagged
+    patient.
+
+    Item groups:
+      1. Per-patient bookkeeping (sequence, tag, status flags).
+      2. PII for the listed patient (name + contact). Per the May 6
+         Working File §3.4.1.7, the protocol authorizes capture of
+         minimum-necessary patient identifiers for follow-up only.
+      3. Single companion (per F3 informant rule — at most one informant
+         per case; HCW present in case the patient cannot self-respond).
+      4. Triage signals fed into the auto-tag PROC: distance, transport
+         mode (multi-response per F3 Q70/Q73), subdivision flag,
+         contact-verified flag.
+
+    Item-width and NA-code discipline (project-wide):
+      - LISTING_TAG NA=9 at width 1 (tag is required; NA=9 reserved).
+      - CONTACT_VERIFIED NA=9 at width 1.
+      - HOME_IN_SUBDIVISION NA=9 at width 1.
+      - DISTANCE_TO_HOME_KM is decimal width 4 (max 99.9 km) — beyond 99.9
+        km the patient is mechanically ineligible for the F4 catchment.
+      - TRANSPORT_MODE_OOO are dichotomous (1=selected, 2=not) per the
+        SELECT-ALL idiom in shared.cspro_helpers.select_all().
+
+    Max occurrences: 999 (matches FACILITY_TARGET + BACKUP_TARGET + REFUSED
+    + EXCLUDED ceiling at any realistic facility-day).
+    """
+
+    # 12-mode transport-mode enumeration, verbatim from F3 Q70/Q73 (see
+    # wiki/sources/Source - Survey Manual 2026-05-06 - Section 3a.md).
+    # Multi-response — captured here for future-Myra-rule use; the
+    # commit-8 Candidate A auto-tag rule does NOT use TRANSPORT_MODE.
+    TRANSPORT_MODE_OPTIONS = [
+        ("Walk",                            "01"),
+        ("Bike",                            "02"),
+        ("Public Bus",                      "03"),
+        ("Jeepney",                         "04"),
+        ("Tricycle",                        "05"),
+        ("Car (incl. private taxi/cab)",    "06"),
+        ("Motorcycle",                      "07"),
+        ("Boat",                            "08"),
+        ("Taxi",                            "09"),
+        ("Pedicab",                         "10"),
+        ("E-bike",                          "11"),
+        ("Other (specify)",                 "96"),
+    ]
+
+    LISTING_TAG_OPTIONS = [
+        ("Tag 1 — for patient exit survey (F3 same-day at facility)",  "1"),
+        ("Tag 2 — for follow-up household survey (F4 home visit)",     "2"),
+        ("Tag 3 — ineligible (outside catchment / no contact)",        "3"),
+        ("Not applicable",                                             "9"),
+    ]
+
+    PATIENT_TYPE_OPTIONS = [
+        ("Outpatient",      "1"),
+        ("Inpatient",       "2"),
+        ("Not applicable",  "9"),
+    ]
+
+    SEX_OPTIONS = [
+        ("Male",           "1"),
+        ("Female",         "2"),
+        ("Not applicable", "9"),
+    ]
+
+    F3_STATUS_OPTIONS = [
+        ("Pending — not yet attempted",  "0"),
+        ("Completed",                    "1"),
+        ("In progress",                  "2"),
+        ("Refused at F3",                "3"),
+        ("Postponed",                    "4"),
+        ("Not applicable",               "9"),
+    ]
+
+    F4_STATUS_OPTIONS = [
+        ("Pending — not yet attempted",  "0"),
+        ("Completed",                    "1"),
+        ("In progress",                  "2"),
+        ("Refused at F4",                "3"),
+        ("Postponed",                    "4"),
+        ("Not applicable — Tag 1 / 3",   "9"),
+    ]
+
+    items = [
+        # --- Per-patient bookkeeping ---------------------------------
+        # ROSTER_SEQ is the 1-based occurrence index within this session —
+        # NOT the F-series CASE_SEQ. F-series CASE_SEQ is allocated by
+        # F3/F4 preproc when those instruments consume this roster.
+        numeric("ROSTER_SEQ",            "Listing roster sequence",            length=3,
+                zero_fill=True),
+        # The auto-tag value (computed by the commit-8 PROC).
+        numeric("LISTING_TAG",           "Auto-tag (1=F3 exit, 2=F4 home, 3=ineligible)",
+                length=1, value_set_options=LISTING_TAG_OPTIONS),
+        # Status flags maintained downstream by F3 / F4 (start at 0).
+        numeric("F3_STATUS",             "F3 interview status",                 length=1,
+                value_set_options=F3_STATUS_OPTIONS),
+        numeric("F4_STATUS",             "F4 interview status",                 length=1,
+                value_set_options=F4_STATUS_OPTIONS),
+        # F-series CASE_SEQ slots — populated by F3/F4 preproc upon
+        # consumption. Width-3 zero-fill matches build_id_block()'s slot 5.
+        numeric("ASSIGNED_F3_CASE_SEQ",  "F3 CASE_SEQ once F3 consumes this row",
+                length=3, zero_fill=True),
+        numeric("ASSIGNED_F4_CASE_SEQ",  "F4 CASE_SEQ once F4 consumes this row",
+                length=3, zero_fill=True),
+
+        # --- Listed patient PII --------------------------------------
+        alpha("P_LAST_NAME",             "Patient last name",                   length=40),
+        alpha("P_FIRST_NAME",            "Patient first name",                  length=40),
+        alpha("P_MIDDLE_INIT",           "Patient middle initial (or hyphen if none)",
+              length=5),
+        alpha("P_NAME_EXT",              "Patient name extension (e.g., Jr., III)",
+              length=10),
+        numeric("P_SEX",                 "Patient sex at birth",                length=1,
+                value_set_options=SEX_OPTIONS),
+        numeric("P_AGE",                 "Patient age (years, as of last birthday)",
+                length=3),
+        numeric("P_TYPE",                "Type of patient",                     length=1,
+                value_set_options=PATIENT_TYPE_OPTIONS),
+        # Contact channels — at least one must be functional for the
+        # CONTACT_VERIFIED flag below to be set to 1.
+        alpha("P_MOBILE",                "Patient mobile number",               length=20),
+        alpha("P_LANDLINE",              "Patient landline number (if any)",    length=20),
+        alpha("P_EMAIL",                 "Patient email (if any)",              length=60),
+
+        # --- Companion (single, per F3 informant rule) ---------------
+        # If the patient cannot self-respond (e.g., admitted inpatient,
+        # cognitive impairment), one companion may serve as informant.
+        # F3 preproc reads HAS_COMPANION + COMPANION_RELATIONSHIP at
+        # case-start to wire the informant-routing.
+        numeric("HAS_COMPANION",         "Companion accompanying the patient",  length=1,
+                value_set_options=[
+                    ("Yes — companion present",           "1"),
+                    ("No — patient is alone",             "2"),
+                    ("Not applicable",                    "9"),
+                ]),
+        alpha("COMPANION_LAST_NAME",     "Companion last name",                 length=40),
+        alpha("COMPANION_FIRST_NAME",    "Companion first name",                length=40),
+        numeric("COMPANION_RELATIONSHIP","Companion relationship to patient",   length=2,
+                zero_fill=True, value_set_options=[
+                    ("Spouse / partner",          "01"),
+                    ("Parent",                    "02"),
+                    ("Child (adult)",             "03"),
+                    ("Sibling",                   "04"),
+                    ("Other relative",            "05"),
+                    ("Friend / neighbour",        "06"),
+                    ("Carer / HCW",               "07"),
+                    ("Other (specify)",           "96"),
+                    ("Not applicable",            "99"),
+                ]),
+        alpha("COMPANION_OTHER_TXT",     "Companion relationship — Other (specify) text",
+              length=60),
+        alpha("COMPANION_MOBILE",        "Companion mobile number",             length=20),
+
+        # --- Triage signals (auto-tag rule inputs) -------------------
+        # DISTANCE_TO_HOME_KM — captured to one decimal place by the
+        # APC's distance helper (haversine on facility GPS vs patient
+        # home approximation). Width 4 holds 00.0 .. 99.9 km. Anything
+        # beyond 99.9 is set as a hard-ineligible by the auto-tag rule.
+        numeric("DISTANCE_TO_HOME_KM",   "Distance from facility to patient home (km, 1 dp)",
+                length=4),
+        # CONTACT_VERIFIED — enumerator confirms at least one contact
+        # channel is functional (test SMS / test ring).
+        numeric("CONTACT_VERIFIED",      "Contact verified at listing time",    length=1,
+                value_set_options=[
+                    ("Yes — at least one channel functional", "1"),
+                    ("No — no functional contact",            "2"),
+                    ("Not applicable",                        "9"),
+                ]),
+        # HOME_IN_SUBDIVISION — captured for future Myra-rule use.
+        # Not currently consumed by the commit-8 Candidate A rule.
+        numeric("HOME_IN_SUBDIVISION",   "Patient home is inside a subdivision",
+                length=1, value_set_options=[
+                    ("Yes",            "1"),
+                    ("No",             "2"),
+                    ("I don't know",   "3"),
+                    ("Not applicable", "9"),
+                ]),
+    ]
+
+    # TRANSPORT_MODE multi-response — 12 dichotomous items + free-text
+    # capture for "Other (specify)" per the SELECT-ALL idiom. Coded
+    # inline (not via select_all()) because the value-set codes are
+    # 2-wide (01..11, 96) rather than the 1-wide default the helper
+    # would assume, and the option labels need explicit numbering.
+    for text, code in TRANSPORT_MODE_OPTIONS:
+        items.append(numeric(
+            f"TRANSPORT_MODE_{code}",
+            f"Transport mode to facility — {text}",
+            length=1,
+            value_set_options=[("Yes", "1"), ("No", "2")],
+        ))
+    items.append(alpha("TRANSPORT_OTHER_TXT",
+                       "Transport mode — Other (specify) text", length=60))
+
     return record("REC_PATIENT_ROSTER", "Patient Listing Roster", "P",
-                  [], max_occurs=999, required=False)
+                  items, max_occurs=999, required=False)
 
 
 def build_listing_facility_capture():
