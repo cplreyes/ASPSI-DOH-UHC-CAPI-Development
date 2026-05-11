@@ -3,6 +3,7 @@
 **Round:** 3 (testers' numbering)
 **Drafted:** 2026-05-11 · **Opens:** 2026-05-13 (Wed AM)
 **Side:** HCW survey (PWA enrollment + form completion + submission)
+**Companion guide:** `docs/F2-PWA-UAT-Round-3-Admin-Portal-Tester-Guide-2026-05-13.md` (Admin Portal side — both testers walk both)
 **Coordinator:** Carl Patrick L. Reyes (Data Programmer)
 **Window:** Opens Wed 2026-05-13 AM · Closes Fri 2026-05-15 PM (sprint close)
 
