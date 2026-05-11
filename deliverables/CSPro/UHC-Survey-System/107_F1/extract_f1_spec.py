@@ -1,6 +1,7 @@
 """extract_f1_spec.py — throwaway one-shot.
 
-Read Carl's existing hand-laid F1.fmf (deliverables/CSPro/F1/FacilityHeadSurvey.fmf)
+Read the archived hand-laid F1.fmf
+(deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/FacilityHeadSurvey.fmf)
 and produce F1.spec.md with one verbatim Q-text block per item, in the format
 question_text_loader.py expects.
 
@@ -13,10 +14,12 @@ import re
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-# Worktree is several levels deep — main checkout's F1 dir is hardcoded below.
+# Worktree is several levels deep — main checkout's archived F1 dir is hardcoded
+# below. Repointed 2026-05-12 after Sprint 005 R3 archive sequence moved the
+# pre-rebuild F1 build under deliverables/.archive/pre-rebuild-2026-05-11/.
 LEGACY_FMF = Path(
     r"C:\Users\analy\Documents\analytiflow\1_Projects\ASPSI-DOH-CAPI-CSPro-Development"
-    r"\deliverables\CSPro\F1\FacilityHeadSurvey.fmf"
+    r"\deliverables\.archive\pre-rebuild-2026-05-11\CSPro\F1\FacilityHeadSurvey.fmf"
 )
 
 FIELD_RE = re.compile(r"\[Field\]\nName=(\S+).*?(?=\[Field\]|\[Text\]|\Z)", flags=re.DOTALL)

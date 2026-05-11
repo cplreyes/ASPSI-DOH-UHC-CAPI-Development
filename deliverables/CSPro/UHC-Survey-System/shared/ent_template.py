@@ -1,8 +1,9 @@
 """ent_template.py — canonical CSPro 8.0 .ent property block.
 
 Source-of-truth: the working F1 .ent at
-deliverables/CSPro/F1/FacilityHeadSurvey.ent (Carl's hand-laid Designer
-output that opens cleanly in CSPro 8.0).
+deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/FacilityHeadSurvey.ent
+(Carl's hand-laid Designer output that opens cleanly in CSPro 8.0;
+archived 2026-05-11 as part of the pre-rebuild snapshot).
 
 Use:
     from shared.ent_template import canonical_logic_settings, canonical_properties

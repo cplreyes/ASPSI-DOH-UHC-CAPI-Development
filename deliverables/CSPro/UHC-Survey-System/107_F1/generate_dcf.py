@@ -8,8 +8,10 @@ supersedes the Apr 08 baseline).
 Authority sources (in priority order):
   1. raw/Project-Deliverable-1_Apr20-submitted/Annex F1_Facility Head Survey
      Questionnaire_UHC Year 2.pdf                                   (printed)
-  2. deliverables/CSPro/F1/inputs/F1_clean.txt                       (text extract)
-  3. deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md          (logic spec)
+  2. deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/inputs/F1_clean.txt
+     (text extract; archived 2026-05-11)
+  3. deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/F1-Skip-Logic-and-Validations.md
+     (logic spec; archived 2026-05-11)
   4. raw/CSPro-Data-Dictionary/FacilityHeadSurvey.dcf                (Carl's manual
      scaffold — authoritative for FIELD_CONTROL, GEO_ID, Q1-Q8 item names + value
      set labels; this generator extends it for Q9-Q166 + secondary data.)
