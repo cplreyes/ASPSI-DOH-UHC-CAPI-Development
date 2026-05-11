@@ -48,6 +48,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
 from cspro_helpers import (
     numeric, alpha, record, build_dictionary as build_dictionary_from_helpers,
+    _gps_fields, _photo_block,
 )
 
 
@@ -391,15 +392,43 @@ def build_patient_roster():
 
 
 def build_listing_facility_capture():
-    """REC_LISTING_FACILITY_CAPTURE — landed in commit 5. Stub for commit 1."""
-    return record("REC_LISTING_FACILITY_CAPTURE",
-                  "Facility GPS Capture (listing session)", "Z", [])
+    """REC_LISTING_FACILITY_CAPTURE — facility GPS for the listing session.
+
+    One occurrence per session. The enumerator captures facility GPS at
+    session start so the desk reviewer can confirm the listing session
+    actually occurred at the sampled facility (not at home / at a
+    friendlier facility). Items emitted by shared._gps_fields() — see
+    shared/Capture-Helpers.apc::ReadGPSReading for the capture handler.
+
+    The FACILITY_ prefix matches the F1 / F3 facility GPS blocks; the
+    record-type 'Z' matches F1's REC_FACILITY_CAPTURE convention.
+    """
+    return record(
+        "REC_LISTING_FACILITY_CAPTURE",
+        "Facility GPS Capture (listing session)", "Z",
+        items=_gps_fields(prefix="FACILITY_"),
+    )
 
 
 def build_listing_photo():
-    """REC_LISTING_PHOTO — landed in commit 5. Stub for commit 1."""
-    return record("REC_LISTING_PHOTO", "Listing Session Verification Photo",
-                  "X", [])
+    """REC_LISTING_PHOTO — verification photo for the listing session.
+
+    Per the project-wide one-photo-per-case rule (see wiki memory
+    'GPS + verification photo capture'). The photo is the enumerator
+    holding the facility's signage / a recognizable facility landmark.
+    Items emitted by shared._photo_block() — filename is a filename-
+    reference, NOT a binary item (per project convention; CSPro 8.0
+    binary items are flagged experimental and avoided for MVP). The
+    file itself syncs via CSEntry's attachment mechanism.
+
+    Filename pattern (set in the APC's CAPTURE_VERIFICATION_PHOTO handler):
+        listing-<RR><PP><MMM><FF>-<YYYYMMDD>-<SSS>-verification.jpg
+    """
+    return record(
+        "REC_LISTING_PHOTO",
+        "Listing Session Verification Photo", "X",
+        items=_photo_block(prefix=""),
+    )
 
 
 # ============================================================
