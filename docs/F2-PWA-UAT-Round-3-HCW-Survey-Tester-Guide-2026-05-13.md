@@ -6,9 +6,9 @@
 **Coordinator:** Carl Patrick L. Reyes (Data Programmer)
 **Window:** Opens Wed 2026-05-13 AM · Closes Fri 2026-05-15 PM (sprint close)
 
-> **Project context.** This is the **DOH UHC Survey Year 2 — Healthcare Worker Survey**. Field rollout uses tablets handed to HCWs (nurses, midwives, physicians, etc.) at sampled health facilities. Round 3's job is twofold: **(a)** verify the three v1.2.0 features shipped 2026-05-01 (exclusive "I don't know" rule, "All of the above" auto-select rule, scale-style matrix) actually work in current prod (v2.0.0), and **(b)** stress-test what Round 2 didn't cover — offline behavior, real device matrix, edge data, resume after force-quit, and token edge cases.
+> **Project context.** This is the **DOH UHC Survey Year 2 — Healthcare Worker Survey**. Field rollout uses tablets handed to HCWs (nurses, midwives, physicians, etc.) at sampled health facilities. Round 3's job is twofold: **(a)** **regression-check** that the 14 HCW-survey-side R2 fixes (closed 2026-05-08 / 2026-05-09) still hold on current prod (v2.0.0), and **(b)** **stress-test** what Round 2 didn't cover — offline behavior, real device matrix, edge data, resume after force-quit, and token edge cases.
 
-> **Why this round exists.** The three R3 fixes (#266/#267/#268) shipped in v1.2.0 release on 2026-05-01 but the GH issues stayed open as a process gap. Code + unit tests confirm correctness; this round confirms in-form behavior on real devices with real testers. The new-scenarios bundle covers the gaps Round 2 (full-form happy/alt/error pass) didn't touch.
+> **Why this round exists.** Round 2 closed cleanly with 47 issues fixed (14 HCW-survey side + 33 Admin Portal). R3 is the first cycle on the post-R2 build to (a) confirm those fixes haven't regressed under continued development and (b) explore scenario classes R2's full-form happy/alt/error pass didn't touch.
 
 > **Scope of this guide.** PWA-side only — what an HCW sees on the tablet. No Admin Portal testing this round (Admin Portal stays at v2.0.1 from PR #136; no R3 cycle for it).
 
@@ -55,7 +55,7 @@ The tokens minted for Round 2 (2026-05-04) are still valid until **2026-06-03** 
 | **Shan** | `DEMO-HCW-004` | Garcia, Roberto · **Pharmacist/Dispenser** · Male · 29 | DEMO-FAC-RHU-QC-1 (NCR / QC RHU) | Sections A, B, F, H, I, J (no C/D/E1/E2/G — role-gated off) | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkYmUzYTU0ZS03OTIzLTQzYjAtYTk4MS0yYmY1ODQzNGU3N2EiLCJ0YWJsZXRfaWQiOiI1MGE1M2QzYy02ZDE2LTRlYWYtODY3ZC0wNTFlMmEzYzJiZWQiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLVJIVS1RQy0xIiwiaWF0IjoxNzc3ODg2OTE5LCJleHAiOjE3ODA0Nzg5MTl9.6ytd1Hu66lABXpCuEMdhgl4c3cIgIpLbkwnRTM8P36A` |
 | **Kidd** | `DEMO-HCW-007` | (DH-INFANTA HCW — pick **Physician/Doctor** at role-select to exercise Section C/G) | DEMO-FAC-DH-INFANTA (IV-A District Hospital) | All sections A–J | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMjUzN2YzMy1mNTI2LTQ0ZDYtOGFiYS0yZmM3MzQxZDA0OTIiLCJ0YWJsZXRfaWQiOiI0YjliZDljYi04ZjBhLTQ1MTQtYTE4Yi00Y2ZlZjBmNjA0Y2MiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLURILUlORkFOVEEiLCJpYXQiOjE3Nzc4ODY5NDEsImV4cCI6MTc4MDQ3ODk0MX0.GXkvyAuKYsDdfbG9PhaKKA1kYMv-jKAh6kAnDBmMVlE` |
 
-> **For Section 5A (verify-shipped):** Kidd MUST pick **Physician/Doctor** at the role-select screen — Section C (Q32 select-all test) is role-gated, only visible to Physician/Nurse/Midwife. Shan's Pharmacist persona doesn't see Section C, so Shan exercises Q25 (Section B) + Section J matrix only for the verify pass.
+> **For Section 5A (R2 regression):** Kidd MUST pick **Physician/Doctor** at the role-select screen — Sections C/D/E1/E2/G are role-gated, only visible to Physician/Nurse/Midwife. Shan's Pharmacist persona doesn't see those sections, so Shan exercises 5A.1 (token), 5A.2 (Q9), 5A.3 (Q25 Section B), 5A.8 (Section J matrix), and 5A.9 (Submission + Sync). Kidd covers everything including the role-gated 5A.4–5A.7. Together both testers cover all 14 R2 regressions.
 
 ### Spare HCWs (for re-test or fresh-start scenarios)
 
@@ -79,51 +79,27 @@ Same as Round 2 — see `docs/F2-PWA-UAT-Round-2-HCW-Survey-Tester-Guide-2026-05
 
 ## 5. Test Scenarios
 
-Two parts: **5A — Verify shipped (v1.2.0 patterns)** confirms three specific UX rules work as spec'd; **5B — New scenarios** stress-tests gaps Round 2 didn't cover.
+Two parts: **5A — R2 fix regression** confirms the 14 HCW-survey-side R2 fixes still hold; **5B — New scenarios** stress-tests scenario classes Round 2 didn't cover.
 
 For every bug you find, open the spec at the cited section to confirm whether it's a **PWA bug** (deployed code diverges from spec) or a **spec bug** (spec is wrong) — the fix path is different.
 
-### 5A. Verify shipped (v1.2.0 patterns)
+### 5A. R2 Fix Regression
 
-These three rules shipped in v1.2.0 (2026-05-01) but were never verified by testers — Round 2 closed before R3 features landed. This pass confirms they work in current prod.
+Re-walk the bug paths from Round 2's 14 HCW-survey closures. For each scenario, confirm the fix still holds on current prod (v2.0.0). If a R2 fix has regressed, file a bug with the original R2 issue number referenced (`Regression of #N`).
 
-#### 5A.1 — Q25 exclusive "I don't know" rule (Section B)
+| # | R2 Issue(s) | Section / Q | Original bug summary | Quick regression check |
+|---|---|---|---|---|
+| **5A.1** | [#108](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/108), [#109](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/109) | Token-paste enrollment | Token paste edge cases (whitespace, multi-line, malformed) | Paste your token cleanly → Verify enables → Step 2 loads. Then try pasting with trailing whitespace, with the full URL prefix `https://...?token=`, with characters chopped off — expect graceful handling. |
+| **5A.2** | [#110](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/110) | Section A, Q9 (year+month) | R2-#110: Q9_2 Month was previously optional, made required 2026-05-09 — blank Months let form proceed despite Q9 being required | Fill Q9 Year(s)=5, leave Month(s) blank, try to advance. Expect: validation error blocking advance until both subfields filled. |
+| **5A.3** | [#111](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/111), [#112](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/112) | Section B, Q25 (UHC Awareness) | Multi-select state pollution / exclusive option behavior | Open Section B Q25. Select Salary + Working hours. Then select "I don't know" — expect previous selections clear. Conversely, with "I don't know" selected, click Salary — expect "I don't know" clears. |
+| **5A.4** | [#114](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/114), [#115](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/115) | Section C, Q31–Q40 (YAKAP/Konsulta) | Role-gated section; Q32 select-all rule | **Physician role only (Kidd):** open Section C. Q32 — click "All of the above" → all 7 services auto-check. Uncheck Mammogram → "All of the above" auto-unchecks. Click "I don't know" → all clear, only "I don't know" remains. **Pharmacist role (Shan):** confirm Section C is HIDDEN in nav. |
+| **5A.5** | [#116](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/116) | Section D, Q44 (NBB/ZBB) | Q44 — role-gated section behavior | **Physician/Nurse/Midwife only:** walk Section D Q41–Q47. Confirm Q44 displays + behaves per spec. **Other roles:** confirm Section D HIDDEN. |
+| **5A.6** | [#117](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/117) | Section E1, E2 | Section E1/E2 issues (BUCAS / GAMOT awareness) | Walk Section E1 + E2 end-to-end. Check no skip-logic regressions; required-field validations fire correctly. |
+| **5A.7** | [#118](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/118) | Section G — back-nav | **HIGH-VALUE REGRESSION:** Back-nav lost answers at Q87/Q88 + X icon despite ✓ + redirect to F | **Physician role:** in Section G, answer Q87 + Q88, click Next, then click Back. Expect: previous answers persist, NOT cleared. Section G nav icon shows ✓ (check), NOT ✗ (X). NO unexpected redirect to Section F. This is the most-likely-to-regress R2 fix — re-test carefully. |
+| **5A.8** | [#119](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/119) | Section J (Q98–Q125) — Job Satisfaction matrix | Two matrix grids + terminal branch | Open Section J. Confirm Q98–Q125 renders as **two matrix grids** (statements as rows, Likert columns shared). On desktop (≥768px) it's a `<table>`; on mobile (<768px) it stacks. Pick answers in some rows; advance — expect required-row validation. |
+| **5A.9** | [#120](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/120), [#121](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/121), [#122](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/122) | Submission + Sync | Submission flow + sync indicator + "no submission yet" UX | After completing the form, hit Submit. Expect: success indicator (NOT silent failure, NOT "no submission yet" misleading text). Open Sync page — expect submission visible + reconciliation state correct. Coordinator (Carl) confirms it landed in F2_Responses sheet. |
 
-**What to verify:** In a multi-select question that includes "I don't know" as a choice, selecting "I don't know" clears all other selections; selecting any other choice clears "I don't know."
-
-**Where to find it:** Section B, Q25 — *"Which of the following do you expect to change in your personal work as a health worker under UHC?"* (multi-select; appears for both Pharmacist and Physician roles, so both testers exercise this).
-
-**Test steps:**
-- **5A.1.H1 (Happy):** Select Salary + Working hours. Then select "I don't know." Expect: Salary + Working hours both clear; only "I don't know" remains checked.
-- **5A.1.H2 (Happy):** With "I don't know" selected, click any other option (e.g., Number of patients). Expect: "I don't know" clears; only Number of patients remains checked.
-- **5A.1.A1 (Alt):** Type into "Other (specify)" text field, then select "I don't know." Expect: "Other (specify)" checkbox clears, but the typed text in the companion field persists (Q25_other) — the multi-select array is wiped, the side-channel text field is not.
-- **5A.1.E1 (Error):** Select "I don't know" then click Next/Save Draft. Expect: question accepted as answered; no validation error.
-
-#### 5A.2 — Q32 select-all + exclusive (Section C, Physician/Nurse/Midwife only)
-
-**What to verify:** "All of the above" auto-selects every non-exclusive choice; exclusive ("I don't know") still wins over select-all when clicked.
-
-**Where to find it:** Section C, Q32 — *"Which of the following are included in the YAKAP/Konsulta package?"* (multi-select with both `isSelectAll: "All of the above"` and `isExclusive: "I don't know"`). **Section C is role-gated** — only visible to Physician/Nurse/Midwife. Kidd as Physician sees this; Shan as Pharmacist does NOT.
-
-**Test steps:**
-- **5A.2.H1 (Happy):** Click "All of the above." Expect: Pap smear, Mammogram, Lipid profile, Thyroid function test, Chest X-ray, Low-dose Chest CT scan, Dental services all auto-check; "All of the above" stays checked; "I don't know" stays unchecked.
-- **5A.2.H2 (Happy):** With "All of the above" checked, uncheck Mammogram. Expect: Mammogram unchecks AND "All of the above" auto-unchecks (the "all" claim is no longer accurate); the other 6 stay checked.
-- **5A.2.H3 (Happy):** With "All of the above" checked, click "I don't know." Expect: all 7 services unselect, "All of the above" unselects, only "I don't know" remains.
-- **5A.2.H4 (Happy):** With "I don't know" checked, click "All of the above." Expect: "I don't know" clears; all 7 services + "All of the above" check.
-- **5A.2.H5 (Happy):** Uncheck "All of the above." Expect: all 7 auto-selected services clear; "I don't know" stays whatever it was (likely still unchecked).
-
-#### 5A.3 — Section J matrix grids (Q98–Q125, Job Satisfaction)
-
-**What to verify:** Consecutive scale-style questions sharing the same answer choices render as a matrix table (one statement per row, shared answer columns) instead of stacked one-per-page.
-
-**Where to find it:** Section J, *"Job Satisfaction."* Q98–Q125 contains **two matrix grids** (per #119 R2 issue) where each row is a statement (e.g., *"I am satisfied with my salary"*) and the columns are a Likert scale (Strongly disagree / Disagree / Neutral / Agree / Strongly agree).
-
-**Test steps:**
-- **5A.3.H1 (Happy / desktop):** On desktop browser (≥768px wide), open Section J. Expect: questions render as a `<table>` with statement column on the left and 5 Likert columns across the top. Each row has 5 radio buttons. Header row shows "Statement | Strongly disagree | Disagree | Neutral | Agree | Strongly agree."
-- **5A.3.H2 (Happy / mobile):** On tablet portrait or phone (<768px), open Section J. Expect: matrix collapses to stacked card-per-statement layout (statement above, radio choices in a horizontal flex row below). NOT the desktop table.
-- **5A.3.H3 (Happy):** Click a radio in row 1 (e.g., "Agree" for *"I am satisfied with my salary"*). Expect: only that radio activates; other rows unchanged. Click "Strongly agree" in same row. Expect: previous selection in row 1 clears, "Strongly agree" activates (mutual exclusion within a row, independent across rows).
-- **5A.3.A1 (Alt):** Try to navigate to next section without answering all rows. Expect: validation error highlights any unanswered row (required-by-default per spec).
-- **5A.3.E1 (Error):** On tablet landscape, check that the matrix doesn't horizontal-scroll-clip the rightmost column ("Strongly agree"). If columns clip, file a bug.
+**File regression bugs as `Regression of #N` in the title** so triage can quickly distinguish R3 regressions from new R3 finds. Apply the `from-uat-round-3-2026-05` label.
 
 ### 5B. New scenarios (Round 2 didn't cover)
 
@@ -189,7 +165,7 @@ Round 2 walked the happy-path form thoroughly. These scenarios stress-test what 
 For every bug you find, open a GitHub Issue at the bug repo. Use this template:
 
 ```
-**Round 3 scenario:** 5A.x.X1 / 5B.x.X1 / etc.
+**Round 3 scenario:** 5A.x (R2 regression — include the original `Regression of #N`) OR 5B.x.X1 (new scenario)
 **Tester:** Shan / Kidd
 **Device:** Android tablet (model) / iPhone (model) / desktop Chrome / etc.
 **HCW used:** DEMO-HCW-00X
@@ -218,13 +194,15 @@ Apply the label `from-uat-round-3-2026-05` to every R3 bug. Coordinator triages 
 
 ## 8. Why this round matters
 
-Round 1 + Round 2 confirmed the form *works for the happy path with reliable internet on a desktop browser*. Field rollout will hit:
+Round 1 + Round 2 found and fixed 60+ issues across the form, but both ran against a desktop browser on reliable internet. Field rollout will hit:
 - Real Android tablets (different from desktop Chrome)
 - Spotty connections at rural facilities
 - HCWs interrupting the form to see patients (resume scenarios)
 - Real respondent text with quotes, special chars, and copy-paste from notes
 - Tokens emailed/Slack-pasted with trailing whitespace
 
-Round 3's new-scenarios bundle is your last cheap chance to find the field-rollout blockers before pretest pilot. Verify-shipped is bookkeeping (the rules are unit-tested), but a tester finding a regression on real devices would still surface it.
+Round 3's two-part structure mirrors that:
+- **5A R2 fix regression** = guard rail. Continued development between R2 close (2026-05-09) and R3 open could have regressed any of the 14 HCW-side fixes. Cheap to re-walk; expensive if a fix silently broke and rolled to field.
+- **5B new scenarios** = field-rollout blocker hunt. Last cheap chance before pretest pilot to surface offline / device-matrix / edge-data / resume / token-edge bugs.
 
 Thanks for testing!
