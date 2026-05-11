@@ -1,0 +1,32 @@
+# F1 line-ending policy.
+#
+# Why this file exists:
+#   CSPro Designer (Windows) rewrites its owned artifacts with CRLF on every
+#   File -> Save / F7 publish. The Python generators in this folder emit LF
+#   because Python's open()/write() on Windows produces \n. Without per-file
+#   pinning, each commit yields "warning: CRLF will be replaced by LF"
+#   chatter that the data programmer has to scroll past.
+#
+# Strategy:
+#   - Pin Designer-owned artifacts to eol=crlf so the index matches what
+#     Designer writes, removing the round-trip warning.
+#   - Pin generator-emitted sources (Python, regenerated JSON .ent, spec docs)
+#     to eol=lf so git autocrlf does not add CR on checkout.
+#
+# Cross-platform note: macOS/Linux contributors will still see LF in their
+# checkout for the lf-pinned files; the crlf-pinned files arrive as CRLF
+# but those are touched only by CSPro Designer on Windows in practice.
+
+# --- Designer-owned binaries (kept CRLF) ---------------------------------
+*.dcf           text eol=crlf
+*.fmf           text eol=crlf
+*.ent.apc       text eol=crlf
+*.ent.mgf       text eol=crlf
+*.ent.qsf       text eol=crlf
+
+# --- Generator-emitted sources (kept LF) ---------------------------------
+*.py            text eol=lf
+*.ent           text eol=lf
+*.pff           text eol=lf
+*.md            text eol=lf
+.gitattributes  text eol=lf
