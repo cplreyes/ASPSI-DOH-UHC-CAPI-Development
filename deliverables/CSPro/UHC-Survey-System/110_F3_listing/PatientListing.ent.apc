@@ -187,6 +187,45 @@ postproc
       cycle produced no patient and no refusal to log. }
 
 
+PROC SESSION_STATUS
+postproc
+    { When the operator closes the session (status changes from 1 to
+      anything else), trigger sync. Per SYNC.md, the listing app pushes
+      the session .csdb to CSWeb under
+        patient_listing/<env>/<RR><PP><MMM><FF>/<YYYYMMDD>/<SSS>.csdb
+      so F3 / F4 tablets can read it via the EXTERNAL dictionary
+      mechanism at interview time. }
+
+    if SESSION_STATUS = 1 then
+        exit;   { still in progress — no sync }
+    endif;
+
+    { Build the remote path from the ID block. Same %02d / %03d / %08d
+      specifiers as the case-ID concatenation in
+      shared/Capture-Helpers.apc::CAPTURE_VERIFICATION_PHOTO. }
+    string facilityPrefix =
+        maketext("%02d", REGION_CODE) +
+        maketext("%02d", PROVINCE_HUC_CODE) +
+        maketext("%03d", CITY_MUNICIPALITY_CODE) +
+        maketext("%02d", FACILITY_NO);
+
+    string remotePath =
+        "patient_listing/" + userpref("env") + "/" +
+        facilityPrefix + "/" +
+        maketext("%08d", LISTING_SESSION_DATE) + "/" +
+        maketext("%03d", LISTING_SESSION_SEQ) + ".csdb";
+
+    { Synchronize the current case .csdb to CSWeb at the remote path.
+      synchronize_file() is CSPro's built-in directive — see
+      CSPro 8.0 Users Guide -> Synchronization -> File-mode sync. }
+    if not synchronize_file(remotePath) then
+        errmsg("Listing-session sync FAILED for remote path %s. "
+               "The session has been saved locally and will retry "
+               "on next Synchronize -> Send data. Inform the STL.",
+               remotePath);
+    endif;
+
+
 PROC REC_PATIENT_ROSTER
 preproc
     { Defaults for a new roster occurrence. }

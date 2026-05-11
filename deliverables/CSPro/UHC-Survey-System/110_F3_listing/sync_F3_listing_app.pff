@@ -1,0 +1,21 @@
+[Run Information]
+Version=CSPro 8.0
+AppType=Sync
+Description=F3 Patient Listing — push listing session .csdb to CSWeb
+
+[Files]
+Application=.\PatientListing.ent
+InputData=..\109_sync\sync_F3_listing_app_data.csdb
+
+[Sync]
+Direction=Send
+SyncType=CSWeb
+ServerURL=PLACEHOLDER
+RemoteFilePath=patient_listing/${ENV}/${RR}${PP}${MMM}${FF}/${YYYYMMDD}/${SSS}.csdb
+Authentication=Token
+
+[Parameters]
+EnvParam=${ENV}
+FacilityPrefix=${RR}${PP}${MMM}${FF}
+SessionDate=${YYYYMMDD}
+SessionSeq=${SSS}
