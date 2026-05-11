@@ -406,15 +406,196 @@ def build_section_b():
 
 
 def build_section_c():
-    """C. Awareness on Universal Health Care (Q35-Q37)."""
-    items = []
+    """C. Awareness on Universal Health Care (Q35-Q37).
+
+    Skip-routing: Q35 UHC_HEARD = No -> Q38 (skip Q36, Q37). PROC-enforced.
+    """
+    Q35_OPTIONS = [
+        ("Yes", "1"),
+        ("No",  "2"),  # proceed to Q38
+    ]
+    Q36_SOURCE = [
+        ("News",                   "1"),
+        ("Legislation",            "2"),
+        ("Social Media",           "3"),
+        ("Friends / Family",       "4"),
+        ("Health center/ facility","5"),
+        ("LGU/ Barangay",          "6"),
+        ("I don't know",           "7"),
+        ("Other (Specify)",        "8"),
+    ]
+    Q37_UNDERSTANDING = [
+        ("Protection from financial risk/decreased out-of-pocket spending", "1"),
+        ("Access to quality and affordable health care goods and services", "2"),
+        ("Automatic enrollment into PhilHealth",                            "3"),
+        ("Primary care provider for every Filipino",                        "4"),
+        ("I don't know",                                                    "5"),
+        ("Other (Specify)",                                                 "6"),
+    ]
+    items = [
+        select_one("Q35_UHC_HEARD",
+                   "35. Have you heard about Universal Health Care (UHC) prior to this survey?",
+                   Q35_OPTIONS, length=1),
+        *select_all("Q36_UHC_SOURCE",
+                    "36. What is your source of information about UHC?", Q36_SOURCE),
+        *select_all("Q37_UHC_UNDERSTAND",
+                    "37. What is your understanding about UHC?", Q37_UNDERSTANDING),
+    ]
     return record("C_UHC_AWARENESS",
                   "C. Awareness on Universal Health Care", "E", items)
 
 
 def build_section_d():
-    """D. PhilHealth Registration and Health Insurance (Q38-Q52)."""
-    items = []
+    """D. PhilHealth Registration and Health Insurance (Q38-Q52).
+
+    Skip-routing:
+      - Q38 = No (2) or DK (3)  -> Q43  (skip Q39-Q42)
+      - Q41 = No                 -> Q43  (skip Q42)
+      - Q43 = No                 -> Q51  (skip Q44; Q45 non-member skip via PDF)
+      - Q45 NON-MEMBER          -> Q51  (per PDF "ASKED ONLY FOR PHILHEALTH MEMBERS")
+      - Q48 = No (3)             -> Q51  (skip Q49, Q50)
+      - Q49 = No                 -> Q51  (skip Q50)
+      - Q51 = No                 -> Q53  (skip Q52)
+    Reuses one REG_ACTOR value set across Q39, Q40, Q44 (same option list).
+    """
+    Q38_REGISTERED = [
+        ("Yes",          "1"),
+        ("No",           "2"),  # proceed to Q43
+        ("I don't know", "3"),  # proceed to Q43
+    ]
+    REG_ACTOR = [
+        ("PhilHealth representative",    "01"),
+        ("LGU",                          "02"),
+        ("Primary care provider",        "03"),
+        ("Other health care provider",   "04"),
+        ("Employer",                     "05"),
+        ("No one / self-registered",     "06"),
+        ("Barangay Health Worker",       "07"),
+        ("Friends / Family",             "08"),
+        ("Health center/facility",       "09"),
+        ("Other (Specify)",              "10"),
+    ]
+    Q42_DIFFICULTY = [
+        ("Unclear process",                                 "1"),
+        ("Took a long time",                                "2"),
+        ("Did not know where to ask for help",              "3"),
+        ("Had to travel a long way",                        "4"),
+        ("No valid ID",                                     "5"),
+        ("Did not know the required documents to register", "6"),
+        ("I don't know",                                    "7"),
+        ("Other (Specify)",                                 "8"),
+    ]
+    Q45_CATEGORY = [
+        ("Formal economy (i.e., individuals working in the government or private sector "
+         "based in the country)", "01"),
+        ("Informal economy (i.e., unemployed, self-employed, informal workers, Filipinos "
+         "with dual citizenship, naturalized Filipino citizens, citizens of other countries "
+         "working and/or residing in the Philippines)", "02"),
+        ("Indigent (i.e., individuals who have no visible means of income, or whose income "
+         "is insufficient for family subsistence based on DSWD's specific criteria)", "03"),
+        ("Sponsored (i.e., members whose contributions are being paid for by another "
+         "individual, government agencies, or private entities. Includes some low-income "
+         "citizens that are not indigent e.g. BHWs, PWDs)", "04"),
+        ("Lifetime member (i.e., individuals aged 60 years and above, uniformed personnel "
+         "aged 56 years and above, and SSS underground miner-retirees aged 55 years and "
+         "above and paid at least 120 monthly contributions with PhilHealth and the former "
+         "Medicare Programs of SSS and GSIS)", "05"),
+        ("Senior citizen (i.e., residents of the Philippines, aged sixty (60) years or above "
+         "and are not currently covered by any membership category of PhilHealth and "
+         "qualified dependents of senior citizen members who are also senior citizen "
+         "themselves or belonging to other membership categories, with or without coverage "
+         "who are senior citizens themselves)", "06"),
+        ("Overseas Filipino Worker (OFW)", "07"),
+        ("Qualified dependents (i.e., those whose contributions are declared and covered by "
+         "a principal member)", "08"),
+        ("I don't know",   "98"),
+        ("Other (Specify)", "99"),
+    ]
+    Q46_BENEFITS = [
+        ("No balance billing for basic ward accommodation", "1"),
+        ("Subsidized inpatient services",                   "2"),
+        ("Subsidized outpatient services",                  "3"),
+        ("There are no benefits to being a member",         "4"),
+        ("I don't know",                                    "5"),
+        ("Other (Specify)",                                 "6"),
+    ]
+    Q48_PAY = [
+        ("Yes, I pay directly",       "1"),
+        ("Yes, my employer pays",     "2"),
+        ("No, I do not pay premiums", "3"),  # proceed to Q51
+    ]
+    Q50_DIFFICULTY_PAYING = [
+        ("Cannot afford the premium",                       "1"),
+        ("Payment options are inconvenient",                "2"),
+        ("No time to pay",                                  "3"),
+        ("Don't see value in paying",                       "4"),
+        ("System of PhilHealth is unreliable/usually down", "5"),
+        ("I don't know",                                    "6"),
+        ("Other (Specify)",                                 "7"),
+    ]
+    Q52_PLANS = [
+        ("GSIS",               "1"),
+        ("SSS",                "2"),
+        ("Private Insurance",  "3"),
+        ("HMO",                "4"),
+        ("Pag-ibig",           "5"),
+        ("I don't know",       "6"),
+        ("Others (specify)",   "7"),
+    ]
+    Q47_PACKAGES = [
+        ("Q47_PHYSICIAN_CHECKUP", "47. Awareness of PhilHealth package — Physician check-up"),
+        ("Q47_DIAGNOSTIC_TESTS",  "47. Awareness of PhilHealth package — Diagnostic tests (e.g. laboratory tests and imaging)"),
+        ("Q47_HOSPITAL_CONF",     "47. Awareness of PhilHealth package — Hospital confinement"),
+        ("Q47_OUTPATIENT_DRUGS",  "47. Awareness of PhilHealth package — Outpatient drugs"),
+    ]
+    items = [
+        select_one("Q38_PHILHEALTH_REG",
+                   "38. Are you currently registered with PhilHealth?",
+                   Q38_REGISTERED, length=1),
+        select_one("Q39_HOW_FIND_OUT",
+                   "39. How did you find out about how to register for PhilHealth?",
+                   REG_ACTOR, length=2),
+        alpha("Q39_HOW_FIND_OUT_OTHER_TXT",
+              "39. How found out — Other (specify) text", length=120),
+        select_one("Q40_WHO_ASSISTED",
+                   "40. Who assisted you in the registration process?",
+                   REG_ACTOR, length=2),
+        alpha("Q40_WHO_ASSISTED_OTHER_TXT",
+              "40. Who assisted — Other (specify) text", length=120),
+        yes_no("Q41_REG_DIFFICULTY",
+               "41. Did you have any difficulties in the registration process?"),
+        *select_all("Q42_DIFFICULTY",
+                    "42. What did you find difficult about the process?", Q42_DIFFICULTY),
+        yes_no("Q43_KNOWS_ASSIST",
+               "43. Would you know where to go to seek assistance during registration?"),
+        select_one("Q44_WHERE_ASSIST",
+                   "44. Where would you go to seek assistance?",
+                   REG_ACTOR, length=2),
+        alpha("Q44_WHERE_ASSIST_OTHER_TXT",
+              "44. Where to seek assistance — Other (specify) text", length=120),
+        select_one("Q45_CATEGORY",
+                   "45. What category of member are you?",
+                   Q45_CATEGORY, length=2),
+        alpha("Q45_CATEGORY_OTHER_TXT",
+              "45. Category — Other (specify) text", length=120),
+        *select_all("Q46_BENEFITS",
+                    "46. What are some of the benefits that come with being a PhilHealth member?",
+                    Q46_BENEFITS),
+    ]
+    for name, label in Q47_PACKAGES:
+        items.append(yes_no(name, label))
+    items.extend([
+        select_one("Q48_PREMIUM_PAY",
+                   "48. Do you pay PhilHealth premiums every month?", Q48_PAY, length=1),
+        yes_no("Q49_PREMIUM_DIFFICULT",
+               "49. Do you find it difficult to pay your PhilHealth premium every month?"),
+        *select_all("Q50_DIFFICULTY_PAYING",
+                    "50. Why did you find it difficult?", Q50_DIFFICULTY_PAYING),
+        yes_no("Q51_OTHER_INSURANCE",
+               "51. Are you registered with another health insurance plan?"),
+        *select_all("Q52_PLANS",
+                    "52. Which health insurance plan/s are you enrolled in?", Q52_PLANS),
+    ])
     return record("D_PHILHEALTH",
                   "D. PhilHealth Registration and Health Insurance", "F", items)
 
