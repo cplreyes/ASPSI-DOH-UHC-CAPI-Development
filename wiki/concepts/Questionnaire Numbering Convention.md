@@ -110,10 +110,13 @@ Drops into *The Survey Questionnaire → Questionnaire Number*, replacing the ex
 
 Adopted; not yet executed. When scheduled:
 
-1. **`deliverables/CSPro/cspro_helpers.py`** — add `build_id_block()` returning the 5 ID items; extend `build_dictionary()` to accept an `id_items=` list (replacing the current `id_item_name` / `id_length` single-item path).
-2. **`deliverables/CSPro/F1/generate_dcf.py`** — replace `id_item_name="QUESTIONNAIRE_NO" / id_length=6` with `id_items=build_id_block()`. Regenerate `FacilityHeadSurvey.dcf`.
-3. **`deliverables/CSPro/F3/generate_dcf.py`** — same replacement; drop `F3_FACILITY_ID` from `PATIENT_GEO_ID` extras (or keep as denormalized convenience). Regenerate `PatientSurvey.dcf`.
-4. **`deliverables/CSPro/F4/generate_dcf.py`** — same replacement; add `F4_PARENT_F3_CASE_SEQ` (numeric, length 3) to `HOUSEHOLD_GEO_ID`. Regenerate `HouseholdSurvey.dcf`.
+> [!note] Path rebase 2026-05-12
+> The Apr 20-22 F1/F3/F4 build that this rollout footprint originally referenced was archived under `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/` during the Sprint 005 R3 archive sequence. The active build now lives under `deliverables/CSPro/UHC-Survey-System/`. The rollout steps below have been repointed accordingly — the **semantics are unchanged** (`build_id_block()` still replaces the single `QUESTIONNAIRE_NO` item; F3 drops `F3_FACILITY_ID`; F4 adds `F4_PARENT_F3_CASE_SEQ`), only the file paths shift.
+
+1. **`deliverables/CSPro/UHC-Survey-System/shared/cspro_helpers.py`** — add `build_id_block()` returning the 5 ID items; extend `build_dictionary()` to accept an `id_items=` list (replacing the current `id_item_name` / `id_length` single-item path).
+2. **`deliverables/CSPro/UHC-Survey-System/107_F1/generate_dcf.py`** — replace `id_item_name="QUESTIONNAIRE_NO" / id_length=6` with `id_items=build_id_block()`. Regenerate `FacilityHeadSurvey.dcf`.
+3. **F3 generator** (path TBD when F3 is reintroduced under UHC-Survey-System; legacy at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F3/generate_dcf.py` for reference) — same replacement; drop `F3_FACILITY_ID` from `PATIENT_GEO_ID` extras (or keep as denormalized convenience). Regenerate `PatientSurvey.dcf`.
+4. **F4 generator** (path TBD when F4 is reintroduced under UHC-Survey-System; legacy at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F4/generate_dcf.py` for reference) — same replacement; add `F4_PARENT_F3_CASE_SEQ` (numeric, length 3) to `HOUSEHOLD_GEO_ID`. Regenerate `HouseholdSurvey.dcf`.
 5. **F2 PWA** — case-ID issuer at submission time concatenates the same 5 fields (facility is known per token; PWA assigns `CASE_SEQ` from the F2_HCWs roster index). Update `apps-script/` writer + Worker schema accordingly.
 6. **Manual addendum** — paste the one-paragraph addendum (above) into the master manual; update `deliverables/Survey-Manual/CSPro-Section-Draft_2026-04-29.md` Section 4 open question #1 to point at this concept page; update `deliverables/Survey-Manual/CAPI-PWA-Stakeholder-Section_2026-05-02.md` §5 / §10 case-identifier mention.
 7. **Logic ramifications** — verify F1/F3/F4 PROC code references to `QUESTIONNAIRE_NO` (search for the literal string); replace where needed.

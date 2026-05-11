@@ -337,7 +337,7 @@ PROC BARANGAY          onfocus  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY
 This project's PSGC refactor (Apr 2026) is the template. Four levels: Region → Province/HUC → City/Municipality → Barangay.
 
 ```
-deliverables/CSPro/shared/
+deliverables/CSPro/UHC-Survey-System/shared/
 ├── psgc_region.dcf / .dat           (18 rows)
 ├── psgc_province.dcf / .dat         (117 rows)
 ├── psgc_city.dcf / .dat             (1,658 rows)

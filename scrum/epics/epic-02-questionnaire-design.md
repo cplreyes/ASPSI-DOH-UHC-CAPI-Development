@@ -40,9 +40,9 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 **State:** **Build-ready 2026-05-04.** Designer walkthrough complete (E2-F1-010 closed); bug list clean — no deferrals. The 6 `PENDING_DESIGN_*` defaults stand as final; no further LSS reconciliation. Unblocks E3-F1-001 (FMF Designer pass).
 **Scope (as of 2026-04-21):** 12 records · 671 items · 166 questions · 4 validation tiers (post Apr 21 GPS+photo+PSGC-cascade pass + case-control extension — SURVEY_CODE/INTERVIEWER_ID/DATE_STARTED/TIME_STARTED/AAPOR_DISPOSITION + FACILITY_NAME/FACILITY_ADDRESS; secondary-data records consolidated; `REC_FACILITY_CAPTURE` added for GPS/photo triggers)
 **Reference docs:**
-- `deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md` — skip-logic + validation spec (aligned with F3/F4 Apr 21 architecture)
-- `deliverables/CSPro/Capture-Helpers.apc` — shared GPS + verification-photo helpers
-- `deliverables/CSPro/PSGC-Cascade.apc` — shared PSGC cascade (REGION → PROVINCE_HUC → CITY_MUNICIPALITY → BARANGAY)
+- `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/F1-Skip-Logic-and-Validations.md` — skip-logic + validation spec (aligned with F3/F4 Apr 21 architecture; archived 2026-05-11)
+- `deliverables/CSPro/UHC-Survey-System/shared/Capture-Helpers.apc` — shared GPS + verification-photo helpers (relocated 2026-05-12 from `deliverables/CSPro/shared/`)
+- `deliverables/CSPro/UHC-Survey-System/shared/PSGC-Cascade.apc` — shared PSGC cascade (REGION → PROVINCE_HUC → CITY_MUNICIPALITY → BARANGAY) (relocated 2026-05-12 from `deliverables/CSPro/shared/`)
 
 - [x] **E2-F1-001** F1 questionnaire PDF ingested to `raw/` `status::done` `priority::critical`
 - [x] **E2-F1-002** F1 text extraction + wiki source page with Section A–H map + secondary data page `status::done` `priority::critical`
@@ -104,7 +104,7 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 
 **State:** Design — Build-ready as of 2026-04-21.
 **Scope (as of 2026-04-21):** 18 records · 840 items · sections A–L · dual-population eligibility (post case-control extension — SURVEY_CODE/INTERVIEWER_ID/DATE_STARTED/TIME_STARTED/AAPOR_DISPOSITION).
-**Reference doc:** `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (reviewed 2026-04-21; 14 sanity findings; 15 CSPro PROC templates; 1 question routed to Juvy — Q31 IP_GROUP).
+**Reference doc:** `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F3/F3-Skip-Logic-and-Validations.md` (reviewed 2026-04-21; archived 2026-05-11; 14 sanity findings; 15 CSPro PROC templates; 1 question routed to Juvy — Q31 IP_GROUP).
 
 - [x] **E2-F3-001** F3 questionnaire PDF ingested `status::done` `priority::high`
 - [x] **E2-F3-002** F3 text extraction + wiki source page with Section A–L map `status::done` `priority::high`
@@ -125,7 +125,7 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 
 **State:** Design — **Build-ready** as of 2026-04-21 (schema verified; no patch needed).
 **Scope (as of 2026-04-21):** 22 records · 623 items · sections A–Q · household roster with per-member sub-tables — highest structural complexity (post case-control extension — SURVEY_CODE/INTERVIEWER_ID/DATE_STARTED/TIME_STARTED/AAPOR_DISPOSITION).
-**Reference doc:** `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md` (draft 2026-04-21; 13 sanity findings, findings #1–#2 CLOSED-BY-VERIFICATION 2026-04-21 — `C_HOUSEHOLD_ROSTER` already repeating (`max_occurs=20`), `J_HEALTH_SEEKING` intentionally respondent-level per Apr 20 source; 11 CSPro PROC templates; 3 questions routed to ASPSI).
+**Reference doc:** `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F4/F4-Skip-Logic-and-Validations.md` (draft 2026-04-21; archived 2026-05-11; 13 sanity findings, findings #1–#2 CLOSED-BY-VERIFICATION 2026-04-21 — `C_HOUSEHOLD_ROSTER` already repeating (`max_occurs=20`), `J_HEALTH_SEEKING` intentionally respondent-level per Apr 20 source; 11 CSPro PROC templates; 3 questions routed to ASPSI).
 
 - [x] **E2-F4-001** F4 questionnaire PDF ingested `status::done` `priority::high`
 - [x] **E2-F4-002** F4 text extraction + wiki source page with Section A–Q map `status::done` `priority::high`
@@ -157,5 +157,5 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 
 - F1 is the reference interviewer-administered CSPro instrument — patterns established here flow into F3/F4.
 - F2 is the outlier — it took the self-admin PWA path and no longer follows the DCF pipeline.
-- Shared helpers live in `deliverables/CSPro/cspro_helpers.py` (Python generator) and in `deliverables/CSPro/Capture-Helpers.apc` + `deliverables/CSPro/PSGC-Cascade.apc` (CSPro `.apc` fragments). F1/F3/F4 all consume these.
+- Shared helpers: the new scaffold's Python generator lives at `deliverables/CSPro/UHC-Survey-System/shared/cspro_helpers.py`; the pre-rebuild equivalent (`deliverables/.archive/pre-rebuild-2026-05-11/CSPro/cspro_helpers.py`) is preserved for reference. CSPro `.apc` fragments now live at `deliverables/CSPro/UHC-Survey-System/shared/Capture-Helpers.apc` + `deliverables/CSPro/UHC-Survey-System/shared/PSGC-Cascade.apc` (relocated 2026-05-12). F1/F3/F4 all consume these.
 - F3 and F4 moved from "Source Captured" to "Build-ready" in a compressed window 2026-04-16 (DCFs built) → 2026-04-21 (skip-logic + validation specs complete). F4's assumed "repeating-record schema patch" (E2-F4-009) turned out to already be implemented — closed by verification 2026-04-21.

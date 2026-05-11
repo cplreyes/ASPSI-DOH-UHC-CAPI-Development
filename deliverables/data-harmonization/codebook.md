@@ -14,10 +14,10 @@ covers: F1 Facility Head, F2 Healthcare Worker (PWA), F3 Patient, F4 Household
 **Scope:** the 13 cross-instrument dimensions documented below. Everything else in each instrument is instrument-specific and stays in its native form.
 
 **Source of truth:**
-- F1 — `deliverables/CSPro/F1/FacilityHeadSurvey.dcf` + `deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md`
+- F1 — Active build target `deliverables/CSPro/UHC-Survey-System/107_F1/FacilityHeadSurvey.dcf`. Pre-rebuild reference: `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/FacilityHeadSurvey.dcf` + `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/F1-Skip-Logic-and-Validations.md` (archived 2026-05-11).
 - F2 — `deliverables/F2/PWA/app/spec/F2-Spec.md` + `deliverables/F2/PWA/app/src/generated/items.ts`
-- F3 — `deliverables/CSPro/F3/PatientSurvey.dcf` + `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md`
-- F4 — `deliverables/CSPro/F4/HouseholdSurvey.dcf` + `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md`
+- F3 — Pending reintroduction under `deliverables/CSPro/UHC-Survey-System/`. Pre-rebuild reference: `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F3/PatientSurvey.dcf` + `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F3/F3-Skip-Logic-and-Validations.md` (archived 2026-05-11).
+- F4 — Pending reintroduction under `deliverables/CSPro/UHC-Survey-System/`. Pre-rebuild reference: `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F4/HouseholdSurvey.dcf` + `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F4/F4-Skip-Logic-and-Validations.md` (archived 2026-05-11).
 
 **Audited 2026-04-25** against the live spec/dcf files. Per-instrument encodings reflect what's actually in the source today, not what the spec template suggests they should be.
 

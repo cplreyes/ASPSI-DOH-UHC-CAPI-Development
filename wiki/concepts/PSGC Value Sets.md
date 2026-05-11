@@ -27,21 +27,21 @@ Pipeline:
 
 | Artifact | Path | Purpose |
 |---|---|---|
-| Source xlsx | `deliverables/CSPro/F1/inputs/PSGC-1Q-2026-Publication-Datafile.xlsx` | PSA's published workbook |
-| Parser | `deliverables/CSPro/F1/inputs/parse_psgc.py` | state-machine extractor; emits 4 CSVs |
-| Region CSV | `deliverables/CSPro/F1/inputs/psgc_region.csv` | 18 rows |
-| Province/HUC CSV | `deliverables/CSPro/F1/inputs/psgc_province_huc.csv` | 117 rows (82 Prov + 33 HUC + 2 Special) |
-| City/Mun CSV | `deliverables/CSPro/F1/inputs/psgc_city_municipality.csv` | 1,658 rows (149 City + 1,493 Mun + 14 SubMun + 2 Special) |
-| Barangay CSV | `deliverables/CSPro/F1/inputs/psgc_barangay.csv` | 42,010 rows |
-| Builder | `deliverables/CSPro/shared/build_psgc_lookups.py` | emits 4 external lookup dicts + fixed-width .dat files |
-| External dicts | `deliverables/CSPro/shared/psgc_{region,province,city,barangay}.{dcf,dat}` | the 4 lookup dictionaries CSEntry reads via `loadcase()` |
-| Cascade logic | `deliverables/CSPro/shared/PSGC-Cascade.apc` | 4 public `Fill*ValueSet` functions invoked from each form's `onfocus` events |
-| Helper | `deliverables/CSPro/cspro_helpers._psgc_fields(prefix="")` | emits the 4 main-dict numeric items (length=10, placeholder VS) |
+| Source xlsx | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/inputs/PSGC-1Q-2026-Publication-Datafile.xlsx` | PSA's published workbook (archived 2026-05-11) |
+| Parser | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/inputs/parse_psgc.py` | state-machine extractor; emits 4 CSVs (archived 2026-05-11) |
+| Region CSV | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/inputs/psgc_region.csv` | 18 rows (archived 2026-05-11) |
+| Province/HUC CSV | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/inputs/psgc_province_huc.csv` | 117 rows (82 Prov + 33 HUC + 2 Special) (archived 2026-05-11) |
+| City/Mun CSV | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/inputs/psgc_city_municipality.csv` | 1,658 rows (149 City + 1,493 Mun + 14 SubMun + 2 Special) (archived 2026-05-11) |
+| Barangay CSV | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/inputs/psgc_barangay.csv` | 42,010 rows (archived 2026-05-11) |
+| Builder | `deliverables/CSPro/UHC-Survey-System/shared/build_psgc_lookups.py` | emits 4 external lookup dicts + fixed-width .dat files |
+| External dicts | `deliverables/CSPro/UHC-Survey-System/shared/psgc_{region,province,city,barangay}.{dcf,dat}` | the 4 lookup dictionaries CSEntry reads via `loadcase()` |
+| Cascade logic | `deliverables/CSPro/UHC-Survey-System/shared/PSGC-Cascade.apc` | 4 public `Fill*ValueSet` functions invoked from each form's `onfocus` events |
+| Helper | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/cspro_helpers._psgc_fields(prefix="")` | emits the 4 main-dict numeric items (archived 2026-05-11); the new scaffold's equivalent lives in `deliverables/CSPro/UHC-Survey-System/shared/cspro_helpers.py` |
 | Wiring | `F1/F3/F4 generate_dcf.py` via `build_geo_id(mode)` | attaches the placeholder value set; runtime cascade fills the real options |
 
 ## Architecture — External Lookup + Cascade
 
-The four PSGC levels (18 regions / 117 provinces-HUCs / 1,658 cities-municipalities / 42,010 barangays) are **not baked into the main F1/F3/F4 dictionaries**. They live in four **external lookup dictionaries** under `deliverables/CSPro/shared/`. The main-dict PSGC items carry only a 1-entry generic placeholder value set (per CSPro 8.0 Users Guide p.188 best-practice #3 for cascading items).
+The four PSGC levels (18 regions / 117 provinces-HUCs / 1,658 cities-municipalities / 42,010 barangays) are **not baked into the main F1/F3/F4 dictionaries**. They live in four **external lookup dictionaries** under `deliverables/CSPro/UHC-Survey-System/shared/` (relocated 2026-05-12 from `deliverables/CSPro/shared/`). The main-dict PSGC items carry only a 1-entry generic placeholder value set (per CSPro 8.0 Users Guide p.188 best-practice #3 for cascading items).
 
 At runtime, `PSGC-Cascade.apc` uses `loadcase()` to pull the relevant parent's children from the external dict and `setvalueset()` to replace the placeholder VS on the target item. Each handler fires in `onfocus` (not `preproc`, per Users Guide p.188 Logic Tip #4) so reverse-navigation re-populates the value set.
 

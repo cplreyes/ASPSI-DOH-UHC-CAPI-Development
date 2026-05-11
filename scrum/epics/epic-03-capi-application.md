@@ -46,7 +46,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 ## F1 — Facility Head Survey
 
 **Prerequisite:** E2-F1-010 (Designer sign-off on F1 DCF)
-**Current DCF state (2026-04-21):** 12 records / 671 items. Shared `cspro_helpers.py` in use. PSGC cascade wired via `PSGC-Cascade.apc`; GPS + verification-photo via `Capture-Helpers.apc` (`REC_FACILITY_CAPTURE`). Skip-logic + validation spec at `deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md` (aligned with F3/F4 Apr 21).
+**Current DCF state (2026-04-21):** 12 records / 671 items. Shared `cspro_helpers.py` in use. PSGC cascade wired via `PSGC-Cascade.apc`; GPS + verification-photo via `Capture-Helpers.apc` (`REC_FACILITY_CAPTURE`). Skip-logic + validation spec at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/F1-Skip-Logic-and-Validations.md` (aligned with F3/F4 Apr 21; archived 2026-05-11). Active F1 build path now `deliverables/CSPro/UHC-Survey-System/107_F1/` per Sprint 005 R3 archive sequence.
 **Sprint 003 prerequisite:** Form-layout plan (forms per subsection, no scrolling, roster-scrolls-alone) must land before E3-F1-001 starts — see Sprint 002 rationale.
 
 ### Form layout & UX
@@ -163,7 +163,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 ## F3 — Patient Survey
 
 **Prerequisite:** Form-layout plan (shared with F1/F4 — Sprint 003 prerequisite).
-**Current DCF state (2026-04-21):** 18 records / 840 items, sections A–L. Skip-logic + validation spec reviewed 2026-04-21 at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (1 question routed to Juvy — Q31 IP_GROUP; 5 spec-decisions closed with override clause). **Build-ready.**
+**Current DCF state (2026-04-21):** 18 records / 840 items, sections A–L. Skip-logic + validation spec reviewed 2026-04-21 at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F3/F3-Skip-Logic-and-Validations.md` (archived 2026-05-11; 1 question routed to Juvy — Q31 IP_GROUP; 5 spec-decisions closed with override clause). **Build-ready** as of 2026-04-21; pending reintroduction under `deliverables/CSPro/UHC-Survey-System/` per Sprint 005 R3 archive sequence.
 
 - [ ] **E3-F3-001..060** Standard template; reuses F1's interviewer-administered patterns (PSGC cascade + consent + GPS/photo via `Capture-Helpers.apc`)
 - [ ] **E3-F3-015** Outpatient vs inpatient branching at eligibility screen `status::todo` `priority::high` `estimate::4h`
@@ -174,8 +174,8 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ## F4 — Household Survey
 
-**Prerequisite:** Form-layout plan (drafted 2026-04-21, [[../../deliverables/CSPro/F4/F4-Form-Layout-Plan|F4-Form-Layout-Plan]]). Schema is already correct — no patch needed.
-**Current DCF state (2026-04-21):** 22 records / 623 items, sections A–Q. `C_HOUSEHOLD_ROSTER` is repeating (`max_occurs=20`, id-item `MEMBER_LINE_NO`); `H_PHILHEALTH_REG` and `J_HEALTH_SEEKING` are respondent-level non-repeating per the Apr 20 source rephrase ("singular you/your household member"). Skip-logic + validation spec drafted 2026-04-21 at `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md` (3 questions routed to ASPSI, 5 spec-decisions; findings #1/#2 CLOSED-BY-VERIFICATION). **Build-ready.**
+**Prerequisite:** Form-layout plan (drafted 2026-04-21, [[../../deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F4/F4-Form-Layout-Plan|F4-Form-Layout-Plan]]; archived 2026-05-11). Schema is already correct — no patch needed.
+**Current DCF state (2026-04-21):** 22 records / 623 items, sections A–Q. `C_HOUSEHOLD_ROSTER` is repeating (`max_occurs=20`, id-item `MEMBER_LINE_NO`); `H_PHILHEALTH_REG` and `J_HEALTH_SEEKING` are respondent-level non-repeating per the Apr 20 source rephrase ("singular you/your household member"). Skip-logic + validation spec drafted 2026-04-21 at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F4/F4-Skip-Logic-and-Validations.md` (archived 2026-05-11; 3 questions routed to ASPSI, 5 spec-decisions; findings #1/#2 CLOSED-BY-VERIFICATION). **Build-ready** as of 2026-04-21; pending reintroduction under `deliverables/CSPro/UHC-Survey-System/` per Sprint 005 R3 archive sequence.
 
 F4 inherits the standard template **plus a roster engine**. The household roster loop is the primary technical challenge in this instrument.
 
@@ -202,7 +202,7 @@ F4 inherits the standard template **plus a roster engine**. The household roster
 
 - **F2 PWA Epic 3 build is COMPLETE (2026-04-23) and in production at v1.1.1 codebase + Verde Manual visual identity (2026-04-26).** UAT Rounds 1 + 2 both closed; 13 issues fixed; production live at https://f2-pwa.pages.dev. Round 3 (v1.2.0) UX enhancements queued: #16/#17/#18 on the project board. **Verde Manual visual-identity migration COMPLETE end-to-end:** 5 staging PRs (#37/#38/#39/#40/#41) + path-B port to main as #42 + manual `wrangler pages deploy` (CF auto-deploy broken per #34). DESIGN.md is the visual source of truth at `deliverables/F2/PWA/app/DESIGN.md`. **CSPro F2 track is least priority — do not reopen.**
 - **F1 is the priority CSPro instrument.** Its task breakdown above is the template for F3 and F4.
-- **F3 and F4 are Build-ready** as of 2026-04-21; form-layout plans also landed 2026-04-21 ([[../../deliverables/CSPro/Form-Layout-Principles|shared principles]] + per-instrument F1/F3/F4 plans). E3-F4-000 schema patch closed by verification on the same day — the generator and DCF were already correct.
+- **F3 and F4 are Build-ready** as of 2026-04-21; form-layout plans also landed 2026-04-21 ([[../../deliverables/CSPro/UHC-Survey-System/Form-Layout-Principles|shared principles]] (relocated 2026-05-12 from `deliverables/CSPro/Form-Layout-Principles.md`) + per-instrument F1/F3/F4 plans now under `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/{F1,F3,F4}/`). E3-F4-000 schema patch closed by verification on the same day — the generator and DCF were already correct.
 - Reusable CSPro patterns live in `deliverables/CSPro/` as includable `.apc` fragments:
   - `Capture-Helpers.apc` — `ReadGPSReading()`, `TakeVerificationPhoto()`
   - `PSGC-Cascade.apc` — `FillRegionValueSet()`, `FillProvinceValueSet()`, `FillCityValueSet()`, `FillBarangayValueSet()`

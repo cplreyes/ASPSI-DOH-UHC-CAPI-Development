@@ -737,7 +737,7 @@ git status   # should show no untracked stub files
 - Create: `deliverables/CSPro/UHC-Survey-System/shared/form_layout_engine.py`
 - Create: `deliverables/CSPro/UHC-Survey-System/tests/unit/test_form_layout_engine.py`
 
-Layout rules from `deliverables/CSPro/Form-Layout-Principles.md` §2 (the existing project doc): single-column, label at x=50, control at x=1695, 30-pixel rows starting at y=30.
+Layout rules from `deliverables/CSPro/UHC-Survey-System/Form-Layout-Principles.md` §2 (the existing project doc; relocated 2026-05-12 from `deliverables/CSPro/Form-Layout-Principles.md`): single-column, label at x=50, control at x=1695, 30-pixel rows starting at y=30.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -2276,12 +2276,12 @@ The existing `F1-Skip-Logic-and-Validations.md` already has verbatim text but in
 import re
 from pathlib import Path
 
-src = Path("deliverables/CSPro/F1/F1-Skip-Logic-and-Validations.md").read_text(encoding="utf-8")
+src = Path("deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/F1-Skip-Logic-and-Validations.md").read_text(encoding="utf-8")
 
 # The existing doc has headings like "### Q4. What is your sex?" — flip into
 # "### Q4_SEX\nQ-text" by mapping against the DCF item names.
 import json
-dcf = json.loads(Path("deliverables/CSPro/F1/FacilityHeadSurvey.dcf").read_text(encoding="utf-8"))
+dcf = json.loads(Path("deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/FacilityHeadSurvey.dcf").read_text(encoding="utf-8"))
 items = []
 for level in dcf["levels"]:
     for record in level.get("records", []):
@@ -2326,16 +2326,11 @@ git commit -m "spec(UHC-build): F1.spec.md verbatim Q-text per item"
 
 **Files:**
 - Create: `deliverables/CSPro/UHC-Survey-System/107_F1/generate_fmf.py` (replaces nothing — F1 didn't have one)
-- Backup: `deliverables/CSPro/F1/FacilityHeadSurvey.fmf` → `FacilityHeadSurvey.fmf.bak` (preserve Carl's hand-laid version for reference)
+- Backup: ~~`deliverables/CSPro/F1/FacilityHeadSurvey.fmf` → `FacilityHeadSurvey.fmf.bak`~~ — superseded 2026-05-12; the hand-laid F1 .fmf was archived under `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/FacilityHeadSurvey.fmf` as part of the Sprint 005 R3 archive sequence, so no separate `.bak` is needed.
 
-- [ ] **Step 1: Backup the existing hand-laid F1 .fmf**
+- [ ] **Step 1: ~~Backup the existing hand-laid F1 .fmf~~** — SUPERSEDED 2026-05-12
 
-```bash
-cp deliverables/CSPro/F1/FacilityHeadSurvey.fmf \
-   deliverables/CSPro/F1/FacilityHeadSurvey.fmf.bak
-git add deliverables/CSPro/F1/FacilityHeadSurvey.fmf.bak
-git commit -m "chore(UHC-build): backup existing hand-laid F1 .fmf for reference"
-```
+The hand-laid F1 .fmf is preserved at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/FacilityHeadSurvey.fmf`. Reference it from there; do not re-introduce a `.bak` in the active tree.
 
 - [ ] **Step 2: Write the full F1 generate_fmf.py**
 
@@ -2451,7 +2446,7 @@ Expected: prints "wrote FacilityHeadSurvey.fmf (N forms)"; file exists.
 
 - [ ] **Step 4: Compare line count to the hand-laid F1**
 
-Run: `wc -l deliverables/CSPro/UHC-Survey-System/107_F1/FacilityHeadSurvey.fmf deliverables/CSPro/F1/FacilityHeadSurvey.fmf.bak`
+Run: `wc -l deliverables/CSPro/UHC-Survey-System/107_F1/FacilityHeadSurvey.fmf deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/FacilityHeadSurvey.fmf`
 Expected: Generated file in the same order of magnitude as the hand-laid (5,000+ lines). Substantial deviation means a bug.
 
 - [ ] **Step 5: Commit**
@@ -2526,7 +2521,7 @@ git commit -m "feat(UHC-build): F1 .ent + .qsf + .mgf generator"
 **Files:**
 - Create: `deliverables/CSPro/UHC-Survey-System/107_F1/generate_apc.py`
 
-For Phase 1 we keep the skip-logic simple: pass through the existing `FacilityHeadSurvey.ent.apc` from `deliverables/CSPro/F1/`, prepend the `#include` directives for the shared helpers.
+For Phase 1 we keep the skip-logic simple: pass through the existing `FacilityHeadSurvey.ent.apc` from `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/` (archived 2026-05-11), prepend the `#include` directives for the shared helpers.
 
 - [ ] **Step 1: Write generate_apc.py**
 
@@ -2534,7 +2529,7 @@ For Phase 1 we keep the skip-logic simple: pass through the existing `FacilityHe
 """generate_apc.py — emit FacilityHeadSurvey.ent.apc.
 
 Phase 1 strategy:
-  1. Read the existing F1 .apc from deliverables/CSPro/F1/ (Carl's working code).
+  1. Read the existing F1 .apc from deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/ (Carl's working code; archived 2026-05-11).
   2. Prepend #include directives for Sync-Helpers.apc + Expiration-Guard.apc.
   3. Inject sync glue + expiration check into LEVEL.preproc / LEVEL.postproc.
 
@@ -2543,7 +2538,14 @@ Phase 2 will refactor to fully spec-driven generation.
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-LEGACY = HERE.parent.parent / "F1" / "FacilityHeadSurvey.ent.apc"
+# Repointed 2026-05-12 — legacy F1 build was archived under
+# deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/ during the Sprint 005
+# R3 archive sequence. From 107_F1/, three levels up lands at deliverables/.
+LEGACY = (
+    HERE.parent.parent.parent  # 107_F1 -> UHC-Survey-System -> CSPro -> deliverables
+    / ".archive" / "pre-rebuild-2026-05-11" / "CSPro" / "F1"
+    / "FacilityHeadSurvey.ent.apc"
+)
 
 PREAMBLE = r'''{ FacilityHeadSurvey.ent.apc — generated; do NOT hand-edit on the device. }
 { Source of truth: 107_F1/generate_apc.py + the legacy F1 .apc body below.    }
@@ -2593,12 +2595,16 @@ git commit -m "feat(UHC-build): F1 APC generator (preamble + legacy body + sync 
 
 ### Task 7.5: F1 generate_dcf.py — bring forward + add userSettings
 
-The existing F1 `generate_dcf.py` lives at `deliverables/CSPro/F1/generate_dcf.py`. We need a copy in `107_F1/` that emits to `107_F1/FacilityHeadSurvey.dcf`.
+The existing F1 `generate_dcf.py` lives at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/generate_dcf.py` (archived 2026-05-11 during the Sprint 005 R3 archive sequence). We need a copy in `107_F1/` that emits to `107_F1/FacilityHeadSurvey.dcf`.
 
-- [ ] **Step 1: Copy + adjust output path**
+> [!note]
+> This copy step is **already done** as of 2026-05-12 — `deliverables/CSPro/UHC-Survey-System/107_F1/generate_dcf.py` exists and was moved with the legacy F1 build. Treat this section as documenting the original Phase 1 step; the file is in place.
+
+- [ ] **Step 1: ~~Copy + adjust output path~~** — DONE 2026-05-12
 
 ```bash
-cp deliverables/CSPro/F1/generate_dcf.py \
+# Historical reference only; the file already exists at the destination.
+cp deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/generate_dcf.py \
    deliverables/CSPro/UHC-Survey-System/107_F1/generate_dcf.py
 ```
 

@@ -29,11 +29,11 @@ Each photo block has 2 items: `{prefix}VERIFICATION_PHOTO_FILENAME` (alpha 120, 
 
 | Artifact | Path | Purpose |
 |---|---|---|
-| Python emitters | `deliverables/CSPro/cspro_helpers.py` — `_gps_fields(prefix)`, `_photo_block(prefix)` | Reusable item builders |
-| CSPro logic module | `deliverables/CSPro/shared/Capture-Helpers.apc` | `ReadGPSReading(maxTimeSec, desiredAccuracyM)` + `TakeVerificationPhoto(filename)` |
-| F1 wiring | `deliverables/CSPro/F1/generate_dcf.py` → `build_capture_record()` | Adds `REC_FACILITY_CAPTURE` (type Z) |
-| F3 wiring | `deliverables/CSPro/F3/generate_dcf.py` → `build_f3_facility_capture/patient_home_capture/case_verification` | 3 new records (Z/Y/X) + `F3_FACILITY_ID` on `PATIENT_GEO_ID` |
-| F4 wiring | `deliverables/CSPro/F4/generate_dcf.py` → `build_f4_geo_id` (augmented) + `build_f4_case_verification` | 5 items onto `HOUSEHOLD_GEO_ID` + `REC_CASE_VERIFICATION` (type Z) |
+| Python emitters | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/cspro_helpers.py` — `_gps_fields(prefix)`, `_photo_block(prefix)` | Reusable item builders (archived 2026-05-11; UHC-Survey-System scaffold has its own `shared/cspro_helpers.py`) |
+| CSPro logic module | `deliverables/CSPro/UHC-Survey-System/shared/Capture-Helpers.apc` | `ReadGPSReading(maxTimeSec, desiredAccuracyM)` + `TakeVerificationPhoto(filename)` (relocated 2026-05-12 from `deliverables/CSPro/shared/`) |
+| F1 wiring | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F1/generate_dcf.py` → `build_capture_record()` | Adds `REC_FACILITY_CAPTURE` (type Z) — archived 2026-05-11; reimplementation pending in `deliverables/CSPro/UHC-Survey-System/107_F1/` |
+| F3 wiring | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F3/generate_dcf.py` → `build_f3_facility_capture/patient_home_capture/case_verification` | 3 new records (Z/Y/X) + `F3_FACILITY_ID` on `PATIENT_GEO_ID` — archived 2026-05-11; F3 rebuild pending |
+| F4 wiring | `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F4/generate_dcf.py` → `build_f4_geo_id` (augmented) + `build_f4_case_verification` | 5 items onto `HOUSEHOLD_GEO_ID` + `REC_CASE_VERIFICATION` (type Z) — archived 2026-05-11; F4 rebuild pending |
 
 ## Capture flow (runtime)
 
