@@ -27,15 +27,22 @@ from shared.env_loader import load_env, splice_user_settings
 WORKSPACE = Path(__file__).resolve().parent
 
 # (numeric_prefix, short_name, dir_name, ent_filename)
-# Phase 1 builds F1 + F3LIST. Login + menu parked at 101_login/ and 106_menu/
-# (on-disk but not built); reactivated in Phase 2 alongside chain rebuild.
-# F3LIST = the 110_F3_listing patient listing CAPI app (commits 1-11 of the
-# 2026-05-12 build); its compiled .pen is consumed by the listing-side menu
-# launch entry (Phase 2 menu rebuild) and its output PATIENTLISTING_DICT is
-# consumed by F3/F4 entry apps as an EXTERNAL dictionary.
+# Phase 1 builds F1 + F3LIST + F3. Login + menu parked at 101_login/ and
+# 106_menu/ (on-disk but not built); reactivated in Phase 2 alongside the
+# chain rebuild.
+# F3LIST = the 110_F3_listing patient listing CAPI app; its compiled .pen
+# is consumed by the listing-side menu launch entry (Phase 2 menu rebuild)
+# and its output PATIENTLISTING_DICT is consumed by F3/F4 entry apps as
+# an EXTERNAL dictionary.
+# F3 = the 111_F3 Patient Survey CAPI app (2026-05-12 quartet build); it
+# declares PATIENTLISTING_DICT as an EXTERNAL dictionary so the case-open
+# patient-pick PROC can query the listing roster and write F3_STATUS back
+# at case-open / case-save / refusal. F3 follows F3LIST in INSTRUMENTS so
+# the listing DCF is generated before F3's ENT references it.
 INSTRUMENTS = [
     ("107", "F1",     "107_F1",        "FacilityHeadSurvey"),
     ("110", "F3LIST", "110_F3_listing", "PatientListing"),
+    ("111", "F3",     "111_F3",        "PatientSurvey"),
 ]
 
 
