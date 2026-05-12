@@ -86,22 +86,18 @@ export default defineConfig(({ mode }) => {
           skipWaiting: true,
           clientsClaim: true,
           cleanupOutdatedCaches: true,
-          // Verde Manual fonts. See DESIGN.md. CDN now, self-host follow-up.
-          // CSS = StaleWhileRevalidate (refresh when online); woff2 = CacheFirst.
+          // Verde Manual fonts (self-hosted under /fonts since #162). The CSS
+          // file (/fonts/fonts.css) is already in globPatterns precache.
+          // The woff2 files are too numerous (22 across 3 families × weights ×
+          // latin/latin-ext) to precache eagerly — runtime CacheFirst keeps
+          // first-paint fast and ensures any once-rendered weight is available
+          // offline thereafter.
           runtimeCaching: [
             {
-              urlPattern: /^https:\/\/fonts\.bunny\.net\/css/,
-              handler: 'StaleWhileRevalidate',
-              options: {
-                cacheName: 'bunny-fonts-css',
-                expiration: { maxEntries: 5, maxAgeSeconds: 60 * 60 * 24 * 365 },
-              },
-            },
-            {
-              urlPattern: /^https:\/\/fonts\.bunny\.net\/.*\.(woff2?|ttf|otf)$/,
+              urlPattern: /\/fonts\/.*\.woff2$/,
               handler: 'CacheFirst',
               options: {
-                cacheName: 'bunny-fonts-files',
+                cacheName: 'self-host-fonts',
                 expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 365 },
                 cacheableResponse: { statuses: [0, 200] },
               },

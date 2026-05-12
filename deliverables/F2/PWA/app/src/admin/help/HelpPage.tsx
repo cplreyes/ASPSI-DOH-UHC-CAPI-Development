@@ -120,9 +120,9 @@ export function HelpPage(): JSX.Element {
           rows={[
             {
               tab: 'Versioning',
-              what: 'Live build identifiers',
+              what: 'Live build identifiers + per-spec submission counts',
               detail:
-                'PWA bundle SHA, Worker version, Apps Script deployment, latest spec_version seen in submissions. First place to look during incident triage — answers "what version is in front of users?".',
+                'PWA version + bundle SHA, Worker version, last Pages deploy timestamp, and a form_revisions table aggregating F2_Responses by spec_version (count + last_seen_at + total). First place to look during incident triage — answers "what version is in front of users?" and "how many submissions are still on an outdated spec?".',
             },
             {
               tab: 'Files',
@@ -198,7 +198,7 @@ export function HelpPage(): JSX.Element {
             'Paste your CSV. The preview validates each row — duplicates flagged, role lookups confirmed, password rules checked.',
             'Click Import. New users get password_must_change=true; first-login forces them to rotate.',
           ]}
-          gotcha="Maximum 500 rows per import call. For larger cohorts, split into batches. The import is transactional within a batch — if one row fails validation, the whole batch is rejected with a list of issues."
+          gotcha="Maximum 100 rows per import call (Worker validation: E_VALIDATION). For larger cohorts, split into batches. The import is transactional within a batch — if one row fails validation, the whole batch is rejected with a list of issues."
         />
 
         <Workflow
@@ -242,11 +242,11 @@ export function HelpPage(): JSX.Element {
               desc="Read everything except Users + Roles. Cannot mutate; safe default for new staff who need visibility but not admin power."
             />
             <Tr
-              name="DataReader (custom)"
+              name="DataReader"
               desc="Read Data + Reports only. No Apps & Settings, no Users / Roles. Useful for analyst access where the analyst should never accidentally toggle a config."
             />
             <Tr
-              name="Encoder (custom)"
+              name="Encoder"
               desc="Encode dashboard + read access to Responses for the HCWs they're encoding. No DLQ, no audit, no admin."
             />
           </tbody>

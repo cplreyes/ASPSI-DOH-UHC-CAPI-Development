@@ -74,9 +74,9 @@ export function Versioning({ apiBaseUrl, fetchImpl }: VersioningProps): JSX.Elem
       <header className="flex flex-col">
         <h3 className="font-serif text-lg font-medium tracking-tight">Versioning</h3>
         <p className="text-xs text-muted-foreground">
-          Live build identifiers (PWA bundle, Worker, Apps Script) and per-spec submission counts.
-          First place to look during incident triage — answers “what version is in front of users
-          right now?”
+          Live build identifiers (PWA bundle + SHA, Worker, last Pages deploy) and per-spec
+          submission counts. First place to look during incident triage — answers “what version is
+          in front of users right now?”
         </p>
       </header>
 
