@@ -174,11 +174,29 @@ def f4_apc():
     return path.read_text(encoding="utf-8")
 
 
-def test_f4_apc_has_household_pick_stub(f4_apc):
+def test_f4_apc_has_household_pick_activated(f4_apc):
+    """F4 listing build (2026-05-12) activated PickHousehold(). The stub
+    that returned 0 immediately is replaced with the forcase/loadcase/
+    savecase implementation mirroring 111_F3/PickPatient(). The wiring
+    must NOT regress to the stub form."""
     assert "function PickHousehold"                    in f4_apc
     assert "PROC HOUSEHOLDSURVEY_LEVEL"                in f4_apc
-    # Stub doc-comment must reference F4LISTING_DICT activation path.
+    # F4LISTING_DICT external-dict references appear in PickHousehold +
+    # StampRosterStatus (forcase / loadcase / savecase).
     assert "F4LISTING_DICT"                            in f4_apc
+    # Activation -- not the stub anymore.
+    assert "function StampRosterStatus"                in f4_apc
+    assert "forcase F4LISTING_DICT"                    in f4_apc
+    assert "loadcase(F4LISTING_DICT"                   in f4_apc
+    assert "savecase(F4LISTING_DICT)"                  in f4_apc
+    # F4_STATUS write-back state machine on roster row.
+    assert "F4_STATUS = newStatus"                     in f4_apc
+    # Pick screen invokes accept() with the 20 prebuilt choice slots.
+    assert "Select the household for this F4 interview" in f4_apc
+    # Refusal path -- CONSENT_GIVEN postproc calls StampRosterStatus(REFUSED).
+    assert "StampRosterStatus(F4_STATUS_REFUSED)"      in f4_apc
+    # Complete path -- CloseCaseAsComplete calls StampRosterStatus(COMPLETED).
+    assert "StampRosterStatus(F4_STATUS_COMPLETED)"    in f4_apc
 
 
 def test_f4_apc_has_field_control_setup(f4_apc):

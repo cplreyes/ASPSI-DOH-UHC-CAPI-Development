@@ -50,84 +50,448 @@ function CloseCaseAsComplete()
       completes through the final terminus item. Wired from Section Q
       Q201_WORRIED_FINANCES and the early-exit Q200 Refused path.
 
-      Unlike F3, F4 has no listing-roster write-back (the
-      113_F4_listing app is not yet built; when it lands, this function
-      is updated to stamp F4_STATUS on the household-roster row -- see
-      commit 9 stub). }
+      Listing-roster write-back: stamps F4_STATUS = COMPLETED + the
+      F-series CASE_SEQ allocation onto the chosen
+      F4LISTING_DICT.REC_LISTING_BRGY_FRAME row via StampRosterStatus().
+      The g_picked_* globals capture the roster-row identity at case
+      open (PROC HOUSEHOLDSURVEY_LEVEL preproc + PickHousehold()). }
     AAPOR_DISPOSITION        = AAPOR_COMPLETE;
     ENUM_RESULT_FINAL_VISIT  = VISIT_RESULT_COMPLETED;
     DATE_FINAL_VISIT         = SYSDATE("YYYYMMDD");
+
+    { Roster write-back: only if PickHousehold() actually picked a row
+      (g_picked_hh_listing_no = 0 if operator was on the manual-entry
+      fallback path; no write-back possible in that case). }
+    if g_picked_hh_listing_no > 0 then
+        StampRosterStatus(F4_STATUS_COMPLETED);
+    endif;
 end;
 
 
 { ===================================================================== }
-{  Household-pick stub -- activated when 113_F4_listing app lands       }
+{  Household-pick -- 113_F4_listing roster pick + write-back              }
 { ===================================================================== }
-{ STUB: Until 113_F4_listing exists, HH_LISTING_NO is populated by the  }
-{ enumerator manually in the FIELD_CONTROL form. The PROC below stays  }
-{ in place so the wiring activates without surgery when the listing    }
-{ app lands.                                                            }
+{ Activated 2026-05-12 once 113_F4_listing landed. PickHousehold() walks }
+{ F4LISTING_DICT (declared EXTERNAL in HouseholdSurvey.ent), shows the  }
+{ operator a pick screen of eligible barangay households, and stamps   }
+{ F4_STATUS = IN_PROGRESS + ASSIGNED_F4_CASE_SEQ on the chosen row.    }
+{                                                                       }
+{ Mirrors 111_F3/generate_apc.py::PickPatient() with these F4-specific }
+{ differences:                                                          }
+{   - Eligibility filter is F4_STATUS = 0 (PENDING) -- no LISTING_TAG  }
+{     to filter by (every listed HH in the barangay frame is F4-       }
+{     eligible by definition; the auto-tag belongs to F3 listing).     }
+{   - Roster row is REC_LISTING_BRGY_FRAME (vs F3's REC_PATIENT_ROSTER) }
+{     and the per-row key is LISTING_NO (4-wide vs F3's 3-wide          }
+{     ROSTER_SEQ).                                                      }
+{   - The forcase filter matches on the 9-digit facility-tier prefix    }
+{     of the listing session ID block. F4 listing sessions for the     }
+{     same facility-tier across multiple barangays + multiple days     }
+{     are all visible to F4 (the operator picks the row they want).    }
 
 
 PROC GLOBAL
 
-{ Status codes -- mirror F4_STATUS value set in the (future)
-  113_F4_listing DCF. Held here so the stub function compiles once the
-  listing app lands without needing a re-edit. }
+{ Status codes -- mirror F4_STATUS value set in 113_F4_listing DCF. }
 numeric F4_STATUS_PENDING     = 0;
 numeric F4_STATUS_COMPLETED   = 1;
 numeric F4_STATUS_IN_PROGRESS = 2;
 numeric F4_STATUS_REFUSED     = 3;
 
+{ Cap on visible eligible-household choices per pick screen. CSPro
+  accept() is variadic at compile time, not runtime; we hard-build 20
+  slots and fall back to "more rows exist -- refine by listing session"
+  guidance if the operator sees the cap hit. The 113_F4_listing
+  FRAME_TARGET ceiling per barangay is ~50 (per F4 sampling matrix)
+  with 10-row REPLACEMENT_RESERVES, so 20 visible is generous if the
+  crew sticks to one barangay-day at a time. }
+numeric HH_PICK_MAX_CHOICES = 20;
+
 { State held across the household-pick + write-back PROCs. Populated by
-  the stub function and consumed by the F4 case-save finalizer when the
-  listing app lands. }
+  PickHousehold(), consumed by StampRosterStatus() and the F4 case-save
+  finalizer in CloseCaseAsComplete + PROC CONSENT_GIVEN (refusal). }
 numeric g_picked_hh_listing_no     =  0;   { LISTING_NO on chosen roster }
 numeric g_picked_listing_date      =  0;   { LISTING_SESSION_DATE        }
 numeric g_picked_listing_seq       =  0;   { LISTING_SESSION_SEQ          }
+string  g_picked_hh_head_fullname  = "";   { for FIELD_CONTROL stamping  }
+
+
+function StampRosterStatus(numeric newStatus)
+    { Re-load the chosen F4LISTING_DICT case (by listing-session ID
+      block) into edit mode, locate the matching REC_LISTING_BRGY_FRAME
+      occurrence via g_picked_hh_listing_no, update F4_STATUS, and
+      savecase.
+
+      Called from:
+        - PickHousehold()                with F4_STATUS_IN_PROGRESS
+        - CloseCaseAsComplete()          with F4_STATUS_COMPLETED (save)
+        - PROC CONSENT_GIVEN postproc    with F4_STATUS_REFUSED   (refuse)
+
+      Failure mode: if loadcase / savecase return false, errmsg the
+      operator. The F4 case itself can still be saved -- the roster
+      flag will be reconciled at next listing-app sync by the desk
+      reviewer. }
+
+    if not loadcase(F4LISTING_DICT,
+                    REGION_CODE, PROVINCE_HUC_CODE,
+                    CITY_MUNICIPALITY_CODE, FACILITY_NO,
+                    g_picked_listing_date, g_picked_listing_seq) then
+        errmsg("Could not re-open F4 listing session for status write-back. "
+               "Roster F4_STATUS will be reconciled at next sync. "
+               "Continuing with F4 case.");
+        StampRosterStatus = 0;
+        exit;
+    endif;
+
+    { Locate the matching roster occurrence. LISTING_NO is 1-based and
+      contiguous within a session. }
+    numeric occIdx = 0;
+    numeric i;
+    for i = 1 to totocc(REC_LISTING_BRGY_FRAME)
+        if F4LISTING_DICT.REC_LISTING_BRGY_FRAME(i).LISTING_NO
+                                            = g_picked_hh_listing_no then
+            occIdx = i;
+        endif;
+    enddo;
+
+    if occIdx = 0 then
+        errmsg("Picked LISTING_NO %v not found in re-loaded F4 listing "
+               "case. F4 case will still save; reconcile manually.",
+               g_picked_hh_listing_no);
+        StampRosterStatus = 0;
+        exit;
+    endif;
+
+    F4LISTING_DICT.REC_LISTING_BRGY_FRAME(occIdx).F4_STATUS = newStatus;
+
+    if newStatus = F4_STATUS_IN_PROGRESS then
+        { Stamp the F4 CASE_SEQ allocation onto the roster row so the
+          listing-app's replacement-protocol engine sees the slot
+          consumed. CASE_SEQ is the 5th item of F4's ID block. }
+        F4LISTING_DICT.REC_LISTING_BRGY_FRAME(occIdx).ASSIGNED_F4_CASE_SEQ
+                                                              = CASE_SEQ;
+    endif;
+
+    if not savecase(F4LISTING_DICT) then
+        errmsg("Could not save F4 listing-session write-back (status=%v). "
+               "Roster F4_STATUS will be reconciled at next sync.",
+               newStatus);
+        StampRosterStatus = 0;
+        exit;
+    endif;
+
+    StampRosterStatus = 1;
+end;
 
 
 function PickHousehold()
-    { STUB -- activated when 113_F4_listing app lands (task #7 of the
-      F4 rebuild plan). Will:
-        1. Query F4LISTING_DICT (declared EXTERNAL in HouseholdSurvey.ent)
-           via forcase for eligible households at the current barangay
-           listing (login_brgy_code prefix match, F4_STATUS = PENDING).
-        2. Show pick list via accept() and capture the chosen row's
-           LISTING_NO + LISTING_SESSION_DATE + LISTING_SESSION_SEQ into
-           the g_picked_* globals.
-        3. Stamp F4_STATUS = IN_PROGRESS on the chosen roster row via
-           savecase.
-        4. Return 1 on success / 0 on cancel.
+    { Build the eligible-household pick list from F4LISTING_DICT and
+      prompt the operator. Eligibility filter:
+        - F4_STATUS = 0 (pending -- not yet attempted)
 
-      Until then: returns 0 immediately; enumerator falls back to
-      manual HH_LISTING_NO entry in the FIELD_CONTROL form. The
-      F4LISTING_DICT external reference in HouseholdSurvey.ent is the
-      load-bearing wiring -- when the listing DCF exists, this stub
-      body is filled in (mirroring 111_F3/PickPatient()). }
+      Only roster rows from listing sessions for the current facility-
+      tier (matched on the 9-digit prefix REGION + PROVINCE_HUC +
+      CITY_MUNICIPALITY + FACILITY_NO) are considered. The operator
+      sees a maximum of HH_PICK_MAX_CHOICES eligible households;
+      additional rows are hidden with a "more rows exist -- refine by
+      listing session" footer message.
 
-    { Reset state -- documents intent for the future implementation. }
-    g_picked_hh_listing_no  = 0;
-    g_picked_listing_date   = 0;
-    g_picked_listing_seq    = 0;
+      On selection:
+        - g_picked_hh_listing_no     = chosen LISTING_NO
+        - g_picked_listing_date      = LISTING_SESSION_DATE of chosen case
+        - g_picked_listing_seq       = LISTING_SESSION_SEQ of chosen case
+        - g_picked_hh_head_fullname  = "First Last" of chosen HH head
 
-    PickHousehold = 0;
+      Returns 1 on success, 0 on operator-cancel or no-eligible-rows. }
+
+    { Reset state. }
+    g_picked_hh_listing_no    = 0;
+    g_picked_listing_date     = 0;
+    g_picked_listing_seq      = 0;
+    g_picked_hh_head_fullname = "";
+
+    { Build choice strings via forcase across all matching listing cases. }
+    string choice01 = ""; string choice02 = ""; string choice03 = "";
+    string choice04 = ""; string choice05 = ""; string choice06 = "";
+    string choice07 = ""; string choice08 = ""; string choice09 = "";
+    string choice10 = ""; string choice11 = ""; string choice12 = "";
+    string choice13 = ""; string choice14 = ""; string choice15 = "";
+    string choice16 = ""; string choice17 = ""; string choice18 = "";
+    string choice19 = ""; string choice20 = "";
+
+    { Parallel arrays of the same length tracking the roster identity
+      behind each visible choice. CSPro doesn't have native arrays, so
+      we use numbered scalars (same idiom as F3's PickPatient). }
+    numeric hn01 = 0; numeric hn02 = 0; numeric hn03 = 0; numeric hn04 = 0;
+    numeric hn05 = 0; numeric hn06 = 0; numeric hn07 = 0; numeric hn08 = 0;
+    numeric hn09 = 0; numeric hn10 = 0; numeric hn11 = 0; numeric hn12 = 0;
+    numeric hn13 = 0; numeric hn14 = 0; numeric hn15 = 0; numeric hn16 = 0;
+    numeric hn17 = 0; numeric hn18 = 0; numeric hn19 = 0; numeric hn20 = 0;
+
+    numeric ld01 = 0; numeric ld02 = 0; numeric ld03 = 0; numeric ld04 = 0;
+    numeric ld05 = 0; numeric ld06 = 0; numeric ld07 = 0; numeric ld08 = 0;
+    numeric ld09 = 0; numeric ld10 = 0; numeric ld11 = 0; numeric ld12 = 0;
+    numeric ld13 = 0; numeric ld14 = 0; numeric ld15 = 0; numeric ld16 = 0;
+    numeric ld17 = 0; numeric ld18 = 0; numeric ld19 = 0; numeric ld20 = 0;
+
+    numeric ls01 = 0; numeric ls02 = 0; numeric ls03 = 0; numeric ls04 = 0;
+    numeric ls05 = 0; numeric ls06 = 0; numeric ls07 = 0; numeric ls08 = 0;
+    numeric ls09 = 0; numeric ls10 = 0; numeric ls11 = 0; numeric ls12 = 0;
+    numeric ls13 = 0; numeric ls14 = 0; numeric ls15 = 0; numeric ls16 = 0;
+    numeric ls17 = 0; numeric ls18 = 0; numeric ls19 = 0; numeric ls20 = 0;
+
+    numeric choice_count = 0;
+    numeric rows_total   = 0;
+
+    { Read the current facility's 9-digit prefix from loadsetting() --
+      stamped by 101_login at sign-in. }
+    numeric login_region  = tonumber(loadsetting("region_code"));
+    numeric login_prov    = tonumber(loadsetting("province_huc_code"));
+    numeric login_city    = tonumber(loadsetting("city_municipality_code"));
+    numeric login_fac     = tonumber(loadsetting("facility_no"));
+
+    forcase F4LISTING_DICT
+        where REGION_CODE            = login_region
+        and   PROVINCE_HUC_CODE      = login_prov
+        and   CITY_MUNICIPALITY_CODE = login_city
+        and   FACILITY_NO            = login_fac
+    do
+        { For each F4 listing session for the current facility-tier,
+          walk the barangay-frame roster occurrences. }
+        numeric j;
+        for j = 1 to totocc(REC_LISTING_BRGY_FRAME)
+            if F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).F4_STATUS
+                                              = F4_STATUS_PENDING then
+                rows_total = rows_total + 1;
+
+                if choice_count < HH_PICK_MAX_CHOICES then
+                    choice_count = choice_count + 1;
+                    string fullname =
+                        strip(
+                            F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).HEAD_FIRST_NAME)
+                        + " " +
+                        strip(
+                            F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).HEAD_LAST_NAME);
+                    string label =
+                        maketext("#%04d  %s  (session %d-%03d)",
+                            F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO,
+                            fullname,
+                            LISTING_SESSION_DATE,
+                            LISTING_SESSION_SEQ);
+
+                    if choice_count = 1  then choice01 = label;
+                       hn01 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld01 = LISTING_SESSION_DATE; ls01 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 2  then choice02 = label;
+                       hn02 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld02 = LISTING_SESSION_DATE; ls02 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 3  then choice03 = label;
+                       hn03 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld03 = LISTING_SESSION_DATE; ls03 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 4  then choice04 = label;
+                       hn04 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld04 = LISTING_SESSION_DATE; ls04 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 5  then choice05 = label;
+                       hn05 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld05 = LISTING_SESSION_DATE; ls05 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 6  then choice06 = label;
+                       hn06 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld06 = LISTING_SESSION_DATE; ls06 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 7  then choice07 = label;
+                       hn07 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld07 = LISTING_SESSION_DATE; ls07 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 8  then choice08 = label;
+                       hn08 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld08 = LISTING_SESSION_DATE; ls08 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 9  then choice09 = label;
+                       hn09 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld09 = LISTING_SESSION_DATE; ls09 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 10 then choice10 = label;
+                       hn10 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld10 = LISTING_SESSION_DATE; ls10 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 11 then choice11 = label;
+                       hn11 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld11 = LISTING_SESSION_DATE; ls11 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 12 then choice12 = label;
+                       hn12 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld12 = LISTING_SESSION_DATE; ls12 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 13 then choice13 = label;
+                       hn13 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld13 = LISTING_SESSION_DATE; ls13 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 14 then choice14 = label;
+                       hn14 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld14 = LISTING_SESSION_DATE; ls14 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 15 then choice15 = label;
+                       hn15 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld15 = LISTING_SESSION_DATE; ls15 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 16 then choice16 = label;
+                       hn16 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld16 = LISTING_SESSION_DATE; ls16 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 17 then choice17 = label;
+                       hn17 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld17 = LISTING_SESSION_DATE; ls17 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 18 then choice18 = label;
+                       hn18 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld18 = LISTING_SESSION_DATE; ls18 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 19 then choice19 = label;
+                       hn19 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld19 = LISTING_SESSION_DATE; ls19 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 20 then choice20 = label;
+                       hn20 = F4LISTING_DICT.REC_LISTING_BRGY_FRAME(j).LISTING_NO;
+                       ld20 = LISTING_SESSION_DATE; ls20 = LISTING_SESSION_SEQ;
+                    endif;
+                endif;
+            endif;
+        enddo;
+    enddo;
+
+    if choice_count = 0 then
+        errmsg("No eligible households pending F4 at this facility-tier. "
+               "Either no F4 listing session has been run yet for this "
+               "barangay, or all rows are already in-progress / "
+               "completed / refused. Confirm with the supervisor before "
+               "creating an F4 case manually.");
+        PickHousehold = 0;
+        exit;
+    endif;
+
+    if rows_total > HH_PICK_MAX_CHOICES then
+        errmsg("%v eligible rows found -- showing first %v. Refine by "
+               "running F4 in a focused listing-session window if the "
+               "household you want is not in the list.",
+               rows_total, HH_PICK_MAX_CHOICES);
+        { soft -- operator continues into the pick list }
+    endif;
+
+    numeric pick = accept(
+        "Select the household for this F4 interview",
+        choice01, choice02, choice03, choice04, choice05,
+        choice06, choice07, choice08, choice09, choice10,
+        choice11, choice12, choice13, choice14, choice15,
+        choice16, choice17, choice18, choice19, choice20);
+
+    if pick = 0 then
+        { Operator cancelled. F4 case may still proceed via manual
+          HH_LISTING_NO entry path. }
+        warnmsg("F4 case household-pick cancelled. The operator may "
+                "enter HH_LISTING_NO manually in FIELD_CONTROL if the "
+                "household truly is not in the listing roster (rare).");
+        PickHousehold = 0;
+        exit;
+    endif;
+
+    if      pick =  1 then g_picked_hh_listing_no = hn01;
+                            g_picked_listing_date = ld01;
+                            g_picked_listing_seq  = ls01;
+    elseif  pick =  2 then g_picked_hh_listing_no = hn02;
+                            g_picked_listing_date = ld02;
+                            g_picked_listing_seq  = ls02;
+    elseif  pick =  3 then g_picked_hh_listing_no = hn03;
+                            g_picked_listing_date = ld03;
+                            g_picked_listing_seq  = ls03;
+    elseif  pick =  4 then g_picked_hh_listing_no = hn04;
+                            g_picked_listing_date = ld04;
+                            g_picked_listing_seq  = ls04;
+    elseif  pick =  5 then g_picked_hh_listing_no = hn05;
+                            g_picked_listing_date = ld05;
+                            g_picked_listing_seq  = ls05;
+    elseif  pick =  6 then g_picked_hh_listing_no = hn06;
+                            g_picked_listing_date = ld06;
+                            g_picked_listing_seq  = ls06;
+    elseif  pick =  7 then g_picked_hh_listing_no = hn07;
+                            g_picked_listing_date = ld07;
+                            g_picked_listing_seq  = ls07;
+    elseif  pick =  8 then g_picked_hh_listing_no = hn08;
+                            g_picked_listing_date = ld08;
+                            g_picked_listing_seq  = ls08;
+    elseif  pick =  9 then g_picked_hh_listing_no = hn09;
+                            g_picked_listing_date = ld09;
+                            g_picked_listing_seq  = ls09;
+    elseif  pick = 10 then g_picked_hh_listing_no = hn10;
+                            g_picked_listing_date = ld10;
+                            g_picked_listing_seq  = ls10;
+    elseif  pick = 11 then g_picked_hh_listing_no = hn11;
+                            g_picked_listing_date = ld11;
+                            g_picked_listing_seq  = ls11;
+    elseif  pick = 12 then g_picked_hh_listing_no = hn12;
+                            g_picked_listing_date = ld12;
+                            g_picked_listing_seq  = ls12;
+    elseif  pick = 13 then g_picked_hh_listing_no = hn13;
+                            g_picked_listing_date = ld13;
+                            g_picked_listing_seq  = ls13;
+    elseif  pick = 14 then g_picked_hh_listing_no = hn14;
+                            g_picked_listing_date = ld14;
+                            g_picked_listing_seq  = ls14;
+    elseif  pick = 15 then g_picked_hh_listing_no = hn15;
+                            g_picked_listing_date = ld15;
+                            g_picked_listing_seq  = ls15;
+    elseif  pick = 16 then g_picked_hh_listing_no = hn16;
+                            g_picked_listing_date = ld16;
+                            g_picked_listing_seq  = ls16;
+    elseif  pick = 17 then g_picked_hh_listing_no = hn17;
+                            g_picked_listing_date = ld17;
+                            g_picked_listing_seq  = ls17;
+    elseif  pick = 18 then g_picked_hh_listing_no = hn18;
+                            g_picked_listing_date = ld18;
+                            g_picked_listing_seq  = ls18;
+    elseif  pick = 19 then g_picked_hh_listing_no = hn19;
+                            g_picked_listing_date = ld19;
+                            g_picked_listing_seq  = ls19;
+    elseif  pick = 20 then g_picked_hh_listing_no = hn20;
+                            g_picked_listing_date = ld20;
+                            g_picked_listing_seq  = ls20;
+    endif;
+
+    { Allocate F4 CASE_SEQ from the enumerator's f4_seq_lo/f4_seq_hi
+      range (loaded into loadsetting() by 101_login from user_roster.xlsx).
+      Strategy: read the lo endpoint and use lo + LISTING_NO - 1 as the
+      base allocation. For Phase 1 the base allocation is sufficient
+      since F4 case-IDs are not reused across sessions. }
+    numeric f4_lo = tonumber(loadsetting("f4_seq_lo"));
+    CASE_SEQ = f4_lo + g_picked_hh_listing_no - 1;
+
+    { Stamp the F4 case-ID block (REGION_CODE etc.) from the login
+      settings, matching the facility-tier prefix the listing roster
+      used. }
+    REGION_CODE            = login_region;
+    PROVINCE_HUC_CODE      = login_prov;
+    CITY_MUNICIPALITY_CODE = login_city;
+    FACILITY_NO            = login_fac;
+
+    { HH_LISTING_NO copied from the chosen roster row into F4's
+      FIELD_CONTROL header (per the FIELD_CONTROL extra item -- Option C
+      dual-linkage). Width-4 in F4 vs width-4 LISTING_NO in F4 listing. }
+    HH_LISTING_NO = g_picked_hh_listing_no;
+
+    { Write F4_STATUS = 2 (in-progress) + ASSIGNED_F4_CASE_SEQ back
+      to the listing roster. }
+    StampRosterStatus(F4_STATUS_IN_PROGRESS);
+
+    PickHousehold = 1;
 end;
 
 
 PROC HOUSEHOLDSURVEY_LEVEL
 preproc
-    { STUB: When 113_F4_listing app lands the preproc calls PickHousehold()
-      and stamps the case-ID block + HH_LISTING_NO from the chosen roster
-      row. Until then, enumerator enters HH_LISTING_NO manually in the
-      FIELD_CONTROL form; the stub function returns 0 immediately.
+    { On every new F4 case, run the household-pick screen BEFORE any
+      form opens. The pick stamps:
+        - CASE_SEQ                       (allocated from f4_seq_lo..hi)
+        - REGION_CODE..FACILITY_NO       (from login settings)
+        - HH_LISTING_NO                  (from chosen roster row)
+        - g_picked_*                     (state for end-of-case write-back)
+
+      If the operator cancels or no eligible rows exist, PickHousehold()
+      warnmsgs / errmsgs and returns 0; the case still opens, and the
+      operator may enter HH_LISTING_NO manually (rare fallback path --
+      e.g., household truly missed by the listing crew).
 
       F4_PARENT_F3_CASE_SEQ defaults to 999 (NA per F-series convention)
-      -- the protocol-conformant barangay-listing sampling path. }
+      -- the protocol-conformant barangay-listing sampling path. Set
+      only on the 110_F3_listing patient interval-walk path
+      (LISTING_TAG=2 listing); not implemented yet. }
     if not PickHousehold() then
         { Stay in the dictionary -- operator will enter HH_LISTING_NO
-          manually. No error message; the stub return path is the
-          expected flow until 113_F4_listing lands. }
+          manually. The warnmsg already fired in PickHousehold(). }
     endif;
 
 
@@ -177,11 +541,21 @@ postproc
       read-out, mark the case withdrawn and end the interview. The
       operator is expected to save the partial case so the disposition
       is preserved for paradata. Per F4-Skip-Logic-and-Validations.md
-      §2 Section A ("Terminate interview" rule). }
+      §2 Section A ("Terminate interview" rule).
+
+      Listing-roster write-back: stamp F4_STATUS = REFUSED onto the
+      chosen F4LISTING_DICT.REC_LISTING_BRGY_FRAME row (when the case
+      was opened via PickHousehold and not via the manual-entry
+      fallback path). }
     if CONSENT_GIVEN = 2 then   { 2 = No }
         AAPOR_DISPOSITION        = AAPOR_REFUSED;
         ENUM_RESULT_FINAL_VISIT  = VISIT_RESULT_WITHDRAW_CONSENT;
         DATE_FINAL_VISIT         = SYSDATE("YYYYMMDD");
+
+        if g_picked_hh_listing_no > 0 then
+            StampRosterStatus(F4_STATUS_REFUSED);
+        endif;
+
         endcase;
     endif;
 
