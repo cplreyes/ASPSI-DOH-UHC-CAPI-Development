@@ -74,7 +74,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 // Context+hook pair lives alongside the Provider for cohesion. HMR's
 // "only-export-components" rule is too strict for this React-standard pattern;
 // splitting across files just to satisfy it adds friction without runtime benefit.
-// eslint-disable-next-line react-refresh/only-export-components
+ 
 export function useAuth(): AuthContextValue {
   const ctx = useContext(AuthContext);
   if (!ctx) {

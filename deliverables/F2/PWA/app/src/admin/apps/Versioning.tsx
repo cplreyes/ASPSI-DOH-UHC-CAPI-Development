@@ -67,7 +67,7 @@ export function Versioning({ apiBaseUrl, fetchImpl }: VersioningProps): JSX.Elem
     return () => {
       cancelled = true;
     };
-  }, [apiBaseUrl, token]);
+  }, [apiBaseUrl, token, clearAuth, navigate, fetchImpl]);
 
   return (
     <section className="flex flex-col gap-3">

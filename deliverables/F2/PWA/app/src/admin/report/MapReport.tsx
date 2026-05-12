@@ -146,7 +146,7 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
     return () => {
       cancelled = true;
     };
-  }, [apiQuery, apiBaseUrl, token]);
+  }, [apiQuery, apiBaseUrl, token, clearAuth, navigate, fetchImpl]);
 
   // Group markers by region (2-char facility prefix) for the sidebar.
   const regionCounts = useMemo(() => {

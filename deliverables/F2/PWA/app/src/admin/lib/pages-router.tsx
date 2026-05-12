@@ -15,8 +15,10 @@
  */
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
   type ReactNode,
   type MouseEvent,
@@ -54,7 +56,10 @@ export function RouterProvider({ children }: { children: ReactNode }): JSX.Eleme
     };
   }, []);
 
-  const navigate = (to: string) => {
+  // Memoize navigate so consumers can put it in useEffect dep arrays without
+  // their effects re-firing on every parent re-render. Empty dep array because
+  // navigate has no closed-over state — it reads window.location each call.
+  const navigate = useCallback((to: string) => {
     // Compare against the full URL (pathname + search) so tab/filter
     // navigations like /admin/data?tab=audit aren't bailed out of just
     // because the pathname matches.
@@ -62,13 +67,14 @@ export function RouterProvider({ children }: { children: ReactNode }): JSX.Eleme
     if (to === current) return;
     window.history.pushState({}, '', to);
     window.dispatchEvent(new Event(PATH_CHANGE_EVENT));
-  };
+  }, []);
 
-  return (
-    <RouterContext.Provider value={{ pathname, search, navigate }}>
-      {children}
-    </RouterContext.Provider>
-  );
+  // Memoize the context value so consumers don't re-render just because
+  // RouterProvider's parent re-rendered (object identity stays stable until
+  // pathname/search actually change).
+  const value = useMemo(() => ({ pathname, search, navigate }), [pathname, search, navigate]);
+
+  return <RouterContext.Provider value={value}>{children}</RouterContext.Provider>;
 }
 
 export function useRouter(): RouterCtx {

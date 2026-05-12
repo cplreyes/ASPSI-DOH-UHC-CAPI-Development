@@ -58,7 +58,7 @@ export function QuotaWidget({ apiBaseUrl, fetchImpl }: QuotaWidgetProps): JSX.El
     return () => {
       cancelled = true;
     };
-  }, [apiBaseUrl, token]);
+  }, [apiBaseUrl, token, clearAuth, navigate, fetchImpl]);
 
   return (
     <section className="flex flex-col gap-2">
