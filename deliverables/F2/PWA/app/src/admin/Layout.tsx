@@ -118,7 +118,7 @@ const NAV_GROUPS: NavGroup[] = [
 const FLAT_NAV: NavItemSpec[] = NAV_GROUPS.flatMap((g) => g.items);
 
 export function Layout({ children }: LayoutProps): JSX.Element {
-  const { username, role, clearAuth } = useAdminAuth();
+  const { username, role, clearAuth, isAuthenticated } = useAdminAuth();
   const { navigate } = useRouter();
 
   const onLogout = () => {
@@ -149,42 +149,73 @@ export function Layout({ children }: LayoutProps): JSX.Element {
         </Link>
 
         <nav className="flex flex-1 flex-col gap-4 overflow-y-auto py-2">
-          {NAV_GROUPS.map((group) => (
-            <div key={group.title} className="flex flex-col">
-              <p className="px-5 pb-1 pt-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                {group.title}
-              </p>
-              {group.items.map((item) => (
-                <SidebarLink key={item.to} item={item} />
-              ))}
-            </div>
-          ))}
+          {isAuthenticated
+            ? NAV_GROUPS.map((group) => (
+                <div key={group.title} className="flex flex-col">
+                  <p className="px-5 pb-1 pt-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    {group.title}
+                  </p>
+                  {group.items.map((item) => (
+                    <SidebarLink key={item.to} item={item} />
+                  ))}
+                </div>
+              ))
+            : // Unauthenticated: only Help is reachable. Show just the Help link
+              // so visitors who landed at /admin/help can confirm they're in the
+              // right place without a wall of links that all bounce to login.
+              (
+                <div className="flex flex-col">
+                  <p className="px-5 pb-1 pt-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    Help
+                  </p>
+                  <SidebarLink
+                    item={{
+                      to: '/admin/help',
+                      label: 'Help',
+                      description: 'Operator guide — what each tab does, common workflows, glossary.',
+                      icon: IconBook,
+                    }}
+                  />
+                </div>
+              )}
         </nav>
 
-        {/* Sidebar footer: user profile + sign out + version */}
+        {/* Sidebar footer: when authenticated, user profile + sign out + version.
+            When unauthenticated (Help-only view), Sign-in CTA + version. */}
         <div className="flex flex-col gap-3 border-t border-hairline px-5 py-4">
-          <div className="flex items-center gap-3">
-            <div
-              aria-hidden="true"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border border-hairline bg-secondary/40 font-mono text-sm text-ink"
+          {isAuthenticated ? (
+            <>
+              <div className="flex items-center gap-3">
+                <div
+                  aria-hidden="true"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border border-hairline bg-secondary/40 font-mono text-sm text-ink"
+                >
+                  {initial}
+                </div>
+                <div className="flex min-w-0 flex-col">
+                  <p className="truncate text-sm font-medium text-ink">{username ?? '—'}</p>
+                  <p className="truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    {role ?? '—'}
+                  </p>
+                </div>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onLogout}
+                className="h-9 w-full border-hairline font-mono text-xs uppercase tracking-wider text-muted-foreground hover:bg-secondary/40 hover:text-ink"
+              >
+                Sign out
+              </Button>
+            </>
+          ) : (
+            <Link
+              to="/admin/login"
+              className="flex h-9 items-center justify-center rounded-sm border border-hairline bg-secondary/40 font-mono text-xs uppercase tracking-wider text-ink hover:bg-secondary/60"
             >
-              {initial}
-            </div>
-            <div className="flex min-w-0 flex-col">
-              <p className="truncate text-sm font-medium text-ink">{username ?? '—'}</p>
-              <p className="truncate font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                {role ?? '—'}
-              </p>
-            </div>
-          </div>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onLogout}
-            className="h-9 w-full border-hairline font-mono text-xs uppercase tracking-wider text-muted-foreground hover:bg-secondary/40 hover:text-ink"
-          >
-            Sign out
-          </Button>
+              Sign in
+            </Link>
+          )}
           <p className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
             v{__APP_VERSION__}
           </p>
@@ -204,23 +235,33 @@ export function Layout({ children }: LayoutProps): JSX.Element {
             <span className="font-serif text-base font-medium tracking-tight">F2 PWA Portal</span>
           </Link>
           <div className="flex items-center gap-3">
-            <span className="text-sm">{username ?? '—'}</span>
-            <Button
-              type="button"
-              variant="tableAction"
-              size="tableAction"
-              onClick={onLogout}
-              className="text-muted-foreground no-underline hover:text-ink hover:no-underline"
-            >
-              Sign out
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <span className="text-sm">{username ?? '—'}</span>
+                <Button
+                  type="button"
+                  variant="tableAction"
+                  size="tableAction"
+                  onClick={onLogout}
+                  className="text-muted-foreground no-underline hover:text-ink hover:no-underline"
+                >
+                  Sign out
+                </Button>
+              </>
+            ) : (
+              <Link to="/admin/login" className="text-sm font-medium text-ink no-underline hover:no-underline">
+                Sign in
+              </Link>
+            )}
           </div>
         </div>
-        <nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm" aria-label="Primary (mobile)">
-          {FLAT_NAV.map((item) => (
-            <MobileNavLink key={item.to} item={item} />
-          ))}
-        </nav>
+        {isAuthenticated && (
+          <nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm" aria-label="Primary (mobile)">
+            {FLAT_NAV.map((item) => (
+              <MobileNavLink key={item.to} item={item} />
+            ))}
+          </nav>
+        )}
       </header>
 
       {/* Single content area — scrolls independently of fixed sidebar (≥md)

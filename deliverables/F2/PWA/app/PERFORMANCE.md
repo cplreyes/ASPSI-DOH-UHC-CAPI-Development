@@ -3,6 +3,7 @@
 Reference baseline for the F2 PWA (HCW survey + Admin Portal) measured on production. Use this to detect regressions in future releases.
 
 **First measurement:** 2026-05-12 (PR #274 + slate 2 — closes [#192](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/192) E6-PWA-010)
+**Re-measurement:** 2026-05-12 PM after slate 4 bundle-split — closes [#275](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/275). See "Bundle-split delta" section below.
 **Method:** Lighthouse 11.7.1, headless Chromium, mobile profile (default), single sample, run from operator workstation against `https://f2-pwa.pages.dev/`.
 
 > Single-sample Lighthouse numbers fluctuate ±5% run-to-run. Treat ±10pt swings on any individual metric as noise; persistent shifts of >10pt or any score dropping below the **AA budget** below as a regression.
@@ -76,8 +77,32 @@ npx lighthouse https://f2-pwa.pages.dev/admin/login --only-categories=performanc
 
 Run 3 times and average; single samples are noisy.
 
+## Bundle-split delta (PR #281 / closes #275)
+
+Slate 4 (2026-05-12 PM) split the `index-*.js` monolithic chunk into three by adding `manualChunks` + `lazy(() => import('@/admin/App'))`:
+
+| Chunk | Pre-split | Post-split | Notes |
+|---|---|---|---|
+| HCW first-paint JS (entry + vendor) | 930 KB raw / 250 KB gzip | **608 KB raw / 188 KB gzip** | 35% raw / 25% gzip reduction; admin chunk no longer downloaded |
+| `index-*.js` (HCW shell) | 930 KB | **26 KB raw / 8 KB gzip** | App.tsx + survey components only |
+| `vendor-*.js` (React + deps) | (in index) | 582 KB raw / 179 KB gzip | All node_modules; eagerly loaded for app boot |
+| `admin-*.js` (Admin portal) | (in index) | 329 KB raw / 61 KB gzip | **Lazy** — only fetched on /admin/* navigation |
+
+`build.modulePreload.resolveDependencies` filters the admin chunk out of `<link rel="modulepreload">` for the HCW entry, so the browser doesn't eager-fetch admin even though it's reachable from the entry's module graph.
+
+Re-measured Lighthouse perf (single sample, post-split, local preview build):
+
+| Surface | Pre-split perf | Post-split perf | LCP delta |
+|---|---|---|---|
+| HCW root | 0.91 | **0.90** | 2.8s → 3.0s (within ±5% sample noise) |
+| Admin login | 0.93 | **0.87** | 2.3s → 3.6s (one-time lazy-fetch cost) |
+
+Trade-off accepted: HCW respondents (dominant traffic class) get a smaller first-paint payload; Admin users (ASPSI ops staff, low traffic, typically on fixed connections) pay a one-time ~1s lazy-load cost on first admin-portal navigation, then everything is cached. For a survey app where 99%+ of traffic is HCW, this is the right shape. Both surfaces remain above the 0.85 perf floor.
+
+A11y unaffected — both surfaces still score 1.0 / 100.
+
 ## Known regressions / follow-ups
 
-- **Bundle splitting** ([#275](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/275) — to file): the `index-*.js` chunk is 930 KB raw. Route-level code-splitting on `/admin/*` would let the HCW survey ship with a smaller initial JS payload (most HCWs never load admin code).
 - **CI perf gate** (deferred): no automated regression detection today. Adding a Lighthouse CI step against staging on every PR would catch perf drops at the PR level instead of post-deploy.
 - **Authenticated-state perf** (deferred): same as the a11y audit limitation — Lighthouse against post-login dashboards needs cookie-injection setup. Tracked alongside [#273](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/273) (E6-PWA-009b).
+- **Vendor chunk split** (deferred): the `vendor-*.js` chunk at 582 KB raw still trips Vite's chunkSizeWarningLimit (500 KB). Could be sub-split into `vendor-react`, `vendor-forms`, etc., but diminishing returns once the admin lazy-load is in place. Re-evaluate if HCW LCP regresses below 0.85 in a future measurement.

@@ -36,8 +36,19 @@ export function Question({ item }: QuestionProps) {
   const error = errors[item.id];
   const errorMessage = typeof error?.message === 'string' ? error.message : undefined;
 
+  // Compound questions (multi-field — Q1 name, Q9 tenure, etc.) need a
+  // <fieldset>/<legend> wrapper instead of <div>/<label htmlFor>: a single
+  // <label> can't legally point to multiple sub-inputs, and pre-fix it
+  // pointed at item.id which had no matching element — broke screen-reader
+  // announcement of the question text on each sub-input + tripped axe's
+  // label-no-for + form-field-no-id rules. Closes #277.
+  const isCompound = item.type === 'multi-field';
+  const Outer = isCompound ? 'fieldset' : 'div';
+  const Heading = isCompound ? 'legend' : 'label';
+  const headingProps = isCompound ? {} : { htmlFor: item.id };
+
   return (
-    <div className="grid grid-cols-1 gap-y-2 py-3 sm:grid-cols-[80px_1fr]">
+    <Outer className="m-0 grid min-w-0 grid-cols-1 gap-y-2 border-0 p-0 py-3 sm:grid-cols-[80px_1fr]">
       <span
         aria-hidden="true"
         className="font-mono text-sm text-muted-foreground sm:pt-1 sm:pr-4 sm:text-right sm:text-base sm:leading-snug"
@@ -45,14 +56,14 @@ export function Question({ item }: QuestionProps) {
         {item.id}
       </span>
       <div className="flex min-w-0 flex-col gap-2">
-        <label htmlFor={item.id} className="text-base font-medium leading-snug">
+        <Heading {...headingProps} className="text-base font-medium leading-snug">
           <span className="sr-only">
             {item.id}
             {'. '}
           </span>
           {localized(item.label, locale)}
           {item.required ? <span className="ml-1 text-destructive">*</span> : null}
-        </label>
+        </Heading>
         {item.help ? (
           <p className="text-xs text-muted-foreground">{localized(item.help, locale)}</p>
         ) : null}
@@ -77,7 +88,7 @@ export function Question({ item }: QuestionProps) {
           </p>
         ) : null}
       </div>
-    </div>
+    </Outer>
   );
 }
 

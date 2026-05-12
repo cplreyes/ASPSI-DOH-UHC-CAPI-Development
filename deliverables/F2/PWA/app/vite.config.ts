@@ -115,6 +115,37 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: { '@': path.resolve(__dirname, './src') },
     },
+    build: {
+      // Bundle-split admin routes off the HCW initial-load chunk (closes #275).
+      // HCW respondents — the dominant traffic class in production — never
+      // need admin code, so paying for ~half the bundle they don't use
+      // pre-split was wasted bandwidth. Split shape:
+      //   - admin  → everything under src/admin/* (Login, Dashboards, Help, …)
+      //   - vendor → all node_modules (React, react-i18next, RHF, zod, etc.)
+      //   - index  → HCW survey shell + components (the default chunk)
+      // Rollup automatically deduplicates: shared modules between admin
+      // and HCW (e.g., admin/lib/api-client) end up in the chunk that's
+      // first to import them, with the other side importing it on demand.
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('/src/admin/') || id.includes('\\src\\admin\\')) return 'admin';
+            if (id.includes('/node_modules/') || id.includes('\\node_modules\\')) return 'vendor';
+            return undefined;
+          },
+        },
+      },
+      // Filter modulepreload links so the HCW entry (index.html) doesn't eager-
+      // fetch the admin chunk. Without this filter, Vite emits a
+      // <link rel="modulepreload" href="/assets/admin-*.js"> in index.html for
+      // any chunk reachable from the entry — even lazy(() => import()) ones —
+      // which the browser fetches immediately, defeating the lazy-load benefit.
+      modulePreload: {
+        resolveDependencies(_filename, deps) {
+          return deps.filter((dep) => !dep.includes('/admin-'));
+        },
+      },
+    },
     // Dev-only proxy. /admin/api/* is forwarded to the staging Worker so
     // localhost:5173/admin/login can dogfood the portal end-to-end without
     // running into CORS (admin routes are deliberately not CORS-enabled —
