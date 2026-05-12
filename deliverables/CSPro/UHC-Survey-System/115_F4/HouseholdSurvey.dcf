@@ -11034,7 +11034,1541 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q79_HOW_FIND_OUT_REGISTER",
+              "labels": [
+                {
+                  "text": "79. How did you find out about how to register to PhilHealth?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q79_HOW_FIND_OUT_REGISTER_VS1",
+                  "labels": [
+                    {
+                      "text": "79. How did you find out about how to register to PhilHealth?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "PhilHealth representative"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "LGU"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Primary care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other health care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Employer"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No one / self-registered"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Barangay Health Worker"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Friends / Family"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Health center/facility"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q79_HOW_FIND_OUT_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "79. How find out -- Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q80_ASSISTED_BY",
+              "labels": [
+                {
+                  "text": "80. Who assisted you in the registration process?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q80_ASSISTED_BY_VS1",
+                  "labels": [
+                    {
+                      "text": "80. Who assisted you in the registration process?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "PhilHealth representative"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "LGU"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Primary care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other health care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Employer"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No one / self-registered"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Barangay Health Worker"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Friends / Family"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Health center/facility"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q80_ASSISTED_BY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "80. Assisted by -- Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q81_HAD_DIFFICULTIES",
+              "labels": [
+                {
+                  "text": "81. Did you have any difficulties in the registration process?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q81_HAD_DIFFICULTIES_VS1",
+                  "labels": [
+                    {
+                      "text": "81. Did you have any difficulties in the registration process?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_DIFFICULTIES_O01",
+              "labels": [
+                {
+                  "text": "82. What did you find difficult about the process? \u2014 Unclear process"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_DIFFICULTIES_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "82. What did you find difficult about the process? \u2014 Unclear process"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_DIFFICULTIES_O02",
+              "labels": [
+                {
+                  "text": "82. What did you find difficult about the process? \u2014 Took a long time"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_DIFFICULTIES_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "82. What did you find difficult about the process? \u2014 Took a long time"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_DIFFICULTIES_O03",
+              "labels": [
+                {
+                  "text": "82. What did you find difficult about the process? \u2014 Did not know where to ask for help"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_DIFFICULTIES_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "82. What did you find difficult about the process? \u2014 Did not know where to ask for help"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_DIFFICULTIES_O04",
+              "labels": [
+                {
+                  "text": "82. What did you find difficult about the process? \u2014 Had to travel a long way"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_DIFFICULTIES_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "82. What did you find difficult about the process? \u2014 Had to travel a long way"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_DIFFICULTIES_O05",
+              "labels": [
+                {
+                  "text": "82. What did you find difficult about the process? \u2014 No valid ID"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_DIFFICULTIES_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "82. What did you find difficult about the process? \u2014 No valid ID"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_DIFFICULTIES_O06",
+              "labels": [
+                {
+                  "text": "82. What did you find difficult about the process? \u2014 Did not know the required documents to register"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_DIFFICULTIES_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "82. What did you find difficult about the process? \u2014 Did not know the required documents to register"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_DIFFICULTIES_O07",
+              "labels": [
+                {
+                  "text": "82. What did you find difficult about the process? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_DIFFICULTIES_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "82. What did you find difficult about the process? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_DIFFICULTIES_O08",
+              "labels": [
+                {
+                  "text": "82. What did you find difficult about the process? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q82_DIFFICULTIES_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "82. What did you find difficult about the process? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q82_DIFFICULTIES_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "82. What did you find difficult about the process? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q83_KNOWS_WHERE_TO_SEEK",
+              "labels": [
+                {
+                  "text": "83. Would you know where to go to seek assistance in registration?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q83_KNOWS_WHERE_TO_SEEK_VS1",
+                  "labels": [
+                    {
+                      "text": "83. Would you know where to go to seek assistance in registration?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q84_WHERE_TO_SEEK",
+              "labels": [
+                {
+                  "text": "84. Where would you go to seek assistance?"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 200
+            },
+            {
+              "name": "Q85_BENEFITS_O01",
+              "labels": [
+                {
+                  "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 No balance billing for basic ward accommodation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q85_BENEFITS_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 No balance billing for basic ward accommodation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q85_BENEFITS_O02",
+              "labels": [
+                {
+                  "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 Subsidized inpatient services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q85_BENEFITS_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 Subsidized inpatient services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q85_BENEFITS_O03",
+              "labels": [
+                {
+                  "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 Subsidized outpatient services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q85_BENEFITS_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 Subsidized outpatient services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q85_BENEFITS_O04",
+              "labels": [
+                {
+                  "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 There are no benefits to being a member"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q85_BENEFITS_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 There are no benefits to being a member"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q85_BENEFITS_O05",
+              "labels": [
+                {
+                  "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q85_BENEFITS_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q85_BENEFITS_O06",
+              "labels": [
+                {
+                  "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q85_BENEFITS_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q85_BENEFITS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "85. What are some of the benefits that come with being a PhilHealth member? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q86_PAYS_PREMIUMS",
+              "labels": [
+                {
+                  "text": "86. Do you and members of your HH pay PhilHealth premiums every month?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q86_PAYS_PREMIUMS_VS1",
+                  "labels": [
+                    {
+                      "text": "86. Do you and members of your HH pay PhilHealth premiums every month?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes, I pay directly"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes, my employer pays"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No, I do not pay premiums"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q87_DIFFICULT_TO_PAY",
+              "labels": [
+                {
+                  "text": "87. Do you find it difficult to pay the PhilHealth premiums every month?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q87_DIFFICULT_TO_PAY_VS1",
+                  "labels": [
+                    {
+                      "text": "87. Do you find it difficult to pay the PhilHealth premiums every month?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q88_WHY_DIFFICULT_TO_PAY_O01",
+              "labels": [
+                {
+                  "text": "88. Why did you find it difficult? \u2014 Cannot afford the premium"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q88_WHY_DIFFICULT_TO_PAY_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "88. Why did you find it difficult? \u2014 Cannot afford the premium"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q88_WHY_DIFFICULT_TO_PAY_O02",
+              "labels": [
+                {
+                  "text": "88. Why did you find it difficult? \u2014 Payment options are inconvenient"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q88_WHY_DIFFICULT_TO_PAY_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "88. Why did you find it difficult? \u2014 Payment options are inconvenient"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q88_WHY_DIFFICULT_TO_PAY_O03",
+              "labels": [
+                {
+                  "text": "88. Why did you find it difficult? \u2014 No time to pay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q88_WHY_DIFFICULT_TO_PAY_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "88. Why did you find it difficult? \u2014 No time to pay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q88_WHY_DIFFICULT_TO_PAY_O04",
+              "labels": [
+                {
+                  "text": "88. Why did you find it difficult? \u2014 Don't see value in paying"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q88_WHY_DIFFICULT_TO_PAY_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "88. Why did you find it difficult? \u2014 Don't see value in paying"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q88_WHY_DIFFICULT_TO_PAY_O05",
+              "labels": [
+                {
+                  "text": "88. Why did you find it difficult? \u2014 System of PhilHealth is unreliable/usually down"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q88_WHY_DIFFICULT_TO_PAY_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "88. Why did you find it difficult? \u2014 System of PhilHealth is unreliable/usually down"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q88_WHY_DIFFICULT_TO_PAY_O06",
+              "labels": [
+                {
+                  "text": "88. Why did you find it difficult? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q88_WHY_DIFFICULT_TO_PAY_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "88. Why did you find it difficult? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q88_WHY_DIFFICULT_TO_PAY_O07",
+              "labels": [
+                {
+                  "text": "88. Why did you find it difficult? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q88_WHY_DIFFICULT_TO_PAY_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "88. Why did you find it difficult? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q88_WHY_DIFFICULT_TO_PAY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "88. Why did you find it difficult? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
         },
         {
           "name": "I_PRIMARY_CARE",
@@ -11048,7 +12582,1904 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q89_HAS_USUAL_FACILITY",
+              "labels": [
+                {
+                  "text": "89. In the past 12 months, do you have a clinic, or health center that you usually go to?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q89_HAS_USUAL_FACILITY_VS1",
+                  "labels": [
+                    {
+                      "text": "89. In the past 12 months, do you have a clinic, or health center that you usually go to?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q89_1_FACILITY_NAME",
+              "labels": [
+                {
+                  "text": "89.1. What is the name of the facility?"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 200
+            },
+            {
+              "name": "Q90_IS_USUAL_FOR_GENERAL",
+              "labels": [
+                {
+                  "text": "90. Is this the facility you usually go to for general health concerns?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q90_IS_USUAL_FOR_GENERAL_VS1",
+                  "labels": [
+                    {
+                      "text": "90. Is this the facility you usually go to for general health concerns?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q91_WHY_THIS_FACILITY_O01",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility? \u2014 This facility is more accessible than my usual facility (i.e., nearer, has more transportation options to get to, and cheaper to travel to)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q91_WHY_THIS_FACILITY_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "91. Why did you go to this facility? \u2014 This facility is more accessible than my usual facility (i.e., nearer, has more transportation options to get to, and cheaper to travel to)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q91_WHY_THIS_FACILITY_O02",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility? \u2014 Needed a service/specialist not available at my usual facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q91_WHY_THIS_FACILITY_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "91. Why did you go to this facility? \u2014 Needed a service/specialist not available at my usual facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q91_WHY_THIS_FACILITY_O03",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility? \u2014 Recommended by friends/family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q91_WHY_THIS_FACILITY_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "91. Why did you go to this facility? \u2014 Recommended by friends/family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q91_WHY_THIS_FACILITY_O04",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility? \u2014 Wanted to try another facility than my usual"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q91_WHY_THIS_FACILITY_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "91. Why did you go to this facility? \u2014 Wanted to try another facility than my usual"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q91_WHY_THIS_FACILITY_O05",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility? \u2014 Prefer this facility than my usual"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q91_WHY_THIS_FACILITY_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "91. Why did you go to this facility? \u2014 Prefer this facility than my usual"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q91_WHY_THIS_FACILITY_O06",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility? \u2014 This was referred to me by my usual facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q91_WHY_THIS_FACILITY_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "91. Why did you go to this facility? \u2014 This was referred to me by my usual facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q91_WHY_THIS_FACILITY_O07",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility? \u2014 Usual facility is closed for today"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q91_WHY_THIS_FACILITY_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "91. Why did you go to this facility? \u2014 Usual facility is closed for today"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q91_WHY_THIS_FACILITY_O08",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility? \u2014 The doctor I trust/familiar with transferred in this facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q91_WHY_THIS_FACILITY_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "91. Why did you go to this facility? \u2014 The doctor I trust/familiar with transferred in this facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q91_WHY_THIS_FACILITY_O09",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q91_WHY_THIS_FACILITY_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "91. Why did you go to this facility? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q91_WHY_THIS_FACILITY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "91. Why did you go to this facility? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q92_FACILITY_TYPE",
+              "labels": [
+                {
+                  "text": "92. What is the type of facility that you usually go to?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q92_FACILITY_TYPE_VS1",
+                  "labels": [
+                    {
+                      "text": "92. What is the type of facility that you usually go to?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "YAKAP/Konsulta or primary care provider"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Barangay Health Center"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Rural Health Unit / Health Center"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Public Hospital"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Private Hospital"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Private Clinic"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Traditional Healer or Manghihilot/Albularyo"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q92_FACILITY_TYPE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "92. Facility type -- Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q93_NO_USUAL_REASON_O01",
+              "labels": [
+                {
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't get sick"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q93_NO_USUAL_REASON_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't get sick"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q93_NO_USUAL_REASON_O02",
+              "labels": [
+                {
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I recently moved into the area"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q93_NO_USUAL_REASON_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I recently moved into the area"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q93_NO_USUAL_REASON_O03",
+              "labels": [
+                {
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 It's expensive"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q93_NO_USUAL_REASON_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 It's expensive"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q93_NO_USUAL_REASON_O04",
+              "labels": [
+                {
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I can treat myself"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q93_NO_USUAL_REASON_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I can treat myself"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q93_NO_USUAL_REASON_O05",
+              "labels": [
+                {
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know where to go for care"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q93_NO_USUAL_REASON_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know where to go for care"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q93_NO_USUAL_REASON_O06",
+              "labels": [
+                {
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q93_NO_USUAL_REASON_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q93_NO_USUAL_REASON_O07",
+              "labels": [
+                {
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q93_NO_USUAL_REASON_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q93_NO_USUAL_REASON_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "93. If not, why do you not have a usual clinic, or health center that you usually go to? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O01",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Walk"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Walk"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O02",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Bike"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Bike"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O03",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Public Bus"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Public Bus"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O04",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Jeepney"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Jeepney"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O05",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Tricycle"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Tricycle"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O06",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Car (including private taxi/cab)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Car (including private taxi/cab)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O07",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Motorcycle"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Motorcycle"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O08",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Boat"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Boat"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O09",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Taxi"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Taxi"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O10",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Pedicab"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O10_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Pedicab"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O11",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 E-bike"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O11_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 E-bike"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_O12",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q94_TRANSPORT_MODE_O12_VS1",
+                  "labels": [
+                    {
+                      "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_TRANSPORT_MODE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "94. What mode/s of transportation do you use when travelling to the nearest primary care facility? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q95_TRAVEL_TIME_ONE_WAY",
+              "labels": [
+                {
+                  "text": "95. How long does it take you to travel from your house when going to the nearest primary care facility? (one-way, HH:MM)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 5
+            },
+            {
+              "name": "Q96_TRAVEL_COST_ONE_WAY",
+              "labels": [
+                {
+                  "text": "96. How much does it usually cost for you to travel to this facility from your home? (Philippine pesos, ONE-WAY)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 7,
+              "zeroFill": false
+            },
+            {
+              "name": "Q97_KNOWS_HOW_TO_BOOK",
+              "labels": [
+                {
+                  "text": "97. When you have a health problem, do you know how to book an appointment at a primary care facility?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q97_KNOWS_HOW_TO_BOOK_VS1",
+                  "labels": [
+                    {
+                      "text": "97. When you have a health problem, do you know how to book an appointment at a primary care facility?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q98_PHONE_ADVICE_WHEN_OPEN",
+              "labels": [
+                {
+                  "text": "98. When your primary care facility is open, can you get advice quickly over the phone if you need it?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q98_PHONE_ADVICE_WHEN_OPEN_VS1",
+                  "labels": [
+                    {
+                      "text": "98. When your primary care facility is open, can you get advice quickly over the phone if you need it?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I haven't tried"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q99_PHONE_WHEN_CLOSED",
+              "labels": [
+                {
+                  "text": "99. When your primary care facility is closed, is there a phone number you can call when you get sick?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q99_PHONE_WHEN_CLOSED_VS1",
+                  "labels": [
+                    {
+                      "text": "99. When your primary care facility is closed, is there a phone number you can call when you get sick?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I haven't tried"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q100_LEAVE_WORK_TO_VISIT",
+              "labels": [
+                {
+                  "text": "100. When you have to visit your primary care facility, do you have to take a leave from work or school to go?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q100_LEAVE_WORK_TO_VISIT_VS1",
+                  "labels": [
+                    {
+                      "text": "100. When you have to visit your primary care facility, do you have to take a leave from work or school to go?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I haven't tried"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "J_HEALTH_SEEKING",

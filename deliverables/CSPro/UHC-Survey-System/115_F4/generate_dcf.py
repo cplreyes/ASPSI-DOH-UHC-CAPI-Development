@@ -987,15 +987,227 @@ def build_section_g():
 
 
 def build_section_h():
-    """H. PhilHealth Registration and Health Insurance."""
+    """H. PhilHealth Registration and Health Insurance (Q79-Q88).
+
+    Section conditionally applicable: Q79-Q88 only when the respondent
+    is registered with PhilHealth (per PDF section header note --
+    "Answer Q79 to Q88 if the respondent is registered with PhilHealth
+    in Q45"). The Q45 column is per-member in C_HOUSEHOLD_ROSTER; for
+    this section the gate is the respondent's own Q45 row (HH_MEMBER_-
+    LINE_NO=1). Routing enforced in PROC.
+
+    Skip-routing (enforced in PROC):
+      - Q81 = No (2) -> Q83 (skip Q82)
+      - Q87 = No (2) -> Q89 (skip Q88; section H ends)
+    """
+    Q79_HOW_FIND_OUT = [
+        ("PhilHealth representative",          "01"),
+        ("LGU",                                "02"),
+        ("Primary care provider",              "03"),
+        ("Other health care provider",         "04"),
+        ("Employer",                           "05"),
+        ("No one / self-registered",           "06"),
+        ("Barangay Health Worker",             "07"),
+        ("Friends / Family",                   "08"),
+        ("Health center/facility",             "09"),
+        ("Other (Specify)",                    "10"),
+    ]
+    # Q80 reuses the same value set as Q79 per the PDF
+    Q80_ASSISTANCE = Q79_HOW_FIND_OUT
+    Q82_DIFFICULTIES = [
+        ("Unclear process",                                            "01"),
+        ("Took a long time",                                           "02"),
+        ("Did not know where to ask for help",                         "03"),
+        ("Had to travel a long way",                                   "04"),
+        ("No valid ID",                                                "05"),
+        ("Did not know the required documents to register",            "06"),
+        ("I don't know",                                               "07"),
+        ("Other (Specify)",                                            "08"),
+    ]
+    Q85_BENEFITS = [
+        ("No balance billing for basic ward accommodation",   "01"),
+        ("Subsidized inpatient services",                     "02"),
+        ("Subsidized outpatient services",                    "03"),
+        ("There are no benefits to being a member",           "04"),
+        ("I don't know",                                      "05"),
+        ("Other (Specify)",                                   "06"),
+    ]
+    Q86_PREMIUMS = [
+        ("Yes, I pay directly",       "1"),
+        ("Yes, my employer pays",     "2"),
+        ("No, I do not pay premiums", "3"),
+    ]
+    Q88_WHY_DIFFICULT = [
+        ("Cannot afford the premium",                       "01"),
+        ("Payment options are inconvenient",                "02"),
+        ("No time to pay",                                  "03"),
+        ("Don't see value in paying",                       "04"),
+        ("System of PhilHealth is unreliable/usually down", "05"),
+        ("I don't know",                                    "06"),
+        ("Other (Specify)",                                 "07"),
+    ]
+    items = [
+        select_one("Q79_HOW_FIND_OUT_REGISTER",
+                   "79. How did you find out about how to register to PhilHealth?",
+                   Q79_HOW_FIND_OUT, length=2),
+        alpha("Q79_HOW_FIND_OUT_OTHER_TXT",
+              "79. How find out -- Other (specify) text", length=120),
+        select_one("Q80_ASSISTED_BY",
+                   "80. Who assisted you in the registration process?",
+                   Q80_ASSISTANCE, length=2),
+        alpha("Q80_ASSISTED_BY_OTHER_TXT",
+              "80. Assisted by -- Other (specify) text", length=120),
+        yes_no("Q81_HAD_DIFFICULTIES",
+               "81. Did you have any difficulties in the registration process?"),
+        *select_all("Q82_DIFFICULTIES",
+                    "82. What did you find difficult about the process?",
+                    Q82_DIFFICULTIES),
+        yes_no("Q83_KNOWS_WHERE_TO_SEEK",
+               "83. Would you know where to go to seek assistance in registration?"),
+        alpha("Q84_WHERE_TO_SEEK",
+              "84. Where would you go to seek assistance?", length=200),
+        *select_all("Q85_BENEFITS",
+                    "85. What are some of the benefits that come with being a "
+                    "PhilHealth member?",
+                    Q85_BENEFITS),
+        select_one("Q86_PAYS_PREMIUMS",
+                   "86. Do you and members of your HH pay PhilHealth premiums "
+                   "every month?",
+                   Q86_PREMIUMS, length=1),
+        yes_no("Q87_DIFFICULT_TO_PAY",
+               "87. Do you find it difficult to pay the PhilHealth premiums "
+               "every month?"),
+        *select_all("Q88_WHY_DIFFICULT_TO_PAY",
+                    "88. Why did you find it difficult?",
+                    Q88_WHY_DIFFICULT),
+    ]
     return record("H_PHILHEALTH",
-                  "H. PhilHealth Registration and Health Insurance", "J", [])
+                  "H. PhilHealth Registration and Health Insurance", "J", items)
 
 
 def build_section_i():
-    """I. Primary Care Utilization."""
+    """I. Primary Care Utilization (Q89-Q100).
+
+    Skip-routing (enforced in PROC):
+      - Q89 = No (2) or I don't know (3) -> Q93 (skip Q90, Q91, Q92)
+      - Q90 = No (2) -> Q96 (skip Q91, Q92, Q93, Q94, Q95)
+      - Q93 only when Q89 = No / DK (no usual clinic)
+    """
+    Q89_HAS_USUAL = [
+        ("Yes",          "1"),
+        ("No",           "2"),  # proceed to Q93
+        ("I don't know", "3"),  # proceed to Q93
+    ]
+    Q91_WHY_FACILITY = [
+        ("This facility is more accessible than my usual facility (i.e., nearer, has more transportation options to get to, and cheaper to travel to)",   "01"),
+        ("Needed a service/specialist not available at my usual facility",                                                                                "02"),
+        ("Recommended by friends/family",                                                                                                                 "03"),
+        ("Wanted to try another facility than my usual",                                                                                                  "04"),
+        ("Prefer this facility than my usual",                                                                                                            "05"),
+        ("This was referred to me by my usual facility",                                                                                                  "06"),
+        ("Usual facility is closed for today",                                                                                                            "07"),
+        ("The doctor I trust/familiar with transferred in this facility",                                                                                 "08"),
+        ("Other (Specify)",                                                                                                                               "09"),
+    ]
+    Q92_FACILITY_TYPE = [
+        ("YAKAP/Konsulta or primary care provider",      "01"),
+        ("Barangay Health Center",                       "02"),
+        ("Rural Health Unit / Health Center",            "03"),
+        ("Public Hospital",                              "04"),
+        ("Private Hospital",                             "05"),
+        ("Private Clinic",                               "06"),
+        ("Traditional Healer or Manghihilot/Albularyo",  "07"),
+        ("I don't know",                                 "08"),
+        ("Other (specify)",                              "09"),
+    ]
+    Q93_NO_USUAL_REASON = [
+        ("I don't get sick",                  "01"),
+        ("I recently moved into the area",    "02"),
+        ("It's expensive",                    "03"),
+        ("I can treat myself",                "04"),
+        ("I don't know where to go for care", "05"),
+        ("I don't know",                      "06"),
+        ("Other (Specify)",                   "07"),
+    ]
+    Q94_TRANSPORT = [
+        ("Walk",                              "01"),
+        ("Bike",                              "02"),
+        ("Public Bus",                        "03"),
+        ("Jeepney",                           "04"),
+        ("Tricycle",                          "05"),
+        ("Car (including private taxi/cab)",  "06"),
+        ("Motorcycle",                        "07"),
+        ("Boat",                              "08"),
+        ("Taxi",                              "09"),
+        ("Pedicab",                           "10"),
+        ("E-bike",                            "11"),
+        ("Other (Specify)",                   "12"),
+    ]
+    Q98_YN_TRIED_DK = [
+        ("Yes",            "1"),
+        ("No",             "2"),
+        ("I haven't tried", "3"),
+        ("I don't know",   "4"),
+    ]
+    Q100_YN_TRIED_DK_NA = [
+        ("Yes",            "1"),
+        ("No",             "2"),
+        ("I haven't tried", "3"),
+        ("I don't know",   "4"),
+        ("Not applicable", "5"),
+    ]
+    items = [
+        select_one("Q89_HAS_USUAL_FACILITY",
+                   "89. In the past 12 months, do you have a clinic, or health "
+                   "center that you usually go to?",
+                   Q89_HAS_USUAL, length=1),
+        alpha("Q89_1_FACILITY_NAME",
+              "89.1. What is the name of the facility?", length=200),
+        yes_no("Q90_IS_USUAL_FOR_GENERAL",
+               "90. Is this the facility you usually go to for general health "
+               "concerns?"),
+        *select_all("Q91_WHY_THIS_FACILITY",
+                    "91. Why did you go to this facility?",
+                    Q91_WHY_FACILITY),
+        select_one("Q92_FACILITY_TYPE",
+                   "92. What is the type of facility that you usually go to?",
+                   Q92_FACILITY_TYPE, length=2),
+        alpha("Q92_FACILITY_TYPE_OTHER_TXT",
+              "92. Facility type -- Other (specify) text", length=120),
+        *select_all("Q93_NO_USUAL_REASON",
+                    "93. If not, why do you not have a usual clinic, or health "
+                    "center that you usually go to?",
+                    Q93_NO_USUAL_REASON),
+        *select_all("Q94_TRANSPORT_MODE",
+                    "94. What mode/s of transportation do you use when "
+                    "travelling to the nearest primary care facility?",
+                    Q94_TRANSPORT),
+        alpha("Q95_TRAVEL_TIME_ONE_WAY",
+              "95. How long does it take you to travel from your house when "
+              "going to the nearest primary care facility? (one-way, HH:MM)",
+              length=5),
+        numeric("Q96_TRAVEL_COST_ONE_WAY",
+                "96. How much does it usually cost for you to travel to this "
+                "facility from your home? (Philippine pesos, ONE-WAY)",
+                length=7),
+        yes_no("Q97_KNOWS_HOW_TO_BOOK",
+               "97. When you have a health problem, do you know how to book "
+               "an appointment at a primary care facility?"),
+        select_one("Q98_PHONE_ADVICE_WHEN_OPEN",
+                   "98. When your primary care facility is open, can you get "
+                   "advice quickly over the phone if you need it?",
+                   Q98_YN_TRIED_DK, length=1),
+        select_one("Q99_PHONE_WHEN_CLOSED",
+                   "99. When your primary care facility is closed, is there a "
+                   "phone number you can call when you get sick?",
+                   Q98_YN_TRIED_DK, length=1),
+        select_one("Q100_LEAVE_WORK_TO_VISIT",
+                   "100. When you have to visit your primary care facility, do "
+                   "you have to take a leave from work or school to go?",
+                   Q100_YN_TRIED_DK_NA, length=1),
+    ]
     return record("I_PRIMARY_CARE",
-                  "I. Primary Care Utilization", "K", [])
+                  "I. Primary Care Utilization", "K", items)
 
 
 def build_section_j():
