@@ -256,9 +256,11 @@ postproc
 
 PROC Q30_IP
 postproc
-    { Indigenous Peoples gate — if not IP, skip Q31 (IP group). }
+    { Indigenous Peoples gate — if not IP, skip Q31 (IP group). Q32 in
+      the DCF is the 4Ps beneficiary flag (Q32_4PS), per the Apr 20 PDF
+      item ordering. }
     if Q30_IP = 2 then   { 2 = No }
-        skip to Q32_RELIGION;
+        skip to Q32_4PS;
     endif;
 
 
@@ -282,3 +284,560 @@ postproc
     if Q35_UHC_HEARD = 2 then   { 2 = No }
         skip to Q38_PHILHEALTH_REG;
     endif;
+
+
+{ ===================================================================== }
+{  Section D — PhilHealth Registration + Insurance (Q38-Q52)            }
+{ ===================================================================== }
+
+PROC Q38_PHILHEALTH_REG
+postproc
+    { Template 4.1 — non-registered / DK skips the registration-detail
+      questions Q39-Q42 and jumps direct to Q43 (knows-of-assistance). }
+    if Q38_PHILHEALTH_REG in 2, 3 then   { 2 = No, 3 = DK }
+        skip to Q43_KNOWS_ASSIST;
+    endif;
+
+
+PROC Q41_REG_DIFFICULTY
+postproc
+    if Q41_REG_DIFFICULTY = 2 then   { 2 = No }
+        skip to Q43_KNOWS_ASSIST;
+    endif;
+
+
+PROC Q43_KNOWS_ASSIST
+postproc
+    { Non-member path: per PDF, Q43=No skips Q44 + Q45-Q50 (all
+      asked-only-for-members) and jumps to Q51 (other insurance). }
+    if Q43_KNOWS_ASSIST = 2 then   { 2 = No }
+        skip to Q51_OTHER_INSURANCE;
+    endif;
+
+
+PROC Q45_CATEGORY
+preproc
+    { Member-gate: Q45-Q50 asked only when Q38=1 (registered).
+      Per PDF "ASKED ONLY FOR PHILHEALTH MEMBERS. SKIP TO 51 FOR NON-MEMBERS". }
+    if Q38_PHILHEALTH_REG <> 1 then
+        skip to Q51_OTHER_INSURANCE;
+    endif;
+
+
+PROC Q45_CATEGORY_OTHER_TXT
+preproc
+    { Other-specify gate (template 4.6). 96 = Other (per PSA convention).
+      Q46_BENEFITS is a select_all; route to its first decomposed slot. }
+    if Q45_CATEGORY <> 96 then
+        skip to Q46_BENEFITS_O01;
+    endif;
+postproc
+    if Q45_CATEGORY = 96 and strlen(strip(Q45_CATEGORY_OTHER_TXT)) = 0 then
+        errmsg("Please specify the 'Other' PhilHealth category.");
+        reenter;
+    endif;
+
+
+PROC Q48_PREMIUM_PAY
+postproc
+    { Non-payer skips premium-difficulty / amount-difficulty. }
+    if Q48_PREMIUM_PAY = 3 then   { 3 = No / does not pay premium }
+        skip to Q51_OTHER_INSURANCE;
+    endif;
+
+
+PROC Q49_PREMIUM_DIFFICULT
+postproc
+    if Q49_PREMIUM_DIFFICULT = 2 then   { 2 = No }
+        skip to Q51_OTHER_INSURANCE;
+    endif;
+
+
+PROC Q51_OTHER_INSURANCE
+postproc
+    { Skip Q52 detail when no other insurance. }
+    if Q51_OTHER_INSURANCE = 2 then   { 2 = No }
+        skip to Q53_HAS_PCP;
+    endif;
+
+
+{ ===================================================================== }
+{  Section E — Primary Care Utilization (Q53-Q82)                       }
+{ ===================================================================== }
+
+PROC Q53_HAS_PCP
+postproc
+    { No-PCP skips the entire PCP-attribute chain Q54-Q62 and jumps to
+      Q63 (has-usual-facility). }
+    if Q53_HAS_PCP = 2 then   { 2 = No }
+        skip to Q63_HAS_USUAL_FACILITY;
+    endif;
+
+
+PROC Q60_SCHED_TELECON_OK
+preproc
+    { Template 4.2 — Q60 telecon-detail gated by Q59 contains "Teleconsultation".
+      The select-all is decomposed into Q59_SCHED_COMM_O01..O0n by the
+      DCF generator; option 2 (Teleconsultation) corresponds to
+      Q59_SCHED_COMM_O02. Skip Q60 if telecon not chosen; route to the
+      first slot of Q61 select_all. }
+    if Q59_SCHED_COMM_O02 <> 1 then
+        skip to Q61_CONSULT_COMM_O01;
+    endif;
+
+
+PROC Q62_CONSULT_TELECON_OK
+preproc
+    { Template 4.2 — Q62 telecon-detail gated by Q61 contains "Teleconsultation". }
+    if Q61_CONSULT_COMM_O02 <> 1 then
+        skip to Q63_HAS_USUAL_FACILITY;
+    endif;
+
+
+PROC Q63_HAS_USUAL_FACILITY
+postproc
+    { No-usual-facility — Q64 facility name unused; after Q65 (why-no-usual
+      select_all) skip Q66-Q70 (same-as-usual chain) and jump to Q71.
+      Implementation: defer the routing to Q66.preproc below — when Q66
+      opens, if Q63=No we skip the whole same-as-usual chain. }
+    { No skip emitted on Q63 — Q65 is still asked when Q63=No. }
+
+
+PROC Q66_SAME_AS_USUAL
+preproc
+    { When Q63=No (no usual facility), the entire same-as-usual chain
+      (Q66-Q70) is skipped. Route to Q71 (nearest-facility type — the
+      first item of the "nearest facility" block asked of everyone). }
+    if Q63_HAS_USUAL_FACILITY = 2 then
+        skip to Q71_NEAREST_TYPE;
+    endif;
+postproc
+    { If usual = today's facility, skip Q67 (which other facility) and
+      proceed to Q68 (usual-facility type). }
+    if Q66_SAME_AS_USUAL = 1 then   { 1 = Yes }
+        skip to Q68_USUAL_FAC_TYPE;
+    endif;
+
+
+PROC Q74_KON_HEARD
+postproc
+    { Konsulta awareness chain: never-heard skips Q75-Q82 entirely.
+      Q83 is the first item of Section F (Q83_VISIT_REASON). }
+    if Q74_KON_HEARD = 2 then   { 2 = No }
+        skip to Q83_VISIT_REASON;
+    endif;
+
+
+PROC Q77_KON_REGISTERED
+postproc
+    { Konsulta registration chain:
+        - "Not registered" (2)         -> skip to Q82 (why-not-registered).
+        - "Never heard" (3) or DK (4)  -> skip to Q83 (Section F start).
+      Q82_KON_WHY_NOT_REG is a select_all; CSPro routes to its first
+      decomposed item _O01. }
+    if Q77_KON_REGISTERED = 2 then
+        skip to Q82_KON_WHY_NOT_REG_O01;
+    endif;
+    if Q77_KON_REGISTERED in 3, 4 then
+        skip to Q83_VISIT_REASON;
+    endif;
+
+
+{ ===================================================================== }
+{  Section F — Health-Seeking Behavior (Q83-Q87)                        }
+{  Q84 SERVICE_TYPE gates Section G (Outpatient/Primary) vs Section H   }
+{  (Inpatient/Emergency) vs Section I direct (Other).                   }
+{ ===================================================================== }
+
+PROC Q84_SERVICE_TYPE
+postproc
+    { Cross-section routing per F3-Skip-Logic-and-Validations.md §2:
+        - 1 (Outpatient) or 4 (Primary care)  -> Section G then I.
+        - 2 (Inpatient)  or 3 (Emergency)     -> Section H then I.
+        - 5 (Other)                            -> skip directly to Section I. }
+    if Q84_SERVICE_TYPE = 5 then   { 5 = Other — both G and H skipped }
+        skip to Q116_NBB_HEARD;
+    endif;
+    { 1/2/3/4 fall through; the section-entry gates below route correctly. }
+
+
+{ ===================================================================== }
+{  Section G — Outpatient Care (Q88-Q104)                               }
+{ ===================================================================== }
+
+PROC G_OUTPATIENT_CARE
+preproc
+    { Template 4.10 — section entry gate. If Q84 not in (1,4), skip
+      Section G entirely and route to Section H (which has its own
+      gate to skip if Q84 not in (2,3)). }
+    if not (Q84_SERVICE_TYPE in 1, 4) then
+        skip to H_INPATIENT;
+    endif;
+
+
+PROC Q89_ADVISED_ADMIT
+postproc
+    { Q90 is asked only when patient was advised admit but did not get
+      confined. If Q89=No, skip Q90 (reasons-not-confined) and go to
+      Q91 (usual outpatient flag). }
+    if Q89_ADVISED_ADMIT = 2 then   { 2 = No }
+        skip to Q91_USUAL_OUTPATIENT;
+    endif;
+
+
+PROC Q93_LABS_OTHER_TXT
+preproc
+    { Multi-response Q93 — option 17 = "None". If only "None" selected,
+      skip Q94 (no lab costs). PROC checks Q93_LABS_O17 = 1 plus the
+      sum of all other Q93_LABS_O## items is zero. }
+    numeric count_other_labs = 0;
+    numeric i;
+    string fldname;
+    { Each Q93 option is exposed as Q93_LABS_O01 ... Q93_LABS_O17 by the
+      select_all() decomposition in generate_dcf.py. The "None" code lives
+      at slot 17. }
+    if Q93_LABS_O17 = 1 then
+        { Sum all non-None options. }
+        if Q93_LABS_O01 + Q93_LABS_O02 + Q93_LABS_O03 + Q93_LABS_O04 +
+           Q93_LABS_O05 + Q93_LABS_O06 + Q93_LABS_O07 + Q93_LABS_O08 +
+           Q93_LABS_O09 + Q93_LABS_O10 + Q93_LABS_O11 + Q93_LABS_O12 +
+           Q93_LABS_O13 + Q93_LABS_O14 + Q93_LABS_O15 + Q93_LABS_O16 = 0 then
+            skip to Q95_PRESCRIBED;
+        endif;
+    endif;
+
+
+PROC Q95_PRESCRIBED
+postproc
+    if Q95_PRESCRIBED = 2 then   { 2 = No }
+        skip to Q97_FINAL_AMOUNT;
+    endif;
+
+
+PROC Q99_BUCAS_HEARD
+postproc
+    if Q99_BUCAS_HEARD = 2 then   { 2 = No }
+        skip to Q104_WITHOUT_BUCAS;
+    endif;
+
+
+PROC Q102_BUCAS_ACCESSED
+postproc
+    if Q102_BUCAS_ACCESSED = 2 then   { 2 = No }
+        skip to Q104_WITHOUT_BUCAS;
+    endif;
+
+
+PROC Q104_WITHOUT_BUCAS
+postproc
+    { Template 4.13 — Section G terminus. Jump to Section I (Q116). }
+    skip to Q116_NBB_HEARD;
+
+
+{ ===================================================================== }
+{  Section H — Inpatient Care (Q105-Q115)                               }
+{ ===================================================================== }
+
+PROC H_INPATIENT
+preproc
+    { Template 4.9 — section entry gate. Q84 must be 2 (Inpatient) or 3
+      (Emergency) to ask Section H. Otherwise route to Section I. }
+    if not (Q84_SERVICE_TYPE in 2, 3) then
+        skip to I_FINANCIAL_RISK;
+    endif;
+
+
+PROC Q106_DAYS
+postproc
+    { Validation H7 — nights / days consistency. Days >= 1 must <= nights+1
+      (day count cannot exceed night count by more than 1 — accounts for
+      admit+discharge spanning two calendar days). }
+    if Q106_NIGHTS < 0 or Q106_DAYS < 0 then
+        errmsg("Nights / days cannot be negative. Please re-check.");
+        reenter;
+    endif;
+    if Q106_DAYS > Q106_NIGHTS + 1 then
+        errmsg("Days admitted (%v) cannot exceed nights (%v) + 1. "
+               "Please re-check.", Q106_DAYS, Q106_NIGHTS);
+        reenter;
+    endif;
+
+
+PROC Q108_MEDS_OUTSIDE
+postproc
+    if Q108_MEDS_OUTSIDE = 2 then   { 2 = No }
+        skip to Q110_LAB_OUTSIDE;
+    endif;
+
+
+PROC Q110_LAB_OUTSIDE
+postproc
+    if Q110_LAB_OUTSIDE = 2 then   { 2 = No }
+        skip to Q113_PAY_01;   { first item of the 13-source payment matrix }
+    endif;
+
+
+PROC Q114_NO_PH_O01
+preproc
+    { Q114 (multi-response: reasons for not using PhilHealth) asked
+      ONLY if PhilHealth was NOT used in Q113. The Q113 payment matrix
+      exposes PhilHealth as Q113_PAY_08 (zero-padded "08" per Q113_SOURCES
+      build order in generate_dcf.py). If PhilHealth was used (=1), skip
+      the entire Q114 select_all by jumping past it to the next-billed
+      sub-block Q1141_1 (first item of Q114.1 in-bill itemization). }
+    if Q113_PAY_08 = 1 then
+        skip to Q1141_1;
+    endif;
+
+
+PROC Q115_FINAL_CASH
+postproc
+    { Validation H8 — sum the inpatient payment matrix (Q113_PAY_01_AMT
+      through Q113_PAY_13_AMT) and warn if the total is >5% off from
+      Q115_FINAL_CASH. The matrix is decomposed by generate_dcf.py
+      (Q113_PAY_NN + Q113_PAY_NN_AMT for each of 13 sources). }
+    numeric matrix_total =
+        Q113_PAY_01_AMT + Q113_PAY_02_AMT + Q113_PAY_03_AMT +
+        Q113_PAY_04_AMT + Q113_PAY_05_AMT + Q113_PAY_06_AMT +
+        Q113_PAY_07_AMT + Q113_PAY_08_AMT + Q113_PAY_09_AMT +
+        Q113_PAY_10_AMT + Q113_PAY_11_AMT + Q113_PAY_12_AMT +
+        Q113_PAY_13_AMT;
+
+    if Q115_FINAL_CASH > 0 then
+        numeric pct_diff =
+            abs(matrix_total - Q115_FINAL_CASH) * 100 / Q115_FINAL_CASH;
+        if pct_diff > 5 then
+            errmsg("Q113 payment matrix total (%v) differs from "
+                   "Q115 final cash (%v) by >5%% (computed %v%%). "
+                   "Please re-check.",
+                   matrix_total, Q115_FINAL_CASH, pct_diff);
+            { soft — operator accepts to continue }
+        endif;
+    endif;
+
+    { Section H terminus — fall through to Section I (Q116). }
+
+
+{ ===================================================================== }
+{  Section I — Financial Risk Protection (Q116-Q130)                    }
+{ ===================================================================== }
+
+PROC I_FINANCIAL_RISK
+preproc
+    { No section entry gate — Section I is always asked. }
+
+
+PROC Q116_NBB_HEARD
+postproc
+    if Q116_NBB_HEARD in 2, 3 then   { 2 = No, 3 = DK }
+        skip to Q119_ZBB_HEARD;
+    endif;
+
+
+PROC Q119_ZBB_HEARD
+postproc
+    if Q119_ZBB_HEARD in 2, 3 then   { 2 = No, 3 = DK }
+        skip to Q124_MAIFIP_HEARD;
+    endif;
+
+
+PROC Q124_MAIFIP_HEARD
+postproc
+    { Three-way routing:
+        - Q124 in (2, 3)            -> skip to Q130 (skip Q125-Q129).
+        - Q113_PAY_07 = 1 (MAIFIP)  -> handled in Q125_MAIFIP_SOURCE_O01.preproc
+                                       below (skip Q125 select_all). }
+    if Q124_MAIFIP_HEARD in 2, 3 then
+        skip to Q130_REDUCED_SPEND;
+    endif;
+
+
+PROC Q125_MAIFIP_SOURCE_O01
+preproc
+    { Q125 (MAIFIP awareness source — multi-response) skipped if MAIFIP
+      already used in Q113 (operator was already informed during the
+      payment-matrix capture). Jump to Q126 (have-you-availed). }
+    if Q113_PAY_07 = 1 then
+        skip to Q126_MAIFIP_AVAILED;
+    endif;
+
+
+PROC Q126_MAIFIP_AVAILED
+postproc
+    { Per spec §2 Section I: Q126 = No skips Q127 (OOP) + Q128 (OOP items)
+      and routes to Q129 (why-no-MAIFIP — select_all). }
+    if Q126_MAIFIP_AVAILED = 2 then   { 2 = No }
+        skip to Q129_WHY_NO_MAIFIP_O01;
+    endif;
+
+
+PROC Q127_MAIFIP_OOP
+postproc
+    { Q127 = No skips Q128 (OOP-items select_all) + Q129 (why-no — N/A) and
+      routes direct to Q130. }
+    if Q127_MAIFIP_OOP = 2 then   { 2 = No }
+        skip to Q130_REDUCED_SPEND;
+    endif;
+
+
+{ ===================================================================== }
+{  Section J — Satisfaction (Q131-Q151)                                 }
+{ ===================================================================== }
+
+PROC Q134_AMEN_ROOMS
+preproc
+    { Template 4.3 — Q134 (room amenities) asked only for inpatients.
+      If Q84 not Inpatient (2), skip to Q136 (staff courtesy). }
+    if Q84_SERVICE_TYPE <> 2 then
+        skip to Q136_STAFF_COURTESY;
+    endif;
+
+
+PROC Q135_SAT_OVERALL_TIME
+preproc
+    { Template 4.3 — Q135 (overall wait-time satisfaction) asked only
+      for inpatients per PDF tagging. }
+    if Q84_SERVICE_TYPE <> 2 then
+        skip to Q136_STAFF_COURTESY;
+    endif;
+
+
+PROC Q150_TRAVEL_MM
+postproc
+    { Validation H9 — MM in [0, 59]. }
+    if Q150_TRAVEL_MM < 0 or Q150_TRAVEL_MM > 59 then
+        errmsg("Travel minutes must be between 0 and 59. Please re-check.");
+        reenter;
+    endif;
+    { Soft S2 — both HH and MM zero is unusual unless patient is at the
+      pharmacy. Warn but allow. }
+    if Q150_TRAVEL_HH = 0 and Q150_TRAVEL_MM = 0 then
+        errmsg("Travel time recorded as 0 hours and 0 minutes. "
+               "Please confirm patient lives at the pharmacy.");
+        { soft — no reenter }
+    endif;
+
+
+{ ===================================================================== }
+{  Section K — Access to Medicines (Q152-Q161)                          }
+{ ===================================================================== }
+
+PROC Q152_GAMOT_HEARD
+postproc
+    if Q152_GAMOT_HEARD = 2 then   { 2 = No }
+        skip to Q158_BRAND_GEN_KNOW;
+    endif;
+
+
+PROC Q155_GAMOT_GOT_MEDS
+postproc
+    if Q155_GAMOT_GOT_MEDS = 2 then   { 2 = No }
+        skip to Q158_BRAND_GEN_KNOW;
+    endif;
+
+
+PROC Q159_BRAND_GEN_BOUGHT
+postproc
+    { Branded / generic three-way branch (Q160_WHY_GENERIC and
+      Q161_WHY_BRANDED are multi-response select_all items; the routing
+      targets their first decomposed slot _O01):
+        - 1 (Branded only)        -> skip Q160 select_all,
+                                     ask Q161 select_all.
+        - 2 (Generic only)        -> ask Q160, skip Q161 (jump to Q162).
+                                     Handled in Q161_WHY_BRANDED_O01.preproc.
+        - 3 (Both)                -> ask Q160 then Q161 in sequence.
+        - 4 (DK) or 5 (NA)        -> skip Q160 and Q161, jump to Q162. }
+    if Q159_BRAND_GEN_BOUGHT = 1 then
+        skip to Q161_WHY_BRANDED_O01;
+    endif;
+    { Open-question §1 #2 in spec — DK/NA cross-section. Default = honor
+      source: jump to Q162 (REFERRED). }
+    if Q159_BRAND_GEN_BOUGHT in 4, 5 then
+        skip to Q162_REFERRED;
+    endif;
+    { Q159 = 2 (Generic) — Q160 asked, then Q161 skipped by
+      Q161_WHY_BRANDED_O01.preproc below. }
+    { Q159 = 3 (Both) — both Q160 and Q161 asked; fall through. }
+
+
+PROC Q161_WHY_BRANDED_O01
+preproc
+    { If Q159 = Generic only (2), skip the Q161 branded-reasons select_all
+      and route directly to Q162 (REFERRED). }
+    if Q159_BRAND_GEN_BOUGHT = 2 then
+        skip to Q162_REFERRED;
+    endif;
+
+
+{ ===================================================================== }
+{  Section L — Referrals (Q162-Q178)                                    }
+{ ===================================================================== }
+
+PROC Q162_REFERRED
+postproc
+    { Template 4.11 — non-referral path skips Q163-Q171 and jumps to
+      Q172 (PCP referral block, asked of everyone). }
+    if Q162_REFERRED = 2 then   { 2 = No }
+        skip to Q172_PCP_REFERRAL;
+    endif;
+
+
+PROC Q169_VISITED
+postproc
+    { Template 4.12 — three-way branch on visit-status of referral.
+      Q170_FOLLOWUP = follow-up flag (asked when visited). Q171_WHY_NOT
+      is a multi-response select_all (Q171_WHY_NOT_O01.. is the routing
+      target). }
+    if Q169_VISITED in 2, 3 then
+        { Not visiting / planning later — skip Q170 (followup), ask Q171
+          (why-not select_all), then proceed to Q172. }
+        skip to Q171_WHY_NOT_O01;
+    endif;
+    { Q169 = 1 (Yes) — fall through to Q170 (followup).
+      Q170.postproc handles the jump to Q172 to skip Q171. }
+
+
+PROC Q170_FOLLOWUP
+postproc
+    { After Q170 (follow-up flag), skip Q171 (why-not) and proceed
+      to Q172 since the patient DID visit the referral. }
+    if Q169_VISITED = 1 then
+        skip to Q172_PCP_REFERRAL;
+    endif;
+
+
+PROC Q172_PCP_REFERRAL
+postproc
+    { Non-PCP-referral path skips Q173-Q176 (PCP referral details) and
+      jumps to Q177 (why-hospital select_all — first decomposed slot). }
+    if Q172_PCP_REFERRAL = 2 then   { 2 = No }
+        skip to Q177_WHY_HOSPITAL_O01;
+    endif;
+
+
+PROC Q178_SAT_REFERRAL
+postproc
+    { Final terminus — close the case as a complete interview. }
+    CloseCaseAsComplete();
+
+
+{ ===================================================================== }
+{  GPS + photo capture handlers — wire shared helpers                    }
+{ ===================================================================== }
+
+PROC FACILITY_CAPTURE_GPS
+onfocus
+    { Trigger field — when the operator taps "Capture GPS now" the
+      onfocus calls ReadGPSReading() with the F-series defaults:
+      maxTimeSec=60, desiredAccuracyM=20. Results are written to
+      FACILITY_GPS_LATITUDE, ..., FACILITY_GPS_READTIME. See
+      shared/Capture-Helpers.apc for the helper definition. }
+    ReadGPSReading(60, 20);
+
+
+PROC P_HOME_CAPTURE_GPS
+onfocus
+    { Same as facility GPS but for the patient's home address. Asked at
+      the closing of the interview if the patient agrees to share home
+      coordinates (for F4 home-visit logistics). }
+    ReadGPSReading(60, 20);
