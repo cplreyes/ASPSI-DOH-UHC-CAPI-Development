@@ -38,6 +38,22 @@ export function EnrollmentScreen() {
     void listFacilities().then(setFacilities);
   }, []);
 
+  // Prefill the tablet-token field from the `?token=` URL query string when
+  // the page is opened via an enrollment URL (the format used in tester guides
+  // and ops handouts). Without this, testers/HCWs receiving a URL like
+  // `/enroll?token=eyJhbGc...` see an empty textbox and have to manually copy
+  // the JWT out of the address bar — a regression in the auth re-arch handoff.
+  // Only prefill on first mount; never overwrite a verifying or verified state.
+  useEffect(() => {
+    if (verifiedToken !== null) return;
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get('token');
+    if (urlToken && urlToken.length > 0) {
+      setTokenInput((current) => (current.length === 0 ? urlToken : current));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const facilityFromToken = tokenFacilityId
     ? (facilities.find((f) => f.facility_id === tokenFacilityId) ?? null)
     : null;
