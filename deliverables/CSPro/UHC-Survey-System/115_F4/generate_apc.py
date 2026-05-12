@@ -908,15 +908,567 @@ postproc
     endif;
 
 
-{ Sections N-Q + edits + household-pick stub + roster auto-fill land in }
-{ commits 7-9. The .apc file ends here for commit 6.                    }
+{ ===================================================================== }
+{  Section N -- Household Expenditures (Q144-Q185)                       }
+{                                                                        }
+{  No section-level skip routing -- every row Q144-Q184 is asked in     }
+{  order. Within each row:                                              }
+{    - Q{n}_CONSUMED = No (2) -> zero out the amount fields + total.    }
+{    - Q{n}_TOTAL    = Q{n}_AMOUNT_PURCHASED + Q{n}_AMOUNT_INKIND       }
+{                       (when Q{n}_CONSUMED = Yes; else 0)              }
+{                                                                        }
+{  4 computed totals (Q157/Q177/Q182/Q185) are filled at the moment     }
+{  their constituent items finish:                                      }
+{    - Q157 := sum(Q144..Q156 totals)        food sub-total              }
+{    - Q177 := Q175_TOTAL + Q176_TOTAL                                  }
+{    - Q182 := Q178_TOTAL + Q179_TOTAL + Q180_TOTAL + Q181_TOTAL        }
+{    - Q185 := Q183_TOTAL + Q184_TOTAL                                  }
+{                                                                        }
+{  The PROCs below land one quad-handler per row + a single computed-   }
+{  total trigger on the last constituent item of each sum.              }
+{ ===================================================================== }
+
+PROC Q144_CONSUMED
+postproc
+    if Q144_CONSUMED = 2 then   { 2 = No }
+        Q144_AMOUNT_PURCHASED = 0;
+        Q144_AMOUNT_INKIND    = 0;
+        Q144_TOTAL            = 0;
+        skip to Q145_CONSUMED;
+    endif;
+
+
+PROC Q144_AMOUNT_INKIND
+postproc
+    { Compute row total as soon as in-kind amount is captured. }
+    Q144_TOTAL = Q144_AMOUNT_PURCHASED + Q144_AMOUNT_INKIND;
+
+
+PROC Q145_CONSUMED
+postproc
+    if Q145_CONSUMED = 2 then
+        Q145_AMOUNT_PURCHASED = 0;
+        Q145_AMOUNT_INKIND    = 0;
+        Q145_TOTAL            = 0;
+        skip to Q146_CONSUMED;
+    endif;
+PROC Q145_AMOUNT_INKIND
+postproc
+    Q145_TOTAL = Q145_AMOUNT_PURCHASED + Q145_AMOUNT_INKIND;
+
+
+PROC Q146_CONSUMED
+postproc
+    if Q146_CONSUMED = 2 then
+        Q146_AMOUNT_PURCHASED = 0;
+        Q146_AMOUNT_INKIND    = 0;
+        Q146_TOTAL            = 0;
+        skip to Q147_CONSUMED;
+    endif;
+PROC Q146_AMOUNT_INKIND
+postproc
+    Q146_TOTAL = Q146_AMOUNT_PURCHASED + Q146_AMOUNT_INKIND;
+
+
+PROC Q147_CONSUMED
+postproc
+    if Q147_CONSUMED = 2 then
+        Q147_AMOUNT_PURCHASED = 0;
+        Q147_AMOUNT_INKIND    = 0;
+        Q147_TOTAL            = 0;
+        skip to Q148_CONSUMED;
+    endif;
+PROC Q147_AMOUNT_INKIND
+postproc
+    Q147_TOTAL = Q147_AMOUNT_PURCHASED + Q147_AMOUNT_INKIND;
+
+
+PROC Q148_CONSUMED
+postproc
+    if Q148_CONSUMED = 2 then
+        Q148_AMOUNT_PURCHASED = 0;
+        Q148_AMOUNT_INKIND    = 0;
+        Q148_TOTAL            = 0;
+        skip to Q149_CONSUMED;
+    endif;
+PROC Q148_AMOUNT_INKIND
+postproc
+    Q148_TOTAL = Q148_AMOUNT_PURCHASED + Q148_AMOUNT_INKIND;
+
+
+PROC Q149_CONSUMED
+postproc
+    if Q149_CONSUMED = 2 then
+        Q149_AMOUNT_PURCHASED = 0;
+        Q149_AMOUNT_INKIND    = 0;
+        Q149_TOTAL            = 0;
+        skip to Q150_CONSUMED;
+    endif;
+PROC Q149_AMOUNT_INKIND
+postproc
+    Q149_TOTAL = Q149_AMOUNT_PURCHASED + Q149_AMOUNT_INKIND;
+
+
+PROC Q150_CONSUMED
+postproc
+    if Q150_CONSUMED = 2 then
+        Q150_AMOUNT_PURCHASED = 0;
+        Q150_AMOUNT_INKIND    = 0;
+        Q150_TOTAL            = 0;
+        skip to Q151_CONSUMED;
+    endif;
+PROC Q150_AMOUNT_INKIND
+postproc
+    Q150_TOTAL = Q150_AMOUNT_PURCHASED + Q150_AMOUNT_INKIND;
+
+
+PROC Q151_CONSUMED
+postproc
+    if Q151_CONSUMED = 2 then
+        Q151_AMOUNT_PURCHASED = 0;
+        Q151_AMOUNT_INKIND    = 0;
+        Q151_TOTAL            = 0;
+        skip to Q152_CONSUMED;
+    endif;
+PROC Q151_AMOUNT_INKIND
+postproc
+    Q151_TOTAL = Q151_AMOUNT_PURCHASED + Q151_AMOUNT_INKIND;
+
+
+PROC Q152_CONSUMED
+postproc
+    if Q152_CONSUMED = 2 then
+        Q152_AMOUNT_PURCHASED = 0;
+        Q152_AMOUNT_INKIND    = 0;
+        Q152_TOTAL            = 0;
+        skip to Q153_CONSUMED;
+    endif;
+PROC Q152_AMOUNT_INKIND
+postproc
+    Q152_TOTAL = Q152_AMOUNT_PURCHASED + Q152_AMOUNT_INKIND;
+
+
+PROC Q153_CONSUMED
+postproc
+    if Q153_CONSUMED = 2 then
+        Q153_AMOUNT_PURCHASED = 0;
+        Q153_AMOUNT_INKIND    = 0;
+        Q153_TOTAL            = 0;
+        skip to Q154_CONSUMED;
+    endif;
+PROC Q153_AMOUNT_INKIND
+postproc
+    Q153_TOTAL = Q153_AMOUNT_PURCHASED + Q153_AMOUNT_INKIND;
+
+
+PROC Q154_CONSUMED
+postproc
+    if Q154_CONSUMED = 2 then
+        Q154_AMOUNT_PURCHASED = 0;
+        Q154_AMOUNT_INKIND    = 0;
+        Q154_TOTAL            = 0;
+        skip to Q155_CONSUMED;
+    endif;
+PROC Q154_AMOUNT_INKIND
+postproc
+    Q154_TOTAL = Q154_AMOUNT_PURCHASED + Q154_AMOUNT_INKIND;
+
+
+PROC Q155_CONSUMED
+postproc
+    if Q155_CONSUMED = 2 then
+        Q155_AMOUNT_PURCHASED = 0;
+        Q155_AMOUNT_INKIND    = 0;
+        Q155_TOTAL            = 0;
+        skip to Q156_CONSUMED;
+    endif;
+PROC Q155_AMOUNT_INKIND
+postproc
+    Q155_TOTAL = Q155_AMOUNT_PURCHASED + Q155_AMOUNT_INKIND;
+
+
+PROC Q156_CONSUMED
+postproc
+    if Q156_CONSUMED = 2 then
+        Q156_AMOUNT_PURCHASED = 0;
+        Q156_AMOUNT_INKIND    = 0;
+        Q156_TOTAL            = 0;
+        { Q157_TOTAL still computed on the next item's PROC even when
+          this row is zero. }
+        skip to Q157_TOTAL;
+    endif;
+PROC Q156_AMOUNT_INKIND
+postproc
+    Q156_TOTAL = Q156_AMOUNT_PURCHASED + Q156_AMOUNT_INKIND;
+
+
+PROC Q157_TOTAL
+preproc
+    { Computed total (DO NOT ASK per PDF) -- sum of food items Q144-Q156. }
+    Q157_TOTAL =
+        Q144_TOTAL + Q145_TOTAL + Q146_TOTAL + Q147_TOTAL +
+        Q148_TOTAL + Q149_TOTAL + Q150_TOTAL + Q151_TOTAL +
+        Q152_TOTAL + Q153_TOTAL + Q154_TOTAL + Q155_TOTAL +
+        Q156_TOTAL;
+    { Skip the field -- operator does not touch the computed value. }
+    skip to Q158_CONSUMED;
+
+
+PROC Q158_CONSUMED
+postproc
+    if Q158_CONSUMED = 2 then
+        Q158_AMOUNT_PURCHASED = 0;
+        Q158_AMOUNT_INKIND    = 0;
+        Q158_TOTAL            = 0;
+        skip to Q159_CONSUMED;
+    endif;
+PROC Q158_AMOUNT_INKIND
+postproc
+    Q158_TOTAL = Q158_AMOUNT_PURCHASED + Q158_AMOUNT_INKIND;
+
+
+PROC Q159_CONSUMED
+postproc
+    if Q159_CONSUMED = 2 then
+        Q159_AMOUNT_PURCHASED = 0;
+        Q159_AMOUNT_INKIND    = 0;
+        Q159_TOTAL            = 0;
+        skip to Q160_CONSUMED;
+    endif;
+PROC Q159_AMOUNT_INKIND
+postproc
+    Q159_TOTAL = Q159_AMOUNT_PURCHASED + Q159_AMOUNT_INKIND;
+
+
+PROC Q160_CONSUMED
+postproc
+    if Q160_CONSUMED = 2 then
+        Q160_AMOUNT_PURCHASED = 0;
+        Q160_AMOUNT_INKIND    = 0;
+        Q160_TOTAL            = 0;
+        skip to Q161_CONSUMED;
+    endif;
+PROC Q160_AMOUNT_INKIND
+postproc
+    Q160_TOTAL = Q160_AMOUNT_PURCHASED + Q160_AMOUNT_INKIND;
+
+
+PROC Q161_CONSUMED
+postproc
+    if Q161_CONSUMED = 2 then
+        Q161_AMOUNT_PURCHASED = 0;
+        Q161_AMOUNT_INKIND    = 0;
+        Q161_TOTAL            = 0;
+        skip to Q162_CONSUMED;
+    endif;
+PROC Q161_AMOUNT_INKIND
+postproc
+    Q161_TOTAL = Q161_AMOUNT_PURCHASED + Q161_AMOUNT_INKIND;
+
+
+PROC Q162_CONSUMED
+postproc
+    if Q162_CONSUMED = 2 then
+        Q162_AMOUNT_PURCHASED = 0;
+        Q162_AMOUNT_INKIND    = 0;
+        Q162_TOTAL            = 0;
+        skip to Q163_CONSUMED;
+    endif;
+PROC Q162_AMOUNT_INKIND
+postproc
+    Q162_TOTAL = Q162_AMOUNT_PURCHASED + Q162_AMOUNT_INKIND;
+
+
+PROC Q163_CONSUMED
+postproc
+    if Q163_CONSUMED = 2 then
+        Q163_AMOUNT_PURCHASED = 0;
+        Q163_AMOUNT_INKIND    = 0;
+        Q163_TOTAL            = 0;
+        skip to Q164_CONSUMED;
+    endif;
+PROC Q163_AMOUNT_INKIND
+postproc
+    Q163_TOTAL = Q163_AMOUNT_PURCHASED + Q163_AMOUNT_INKIND;
+
+
+PROC Q164_CONSUMED
+postproc
+    if Q164_CONSUMED = 2 then
+        Q164_AMOUNT_PURCHASED = 0;
+        Q164_AMOUNT_INKIND    = 0;
+        Q164_TOTAL            = 0;
+        skip to Q165_CONSUMED;
+    endif;
+PROC Q164_AMOUNT_INKIND
+postproc
+    Q164_TOTAL = Q164_AMOUNT_PURCHASED + Q164_AMOUNT_INKIND;
+
+
+PROC Q165_CONSUMED
+postproc
+    if Q165_CONSUMED = 2 then
+        Q165_AMOUNT_PURCHASED = 0;
+        Q165_AMOUNT_INKIND    = 0;
+        Q165_TOTAL            = 0;
+        skip to Q166_CONSUMED;
+    endif;
+PROC Q165_AMOUNT_INKIND
+postproc
+    Q165_TOTAL = Q165_AMOUNT_PURCHASED + Q165_AMOUNT_INKIND;
+
+
+PROC Q166_CONSUMED
+postproc
+    if Q166_CONSUMED = 2 then
+        Q166_AMOUNT_PURCHASED = 0;
+        Q166_AMOUNT_INKIND    = 0;
+        Q166_TOTAL            = 0;
+        skip to Q167_CONSUMED;
+    endif;
+PROC Q166_AMOUNT_INKIND
+postproc
+    Q166_TOTAL = Q166_AMOUNT_PURCHASED + Q166_AMOUNT_INKIND;
+
+
+PROC Q167_CONSUMED
+postproc
+    if Q167_CONSUMED = 2 then
+        Q167_AMOUNT_PURCHASED = 0;
+        Q167_AMOUNT_INKIND    = 0;
+        Q167_TOTAL            = 0;
+        skip to Q168_CONSUMED;
+    endif;
+PROC Q167_AMOUNT_INKIND
+postproc
+    Q167_TOTAL = Q167_AMOUNT_PURCHASED + Q167_AMOUNT_INKIND;
+
+
+PROC Q168_CONSUMED
+postproc
+    if Q168_CONSUMED = 2 then
+        Q168_AMOUNT_PURCHASED = 0;
+        Q168_AMOUNT_INKIND    = 0;
+        Q168_TOTAL            = 0;
+        skip to Q169_CONSUMED;
+    endif;
+PROC Q168_AMOUNT_INKIND
+postproc
+    Q168_TOTAL = Q168_AMOUNT_PURCHASED + Q168_AMOUNT_INKIND;
+
+
+PROC Q169_CONSUMED
+postproc
+    if Q169_CONSUMED = 2 then
+        Q169_AMOUNT_PURCHASED = 0;
+        Q169_AMOUNT_INKIND    = 0;
+        Q169_TOTAL            = 0;
+        skip to Q170_CONSUMED;
+    endif;
+PROC Q169_AMOUNT_INKIND
+postproc
+    Q169_TOTAL = Q169_AMOUNT_PURCHASED + Q169_AMOUNT_INKIND;
+
+
+PROC Q170_CONSUMED
+postproc
+    if Q170_CONSUMED = 2 then
+        Q170_AMOUNT_PURCHASED = 0;
+        Q170_AMOUNT_INKIND    = 0;
+        Q170_TOTAL            = 0;
+        skip to Q171_CONSUMED;
+    endif;
+PROC Q170_AMOUNT_INKIND
+postproc
+    Q170_TOTAL = Q170_AMOUNT_PURCHASED + Q170_AMOUNT_INKIND;
+
+
+PROC Q171_CONSUMED
+postproc
+    if Q171_CONSUMED = 2 then
+        Q171_AMOUNT_PURCHASED = 0;
+        Q171_AMOUNT_INKIND    = 0;
+        Q171_TOTAL            = 0;
+        skip to Q172_CONSUMED;
+    endif;
+PROC Q171_AMOUNT_INKIND
+postproc
+    Q171_TOTAL = Q171_AMOUNT_PURCHASED + Q171_AMOUNT_INKIND;
+
+
+PROC Q172_CONSUMED
+postproc
+    if Q172_CONSUMED = 2 then
+        Q172_AMOUNT_PURCHASED = 0;
+        Q172_AMOUNT_INKIND    = 0;
+        Q172_TOTAL            = 0;
+        skip to Q173_CONSUMED;
+    endif;
+PROC Q172_AMOUNT_INKIND
+postproc
+    Q172_TOTAL = Q172_AMOUNT_PURCHASED + Q172_AMOUNT_INKIND;
+
+
+PROC Q173_CONSUMED
+postproc
+    if Q173_CONSUMED = 2 then
+        Q173_AMOUNT_PURCHASED = 0;
+        Q173_AMOUNT_INKIND    = 0;
+        Q173_TOTAL            = 0;
+        skip to Q174_CONSUMED;
+    endif;
+PROC Q173_AMOUNT_INKIND
+postproc
+    Q173_TOTAL = Q173_AMOUNT_PURCHASED + Q173_AMOUNT_INKIND;
+
+
+PROC Q174_CONSUMED
+postproc
+    if Q174_CONSUMED = 2 then
+        Q174_AMOUNT_PURCHASED = 0;
+        Q174_AMOUNT_INKIND    = 0;
+        Q174_TOTAL            = 0;
+        skip to Q175_CONSUMED;
+    endif;
+PROC Q174_AMOUNT_INKIND
+postproc
+    Q174_TOTAL = Q174_AMOUNT_PURCHASED + Q174_AMOUNT_INKIND;
+
+
+PROC Q175_CONSUMED
+postproc
+    if Q175_CONSUMED = 2 then
+        Q175_AMOUNT_PURCHASED = 0;
+        Q175_AMOUNT_INKIND    = 0;
+        Q175_TOTAL            = 0;
+        skip to Q176_CONSUMED;
+    endif;
+PROC Q175_AMOUNT_INKIND
+postproc
+    Q175_TOTAL = Q175_AMOUNT_PURCHASED + Q175_AMOUNT_INKIND;
+
+
+PROC Q176_CONSUMED
+postproc
+    if Q176_CONSUMED = 2 then
+        Q176_AMOUNT_PURCHASED = 0;
+        Q176_AMOUNT_INKIND    = 0;
+        Q176_TOTAL            = 0;
+        skip to Q177_TOTAL;
+    endif;
+PROC Q176_AMOUNT_INKIND
+postproc
+    Q176_TOTAL = Q176_AMOUNT_PURCHASED + Q176_AMOUNT_INKIND;
+
+
+PROC Q177_TOTAL
+preproc
+    { Computed total (DO NOT ASK per PDF) -- Q175 + Q176. }
+    Q177_TOTAL = Q175_TOTAL + Q176_TOTAL;
+    skip to Q178_CONSUMED;
+
+
+PROC Q178_CONSUMED
+postproc
+    if Q178_CONSUMED = 2 then
+        Q178_AMOUNT_PURCHASED = 0;
+        Q178_AMOUNT_INKIND    = 0;
+        Q178_TOTAL            = 0;
+        skip to Q179_CONSUMED;
+    endif;
+PROC Q178_AMOUNT_INKIND
+postproc
+    Q178_TOTAL = Q178_AMOUNT_PURCHASED + Q178_AMOUNT_INKIND;
+
+
+PROC Q179_CONSUMED
+postproc
+    if Q179_CONSUMED = 2 then
+        Q179_AMOUNT_PURCHASED = 0;
+        Q179_AMOUNT_INKIND    = 0;
+        Q179_TOTAL            = 0;
+        skip to Q180_CONSUMED;
+    endif;
+PROC Q179_AMOUNT_INKIND
+postproc
+    Q179_TOTAL = Q179_AMOUNT_PURCHASED + Q179_AMOUNT_INKIND;
+
+
+PROC Q180_CONSUMED
+postproc
+    if Q180_CONSUMED = 2 then
+        Q180_AMOUNT_PURCHASED = 0;
+        Q180_AMOUNT_INKIND    = 0;
+        Q180_TOTAL            = 0;
+        skip to Q181_CONSUMED;
+    endif;
+PROC Q180_AMOUNT_INKIND
+postproc
+    Q180_TOTAL = Q180_AMOUNT_PURCHASED + Q180_AMOUNT_INKIND;
+
+
+PROC Q181_CONSUMED
+postproc
+    if Q181_CONSUMED = 2 then
+        Q181_AMOUNT_PURCHASED = 0;
+        Q181_AMOUNT_INKIND    = 0;
+        Q181_TOTAL            = 0;
+        skip to Q182_TOTAL;
+    endif;
+PROC Q181_AMOUNT_INKIND
+postproc
+    Q181_TOTAL = Q181_AMOUNT_PURCHASED + Q181_AMOUNT_INKIND;
+
+
+PROC Q182_TOTAL
+preproc
+    { Computed total (DO NOT ASK per PDF) -- Q178 + Q179 + Q180 + Q181. }
+    Q182_TOTAL = Q178_TOTAL + Q179_TOTAL + Q180_TOTAL + Q181_TOTAL;
+    skip to Q183_CONSUMED;
+
+
+PROC Q183_CONSUMED
+postproc
+    if Q183_CONSUMED = 2 then
+        Q183_AMOUNT_PURCHASED = 0;
+        Q183_AMOUNT_INKIND    = 0;
+        Q183_TOTAL            = 0;
+        skip to Q184_CONSUMED;
+    endif;
+PROC Q183_AMOUNT_INKIND
+postproc
+    Q183_TOTAL = Q183_AMOUNT_PURCHASED + Q183_AMOUNT_INKIND;
+
+
+PROC Q184_CONSUMED
+postproc
+    if Q184_CONSUMED = 2 then
+        Q184_AMOUNT_PURCHASED = 0;
+        Q184_AMOUNT_INKIND    = 0;
+        Q184_TOTAL            = 0;
+        skip to Q185_TOTAL;
+    endif;
+PROC Q184_AMOUNT_INKIND
+postproc
+    Q184_TOTAL = Q184_AMOUNT_PURCHASED + Q184_AMOUNT_INKIND;
+
+
+PROC Q185_TOTAL
+preproc
+    { Computed total (DO NOT ASK per PDF) -- Q183 + Q184. }
+    Q185_TOTAL = Q183_TOTAL + Q184_TOTAL;
+    { Section N terminus -- fall through to Section O. }
+
+
+{ Sections O-Q + edits + household-pick stub + roster auto-fill land in }
+{ commits 8-9. The .apc file ends here for commit 7.                    }
 '''
 
 
 def main():
     (HERE / "HouseholdSurvey.ent.apc").write_text(APC, encoding="utf-8")
     print(f"wrote HouseholdSurvey.ent.apc ({len(APC)} chars; "
-          f"commit 6/9 -- Sections L-M + Q136 transcription-artifact note)")
+          f"commit 7/9 -- Section N expenditure quads + 4 computed totals)")
 
 
 if __name__ == "__main__":
