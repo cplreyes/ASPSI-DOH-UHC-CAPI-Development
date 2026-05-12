@@ -412,5 +412,138 @@ postproc
     endif;
 
 
-{ Sections D-Q + edits + household-pick stub + roster auto-fill land in }
-{ commits 4-9. The .apc file ends here for commit 3.                     }
+{ ===================================================================== }
+{  Section D -- UHC Awareness (Q51-Q53)                                  }
+{ ===================================================================== }
+
+PROC Q51_HEARD_UHC
+postproc
+    { Per spec §2 Section D: Q51 = No (2) continues to Q52 per PDF arrow
+      (both Q52 and Q53 are asked regardless of Q51). No skip emitted. }
+
+
+{ ===================================================================== }
+{  Section E -- YAKAP / Konsulta (Q54-Q56)                               }
+{ ===================================================================== }
+
+PROC Q54_HEARD_YAKAP
+postproc
+    { Per spec §2 Section E: Q54 = No (2) -> Q57 (skip Q55, Q56). }
+    if Q54_HEARD_YAKAP = 2 then   { 2 = No }
+        skip to Q57_HEARD_BUCAS;
+    endif;
+
+
+{ ===================================================================== }
+{  Section F -- BUCAS (Q57-Q61)                                          }
+{  Settings-driven gate: F4_BUCAS_AREA from EXT_DIC facility metadata    }
+{  gates entire section.                                                 }
+{ ===================================================================== }
+
+PROC F_BUCAS
+preproc
+    { Settings-driven gate per spec §2 Section F note:
+      Q57-Q61 only fire when loadsetting("F4_BUCAS_AREA") = 1 for the
+      case's facility. Otherwise proceed to Q62 (Section G entry).
+
+      The setting comes from the EXT_DIC facility-metadata dictionary
+      (103_EXT_DATA) at preproc time. Until the EXT_DIC bundle confirms
+      the setting field name, default to 0 (not a BUCAS area) -- the
+      conservative path that skips the section.
+
+      Open question #3 in spec §5 -- field name TBD by ASPSI. }
+    numeric is_bucas_area = tonumber(loadsetting("F4_BUCAS_AREA"));
+    if is_bucas_area <> 1 then
+        skip to Q62_PURCHASE_FREQUENCY;
+    endif;
+
+
+PROC Q57_HEARD_BUCAS
+postproc
+    { Per spec §2 Section F: Q57 = No (2) -> Q62 (skip Q58, Q59, Q60, Q61). }
+    if Q57_HEARD_BUCAS = 2 then   { 2 = No }
+        skip to Q62_PURCHASE_FREQUENCY;
+    endif;
+
+
+PROC Q60_BUCAS_ACCESSED
+postproc
+    { Per spec §2 Section F: Q60 = No (2) -> Q62 (skip Q61). }
+    if Q60_BUCAS_ACCESSED = 2 then   { 2 = No }
+        skip to Q62_PURCHASE_FREQUENCY;
+    endif;
+
+
+{ ===================================================================== }
+{  Section G -- Access to Medicines (Q62-Q78)                            }
+{  Settings-driven gate (Q69-Q74, Q76): F4_GAMOT_AREA from EXT_DIC.      }
+{ ===================================================================== }
+
+PROC Q62_PURCHASE_FREQUENCY
+postproc
+    { Per spec §2 Section G: Q62 = Never (5) -> Q69 (skip Q63-Q68). }
+    if Q62_PURCHASE_FREQUENCY = 5 then   { 5 = Never }
+        skip to Q69_HEARD_GAMOT;
+    endif;
+
+
+PROC Q69_HEARD_GAMOT
+preproc
+    { Settings-driven sub-gate per spec §2 Section G note:
+      Q69-Q74 + Q76 only fire when loadsetting("F4_GAMOT_AREA") = 1
+      for the case's facility. Otherwise proceed to Q75
+      (KNOWS_BRAND_VS_GENERIC). Same EXT_DIC source as the BUCAS gate.
+
+      Open question #3 in spec §5. }
+    numeric is_gamot_area = tonumber(loadsetting("F4_GAMOT_AREA"));
+    if is_gamot_area <> 1 then
+        skip to Q75_KNOWS_BRAND_VS_GENERIC;
+    endif;
+postproc
+    { Per spec §2 Section G: Q69 = No (2) -> Q75 (skip Q70-Q74). }
+    if Q69_HEARD_GAMOT = 2 then   { 2 = No }
+        skip to Q75_KNOWS_BRAND_VS_GENERIC;
+    endif;
+
+
+PROC Q72_GAMOT_OBTAINED
+postproc
+    { Per spec §2 Section G: Q72 = No (2) -> Q75 (skip Q73, Q74). }
+    if Q72_GAMOT_OBTAINED = 2 then   { 2 = No }
+        skip to Q75_KNOWS_BRAND_VS_GENERIC;
+    endif;
+
+
+PROC Q76_MED_TYPE_PURCHASED
+preproc
+    { Settings-driven sub-gate -- Q76 only fires in GAMOT area. The
+      preproc check on Q76 lets the operator land at Q75 (the
+      non-gated terminus) when not a GAMOT area. }
+    numeric is_gamot_area = tonumber(loadsetting("F4_GAMOT_AREA"));
+    if is_gamot_area <> 1 then
+        skip to Q79_HOW_FIND_OUT_REGISTER;
+    endif;
+postproc
+    { Per spec §2 Section G:
+        - Q76 = Branded (1)            -> Q78 (skip Q77).
+        - Q76 = DK (4) or N/A (5)      -> Q79 (skip Q77 + Q78).
+      Q76 = Generic (2) falls through to Q77; Q78 then skipped via
+      Q78_BRANDED_REASON_O01.preproc below. }
+    if Q76_MED_TYPE_PURCHASED = 1 then
+        skip to Q78_BRANDED_REASON_O01;
+    endif;
+    if Q76_MED_TYPE_PURCHASED in 4, 5 then
+        skip to Q79_HOW_FIND_OUT_REGISTER;
+    endif;
+
+
+PROC Q78_BRANDED_REASON_O01
+preproc
+    { Per spec §2 Section G: Q76 = Generic (2) skips Q78 select_all. }
+    if Q76_MED_TYPE_PURCHASED = 2 then
+        skip to Q79_HOW_FIND_OUT_REGISTER;
+    endif;
+
+
+{ Sections H-Q + edits + household-pick stub + roster auto-fill land in }
+{ commits 5-9. The .apc file ends here for commit 4.                    }
