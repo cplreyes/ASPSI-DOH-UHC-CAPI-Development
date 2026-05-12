@@ -79,18 +79,419 @@ function CloseCaseAsComplete()
     { Set the closing AAPOR + visit-result codes when a respondent
       completes through the final terminus item (Q178 SAT_REFERRAL or
       the non-referral terminus at Q172+). Wired from PROC Q178 and the
-      end-of-survey paths in commit 4. }
+      end-of-survey paths.
+
+      Also: write F3_STATUS = 1 (completed) back to the listing roster
+      row so the listing app's replacement-protocol engine sees the
+      F-series slot consumed (no replacement needed). The roster write-
+      back uses g_picked_* state captured by PickPatient() at case-open. }
     AAPOR_DISPOSITION        = AAPOR_COMPLETE;
     ENUM_RESULT_FINAL_VISIT  = VISIT_RESULT_COMPLETED;
     DATE_FINAL_VISIT         = SYSDATE("YYYYMMDD");
+    StampRosterStatus(F3_STATUS_COMPLETED);
+end;
+
+
+{ ===================================================================== }
+{  Patient-pick — globals + helper functions                             }
+{ ===================================================================== }
+
+PROC GLOBAL
+
+{ Cap on visible eligible-patient choices per pick screen. CSPro accept()
+  is variadic at compile time, not runtime; we hard-build 20 slots and
+  fall back to "more rows exist — refine by listing-session" guidance if
+  the operator sees the cap hit. With BACKUP_TARGET ~= 0.5 * FACILITY_TARGET
+  per session (see 110_F3_listing logic) plus rare same-day backfill, 20
+  is generous for a single facility-day session. }
+numeric PICK_MAX_CHOICES = 20;
+
+{ State held across the patient-pick + write-back PROCs. Populated by
+  PickPatient(), consumed by StampRosterStatus() and the F3 case-save
+  finalizer in PROC PATIENTSURVEY_LEVEL.postproc. }
+numeric g_picked_roster_seq        =  0;   { ROSTER_SEQ on chosen roster row }
+numeric g_picked_listing_date      =  0;   { LISTING_SESSION_DATE of chosen  }
+numeric g_picked_listing_seq       =  0;   { LISTING_SESSION_SEQ of chosen   }
+string  g_picked_patient_fullname  = "";   { for FIELD_CONTROL stamping     }
+
+{ Status codes — mirror F3_STATUS value set in 110_F3_listing DCF. }
+numeric F3_STATUS_PENDING     = 0;
+numeric F3_STATUS_COMPLETED   = 1;
+numeric F3_STATUS_IN_PROGRESS = 2;
+numeric F3_STATUS_REFUSED     = 3;
+
+
+function StampRosterStatus(numeric newStatus)
+    { Re-load the chosen PATIENTLISTING_DICT case (by listing-session ID
+      block) into edit mode, locate the matching REC_PATIENT_ROSTER
+      occurrence via g_picked_roster_seq, update F3_STATUS, and savecase.
+
+      Called from:
+        - PickPatient()                      with F3_STATUS_IN_PROGRESS
+        - PROC FIELD_CONTROL postproc        with F3_STATUS_COMPLETED (save)
+        - PROC CONSENT_GIVEN postproc        with F3_STATUS_REFUSED   (refuse)
+
+      Failure mode: if loadcase / savecase return false, errmsg the
+      operator. The F3 case itself can still be saved — the roster
+      flag will be reconciled at next listing-app sync by the desk
+      reviewer. }
+
+    if not loadcase(PATIENTLISTING_DICT,
+                    REGION_CODE, PROVINCE_HUC_CODE,
+                    CITY_MUNICIPALITY_CODE, FACILITY_NO,
+                    g_picked_listing_date, g_picked_listing_seq) then
+        errmsg("Could not re-open listing session for status write-back. "
+               "Roster F3_STATUS will be reconciled at next sync. "
+               "Continuing with F3 case.");
+        StampRosterStatus = 0;
+        exit;
+    endif;
+
+    { Locate the matching roster occurrence. ROSTER_SEQ is 1-based and
+      contiguous within a session. }
+    numeric occIdx = 0;
+    numeric i;
+    for i = 1 to totocc(REC_PATIENT_ROSTER)
+        if PATIENTLISTING_DICT.REC_PATIENT_ROSTER(i).ROSTER_SEQ
+                                                = g_picked_roster_seq then
+            occIdx = i;
+        endif;
+    enddo;
+
+    if occIdx = 0 then
+        errmsg("Picked ROSTER_SEQ %v not found in re-loaded listing case. "
+               "F3 case will still save; reconcile manually.",
+               g_picked_roster_seq);
+        StampRosterStatus = 0;
+        exit;
+    endif;
+
+    PATIENTLISTING_DICT.REC_PATIENT_ROSTER(occIdx).F3_STATUS = newStatus;
+
+    if newStatus = F3_STATUS_IN_PROGRESS then
+        { Stamp the F3 CASE_SEQ allocation onto the roster row so the
+          listing-app's replacement-protocol engine sees the slot
+          consumed. CASE_SEQ is the 5th item of F3's ID block. }
+        PATIENTLISTING_DICT.REC_PATIENT_ROSTER(occIdx).ASSIGNED_F3_CASE_SEQ
+                                                              = CASE_SEQ;
+    endif;
+
+    if not savecase(PATIENTLISTING_DICT) then
+        errmsg("Could not save listing-session write-back (status=%v). "
+               "Roster F3_STATUS will be reconciled at next sync.",
+               newStatus);
+        StampRosterStatus = 0;
+        exit;
+    endif;
+
+    StampRosterStatus = 1;
+end;
+
+
+function PickPatient()
+    { Build the eligible-patient pick list from PATIENTLISTING_DICT and
+      prompt the operator. Eligibility filter:
+        - LISTING_TAG = 1 (F3-exit same-day at facility)
+        - F3_STATUS   = 0 (pending — not yet attempted)
+
+      Only roster rows from listing sessions for the current facility
+      (matched on the 9-digit facility prefix REGION + PROVINCE_HUC +
+      CITY_MUNICIPALITY + FACILITY_NO) are considered.
+
+      The operator sees a maximum of PICK_MAX_CHOICES eligible patients;
+      additional rows are hidden with a "more rows hidden — refine by
+      listing session" footer message.
+
+      On selection:
+        - g_picked_roster_seq      = chosen ROSTER_SEQ
+        - g_picked_listing_date    = LISTING_SESSION_DATE of chosen case
+        - g_picked_listing_seq     = LISTING_SESSION_SEQ of chosen case
+        - g_picked_patient_fullname = "First Last" of chosen patient
+
+      Returns 1 on success, 0 on operator-cancel or no-eligible-rows. }
+
+    { Reset state. }
+    g_picked_roster_seq        = 0;
+    g_picked_listing_date      = 0;
+    g_picked_listing_seq       = 0;
+    g_picked_patient_fullname  = "";
+
+    { Build choice strings via forcase across all matching listing cases. }
+    string choice01 = ""; string choice02 = ""; string choice03 = "";
+    string choice04 = ""; string choice05 = ""; string choice06 = "";
+    string choice07 = ""; string choice08 = ""; string choice09 = "";
+    string choice10 = ""; string choice11 = ""; string choice12 = "";
+    string choice13 = ""; string choice14 = ""; string choice15 = "";
+    string choice16 = ""; string choice17 = ""; string choice18 = "";
+    string choice19 = ""; string choice20 = "";
+
+    { Parallel arrays of the same length tracking the roster identity
+      behind each visible choice. CSPro doesn't have native arrays, so
+      we use numbered scalars. }
+    numeric rs01 = 0; numeric rs02 = 0; numeric rs03 = 0; numeric rs04 = 0;
+    numeric rs05 = 0; numeric rs06 = 0; numeric rs07 = 0; numeric rs08 = 0;
+    numeric rs09 = 0; numeric rs10 = 0; numeric rs11 = 0; numeric rs12 = 0;
+    numeric rs13 = 0; numeric rs14 = 0; numeric rs15 = 0; numeric rs16 = 0;
+    numeric rs17 = 0; numeric rs18 = 0; numeric rs19 = 0; numeric rs20 = 0;
+
+    numeric ld01 = 0; numeric ld02 = 0; numeric ld03 = 0; numeric ld04 = 0;
+    numeric ld05 = 0; numeric ld06 = 0; numeric ld07 = 0; numeric ld08 = 0;
+    numeric ld09 = 0; numeric ld10 = 0; numeric ld11 = 0; numeric ld12 = 0;
+    numeric ld13 = 0; numeric ld14 = 0; numeric ld15 = 0; numeric ld16 = 0;
+    numeric ld17 = 0; numeric ld18 = 0; numeric ld19 = 0; numeric ld20 = 0;
+
+    numeric ls01 = 0; numeric ls02 = 0; numeric ls03 = 0; numeric ls04 = 0;
+    numeric ls05 = 0; numeric ls06 = 0; numeric ls07 = 0; numeric ls08 = 0;
+    numeric ls09 = 0; numeric ls10 = 0; numeric ls11 = 0; numeric ls12 = 0;
+    numeric ls13 = 0; numeric ls14 = 0; numeric ls15 = 0; numeric ls16 = 0;
+    numeric ls17 = 0; numeric ls18 = 0; numeric ls19 = 0; numeric ls20 = 0;
+
+    numeric choice_count = 0;
+    numeric rows_total   = 0;
+
+    { Read the current facility's 9-digit prefix from loadsetting() —
+      stamped by 101_login at sign-in. }
+    numeric login_region  = tonumber(loadsetting("region_code"));
+    numeric login_prov    = tonumber(loadsetting("province_huc_code"));
+    numeric login_city    = tonumber(loadsetting("city_municipality_code"));
+    numeric login_fac     = tonumber(loadsetting("facility_no"));
+
+    forcase PATIENTLISTING_DICT
+        where REGION_CODE            = login_region
+        and   PROVINCE_HUC_CODE      = login_prov
+        and   CITY_MUNICIPALITY_CODE = login_city
+        and   FACILITY_NO            = login_fac
+    do
+        { For each listing session for the current facility, walk the
+          roster occurrences. }
+        numeric j;
+        for j = 1 to totocc(REC_PATIENT_ROSTER)
+            if PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).LISTING_TAG = 1
+               and PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).F3_STATUS
+                                                  = F3_STATUS_PENDING then
+                rows_total = rows_total + 1;
+
+                if choice_count < PICK_MAX_CHOICES then
+                    choice_count = choice_count + 1;
+                    string fullname =
+                        strip(
+                            PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).P_FIRST_NAME)
+                        + " " +
+                        strip(
+                            PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).P_LAST_NAME);
+                    string label =
+                        maketext("#%03d  %s  (session %d-%03d)",
+                            PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ,
+                            fullname,
+                            LISTING_SESSION_DATE,
+                            LISTING_SESSION_SEQ);
+
+                    if choice_count = 1  then choice01 = label;
+                       rs01 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld01 = LISTING_SESSION_DATE; ls01 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 2  then choice02 = label;
+                       rs02 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld02 = LISTING_SESSION_DATE; ls02 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 3  then choice03 = label;
+                       rs03 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld03 = LISTING_SESSION_DATE; ls03 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 4  then choice04 = label;
+                       rs04 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld04 = LISTING_SESSION_DATE; ls04 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 5  then choice05 = label;
+                       rs05 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld05 = LISTING_SESSION_DATE; ls05 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 6  then choice06 = label;
+                       rs06 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld06 = LISTING_SESSION_DATE; ls06 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 7  then choice07 = label;
+                       rs07 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld07 = LISTING_SESSION_DATE; ls07 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 8  then choice08 = label;
+                       rs08 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld08 = LISTING_SESSION_DATE; ls08 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 9  then choice09 = label;
+                       rs09 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld09 = LISTING_SESSION_DATE; ls09 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 10 then choice10 = label;
+                       rs10 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld10 = LISTING_SESSION_DATE; ls10 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 11 then choice11 = label;
+                       rs11 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld11 = LISTING_SESSION_DATE; ls11 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 12 then choice12 = label;
+                       rs12 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld12 = LISTING_SESSION_DATE; ls12 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 13 then choice13 = label;
+                       rs13 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld13 = LISTING_SESSION_DATE; ls13 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 14 then choice14 = label;
+                       rs14 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld14 = LISTING_SESSION_DATE; ls14 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 15 then choice15 = label;
+                       rs15 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld15 = LISTING_SESSION_DATE; ls15 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 16 then choice16 = label;
+                       rs16 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld16 = LISTING_SESSION_DATE; ls16 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 17 then choice17 = label;
+                       rs17 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld17 = LISTING_SESSION_DATE; ls17 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 18 then choice18 = label;
+                       rs18 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld18 = LISTING_SESSION_DATE; ls18 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 19 then choice19 = label;
+                       rs19 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld19 = LISTING_SESSION_DATE; ls19 = LISTING_SESSION_SEQ;
+                    elseif choice_count = 20 then choice20 = label;
+                       rs20 = PATIENTLISTING_DICT.REC_PATIENT_ROSTER(j).ROSTER_SEQ;
+                       ld20 = LISTING_SESSION_DATE; ls20 = LISTING_SESSION_SEQ;
+                    endif;
+                endif;
+            endif;
+        enddo;
+    enddo;
+
+    if choice_count = 0 then
+        errmsg("No eligible patients pending F3 at this facility. "
+               "Either no listing session has been run today, or all "
+               "F3-tagged rows are already in-progress / completed. "
+               "Confirm with the supervisor before creating an F3 case.");
+        PickPatient = 0;
+        exit;
+    endif;
+
+    if rows_total > PICK_MAX_CHOICES then
+        errmsg("%v eligible rows found — showing first %v. Refine by "
+               "running F3 in a focused listing-session window if the "
+               "patient you want is not in the list.",
+               rows_total, PICK_MAX_CHOICES);
+        { soft — operator continues into the pick list }
+    endif;
+
+    numeric pick = accept(
+        "Select the patient for this F3 interview",
+        choice01, choice02, choice03, choice04, choice05,
+        choice06, choice07, choice08, choice09, choice10,
+        choice11, choice12, choice13, choice14, choice15,
+        choice16, choice17, choice18, choice19, choice20);
+
+    if pick = 0 then
+        { Operator cancelled. F3 case cannot proceed without a roster row. }
+        errmsg("F3 case creation cancelled — patient not picked.");
+        PickPatient = 0;
+        exit;
+    endif;
+
+    if      pick =  1 then g_picked_roster_seq = rs01;
+                            g_picked_listing_date = ld01;
+                            g_picked_listing_seq  = ls01;
+    elseif  pick =  2 then g_picked_roster_seq = rs02;
+                            g_picked_listing_date = ld02;
+                            g_picked_listing_seq  = ls02;
+    elseif  pick =  3 then g_picked_roster_seq = rs03;
+                            g_picked_listing_date = ld03;
+                            g_picked_listing_seq  = ls03;
+    elseif  pick =  4 then g_picked_roster_seq = rs04;
+                            g_picked_listing_date = ld04;
+                            g_picked_listing_seq  = ls04;
+    elseif  pick =  5 then g_picked_roster_seq = rs05;
+                            g_picked_listing_date = ld05;
+                            g_picked_listing_seq  = ls05;
+    elseif  pick =  6 then g_picked_roster_seq = rs06;
+                            g_picked_listing_date = ld06;
+                            g_picked_listing_seq  = ls06;
+    elseif  pick =  7 then g_picked_roster_seq = rs07;
+                            g_picked_listing_date = ld07;
+                            g_picked_listing_seq  = ls07;
+    elseif  pick =  8 then g_picked_roster_seq = rs08;
+                            g_picked_listing_date = ld08;
+                            g_picked_listing_seq  = ls08;
+    elseif  pick =  9 then g_picked_roster_seq = rs09;
+                            g_picked_listing_date = ld09;
+                            g_picked_listing_seq  = ls09;
+    elseif  pick = 10 then g_picked_roster_seq = rs10;
+                            g_picked_listing_date = ld10;
+                            g_picked_listing_seq  = ls10;
+    elseif  pick = 11 then g_picked_roster_seq = rs11;
+                            g_picked_listing_date = ld11;
+                            g_picked_listing_seq  = ls11;
+    elseif  pick = 12 then g_picked_roster_seq = rs12;
+                            g_picked_listing_date = ld12;
+                            g_picked_listing_seq  = ls12;
+    elseif  pick = 13 then g_picked_roster_seq = rs13;
+                            g_picked_listing_date = ld13;
+                            g_picked_listing_seq  = ls13;
+    elseif  pick = 14 then g_picked_roster_seq = rs14;
+                            g_picked_listing_date = ld14;
+                            g_picked_listing_seq  = ls14;
+    elseif  pick = 15 then g_picked_roster_seq = rs15;
+                            g_picked_listing_date = ld15;
+                            g_picked_listing_seq  = ls15;
+    elseif  pick = 16 then g_picked_roster_seq = rs16;
+                            g_picked_listing_date = ld16;
+                            g_picked_listing_seq  = ls16;
+    elseif  pick = 17 then g_picked_roster_seq = rs17;
+                            g_picked_listing_date = ld17;
+                            g_picked_listing_seq  = ls17;
+    elseif  pick = 18 then g_picked_roster_seq = rs18;
+                            g_picked_listing_date = ld18;
+                            g_picked_listing_seq  = ls18;
+    elseif  pick = 19 then g_picked_roster_seq = rs19;
+                            g_picked_listing_date = ld19;
+                            g_picked_listing_seq  = ls19;
+    elseif  pick = 20 then g_picked_roster_seq = rs20;
+                            g_picked_listing_date = ld20;
+                            g_picked_listing_seq  = ls20;
+    endif;
+
+    { Allocate F3 CASE_SEQ from the enumerator's f3_seq_lo/f3_seq_hi
+      range (loaded into loadsetting() by 101_login from user_roster.xlsx).
+      Strategy: read both endpoints, use lo + roster_seq - 1 as the
+      base allocation, falling back to a free-slot scan if the base is
+      already used. For Phase 1 the base allocation is sufficient since
+      F3 case-IDs are not reused across sessions. }
+    numeric f3_lo = tonumber(loadsetting("f3_seq_lo"));
+    CASE_SEQ = f3_lo + g_picked_roster_seq - 1;
+
+    { Stamp the F3 case-ID block (REGION_CODE etc.) from the login
+      settings, matching the facility-prefix the listing roster used. }
+    REGION_CODE            = login_region;
+    PROVINCE_HUC_CODE      = login_prov;
+    CITY_MUNICIPALITY_CODE = login_city;
+    FACILITY_NO            = login_fac;
+
+    { PATIENT_LISTING_NO copied from the chosen roster row into the F3
+      FIELD_CONTROL header (per the FIELD_CONTROL extra item in
+      generate_dcf.py::build_f3_field_control). }
+    PATIENT_LISTING_NO = g_picked_roster_seq;
+
+    { Write F3_STATUS = 2 (in-progress) + ASSIGNED_F3_CASE_SEQ back
+      to the listing roster. }
+    StampRosterStatus(F3_STATUS_IN_PROGRESS);
+
+    PickPatient = 1;
 end;
 
 
 PROC PATIENTSURVEY_LEVEL
-{ Level-scope preproc placeholder. Commit 5 will fill this with the
-  patient-pick logic that queries PATIENTLISTING_DICT via loadcase()
-  and writes ASSIGNED_F3_CASE_SEQ + F3_STATUS=2 back to the chosen
-  roster occurrence. }
+preproc
+    { On every new F3 case, run the patient-pick screen BEFORE any
+      form opens. The pick stamps:
+        - CASE_SEQ                    (allocated from f3_seq_lo..hi)
+        - REGION_CODE..FACILITY_NO    (from login settings)
+        - PATIENT_LISTING_NO          (from chosen roster row)
+        - g_picked_*                  (state for end-of-case write-back)
+
+      If the operator cancels or no eligible rows exist, PickPatient()
+      errmsgs and returns 0; the case still opens, but the operator must
+      cancel via the system Stop-case button. We cannot endcase() from
+      LEVEL.preproc because the case has not yet been initialized. }
+
+    if not PickPatient() then
+        { Stay in the dictionary — operator will see the error and
+          cancel the case via the Stop-case shortcut. }
+    endif;
 
 
 { ===================================================================== }
@@ -119,11 +520,15 @@ postproc
       mark the case withdrawn and end the interview. The operator is
       expected to save the partial case so the disposition is preserved
       for paradata. Per F3-Skip-Logic-and-Validations.md §2 Section A
-      ("Terminate interview" rule). }
+      ("Terminate interview" rule). The roster row is flagged
+      F3_STATUS = 3 (refused-at-F3) so the listing-app's replacement
+      engine pulls a backup slot from the 700-899 range on the next
+      listing-event. }
     if CONSENT_GIVEN = 2 then   { 2 = No }
         AAPOR_DISPOSITION        = AAPOR_REFUSED;
         ENUM_RESULT_FINAL_VISIT  = VISIT_RESULT_WITHDRAW_CONSENT;
         DATE_FINAL_VISIT         = SYSDATE("YYYYMMDD");
+        StampRosterStatus(F3_STATUS_REFUSED);
         endcase;
     endif;
 
@@ -878,7 +1283,7 @@ onfocus
 
 def main():
     (HERE / "PatientSurvey.ent.apc").write_text(APC, encoding="utf-8")
-    print(f"wrote PatientSurvey.ent.apc ({len(APC)} chars; commit 4/6 — sections D-L + validations)")
+    print(f"wrote PatientSurvey.ent.apc ({len(APC)} chars; commit 5/6 — patient-pick + write-back)")
 
 
 if __name__ == "__main__":
