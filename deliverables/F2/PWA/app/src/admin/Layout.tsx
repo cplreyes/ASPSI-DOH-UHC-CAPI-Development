@@ -186,7 +186,7 @@ export function Layout({ children }: LayoutProps): JSX.Element {
             Sign out
           </Button>
           <p className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
-            v0.1.0-staging
+            v{__APP_VERSION__}
           </p>
         </div>
       </aside>
