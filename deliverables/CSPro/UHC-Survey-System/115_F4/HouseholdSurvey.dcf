@@ -25121,7 +25121,912 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q186_INCOME",
+              "labels": [
+                {
+                  "text": "186. Current income of any household members"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q186_INCOME_VS1",
+                  "labels": [
+                    {
+                      "text": "186. Current income of any household members"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q187_SAVINGS",
+              "labels": [
+                {
+                  "text": "187. Savings, pension"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q187_SAVINGS_VS1",
+                  "labels": [
+                    {
+                      "text": "187. Savings, pension"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q188_SELL_ASSETS",
+              "labels": [
+                {
+                  "text": "188. Selling of any household's assets or goods (housing, land, animals, jewelry, appliances, or machines)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q188_SELL_ASSETS_VS1",
+                  "labels": [
+                    {
+                      "text": "188. Selling of any household's assets or goods (housing, land, animals, jewelry, appliances, or machines)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q189_BORROW_FRIENDS",
+              "labels": [
+                {
+                  "text": "189. Borrowing from friends or relatives outside the household"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q189_BORROW_FRIENDS_VS1",
+                  "labels": [
+                    {
+                      "text": "189. Borrowing from friends or relatives outside the household"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q190_BORROW_INSTITUTIONS",
+              "labels": [
+                {
+                  "text": "190. Borrowing from institutions (e.g., financial, microfinance arrangements)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q190_BORROW_INSTITUTIONS_VS1",
+                  "labels": [
+                    {
+                      "text": "190. Borrowing from institutions (e.g., financial, microfinance arrangements)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q191_REMITTANCE",
+              "labels": [
+                {
+                  "text": "191. Remittance or money gift"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q191_REMITTANCE_VS1",
+                  "labels": [
+                    {
+                      "text": "191. Remittance or money gift"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q192_GOV_ASSISTANCE",
+              "labels": [
+                {
+                  "text": "192. Government assistance (DSWD, local, etc.)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q192_GOV_ASSISTANCE_VS1",
+                  "labels": [
+                    {
+                      "text": "192. Government assistance (DSWD, local, etc.)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q193_LGU_DONATION",
+              "labels": [
+                {
+                  "text": "193. Donation from LGUs"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q193_LGU_DONATION_VS1",
+                  "labels": [
+                    {
+                      "text": "193. Donation from LGUs"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q194_OTHER",
+              "labels": [
+                {
+                  "text": "194. Other specify"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q194_OTHER_VS1",
+                  "labels": [
+                    {
+                      "text": "194. Other specify"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q194_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "194. Other -- specify text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 200
+            },
+            {
+              "name": "Q195_PORTION_FOR_HEALTH",
+              "labels": [
+                {
+                  "text": "195. What portion of your household's monthly income would you be willing to set aside for health care if it reduced unexpected medical expenses?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q195_PORTION_FOR_HEALTH_VS1",
+                  "labels": [
+                    {
+                      "text": "195. What portion of your household's monthly income would you be willing to set aside for health care if it reduced unexpected medical expenses?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "None"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Less than 1%"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "1-3%"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "4-6%"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "More than 6%"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q196_CARE_FOREGONE_O01",
+              "labels": [
+                {
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Doctor/consultation visit"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q196_CARE_FOREGONE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Doctor/consultation visit"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q196_CARE_FOREGONE_O02",
+              "labels": [
+                {
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Medicines or treatments"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q196_CARE_FOREGONE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Medicines or treatments"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q196_CARE_FOREGONE_O03",
+              "labels": [
+                {
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Laboratory tests / diagnostics"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q196_CARE_FOREGONE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Laboratory tests / diagnostics"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q196_CARE_FOREGONE_O04",
+              "labels": [
+                {
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Hospital admission / inpatient care"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q196_CARE_FOREGONE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Hospital admission / inpatient care"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q196_CARE_FOREGONE_O05",
+              "labels": [
+                {
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Preventive care (e.g., vaccinations, check-ups)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q196_CARE_FOREGONE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Preventive care (e.g., vaccinations, check-ups)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q196_CARE_FOREGONE_O06",
+              "labels": [
+                {
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Dental care"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q196_CARE_FOREGONE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Dental care"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q196_CARE_FOREGONE_O07",
+              "labels": [
+                {
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (please specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q196_CARE_FOREGONE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (please specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q196_CARE_FOREGONE_O08",
+              "labels": [
+                {
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 We do not forego care"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q196_CARE_FOREGONE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 We do not forego care"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "P_FINANCIAL_RISK",
@@ -25135,7 +26040,243 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q197_DELAYED_CARE",
+              "labels": [
+                {
+                  "text": "197. In the last 6 months, have you or your household member delayed seeking care for financial reasons?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q197_DELAYED_CARE_VS1",
+                  "labels": [
+                    {
+                      "text": "197. In the last 6 months, have you or your household member delayed seeking care for financial reasons?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q198_NOT_FOLLOWED_ADVICE",
+              "labels": [
+                {
+                  "text": "198. In the last 6 months, have you or your household member seen a doctor and not fully followed their advice (for example, to buy prescribed medicine, to go for a follow-up consultation, to get additional diagnostics) for financial reasons?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q198_NOT_FOLLOWED_ADVICE_VS1",
+                  "labels": [
+                    {
+                      "text": "198. In the last 6 months, have you or your household member seen a doctor and not fully followed their advice (for example, to buy prescribed medicine, to go for a follow-up consultation, to get additional diagnostics) for financial reasons?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q199_WILLING_TO_PAY",
+              "labels": [
+                {
+                  "text": "199. The usual price for a consultation ranges from Php 500 to Php 2,000. What is the highest amount you are willing to pay for a consultation?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q199_WILLING_TO_PAY_VS1",
+                  "labels": [
+                    {
+                      "text": "199. The usual price for a consultation ranges from Php 500 to Php 2,000. What is the highest amount you are willing to pay for a consultation?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Php 0 - Php 249"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Php 250 - Php 499"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Php 500 - Php 999"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Php 1,000 - Php 1249"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Php 1,250 - Php 1499"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Php 1,500 - Php 1749"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Php 1,750 - Php 1999"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Php 2,000 and above"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q199_WILLING_TO_PAY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "199. Willing to pay -- Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
         },
         {
           "name": "Q_FINANCIAL_ANXIETY",
@@ -25149,7 +26290,291 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q200_REDUCED_SPENDING",
+              "labels": [
+                {
+                  "text": "200. Have you or your household had to reduce spending on things you need (such as food, housing, or utilities) because of this health expenditure in the last 1 month?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q200_REDUCED_SPENDING_VS1",
+                  "labels": [
+                    {
+                      "text": "200. Have you or your household had to reduce spending on things you need (such as food, housing, or utilities) because of this health expenditure in the last 1 month?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refused to answer"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q201_WORRIED_FINANCES",
+              "labels": [
+                {
+                  "text": "201. How worried are you about your household's finances in the next 1 month?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q201_WORRIED_FINANCES_VS1",
+                  "labels": [
+                    {
+                      "text": "201. How worried are you about your household's finances in the next 1 month?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Very worried"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Somewhat worried"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not too worried"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not worried at all"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q202_WHY_WORRIED_O01",
+              "labels": [
+                {
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Loss of income"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q202_WHY_WORRIED_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Loss of income"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q202_WHY_WORRIED_O02",
+              "labels": [
+                {
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Healthcare costs related to coronavirus (COVID-19)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q202_WHY_WORRIED_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Healthcare costs related to coronavirus (COVID-19)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q202_WHY_WORRIED_O03",
+              "labels": [
+                {
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q202_WHY_WORRIED_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }

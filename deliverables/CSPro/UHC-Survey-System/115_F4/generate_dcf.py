@@ -1912,22 +1912,157 @@ def build_section_n():
 
 
 def build_section_o():
-    """O. Sources of Funds for Health."""
+    """O. Sources of Funds for Health (Q186-Q196).
+
+    Q186-Q194 are each a single yes_no row (one column "Yes/No" per
+    PDF table). The PDF describes them collectively as "which of the
+    following financial sources did your household use to pay
+    out-of-pocket ... in the last 12 months".
+
+    Q195/Q196 are single-select with skip routing:
+      - Q195 = None (1) -> Q196 (per "no skip" flow on PDF).
+      - Q195 = any other -> Q197 (skip Q196). Per PDF "<proceed to Q197>"
+        annotations on Less-than-1% / 1-3% / 4-6% / More-than-6% / DK.
+
+    PROC enforcement at the quartet phase.
+    """
+    Q195_PORTION = [
+        ("None",            "1"),
+        ("Less than 1%",    "2"),  # proceed to Q197
+        ("1-3%",            "3"),  # proceed to Q197
+        ("4-6%",            "4"),  # proceed to Q197
+        ("More than 6%",    "5"),  # proceed to Q197
+        ("Don't know",      "6"),  # proceed to Q197
+    ]
+    Q196_CARE_FOREGONE = [
+        ("Doctor/consultation visit",                    "01"),
+        ("Medicines or treatments",                      "02"),
+        ("Laboratory tests / diagnostics",               "03"),
+        ("Hospital admission / inpatient care",          "04"),
+        ("Preventive care (e.g., vaccinations, check-ups)", "05"),
+        ("Dental care",                                  "06"),
+        ("Other (please specify)",                       "07"),
+        ("We do not forego care",                        "08"),
+    ]
+    items = [
+        yes_no("Q186_INCOME",
+               "186. Current income of any household members"),
+        yes_no("Q187_SAVINGS",
+               "187. Savings, pension"),
+        yes_no("Q188_SELL_ASSETS",
+               "188. Selling of any household's assets or goods (housing, "
+               "land, animals, jewelry, appliances, or machines)"),
+        yes_no("Q189_BORROW_FRIENDS",
+               "189. Borrowing from friends or relatives outside the household"),
+        yes_no("Q190_BORROW_INSTITUTIONS",
+               "190. Borrowing from institutions (e.g., financial, "
+               "microfinance arrangements)"),
+        yes_no("Q191_REMITTANCE",
+               "191. Remittance or money gift"),
+        yes_no("Q192_GOV_ASSISTANCE",
+               "192. Government assistance (DSWD, local, etc.)"),
+        yes_no("Q193_LGU_DONATION",
+               "193. Donation from LGUs"),
+        yes_no("Q194_OTHER",
+               "194. Other specify"),
+        alpha("Q194_OTHER_TXT",
+              "194. Other -- specify text", length=200),
+        select_one("Q195_PORTION_FOR_HEALTH",
+                   "195. What portion of your household's monthly income "
+                   "would you be willing to set aside for health care if it "
+                   "reduced unexpected medical expenses?",
+                   Q195_PORTION, length=1),
+        *select_all("Q196_CARE_FOREGONE",
+                    "196. If your household chooses not to spend on health "
+                    "care for financial reasons, what kind of care do you "
+                    "usually forego?",
+                    Q196_CARE_FOREGONE),
+    ]
     return record("O_HEALTH_FUNDING",
-                  "O. Sources of Funds for Health", "Q", [])
+                  "O. Sources of Funds for Health", "Q", items)
 
 
 def build_section_p():
-    """P. Financial Risk Protection: Incidence of Reduced/Delayed Care."""
+    """P. Financial Risk Protection: Incidence of Reduced/Delayed Care
+    (Q197-Q199).
+
+    No skip routing within section. All three items asked in sequence.
+    """
+    Q199_BRACKET = [
+        ("Php 0 - Php 249",            "01"),
+        ("Php 250 - Php 499",          "02"),
+        ("Php 500 - Php 999",          "03"),
+        ("Php 1,000 - Php 1249",       "04"),
+        ("Php 1,250 - Php 1499",       "05"),
+        ("Php 1,500 - Php 1749",       "06"),
+        ("Php 1,750 - Php 1999",       "07"),
+        ("Php 2,000 and above",        "08"),
+        ("Other (Specify)",            "09"),
+    ]
+    items = [
+        yes_no("Q197_DELAYED_CARE",
+               "197. In the last 6 months, have you or your household member "
+               "delayed seeking care for financial reasons?"),
+        yes_no("Q198_NOT_FOLLOWED_ADVICE",
+               "198. In the last 6 months, have you or your household member "
+               "seen a doctor and not fully followed their advice (for example, "
+               "to buy prescribed medicine, to go for a follow-up consultation, "
+               "to get additional diagnostics) for financial reasons?"),
+        select_one("Q199_WILLING_TO_PAY",
+                   "199. The usual price for a consultation ranges from "
+                   "Php 500 to Php 2,000. What is the highest amount you are "
+                   "willing to pay for a consultation?",
+                   Q199_BRACKET, length=2),
+        alpha("Q199_WILLING_TO_PAY_OTHER_TXT",
+              "199. Willing to pay -- Other (specify) text", length=120),
+    ]
     return record("P_FINANCIAL_RISK",
                   "P. Financial Risk Protection: Incidence of "
-                  "Reduced/Delayed Care", "R", [])
+                  "Reduced/Delayed Care", "R", items)
 
 
 def build_section_q():
-    """Q. Anxiety about Household Finances."""
+    """Q. Anxiety about Household Finances (Q200-Q202).
+
+    Skip-routing (enforced in PROC):
+      - Q200 = Refused to answer (4) -> END OF SURVEY (skip Q201, Q202).
+      - Q201 = Not worried at all (4) -> END OF SURVEY (skip Q202).
+    """
+    Q200_REDUCED_SPEND = [
+        ("Yes",                                "1"),
+        ("No",                                 "2"),
+        ("Don't know",                         "3"),
+        ("Refused to answer",                  "4"),  # end of survey
+    ]
+    Q201_WORRIED = [
+        ("Very worried",        "1"),
+        ("Somewhat worried",    "2"),
+        ("Not too worried",     "3"),
+        ("Not worried at all",  "4"),  # end of survey
+    ]
+    Q202_WHY_WORRIED = [
+        ("Loss of income",                                                                                                                                                       "1"),
+        ("Healthcare costs related to coronavirus (COVID-19)",                                                                                                                   "2"),
+        ("Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)",                                         "3"),
+    ]
+    items = [
+        select_one("Q200_REDUCED_SPENDING",
+                   "200. Have you or your household had to reduce spending on "
+                   "things you need (such as food, housing, or utilities) "
+                   "because of this health expenditure in the last 1 month?",
+                   Q200_REDUCED_SPEND, length=1),
+        select_one("Q201_WORRIED_FINANCES",
+                   "201. How worried are you about your household's finances "
+                   "in the next 1 month?",
+                   Q201_WORRIED, length=1),
+        *select_all("Q202_WHY_WORRIED",
+                    "202. Do any of the following reasons describe why you "
+                    "are worried about your household's finances in the next "
+                    "1 month?",
+                    Q202_WHY_WORRIED),
+    ]
     return record("Q_FINANCIAL_ANXIETY",
-                  "Q. Anxiety about Household Finances", "S", [])
+                  "Q. Anxiety about Household Finances", "S", items)
 
 
 # ============================================================
