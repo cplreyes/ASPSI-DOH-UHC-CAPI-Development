@@ -3,7 +3,7 @@ type: concept
 status: adopted
 date_drafted: 2026-05-02
 date_adopted: 2026-05-05
-last_updated: 2026-05-05
+last_updated: 2026-05-12
 tags: [capi, cspro, dictionary, case-id, questionnaire-numbering, working-convention, adopted]
 source_count: 4
 related_task: E7-DOC-001
@@ -89,7 +89,13 @@ The 3-digit `CASE_SEQ` cleanly handles the manual's *"refused/cancelled cases ge
 
 - **F3 → F1** — derived structurally from the shared `REGION_CODE + PROVINCE_HUC_CODE + CITY_MUNICIPALITY_CODE + FACILITY_NO`. The current `F3_FACILITY_ID` (10-digit) data item becomes redundant and can be retired (or kept as a denormalized convenience field — leaning retire to avoid drift).
 - **F2 → F1** — same: shared first 9 digits identify the facility.
-- **F4 → F3** — not derivable from the case ID alone (F4 households aren't anchored on facility geography in the same way). Capture parent F3 patient sequence as a dedicated data item `F4_PARENT_F3_CASE_SEQ` (numeric, length 3) inside `HOUSEHOLD_GEO_ID`. This is exactly how DHS handles HHID → cluster/HH/line decomposition.
+- **F4 → F1** — same: shared first 9 digits identify the facility (no `F4_FACILITY_ID` emitted).
+- **F4 → listing roster (operational anchor)** — `HH_LISTING_NO` (numeric, length 4, zero-fill) lives in F4's `FIELD_CONTROL`. Always populated. Captures the 4-digit LISTING_NO from the **113_F4_listing** barangay-listing app's roster occurrence (PIDS barangay sampling per Protocol V2 §3.4.2). This is the protocol-conformant sampling path and the operational anchor between the listing roster and the F4 case.
+- **F4 → F3 (optional parent)** — `F4_PARENT_F3_CASE_SEQ` (numeric, length 3, zero-fill) lives in F4's `FIELD_CONTROL`. Defaults to **999 (NA per F-series convention)** when F4 was sampled via the barangay listing (the case for nearly all households). Populated only when F4 was reached via the **110_F3_listing** patient interval-walk path (`LISTING_TAG=2`). Future-proofs for the parallel sampling mode without DCF surgery later.
+
+**Why both fields on F4 (Option C, adopted 2026-05-12):** F4 supports two distinct sampling paths into the same case. The barangay listing is the protocol-conformant primary path and gets a required anchor (`HH_LISTING_NO`). The patient interval-walk path is a secondary sampling mode whose existence is preserved in the data model via the optional `F4_PARENT_F3_CASE_SEQ` (defaulting to NA when the primary path was used). Carrying both fields means the F4 entry app can handle either mode without DCF surgery, and downstream analysis can join F4 → patient parent (when applicable) without inferring it from timestamps or geography.
+
+This is closer in spirit to DHS's HHID-plus-decomposed-keys pattern than to a single composite — F4 cases get the structural facility anchor in their case-ID, the protocol-anchored listing reference in `HH_LISTING_NO`, and the optional patient-parent in `F4_PARENT_F3_CASE_SEQ`.
 
 ## Manual addendum (one paragraph)
 
@@ -103,6 +109,7 @@ Drops into *The Survey Questionnaire → Questionnaire Number*, replacing the ex
 |---|---|
 | `QUESTIONNAIRE_NO` (single 6-digit ID item) on F1 / F3 / F4 | 5 ID items totalling 12 digits on F1 / F3 / F4; the F2 PWA generates the same 12-digit form per response |
 | `F3_FACILITY_ID` (10-digit data item) | Retired — facility identity is now in the ID item block |
+| F4 has no operational anchor to its sampling source | F4 `FIELD_CONTROL` carries **`HH_LISTING_NO`** (length 4, always populated, from 113_F4_listing barangay roster) AND **`F4_PARENT_F3_CASE_SEQ`** (length 3, defaults to 999=NA, populated only when sampled via 110_F3_listing patient interval-walk). Option C dual-linkage, adopted 2026-05-12. |
 | Geographic items `REGION` / `PROVINCE_HUC` / `CITY_MUNICIPALITY` / `BARANGAY` at 10 digits each (full PSA PSGC) | **Keep** — these stay as data items for joining with PSA / DOH datasets at full precision; the 2/2/3-digit ID items are the *within-parent* PSA 1Q 2026 codes derived from the same PSGC source |
 | Manual specifies 9 digits (legacy 6-digit PSGC + 3 sequence) | Manual addendum: 12 digits (PSA 1Q 2026 7-digit PSGC + 2 facility + 3 case) — replaces the legacy PSGC slice entirely |
 
@@ -111,13 +118,13 @@ Drops into *The Survey Questionnaire → Questionnaire Number*, replacing the ex
 > [!note] Path rebase 2026-05-12
 > The Apr 20-22 F1/F3/F4 build that this rollout footprint originally referenced was archived under `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/` during the Sprint 005 R3 archive sequence. The active build now lives under `deliverables/CSPro/UHC-Survey-System/`. The rollout steps below have been repointed accordingly — the **semantics are unchanged** (`build_id_block()` still replaces the single `QUESTIONNAIRE_NO` item; F3 drops `F3_FACILITY_ID`; F4 adds `F4_PARENT_F3_CASE_SEQ`), only the file paths shift.
 
-> [!check] F1 + helper landed 2026-05-12
-> Steps 1, 2, 6 (partial — F1 PROC + docs in scaffold; manual addendum still pending Survey-Manual edit-pass resolution), and 7 (F1 only) are **complete on branch `feature/uhc-survey-system-build`** at commit `feat(capi): wire 12-digit case-ID block into F1 generate_dcf.py` (and predecessors). 10 unit tests pin the block shape. F3/F4/PLF generators still pending (not in scope until the F3 rewrite begins).
+> [!check] F1 + F3 + F4 + helper landed 2026-05-12
+> Steps 1, 2, 3, 4, 6 (partial — F1/F3/F4 PROC + docs in scaffold; manual addendum still pending Survey-Manual edit-pass resolution), and 7 (F1, F3, F4) are **complete on branch `feature/uhc-survey-system-build`**. Helper + F1 landed in the earlier 2026-05-12 commit series; F3 quartet wired into `build_all.py` 2026-05-12 (commit `feat(f3-build): wire F3 into build_all.py INSTRUMENTS + smoke test`); F4 core DCF rebuilt 2026-05-12 with **Option C dual-linkage** (`HH_LISTING_NO` + `F4_PARENT_F3_CASE_SEQ` both in `FIELD_CONTROL`). 10 unit tests pin the block shape. PLF (F2) PWA case-ID issuer still pending — separate workstream, not blocking the CSPro F-series.
 
 1. **`deliverables/CSPro/UHC-Survey-System/shared/cspro_helpers.py`** — DONE 2026-05-12. `build_id_block()` returns the 5 ID items; `build_dictionary()` accepts `id_items=` and still supports the legacy single-item triple for backwards compatibility.
 2. **`deliverables/CSPro/UHC-Survey-System/107_F1/generate_dcf.py`** — DONE 2026-05-12. Calls `build_dictionary(..., id_items=build_id_block(), ...)`. `FacilityHeadSurvey.dcf` regenerated; .fmf form FORM000 now renders 5 ID-item fields; F1.spec.md updated with verbatim labels for the new items; `118_csbatch/consistency_F1.apc` updated to validate all 5 items required.
-3. **F3 generator** (path TBD when F3 is reintroduced under UHC-Survey-System; legacy at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F3/generate_dcf.py` for reference) — same replacement; drop `F3_FACILITY_ID` from `PATIENT_GEO_ID` extras (or keep as denormalized convenience). Regenerate `PatientSurvey.dcf`.
-4. **F4 generator** (path TBD when F4 is reintroduced under UHC-Survey-System; legacy at `deliverables/.archive/pre-rebuild-2026-05-11/CSPro/F4/generate_dcf.py` for reference) — same replacement; add `F4_PARENT_F3_CASE_SEQ` (numeric, length 3) to `HOUSEHOLD_GEO_ID`. Regenerate `HouseholdSurvey.dcf`.
+3. **`deliverables/CSPro/UHC-Survey-System/111_F3/generate_dcf.py`** — DONE 2026-05-12. Calls `build_dictionary(..., id_items=build_id_block(), ...)`. `F3_FACILITY_ID` retired from `PATIENT_GEO_ID` per the adopted convention; F3 → F1 linkage now derives from the shared first 9 digits of the case-ID. `PatientSurvey.dcf` regenerated; `FIELD_CONTROL` carries F3-specific extras `PATIENT_TYPE` + `PATIENT_LISTING_NO` (the latter is the 4-digit reference into the 110_F3_listing roster, paralleling F4's `HH_LISTING_NO`).
+4. **`deliverables/CSPro/UHC-Survey-System/115_F4/generate_dcf.py`** — DONE 2026-05-12. Calls `build_dictionary(..., id_items=build_id_block(), ...)`. `HouseholdSurvey.dcf` regenerated. Adopted **Option C — dual linkage** (resolved 2026-05-12 during F4 bring-up): `HH_LISTING_NO` (length 4, always populated) and `F4_PARENT_F3_CASE_SEQ` (length 3, defaults to 999=NA when sampled via barangay listing) both live in `FIELD_CONTROL`, not `HOUSEHOLD_GEO_ID` — geo-id keeps its PSGC-only shape and the linkage moves to the case-control record where the AAPOR + visit-result bookkeeping already sits. See `deliverables/CSPro/UHC-Survey-System/115_F4/F4-Skip-Logic-and-Validations.md` rules #16–#17 for the consistency rules. The original Apr/May draft placed `F4_PARENT_F3_CASE_SEQ` in `HOUSEHOLD_GEO_ID`; the dual-field architecture supersedes that placement.
 5. **F2 PWA** — case-ID issuer at submission time concatenates the same 5 fields (facility is known per token; PWA assigns `CASE_SEQ` from the F2_HCWs roster index). Update `apps-script/` writer + Worker schema accordingly.
 6. **Manual addendum** — paste the one-paragraph addendum (above) into the master manual; update `deliverables/Survey-Manual/CSPro-Section-Draft_2026-04-29.md` Section 4 open question #1 to point at this concept page; update `deliverables/Survey-Manual/CAPI-PWA-Stakeholder-Section_2026-05-02.md` §5 / §10 case-identifier mention. (Pending Myra's edit-pass resolution per the defer-clarifications-during-upstream-review feedback memory.)
 7. **Logic ramifications** — verify F1/F3/F4 PROC code references to `QUESTIONNAIRE_NO` (search for the literal string); replace where needed. F1 swept 2026-05-12: live references replaced in `118_csbatch/consistency_F1.apc` and the `shared/Capture-Helpers.apc` filename-pattern example; only doc/test comments retain the literal as historical context. F3/F4 PROC pending those generators' rebuild.
@@ -131,6 +138,14 @@ Estimated effort: ~4–6 hours including regen + spot-check Designer open + PWA 
 - **Storage shape:** 5 separate ID items, not 1 composite. Matches CSPro convention; enables Designer / CSWeb filtering by structural level.
 - **`FACILITY_NO` scoping:** per-municipality (FF=2 digits), justified by Inception-Report Table 1 ceilings (max per-province sample = 53; max HUC = 38; per-mun strictly bounded by these).
 - **`F3_FACILITY_ID`:** retired in favour of the ID-item block, to avoid drift.
+
+## Decisions made on F4 build (2026-05-12)
+
+- **Option C — F4 dual linkage:** F4 carries BOTH `HH_LISTING_NO` (length 4, always populated; barangay-listing roster anchor) AND `F4_PARENT_F3_CASE_SEQ` (length 3, defaults to 999=NA; optional F3-patient interval-walk parent). Two reasons:
+  1. F4 supports two distinct sampling paths into the same case. The protocol-conformant primary path is barangay listing (PIDS sampling per Protocol V2 §3.4.2); the secondary path is patient-interval-walk from F3 (LISTING_TAG=2). Carrying both fields means the F4 entry app can handle either mode without DCF surgery.
+  2. The original Apr/May draft placed `F4_PARENT_F3_CASE_SEQ` in `HOUSEHOLD_GEO_ID`. Moving it (and adding `HH_LISTING_NO`) to `FIELD_CONTROL` keeps `HOUSEHOLD_GEO_ID` PSGC-only and concentrates all case-control metadata in one record, where the AAPOR + visit-result bookkeeping already lives.
+- **F4 facility-id data item:** no separate `F4_FACILITY_ID` emitted. F4 → F1 linkage derives structurally from the shared first 9 digits of the case-ID.
+- **HH_LISTING_NO width:** length 4 (range 0001–9999). Matches the per-facility-day session-scoped listing-roster width assigned by 113_F4_listing.
 
 ## Cross-references
 

@@ -2,6 +2,32 @@
 
 Chronological record of all wiki operations.
 
+## 2026-05-12 (CAPI build — F4 core DCF rebuild + Option C dual-linkage concept-page update)
+
+### Concept page update — `Questionnaire Numbering Convention.md`
+
+- **Trigger.** F4 core DCF rebuild landed on branch `feature/uhc-survey-system-build` (worktree `.claude/worktrees/uhc-survey-system-build`). Carl resolved the F4 cross-form linkage design via **Option C — dual linkage** (continue from agent `a1f96274e67e7029b`).
+- **Changes.** Cross-instrument linkage section rewritten: `F4 → listing roster` and `F4 → F3 (optional parent)` now both documented; the dual-field rationale (carry both to handle either sampling mode) added; F4 → F1 row added to confirm the structural derivation. Implementation footprint step 3 (F3 generator) marked DONE 2026-05-12 with concrete file refs; step 4 (F4 generator) marked DONE 2026-05-12 with Option C resolution captured; the original placement of `F4_PARENT_F3_CASE_SEQ` in `HOUSEHOLD_GEO_ID` is noted as superseded. New "Decisions made on F4 build (2026-05-12)" section added below the original adoption-decisions block, capturing the Option C reasoning, the no-F4_FACILITY_ID choice, and the HH_LISTING_NO width. The "What changes" table gained a row for the F4 dual-linkage anchors. Status callout updated from "F1 + helper landed" to "F1 + F3 + F4 + helper landed".
+- **No new wiki pages.** Index entry already exists.
+
+### F4 instrument bring-up — `deliverables/CSPro/UHC-Survey-System/115_F4/`
+
+- 12 atomic commits landed on `feature/uhc-survey-system-build`:
+  1. scaffold (.gitattributes, README, generate_dcf.py with base records)
+  2. sections A + B (informed consent + respondent profile)
+  3. section C (HH roster + private-insurance gate + private-insurance sub-roster)
+  4. sections D + E (UHC + YAKAP/Konsulta awareness)
+  5. sections F + G (BUCAS + Access to Medicines)
+  6. sections H + I (PhilHealth registration + primary care)
+  7. sections J + K (health-seeking behavior + referrals)
+  8. sections L + M (NBB + ZBB/MAIFIP/billing detail)
+  9. section N (household expenditures, 156 items via 4-tuple quad helper)
+  10. sections O, P, Q (funding sources + financial risk + financial anxiety)
+  11. F4 skip-logic + validations spec doc
+  12. concept-page update (this entry)
+- Final `HouseholdSurvey.dcf`: 24 records / 659 items. Build_all.py wire-in + smoke pass pending.
+- All labels verbatim from Annex F4 (Apr 20 2026 submission). Q136 MAIFIP-to-Q113 reference inconsistency captured as a `> [!note]` doc-level discrepancy in F4-Skip-Logic-and-Validations.md per `feedback_non_capi_flags_disposition.md` (not escalated as a warning, not drafted into a Kidd brief).
+
 ## 2026-05-12 (CAPI build — F3 rebuild kickoff + May 6 divergence audit trail)
 
 ### Source update — `Source - Annex F3b Patient Listing Protocol.md`
