@@ -1632,10 +1632,11 @@ preproc
       depth here for the focus-shift edge case. }
 
 
-PROC Q202_WHY_WORRIED_OTHER_TXT
+PROC Q202_WHY_WORRIED_O03
 postproc
     { Section Q terminus -- close the case as a complete interview after
-      the Q202 select_all is captured. }
+      the last Q202 select_all slot is captured. Q202 has 3 options
+      (no Other-specify slot per the DCF generator); _O03 is the last. }
     CloseCaseAsComplete();
 
 

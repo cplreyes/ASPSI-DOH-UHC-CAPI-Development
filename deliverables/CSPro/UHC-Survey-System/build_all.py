@@ -27,12 +27,9 @@ from shared.env_loader import load_env, splice_user_settings
 WORKSPACE = Path(__file__).resolve().parent
 
 # (numeric_prefix, short_name, dir_name, ent_filename)
-# Phase 1 builds F1 + F3LIST + F3 + F4 (core DCF only -- the F4 quartet
-# ENT/FMF/APC generators land in a later commit series; build_all.py
-# currently only runs F4's generate_dcf.py through generate_*.py
-# globbing in run_generators()). Login + menu parked at 101_login/ and
-# 106_menu/ (on-disk but not built); reactivated in Phase 2 alongside the
-# chain rebuild.
+# Phase 1 builds F1 + F3LIST + F3 + F4 (all quartet-complete as of
+# 2026-05-12). Login + menu parked at 101_login/ and 106_menu/ (on-disk
+# but not built); reactivated in Phase 2 alongside the chain rebuild.
 # F3LIST = the 110_F3_listing patient listing CAPI app; its compiled .pen
 # is consumed by the listing-side menu launch entry (Phase 2 menu rebuild)
 # and its output PATIENTLISTING_DICT is consumed by F3/F4 entry apps as
@@ -42,15 +39,15 @@ WORKSPACE = Path(__file__).resolve().parent
 # patient-pick PROC can query the listing roster and write F3_STATUS back
 # at case-open / case-save / refusal. F3 follows F3LIST in INSTRUMENTS so
 # the listing DCF is generated before F3's ENT references it.
-# F4 = the 115_F4 Household Survey CAPI app (2026-05-12 core DCF rebuild).
-# Currently emits HouseholdSurvey.dcf only; ENT/FMF/APC land in a later
-# commit series. F4 sits AFTER F3 in INSTRUMENTS because the F4 quartet
-# (when it lands) will declare the 113_F4_listing dictionary as EXTERNAL
-# for HH_LISTING_NO lookup, in parallel to F3's PATIENTLISTING_DICT
-# pattern. Until the 113_F4_listing app is built, F4's case-open
-# preproc uses the F4_PARENT_F3_CASE_SEQ field (defaulting to 999) and
-# HH_LISTING_NO is populated manually by the enumerator (interim until
-# the F4 quartet phase wires the external-dict lookup).
+# F4 = the 115_F4 Household Survey CAPI app (2026-05-12 quartet build);
+# it declares F4LISTING_DICT (../113_F4_listing/F4Listing.dcf) as an
+# EXTERNAL dictionary for the household-pick PROC. Until the 113_F4_listing
+# app lands (task #7 of the F4 rebuild plan), the household-pick PROC is
+# stubbed -- PickHousehold() returns 0 and the enumerator enters
+# HH_LISTING_NO manually in FIELD_CONTROL. F4_PARENT_F3_CASE_SEQ defaults
+# to 999 (NA per F-series convention) on the barangay-listing sampling
+# path. CSPro Designer F7 publish on F4 will fail until F4Listing.dcf
+# exists; this is the expected state for the interim phase.
 INSTRUMENTS = [
     ("107", "F1",     "107_F1",         "FacilityHeadSurvey"),
     ("110", "F3LIST", "110_F3_listing", "PatientListing"),
