@@ -545,5 +545,202 @@ preproc
     endif;
 
 
-{ Sections H-Q + edits + household-pick stub + roster auto-fill land in }
-{ commits 5-9. The .apc file ends here for commit 4.                    }
+{ ===================================================================== }
+{  Section H -- PhilHealth Registration (Q79-Q88)                        }
+{  Cross-record gate: Q79-Q88 only fire when respondent (row 1 of        }
+{  C_HOUSEHOLD_ROSTER) Q45_PHILHEALTH_REG = 1 (Yes / 01).                }
+{ ===================================================================== }
+
+PROC H_PHILHEALTH
+preproc
+    { Cross-record gate per spec §2 Section H note + §3 HARD edit:
+      Q79-Q88 populated only when C_HOUSEHOLD_ROSTER(1).Q45_PHILHEALTH_REG
+      = 01 (Yes). The PDF says "Answer Q79 to Q88 if the respondent is
+      registered with PhilHealth in Q45". Row 1 of the roster is the
+      respondent (by Section C auto-fill, commit 9). }
+    if C_HOUSEHOLD_ROSTER(1).Q45_PHILHEALTH_REG <> 1 then
+        skip to Q89_HAS_USUAL_FACILITY;
+    endif;
+
+
+PROC Q81_HAD_DIFFICULTIES
+postproc
+    { Per spec §2 Section H: Q81 = No (2) -> Q83 (skip Q82). }
+    if Q81_HAD_DIFFICULTIES = 2 then   { 2 = No }
+        skip to Q83_KNOWS_WHERE_TO_SEEK;
+    endif;
+
+
+PROC Q87_DIFFICULT_TO_PAY
+postproc
+    { Per spec §2 Section H: Q87 = No (2) -> Q89 (skip Q88; end of
+      section H). Q89 is the first item of Section I. }
+    if Q87_DIFFICULT_TO_PAY = 2 then   { 2 = No }
+        skip to Q89_HAS_USUAL_FACILITY;
+    endif;
+
+
+{ ===================================================================== }
+{  Section I -- Primary Care Utilization (Q89-Q100)                      }
+{ ===================================================================== }
+
+PROC Q89_HAS_USUAL_FACILITY
+postproc
+    { Per spec §2 Section I: Q89 = No (2) or DK (3) -> Q93 (skip Q89.1
+      facility name, Q90, Q91, Q92). Q93 is the no-usual-reason
+      multi-response; route to first decomposed slot _O01. }
+    if Q89_HAS_USUAL_FACILITY in 2, 3 then
+        skip to Q93_NO_USUAL_REASON_O01;
+    endif;
+
+
+PROC Q90_IS_USUAL_FOR_GENERAL
+postproc
+    { Per spec §2 Section I: Q90 = No (2) -> Q96 (skip Q91, Q92, Q93,
+      Q94, Q95). The PDF semantics: if not the usual facility for
+      general consult, fall through to travel-time/cost block. }
+    if Q90_IS_USUAL_FOR_GENERAL = 2 then   { 2 = No }
+        skip to Q96_TRAVEL_COST_ONE_WAY;
+    endif;
+
+
+PROC Q92_FACILITY_TYPE_OTHER_TXT
+preproc
+    { Other-specify gate. Q92 value set max code is "Other (specify)";
+      use the highest code from the DCF value set for safety. The DCF
+      generator's Q92_FACILITY_TYPE includes an Other code (assumed
+      high). Treat code = 9 as Other; PROC re-points if DCF changes. }
+    if Q92_FACILITY_TYPE <> 9 then
+        skip to Q93_NO_USUAL_REASON_O01;
+    endif;
+postproc
+    if Q92_FACILITY_TYPE = 9 and
+       strlen(strip(Q92_FACILITY_TYPE_OTHER_TXT)) = 0 then
+        errmsg("Please specify the 'Other' facility type.");
+        reenter;
+    endif;
+
+
+PROC Q95_TRAVEL_TIME_ONE_WAY
+postproc
+    { Q95 is HH:MM stored as length-5 alpha (per spec §1 sanity finding
+      #9). PROC checks the HH and MM ranges by string-parse.
+
+      The CSPro 8.0 alpha-to-numeric conversion runs via tonumber()
+      on substrings. Q95 format expected as "HH:MM" (e.g. "01:30"). }
+    string time_str = strip(Q95_TRAVEL_TIME_ONE_WAY);
+    if strlen(time_str) <> 5 or substr(time_str, 3, 1) <> ":" then
+        errmsg("Travel time must be in HH:MM format (e.g., 01:30). "
+               "Please re-check.");
+        reenter;
+    endif;
+
+    numeric hh = tonumber(substr(time_str, 1, 2));
+    numeric mm = tonumber(substr(time_str, 4, 2));
+    if hh < 0 or hh > 23 then
+        errmsg("Travel hours must be between 0 and 23. Please re-check.");
+        reenter;
+    endif;
+    if mm < 0 or mm > 59 then
+        errmsg("Travel minutes must be between 0 and 59. Please "
+               "re-check.");
+        reenter;
+    endif;
+
+    { SOFT warning S5: travel time > 2h00m unusual; ask to verify. }
+    if hh >= 2 then
+        errmsg("Travel time recorded as %v:%v -- longer than 2 hours. "
+               "Please confirm.", hh, mm);
+        { soft -- no reenter. }
+    endif;
+
+
+PROC Q96_TRAVEL_COST_ONE_WAY
+postproc
+    { Range check: 0..99999 (per spec §3 Range Checks). }
+    if Q96_TRAVEL_COST_ONE_WAY < 0 or Q96_TRAVEL_COST_ONE_WAY > 99999 then
+        errmsg("One-way travel cost must be between 0 and 99,999. "
+               "Please re-check.");
+        reenter;
+    endif;
+
+    { SOFT warning S5: cost > 500 pesos one-way is unusual; ask. }
+    if Q96_TRAVEL_COST_ONE_WAY > 500 then
+        errmsg("One-way travel cost of P%v is unusually high. Please "
+               "confirm.", Q96_TRAVEL_COST_ONE_WAY);
+        { soft -- no reenter. }
+    endif;
+
+
+{ ===================================================================== }
+{  Section J -- Health-Seeking Behavior (Q101-Q107)                      }
+{ ===================================================================== }
+
+PROC Q105_CHOSE_NOT_TO_SEE
+postproc
+    { Per spec §2 Section J: Q105 = No (2) -> Q107 (skip Q106).
+      Q107 is select_all -- route to first decomposed slot _O01. }
+    if Q105_CHOSE_NOT_TO_SEE = 2 then   { 2 = No }
+        skip to Q107_OTHER_ACTIONS_TAKEN_O01;
+    endif;
+
+
+{ ===================================================================== }
+{  Section K -- Referrals (Q108-Q125)                                    }
+{ ===================================================================== }
+
+PROC Q108_REFERRED
+postproc
+    { Per spec §2 Section K: Q108 = No (2) -> Q126 (skip Q109-Q125;
+      entire body of section K bypassed). Q126 is the first item of
+      Section L. }
+    if Q108_REFERRED = 2 then   { 2 = No }
+        skip to Q126_HEARD_NBB;
+    endif;
+
+
+PROC Q112_VISITED
+postproc
+    { Per spec §2 Section K three-way branch:
+        - Q112 = Yes (1)                  -> Q114 (skip Q113).
+        - Q112 = Not yet, planning to (3) -> Q114 (skip Q113).
+        - Q112 = No, not planning (2)     -> Q113 then Q119 (skip Q114-Q118). }
+    if Q112_VISITED in 1, 3 then
+        skip to Q114_DISCUSSED_OPTIONS;
+    endif;
+    { Q112 = 2 (No, not planning) falls through to Q113. Q119 jump
+      handled by Q114_DISCUSSED_OPTIONS.preproc below. }
+
+
+PROC Q114_DISCUSSED_OPTIONS
+preproc
+    { When Q112 = 2 (No, not planning to visit) and the operator
+      finished Q113, jump past Q114-Q118 to Q119. }
+    if Q112_VISITED = 2 then
+        skip to Q119_PCP_REFERRAL;
+    endif;
+
+
+PROC Q117_FOLLOWUP
+preproc
+    { Q117 gated on Q112 = Yes (1) per spec §2 Section K row. Q112 = 3
+      (planning to) routed to Q114 above; from Q114 we fall through
+      Q115, Q116 and arrive at Q117 -- but Q117 is only meaningful when
+      the patient HAS visited. For Q112 = 3 (planning to), skip
+      Q117/Q118 and route to Q119. }
+    if Q112_VISITED = 3 then
+        skip to Q119_PCP_REFERRAL;
+    endif;
+
+
+PROC Q119_PCP_REFERRAL
+postproc
+    { Per spec §2 Section K: Q119 = No (2) -> Q121 (skip Q120).
+      Q121 is select_all -- route to first decomposed slot _O01. }
+    if Q119_PCP_REFERRAL = 2 then   { 2 = No }
+        skip to Q121_WHY_HOSPITAL_O01;
+    endif;
+
+
+{ Sections L-Q + edits + household-pick stub + roster auto-fill land in }
+{ commits 6-9. The .apc file ends here for commit 5.                    }
