@@ -80,6 +80,18 @@ const VERDE_MARKER_ICON = L.divIcon({
   popupAnchor: [0, -11],
 });
 
+// Highlight variant for the currently-selected marker (whichever the user
+// last clicked, mirrored in the sidebar HoveredCard). Slightly larger +
+// `.verde-marker--selected` adds a ring class via CSS, so the user can
+// visually correlate the sidebar card with the map pin without hunting.
+const VERDE_MARKER_ICON_SELECTED = L.divIcon({
+  className: 'verde-marker verde-marker--selected',
+  html: '<span class="verde-marker__dot" aria-hidden="true"></span>',
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
+  popupAnchor: [0, -14],
+});
+
 // (No "West Philippine Sea" overlay needed — Carto Positron's tiles render
 // "West Philippine Sea" natively at the demo zoom level inside PH's EEZ.
 // At very-zoomed-out views Carto falls back to the multilingual SCS stack,
@@ -148,12 +160,22 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
     };
   }, [apiQuery, apiBaseUrl, token, clearAuth, navigate, fetchImpl]);
 
-  // Group markers by region (2-char facility prefix) for the sidebar.
-  const regionCounts = useMemo(() => {
+  // Group markers by facility-id prefix. The intent was "by region" — but
+  // PSGC region codes only appear in the prefix when facility_ids follow the
+  // `RR-PP-...` numeric pattern (per `project_questionnaire_numbering_parked`).
+  // Demo facility_ids look like `DEMO-FAC-DH-INFANTA`, so the prefix is `DE`,
+  // `RH`, etc. — not real regions. Smart-extract: keep only the prefix when
+  // it's exactly two digits (the PSGC region pattern); else label as the
+  // alphabetic prefix in lowercase to make the demo-vs-prod distinction
+  // visible at a glance. Real region grouping needs a facility lookup
+  // (FacilityMasterList.region_id) — tracked as a v2.0.2 follow-up.
+  const facilityPrefixCounts = useMemo(() => {
     if (state.kind !== 'loaded') return new Map<string, number>();
     const m = new Map<string, number>();
     for (const marker of state.data.markers) {
-      const key = String(marker.facility_id).slice(0, 2) || '—';
+      const raw = String(marker.facility_id).slice(0, 2);
+      const isPsgcDigits = /^\d{2}$/.test(raw);
+      const key = raw ? (isPsgcDigits ? raw : raw.toLowerCase()) : '—';
       m.set(key, (m.get(key) ?? 0) + 1);
     }
     return m;
@@ -191,38 +213,38 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
             <p className="mt-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
               {state.data.markers.length} marker{state.data.markers.length === 1 ? '' : 's'}
               {state.data.no_gps_count > 0 ? (
-                <>
+                // No-GPS responses can't be reached via the current Responses
+                // filter set (no `no_gps=1` filter on the API or UI yet — the
+                // previous Link pointed at `?q=submission_lat` which actually
+                // searched for that literal text in HCW IDs). Render as plain
+                // text until a real filter ships. Tracked as a v2.0.2 follow-up.
+                <span className="text-muted-foreground">
                   {' · '}
-                  <Link
-                    to={`/admin/data?tab=responses&q=submission_lat`}
-                    className="text-error underline-offset-4 hover:underline"
-                  >
-                    {state.data.no_gps_count} without GPS
-                  </Link>
-                </>
+                  {state.data.no_gps_count} without GPS
+                </span>
               ) : null}
             </p>
           </div>
           <aside className="lg:w-64">
             <h3 className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              By region
+              By facility prefix
             </h3>
-            {regionCounts.size === 0 ? (
+            {facilityPrefixCounts.size === 0 ? (
               <p className="mt-2 text-sm text-muted-foreground">No GPS-tagged submissions yet.</p>
             ) : (
               <ul className="mt-2 divide-y divide-hairline border-y border-hairline">
-                {Array.from(regionCounts.entries())
+                {Array.from(facilityPrefixCounts.entries())
                   .sort((a, b) => b[1] - a[1])
-                  .map(([region, count]) => (
-                    <li key={region} className="flex items-center justify-between py-2 text-sm">
+                  .map(([prefix, count]) => (
+                    <li key={prefix} className="flex items-center justify-between py-2 text-sm">
                       <Button
                         type="button"
                         variant="tableAction"
                         size="tableAction"
-                        onClick={() => setFilters({ ...filters, region_id: region })}
+                        onClick={() => setFilters({ ...filters, region_id: prefix })}
                         className="font-mono text-xs normal-case tracking-normal"
                       >
-                        {region}
+                        {prefix}
                       </Button>
                       <span className="font-mono text-xs text-muted-foreground">{count}</span>
                     </li>
@@ -239,6 +261,7 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
 
 function MapPlot({
   markers,
+  hovered,
   onHover,
 }: {
   markers: Marker[];
@@ -270,7 +293,7 @@ function MapPlot({
           <Marker
             key={m.submission_id}
             position={[m.lat, m.lng]}
-            icon={VERDE_MARKER_ICON}
+            icon={hovered?.submission_id === m.submission_id ? VERDE_MARKER_ICON_SELECTED : VERDE_MARKER_ICON}
             eventHandlers={{
               click: () => onHover(m),
               popupclose: () => onHover(null),
