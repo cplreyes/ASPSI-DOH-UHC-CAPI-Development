@@ -408,26 +408,240 @@ def build_section_c():
     """C. Household Roster and Characteristics (C1-C5, Q30-Q46).
 
     Per-household-member occurring record, max_occurs=10 (matching the
-    PDF's 10-row roster table). Q47 (HH-level private-insurance gate)
-    and Q48-Q50 (private-insurance sub-roster) live in separate records.
+    PDF's 10-row roster table; the same 10-member limit applies to the
+    later private-insurance sub-roster Q48-Q50). Q47 (HH-level private-
+    insurance gate) and Q48-Q50 (private-insurance sub-roster) live in
+    separate records (C_PRIVATE_INSURANCE_GATE and
+    C_PRIVATE_INSURANCE_ROSTER) so the section C record keeps the
+    PDF's C1-C5 sub-section anchoring (Q30-Q46) intact.
+
+    Sub-section anchoring (per PDF):
+      - C1. HOUSEHOLD ROSTER             -- Q30 (Name), Q31 (Present/Away),
+                                            Q32 (Age), Q33 (Sex), Q34 (Rel)
+      - C2. HOUSEHOLD CHARACTERISTICS    -- disability (Q35-Q38)
+      - C3. HOUSEHOLD CHARACTERISTICS    -- civil/education/employment
+                                            (Q39-Q41)
+      - C4. HOUSEHOLD CHARACTERISTICS    -- GSIS/SSS/Pag-ibig (Q42-Q44)
+      - C5. HOUSEHOLD CHARACTERISTICS    -- PhilHealth registration +
+                                            member category (Q45-Q46)
+
+    NA / Don't-know codes per F4: the PDF uses -55 for "I don't know"
+    in C4-C5 columns and 0=No/1=Yes for C2 (matching the archived F4
+    generator's convention; archived used "55" stored as positive
+    integer to fit numeric items). For uniformity with the rest of the
+    F-series the codes are stored as positive integers in the value
+    sets below; the negative sign is a paper-form display convention.
     """
+    Q31_PRESENT = [
+        ("Away",    "0"),
+        ("Present", "1"),
+    ]
+    Q33_SEX = [
+        ("Male",   "1"),
+        ("Female", "2"),
+    ]
+    Q34_RELATIONSHIP = [
+        ("Head",                        "01"),
+        ("Spouse/Partner",              "02"),
+        ("Son/Daughter",                "03"),
+        ("Brother/Sister",              "04"),
+        ("Son-In-Law/Daughter-In-Law",  "05"),
+        ("Grandson/Granddaughter",      "06"),
+        ("Father/Mother",               "07"),
+        ("Nephew/Niece",                "08"),
+        ("Cousin",                      "09"),
+        ("Boarder",                     "10"),
+        ("Domestic Helper",             "11"),
+        ("Non-relative",                "12"),
+    ]
+    YN_01 = [
+        ("No",  "0"),
+        ("Yes", "1"),
+    ]
+    Q37_PWD_CARD = [
+        ("No",                                     "0"),
+        ("Yes",                                    "1"),
+        ("Respondent refused to present card",     "2"),
+    ]
+    Q38_DISABILITY_TYPE = [
+        ("Physical disability (Orthopedic)", "1"),
+        ("Visual disability",                "2"),
+        ("Hearing disability",               "3"),
+        ("Speech impairment",                "4"),
+        ("Intellectual disability",          "5"),
+        ("Psychosocial disability",          "6"),
+        ("Multiple disabilities",            "7"),
+        ("Other disability (specify)",       "8"),
+    ]
+    Q39_CIVIL_STATUS = [
+        ("Single / Never Married",   "1"),
+        ("Married",                  "2"),
+        ("Common law / Live-in",     "3"),
+        ("Widowed",                  "4"),
+        ("Divorced",                 "5"),
+        ("Separated",                "6"),
+        ("Annulled",                 "7"),
+        ("Not reported",             "8"),
+    ]
+    Q40_EDUCATION = [
+        ("Early Childhood Education (Pre-school)",                                                                            "01"),
+        ("Primary Education (Grade 1 to 6)",                                                                                  "02"),
+        ("Lower Secondary Education (Grade 7 to 10)",                                                                         "03"),
+        ("Upper Secondary Education (Grade 11 to 12)",                                                                        "04"),
+        ("Post-Secondary Non-Tertiary Education (including Technical and Vocational degrees with a certificate)",             "05"),
+        ("Short-Cycle Tertiary Education or Equivalent (including Technical and Vocational degrees with a diploma)",          "06"),
+        ("Bachelor Level Education or Equivalent",                                                                            "07"),
+        ("Master Level Education or Equivalent",                                                                              "08"),
+        ("Doctoral Level Education or Equivalent",                                                                            "09"),
+        ("No schooling",                                                                                                      "10"),
+    ]
+    Q41_EMPLOYMENT = [
+        ("Has a permanent job/ own business",                  "1"),
+        ("Has a short-term, seasonal, casual job/business",    "2"),
+        ("Worked on different jobs day to day per week",       "3"),
+        ("Unemployed and looking for work",                    "4"),
+        ("Unemployed and not looking for work",                "5"),
+        ("Retired",                                            "6"),
+        ("I don't know",                                       "7"),
+        ("Not applicable",                                     "8"),
+    ]
+    # YN_DK55: -55 stored as "55" (positive) per the convention used in
+    # the archived F4 generator. Sign is a display convention for paper;
+    # CSPro numeric items cannot store negative values without a leading
+    # sign character that the .dcf would otherwise need to widen for.
+    YN_DK55 = [
+        ("Yes",          "01"),
+        ("No",           "02"),
+        ("I don't know", "55"),
+    ]
+    Q46_MEMBER_CATEGORY = [
+        ("Formal economy",                  "01"),
+        ("Informal economy",                "02"),
+        ("Indigent",                        "03"),
+        ("Sponsored",                       "04"),
+        ("Lifetime member",                 "05"),
+        ("Senior citizen",                  "06"),
+        ("Overseas Filipino Worker (OFW)",  "07"),
+        ("Qualified dependents",            "08"),
+        ("Dependent",                       "09"),
+        ("Other (Specify)",                 "88"),
+        ("I don't know",                    "55"),
+    ]
+    items = [
+        numeric("HH_MEMBER_LINE_NO", "Household Member Line Number",
+                length=2, zero_fill=True),
+        # C1. HOUSEHOLD ROSTER (Q30-Q34)
+        alpha("Q30_NAME",
+              "30. Name (LAST NAME, FIRST NAME & MIDDLE NAME, EXT)", length=120),
+        select_one("Q31_PRESENT",
+                   "31. HH member present or away", Q31_PRESENT, length=1),
+        numeric("Q32_AGE",
+                "32. Age (as of last birthday)", length=3),
+        select_one("Q33_SEX",
+                   "33. Sex at birth", Q33_SEX, length=1),
+        select_one("Q34_RELATIONSHIP",
+                   "34. Relationship to Household Head", Q34_RELATIONSHIP, length=2),
+        # C2. HOUSEHOLD CHARACTERISTICS -- disability (Q35-Q38)
+        select_one("Q35_HAS_DISABILITY",
+                   "35. Do you identify as a person with a disability?",
+                   YN_01, length=1),
+        select_one("Q36_SPECIFY_DISABILITY",
+                   "36. Would you like to specify the type of disability?",
+                   YN_01, length=1),
+        select_one("Q37_PWD_CARD",
+                   "37. May we view the patient's PWD Identification Card?",
+                   Q37_PWD_CARD, length=1),
+        select_one("Q38_DISABILITY_TYPE",
+                   "38. Based on the presented PWD Identification Card, "
+                   "what type of disability is indicated?",
+                   Q38_DISABILITY_TYPE, length=1),
+        alpha("Q38_DISABILITY_OTHER_TXT",
+              "38. Disability -- Other (specify) text", length=120),
+        # C3. HOUSEHOLD CHARACTERISTICS -- civil/education/employment (Q39-Q41)
+        select_one("Q39_CIVIL_STATUS",
+                   "39. Civil Status", Q39_CIVIL_STATUS, length=1),
+        select_one("Q40_EDUCATION",
+                   "40. Highest level of education completed",
+                   Q40_EDUCATION, length=2),
+        select_one("Q41_EMPLOYMENT",
+                   "41. Employment Status", Q41_EMPLOYMENT, length=1),
+        # C4. HOUSEHOLD CHARACTERISTICS -- social insurance (Q42-Q44)
+        select_one("Q42_GSIS",
+                   "42. Is (NAME) covered by GSIS either as a member or dependent?",
+                   YN_DK55, length=2),
+        select_one("Q43_SSS",
+                   "43. Is (NAME) covered by SSS either as a member or dependent?",
+                   YN_DK55, length=2),
+        select_one("Q44_PAGIBIG",
+                   "44. Is (NAME) covered by Pag-ibig either as a member or dependent?",
+                   YN_DK55, length=2),
+        # C5. HOUSEHOLD CHARACTERISTICS -- PhilHealth (Q45-Q46)
+        select_one("Q45_PHILHEALTH_REG",
+                   "45. Currently registered with PhilHealth?",
+                   YN_DK55, length=2),
+        select_one("Q46_MEMBER_CATEGORY",
+                   "46. What is his/her membership category? (Only answer if 'Yes' in Q45)",
+                   Q46_MEMBER_CATEGORY, length=2),
+        alpha("Q46_MEMBER_OTHER_TXT",
+              "46. Member category -- Other (specify) text", length=120),
+    ]
     return record("C_HOUSEHOLD_ROSTER",
                   "C. Household Roster and Characteristics", "E",
-                  [], max_occurs=10, required=False)
+                  items, max_occurs=10, required=False)
 
 
 def build_section_c_private_insurance_gate():
-    """Q47 HH-level private-insurance gate. Non-repeating."""
+    """Q47 HH-level private-insurance gate. Non-repeating.
+
+    Q47 = Yes (1) -> proceed to Q48 (per-member private-insurance roster).
+    Q47 = No  (2) -> proceed to Q51 (Section D, UHC awareness).
+    Routing enforced in PROC, not the DCF.
+    """
+    Q47_PRIVATE_INS = [
+        ("Yes", "1"),  # proceed to Q48
+        ("No",  "2"),  # proceed to Q51
+    ]
+    items = [
+        select_one("Q47_HAS_PRIVATE_INS",
+                   "47. Do you or other members of your HH have private insurance?",
+                   Q47_PRIVATE_INS, length=1),
+    ]
     return record("C_PRIVATE_INSURANCE_GATE",
-                  "C. Private Insurance Coverage (HH-level gate, Q47)", "T",
-                  [])
+                  "C. Private Insurance Coverage (HH-level gate, Q47)", "T", items)
 
 
 def build_section_c_private_insurance_roster():
-    """Q48-Q50 private-insurance sub-roster. Per-member, max_occurs=10."""
+    """Q48-Q50 per-member private-insurance sub-roster. max_occurs=10.
+
+    Only relevant when Q47 = Yes (1); when Q47 = No, this record stays
+    unpopulated for the case (routing enforced in PROC).
+
+    The roster reuses HH_MEMBER_LINE_NO for cross-reference with the
+    main C_HOUSEHOLD_ROSTER (per-row name displayed Q48 is "First Name
+    Only" of the same household member). The actual cross-reference is
+    enforced in PROC at the sub-roster's preproc handler.
+    """
+    YN_DK55 = [
+        ("Yes",          "01"),
+        ("No",           "02"),
+        ("I don't know", "55"),
+    ]
+    items = [
+        numeric("HH_MEMBER_LINE_NO", "Household Member Line Number "
+                "(same line as in C_HOUSEHOLD_ROSTER)", length=2, zero_fill=True),
+        alpha("Q48_NAME_FIRST",
+              "48. Name (First Name Only) -- private insurance roster", length=80),
+        select_one("Q49_PRIVATE_INS",
+                   "49. Is (NAME) covered by a private health insurance either as "
+                   "a member or dependent? (Example: Maxicare, Intellicare, "
+                   "Pacific Cross Health Care)",
+                   YN_DK55, length=2),
+        alpha("Q50_PRIVATE_INS_OTHER_TXT",
+              "50. Others (Specify)", length=120),
+    ]
     return record("C_PRIVATE_INSURANCE_ROSTER",
                   "C. Private Insurance Coverage Roster (Q48-Q50)", "U",
-                  [], max_occurs=10, required=False)
+                  items, max_occurs=10, required=False)
 
 
 def build_section_d():
