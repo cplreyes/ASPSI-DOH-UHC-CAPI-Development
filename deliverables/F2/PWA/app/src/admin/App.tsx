@@ -71,8 +71,20 @@ function AdminRoot({ apiBaseUrl, fetchImpl }: AdminAppProps): JSX.Element {
   }, [pathname, isAuthenticated, navigate]);
 
   // Unauthenticated user requesting a protected page → redirect to login.
+  // /admin/help is intentionally exempted (no-auth surface — see render branch
+  // below). Prior to this exemption, navigating directly to /admin/help while
+  // signed out triggered this effect to push history to /admin/login *while*
+  // the render branch below still returned the HelpPage in its Layout, leaving
+  // the URL bar at /admin/login but the visible content as Help — a confusing
+  // mismatch when testers file bugs that quote the URL.
   useEffect(() => {
-    if (!isAuthenticated && pathname !== '/admin/login' && pathname.startsWith('/admin')) {
+    if (
+      !isAuthenticated &&
+      pathname !== '/admin/login' &&
+      pathname !== '/admin/help' &&
+      pathname !== '/admin/help/' &&
+      pathname.startsWith('/admin')
+    ) {
       navigate('/admin/login');
     }
   }, [isAuthenticated, pathname, navigate]);
