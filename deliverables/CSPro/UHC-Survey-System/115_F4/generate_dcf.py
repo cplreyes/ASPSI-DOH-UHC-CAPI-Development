@@ -645,15 +645,89 @@ def build_section_c_private_insurance_roster():
 
 
 def build_section_d():
-    """D. Awareness on Universal Health Care (UHC)."""
+    """D. Awareness on Universal Health Care (UHC) (Q51-Q53).
+
+    Skip-routing (enforced in PROC):
+      - Q51 = No (2) -> Q52 (continues; "No" path branches to "what is
+        your source of info" before resuming -- per PDF "No <proceed to
+        Q52>"). Effectively Q52/Q53 both ask regardless of Q51 in this
+        section.
+
+    Q52 and Q53 are SELECT ALL THAT APPLY (multi-response).
+    """
+    INFO_SOURCE = [
+        ("News",                       "01"),
+        ("Legislation",                "02"),
+        ("Social Media",               "03"),
+        ("Friends / Family",           "04"),
+        ("Health center/facility",     "05"),
+        ("LGU/Barangay",               "06"),
+        ("I don't know",               "07"),
+        ("Other (Specify)",            "08"),
+    ]
+    UHC_UNDERSTANDING = [
+        ("Protection from financial risk/decreased out-of-pocket spending",       "01"),
+        ("Access to quality and affordable health care goods and services",       "02"),
+        ("Automatic enrollment into PhilHealth",                                  "03"),
+        ("Primary care provider for every Filipino",                              "04"),
+        ("I don't know",                                                          "05"),
+        ("Other (Specify)",                                                       "06"),
+    ]
+    items = [
+        yes_no("Q51_HEARD_UHC",
+               "51. Have you heard about Universal Health Care (UHC) prior to "
+               "this survey?"),
+        *select_all("Q52_UHC_SOURCE",
+                    "52. What is your source of information about UHC?",
+                    INFO_SOURCE),
+        *select_all("Q53_UHC_UNDERSTANDING",
+                    "53. What is your understanding about UHC?",
+                    UHC_UNDERSTANDING),
+    ]
     return record("D_UHC_AWARENESS",
-                  "D. Awareness on Universal Health Care (UHC)", "F", [])
+                  "D. Awareness on Universal Health Care (UHC)", "F", items)
 
 
 def build_section_e():
-    """E. YAKAP/Konsulta Awareness."""
+    """E. YAKAP/Konsulta Awareness (Q54-Q56).
+
+    Skip-routing (enforced in PROC):
+      - Q54 = No (2) -> Q57 (skip Q55, Q56)
+
+    Q55 and Q56 are SELECT ALL THAT APPLY.
+    """
+    INFO_SOURCE = [
+        ("News",                       "01"),
+        ("Legislation",                "02"),
+        ("Social Media",               "03"),
+        ("Friends / Family",           "04"),
+        ("Health center/facility",     "05"),
+        ("LGU/Barangay",               "06"),
+        ("I don't know",               "07"),
+        ("Other (Specify)",            "08"),
+    ]
+    YAKAP_UNDERSTANDING = [
+        ("Free primary care consultation (with a registered YAKAP/Konsulta provider)",        "01"),
+        ("Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)", "02"),
+        ("Free selected laboratory / diagnostics examination",                                "03"),
+        ("Free selected drugs and medicines",                                                 "04"),
+        ("There are no benefits in the package",                                              "05"),
+        ("I don't know",                                                                      "06"),
+        ("Other (Specify)",                                                                   "07"),
+    ]
+    items = [
+        yes_no("Q54_HEARD_YAKAP",
+               "54. Have you heard of the term \"YAKAP/Konsulta package\"?"),
+        *select_all("Q55_YAKAP_SOURCE",
+                    "55. What are your sources of information about the "
+                    "YAKAP/Konsulta package?",
+                    INFO_SOURCE),
+        *select_all("Q56_YAKAP_UNDERSTANDING",
+                    "56. What is your understanding about the YAKAP/Konsulta package?",
+                    YAKAP_UNDERSTANDING),
+    ]
     return record("E_YAKAP_KONSULTA",
-                  "E. YAKAP/Konsulta Awareness", "G", [])
+                  "E. YAKAP/Konsulta Awareness", "G", items)
 
 
 def build_section_f():

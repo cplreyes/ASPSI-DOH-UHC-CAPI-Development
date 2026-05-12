@@ -4656,7 +4656,733 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q51_HEARD_UHC",
+              "labels": [
+                {
+                  "text": "51. Have you heard about Universal Health Care (UHC) prior to this survey?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q51_HEARD_UHC_VS1",
+                  "labels": [
+                    {
+                      "text": "51. Have you heard about Universal Health Care (UHC) prior to this survey?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_UHC_SOURCE_O01",
+              "labels": [
+                {
+                  "text": "52. What is your source of information about UHC? \u2014 News"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_UHC_SOURCE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "52. What is your source of information about UHC? \u2014 News"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_UHC_SOURCE_O02",
+              "labels": [
+                {
+                  "text": "52. What is your source of information about UHC? \u2014 Legislation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_UHC_SOURCE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "52. What is your source of information about UHC? \u2014 Legislation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_UHC_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "52. What is your source of information about UHC? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_UHC_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "52. What is your source of information about UHC? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_UHC_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "52. What is your source of information about UHC? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_UHC_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "52. What is your source of information about UHC? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_UHC_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "52. What is your source of information about UHC? \u2014 Health center/facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_UHC_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "52. What is your source of information about UHC? \u2014 Health center/facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_UHC_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "52. What is your source of information about UHC? \u2014 LGU/Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_UHC_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "52. What is your source of information about UHC? \u2014 LGU/Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_UHC_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "52. What is your source of information about UHC? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_UHC_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "52. What is your source of information about UHC? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_UHC_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "52. What is your source of information about UHC? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q52_UHC_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "52. What is your source of information about UHC? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q52_UHC_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "52. What is your source of information about UHC? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q53_UHC_UNDERSTANDING_O01",
+              "labels": [
+                {
+                  "text": "53. What is your understanding about UHC? \u2014 Protection from financial risk/decreased out-of-pocket spending"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q53_UHC_UNDERSTANDING_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "53. What is your understanding about UHC? \u2014 Protection from financial risk/decreased out-of-pocket spending"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q53_UHC_UNDERSTANDING_O02",
+              "labels": [
+                {
+                  "text": "53. What is your understanding about UHC? \u2014 Access to quality and affordable health care goods and services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q53_UHC_UNDERSTANDING_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "53. What is your understanding about UHC? \u2014 Access to quality and affordable health care goods and services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q53_UHC_UNDERSTANDING_O03",
+              "labels": [
+                {
+                  "text": "53. What is your understanding about UHC? \u2014 Automatic enrollment into PhilHealth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q53_UHC_UNDERSTANDING_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "53. What is your understanding about UHC? \u2014 Automatic enrollment into PhilHealth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q53_UHC_UNDERSTANDING_O04",
+              "labels": [
+                {
+                  "text": "53. What is your understanding about UHC? \u2014 Primary care provider for every Filipino"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q53_UHC_UNDERSTANDING_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "53. What is your understanding about UHC? \u2014 Primary care provider for every Filipino"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q53_UHC_UNDERSTANDING_O05",
+              "labels": [
+                {
+                  "text": "53. What is your understanding about UHC? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q53_UHC_UNDERSTANDING_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "53. What is your understanding about UHC? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q53_UHC_UNDERSTANDING_O06",
+              "labels": [
+                {
+                  "text": "53. What is your understanding about UHC? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q53_UHC_UNDERSTANDING_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "53. What is your understanding about UHC? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q53_UHC_UNDERSTANDING_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "53. What is your understanding about UHC? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
         },
         {
           "name": "E_YAKAP_KONSULTA",
@@ -4670,7 +5396,780 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q54_HEARD_YAKAP",
+              "labels": [
+                {
+                  "text": "54. Have you heard of the term \"YAKAP/Konsulta package\"?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q54_HEARD_YAKAP_VS1",
+                  "labels": [
+                    {
+                      "text": "54. Have you heard of the term \"YAKAP/Konsulta package\"?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q55_YAKAP_SOURCE_O01",
+              "labels": [
+                {
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 News"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q55_YAKAP_SOURCE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 News"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q55_YAKAP_SOURCE_O02",
+              "labels": [
+                {
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Legislation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q55_YAKAP_SOURCE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Legislation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q55_YAKAP_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q55_YAKAP_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q55_YAKAP_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q55_YAKAP_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q55_YAKAP_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Health center/facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q55_YAKAP_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Health center/facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q55_YAKAP_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 LGU/Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q55_YAKAP_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 LGU/Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q55_YAKAP_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q55_YAKAP_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q55_YAKAP_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q55_YAKAP_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q55_YAKAP_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "55. What are your sources of information about the YAKAP/Konsulta package? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTANDING_O01",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free primary care consultation (with a registered YAKAP/Konsulta provider)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTANDING_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free primary care consultation (with a registered YAKAP/Konsulta provider)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTANDING_O02",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTANDING_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTANDING_O03",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected laboratory / diagnostics examination"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTANDING_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected laboratory / diagnostics examination"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTANDING_O04",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected drugs and medicines"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTANDING_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Free selected drugs and medicines"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTANDING_O05",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 There are no benefits in the package"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTANDING_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 There are no benefits in the package"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTANDING_O06",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTANDING_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTANDING_O07",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q56_YAKAP_UNDERSTANDING_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q56_YAKAP_UNDERSTANDING_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "56. What is your understanding about the YAKAP/Konsulta package? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
         },
         {
           "name": "F_BUCAS",
