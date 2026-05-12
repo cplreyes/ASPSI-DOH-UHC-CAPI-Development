@@ -37,14 +37,16 @@
 
 **Each tester uses their own admin credential — no shared logins.** Audit columns must show who clicked what; sharing a single login collapses attribution.
 
-### Primary roster (REUSED from Round 2 — passwords unchanged from your first-login reset)
+### Primary roster
 
-| Tester | Username | Password |
-|---|---|---|
-| **Shan** (ASPSI RA) | `shan_admin` | _your reset password from R2_ |
-| **Kidd** (ASPSI main RA) | `kidd_admin` | _your reset password from R2_ |
+| Tester | Username | Password | Notes |
+|---|---|---|---|
+| **Shan** (ASPSI RA) | `shan_admin` | _your reset password from R2_ | Administrator |
+| **Kidd** (ASPSI main RA) | `kidd_admin` | _your reset password from R2_ | Administrator |
+| **Marriz** (ASPSI Data Manager) | `marriz_admin` | _coordinator hands off your initial password out-of-band (Slack DM); first login forces a rotation_ | Administrator (for R3 test breadth); her day-to-day surfaces are **Data → Responses + Audit + HCWs** and **Reports → Sync Report + Map Report** — pay extra attention to those flows |
 
-> If you forgot your R2 password, ping coordinator in `#f2-pwa-uat` for a reset (admin user reset is now in v2.0.1 — `E4-APRT-051`).
+> Shan + Kidd: if you forgot your R2 password, ping coordinator in `#f2-pwa-uat` for a reset (admin user reset is now in v2.0.1 — `E4-APRT-051`).
+> Marriz: your `marriz_admin` account is created at R3 open with Administrator role for full test coverage; coordinator (Carl) sends initial credentials via Slack DM. Change-on-first-login is enforced by the `password_must_change` flag; pick a new password ≥ 8 chars after first login. As a Data Manager, your perspective on the Sync Report / Map Report / Audit / Responses dashboards is especially valuable — flag anything that would slow down your real day-to-day monitoring of submitted entries.
 
 ### RBAC test credential (shared — only for Section 5A.11 + 5B.2 RBAC scenarios)
 
