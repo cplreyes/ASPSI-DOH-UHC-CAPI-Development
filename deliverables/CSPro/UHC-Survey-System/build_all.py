@@ -39,19 +39,26 @@ WORKSPACE = Path(__file__).resolve().parent
 # patient-pick PROC can query the listing roster and write F3_STATUS back
 # at case-open / case-save / refusal. F3 follows F3LIST in INSTRUMENTS so
 # the listing DCF is generated before F3's ENT references it.
+# F4LIST = the 113_F4_listing Household Listing CAPI app (2026-05-12
+# build); produces F4LISTING_DICT (one case per barangay-day session)
+# consumed by 115_F4 at interview time via EXTERNAL dictionary
+# loadcase/forcase. F4LIST is placed BEFORE F4 in INSTRUMENTS so the
+# listing DCF is generated before F4's ENT external-dict reference is
+# parsed by Designer for F7 publish -- pattern parity with F3LIST/F3.
 # F4 = the 115_F4 Household Survey CAPI app (2026-05-12 quartet build);
 # it declares F4LISTING_DICT (../113_F4_listing/F4Listing.dcf) as an
-# EXTERNAL dictionary for the household-pick PROC. Until the 113_F4_listing
-# app lands (task #7 of the F4 rebuild plan), the household-pick PROC is
-# stubbed -- PickHousehold() returns 0 and the enumerator enters
-# HH_LISTING_NO manually in FIELD_CONTROL. F4_PARENT_F3_CASE_SEQ defaults
-# to 999 (NA per F-series convention) on the barangay-listing sampling
-# path. CSPro Designer F7 publish on F4 will fail until F4Listing.dcf
-# exists; this is the expected state for the interim phase.
+# EXTERNAL dictionary for the household-pick PROC. As of the F4 listing
+# build (this commit) the EXTERNAL ref resolves -- F4Listing.dcf exists
+# under 113_F4_listing/. The household-pick PROC body is filled in at
+# commit 12 of the F4 listing build series; until then the stub returns
+# 0 and the enumerator enters HH_LISTING_NO manually in FIELD_CONTROL.
+# F4_PARENT_F3_CASE_SEQ defaults to 999 (NA per F-series convention) on
+# the barangay-listing sampling path.
 INSTRUMENTS = [
     ("107", "F1",     "107_F1",         "FacilityHeadSurvey"),
     ("110", "F3LIST", "110_F3_listing", "PatientListing"),
     ("111", "F3",     "111_F3",         "PatientSurvey"),
+    ("113", "F4LIST", "113_F4_listing", "F4Listing"),
     ("115", "F4",     "115_F4",         "HouseholdSurvey"),
 ]
 
