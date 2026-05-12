@@ -59,8 +59,8 @@
 1. **Open `https://f2-pwa.pages.dev/admin/login`** in Chrome. Page loads with the Verde paper background and login form.
 2. **Login with your dedicated credential** (your R2-reset password). Land on Data dashboard.
 3. **Confirm version.** Apps & Settings → Versioning should read **PWA: 2.0.0** + **Worker: 2.0.0+** (with v2.0.1 patches in Worker hash).
-4. **Sidebar shows your username + role badge** ("Administrator") at the bottom-left.
-5. **Open `https://f2-pwa.pages.dev/admin/help` in incognito** (no auth). Help page renders without redirect to login.
+4. **Sidebar shows your username + role badge** ("Administrator") at the bottom-left. Version footer below should read **`v2.0.0`** (NOT `v0.1.0-staging` — that was a hardcoded literal regression fixed 2026-05-12 in PR #279). If you still see `v0.1.0-staging`, hard-refresh the page to pull the new bundle.
+5. **Open `https://f2-pwa.pages.dev/admin/help` in incognito** (no auth). Help page renders **and the URL bar stays at `/admin/help`** (NOT racing to `/admin/login` — that was a useEffect race fixed 2026-05-12 in PR #279). The full operator sidebar is still visible to unauthenticated users by current design — that broader UX gap is tracked separately as #278 for v2.0.2.
 6. **Confirm seed data exists** — Data → HCWs sub-tab → 12 `DEMO-HCW-*` rows visible.
 7. **DevTools open** (F12) — Network + Console tabs visible. Capture screenshots of these for any bug.
 

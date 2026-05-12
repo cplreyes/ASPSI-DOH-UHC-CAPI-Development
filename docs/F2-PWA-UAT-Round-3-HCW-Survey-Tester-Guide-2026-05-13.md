@@ -74,7 +74,7 @@ Same as Round 2 — see `docs/F2-PWA-UAT-Round-2-HCW-Survey-Tester-Guide-2026-05
    - `deliverables/F2/F2-Spec.md` — full questionnaire structure
    - `deliverables/F2/F2-Skip-Logic.md` — all role + facility-type gates
    - Round 2 guide for context on what was previously tested
-4. **Confirm your token works:** open your primary URL above, click Verify token, advance to the role-select / Section A screen.
+4. **Confirm your token works:** open your primary URL above. As of 2026-05-12 the token in the URL **auto-prefills** the textbox — Verify button is enabled immediately. Click Verify, advance to the role-select / Section A screen. (If the textbox is empty after opening the URL, that's a regression — file it as a bug; manual paste from the URL bar still works as a fallback.)
 
 ---
 
@@ -90,7 +90,7 @@ Re-walk the bug paths from Round 2's 14 HCW-survey closures. For each scenario, 
 
 | # | R2 Issue(s) | Section / Q | Original bug summary | Quick regression check |
 |---|---|---|---|---|
-| **5A.1** | [#108](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/108), [#109](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/109) | Token-paste enrollment | Token paste edge cases (whitespace, multi-line, malformed) | Paste your token cleanly → Verify enables → Step 2 loads. Then try pasting with trailing whitespace, with the full URL prefix `https://...?token=`, with characters chopped off — expect graceful handling. |
+| **5A.1** | [#108](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/108), [#109](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/109) | Token-paste enrollment | Token paste edge cases (whitespace, multi-line, malformed) — also URL-prefill regression check | **First, the new auto-prefill path (added 2026-05-12):** open your enrollment URL — expect the token already in the textbox + Verify enabled. Click → Step 2. **Then the manual-paste fallback:** clear the textbox, paste your token cleanly → Verify enables → Step 2 loads. Then try pasting with trailing whitespace, with the full URL prefix `https://...?token=`, with characters chopped off — expect graceful handling. |
 | **5A.2** | [#110](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/110) | Section A, Q9 (year+month) | R2-#110: Q9_2 Month was previously optional, made required 2026-05-09 — blank Months let form proceed despite Q9 being required | Fill Q9 Year(s)=5, leave Month(s) blank, try to advance. Expect: validation error blocking advance until both subfields filled. |
 | **5A.3** | [#111](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/111), [#112](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/112) | Section B, Q25 (UHC Awareness) | Multi-select state pollution / exclusive option behavior | Open Section B Q25. Select Salary + Working hours. Then select "I don't know" — expect previous selections clear. Conversely, with "I don't know" selected, click Salary — expect "I don't know" clears. |
 | **5A.4** | [#114](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/114), [#115](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/115) | Section C, Q31–Q40 (YAKAP/Konsulta) | Role-gated section; Q32 select-all rule | **Physician role only (Kidd):** open Section C. Q32 — click "All of the above" → all 7 services auto-check. Uncheck Mammogram → "All of the above" auto-unchecks. Click "I don't know" → all clear, only "I don't know" remains. **Pharmacist role (Shan):** confirm Section C is HIDDEN in nav. |
@@ -152,9 +152,10 @@ Round 2 walked the happy-path form thoroughly. These scenarios stress-test what 
 
 **What to verify:** Token-paste handles real-world copy-paste mishaps.
 
-- **5B.5.H1 (Clean paste):** Paste your token cleanly into the Step 1 textarea. Expect: Verify button enables; click → Step 2.
+- **5B.5.H1 (URL auto-prefill, NEW 2026-05-12):** Open your enrollment URL fresh (incognito tab + clear storage if you've been testing). Expect: textbox already filled with the token; Verify button enabled; click → Step 2. This is the path real testers + HCWs will use.
+- **5B.5.H2 (Clean manual paste):** Clear the textbox, paste your token cleanly. Expect: Verify enables; click → Step 2.
 - **5B.5.A1 (Trailing whitespace):** Copy your token + 1–2 trailing spaces (common when copy-paste from email). Paste. Expect: Verify still succeeds (whitespace gets trimmed) OR the Verify button greys out with a clear hint.
-- **5B.5.A2 (Multi-line paste):** Copy the entire enrollment URL (including `https://...?token=` prefix) and paste into the token textarea. Expect: app extracts the token portion OR shows a clear error like "Paste only the token, not the full URL."
+- **5B.5.A2 (Multi-line paste — into textbox, NOT browser bar):** Copy the entire enrollment URL (including `https://...?token=` prefix) and paste into the **token textarea** (not the browser address bar — pasting into the address bar uses the auto-prefill path covered in 5B.5.H1). Expect: app extracts the token portion OR shows a clear error like "Paste only the token, not the full URL."
 - **5B.5.E1 (Truncated token):** Paste a token with the last ~20 characters chopped off. Expect: Verify fails with a clear error like "Invalid token signature."
 - **5B.5.E2 (Reused/already-enrolled token):** Use a token that's already been enrolled on a different device. Expect: either accepts and rebinds OR shows a clear "Already enrolled elsewhere" message. Document which.
 - **5B.5.E3 (Expired token):** All current DEMO tokens expire 2026-06-03. Don't worry about this in R3 unless you're testing past that date.
