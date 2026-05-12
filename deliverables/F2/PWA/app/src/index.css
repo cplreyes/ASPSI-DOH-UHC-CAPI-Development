@@ -173,6 +173,18 @@
     0 0 0 2px hsl(var(--primary)),
     0 1px 4px hsl(var(--foreground) / 0.4);
 }
+/* Selected marker — sticks larger + an outer ring after the user clicks it,
+   so the visual map pin stays correlated with the sidebar HoveredCard until
+   the user clicks elsewhere or dismisses. Pre-fix the selection state was
+   only reflected in the sidebar; the pin looked identical to its neighbors. */
+.verde-marker--selected .verde-marker__dot {
+  width: 24px;
+  height: 24px;
+  background: hsl(var(--foreground));
+  box-shadow:
+    0 0 0 3px hsl(var(--primary)),
+    0 2px 6px hsl(var(--foreground) / 0.5);
+}
 
 /* (West Philippine Sea overlay removed — Carto Positron's tiles render
    the WPS label natively at the demo zoom level within PH's EEZ.) */
