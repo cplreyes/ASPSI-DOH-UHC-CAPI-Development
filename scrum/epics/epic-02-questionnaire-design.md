@@ -142,16 +142,16 @@ Per-instrument design workstream covering questionnaire ingestion, data model sp
 
 ---
 
-## PLF — Patient Listing Form *(recruitment form, 1pp)*
+## F3 Patient Listing *(recruitment form, 1pp; Phase 1 spec name "PLF")*
 
-**State:** Source Captured
+**State:** COMPLETED 2026-05-12 — shipped as the `110_F3_listing` quartet (DCF + FMF + ENT + APC) under `deliverables/CSPro/UHC-Survey-System/110_F3_listing/`.
 
 - [x] **E2-PLF-001** PLF form PDF ingested `status::done` `priority::medium`
 - [x] **E2-PLF-002** PLF wiki source page `status::done` `priority::medium`
-- [ ] **E2-PLF-003** Implementation decision: lightweight CAPI vs paper-only `status::todo` `priority::medium` `estimate::2h`
-- [ ] **E2-PLF-004** If CAPI: `generate_dcf.py` + DCF v1 (minimal, single-record) `status::todo` `priority::medium` `estimate::4h`
-- [ ] **E2-PLF-005** If CAPI: minimal skip logic + validation rules `status::todo` `priority::medium` `estimate::2h`
-- [ ] **E2-PLF-006** If CAPI: Designer validation + sign-off `status::todo` `priority::medium` `estimate::1h`
+- [x] **E2-PLF-003** Implementation decision: lightweight CAPI vs paper-only — resolved as CAPI (shipped as `110_F3_listing`) `status::done` `priority::medium`
+- [x] **E2-PLF-004** `generate_dcf.py` + DCF v1 — shipped under `110_F3_listing/` `status::done` `priority::medium`
+- [x] **E2-PLF-005** Skip logic + validation rules — shipped under `110_F3_listing/` `status::done` `priority::medium`
+- [x] **E2-PLF-006** Designer validation + sign-off — covered by smoke pass on the `110_F3_listing` quartet `status::done` `priority::medium`
 
 ## Notes
 

@@ -1,11 +1,11 @@
 # UHC Survey System Build
 
-End-to-end CAPI build for the DOH UHC Year 2 Survey: F1 Facility Head, F3 Patient, F4 Household, plus PLF (Patient Listing Form) and F4 Barangay Listing, plus the login + menu chain. F2 Healthcare Worker is the parallel PWA track and lives elsewhere.
+End-to-end CAPI build for the DOH UHC Year 2 Survey: F1 Facility Head, F3 Patient, F4 Household, plus F3 Patient Listing (`110_F3_listing` quartet) and F4 Barangay Listing, plus the login + menu chain. F2 Healthcare Worker is the parallel PWA track and lives elsewhere.
 
 ## Phase status
 
 - **Phase 1** (this directory) — Foundation + F1 vertical slice + local CSWeb. See `docs/superpowers/plans/2026-05-08-uhc-survey-system-build-phase-1.md`.
-- **Phase 2** — PLF, F3, F4_listing, F4 + supervisor flow + audit. Plan written after Phase 1 lands.
+- **Phase 2** — F3 Patient Listing (shipped as `110_F3_listing`), F3, F4_listing, F4 + supervisor flow + audit. Plan written after Phase 1 lands.
 
 ## Build
 

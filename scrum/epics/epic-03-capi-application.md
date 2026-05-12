@@ -192,11 +192,11 @@ F4 inherits the standard template **plus a roster engine**. The household roster
 
 ---
 
-## PLF — Patient Listing Form
+## F3 Patient Listing *(Phase 1 spec name "PLF — Patient Listing Form")*
 
-**Prerequisite:** E2-PLF-006 (implementation decision + any dictionary work)
+**Status:** COMPLETED 2026-05-12 — shipped as the `110_F3_listing` quartet under `deliverables/CSPro/UHC-Survey-System/110_F3_listing/`.
 
-- [ ] **E3-PLF-001** If CAPI: minimal form with facility selector + patient entries grid `status::todo` `priority::medium` `estimate::4h`
+- [x] **E3-PLF-001** Facility selector + patient entries grid — shipped as the `110_F3_listing` quartet (DCF + FMF + ENT + APC) with PATIENTLISTING_DICT external-dict patient-pick + roster write-back `status::done` `priority::medium`
 
 ## Notes
 
