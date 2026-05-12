@@ -72,9 +72,20 @@ jobs:
         working-directory: deliverables/F2/PWA/app
         # VITE_F2_PROXY_URL is the post-auth-rearch worker origin (Issue #45).
         # vite.config.ts fails the build fast if it's missing or REPLACE_ME.
+        #
+        # Branch-aware (closes #282 — E4-PWA-012): main builds use the prod
+        # worker URL; staging builds use the staging worker URL when the
+        # VITE_F2_PROXY_URL_STAGING repo secret is set, else fall back to
+        # prod URL (preserves pre-fix behavior so staging doesn't suddenly
+        # fail to build before the staging secret lands). Add the staging
+        # secret in repo Settings → Secrets, value:
+        #   https://f2-pwa-worker-staging.hcw.workers.dev
         env:
-          VITE_F2_PROXY_URL: ${{ secrets.VITE_F2_PROXY_URL }}
-        run: npm run build
+          VITE_F2_PROXY_URL: ${{ github.event.workflow_run.head_branch == 'main' && secrets.VITE_F2_PROXY_URL || secrets.VITE_F2_PROXY_URL_STAGING || secrets.VITE_F2_PROXY_URL }}
+        run: |
+          echo "Branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "Worker URL configured: $(echo $VITE_F2_PROXY_URL | sed 's|https://||' | cut -d. -f1)"
+          npm run build
 
       - if: steps.secrets.outputs.ready == 'true'
         name: Resolve project name from branch
