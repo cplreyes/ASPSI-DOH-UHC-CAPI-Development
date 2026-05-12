@@ -7,7 +7,7 @@
 **Coordinator:** Carl Patrick L. Reyes (Data Programmer)
 **Window:** Opens Wed 2026-05-13 AM · Closes Fri 2026-05-15 PM (sprint close)
 
-> **Project context.** The F2 Admin Portal is the operations console ASPSI ops users run from. It mirrors the **CSWeb** dashboard model — same shape, 5 dashboards × 5 roles × per-instrument flags. An ops user enrolls HCWs (mints tablet tokens), monitors submissions, triages dead-letter-queue entries, manages files (training plans, rosters), schedules CSV break-out exports, audits actions, and onboards other ops users. Round 3's job is twofold: **(a) regression-check** that the 33 admin-side R2 fixes (closed 2026-05-09) plus the v2.0.1 patch bundle (PR #136 — 9 E4-APRT-04x patches) still hold on current prod (v2.0.0+v2.0.1), and **(b) stress-test** what Round 2 didn't cover — concurrent multi-admin actions, RBAC edge cases, cross-tab session, kill-switch/spec-drift admin response, audit log completeness, FX-017 deferred touch-targets, large-data scenarios.
+> **Project context.** The F2 Admin Portal is the operations console ASPSI ops users run from. It mirrors the **CSWeb** dashboard model — same shape, 5 dashboards × 5 roles × per-instrument flags. An ops user enrolls HCWs (mints tablet tokens), monitors submissions, triages dead-letter-queue entries, manages files (training plans, rosters), schedules CSV break-out exports, audits actions, and onboards other ops users. Round 3's job is twofold: **(a) regression-check** that the 33 admin-side R2 fixes (closed 2026-05-09) plus the v2.0.1 patch bundle (PR #136 — 9 E4-APRT-04x patches) still hold on current prod (v2.0.2 — covers v2.0.0 base + v2.0.1 patches + 2026-05-12 polish slate), and **(b) stress-test** what Round 2 didn't cover — concurrent multi-admin actions, RBAC edge cases, cross-tab session, kill-switch/spec-drift admin response, audit log completeness, FX-017 deferred touch-targets, large-data scenarios.
 
 > **Why this round exists.** Round 2 closed cleanly with 33 admin-side issues fixed; v2.0.1 patches (Create-HCW UI, RBAC cache fix, JWT pwc enforce, design 5-fix sweep, concurrency, last_login_at, orphan-admin guards, user-self password rotation) shipped AFTER R2 closed and never had explicit tester walks. R3 is the first cycle to (a) confirm R2 + v2.0.1 fixes haven't regressed and (b) explore admin-specific scenario classes R2's nominal-flow walk didn't touch.
 
@@ -22,13 +22,13 @@
 | **Production Admin Portal** | https://f2-pwa.pages.dev/admin/login |
 | **Help (no-auth)** | https://f2-pwa.pages.dev/admin/help |
 | **Worker (curl smoke)** | https://f2-pwa-worker.hcw.workers.dev |
-| **Current prod version** | v2.0.0 base + v2.0.1 patch bundle (PR #136 merged 2026-05-09) |
+| **Current prod version** | v2.0.2 (header `v2.0.2 · spec 2026-04-17-m1`) — covers v2.0.0 base + v2.0.1 patch bundle (PR #136) + 2026-05-12 polish slate (PRs #274/#276/#279/#281/#283/#285/#288/#291) |
 | **Spec — full Admin Portal design** | `docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md` |
 | **Concept overview** | `wiki/concepts/F2 Admin Portal.md` |
 | **Bug repo** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues |
 | **Bug-filing label** | `from-uat-round-3-2026-05` |
 | **Slack channel (blockers + daily check-in)** | `#f2-pwa-uat` on `aspsi-doh-uhc-survey2.slack.com` |
-| **Release notes** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v2.0.0 |
+| **Release notes** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v2.0.2 (latest) · [v2.0.1](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v2.0.1) · [v2.0.0](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v2.0.0) |
 | **R3 sprint card** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/271 |
 
 ---
@@ -58,9 +58,9 @@
 
 1. **Open `https://f2-pwa.pages.dev/admin/login`** in Chrome. Page loads with the Verde paper background and login form.
 2. **Login with your dedicated credential** (your R2-reset password). Land on Data dashboard.
-3. **Confirm version.** Apps & Settings → Versioning should read **PWA: 2.0.0** + **Worker: 2.0.0+** (with v2.0.1 patches in Worker hash).
-4. **Sidebar shows your username + role badge** ("Administrator") at the bottom-left. Version footer below should read **`v2.0.0`** (NOT `v0.1.0-staging` — that was a hardcoded literal regression fixed 2026-05-12 in PR #279). If you still see `v0.1.0-staging`, hard-refresh the page to pull the new bundle.
-5. **Open `https://f2-pwa.pages.dev/admin/help` in incognito** (no auth). Help page renders **and the URL bar stays at `/admin/help`** (NOT racing to `/admin/login` — that was a useEffect race fixed 2026-05-12 in PR #279). The full operator sidebar is still visible to unauthenticated users by current design — that broader UX gap is tracked separately as #278 for v2.0.2.
+3. **Confirm version.** Apps & Settings → Versioning should read **PWA: 2.0.2** + **Worker: 2.0.0+** (Worker version pinned via wrangler.toml; package.json bump to 2.0.2 is PWA-side only).
+4. **Sidebar shows your username + role badge** ("Administrator") at the bottom-left. Version footer below should read **`v2.0.2`** (NOT `v0.1.0-staging` — that was a hardcoded literal regression fixed 2026-05-12 in PR #279; not `v2.0.0` or `v2.0.1` either — bumped in PR #291). If you still see an older value, hard-refresh the page to pull the new bundle.
+5. **Open `https://f2-pwa.pages.dev/admin/help` in incognito** (no auth). Help page renders, the URL bar stays at `/admin/help`, **and the sidebar shows ONLY the Help link + a "Sign in" CTA** (the full operator nav is hidden for unauthenticated users — fixed in PR #281). If you see the full nav with all 7 dashboard links + a "Sign out" button while not signed in, hard-refresh.
 6. **Confirm seed data exists** — Data → HCWs sub-tab → 12 `DEMO-HCW-*` rows visible.
 7. **DevTools open** (F12) — Network + Console tabs visible. Capture screenshots of these for any bug.
 

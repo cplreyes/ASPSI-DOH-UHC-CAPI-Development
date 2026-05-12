@@ -7,11 +7,11 @@
 **Coordinator:** Carl Patrick L. Reyes (Data Programmer)
 **Window:** Opens Wed 2026-05-13 AM · Closes Fri 2026-05-15 PM (sprint close)
 
-> **Project context.** This is the **DOH UHC Survey Year 2 — Healthcare Worker Survey**. Field rollout uses tablets handed to HCWs (nurses, midwives, physicians, etc.) at sampled health facilities. Round 3's job is twofold: **(a)** **regression-check** that the 14 HCW-survey-side R2 fixes (closed 2026-05-08 / 2026-05-09) still hold on current prod (v2.0.0), and **(b)** **stress-test** what Round 2 didn't cover — offline behavior, real device matrix, edge data, resume after force-quit, and token edge cases.
+> **Project context.** This is the **DOH UHC Survey Year 2 — Healthcare Worker Survey**. Field rollout uses tablets handed to HCWs (nurses, midwives, physicians, etc.) at sampled health facilities. Round 3's job is twofold: **(a)** **regression-check** that the 14 HCW-survey-side R2 fixes (closed 2026-05-08 / 2026-05-09) still hold on current prod (v2.0.2 — includes the v2.0.1 R2 patch wave + 2026-05-12 polish slate), and **(b)** **stress-test** what Round 2 didn't cover — offline behavior, real device matrix, edge data, resume after force-quit, and token edge cases.
 
 > **Why this round exists.** Round 2 closed cleanly with 47 issues fixed (14 HCW-survey side + 33 Admin Portal). R3 is the first cycle on the post-R2 build to (a) confirm those fixes haven't regressed under continued development and (b) explore scenario classes R2's full-form happy/alt/error pass didn't touch.
 
-> **Scope of this guide.** PWA-side only — what an HCW sees on the tablet. No Admin Portal testing this round (Admin Portal stays at v2.0.1 from PR #136; no R3 cycle for it).
+> **Scope of this guide.** PWA-side only — what an HCW sees on the tablet. Admin Portal testing has its own companion guide (link above); both Shan + Kidd walk both sides.
 
 ---
 
@@ -20,7 +20,7 @@
 | Item | Value |
 |---|---|
 | **Production PWA URL** | https://f2-pwa.pages.dev |
-| **Current prod version** | v2.0.0 (header: `v2.0.0 · spec 2026-04-17-m1`) |
+| **Current prod version** | v2.0.2 (header: `v2.0.2 · spec 2026-04-17-m1`) — includes v2.0.0 + v2.0.1 patches + 2026-05-12 polish slate |
 | **Spec — verbatim question text + validation rules** | `deliverables/F2/F2-Spec.md` |
 | **Skip logic + branching** | `deliverables/F2/F2-Skip-Logic.md` |
 | **Cross-field validation** | `deliverables/F2/F2-Cross-Field.md` |
@@ -68,7 +68,7 @@ Same as Round 2 — see `docs/F2-PWA-UAT-Round-2-HCW-Survey-Tester-Guide-2026-05
 
 ## 4. Pre-Flight Checks (do these before testing)
 
-1. **Confirm prod version.** Open `https://f2-pwa.pages.dev` on your test device. Header should read `v2.0.0 · spec 2026-04-17-m1`. If it says `v1.x.x`, hard-refresh (Ctrl+Shift+R or pull-down refresh on tablet) — service worker may need to update.
+1. **Confirm prod version.** Open `https://f2-pwa.pages.dev` on your test device. Header should read `v2.0.2 · spec 2026-04-17-m1`. If it says `v1.x.x` or `v2.0.0` / `v2.0.1`, hard-refresh (Ctrl+Shift+R or pull-down refresh on tablet) — service worker may need to update.
 2. **Open DevTools** (F12 on desktop, or Chrome remote debugging from a paired desktop for tablets). Network + Console tabs visible.
 3. **Read these reference docs once before testing:**
    - `deliverables/F2/F2-Spec.md` — full questionnaire structure
