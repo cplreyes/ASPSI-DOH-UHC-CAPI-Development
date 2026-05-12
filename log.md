@@ -2,6 +2,41 @@
 
 Chronological record of all wiki operations.
 
+## 2026-05-12 (CAPI build — F4 Household Listing app 113_F4_listing quartet + F4 PickHousehold activation)
+
+### F4 listing instrument bring-up — `deliverables/CSPro/UHC-Survey-System/113_F4_listing/`
+
+- 12 atomic commits landed on `feature/uhc-survey-system-build` (continuation of the F4 build worktree):
+  1. Scaffold (.gitattributes, README, `generate_dcf.py` with 4 records — root + `REC_LISTING_CONTROL` + `REC_LISTING_BRGY_FRAME` + `REC_LISTING_BARANGAY_GPS`)
+  2. FMF generator — 5 forms / 41 items, BOM-prefixed
+  3. ENT generator + canonical QSF/MGF templates (single input dict, no EXTERNAL refs)
+  4. APC generator — frame builder + `LISTING_SOURCE` warnmsg + `synchronize_file` with `BARANGAY10` path segment + `SeedSessionPRNG` with `BARANGAY_CODE`
+  5. `sync_F4_listing_app.pff` + `SYNC.md`
+  6. `F4-Listing-Skip-Logic-and-Validations.md` spec
+  7. `build_all.py` wiring — F4LIST instrument tuple between F3 and F4
+  8. Smoke test — 16 tests covering Q1–Q8 design pins
+  9. `log.md` entry (this entry)
+  10. `index.md` catalog update for the new concept page
+  11. Wiki concept page — `F4 Listing - Hybrid Frame Model`
+  12. F4 APC `PickHousehold()` body filled in — `F4LISTING_DICT` `forcase`/`loadcase`/`savecase` wired
+- Final `F4Listing.dcf`: 4 records / 35 record items + 6 ID items. `F4Listing.ent.apc`: ~10KB; cadence-engine-free; LISTING_SOURCE soft warnmsg; frame finalizer.
+- Carl's 2026-05-12 design sign-off encoded:
+  - **Q1 Hybrid LISTING_SOURCE** (1=captain-supplied / 2=fresh door-to-door) — single record schema, both paths feed the same `REC_LISTING_BRGY_FRAME`
+  - **Q2 REPLACEMENT_RESERVES default = 10** — supervisor dashboard enforces the Annex D cap, CSPro just tags rows via `FROM_RESERVE_POOL`
+  - **Q3 ID block reuse** — same `build_listing_id_block()` helper as 110_F3_listing; `BARANGAY_CODE` lives on `REC_LISTING_CONTROL` as data item; sync path encodes `<barangay10>` as separate segment
+  - **Q4 Frame cap** — `max_occurs=999`
+  - **Q5 Phone** — `MOBILE` alpha-11 optional
+  - **Q6 GPS only** — no verification photo record
+  - **Q7 Menu label** — "F4 Household Listing"
+  - **Q8 Seed inputs** — `ENUMERATOR_ID + DATE_SESSION + TIME_SESSION_START + BARANGAY_CODE`
+- Open spec items documented in §10 of the skip-logic spec (NOT escalated per `feedback_defer_clarifications_during_upstream_review.md`):
+  - Protocol V2 line 1199-1201 `{.mark}` resolved here as the hybrid model
+  - No Annex F4b (this build is the de facto spec until Myra reviews)
+  - Annex D 5-10% replacement-rate cap = supervisor side
+  - Eligibility verification at listing time = F4 visit consent, not listing
+- F4 `HouseholdSurvey.ent.apc::PickHousehold()` body filled at commit 12 — `forcase F4LISTING_DICT where facility-tier prefix match` → roster row pick (`accept`) → `loadcase`/`savecase` write-back of `F4_STATUS = 2` (in-progress) + `ASSIGNED_F4_CASE_SEQ`. Pattern parity with `PickPatient()` in 111_F3.
+- Smoke pass: 97 tests across F1/F3/F3LIST/F4/F4LIST (81 prior + 16 new); `python build_all.py --env=dev` builds all 5 instruments end-to-end cleanly.
+
 ## 2026-05-12 (CAPI build — F4 core DCF rebuild + Option C dual-linkage concept-page update)
 
 ### Concept page update — `Questionnaire Numbering Convention.md`
