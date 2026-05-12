@@ -6183,7 +6183,1072 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q57_HEARD_BUCAS",
+              "labels": [
+                {
+                  "text": "57. Have you heard about Bagong Urgent Care and Ambulatory Service (BUCAS) center?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q57_HEARD_BUCAS_VS1",
+                  "labels": [
+                    {
+                      "text": "57. Have you heard about Bagong Urgent Care and Ambulatory Service (BUCAS) center?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O01",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 News"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 News"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O02",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Legislation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Legislation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Health center/facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Health center/facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 LGU/Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 LGU/Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q58_BUCAS_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q58_BUCAS_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "58. If yes, what are your sources of information about this BUCAS center? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTANDING_O01",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Provides urgent care for non-life-threatening/serious conditions"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_BUCAS_UNDERSTANDING_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What is your understanding about a BUCAS center? \u2014 Provides urgent care for non-life-threatening/serious conditions"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTANDING_O02",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Offers outpatient and ambulatory health services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_BUCAS_UNDERSTANDING_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What is your understanding about a BUCAS center? \u2014 Offers outpatient and ambulatory health services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTANDING_O03",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Helps reduce overcrowding in hospitals"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_BUCAS_UNDERSTANDING_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What is your understanding about a BUCAS center? \u2014 Helps reduce overcrowding in hospitals"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTANDING_O04",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Allows access to timely medical consultation and treatment"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_BUCAS_UNDERSTANDING_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What is your understanding about a BUCAS center? \u2014 Allows access to timely medical consultation and treatment"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTANDING_O05",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q59_BUCAS_UNDERSTANDING_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "59. What is your understanding about a BUCAS center? \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q59_BUCAS_UNDERSTANDING_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "59. What is your understanding about a BUCAS center? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q60_BUCAS_ACCESSED",
+              "labels": [
+                {
+                  "text": "60. In the last six months, did you or any member of your HH accessed the services in a BUCAS center?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q60_BUCAS_ACCESSED_VS1",
+                  "labels": [
+                    {
+                      "text": "60. In the last six months, did you or any member of your HH accessed the services in a BUCAS center?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_AVAILED_O01",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Medical consultation for urgent or minor conditions"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_AVAILED_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Medical consultation for urgent or minor conditions"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_AVAILED_O02",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Outpatient or ambulatory care services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_AVAILED_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Outpatient or ambulatory care services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_AVAILED_O03",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Basic diagnostic services (e.g., laboratory tests, X-ray)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_AVAILED_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Basic diagnostic services (e.g., laboratory tests, X-ray)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_AVAILED_O04",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Minor procedures or treatments"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_AVAILED_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Minor procedures or treatments"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_AVAILED_O05",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Referral to higher-level health facilities"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_AVAILED_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Referral to higher-level health facilities"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_AVAILED_O06",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_AVAILED_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_AVAILED_O07",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q61_BUCAS_SERVICES_AVAILED_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "61. If yes, which of the services did you avail? \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q61_BUCAS_SERVICES_AVAILED_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "61. If yes, which of the services did you avail? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
         },
         {
           "name": "G_ACCESS_TO_MEDICINES",
@@ -6197,7 +7262,3765 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q62_PURCHASE_FREQUENCY",
+              "labels": [
+                {
+                  "text": "62. How often do you purchase or receive medicines?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q62_PURCHASE_FREQUENCY_VS1",
+                  "labels": [
+                    {
+                      "text": "62. How often do you purchase or receive medicines?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Weekly"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Bi-weekly"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Monthly"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Rarely"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Never"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q63_PRESCRIPTION_TYPE",
+              "labels": [
+                {
+                  "text": "63. Was the most recent medicine purchased prescribed by a doctor or over-the-counter (OTC) medicine (no need for a prescription)?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q63_PRESCRIPTION_TYPE_VS1",
+                  "labels": [
+                    {
+                      "text": "63. Was the most recent medicine purchased prescribed by a doctor or over-the-counter (OTC) medicine (no need for a prescription)?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Prescribed by a doctor"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Over-the-counter medicine"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Purchased both prescribed medicine and OTC medicine"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q64_MEDICATIONS_LIST",
+              "labels": [
+                {
+                  "text": "64. What are the medications that you or any member of your household usually take? (List)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 512
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O01",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Upper respiratory infection"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Upper respiratory infection"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O02",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Hypertension"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Hypertension"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O03",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Immunization"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Immunization"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O04",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Pregnancy or birth"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Pregnancy or birth"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O05",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Flu"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Flu"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O06",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Fever"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Fever"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O07",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Joint and muscle pain"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Joint and muscle pain"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O08",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Asthma or COPD (chronic breathing problem, not cancer)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Asthma or COPD (chronic breathing problem, not cancer)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O09",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Diabetes"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Diabetes"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O10",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Heart problem"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O10_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Heart problem"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O11",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Kidney problem /Dialysis"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O11_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Kidney problem /Dialysis"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O12",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Cancer (any)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O12_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Cancer (any)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O13",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Gastro problem (vomiting, diarrhea, etc.)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O13_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Gastro problem (vomiting, diarrhea, etc.)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O14",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Other infection (e.g. urine, skin, other virus etc.)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O14_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Other infection (e.g. urine, skin, other virus etc.)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O15",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Accident/injury (e.g. wound/broken bone)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O15_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Accident/injury (e.g. wound/broken bone)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O16",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Dental"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O16_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Dental"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O17",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 ENT (problem with ear/nose/throat)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O17_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 ENT (problem with ear/nose/throat)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O18",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Allergy"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O18_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Allergy"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O19",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 No condition - Regular check-up only"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O19_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 No condition - Regular check-up only"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_O20",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q65_MEDICAL_CONDITIONS_O20_VS1",
+                  "labels": [
+                    {
+                      "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q65_MEDICAL_CONDITIONS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "65. What are the medical conditions that you/your household member/s take the medicine/s for? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q66_WHERE_BUY_O01",
+              "labels": [
+                {
+                  "text": "66. Where do you usually buy or receive your medicines? \u2014 Public Hospital"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q66_WHERE_BUY_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "66. Where do you usually buy or receive your medicines? \u2014 Public Hospital"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q66_WHERE_BUY_O02",
+              "labels": [
+                {
+                  "text": "66. Where do you usually buy or receive your medicines? \u2014 Private Hospital"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q66_WHERE_BUY_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "66. Where do you usually buy or receive your medicines? \u2014 Private Hospital"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q66_WHERE_BUY_O03",
+              "labels": [
+                {
+                  "text": "66. Where do you usually buy or receive your medicines? \u2014 Chain Pharmacies (e.g. Mercury Drug, Watsons, TGP, Generika)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q66_WHERE_BUY_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "66. Where do you usually buy or receive your medicines? \u2014 Chain Pharmacies (e.g. Mercury Drug, Watsons, TGP, Generika)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q66_WHERE_BUY_O04",
+              "labels": [
+                {
+                  "text": "66. Where do you usually buy or receive your medicines? \u2014 Local pharmacies"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q66_WHERE_BUY_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "66. Where do you usually buy or receive your medicines? \u2014 Local pharmacies"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q66_WHERE_BUY_O05",
+              "labels": [
+                {
+                  "text": "66. Where do you usually buy or receive your medicines? \u2014 Online stores (e.g. Shopee, Lazada)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q66_WHERE_BUY_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "66. Where do you usually buy or receive your medicines? \u2014 Online stores (e.g. Shopee, Lazada)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q66_WHERE_BUY_O06",
+              "labels": [
+                {
+                  "text": "66. Where do you usually buy or receive your medicines? \u2014 Barangay Health Station"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q66_WHERE_BUY_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "66. Where do you usually buy or receive your medicines? \u2014 Barangay Health Station"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q66_WHERE_BUY_O07",
+              "labels": [
+                {
+                  "text": "66. Where do you usually buy or receive your medicines? \u2014 Rural Health Unit or City Health Office"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q66_WHERE_BUY_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "66. Where do you usually buy or receive your medicines? \u2014 Rural Health Unit or City Health Office"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q66_WHERE_BUY_O08",
+              "labels": [
+                {
+                  "text": "66. Where do you usually buy or receive your medicines? \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q66_WHERE_BUY_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "66. Where do you usually buy or receive your medicines? \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q66_WHERE_BUY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "66. Where do you usually buy or receive your medicines? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q67_TIME_TO_PHARMACY",
+              "labels": [
+                {
+                  "text": "67. How much time does it take for you to reach the nearest pharmacy from your home? (HH:MM)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 5
+            },
+            {
+              "name": "Q68_PHARMACY_ACCESS_EASE",
+              "labels": [
+                {
+                  "text": "68. How easy is it for you to access a pharmacy or drugstore?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q68_PHARMACY_ACCESS_EASE_VS1",
+                  "labels": [
+                    {
+                      "text": "68. How easy is it for you to access a pharmacy or drugstore?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Very difficult"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Difficult"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Neutral"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Easy"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Very easy"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q69_HEARD_GAMOT",
+              "labels": [
+                {
+                  "text": "69. Have you heard of the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's YAKAP/Konsulta or primary care benefit package?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q69_HEARD_GAMOT_VS1",
+                  "labels": [
+                    {
+                      "text": "69. Have you heard of the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's YAKAP/Konsulta or primary care benefit package?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_GAMOT_SOURCE_O01",
+              "labels": [
+                {
+                  "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 News"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_GAMOT_SOURCE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 News"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_GAMOT_SOURCE_O02",
+              "labels": [
+                {
+                  "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Legislation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_GAMOT_SOURCE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Legislation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_GAMOT_SOURCE_O03",
+              "labels": [
+                {
+                  "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Social Media"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_GAMOT_SOURCE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Social Media"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_GAMOT_SOURCE_O04",
+              "labels": [
+                {
+                  "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Friends / Family"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_GAMOT_SOURCE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Friends / Family"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_GAMOT_SOURCE_O05",
+              "labels": [
+                {
+                  "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Health center/facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_GAMOT_SOURCE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Health center/facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_GAMOT_SOURCE_O06",
+              "labels": [
+                {
+                  "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 LGU/Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_GAMOT_SOURCE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 LGU/Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_GAMOT_SOURCE_O07",
+              "labels": [
+                {
+                  "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_GAMOT_SOURCE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_GAMOT_SOURCE_O08",
+              "labels": [
+                {
+                  "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q70_GAMOT_SOURCE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q70_GAMOT_SOURCE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "70. If yes, what are your sources of information for GAMOT Package? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q71_GAMOT_UNDERSTANDING_O01",
+              "labels": [
+                {
+                  "text": "71. What is your understanding of the GAMOT Package? \u2014 Provides free or affordable medicines for outpatients"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q71_GAMOT_UNDERSTANDING_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "71. What is your understanding of the GAMOT Package? \u2014 Provides free or affordable medicines for outpatients"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q71_GAMOT_UNDERSTANDING_O02",
+              "labels": [
+                {
+                  "text": "71. What is your understanding of the GAMOT Package? \u2014 Ensures continuous availability of essential medicines"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q71_GAMOT_UNDERSTANDING_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "71. What is your understanding of the GAMOT Package? \u2014 Ensures continuous availability of essential medicines"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q71_GAMOT_UNDERSTANDING_O03",
+              "labels": [
+                {
+                  "text": "71. What is your understanding of the GAMOT Package? \u2014 Helps reduce out-of-pocket expenses for medicines"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q71_GAMOT_UNDERSTANDING_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "71. What is your understanding of the GAMOT Package? \u2014 Helps reduce out-of-pocket expenses for medicines"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q71_GAMOT_UNDERSTANDING_O04",
+              "labels": [
+                {
+                  "text": "71. What is your understanding of the GAMOT Package? \u2014 Supports treatment of common illnesses and chronic conditions"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q71_GAMOT_UNDERSTANDING_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "71. What is your understanding of the GAMOT Package? \u2014 Supports treatment of common illnesses and chronic conditions"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q71_GAMOT_UNDERSTANDING_O05",
+              "labels": [
+                {
+                  "text": "71. What is your understanding of the GAMOT Package? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q71_GAMOT_UNDERSTANDING_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "71. What is your understanding of the GAMOT Package? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q71_GAMOT_UNDERSTANDING_O06",
+              "labels": [
+                {
+                  "text": "71. What is your understanding of the GAMOT Package? \u2014 Other (specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q71_GAMOT_UNDERSTANDING_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "71. What is your understanding of the GAMOT Package? \u2014 Other (specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q71_GAMOT_UNDERSTANDING_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "71. What is your understanding of the GAMOT Package? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q72_GAMOT_OBTAINED",
+              "labels": [
+                {
+                  "text": "72. Did you get the medicines from the GAMOT Package during the past 6 months?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q72_GAMOT_OBTAINED_VS1",
+                  "labels": [
+                    {
+                      "text": "72. Did you get the medicines from the GAMOT Package during the past 6 months?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q73_GAMOT_MEDICATIONS_LIST",
+              "labels": [
+                {
+                  "text": "73. What are the medications that you obtained from the GAMOT Package? (List)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 512
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_O01",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Purchased from pharmacy"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_WHERE_REST_OF_MEDS_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Where did you get the rest of the medicines? \u2014 Purchased from pharmacy"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_O02",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Purchased from public hospital"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_WHERE_REST_OF_MEDS_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Where did you get the rest of the medicines? \u2014 Purchased from public hospital"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_O03",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Purchased from private hospital"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_WHERE_REST_OF_MEDS_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Where did you get the rest of the medicines? \u2014 Purchased from private hospital"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_O04",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Purchased from primary care provider (PCP)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_WHERE_REST_OF_MEDS_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Where did you get the rest of the medicines? \u2014 Purchased from primary care provider (PCP)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_O05",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Received from PCP for free"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_WHERE_REST_OF_MEDS_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Where did you get the rest of the medicines? \u2014 Received from PCP for free"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_O06",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Received from LGU for free"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_WHERE_REST_OF_MEDS_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Where did you get the rest of the medicines? \u2014 Received from LGU for free"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_O07",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Received from public hospital for free"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_WHERE_REST_OF_MEDS_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Where did you get the rest of the medicines? \u2014 Received from public hospital for free"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_O08",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Received from private hospital for free"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_WHERE_REST_OF_MEDS_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Where did you get the rest of the medicines? \u2014 Received from private hospital for free"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_O09",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Not applicable"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_WHERE_REST_OF_MEDS_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Where did you get the rest of the medicines? \u2014 Not applicable"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_O10",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q74_WHERE_REST_OF_MEDS_O10_VS1",
+                  "labels": [
+                    {
+                      "text": "74. Where did you get the rest of the medicines? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q74_WHERE_REST_OF_MEDS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "74. Where did you get the rest of the medicines? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q75_KNOWS_BRAND_VS_GENERIC",
+              "labels": [
+                {
+                  "text": "75. Do you know the difference between a 'branded' and a 'generic' medicine?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q75_KNOWS_BRAND_VS_GENERIC_VS1",
+                  "labels": [
+                    {
+                      "text": "75. Do you know the difference between a 'branded' and a 'generic' medicine?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q76_MED_TYPE_PURCHASED",
+              "labels": [
+                {
+                  "text": "76. Was/were the medicine/s you bought outside of GAMOT pharmacy branded or generic?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q76_MED_TYPE_PURCHASED_VS1",
+                  "labels": [
+                    {
+                      "text": "76. Was/were the medicine/s you bought outside of GAMOT pharmacy branded or generic?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Branded"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Generic"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Both branded and generic"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know the difference"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q77_GENERIC_REASON_O01",
+              "labels": [
+                {
+                  "text": "77. If generic, why did you buy generic medicine? \u2014 Lower cost"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q77_GENERIC_REASON_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "77. If generic, why did you buy generic medicine? \u2014 Lower cost"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q77_GENERIC_REASON_O02",
+              "labels": [
+                {
+                  "text": "77. If generic, why did you buy generic medicine? \u2014 Prescribed by doctor"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q77_GENERIC_REASON_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "77. If generic, why did you buy generic medicine? \u2014 Prescribed by doctor"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q77_GENERIC_REASON_O03",
+              "labels": [
+                {
+                  "text": "77. If generic, why did you buy generic medicine? \u2014 Readily available"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q77_GENERIC_REASON_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "77. If generic, why did you buy generic medicine? \u2014 Readily available"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q77_GENERIC_REASON_O04",
+              "labels": [
+                {
+                  "text": "77. If generic, why did you buy generic medicine? \u2014 Given for free"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q77_GENERIC_REASON_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "77. If generic, why did you buy generic medicine? \u2014 Given for free"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q77_GENERIC_REASON_O05",
+              "labels": [
+                {
+                  "text": "77. If generic, why did you buy generic medicine? \u2014 More or as effective as branded medicine"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q77_GENERIC_REASON_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "77. If generic, why did you buy generic medicine? \u2014 More or as effective as branded medicine"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q77_GENERIC_REASON_O06",
+              "labels": [
+                {
+                  "text": "77. If generic, why did you buy generic medicine? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q77_GENERIC_REASON_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "77. If generic, why did you buy generic medicine? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q77_GENERIC_REASON_O07",
+              "labels": [
+                {
+                  "text": "77. If generic, why did you buy generic medicine? \u2014 Not applicable"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q77_GENERIC_REASON_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "77. If generic, why did you buy generic medicine? \u2014 Not applicable"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q77_GENERIC_REASON_O08",
+              "labels": [
+                {
+                  "text": "77. If generic, why did you buy generic medicine? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q77_GENERIC_REASON_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "77. If generic, why did you buy generic medicine? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q77_GENERIC_REASON_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "77. If generic, why did you buy generic medicine? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q78_BRANDED_REASON_O01",
+              "labels": [
+                {
+                  "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Branded medicine is more effective than generic"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q78_BRANDED_REASON_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Branded medicine is more effective than generic"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q78_BRANDED_REASON_O02",
+              "labels": [
+                {
+                  "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Not aware of generic option"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q78_BRANDED_REASON_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Not aware of generic option"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q78_BRANDED_REASON_O03",
+              "labels": [
+                {
+                  "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Prescribed by doctor"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q78_BRANDED_REASON_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Prescribed by doctor"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q78_BRANDED_REASON_O04",
+              "labels": [
+                {
+                  "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Given for free"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q78_BRANDED_REASON_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Given for free"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q78_BRANDED_REASON_O05",
+              "labels": [
+                {
+                  "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Prefer branded over generic option"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q78_BRANDED_REASON_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Prefer branded over generic option"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q78_BRANDED_REASON_O06",
+              "labels": [
+                {
+                  "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q78_BRANDED_REASON_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q78_BRANDED_REASON_O07",
+              "labels": [
+                {
+                  "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Not applicable"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q78_BRANDED_REASON_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Not applicable"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q78_BRANDED_REASON_O08",
+              "labels": [
+                {
+                  "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q78_BRANDED_REASON_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q78_BRANDED_REASON_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
         },
         {
           "name": "H_PHILHEALTH",

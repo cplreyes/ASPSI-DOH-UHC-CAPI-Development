@@ -731,16 +731,259 @@ def build_section_e():
 
 
 def build_section_f():
-    """F. BUCAS Awareness and Utilization."""
+    """F. BUCAS Awareness and Utilization (Q57-Q61).
+
+    Skip-routing (enforced in PROC):
+      - Q57 = No (2) -> Q62 (skip Q58, Q59, Q60, Q61)
+      - Q60 = No (2) -> Q62 (skip Q61)
+
+    Section is conditionally applicable: Q57-Q61 only for respondents
+    in areas with BUCAS; otherwise enumerator proceeds to Q62 (per
+    PDF section header note).
+    """
+    INFO_SOURCE = [
+        ("News",                       "01"),
+        ("Legislation",                "02"),
+        ("Social Media",               "03"),
+        ("Friends / Family",           "04"),
+        ("Health center/facility",     "05"),
+        ("LGU/Barangay",               "06"),
+        ("I don't know",               "07"),
+        ("Other (Specify)",            "08"),
+    ]
+    BUCAS_UNDERSTANDING = [
+        ("Provides urgent care for non-life-threatening/serious conditions",       "01"),
+        ("Offers outpatient and ambulatory health services",                       "02"),
+        ("Helps reduce overcrowding in hospitals",                                 "03"),
+        ("Allows access to timely medical consultation and treatment",             "04"),
+        ("Other (specify)",                                                        "05"),
+    ]
+    BUCAS_SERVICES = [
+        ("Medical consultation for urgent or minor conditions",        "01"),
+        ("Outpatient or ambulatory care services",                     "02"),
+        ("Basic diagnostic services (e.g., laboratory tests, X-ray)",  "03"),
+        ("Minor procedures or treatments",                             "04"),
+        ("Referral to higher-level health facilities",                 "05"),
+        ("I don't know",                                               "06"),
+        ("Other (specify)",                                            "07"),
+    ]
+    items = [
+        yes_no("Q57_HEARD_BUCAS",
+               "57. Have you heard about Bagong Urgent Care and Ambulatory "
+               "Service (BUCAS) center?"),
+        *select_all("Q58_BUCAS_SOURCE",
+                    "58. If yes, what are your sources of information about "
+                    "this BUCAS center?",
+                    INFO_SOURCE),
+        *select_all("Q59_BUCAS_UNDERSTANDING",
+                    "59. What is your understanding about a BUCAS center?",
+                    BUCAS_UNDERSTANDING),
+        yes_no("Q60_BUCAS_ACCESSED",
+               "60. In the last six months, did you or any member of your HH "
+               "accessed the services in a BUCAS center?"),
+        *select_all("Q61_BUCAS_SERVICES_AVAILED",
+                    "61. If yes, which of the services did you avail?",
+                    BUCAS_SERVICES),
+    ]
     return record("F_BUCAS",
                   "F. Bagong Urgent Care and Ambulatory Service (BUCAS) "
-                  "Awareness and Utilization", "H", [])
+                  "Awareness and Utilization", "H", items)
 
 
 def build_section_g():
-    """G. Access to Medicines."""
+    """G. Access to Medicines (Q62-Q78).
+
+    Skip-routing (enforced in PROC):
+      - Q62 = Never (5) -> Q69 (skip Q63-Q68)
+      - Q69 = No (2)    -> Q75 (skip Q70-Q74)
+      - Q72 = No (2)    -> Q75 (skip Q73, Q74) -- inferred from PDF
+                                                  flow (Q73-Q74 ask about
+                                                  GAMOT meds received)
+      - Q76 = Branded (1) -> Q78 (skip Q77)
+      - Q76 = Don't know the difference (4) or Not applicable (5)
+                          -> Q79 (skip Q77, Q78)
+      - Q77 only when Q76 = Generic (2) or Both (3)
+      - Q78 only when Q76 = Branded (1) or Both (3)
+
+    Q64 + Q73 are free-text medicine lists; PDF says "PLEASE LIST DOWN".
+    Captured as length-512 alpha for multi-medicine entry; the enumerator
+    types comma-separated names.
+    """
+    Q62_FREQUENCY = [
+        ("Weekly",     "1"),
+        ("Bi-weekly",  "2"),
+        ("Monthly",    "3"),
+        ("Rarely",     "4"),
+        ("Never",      "5"),  # proceed to Q69
+    ]
+    Q63_PRESCRIPTION = [
+        ("Prescribed by a doctor",                              "1"),
+        ("Over-the-counter medicine",                           "2"),
+        ("Purchased both prescribed medicine and OTC medicine", "3"),
+        ("I don't know",                                        "4"),
+    ]
+    Q65_CONDITION = [
+        ("Upper respiratory infection",                                 "01"),
+        ("Hypertension",                                                "02"),
+        ("Immunization",                                                "03"),
+        ("Pregnancy or birth",                                          "04"),
+        ("Flu",                                                         "05"),
+        ("Fever",                                                       "06"),
+        ("Joint and muscle pain",                                       "07"),
+        ("Asthma or COPD (chronic breathing problem, not cancer)",      "08"),
+        ("Diabetes",                                                    "09"),
+        ("Heart problem",                                               "10"),
+        ("Kidney problem /Dialysis",                                    "11"),
+        ("Cancer (any)",                                                "12"),
+        ("Gastro problem (vomiting, diarrhea, etc.)",                   "13"),
+        ("Other infection (e.g. urine, skin, other virus etc.)",        "14"),
+        ("Accident/injury (e.g. wound/broken bone)",                    "15"),
+        ("Dental",                                                      "16"),
+        ("ENT (problem with ear/nose/throat)",                          "17"),
+        ("Allergy",                                                     "18"),
+        ("No condition - Regular check-up only",                        "19"),
+        ("Other (Specify)",                                             "20"),
+    ]
+    Q66_WHERE = [
+        ("Public Hospital",                                                  "01"),
+        ("Private Hospital",                                                 "02"),
+        ("Chain Pharmacies (e.g. Mercury Drug, Watsons, TGP, Generika)",     "03"),
+        ("Local pharmacies",                                                 "04"),
+        ("Online stores (e.g. Shopee, Lazada)",                              "05"),
+        ("Barangay Health Station",                                          "06"),
+        ("Rural Health Unit or City Health Office",                          "07"),
+        ("Other (specify)",                                                  "08"),
+    ]
+    Q68_EASE = [
+        ("Very difficult", "1"),
+        ("Difficult",      "2"),
+        ("Neutral",        "3"),
+        ("Easy",           "4"),
+        ("Very easy",      "5"),
+    ]
+    INFO_SOURCE = [
+        ("News",                       "01"),
+        ("Legislation",                "02"),
+        ("Social Media",               "03"),
+        ("Friends / Family",           "04"),
+        ("Health center/facility",     "05"),
+        ("LGU/Barangay",               "06"),
+        ("I don't know",               "07"),
+        ("Other (Specify)",            "08"),
+    ]
+    Q71_GAMOT_UNDERSTANDING = [
+        ("Provides free or affordable medicines for outpatients",                "01"),
+        ("Ensures continuous availability of essential medicines",               "02"),
+        ("Helps reduce out-of-pocket expenses for medicines",                    "03"),
+        ("Supports treatment of common illnesses and chronic conditions",        "04"),
+        ("I don't know",                                                         "05"),
+        ("Other (specify)",                                                      "06"),
+    ]
+    Q74_WHERE_REST = [
+        ("Purchased from pharmacy",                "01"),
+        ("Purchased from public hospital",         "02"),
+        ("Purchased from private hospital",        "03"),
+        ("Purchased from primary care provider (PCP)", "04"),
+        ("Received from PCP for free",             "05"),
+        ("Received from LGU for free",             "06"),
+        ("Received from public hospital for free", "07"),
+        ("Received from private hospital for free", "08"),
+        ("Not applicable",                         "09"),
+        ("Other (Specify)",                        "10"),
+    ]
+    Q76_TYPE = [
+        ("Branded",                          "1"),  # proceed to Q78
+        ("Generic",                          "2"),
+        ("Both branded and generic",         "3"),
+        ("Don't know the difference",        "4"),  # proceed to Q79
+        ("Not applicable",                   "5"),  # proceed to Q79
+    ]
+    Q77_GENERIC_WHY = [
+        ("Lower cost",                                        "01"),
+        ("Prescribed by doctor",                              "02"),
+        ("Readily available",                                 "03"),
+        ("Given for free",                                    "04"),
+        ("More or as effective as branded medicine",          "05"),
+        ("I don't know",                                      "06"),
+        ("Not applicable",                                    "07"),
+        ("Other (Specify)",                                   "08"),
+    ]
+    Q78_BRANDED_WHY = [
+        ("Branded medicine is more effective than generic",   "01"),
+        ("Not aware of generic option",                       "02"),
+        ("Prescribed by doctor",                              "03"),
+        ("Given for free",                                    "04"),
+        ("Prefer branded over generic option",                "05"),
+        ("I don't know",                                      "06"),
+        ("Not applicable",                                    "07"),
+        ("Other (Specify)",                                   "08"),
+    ]
+    items = [
+        select_one("Q62_PURCHASE_FREQUENCY",
+                   "62. How often do you purchase or receive medicines?",
+                   Q62_FREQUENCY, length=1),
+        select_one("Q63_PRESCRIPTION_TYPE",
+                   "63. Was the most recent medicine purchased prescribed by a "
+                   "doctor or over-the-counter (OTC) medicine (no need for a "
+                   "prescription)?",
+                   Q63_PRESCRIPTION, length=1),
+        alpha("Q64_MEDICATIONS_LIST",
+              "64. What are the medications that you or any member of your "
+              "household usually take? (List)",
+              length=512),
+        *select_all("Q65_MEDICAL_CONDITIONS",
+                    "65. What are the medical conditions that you/your household "
+                    "member/s take the medicine/s for?",
+                    Q65_CONDITION),
+        *select_all("Q66_WHERE_BUY",
+                    "66. Where do you usually buy or receive your medicines?",
+                    Q66_WHERE),
+        alpha("Q67_TIME_TO_PHARMACY",
+              "67. How much time does it take for you to reach the nearest "
+              "pharmacy from your home? (HH:MM)",
+              length=5),
+        select_one("Q68_PHARMACY_ACCESS_EASE",
+                   "68. How easy is it for you to access a pharmacy or drugstore?",
+                   Q68_EASE, length=1),
+        yes_no("Q69_HEARD_GAMOT",
+               "69. Have you heard of the Guaranteed and Accessible Medications "
+               "for Outpatient Treatment (GAMOT) Package, which is part of "
+               "PhilHealth's YAKAP/Konsulta or primary care benefit package?"),
+        *select_all("Q70_GAMOT_SOURCE",
+                    "70. If yes, what are your sources of information for "
+                    "GAMOT Package?",
+                    INFO_SOURCE),
+        *select_all("Q71_GAMOT_UNDERSTANDING",
+                    "71. What is your understanding of the GAMOT Package?",
+                    Q71_GAMOT_UNDERSTANDING),
+        yes_no("Q72_GAMOT_OBTAINED",
+               "72. Did you get the medicines from the GAMOT Package during "
+               "the past 6 months?"),
+        alpha("Q73_GAMOT_MEDICATIONS_LIST",
+              "73. What are the medications that you obtained from the GAMOT "
+              "Package? (List)",
+              length=512),
+        *select_all("Q74_WHERE_REST_OF_MEDS",
+                    "74. Where did you get the rest of the medicines?",
+                    Q74_WHERE_REST),
+        yes_no("Q75_KNOWS_BRAND_VS_GENERIC",
+               "75. Do you know the difference between a 'branded' and a "
+               "'generic' medicine?"),
+        select_one("Q76_MED_TYPE_PURCHASED",
+                   "76. Was/were the medicine/s you bought outside of GAMOT "
+                   "pharmacy branded or generic?",
+                   Q76_TYPE, length=1),
+        *select_all("Q77_GENERIC_REASON",
+                    "77. If generic, why did you buy generic medicine?",
+                    Q77_GENERIC_WHY),
+        *select_all("Q78_BRANDED_REASON",
+                    "78. If branded, why did you buy branded medicine? "
+                    "(Ask if answer in Q76 is branded and both branded and "
+                    "generic, otherwise skip.)",
+                    Q78_BRANDED_WHY),
+    ]
     return record("G_ACCESS_TO_MEDICINES",
-                  "G. Access to Medicines", "I", [])
+                  "G. Access to Medicines", "I", items)
 
 
 def build_section_h():
