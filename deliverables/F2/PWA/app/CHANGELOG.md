@@ -6,9 +6,9 @@ All notable changes to the F2 Healthcare Worker Survey PWA (HCW Survey side + Ad
 
 ---
 
-## [Unreleased] — staged for v2.0.2
+## [2.0.2] — 2026-05-12
 
-Eight PRs merged + verified on production 2026-05-12 (Sprint 005 Day 2 — R3 prep + v2.0.2 quality slate). All changes are live at `f2-pwa.pages.dev`.
+Nine PRs merged + verified on production 2026-05-12 (Sprint 005 Day 2 — R3 prep + v2.0.2 quality slate, plus the CHANGELOG/release-notes alignment pass that bumped this version). All changes are live at `f2-pwa.pages.dev`.
 
 ### Improved (HCW survey side)
 - **Enrollment URL auto-prefill** — opening an enrollment link of the shape `/enroll?token=eyJhbGc...` now pre-fills the token textbox and enables the Verify button immediately. Pre-fix, testers and HCWs had to copy the JWT out of the address bar by hand. ([PR #279](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/pull/279))
@@ -193,8 +193,9 @@ Admin Portal R2 fix wave + v2.0.1 patch bundle. PR [#136](https://github.com/cpl
 
 ---
 
-[Unreleased]: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/v2.0.0...main
-[2.0.1]: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/v2.0.0...9bab42b
+[Unreleased]: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/compare/v2.0.2...main
+[2.0.2]: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v2.0.2
+[2.0.1]: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v2.0.1
 [2.0.0]: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v2.0.0
 [1.3.0]: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.3.0
 [1.2.0]: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/releases/tag/v1.2.0
