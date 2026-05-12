@@ -14493,7 +14493,1565 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q101_CHECKUP_FREQUENCY",
+              "labels": [
+                {
+                  "text": "101. How often do you/your household member have a general check-up on your health (i.e., when you feel healthy, without any specific illness)?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q101_CHECKUP_FREQUENCY_VS1",
+                  "labels": [
+                    {
+                      "text": "101. How often do you/your household member have a general check-up on your health (i.e., when you feel healthy, without any specific illness)?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "More than once a year"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Every year"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Every 2-3 years"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Every 4-5 years"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No set time; I've only ever done this once or twice in my life"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Never; I only go to the doctor when I am sick"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "7"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q102_WHY_VISIT_FACILITY_O01",
+              "labels": [
+                {
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Consultation for new health problem"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q102_WHY_VISIT_FACILITY_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Consultation for new health problem"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q102_WHY_VISIT_FACILITY_O02",
+              "labels": [
+                {
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Consultation to follow-up an ongoing health problem"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q102_WHY_VISIT_FACILITY_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Consultation to follow-up an ongoing health problem"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q102_WHY_VISIT_FACILITY_O03",
+              "labels": [
+                {
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For tests/diagnostics only"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q102_WHY_VISIT_FACILITY_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For tests/diagnostics only"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q102_WHY_VISIT_FACILITY_O04",
+              "labels": [
+                {
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For a general check-up"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q102_WHY_VISIT_FACILITY_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For a general check-up"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q102_WHY_VISIT_FACILITY_O05",
+              "labels": [
+                {
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 To get a health certificate/administrative reason"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q102_WHY_VISIT_FACILITY_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 To get a health certificate/administrative reason"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q102_WHY_VISIT_FACILITY_O06",
+              "labels": [
+                {
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For immunizations/vaccinations"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q102_WHY_VISIT_FACILITY_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 For immunizations/vaccinations"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q102_WHY_VISIT_FACILITY_O07",
+              "labels": [
+                {
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 My doctor transferred to this health facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q102_WHY_VISIT_FACILITY_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 My doctor transferred to this health facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q102_WHY_VISIT_FACILITY_O08",
+              "labels": [
+                {
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q102_WHY_VISIT_FACILITY_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q102_WHY_VISIT_FACILITY_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q103_CARE_ACCESSED_6MO_O01",
+              "labels": [
+                {
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q103_CARE_ACCESSED_6MO_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q103_CARE_ACCESSED_6MO_O02",
+              "labels": [
+                {
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q103_CARE_ACCESSED_6MO_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q103_CARE_ACCESSED_6MO_O03",
+              "labels": [
+                {
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q103_CARE_ACCESSED_6MO_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q103_CARE_ACCESSED_6MO_O04",
+              "labels": [
+                {
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Primary care consultation"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q103_CARE_ACCESSED_6MO_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Primary care consultation"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q103_CARE_ACCESSED_6MO_O05",
+              "labels": [
+                {
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q103_CARE_ACCESSED_6MO_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q103_CARE_ACCESSED_6MO_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "103. Have you accessed any of the following forms of care in the last 6 months? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q104_CONSULTED_FOR_PREVENTION",
+              "labels": [
+                {
+                  "text": "104. Have you ever consulted a physician for preventative reasons, such as to consult about your lifestyle, weight loss, stopping smoking, etc.?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q104_CONSULTED_FOR_PREVENTION_VS1",
+                  "labels": [
+                    {
+                      "text": "104. Have you ever consulted a physician for preventative reasons, such as to consult about your lifestyle, weight loss, stopping smoking, etc.?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q105_CHOSE_NOT_TO_SEE",
+              "labels": [
+                {
+                  "text": "105. In the last 6 months, have you or any of your household members had a medical problem and chosen NOT to see a healthcare provider?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q105_CHOSE_NOT_TO_SEE_VS1",
+                  "labels": [
+                    {
+                      "text": "105. In the last 6 months, have you or any of your household members had a medical problem and chosen NOT to see a healthcare provider?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q106_WHY_NOT_SEE_O01",
+              "labels": [
+                {
+                  "text": "106. Why not? \u2014 Not sick enough"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q106_WHY_NOT_SEE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "106. Why not? \u2014 Not sick enough"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q106_WHY_NOT_SEE_O02",
+              "labels": [
+                {
+                  "text": "106. Why not? \u2014 It's too expensive"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q106_WHY_NOT_SEE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "106. Why not? \u2014 It's too expensive"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q106_WHY_NOT_SEE_O03",
+              "labels": [
+                {
+                  "text": "106. Why not? \u2014 Could not take time off work"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q106_WHY_NOT_SEE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "106. Why not? \u2014 Could not take time off work"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q106_WHY_NOT_SEE_O04",
+              "labels": [
+                {
+                  "text": "106. Why not? \u2014 Could not get an appointment soon enough"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q106_WHY_NOT_SEE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "106. Why not? \u2014 Could not get an appointment soon enough"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q106_WHY_NOT_SEE_O05",
+              "labels": [
+                {
+                  "text": "106. Why not? \u2014 No transportation available"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q106_WHY_NOT_SEE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "106. Why not? \u2014 No transportation available"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q106_WHY_NOT_SEE_O06",
+              "labels": [
+                {
+                  "text": "106. Why not? \u2014 Afraid to know my illness"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q106_WHY_NOT_SEE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "106. Why not? \u2014 Afraid to know my illness"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q106_WHY_NOT_SEE_O07",
+              "labels": [
+                {
+                  "text": "106. Why not? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q106_WHY_NOT_SEE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "106. Why not? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q106_WHY_NOT_SEE_O08",
+              "labels": [
+                {
+                  "text": "106. Why not? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q106_WHY_NOT_SEE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "106. Why not? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q106_WHY_NOT_SEE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "106. Why not? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q107_OTHER_ACTIONS_TAKEN_O01",
+              "labels": [
+                {
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Visited other healthcare facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_OTHER_ACTIONS_TAKEN_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Visited other healthcare facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_OTHER_ACTIONS_TAKEN_O02",
+              "labels": [
+                {
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_OTHER_ACTIONS_TAKEN_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_OTHER_ACTIONS_TAKEN_O03",
+              "labels": [
+                {
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_OTHER_ACTIONS_TAKEN_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_OTHER_ACTIONS_TAKEN_O04",
+              "labels": [
+                {
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Used home care (Healthcare services and support provided to individuals in their own homes)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_OTHER_ACTIONS_TAKEN_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Used home care (Healthcare services and support provided to individuals in their own homes)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_OTHER_ACTIONS_TAKEN_O05",
+              "labels": [
+                {
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Bought medicine from a pharmacy"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_OTHER_ACTIONS_TAKEN_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Bought medicine from a pharmacy"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_OTHER_ACTIONS_TAKEN_O06",
+              "labels": [
+                {
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Did not seek other forms of care"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_OTHER_ACTIONS_TAKEN_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Did not seek other forms of care"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_OTHER_ACTIONS_TAKEN_O07",
+              "labels": [
+                {
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q107_OTHER_ACTIONS_TAKEN_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q107_OTHER_ACTIONS_TAKEN_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
         },
         {
           "name": "K_REFERRALS",
@@ -14507,7 +16065,2487 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q108_REFERRED",
+              "labels": [
+                {
+                  "text": "108. In the past 6 months, did a healthcare worker refer you to another facility or specialist for further care or specialized care?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q108_REFERRED_VS1",
+                  "labels": [
+                    {
+                      "text": "108. In the past 6 months, did a healthcare worker refer you to another facility or specialist for further care or specialized care?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O01",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O02",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O03",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O04",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O05",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Other facility visits (Care that is provided in a facility that is not a health center or hospital, such as independent diagnostic centers, TB dispensaries, etc.)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Other facility visits (Care that is provided in a facility that is not a health center or hospital, such as independent diagnostic centers, TB dispensaries, etc.)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O06",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech and language therapy)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech and language therapy)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O07",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Alternative care (Healthcare apart from medical doctors or the formal health care system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Alternative care (Healthcare apart from medical doctors or the formal health care system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O08",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Outreach / medical missions (Care provided by the government or an NGO through an outreach or medical mission within a community)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Outreach / medical missions (Care provided by the government or an NGO through an outreach or medical mission within a community)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O09",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Home healthcare (Care that is administered at the patient's home, such as birth delivery, checkups, immunization, rehabilitation, etc.)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Home healthcare (Care that is administered at the patient's home, such as birth delivery, checkups, immunization, rehabilitation, etc.)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O10",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O10_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O11",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 None of the above"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O11_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 None of the above"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_O12",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q109_CARE_TYPE_O12_VS1",
+                  "labels": [
+                    {
+                      "text": "109. What type of care was the referral for? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q109_CARE_TYPE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "109. What type of care was the referral for? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q110_SPECIALIST",
+              "labels": [
+                {
+                  "text": "110. What kind of specialist did they recommend?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q110_SPECIALIST_VS1",
+                  "labels": [
+                    {
+                      "text": "110. What kind of specialist did they recommend?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "No specialty"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Anesthesia"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Dermatology"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Emergency Medicine"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Family Medicine"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "General Surgery"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Internal Medicine"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Neurology"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Nuclear Medicine"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Obstetrics and Gynecology"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Occupational Medicine"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "11"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Ophthalmology"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "12"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Orthopedics"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "13"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Otorhinolaryngology (ENT)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "14"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Pathology"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "15"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Pediatrics"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "16"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Physical and Rehabilitation Medicine"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "17"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Psychiatry"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "18"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Public health"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "19"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Radiology"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "20"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Research"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "21"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "22"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "23"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q110_SPECIALIST_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "110. Specialist -- Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q111_HOW_REFERRED",
+              "labels": [
+                {
+                  "text": "111. How did they refer you to the doctor?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q111_HOW_REFERRED_VS1",
+                  "labels": [
+                    {
+                      "text": "111. How did they refer you to the doctor?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Physical referral slip"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "E-referral"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Phone call from referring facility to receiving facility"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q111_HOW_REFERRED_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "111. How referred -- Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q112_VISITED",
+              "labels": [
+                {
+                  "text": "112. Did you visit another facility after the referral?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q112_VISITED_VS1",
+                  "labels": [
+                    {
+                      "text": "112. Did you visit another facility after the referral?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No, I'm not planning to"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not yet, but I'm planning to"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_WHY_NOT_VISIT_O01",
+              "labels": [
+                {
+                  "text": "113. Why are you not planning to visit? \u2014 Facility is too far"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_WHY_NOT_VISIT_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Why are you not planning to visit? \u2014 Facility is too far"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_WHY_NOT_VISIT_O02",
+              "labels": [
+                {
+                  "text": "113. Why are you not planning to visit? \u2014 Do not trust the referred facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_WHY_NOT_VISIT_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Why are you not planning to visit? \u2014 Do not trust the referred facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_WHY_NOT_VISIT_O03",
+              "labels": [
+                {
+                  "text": "113. Why are you not planning to visit? \u2014 No time"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_WHY_NOT_VISIT_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Why are you not planning to visit? \u2014 No time"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_WHY_NOT_VISIT_O04",
+              "labels": [
+                {
+                  "text": "113. Why are you not planning to visit? \u2014 Worried about additional costs"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_WHY_NOT_VISIT_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Why are you not planning to visit? \u2014 Worried about additional costs"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_WHY_NOT_VISIT_O05",
+              "labels": [
+                {
+                  "text": "113. Why are you not planning to visit? \u2014 Not needed"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_WHY_NOT_VISIT_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Why are you not planning to visit? \u2014 Not needed"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_WHY_NOT_VISIT_O06",
+              "labels": [
+                {
+                  "text": "113. Why are you not planning to visit? \u2014 Don't know how to get to facility"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_WHY_NOT_VISIT_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Why are you not planning to visit? \u2014 Don't know how to get to facility"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_WHY_NOT_VISIT_O07",
+              "labels": [
+                {
+                  "text": "113. Why are you not planning to visit? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q113_WHY_NOT_VISIT_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "113. Why are you not planning to visit? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q113_WHY_NOT_VISIT_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "113. Why are you not planning to visit? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q114_DISCUSSED_OPTIONS",
+              "labels": [
+                {
+                  "text": "114. Did they discuss with you the different places you could have gone to get help with your problem?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q114_DISCUSSED_OPTIONS_VS1",
+                  "labels": [
+                    {
+                      "text": "114. Did they discuss with you the different places you could have gone to get help with your problem?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q115_HELPED_APPT",
+              "labels": [
+                {
+                  "text": "115. Did they help you make the appointment for that visit?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q115_HELPED_APPT_VS1",
+                  "labels": [
+                    {
+                      "text": "115. Did they help you make the appointment for that visit?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q116_WROTE_INFO",
+              "labels": [
+                {
+                  "text": "116. Did they write down any information for the specialist about the reason for that visit?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q116_WROTE_INFO_VS1",
+                  "labels": [
+                    {
+                      "text": "116. Did they write down any information for the specialist about the reason for that visit?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q117_FOLLOWUP",
+              "labels": [
+                {
+                  "text": "117. [Answer only \"yes\" in Q112] After you went to the specialist or special service, did they follow up with you about what happened at the visit?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q117_FOLLOWUP_VS1",
+                  "labels": [
+                    {
+                      "text": "117. [Answer only \"yes\" in Q112] After you went to the specialist or special service, did they follow up with you about what happened at the visit?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q118_SAT_REFERRAL",
+              "labels": [
+                {
+                  "text": "118. [Answer only \"yes\" in Q112] Overall, how would you rate your satisfaction with the referral process?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q118_SAT_REFERRAL_VS1",
+                  "labels": [
+                    {
+                      "text": "118. [Answer only \"yes\" in Q112] Overall, how would you rate your satisfaction with the referral process?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Very Satisfied"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Satisfied"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Neither Satisfied nor Dissatisfied"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Dissatisfied"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Very Dissatisfied"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q119_PCP_REFERRAL",
+              "labels": [
+                {
+                  "text": "119. Was the visit to the facility a referral from your primary care facility?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q119_PCP_REFERRAL_VS1",
+                  "labels": [
+                    {
+                      "text": "119. Was the visit to the facility a referral from your primary care facility?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q120_PCP_KNOWS",
+              "labels": [
+                {
+                  "text": "120. Does your primary care provider know that you made the visit?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q120_PCP_KNOWS_VS1",
+                  "labels": [
+                    {
+                      "text": "120. Does your primary care provider know that you made the visit?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_WHY_HOSPITAL_O01",
+              "labels": [
+                {
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by other specialist (doctor in another hospital)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_WHY_HOSPITAL_O01_VS1",
+                  "labels": [
+                    {
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by other specialist (doctor in another hospital)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_WHY_HOSPITAL_O02",
+              "labels": [
+                {
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Nearest facility to house"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_WHY_HOSPITAL_O02_VS1",
+                  "labels": [
+                    {
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Nearest facility to house"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_WHY_HOSPITAL_O03",
+              "labels": [
+                {
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility is usual source of care"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_WHY_HOSPITAL_O03_VS1",
+                  "labels": [
+                    {
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility is usual source of care"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_WHY_HOSPITAL_O04",
+              "labels": [
+                {
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility is the only place that can perform a certain test"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_WHY_HOSPITAL_O04_VS1",
+                  "labels": [
+                    {
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility is the only place that can perform a certain test"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_WHY_HOSPITAL_O05",
+              "labels": [
+                {
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by BHW/nurse/midwife/other community health professional"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_WHY_HOSPITAL_O05_VS1",
+                  "labels": [
+                    {
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by BHW/nurse/midwife/other community health professional"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_WHY_HOSPITAL_O06",
+              "labels": [
+                {
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by family / friends"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_WHY_HOSPITAL_O06_VS1",
+                  "labels": [
+                    {
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Referred by family / friends"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_WHY_HOSPITAL_O07",
+              "labels": [
+                {
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility offers subsidized or free health services"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_WHY_HOSPITAL_O07_VS1",
+                  "labels": [
+                    {
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Facility offers subsidized or free health services"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_WHY_HOSPITAL_O08",
+              "labels": [
+                {
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 I don't know"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_WHY_HOSPITAL_O08_VS1",
+                  "labels": [
+                    {
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 I don't know"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_WHY_HOSPITAL_O09",
+              "labels": [
+                {
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Other (Specify)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q121_WHY_HOSPITAL_O09_VS1",
+                  "labels": [
+                    {
+                      "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Other (Specify)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q121_WHY_HOSPITAL_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "121. As it was not a referral, why did you decide to visit a hospital? \u2014 Other (specify) text"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q122_PCP_DISCUSSED",
+              "labels": [
+                {
+                  "text": "122. Did your primary care provider discuss with you different places you could have gone to get help with your problem?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q122_PCP_DISCUSSED_VS1",
+                  "labels": [
+                    {
+                      "text": "122. Did your primary care provider discuss with you different places you could have gone to get help with your problem?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q123_PCP_HELPED_APPT",
+              "labels": [
+                {
+                  "text": "123. Did your primary care provider (PCP) or someone working with your PCP help you make the appointment for that visit?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q123_PCP_HELPED_APPT_VS1",
+                  "labels": [
+                    {
+                      "text": "123. Did your primary care provider (PCP) or someone working with your PCP help you make the appointment for that visit?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q124_PCP_WROTE_INFO",
+              "labels": [
+                {
+                  "text": "124. Did your primary care provider write down any information for the specialist about the reason for that visit?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q124_PCP_WROTE_INFO_VS1",
+                  "labels": [
+                    {
+                      "text": "124. Did your primary care provider write down any information for the specialist about the reason for that visit?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q125_SAT_REFERRAL_OVERALL",
+              "labels": [
+                {
+                  "text": "125. Overall, how would you rate your experience with the referral process?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q125_SAT_REFERRAL_OVERALL_VS1",
+                  "labels": [
+                    {
+                      "text": "125. Overall, how would you rate your experience with the referral process?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Very Satisfied"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Satisfied"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Neither Satisfied nor Dissatisfied"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Dissatisfied"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Very Dissatisfied"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
           "name": "L_NBB",

@@ -1211,16 +1211,258 @@ def build_section_i():
 
 
 def build_section_j():
-    """J. Household members' Health-Seeking Behavior and Outcomes."""
+    """J. Household members' Health-Seeking Behavior and Outcomes (Q101-Q107).
+
+    Skip-routing (enforced in PROC):
+      - Q105 = No (2) -> Q107 (skip Q106)
+    """
+    Q101_FREQUENCY = [
+        ("More than once a year",                                              "1"),
+        ("Every year",                                                         "2"),
+        ("Every 2-3 years",                                                    "3"),
+        ("Every 4-5 years",                                                    "4"),
+        ("No set time; I've only ever done this once or twice in my life",     "5"),
+        ("Never; I only go to the doctor when I am sick",                      "6"),
+        ("Other (Specify)",                                                    "7"),
+    ]
+    Q102_WHY_VISIT = [
+        ("Consultation for new health problem",                       "01"),
+        ("Consultation to follow-up an ongoing health problem",       "02"),
+        ("For tests/diagnostics only",                                "03"),
+        ("For a general check-up",                                    "04"),
+        ("To get a health certificate/administrative reason",         "05"),
+        ("For immunizations/vaccinations",                            "06"),
+        ("My doctor transferred to this health facility",             "07"),
+        ("Other (Specify)",                                           "08"),
+    ]
+    Q103_CARE_TYPE = [
+        ("Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)",   "01"),
+        ("Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)", "02"),
+        ("Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)", "03"),
+        ("Primary care consultation",                                                                                          "04"),
+        ("Other (Specify)",                                                                                                    "05"),
+    ]
+    Q106_WHY_NOT = [
+        ("Not sick enough",                       "01"),
+        ("It's too expensive",                    "02"),
+        ("Could not take time off work",          "03"),
+        ("Could not get an appointment soon enough", "04"),
+        ("No transportation available",           "05"),
+        ("Afraid to know my illness",             "06"),
+        ("I don't know",                          "07"),
+        ("Other (Specify)",                       "08"),
+    ]
+    Q107_OTHER_ACTIONS = [
+        ("Visited other healthcare facility",                                                                                            "01"),
+        ("Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)", "02"),
+        ("Sought telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)",                   "03"),
+        ("Used home care (Healthcare services and support provided to individuals in their own homes)",                                  "04"),
+        ("Bought medicine from a pharmacy",                                                                                              "05"),
+        ("Did not seek other forms of care",                                                                                             "06"),
+        ("Other (Specify)",                                                                                                              "07"),
+    ]
+    items = [
+        select_one("Q101_CHECKUP_FREQUENCY",
+                   "101. How often do you/your household member have a general "
+                   "check-up on your health (i.e., when you feel healthy, "
+                   "without any specific illness)?",
+                   Q101_FREQUENCY, length=1),
+        *select_all("Q102_WHY_VISIT_FACILITY",
+                    "102. What best describes why you/your household member will "
+                    "visit a health facility (e.g. RHU, health center, clinic, "
+                    "hospital)?",
+                    Q102_WHY_VISIT),
+        *select_all("Q103_CARE_ACCESSED_6MO",
+                    "103. Have you accessed any of the following forms of care "
+                    "in the last 6 months?",
+                    Q103_CARE_TYPE),
+        yes_no("Q104_CONSULTED_FOR_PREVENTION",
+               "104. Have you ever consulted a physician for preventative "
+               "reasons, such as to consult about your lifestyle, weight loss, "
+               "stopping smoking, etc.?"),
+        yes_no("Q105_CHOSE_NOT_TO_SEE",
+               "105. In the last 6 months, have you or any of your household "
+               "members had a medical problem and chosen NOT to see a "
+               "healthcare provider?"),
+        *select_all("Q106_WHY_NOT_SEE",
+                    "106. Why not?",
+                    Q106_WHY_NOT),
+        *select_all("Q107_OTHER_ACTIONS_TAKEN",
+                    "107. Did you or your household members do any other "
+                    "actions to improve your/their health condition or "
+                    "address your/their health concern?",
+                    Q107_OTHER_ACTIONS),
+    ]
     return record("J_HEALTH_SEEKING",
                   "J. Household members' Health-Seeking Behavior and Outcomes",
-                  "L", [])
+                  "L", items)
 
 
 def build_section_k():
-    """K. Experiences and Satisfaction with Referrals."""
+    """K. Experiences and Satisfaction with Referrals (Q108-Q125).
+
+    Skip-routing (enforced in PROC):
+      - Q108 = No (2) -> Q126 (skip Q109-Q125; entire section K body)
+      - Q112 = Yes (1) -> Q114 (skip Q113)
+      - Q112 = Not yet but planning (3) -> Q114 (skip Q113)
+      - Q112 = No, not planning (2) -> Q113 -> Q119 (skip Q114-Q118)
+      - Q117 only when Q112 = Yes (1) -- per PDF gate
+      - Q118 only when Q112 = Yes (1) -- per PDF gate
+      - Q119 = No (2) -> Q121 (skip Q120)
+
+    Q110 specialist value set is large (24 options) and mirrors F3 Q164.
+    """
+    Q109_CARE_TYPE = [
+        ("Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)",                              "01"),
+        ("Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)",   "02"),
+        ("Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)",                          "03"),
+        ("Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)",                                                                 "04"),
+        ("Other facility visits (Care that is provided in a facility that is not a health center or hospital, such as independent diagnostic centers, TB dispensaries, etc.)", "05"),
+        ("Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech and language therapy)", "06"),
+        ("Alternative care (Healthcare apart from medical doctors or the formal health care system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)", "07"),
+        ("Outreach / medical missions (Care provided by the government or an NGO through an outreach or medical mission within a community)",            "08"),
+        ("Home healthcare (Care that is administered at the patient's home, such as birth delivery, checkups, immunization, rehabilitation, etc.)",      "09"),
+        ("Telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)",                                          "10"),
+        ("None of the above",                                                                                                                            "11"),
+        ("Other (Specify)",                                                                                                                              "12"),
+    ]
+    Q110_SPECIALIST = [
+        ("No specialty",                              "01"),
+        ("Anesthesia",                                "02"),
+        ("Dermatology",                               "03"),
+        ("Emergency Medicine",                        "04"),
+        ("Family Medicine",                           "05"),
+        ("General Surgery",                           "06"),
+        ("Internal Medicine",                         "07"),
+        ("Neurology",                                 "08"),
+        ("Nuclear Medicine",                          "09"),
+        ("Obstetrics and Gynecology",                 "10"),
+        ("Occupational Medicine",                     "11"),
+        ("Ophthalmology",                             "12"),
+        ("Orthopedics",                               "13"),
+        ("Otorhinolaryngology (ENT)",                 "14"),
+        ("Pathology",                                 "15"),
+        ("Pediatrics",                                "16"),
+        ("Physical and Rehabilitation Medicine",      "17"),
+        ("Psychiatry",                                "18"),
+        ("Public health",                             "19"),
+        ("Radiology",                                 "20"),
+        ("Research",                                  "21"),
+        ("I don't know",                              "22"),
+        ("Other (Specify)",                           "23"),
+    ]
+    Q111_HOW_REFERRED = [
+        ("Physical referral slip",                                       "1"),
+        ("E-referral",                                                   "2"),
+        ("Phone call from referring facility to receiving facility",     "3"),
+        ("I don't know",                                                 "4"),
+        ("Other (Specify)",                                              "5"),
+    ]
+    Q112_VISITED = [
+        ("Yes",                              "1"),  # proceed to Q114
+        ("No, I'm not planning to",          "2"),
+        ("Not yet, but I'm planning to",     "3"),  # proceed to Q114
+    ]
+    Q113_WHY_NOT_VISIT = [
+        ("Facility is too far",                       "1"),
+        ("Do not trust the referred facility",        "2"),
+        ("No time",                                   "3"),
+        ("Worried about additional costs",            "4"),
+        ("Not needed",                                "5"),
+        ("Don't know how to get to facility",         "6"),
+        ("Other (Specify)",                           "7"),
+    ]
+    SATISFACTION_6PT = [
+        ("Very Satisfied",                     "1"),
+        ("Satisfied",                          "2"),
+        ("Neither Satisfied nor Dissatisfied", "3"),
+        ("Dissatisfied",                       "4"),
+        ("Very Dissatisfied",                  "5"),
+        ("Not applicable",                     "6"),
+    ]
+    Q120_PCP_KNOWS = [
+        ("Yes",          "1"),
+        ("No",           "2"),
+        ("I don't know", "3"),
+    ]
+    Q121_WHY_HOSPITAL = [
+        ("Referred by other specialist (doctor in another hospital)",         "01"),
+        ("Nearest facility to house",                                         "02"),
+        ("Facility is usual source of care",                                  "03"),
+        ("Facility is the only place that can perform a certain test",        "04"),
+        ("Referred by BHW/nurse/midwife/other community health professional", "05"),
+        ("Referred by family / friends",                                      "06"),
+        ("Facility offers subsidized or free health services",                "07"),
+        ("I don't know",                                                      "08"),
+        ("Other (Specify)",                                                   "09"),
+    ]
+    items = [
+        yes_no("Q108_REFERRED",
+               "108. In the past 6 months, did a healthcare worker refer you "
+               "to another facility or specialist for further care or "
+               "specialized care?"),
+        *select_all("Q109_CARE_TYPE",
+                    "109. What type of care was the referral for?",
+                    Q109_CARE_TYPE),
+        select_one("Q110_SPECIALIST",
+                   "110. What kind of specialist did they recommend?",
+                   Q110_SPECIALIST, length=2),
+        alpha("Q110_SPECIALIST_OTHER_TXT",
+              "110. Specialist -- Other (specify) text", length=120),
+        select_one("Q111_HOW_REFERRED",
+                   "111. How did they refer you to the doctor?",
+                   Q111_HOW_REFERRED, length=1),
+        alpha("Q111_HOW_REFERRED_OTHER_TXT",
+              "111. How referred -- Other (specify) text", length=120),
+        select_one("Q112_VISITED",
+                   "112. Did you visit another facility after the referral?",
+                   Q112_VISITED, length=1),
+        *select_all("Q113_WHY_NOT_VISIT",
+                    "113. Why are you not planning to visit?",
+                    Q113_WHY_NOT_VISIT),
+        yes_no("Q114_DISCUSSED_OPTIONS",
+               "114. Did they discuss with you the different places you could "
+               "have gone to get help with your problem?"),
+        yes_no("Q115_HELPED_APPT",
+               "115. Did they help you make the appointment for that visit?"),
+        yes_no("Q116_WROTE_INFO",
+               "116. Did they write down any information for the specialist "
+               "about the reason for that visit?"),
+        yes_no("Q117_FOLLOWUP",
+               "117. [Answer only \"yes\" in Q112] After you went to the "
+               "specialist or special service, did they follow up with you "
+               "about what happened at the visit?"),
+        select_one("Q118_SAT_REFERRAL",
+                   "118. [Answer only \"yes\" in Q112] Overall, how would you "
+                   "rate your satisfaction with the referral process?",
+                   SATISFACTION_6PT, length=1),
+        yes_no("Q119_PCP_REFERRAL",
+               "119. Was the visit to the facility a referral from your "
+               "primary care facility?"),
+        select_one("Q120_PCP_KNOWS",
+                   "120. Does your primary care provider know that you made "
+                   "the visit?",
+                   Q120_PCP_KNOWS, length=1),
+        *select_all("Q121_WHY_HOSPITAL",
+                    "121. As it was not a referral, why did you decide to "
+                    "visit a hospital?",
+                    Q121_WHY_HOSPITAL),
+        yes_no("Q122_PCP_DISCUSSED",
+               "122. Did your primary care provider discuss with you different "
+               "places you could have gone to get help with your problem?"),
+        yes_no("Q123_PCP_HELPED_APPT",
+               "123. Did your primary care provider (PCP) or someone working "
+               "with your PCP help you make the appointment for that visit?"),
+        yes_no("Q124_PCP_WROTE_INFO",
+               "124. Did your primary care provider write down any information "
+               "for the specialist about the reason for that visit?"),
+        select_one("Q125_SAT_REFERRAL_OVERALL",
+                   "125. Overall, how would you rate your experience with the "
+                   "referral process?",
+                   SATISFACTION_6PT, length=1),
+    ]
     return record("K_REFERRALS",
-                  "K. Experiences and Satisfaction with Referrals", "M", [])
+                  "K. Experiences and Satisfaction with Referrals", "M", items)
 
 
 def build_section_l():
