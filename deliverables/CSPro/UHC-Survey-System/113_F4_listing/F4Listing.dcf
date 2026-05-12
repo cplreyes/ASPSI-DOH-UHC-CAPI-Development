@@ -1,0 +1,911 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "F4LISTING_DICT",
+  "labels": [
+    {
+      "text": "F4Listing"
+    }
+  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 1,
+    "length": 1
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": false
+  },
+  "relativePositions": true,
+  "levels": [
+    {
+      "name": "F4LISTING_LEVEL",
+      "labels": [
+        {
+          "text": "F4Listing Level"
+        }
+      ],
+      "ids": {
+        "items": [
+          {
+            "name": "REGION_CODE",
+            "labels": [
+              {
+                "text": "Region Code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 2,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "PROVINCE_HUC_CODE",
+            "labels": [
+              {
+                "text": "Province / HUC Code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 4,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "CITY_MUNICIPALITY_CODE",
+            "labels": [
+              {
+                "text": "City / Municipality Code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 6,
+            "length": 3,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "FACILITY_NO",
+            "labels": [
+              {
+                "text": "Facility No"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 9,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "LISTING_SESSION_DATE",
+            "labels": [
+              {
+                "text": "Listing Session Date (YYYYMMDD)"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 11,
+            "length": 8,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "LISTING_SESSION_SEQ",
+            "labels": [
+              {
+                "text": "Listing Session Sequence (per facility-day)"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 19,
+            "length": 3,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "F4LISTING_REC",
+          "labels": [
+            {
+              "text": "F4Listing Record"
+            }
+          ],
+          "recordType": "1",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "REC_LISTING_CONTROL",
+          "labels": [
+            {
+              "text": "Listing Session Control"
+            }
+          ],
+          "recordType": "A",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "SURVEY_CODE",
+              "labels": [
+                {
+                  "text": "Survey Instrument Code (F4L)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 3
+            },
+            {
+              "name": "DATE_SESSION",
+              "labels": [
+                {
+                  "text": "Date of Listing Session (YYYYMMDD)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "TIME_SESSION_START",
+              "labels": [
+                {
+                  "text": "Session Start Time (HHMMSS)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 6,
+              "zeroFill": false
+            },
+            {
+              "name": "TIME_SESSION_END",
+              "labels": [
+                {
+                  "text": "Session End Time (HHMMSS)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 6,
+              "zeroFill": false
+            },
+            {
+              "name": "ENUMERATOR_ID",
+              "labels": [
+                {
+                  "text": "Enumerator ID"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": true
+            },
+            {
+              "name": "SUPERVISOR_ID",
+              "labels": [
+                {
+                  "text": "Survey Team Leader / Supervisor ID"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": true
+            },
+            {
+              "name": "BARANGAY_CODE",
+              "labels": [
+                {
+                  "text": "Barangay (10-digit PSGC)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "BARANGAY_CODE_VS1",
+                  "labels": [
+                    {
+                      "text": "Barangay (10-digit PSGC)"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "(set at runtime)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "0000000000"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "BARANGAY_NAME",
+              "labels": [
+                {
+                  "text": "Barangay Name (for operator confirmation)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 100
+            },
+            {
+              "name": "LISTING_SOURCE",
+              "labels": [
+                {
+                  "text": "Source of household frame"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "LISTING_SOURCE_VS1",
+                  "labels": [
+                    {
+                      "text": "Source of household frame"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Captain-supplied list (primary path)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Fresh door-to-door enumeration (captain list missing)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "FRAME_TARGET",
+              "labels": [
+                {
+                  "text": "Households to list in this barangay today"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "REPLACEMENT_RESERVES",
+              "labels": [
+                {
+                  "text": "Replacement reserves (default 10)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "LISTED_COUNT",
+              "labels": [
+                {
+                  "text": "Households listed so far"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "REFUSED_COUNT",
+              "labels": [
+                {
+                  "text": "Households who refused listing"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "EXCLUDED_COUNT",
+              "labels": [
+                {
+                  "text": "Households excluded (ineligible)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "SESSION_STATUS",
+              "labels": [
+                {
+                  "text": "Session Disposition"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "SESSION_STATUS_VS1",
+                  "labels": [
+                    {
+                      "text": "Session Disposition"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "In progress"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Closed \u2014 frame complete"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Closed \u2014 barangay-day ended"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Aborted \u2014 operator"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Aborted \u2014 error"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "FRAME_NOTES",
+              "labels": [
+                {
+                  "text": "Free-text notes from the enumerator (frame source, deviations, captain status)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 240
+            }
+          ]
+        },
+        {
+          "name": "REC_LISTING_BRGY_FRAME",
+          "labels": [
+            {
+              "text": "Barangay Household Listing Frame"
+            }
+          ],
+          "recordType": "P",
+          "occurrences": {
+            "required": false,
+            "maximum": 999
+          },
+          "items": [
+            {
+              "name": "LISTING_NO",
+              "labels": [
+                {
+                  "text": "Listing roster sequence"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": true
+            },
+            {
+              "name": "F4_STATUS",
+              "labels": [
+                {
+                  "text": "F4 interview status"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "F4_STATUS_VS1",
+                  "labels": [
+                    {
+                      "text": "F4 interview status"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Pending \u2014 not yet attempted"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "0"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Completed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In progress"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refused at F4"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Postponed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ASSIGNED_F4_CASE_SEQ",
+              "labels": [
+                {
+                  "text": "F4 CASE_SEQ once F4 consumes this row"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true
+            },
+            {
+              "name": "FROM_RESERVE_POOL",
+              "labels": [
+                {
+                  "text": "Drawn from replacement reserve pool"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "FROM_RESERVE_POOL_VS1",
+                  "labels": [
+                    {
+                      "text": "Drawn from replacement reserve pool"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "HEAD_LAST_NAME",
+              "labels": [
+                {
+                  "text": "Household head last name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 40
+            },
+            {
+              "name": "HEAD_FIRST_NAME",
+              "labels": [
+                {
+                  "text": "Household head first name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 40
+            },
+            {
+              "name": "HEAD_MIDDLE_INIT",
+              "labels": [
+                {
+                  "text": "Household head middle initial (or hyphen if none)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 5
+            },
+            {
+              "name": "HEAD_NAME_EXT",
+              "labels": [
+                {
+                  "text": "Household head name extension (e.g., Jr., III)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 10
+            },
+            {
+              "name": "HH_ADDRESS",
+              "labels": [
+                {
+                  "text": "Household address (street / sitio / purok)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 200
+            },
+            {
+              "name": "MOBILE",
+              "labels": [
+                {
+                  "text": "Household contact mobile (09xxxxxxxxx; blank if none)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 11
+            },
+            {
+              "name": "HH_ELIGIBLE",
+              "labels": [
+                {
+                  "text": "Household meets F4 eligibility criteria"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "HH_ELIGIBLE_VS1",
+                  "labels": [
+                    {
+                      "text": "Household meets F4 eligibility criteria"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes \u2014 household meets F4 eligibility"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No \u2014 household ineligible"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not applicable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "INELIGIBLE_REASON",
+              "labels": [
+                {
+                  "text": "If ineligible, brief reason (free text)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
+        },
+        {
+          "name": "REC_LISTING_BARANGAY_GPS",
+          "labels": [
+            {
+              "text": "Barangay GPS Capture (listing session)"
+            }
+          ],
+          "recordType": "Z",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "BARANGAY_GPS_LATITUDE",
+              "labels": [
+                {
+                  "text": "GPS Latitude"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 12
+            },
+            {
+              "name": "BARANGAY_GPS_LONGITUDE",
+              "labels": [
+                {
+                  "text": "GPS Longitude"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 12
+            },
+            {
+              "name": "BARANGAY_GPS_ALTITUDE",
+              "labels": [
+                {
+                  "text": "GPS Altitude (m)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 10
+            },
+            {
+              "name": "BARANGAY_GPS_ACCURACY",
+              "labels": [
+                {
+                  "text": "GPS Accuracy (m)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "BARANGAY_GPS_SATELLITES",
+              "labels": [
+                {
+                  "text": "GPS Satellites"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "BARANGAY_GPS_READTIME",
+              "labels": [
+                {
+                  "text": "GPS Read Time (UTC)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 19
+            },
+            {
+              "name": "BARANGAY_CAPTURE_GPS",
+              "labels": [
+                {
+                  "text": "Capture GPS"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "BARANGAY_CAPTURE_GPS_VS1",
+                  "labels": [
+                    {
+                      "text": "Capture GPS"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Capture GPS now"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
