@@ -1466,17 +1466,227 @@ def build_section_k():
 
 
 def build_section_l():
-    """L. NBB Awareness and Utilization."""
+    """L. No Balance Billing (NBB) Awareness and Utilization (Q126-Q131).
+
+    Skip-routing (enforced in PROC):
+      - Q126 = No (2) or DK (3) -> Q132 (skip Q127-Q131; entire section L
+        body skipped except the gate).
+      - Q129 = No (2) or DK (3) -> Q132 (skip Q130, Q131).
+      - Q130 = Public (1) -> Q132 (skip Q131).
+      - Q130 = Private (3) -> Q132 (skip Q131).
+      - Q131 only when Q130 = DOH-retained hospital (2).
+    """
+    Q126_HEARD_NBB = [
+        ("Yes",          "1"),
+        ("No",           "2"),  # proceed to Q132
+        ("I don't know", "3"),  # proceed to Q132
+    ]
+    INFO_SOURCE = [
+        ("News",                       "01"),
+        ("Legislation",                "02"),
+        ("Social Media",               "03"),
+        ("Friends / Family",           "04"),
+        ("Health center/facility",     "05"),
+        ("LGU/Barangay",               "06"),
+        ("I don't know",               "07"),
+        ("Other (Specify)",            "08"),
+    ]
+    NBB_UNDERSTANDING = [
+        ("Patient does not pay any hospital bill",                              "01"),
+        ("PhilHealth will cover cost of treatment",                             "02"),
+        ("Medicine and service are already included",                           "03"),
+        ("No cash payment required upon discharge",                             "04"),
+        ("Applies only to certain patients or hospitals",                       "05"),
+        ("Bills are settled between the hospital and PhilHealth",               "06"),
+        ("Patients should not be charged extra fees",                           "07"),
+        ("I don't know",                                                        "08"),
+        ("Other (Specify)",                                                     "09"),
+    ]
+    Q129_CONFINED = [
+        ("Yes",          "1"),
+        ("No",           "2"),  # proceed to Q132
+        ("I don't know", "3"),  # proceed to Q132
+    ]
+    Q130_HOSPITAL_TYPE = [
+        ("Public",                                              "1"),  # proceed to Q132
+        ("DOH-retained hospital (sub-type of public hospital)", "2"),
+        ("Private",                                             "3"),  # proceed to Q132
+    ]
+    Q131_OOP = [
+        ("Yes",          "1"),
+        ("No",           "2"),
+        ("I don't know", "3"),
+    ]
+    items = [
+        select_one("Q126_HEARD_NBB",
+                   "126. Have you heard of the No Balance Billing (NBB)?",
+                   Q126_HEARD_NBB, length=1),
+        *select_all("Q127_NBB_SOURCE",
+                    "127. If yes, what are your sources of information about NBB?",
+                    INFO_SOURCE),
+        *select_all("Q128_NBB_UNDERSTANDING",
+                    "128. What is your understanding about NBB?",
+                    NBB_UNDERSTANDING),
+        select_one("Q129_HOSPITALIZED_6MO",
+                   "129. Were you or any of your household members confined in "
+                   "a hospital during the past 6 months?",
+                   Q129_CONFINED, length=1),
+        select_one("Q130_HOSPITAL_TYPE",
+                   "130. For the most recent hospitalization, what type of hospital?",
+                   Q130_HOSPITAL_TYPE, length=1),
+        select_one("Q131_OOP_NBB",
+                   "131. [Ask only if they went to a DOH-retained hospital] "
+                   "During your hospitalization in a DOH-retained hospital, "
+                   "did you or your family pay anything out-of-pocket before "
+                   "being discharged that should have been covered under NBB?",
+                   Q131_OOP, length=1),
+    ]
     return record("L_NBB",
                   "L. No Balance Billing (NBB) Awareness and Utilization",
-                  "N", [])
+                  "N", items)
 
 
 def build_section_m():
-    """M. ZBB Awareness and Utilization."""
+    """M. Zero Balance Billing (ZBB) Awareness and Utilization (Q132-Q143).
+
+    Section M is broader than its title suggests: ZBB awareness Q132-Q135,
+    MAIFIP awareness Q136-Q137, and per-visit bill detail Q138-Q143.1
+    are all grouped under M per the PDF layout.
+
+    Skip-routing (enforced in PROC):
+      - Q132 = No (2) or DK (3) -> Q137 (skip Q133, Q134; "skip to Q137"
+        per PDF). Note: Q135 is conditionally applicable only to
+        DOH-retained hospital stays (per Q130 gating), so when Q130 = Public
+        or Private the Q135 question itself is skipped regardless of Q132.
+      - Q136 = No (2) or DK (3) -> Q138 (skip Q137).
+      - Q140 = No (2) -> Q142 (skip Q141, Q141.1) -- inferred from PDF flow;
+        Q141 asks "which were included in the bill" which only makes sense
+        when respondent recalls the breakdown.
+      - Q142 = No (2) -> Q144 (skip Q143).
+
+    Doc-level note (lifted to F4-Skip-Logic-and-Validations.md spec):
+      - Q136 PDF text says "(SKIP iF ANSWERED MAIFIP IN Q113)" -- Q113 is
+        the referral-not-visiting reasons and does not contain a MAIFIP
+        option. The reference appears to be a transcription artifact from
+        a prior questionnaire version. Treated as a no-op for the DCF;
+        revisit in PROC after Myra's edit pass.
+    """
+    Q132_HEARD_ZBB = [
+        ("Yes",          "1"),
+        ("No",           "2"),  # proceed to Q137
+        ("I don't know", "3"),  # proceed to Q137
+    ]
+    INFO_SOURCE = [
+        ("News",                       "01"),
+        ("Legislation",                "02"),
+        ("Social Media",               "03"),
+        ("Friends / Family",           "04"),
+        ("Health center/facility",     "05"),
+        ("LGU/Barangay",               "06"),
+        ("I don't know",               "07"),
+        ("Other (Specify)",            "08"),
+    ]
+    ZBB_UNDERSTANDING = [
+        ("Patient does not pay any hospital bill",                              "01"),
+        ("PhilHealth will cover cost of treatment",                             "02"),
+        ("Medicine and service are already included",                           "03"),
+        ("No cash payment required upon discharge",                             "04"),
+        ("Applies only to certain patients or hospitals",                       "05"),
+        ("Bills are settled between the hospital and PhilHealth",               "06"),
+        ("Patients should not be charged extra fees",                           "07"),
+        ("I don't know",                                                        "08"),
+        ("Other (Specify)",                                                     "09"),
+    ]
+    Q135_OOP = [
+        ("Yes",          "1"),
+        ("No",           "2"),
+        ("I don't know", "3"),
+    ]
+    Q136_HEARD_MAIFIP = [
+        ("Yes",          "1"),
+        ("No",           "2"),  # proceed to Q138
+        ("I don't know", "3"),  # proceed to Q138
+    ]
+    Q138_MOST_EXPENSIVE = [
+        ("Medicine",            "1"),
+        ("Laboratory Tests",    "2"),
+        ("Medical Supplies",    "3"),
+        ("Doctor's Fee",        "4"),
+    ]
+    Q141_INCLUDED = [
+        ("Rooms <for inpatients only>",          "01"),
+        ("Doctor's Fee",                         "02"),
+        ("Diagnostic or laboratory procedure",   "03"),
+        ("Medical equipment or supplies",        "04"),
+        ("Medicines or drugs",                   "05"),
+        ("Non-medical expenses (e.g. hygiene kit)", "06"),
+        ("Other expenses",                       "07"),
+    ]
+    Q143_HOW_PAID = [
+        ("Own income/ household income",                   "01"),
+        ("PhilHealth",                                     "02"),
+        ("Private insurance / HMO",                        "03"),
+        ("Loan",                                           "04"),
+        ("Sale of assets",                                 "05"),
+        ("Donations from charities / NGOs",                "06"),
+        ("Donations from LGUs / LGU programs",             "07"),
+        ("National Government Agencies (DSWD, etc.)",      "08"),
+        ("Paid by someone else",                           "09"),
+        ("Other (Specify)",                                "10"),
+    ]
+    items = [
+        select_one("Q132_HEARD_ZBB",
+                   "132. Have you heard of the Zero Balance Billing (ZBB)?",
+                   Q132_HEARD_ZBB, length=1),
+        *select_all("Q133_ZBB_SOURCE",
+                    "133. If yes, what are your sources of information about ZBB?",
+                    INFO_SOURCE),
+        *select_all("Q134_ZBB_UNDERSTANDING",
+                    "134. What is your understanding about ZBB?",
+                    ZBB_UNDERSTANDING),
+        select_one("Q135_OOP_ZBB",
+                   "135. [Ask only if they went to a DOH-retained hospital] "
+                   "During your hospitalization in a DOH-retained hospital, "
+                   "did you or your family pay anything out-of-pocket before "
+                   "being discharged that should have been covered under ZBB?",
+                   Q135_OOP, length=1),
+        select_one("Q136_HEARD_MAIFIP",
+                   "136. Have you heard of the Medical Assistance for Indigent "
+                   "and Financially Incapacitated Patients (MAIFIP)? "
+                   "(SKIP iF ANSWERED MAIFIP IN Q113)",
+                   Q136_HEARD_MAIFIP, length=1),
+        *select_all("Q137_MAIFIP_SOURCE",
+                    "137. What are your sources of information about MAIFIP?",
+                    INFO_SOURCE),
+        select_one("Q138_MOST_EXPENSIVE_CHARGE",
+                   "138. From your most recent visit, which among the charges "
+                   "was the most expensive?",
+                   Q138_MOST_EXPENSIVE, length=1),
+        numeric("Q139_FINAL_AMOUNT_PAID",
+                "139. From your most recent visit, what was the final amount "
+                "you paid in cash at the hospital cashier upon discharge?",
+                length=10),
+        yes_no("Q140_RECALL_BREAKDOWN",
+               "140. From your most recent visit, do you recall the breakdown "
+               "of the bill?"),
+        *select_all("Q141_INCLUDED_IN_BILL",
+                    "141. From your most recent visit, which of the following "
+                    "were included in the bill?",
+                    Q141_INCLUDED),
+        numeric("Q141_1_NO_RECEIPT_AMOUNT",
+                "141.1. From your recent visit, how much was charged for "
+                "services with no receipts provided ie. Professional fees -- Amount",
+                length=10),
+        yes_no("Q142_RECALL_HOW_PAID",
+               "142. From your most recent visit, do you recall how you paid "
+               "for your bill?"),
+        *select_all("Q143_HOW_PAID",
+                    "143. From your most recent visit, how did you pay?",
+                    Q143_HOW_PAID),
+    ]
     return record("M_ZBB",
                   "M. Zero Balance Billing (ZBB) Awareness and Utilization",
-                  "O", [])
+                  "O", items)
 
 
 def build_section_n():
