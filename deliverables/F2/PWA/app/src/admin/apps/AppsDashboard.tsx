@@ -27,7 +27,7 @@ const TABS: Array<{ key: TabKey; label: string; description: string }> = [
     key: 'versioning',
     label: 'Versioning',
     description:
-      'Live build identifiers (PWA bundle, Worker, Apps Script) and per-spec submission counts. First place to look during incident triage.',
+      'Live build identifiers (PWA bundle + SHA, Worker, last Pages deploy) and per-spec submission counts. First place to look during incident triage.',
   },
   {
     key: 'files',
