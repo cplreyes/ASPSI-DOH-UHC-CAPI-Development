@@ -1460,15 +1460,138 @@ preproc
     { Section N terminus -- fall through to Section O. }
 
 
-{ Sections O-Q + edits + household-pick stub + roster auto-fill land in }
-{ commits 8-9. The .apc file ends here for commit 7.                    }
+{ ===================================================================== }
+{  Section O -- Sources of Funds for Health (Q186-Q196)                  }
+{ ===================================================================== }
+
+PROC Q194_OTHER_TXT
+preproc
+    { Other-specify gate: only ask the txt field when Q194 = Yes (1). }
+    if Q194_OTHER <> 1 then
+        skip to Q195_PORTION_FOR_HEALTH;
+    endif;
+postproc
+    if Q194_OTHER = 1 and strlen(strip(Q194_OTHER_TXT)) = 0 then
+        errmsg("Please specify the 'Other' source of funds for health.");
+        reenter;
+    endif;
+
+
+PROC Q195_PORTION_FOR_HEALTH
+postproc
+    { Per spec §2 Section O:
+        - Q195 = None (1)                       -> continue to Q196.
+        - Q195 = Less than 1% (2) | 1-3% (3) |
+                 4-6% (4) | More than 6% (5) |
+                 DK (6)                          -> Q197 (skip Q196). }
+    if Q195_PORTION_FOR_HEALTH in 2, 3, 4, 5, 6 then
+        skip to Q197_DELAYED_CARE;
+    endif;
+
+
+{ ===================================================================== }
+{  Section P -- Financial Risk Protection (Q197-Q199)                    }
+{  No internal skips per spec §2 Section P. Q197, Q198, Q199 all asked. }
+{ ===================================================================== }
+
+PROC Q199_WILLING_TO_PAY_OTHER_TXT
+preproc
+    { Other-specify gate. Q199 value set last code is the Other; treat
+      a high code as Other. The DCF generator fixes the value; using
+      code 5 as Other based on archived F4 generator. }
+    if Q199_WILLING_TO_PAY <> 5 then
+        skip to Q200_REDUCED_SPENDING;
+    endif;
+postproc
+    if Q199_WILLING_TO_PAY = 5 and
+       strlen(strip(Q199_WILLING_TO_PAY_OTHER_TXT)) = 0 then
+        errmsg("Please specify the 'Other' willing-to-pay reason.");
+        reenter;
+    endif;
+
+
+{ ===================================================================== }
+{  Section Q -- Financial Anxiety (Q200-Q202)                            }
+{  End-of-survey terminators.                                           }
+{ ===================================================================== }
+
+PROC Q200_REDUCED_SPENDING
+postproc
+    { Per spec §2 Section Q + §1 finding #15:
+        - Q200 = Refused (4) -> END OF SURVEY (skip Q201, Q202);
+                                terminator with ENUM_RESULT set
+                                appropriately. }
+    if Q200_REDUCED_SPENDING = 4 then   { 4 = Refused }
+        AAPOR_DISPOSITION        = AAPOR_REFUSED;
+        ENUM_RESULT_FINAL_VISIT  = VISIT_RESULT_WITHDRAW_CONSENT;
+        DATE_FINAL_VISIT         = SYSDATE("YYYYMMDD");
+        endcase;
+    endif;
+
+
+PROC Q201_WORRIED_FINANCES
+postproc
+    { Per spec §2 Section Q + §1 finding #15:
+        - Q201 = Not worried at all (4) -> END OF SURVEY (skip Q202);
+                                            set ENUM_RESULT_FINAL_VISIT
+                                            = Completed. }
+    if Q201_WORRIED_FINANCES = 4 then   { 4 = Not worried at all }
+        CloseCaseAsComplete();
+        endcase;
+    endif;
+
+
+PROC Q202_WHY_WORRIED_O01
+preproc
+    { Q202 only asked when Q201 in (1, 2, 3) -- "worried" responses.
+      Q201 = 4 already terminated via Q201.postproc above; defence-in-
+      depth here for the focus-shift edge case. }
+
+
+PROC Q202_WHY_WORRIED_OTHER_TXT
+postproc
+    { Section Q terminus -- close the case as a complete interview after
+      the Q202 select_all is captured. }
+    CloseCaseAsComplete();
+
+
+{ ===================================================================== }
+{  GPS + photo capture handlers -- wire shared helpers                   }
+{ ===================================================================== }
+
+PROC HH_CAPTURE_GPS
+onfocus
+    { Trigger field -- when the operator taps "Capture GPS now" the
+      onfocus calls ReadGPSReading() with the F-series defaults:
+      maxTimeSec=60, desiredAccuracyM=20. Results are written to
+      HH_GPS_LATITUDE, ..., HH_GPS_READTIME. See
+      shared/Capture-Helpers.apc for the helper definition. }
+    ReadGPSReading(60, 20);
+
+
+PROC CAPTURE_VERIFICATION_PHOTO
+onfocus
+    { Trigger field -- when the operator taps "Take verification photo
+      now" the onfocus calls TakeVerificationPhoto() with a per-case
+      filename derived from the 12-digit case-ID block. See
+      shared/Capture-Helpers.apc for the helper definition. }
+    string photo_filename = maketext("F4_%03d_%03d_%03d_%03d_%03d.jpg",
+        REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE,
+        FACILITY_NO, CASE_SEQ);
+    if TakeVerificationPhoto(photo_filename) then
+        VERIFICATION_PHOTO_FILENAME = photo_filename;
+    endif;
+
+
+{ Household-pick stub + respondent-row-1 auto-fill land in commit 9.    }
+{ The .apc file ends here for commit 8.                                  }
 '''
 
 
 def main():
     (HERE / "HouseholdSurvey.ent.apc").write_text(APC, encoding="utf-8")
     print(f"wrote HouseholdSurvey.ent.apc ({len(APC)} chars; "
-          f"commit 7/9 -- Section N expenditure quads + 4 computed totals)")
+          f"commit 8/9 -- Sections O-Q + end-of-survey terminators)")
 
 
 if __name__ == "__main__":
