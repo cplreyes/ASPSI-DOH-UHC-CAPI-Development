@@ -107,7 +107,7 @@ export function SyncReport({ apiBaseUrl, fetchImpl }: SyncReportProps): JSX.Elem
     return () => {
       cancelled = true;
     };
-  }, [apiQuery, apiBaseUrl, token]);
+  }, [apiQuery, apiBaseUrl, token, clearAuth, navigate, fetchImpl]);
 
   const setLevel = (level: Level) => setFilters({ ...filters, level });
 

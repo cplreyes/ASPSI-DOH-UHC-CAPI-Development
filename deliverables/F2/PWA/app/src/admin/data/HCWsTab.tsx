@@ -109,7 +109,7 @@ export function HCWsTab({ apiBaseUrl, fetchImpl }: HCWsTabProps): JSX.Element {
     return () => {
       cancelled = true;
     };
-  }, [apiQuery, apiBaseUrl, token, reloadTick]);
+  }, [apiQuery, apiBaseUrl, token, reloadTick, clearAuth, navigate, fetchImpl]);
 
   const togglePill = (value: string) => {
     setFilters((prev) => ({ ...prev, status: prev.status === value ? '' : value }));

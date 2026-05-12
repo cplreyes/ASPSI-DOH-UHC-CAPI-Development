@@ -104,7 +104,7 @@ export function DLQTab({ apiBaseUrl, fetchImpl }: DLQTabProps): JSX.Element {
     return () => {
       cancelled = true;
     };
-  }, [apiQuery, apiBaseUrl, token, refreshKey]);
+  }, [apiQuery, apiBaseUrl, token, refreshKey, clearAuth, navigate, fetchImpl]);
 
   // R2-#84: Replay re-attempts the submit through the AS handleSubmit
   // path. If the underlying validation issue has been fixed (e.g., the

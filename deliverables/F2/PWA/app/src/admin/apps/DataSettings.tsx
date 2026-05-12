@@ -99,7 +99,7 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
     return () => {
       cancelled = true;
     };
-  }, [apiBaseUrl, token, reloadTick]);
+  }, [apiBaseUrl, token, reloadTick, clearAuth, navigate, fetchImpl]);
 
   function authOpts() {
     return {

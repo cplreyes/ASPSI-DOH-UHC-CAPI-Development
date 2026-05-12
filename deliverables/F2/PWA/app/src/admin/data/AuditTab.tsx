@@ -110,7 +110,7 @@ export function AuditTab({ apiBaseUrl, fetchImpl }: AuditTabProps): JSX.Element 
     return () => {
       cancelled = true;
     };
-  }, [apiQuery, apiBaseUrl, token]);
+  }, [apiQuery, apiBaseUrl, token, clearAuth, navigate, fetchImpl]);
 
   return (
     <div className="flex flex-col gap-4">

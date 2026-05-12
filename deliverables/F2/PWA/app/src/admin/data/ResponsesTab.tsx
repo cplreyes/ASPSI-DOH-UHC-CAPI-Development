@@ -151,7 +151,7 @@ export function ResponsesTab({ apiBaseUrl, fetchImpl }: ResponsesTabProps): JSX.
     return () => {
       cancelled = true;
     };
-  }, [apiQuery, apiBaseUrl, token]);
+  }, [apiQuery, apiBaseUrl, token, clearAuth, navigate, fetchImpl]);
 
   const onFilterSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

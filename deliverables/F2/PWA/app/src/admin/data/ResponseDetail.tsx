@@ -95,7 +95,7 @@ function ResponseDetailInner({ apiBaseUrl, submissionId, fetchImpl }: ResponseDe
     return () => {
       cancelled = true;
     };
-  }, [apiBaseUrl, submissionId, token]);
+  }, [apiBaseUrl, submissionId, token, clearAuth, navigate, fetchImpl]);
 
   return (
     <section className="flex flex-col gap-6 py-2">

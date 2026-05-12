@@ -89,7 +89,7 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
     return () => {
       cancelled = true;
     };
-  }, [apiBaseUrl, token, reloadTick]);
+  }, [apiBaseUrl, token, reloadTick, clearAuth, navigate, fetchImpl]);
 
   async function handleUpload(file: File): Promise<void> {
     setUploadError(null);
