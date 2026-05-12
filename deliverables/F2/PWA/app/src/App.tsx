@@ -1,7 +1,12 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import AdminApp from '@/admin/App';
+
+// Lazy-load the admin portal so HCW respondents — the dominant traffic class —
+// don't pay for the admin chunk on first paint. Closes #275 in combination
+// with the manualChunks split in vite.config.ts; together they take the HCW
+// initial-load JS from ~930 KB raw (single chunk) down to index + vendor only.
+const AdminApp = lazy(() => import('@/admin/App'));
 import { MultiSectionForm } from '@/components/survey/MultiSectionForm';
 import { EnrollmentScreen } from '@/components/enrollment/EnrollmentScreen';
 import { PendingCount } from '@/components/sync/PendingCount';
@@ -392,7 +397,17 @@ export default function App() {
     } catch {
       // VITE_F2_PROXY_URL unset — admin will surface E_NETWORK on login.
     }
-    return <AdminApp apiBaseUrl={proxyUrl} />;
+    return (
+      <Suspense
+        fallback={
+          <div className="flex min-h-screen items-center justify-center bg-paper text-sm text-muted-foreground">
+            Loading admin portal…
+          </div>
+        }
+      >
+        <AdminApp apiBaseUrl={proxyUrl} />
+      </Suspense>
+    );
   }
 
   let fetcher: () => Promise<GetConfigResponse>;
