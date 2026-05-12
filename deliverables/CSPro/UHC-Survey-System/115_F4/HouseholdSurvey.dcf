@@ -1,0 +1,1268 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "HOUSEHOLDSURVEY_DICT",
+  "labels": [
+    {
+      "text": "HouseholdSurvey"
+    }
+  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 1,
+    "length": 1
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": false
+  },
+  "relativePositions": true,
+  "levels": [
+    {
+      "name": "HOUSEHOLDSURVEY_LEVEL",
+      "labels": [
+        {
+          "text": "HouseholdSurvey Level"
+        }
+      ],
+      "ids": {
+        "items": [
+          {
+            "name": "REGION_CODE",
+            "labels": [
+              {
+                "text": "Region Code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 2,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "PROVINCE_HUC_CODE",
+            "labels": [
+              {
+                "text": "Province / HUC Code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 4,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "CITY_MUNICIPALITY_CODE",
+            "labels": [
+              {
+                "text": "City / Municipality Code"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 6,
+            "length": 3,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "FACILITY_NO",
+            "labels": [
+              {
+                "text": "Facility No"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 9,
+            "length": 2,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          },
+          {
+            "name": "CASE_SEQ",
+            "labels": [
+              {
+                "text": "Case Sequence"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 11,
+            "length": 3,
+            "zeroFill": true,
+            "decimal": 0,
+            "decimalChar": false
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "HOUSEHOLDSURVEY_REC",
+          "labels": [
+            {
+              "text": "HouseholdSurvey Record"
+            }
+          ],
+          "recordType": "1",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "FIELD_CONTROL",
+          "labels": [
+            {
+              "text": "Field Control"
+            }
+          ],
+          "recordType": "A",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "SURVEY_CODE",
+              "labels": [
+                {
+                  "text": "Survey Instrument Code"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 2
+            },
+            {
+              "name": "INTERVIEWER_ID",
+              "labels": [
+                {
+                  "text": "Interviewer ID"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": true
+            },
+            {
+              "name": "DATE_STARTED",
+              "labels": [
+                {
+                  "text": "Date Interview Started (YYYYMMDD)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "TIME_STARTED",
+              "labels": [
+                {
+                  "text": "Time Interview Started (HHMMSS)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 6,
+              "zeroFill": false
+            },
+            {
+              "name": "AAPOR_DISPOSITION",
+              "labels": [
+                {
+                  "text": "AAPOR Disposition Code"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "AAPOR_DISPOSITION_VS1",
+                  "labels": [
+                    {
+                      "text": "AAPOR Disposition Code"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "000 \u2014 In Progress (initial)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "000"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "110 \u2014 Complete interview"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "110"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "120 \u2014 Partial interview / break-off"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "120"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "210 \u2014 Refusal \u2014 respondent"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "210"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "211 \u2014 Refusal \u2014 gatekeeper / household"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "211"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "220 \u2014 Non-contact \u2014 respondent unavailable"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "220"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "230 \u2014 Other eligible non-interview"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "230"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "310 \u2014 Unknown eligibility \u2014 facility/household"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "310"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "320 \u2014 Unknown eligibility \u2014 respondent"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "320"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "410 \u2014 Not eligible \u2014 out of sample / ineligible"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "410"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "450 \u2014 Not eligible \u2014 other"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "450"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "SURVEY_TEAM_LEADER_S_NAME",
+              "labels": [
+                {
+                  "text": "Survey Team Leader's Name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 50
+            },
+            {
+              "name": "ENUMERATOR_S_NAME",
+              "labels": [
+                {
+                  "text": "Enumerator's Name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 50
+            },
+            {
+              "name": "FIELD_VALIDATED_BY",
+              "labels": [
+                {
+                  "text": "Field Validated by"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 50
+            },
+            {
+              "name": "FIELD_EDITED_BY",
+              "labels": [
+                {
+                  "text": "Field Edited by"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 50
+            },
+            {
+              "name": "DATE_FIRST_VISITED",
+              "labels": [
+                {
+                  "text": "Date First Visited the Household (YYYYMMDD)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "DATE_FINAL_VISIT",
+              "labels": [
+                {
+                  "text": "Date of Final Visit to the Household (YYYYMMDD)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": false
+            },
+            {
+              "name": "TOTAL_NUMBER_OF_VISITS",
+              "labels": [
+                {
+                  "text": "Total Number of Visits"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "ENUM_RESULT_FIRST_VISIT",
+              "labels": [
+                {
+                  "text": "Result of First Visit"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "ENUM_RESULT_FIRST_VISIT_VS1",
+                  "labels": [
+                    {
+                      "text": "Result of First Visit"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Completed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Postponed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refused"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Incomplete"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ENUM_RESULT_FINAL_VISIT",
+              "labels": [
+                {
+                  "text": "Result of Final Visit"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "ENUM_RESULT_FINAL_VISIT_VS1",
+                  "labels": [
+                    {
+                      "text": "Result of Final Visit"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Completed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Postponed"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refused"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Incomplete"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CONSENT_GIVEN",
+              "labels": [
+                {
+                  "text": "Informed consent given"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CONSENT_GIVEN_VS1",
+                  "labels": [
+                    {
+                      "text": "Informed consent given"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "HH_LISTING_NO",
+              "labels": [
+                {
+                  "text": "Household Listing Reference Number (113_F4_listing roster)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": true
+            },
+            {
+              "name": "F4_PARENT_F3_CASE_SEQ",
+              "labels": [
+                {
+                  "text": "Parent F3 Patient CASE_SEQ (110_F3_listing interval-walk; 999 = NA)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true
+            }
+          ]
+        },
+        {
+          "name": "HOUSEHOLD_GEO_ID",
+          "labels": [
+            {
+              "text": "Household Geographic Identification"
+            }
+          ],
+          "recordType": "B",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "CLASSIFICATION",
+              "labels": [
+                {
+                  "text": "Classification"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CLASSIFICATION_VS1",
+                  "labels": [
+                    {
+                      "text": "Classification"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "UHC IS"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Non-UHC IS"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "REGION",
+              "labels": [
+                {
+                  "text": "Region"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "REGION_VS1",
+                  "labels": [
+                    {
+                      "text": "Region"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "(set at runtime)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "0000000000"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "PROVINCE_HUC",
+              "labels": [
+                {
+                  "text": "Province / HUC"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "PROVINCE_HUC_VS1",
+                  "labels": [
+                    {
+                      "text": "Province / HUC"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "(set at runtime)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "0000000000"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CITY_MUNICIPALITY",
+              "labels": [
+                {
+                  "text": "City / Municipality"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "CITY_MUNICIPALITY_VS1",
+                  "labels": [
+                    {
+                      "text": "City / Municipality"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "(set at runtime)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "0000000000"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "BARANGAY",
+              "labels": [
+                {
+                  "text": "Barangay"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "BARANGAY_VS1",
+                  "labels": [
+                    {
+                      "text": "Barangay"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "(set at runtime)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "0000000000"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "HH_ADDRESS",
+              "labels": [
+                {
+                  "text": "Household Address"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 200
+            }
+          ]
+        },
+        {
+          "name": "REC_HOUSEHOLD_CAPTURE",
+          "labels": [
+            {
+              "text": "Household GPS Capture"
+            }
+          ],
+          "recordType": "Z",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "HH_GPS_LATITUDE",
+              "labels": [
+                {
+                  "text": "GPS Latitude"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 12
+            },
+            {
+              "name": "HH_GPS_LONGITUDE",
+              "labels": [
+                {
+                  "text": "GPS Longitude"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 12
+            },
+            {
+              "name": "HH_GPS_ALTITUDE",
+              "labels": [
+                {
+                  "text": "GPS Altitude (m)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 10
+            },
+            {
+              "name": "HH_GPS_ACCURACY",
+              "labels": [
+                {
+                  "text": "GPS Accuracy (m)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "HH_GPS_SATELLITES",
+              "labels": [
+                {
+                  "text": "GPS Satellites"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "HH_GPS_READTIME",
+              "labels": [
+                {
+                  "text": "GPS Read Time (UTC)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 19
+            },
+            {
+              "name": "HH_CAPTURE_GPS",
+              "labels": [
+                {
+                  "text": "Capture GPS"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "HH_CAPTURE_GPS_VS1",
+                  "labels": [
+                    {
+                      "text": "Capture GPS"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Capture GPS now"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "REC_CASE_VERIFICATION",
+          "labels": [
+            {
+              "text": "Case Verification Photo"
+            }
+          ],
+          "recordType": "X",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "VERIFICATION_PHOTO_FILENAME",
+              "labels": [
+                {
+                  "text": "Verification Photo Filename"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "CAPTURE_VERIFICATION_PHOTO",
+              "labels": [
+                {
+                  "text": "Take Verification Photo"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CAPTURE_VERIFICATION_PHOTO_VS1",
+                  "labels": [
+                    {
+                      "text": "Take Verification Photo"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Take verification photo"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "A_INFORMED_CONSENT",
+          "labels": [
+            {
+              "text": "A. Introduction and Informed Consent"
+            }
+          ],
+          "recordType": "C",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "B_RESPONDENT_PROFILE",
+          "labels": [
+            {
+              "text": "B. Respondent Profile"
+            }
+          ],
+          "recordType": "D",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "C_HOUSEHOLD_ROSTER",
+          "labels": [
+            {
+              "text": "C. Household Roster and Characteristics"
+            }
+          ],
+          "recordType": "E",
+          "occurrences": {
+            "required": false,
+            "maximum": 10
+          },
+          "items": []
+        },
+        {
+          "name": "C_PRIVATE_INSURANCE_GATE",
+          "labels": [
+            {
+              "text": "C. Private Insurance Coverage (HH-level gate, Q47)"
+            }
+          ],
+          "recordType": "T",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "C_PRIVATE_INSURANCE_ROSTER",
+          "labels": [
+            {
+              "text": "C. Private Insurance Coverage Roster (Q48-Q50)"
+            }
+          ],
+          "recordType": "U",
+          "occurrences": {
+            "required": false,
+            "maximum": 10
+          },
+          "items": []
+        },
+        {
+          "name": "D_UHC_AWARENESS",
+          "labels": [
+            {
+              "text": "D. Awareness on Universal Health Care (UHC)"
+            }
+          ],
+          "recordType": "F",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "E_YAKAP_KONSULTA",
+          "labels": [
+            {
+              "text": "E. YAKAP/Konsulta Awareness"
+            }
+          ],
+          "recordType": "G",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "F_BUCAS",
+          "labels": [
+            {
+              "text": "F. Bagong Urgent Care and Ambulatory Service (BUCAS) Awareness and Utilization"
+            }
+          ],
+          "recordType": "H",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "G_ACCESS_TO_MEDICINES",
+          "labels": [
+            {
+              "text": "G. Access to Medicines"
+            }
+          ],
+          "recordType": "I",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "H_PHILHEALTH",
+          "labels": [
+            {
+              "text": "H. PhilHealth Registration and Health Insurance"
+            }
+          ],
+          "recordType": "J",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "I_PRIMARY_CARE",
+          "labels": [
+            {
+              "text": "I. Primary Care Utilization"
+            }
+          ],
+          "recordType": "K",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "J_HEALTH_SEEKING",
+          "labels": [
+            {
+              "text": "J. Household members' Health-Seeking Behavior and Outcomes"
+            }
+          ],
+          "recordType": "L",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "K_REFERRALS",
+          "labels": [
+            {
+              "text": "K. Experiences and Satisfaction with Referrals"
+            }
+          ],
+          "recordType": "M",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "L_NBB",
+          "labels": [
+            {
+              "text": "L. No Balance Billing (NBB) Awareness and Utilization"
+            }
+          ],
+          "recordType": "N",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "M_ZBB",
+          "labels": [
+            {
+              "text": "M. Zero Balance Billing (ZBB) Awareness and Utilization"
+            }
+          ],
+          "recordType": "O",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "N_HH_EXPENDITURES",
+          "labels": [
+            {
+              "text": "N. Household Expenditures"
+            }
+          ],
+          "recordType": "P",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "O_HEALTH_FUNDING",
+          "labels": [
+            {
+              "text": "O. Sources of Funds for Health"
+            }
+          ],
+          "recordType": "Q",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "P_FINANCIAL_RISK",
+          "labels": [
+            {
+              "text": "P. Financial Risk Protection: Incidence of Reduced/Delayed Care"
+            }
+          ],
+          "recordType": "R",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        },
+        {
+          "name": "Q_FINANCIAL_ANXIETY",
+          "labels": [
+            {
+              "text": "Q. Anxiety about Household Finances"
+            }
+          ],
+          "recordType": "S",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": []
+        }
+      ]
+    }
+  ]
+}
