@@ -1,0 +1,22 @@
+[Run Information]
+Version=CSPro 8.0
+AppType=Sync
+Description=F4 Household Listing -- push listing session .csdb to CSWeb
+
+[Files]
+Application=.\F4Listing.ent
+InputData=..\109_sync\sync_F4_listing_app_data.csdb
+
+[Sync]
+Direction=Send
+SyncType=CSWeb
+ServerURL=PLACEHOLDER
+RemoteFilePath=f4_listing/${ENV}/${RR}${PP}${MMM}${FF}/${YYYYMMDD}/${BARANGAY10}/${SSS}.csdb
+Authentication=Token
+
+[Parameters]
+EnvParam=${ENV}
+FacilityPrefix=${RR}${PP}${MMM}${FF}
+SessionDate=${YYYYMMDD}
+BarangayCode=${BARANGAY10}
+SessionSeq=${SSS}
