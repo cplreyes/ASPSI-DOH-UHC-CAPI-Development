@@ -1,0 +1,87 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "application",
+  "type": "entry",
+  "name": "F4LISTING",
+  "label": "F4Listing",
+  "dictionaries": [
+    {
+      "type": "input",
+      "path": "F4Listing.dcf",
+      "parent": "F4Listing.fmf"
+    }
+  ],
+  "forms": [
+    "F4Listing.fmf"
+  ],
+  "questionText": [
+    "F4Listing.ent.qsf"
+  ],
+  "code": [
+    {
+      "type": "main",
+      "path": "F4Listing.ent.apc"
+    }
+  ],
+  "messages": [
+    "F4Listing.ent.mgf"
+  ],
+  "logicSettings": {
+    "version": 2.0,
+    "caseSensitive": {
+      "symbols": false
+    },
+    "actionInvoker": {
+      "accessFromExternalCaller": "promptIfNoValidAccessToken",
+      "convertResultsForLogic": true
+    }
+  },
+  "properties": {
+    "askOperatorId": false,
+    "autoAdvanceOnSelection": false,
+    "caseTree": "mobileOnly",
+    "centerForms": false,
+    "createListing": false,
+    "createLog": false,
+    "decimalMark": "dot",
+    "displayCodesAlongsideLabels": false,
+    "notes": {
+      "delete": "all",
+      "edit": "all"
+    },
+    "partialSave": {
+      "operatorEnabled": true
+    },
+    "showEndCaseMessage": true,
+    "showOnlyDiscreteValuesInComboBoxes": true,
+    "showFieldLabels": true,
+    "showErrorMessageNumbers": false,
+    "showQuestionText": true,
+    "showRefusals": true,
+    "verify": {
+      "frequency": 1,
+      "start": 1
+    },
+    "htmlDialogs": true,
+    "paradata": {
+      "collection": "all",
+      "recordCoordinates": false,
+      "recordInitialPropertyValues": false,
+      "recordIteratorLoadCases": false,
+      "recordValues": false,
+      "deviceStateIntervalMinutes": 5
+    },
+    "useHtmlComponentsInsteadOfNativeVersions": false
+  },
+  "userSettings": [
+    {
+      "name": "csweb_url",
+      "value": "PLACEHOLDER"
+    },
+    {
+      "name": "expiration_days",
+      "value": "30"
+    }
+  ]
+}
