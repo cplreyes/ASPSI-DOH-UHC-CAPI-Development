@@ -22022,7 +22022,3092 @@
             "required": true,
             "maximum": 1
           },
-          "items": []
+          "items": [
+            {
+              "name": "Q144_CONSUMED",
+              "labels": [
+                {
+                  "text": "144. Cereals (rice, flour, noodles, corn, etc.) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q144_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "144. Cereals (rice, flour, noodles, corn, etc.) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q144_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "144. Cereals (rice, flour, noodles, corn, etc.) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q144_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "144. Cereals (rice, flour, noodles, corn, etc.) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q144_TOTAL",
+              "labels": [
+                {
+                  "text": "144. Cereals (rice, flour, noodles, corn, etc.) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q145_CONSUMED",
+              "labels": [
+                {
+                  "text": "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q145_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q145_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q145_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q145_TOTAL",
+              "labels": [
+                {
+                  "text": "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q146_CONSUMED",
+              "labels": [
+                {
+                  "text": "146. Vegetables (fresh, dried, dehydrated, frozen) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q146_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "146. Vegetables (fresh, dried, dehydrated, frozen) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q146_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "146. Vegetables (fresh, dried, dehydrated, frozen) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q146_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "146. Vegetables (fresh, dried, dehydrated, frozen) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q146_TOTAL",
+              "labels": [
+                {
+                  "text": "146. Vegetables (fresh, dried, dehydrated, frozen) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q147_CONSUMED",
+              "labels": [
+                {
+                  "text": "147. Fruits in any form (fresh, dried, dehydrated, frozen) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q147_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "147. Fruits in any form (fresh, dried, dehydrated, frozen) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q147_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "147. Fruits in any form (fresh, dried, dehydrated, frozen) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q147_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "147. Fruits in any form (fresh, dried, dehydrated, frozen) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q147_TOTAL",
+              "labels": [
+                {
+                  "text": "147. Fruits in any form (fresh, dried, dehydrated, frozen) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q148_CONSUMED",
+              "labels": [
+                {
+                  "text": "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q148_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q148_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q148_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q148_TOTAL",
+              "labels": [
+                {
+                  "text": "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q149_CONSUMED",
+              "labels": [
+                {
+                  "text": "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q149_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q149_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q149_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q149_TOTAL",
+              "labels": [
+                {
+                  "text": "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q150_CONSUMED",
+              "labels": [
+                {
+                  "text": "150. Any kind of egg (from chicken, duck, quail, etc.) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q150_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "150. Any kind of egg (from chicken, duck, quail, etc.) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q150_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "150. Any kind of egg (from chicken, duck, quail, etc.) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q150_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "150. Any kind of egg (from chicken, duck, quail, etc.) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q150_TOTAL",
+              "labels": [
+                {
+                  "text": "150. Any kind of egg (from chicken, duck, quail, etc.) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q151_CONSUMED",
+              "labels": [
+                {
+                  "text": "151. Milk and other milk products, excluding butter -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q151_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "151. Milk and other milk products, excluding butter -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q151_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "151. Milk and other milk products, excluding butter -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q151_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "151. Milk and other milk products, excluding butter -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q151_TOTAL",
+              "labels": [
+                {
+                  "text": "151. Milk and other milk products, excluding butter -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q152_CONSUMED",
+              "labels": [
+                {
+                  "text": "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q152_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q152_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q152_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q152_TOTAL",
+              "labels": [
+                {
+                  "text": "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q153_CONSUMED",
+              "labels": [
+                {
+                  "text": "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q153_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q153_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q153_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q153_TOTAL",
+              "labels": [
+                {
+                  "text": "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q154_CONSUMED",
+              "labels": [
+                {
+                  "text": "154. Condiments and other spices and other ready-made meals -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q154_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "154. Condiments and other spices and other ready-made meals -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q154_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "154. Condiments and other spices and other ready-made meals -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q154_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "154. Condiments and other spices and other ready-made meals -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q154_TOTAL",
+              "labels": [
+                {
+                  "text": "154. Condiments and other spices and other ready-made meals -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q155_CONSUMED",
+              "labels": [
+                {
+                  "text": "155. Water and non-alcoholic beverages (e.g., coffee) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q155_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "155. Water and non-alcoholic beverages (e.g., coffee) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q155_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "155. Water and non-alcoholic beverages (e.g., coffee) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q155_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "155. Water and non-alcoholic beverages (e.g., coffee) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q155_TOTAL",
+              "labels": [
+                {
+                  "text": "155. Water and non-alcoholic beverages (e.g., coffee) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q156_CONSUMED",
+              "labels": [
+                {
+                  "text": "156. Alcoholic beverages (e.g., local and imported) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q156_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "156. Alcoholic beverages (e.g., local and imported) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q156_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "156. Alcoholic beverages (e.g., local and imported) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q156_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "156. Alcoholic beverages (e.g., local and imported) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q156_TOTAL",
+              "labels": [
+                {
+                  "text": "156. Alcoholic beverages (e.g., local and imported) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q157_TOTAL",
+              "labels": [
+                {
+                  "text": "157. Sub-total -- sum of food items Q144-Q156 (computed automatically in CAPI; DO NOT ASK)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q158_CONSUMED",
+              "labels": [
+                {
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q158_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q158_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q158_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q158_TOTAL",
+              "labels": [
+                {
+                  "text": "158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q159_CONSUMED",
+              "labels": [
+                {
+                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q159_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) -- In the last WEEK, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q159_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) -- During the last WEEK, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q159_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) -- During the last WEEK, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q159_TOTAL",
+              "labels": [
+                {
+                  "text": "159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q160_CONSUMED",
+              "labels": [
+                {
+                  "text": "160. Personal care products (e.g., shampoo, haircut) -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q160_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "160. Personal care products (e.g., shampoo, haircut) -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q160_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "160. Personal care products (e.g., shampoo, haircut) -- During the last MONTH, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q160_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "160. Personal care products (e.g., shampoo, haircut) -- During the last MONTH, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q160_TOTAL",
+              "labels": [
+                {
+                  "text": "160. Personal care products (e.g., shampoo, haircut) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q161_CONSUMED",
+              "labels": [
+                {
+                  "text": "161. Household cleaning and maintenance products and services including domestic ones -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q161_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "161. Household cleaning and maintenance products and services including domestic ones -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q161_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "161. Household cleaning and maintenance products and services including domestic ones -- During the last MONTH, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q161_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "161. Household cleaning and maintenance products and services including domestic ones -- During the last MONTH, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q161_TOTAL",
+              "labels": [
+                {
+                  "text": "161. Household cleaning and maintenance products and services including domestic ones -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q162_CONSUMED",
+              "labels": [
+                {
+                  "text": "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q162_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q162_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) -- During the last MONTH, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q162_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) -- During the last MONTH, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q162_TOTAL",
+              "labels": [
+                {
+                  "text": "162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q163_CONSUMED",
+              "labels": [
+                {
+                  "text": "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q163_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q163_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle -- During the last MONTH, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q163_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle -- During the last MONTH, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q163_TOTAL",
+              "labels": [
+                {
+                  "text": "163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q164_CONSUMED",
+              "labels": [
+                {
+                  "text": "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q164_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q164_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations -- During the last MONTH, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q164_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations -- During the last MONTH, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q164_TOTAL",
+              "labels": [
+                {
+                  "text": "164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q165_CONSUMED",
+              "labels": [
+                {
+                  "text": "165. Recreational, cultural, religious, sporting and entertainment devices -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q165_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "165. Recreational, cultural, religious, sporting and entertainment devices -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q165_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "165. Recreational, cultural, religious, sporting and entertainment devices -- During the last MONTH, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q165_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "165. Recreational, cultural, religious, sporting and entertainment devices -- During the last MONTH, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q165_TOTAL",
+              "labels": [
+                {
+                  "text": "165. Recreational, cultural, religious, sporting and entertainment devices -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q166_CONSUMED",
+              "labels": [
+                {
+                  "text": "166. Postal services -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q166_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "166. Postal services -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q166_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "166. Postal services -- During the last MONTH, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q166_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "166. Postal services -- During the last MONTH, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q166_TOTAL",
+              "labels": [
+                {
+                  "text": "166. Postal services -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q167_CONSUMED",
+              "labels": [
+                {
+                  "text": "167. Housing (actual rentals, estimated value of rent if owned) -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q167_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "167. Housing (actual rentals, estimated value of rent if owned) -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q167_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "167. Housing (actual rentals, estimated value of rent if owned) -- During the last MONTH, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q167_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "167. Housing (actual rentals, estimated value of rent if owned) -- During the last MONTH, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q167_TOTAL",
+              "labels": [
+                {
+                  "text": "167. Housing (actual rentals, estimated value of rent if owned) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q168_CONSUMED",
+              "labels": [
+                {
+                  "text": "168. Recreational, cultural, religious, sporting and entertainment devices -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q168_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "168. Recreational, cultural, religious, sporting and entertainment devices -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q168_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "168. Recreational, cultural, religious, sporting and entertainment devices -- During the last 6 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q168_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "168. Recreational, cultural, religious, sporting and entertainment devices -- During the last 6 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q168_TOTAL",
+              "labels": [
+                {
+                  "text": "168. Recreational, cultural, religious, sporting and entertainment devices -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q169_CONSUMED",
+              "labels": [
+                {
+                  "text": "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q169_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q169_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs -- During the last 6 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q169_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs -- During the last 6 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q169_TOTAL",
+              "labels": [
+                {
+                  "text": "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q170_CONSUMED",
+              "labels": [
+                {
+                  "text": "170. Educational services (e.g., tuitions and tutoring) -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q170_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "170. Educational services (e.g., tuitions and tutoring) -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q170_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "170. Educational services (e.g., tuitions and tutoring) -- During the last 12 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q170_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "170. Educational services (e.g., tuitions and tutoring) -- During the last 12 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q170_TOTAL",
+              "labels": [
+                {
+                  "text": "170. Educational services (e.g., tuitions and tutoring) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q171_CONSUMED",
+              "labels": [
+                {
+                  "text": "171. Accommodation services, including for educational establishment (e.g., hotels) -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q171_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "171. Accommodation services, including for educational establishment (e.g., hotels) -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q171_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "171. Accommodation services, including for educational establishment (e.g., hotels) -- During the last 12 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q171_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "171. Accommodation services, including for educational establishment (e.g., hotels) -- During the last 12 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q171_TOTAL",
+              "labels": [
+                {
+                  "text": "171. Accommodation services, including for educational establishment (e.g., hotels) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q172_CONSUMED",
+              "labels": [
+                {
+                  "text": "172. Garden and personal pets' products and services -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q172_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "172. Garden and personal pets' products and services -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q172_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "172. Garden and personal pets' products and services -- During the last 12 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q172_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "172. Garden and personal pets' products and services -- During the last 12 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q172_TOTAL",
+              "labels": [
+                {
+                  "text": "172. Garden and personal pets' products and services -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q173_CONSUMED",
+              "labels": [
+                {
+                  "text": "173. Health insurance -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q173_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "173. Health insurance -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q173_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "173. Health insurance -- During the last 12 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q173_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "173. Health insurance -- During the last 12 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q173_TOTAL",
+              "labels": [
+                {
+                  "text": "173. Health insurance -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q174_CONSUMED",
+              "labels": [
+                {
+                  "text": "174. Other insurance (e.g., for life and accident, and travel) -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q174_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "174. Other insurance (e.g., for life and accident, and travel) -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q174_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "174. Other insurance (e.g., for life and accident, and travel) -- During the last 12 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q174_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "174. Other insurance (e.g., for life and accident, and travel) -- During the last 12 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q174_TOTAL",
+              "labels": [
+                {
+                  "text": "174. Other insurance (e.g., for life and accident, and travel) -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q175_CONSUMED",
+              "labels": [
+                {
+                  "text": "175. Inpatient care services -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q175_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "175. Inpatient care services -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q175_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "175. Inpatient care services -- During the last 12 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q175_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "175. Inpatient care services -- During the last 12 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q175_TOTAL",
+              "labels": [
+                {
+                  "text": "175. Inpatient care services -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q176_CONSUMED",
+              "labels": [
+                {
+                  "text": "176. Emergency transportation and emergency rescue services -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q176_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "176. Emergency transportation and emergency rescue services -- In the last 12 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q176_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "176. Emergency transportation and emergency rescue services -- During the last 12 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q176_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "176. Emergency transportation and emergency rescue services -- During the last 12 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q176_TOTAL",
+              "labels": [
+                {
+                  "text": "176. Emergency transportation and emergency rescue services -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q177_TOTAL",
+              "labels": [
+                {
+                  "text": "177. [DO NOT ASK] Total value of 175 and 176 -- sum of Q175 + Q176 (computed automatically in CAPI; DO NOT ASK)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q178_CONSUMED",
+              "labels": [
+                {
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits) Exclude the cost of vaccine itself, if possible, I'll ask about this in the next section. -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q178_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits) Exclude the cost of vaccine itself, if possible, I'll ask about this in the next section. -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q178_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits) Exclude the cost of vaccine itself, if possible, I'll ask about this in the next section. -- During the last 6 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q178_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits) Exclude the cost of vaccine itself, if possible, I'll ask about this in the next section. -- During the last 6 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q178_TOTAL",
+              "labels": [
+                {
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits) Exclude the cost of vaccine itself, if possible, I'll ask about this in the next section. -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q179_CONSUMED",
+              "labels": [
+                {
+                  "text": "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care. -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q179_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care. -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q179_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care. -- During the last 6 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q179_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care. -- During the last 6 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q179_TOTAL",
+              "labels": [
+                {
+                  "text": "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care. -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q180_CONSUMED",
+              "labels": [
+                {
+                  "text": "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q180_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q180_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases -- During the last 6 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q180_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases -- During the last 6 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q180_TOTAL",
+              "labels": [
+                {
+                  "text": "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q181_CONSUMED",
+              "labels": [
+                {
+                  "text": "181. Medical products, (e.g., antigen tests, glucose meters, masks), including online purchases -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q181_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "181. Medical products, (e.g., antigen tests, glucose meters, masks), including online purchases -- In the last 6 MONTHS, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q181_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "181. Medical products, (e.g., antigen tests, glucose meters, masks), including online purchases -- During the last 6 MONTHS, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q181_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "181. Medical products, (e.g., antigen tests, glucose meters, masks), including online purchases -- During the last 6 MONTHS, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q181_TOTAL",
+              "labels": [
+                {
+                  "text": "181. Medical products, (e.g., antigen tests, glucose meters, masks), including online purchases -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q182_TOTAL",
+              "labels": [
+                {
+                  "text": "182. [DO NOT ASK] Total value of 178 to 181 -- sum of Q178 + Q179 + Q180 + Q181 (computed automatically in CAPI; DO NOT ASK)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q183_CONSUMED",
+              "labels": [
+                {
+                  "text": "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q183_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q183_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases -- During the last MONTH, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q183_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases -- During the last MONTH, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q183_TOTAL",
+              "labels": [
+                {
+                  "text": "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q184_CONSUMED",
+              "labels": [
+                {
+                  "text": "184. Outpatient medical and dental services, including online services, without overnight stay -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q184_CONSUMED_VS1",
+                  "labels": [
+                    {
+                      "text": "184. Outpatient medical and dental services, including online services, without overnight stay -- In the last MONTH, did you or any member of your household consume [ITEM]?"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q184_AMOUNT_PURCHASED",
+              "labels": [
+                {
+                  "text": "184. Outpatient medical and dental services, including online services, without overnight stay -- During the last MONTH, how much did your household spend to purchase for [ITEM]? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q184_AMOUNT_INKIND",
+              "labels": [
+                {
+                  "text": "184. Outpatient medical and dental services, including online services, without overnight stay -- During the last MONTH, what was the total estimated value of [ITEM] that you produced, received in-kind, and/or as gift? (pesos)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 10,
+              "zeroFill": false
+            },
+            {
+              "name": "Q184_TOTAL",
+              "labels": [
+                {
+                  "text": "184. Outpatient medical and dental services, including online services, without overnight stay -- Total (computed automatically in CAPI)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            },
+            {
+              "name": "Q185_TOTAL",
+              "labels": [
+                {
+                  "text": "185. [DO NOT ASK] Total value of 183 and 184 -- sum of Q183 + Q184 (computed automatically in CAPI; DO NOT ASK)"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 11,
+              "zeroFill": false
+            }
+          ]
         },
         {
           "name": "O_HEALTH_FUNDING",

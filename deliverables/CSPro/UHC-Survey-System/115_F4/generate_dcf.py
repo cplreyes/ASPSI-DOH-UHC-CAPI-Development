@@ -1689,14 +1689,226 @@ def build_section_m():
                   "O", items)
 
 
-def build_section_n():
-    """N. Household Expenditures (food, non-food, health products/services).
+def _expenditure_quad(qnum, label_text, reference_period):
+    """Build the 4-item quad for one expenditure-table row.
 
-    Q144-Q176 plus the three "computed automatically in CAPI" totals
-    Q177, Q182, Q185. Items land in a later commit.
+    Every numbered Q in Section N (except the "DO NOT ASK" computed
+    totals Q157, Q177, Q182, Q185) has the same shape: a "did you
+    consume" yes_no plus three peso-amount items (purchase spend,
+    in-kind / produced / gift value, and a CAPI-computed total).
+
+    The total field is captured as a data item so the value persists
+    on disk after CAPI computes it; the PROC fill logic at the
+    quartet phase wires the arithmetic.
+
+    Parameters
+    ----------
+    qnum : str
+        Numeric question number as it appears in the PDF (e.g. "144"
+        or "141_1"). Used in item names as Q{qnum}_*.
+    label_text : str
+        Item label text from the PDF (verbatim, including the
+        leading "144. Cereals (..." prefix).
+    reference_period : str
+        Human-readable reference period ("WEEK", "MONTH", "6 MONTHS",
+        "12 MONTHS"). Embedded in the per-sub-item labels for
+        operator clarity at form-render time.
+
+    Returns
+    -------
+    list of dict
+        Four item dicts: CONSUMED, AMOUNT_PURCHASED, AMOUNT_INKIND,
+        TOTAL.
     """
+    return [
+        yes_no(f"Q{qnum}_CONSUMED",
+               f"{label_text} -- In the last {reference_period}, did you or "
+               f"any member of your household consume [ITEM]?"),
+        numeric(f"Q{qnum}_AMOUNT_PURCHASED",
+                f"{label_text} -- During the last {reference_period}, how "
+                f"much did your household spend to purchase for [ITEM]? "
+                f"(pesos)",
+                length=10),
+        numeric(f"Q{qnum}_AMOUNT_INKIND",
+                f"{label_text} -- During the last {reference_period}, what "
+                f"was the total estimated value of [ITEM] that you produced, "
+                f"received in-kind, and/or as gift? (pesos)",
+                length=10),
+        numeric(f"Q{qnum}_TOTAL",
+                f"{label_text} -- Total (computed automatically in CAPI)",
+                length=11),
+    ]
+
+
+def _computed_total_item(qnum, label_text, computes_what):
+    """Build the single-item computed total for a 'DO NOT ASK' row.
+
+    Section N has four such rows: Q157 (food sub-total), Q177 (175+176),
+    Q182 (178-181), Q185 (183+184). All are CAPI-derived items the
+    enumerator does not capture by hand; the PROC wiring at the quartet
+    phase populates them.
+
+    They live in the DCF as data items (not CSPro 'derived' items)
+    because the v1.0 CSPro 8.0 derived-item runtime evaluator has
+    surprising re-trigger behaviour on roster-style records; storing
+    a computed value via PROC is more predictable on tablet.
+    """
+    return numeric(
+        f"Q{qnum}_TOTAL",
+        f"{label_text} -- {computes_what} (computed automatically in CAPI; "
+        f"DO NOT ASK)",
+        length=11,
+    )
+
+
+def build_section_n():
+    """N. Household Expenditures (Q144-Q185).
+
+    The longest section in F4 by item count -- 4-item quads (consumed +
+    spent + in-kind + computed total) for each of 36 expenditure
+    categories, plus 4 standalone "DO NOT ASK" computed totals
+    (Q157 food sub-total, Q177 175+176, Q182 178-181, Q185 183+184).
+
+    The PDF groups items by reference period:
+
+      - Last WEEK     -- Q144-Q156 (food items, 13 rows),
+                          Q157 (food sub-total computed),
+                          Q158 (dine-in/take-out/delivery meals),
+                          Q159 (smoking + tobacco)
+      - Last MONTH    -- Q160-Q161 (personal care + cleaning),
+                          Q162-Q167 (utilities/transport/comms/postal/housing)
+      - Last 6 MONTHS -- Q168 (recreational), Q169 (clothing/textiles)
+      - Last 12 MONTHS -- Q170-Q174 (education/accomm/pets/insurance)
+      - Last 12 MONTHS, health -- Q175-Q176 + Q177 computed
+      - Last 6 MONTHS, health  -- Q178-Q181 + Q182 computed
+      - Last MONTH, health     -- Q183-Q184 + Q185 computed
+
+    Computed-total items (Q157, Q177, Q182, Q185) are stored as data
+    items the .apc PROC wires; see _computed_total_item docstring.
+
+    No skip routing inside this section -- every row is asked in
+    order; the operator answers "No" to the consumed field to skip
+    the amount columns at form-render time (handled by the FMF onfocus
+    logic at the quartet phase).
+    """
+    # ---- Last WEEK reference period ----
+    items = []
+    week_rows = [
+        ("144", "144. Cereals (rice, flour, noodles, corn, etc.)"),
+        ("145", "145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts"),
+        ("146", "146. Vegetables (fresh, dried, dehydrated, frozen)"),
+        ("147", "147. Fruits in any form (fresh, dried, dehydrated, frozen)"),
+        ("148", "148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen)"),
+        ("149", "149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen)"),
+        ("150", "150. Any kind of egg (from chicken, duck, quail, etc.)"),
+        ("151", "151. Milk and other milk products, excluding butter"),
+        ("152", "152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame)"),
+        ("153", "153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes)"),
+        ("154", "154. Condiments and other spices and other ready-made meals"),
+        ("155", "155. Water and non-alcoholic beverages (e.g., coffee)"),
+        ("156", "156. Alcoholic beverages (e.g., local and imported)"),
+    ]
+    for qnum, label in week_rows:
+        items.extend(_expenditure_quad(qnum, label, "WEEK"))
+    items.append(_computed_total_item(
+        "157", "157. Sub-total", "sum of food items Q144-Q156"))
+    for qnum, label in [
+        ("158", "158. Meals and snacks and beverages from restaurants "
+                "(dine-in, take-out, and deliveries)"),
+        ("159", "159. Smoking (e.g., cigarettes, cigars, and vape), and/or "
+                "smokeless tobacco products (e.g., chewing tobacco, betel nut)"),
+    ]:
+        items.extend(_expenditure_quad(qnum, label, "WEEK"))
+
+    # ---- Last MONTH reference period ----
+    month_rows = [
+        ("160", "160. Personal care products (e.g., shampoo, haircut)"),
+        ("161", "161. Household cleaning and maintenance products and services "
+                "including domestic ones"),
+        ("162", "162. Utilities like electricity, water supply, refuse and sewage "
+                "collection, and fuels (including gas)"),
+        ("163", "163. Passenger transportation services (jeepney, bus, train, "
+                "taxi, plane, school bus) including rentals and online purchases "
+                "and fuels and lubricants for personal vehicle"),
+        ("164", "164. Telephone line and mobile phone services, WIFI access, "
+                "cable TV and any other communication and audio services "
+                "including repairs and installations"),
+        ("165", "165. Recreational, cultural, religious, sporting and "
+                "entertainment devices"),
+        ("166", "166. Postal services"),
+        ("167", "167. Housing (actual rentals, estimated value of rent if owned)"),
+    ]
+    for qnum, label in month_rows:
+        items.extend(_expenditure_quad(qnum, label, "MONTH"))
+
+    # ---- Last 6 MONTHS reference period (non-health) ----
+    six_month_rows = [
+        ("168", "168. Recreational, cultural, religious, sporting and "
+                "entertainment devices"),
+        ("169", "169. Ready-made clothing, fabric and materials for clothing, "
+                "and footwear including household textile, glassware, "
+                "table ware and household utensils including repairs"),
+    ]
+    for qnum, label in six_month_rows:
+        items.extend(_expenditure_quad(qnum, label, "6 MONTHS"))
+
+    # ---- Last 12 MONTHS reference period (non-health) ----
+    twelve_month_rows = [
+        ("170", "170. Educational services (e.g., tuitions and tutoring)"),
+        ("171", "171. Accommodation services, including for educational "
+                "establishment (e.g., hotels)"),
+        ("172", "172. Garden and personal pets' products and services"),
+        ("173", "173. Health insurance"),
+        ("174", "174. Other insurance (e.g., for life and accident, and travel)"),
+    ]
+    for qnum, label in twelve_month_rows:
+        items.extend(_expenditure_quad(qnum, label, "12 MONTHS"))
+
+    # ---- Health products and services (Q175-Q185) ----
+    # Each cluster ends with a "DO NOT ASK" computed total.
+    for qnum, label in [
+        ("175", "175. Inpatient care services"),
+        ("176", "176. Emergency transportation and emergency rescue services"),
+    ]:
+        items.extend(_expenditure_quad(qnum, label, "12 MONTHS"))
+    items.append(_computed_total_item(
+        "177", "177. [DO NOT ASK] Total value of 175 and 176",
+        "sum of Q175 + Q176"))
+
+    for qnum, label in [
+        ("178", "178. Preventive services such as immunization/vaccinations "
+                "services and other preventive services (e.g., tetanus toxoid "
+                "for pregnant women, and routine immunization such as BCG "
+                "during well child visits) Exclude the cost of vaccine itself, "
+                "if possible, I'll ask about this in the next section."),
+        ("179", "179. Diagnostic and laboratory tests, such as blood tests and "
+                "x-rays, for other reasons than preventive care."),
+        ("180", "180. Assistive health products for vision (e.g., glasses), "
+                "hearing (e.g., hearing aids), and mobility (e.g., crutches, "
+                "therapeutic footwear), including repair, rental, and online "
+                "purchases"),
+        ("181", "181. Medical products, (e.g., antigen tests, glucose meters, "
+                "masks), including online purchases"),
+    ]:
+        items.extend(_expenditure_quad(qnum, label, "6 MONTHS"))
+    items.append(_computed_total_item(
+        "182", "182. [DO NOT ASK] Total value of 178 to 181",
+        "sum of Q178 + Q179 + Q180 + Q181"))
+
+    for qnum, label in [
+        ("183", "183. Medicines (branded, generic, herbal), vaccines, oral "
+                "contraceptives, and other pharmaceutical preparations, "
+                "including online purchases"),
+        ("184", "184. Outpatient medical and dental services, including "
+                "online services, without overnight stay"),
+    ]:
+        items.extend(_expenditure_quad(qnum, label, "MONTH"))
+    items.append(_computed_total_item(
+        "185", "185. [DO NOT ASK] Total value of 183 and 184",
+        "sum of Q183 + Q184"))
+
     return record("N_HH_EXPENDITURES",
-                  "N. Household Expenditures", "P", [])
+                  "N. Household Expenditures", "P", items)
 
 
 def build_section_o():
