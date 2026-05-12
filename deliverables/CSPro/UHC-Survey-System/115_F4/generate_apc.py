@@ -771,15 +771,152 @@ postproc
     endif;
 
 
-{ Sections L-Q + edits + household-pick stub + roster auto-fill land in }
-{ commits 6-9. The .apc file ends here for commit 5.                    }
+{ ===================================================================== }
+{  Section L -- NBB (No Balance Billing) (Q126-Q131)                     }
+{ ===================================================================== }
+
+PROC Q126_HEARD_NBB
+postproc
+    { Per spec §2 Section L: Q126 = No (2) or DK (3) -> Q132 (skip
+      Q127-Q131; Q132 is the first item of Section M). }
+    if Q126_HEARD_NBB in 2, 3 then
+        skip to Q132_HEARD_ZBB;
+    endif;
+
+
+PROC Q129_HOSPITALIZED_6MO
+postproc
+    { Per spec §2 Section L: Q129 = No (2) or DK (3) -> Q132
+      (skip Q130, Q131). }
+    if Q129_HOSPITALIZED_6MO in 2, 3 then
+        skip to Q132_HEARD_ZBB;
+    endif;
+
+
+PROC Q130_HOSPITAL_TYPE
+postproc
+    { Per spec §2 Section L: only Q130 = DOH-retained (2) keeps Q131.
+      Q130 = Public (1) or Private (3) -> Q132 (skip Q131).
+      Per spec §3 HARD edit (Q131 gate): Q131 populated only when
+      Q130 = 2. }
+    if Q130_HOSPITAL_TYPE in 1, 3 then
+        skip to Q132_HEARD_ZBB;
+    endif;
+
+
+PROC Q131_OOP_NBB
+preproc
+    { HARD edit (Q131 gate): Q131 populated only when Q130 = 2
+      (DOH-retained). The preproc skips Q131 when the gate is
+      not met -- defence-in-depth on top of Q130's postproc skip. }
+    if Q130_HOSPITAL_TYPE <> 2 then
+        skip to Q132_HEARD_ZBB;
+    endif;
+
+
+{ ===================================================================== }
+{  Section M -- ZBB / MAIFIP / Bill detail (Q132-Q143)                   }
+{ ===================================================================== }
+
+PROC Q132_HEARD_ZBB
+postproc
+    { Per spec §2 Section M: Q132 = No (2) or DK (3) -> Q137 (skip
+      Q133, Q134; Q135 skipped here too if Q130 <> 2 via Q135.preproc).
+      Q137 is select_all -- route to first decomposed slot _O01.
+
+      NOTE: Per spec §2 table, when Q132 in (2,3) the operator routes
+      to Q137_MAIFIP_SOURCE -- but Q136 (HEARD_MAIFIP) is the natural
+      gate item before Q137. Treat the spec's "Q137" target as
+      "Q136_HEARD_MAIFIP" so the operator first answers heard-of-MAIFIP
+      before being asked sources. }
+    if Q132_HEARD_ZBB in 2, 3 then
+        skip to Q136_HEARD_MAIFIP;
+    endif;
+
+
+PROC Q135_OOP_ZBB
+preproc
+    { HARD edit (Q135 gate per spec §3): Q135 populated only when
+      Q130 = 2 (DOH-retained). Same shape as Q131 gate. }
+    if Q130_HOSPITAL_TYPE <> 2 then
+        skip to Q136_HEARD_MAIFIP;
+    endif;
+
+
+PROC Q136_HEARD_MAIFIP
+postproc
+    { Per spec §2 Section M: Q136 = No (2) or DK (3) -> Q138 (skip Q137).
+      Q137 is select_all (MAIFIP source); routing to MOST_EXPENSIVE_CHARGE
+      bypasses the awareness-source sub-block. }
+    if Q136_HEARD_MAIFIP in 2, 3 then
+        skip to Q138_MOST_EXPENSIVE_CHARGE;
+    endif;
+
+    { Per spec §1 sanity finding #12 + §3 doc-level note: PDF text
+      "(SKIP iF ANSWERED MAIFIP IN Q113)" is a transcription artifact
+      from a prior questionnaire version. Q113 in F4 is referral-not-
+      visiting reasons and has no MAIFIP option, so the spec'd skip
+      rule is unreachable in this DCF. Encode the rule literally so
+      it stays explicit in the code and survives a future Q113 value
+      set change without surgery -- the if-branch will simply never
+      trigger today.
+
+      Open question #1 in spec §5 -- revisit after Myra's edit pass. }
+    { Q113_WHY_NOT_VISIT options are select_all decomposed _O01.._O07
+      + _OTHER_TXT; none is "MAIFIP". The check is a no-op until/unless
+      Q113 value set evolves to include MAIFIP. }
+
+
+PROC Q139_FINAL_AMOUNT_PAID
+postproc
+    { Range check: 0..9,999,999,999 (per spec §3 Range Checks, len 10). }
+    if Q139_FINAL_AMOUNT_PAID < 0 or
+       Q139_FINAL_AMOUNT_PAID > 9999999999 then
+        errmsg("Final amount paid must be between 0 and 9,999,999,999. "
+               "Please re-check.");
+        reenter;
+    endif;
+
+
+PROC Q140_RECALL_BREAKDOWN
+postproc
+    { Per spec §2 Section M: Q140 = No (2) -> Q142 (skip Q141, Q141.1).
+      Q141 is select_all -- skip the entire decomposition. }
+    if Q140_RECALL_BREAKDOWN = 2 then   { 2 = No }
+        skip to Q142_RECALL_HOW_PAID;
+    endif;
+
+
+PROC Q141_1_NO_RECEIPT_AMOUNT
+postproc
+    { Range check: 0..9,999,999,999 (per spec §3 Range Checks, len 10). }
+    if Q141_1_NO_RECEIPT_AMOUNT < 0 or
+       Q141_1_NO_RECEIPT_AMOUNT > 9999999999 then
+        errmsg("No-receipt amount must be between 0 and 9,999,999,999. "
+               "Please re-check.");
+        reenter;
+    endif;
+
+
+PROC Q142_RECALL_HOW_PAID
+postproc
+    { Per spec §2 Section M: Q142 = No (2) -> Q144 (skip Q143).
+      Q143 is select_all -- skip the entire decomposition. Q144 is the
+      first item of Section N (HH Expenditures). }
+    if Q142_RECALL_HOW_PAID = 2 then   { 2 = No }
+        skip to Q144_CONSUMED;
+    endif;
+
+
+{ Sections N-Q + edits + household-pick stub + roster auto-fill land in }
+{ commits 7-9. The .apc file ends here for commit 6.                    }
 '''
 
 
 def main():
     (HERE / "HouseholdSurvey.ent.apc").write_text(APC, encoding="utf-8")
     print(f"wrote HouseholdSurvey.ent.apc ({len(APC)} chars; "
-          f"commit 5/9 -- Sections H-K + cross-record gate)")
+          f"commit 6/9 -- Sections L-M + Q136 transcription-artifact note)")
 
 
 if __name__ == "__main__":
