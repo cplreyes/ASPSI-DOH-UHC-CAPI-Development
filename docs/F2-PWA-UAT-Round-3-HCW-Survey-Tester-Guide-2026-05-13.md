@@ -40,8 +40,9 @@
 |---|---|---|---|
 | **Shan** (ASPSI RA) | Primary tester | All Section 5 scenarios (verify + new) | Real Android tablet primary; iPhone Safari + desktop Firefox secondary |
 | **Kidd** (ASPSI main RA) | Cross-coverage tester | All Section 5 scenarios (verify + new) | Real iPad primary; low-end Android phone + desktop Edge secondary |
+| **Marriz** (ASPSI Data Manager) | Cross-role coverage tester (Nurse persona) — also owns sync/submission monitoring perspective | All Section 5 scenarios (verify + new); pay extra attention to **5A.9 (Submission + Sync)** + the **Sync Report / Map Report** flows on the Admin side — those map directly to her day-to-day role | Whatever's available — variety welcome |
 
-> **Both testers walk both verify-shipped and new-scenarios sections.** Coverage breadth comes from device variety, not split assignments.
+> **All three testers walk both verify-shipped and new-scenarios sections.** Coverage breadth comes from device variety + role variety (Pharmacist + Physician + Nurse hit different role-gated paths). Marriz brings the Data Manager perspective on what synced data should look like end-to-end.
 
 ---
 
@@ -55,8 +56,13 @@ The tokens minted for Round 2 (2026-05-04) are still valid until **2026-06-03** 
 |---|---|---|---|---|---|
 | **Shan** | `DEMO-HCW-004` | Garcia, Roberto · **Pharmacist/Dispenser** · Male · 29 | DEMO-FAC-RHU-QC-1 (NCR / QC RHU) | Sections A, B, F, H, I, J (no C/D/E1/E2/G — role-gated off) | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkYmUzYTU0ZS03OTIzLTQzYjAtYTk4MS0yYmY1ODQzNGU3N2EiLCJ0YWJsZXRfaWQiOiI1MGE1M2QzYy02ZDE2LTRlYWYtODY3ZC0wNTFlMmEzYzJiZWQiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLVJIVS1RQy0xIiwiaWF0IjoxNzc3ODg2OTE5LCJleHAiOjE3ODA0Nzg5MTl9.6ytd1Hu66lABXpCuEMdhgl4c3cIgIpLbkwnRTM8P36A` |
 | **Kidd** | `DEMO-HCW-007` | (DH-INFANTA HCW — pick **Physician/Doctor** at role-select to exercise Section C/G) | DEMO-FAC-DH-INFANTA (IV-A District Hospital) | All sections A–J | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMjUzN2YzMy1mNTI2LTQ0ZDYtOGFiYS0yZmM3MzQxZDA0OTIiLCJ0YWJsZXRfaWQiOiI0YjliZDljYi04ZjBhLTQ1MTQtYTE4Yi00Y2ZlZjBmNjA0Y2MiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLURILUlORkFOVEEiLCJpYXQiOjE3Nzc4ODY5NDEsImV4cCI6MTc4MDQ3ODk0MX0.GXkvyAuKYsDdfbG9PhaKKA1kYMv-jKAh6kAnDBmMVlE` |
+| **Marriz** | `DEMO-HCW-002` | Santos, Maria · **Nurse** · Female · 35 | DEMO-FAC-RHU-QC-1 (NCR / QC RHU) | Sections A, B, C, D, E1, E2, F, H, I, J (Section G HIDDEN — Nurse role) | `https://f2-pwa.pages.dev/enroll?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MjI2MzRmNy04YmQ4LTRiYjktYmE2Yy0xMjgwNTM3NTIwMWEiLCJ0YWJsZXRfaWQiOiIzMjg4YWEwZi05MmViLTRiYmEtYmI1My03ZjE4ZWQyMmVmZjEiLCJmYWNpbGl0eV9pZCI6IkRFTU8tRkFDLVJIVS1RQy0xIiwiaWF0IjoxNzc3ODg2OTA4LCJleHAiOjE3ODA0Nzg5MDh9.3N9y_p0B8xea0g4vGHpb47AL_kXQxUR_hD2jrpdU1ro` |
 
-> **For Section 5A (R2 regression):** Kidd MUST pick **Physician/Doctor** at the role-select screen — Sections C/D/E1/E2/G are role-gated, only visible to Physician/Nurse/Midwife. Shan's Pharmacist persona doesn't see those sections, so Shan exercises 5A.1 (token), 5A.2 (Q9), 5A.3 (Q25 Section B), 5A.8 (Section J matrix), and 5A.9 (Submission + Sync). Kidd covers everything including the role-gated 5A.4–5A.7. Together both testers cover all 14 R2 regressions.
+> **For Section 5A (R2 regression) — coverage matrix with 3 testers:**
+> - **Shan (Pharmacist)** exercises 5A.1 (token), 5A.2 (Q9), 5A.3 (Q25 Section B), 5A.8 (Section J matrix), and 5A.9 (Submission + Sync) — Pharmacist persona doesn't see role-gated sections C/D/E1/E2/G.
+> - **Kidd (Physician)** MUST pick **Physician/Doctor** at the role-select screen — covers everything including role-gated 5A.4 (Section C), 5A.5 (Section D), 5A.6 (Section E1/E2), and 5A.7 (Section G). Section G is **Physician-only**, so this is Kidd's exclusive coverage.
+> - **Marriz (Nurse)** picks **Nurse** at the role-select screen — covers role-gated 5A.4–5A.6 (sections C/D/E1/E2 visible for Nurse) but NOT 5A.7 (Section G hidden for Nurse). Provides cross-coverage of Sections C/D/E1/E2 against Kidd's Physician walk + a Nurse-specific role-gating regression check.
+> Together all three testers cover all 14 R2 regressions; Sections C/D/E1/E2 get double-coverage (Kidd + Marriz); Section G stays single-coverage (Kidd only).
 
 ### Spare HCWs (for re-test or fresh-start scenarios)
 

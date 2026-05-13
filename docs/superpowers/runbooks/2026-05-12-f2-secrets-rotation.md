@@ -49,7 +49,7 @@ The F2 PWA backend uses 6 distinct secret-bearing surfaces. This runbook defines
    ```
 3. Re-mint all active enrollment tokens. Open Admin Portal → Data → HCWs → for each row with `status='enrolled'`, click **REISSUE**. (For >50 HCWs, file a follow-up to add a bulk-reissue script.)
 4. Force-logout all active admin sessions: open Admin Portal → Users → for each row, click the menu → **Revoke active sessions**. (No bulk button yet.)
-5. Notify Shan + Kidd in `#f2-pwa-uat` that they need to re-login and re-enroll their test devices.
+5. Notify Shan + Kidd + Marriz in `#f2-pwa-uat` that they need to re-login and re-enroll their test devices.
 
 **What breaks if you skip:** key compromise → arbitrary token forgery → unauthorized admin access OR unauthorized survey submission with stolen HCW identity.
 
