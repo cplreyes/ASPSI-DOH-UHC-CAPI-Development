@@ -3,7 +3,7 @@ epic: 4
 title: Backend & Sync Infrastructure
 phase: per-track
 status: in-progress
-last_updated: 2026-05-02
+last_updated: 2026-05-18
 ---
 
 # Epic 4 — Backend & Sync Infrastructure
@@ -48,13 +48,13 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
 - [ ] **E4-PWA-010** Backend secrets rotation policy documented (HMAC, JWT_SIGNING_KEY, Apps Script deploy ID) `status::todo` `priority::medium` `estimate::2h`
 - [ ] **E4-PWA-011** Backup + restore runbook for FacilityMasterList + submissions sheets `status::todo` `priority::medium` `estimate::3h`
 
-### CSWeb Track *(not started)*
+### CSWeb Track *(Sprint 006 — VPS provisioning + install committed; per 2026-05-18 ASPSI Team Meeting: stand up CSWeb on a VPS for field-response visibility + tablet-sync mgmt + data-manager monitoring. Local CSWeb deploy already proven — `E3-F1-085` — so VPS work is replication, not first-build; epic estimates likely compress.)*
 
-- [ ] **E4-CSWeb-001** CSWeb server provisioning — host selection, OS, network, TLS `status::todo` `priority::high` `estimate::1d`
-- [ ] **E4-CSWeb-002** CSWeb installation + admin account setup `status::todo` `priority::high` `estimate::4h`
-- [ ] **E4-CSWeb-003** Per-survey project upload (F1, F3, F4 dictionaries + apps) `status::todo` `priority::high` `estimate::4h`
+- [ ] **E4-CSWeb-001** CSWeb server provisioning — host selection, OS, network, TLS. **Sprint 006 committed (Goal D).** `status::todo` `priority::critical` `estimate::1d`
+- [ ] **E4-CSWeb-002** CSWeb installation + admin account setup. **Sprint 006 committed (Goal D).** `status::todo` `priority::critical` `estimate::4h`
+- [ ] **E4-CSWeb-003** Per-survey project upload (F1, F3, F4 dictionaries + apps) — **Sprint 007 carry** (subset commit: S006 = 001+002 only). `status::todo` `priority::high` `estimate::4h`
 - [ ] **E4-CSWeb-004** User management — enumerator credentials, role-based access `status::todo` `priority::high` `estimate::3h`
-- [ ] **E4-CSWeb-005** Field-tablet sync configuration — endpoint URLs, sync schedule, conflict policy `status::todo` `priority::high` `estimate::3h`
+- [ ] **E4-CSWeb-005** Field-tablet sync configuration — endpoint URLs, sync schedule, conflict policy. **Sprint 007 carry**; **gates `E3-F1-088`** (F1 tablet sync-verify). `status::todo` `priority::high` `estimate::3h`
 - [ ] **E4-CSWeb-006** Backup strategy for CSWeb data (frequency, retention, restore drill) `status::todo` `priority::medium` `estimate::4h`
 - [ ] **E4-CSWeb-007** Monitoring dashboard — sync health, submission counts, field-device status `status::todo` `priority::medium` `estimate::1d`
 

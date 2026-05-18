@@ -3,7 +3,7 @@ epic: 3
 title: CAPI Application Development (CSPro + CSEntry / PWA)
 phase: per-instrument
 status: in-progress
-last_updated: 2026-04-26
+last_updated: 2026-05-18
 ---
 
 # Epic 3 — CAPI Application Development (CSPro + CSEntry / PWA)
@@ -13,15 +13,15 @@ Per-instrument application build workstream. Turns the validated data dictionary
 **Ties to Product Backlog:** [[../product-backlog#Epic 3 — CAPI Application Development|PB Epic 3]]
 **Methodology:** [[../../../../2_Areas/IT-Standards/templates/CAPI-Development-Workflow|CAPI Development Workflow]] Phase 6
 
-## Status snapshot (2026-04-26)
+## Status snapshot (2026-05-18)
 
 | Instrument | Mode | Build state |
 |---|---|---|
-| F1 | CSPro CAPI | **Designer sign-off DONE 2026-05-04 (E2-F1-010 closed Day 1 of Sprint 004)**; DCF Build-ready at 12 records / 671 items; **E3-F1-001 (FMF Designer pass) UNBLOCKED** — generator skeleton ready, in-flight Sprint 004 |
-| F2 | **PWA** (self-admin; CSPro-encoder and Google Forms fallbacks retired; **CSPro F2 track = least priority**) | **Production live at v1.1.1 codebase + Verde Manual visual identity since 2026-04-26.** UAT Rounds 1 + 2 both closed (13 issues fixed across both rounds). Production: https://f2-pwa.pages.dev (Verde Manual ported via PR #42 path B + manual `wrangler pages deploy`). UAT automation pipeline in place (Slack events + daily digest + release notes). Round 3 (v1.2.0) UX backlog queued (#16/#17/#18); Verde Manual visual-identity migration shipped end-to-end (5 PRs on staging, ported to main as #42); auth re-arch (PR #31) on staging awaiting Phase F. |
-| F3 | CSPro CAPI | Build-ready — DCF built 2026-04-16, skip-logic+validation spec reviewed 2026-04-21 |
-| F4 | CSPro CAPI (roster-heavy) | Build-ready — DCF built 2026-04-16, skip-logic+validation spec drafted 2026-04-21; schema verified |
-| PLF | Recruitment form (mode TBD) | Source captured |
+| F1 | CSPro CAPI | Designer sign-off DONE 2026-05-04 (E2-F1-010); **from-scratch CAPI rebuild 2026-05-12** emits F1 end-to-end (generator → `FacilityHeadSurvey.generated.fmf`). **E3-F1-001 REOPENED 2026-05-18** (prior `done` superseded by the rebuild — CSPro Designer pass on Section A outstanding; Sprint 006 Goal A). Phase 1 sync (`E3-F1-088`) code-side partial; tablet-verify deferred to Sprint 007 (blocked behind `E4-CSWeb-005`). |
+| F2 | **PWA** (self-admin; CSPro-encoder and Google Forms fallbacks retired; **CSPro F2 track = least priority**) | Production live (v2.0.x + Verde Manual). UAT Rounds 1 + 2 closed; **Round 3 ran 2026-05-13→15** (label `from-uat-round-3-2026-05`, ~13 findings #302–#314); R3 close-out is Sprint 006 Goal B (`E6-PWA-007` / #271). UAT automation pipeline live. |
+| F3 | CSPro CAPI | Build-ready; **rebuilt end-to-end 2026-05-12** (incl. 110_F3_listing). FMF Designer pass tracked as **E3-F3-001 — Sprint 006 Goal A**. |
+| F4 | CSPro CAPI (roster-heavy) | Build-ready; **rebuilt end-to-end 2026-05-12** (incl. 113_F4_listing). FMF Designer pass tracked as **E3-F4-001 — Sprint 006 Goal A**. |
+| PLF | Recruitment form | Closed as duplicate of 110_F3_listing (per 2026-05-12 rebuild). |
 
 ## Task conventions
 
@@ -51,7 +51,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ### Form layout & UX
 
-- [x] **E3-F1-001** Create form file (`FacilityHeadSurvey.fmf`); lay out Section A (Identification & Cover Page) `status::done` `priority::high` `estimate::4h`
+- [ ] **E3-F1-001** Create form file (`FacilityHeadSurvey.fmf`); lay out Section A (Identification & Cover Page) — **REOPENED 2026-05-18:** prior `done` (pre-2026-04-26) superseded by the 2026-05-12 from-scratch CAPI rebuild; generator now emits `FacilityHeadSurvey.generated.fmf`, the CSPro Designer pass on Section A is still outstanding. **Sprint 006 carry (Goal A).** `status::todo` `priority::high` `estimate::4h`
 - [x] **E3-F1-002** Lay out Sections B–H with grouped screens matching interviewer flow `status::done` `priority::high` `estimate::2d`
 - [x] **E3-F1-003** Assign capture types per field (radio, drop-down, number pad, date picker) to optimize tablet entry speed `status::done` `priority::high` `estimate::1d`
 
@@ -101,8 +101,8 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [x] **E3-F1-085** Phase 1 — local CSWeb deploy proven (F7 → Deploy Application wizard) `status::done` `priority::critical`
 - [x] **E3-F1-086** Phase 1 — CSEntry tablet sync chain proven (login → menu → F1, end-to-end on real device) `status::done` `priority::critical`
 - [x] **E3-F1-087** Phase 1 — CSPro 8.0 syntax gotchas catalog (Phase 2 / F3 / F4 reference) `status::done` `priority::high`
-- [ ] **E3-F1-088** Phase 1 sync mechanic resolution — `syncdata` external-dict + CSDB binding `status::todo` `priority::critical` `estimate::6h` *(handoff says ~5% of Plan 1 remaining; investigation + tablet test cycle)*
-- [ ] **E3-F1-PHASE2-PLAN** Phase 2 plan + scope confirmation (PLF + F3 + F4_listing + F4 + supervisor menu + EA fence + daily audit Slack) `status::todo` `priority::high` `estimate::4h` *(planning + scope writeup; gates F3/F4/PLF builds)*
+- [ ] **E3-F1-088** Phase 1 sync mechanic resolution — `syncdata` external-dict + CSDB binding. Code-side PARTIAL via the 2026-05-12 rebuild. Tablet-verify slice **deferred to Sprint 007** — blocked behind `E4-CSWeb-005` (field-tablet sync config), which is the Sprint 007 carry of the Goal D subset commit (S006 commits only E4-CSWeb-001/002). `status::blocked` `priority::critical` `estimate::3h` *(tablet round-trip smoke; needs CSWeb VPS sync target up)*
+- [x] **E3-F1-PHASE2-PLAN** Phase 2 plan + scope confirmation (PLF + F3 + F4_listing + F4 + supervisor menu + EA fence + daily audit Slack) — **OVER-DELIVERED 2026-05-12** as built artifacts (F1+F3+F4+110_F3_listing+113_F4_listing end-to-end, 83 worktree commits) rather than a scope-doc; closed in Sprint 005. `status::done` `priority::high` `estimate::4h`
 
 ---
 
@@ -178,7 +178,8 @@ Per-instrument application build workstream. Turns the validated data dictionary
 **Prerequisite:** Form-layout plan (shared with F1/F4 — Sprint 003 prerequisite).
 **Current DCF state (2026-04-21):** 18 records / 840 items, sections A–L. Skip-logic + validation spec reviewed 2026-04-21 at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (1 question routed to Juvy — Q31 IP_GROUP; 5 spec-decisions closed with override clause). **Build-ready.**
 
-- [ ] **E3-F3-001..060** Standard template; reuses F1's interviewer-administered patterns (PSGC cascade + consent + GPS/photo via `Capture-Helpers.apc`)
+- [ ] **E3-F3-001** Create form file (`PatientSurvey.fmf`); CSPro Designer pass on Section A — generator emits the skeleton post-2026-05-12 rebuild. **Sprint 006 committed (Goal A).** `status::todo` `priority::high` `estimate::4h`
+- [ ] **E3-F3-002..060** Standard template; reuses F1's interviewer-administered patterns (PSGC cascade + consent + GPS/photo via `Capture-Helpers.apc`)
 - [ ] **E3-F3-015** Outpatient vs inpatient branching at eligibility screen `status::todo` `priority::high` `estimate::4h`
 
 *(Full task list to be expanded when F3 enters a sprint.)*
@@ -193,7 +194,8 @@ Per-instrument application build workstream. Turns the validated data dictionary
 F4 inherits the standard template **plus a roster engine**. The household roster loop is the primary technical challenge in this instrument.
 
 - [x] **E3-F4-000** ~~Schema patch — flip `C_HOUSEHOLD_ROSTER` and `J_HEALTH_SEEKING` to repeating records~~ **CLOSED-BY-VERIFICATION 2026-04-21.** Re-inspected generator + emitted DCF before starting patch: `C_HOUSEHOLD_ROSTER` already at `max_occurs=20`, `J_HEALTH_SEEKING` correctly respondent-level per Apr 20 source. No code change. `status::done` `priority::critical`
-- [ ] **E3-F4-001..060** Standard template per F1
+- [ ] **E3-F4-001** Create form file (`HouseholdSurvey.fmf`); CSPro Designer pass on Section A — generator emits the skeleton post-2026-05-12 rebuild (incl. 113_F4_listing). **Sprint 006 committed (Goal A).** `status::todo` `priority::high` `estimate::4h`
+- [ ] **E3-F4-002..060** Standard template per F1
 - [ ] **E3-F4-070** Household roster grid: add-member, edit-member, remove-member, reorder `status::todo` `priority::critical` `estimate::2d`
 - [ ] **E3-F4-071** Per-member sub-questionnaire loop (conditional on age/relation/etc.) `status::todo` `priority::critical` `estimate::2d`
 - [ ] **E3-F4-072** Cross-member consistency rules (e.g., only one household head, spouse implies head exists) `status::todo` `priority::high` `estimate::1d`
