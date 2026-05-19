@@ -90,7 +90,11 @@ const predicates: Record<string, Record<string, Predicate>> = {
     Q35: (v) => v.Q31 === 'Yes' && v.Q34 === 'Yes',
     Q36: (v) => v.Q31 === 'Yes' && v.Q34 === 'Yes',
     Q37: (v) => v.Q31 === 'Yes' && v.Q34 === 'No',
-    Q38: (v) => v.Q31 === 'Yes',
+    // R3 #308: per F2-Skip-Logic "Apr 20 improvement", Q34=Yes (already
+    // accredited) skips the whole C tail (Q37–Q40) → Q41. Q38 ("would you
+    // consider becoming accredited?") only makes sense for the not-yet-
+    // accredited path, so gate it on Q34=No like Q37.
+    Q38: (v) => v.Q31 === 'Yes' && v.Q34 === 'No',
     Q39: (v) => v.Q31 === 'Yes' && v.Q38 === 'Yes',
     Q40: (v) => v.Q31 === 'Yes' && v.Q38 === 'No',
   },
