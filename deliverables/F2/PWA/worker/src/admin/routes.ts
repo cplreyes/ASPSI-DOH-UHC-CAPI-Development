@@ -27,6 +27,7 @@ import {
   handleGetResponseById,
   handleListAudit,
   handleListDlq,
+  handleDlqMutation,
   handleListHcws,
   handleSyncReport,
   handleMapReport,
@@ -425,6 +426,48 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleListDlq(url, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  // #297: replay/delete were dead route constants (defined, never
+  // dispatched) → "route not found". AS handlers already exist.
+  const dlqReplayMatch = url.pathname.match(DLQ_REPLAY_RE);
+  if (req.method === 'POST' && dlqReplayMatch) {
+    const auth = await requirePerm(req, 'dash_data', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const dlqId = decodeURIComponent(dlqReplayMatch[1]!);
+    const asCall = (payload: { dlq_id: string }) =>
+      callAppsScript<{ dlq_id: string; status: string; submission_id?: string | null }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_dlq_replay',
+        payload as unknown as Record<string, unknown>,
+        requestId,
+        env.F2_AUTH,
+      );
+    const r = await handleDlqMutation(dlqId, asCall);
+    return withRequestId(r, requestId);
+  }
+
+  const dlqDeleteMatch = url.pathname.match(DLQ_DELETE_RE);
+  if (req.method === 'DELETE' && dlqDeleteMatch) {
+    const auth = await requirePerm(req, 'dash_data', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const dlqId = decodeURIComponent(dlqDeleteMatch[1]!);
+    const asCall = (payload: { dlq_id: string }) =>
+      callAppsScript<{ dlq_id: string; status: string }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_dlq_delete',
+        payload as unknown as Record<string, unknown>,
+        requestId,
+        env.F2_AUTH,
+      );
+    const r = await handleDlqMutation(dlqId, asCall);
     return withRequestId(r, requestId);
   }
 
