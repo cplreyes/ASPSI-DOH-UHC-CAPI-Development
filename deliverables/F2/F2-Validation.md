@@ -32,6 +32,7 @@ Sourced from the **April 20, 2026 PDF** (124 actual items, numbered Q1–Q125 wi
 - **Numeric fields** use Forms' built-in "Number · Between" validator with generous ranges. A too-tight range on self-admin blocks submission — prefer loose + POST flag.
 - **Regex on short-text** only where a structured value is expected (none in F2 body — no phone, no email beyond Google sign-in auto-capture).
 - **"Other, specify" follow-ups** are standalone short-text fields triggered by the parent single/multi-select. Required when the parent equals **any** of its specify-other options — an item may carry more than one (e.g. Q13–Q24 have both "Yes, specify other reason ___" and "No, specify other reason ___" feeding one shared `_other` field). The generated `.superRefine` gates on all of them, not just the first (R3 #302, 2026-05-19).
+- **Multi-select affordance** — every `multi`-type item renders a "Select all that apply." hint above its options so respondents know multiple answers are permitted (R3 #313, 2026-05-19; applied generically, not a per-question list).
 - **Consent (Block 5)** is the single hard gate. Declining routes to thank-you; everything else is optional.
 - **Q108 gap** — Apr 20 PDF skips Q108 (editorial artifact). Builder must *not* emit a Q108 field. Flagged to ASPSI for confirmation.
 
