@@ -79,6 +79,12 @@ revised: 2026-05-18 — re-planned against the 2026-05-18 ASPSI Team Meeting (CS
   - **Translation:** confirmed S007 (full build next week); Myra Tagalog help ~weekend. Stretch dropped.
   - **SJREB:** full-board 2nd week of June 2026 — informational only, out of DP scope.
 
+### 2026-05-19 (Tue) — Day 2: CAPI-translation email ingest → new 2026-06-12 PSA gate
+
+- CAPI-relevant 30-day email sweep (`clreyes6@up.edu.ph`) ingested 2 net-new translation threads. **New hard external constraint surfaced:** PSA will not clear the survey without the **CAPI app + 7 translated versions** bundled — internal deadline **2026-06-12** (Myra↔Carl call-firmed 05-13; Carl confirmed, quality held). **7 distinct languages** (Bisaya ≠ Cebuano). QC-finalization (not first-draft) is the binding predecessor; Bisaya Household + Ilocano-reviewer gaps are ASPSI-owned build-input risks (not Carl's to chase).
+- **Impact on this sprint: none to S006 sequencing.** The 7-language build is S007 (per the 05-18 meeting); this sharpens the S007 framing to a hard date and makes it the **S007 critical path to PSA clearance**, competing with the parked questionnaire-numbering work for the same window. S006 Goal A (F1/F3/F4 Designer passes) feeds it — clean FMF structure now de-risks the 06-12 path. Per quality-over-deadline, 06-12 is a sequencing constraint, not a reason to cut logic/Designer/validation.
+- Durable record: `wiki/concepts/CAPI Seven-Language Translation Build.md` + 2 source pages + memory `project_capi_translation_psa_deadline`. Mode C standup `scrum/standups/2026-05-19.md` written (replaced stale auto file).
+
 ## Definition of Done — Sprint 006
 
 - [ ] **E3-F1-001 / E3-F3-001 / E3-F4-001** closed: each instrument's `.fmf` saved + reviewed in CSPro Designer.
