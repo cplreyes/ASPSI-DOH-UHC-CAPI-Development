@@ -33,7 +33,10 @@ import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { Link, useRouter } from '../lib/pages-router';
 
-interface Marker {
+// #286: renamed from `Marker` — the old name shadowed the react-leaflet
+// `Marker` component imported above (TS disambiguated by namespace, but it
+// read ambiguously). This is the data shape; the JSX `<Marker>` is the import.
+interface MarkerData {
   submission_id: string;
   hcw_id: string;
   facility_id: string;
@@ -43,7 +46,7 @@ interface Marker {
 }
 
 interface MapReportData {
-  markers: Marker[];
+  markers: MarkerData[];
   no_gps_count: number;
 }
 
@@ -130,7 +133,7 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
     | { kind: 'loaded'; data: MapReportData }
     | { kind: 'failed'; error: ApiError }
   >({ kind: 'loading' });
-  const [hovered, setHovered] = useState<Marker | null>(null);
+  const [hovered, setHovered] = useState<MarkerData | null>(null);
 
   const apiQuery = useMemo(() => buildApiQuery(filters), [filters]);
 
@@ -264,9 +267,9 @@ function MapPlot({
   hovered,
   onHover,
 }: {
-  markers: Marker[];
-  hovered: Marker | null;
-  onHover: (m: Marker | null) => void;
+  markers: MarkerData[];
+  hovered: MarkerData | null;
+  onHover: (m: MarkerData | null) => void;
 }): JSX.Element {
   return (
     <div className="verde-leaflet-wrap border border-hairline bg-paper">
@@ -324,7 +327,7 @@ function MapPlot({
   );
 }
 
-function HoveredCard({ marker, onClear }: { marker: Marker; onClear: () => void }): JSX.Element {
+function HoveredCard({ marker, onClear }: { marker: MarkerData; onClear: () => void }): JSX.Element {
   return (
     <div className="mt-3 border border-hairline bg-secondary/20 p-3 text-sm">
       <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Marker</p>
