@@ -102,6 +102,17 @@ flowchart TD
     class SUB terminal
 ```
 
+> **Validation invariant (R3 #298, 2026-05-19).** Skip-logic visibility is the
+> single source of truth for *all three* derived behaviors: rendering
+> (`groupVisibleItems`), the section-status/advance gate (`allRequiredFilled`),
+> and **form validation** (the `Section.tsx` zod resolver now drops errors for
+> any field not in the shouldShow-filtered visible set). Items hidden by a
+> role gate that the linear spec can't express as `conditional` — e.g. the
+> E1 BUCAS block (Q48–Q52) for Pharmacist/Dispenser — stay schema-`required`
+> in the generated `schema.ts`, but a hidden required field can no longer
+> silently block submit. Required-when-visible is still enforced (visible
+> fields validate normally; the runtime gate also checks `item.required`).
+
 ### Diagram 2 — Section A detail (Profile)
 
 ```mermaid

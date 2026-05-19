@@ -81,6 +81,33 @@ describe('<Section>', () => {
     expect(screen.getByLabelText(/Age\?/)).toBeInTheDocument();
   });
 
+  // R3 #298: skip-logic can hide a schema-required item (e.g. Section E1
+  // Q48 for a Pharmacist/Dispenser — the role gate lives in skip-logic.ts,
+  // not the spec, so the generated schema still marks it required). The
+  // resolver must mirror visibility the way rendering does, or the form
+  // silently fails zod on the hidden field and "cannot proceed".
+  it('does not block submit on schema-required items hidden by skip-logic (#298)', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    renderWithProviders(
+      <Section section={fixture} schema={schema} items={[fixture.items[1]]} onSubmit={onSubmit} />,
+    );
+    await user.type(screen.getByLabelText(/Age\?/), '25');
+    await user.click(screen.getByRole('button', { name: /submit/i }));
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onSubmit.mock.calls[0][0]).toEqual({ Q4: 25 });
+  });
+
+  it('still blocks submit when a VISIBLE required item is empty', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    // Both items visible (no items override) — real validation must hold.
+    renderWithProviders(<Section section={fixture} schema={schema} onSubmit={onSubmit} />);
+    await user.type(screen.getByLabelText(/Age\?/), '25');
+    await user.click(screen.getByRole('button', { name: /submit/i }));
+    expect(onSubmit).not.toHaveBeenCalled(); // Q3 still required + empty
+  });
+
   it('prefills inputs from defaultValues', () => {
     renderWithProviders(
       <Section
