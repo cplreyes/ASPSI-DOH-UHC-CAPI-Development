@@ -141,4 +141,104 @@ describe('<Section>', () => {
     const last = onAutosave.mock.calls[onAutosave.mock.calls.length - 1];
     expect(last[0]).toMatchObject({ Q3: 'Female' });
   });
+
+  // R3 #314 seam probe at the Section level: a matrix (consecutive
+  // same-choice singles → MatrixQuestion) filled LIVE, then the real
+  // handleSubmit round-trip. onSubmit is exactly what handleSectionValid
+  // spreads into `merged`. If the matrix values don't reach onSubmit, the
+  // seam is here; if they do, it's higher in MultiSectionForm orchestration.
+  const matrixFixture: SectionModel = {
+    id: 'J',
+    title: dual('Job Satisfaction'),
+    items: [
+      {
+        id: 'Q98',
+        section: 'J',
+        type: 'single',
+        required: true,
+        label: dual('Pay'),
+        choices: [
+          { label: dual('1'), value: '1' },
+          { label: dual('2'), value: '2' },
+          { label: dual('3'), value: '3' },
+        ],
+      },
+      {
+        id: 'Q99',
+        section: 'J',
+        type: 'single',
+        required: true,
+        label: dual('Workload'),
+        choices: [
+          { label: dual('1'), value: '1' },
+          { label: dual('2'), value: '2' },
+          { label: dual('3'), value: '3' },
+        ],
+      },
+    ],
+  };
+  const matrixSchema = z.object({
+    Q98: z.enum(['1', '2', '3']),
+    Q99: z.enum(['1', '2', '3']),
+  });
+
+  it('live-filled matrix values reach onSubmit (#314 Section-level seam)', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    renderWithProviders(
+      <Section
+        section={matrixFixture}
+        schema={matrixSchema}
+        items={matrixFixture.items}
+        onSubmit={onSubmit}
+      />,
+    );
+    // MatrixQuestion radios have aria-label `${item.id} ${choiceLabel}`.
+    await user.click(screen.getAllByLabelText('Q98 2')[0]);
+    await user.click(screen.getAllByLabelText('Q99 3')[0]);
+    await user.click(screen.getByRole('button', { name: /submit/i }));
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onSubmit.mock.calls[0][0]).toEqual({ Q98: '2', Q99: '3' });
+  });
+
+  // #314 — REPRODUCED + ROOT-CAUSED, fix pending an architectural decision.
+  // `.skip` because it fails on purpose (it's the runnable reproduction);
+  // flip to `it(` once MatrixQuestion is fixed and this should pass.
+  //
+  // Root cause: MatrixQuestion renders every radio TWICE — once in the
+  // desktop `<table>` (md:table) and once in the mobile cards (md:hidden) —
+  // both attaching `{...register(item.id)}`. RHF gets duplicate refs for a
+  // single radio-group name and applies `defaultValues` to only ONE copy.
+  // On the Edit-from-review remount (Section re-mounts with sectionDefaults),
+  // the *desktop* table — what tablet/desktop users actually see — renders
+  // blank. (An earlier isolated probe passed spuriously by asserting
+  // `.some(checked)`, which the mobile copy satisfied; this asserts the
+  // desktop `[0]` copy, i.e. the real-user view.)
+  //
+  // Why the obvious fixes don't work:
+  //  - Controlled-via-`useWatch` (no register): fields never register, so
+  //    `useWatch` returns undefined → never checked.
+  //  - register-once-in-body + controlled `useWatch`: Section's
+  //    `useForm({ resolver, mode:'onChange' })` config doesn't surface
+  //    defaultValues through `useWatch` reliably (works with a bare
+  //    `useForm({defaultValues})`, not with the resolver+onChange config).
+  //
+  // Correct fix is architectural (Phase 4.5): eliminate the dual-DOM
+  // duplication — render the inputs once and make the layout responsive via
+  // CSS, OR wrap each row in an RHF `<Controller>` (the official controlled
+  // pattern, which surfaces defaultValues deterministically) spanning both
+  // layout copies. Both are deliberate refactors, not one-liners.
+  it.skip('matrix rehydrates from defaultValues after the round-trip (#314)', () => {
+    renderWithProviders(
+      <Section
+        section={matrixFixture}
+        schema={matrixSchema}
+        items={matrixFixture.items}
+        defaultValues={{ Q98: '2', Q99: '3' }}
+        onSubmit={() => {}}
+      />,
+    );
+    expect((screen.getAllByLabelText('Q98 2')[0] as HTMLInputElement).checked).toBe(true);
+    expect((screen.getAllByLabelText('Q99 3')[0] as HTMLInputElement).checked).toBe(true);
+  });
 });
