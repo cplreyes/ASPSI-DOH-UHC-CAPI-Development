@@ -42,7 +42,11 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-CHANGELOG = ROOT / "CHANGELOG.md"
+# #289: the canonical CHANGELOG (read by humans, referenced by the F2 PWA
+# README/header, Keep-a-Changelog) lives with the app, NOT at repo root.
+# Writing to ROOT/CHANGELOG.md sent every milestone's release notes to a
+# file nobody reads. Co-locate with package.json (same dir, next line).
+CHANGELOG = ROOT / "deliverables" / "F2" / "PWA" / "app" / "CHANGELOG.md"
 PACKAGE_JSON = ROOT / "deliverables" / "F2" / "PWA" / "app" / "package.json"
 
 # Versioning policy (documented here for reference and applied by --update-package-json):
