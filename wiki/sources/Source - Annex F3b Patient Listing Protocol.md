@@ -11,6 +11,11 @@ Field-operations protocol for listing and selecting patient respondents for the 
 
 **Version:** Apr 20 2026 Revised Inception Report submission (−105 KB vs Apr 08 — significant slim from simple listing *form* to streamlined *protocol* document). Renamed from "Patient Listing Form" to "Patient Listing Protocol".
 
+> [!warning] Conflicts with Survey Manual v1.0 (2026-05-12) — open divergence
+> The **per-patient random-interval method** documented below (CSPro generates 1–10 min, enumerator waits, approaches next patient, repeats) is contradicted by [[Source - Survey Manual v1.0 (2026-05-12 Working File post-Myra)|Manual v1.0]] §3.4.3, which mandates **standard PPS systematic sampling** from a closed daily consultation list (every-nth from total/quota interval).
+>
+> **CAPI build impact:** [[project_f3_listing_built_2026_05_12|F3 listing CAPI app]] implements this Apr 20 random-interval method. Either the F3 app rewrites to systematic, or the Manual reverts. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - 2026-05-12 Survey Manual v1.0 Divergence Re-eval|the 2026-05-12 divergence re-eval]] for the framing options.
+
 ## Scope
 
 - **Target sample per facility**: 1–30 patients, sized to IS and facility patient load. **Oversample by 50%** for non-response backup.

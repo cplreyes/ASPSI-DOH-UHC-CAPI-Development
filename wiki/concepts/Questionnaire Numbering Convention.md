@@ -13,6 +13,14 @@ related_task: E7-DOC-001
 
 > **Status: ADOPTED 2026-05-05.** Carl approved the decomposed scheme on 2026-05-05 in response to Kidd's coding question. Width verification against PSA 1Q 2026 PSGC + Inception-Report Table 1 (same date) revised the proposal from 11 to **12 digits** because the PSGC city/municipality slot is 3 digits, not 2 — the manual's legacy `035401` example used the pre-2008 PSGC, while the F-series build is anchored on PSA 1Q 2026. The convention below reflects the adopted, verified widths. A brief for Kidd is at `deliverables/Survey-Manual/Case-ID-Convention-Brief_2026-05-05.{md,docx}`. Implementation footprint (cspro_helpers + F1/F3/F4 generators + F2 PWA case-ID issuer + manual addendum) remains pending sprint scheduling.
 
+> [!warning] Survey Manual v1.0 (2026-05-12) §5.1 documents a DIFFERENT 12-digit scheme — and it's internally inconsistent
+> [[Source - Survey Manual v1.0 (2026-05-12 Working File post-Myra)|Manual v1.0]] §5.1 Respondent Number describes a 12-digit code with **7-digit PSGC + 2-digit facility + 3-digit respondent-type-and-sequence**, where:
+> - The text says "Digits 10–12 (Respondent Type)" and "Digits 11–12 (Response Number)" — these **overlap**.
+> - Example codes (`050620003101`, `050620003303`) clarify that **digit 10 is the respondent-type tens digit** (1, 3) and **digits 11–12 are the sequence** (01, 03) — but the text contradicts this.
+> - Respondent-type values listed: **100 = Facility Head, 300 = Patient**. **F2 HCW (presumably 200) and F4 Household (presumably 400) are missing.**
+>
+> **Neither variant** in the Manual v1.0 nor the adopted scheme below has the active/replacement/refused partition (001–699 / 700–899 / 900–999) that Carl's May 5 brief proposed. **Three variants are now in play** going into PSA submission 2026-05-19. Reconciliation needed before Sprint scheduling for case-ID implementation. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - 2026-05-12 Survey Manual v1.0 Divergence Re-eval|the 2026-05-12 divergence re-eval]].
+
 This document specifies the case-identifier (questionnaire-number) format for every instrument in the UHC Survey Year 2 — F1 (Facility Head, CSPro), F2 (Healthcare Worker, PWA), F3 (Patient, CSPro), F4 (Household, CSPro). It exists because the master Survey Manual (March 2026 / Apr 28 working version) prescribes a 9-digit composite that doesn't quite fit a multi-instrument health-facility survey, and because the current F-series dictionaries use a different shape (single 6-digit `QUESTIONNAIRE_NO` ID item) that under-specifies the case key.
 
 ## What the manual currently says

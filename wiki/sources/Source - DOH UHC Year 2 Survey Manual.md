@@ -7,6 +7,8 @@ tags: [survey-manual, fieldwork, sop, capi, papi, hcw-protocol, quality-control,
 
 # Source — DOH UHC Year 2 Survey Manual
 
+> [!info] SUPERSEDED 2026-05-12 by [[Source - Survey Manual v1.0 (2026-05-12 Working File post-Myra)|Survey Manual v1.0]] (and its [[Source - Survey Manual v1.0 (2026-05-12 Clean Final to DOH)|clean final variant]] going to DOH/PSA on 2026-05-19). This Apr 28 page is retained for historical comparison and for Carl's CSPro section rewrite trail.
+
 > **March 2026 dated, Apr 28 2026 working version** (`raw/DOH UHC Year 2_Survey Manual Apr 28.docx`).
 > ASPSI-authored field manual for survey team leaders (STLs) and survey enumerators (SEs). Covers the full chain from facility selection through interview administration, quality control, and data processing.
 >
