@@ -297,9 +297,28 @@ function MapPlot({
             key={m.submission_id}
             position={[m.lat, m.lng]}
             icon={hovered?.submission_id === m.submission_id ? VERDE_MARKER_ICON_SELECTED : VERDE_MARKER_ICON}
+            keyboard
             eventHandlers={{
               click: () => onHover(m),
               popupclose: () => onHover(null),
+              // #287: the divIcon is aria-hidden, so AT/keyboard users get
+              // nothing. Decorate the marker element on add: role + name +
+              // tabindex, and bind Enter/Space to the same action as click
+              // (Leaflet's built-in Enter→click is unreliable for divIcons).
+              add: ({ target }) => {
+                const el = target.getElement() as HTMLElement | undefined;
+                if (!el) return;
+                el.setAttribute('role', 'button');
+                el.setAttribute('tabindex', '0');
+                el.setAttribute('aria-label', describeMarker(m));
+                el.addEventListener('keydown', (ev: KeyboardEvent) => {
+                  if (ev.key === 'Enter' || ev.key === ' ') {
+                    ev.preventDefault();
+                    onHover(m);
+                    target.openPopup();
+                  }
+                });
+              },
             }}
           >
             <Popup>
@@ -406,6 +425,12 @@ function FilterText({
       />
     </label>
   );
+}
+
+// #287: accessible name for a map marker (announced to AT, exposed as the
+// marker element's aria-label). Mirrors the Popup's human-readable content.
+function describeMarker(m: MarkerData): string {
+  return `Submission ${m.hcw_id}, facility ${m.facility_id}, submitted ${formatTs(m.submitted_at)}. Activate to view details.`;
 }
 
 function formatTs(iso: string): string {
