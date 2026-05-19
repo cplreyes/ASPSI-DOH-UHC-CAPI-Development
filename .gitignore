@@ -8,6 +8,13 @@ wiki/sources/Source - ASPSI Proposal Approach and Methodology.md
 wiki/sources/Source - Revised Inception Report.md
 wiki/sources/Source - ASPSI Team Meeting 2026-04-13.md
 wiki/analyses/Analysis - Project Intelligence Brief.md
+# Internal ASPSI comms — verbatim email / meeting content, kept local (public repo)
+wiki/sources/Source - ASPSI Team Meeting 2026-05-11.md
+wiki/sources/Source - ASPSI Team Meeting 2026-05-18.md
+wiki/sources/Source - ASPSI Weekly Update Draft 2026-05-11.md
+wiki/sources/Source - CAPI Translations PSA Deadline (Myra 2026-05-13).md
+wiki/sources/Source - Survey Tool Translation Delivery Status 2026-05-15.md
+wiki/concepts/CAPI Seven-Language Translation Build.md
 
 # OS
 .DS_Store
@@ -28,6 +35,9 @@ desktop.ini
 
 # Claude Code local config and automation scripts (contains Slack webhook secret)
 .claude/
+
+# Node deps (root-level stray install; app deps live under deliverables/**)
+node_modules/
 
 # Python bytecode caches
 __pycache__/
