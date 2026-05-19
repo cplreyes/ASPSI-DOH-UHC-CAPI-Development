@@ -201,34 +201,17 @@ describe('<Section>', () => {
     expect(onSubmit.mock.calls[0][0]).toEqual({ Q98: '2', Q99: '3' });
   });
 
-  // #314 — REPRODUCED + ROOT-CAUSED, fix pending an architectural decision.
-  // `.skip` because it fails on purpose (it's the runnable reproduction);
-  // flip to `it(` once MatrixQuestion is fixed and this should pass.
-  //
-  // Root cause: MatrixQuestion renders every radio TWICE — once in the
-  // desktop `<table>` (md:table) and once in the mobile cards (md:hidden) —
-  // both attaching `{...register(item.id)}`. RHF gets duplicate refs for a
-  // single radio-group name and applies `defaultValues` to only ONE copy.
-  // On the Edit-from-review remount (Section re-mounts with sectionDefaults),
-  // the *desktop* table — what tablet/desktop users actually see — renders
-  // blank. (An earlier isolated probe passed spuriously by asserting
-  // `.some(checked)`, which the mobile copy satisfied; this asserts the
-  // desktop `[0]` copy, i.e. the real-user view.)
-  //
-  // Why the obvious fixes don't work:
-  //  - Controlled-via-`useWatch` (no register): fields never register, so
-  //    `useWatch` returns undefined → never checked.
-  //  - register-once-in-body + controlled `useWatch`: Section's
-  //    `useForm({ resolver, mode:'onChange' })` config doesn't surface
-  //    defaultValues through `useWatch` reliably (works with a bare
-  //    `useForm({defaultValues})`, not with the resolver+onChange config).
-  //
-  // Correct fix is architectural (Phase 4.5): eliminate the dual-DOM
-  // duplication — render the inputs once and make the layout responsive via
-  // CSS, OR wrap each row in an RHF `<Controller>` (the official controlled
-  // pattern, which surfaces defaultValues deterministically) spanning both
-  // layout copies. Both are deliberate refactors, not one-liners.
-  it.skip('matrix rehydrates from defaultValues after the round-trip (#314)', () => {
+  // #314 — FIXED. Root cause: MatrixQuestion rendered every radio TWICE
+  // (desktop `<table>` + mobile cards) with uncontrolled
+  // `{...register(item.id)}`; RHF got duplicate refs for one radio-group
+  // name and applied `defaultValues` to only ONE copy, so the desktop
+  // table (what tablet/desktop users see) rendered blank on the
+  // Edit-from-review remount. Fix: each row now binds through
+  // `useController` (RHF's controlled pattern; `field.value`
+  // deterministically reflects `defaultValues`, and two controllers for
+  // one name across the two layouts is supported). This test is the
+  // regression gate — it must stay green.
+  it('matrix rehydrates from defaultValues after the round-trip (#314)', () => {
     renderWithProviders(
       <Section
         section={matrixFixture}
