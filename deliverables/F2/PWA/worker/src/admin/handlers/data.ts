@@ -251,6 +251,35 @@ export async function handleListDlq(
   return jsonResponse(r.data, 200);
 }
 
+// #297: DLQ replay/delete. The AS handlers (admin_dlq_replay /
+// admin_dlq_delete) existed, but the Worker had `DLQ_REPLAY_RE` /
+// `DLQ_DELETE_RE` defined yet never dispatched — every DLQ mutation
+// returned "route not found". Shared handler: both take `{ dlq_id }`
+// and return `{ dlq_id, status, ... }`; mirrors handleListDlq's
+// ok/data/error → Response shaping.
+export type DlqMutationAsCallable = (payload: {
+  dlq_id: string;
+}) => Promise<{
+  ok: boolean;
+  data?: { dlq_id: string; status: string; submission_id?: string | null };
+  error?: { code?: string; message?: string };
+}>;
+
+export async function handleDlqMutation(
+  dlqId: string,
+  asCallable: DlqMutationAsCallable,
+): Promise<Response> {
+  const r = await asCallable({ dlq_id: dlqId });
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      502,
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
 // ----- HCWs lookup (Task 2.9) ---------------------------------------------
 
 export interface HcwRow {
