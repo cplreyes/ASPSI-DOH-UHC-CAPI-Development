@@ -25,6 +25,9 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
   const { navigate } = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  // #331: optional show/hide on the password field (tester suggestion —
+  // convenience when typing security credentials).
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<ApiError | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -98,15 +101,26 @@ export function Login({ apiBaseUrl, fetchImpl }: LoginProps): JSX.Element {
           <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
             Password
           </span>
-          <input
-            type="password"
-            name="password"
-            autoComplete="current-password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border-0 border-b border-hairline bg-transparent py-2 text-base outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal focus:ring-0"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border-0 border-b border-hairline bg-transparent py-2 pr-14 text-base outline-none focus:border-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal focus:ring-0"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((s) => !s)}
+              aria-pressed={showPassword}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+              className="absolute inset-y-0 right-0 flex items-center px-1 font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
+          </div>
         </label>
 
         {error ? (
