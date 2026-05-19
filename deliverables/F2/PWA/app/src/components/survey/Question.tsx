@@ -197,6 +197,9 @@ function renderControl(
       const reg = register(item.id);
       return (
         <div className="flex flex-col gap-1">
+          {/* R3 #313: every multi-select shows this affordance so respondents
+              know more than one answer is allowed (raised for Q25/Q32/.../Q124). */}
+          <p className="text-xs text-muted-foreground">{t('question.selectAllThatApply')}</p>
           <fieldset className="flex flex-col gap-1">
             {allChoices.map((choice, idx) => {
               const isChecked = selected.includes(choice.value);

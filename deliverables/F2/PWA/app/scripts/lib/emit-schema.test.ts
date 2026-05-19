@@ -387,6 +387,54 @@ describe('emitSchema', () => {
     expect(code).toContain("path: ['Q21_other']");
   });
 
+  // R3 #302: Q13–Q24 each carry TWO "specify other reason" options
+  // ("Yes, specify other reason ___" AND "No, specify other reason ___").
+  // emitOtherSpecifyRefinement used .find() (first match only), so picking
+  // the "No, specify ___" option enforced nothing and the respondent could
+  // proceed without a reason. The refinement must fire for ANY isOtherSpecify
+  // option the item has.
+  it('enforces _other when ANY of multiple other-specify options is chosen (#302)', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'B',
+          title: dual('B'),
+          items: [
+            {
+              id: 'Q13',
+              section: 'B',
+              type: 'single',
+              required: true,
+              hasOtherSpecify: true,
+              label: dual('Implemented?'),
+              choices: [
+                { label: dual('Yes, direct'), value: 'Yes, direct' },
+                {
+                  label: dual('Yes, specify other reason __________'),
+                  value: 'Yes, specify other reason __________',
+                  isOtherSpecify: true,
+                },
+                { label: dual('No, plan to'), value: 'No, plan to' },
+                {
+                  label: dual('No, specify other reason __________'),
+                  value: 'No, specify other reason __________',
+                  isOtherSpecify: true,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    const code = emitSchema(result);
+    const refine = code.slice(code.indexOf('.superRefine'));
+    // Both specify-other values must gate the shared Q13_other field.
+    expect(refine).toContain('Yes, specify other reason __________');
+    expect(refine).toContain('No, specify other reason __________');
+    expect(refine).toContain("path: ['Q13_other']");
+  });
+
   it('does not emit .superRefine when the section has no hasOtherSpecify items', () => {
     const result: ParseResult = {
       sections: [

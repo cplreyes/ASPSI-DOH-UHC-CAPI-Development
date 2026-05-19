@@ -598,13 +598,13 @@ Reuse the F2 PWA's existing breakpoint tokens.
 
 **Flow:**
 1. Open `/admin` → log in.
-2. Land on `/admin/data` with default filter `submitted_at_server >= now - 24h`, sort newest first.
+2. Land on `/admin/data` with **no implicit date filter** (all responses, newest first). _(Revised per R3 #296 2026-05-19: the original last-24h auto-filter silently hid older submissions on first load — testers saw a filtered list they never set. A `from`/`to` is applied only when the user picks one or an explicit `?from=` URL param is present.)_
 3. Glance at top-right error-count badge in nav (e.g., "12" in `--error`). If non-zero, click "Show only errors" pill.
 4. Filter by facility or status as needed. URL is shareable for Slack handoff.
 5. Switch to `/admin/report` → Sync Report defaults to region-level pacing vs target.
 6. Total time: ~2 minutes. No data entry, all reading.
 
-**Defaults documented:** Last-24h filter, newest-first sort, error-count nav badge, persistent "Last 24h / Last 7d / All time" pill, shareable URL.
+**Defaults documented:** No implicit date filter (all responses on load; R3 #296), newest-first sort, error-count nav badge, persistent "Last 24h / Last 7d / All time" pill, shareable URL.
 
 ### 7.0.1 Empty / loading / error states
 
@@ -649,7 +649,7 @@ Reuse the F2 PWA's existing breakpoint tokens.
 
 **Actor:** any user with `dash_data`.
 
-**Flow:** GET `/admin/api/dashboards/data/responses` with default filters (last 24h, newest first); render virtualized table; filters in URL (shareable).
+**Flow:** GET `/admin/api/dashboards/data/responses` with no implicit date filter (all responses, newest first; R3 #296); render virtualized table; filters in URL (shareable).
 
 ### 7.3 View case detail
 

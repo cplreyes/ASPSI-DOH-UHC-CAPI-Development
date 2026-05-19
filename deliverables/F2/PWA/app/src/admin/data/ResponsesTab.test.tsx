@@ -78,7 +78,10 @@ describe('<ResponsesTab />', () => {
     });
   });
 
-  it('attaches default 24h-from filter to the API call', async () => {
+  // R3 #296: date filters default EMPTY. On initial load (no URL params)
+  // every response shows unfiltered — no auto-fill `from` that silently
+  // hides older submissions. A `from` is only sent once the user picks one.
+  it('does not attach an implicit date filter on initial load (#296)', async () => {
     let captured: string | null = null;
     const fetchImpl = vi.fn(async (url) => {
       captured = String(url);
@@ -86,7 +89,20 @@ describe('<ResponsesTab />', () => {
     }) as unknown as typeof fetch;
     renderTab(fetchImpl);
     await waitFor(() => expect(fetchImpl).toHaveBeenCalled());
-    expect(captured).toMatch(/from=\d{4}-\d{2}-\d{2}/);
+    expect(captured).not.toMatch(/[?&]from=/);
     expect(captured).toMatch(/limit=200/);
+  });
+
+  it('honors an explicit ?from= URL param when present', async () => {
+    window.history.replaceState({}, '', '/admin?tab=responses&from=2026-05-01');
+    let captured: string | null = null;
+    const fetchImpl = vi.fn(async (url) => {
+      captured = String(url);
+      return jsonResponse({ rows: [], total: 0, has_more: false });
+    }) as unknown as typeof fetch;
+    renderTab(fetchImpl);
+    await waitFor(() => expect(fetchImpl).toHaveBeenCalled());
+    expect(captured).toMatch(/[?&]from=2026-05-01/);
+    window.history.replaceState({}, '', '/admin');
   });
 });

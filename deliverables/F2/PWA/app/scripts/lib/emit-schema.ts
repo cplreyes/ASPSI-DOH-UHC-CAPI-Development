@@ -31,15 +31,26 @@ function emitOtherSpecifyRefinement(section: Section): string | null {
   const clauses: string[] = [];
   for (const item of section.items) {
     if (!item.hasOtherSpecify || !item.choices) continue;
-    const otherChoice = item.choices.find((c) => c.isOtherSpecify);
-    if (!otherChoice) continue;
+    // R3 #302: an item can carry MORE THAN ONE "specify other" option
+    // (e.g. Q13–Q24 have both "Yes, specify other reason ___" and
+    // "No, specify other reason ___", sharing one _other text field).
+    // .find() only enforced the first, so picking the other one let the
+    // respondent proceed with no reason. Gate on ANY of them.
+    const otherChoices = item.choices.filter((c) => c.isOtherSpecify);
+    if (otherChoices.length === 0) continue;
     const parentKey = jsAccess(item.id);
     const otherKey = jsAccess(`${item.id}_other`);
-    const otherValue = otherChoice.value.replace(/'/g, "\\'");
+    const otherValues = otherChoices.map((c) => c.value.replace(/'/g, "\\'"));
+    const single = otherValues.length === 1;
+    const valueList = otherValues.map((v) => `'${v}'`).join(', ');
     const condition =
       item.type === 'multi'
-        ? `Array.isArray(data${parentKey}) && data${parentKey}.includes('${otherValue}')`
-        : `data${parentKey} === '${otherValue}'`;
+        ? single
+          ? `Array.isArray(data${parentKey}) && data${parentKey}.includes('${otherValues[0]}')`
+          : `Array.isArray(data${parentKey}) && [${valueList}].some((o) => data${parentKey}.includes(o))`
+        : single
+          ? `data${parentKey} === '${otherValues[0]}'`
+          : `[${valueList}].some((o) => data${parentKey} === o)`;
     const filledCheck = `typeof data${otherKey} === 'string' && data${otherKey}.trim().length > 0`;
     const pathLiteral = `['${item.id}_other']`;
     clauses.push(

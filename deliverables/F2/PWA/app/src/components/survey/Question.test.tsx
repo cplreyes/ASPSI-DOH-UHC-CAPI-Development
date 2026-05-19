@@ -25,6 +25,39 @@ function Harness({ item }: { item: Item }) {
 }
 
 describe('<Question>', () => {
+  // R3 #313: multi-select questions need a visible "select all that apply"
+  // affordance so respondents know multiple answers are allowed (raised for
+  // Q25/Q32/Q37/.../Q124 — i.e. every multi item). Applied generically.
+  it('shows a "select all that apply" hint on multi questions only (#313)', () => {
+    const multi: Item = {
+      id: 'Q25',
+      section: 'B',
+      type: 'multi',
+      required: true,
+      label: dual('Which changed?'),
+      choices: [
+        { label: dual('Salary'), value: 'Salary' },
+        { label: dual('Hours'), value: 'Hours' },
+      ],
+    };
+    const single: Item = {
+      id: 'Q3',
+      section: 'A',
+      type: 'single',
+      required: true,
+      label: dual('Sex?'),
+      choices: [
+        { label: dual('Male'), value: 'Male' },
+        { label: dual('Female'), value: 'Female' },
+      ],
+    };
+    const { unmount } = renderWithProviders(<Harness item={multi} />);
+    expect(screen.getByText(/select all that apply/i)).toBeInTheDocument();
+    unmount();
+    renderWithProviders(<Harness item={single} />);
+    expect(screen.queryByText(/select all that apply/i)).toBeNull();
+  });
+
   it('renders short-text as a text input with the label', () => {
     const item: Item = {
       id: 'Q1',

@@ -1,4 +1,4 @@
-import { useEffect, type MutableRefObject } from 'react';
+import { useEffect, useMemo, type MutableRefObject } from 'react';
 import { FormProvider, useForm, type DefaultValues, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslation } from 'react-i18next';
@@ -49,9 +49,57 @@ export function Section<T extends Record<string, unknown>>({
   const { t } = useTranslation();
   const { locale } = useLocale();
 
+  // R3 #298: the generated zod schema marks an item required whenever the
+  // *spec* says so. Skip-logic (skip-logic.ts) hides items the spec can't
+  // express as conditional — e.g. the Section E1 role gate hides Q48 for a
+  // Pharmacist while schema.ts still has `Q48: z.enum([...])` (required).
+  // Rendering and the status gate already key off the shouldShow-filtered
+  // `items`; validation must too, or handleSubmit silently fails zod on a
+  // field the respondent was never shown. Only suppress errors for items
+  // NOT in the visible set — visible required items still validate.
+  const visibleKeys = useMemo(() => {
+    const keys = new Set<string>();
+    for (const it of items ?? section.items) {
+      keys.add(it.id);
+      keys.add(`${it.id}_other`);
+      for (const sf of it.subFields ?? []) keys.add(sf.id);
+    }
+    return keys;
+  }, [items, section.items]);
+
+  const visibleItemList = items ?? section.items;
+
   const baseResolver = zodResolver(schema) as Resolver<T>;
-  const resolver: Resolver<T> = async (values, context, options) =>
-    baseResolver(stripNulls(values) as T, context, options);
+  const resolver: Resolver<T> = async (values, context, options) => {
+    const result = await baseResolver(stripNulls(values) as T, context, options);
+    const errs = (result.errors ?? {}) as Record<string, unknown>;
+    const hadErrors = Object.keys(errs).length > 0;
+    if (!hadErrors) return result;
+
+    for (const key of Object.keys(errs)) {
+      if (!visibleKeys.has(key)) delete errs[key];
+    }
+    if (Object.keys(errs).length > 0) return result;
+
+    // Every remaining failure was a hidden field — zod zeroed `result.values`
+    // because the whole-object parse failed. Rebuild the visible subset so
+    // the form can advance with real data. zod's only coercion in the
+    // generated schema is `z.coerce.number()`, so mirror just that; enums
+    // (string), multi (array) and text already hold the correct runtime type.
+    const stripped = stripNulls(values) as Record<string, unknown>;
+    const out: Record<string, unknown> = {};
+    for (const it of visibleItemList) {
+      if (it.id in stripped) {
+        out[it.id] = it.type === 'number' ? Number(stripped[it.id]) : stripped[it.id];
+      }
+      const other = `${it.id}_other`;
+      if (other in stripped) out[other] = stripped[other];
+      for (const sf of it.subFields ?? []) {
+        if (sf.id in stripped) out[sf.id] = stripped[sf.id];
+      }
+    }
+    return { values: out as T, errors: {} } as typeof result;
+  };
 
   const methods = useForm<T>({
     resolver,

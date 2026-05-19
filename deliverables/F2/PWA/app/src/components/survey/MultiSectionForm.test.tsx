@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type * as React from 'react';
 import { LocaleProvider } from '@/i18n/locale-context';
@@ -207,6 +207,43 @@ describe('<MultiSectionForm>', () => {
     expect(
       screen.getByRole('heading', { name: /Section A — Healthcare Worker Profile/i }),
     ).toBeInTheDocument();
+  });
+
+  // R3 #314: edit a matrix section from Review → the matrix must show the
+  // prior answers. Tester saw a blank Job-Satisfaction matrix on edit/back.
+  it('rehydrates a matrix section when edited from the review screen (#314)', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(
+      <MultiSectionForm
+        initialValues={{
+          Q1_1: 'Reyes',
+          Q1_2: 'Carl',
+          Q1_3: 'P',
+          Q2: 'Regular',
+          Q3: 'Female',
+          Q4: 30,
+          Q5: 'Physician/Doctor', // makes Section G (matrix) visible
+          Q7: 'No',
+          Q9_1: 3,
+          Q9_2: 6,
+          Q10: 5,
+          Q11: 8,
+          Q75: '3', // Section G matrix (1–5 scale) prior answer
+        }}
+        initialIndex={10} // REVIEW_INDEX (SECTIONS A–J = 10)
+        onAutosave={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+    // Target Section G's Edit button via its review header (ReviewSection
+    // only renders sections that have answered blocks, so a fixed index is
+    // unreliable).
+    const gHeading = screen.getByText(/^Section G —/);
+    const gSection = gHeading.closest('section') as HTMLElement;
+    await user.click(within(gSection).getByRole('button', { name: /edit/i }));
+    const q75at3 = screen.getAllByLabelText('Q75 3') as HTMLInputElement[];
+    expect(q75at3.length).toBeGreaterThan(0);
+    expect(q75at3.some((r) => r.checked)).toBe(true);
   });
 
   it('R2-#118+#119: blocks advance when Section B Q25 (multi, conditional, required) is an empty array', async () => {
