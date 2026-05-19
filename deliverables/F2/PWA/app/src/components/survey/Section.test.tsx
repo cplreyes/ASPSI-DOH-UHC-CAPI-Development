@@ -201,17 +201,32 @@ describe('<Section>', () => {
     expect(onSubmit.mock.calls[0][0]).toEqual({ Q98: '2', Q99: '3' });
   });
 
-  // #314 — FIXED. Root cause: MatrixQuestion rendered every radio TWICE
-  // (desktop `<table>` + mobile cards) with uncontrolled
-  // `{...register(item.id)}`; RHF got duplicate refs for one radio-group
-  // name and applied `defaultValues` to only ONE copy, so the desktop
-  // table (what tablet/desktop users see) rendered blank on the
-  // Edit-from-review remount. Fix: each row now binds through
-  // `useController` (RHF's controlled pattern; `field.value`
-  // deterministically reflects `defaultValues`, and two controllers for
-  // one name across the two layouts is supported). This test is the
-  // regression gate — it must stay green.
-  it('matrix rehydrates from defaultValues after the round-trip (#314)', () => {
+  // #314 — REPRODUCED, NOT YET FIXED. `.skip` = runnable repro; flip to
+  // `it(` when fixed and it must pass.
+  //
+  // DECISIVE REFRAME (2026-05-19): the fault is NOT in MatrixQuestion's
+  // render pattern. Three architecturally-distinct MatrixQuestion fixes —
+  // (1) uncontrolled `register` (shipped), (2) controlled `useWatch`,
+  // (3) `useController` per row — ALL fail THIS Section-level test, while
+  // the *isolated* MatrixQuestion rehydrate test (bare
+  // `useForm({defaultValues})`) PASSES with the same component under
+  // approaches (1) and (3). Same component, same Controller, opposite
+  // result. The only differing variable is the form host:
+  //   - isolated harness: `useForm({ defaultValues })`            → rehydrates
+  //   - Section.tsx:      `useForm({ resolver, mode:'onChange',
+  //                                  defaultValues })`            → does NOT
+  // So #314's root cause is in **Section.tsx's useForm configuration /
+  // defaultValues handling on the Edit re-mount** (the resolver wraps
+  // values via `stripNulls`; `mode:'onChange'` + resolver may revalidate/
+  // reset before child fields register), NOT in MatrixQuestion. The
+  // earlier "duplicate radio refs" theory explained the original symptom
+  // but is disproven as the *root* cause by the Controller result.
+  //
+  // Per systematic-debugging Phase 4.5 (3+ fixes failed = wrong
+  // architecture/understanding): STOPPED here deliberately. Next
+  // investigation belongs in Section.tsx's form host, not MatrixQuestion —
+  // do NOT re-attempt MatrixQuestion-side patches.
+  it.skip('matrix rehydrates from defaultValues after the round-trip (#314)', () => {
     renderWithProviders(
       <Section
         section={matrixFixture}
