@@ -51,6 +51,34 @@ describe('<MatrixQuestion>', () => {
     }
   });
 
+  // R3 #314: editing the Job-Satisfaction matrix from the Review screen
+  // remounts the section with prior answers in RHF defaultValues. The
+  // matrix must show them — testers saw a blank matrix on edit/back.
+  it('rehydrates matrix selections from RHF defaultValues (#314)', () => {
+    function PrefilledHarness() {
+      const methods = useForm({ defaultValues: { Q75: '3', Q76: '5' } });
+      return (
+        <LocaleProvider>
+          <FormProvider {...methods}>
+            <form>
+              <MatrixQuestion
+                items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]}
+                choices={scale15}
+              />
+            </form>
+          </FormProvider>
+        </LocaleProvider>
+      );
+    }
+    render(<PrefilledHarness />);
+    const q75sel = screen.getAllByLabelText('Q75 3') as HTMLInputElement[];
+    const q76sel = screen.getAllByLabelText('Q76 5') as HTMLInputElement[];
+    const q75other = screen.getAllByLabelText('Q75 1') as HTMLInputElement[];
+    expect(q75sel.some((r) => r.checked)).toBe(true);
+    expect(q76sel.some((r) => r.checked)).toBe(true);
+    expect(q75other.every((r) => !r.checked)).toBe(true);
+  });
+
   it('renders one row per item with the localised statement text', () => {
     render(<Harness items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]} choices={scale15} />);
     // Both desktop table and mobile card render in the DOM; use getAllByText
