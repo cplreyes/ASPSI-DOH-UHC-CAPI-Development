@@ -65,34 +65,34 @@ export const sectionBSchema = z.object({
   Q29: z.enum(['More stringent', 'Less stringent', 'I don\'t know']).optional(),
   Q30: z.enum(['More', 'Less', 'I don\'t know']).optional(),
 }).superRefine((data, ctx) => {
-  if (data.Q13 === 'Yes, specify other reason __________' && !(typeof data.Q13_other === 'string' && data.Q13_other.trim().length > 0)) {
+  if (['Yes, specify other reason __________', 'No, specify other reason __________'].some((o) => data.Q13 === o) && !(typeof data.Q13_other === 'string' && data.Q13_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q13_other'], message: 'Please specify' });
   }
-  if (data.Q15 === 'Yes, specify other reason __________' && !(typeof data.Q15_other === 'string' && data.Q15_other.trim().length > 0)) {
+  if (['Yes, specify other reason __________', 'No, specify other reason __________'].some((o) => data.Q15 === o) && !(typeof data.Q15_other === 'string' && data.Q15_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q15_other'], message: 'Please specify' });
   }
-  if (data.Q17 === 'Yes, specify other reason __________' && !(typeof data.Q17_other === 'string' && data.Q17_other.trim().length > 0)) {
+  if (['Yes, specify other reason __________', 'No, specify other reason __________'].some((o) => data.Q17 === o) && !(typeof data.Q17_other === 'string' && data.Q17_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q17_other'], message: 'Please specify' });
   }
-  if (data.Q18 === 'Yes, specify other reason __________' && !(typeof data.Q18_other === 'string' && data.Q18_other.trim().length > 0)) {
+  if (['Yes, specify other reason __________', 'No, specify other reason __________'].some((o) => data.Q18 === o) && !(typeof data.Q18_other === 'string' && data.Q18_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q18_other'], message: 'Please specify' });
   }
-  if (data.Q19 === 'Yes, specify other reason __________' && !(typeof data.Q19_other === 'string' && data.Q19_other.trim().length > 0)) {
+  if (['Yes, specify other reason __________', 'No, specify other reason __________'].some((o) => data.Q19 === o) && !(typeof data.Q19_other === 'string' && data.Q19_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q19_other'], message: 'Please specify' });
   }
-  if (data.Q20 === 'Yes, specify other reason __________' && !(typeof data.Q20_other === 'string' && data.Q20_other.trim().length > 0)) {
+  if (['Yes, specify other reason __________', 'No, specify other reason __________'].some((o) => data.Q20 === o) && !(typeof data.Q20_other === 'string' && data.Q20_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q20_other'], message: 'Please specify' });
   }
-  if (data.Q21 === 'Yes, specify other reason __________' && !(typeof data.Q21_other === 'string' && data.Q21_other.trim().length > 0)) {
+  if (['Yes, specify other reason __________', 'No, specify other reason __________'].some((o) => data.Q21 === o) && !(typeof data.Q21_other === 'string' && data.Q21_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q21_other'], message: 'Please specify' });
   }
-  if (data.Q22 === 'Yes, specify other reason __________' && !(typeof data.Q22_other === 'string' && data.Q22_other.trim().length > 0)) {
+  if (['Yes, specify other reason __________', 'No, specify other reason __________'].some((o) => data.Q22 === o) && !(typeof data.Q22_other === 'string' && data.Q22_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q22_other'], message: 'Please specify' });
   }
-  if (data.Q23 === 'Yes, specify other reason __________' && !(typeof data.Q23_other === 'string' && data.Q23_other.trim().length > 0)) {
+  if (['Yes, specify other reason __________', 'No, specify other reason __________'].some((o) => data.Q23 === o) && !(typeof data.Q23_other === 'string' && data.Q23_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q23_other'], message: 'Please specify' });
   }
-  if (data.Q24 === 'Yes, specify other reason __________' && !(typeof data.Q24_other === 'string' && data.Q24_other.trim().length > 0)) {
+  if (['Yes, specify other reason __________', 'No, specify other reason __________'].some((o) => data.Q24 === o) && !(typeof data.Q24_other === 'string' && data.Q24_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q24_other'], message: 'Please specify' });
   }
   if (Array.isArray(data.Q25) && data.Q25.includes('Other (specify)') && !(typeof data.Q25_other === 'string' && data.Q25_other.trim().length > 0)) {
@@ -165,7 +165,7 @@ export const sectionDSchema = z.object({
 export type SectionDValues = z.infer<typeof sectionDSchema>;
 
 export const sectionESchema = z.object({
-  Q48: z.enum(['Yes', 'No']),
+  Q48: z.enum(['Yes', 'No']).optional(),
   Q49: z.enum(['Yes', 'No', 'I don\'t know']).optional(),
   Q50: z.array(z.enum(['Patient awareness', 'Referral patterns', 'Availability of staff/services', 'Facility location and accessibility', 'PhilHealth coverage and reimbursement', 'Other (specify)'])).optional(),
   Q50_other: z.string().optional(),

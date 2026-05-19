@@ -31,7 +31,7 @@ Sourced from the **April 20, 2026 PDF** (124 actual items, numbered Q1–Q125 wi
 - **Every question is skippable by default** (per cover-block Decision on Q1 information block) EXCEPT consent, facility-type confirm, role bucket confirm, and Q5 role. Those four are hard-required because downstream routing depends on them.
 - **Numeric fields** use Forms' built-in "Number · Between" validator with generous ranges. A too-tight range on self-admin blocks submission — prefer loose + POST flag.
 - **Regex on short-text** only where a structured value is expected (none in F2 body — no phone, no email beyond Google sign-in auto-capture).
-- **"Other, specify" follow-ups** are standalone short-text fields triggered by the parent single/multi-select. Required only when parent = "Other".
+- **"Other, specify" follow-ups** are standalone short-text fields triggered by the parent single/multi-select. Required when the parent equals **any** of its specify-other options — an item may carry more than one (e.g. Q13–Q24 have both "Yes, specify other reason ___" and "No, specify other reason ___" feeding one shared `_other` field). The generated `.superRefine` gates on all of them, not just the first (R3 #302, 2026-05-19).
 - **Consent (Block 5)** is the single hard gate. Declining routes to thank-you; everything else is optional.
 - **Q108 gap** — Apr 20 PDF skips Q108 (editorial artifact). Builder must *not* emit a Q108 field. Flagged to ASPSI for confirmation.
 
