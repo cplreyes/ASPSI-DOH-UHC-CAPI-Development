@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useFocusTrap } from '@/lib/use-focus-trap';
 
 interface Props {
   active: boolean;
@@ -6,10 +8,16 @@ interface Props {
 
 export function KillSwitchOverlay({ active }: Props) {
   const { t } = useTranslation();
+  const ref = useRef<HTMLDivElement>(null);
+  // #284: terminal overlay with no controls — trap focus on the dialog so
+  // keyboard/AT can't reach or edit the form behind it.
+  useFocusTrap(ref, active);
   if (!active) return null;
   return (
     <div
-      role="alert"
+      ref={ref}
+      role="alertdialog"
+      aria-modal="true"
       aria-labelledby="kill-switch-title"
       aria-describedby="kill-switch-body"
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-6"

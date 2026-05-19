@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
+import { useFocusTrap } from '@/lib/use-focus-trap';
 
 interface Props {
   drift: boolean;
@@ -10,15 +11,16 @@ interface Props {
 
 export function SpecDriftOverlay({ drift, localVersion, serverMin }: Props) {
   const { t } = useTranslation();
-  const reloadRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (drift) reloadRef.current?.focus();
-  }, [drift]);
+  const ref = useRef<HTMLDivElement>(null);
+  // #284: trap focus on the dialog (was: focus Reload, but Tab still
+  // escaped to the form behind). The hook focuses the first focusable
+  // (Reload) and cycles Tab within the dialog.
+  useFocusTrap(ref, drift);
 
   if (!drift) return null;
   return (
     <div
+      ref={ref}
       role="alertdialog"
       aria-modal="true"
       aria-labelledby="spec-drift-title"
@@ -32,7 +34,7 @@ export function SpecDriftOverlay({ drift, localVersion, serverMin }: Props) {
         <p id="spec-drift-body" className="mb-4 text-sm text-muted-foreground">
           {t('chrome.specDriftBody', { localVersion, serverMin })}
         </p>
-        <Button ref={reloadRef} onClick={() => window.location.reload()}>
+        <Button onClick={() => window.location.reload()}>
           {t('chrome.reload')}
         </Button>
       </div>
