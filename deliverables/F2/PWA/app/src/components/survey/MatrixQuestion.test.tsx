@@ -51,6 +51,34 @@ describe('<MatrixQuestion>', () => {
     }
   });
 
+  // R3 #314: editing the Job-Satisfaction matrix from the Review screen
+  // remounts the section with prior answers in RHF defaultValues. The
+  // matrix must show them — testers saw a blank matrix on edit/back.
+  it('rehydrates matrix selections from RHF defaultValues (#314)', () => {
+    function PrefilledHarness() {
+      const methods = useForm({ defaultValues: { Q75: '3', Q76: '5' } });
+      return (
+        <LocaleProvider>
+          <FormProvider {...methods}>
+            <form>
+              <MatrixQuestion
+                items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]}
+                choices={scale15}
+              />
+            </form>
+          </FormProvider>
+        </LocaleProvider>
+      );
+    }
+    render(<PrefilledHarness />);
+    const q75sel = screen.getAllByLabelText('Q75 3') as HTMLInputElement[];
+    const q76sel = screen.getAllByLabelText('Q76 5') as HTMLInputElement[];
+    const q75other = screen.getAllByLabelText('Q75 1') as HTMLInputElement[];
+    expect(q75sel.some((r) => r.checked)).toBe(true);
+    expect(q76sel.some((r) => r.checked)).toBe(true);
+    expect(q75other.every((r) => !r.checked)).toBe(true);
+  });
+
   it('renders one row per item with the localised statement text', () => {
     render(<Harness items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]} choices={scale15} />);
     // Both desktop table and mobile card render in the DOM; use getAllByText
@@ -77,16 +105,24 @@ describe('<MatrixQuestion>', () => {
       );
     }
     render(<CaptureHarness items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]} choices={scale15} />);
-    // Each row's radios share name = item.id; desktop + mobile = 10 total for Q75
-    const q75Radios = screen.getAllByRole('radio').filter((el) => (el as HTMLInputElement).name === 'Q75');
+    // R3 #314 fix removed `name` from visible radios (radio-group semantics
+    // were stealing checked-state across the desktop+mobile copies). Filter
+    // by aria-label prefix instead. Desktop + mobile = 10 total for Q75.
+    const q75Radios = screen.getAllByRole('radio').filter((el) =>
+      el.getAttribute('aria-label')?.startsWith('Q75 '),
+    );
     expect(q75Radios).toHaveLength(10);
     // Click the last "5" radio in the desktop table (index 4)
     await user.click(q75Radios[4]);
     await user.click(screen.getByText('snapshot'));
     expect(captured).toMatchObject({ Q75: '5' });
-    // Q76 is registered but untouched — RHF may represent it as null or undefined
+    // Q76 is registered but untouched. RHF may represent untouched matrix
+    // fields as null, undefined, or "" (the R3 #314 fix registers each
+    // matrix item via a hidden input at mount, which initializes to "").
+    // Section.tsx's stripNulls coerces "" → undefined on submit, so all three
+    // are equivalent for downstream consumers.
     const q76 = (captured as Record<string, unknown>).Q76;
-    expect(q76 == null).toBe(true);
+    expect(q76 == null || q76 === '').toBe(true);
   });
 
   it('renders a row\'s required error inline when triggered', async () => {

@@ -54,6 +54,23 @@ describe('shouldShow', () => {
     it('hides Q36 when Q31 is No (entire Q32–Q40 block hidden)', () => {
       expect(shouldShow('C', 'Q36', { Q31: 'No', Q34: 'Yes' })).toBe(false);
     });
+
+    // R3 #308: F2-Skip-Logic "Apr 20 improvement" — an already-accredited
+    // respondent (Q34=Yes) skips the entire Section C tail (Q37–Q40) to
+    // Q41. Q38 "would you consider becoming accredited?" is nonsensical for
+    // a facility that already is, so it must be hidden when Q34=Yes.
+    it('hides Q38 when Q34 is Yes (already accredited — skip C tail)', () => {
+      expect(shouldShow('C', 'Q38', { Q31: 'Yes', Q34: 'Yes' })).toBe(false);
+    });
+
+    it('shows Q38 when Q31=Yes and Q34=No (consider-accreditation path)', () => {
+      expect(shouldShow('C', 'Q38', { Q31: 'Yes', Q34: 'No' })).toBe(true);
+    });
+
+    it('hides Q39/Q40 when Q34=Yes (gated behind the now-hidden Q38)', () => {
+      expect(shouldShow('C', 'Q39', { Q31: 'Yes', Q34: 'Yes' })).toBe(false);
+      expect(shouldShow('C', 'Q40', { Q31: 'Yes', Q34: 'Yes' })).toBe(false);
+    });
   });
 
   describe('Section D', () => {

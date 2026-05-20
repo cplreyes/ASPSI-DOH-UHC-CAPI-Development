@@ -28,9 +28,23 @@ describe('<Login />', () => {
     renderLogin(fetchImpl);
     expect(screen.getByRole('heading', { name: /sign in/i })).toBeInTheDocument();
     expect(screen.getByRole('textbox', { name: /username/i })).toBeInTheDocument();
-    // password is type=password, no implicit role — find by label.
-    expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
+    // password is type=password, no implicit role — find by exact label
+    // ('Password'); the #331 toggle is a separate button ('Show password').
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
+  });
+
+  it('#331: toggles password visibility via the Show/Hide button', async () => {
+    const fetchImpl = vi.fn() as unknown as typeof fetch;
+    renderLogin(fetchImpl);
+    const pw = screen.getByLabelText('Password') as HTMLInputElement;
+    expect(pw.type).toBe('password');
+    const toggle = screen.getByRole('button', { name: /show password/i });
+    await userEvent.click(toggle);
+    expect(pw.type).toBe('text');
+    expect(screen.getByRole('button', { name: /hide password/i })).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('button', { name: /hide password/i }));
+    expect(pw.type).toBe('password');
   });
 
   it('disables sign-in until both fields have content', () => {
@@ -57,7 +71,7 @@ describe('<Login />', () => {
     renderLogin(fetchImpl);
 
     await user.type(screen.getByRole('textbox', { name: /username/i }), 'alice');
-    await user.type(screen.getByLabelText(/password/i), 'wrong');
+    await user.type(screen.getByLabelText('Password'), 'wrong');
     await user.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => {
@@ -74,7 +88,7 @@ describe('<Login />', () => {
     renderLogin(fetchImpl);
 
     await user.type(screen.getByRole('textbox', { name: /username/i }), 'alice');
-    await user.type(screen.getByLabelText(/password/i), 'x');
+    await user.type(screen.getByLabelText('Password'), 'x');
     await user.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => {
@@ -100,7 +114,7 @@ describe('<Login />', () => {
     renderLogin(fetchImpl);
 
     await user.type(screen.getByRole('textbox', { name: /username/i }), 'alice');
-    await user.type(screen.getByLabelText(/password/i), 'CorrectPw1');
+    await user.type(screen.getByLabelText('Password'), 'CorrectPw1');
     await user.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => expect(fetchImpl).toHaveBeenCalled());

@@ -77,6 +77,7 @@ export const fil: EnBundle = {
     requiredFallback: 'This field is required.',
     pleaseSpecifyLabel: 'Please specify',
     pleaseSpecifyError: 'Please specify',
+    selectAllThatApply: 'Select all that apply.',
   },
   review: {
     heading: 'Review your answers',

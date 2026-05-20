@@ -52,16 +52,14 @@ interface UiFilters {
   q: string;
 }
 
-function defaultFromIso(): string {
-  // Default to 24h ago, formatted as YYYY-MM-DD for the date input.
-  const d = new Date(Date.now() - 24 * 60 * 60 * 1000);
-  return d.toISOString().slice(0, 10);
-}
-
 function readFiltersFromUrl(): UiFilters {
+  // R3 #296: date filters default EMPTY. Seeding `from` with a 24h-ago
+  // default silently hid older submissions on first load (testers saw a
+  // filtered list they never asked for). Only filter by date once the
+  // user picks one, or an explicit ?from= URL param is present.
   if (typeof window === 'undefined') {
     return {
-      from: defaultFromIso(),
+      from: '',
       to: '',
       facility_id: '',
       source_path: '',
@@ -71,7 +69,7 @@ function readFiltersFromUrl(): UiFilters {
   }
   const p = new URLSearchParams(window.location.search);
   return {
-    from: p.get('from') ?? defaultFromIso(),
+    from: p.get('from') ?? '',
     to: p.get('to') ?? '',
     facility_id: p.get('facility_id') ?? '',
     source_path: p.get('source_path') ?? '',

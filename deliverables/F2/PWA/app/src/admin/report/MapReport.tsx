@@ -33,7 +33,10 @@ import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { Link, useRouter } from '../lib/pages-router';
 
-interface Marker {
+// #286: renamed from `Marker` — the old name shadowed the react-leaflet
+// `Marker` component imported above (TS disambiguated by namespace, but it
+// read ambiguously). This is the data shape; the JSX `<Marker>` is the import.
+interface MarkerData {
   submission_id: string;
   hcw_id: string;
   facility_id: string;
@@ -43,7 +46,7 @@ interface Marker {
 }
 
 interface MapReportData {
-  markers: Marker[];
+  markers: MarkerData[];
   no_gps_count: number;
 }
 
@@ -130,7 +133,7 @@ export function MapReport({ apiBaseUrl, fetchImpl }: MapReportProps): JSX.Elemen
     | { kind: 'loaded'; data: MapReportData }
     | { kind: 'failed'; error: ApiError }
   >({ kind: 'loading' });
-  const [hovered, setHovered] = useState<Marker | null>(null);
+  const [hovered, setHovered] = useState<MarkerData | null>(null);
 
   const apiQuery = useMemo(() => buildApiQuery(filters), [filters]);
 
@@ -264,9 +267,9 @@ function MapPlot({
   hovered,
   onHover,
 }: {
-  markers: Marker[];
-  hovered: Marker | null;
-  onHover: (m: Marker | null) => void;
+  markers: MarkerData[];
+  hovered: MarkerData | null;
+  onHover: (m: MarkerData | null) => void;
 }): JSX.Element {
   return (
     <div className="verde-leaflet-wrap border border-hairline bg-paper">
@@ -294,9 +297,28 @@ function MapPlot({
             key={m.submission_id}
             position={[m.lat, m.lng]}
             icon={hovered?.submission_id === m.submission_id ? VERDE_MARKER_ICON_SELECTED : VERDE_MARKER_ICON}
+            keyboard
             eventHandlers={{
               click: () => onHover(m),
               popupclose: () => onHover(null),
+              // #287: the divIcon is aria-hidden, so AT/keyboard users get
+              // nothing. Decorate the marker element on add: role + name +
+              // tabindex, and bind Enter/Space to the same action as click
+              // (Leaflet's built-in Enter→click is unreliable for divIcons).
+              add: ({ target }) => {
+                const el = target.getElement() as HTMLElement | undefined;
+                if (!el) return;
+                el.setAttribute('role', 'button');
+                el.setAttribute('tabindex', '0');
+                el.setAttribute('aria-label', describeMarker(m));
+                el.addEventListener('keydown', (ev: KeyboardEvent) => {
+                  if (ev.key === 'Enter' || ev.key === ' ') {
+                    ev.preventDefault();
+                    onHover(m);
+                    target.openPopup();
+                  }
+                });
+              },
             }}
           >
             <Popup>
@@ -324,7 +346,7 @@ function MapPlot({
   );
 }
 
-function HoveredCard({ marker, onClear }: { marker: Marker; onClear: () => void }): JSX.Element {
+function HoveredCard({ marker, onClear }: { marker: MarkerData; onClear: () => void }): JSX.Element {
   return (
     <div className="mt-3 border border-hairline bg-secondary/20 p-3 text-sm">
       <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Marker</p>
@@ -403,6 +425,12 @@ function FilterText({
       />
     </label>
   );
+}
+
+// #287: accessible name for a map marker (announced to AT, exposed as the
+// marker element's aria-label). Mirrors the Popup's human-readable content.
+function describeMarker(m: MarkerData): string {
+  return `Submission ${m.hcw_id}, facility ${m.facility_id}, submitted ${formatTs(m.submitted_at)}. Activate to view details.`;
 }
 
 function formatTs(iso: string): string {
