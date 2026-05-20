@@ -10,11 +10,16 @@ Hi Shan,
 
 UAT Round 3 surfaced 9 observations from Marriz that are **questionnaire-content / validation-policy calls**, not CAPI bugs — they need a survey-design ruling before I can close them or implement. Could you please raise these to Kidd and the team (Mam Merlyne / Dr Myra as relevant) and come back with the confirmations?
 
+**A couple of process notes before the table:**
+
+1. **Questionnaire-content changes ideally land *before* UAT testing.** Once a build is in front of testers, content edits become out-of-cycle — re-spec, re-implement, re-test. So for any of these 9 we *can't* accommodate in the current build, please treat the disposition as "noted, parked for the next questionnaire revision" rather than as a current-sprint change. Worth flagging this with the team so the process tightens for the next round.
+2. **Marriz needs a response either way.** She filed these in good faith as part of R3; whatever the disposition (accept now / defer to next revision / decline), we should communicate it back to her so the feedback loop closes. For each item the team decides not to accommodate now, please draft a short remark for Marriz in the Remarks column (or I can — just say which you prefer).
+
 I've drafted a recommendation per item below. For each, the team can mark **Yes** (approve my recommendation) or **No** (do something else — note what in Remarks). A remark on a Yes is welcome too.
 
 Once confirmed, I'll close the GitHub issues with the disposition recorded and slot any approved changes into the build.
 
-| # | GH | Section / Item | Marriz's observation (short) | My recommendation | Confirm (Yes / No) | Remarks |
+| # | GH | Section / Item | Marriz's observation (short) | My recommendation | Confirm (Yes / No) | Remarks (incl. note for Marriz if declined / deferred) |
 |---|---|---|---|---|---|---|
 | 1 | [#303](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/303) | A · Q11 work hours | Allow decimal hours (e.g., 3.5h for part-time)? | **Keep integer** (1–24, per spec). | | |
 | 2 | [#304](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/304) | E · Q52 | "No significant impact" can be ticked with other options → contradicts. | **Make "No significant impact" exclusive** (standard sentinel pattern). | | |
