@@ -201,34 +201,26 @@ describe('<Section>', () => {
     expect(onSubmit.mock.calls[0][0]).toEqual({ Q98: '2', Q99: '3' });
   });
 
-  // #314 — REPRODUCED + ROOT-CAUSED, fix pending an architectural decision.
-  // `.skip` because it fails on purpose (it's the runnable reproduction);
-  // flip to `it(` once MatrixQuestion is fixed and this should pass.
+  // R3 #314 — matrix blank on Edit-from-Review. Fixed 2026-05-20 in
+  // MatrixQuestion.tsx (see commit message).
   //
-  // Root cause: MatrixQuestion renders every radio TWICE — once in the
-  // desktop `<table>` (md:table) and once in the mobile cards (md:hidden) —
-  // both attaching `{...register(item.id)}`. RHF gets duplicate refs for a
-  // single radio-group name and applies `defaultValues` to only ONE copy.
-  // On the Edit-from-review remount (Section re-mounts with sectionDefaults),
-  // the *desktop* table — what tablet/desktop users actually see — renders
-  // blank. (An earlier isolated probe passed spuriously by asserting
-  // `.some(checked)`, which the mobile copy satisfied; this asserts the
-  // desktop `[0]` copy, i.e. the real-user view.)
+  // Root cause (confirmed via diagnostic DOM dump): MatrixQuestion rendered
+  // each radio TWICE — desktop <table> (md:table) + mobile cards (md:hidden) —
+  // both sharing `name={item.id}`. Browser radio-group semantics enforce
+  // only-one-`.checked` per name; mobile (rendered second in JSX) won, leaving
+  // the desktop copy with `.checked = false` even though React had set
+  // `checked` on both.
   //
-  // Why the obvious fixes don't work:
-  //  - Controlled-via-`useWatch` (no register): fields never register, so
-  //    `useWatch` returns undefined → never checked.
-  //  - register-once-in-body + controlled `useWatch`: Section's
-  //    `useForm({ resolver, mode:'onChange' })` config doesn't surface
-  //    defaultValues through `useWatch` reliably (works with a bare
-  //    `useForm({defaultValues})`, not with the resolver+onChange config).
+  // Fix: register each item.id exactly once via a hidden input at the top of
+  // MatrixQuestion; render the visible radios as controlled inputs with no
+  // `name` attribute (no browser-radio-group enforcement; React controls
+  // both copies independently from shared form state via useWatch +
+  // setValue).
   //
-  // Correct fix is architectural (Phase 4.5): eliminate the dual-DOM
-  // duplication — render the inputs once and make the layout responsive via
-  // CSS, OR wrap each row in an RHF `<Controller>` (the official controlled
-  // pattern, which surfaces defaultValues deterministically) spanning both
-  // layout copies. Both are deliberate refactors, not one-liners.
-  it.skip('matrix rehydrates from defaultValues after the round-trip (#314)', () => {
+  // The earlier "Section form-host" theory was based on isolated tests that
+  // passed spuriously via `.some(checked)` (which the mobile copy satisfied).
+  // Asserting [0] (desktop) reveals the real bug.
+  it('matrix rehydrates from defaultValues after the round-trip (#314)', () => {
     renderWithProviders(
       <Section
         section={matrixFixture}
@@ -238,7 +230,11 @@ describe('<Section>', () => {
         onSubmit={() => {}}
       />,
     );
+    // Both DOM copies (desktop table + mobile cards) must rehydrate from
+    // defaultValues. [0] is the desktop copy — what tablet/desktop users see.
     expect((screen.getAllByLabelText('Q98 2')[0] as HTMLInputElement).checked).toBe(true);
     expect((screen.getAllByLabelText('Q99 3')[0] as HTMLInputElement).checked).toBe(true);
+    expect((screen.getAllByLabelText('Q98 2')[1] as HTMLInputElement).checked).toBe(true);
+    expect((screen.getAllByLabelText('Q99 3')[1] as HTMLInputElement).checked).toBe(true);
   });
 });

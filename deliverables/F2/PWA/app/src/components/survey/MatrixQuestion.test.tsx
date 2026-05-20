@@ -105,16 +105,24 @@ describe('<MatrixQuestion>', () => {
       );
     }
     render(<CaptureHarness items={[row('Q75', 'fairness ZBB', scale15), row('Q76', 'fairness NBB', scale15)]} choices={scale15} />);
-    // Each row's radios share name = item.id; desktop + mobile = 10 total for Q75
-    const q75Radios = screen.getAllByRole('radio').filter((el) => (el as HTMLInputElement).name === 'Q75');
+    // R3 #314 fix removed `name` from visible radios (radio-group semantics
+    // were stealing checked-state across the desktop+mobile copies). Filter
+    // by aria-label prefix instead. Desktop + mobile = 10 total for Q75.
+    const q75Radios = screen.getAllByRole('radio').filter((el) =>
+      el.getAttribute('aria-label')?.startsWith('Q75 '),
+    );
     expect(q75Radios).toHaveLength(10);
     // Click the last "5" radio in the desktop table (index 4)
     await user.click(q75Radios[4]);
     await user.click(screen.getByText('snapshot'));
     expect(captured).toMatchObject({ Q75: '5' });
-    // Q76 is registered but untouched — RHF may represent it as null or undefined
+    // Q76 is registered but untouched. RHF may represent untouched matrix
+    // fields as null, undefined, or "" (the R3 #314 fix registers each
+    // matrix item via a hidden input at mount, which initializes to "").
+    // Section.tsx's stripNulls coerces "" → undefined on submit, so all three
+    // are equivalent for downstream consumers.
     const q76 = (captured as Record<string, unknown>).Q76;
-    expect(q76 == null).toBe(true);
+    expect(q76 == null || q76 === '').toBe(true);
   });
 
   it('renders a row\'s required error inline when triggered', async () => {

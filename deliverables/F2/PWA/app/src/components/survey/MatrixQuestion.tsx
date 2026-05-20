@@ -1,5 +1,5 @@
 import type * as React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocale } from '@/i18n/locale-context';
 import { localized } from '@/i18n/localized';
@@ -15,11 +15,29 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
   const { locale } = useLocale();
   const {
     register,
+    setValue,
     formState: { errors },
   } = useFormContext();
+  // R3 #314: controlled radios via setValue + useWatch, with a single
+  // register call per item issued through a hidden input below. The dual-DOM
+  // responsive layout (desktop <table> + mobile <div> cards) previously
+  // called register(item.id) on EVERY visible radio in both copies — RHF
+  // kept only the last ref, so defaultValues prefill applied only to the
+  // mobile copy, leaving the desktop view blank on Edit-from-Review. Now
+  // each item registers exactly once (on the hidden input), and both visible
+  // copies render as controlled inputs that read form state via useWatch.
+  const watchedValues = useWatch({ name: items.map((i) => i.id) }) as
+    | (string | undefined)[]
+    | undefined;
 
   return (
     <div className="flex flex-col gap-2 py-3">
+      {/* Hidden registrations — exactly one ref per item.id, so RHF picks up
+          defaultValues for matrix fields. Visible radios below are controlled. */}
+      {items.map((item) => (
+        <input key={`reg-${item.id}`} type="hidden" {...register(item.id)} />
+      ))}
+
       {/* Desktop / tablet (md and up): real <table> */}
       <table className="hidden w-full border-collapse text-sm md:table">
         <thead>
@@ -35,9 +53,10 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
           </tr>
         </thead>
         <tbody>
-          {items.flatMap((item) => {
+          {items.flatMap((item, itemIdx) => {
             const error = errors[item.id];
             const errorMessage = typeof error?.message === 'string' ? error.message : undefined;
+            const currentValue = (watchedValues ?? [])[itemIdx];
             const out: React.ReactElement[] = [
               <tr key={item.id} className="border-b">
                 <th scope="row" className="py-2 pr-2 text-left text-sm font-normal">
@@ -51,7 +70,13 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
                       type="radio"
                       value={c.value}
                       aria-label={`${item.id} ${localized(c.label, locale)}`}
-                      {...register(item.id)}
+                      checked={currentValue === c.value}
+                      onChange={() =>
+                        setValue(item.id, c.value, {
+                          shouldValidate: true,
+                          shouldDirty: true,
+                        })
+                      }
                     />
                   </td>
                 ))}
@@ -77,10 +102,11 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
 
       {/* Mobile (below md): stacked card per row */}
       <div className="flex flex-col gap-3 md:hidden">
-        {items.map((item) => {
+        {items.map((item, itemIdx) => {
           const error = errors[item.id];
           const errorMessage = typeof error?.message === 'string' ? error.message : undefined;
           const groupId = `${item.id}-statement`;
+          const currentValue = (watchedValues ?? [])[itemIdx];
           return (
             <div key={item.id} className="flex flex-col gap-2 border-t pt-3">
               <p id={groupId} className="text-sm font-medium">
@@ -95,7 +121,13 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
                       type="radio"
                       value={c.value}
                       aria-label={`${item.id} ${localized(c.label, locale)}`}
-                      {...register(item.id)}
+                      checked={currentValue === c.value}
+                      onChange={() =>
+                        setValue(item.id, c.value, {
+                          shouldValidate: true,
+                          shouldDirty: true,
+                        })
+                      }
                     />
                     {localized(c.label, locale)}
                   </label>
