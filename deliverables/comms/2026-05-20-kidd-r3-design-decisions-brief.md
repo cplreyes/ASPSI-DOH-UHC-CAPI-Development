@@ -1,25 +1,24 @@
-# Email draft — R3 design-decision questions (via Shan)
+# Email draft — R3 design-decision questions (via Shan, Marriz looped in)
 
 **To:** Shan _(R3 tester + coordinator — please raise to Kidd and the survey-design team)_
-**Cc:** Kidd _(for visibility — Shan to route to Mam Merlyne / Dr Myra as needed)_
+**Cc:** Kidd _(for visibility — Shan to route to Mam Merlyne / Dr Myra as needed)_, Marriz _(originator — looped in to see how her R3 observations get dispositioned)_
 **Subject:** F2 PWA UAT R3 — 9 questionnaire design questions, need survey-design confirmation
 
 ---
 
 Hi Shan,
 
-UAT Round 3 surfaced 9 observations from Marriz that are **questionnaire-content / validation-policy calls**, not CAPI bugs — they need a survey-design ruling before I can close them or implement. Could you please raise these to Kidd and the team (Mam Merlyne / Dr Myra as relevant) and come back with the confirmations?
+Looping Marriz in directly — her careful eye during R3 surfaced 9 observations that are **questionnaire-content / validation-policy calls** rather than CAPI bugs, so they need a survey-design ruling before I can implement or close them. Marriz, thank you for the detail in each report; it made the classification straightforward on my side.
 
-**A couple of process notes before the table:**
+Shan, could you please raise the 9 items below to Kidd and the team (Mam Merlyne / Dr Myra as relevant) and come back with the confirmations?
 
-1. **Questionnaire-content changes ideally land *before* UAT testing.** Once a build is in front of testers, content edits become out-of-cycle — re-spec, re-implement, re-test. So for any of these 9 we *can't* accommodate in the current build, please treat the disposition as "noted, parked for the next questionnaire revision" rather than as a current-sprint change. Worth flagging this with the team so the process tightens for the next round.
-2. **Marriz needs a response either way.** She filed these in good faith as part of R3; whatever the disposition (accept now / defer to next revision / decline), we should communicate it back to her so the feedback loop closes. For each item the team decides not to accommodate now, please draft a short remark for Marriz in the Remarks column (or I can — just say which you prefer).
+**A note on process going forward:** questionnaire-content and validation-policy decisions ideally land *before* a UAT round opens — once a build is in front of testers, content edits become out-of-cycle work (re-spec, re-implement, re-test). That's a process point for the team to tighten on the next round, not a comment on Marriz's R3 input — her observations are exactly the kind of thoughtful feedback we want on these items, and they're being treated as first-class. Anything we can't accommodate in the current build will be parked for the next questionnaire revision rather than dropped, and the disposition for each item (accept now / defer to next revision / decline with rationale) will be visible to Marriz on this thread.
 
-I've drafted a recommendation per item below. For each, the team can mark **Yes** (approve my recommendation) or **No** (do something else — note what in Remarks). A remark on a Yes is welcome too.
+I've drafted a recommendation per item below. For each, the team can mark **Yes** (approve my recommendation) or **No** (do something else — note what in Remarks). Remarks on a Yes are welcome too.
 
 Once confirmed, I'll close the GitHub issues with the disposition recorded and slot any approved changes into the build.
 
-| # | GH | Section / Item | Marriz's observation (short) | My recommendation | Confirm (Yes / No) | Remarks (incl. note for Marriz if declined / deferred) |
+| # | GH | Section / Item | Marriz's observation (short) | My recommendation | Confirm (Yes / No) | Remarks |
 |---|---|---|---|---|---|---|
 | 1 | [#303](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/303) | A · Q11 work hours | Allow decimal hours (e.g., 3.5h for part-time)? | **Keep integer** (1–24, per spec). | | |
 | 2 | [#304](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/304) | E · Q52 | "No significant impact" can be ticked with other options → contradicts. | **Make "No significant impact" exclusive** (standard sentinel pattern). | | |
@@ -35,10 +34,12 @@ Once confirmed, I'll close the GitHub issues with the disposition recorded and s
 
 **Notes on a couple of items where context helps:**
 
+- **#303** — keeping integer is anchored to the current spec; if part-time hours come up often enough in the field, this is a clean parking-lot item for the next revision (one-line schema change).
 - **#305 (3b)** — adding a Q9 < Q34 cross-field check is straightforward; what's not obvious is the failure UX (hard-block vs. soft-warn vs. require a comment). Easier to disposition once we see real respondent behaviour. Hence "defer".
-- **#307** — both sub-decisions are questionnaire-content. I don't paraphrase item wording on my own; needs the survey-design team's call.
-- **#312** — single-select is the simplest fix and eliminates the contradiction class. If the team wants to keep multi-select with specific exclusivity rules between options, just list which pairs are exclusive and I'll implement.
+- **#307** — both sub-decisions are pure questionnaire-content; I don't paraphrase item wording on my own, the survey-design team owns those calls.
+- **#312** — single-select is the simplest fix and eliminates the contradiction class Marriz flagged. If the team wants to keep multi-select with exclusivity rules between specific options (e.g., "Retire" exclusive vs. "Transfer"), just list which pairs and I'll implement.
 
 Thanks Shan — let me know if anything is unclear before you raise it.
+Marriz — you'll see the dispositions land in this thread; appreciate the careful R3 work.
 
 Carl
