@@ -1,18 +1,18 @@
-# Email draft — R3 design-decision questions for Kidd
+# Email draft — R3 design-decision questions (via Shan)
 
-**To:** Kidd
-**Cc:** _(Mam Merlyne, Dr Myra — if you want survey-design owners looped in directly)_
-**Subject:** F2 PWA UAT R3 — 9 questionnaire design questions, please confirm
+**To:** Shan _(R3 tester + coordinator — please raise to Kidd and the survey-design team)_
+**Cc:** Kidd _(for visibility — Shan to route to Mam Merlyne / Dr Myra as needed)_
+**Subject:** F2 PWA UAT R3 — 9 questionnaire design questions, need survey-design confirmation
 
 ---
 
-Hi Kidd,
+Hi Shan,
 
-UAT Round 3 surfaced 9 observations from Marriz that are questionnaire-content / validation-policy calls, not CAPI bugs — they need a survey-design ruling before I can close them or implement.
+UAT Round 3 surfaced 9 observations from Marriz that are **questionnaire-content / validation-policy calls**, not CAPI bugs — they need a survey-design ruling before I can close them or implement. Could you please raise these to Kidd and the team (Mam Merlyne / Dr Myra as relevant) and come back with the confirmations?
 
-I've drafted a recommendation per item below. For each, please mark **Yes** (approve my recommendation) or **No** (do something else — note what in Remarks). Where a remark is helpful even on a Yes, please add it.
+I've drafted a recommendation per item below. For each, the team can mark **Yes** (approve my recommendation) or **No** (do something else — note what in Remarks). A remark on a Yes is welcome too.
 
-Once you confirm, I'll close the GitHub issues with your disposition recorded and slot any approved changes into the build.
+Once confirmed, I'll close the GitHub issues with the disposition recorded and slot any approved changes into the build.
 
 | # | GH | Section / Item | Marriz's observation (short) | My recommendation | Confirm (Yes / No) | Remarks |
 |---|---|---|---|---|---|---|
@@ -31,8 +31,9 @@ Once you confirm, I'll close the GitHub issues with your disposition recorded an
 **Notes on a couple of items where context helps:**
 
 - **#305 (3b)** — adding a Q9 < Q34 cross-field check is straightforward; what's not obvious is the failure UX (hard-block vs. soft-warn vs. require a comment). Easier to disposition once we see real respondent behaviour. Hence "defer".
-- **#307** — both sub-decisions are questionnaire-content. I don't paraphrase item wording on my own; needs your / Mam Merlyne's call.
-- **#312** — single-select is the simplest fix and eliminates the contradiction class. If you want to keep multi-select with specific exclusivity rules between options, just list which pairs are exclusive and I'll implement.
+- **#307** — both sub-decisions are questionnaire-content. I don't paraphrase item wording on my own; needs the survey-design team's call.
+- **#312** — single-select is the simplest fix and eliminates the contradiction class. If the team wants to keep multi-select with specific exclusivity rules between options, just list which pairs are exclusive and I'll implement.
 
-Thanks,
+Thanks Shan — let me know if anything is unclear before you raise it.
+
 Carl
