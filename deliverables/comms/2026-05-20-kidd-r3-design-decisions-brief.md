@@ -1,45 +1,44 @@
-# Email draft — R3 design-decision questions (via Shan, Marriz looped in)
+# Email draft — R3 questionnaire decisions (via Shan, Marriz looped in)
 
 **To:** Shan _(R3 tester + coordinator — please raise to Kidd and the survey-design team)_
-**Cc:** Kidd _(for visibility — Shan to route to Mam Merlyne / Dr Myra as needed)_, Marriz _(originator — looped in to see how her R3 observations get dispositioned)_
-**Subject:** F2 PWA UAT R3 — 9 questionnaire design questions, need survey-design confirmation
+**Cc:** Kidd _(for visibility — Shan to route to Mam Merlyne / Dr Myra as needed)_, Marriz _(originator — looped in to see how her observations get resolved)_
+**Subject:** HCW Survey Round 3 — 9 questionnaire items needing the team's decision
 
 ---
 
 Hi Shan,
 
-Looping Marriz in directly — her careful eye during R3 surfaced 9 observations that are **questionnaire-content / validation-policy calls** rather than CAPI bugs, so they need a survey-design ruling before I can implement or close them. Marriz, thank you for the detail in each report; it made the classification straightforward on my side.
+Looping Marriz in directly — during HCW Survey Round 3 testing, she noticed 9 items that involve **questionnaire wording, answer options, or answer rules** rather than anything wrong with the app itself. Those are decisions for the survey-design team to make. Marriz, thank you for the detail in each note — it made it easy to sort them.
 
-Shan, could you please raise the 9 items below to Kidd and the team (Mam Merlyne / Dr Myra as relevant) and come back with the confirmations?
+Shan, could you please walk these 9 items below with Kidd and the team (Mam Merlyne and Dr Myra as relevant) and come back with their decisions?
 
-**A note on process going forward:** questionnaire-content and validation-policy decisions ideally land *before* a UAT round opens — once a build is in front of testers, content edits become out-of-cycle work (re-spec, re-implement, re-test). That's a process point for the team to tighten on the next round, not a comment on Marriz's R3 input — her observations are exactly the kind of thoughtful feedback we want on these items, and they're being treated as first-class. Anything we can't accommodate in the current build will be parked for the next questionnaire revision rather than dropped, and the disposition for each item (accept now / defer to next revision / decline with rationale) will be visible to Marriz on this thread.
+**A note on process:** changes to questionnaire wording and answer rules ideally get settled *before* testing begins, since making those changes after a round opens means re-doing the build and re-running the testing. That's a process point for the next round to tighten on — it isn't a comment on Marriz's input, which is exactly the kind of careful feedback we want on these items. Whatever the team decides for each (change it now / hold it for the next questionnaire revision / leave as-is with a reason), Marriz will see the outcome on this thread.
 
-I've drafted a recommendation per item below. For each, the team can mark **Yes** (approve my recommendation) or **No** (do something else — note what in Remarks). Remarks on a Yes are welcome too.
+For each item below, I've suggested what I think makes sense. The team can mark **Yes** to approve, or **No** with a remark on what to do instead. Notes are welcome on a Yes too.
 
-Once confirmed, I'll close the GitHub issues with the disposition recorded and slot any approved changes into the build.
+Once the team confirms, I'll update the build for anything approved and close out the tracking notes.
 
-| # | GH | Section / Item | Marriz's observation (short) | My recommendation | Confirm (Yes / No) | Remarks |
+| # | Section / Item | What Marriz noticed | Suggested decision | Confirm (Yes / No) | Remarks | Tracker |
 |---|---|---|---|---|---|---|
-| 1 | [#303](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/303) | A · Q11 work hours | Allow decimal hours (e.g., 3.5h for part-time)? | **Keep integer** (1–24, per spec). | | |
-| 2 | [#304](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/304) | E · Q52 | "No significant impact" can be ticked with other options → contradicts. | **Make "No significant impact" exclusive** (standard sentinel pattern). | | |
-| 3a | [#305](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/305) | A · Q9 tenure | "0 years AND 0 months" should not be allowed. | **Block 0+0**. | | |
-| 3b | #305 | A · Q9 vs Q34 | Q9 years should be < Q34 age (cross-field). | **Defer** (need a separate call on the failure UX — block? warn? require comment?). | | |
-| 4 | [#306](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/306) | C · Q35 date | Respondent may not remember the exact date. | **Add a "Don't Know / Can't Recall" code** (value `9999`, project F-series convention). | | |
-| 5a | [#307](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/307) | C · Q36 | Should Q36 allow multiple responses (like Q39)? | _Survey-design call — no default._ | | |
-| 5b | #307 | C · Q36 stem | When Q34 = "already accredited", current stem reads future-tense ("…applying…"). Re-word to past-tense ("…apply…")? | _Survey-design call — no default. Marriz already flagged to Mam Merlyne._ | | |
-| 6 | [#309](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/309) | C · Q39 | Remove "Not a physician/dentist" option, OR fix it being selectable alongside others. | **Keep the option, make it exclusive.** | | |
-| 7 | [#310](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/310) | D · Q47 ZBB challenges | No "None" option if respondent had no challenges. | **Add "None"** (exclusive). | | |
-| 8 | [#311](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/311) | J · Q110 resources | No "None" option if no additional resources needed. | **Add "None"** (exclusive). | | |
-| 9 | [#312](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/312) | J · Q125 future plans | Multi-select allows contradictions ("Retire" + "Transfer"). | **Convert to single-select.** | | |
+| 1 | A · Q11 — work hours | Should respondents be able to enter half-hours (e.g., 3.5 hours) for part-time workers? | Keep it as whole hours only (1–24) for now. If half-hours come up often in the field, we can revisit. | | | [#303](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/303) |
+| 2 | E · Q52 | "No significant impact" can currently be ticked together with other options, which contradicts itself. | Make "No significant impact" a stand-alone choice — if the respondent picks it, the other options auto-clear. | | | [#304](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/304) |
+| 3a | A · Q9 — tenure | A respondent could currently enter "0 years AND 0 months", which doesn't make sense. | Block 0 years + 0 months. | | | [#305](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/305) |
+| 3b | A · Q9 vs Q34 | Years in current job (Q9) shouldn't be greater than the respondent's age (Q34). | Hold for now — first we need the team's call on what should happen when the answers don't match (block? warn the respondent? require a note?). | | | #305 |
+| 4 | C · Q35 — date | Respondent may not remember the exact date. | Add a "Don't Know / Can't Recall" option. | | | [#306](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/306) |
+| 5a | C · Q36 — accreditation reason | Should Q36 accept multiple answers (like Q39 does), or stay single-answer? | The team's call — no suggestion from my side. | | | [#307](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/307) |
+| 5b | C · Q36 — wording | When Q34 = "already accredited", the current Q36 wording asks "why is your facility applying…" — should it be re-worded to past tense ("why did your facility apply for…")? | The team's call. Marriz already flagged this to Mam Merlyne. | | | #307 |
+| 6 | C · Q39 | The "Not a physician/dentist" option can currently be picked alongside other options. Marriz also asked if the option should be removed (since Q38 already captures the same fact). | Keep the option, but make it a stand-alone choice — if picked, others auto-clear. | | | [#309](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/309) |
+| 7 | D · Q47 — challenges with ZBB patients | No option for respondents who had no challenges. | Add a "None" option (stand-alone — auto-clears the others). | | | [#310](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/310) |
+| 8 | J · Q110 — additional resources | No option for respondents who don't need any additional resources. | Add a "None" option (stand-alone — auto-clears the others). | | | [#311](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/311) |
+| 9 | J · Q125 — HCW future plans | Multiple answers are allowed, which can produce contradictions (e.g., "Retire" + "Transfer to new facility"). | Allow only one answer. If the team would rather keep multiple answers but block specific contradictions (e.g., "Retire" can't go with "Transfer"), please list which combinations to block and I'll set that up. | | | [#312](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/312) |
 
-**Notes on a couple of items where context helps:**
+**A few notes where context might help:**
 
-- **#303** — keeping integer is anchored to the current spec; if part-time hours come up often enough in the field, this is a clean parking-lot item for the next revision (one-line schema change).
-- **#305 (3b)** — adding a Q9 < Q34 cross-field check is straightforward; what's not obvious is the failure UX (hard-block vs. soft-warn vs. require a comment). Easier to disposition once we see real respondent behaviour. Hence "defer".
-- **#307** — both sub-decisions are pure questionnaire-content; I don't paraphrase item wording on my own, the survey-design team owns those calls.
-- **#312** — single-select is the simplest fix and eliminates the contradiction class Marriz flagged. If the team wants to keep multi-select with exclusivity rules between specific options (e.g., "Retire" exclusive vs. "Transfer"), just list which pairs and I'll implement.
+- **Item 3b (Q9 vs Q34):** Comparing one answer against another is straightforward to set up. The harder call is what the questionnaire should *do* when the answers don't match — block the respondent until they fix it, show a warning, or ask them to add a note. Easier to decide once we see how often it actually happens.
+- **Item 5 (Q36):** Both parts are pure questionnaire-content calls. I don't change the wording of any item on my own — it's the survey-design team's call.
+- **Item 9 (Q125):** Allowing only one answer is the simplest fix and removes the contradiction problem Marriz flagged. If the team prefers to keep multiple answers, just list which combinations shouldn't be allowed together and I'll set up the rule.
 
 Thanks Shan — let me know if anything is unclear before you raise it.
-Marriz — you'll see the dispositions land in this thread; appreciate the careful R3 work.
+Marriz — you'll see the decisions land in this thread; thanks again for the careful R3 work.
 
 Carl
