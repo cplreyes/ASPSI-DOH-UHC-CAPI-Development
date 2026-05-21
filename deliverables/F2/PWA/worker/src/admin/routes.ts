@@ -244,6 +244,34 @@ function buildLastLoginDispatcher(
 }
 
 /**
+ * #327: emit a success-gated audit row for a mutation route. Before this,
+ * the Admin Portal audited only auth events plus a few HCW/session
+ * mutations — user/role/file/settings/DLQ/encode mutations wrote data with
+ * no trail. Call this immediately before returning a mutation route's
+ * response: it fires only on a 2xx and only when the actor's JWT payload is
+ * present, mirroring the existing fire-and-forget pattern (the AS RPC runs
+ * via ctx.waitUntil inside auditFn).
+ */
+function auditMutation(
+  auditFn: (ctx: AuthAuditCtx) => void,
+  r: Response,
+  auth: { payload?: { sub: string; jti: string; role: string } | null },
+  ipHash: string,
+  eventType: string,
+  resource: string,
+): void {
+  if (r.status < 200 || r.status >= 300 || !auth.payload) return;
+  auditFn({
+    event_type: eventType,
+    actor_username: auth.payload.sub,
+    actor_jti: auth.payload.jti,
+    actor_role: auth.payload.role,
+    client_ip_hash: ipHash,
+    event_resource: resource,
+  });
+}
+
+/**
  * Returns the response for an /admin/api/ request, or null when the path
  * isn't an admin-portal route (so the caller can fall through to legacy).
  *
@@ -352,6 +380,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
       { username: auth.payload!.sub },
       asCall,
     );
+    auditMutation(auditFn, r, auth, ipHash, 'admin_encode_submit', hcwId);
     return withRequestId(r, requestId);
   }
 
@@ -448,6 +477,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleDlqMutation(dlqId, asCall);
+    auditMutation(auditFn, r, auth, ipHash, 'admin_dlq_replay', dlqId);
     return withRequestId(r, requestId);
   }
 
@@ -468,6 +498,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleDlqMutation(dlqId, asCall);
+    auditMutation(auditFn, r, auth, ipHash, 'admin_dlq_delete', dlqId);
     return withRequestId(r, requestId);
   }
 
@@ -540,6 +571,17 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleUploadFile(req, { username: auth.payload!.sub }, env.F2_ADMIN_R2, asCall);
+    // Resource = the stored filename, read from the success response body.
+    let uploadedName = '';
+    if (r.status >= 200 && r.status < 300) {
+      try {
+        const j = (await r.clone().json()) as { file?: { filename?: string } };
+        uploadedName = typeof j.file?.filename === 'string' ? j.file.filename : '';
+      } catch {
+        /* leave blank — audit row still records the create */
+      }
+    }
+    auditMutation(auditFn, r, auth, ipHash, 'admin_files_create', uploadedName);
     return withRequestId(r, requestId);
   }
 
@@ -573,6 +615,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleDeleteFile(fileId, env.F2_ADMIN_R2, asCall);
+    auditMutation(auditFn, r, auth, ipHash, 'admin_files_delete', fileId);
     return withRequestId(r, requestId);
   }
 
@@ -604,6 +647,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleRunNowSetting(sid, asCall);
+    auditMutation(auditFn, r, auth, ipHash, 'admin_settings_run_now', sid);
     return withRequestId(r, requestId);
   }
 
@@ -641,6 +685,14 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleCreateSetting(body, { username: auth.payload!.sub }, asCall);
+    auditMutation(
+      auditFn,
+      r,
+      auth,
+      ipHash,
+      'admin_settings_create',
+      typeof body.instrument === 'string' ? body.instrument : '',
+    );
     return withRequestId(r, requestId);
   }
 
@@ -663,6 +715,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
           env.F2_AUTH,
         );
       const r = await handleUpdateSetting(sid, body, asCall);
+      auditMutation(auditFn, r, auth, ipHash, 'admin_settings_update', sid);
       return withRequestId(r, requestId);
     }
     const asCall = (payload: { setting_id: string }) =>
@@ -675,6 +728,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleDeleteSetting(sid, asCall);
+    auditMutation(auditFn, r, auth, ipHash, 'admin_settings_delete', sid);
     return withRequestId(r, requestId);
   }
 
@@ -761,6 +815,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleBulkImportUsers(body, { username: auth.payload!.sub }, asCall);
+    auditMutation(auditFn, r, auth, ipHash, 'admin_users_bulk_import', '');
     return withRequestId(r, requestId);
   }
 
@@ -780,6 +835,14 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleCreateUser(body, { username: auth.payload!.sub }, asCall);
+    auditMutation(
+      auditFn,
+      r,
+      auth,
+      ipHash,
+      'admin_users_create',
+      typeof body.username === 'string' ? body.username : '',
+    );
     return withRequestId(r, requestId);
   }
 
@@ -822,6 +885,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
           env.F2_AUTH,
         );
       const r = await handleUpdateUser(username, body, asCall);
+      auditMutation(auditFn, r, auth, ipHash, 'admin_users_update', username);
       return withRequestId(r, requestId);
     }
     // DELETE
@@ -835,6 +899,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleDeleteUser(username, auth.payload!.sub, asCall);
+    auditMutation(auditFn, r, auth, ipHash, 'admin_users_delete', username);
     return withRequestId(r, requestId);
   }
 
@@ -872,6 +937,14 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         env.F2_AUTH,
       );
     const r = await handleCreateRole(body, { username: auth.payload!.sub }, asCall);
+    auditMutation(
+      auditFn,
+      r,
+      auth,
+      ipHash,
+      'admin_roles_create',
+      typeof body.name === 'string' ? body.name : '',
+    );
     return withRequestId(r, requestId);
   }
 
@@ -898,6 +971,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
       // request for any user holding this role refetches authoritative
       // F2_Roles data instead of trusting the now-stale entry.
       if (r.status >= 200 && r.status < 300) roleCache.invalidate(name);
+      auditMutation(auditFn, r, auth, ipHash, 'admin_roles_update', name);
       return withRequestId(r, requestId);
     }
     // DELETE
@@ -914,6 +988,7 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
     // R2-#56: deleting a role evicts the cache entry too — any extant JWT
     // for this role will fall through to refetch + 401 (role not in list).
     if (r.status >= 200 && r.status < 300) roleCache.invalidate(name);
+    auditMutation(auditFn, r, auth, ipHash, 'admin_roles_delete', name);
     return withRequestId(r, requestId);
   }
 
