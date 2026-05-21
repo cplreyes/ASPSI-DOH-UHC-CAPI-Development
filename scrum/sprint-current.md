@@ -90,7 +90,14 @@ revised: 2026-05-18 — re-planned against the 2026-05-18 ASPSI Team Meeting (CS
 - **E0-008 DONE** — root-caused the morning's 5-of-8 auto-standup: the `TASK_LINE` ID regex excluded lowercase, dropping `E0-009b`/`E4-CSWeb-001`/`E4-CSWeb-002`. Fixed + added the sprint roll-over `[!warning]` banner (the 05-18 "Day 8 of 5" failure now surfaces loudly) + "silence ≠ idle" no-activity note. 11 regression tests added (`.claude/scripts/tests/test_generate_standup.py`, all pass). 4th-deferral risk retired.
 - **E0-009b CLOSED as stale-premise** — verified against Project #8 + repo: `epic:*` labels already 95/98 on board issues; Project #8 has no `surface`/`severity` field to mirror. Real gap is 28 off-board open issues (R3 findings) — board curation, not a label mirror; rescope separately if pursued.
 - Mode C standup `scrum/standups/2026-05-21.md` regenerated (auto file had captured only 5 of 8 items — the exact bug E0-008 fixes).
-- **Goal C complete.** Remaining S006: Goal A (3 Designer passes) + Goal D (CSWeb VPS) — S007 carry by arithmetic; E6-PWA-007 closeable. Friday is Mode D close.
+- **Goal C complete.** Remaining S006: Goal A (3 Designer passes) + Goal D (CSWeb VPS) — S007 carry by arithmetic. Friday is Mode D close.
+- **Goal B / E6-PWA-007 — Day-4 R3 close-out grind (Admin Portal batch #315–#330, 15 issues triaged):**
+  - **#328** clickable-username → change-password entry point — fixed, PR #339 merged to `main` (prod).
+  - **#315** Files download authenticated (was a bare `<a href>` that couldn't carry the in-memory JWT) — fixed, PR #341 merged to `main` (prod).
+  - **#320 / #321** cross-tab session — closed as `design-decision` (in-memory per-tab JWT is WAD); **#340** opened to track the one real finding (password-change JWT invalidation, low-sev E4-APRT security enhancement).
+  - **#319 / #325 / #317 / #330 / #316 / #324 / #326** — all root-caused to **#294** (Apps Script deploy gap; deployed dispatcher lacks the v2.0.1 action handlers). No code fix — one AS redeploy clears them. Gated on Carl's Google auth.
+  - **#318** (empty) + **#323** (tester-unsure) — pending needs-info disposition.
+  - E6-PWA-007 not closed: blocked-tail rides on #294; carries to S007.
 
 ## Definition of Done — Sprint 006
 
