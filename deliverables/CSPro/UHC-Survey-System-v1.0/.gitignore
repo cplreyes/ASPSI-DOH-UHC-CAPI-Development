@@ -1,0 +1,3 @@
+# Python bytecode caches — generators are run in place, no need to track these.
+__pycache__/
+*.pyc
