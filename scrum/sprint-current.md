@@ -33,8 +33,8 @@ revised: 2026-05-18 — re-planned against the 2026-05-18 ASPSI Team Meeting (CS
 
 ### Goal C — Scrum tooling + hygiene
 
-- [ ] **E0-008** Auto-standup no-work-since-last-run branch in `.claude/scripts/generate_standup.py` — detect sprint roll-over + no-commits window, surface "silence ≠ idle". Retro Q4 prescribed (3rd deferral). `status::todo` `priority::high` `estimate::1.5h`
-- [ ] **E0-009b** Label-hygiene pass — apply `surface:`/`severity:`/`epic:` to the ~116 open repo issues (Project #8 fields populated, repo labels not). `status::todo` `priority::medium` `estimate::0.5h`
+- [x] **E0-008** Auto-standup no-work-since-last-run branch in `.claude/scripts/generate_standup.py` — detect sprint roll-over + no-commits window, surface "silence ≠ idle". Retro Q4 prescribed (3rd deferral). **DONE 2026-05-21:** fixed the `TASK_LINE` ID regex (lowercase segments `E0-009b`/`E4-CSWeb-*` were silently dropped → today's 5-of-8 standup), added the roll-over `[!warning]` banner + "silence ≠ idle" no-activity note, 11 regression tests in `.claude/scripts/tests/test_generate_standup.py` (all pass). `status::done` `priority::high` `estimate::1.5h`
+- [x] **E0-009b** Label-hygiene pass — apply `surface:`/`severity:`/`epic:` to the ~116 open repo issues. **CLOSED 2026-05-21 as stale-premise:** `epic:*` labels already 95/98 applied on board issues; Project #8 has no `surface` or `severity` field to mirror (only `Epic`/`Priority`). The real gap is board membership — 28 open issues (mostly R3 findings #294/#303–312/#315–330) are off the Project #8 board entirely — but that is board curation, not a label mirror; rescope separately if pursued. `status::done` `priority::medium` `estimate::0.5h`
 
 ### Goal D — CSWeb on a VPS (NEW; canonical epic-04 IDs — subset commit)
 
@@ -85,12 +85,19 @@ revised: 2026-05-18 — re-planned against the 2026-05-18 ASPSI Team Meeting (CS
 - **Impact on this sprint: none to S006 sequencing.** The 7-language build is S007 (per the 05-18 meeting); this sharpens the S007 framing to a hard date and makes it the **S007 critical path to PSA clearance**, competing with the parked questionnaire-numbering work for the same window. S006 Goal A (F1/F3/F4 Designer passes) feeds it — clean FMF structure now de-risks the 06-12 path. Per quality-over-deadline, 06-12 is a sequencing constraint, not a reason to cut logic/Designer/validation.
 - Durable record: `wiki/concepts/CAPI Seven-Language Translation Build.md` + 2 source pages + memory `project_capi_translation_psa_deadline`. Mode C standup `scrum/standups/2026-05-19.md` written (replaced stale auto file).
 
+### 2026-05-21 (Thu) — Day 4: Goal C closed (E0-008 done, E0-009b closed-as-stale)
+
+- **E0-008 DONE** — root-caused the morning's 5-of-8 auto-standup: the `TASK_LINE` ID regex excluded lowercase, dropping `E0-009b`/`E4-CSWeb-001`/`E4-CSWeb-002`. Fixed + added the sprint roll-over `[!warning]` banner (the 05-18 "Day 8 of 5" failure now surfaces loudly) + "silence ≠ idle" no-activity note. 11 regression tests added (`.claude/scripts/tests/test_generate_standup.py`, all pass). 4th-deferral risk retired.
+- **E0-009b CLOSED as stale-premise** — verified against Project #8 + repo: `epic:*` labels already 95/98 on board issues; Project #8 has no `surface`/`severity` field to mirror. Real gap is 28 off-board open issues (R3 findings) — board curation, not a label mirror; rescope separately if pursued.
+- Mode C standup `scrum/standups/2026-05-21.md` regenerated (auto file had captured only 5 of 8 items — the exact bug E0-008 fixes).
+- **Goal C complete.** Remaining S006: Goal A (3 Designer passes) + Goal D (CSWeb VPS) — S007 carry by arithmetic; E6-PWA-007 closeable. Friday is Mode D close.
+
 ## Definition of Done — Sprint 006
 
 - [ ] **E3-F1-001 / E3-F3-001 / E3-F4-001** closed: each instrument's `.fmf` saved + reviewed in CSPro Designer.
 - [ ] **E6-PWA-007** closed: R3 findings (#302–#314 + #294/#296/#298) triaged + fixed-or-dispositioned; #271 closed with linking comment; `from-uat-round-3-2026-05` issues reconciled; sprint board updated.
-- [ ] **E0-008** closed: no-work/roll-over branch live in `generate_standup.py`; verified against the 05-18 stale-standup scenario.
-- [ ] **E0-009b** closed: ~116 open issues carry repo-side `surface:`/`severity:`/`epic:` labels.
+- [x] **E0-008** closed 2026-05-21: roll-over branch + ID-regex fix live in `generate_standup.py`; verified against the 05-18 stale-standup scenario; 11 regression tests pass.
+- [x] **E0-009b** closed 2026-05-21 as stale-premise: `epic:*` labels already 95/98 on board issues; no `surface`/`severity` Project #8 field to mirror; real gap (28 off-board issues) rescoped out.
 - [ ] **E4-CSWeb-001** closed: VPS provisioned; CSWeb reachable over HTTPS (host/OS/network/TLS).
 - [ ] **E4-CSWeb-002** closed: CSWeb installed; admin account works; ready for per-survey upload (E4-CSWeb-003, S007).
 - [ ] *S007 carry (not S006 DoD): E4-CSWeb-003 app upload · E4-CSWeb-005 sync config · E3-F1-088 tablet-verify.*
