@@ -17,7 +17,7 @@ import { useState, type FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { adminFetch, type ApiError } from '../lib/api-client';
 import { useAdminAuth, type AdminLoginResponse } from '../lib/auth-context';
-import { useRouter } from '../lib/pages-router';
+import { Link, useRouter } from '../lib/pages-router';
 
 export interface ChangePasswordPageProps {
   apiBaseUrl: string;
@@ -155,6 +155,20 @@ export function ChangePasswordPage({ apiBaseUrl, fetchImpl }: ChangePasswordPage
         <Button type="submit" disabled={submitting || !currentPw || !newPw || !confirmPw}>
           {submitting ? 'Saving…' : 'Update password'}
         </Button>
+
+        {/* #328: this page renders chrome-less (no sidebar). When the user
+            arrived here voluntarily (via the sidebar username link, not the
+            forced first-login redirect) they need an escape hatch — otherwise
+            the only way off the page is submitting a password change. Hidden
+            under password_must_change: a forced rotation has no opt-out. */}
+        {!passwordMustChange ? (
+          <Link
+            to="/admin/data"
+            className="self-start font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-signal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+          >
+            Cancel — back to portal
+          </Link>
+        ) : null}
       </form>
 
       <footer className="mt-16 border-t border-hairline pt-4">
