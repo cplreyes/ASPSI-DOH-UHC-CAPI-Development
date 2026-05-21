@@ -96,11 +96,19 @@ Phase 4 (in progress) — FMF + APC per instrument:
   applies visual polish.
 - F1 APC: `F1/generate_apc.py` -> `FacilityHeadSurvey.generated.apc`. CAPI
   logic from `F1-Skip-Logic-and-Validations.md` — framework (case-control,
-  consent terminator, PSGC cascade, GPS/photo capture), skip rules,
-  why-difficult gates, numeric validations, and 'Other (specify)'
-  enforcement. 188 PROC blocks; all skip targets resolve to DCF items.
-  Verified against a paper walkthrough in the bench-test pass.
-- F3/F4 FMF + F3/F4 APC: not yet started.
+  consent terminator, PSGC cascade, GPS/photo capture), skip rules
+  (incl. multi-branch routing), why-difficult gates, numeric validations,
+  and 'Other (specify)' enforcement. 197 PROC blocks; all skip targets
+  resolve to DCF items. Bench-test verification still pending (spec 6.5).
+- F3 FMF: `F3/generate_fmf.py` -> `PatientSurvey.generated.fmf`. 19-form
+  skeleton (one form per record; 0 orphan items).
+- F3 APC: `F3/generate_apc.py` -> `PatientSurvey.generated.apc`. CAPI logic
+  from `F3-Skip-Logic-and-Validations.md` — framework (PATIENT_TYPE G/H
+  routing, consent + Q162 terminators, PSGC cascade incl. patient-home,
+  GPS/photo capture), skip rules, multi-branch routing, payment-source
+  matrix (103 flag<->amount rows), validations, and 'Other (specify)'
+  enforcement. 246 PROC blocks; all skip targets resolve to DCF items.
+- F4 FMF + F4 APC: not yet started.
 
 Each phase ends at a sign-off checkpoint before the next phase begins.
 
