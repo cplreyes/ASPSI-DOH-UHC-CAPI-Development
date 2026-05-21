@@ -70,7 +70,7 @@ This walks `F1/`, `F3/`, `F4/` and runs each instrument's `generate_dcf.py`
 | 1     | F1 DCF                                     | done 2026-05-21 |
 | 2     | F3 DCF                                     | done 2026-05-21 |
 | 3     | F4 DCF (with region whitelist)             | done 2026-05-21 |
-| 4     | FMF (forms) + APC (skip logic) per instrument | not started |
+| 4     | FMF (forms) + APC (skip logic) per instrument | in progress  |
 | 5     | Tablet smoke test + Designer review        | not started   |
 
 Phase 1 output: `F1/FacilityHeadSurvey.dcf` — 5 ID items (12-digit
@@ -88,6 +88,19 @@ Phase 3 output: `F4/HouseholdSurvey.dcf` — 5 ID items + 23 records / 621 items
 REGION_CODE value set is restricted to the 6 F4 regions (III, V, NIR, VII, X,
 BARMM). F4->F3 linkage is the `F4_PARENT_F3_CASE_SEQ` item. Question items
 match the reference F4 build 1:1 (616 shared items, identical type/length).
+
+Phase 4 (in progress) — FMF + APC per instrument:
+- F1 FMF: `F1/generate_fmf.py` -> `FacilityHeadSurvey.generated.fmf`. 18-form
+  skeleton (one form per record; 0 orphan items). The CSPro Designer pass
+  splits the oversized sections (C/D/E/F/G) per `F1-Form-Layout-Plan.md` and
+  applies visual polish.
+- F1 APC: `F1/generate_apc.py` -> `FacilityHeadSurvey.generated.apc`. CAPI
+  logic from `F1-Skip-Logic-and-Validations.md` — framework (case-control,
+  consent terminator, PSGC cascade, GPS/photo capture), skip rules,
+  why-difficult gates, numeric validations, and 'Other (specify)'
+  enforcement. 188 PROC blocks; all skip targets resolve to DCF items.
+  Verified against a paper walkthrough in the bench-test pass.
+- F3/F4 FMF + F3/F4 APC: not yet started.
 
 Each phase ends at a sign-off checkpoint before the next phase begins.
 

@@ -20,9 +20,12 @@ STEPS = [
     ("F1", "generate_dcf.py", 1),
     ("F3", "generate_dcf.py", 2),
     ("F4", "generate_dcf.py", 3),
-    # ("F1", "generate_fmf.py", 4),   # phase 4 — not yet built
-    # ("F3", "generate_fmf.py", 4),
+    ("F1", "generate_fmf.py", 4),
+    ("F1", "generate_apc.py", 4),
+    # ("F3", "generate_fmf.py", 4),   # phase 4 — not yet built
     # ("F4", "generate_fmf.py", 4),
+    # ("F3", "generate_apc.py", 4),
+    # ("F4", "generate_apc.py", 4),
 ]
 
 
