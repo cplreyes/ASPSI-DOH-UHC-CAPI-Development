@@ -416,4 +416,112 @@ describe('adminRouter', () => {
       fetchSpy.mockRestore();
     }
   });
+
+  // #327: mutation routes beyond auth/HCW/session previously emitted no audit
+  // row. These confirm a representative mutation (user-create) now writes one
+  // on success and stays silent on failure (the auditMutation success gate).
+  it('#327: a successful user-create mutation emits admin_audit_write', async () => {
+    const env = makeEnv(makeKv());
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, {
+      sub: 'admin-bob',
+      role: 'Administrator',
+      role_version: 1,
+    });
+    const calls: Array<{ action: string; payload: Record<string, unknown> }> = [];
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => {
+      const body = JSON.parse((init as RequestInit).body as string) as {
+        action: string;
+        payload: Record<string, unknown>;
+      };
+      calls.push({ action: body.action, payload: body.payload });
+      if (body.action === 'admin_roles_list') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { roles: [{ name: 'Administrator', version: 1, dash_users: true }] },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_users_create') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { user: { username: 'newbie' } },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_audit_write') {
+        return new Response(JSON.stringify({ ok: true, data: { ok: true } }), { status: 200 });
+      }
+      return new Response('{}', { status: 500 });
+    });
+    const waitUntilPromises: Promise<unknown>[] = [];
+    const ctx = {
+      waitUntil: (p: Promise<unknown>) => { waitUntilPromises.push(p); },
+      passThroughOnException: () => undefined,
+    } as unknown as ExecutionContext;
+    try {
+      const req = new Request('https://x/admin/api/dashboards/users', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${tok}`,
+          'Content-Type': 'application/json',
+          'cf-connecting-ip': '203.0.113.7',
+        },
+        body: JSON.stringify({ username: 'newbie', password: 'StrongPw123', role_name: 'Administrator' }),
+      });
+      const r = await adminRouter(req, env, ctx);
+      expect(r!.status).toBe(200);
+      await Promise.all(waitUntilPromises);
+
+      const audit = calls.find((c) => c.action === 'admin_audit_write');
+      expect(audit).toBeDefined();
+      expect(audit!.payload.event_type).toBe('admin_users_create');
+      expect(audit!.payload.actor_username).toBe('admin-bob');
+      expect(audit!.payload.event_resource).toBe('newbie');
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
+  it('#327: a rejected user-create mutation emits no admin_audit_write', async () => {
+    const env = makeEnv(makeKv());
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, {
+      sub: 'admin-bob',
+      role: 'Administrator',
+      role_version: 1,
+    });
+    const calls: Array<{ action: string }> = [];
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => {
+      const body = JSON.parse((init as RequestInit).body as string) as { action: string };
+      calls.push({ action: body.action });
+      if (body.action === 'admin_roles_list') {
+        return new Response(JSON.stringify({
+          ok: true,
+          data: { roles: [{ name: 'Administrator', version: 1, dash_users: true }] },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_users_create') {
+        return new Response(JSON.stringify({
+          ok: false,
+          error: { code: 'E_CONFLICT', message: 'username already exists' },
+        }), { status: 200 });
+      }
+      return new Response('{}', { status: 500 });
+    });
+    const waitUntilPromises: Promise<unknown>[] = [];
+    const ctx = {
+      waitUntil: (p: Promise<unknown>) => { waitUntilPromises.push(p); },
+      passThroughOnException: () => undefined,
+    } as unknown as ExecutionContext;
+    try {
+      const req = new Request('https://x/admin/api/dashboards/users', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${tok}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: 'newbie', password: 'StrongPw123', role_name: 'Administrator' }),
+      });
+      const r = await adminRouter(req, env, ctx);
+      expect(r!.status).toBeGreaterThanOrEqual(400);
+      await Promise.all(waitUntilPromises);
+      expect(calls.some((c) => c.action === 'admin_audit_write')).toBe(false);
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
 });
