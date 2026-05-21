@@ -30,9 +30,9 @@ const SAMPLE_FILE = {
 /** Mock fetch: records calls, serves the file list, and the download bytes. */
 function makeFetch(downloadStatus = 200): {
   fetch: typeof fetch;
-  calls: { url: string; init?: RequestInit }[];
+  calls: { url: string; init: RequestInit | undefined }[];
 } {
-  const calls: { url: string; init?: RequestInit }[] = [];
+  const calls: { url: string; init: RequestInit | undefined }[] = [];
   const impl = (async (url: string | URL, init?: RequestInit) => {
     const u = String(url);
     calls.push({ url: u, init });
