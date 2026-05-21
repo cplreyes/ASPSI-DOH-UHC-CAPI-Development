@@ -185,7 +185,17 @@ export function Layout({ children }: LayoutProps): JSX.Element {
         <div className="flex flex-col gap-3 border-t border-hairline px-5 py-4">
           {isAuthenticated ? (
             <>
-              <div className="flex items-center gap-3">
+              {/* #328: the username profile is a link to /admin/me/change-password.
+                  Before this it was a plain <p> — clicking it only selected the
+                  text, so a user under no forced rotation had no UI path to the
+                  change-password screen (the login redirect was the only entry).
+                  Tooltip + aria-label make the affordance discoverable. */}
+              <Link
+                to="/admin/me/change-password"
+                title="Account — change your password"
+                aria-label={`${username ?? 'Account'} (${role ?? 'role unknown'}) — change password`}
+                className="-mx-2 flex items-center gap-3 rounded-sm px-2 py-1 hover:bg-secondary/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+              >
                 <div
                   aria-hidden="true"
                   className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border border-hairline bg-secondary/40 font-mono text-sm text-ink"
@@ -198,7 +208,7 @@ export function Layout({ children }: LayoutProps): JSX.Element {
                     {role ?? '—'}
                   </p>
                 </div>
-              </div>
+              </Link>
               <Button
                 type="button"
                 variant="outline"
@@ -237,7 +247,16 @@ export function Layout({ children }: LayoutProps): JSX.Element {
           <div className="flex items-center gap-3">
             {isAuthenticated ? (
               <>
-                <span className="text-sm">{username ?? '—'}</span>
+                {/* #328: clickable username (mobile parity with the desktop
+                    sidebar footer) — links to the change-password screen. */}
+                <Link
+                  to="/admin/me/change-password"
+                  title="Account — change your password"
+                  aria-label={`${username ?? 'Account'} — change password`}
+                  className="text-sm text-ink hover:text-signal"
+                >
+                  {username ?? '—'}
+                </Link>
                 <Button
                   type="button"
                   variant="tableAction"
