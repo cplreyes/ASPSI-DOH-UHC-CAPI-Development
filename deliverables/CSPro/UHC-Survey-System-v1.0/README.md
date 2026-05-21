@@ -70,7 +70,7 @@ This walks `F1/`, `F3/`, `F4/` and runs each instrument's `generate_dcf.py`
 | 1     | F1 DCF                                     | done 2026-05-21 |
 | 2     | F3 DCF                                     | done 2026-05-21 |
 | 3     | F4 DCF (with region whitelist)             | done 2026-05-21 |
-| 4     | FMF (forms) + APC (skip logic) per instrument | in progress  |
+| 4     | FMF (forms) + APC (skip logic) per instrument | done 2026-05-21 |
 | 5     | Tablet smoke test + Designer review        | not started   |
 
 Phase 1 output: `F1/FacilityHeadSurvey.dcf` — 5 ID items (12-digit
@@ -108,7 +108,22 @@ Phase 4 (in progress) — FMF + APC per instrument:
   GPS/photo capture), skip rules, multi-branch routing, payment-source
   matrix (103 flag<->amount rows), validations, and 'Other (specify)'
   enforcement. 246 PROC blocks; all skip targets resolve to DCF items.
-- F4 FMF + F4 APC: not yet started.
+- F4 FMF: `F4/generate_fmf.py` -> `HouseholdSurvey.generated.fmf`. 25-form
+  skeleton (one form per record; 0 orphan items). The repeating
+  `C_HOUSEHOLD_ROSTER` gets its own roster-grid form.
+- F4 APC: `F4/generate_apc.py` -> `HouseholdSurvey.generated.apc`. CAPI logic
+  from `F4-Skip-Logic-and-Validations.md` — framework, PSGC cascade,
+  GPS/photo capture, skip rules, multi-branch routing, household-roster
+  per-member skips + post-roster count check, the WHO/SHA expenditure
+  'consumed' gates (38) + auto-computed panel subtotals, validations, and
+  'Other (specify)' enforcement. 156 PROC blocks.
+
+Phase 4 output (all generator-emitted, building clean via `build_all.py`):
+F1 — `.generated.fmf` (18 forms) + `.generated.apc` (197 PROC blocks).
+F3 — `.generated.fmf` (19 forms) + `.generated.apc` (246 PROC blocks).
+F4 — `.generated.fmf` (25 forms) + `.generated.apc` (156 PROC blocks).
+The `.generated.*` artifacts are Designer-ready skeletons; phase 5 (CSPro
+Designer polish + tablet bench-test) is the verification step.
 
 Each phase ends at a sign-off checkpoint before the next phase begins.
 
