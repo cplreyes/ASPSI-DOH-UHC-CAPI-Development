@@ -63,6 +63,8 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
   const [reloadTick, setReloadTick] = useState(0);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  // #315: id of the row whose download is in flight (authenticated blob fetch).
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -154,6 +156,60 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
     return `${apiBaseUrl}/admin/api/dashboards/apps/files/${encodeURIComponent(fileId)}`;
   }
 
+  // #315: the file download MUST be an authenticated fetch, not a plain
+  // <a href> navigation. The admin JWT lives in memory only and is sent
+  // exclusively via the Authorization header; a bare anchor click carries no
+  // header, so the worker rejected every download with 401 and the error JSON
+  // ("access denied") was what got saved as the "file". Fetch the bytes with
+  // the token, then trigger a client-side save from the resulting blob.
+  async function handleDownload(row: FileRow): Promise<void> {
+    setDownloadingId(row.file_id);
+    try {
+      const fetchFn = fetchImpl ?? fetch;
+      let resp: Response;
+      try {
+        resp = await fetchFn(downloadUrl(row.file_id), {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
+      } catch {
+        window.alert('Network unavailable. Try the download again.');
+        return;
+      }
+      if (resp.status === 401) {
+        clearAuth();
+        navigate('/admin/login');
+        return;
+      }
+      if (!resp.ok) {
+        // Error responses are JSON envelopes; a successful download is raw bytes.
+        let message = `Download failed (HTTP ${resp.status}).`;
+        try {
+          const env = (await resp.json()) as { error?: { code?: string; message?: string } };
+          if (env?.error?.code === 'E_PASSWORD_CHANGE_REQUIRED') {
+            navigate('/admin/me/change-password');
+            return;
+          }
+          if (env?.error?.message) message = env.error.message;
+        } catch {
+          // Non-JSON error body — keep the generic message.
+        }
+        window.alert(message);
+        return;
+      }
+      const blob = await resp.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = objectUrl;
+      a.download = row.filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(objectUrl);
+    } finally {
+      setDownloadingId(null);
+    }
+  }
+
   return (
     <section className="flex flex-col gap-3">
       <div className="flex items-baseline justify-between">
@@ -177,7 +233,12 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
       ) : state.data.files.length === 0 ? (
         <EmptyState />
       ) : (
-        <FilesTable rows={state.data.files} downloadUrl={downloadUrl} onDelete={handleDelete} />
+        <FilesTable
+          rows={state.data.files}
+          onDownload={handleDownload}
+          downloadingId={downloadingId}
+          onDelete={handleDelete}
+        />
       )}
     </section>
   );
@@ -279,11 +340,13 @@ function UploadRow({
 
 function FilesTable({
   rows,
-  downloadUrl,
+  onDownload,
+  downloadingId,
   onDelete,
 }: {
   rows: FileRow[];
-  downloadUrl: (id: string) => string;
+  onDownload: (row: FileRow) => void | Promise<void>;
+  downloadingId: string | null;
   onDelete: (row: FileRow) => void | Promise<void>;
 }): JSX.Element {
   return (
@@ -303,17 +366,23 @@ function FilesTable({
           {rows.map((r) => (
             <tr key={r.file_id}>
               <Td>
-                {/* FX-013 (2026-05-03): `download` attr is defense-in-depth; the
-                    worker already sets Content-Disposition: attachment, but
-                    listing `download` here makes the save-dialog deterministic
-                    across browsers and surfaces the filename in the prompt. */}
-                <a
-                  href={downloadUrl(r.file_id)}
-                  download={r.filename}
-                  className="underline decoration-hairline underline-offset-4 hover:decoration-foreground"
+                {/* #315: download goes through handleDownload (authenticated
+                    blob fetch). A plain <a href> cannot send the in-memory
+                    admin JWT, so the bare GET 401'd and the error JSON was
+                    saved as the "file". This button is the action trigger. */}
+                <button
+                  type="button"
+                  onClick={() => void onDownload(r)}
+                  disabled={downloadingId === r.file_id}
+                  className="text-left underline decoration-hairline underline-offset-4 hover:decoration-foreground disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {r.filename}
-                </a>
+                </button>
+                {downloadingId === r.file_id ? (
+                  <span className="ml-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    Downloading…
+                  </span>
+                ) : null}
               </Td>
               <Td mono>{r.content_type}</Td>
               <Td mono>{formatBytes(r.size_bytes)}</Td>
