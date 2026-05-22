@@ -109,7 +109,7 @@ revised: 2026-05-18 — re-planned against the 2026-05-18 ASPSI Team Meeting (CS
 
 ### 1. Did the sprint goal land? (yes / partial / no — one line why)
 
-_TBD 2026-05-22_
+_Auto-seed: 5 standup(s) filed of 5 sprint days. Review the week and answer: yes / partial / no — one line why. Overwrite this placeholder._
 
 ### 2. What surprised me? (process, not work — max 3 bullets)
 
