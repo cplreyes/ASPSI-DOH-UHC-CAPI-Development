@@ -1,115 +1,66 @@
 ---
-sprint: 006
-start: 2026-05-18
-end: 2026-05-22
-status: active
+sprint: 007
+start: 2026-05-25
+end: 2026-05-29
+status: planning
 sprint_length: 1 week (5 working days)
-deliverable_anchor: Goal A — F1/F3/F4 FMF Designer passes (E3-F1-001/F3-001/F4-001) · Goal B — F2 PWA UAT Round 3 close-out (R3 ran last wk; fix findings + close #271) · Goal C — scrum tooling + hygiene (E0-008 retro Q4 + E0-009b) · Goal D — CSWeb on a VPS, subset commit (E4-CSWeb-001 provision + E4-CSWeb-002 install; 003/005 + E3-F1-088 → S007)
-revised: 2026-05-18 — re-planned against the 2026-05-18 ASPSI Team Meeting (CSWeb VPS added as Goal D; Goal B reframed; F3/F4 Designer passes added)
+deliverable_anchor: TBD — set at Mode A planning, Mon 2026-05-25
+revised: 2026-05-22 — skeleton created at Sprint 006 close (Mode D); awaiting Mode A planning
 ---
 
-# Sprint 006 — F1/F3/F4 Designer passes, F2 PWA R3 close-out, CSWeb on a VPS
+# Sprint 007 — (planning)
+
+> [!note] Planning skeleton
+> This file was reset from Sprint 006 at its Mode D close on 2026-05-22. It is a **carry-in + constraints skeleton only** — the Sprint Goal, committed items, sizing, and DoD are filled by `/scrum` **Mode A** on Monday 2026-05-25. Do not treat anything below as committed yet.
+
+> [!warning] `scrum/sprint-007-plan.md` is stale — do not promote it
+> A `sprint-007-plan.md` draft exists (authored 2026-05-09, F1-validation-anchored). It **predates the 2026-05-18 ASPSI team-meeting re-plan** and contradicts current reality (it says "CSWeb stand-up waits until F1 build artifact stable" — CSWeb was committed to S006 by the meeting). Mode A should supersede it, not carry it forward.
+
+## Carry-in from Sprint 006
+
+Five items carry from S006 (2/8 committed items closed there — E0-008, E0-009b):
+
+| ID | Item | S006 state | Notes for Mode A |
+|---|---|---|---|
+| **E3-F1-001** | F1 FMF Section A layout — CSPro Designer pass | todo (never started) | Goal A carry. Gated only on Carl's Designer time. |
+| **E3-F3-001** | F3 FMF Designer pass — Patient (18 rec / 840 items) | todo (never started) | Goal A carry. |
+| **E3-F4-001** | F4 FMF Designer pass — Household (22 rec / 623 items) | todo (never started) | Goal A carry; heaviest of the three. |
+| **E4-CSWeb-001** | Provision VPS — host/OS/network/TLS | runbook authored | Execution-ready. Runbook: `deliverables/CSWeb/CSWeb-on-VPS-Setup-Runbook.md`. **Blocked on:** Carl provisioning a VPS + a domain name (Let's Encrypt won't issue to bare IPs). |
+| **E4-CSWeb-002** | CSWeb install + admin account | runbook authored | Execution-ready; same runbook (Part 4). Follows E4-CSWeb-001. |
+| **E6-PWA-007** | [#271](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/271) — R3 close-out | partial | 3 R3 bugs shipped to prod (#328/#315/#327), 6 issues closed, #294 cluster root-caused. Remaining: formally close #271, reconcile `from-uat-round-3-2026-05`. Re-verify is tester-paced. |
+
+## Hard external constraint entering Sprint 007
+
+- **PSA clearance gate — 2026-06-12.** PSA will not clear the survey without the CAPI app + **7 distinct translated versions** bundled (Bisaya ≠ Cebuano). QC-finalization (not first-draft) is the binding predecessor. Per the 2026-05-18 team meeting the full 7-language build is **S007 work** — this is the **S007 critical path**. (Ref: `wiki/concepts/CAPI Seven-Language Translation Build.md`, memory `project_capi_translation_psa_deadline`.)
+
+## Also designated S007 (from the 2026-05-18 meeting / S006 deferrals)
+
+- **E4-CSWeb-003 / -005** — per-survey F1/F3/F4 upload + field-tablet sync config (follow E4-CSWeb-001/002).
+- **E3-F1-088** — F1 Phase-1 tablet sync-verify; blocked behind E4-CSWeb-005.
 
 ## Sprint Goal
 
-> **Goal A — UHC CAPI Designer passes:** F1/F3/F4 FMF Designer passes (`E3-F1-001`, `E3-F3-001`, `E3-F4-001`). *(E3-F1-088 tablet-verify deferred to Sprint 007 — blocked behind `E4-CSWeb-005`, a S007 carry of the Goal D subset commit.)*
-> **Goal B — F2 PWA UAT Round 3 close-out:** R3 **ran last week** (informally, outside #271 — confirmed via the `from-uat-round-3-2026-05` label + ~13 tester findings #302–#314 / #294 / #296 / #298). Triage + fix the findings, close [#271](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/271), reconcile the #271 tracking gap.
-> **Goal C — Scrum tooling + hygiene (retro Q4 prescribed change):** Ship `E0-008` (auto-standup no-work-since-last-run branch) **committed** — third deferral; today's stale "Day 8 of 5" auto-standup is the exact failure E0-008 fixes. Pair with the 30m label-hygiene pass (`E0-009b`).
-> **Goal D — CSWeb on a VPS (NEW, from the 2026-05-18 team meeting):** Stand up CSWeb on a VPS for field-response visibility, field-ops + tablet-sync management, data-manager monitoring. **Subset commit on canonical epic-04 IDs:** `E4-CSWeb-001` (provision) + `E4-CSWeb-002` (install) this sprint; `E4-CSWeb-003`/`-005` + `E3-F1-088` carry to S007.
+_TBD — Mode A, Mon 2026-05-25._
 
 ## Committed Items
 
-### Goal A — F1/F3/F4 Designer passes
+_TBD — Mode A. Note the Q4 retro prescription from S006: plan to capacity (~25h), not over it._
 
-- [ ] **E3-F1-001** F1 FMF Section A layout in CSPro Designer — generator emits `FacilityHeadSurvey.generated.fmf`. epic-03 E3-F1-001 **reopened 2026-05-18** (prior `done` superseded by the 05-12 rebuild). *(Carry — gated only on Carl's Designer time.)* `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F3-001** F3 FMF Designer pass — Patient instrument (18 records / 840 items). `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F4-001** F4 FMF Designer pass — Household instrument (22 records / 623 items, roster-heavy). `status::todo` `priority::high` `estimate::4h`
+## Definition of Done — Sprint 007
 
-> **E3-F1-088** (Phase 1 sync tablet-verify, ~3h) **deferred to Sprint 007** — blocked behind `E4-CSWeb-005` (field-tablet sync config), a S007 carry of the Goal D subset commit. Runbook `52a0b27`; worktree `.claude/worktrees/uhc-survey-system-build`.
-
-### Goal B — F2 PWA UAT Round 3 close-out
-
-- [ ] **E6-PWA-007** [#271](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/271) — R3 close-out. R3 ran last week outside #271 (process gap — same pattern as the S005 #266–268 discovery). Triage + fix the ~13+ R3 findings (#302–#314 HCW survey + #294/#296/#298), close #271 with a comment linking the `from-uat-round-3-2026-05` issues, reconcile the tracking gap. Re-verify is tester-paced. `status::todo` `priority::critical` `estimate::6h Carl-driven`
-
-### Goal C — Scrum tooling + hygiene
-
-- [x] **E0-008** Auto-standup no-work-since-last-run branch in `.claude/scripts/generate_standup.py` — detect sprint roll-over + no-commits window, surface "silence ≠ idle". Retro Q4 prescribed (3rd deferral). **DONE 2026-05-21:** fixed the `TASK_LINE` ID regex (lowercase segments `E0-009b`/`E4-CSWeb-*` were silently dropped → today's 5-of-8 standup), added the roll-over `[!warning]` banner + "silence ≠ idle" no-activity note, 11 regression tests in `.claude/scripts/tests/test_generate_standup.py` (all pass). `status::done` `priority::high` `estimate::1.5h`
-- [x] **E0-009b** Label-hygiene pass — apply `surface:`/`severity:`/`epic:` to the ~116 open repo issues. **CLOSED 2026-05-21 as stale-premise:** `epic:*` labels already 95/98 applied on board issues; Project #8 has no `surface` or `severity` field to mirror (only `Epic`/`Priority`). The real gap is board membership — 28 open issues (mostly R3 findings #294/#303–312/#315–330) are off the Project #8 board entirely — but that is board curation, not a label mirror; rescope separately if pursued. `status::done` `priority::medium` `estimate::0.5h`
-
-### Goal D — CSWeb on a VPS (NEW; canonical epic-04 IDs — subset commit)
-
-- [ ] **E4-CSWeb-001** Provision VPS — host/OS/network/TLS; CSWeb web UI reachable over HTTPS. `status::todo` `priority::critical` `estimate::1d`
-- [ ] **E4-CSWeb-002** CSWeb install + admin account setup. `status::todo` `priority::critical` `estimate::4h`
-
-> **S007 carry:** `E4-CSWeb-003` (per-survey upload F1/F3/F4) + `E4-CSWeb-005` (field-tablet sync config). E3-F1-088 tablet-verify is blocked behind E4-CSWeb-005 → also S007. Local CSWeb deploy already proven (`E3-F1-085`) — VPS work is replication; the 1d on E4-CSWeb-001 likely compresses.
-
-### Stretch — DROPPED (no headroom; full translation is S007 per 2026-05-18 meeting)
-
-- E3-F1-011 / E3-F1-012 / E3-F1-020 — Filipino translation + multi-language + master skip gates. Carl confirmed **full dialect build is next week (S007)**; Myra's Tagalog help lands ~weekend. May *start* opportunistically but not committed.
-
-## Sprint Backlog Sizing
-
-| Class | Items | Estimate |
-|---|---|---|
-| **Goal A** | E3-F1-001, E3-F3-001, E3-F4-001 | ~12h |
-| **Goal B** | E6-PWA-007 (R3 fix + close) | ~6h |
-| **Goal C** | E0-008, E0-009b | ~2h |
-| **Goal D** | E4-CSWeb-001 (1d) + E4-CSWeb-002 (4h) | ~12h |
-| **Committed total** | | **~32h** |
-| **Deferred to S007** | E3-F1-088, E4-CSWeb-003, E4-CSWeb-005 | (~10h) |
-| **Stretch** | DROPPED | — |
-
-> [!warning] Committed ~32h vs ~25h capacity — ~7h over.
-> A genuine capacity overcommit, not a deadline-protection cut. Carl chose all four goals at the 2026-05-18 re-plan with quality-over-speed reaffirmed. **Not recommending logic/Designer work be deferred to protect a deadline** (per `feedback_quality_over_deadline`). Sequence by dependency; the mid-week checkpoint decides what carries to S007:
->
-> **Critical path:** Goal D (E4-CSWeb-001 provision → E4-CSWeb-002 install) is the CSWeb keystone; its S007 tail (E4-CSWeb-003/005) gates E3-F1-088 (already deferred to S007 by design). Run Goal D early. Goal B re-verify is tester-paced (fix-and-hand-back). Goal C is small + independent (good filler). Goal A Designer passes are independent, parallelizable with tester-wait windows.
->
-> **Most likely S007 carry if the week is full:** one Designer pass (E3-F4-001 — heaviest/newest) or E4-CSWeb-002 if VPS provisioning (E4-CSWeb-001, 1d) eats the week. Decide at the Wed/Thu checkpoint — not pre-emptively.
+_TBD — Mode A._
 
 ## Daily Notes
 
-### 2026-05-18 (Mon) — Sprint 006 kickoff (re-planned vs the team meeting)
+_(populated from Day 1)_
 
-- **Carry-forward from Sprint 005 retro Q4:** Ship E0-008 (auto-standup no-work branch) **committed** — 3rd deferral; today's stale "Day 8 of 5" auto-standup *is* the failure mode. Pair with 30m label-hygiene (E0-009b).
-- **Late kickoff note:** S005 ran full cadence + retro 05-15 but mechanical close (archive + reset) was skipped over the weekend; done today 05-18 at S006 Day-1.
-- **Re-plan vs 2026-05-18 ASPSI Team Meeting** (ingested → `wiki/sources/Source - ASPSI Team Meeting 2026-05-18.md`):
-  - **Goal D added (NEW):** stand up CSWeb on a VPS — field-response visibility + tablet-sync mgmt + data-manager monitoring. **ID reconciliation:** canonical `E4-CSWeb-001..007` already existed in epic-04 — Goal D uses them; **subset commit** = E4-CSWeb-001 (provision) + E4-CSWeb-002 (install) this sprint; E4-CSWeb-003/005 + E3-F1-088 → S007. epic-03 **E3-F1-001 reopened** (prior `done` stale post-05-12 rebuild). epic-03/epic-04 edited 2026-05-18 to register E3-F3-001/E3-F4-001 + sync status.
-  - **Goal B reframed:** R3 *ran last week* (confirmed via `from-uat-round-3-2026-05` label + #302–#314 / #294 / #296 / #298). #271 stayed open as a tracking gap. Goal B = fix R3 findings + close #271 + reconcile, not "open + run".
-  - **Goal A broadened:** added E3-F3-001 + E3-F4-001 (F3/F4 FMF Designer passes) alongside E3-F1-001.
-  - **Translation:** confirmed S007 (full build next week); Myra Tagalog help ~weekend. Stretch dropped.
-  - **SJREB:** full-board 2nd week of June 2026 — informational only, out of DP scope.
-
-### 2026-05-19 (Tue) — Day 2: CAPI-translation email ingest → new 2026-06-12 PSA gate
-
-- CAPI-relevant 30-day email sweep (`clreyes6@up.edu.ph`) ingested 2 net-new translation threads. **New hard external constraint surfaced:** PSA will not clear the survey without the **CAPI app + 7 translated versions** bundled — internal deadline **2026-06-12** (Myra↔Carl call-firmed 05-13; Carl confirmed, quality held). **7 distinct languages** (Bisaya ≠ Cebuano). QC-finalization (not first-draft) is the binding predecessor; Bisaya Household + Ilocano-reviewer gaps are ASPSI-owned build-input risks (not Carl's to chase).
-- **Impact on this sprint: none to S006 sequencing.** The 7-language build is S007 (per the 05-18 meeting); this sharpens the S007 framing to a hard date and makes it the **S007 critical path to PSA clearance**, competing with the parked questionnaire-numbering work for the same window. S006 Goal A (F1/F3/F4 Designer passes) feeds it — clean FMF structure now de-risks the 06-12 path. Per quality-over-deadline, 06-12 is a sequencing constraint, not a reason to cut logic/Designer/validation.
-- Durable record: `wiki/concepts/CAPI Seven-Language Translation Build.md` + 2 source pages + memory `project_capi_translation_psa_deadline`. Mode C standup `scrum/standups/2026-05-19.md` written (replaced stale auto file).
-
-### 2026-05-21 (Thu) — Day 4: Goal C closed (E0-008 done, E0-009b closed-as-stale)
-
-- **E0-008 DONE** — root-caused the morning's 5-of-8 auto-standup: the `TASK_LINE` ID regex excluded lowercase, dropping `E0-009b`/`E4-CSWeb-001`/`E4-CSWeb-002`. Fixed + added the sprint roll-over `[!warning]` banner (the 05-18 "Day 8 of 5" failure now surfaces loudly) + "silence ≠ idle" no-activity note. 11 regression tests added (`.claude/scripts/tests/test_generate_standup.py`, all pass). 4th-deferral risk retired.
-- **E0-009b CLOSED as stale-premise** — verified against Project #8 + repo: `epic:*` labels already 95/98 on board issues; Project #8 has no `surface`/`severity` field to mirror. Real gap is 28 off-board open issues (R3 findings) — board curation, not a label mirror; rescope separately if pursued.
-- Mode C standup `scrum/standups/2026-05-21.md` regenerated (auto file had captured only 5 of 8 items — the exact bug E0-008 fixes).
-- **Goal C complete.** Remaining S006: Goal A (3 Designer passes) + Goal D (CSWeb VPS) — S007 carry by arithmetic; E6-PWA-007 closeable. Friday is Mode D close.
-
-## Definition of Done — Sprint 006
-
-- [ ] **E3-F1-001 / E3-F3-001 / E3-F4-001** closed: each instrument's `.fmf` saved + reviewed in CSPro Designer.
-- [ ] **E6-PWA-007** closed: R3 findings (#302–#314 + #294/#296/#298) triaged + fixed-or-dispositioned; #271 closed with linking comment; `from-uat-round-3-2026-05` issues reconciled; sprint board updated.
-- [x] **E0-008** closed 2026-05-21: roll-over branch + ID-regex fix live in `generate_standup.py`; verified against the 05-18 stale-standup scenario; 11 regression tests pass.
-- [x] **E0-009b** closed 2026-05-21 as stale-premise: `epic:*` labels already 95/98 on board issues; no `surface`/`severity` Project #8 field to mirror; real gap (28 off-board issues) rescoped out.
-- [ ] **E4-CSWeb-001** closed: VPS provisioned; CSWeb reachable over HTTPS (host/OS/network/TLS).
-- [ ] **E4-CSWeb-002** closed: CSWeb installed; admin account works; ready for per-survey upload (E4-CSWeb-003, S007).
-- [ ] *S007 carry (not S006 DoD): E4-CSWeb-003 app upload · E4-CSWeb-005 sync config · E3-F1-088 tablet-verify.*
-- [ ] **Sprint 006 retrospective** (4 questions) filled 2026-05-22; archived to `scrum/sprints/sprint-006.md`; `sprint-current.md` reset for Sprint 007.
-
-## Retrospective — Sprint 006
+## Retrospective — Sprint 007
 
 > 5-minute time-box. Four questions, fixed order. Written, not thought-through-only.
 
 ### 1. Did the sprint goal land? (yes / partial / no — one line why)
 
-_Auto-seed: 5 standup(s) filed of 5 sprint days. Review the week and answer: yes / partial / no — one line why. Overwrite this placeholder._
+_TBD_
 
 ### 2. What surprised me? (process, not work — max 3 bullets)
 
@@ -119,6 +70,6 @@ _TBD_
 
 _Informational only (out of Data Programmer scope per CSA D1–D6)._
 
-### 4. One thing to change in Sprint 007
+### 4. One thing to change in Sprint 008
 
 _TBD_
