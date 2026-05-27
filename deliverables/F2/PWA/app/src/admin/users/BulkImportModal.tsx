@@ -13,7 +13,7 @@
  * Required: username, password, role_name. Optional: first_name,
  * last_name, email, phone.
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { adminFetch } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
@@ -73,6 +73,14 @@ export function BulkImportModal({
   const [parseError, setParseError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [importResult, setImportResult] = useState<ImportResult | null>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && phase !== 'submitting') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose, phase]);
 
   const handleFile = async (file: File) => {
     setParseError(null);
@@ -139,8 +147,11 @@ export function BulkImportModal({
       role="dialog"
       aria-modal="true"
       aria-label="Bulk import users"
+      onClick={(e) => {
+        if (e.target === e.currentTarget && phase !== 'submitting') onClose();
+      }}
     >
-      <div className="w-full max-w-3xl border border-hairline bg-background p-6 shadow-lg">
+      <div className="flex max-h-[90vh] w-full max-w-3xl flex-col border border-hairline bg-background p-6 shadow-lg">
         <div className="flex items-start justify-between border-b border-hairline pb-3">
           <div>
             <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
@@ -159,6 +170,7 @@ export function BulkImportModal({
           </Button>
         </div>
 
+        <div className="-mx-6 flex-1 overflow-y-auto px-6">
         {phase === 'upload' ? (
           <div className="flex flex-col gap-4 pt-4">
             <p className="text-sm text-muted-foreground">
@@ -314,6 +326,7 @@ export function BulkImportModal({
             </div>
           </div>
         ) : null}
+        </div>
       </div>
     </div>
   );

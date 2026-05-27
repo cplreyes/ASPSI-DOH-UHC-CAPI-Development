@@ -108,6 +108,23 @@ export function RolesDashboard({ apiBaseUrl, fetchImpl }: RolesDashboardProps): 
       },
     );
     if (r.ok) {
+      // #344: optimistically drop the deleted role from the visible matrix
+      // so the row disappears immediately even if a downstream cache /
+      // service-worker layer briefly serves a stale roles list. The
+      // reloadTick refetch follows; if the server somehow still returns
+      // the role, the matrix repopulates with authoritative state.
+      setState((s) =>
+        s.kind === 'loaded'
+          ? {
+              kind: 'loaded',
+              data: {
+                ...s.data,
+                roles: s.data.roles.filter((r) => r.name !== name),
+                total: Math.max(0, s.data.total - 1),
+              },
+            }
+          : s,
+      );
       setReloadTick((n) => n + 1);
     } else if (r.error.code === 'E_CONFLICT') {
       window.alert('Cannot delete: this role is still assigned to one or more users.');
