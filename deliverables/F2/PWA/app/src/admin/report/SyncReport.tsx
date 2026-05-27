@@ -5,7 +5,7 @@
  * Spec: docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md (§7.7)
  *
  * Pivot table of submissions by geography level (region / province /
- * facility). Default region-level, last 7 days. Each row links to the
+ * facility). Default region-level, no date filter. Each row links to the
  * Data dashboard pre-filtered (free-text q on the geo key) so admins
  * can drill from a low-pacing region straight to the rows.
  *
@@ -45,20 +45,16 @@ interface UiFilters {
   to: string;
 }
 
-function defaultFromIso(): string {
-  return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-}
-
 function readFiltersFromUrl(): UiFilters {
   if (typeof window === 'undefined') {
-    return { level: 'region', from: defaultFromIso(), to: '' };
+    return { level: 'region', from: '', to: '' };
   }
   const p = new URLSearchParams(window.location.search);
   const lvlRaw = p.get('level');
   const lvl: Level = lvlRaw === 'province' || lvlRaw === 'facility' ? lvlRaw : 'region';
   return {
     level: lvl,
-    from: p.get('from') ?? defaultFromIso(),
+    from: p.get('from') ?? '',
     to: p.get('to') ?? '',
   };
 }

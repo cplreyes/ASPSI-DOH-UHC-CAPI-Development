@@ -100,17 +100,13 @@ const VERDE_MARKER_ICON_SELECTED = L.divIcon({
 // At very-zoomed-out views Carto falls back to the multilingual SCS stack,
 // which is acceptable for the rare case the user zooms beyond PH bounds.)
 
-function defaultFromIso(): string {
-  return new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-}
-
 function readFiltersFromUrl(): UiFilters {
   if (typeof window === 'undefined') {
-    return { from: defaultFromIso(), to: '', region_id: '' };
+    return { from: '', to: '', region_id: '' };
   }
   const p = new URLSearchParams(window.location.search);
   return {
-    from: p.get('from') ?? defaultFromIso(),
+    from: p.get('from') ?? '',
     to: p.get('to') ?? '',
     region_id: p.get('region_id') ?? '',
   };
