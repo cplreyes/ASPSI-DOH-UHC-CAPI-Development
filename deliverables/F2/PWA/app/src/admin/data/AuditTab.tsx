@@ -45,17 +45,13 @@ interface UiFilters {
   q: string;
 }
 
-function defaultFromIso(): string {
-  return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-}
-
 function readFiltersFromUrl(): UiFilters {
   if (typeof window === 'undefined') {
-    return { from: defaultFromIso(), to: '', event_type: '', actor_username: '', q: '' };
+    return { from: '', to: '', event_type: '', actor_username: '', q: '' };
   }
   const p = new URLSearchParams(window.location.search);
   return {
-    from: p.get('from') ?? defaultFromIso(),
+    from: p.get('from') ?? '',
     to: p.get('to') ?? '',
     event_type: p.get('event_type') ?? '',
     actor_username: p.get('actor_username') ?? '',

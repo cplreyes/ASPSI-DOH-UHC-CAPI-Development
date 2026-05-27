@@ -39,17 +39,13 @@ interface UiFilters {
   q: string;
 }
 
-function defaultFromIso(): string {
-  return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-}
-
 function readFiltersFromUrl(): UiFilters {
   if (typeof window === 'undefined') {
-    return { from: defaultFromIso(), to: '', q: '' };
+    return { from: '', to: '', q: '' };
   }
   const p = new URLSearchParams(window.location.search);
   return {
-    from: p.get('from') ?? defaultFromIso(),
+    from: p.get('from') ?? '',
     to: p.get('to') ?? '',
     q: p.get('q') ?? '',
   };
