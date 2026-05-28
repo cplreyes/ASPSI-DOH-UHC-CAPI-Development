@@ -447,6 +447,12 @@ const EXCLUSIVE_VALUES = new Set([
   'None',
   'None of the above',
   'None of the above are true',
+  // R3 #304 (Q52 BUCAS impact): standalone — cannot coexist with the
+  // positive-impact options. Per Myra 2026-05-21.
+  'No significant impact',
+  // R3 #312 (Q125 post-facility plans): selecting "Retire" clears the
+  // other plan options. Per Myra 2026-05-21.
+  'Retire',
 ]);
 
 // Multi-select option values that should auto-select all other non-exclusive

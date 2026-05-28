@@ -45,7 +45,7 @@ Each row in the response Sheet gets an auto-appended column `_qa_flags` containi
 
 | ID | Rule | Severity | Source fields | Action |
 |---|---|---|---|---|
-| **PROF-01** | Tenure years ≤ (age − 15) | warn | Q9.years, Q4 | flag `PROF-01` if Q9.years > Q4 − 15 |
+| **PROF-01** | Tenure years < (age − 20) | error | Q9.years, Q4 | `PROF-01` fires if Q9.years ≥ Q4 − 20. R3 #305/3b (Myra 2026-05-21): promoted from `warn` to `error` AND enforced as an **in-survey hard block** — the PWA Review screen disables Submit while this fires (`evaluateCrossField` severity `error` → blocking); threshold tightened age−15 → age−20. |
 | **PROF-02** | Role vs specialty consistency — only physicians and dentists have a medical specialty | warn | Q5, Q6 | flag if Q5 ∉ {Physician/Doctor, Dentist} AND Q6 ≠ "No specialty" |
 | **PROF-03** | Q11 hours/day full-time derivation | info | Q11 | derive `employment_class` = `full-time` if Q11 ≥ 8, `part-time` otherwise; write to `_derived_employment_class` column |
 | **PROF-04** | Q10 days/week × Q11 hours/day sanity | warn | Q10, Q11 | flag if Q10 × Q11 > 80 (weekly hours implausible) |

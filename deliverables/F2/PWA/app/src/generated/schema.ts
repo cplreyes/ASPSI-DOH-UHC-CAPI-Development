@@ -108,19 +108,19 @@ export const sectionCSchema = z.object({
   Q34: z.enum(['Yes', 'No', 'I don\'t know what PhilHealth YAKAP/Konsulta package accreditation is', 'Other (specify)']).optional(),
   Q34_other: z.string().optional(),
   Q35: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-  Q36: z.enum(['Predictable revenue due to capitation', 'YAKAP is more comprehensive', 'High volume of patients', 'Other (specify)']).optional(),
+  Q36: z.array(z.enum(['Predictable revenue due to capitation', 'YAKAP is more comprehensive', 'High volume of patients', 'Other (specify)'])).optional(),
   Q36_other: z.string().optional(),
   Q37: z.array(z.enum(['No time', 'Ongoing application', 'Other (specify)'])).optional(),
   Q37_other: z.string().optional(),
   Q38: z.enum(['Yes', 'No', 'Not a physician/dentist']).optional(),
-  Q39: z.array(z.enum(['Predictable revenue due to capitation', 'YAKAP is more comprehensive', 'High volume of patients', 'Other (specify)', 'Not a physician/dentist'])).optional(),
+  Q39: z.array(z.enum(['Predictable revenue due to capitation', 'YAKAP is more comprehensive', 'High volume of patients', 'Other (specify)'])).optional(),
   Q39_other: z.string().optional(),
   Q40: z.string().optional(),
 }).superRefine((data, ctx) => {
   if (data.Q34 === 'Other (specify)' && !(typeof data.Q34_other === 'string' && data.Q34_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q34_other'], message: 'Please specify' });
   }
-  if (data.Q36 === 'Other (specify)' && !(typeof data.Q36_other === 'string' && data.Q36_other.trim().length > 0)) {
+  if (Array.isArray(data.Q36) && data.Q36.includes('Other (specify)') && !(typeof data.Q36_other === 'string' && data.Q36_other.trim().length > 0)) {
     ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['Q36_other'], message: 'Please specify' });
   }
   if (Array.isArray(data.Q37) && data.Q37.includes('Other (specify)') && !(typeof data.Q37_other === 'string' && data.Q37_other.trim().length > 0)) {
@@ -143,7 +143,7 @@ export const sectionDSchema = z.object({
   Q45_other: z.string().optional(),
   Q46: z.array(z.enum(['Patient does not pay any hospital bill', 'PhilHealth will cover cost of treatment', 'Medicine and service are already included', 'No cash payment required upon discharge', 'Applies only to PhilHealth members and DOH-run hospitals', 'Bills are settled between the hospital and PhilHealth', 'Patients should not be charged extra fees', 'Applies only to PhilHealth members and any public hospital', 'Applies only to PhilHealth members and any public and private hospital', 'I don\'t know', 'Other (Specify)'])).optional(),
   Q46_other: z.string().optional(),
-  Q47: z.array(z.enum(['Lack/Insufficient medicines/supplies', 'Limited diagnostic services', 'High patient volume/workload', 'Documentation/compliance issues', 'ICT/system limitations', 'Patient-related concerns', 'Other (specify)'])).optional(),
+  Q47: z.array(z.enum(['Lack/Insufficient medicines/supplies', 'Limited diagnostic services', 'High patient volume/workload', 'Documentation/compliance issues', 'ICT/system limitations', 'Patient-related concerns', 'Other (specify)', 'None'])).optional(),
   Q47_other: z.string().optional(),
 }).superRefine((data, ctx) => {
   if (Array.isArray(data.Q42) && data.Q42.includes('Other (specify)') && !(typeof data.Q42_other === 'string' && data.Q42_other.trim().length > 0)) {
@@ -294,7 +294,7 @@ export const sectionJSchema = z.object({
   Q106: z.enum(['Strongly Agree', 'Agree', 'Neither Agree nor Disagree', 'Disagree', 'Strongly Disagree']),
   Q107: z.enum(['Strongly Agree', 'Agree', 'Neither Agree nor Disagree', 'Disagree', 'Strongly Disagree']),
   Q109: z.string().min(1),
-  Q110: z.array(z.enum(['Professional development opportunities', 'Better compensation policies', 'Better equipment / facilities', 'Other (specify)'])).min(1),
+  Q110: z.array(z.enum(['Professional development opportunities', 'Better compensation policies', 'Better equipment / facilities', 'Other (specify)', 'None'])).min(1),
   Q110_other: z.string().optional(),
   Q111: z.array(z.enum(['Seminars, conferences, workshops', 'Supervisory trainings', 'More training related to my job post', 'Other (specify)'])).min(1),
   Q111_other: z.string().optional(),

@@ -87,10 +87,13 @@ export function evaluateCrossField(values: FormValues): Warning[] {
 
   const age = typeof values.Q4 === 'number' ? values.Q4 : Number(values.Q4);
   const tenureYears = typeof values.Q9_1 === 'number' ? values.Q9_1 : Number(values.Q9_1);
-  if (Number.isFinite(age) && Number.isFinite(tenureYears) && tenureYears > age - 15) {
+  // R3 #305/3b (Myra 2026-05-21): promoted from a post-survey warn flag to an
+  // in-survey hard block, and the threshold tightened age−15 → age−20. Tenure
+  // must be strictly less than (age − 20); at-or-above blocks submission.
+  if (Number.isFinite(age) && Number.isFinite(tenureYears) && tenureYears >= age - 20) {
     out.push({
       id: 'PROF-01',
-      severity: 'warn',
+      severity: 'error',
       message: {
         key: 'crossField.tenureImplausible',
         values: { years: tenureYears, age },

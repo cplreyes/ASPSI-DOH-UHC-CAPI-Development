@@ -96,6 +96,9 @@ export function ReviewSection({ values, onEdit, onSubmit, mode = 'hcw' }: Review
   const { t } = useTranslation();
   const { locale } = useLocale();
   const warnings = useMemo(() => evaluateCrossField(values), [values]);
+  // R3 #305/3b: error-severity cross-field findings (e.g. PROF-01 tenure ≥
+  // age − 20) are hard blocks — submission is disabled until corrected.
+  const hasBlockingError = warnings.some((w) => w.severity === 'error');
 
   return (
     <div className="mx-auto flex max-w-xl flex-col gap-6 p-6">
@@ -181,9 +184,14 @@ export function ReviewSection({ values, onEdit, onSubmit, mode = 'hcw' }: Review
             {t('consent.gps_disclosure')}
           </p>
         ) : null}
-        <Button type="button" onClick={onSubmit}>
+        <Button type="button" onClick={onSubmit} disabled={hasBlockingError}>
           {t('review.submit')}
         </Button>
+        {hasBlockingError ? (
+          <p role="alert" className="text-xs text-destructive">
+            {t('review.blockingError')}
+          </p>
+        ) : null}
       </div>
     </div>
   );
