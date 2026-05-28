@@ -482,7 +482,7 @@ Every row below becomes one Apps Script `setGoToSectionBasedOnAnswer()` call in 
 | SEC-C6 | Q38 | Yes | SEC-C7 |
 | SEC-C6 | Q38 | No | SEC-C8 |
 | SEC-C6 | Q38 | Not physician/dentist | SEC-D1 |
-| SEC-C7 | — | — (Q39 "Not phys/dentist" answer option → SEC-D1; else unconditional) | SEC-D1 |
+| SEC-C7 | — | — (unconditional; R3 #309: Q39 "Not phys/dentist" option removed — was structurally unreachable since Q39 only shows when Q38 = Yes) | SEC-D1 |
 | SEC-C8 | — | — (unconditional) | SEC-D1 |
 | SEC-D1 | Q41 | Yes | SEC-D2 |
 | SEC-D1 | Q41 | No | SEC-D3 |

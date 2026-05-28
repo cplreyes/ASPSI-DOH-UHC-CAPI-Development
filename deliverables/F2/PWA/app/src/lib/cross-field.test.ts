@@ -17,9 +17,23 @@ describe('evaluateCrossField', () => {
     ]);
   });
 
-  it('flags PROF-01 when tenure exceeds age − 15', () => {
+  it('flags PROF-01 as an error when tenure is at or above age − 20 (R3 #305/3b)', () => {
+    // age 25, threshold age − 20 = 5; tenure 15 ≥ 5 → block.
     const out = evaluateCrossField({ Q4: 25, Q5: 'Nurse', Q9_1: 15 });
+    const prof01 = out.find((w) => w.id === 'PROF-01');
+    expect(prof01?.severity).toBe('error');
+  });
+
+  it('flags PROF-01 at the exact age − 20 boundary (inclusive block)', () => {
+    // age 40, threshold = 20; tenure exactly 20 → blocks (must be strictly <).
+    const out = evaluateCrossField({ Q4: 40, Q5: 'Nurse', Q9_1: 20 });
     expect(out.map((w) => w.id)).toContain('PROF-01');
+  });
+
+  it('does not flag PROF-01 when tenure is below age − 20', () => {
+    // age 40, threshold = 20; tenure 19 < 20 → clean.
+    const out = evaluateCrossField({ Q4: 40, Q5: 'Nurse', Q9_1: 19 });
+    expect(out.map((w) => w.id)).not.toContain('PROF-01');
   });
 
   it('flags PROF-02 when a non-doctor reports a specialty', () => {

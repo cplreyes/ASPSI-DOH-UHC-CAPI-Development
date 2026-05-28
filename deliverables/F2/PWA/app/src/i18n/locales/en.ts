@@ -81,6 +81,7 @@ export const en = {
     sectionHeading: 'Section {{id}} — {{title}}',
     edit: 'Edit',
     submit: 'Submit',
+    blockingError: 'Please resolve the highlighted issue above before submitting.',
   },
   consent: {
     gps_disclosure:
@@ -110,7 +111,7 @@ export const en = {
     syncFailedFallback: 'Sync failed',
   },
   crossField: {
-    tenureImplausible: 'Reported tenure ({{years}} years) is implausible for age {{age}}.',
+    tenureImplausible: 'Years of service ({{years}}) must be less than your age ({{age}}) minus 20. Please correct your tenure or age.',
     specialtyMismatch:
       'Role "{{role}}" does not normally carry a medical specialty ({{specialty}}).',
     employmentClassDerived: 'Derived employment class: {{employmentClass}}.',
