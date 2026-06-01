@@ -44,11 +44,17 @@ jobs:
         env:
           TITLE: ${{ github.event.milestone.title || inputs.milestone_title }}
         run: |
+          # #289: generate_release_notes.py writes the canonical CHANGELOG at
+          # deliverables/F2/PWA/app/CHANGELOG.md (NOT repo root). The commit step
+          # must stage that same path, or the generated entry is silently dropped
+          # (root CHANGELOG.md no longer changes → nothing committed). Surfaced on
+          # the v2.1.0 release (entry generated, never persisted).
+          CHANGELOG=deliverables/F2/PWA/app/CHANGELOG.md
           PACKAGE_JSON=deliverables/F2/PWA/app/package.json
-          if [ -n "$(git status --porcelain CHANGELOG.md $PACKAGE_JSON 2>/dev/null)" ]; then
+          if [ -n "$(git status --porcelain "$CHANGELOG" "$PACKAGE_JSON" 2>/dev/null)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add CHANGELOG.md $PACKAGE_JSON
+            git add "$CHANGELOG" "$PACKAGE_JSON"
             git commit -m "chore(release): $TITLE — sync CHANGELOG + version"
             git push
           else
