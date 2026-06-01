@@ -212,6 +212,7 @@ const SUPPORTED_TYPES: Record<string, ItemType> = {
   multi: 'multi',
   'multi + specify': 'multi',
   date: 'date',
+  'partial-date': 'partial-date',
   'short-text': 'short-text',
   'long-text': 'long-text',
   number: 'number',

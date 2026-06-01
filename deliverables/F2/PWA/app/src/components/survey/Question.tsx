@@ -42,7 +42,7 @@ export function Question({ item }: QuestionProps) {
   // pointed at item.id which had no matching element — broke screen-reader
   // announcement of the question text on each sub-input + tripped axe's
   // label-no-for + form-field-no-id rules. Closes #277.
-  const isCompound = item.type === 'multi-field';
+  const isCompound = item.type === 'multi-field' || item.type === 'partial-date';
   const Outer = isCompound ? 'fieldset' : 'div';
   const Heading = isCompound ? 'legend' : 'label';
   const headingProps = isCompound ? {} : { htmlFor: item.id };
@@ -110,7 +110,7 @@ function renderControl(
   errors: FieldErrors,
   visibleChoices?: Item['choices'],
   currentValue?: unknown,
-  onChange?: (next: string[]) => void,
+  onChange?: (next: string | string[]) => void,
 ) {
   // Use filtered choices if provided (e.g., A.Q6 specialty narrowed by Q5 role).
   const choices = visibleChoices ?? item.choices;
@@ -247,6 +247,97 @@ function renderControl(
           {...register(item.id)}
         />
       );
+    case 'partial-date': {
+      // One field, ISO-8601 variable precision: '' | 'YYYY' | 'YYYY-MM' |
+      // 'YYYY-MM-DD'. Year required; month + day each optional (blank = "Don't
+      // know"). Day enables only when month is set — ISO 8601 has no
+      // day-without-month, and it matches the approved year→month→day shape.
+      //
+      // Fully controlled (like `multi`): the field value is the composite
+      // string, driven via setValue (onChange). We bind only register()'s ref +
+      // onBlur to the year input (focus + touched tracking) and DON'T spread the
+      // full register() onto any sub-input, so RHF never re-derives the value
+      // from a single sub-input's DOM `.value`. R3 #306.
+      const raw = typeof currentValue === 'string' ? currentValue : '';
+      const [yPart = '', mPart = '', dPart = ''] = raw.split('-');
+      const reg = register(item.id);
+      const compose = (y: string, m: string, d: string): string => {
+        const yy = y.trim();
+        if (!yy) return '';
+        let out = yy;
+        const mm = m.trim();
+        if (mm) {
+          out += `-${mm.padStart(2, '0')}`;
+          const dd = d.trim();
+          if (dd) out += `-${dd.padStart(2, '0')}`;
+        }
+        return out;
+      };
+      const emit = (y: string, m: string, d: string) => onChange?.(compose(y, m, d));
+      const inputClass = 'rounded-md border border-input bg-background px-3 py-2';
+      // Display month/day without the storage zero-pad ('06' -> '6').
+      const show = (p: string) => (p ? String(Number(p)) : '');
+      return (
+        <div className="flex flex-col gap-1">
+          <div className="grid grid-cols-3 gap-2">
+            <div className="flex flex-col gap-1">
+              <label htmlFor={item.id} className="text-xs text-muted-foreground">
+                {t('question.partialDate.year')}
+                <span className="ml-1 text-destructive">*</span>
+              </label>
+              <input
+                id={item.id}
+                type="number"
+                inputMode="numeric"
+                onKeyDown={blockNonNumericKeys}
+                placeholder="YYYY"
+                value={yPart}
+                ref={reg.ref}
+                onBlur={reg.onBlur}
+                onChange={(e) => emit(e.target.value, mPart, dPart)}
+                className={inputClass}
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label htmlFor={`${item.id}_month`} className="text-xs text-muted-foreground">
+                {t('question.partialDate.month')}
+              </label>
+              <input
+                id={`${item.id}_month`}
+                type="number"
+                inputMode="numeric"
+                min={1}
+                max={12}
+                onKeyDown={blockNonNumericKeys}
+                placeholder={t('question.partialDate.optional')}
+                value={show(mPart)}
+                onChange={(e) => emit(yPart, e.target.value, dPart)}
+                className={inputClass}
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label htmlFor={`${item.id}_day`} className="text-xs text-muted-foreground">
+                {t('question.partialDate.day')}
+              </label>
+              <input
+                id={`${item.id}_day`}
+                type="number"
+                inputMode="numeric"
+                min={1}
+                max={31}
+                onKeyDown={blockNonNumericKeys}
+                placeholder={t('question.partialDate.optional')}
+                value={show(dPart)}
+                disabled={!mPart}
+                onChange={(e) => emit(yPart, mPart, e.target.value)}
+                className={inputClass}
+              />
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground">{t('question.partialDate.hint')}</p>
+        </div>
+      );
+    }
     case 'multi-field':
       return (
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">

@@ -194,6 +194,28 @@ describe('normalizeRow', () => {
     expect(result.unsupported).toBeUndefined();
   });
 
+  it('parses a partial-date row to type partial-date with help (#306)', () => {
+    const result = normalizeRow(
+      {
+        pdf_q: 'Q35',
+        legacy_q: 'Q31',
+        type: 'partial-date',
+        required: 'conditional',
+        label: 'Since when?',
+        choices: 'Year / Month / Day; help: "Year is required."',
+      },
+      'C',
+    );
+    expect(result.item).toMatchObject({
+      id: 'Q35',
+      section: 'C',
+      type: 'partial-date',
+      required: true,
+      help: dual('Year is required.'),
+    });
+    expect(result.unsupported).toBeUndefined();
+  });
+
   it('parses a single+specify row and marks hasOtherSpecify', () => {
     const result = normalizeRow(
       {
