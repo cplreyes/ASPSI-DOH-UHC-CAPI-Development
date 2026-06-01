@@ -143,6 +143,8 @@ function _adminHandlers() {
       admin_hcws_list: typeof adminHcwsList !== 'undefined' ? adminHcwsList : null,
       admin_hcws_create: typeof adminHcwsCreate !== 'undefined' ? adminHcwsCreate : null,
       admin_hcws_reissue_token: typeof adminHcwsReissueToken !== 'undefined' ? adminHcwsReissueToken : null,
+      admin_config_get: typeof adminConfigGet !== 'undefined' ? adminConfigGet : null,
+      admin_config_set: typeof adminConfigSet !== 'undefined' ? adminConfigSet : null,
     },
     // (payload, ctx) handlers
     needs_ctx: {

@@ -369,6 +369,13 @@ export async function handleChangeMyPassword(
     );
   }
 
+  // Invalidate all JWTs minted before this password change (#340).
+  // rbac.ts rejects tokens with iat < revokedAt; the fresh JWT minted
+  // below has iat > revokedAt and passes through.
+  const revokeTs = Math.floor(Date.now() / 1000);
+  const kvStore = env.F2_AUTH as unknown as LogoutKv;
+  await kvStore.put(`revoked_user:${username}`, String(revokeTs), { expirationTtl: JWT_TTL_SECONDS + 60 });
+
   const rolesResp = await rolesListFn();
   if (!rolesResp.ok || !rolesResp.data) {
     return errorJson('E_BACKEND', rolesResp.error?.message || 'Apps Script unavailable', 502);

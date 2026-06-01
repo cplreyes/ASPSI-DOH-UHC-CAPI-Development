@@ -15,9 +15,9 @@
  * editor modal because the surface is small (5 fields) and the row
  * count is bounded (one per instrument, ~3 expected).
  */
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { adminFetch, type ApiError } from '../lib/api-client';
+import { adminFetch, type AdminFetchOptions, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
 
@@ -75,6 +75,13 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
   const [formError, setFormError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
+  const authOpts = useCallback((): AdminFetchOptions => ({
+    ...(token ? { token } : {}),
+    onUnauthorized: () => { clearAuth(); navigate('/admin/login'); },
+    onPasswordChangeRequired: () => navigate('/admin/me/change-password'),
+    ...(fetchImpl ? { fetchImpl } : {}),
+  }), [token, clearAuth, navigate, fetchImpl]);
+
   useEffect(() => {
     let cancelled = false;
     setState({ kind: 'loading' });
@@ -100,18 +107,6 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
       cancelled = true;
     };
   }, [apiBaseUrl, token, reloadTick, clearAuth, navigate, fetchImpl]);
-
-  function authOpts() {
-    return {
-      ...(token ? { token } : {}),
-      onUnauthorized: () => {
-        clearAuth();
-        navigate('/admin/login');
-      },
-      onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
-      ...(fetchImpl ? { fetchImpl } : {}),
-    };
-  }
 
   async function handleSubmit(e: React.FormEvent): Promise<void> {
     e.preventDefault();
@@ -195,9 +190,13 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
   }
 
   return (
-    <section className="flex flex-col gap-3">
+    <section className="flex flex-col gap-6">
+      {/* Kill-switch section */}
+      <KillSwitchSection apiBaseUrl={apiBaseUrl} authOpts={authOpts} />
+
+      <div className="flex flex-col gap-3">
       <div className="flex items-baseline justify-between">
-        <h3 className="font-serif text-lg font-medium tracking-tight">Data Settings</h3>
+        <h3 className="font-serif text-lg font-medium tracking-tight">Scheduled Exports</h3>
         <Button
           type="button"
           variant="tableAction"
@@ -214,7 +213,7 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
       <p className="text-xs text-muted-foreground">
         Scheduled break-out exports of F2_Responses to R2 (CSV per facility, per region, etc). The
         Worker cron fires every 5 min and runs settings whose <code>next_run_at</code> has elapsed.
-        Use “Run now” to trigger out-of-band.
+        Use "Run now" to trigger out-of-band.
       </p>
 
       {form ? (
@@ -241,6 +240,7 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
           onRunNow={handleRunNow}
         />
       )}
+      </div>
     </section>
   );
 }
@@ -461,6 +461,164 @@ function ErrorBanner({ error }: { error: ApiError }): JSX.Element {
       {error.requestId ? (
         <p className="mt-1 font-mono text-xs text-muted-foreground">ref {error.requestId}</p>
       ) : null}
+    </div>
+  );
+}
+
+// ----- Kill-switch section ---------------------------------------------------
+
+type KillSwitchState =
+  | { kind: 'loading' }
+  | { kind: 'on' }
+  | { kind: 'off' }
+  | { kind: 'error'; message: string };
+
+function KillSwitchSection({
+  apiBaseUrl,
+  authOpts,
+}: {
+  apiBaseUrl: string;
+  authOpts: () => AdminFetchOptions;
+}): JSX.Element {
+  const [ks, setKs] = useState<KillSwitchState>({ kind: 'loading' });
+  const [toggling, setToggling] = useState(false);
+  const [confirmPending, setConfirmPending] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const r = await adminFetch<{ kill_switch: boolean }>(
+        `${apiBaseUrl}/admin/api/dashboards/apps/kill-switch`,
+        {},
+        authOpts(),
+      );
+      if (cancelled) return;
+      if (r.ok) setKs({ kind: r.data.kill_switch ? 'on' : 'off' });
+      else setKs({ kind: 'error', message: r.error.message || 'Failed to load kill-switch state.' });
+    })();
+    return () => { cancelled = true; };
+  }, [apiBaseUrl, authOpts]);
+
+  async function doToggle(newValue: boolean): Promise<void> {
+    setConfirmPending(null);
+    setToggling(true);
+    try {
+      const r = await adminFetch<{ kill_switch: boolean }>(
+        `${apiBaseUrl}/admin/api/dashboards/apps/kill-switch`,
+        { method: 'PATCH', body: JSON.stringify({ kill_switch: newValue }) },
+        authOpts(),
+      );
+      if (r.ok) setKs({ kind: r.data.kill_switch ? 'on' : 'off' });
+      else setKs({ kind: 'error', message: r.error.message || 'Toggle failed.' });
+    } finally {
+      setToggling(false);
+    }
+  }
+
+  const isOn = ks.kind === 'on';
+
+  return (
+    <div className="flex flex-col gap-3 border-b border-hairline pb-5">
+      <div className="flex items-baseline justify-between">
+        <h3 className="font-serif text-lg font-medium tracking-tight">Data Settings</h3>
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-4">
+          <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground w-24">
+            Kill switch
+          </span>
+          {ks.kind === 'loading' ? (
+            <span className="text-sm text-muted-foreground">Loading...</span>
+          ) : ks.kind === 'error' ? (
+            <span className="text-sm text-error">{ks.message}</span>
+          ) : (
+            <>
+              <span
+                className={`font-mono text-xs font-medium ${isOn ? 'text-error' : 'text-muted-foreground'}`}
+              >
+                {isOn ? 'ON — submissions blocked' : 'OFF — submissions open'}
+              </span>
+              <Button
+                type="button"
+                variant="tableAction"
+                size="tableAction"
+                disabled={toggling}
+                onClick={() => setConfirmPending(!isOn)}
+                className={
+                  isOn
+                    ? 'text-muted-foreground no-underline hover:text-foreground hover:no-underline'
+                    : 'text-error no-underline hover:text-error/80 hover:no-underline'
+                }
+              >
+                {toggling ? 'Saving...' : isOn ? 'Turn OFF' : 'Turn ON'}
+              </Button>
+            </>
+          )}
+        </div>
+        <p className="text-xs text-muted-foreground">
+          When ON, the HCW PWA shows a "submissions temporarily paused" banner and the Worker rejects
+          all submit requests server-side. Use to pause data collection during maintenance windows or
+          incidents. Propagates within ~30 s on the next Worker config refresh.
+        </p>
+      </div>
+
+      {confirmPending !== null ? (
+        <KillSwitchConfirmModal
+          turningOn={confirmPending}
+          onConfirm={() => void doToggle(confirmPending)}
+          onCancel={() => setConfirmPending(null)}
+        />
+      ) : null}
+    </div>
+  );
+}
+
+function KillSwitchConfirmModal({
+  turningOn,
+  onConfirm,
+  onCancel,
+}: {
+  turningOn: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
+}): JSX.Element {
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ks-confirm-title"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6"
+    >
+      <div className="max-w-sm w-full border border-border bg-background p-5 flex flex-col gap-4">
+        <h4 id="ks-confirm-title" className="font-serif text-base font-medium tracking-tight">
+          {turningOn ? 'Turn kill switch ON?' : 'Turn kill switch OFF?'}
+        </h4>
+        <p className="text-sm text-muted-foreground">
+          {turningOn
+            ? 'This will immediately block all HCW survey submissions and show a maintenance banner in the PWA. Confirm only during a planned maintenance window or incident.'
+            : 'This will re-open HCW survey submissions. Respondents will be able to submit again within ~30 seconds.'}
+        </p>
+        <div className="flex gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onConfirm}
+            className={`border-foreground px-3 py-1 font-mono text-xs uppercase tracking-wider hover:bg-foreground hover:text-background ${turningOn ? 'hover:bg-error hover:text-white border-error text-error' : ''}`}
+          >
+            {turningOn ? 'Yes, block submissions' : 'Yes, re-open submissions'}
+          </Button>
+          <Button
+            type="button"
+            variant="tableAction"
+            size="tableAction"
+            onClick={onCancel}
+            className="text-muted-foreground no-underline hover:text-foreground hover:no-underline"
+          >
+            Cancel
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

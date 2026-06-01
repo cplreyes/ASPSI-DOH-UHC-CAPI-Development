@@ -242,5 +242,52 @@ if (typeof module !== 'undefined') {
     adminSettingsRunNow: adminSettingsRunNow,
     _validateInterval: _validateInterval,
     _validateOutputTemplate: _validateOutputTemplate,
+    adminConfigGet: adminConfigGet,
+    adminConfigSet: adminConfigSet,
   };
+}
+
+// ----- Admin F2_Config read/write (kill-switch, broadcast, spec versions) ----
+
+function _configSheet() {
+  var ss = getF2Spreadsheet();
+  var sh = ss.getSheetByName(TABS.CONFIG);
+  if (!sh) throw new Error('F2_Config sheet not found - run runAllMigrations() first');
+  return sh;
+}
+
+/**
+ * Return all rows from F2_Config as a flat { key: value } object.
+ * Values are raw strings; coercion (bool/number) happens client-side.
+ */
+function adminConfigGet() {
+  var sh = _configSheet();
+  var data = sh.getDataRange().getValues();
+  var config = {};
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    if (row[0]) config[String(row[0])] = String(row[1]);
+  }
+  return { ok: true, data: { config: config } };
+}
+
+/**
+ * Set a single key in F2_Config. Only updates existing rows — no new rows
+ * are created (schema is fixed at setup time via F2_CONFIG_DEFAULTS).
+ */
+function adminConfigSet(payload) {
+  if (!payload || typeof payload.key !== 'string' || payload.value === undefined) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'key and value are required' } };
+  }
+  var key = payload.key;
+  var value = String(payload.value);
+  var sh = _configSheet();
+  var data = sh.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][0]) === key) {
+      sh.getRange(i + 1, 2).setValue(value);
+      return { ok: true, data: { key: key, value: value } };
+    }
+  }
+  return { ok: false, error: { code: 'E_NOT_FOUND', message: 'Config key not found: ' + key } };
 }
