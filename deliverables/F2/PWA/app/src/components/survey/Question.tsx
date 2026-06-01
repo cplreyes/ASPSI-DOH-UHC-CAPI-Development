@@ -334,7 +334,6 @@ function renderControl(
               />
             </div>
           </div>
-          <p className="text-xs text-muted-foreground">{t('question.partialDate.hint')}</p>
         </div>
       );
     }
