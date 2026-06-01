@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { LocaleProvider } from '@/i18n/locale-context';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
 // The switcher renders one button per READY locale (LOCALE_META.ready in
-// src/i18n/index.ts). Today the ready set is en + fil (Tagalog); dialects whose
-// translations aren't wired yet (ceb/bis/ilo/hil/war/bcl) never appear, so a
-// respondent is never shown a language that would render as English.
+// src/i18n/index.ts). All 8 locales (English + the 7 PSA-target PH languages) are
+// wired from ASPSI's questionnaire docs, so all 8 appear. A locale set to ready:false
+// would be omitted — covered by the LOCALE_META unit guarantees rather than a button.
 describe('<LanguageSwitcher>', () => {
   beforeEach(() => {
     localStorage.clear();
@@ -17,24 +17,28 @@ describe('<LanguageSwitcher>', () => {
     localStorage.clear();
   });
 
-  it('renders a button per ready locale (EN + FIL today)', () => {
+  it('renders a button per ready locale (EN + the 7 PH languages)', () => {
     render(
       <LocaleProvider>
         <LanguageSwitcher />
       </LocaleProvider>,
     );
-    expect(screen.getByRole('button', { name: /english/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /filipino/i })).toBeInTheDocument();
+    for (const name of [/english/i, /filipino/i, /cebuano/i, /bisaya/i, /ilocano/i, /hiligaynon/i, /waray/i, /bikol/i]) {
+      expect(screen.getByRole('button', { name })).toBeInTheDocument();
+    }
   });
 
-  it('does not render a not-ready locale (e.g. Cebuano, Waray)', () => {
+  it('only renders locales flagged ready in LOCALE_META', () => {
     render(
       <LocaleProvider>
         <LanguageSwitcher />
       </LocaleProvider>,
     );
-    expect(screen.queryByRole('button', { name: /cebuano/i })).not.toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /waray/i })).not.toBeInTheDocument();
+    // Switcher is driven by READY_LOCALES; with all 8 ready it shows 8 buttons
+    // (each LOCALE_META entry is ready:true today). The group exposes exactly those.
+    const group = screen.getByRole('group');
+    const buttons = within(group).getAllByRole('button');
+    expect(buttons).toHaveLength(8);
   });
 
   it('clicking FIL persists fil to localStorage', async () => {
