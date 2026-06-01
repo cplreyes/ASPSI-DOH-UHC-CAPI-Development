@@ -192,6 +192,51 @@ describe('<Question>', () => {
     expect(input).toHaveAttribute('type', 'date');
   });
 
+  // R3 #306: Q35 "Since when?" — year required; month + day each optional
+  // ("Don't know" = blank), stored as one ISO-8601 variable-precision string.
+  it('composes a partial-date into one ISO string; day enables only after month (#306)', async () => {
+    const user = userEvent.setup();
+    const item: Item = {
+      id: 'Q35',
+      section: 'C',
+      type: 'partial-date',
+      required: true,
+      conditional: true,
+      label: dual('Since when?'),
+    };
+    function PartialHarness() {
+      const methods = useForm();
+      const v = methods.watch('Q35');
+      return (
+        <FormProvider {...methods}>
+          <form>
+            <Question item={item} />
+          </form>
+          <output data-testid="q35val">{typeof v === 'string' ? v : ''}</output>
+        </FormProvider>
+      );
+    }
+    renderWithProviders(<PartialHarness />);
+
+    const year = screen.getByLabelText(/year/i);
+    const month = screen.getByLabelText(/month/i);
+    const day = screen.getByLabelText(/day/i);
+    const val = () => screen.getByTestId('q35val').textContent;
+
+    // Day is disabled until a month is entered (ISO 8601 has no day-without-month).
+    expect(day).toBeDisabled();
+
+    await user.type(year, '2019');
+    expect(val()).toBe('2019'); // year only
+
+    await user.type(month, '6');
+    expect(val()).toBe('2019-06'); // zero-padded, year + month
+    expect(day).toBeEnabled();
+
+    await user.type(day, '15');
+    expect(val()).toBe('2019-06-15'); // full date
+  });
+
   it('renders multi-field as one input per subField, labelled', () => {
     const item: Item = {
       id: 'Q1',

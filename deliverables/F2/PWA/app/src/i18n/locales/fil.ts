@@ -78,6 +78,13 @@ export const fil: EnBundle = {
     pleaseSpecifyLabel: 'Please specify',
     pleaseSpecifyError: 'Please specify',
     selectAllThatApply: 'Select all that apply.',
+    partialDate: {
+      year: 'Year',
+      month: 'Month',
+      day: 'Day',
+      optional: 'Optional',
+      hint: "Year is required. Leave month or day blank if you don't recall them.",
+    },
   },
   review: {
     heading: 'Review your answers',

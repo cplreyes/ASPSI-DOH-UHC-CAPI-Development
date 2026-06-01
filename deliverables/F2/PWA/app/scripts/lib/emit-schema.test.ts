@@ -261,6 +261,34 @@ describe('emitSchema', () => {
     expect(out).toContain('Q31: z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/).optional()');
   });
 
+  it('emits an ISO variable-precision schema for partial-date items (#306)', () => {
+    const result: ParseResult = {
+      sections: [
+        {
+          id: 'C',
+          title: dual('C'),
+          items: [
+            { id: 'Q35', section: 'C', type: 'partial-date', required: false, label: dual('Since when?') },
+          ],
+        },
+      ],
+      unsupported: [],
+    };
+    const out = emitSchema(result);
+    expect(out).toContain('Q35: z.string().regex(/^\\d{4}(-\\d{2}(-\\d{2})?)?$/');
+    expect(out).toContain('.optional()');
+
+    // Lock the variable-precision semantics the regex enforces.
+    const re = /^\d{4}(-\d{2}(-\d{2})?)?$/;
+    expect(re.test('2019')).toBe(true); // year only
+    expect(re.test('2019-06')).toBe(true); // year + month
+    expect(re.test('2019-06-15')).toBe(true); // full date
+    expect(re.test('2019-6')).toBe(false); // month must be zero-padded
+    expect(re.test('2019--15')).toBe(false); // no day-without-month
+    expect(re.test('06-2019')).toBe(false); // not reversed
+    expect(re.test('')).toBe(false); // empty rejected (year required once present)
+  });
+
   it('flattens multi-field items into per-subfield schema entries', () => {
     const result: ParseResult = {
       sections: [

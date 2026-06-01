@@ -136,6 +136,14 @@ function fieldSchema(item: Item): string {
       const base = String.raw`z.string().regex(/^\d{4}-\d{2}-\d{2}$/)`;
       return optional ? `${base}.optional()` : base;
     }
+    // ISO-8601 variable precision: 'YYYY' | 'YYYY-MM' | 'YYYY-MM-DD'. Year is
+    // always required (the leading \d{4}); month + day each optional. Month/day
+    // RANGE is constrained by the UI (number inputs 1–12 / 1–31), same trust
+    // model as `date` above (whose regex also doesn't range-check). R3 #306.
+    case 'partial-date': {
+      const base = String.raw`z.string().regex(/^\d{4}(-\d{2}(-\d{2})?)?$/, 'Enter the year (4 digits). Month and day are optional.')`;
+      return optional ? `${base}.optional()` : base;
+    }
     case 'multi-field':
       throw new Error(
         `multi-field items must be handled in emitFieldEntries, not fieldSchema (item ${item.id})`,

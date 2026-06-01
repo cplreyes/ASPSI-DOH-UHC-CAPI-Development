@@ -107,7 +107,7 @@ export const sectionCSchema = z.object({
   Q33: z.enum(['It is possible to register individual patients to YAKAP/Konsulta', 'It is possible to register whole families to YAKAP/Konsulta', 'It is possible to register both individual patients and their family members together to YAKAP/Konsulta', 'None of the above are true', 'I don\'t know']).optional(),
   Q34: z.enum(['Yes', 'No', 'I don\'t know what PhilHealth YAKAP/Konsulta package accreditation is', 'Other (specify)']).optional(),
   Q34_other: z.string().optional(),
-  Q35: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  Q35: z.string().regex(/^\d{4}(-\d{2}(-\d{2})?)?$/, 'Enter the year (4 digits). Month and day are optional.').optional(),
   Q36: z.array(z.enum(['Predictable revenue due to capitation', 'YAKAP is more comprehensive', 'High volume of patients', 'Other (specify)'])).optional(),
   Q36_other: z.string().optional(),
   Q37: z.array(z.enum(['No time', 'Ongoing application', 'Other (specify)'])).optional(),

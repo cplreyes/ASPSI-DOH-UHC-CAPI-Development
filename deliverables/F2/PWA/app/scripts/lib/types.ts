@@ -10,6 +10,9 @@ export type ItemType =
   | 'single'
   | 'multi'
   | 'date'
+  // One field, ISO-8601 variable precision ('YYYY' | 'YYYY-MM' | 'YYYY-MM-DD').
+  // Year required; month + day each optional ("Don't know" = blank). R3 #306.
+  | 'partial-date'
   | 'multi-field';
 
 export interface Choice {
