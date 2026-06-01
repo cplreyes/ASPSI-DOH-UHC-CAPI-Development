@@ -79,7 +79,6 @@ export const en = {
       month: 'Month',
       day: 'Day',
       optional: 'Optional',
-      hint: "Year is required. Leave month or day blank if you don't recall them.",
     },
   },
   review: {

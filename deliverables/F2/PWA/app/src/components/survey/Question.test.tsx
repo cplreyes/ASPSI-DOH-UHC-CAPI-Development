@@ -203,6 +203,7 @@ describe('<Question>', () => {
       required: true,
       conditional: true,
       label: dual('Since when?'),
+      help: dual("Year is required. Leave month or day blank if you don't recall them."),
     };
     function PartialHarness() {
       const methods = useForm();
@@ -222,6 +223,11 @@ describe('<Question>', () => {
     const month = screen.getByLabelText(/month/i);
     const day = screen.getByLabelText(/day/i);
     const val = () => screen.getByTestId('q35val').textContent;
+
+    // The guidance comes from the spec-driven item.help only — it must render
+    // exactly once (regression guard: a chrome `partialDate.hint` line used to
+    // duplicate it under the inputs).
+    expect(screen.getAllByText(/leave month or day blank/i)).toHaveLength(1);
 
     // Day is disabled until a month is entered (ISO 8601 has no day-without-month).
     expect(day).toBeDisabled();
