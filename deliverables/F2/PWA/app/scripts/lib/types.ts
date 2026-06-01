@@ -1,6 +1,15 @@
+// English is the source and is always present. Each dialect is optional —
+// missing keys fall back to `en` at render time (see src/i18n/localized.ts).
+// Dialect strings are populated by the generator from spec/translations/{locale}.json.
 export interface LocalizedString {
   en: string;
-  fil: string;
+  fil?: string; // Tagalog
+  ceb?: string; // Cebuano
+  bis?: string; // Bisaya
+  ilo?: string; // Ilocano
+  hil?: string; // Hiligaynon (pending ASPSI)
+  war?: string; // Waray (pending ASPSI)
+  bcl?: string; // Bikol/Bicolano (pending ASPSI)
 }
 
 export type ItemType =

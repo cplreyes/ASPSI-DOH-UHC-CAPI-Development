@@ -21,4 +21,15 @@ describe('localized()', () => {
     const partial = { en: 'Hello' } as unknown as LocalizedString;
     expect(localized(partial, 'fil')).toBe('Hello');
   });
+
+  it('resolves a dialect locale (ceb) when present', () => {
+    const multi: LocalizedString = { en: 'Yes', fil: 'Oo', ceb: 'Oo', ilo: 'Wen' };
+    expect(localized(multi, 'ceb')).toBe('Oo');
+    expect(localized(multi, 'ilo')).toBe('Wen');
+  });
+
+  it('falls back to en for a locale with no translation (e.g. pending war)', () => {
+    const multi: LocalizedString = { en: 'Submit', fil: 'Isumite' };
+    expect(localized(multi, 'war')).toBe('Submit');
+  });
 });

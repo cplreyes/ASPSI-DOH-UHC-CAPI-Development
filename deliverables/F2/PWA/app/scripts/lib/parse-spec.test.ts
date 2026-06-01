@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { splitSections, parseTableRows, normalizeRow, parseSpec } from './parse-spec';
 
-const dual = (en: string) => ({ en, fil: en });
+// parseSpec() is English-only; dialect translations are layered on later by
+// apply-translations.ts. So a parsed LocalizedString is just `{ en }`.
+const dual = (en: string) => ({ en });
 
 describe('splitSections', () => {
   it('extracts section headers and bodies', () => {

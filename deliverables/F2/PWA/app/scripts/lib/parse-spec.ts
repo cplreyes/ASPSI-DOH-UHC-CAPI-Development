@@ -46,8 +46,12 @@ function loadConditionalItemKeys(): Set<string> {
 
 const CONDITIONAL_KEYS_FROM_SKIP_LOGIC = loadConditionalItemKeys();
 
+// The parser is intentionally English-only and deterministic: every localizable
+// string starts as `{ en }`. Dialect translations are layered on afterward by a
+// separate pass (apply-translations.ts) that `generate.ts` composes, so the
+// parser's behavior never depends on which translation files happen to be on disk.
 function dual(en: string): LocalizedString {
-  return { en, fil: en };
+  return { en };
 }
 
 // Spec uses `Y` (always required), `conditional` (required when shown via skip-logic),
