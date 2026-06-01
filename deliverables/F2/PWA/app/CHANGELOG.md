@@ -6,6 +6,53 @@ All notable changes to the F2 Healthcare Worker Survey PWA (HCW Survey side + Ad
 
 ---
 
+## v2.1.0 — R3 fix wave + Q35 partial-date + AS auto-deploy (2026-06-01)
+
+### Fixed
+- Roles Section ([#344](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/344))
+- Filtering by Dates ([#343](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/343))
+- ADMIN PORTAL 5B.1.H2 | ([#330](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/330))
+- 5B.1 — Concurrent multi-admin actions ([#329](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/329))
+- ADMIN PORTAL 5A.19 v2.0.1 | User-self password rotation ([#328](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/328))
+- 5B.5 — Audit log completeness ([#327](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/327))
+- ADMIN PORTAL 5A.17 v2.0.1 | Users — last_login_at write ([#326](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/326))
+- ADMIN PORTAL 5A.16 v2.0.1 | JWT password_must_change ([#325](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/325))
+- 5B.3 — Cross-tab session ([#321](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/321))
+- 5B.3.H1 (5B.3 — Cross-tab session) ([#320](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/320))
+- ADMIN PORTAL 5A.11 | RBAC + persona switching ([#319](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/319))
+- ADMIN PORTAL 5A.10 | Users dashboard — expanded rejected-rows panel has no close/scroll affordance ([#318](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/318))
+- ADMIN PORTAL 5A.10 | Users dashboard ([#317](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/317))
+- ADMIN PORTAL 5A.8 | Apps & Settings — Data Settings sub-tab ([#316](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/316))
+- ADMIN PORTAL 5A.7 | Apps & Settings — Files sub-tab ([#315](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/315))
+- **[HIGH]** Cannot see the responses in matrix (Job Satisfaction) when editing ([#314](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/314))
+- Putting note for the respondents: "Multiple response allowed" ([#313](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/313))
+- Section J Q110 - option for "None" ([#311](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/311))
+- Section D Q47 - option for "None" ([#310](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/310))
+- Section C Q38 in relation to Q34 ([#308](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/308))
+- Section E Q52 - option 'No significant impact' ([#304](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/304))
+- **[HIGH]** [F2 PWA UAT R3] Section B Q13 to Q24: can proceed to next section even if no specification of "reasons" ([#302](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/302))
+- [F2 PWA UAT R3] Section A Q11 - answer with decimal ([#301](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/301))
+- [F2 PWA UAT R3] R2-#110 Section A Q9 ([#300](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/300))
+- [F2 PWA UAT R3] Section E - Q52 options ([#299](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/299))
+- **[HIGH]** Section E1/E2 issues (BUCAS / GAMOT awareness) ([#298](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/298))
+- 5.A4 Data — DLQ sub-tab ([#297](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/297))
+- **[HIGH]** 5.A2 - Round 3 (R2 + v2.0.1 Fix Regression) ([#296](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/296))
+
+### Improved
+- Section C Q35 - code for 'Don't Know' or 'Can't recall' ([#306](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/306))
+
+### Other
+- Password Interface ([#331](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/331))
+- Section A Q11 - answer with decimal ([#303](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/303))
+- **[CRITICAL]** [P0][E4-PWA-014] AS deploy gap blocks v2.0.1 admin features (admin_users_change_password, bulk_import, etc.) ([#294](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/294))
+- [E4-PWA-013] uat-release-notes workflow writes CHANGELOG.md to repo root, not deliverables/F2/PWA/app/ ([#289](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/289))
+- [E3-F2-ADMIN-A11Y-002] MapReport: Leaflet markers not keyboard-focusable / no SR announcement ([#287](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/287))
+- [E3-F2-ADMIN-CLEAN-001] MapReport: rename local Marker interface to MarkerData (shadows imported Marker component) ([#286](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/286))
+- [E3-F2-PWA-A11Y-002] Modal overlays (KillSwitch, SpecDrift) lack focus trap + don't disable form ([#284](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/284))
+- [E6-PWA-007] UAT Round 3 — R2 + v2.0.1 regression + new-scenarios bundle (HCW survey + Admin Portal, on prod v2.0.0+v2.0.1) ([#271](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/271))
+- [E0-008] Auto-standup retro-injection — extend `.claude/scripts/generate_standup.py` to read prior sprint's R ([#241](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/241))
+- [E3-F1-PHASE2-PLAN] Phase 2 plan + scope confirmation (PLF + F3 + F4_listing + F4 + supervisor menu + EA fence + daily audit Slack) ([#135](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/135))
+
 ## [2.0.2] — 2026-05-12
 
 Nine PRs merged + verified on production 2026-05-12 (Sprint 005 Day 2 — R3 prep + v2.0.2 quality slate, plus the CHANGELOG/release-notes alignment pass that bumped this version). All changes are live at `f2-pwa.pages.dev`.
