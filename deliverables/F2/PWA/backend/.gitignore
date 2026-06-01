@@ -1,3 +1,7 @@
 node_modules
 dist
 .secrets
+# clasp auth + project config — generated from CI secrets, never committed
+# (see .github/workflows/as-deploy.yml). Local clasp users: same rule.
+.clasp.json
+.clasprc.json
