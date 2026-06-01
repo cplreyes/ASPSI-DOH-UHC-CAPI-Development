@@ -32,6 +32,8 @@ import {
   handleSyncReport,
   handleMapReport,
   handleVersion,
+  handleKillSwitchGet,
+  handleKillSwitchSet,
   type ListFilters,
   type ListResponsesData,
   type ResponseRow,
@@ -46,6 +48,8 @@ import {
   type MapReportFilters,
   type MapReportData,
   type FormRevisionsData,
+  type KillSwitchGetAsCallable,
+  type KillSwitchSetAsCallable,
 } from './handlers/data';
 import {
   handleReissueToken,
@@ -132,6 +136,7 @@ const SETTINGS_LIST_RE = /^\/admin\/api\/dashboards\/apps\/data-settings\/?$/;
 const SETTINGS_BY_ID_RE = /^\/admin\/api\/dashboards\/apps\/data-settings\/([A-Za-z0-9_\-]+)\/?$/;
 const SETTINGS_RUN_NOW_RE = /^\/admin\/api\/dashboards\/apps\/data-settings\/([A-Za-z0-9_\-]+)\/run-now\/?$/;
 const APPS_QUOTA_RE = /^\/admin\/api\/dashboards\/apps\/quota\/?$/;
+const KILL_SWITCH_RE = /^\/admin\/api\/dashboards\/apps\/kill-switch\/?$/;
 
 /**
  * Build RbacOpts that's stable for one request. Most rbac-protected handlers
@@ -754,6 +759,42 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
     };
     const r = await handleVersion(versionEnv, asCall);
     return withRequestId(r, requestId);
+  }
+
+  // Kill-switch toggle — GET reads current state, PATCH sets it.
+  // Both require dash_apps and emit an audit row.
+  if (KILL_SWITCH_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    if (req.method === 'GET') {
+      const asCall: KillSwitchGetAsCallable = () =>
+        callAppsScript<{ config: Record<string, string> }>(
+          env.APPS_SCRIPT_URL,
+          env.APPS_SCRIPT_HMAC,
+          'admin_config_get',
+          {},
+          requestId,
+          env.F2_AUTH,
+        );
+      const r = await handleKillSwitchGet(asCall);
+      return withRequestId(r, requestId);
+    }
+    if (req.method === 'PATCH') {
+      const asCall: KillSwitchSetAsCallable = (payload) =>
+        callAppsScript<{ key: string; value: string }>(
+          env.APPS_SCRIPT_URL,
+          env.APPS_SCRIPT_HMAC,
+          'admin_config_set',
+          payload,
+          requestId,
+          env.F2_AUTH,
+        );
+      const r = await handleKillSwitchSet(req, asCall);
+      auditMutation(auditFn, r, auth, ipHash, 'admin_kill_switch_set', 'kill_switch');
+      return withRequestId(r, requestId);
+    }
   }
 
   if (req.method === 'GET' && REPORT_MAP_RE.test(url.pathname)) {

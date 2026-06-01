@@ -499,3 +499,50 @@ export async function handleVersion(
   };
   return jsonResponse(body, 200);
 }
+
+// ----- Kill-switch config (E4-APRT 5B.4.H1/H2, #322) -----------------------
+
+export interface KillSwitchData {
+  kill_switch: boolean;
+}
+
+export type KillSwitchGetAsCallable = () => Promise<AppsScriptResponse<{ config: Record<string, string> }>>;
+export type KillSwitchSetAsCallable = (
+  payload: { key: string; value: string },
+) => Promise<AppsScriptResponse<{ key: string; value: string }>>;
+
+export async function handleKillSwitchGet(
+  asCallable: KillSwitchGetAsCallable,
+): Promise<Response> {
+  const r = await asCallable();
+  if (!r.ok || !r.data) {
+    return jsonResponse(
+      { ok: false, error: r.error ?? { code: 'E_BACKEND', message: 'Apps Script unavailable' } },
+      502,
+    );
+  }
+  const kill_switch = r.data.config['kill_switch'] === 'true';
+  return jsonResponse({ ok: true, data: { kill_switch } satisfies KillSwitchData }, 200);
+}
+
+export async function handleKillSwitchSet(
+  req: Request,
+  asCallable: KillSwitchSetAsCallable,
+): Promise<Response> {
+  const body = (await req.json().catch(() => ({}))) as { kill_switch?: unknown };
+  if (typeof body.kill_switch !== 'boolean') {
+    return jsonResponse(
+      { ok: false, error: { code: 'E_VALIDATION', message: 'kill_switch must be a boolean' } },
+      400,
+    );
+  }
+  const value = body.kill_switch ? 'true' : 'false';
+  const r = await asCallable({ key: 'kill_switch', value });
+  if (!r.ok) {
+    return jsonResponse(
+      { ok: false, error: r.error ?? { code: 'E_BACKEND', message: 'Apps Script unavailable' } },
+      502,
+    );
+  }
+  return jsonResponse({ ok: true, data: { kill_switch: body.kill_switch } satisfies KillSwitchData }, 200);
+}
