@@ -1,4 +1,4 @@
-import type { Item, ParseResult, Section } from './types';
+import type { Item, LocalizedString, ParseResult, Section } from './types';
 
 export function emitItems(result: ParseResult): string {
   const header = [
@@ -87,6 +87,13 @@ function quote(s: string): string {
   return `'${s.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
 }
 
-function quoteLocalized(s: { en: string; fil: string }): string {
-  return `{ en: ${quote(s.en)}, fil: ${quote(s.fil)} }`;
+// Serialize a LocalizedString, emitting only the locale keys that are present
+// (English is always present; dialects appear only when a translation exists).
+// Fixed key order keeps generated output stable/diffable across runs.
+const LOCALE_KEY_ORDER = ['en', 'fil', 'ceb', 'bis', 'ilo', 'hil', 'war', 'bcl'] as const;
+function quoteLocalized(s: LocalizedString): string {
+  const parts = LOCALE_KEY_ORDER.filter((k) => typeof s[k] === 'string').map(
+    (k) => `${k}: ${quote(s[k] as string)}`,
+  );
+  return `{ ${parts.join(', ')} }`;
 }

@@ -1,31 +1,23 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { LocaleProvider } from '@/i18n/locale-context';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
+// The switcher renders one button per READY locale (LOCALE_META.ready in
+// src/i18n/index.ts). Today the ready set is en + fil (Tagalog); dialects whose
+// translations aren't wired yet (ceb/bis/ilo/hil/war/bcl) never appear, so a
+// respondent is never shown a language that would render as English.
 describe('<LanguageSwitcher>', () => {
   beforeEach(() => {
     localStorage.clear();
-    vi.stubEnv('VITE_FIL_READY', 'true');
   });
 
   afterEach(() => {
-    vi.unstubAllEnvs();
+    localStorage.clear();
   });
 
-  it('renders nothing when VITE_FIL_READY is unset (Filipino translations not ready)', () => {
-    vi.stubEnv('VITE_FIL_READY', '');
-    const { container } = render(
-      <LocaleProvider>
-        <LanguageSwitcher />
-      </LocaleProvider>,
-    );
-    expect(container.firstChild).toBeNull();
-    expect(screen.queryByRole('button', { name: /filipino/i })).not.toBeInTheDocument();
-  });
-
-  it('renders both EN and FIL buttons', () => {
+  it('renders a button per ready locale (EN + FIL today)', () => {
     render(
       <LocaleProvider>
         <LanguageSwitcher />
@@ -33,6 +25,16 @@ describe('<LanguageSwitcher>', () => {
     );
     expect(screen.getByRole('button', { name: /english/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /filipino/i })).toBeInTheDocument();
+  });
+
+  it('does not render a not-ready locale (e.g. Cebuano, Waray)', () => {
+    render(
+      <LocaleProvider>
+        <LanguageSwitcher />
+      </LocaleProvider>,
+    );
+    expect(screen.queryByRole('button', { name: /cebuano/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /waray/i })).not.toBeInTheDocument();
   });
 
   it('clicking FIL persists fil to localStorage', async () => {

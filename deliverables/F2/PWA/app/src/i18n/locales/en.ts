@@ -130,4 +130,14 @@ export const en = {
   },
 } as const;
 
-export type EnBundle = typeof en;
+// Widen the `as const` literal types to plain `string` at every leaf while
+// preserving the exact key structure. Translated bundles (fil.ts, ceb.ts, …) are
+// typed `: EnBundle`, so this still makes a missing or extra key a compile error,
+// but it lets a locale supply a *different* string value than English (the whole
+// point of a translation). Without this widening, `typeof en` would force every
+// translated value to equal the English literal.
+type Translatable<T> = {
+  [K in keyof T]: T[K] extends string ? string : Translatable<T[K]>;
+};
+
+export type EnBundle = Translatable<typeof en>;

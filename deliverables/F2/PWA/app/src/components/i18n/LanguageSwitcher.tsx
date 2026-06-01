@@ -1,18 +1,22 @@
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/i18n/locale-context';
+import { READY_LOCALES, LOCALE_META } from '@/i18n';
 
-// Hide the switcher until ASPSI delivers real Filipino translations.
-// fil.ts ships placeholder-equal-to-English values, so toggling FIL today
-// changes nothing visible to the user — exposing the button reads as broken.
-// Flip VITE_FIL_READY=true once the fil bundle has real strings.
+// Renders one button per READY locale — those with delivered + wired translations
+// (see LOCALE_META in src/i18n/index.ts). A locale's button appears only once its
+// spec/translations/{locale}.json and chrome bundle are populated and its `ready`
+// flag is flipped, so the control never shows a language that would render as
+// English. Hidden entirely when English is the only ready locale.
 export function LanguageSwitcher() {
   const { t } = useTranslation();
   const { locale, setLocale } = useLocale();
 
-  if (import.meta.env.VITE_FIL_READY !== 'true') {
+  if (READY_LOCALES.length <= 1) {
     return null;
   }
+
+  const activeNative = LOCALE_META[locale]?.native ?? LOCALE_META.en.native;
 
   return (
     <div
@@ -21,33 +25,24 @@ export function LanguageSwitcher() {
       aria-label={t('language.label')}
       data-testid="language-switcher"
     >
-      <Button
-        size="sm"
-        variant={locale === 'en' ? 'default' : 'outline'}
-        aria-pressed={locale === 'en'}
-        aria-label={t('language.en')}
-        onClick={() => setLocale('en')}
-        className={locale === 'en' ? 'font-bold ring-2 ring-primary/40' : ''}
-      >
-        EN
-      </Button>
-      <Button
-        size="sm"
-        variant={locale === 'fil' ? 'default' : 'outline'}
-        aria-pressed={locale === 'fil'}
-        aria-label={t('language.fil')}
-        onClick={() => setLocale('fil')}
-        className={locale === 'fil' ? 'font-bold ring-2 ring-primary/40' : ''}
-      >
-        FIL
-      </Button>
-      <span
-        role="status"
-        aria-live="polite"
-        className="sr-only"
-        data-testid="active-locale"
-      >
-        {locale === 'en' ? t('language.en') : t('language.fil')}
+      {READY_LOCALES.map((loc) => {
+        const active = locale === loc;
+        return (
+          <Button
+            key={loc}
+            size="sm"
+            variant={active ? 'default' : 'outline'}
+            aria-pressed={active}
+            aria-label={LOCALE_META[loc].native}
+            onClick={() => setLocale(loc)}
+            className={active ? 'font-bold ring-2 ring-primary/40' : ''}
+          >
+            {loc === 'fil' ? 'FIL' : loc.toUpperCase()}
+          </Button>
+        );
+      })}
+      <span role="status" aria-live="polite" className="sr-only" data-testid="active-locale">
+        {activeNative}
       </span>
     </div>
   );
