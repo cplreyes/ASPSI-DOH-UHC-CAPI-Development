@@ -46,7 +46,8 @@ function migrateAddAdminSheets() {
       name: 'F2_FileMeta',
       headers: [
         'file_id', 'filename', 'content_type', 'size_bytes',
-        'uploaded_by', 'uploaded_at', 'description', 'deleted_at'
+        'uploaded_by', 'uploaded_at', 'description', 'deleted_at',
+        'folder_path', 'is_folder'
       ]
     },
     {
@@ -120,17 +121,43 @@ function migrateExtendF2AuditColumns() {
 }
 
 /**
- * Top-level orchestrator. Runs all three migrations and logs the result.
+ * Append the 2 folder columns to F2_FileMeta if missing (#174).
+ *   folder_path (default '/'), is_folder (default false/blank)
+ *
+ * Pre-existing file rows read these as blank; AdminFiles._coalesceFolderPath
+ * treats blank folder_path as root, so legacy files stay visible at root with
+ * no backfill required.
+ */
+function migrateExtendF2FileMetaColumns() {
+  var ss = getF2Spreadsheet();
+  var sh = ss.getSheetByName('F2_FileMeta');
+  if (!sh) throw new Error('F2_FileMeta sheet not found');
+  var headers = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+  var newCols = ['folder_path', 'is_folder'];
+  var added = [];
+  for (var i = 0; i < newCols.length; i++) {
+    var col = newCols[i];
+    if (headers.indexOf(col) !== -1) continue;
+    sh.getRange(1, sh.getLastColumn() + 1).setValue(col).setFontWeight('bold');
+    added.push(col);
+  }
+  return { added: added };
+}
+
+/**
+ * Top-level orchestrator. Runs all migrations and logs the result.
  * Run this once per environment (staging, then production at cutover).
  */
 function runAllMigrations() {
   var r1 = migrateAddAdminSheets();
   var r2 = migrateExtendF2ResponsesColumns();
   var r3 = migrateExtendF2AuditColumns();
+  var r4 = migrateExtendF2FileMetaColumns();
   var summary = {
     adminSheets: r1,
     responses: r2,
-    audit: r3
+    audit: r3,
+    fileMeta: r4
   };
   console.log('Migrations complete: ' + JSON.stringify(summary));
   return summary;

@@ -9,9 +9,9 @@
  * soft-delete. Allowlist + size cap mirror the worker; we re-validate
  * client-side to give immediate feedback before paying the round trip.
  */
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { adminFetch, type ApiError } from '../lib/api-client';
+import { adminFetch, type AdminFetchOptions, type ApiError } from '../lib/api-client';
 import { useAdminAuth } from '../lib/auth-context';
 import { useRouter } from '../lib/pages-router';
 
@@ -35,6 +35,10 @@ interface FileRow {
   uploaded_at: string;
   description?: string;
   deleted_at?: string;
+  // #174 folders: is_folder marks a virtual folder row; folder_path is the
+  // container it lives in ('/' = root).
+  is_folder?: boolean;
+  folder_path?: string;
 }
 
 interface ListFilesData {
@@ -67,22 +71,34 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  // #174: current virtual-folder path. '' = root; '/<name>' = inside a folder.
+  const [path, setPath] = useState('');
+  const [folderForm, setFolderForm] = useState<string | null>(null); // null = closed
+  const [folderError, setFolderError] = useState<string | null>(null);
+  const [creatingFolder, setCreatingFolder] = useState(false);
+
+  // #175: inline rename — at most one row editable at a time.
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editValue, setEditValue] = useState('');
+  const [renaming, setRenaming] = useState(false);
+
+  // DRY auth options — call sites grew from 3 to ~6 with rename + folders.
+  const authOpts = useCallback((): AdminFetchOptions => ({
+    ...(token ? { token } : {}),
+    onUnauthorized: () => { clearAuth(); navigate('/admin/login'); },
+    onPasswordChangeRequired: () => navigate('/admin/me/change-password'),
+    ...(fetchImpl ? { fetchImpl } : {}),
+  }), [token, clearAuth, navigate, fetchImpl]);
+
   useEffect(() => {
     let cancelled = false;
     setState({ kind: 'loading' });
     void (async () => {
+      const qs = path ? `?path=${encodeURIComponent(path)}` : '';
       const r = await adminFetch<ListFilesData>(
-        `${apiBaseUrl}/admin/api/dashboards/apps/files`,
+        `${apiBaseUrl}/admin/api/dashboards/apps/files${qs}`,
         {},
-        {
-          ...(token ? { token } : {}),
-          onUnauthorized: () => {
-            clearAuth();
-            navigate('/admin/login');
-          },
-          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
-          ...(fetchImpl ? { fetchImpl } : {}),
-        },
+        authOpts(),
       );
       if (cancelled) return;
       if (r.ok) setState({ kind: 'loaded', data: r.data });
@@ -91,7 +107,7 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
     return () => {
       cancelled = true;
     };
-  }, [apiBaseUrl, token, reloadTick, clearAuth, navigate, fetchImpl]);
+  }, [apiBaseUrl, reloadTick, path, authOpts]);
 
   async function handleUpload(file: File): Promise<void> {
     setUploadError(null);
@@ -109,18 +125,12 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
     try {
       const form = new FormData();
       form.append('file', file);
+      // #174: land the file in the open folder (omit at root).
+      if (path) form.append('path', path);
       const r = await adminFetch<UploadResponse>(
         `${apiBaseUrl}/admin/api/dashboards/apps/files`,
         { method: 'POST', body: form },
-        {
-          ...(token ? { token } : {}),
-          onUnauthorized: () => {
-            clearAuth();
-            navigate('/admin/login');
-          },
-          onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
-          ...(fetchImpl ? { fetchImpl } : {}),
-        },
+        authOpts(),
       );
       if (r.ok) {
         setReloadTick((n) => n + 1);
@@ -138,18 +148,84 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
     const r = await adminFetch<undefined>(
       `${apiBaseUrl}/admin/api/dashboards/apps/files/${encodeURIComponent(row.file_id)}`,
       { method: 'DELETE' },
-      {
-        ...(token ? { token } : {}),
-        onUnauthorized: () => {
-          clearAuth();
-          navigate('/admin/login');
-        },
-        onPasswordChangeRequired: () => navigate("/admin/me/change-password"),
-        ...(fetchImpl ? { fetchImpl } : {}),
-      },
+      authOpts(),
     );
     if (r.ok) setReloadTick((n) => n + 1);
     else window.alert(friendlyError(r.error, 'Delete failed.'));
+  }
+
+  // #174: create a folder (flat 1-level — always at root).
+  async function handleCreateFolder(e: React.FormEvent): Promise<void> {
+    e.preventDefault();
+    const name = (folderForm ?? '').trim();
+    setFolderError(null);
+    if (!name) {
+      setFolderError('Folder name required.');
+      return;
+    }
+    if (name.includes('/') || name.includes('\\') || name.includes('..')) {
+      setFolderError('Folder names cannot contain slashes or "..".');
+      return;
+    }
+    setCreatingFolder(true);
+    try {
+      const r = await adminFetch<{ folder: FileRow }>(
+        `${apiBaseUrl}/admin/api/dashboards/apps/files/folders`,
+        { method: 'POST', body: JSON.stringify({ name }) },
+        authOpts(),
+      );
+      if (r.ok) {
+        setFolderForm(null);
+        setReloadTick((n) => n + 1);
+      } else {
+        setFolderError(friendlyError(r.error, 'Create folder failed.'));
+      }
+    } finally {
+      setCreatingFolder(false);
+    }
+  }
+
+  // #175: inline rename.
+  function startRename(row: FileRow): void {
+    setEditingId(row.file_id);
+    setEditValue(row.filename);
+  }
+  function cancelRename(): void {
+    setEditingId(null);
+    setEditValue('');
+  }
+  async function commitRename(row: FileRow): Promise<void> {
+    const next = editValue.trim();
+    if (!next || next === row.filename) {
+      cancelRename();
+      return;
+    }
+    setRenaming(true);
+    try {
+      const r = await adminFetch<{ file: FileRow }>(
+        `${apiBaseUrl}/admin/api/dashboards/apps/files/${encodeURIComponent(row.file_id)}`,
+        { method: 'PATCH', body: JSON.stringify({ filename: next }) },
+        authOpts(),
+      );
+      if (r.ok) {
+        cancelRename();
+        setReloadTick((n) => n + 1);
+      } else {
+        window.alert(friendlyError(r.error, 'Rename failed.'));
+      }
+    } finally {
+      setRenaming(false);
+    }
+  }
+
+  function openFolder(row: FileRow): void {
+    // The folder's child container path is '/' + its display name.
+    cancelRename();
+    setPath(`/${row.filename}`);
+  }
+  function goToRoot(): void {
+    cancelRename();
+    setPath('');
   }
 
   function downloadUrl(fileId: string): string {
@@ -210,14 +286,44 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
     }
   }
 
+  const atRoot = path === '';
+
   return (
     <section className="flex flex-col gap-3">
       <div className="flex items-baseline justify-between">
         <h3 className="font-serif text-lg font-medium tracking-tight">Files</h3>
-        <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-          PDF / ZIP / PNG / JPEG / GIF, up to {formatBytes(MAX_FILE_BYTES)}
-        </p>
+        <div className="flex items-baseline gap-4">
+          {atRoot ? (
+            <Button
+              type="button"
+              variant="tableAction"
+              size="tableAction"
+              onClick={() => {
+                setFolderForm(folderForm === null ? '' : null);
+                setFolderError(null);
+              }}
+              className="text-muted-foreground no-underline hover:text-foreground hover:no-underline"
+            >
+              {folderForm === null ? '+ New folder' : 'Cancel'}
+            </Button>
+          ) : null}
+          <p className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+            PDF / ZIP / PNG / JPEG / GIF, up to {formatBytes(MAX_FILE_BYTES)}
+          </p>
+        </div>
       </div>
+
+      <Breadcrumb path={path} onRoot={goToRoot} />
+
+      {folderForm !== null ? (
+        <FolderForm
+          value={folderForm}
+          creating={creatingFolder}
+          error={folderError}
+          onChange={setFolderForm}
+          onSubmit={handleCreateFolder}
+        />
+      ) : null}
 
       <UploadRow
         uploading={uploading}
@@ -231,16 +337,102 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
       ) : state.kind === 'failed' ? (
         <ErrorBanner error={state.error} />
       ) : state.data.files.length === 0 ? (
-        <EmptyState />
+        <EmptyState atRoot={atRoot} />
       ) : (
         <FilesTable
           rows={state.data.files}
           onDownload={handleDownload}
           downloadingId={downloadingId}
           onDelete={handleDelete}
+          onOpenFolder={openFolder}
+          editingId={editingId}
+          editValue={editValue}
+          renaming={renaming}
+          onStartRename={startRename}
+          onRenameChange={setEditValue}
+          onCommitRename={commitRename}
+          onCancelRename={cancelRename}
         />
       )}
     </section>
+  );
+}
+
+function Breadcrumb({ path, onRoot }: { path: string; onRoot: () => void }): JSX.Element {
+  const inFolder = path !== '';
+  const folderName = inFolder ? path.replace(/^\//, '') : '';
+  return (
+    <nav
+      aria-label="Folder path"
+      className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground"
+    >
+      <button
+        type="button"
+        onClick={onRoot}
+        disabled={!inFolder}
+        className={
+          inFolder
+            ? 'underline decoration-hairline underline-offset-4 hover:decoration-foreground'
+            : 'cursor-default'
+        }
+      >
+        Files
+      </button>
+      {inFolder ? (
+        <>
+          <span aria-hidden="true">/</span>
+          <span className="text-foreground">{folderName}</span>
+        </>
+      ) : null}
+    </nav>
+  );
+}
+
+function FolderForm({
+  value,
+  creating,
+  error,
+  onChange,
+  onSubmit,
+}: {
+  value: string;
+  creating: boolean;
+  error: string | null;
+  onChange: (v: string) => void;
+  onSubmit: (e: React.FormEvent) => void | Promise<void>;
+}): JSX.Element {
+  return (
+    <form onSubmit={onSubmit} className="flex flex-col gap-2 border-l-2 border-hairline pl-4">
+      <label className="flex flex-col gap-1">
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          Folder name
+        </span>
+        <input
+          type="text"
+          autoFocus
+          value={value}
+          disabled={creating}
+          onChange={(e) => onChange(e.target.value)}
+          className="border-b border-hairline bg-transparent px-1 py-0.5 font-mono text-xs"
+          aria-label="New folder name"
+        />
+      </label>
+      {error ? (
+        <p role="alert" className="text-sm text-error">
+          {error}
+        </p>
+      ) : null}
+      <div className="flex gap-3">
+        <Button
+          type="submit"
+          variant="outline"
+          disabled={creating}
+          className="border-foreground px-3 py-1 font-mono text-xs uppercase tracking-wider hover:bg-foreground hover:text-background disabled:opacity-50"
+        >
+          {creating ? 'Creating…' : 'Create'}
+        </Button>
+      </div>
+    </form>
   );
 }
 
@@ -343,12 +535,31 @@ function FilesTable({
   onDownload,
   downloadingId,
   onDelete,
+  onOpenFolder,
+  editingId,
+  editValue,
+  renaming,
+  onStartRename,
+  onRenameChange,
+  onCommitRename,
+  onCancelRename,
 }: {
   rows: FileRow[];
   onDownload: (row: FileRow) => void | Promise<void>;
   downloadingId: string | null;
   onDelete: (row: FileRow) => void | Promise<void>;
+  onOpenFolder: (row: FileRow) => void;
+  editingId: string | null;
+  editValue: string;
+  renaming: boolean;
+  onStartRename: (row: FileRow) => void;
+  onRenameChange: (v: string) => void;
+  onCommitRename: (row: FileRow) => void | Promise<void>;
+  onCancelRename: () => void;
 }): JSX.Element {
+  // #174: folders render first (a directory-listing convention), then files.
+  const folders = rows.filter((r) => r.is_folder);
+  const files = rows.filter((r) => !r.is_folder);
   return (
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
@@ -363,41 +574,106 @@ function FilesTable({
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">
-          {rows.map((r) => (
-            <tr key={r.file_id}>
+          {folders.map((r) => (
+            <tr key={r.file_id} className="hover:bg-secondary/20">
               <Td>
-                {/* #315: download goes through handleDownload (authenticated
-                    blob fetch). A plain <a href> cannot send the in-memory
-                    admin JWT, so the bare GET 401'd and the error JSON was
-                    saved as the "file". This button is the action trigger. */}
                 <button
                   type="button"
-                  onClick={() => void onDownload(r)}
-                  disabled={downloadingId === r.file_id}
-                  className="text-left underline decoration-hairline underline-offset-4 hover:decoration-foreground disabled:cursor-not-allowed disabled:opacity-60"
+                  onClick={() => onOpenFolder(r)}
+                  className="flex items-center gap-2 text-left hover:text-foreground"
                 >
-                  {r.filename}
-                </button>
-                {downloadingId === r.file_id ? (
-                  <span className="ml-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-                    Downloading…
+                  <span aria-hidden="true" className="font-mono text-muted-foreground">
+                    [dir]
                   </span>
-                ) : null}
+                  <span className="underline decoration-hairline underline-offset-4 hover:decoration-foreground">
+                    {r.filename}
+                  </span>
+                </button>
+              </Td>
+              <Td mono>folder</Td>
+              <Td mono>—</Td>
+              <Td mono>{r.uploaded_by}</Td>
+              <Td mono>{formatTs(r.uploaded_at)}</Td>
+              <Td>{''}</Td>
+            </tr>
+          ))}
+          {files.map((r) => (
+            <tr key={r.file_id}>
+              <Td>
+                {editingId === r.file_id ? (
+                  // #175: inline rename — Enter commits, Esc/blur cancels.
+                  <input
+                    autoFocus
+                    type="text"
+                    value={editValue}
+                    disabled={renaming}
+                    onChange={(e) => onRenameChange(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        void onCommitRename(r);
+                      }
+                      if (e.key === 'Escape') {
+                        e.preventDefault();
+                        onCancelRename();
+                      }
+                    }}
+                    onBlur={() => {
+                      // Click-away cancels, but the disable-on-commit transition
+                      // also fires blur — don't cancel mid-PATCH (renaming=true).
+                      if (!renaming) onCancelRename();
+                    }}
+                    className="w-full border-b border-hairline bg-transparent px-1 py-0.5 font-mono text-xs"
+                    aria-label={`Rename ${r.filename}`}
+                  />
+                ) : (
+                  <>
+                    {/* #315: download goes through handleDownload (authenticated
+                        blob fetch). A plain <a href> cannot send the in-memory
+                        admin JWT, so the bare GET 401'd and the error JSON was
+                        saved as the "file". This button is the action trigger. */}
+                    <button
+                      type="button"
+                      onClick={() => void onDownload(r)}
+                      disabled={downloadingId === r.file_id}
+                      className="text-left underline decoration-hairline underline-offset-4 hover:decoration-foreground disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {r.filename}
+                    </button>
+                    {downloadingId === r.file_id ? (
+                      <span className="ml-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                        Downloading…
+                      </span>
+                    ) : null}
+                  </>
+                )}
               </Td>
               <Td mono>{r.content_type}</Td>
               <Td mono>{formatBytes(r.size_bytes)}</Td>
               <Td mono>{r.uploaded_by}</Td>
               <Td mono>{formatTs(r.uploaded_at)}</Td>
               <Td>
-                <Button
-                  type="button"
-                  variant="tableAction"
-                  size="tableAction"
-                  onClick={() => void onDelete(r)}
-                  className="text-muted-foreground no-underline hover:text-error hover:no-underline"
-                >
-                  Delete
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant="tableAction"
+                    size="tableAction"
+                    disabled={editingId === r.file_id}
+                    onClick={() => onStartRename(r)}
+                    className="text-muted-foreground no-underline hover:text-foreground hover:no-underline disabled:opacity-40"
+                  >
+                    Rename
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="tableAction"
+                    size="tableAction"
+                    onClick={() => void onDelete(r)}
+                    className="text-muted-foreground no-underline hover:text-error hover:no-underline"
+                  >
+                    Delete
+                  </Button>
+                </div>
               </Td>
             </tr>
           ))}
@@ -407,12 +683,13 @@ function FilesTable({
   );
 }
 
-function EmptyState(): JSX.Element {
+function EmptyState({ atRoot }: { atRoot: boolean }): JSX.Element {
   return (
     <div className="border border-hairline bg-secondary/20 px-4 py-4">
       <p className="text-sm text-muted-foreground">
-        No files uploaded yet. Reference documents (PDF protocols, training packets, ZIP exports)
-        live here. Uploads are streamed to R2 with the original filename preserved on download.
+        {atRoot
+          ? 'No files uploaded yet. Reference documents (PDF protocols, training packets, ZIP exports) live here. Uploads are streamed to R2 with the original filename preserved on download.'
+          : 'This folder is empty. Drop a file above to add it here.'}
       </p>
     </div>
   );
@@ -458,6 +735,7 @@ function friendlyError(err: ApiError, fallback: string): string {
     return 'Backend unavailable - Apps Script staging may be unreachable.';
   if (err.code === 'E_NOT_CONFIGURED')
     return 'File storage is not configured for this environment. Files require R2 to be enabled.';
+  if (err.code === 'E_CONFLICT') return err.message || 'A folder with that name already exists.';
   return err.message || fallback;
 }
 

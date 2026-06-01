@@ -524,4 +524,103 @@ describe('adminRouter', () => {
       fetchSpy.mockRestore();
     }
   });
+
+  // ---- Files: rename (#175) + create folder (#174) ----
+
+  it('routes PATCH /apps/files/:id to admin_files_rename (filename → new_name) under dash_apps', async () => {
+    const env = makeEnv(makeKv());
+    // Distinct role name — the module-level roleCache is keyed by name, so
+    // reusing 'Administrator' would hit a stale cached entry from an earlier
+    // test that granted it different perms (and 403 on the dash_apps check).
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, { sub: 'apps-mgr', role: 'AppsManager', role_version: 1 });
+    const calls: Array<{ action: string; payload: unknown }> = [];
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => {
+      const body = JSON.parse((init as RequestInit).body as string) as { action: string; payload: unknown };
+      calls.push({ action: body.action, payload: body.payload });
+      if (body.action === 'admin_roles_list') {
+        return new Response(JSON.stringify({
+          ok: true, data: { roles: [{ name: 'AppsManager', version: 1, dash_apps: true }] },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_files_rename') {
+        return new Response(JSON.stringify({
+          ok: true, data: { file: { file_id: 'f-1', filename: 'renamed.pdf' } },
+        }), { status: 200 });
+      }
+      return new Response('{}', { status: 500 });
+    });
+    try {
+      const req = new Request('https://x/admin/api/dashboards/apps/files/f-1', {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${tok}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: 'renamed.pdf' }),
+      });
+      const r = await adminRouter(req, env);
+      expect(r!.status).toBe(200);
+      const renameCall = calls.find((c) => c.action === 'admin_files_rename');
+      expect(renameCall).toBeDefined();
+      // The worker forwards client {filename} to AS {new_name} — and must NOT
+      // fall through to admin_files_delete.
+      expect(renameCall!.payload).toEqual({ file_id: 'f-1', new_name: 'renamed.pdf' });
+      expect(calls.some((c) => c.action === 'admin_files_delete')).toBe(false);
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
+  it('routes POST /apps/files/folders to admin_files_create_folder (not captured as a file_id)', async () => {
+    const env = makeEnv(makeKv());
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, { sub: 'apps-mgr', role: 'AppsManager', role_version: 1 });
+    const calls: Array<{ action: string; payload: unknown }> = [];
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async (_url, init) => {
+      const body = JSON.parse((init as RequestInit).body as string) as { action: string; payload: unknown };
+      calls.push({ action: body.action, payload: body.payload });
+      if (body.action === 'admin_roles_list') {
+        return new Response(JSON.stringify({
+          ok: true, data: { roles: [{ name: 'AppsManager', version: 1, dash_apps: true }] },
+        }), { status: 200 });
+      }
+      if (body.action === 'admin_files_create_folder') {
+        return new Response(JSON.stringify({
+          ok: true, data: { folder: { file_id: 'd-1', filename: 'protocols', is_folder: true, folder_path: '/' } },
+        }), { status: 200 });
+      }
+      return new Response('{}', { status: 500 });
+    });
+    try {
+      const req = new Request('https://x/admin/api/dashboards/apps/files/folders', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${tok}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: 'protocols' }),
+      });
+      const r = await adminRouter(req, env);
+      expect(r!.status).toBe(201);
+      const folderCall = calls.find((c) => c.action === 'admin_files_create_folder');
+      expect(folderCall).toBeDefined();
+      expect(folderCall!.payload).toEqual({ name: 'protocols', created_by: 'apps-mgr' });
+      // Must NOT have been captured as a by-id download/get.
+      expect(calls.some((c) => c.action === 'admin_files_get')).toBe(false);
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
+
+  it('rejects PATCH /apps/files/:id without dash_apps with 403', async () => {
+    const env = makeEnv(makeKv());
+    const tok = await mintAdminJwt(env.JWT_SIGNING_KEY, { sub: 'newbie', role: 'NoAccess', role_version: 1 });
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(async () =>
+      new Response(JSON.stringify({ ok: true, data: { roles: [{ name: 'NoAccess', version: 1 }] } }), { status: 200 }),
+    );
+    try {
+      const req = new Request('https://x/admin/api/dashboards/apps/files/f-1', {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${tok}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: 'x.pdf' }),
+      });
+      const r = await adminRouter(req, env);
+      expect(r!.status).toBe(403);
+    } finally {
+      fetchSpy.mockRestore();
+    }
+  });
 });
