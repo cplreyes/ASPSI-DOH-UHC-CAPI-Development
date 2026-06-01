@@ -2,9 +2,12 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { en } from './locales/en';
 import { fil } from './locales/fil';
-// Chrome bundles for ceb/bis/ilo are added here once their translations land and
-// LOCALE_META flips them to ready. Until then only en + fil chrome are registered;
-// the Locale type below still spans all 8 so survey content stays well-typed.
+import { ceb } from './locales/ceb';
+import { bis } from './locales/bis';
+import { ilo } from './locales/ilo';
+import { hil } from './locales/hil';
+import { war } from './locales/war';
+import { bcl } from './locales/bcl';
 
 // Full locale universe: English (source) + the 7 PSA-target Philippine languages.
 // The Locale TYPE spans all 8 so survey content — which may carry any of them in
@@ -15,21 +18,19 @@ import { fil } from './locales/fil';
 export const SUPPORTED_LOCALES = ['en', 'fil', 'ceb', 'bis', 'ilo', 'hil', 'war', 'bcl'] as const;
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
-// Display name (native) + readiness per locale. `ready` gates switcher visibility:
-// flip a dialect to true once its spec/translations/{locale}.json is populated and
-// its chrome bundle is wired. hil/war/bcl await ASPSI delivery (no Drive folders yet).
+// Display name (native) + readiness per locale. All 7 PSA-target languages are wired
+// from ASPSI's v2.1/v2.1.1 questionnaire docs (spec/translations/{locale}.json + chrome
+// bundles). Survey-content coverage varies 74–95%; untranslated strings fall back to
+// English at render time. `ready` gates switcher visibility.
 export const LOCALE_META: Record<Locale, { native: string; ready: boolean }> = {
   en: { native: 'English', ready: true },
-  fil: { native: 'Filipino', ready: true }, // Tagalog — ASPSI doc extracted + wired
-  // ceb/bis/ilo: ASPSI translations exist on Drive but the per-instrument F2 docs
-  // are not file-accessible via the API yet (folders enumerate empty). Flip to true
-  // once spec/translations/{ceb,bis,ilo}.json + their chrome bundles are populated.
-  ceb: { native: 'Cebuano', ready: false },
-  bis: { native: 'Bisaya', ready: false },
-  ilo: { native: 'Ilocano', ready: false },
-  hil: { native: 'Hiligaynon', ready: false }, // not yet delivered by ASPSI
-  war: { native: 'Waray', ready: false }, // not yet delivered by ASPSI
-  bcl: { native: 'Bikol', ready: false }, // not yet delivered by ASPSI
+  fil: { native: 'Filipino', ready: true }, // Tagalog
+  ceb: { native: 'Cebuano', ready: true },
+  bis: { native: 'Bisaya', ready: true },
+  ilo: { native: 'Ilocano', ready: true },
+  hil: { native: 'Hiligaynon', ready: true },
+  war: { native: 'Waray', ready: true },
+  bcl: { native: 'Bikol', ready: true },
 };
 
 // Locales offered in the language switcher (those with delivered translations).
@@ -46,6 +47,12 @@ if (!i18n.isInitialized) {
     resources: {
       en: { translation: en },
       fil: { translation: fil },
+      ceb: { translation: ceb },
+      bis: { translation: bis },
+      ilo: { translation: ilo },
+      hil: { translation: hil },
+      war: { translation: war },
+      bcl: { translation: bcl },
     },
     lng: 'en',
     fallbackLng: 'en',
