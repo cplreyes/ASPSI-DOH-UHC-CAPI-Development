@@ -212,7 +212,9 @@ function HcwsTable({ rows, onReissue }: { rows: HcwRow[]; onReissue: (r: HcwRow)
             <Th>Facility</Th>
             <Th>Status</Th>
             <Th>Created</Th>
-            <Th aria-label="actions" />
+            <Th>
+              <span className="sr-only">Row actions</span>
+            </Th>
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">

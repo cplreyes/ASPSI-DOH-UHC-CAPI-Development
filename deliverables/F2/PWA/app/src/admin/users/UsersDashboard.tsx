@@ -299,7 +299,9 @@ function UsersTable({
             <Th>Email</Th>
             <Th>Last login</Th>
             <Th>Created</Th>
-            <Th aria-label="actions" />
+            <Th>
+              <span className="sr-only">Row actions</span>
+            </Th>
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">

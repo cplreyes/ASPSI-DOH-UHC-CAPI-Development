@@ -327,7 +327,9 @@ function ResponsesTable({ rows }: { rows: ResponseRow[] }): JSX.Element {
             <Th>Facility</Th>
             <Th>Source</Th>
             <Th>Status</Th>
-            <Th aria-label="actions" />
+            <Th>
+              <span className="sr-only">Row actions</span>
+            </Th>
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">

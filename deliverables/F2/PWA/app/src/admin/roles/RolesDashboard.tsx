@@ -226,8 +226,12 @@ function RoleMatrix({
             </th>
           </tr>
           <tr className="border-b border-hairline">
-            <th />
-            <th />
+            <th>
+              <span className="sr-only">Role</span>
+            </th>
+            <th>
+              <span className="sr-only">Version</span>
+            </th>
             {dashCols.map((c, i) => (
               <th
                 key={c.key}
@@ -244,7 +248,9 @@ function RoleMatrix({
                 {c.label}
               </th>
             ))}
-            <th className="border-l border-hairline" />
+            <th className="border-l border-hairline">
+              <span className="sr-only">Actions</span>
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">
@@ -321,6 +327,7 @@ function PermDot({ active }: { active: boolean }): JSX.Element {
   if (active) {
     return (
       <span
+        role="img"
         aria-label="granted"
         title="granted"
         className="inline-block h-2 w-2 rounded-full bg-signal"
@@ -329,6 +336,7 @@ function PermDot({ active }: { active: boolean }): JSX.Element {
   }
   return (
     <span
+      role="img"
       aria-label="denied"
       title="denied"
       className="inline-block h-2 w-2 rounded-full border border-hairline"
