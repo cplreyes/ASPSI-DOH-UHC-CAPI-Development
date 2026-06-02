@@ -517,6 +517,7 @@ function UploadRow({
         <input
           ref={fileInputRef}
           type="file"
+          aria-label="Upload file"
           accept={ACCEPT_ATTR}
           disabled={uploading}
           onChange={(e) => {
@@ -578,7 +579,9 @@ function FilesTable({
             <Th>Size</Th>
             <Th>Uploaded by</Th>
             <Th>Uploaded</Th>
-            <Th>{''}</Th>
+            <Th>
+              <span className="sr-only">Actions</span>
+            </Th>
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">

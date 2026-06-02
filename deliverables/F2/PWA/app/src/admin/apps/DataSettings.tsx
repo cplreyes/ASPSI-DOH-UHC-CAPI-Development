@@ -345,7 +345,9 @@ function SettingsTable({
             <Th>Output path</Th>
             <Th>Last run</Th>
             <Th>Next run</Th>
-            <Th>{''}</Th>
+            <Th>
+              <span className="sr-only">Actions</span>
+            </Th>
           </tr>
         </thead>
         <tbody className="divide-y divide-hairline">
