@@ -14,6 +14,8 @@ import {
   handleLogin,
   handleLogout,
   handleChangeMyPassword,
+  projectPermissions,
+  PERM_KEYS,
   type AuthAuditCtx,
   type ChangeMyPasswordAsCallable,
   type LastLoginFn,
@@ -139,6 +141,14 @@ describe('handleLogin', () => {
     expect(body.role_version).toBe(1);
     expect(body.password_must_change).toBe(false);
     expect(body.expires_at).toBeGreaterThan(before);
+
+    // FX-002 (#324): the advisory perm map reflects this role's columns.
+    const withPerms = body as unknown as { permissions: Record<string, boolean> };
+    expect(withPerms.permissions.dash_data).toBe(true); // Administrator fixture grants dash_data
+    expect(withPerms.permissions.dash_users).toBe(false); // fixture doesn't grant it
+    // It only carries the known perm keys — never leaks non-perm columns.
+    expect(Object.keys(withPerms.permissions).sort()).toEqual([...PERM_KEYS].sort());
+    expect(withPerms.permissions).not.toHaveProperty('manage_users');
 
     // Token verifies and carries the expected claims.
     const v = await verifyAdminJwt(KEY, body.token);
@@ -600,6 +610,9 @@ describe('handleChangeMyPassword — R2-#134', () => {
     expect(body.role).toBe('Administrator');
     expect(body.role_version).toBe(1);
     expect(body.token).toMatch(/.+\..+\..+/);
+    // FX-002 (#324): the re-mint response also carries the perm map so a
+    // post-rotation client keeps consistent nav gating without re-login.
+    expect((body as unknown as { permissions: Record<string, boolean> }).permissions.dash_data).toBe(true);
 
     // AS RPC was called with the freshly-hashed new password (not equal to
     // the input), and with the actor's username from the JWT.
@@ -643,5 +656,50 @@ describe('handleChangeMyPassword — R2-#134', () => {
     expect(ctx.event_type).toBe('admin_password_change');
     expect(ctx.actor_username).toBe('alice');
     expect(ctx.client_ip_hash).toBe('iphash-9');
+  });
+});
+
+// FX-002 (#324): advisory permission-set projection for nav gating.
+describe('projectPermissions', () => {
+  it('projects exactly the known perm keys, coercing each to boolean', () => {
+    const role = {
+      name: 'Custom', version: 3, is_builtin: false, created_by: 'admin', created_at: 'x',
+      dash_data: true, dash_report: 1, dash_apps: '', dash_users: 0, dash_roles: undefined,
+      dict_paper_encoded_up: 'yes',
+    } as Record<string, unknown>;
+    const perms = projectPermissions(role);
+    // Only perm keys — never the metadata columns.
+    expect(Object.keys(perms).sort()).toEqual([...PERM_KEYS].sort());
+    expect(perms).not.toHaveProperty('name');
+    expect(perms).not.toHaveProperty('is_builtin');
+    expect(perms).not.toHaveProperty('created_by');
+    // Strict boolean coercion.
+    expect(perms.dash_data).toBe(true);
+    expect(perms.dash_report).toBe(true); // 1 → true
+    expect(perms.dash_apps).toBe(false); // '' → false
+    expect(perms.dash_users).toBe(false); // 0 → false
+    expect(perms.dash_roles).toBe(false); // undefined → false
+    expect(perms.dict_paper_encoded_up).toBe(true); // 'yes' → true
+  });
+
+  it('a custom role grants only the perms its row sets', async () => {
+    const kv = makeKv();
+    const env = { JWT_SIGNING_KEY: KEY, F2_AUTH: kv as unknown as KVNamespace };
+    const user = await makeUser('reader', 'CorrectPw1', 'Read Only', false);
+    const customRoles = [{ name: 'Read Only', version: 1, dash_data: true, dash_report: true }];
+    const r = await handleLogin(
+      { username: 'reader', password: 'CorrectPw1' },
+      'iphash-fx002',
+      env,
+      async () => ({ ok: true, data: { users: [user] } }),
+      async () => ({ ok: true, data: { roles: customRoles } }),
+    );
+    expect(r.status).toBe(200);
+    const body = (await r.json()) as { permissions: Record<string, boolean> };
+    expect(body.permissions.dash_data).toBe(true);
+    expect(body.permissions.dash_report).toBe(true);
+    expect(body.permissions.dash_apps).toBe(false);
+    expect(body.permissions.dash_users).toBe(false);
+    expect(body.permissions.dash_roles).toBe(false);
   });
 });
