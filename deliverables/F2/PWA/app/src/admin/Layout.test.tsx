@@ -40,7 +40,9 @@ function renderAuthedLayout(permissions?: Record<string, boolean>) {
   return render(
     <AdminAuthProvider>
       <RouterProvider>
-        <AuthPrime permissions={permissions}>
+        {/* Conditional spread: under exactOptionalPropertyTypes, passing an
+            explicit `undefined` to an optional prop is a type error. */}
+        <AuthPrime {...(permissions ? { permissions } : {})}>
           <Layout>
             <section>
               <h2>Content</h2>
