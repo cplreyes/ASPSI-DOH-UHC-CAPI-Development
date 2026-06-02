@@ -103,6 +103,7 @@ function multipartReq(opts: {
   type: string;
   bytes: Uint8Array;
   description?: string;
+  path?: string;
   contentTypeHeader?: string;
 }): Request {
   const form = new FormData();
@@ -110,6 +111,7 @@ function multipartReq(opts: {
   // Attach a name property; in Workers FormData accepts (Blob, filename) too.
   form.append('file', blob, opts.filename);
   if (opts.description !== undefined) form.append('description', opts.description);
+  if (opts.path !== undefined) form.append('path', opts.path);
   return new Request('http://test/upload', {
     method: 'POST',
     body: form,
@@ -230,6 +232,48 @@ describe('handleUploadFile', () => {
       expect(asPayload?.size_bytes).toBe(4);
     },
   );
+
+  it('#174: forwards a valid folder path to AS as folder_path', async () => {
+    const req = multipartReq({
+      filename: 'inner.pdf', type: 'application/pdf', bytes: new Uint8Array([1]), path: '/protocols',
+    });
+    const { r2 } = makeR2({});
+    let asPayload: Record<string, unknown> | undefined;
+    const r = await handleUploadFile(req, ACTOR, r2, (payload) => {
+      asPayload = payload;
+      return asCreateOk(SAMPLE_META);
+    });
+    expect(r.status).toBe(201);
+    expect(asPayload?.folder_path).toBe('/protocols');
+  });
+
+  it('#174: defaults folder_path to root when no path is given', async () => {
+    const req = multipartReq({ filename: 'a.pdf', type: 'application/pdf', bytes: new Uint8Array([1]) });
+    const { r2 } = makeR2({});
+    let asPayload: Record<string, unknown> | undefined;
+    const r = await handleUploadFile(req, ACTOR, r2, (payload) => {
+      asPayload = payload;
+      return asCreateOk(SAMPLE_META);
+    });
+    expect(r.status).toBe(201);
+    expect(asPayload?.folder_path).toBe('/');
+  });
+
+  it('#174: rejects a malformed upload path with 400 (no silent misfile to root)', async () => {
+    const req = multipartReq({
+      filename: 'a.pdf', type: 'application/pdf', bytes: new Uint8Array([1]), path: '/../escape',
+    });
+    const { r2, calls } = makeR2({});
+    let asCalled = false;
+    const r = await handleUploadFile(req, ACTOR, r2, () => {
+      asCalled = true;
+      return asCreateOk(SAMPLE_META);
+    });
+    expect(r.status).toBe(400);
+    // The bad path must fail BEFORE any R2 write or AS call — no orphan, no misfile.
+    expect(calls.put).toHaveLength(0);
+    expect(asCalled).toBe(false);
+  });
 
   it('purges R2 if AS create fails (orphan cleanup)', async () => {
     const req = multipartReq({ filename: 'doc.pdf', type: 'application/pdf', bytes: new Uint8Array([1]) });

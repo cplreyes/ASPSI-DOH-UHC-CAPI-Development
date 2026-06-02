@@ -292,14 +292,17 @@ export async function handleUploadFile(
     : '';
 
   // #174: which virtual folder the file lands in. The frontend sends the
-  // current breadcrumb path; validate it against the folder-name shape
-  // ('/' or '/<name>'), defaulting to root on anything unexpected so a
-  // malformed path can never escape the flat 1-level model.
+  // current breadcrumb path. Reject a malformed path with a clear error
+  // rather than silently dropping the file at root — a silent fallback would
+  // misfile the upload (the folder it was meant for wouldn't show it).
   const rawPath = typeof form.get('path') === 'string' ? (form.get('path') as string).trim() : '';
   let folderPath = '/';
   if (rawPath && rawPath !== '/') {
     const seg = rawPath.startsWith('/') ? rawPath.slice(1) : rawPath;
-    if (FOLDER_NAME_RE.test(seg)) folderPath = `/${seg}`;
+    if (!FOLDER_NAME_RE.test(seg)) {
+      return errorJson('E_VALIDATION', 'invalid upload folder path', 400);
+    }
+    folderPath = `/${seg}`;
   }
 
   const fileId = crypto.randomUUID();

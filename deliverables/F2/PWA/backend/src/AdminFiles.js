@@ -52,6 +52,24 @@ function _coalesceFolderPath(v) {
   return s.length ? s : '/';
 }
 
+// Folder-name charset. MUST mirror the worker's FOLDER_NAME_RE (apps.ts):
+// ASCII letters/digits/space/dot/underscore/hyphen, no '..', length 1–128.
+// ASCII-only (no unicode/control chars) avoids homoglyph + CSV-formula-prefix
+// surprises in a sheet-backed store. Keep in sync with apps.ts by hand.
+var FOLDER_NAME_RE = /^(?!.*\.\.)[A-Za-z0-9 _\-.]{1,128}$/;
+
+function _validateFolderName(name) {
+  return typeof name === 'string' && FOLDER_NAME_RE.test(name);
+}
+
+// A folder_path is root ('/') or '/<valid-folder-name>' (flat, 1-level).
+// Returns true for an acceptable container path.
+function _validFolderPath(p) {
+  if (p === '/') return true;
+  if (typeof p !== 'string' || p.charAt(0) !== '/') return false;
+  return _validateFolderName(p.slice(1));
+}
+
 // A folder row stores boolean true in is_folder; Sheets may surface it as
 // the boolean true or the string 'true' depending on how it was written.
 function _isFolderRow(v) {
@@ -134,7 +152,9 @@ function adminFilesCreate(payload) {
       // #174: which folder the file lands in. Defaults to root. If the
       // folder_path/is_folder columns aren't present yet (migration not run),
       // headers.map below silently drops these — harmless degradation.
-      folder_path: payload.folder_path || '/',
+      // Defense-in-depth: the worker already validates the upload path, but
+      // coerce anything unexpected to root so a bad value can never persist.
+      folder_path: _validFolderPath(payload.folder_path) ? payload.folder_path : '/',
       is_folder: false,
     };
     var row = data.headers.map(function (h) { return record[h] != null ? record[h] : ''; });
@@ -316,14 +336,11 @@ function adminFilesCreateFolder(payload) {
     return { ok: false, error: { code: 'E_VALIDATION', message: 'payload required' } };
   }
   var name = String(payload.name || '').trim();
-  if (name.length === 0) {
-    return { ok: false, error: { code: 'E_VALIDATION', message: 'folder name required' } };
-  }
-  if (name.indexOf('/') !== -1 || name.indexOf('\\') !== -1 || name.indexOf('..') !== -1) {
-    return { ok: false, error: { code: 'E_VALIDATION', message: 'folder name cannot contain slashes or ..' } };
-  }
-  if (name.length > 128) {
-    return { ok: false, error: { code: 'E_VALIDATION', message: 'folder name too long (max 128)' } };
+  // Single source of truth for the folder-name charset, mirroring the worker.
+  // (Previously a looser denylist that admitted unicode/control chars the
+  // worker's upload-path regex would later reject — see #174 review.)
+  if (!_validateFolderName(name)) {
+    return { ok: false, error: { code: 'E_VALIDATION', message: 'invalid folder name (letters, digits, space, . _ - ; no slashes or .., max 128)' } };
   }
 
   return _withFilesLock(function () {
@@ -370,5 +387,7 @@ if (typeof module !== 'undefined') {
     _validateFileExtension: _validateFileExtension,
     _coalesceFolderPath: _coalesceFolderPath,
     _isFolderRow: _isFolderRow,
+    _validateFolderName: _validateFolderName,
+    _validFolderPath: _validFolderPath,
   };
 }

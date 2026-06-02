@@ -213,6 +213,18 @@ describe('adminFilesCreateFolder', () => {
     expect(AdminFiles.adminFilesCreateFolder({ name: 'x'.repeat(129) }).error.code).toBe('E_VALIDATION');
   });
 
+  it('rejects non-ASCII / special-char names that the worker upload-path regex would later reject', () => {
+    // Closes the create-vs-upload asymmetry: a folder the worker could never
+    // accept an upload-path for must not be creatable in the first place.
+    for (const bad of ['Niño', 'café', 'Q&A', 'Forms(2026)', '#tag', 'a\tb']) {
+      expect(AdminFiles.adminFilesCreateFolder({ name: bad, created_by: 'x' }).error.code).toBe('E_VALIDATION');
+    }
+  });
+
+  it('accepts ASCII names with spaces, dots, dashes, underscores', () => {
+    expect(AdminFiles.adminFilesCreateFolder({ name: 'Field Ops v2.1_draft-A', created_by: 'x' }).ok).toBe(true);
+  });
+
   it('returns E_NOT_CONFIGURED when the folder columns are absent', () => {
     // Pre-migration sheet: no folder_path / is_folder columns.
     currentSheet = new FakeSheet(FILE_META_HEADERS.slice(0, 8));
@@ -270,11 +282,19 @@ describe('adminFilesCreate folder defaults', () => {
     expect(res.data.file.is_folder).toBe(false);
   });
 
-  it('honors an explicit folder_path', () => {
+  it('honors an explicit valid folder_path', () => {
     const res = AdminFiles.adminFilesCreate({
       file_id: 'f-2', filename: 'b.pdf', content_type: 'application/pdf',
       size_bytes: 5, uploaded_by: 'kidd_admin', folder_path: '/protocols',
     });
     expect(res.data.file.folder_path).toBe('/protocols');
+  });
+
+  it('coerces a malformed folder_path to root (defense-in-depth)', () => {
+    const res = AdminFiles.adminFilesCreate({
+      file_id: 'f-3', filename: 'c.pdf', content_type: 'application/pdf',
+      size_bytes: 5, uploaded_by: 'kidd_admin', folder_path: '/../etc',
+    });
+    expect(res.data.file.folder_path).toBe('/');
   });
 });

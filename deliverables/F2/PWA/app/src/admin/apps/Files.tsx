@@ -26,6 +26,11 @@ const ALLOWED_MIME = new Set([
 
 const MAX_FILE_BYTES = 100 * 1024 * 1024;
 
+// #174: folder-name charset — MUST mirror the worker apps.ts FOLDER_NAME_RE
+// and the AS AdminFiles.js validator. ASCII letters/digits/space/. _ -, no
+// '..', length 1–128.
+const FOLDER_NAME_RE = /^(?!.*\.\.)[A-Za-z0-9 _\-.]{1,128}$/;
+
 interface FileRow {
   file_id: string;
   filename: string;
@@ -163,8 +168,10 @@ export function Files({ apiBaseUrl, fetchImpl }: FilesProps): JSX.Element {
       setFolderError('Folder name required.');
       return;
     }
-    if (name.includes('/') || name.includes('\\') || name.includes('..')) {
-      setFolderError('Folder names cannot contain slashes or "..".');
+    // Mirror the worker/AS FOLDER_NAME_RE so the user gets immediate feedback
+    // instead of a generic server 400 (ASCII letters/digits/space/. _ -, no ..).
+    if (!FOLDER_NAME_RE.test(name)) {
+      setFolderError('Use letters, numbers, spaces, and . _ - only (no slashes or "..", max 128).');
       return;
     }
     setCreatingFolder(true);
@@ -410,6 +417,7 @@ function FolderForm({
         <input
           type="text"
           autoFocus
+          maxLength={128}
           value={value}
           disabled={creating}
           onChange={(e) => onChange(e.target.value)}
