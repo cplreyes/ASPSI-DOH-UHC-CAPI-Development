@@ -41,6 +41,10 @@ export interface FileMetaRow {
   uploaded_at: string;
   description?: string;
   deleted_at?: string;
+  // #174 folders: folder_path is the container the row lives in ('/' = root);
+  // is_folder marks a virtual folder row (R2 has no native folders).
+  folder_path?: string;
+  is_folder?: boolean;
 }
 
 export interface ListFilesData {
@@ -50,6 +54,7 @@ export interface ListFilesData {
 
 export interface FilesListFilters {
   q?: string;
+  path?: string;
 }
 
 export type FilesListAsCallable = (
@@ -67,6 +72,14 @@ export type FilesGetAsCallable = (
 export type FilesDeleteAsCallable = (
   payload: { file_id: string },
 ) => Promise<AppsScriptResponse<{ file_id: string; deleted_at: string }>>;
+
+export type FilesRenameAsCallable = (
+  payload: { file_id: string; new_name: string },
+) => Promise<AppsScriptResponse<{ file: FileMetaRow }>>;
+
+export type FilesCreateFolderAsCallable = (
+  payload: { name: string; created_by: string },
+) => Promise<AppsScriptResponse<{ folder: FileMetaRow }>>;
 
 /**
  * Minimal R2 surface used by these handlers. Accepting an interface
@@ -130,6 +143,9 @@ export async function handleListFiles(
   const filters: FilesListFilters = {};
   const q = url.searchParams.get('q');
   if (q) filters.q = q;
+  // #174: scope the listing to one virtual folder (omit = root view).
+  const path = url.searchParams.get('path');
+  if (path) filters.path = path;
   const r = await asCallable(filters);
   if (!r.ok || !r.data) {
     return errorJson(
@@ -139,6 +155,76 @@ export async function handleListFiles(
     );
   }
   return jsonResponse(r.data, 200);
+}
+
+// #174/#175: folder-name + filename validation shared with the frontend.
+// FOLDER_NAME_RE bans '..' and path separators, allows letters/digits/space/._-.
+const FOLDER_NAME_RE = /^(?!.*\.\.)[A-Za-z0-9 _\-.]{1,128}$/;
+const FILE_ID_RE = /^[A-Za-z0-9_-]+$/;
+
+export interface RenameFileBody {
+  filename?: unknown;
+}
+
+export interface CreateFolderBody {
+  name?: unknown;
+}
+
+/**
+ * #175: rename a file's display name. The worker receives `{ filename }`
+ * from the client and forwards it to AS as `{ new_name }` (AS uses the
+ * unambiguous field). file_id (the R2 key) never changes, so download
+ * links survive the rename. Returns the updated row.
+ */
+export async function handleRenameFile(
+  fileId: string,
+  body: RenameFileBody,
+  asCallable: FilesRenameAsCallable,
+): Promise<Response> {
+  if (!FILE_ID_RE.test(fileId)) {
+    return errorJson('E_VALIDATION', 'invalid file_id path param', 400);
+  }
+  const filename = typeof body.filename === 'string' ? body.filename.trim() : '';
+  if (!filename) {
+    return errorJson('E_VALIDATION', '"filename" is required', 400);
+  }
+  const r = await asCallable({ file_id: fileId, new_name: filename });
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse(r.data, 200);
+}
+
+/**
+ * #174: create a virtual folder at root (flat, 1-level). Validates the
+ * folder name before the AS round-trip; AS is the duplicate authority
+ * (returns E_CONFLICT → 409).
+ */
+export async function handleCreateFolder(
+  body: CreateFolderBody,
+  actor: { username: string },
+  asCallable: FilesCreateFolderAsCallable,
+): Promise<Response> {
+  if (!actor.username) {
+    return errorJson('E_INTERNAL', 'actor username missing from RBAC context', 500);
+  }
+  const name = typeof body.name === 'string' ? body.name.trim() : '';
+  if (!FOLDER_NAME_RE.test(name)) {
+    return errorJson('E_VALIDATION', 'invalid folder name (letters, digits, space, . _ - ; no slashes or ..)', 400);
+  }
+  const r = await asCallable({ name, created_by: actor.username });
+  if (!r.ok || !r.data) {
+    return errorJson(
+      r.error?.code ?? 'E_BACKEND',
+      r.error?.message ?? 'Apps Script unavailable',
+      statusForAsError(r.error?.code),
+    );
+  }
+  return jsonResponse(r.data, 201);
 }
 
 /**
@@ -205,6 +291,20 @@ export async function handleUploadFile(
     ? (form.get('description') as string)
     : '';
 
+  // #174: which virtual folder the file lands in. The frontend sends the
+  // current breadcrumb path. Reject a malformed path with a clear error
+  // rather than silently dropping the file at root — a silent fallback would
+  // misfile the upload (the folder it was meant for wouldn't show it).
+  const rawPath = typeof form.get('path') === 'string' ? (form.get('path') as string).trim() : '';
+  let folderPath = '/';
+  if (rawPath && rawPath !== '/') {
+    const seg = rawPath.startsWith('/') ? rawPath.slice(1) : rawPath;
+    if (!FOLDER_NAME_RE.test(seg)) {
+      return errorJson('E_VALIDATION', 'invalid upload folder path', 400);
+    }
+    folderPath = `/${seg}`;
+  }
+
   const fileId = crypto.randomUUID();
   const rawName = file.name ?? 'upload';
   const safeName = sanitizeFilename(rawName);
@@ -225,6 +325,7 @@ export async function handleUploadFile(
     uploaded_by: actor.username,
     uploaded_at: uploadedAt,
     description,
+    folder_path: folderPath,
   });
   if (!r.ok || !r.data) {
     // Best-effort cleanup of the orphaned R2 object so the bucket

@@ -11,12 +11,16 @@ import {
   handleUploadFile,
   handleDownloadFile,
   handleDeleteFile,
+  handleRenameFile,
+  handleCreateFolder,
   type FileMetaRow,
   type FilesR2,
   type FilesListAsCallable,
   type FilesCreateAsCallable,
   type FilesGetAsCallable,
   type FilesDeleteAsCallable,
+  type FilesRenameAsCallable,
+  type FilesCreateFolderAsCallable,
   type ListFilesData,
 } from '../../../src/admin/handlers/apps';
 
@@ -99,6 +103,7 @@ function multipartReq(opts: {
   type: string;
   bytes: Uint8Array;
   description?: string;
+  path?: string;
   contentTypeHeader?: string;
 }): Request {
   const form = new FormData();
@@ -106,6 +111,7 @@ function multipartReq(opts: {
   // Attach a name property; in Workers FormData accepts (Blob, filename) too.
   form.append('file', blob, opts.filename);
   if (opts.description !== undefined) form.append('description', opts.description);
+  if (opts.path !== undefined) form.append('path', opts.path);
   return new Request('http://test/upload', {
     method: 'POST',
     body: form,
@@ -133,6 +139,16 @@ describe('handleListFiles', () => {
       return asListOk({ files: [], total: 0 });
     });
     expect(captured?.q).toBe('protocol');
+  });
+
+  it('forwards path filter to AS (#174)', async () => {
+    let captured: { path?: string } | undefined;
+    const url = new URL('http://x/admin/api/dashboards/apps/files?path=%2Fprotocols');
+    await handleListFiles(url, (filters) => {
+      captured = filters;
+      return asListOk({ files: [], total: 0 });
+    });
+    expect(captured?.path).toBe('/protocols');
   });
 
   it('returns 502 E_BACKEND on AS failure', async () => {
@@ -216,6 +232,48 @@ describe('handleUploadFile', () => {
       expect(asPayload?.size_bytes).toBe(4);
     },
   );
+
+  it('#174: forwards a valid folder path to AS as folder_path', async () => {
+    const req = multipartReq({
+      filename: 'inner.pdf', type: 'application/pdf', bytes: new Uint8Array([1]), path: '/protocols',
+    });
+    const { r2 } = makeR2({});
+    let asPayload: Record<string, unknown> | undefined;
+    const r = await handleUploadFile(req, ACTOR, r2, (payload) => {
+      asPayload = payload;
+      return asCreateOk(SAMPLE_META);
+    });
+    expect(r.status).toBe(201);
+    expect(asPayload?.folder_path).toBe('/protocols');
+  });
+
+  it('#174: defaults folder_path to root when no path is given', async () => {
+    const req = multipartReq({ filename: 'a.pdf', type: 'application/pdf', bytes: new Uint8Array([1]) });
+    const { r2 } = makeR2({});
+    let asPayload: Record<string, unknown> | undefined;
+    const r = await handleUploadFile(req, ACTOR, r2, (payload) => {
+      asPayload = payload;
+      return asCreateOk(SAMPLE_META);
+    });
+    expect(r.status).toBe(201);
+    expect(asPayload?.folder_path).toBe('/');
+  });
+
+  it('#174: rejects a malformed upload path with 400 (no silent misfile to root)', async () => {
+    const req = multipartReq({
+      filename: 'a.pdf', type: 'application/pdf', bytes: new Uint8Array([1]), path: '/../escape',
+    });
+    const { r2, calls } = makeR2({});
+    let asCalled = false;
+    const r = await handleUploadFile(req, ACTOR, r2, () => {
+      asCalled = true;
+      return asCreateOk(SAMPLE_META);
+    });
+    expect(r.status).toBe(400);
+    // The bad path must fail BEFORE any R2 write or AS call — no orphan, no misfile.
+    expect(calls.put).toHaveLength(0);
+    expect(asCalled).toBe(false);
+  });
 
   it('purges R2 if AS create fails (orphan cleanup)', async () => {
     const req = multipartReq({ filename: 'doc.pdf', type: 'application/pdf', bytes: new Uint8Array([1]) });
@@ -321,5 +379,143 @@ describe('handleDeleteFile', () => {
     const { r2 } = makeR2({});
     const r = await handleDeleteFile('f-001', r2, () => asDeleteErr('E_LOCK_TIMEOUT'));
     expect(r.status).toBe(503);
+  });
+});
+
+// -------------------- handleRenameFile (#175) --------------------
+
+function asRenameOk(file: FileMetaRow): ReturnType<FilesRenameAsCallable> {
+  return Promise.resolve({ ok: true, data: { file } });
+}
+function asRenameErr(code: string): ReturnType<FilesRenameAsCallable> {
+  return Promise.resolve({ ok: false, error: { code, message: code } });
+}
+
+describe('handleRenameFile', () => {
+  it('translates client {filename} to AS {new_name} and returns the row', async () => {
+    let captured: { file_id: string; new_name: string } | undefined;
+    const req = new Request('http://x/files/f-001', {
+      method: 'PATCH',
+      body: JSON.stringify({ filename: 'renamed.pdf' }),
+    });
+    const r = await handleRenameFile('f-001', { filename: 'renamed.pdf' }, (payload) => {
+      captured = payload;
+      return asRenameOk({ ...SAMPLE_META, filename: 'renamed.pdf' });
+    });
+    void req;
+    expect(r.status).toBe(200);
+    expect(captured).toEqual({ file_id: 'f-001', new_name: 'renamed.pdf' });
+    const body = (await r.json()) as { file: FileMetaRow };
+    expect(body.file.filename).toBe('renamed.pdf');
+  });
+
+  it('rejects an invalid file_id path param with 400', async () => {
+    const r = await handleRenameFile('bad id!', { filename: 'a.pdf' }, () =>
+      asRenameOk(SAMPLE_META),
+    );
+    expect(r.status).toBe(400);
+  });
+
+  it('rejects a blank filename with 400 before the AS round-trip', async () => {
+    let called = false;
+    const r = await handleRenameFile('f-001', { filename: '   ' }, () => {
+      called = true;
+      return asRenameOk(SAMPLE_META);
+    });
+    expect(r.status).toBe(400);
+    expect(called).toBe(false);
+  });
+
+  it('maps AS E_VALIDATION (bad extension) to 400', async () => {
+    const r = await handleRenameFile('f-001', { filename: 'evil.exe' }, () =>
+      asRenameErr('E_VALIDATION'),
+    );
+    expect(r.status).toBe(400);
+  });
+
+  it('maps AS E_NOT_FOUND to 404', async () => {
+    const r = await handleRenameFile('f-001', { filename: 'a.pdf' }, () =>
+      asRenameErr('E_NOT_FOUND'),
+    );
+    expect(r.status).toBe(404);
+  });
+});
+
+// -------------------- handleCreateFolder (#174) --------------------
+
+function asFolderOk(folder: FileMetaRow): ReturnType<FilesCreateFolderAsCallable> {
+  return Promise.resolve({ ok: true, data: { folder } });
+}
+function asFolderErr(code: string): ReturnType<FilesCreateFolderAsCallable> {
+  return Promise.resolve({ ok: false, error: { code, message: code } });
+}
+
+const SAMPLE_FOLDER: FileMetaRow = {
+  file_id: 'd-001',
+  filename: 'protocols',
+  content_type: 'application/x-directory',
+  size_bytes: 0,
+  uploaded_by: 'admin-alice',
+  uploaded_at: '2026-05-01T12:00:00.000Z',
+  description: '',
+  folder_path: '/',
+  is_folder: true,
+};
+
+describe('handleCreateFolder', () => {
+  it('creates a folder and returns 201 with the folder row', async () => {
+    let captured: { name: string; created_by: string } | undefined;
+    const r = await handleCreateFolder({ name: 'protocols' }, ACTOR, (payload) => {
+      captured = payload;
+      return asFolderOk(SAMPLE_FOLDER);
+    });
+    expect(r.status).toBe(201);
+    expect(captured).toEqual({ name: 'protocols', created_by: 'admin-alice' });
+    const body = (await r.json()) as { folder: FileMetaRow };
+    expect(body.folder.is_folder).toBe(true);
+  });
+
+  it('allows spaces, dots, dashes, underscores in folder names', async () => {
+    const r = await handleCreateFolder({ name: 'Field Ops v2.1_draft-A' }, ACTOR, () =>
+      asFolderOk(SAMPLE_FOLDER),
+    );
+    expect(r.status).toBe(201);
+  });
+
+  it('rejects empty actor username with 500', async () => {
+    const r = await handleCreateFolder({ name: 'protocols' }, { username: '' }, () =>
+      asFolderOk(SAMPLE_FOLDER),
+    );
+    expect(r.status).toBe(500);
+  });
+
+  it.each([
+    ['contains slash', 'a/b'],
+    ['contains backslash', 'a\\b'],
+    ['contains ..', 'a..b'],
+    ['empty', ''],
+    ['too long', 'x'.repeat(129)],
+  ])('rejects %s before the AS round-trip', async (_label, name) => {
+    let called = false;
+    const r = await handleCreateFolder({ name }, ACTOR, () => {
+      called = true;
+      return asFolderOk(SAMPLE_FOLDER);
+    });
+    expect(r.status).toBe(400);
+    expect(called).toBe(false);
+  });
+
+  it('maps AS E_CONFLICT (duplicate) to 409', async () => {
+    const r = await handleCreateFolder({ name: 'protocols' }, ACTOR, () =>
+      asFolderErr('E_CONFLICT'),
+    );
+    expect(r.status).toBe(409);
+  });
+
+  it('maps AS E_NOT_CONFIGURED (missing migration) to 502', async () => {
+    const r = await handleCreateFolder({ name: 'protocols' }, ACTOR, () =>
+      asFolderErr('E_NOT_CONFIGURED'),
+    );
+    expect(r.status).toBe(502);
   });
 });

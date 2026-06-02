@@ -83,6 +83,8 @@ import {
   handleUploadFile,
   handleDownloadFile,
   handleDeleteFile,
+  handleRenameFile,
+  handleCreateFolder,
   handleListSettings,
   handleCreateSetting,
   handleUpdateSetting,
@@ -96,6 +98,8 @@ import {
   type ListSettingsData,
   type SettingRow,
   type SettingMutationBody,
+  type RenameFileBody,
+  type CreateFolderBody,
 } from './handlers/apps';
 import { callAppsScript } from './apps-script-client';
 import { RoleVersionCache, requirePerm, type Role, type RolesListResp, type RbacOpts } from './rbac';
@@ -131,6 +135,9 @@ const USERS_REVOKE_RE = /^\/admin\/api\/dashboards\/users\/([A-Za-z0-9_]{3,32})\
 const ROLES_LIST_RE = /^\/admin\/api\/dashboards\/roles\/?$/;
 const ROLES_BY_NAME_RE = /^\/admin\/api\/dashboards\/roles\/([A-Za-z][A-Za-z0-9 _\-]{0,63})\/?$/;
 const FILES_LIST_RE = /^\/admin\/api\/dashboards\/apps\/files\/?$/;
+// #174: folder-create sits as a sibling of the by-id route. It must be tested
+// BEFORE FILES_BY_ID_RE so "/files/folders" isn't captured as a file_id.
+const FILES_FOLDERS_RE = /^\/admin\/api\/dashboards\/apps\/files\/folders\/?$/;
 const FILES_BY_ID_RE = /^\/admin\/api\/dashboards\/apps\/files\/([A-Za-z0-9_\-]+)\/?$/;
 const SETTINGS_LIST_RE = /^\/admin\/api\/dashboards\/apps\/data-settings\/?$/;
 const SETTINGS_BY_ID_RE = /^\/admin\/api\/dashboards\/apps\/data-settings\/([A-Za-z0-9_\-]+)\/?$/;
@@ -590,13 +597,37 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
     return withRequestId(r, requestId);
   }
 
+  // #174: create a virtual folder. Must precede the by-id block so the
+  // "folders" path segment isn't matched as a file_id.
+  if (req.method === 'POST' && FILES_FOLDERS_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    const body = (await req.json().catch(() => ({}))) as CreateFolderBody;
+    const asCall = (payload: { name: string; created_by: string }) =>
+      callAppsScript<{ folder: FileMetaRow }>(
+        env.APPS_SCRIPT_URL,
+        env.APPS_SCRIPT_HMAC,
+        'admin_files_create_folder',
+        payload as unknown as Record<string, unknown>,
+        requestId,
+        env.F2_AUTH,
+      );
+    const r = await handleCreateFolder(body, { username: auth.payload!.sub }, asCall);
+    auditMutation(auditFn, r, auth, ipHash, 'admin_files_create_folder',
+      typeof body.name === 'string' ? body.name : '');
+    return withRequestId(r, requestId);
+  }
+
   const fileByIdMatch = FILES_BY_ID_RE.exec(url.pathname);
-  if (fileByIdMatch && (req.method === 'GET' || req.method === 'DELETE')) {
+  if (fileByIdMatch && (req.method === 'GET' || req.method === 'PATCH' || req.method === 'DELETE')) {
     const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
     if (!auth.ok) {
       return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
     }
     const fileId = decodeURIComponent(fileByIdMatch[1]!);
+
     if (req.method === 'GET') {
       const asCall = (payload: { file_id: string }) =>
         callAppsScript<{ file: FileMetaRow }>(
@@ -610,6 +641,26 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
       const r = await handleDownloadFile(fileId, env.F2_ADMIN_R2, asCall);
       return withRequestId(r, requestId);
     }
+
+    // #175: rename. Each method-branch self-returns; DELETE is now explicitly
+    // guarded so adding PATCH can't fall through into the delete path.
+    if (req.method === 'PATCH') {
+      const body = (await req.json().catch(() => ({}))) as RenameFileBody;
+      const asCall = (payload: { file_id: string; new_name: string }) =>
+        callAppsScript<{ file: FileMetaRow }>(
+          env.APPS_SCRIPT_URL,
+          env.APPS_SCRIPT_HMAC,
+          'admin_files_rename',
+          payload as unknown as Record<string, unknown>,
+          requestId,
+          env.F2_AUTH,
+        );
+      const r = await handleRenameFile(fileId, body, asCall);
+      auditMutation(auditFn, r, auth, ipHash, 'admin_files_rename', fileId);
+      return withRequestId(r, requestId);
+    }
+
+    // req.method === 'DELETE'
     const asCall = (payload: { file_id: string }) =>
       callAppsScript<{ file_id: string; deleted_at: string }>(
         env.APPS_SCRIPT_URL,

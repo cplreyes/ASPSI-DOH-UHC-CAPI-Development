@@ -132,6 +132,8 @@ function _adminHandlers() {
       admin_files_create: typeof adminFilesCreate !== 'undefined' ? adminFilesCreate : null,
       admin_files_get: typeof adminFilesGet !== 'undefined' ? adminFilesGet : null,
       admin_files_delete: typeof adminFilesDelete !== 'undefined' ? adminFilesDelete : null,
+      admin_files_rename: typeof adminFilesRename !== 'undefined' ? adminFilesRename : null,
+      admin_files_create_folder: typeof adminFilesCreateFolder !== 'undefined' ? adminFilesCreateFolder : null,
       admin_settings_list: typeof adminSettingsList !== 'undefined' ? adminSettingsList : null,
       admin_settings_create: typeof adminSettingsCreate !== 'undefined' ? adminSettingsCreate : null,
       admin_settings_update: typeof adminSettingsUpdate !== 'undefined' ? adminSettingsUpdate : null,
