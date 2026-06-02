@@ -19,6 +19,10 @@ export interface AdminAuthState {
   roleVersion: number | null;
   expiresAt: number | null;
   passwordMustChange: boolean;
+  // FX-002 (#324): advisory perm map for nav gating. null = unknown (logged
+  // out, or the Worker didn't send it) → callers treat null as "show all"
+  // since the Worker still enforces 403 on the actual request.
+  permissions: Record<string, boolean> | null;
 }
 
 const INITIAL_STATE: AdminAuthState = {
@@ -28,6 +32,7 @@ const INITIAL_STATE: AdminAuthState = {
   roleVersion: null,
   expiresAt: null,
   passwordMustChange: false,
+  permissions: null,
 };
 
 export interface AdminLoginResponse {
@@ -36,6 +41,8 @@ export interface AdminLoginResponse {
   role_version: number;
   expires_at: number;
   password_must_change: boolean;
+  // Optional so an older Worker (no permissions field) degrades gracefully.
+  permissions?: Record<string, boolean>;
 }
 
 export interface AdminAuthApi extends AdminAuthState {
@@ -57,6 +64,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }): JSX.El
       roleVersion: resp.role_version,
       expiresAt: resp.expires_at,
       passwordMustChange: resp.password_must_change,
+      permissions: resp.permissions ?? null,
     });
   }, []);
 

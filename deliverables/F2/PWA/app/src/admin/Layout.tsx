@@ -46,6 +46,10 @@ interface NavItemSpec {
   label: string;
   description: string;
   icon: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+  // FX-002 (#324): the RBAC perm a role needs for this item to be useful.
+  // Omitted = always visible (e.g. Help). The Worker enforces actual access;
+  // this only hides controls the current role can't use.
+  requiredPerm?: string;
 }
 
 interface NavGroup {
@@ -62,12 +66,14 @@ const NAV_GROUPS: NavGroup[] = [
         label: 'Data',
         description: 'Submissions, audit log, DLQ, HCWs registry — day-to-day operations.',
         icon: IconTable,
+        requiredPerm: 'dash_data',
       },
       {
         to: '/admin/report',
         label: 'Reports',
         description: 'Coverage by region/province/facility + geographic Map Report.',
         icon: IconChart,
+        requiredPerm: 'dash_report',
       },
       {
         to: '/admin/encode',
@@ -75,6 +81,7 @@ const NAV_GROUPS: NavGroup[] = [
         description:
           'Paper-response transcription flow. Used when an HCW completed the survey on paper.',
         icon: IconEdit,
+        requiredPerm: 'dict_paper_encoded_up',
       },
     ],
   },
@@ -87,18 +94,21 @@ const NAV_GROUPS: NavGroup[] = [
         description:
           'Build versions, file uploads, scheduled break-out exports, Apps Script quota.',
         icon: IconSliders,
+        requiredPerm: 'dash_apps',
       },
       {
         to: '/admin/users',
         label: 'Users',
         description: 'CRUD for ops staff accounts. Bulk-import for new cohorts.',
         icon: IconUsers,
+        requiredPerm: 'dash_users',
       },
       {
         to: '/admin/roles',
         label: 'Roles',
         description: 'Permission matrix editor. Built-in + custom roles.',
         icon: IconShield,
+        requiredPerm: 'dash_roles',
       },
     ],
   },
@@ -118,7 +128,7 @@ const NAV_GROUPS: NavGroup[] = [
 const FLAT_NAV: NavItemSpec[] = NAV_GROUPS.flatMap((g) => g.items);
 
 export function Layout({ children }: LayoutProps): JSX.Element {
-  const { username, role, clearAuth, isAuthenticated } = useAdminAuth();
+  const { username, role, clearAuth, isAuthenticated, permissions } = useAdminAuth();
   const { navigate } = useRouter();
 
   const onLogout = () => {
@@ -127,6 +137,15 @@ export function Layout({ children }: LayoutProps): JSX.Element {
   };
 
   const initial = (username ?? '—').slice(0, 1).toUpperCase();
+
+  // FX-002 (#324): show an item when it needs no perm (Help), when perms are
+  // unknown (null → graceful degradation, since the Worker still enforces
+  // 403), or when the current role grants its perm.
+  const canSee = (item: NavItemSpec): boolean =>
+    !item.requiredPerm || permissions === null || !!permissions[item.requiredPerm];
+  const visibleGroups = NAV_GROUPS
+    .map((g) => ({ ...g, items: g.items.filter(canSee) }))
+    .filter((g) => g.items.length > 0);
 
   return (
     <div className="flex h-screen-dvh w-full flex-col overflow-hidden md:flex-row">
@@ -150,7 +169,7 @@ export function Layout({ children }: LayoutProps): JSX.Element {
 
         <nav className="flex flex-1 flex-col gap-4 overflow-y-auto py-2">
           {isAuthenticated
-            ? NAV_GROUPS.map((group) => (
+            ? visibleGroups.map((group) => (
                 <div key={group.title} className="flex flex-col">
                   <p className="px-5 pb-1 pt-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
                     {group.title}
@@ -276,7 +295,7 @@ export function Layout({ children }: LayoutProps): JSX.Element {
         </div>
         {isAuthenticated && (
           <nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm" aria-label="Primary (mobile)">
-            {FLAT_NAV.map((item) => (
+            {FLAT_NAV.filter(canSee).map((item) => (
               <MobileNavLink key={item.to} item={item} />
             ))}
           </nav>

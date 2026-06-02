@@ -55,6 +55,33 @@ export interface AdminRoleRow {
   [perm: string]: unknown;
 }
 
+// FX-002 (#324): the RBAC permission columns on F2_Roles, in display order.
+// Single source of truth for what the client may learn about its OWN role —
+// an advisory, UI-only hint for nav gating. Keep in sync with the F2_Roles
+// schema (Migrations.js) and the rbac.ts perm checks. Deliberately excludes
+// the non-perm columns (name, is_builtin, version, created_at, created_by) so
+// the projection never leaks metadata or a future non-perm column.
+export const PERM_KEYS = [
+  'dash_data', 'dash_report', 'dash_apps', 'dash_users', 'dash_roles',
+  'dict_self_admin_up', 'dict_self_admin_down',
+  'dict_paper_encoded_up', 'dict_paper_encoded_down',
+  'dict_capi_up', 'dict_capi_down',
+] as const;
+
+export type PermissionSet = Record<string, boolean>;
+
+/**
+ * Project a resolved F2_Roles row into a boolean perm map. ADVISORY ONLY —
+ * the client uses it to hide nav controls it can't use; the Worker's
+ * requirePerm (rbac.ts) remains the sole authorization gate. Coerces each
+ * perm cell to a strict boolean.
+ */
+export function projectPermissions(role: Record<string, unknown>): PermissionSet {
+  const out: PermissionSet = {};
+  for (const k of PERM_KEYS) out[k] = !!role[k];
+  return out;
+}
+
 export type UsersListFn = () => Promise<AppsScriptResponse<{ users: AdminUserRow[] }>>;
 export type RolesListFn = () => Promise<AppsScriptResponse<{ roles: AdminRoleRow[] }>>;
 
@@ -99,6 +126,9 @@ interface LoginSuccess {
   role_version: number;
   expires_at: number;
   password_must_change: boolean;
+  // FX-002 (#324): advisory perm map for client-side nav gating. The server
+  // (rbac.ts) stays authoritative; this only hides controls the role can't use.
+  permissions: PermissionSet;
 }
 
 function errorJson(code: string, message: string, status: number, headers: Record<string, string> = {}): Response {
@@ -234,6 +264,7 @@ export async function handleLogin(
     role_version: role.version,
     expires_at: expiresAt,
     password_must_change: isTruthy(user.password_must_change),
+    permissions: projectPermissions(role),
   };
   return jsonResponse(success, 200);
 }
@@ -412,6 +443,7 @@ export async function handleChangeMyPassword(
     role_version: role.version,
     expires_at: expiresAt,
     password_must_change: false,
+    permissions: projectPermissions(role),
   };
   return jsonResponse(success, 200);
 }
