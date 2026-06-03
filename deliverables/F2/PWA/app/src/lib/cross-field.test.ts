@@ -36,6 +36,21 @@ describe('evaluateCrossField', () => {
     expect(out.map((w) => w.id)).not.toContain('PROF-01');
   });
 
+  it('flags PROF-05 (error) when both Q9 years and months are zero (#305/3a)', () => {
+    const out = evaluateCrossField({ Q4: 30, Q5: 'Nurse', Q9_1: 0, Q9_2: 0 });
+    expect(out.find((w) => w.id === 'PROF-05')?.severity).toBe('error');
+  });
+
+  it('allows years=0 with months ≥ 1 (valid sub-1-year tenure) — no PROF-05', () => {
+    const out = evaluateCrossField({ Q4: 30, Q5: 'Nurse', Q9_1: 0, Q9_2: 6 });
+    expect(out.map((w) => w.id)).not.toContain('PROF-05');
+  });
+
+  it('does not flag PROF-05 for normal tenure', () => {
+    const out = evaluateCrossField({ Q4: 30, Q5: 'Nurse', Q9_1: 3, Q9_2: 0 });
+    expect(out.map((w) => w.id)).not.toContain('PROF-05');
+  });
+
   it('flags PROF-02 when a non-doctor reports a specialty', () => {
     const out = evaluateCrossField({ Q5: 'Nurse', Q6: 'Pediatrics' });
     expect(out.map((w) => w.id)).toContain('PROF-02');

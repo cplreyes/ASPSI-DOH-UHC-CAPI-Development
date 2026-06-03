@@ -118,6 +118,7 @@ export const en = {
   },
   crossField: {
     tenureImplausible: 'Years of service ({{years}}) must be less than your age ({{age}}) minus 20. Please correct your tenure or age.',
+    tenureZero: 'Years and months of service cannot both be zero. Enter at least 1 month of tenure at this facility.',
     specialtyMismatch:
       'Role "{{role}}" does not normally carry a medical specialty ({{specialty}}).',
     employmentClassDerived: 'Derived employment class: {{employmentClass}}.',
