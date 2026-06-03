@@ -122,6 +122,7 @@ export const fil: EnBundle = {
   crossField: {
     // Updated for the R3 #305 age−20 hard block; Tagalog draft pending ASPSI QC.
     tenureImplausible: 'Ang taon ng serbisyo ({{years}}) ay dapat mas mababa sa iyong edad ({{age}}) na binawasan ng 20. Pakitama ang iyong tenure o edad.',
+    tenureZero: 'Years and months of service cannot both be zero. Enter at least 1 month of tenure at this facility.',
     specialtyMismatch:
       'Ang tungkuling "{{role}}" ay karaniwang walang medikal na specialty ({{specialty}}).',
     employmentClassDerived: 'Hinangong klase ng empleyo: {{employmentClass}}.',

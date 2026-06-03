@@ -121,6 +121,7 @@ export const bis: EnBundle = {
   },
   crossField: {
     tenureImplausible: 'Ang gireport nga tenure ({{years}} ka tuig) dili katuohan alang sa edad nga {{age}}.',
+    tenureZero: 'Years and months of service cannot both be zero. Enter at least 1 month of tenure at this facility.',
     specialtyMismatch:
       'Ang tahas nga "{{role}}" kasagaran walay medikal nga espesyalidad ({{specialty}}).',
     employmentClassDerived: 'Gisubay nga klase sa trabaho: {{employmentClass}}.',

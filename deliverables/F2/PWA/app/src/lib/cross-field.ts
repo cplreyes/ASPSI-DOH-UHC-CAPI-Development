@@ -102,6 +102,25 @@ export function evaluateCrossField(values: FormValues): Warning[] {
     });
   }
 
+  // R3 #305/3a (Carl 2026-06-03, pending Myra's final confirm): block the
+  // "0 years AND 0 months" tenure combination — a respondent must have worked
+  // some time at the facility. years=0 with months>=1 (valid sub-1-year HCWs)
+  // remains allowed.
+  const tenureMonths = typeof values.Q9_2 === 'number' ? values.Q9_2 : Number(values.Q9_2);
+  if (
+    Number.isFinite(tenureYears) &&
+    Number.isFinite(tenureMonths) &&
+    tenureYears === 0 &&
+    tenureMonths === 0
+  ) {
+    out.push({
+      id: 'PROF-05',
+      severity: 'error',
+      message: { key: 'crossField.tenureZero' },
+      fields: ['Q9_1', 'Q9_2'],
+    });
+  }
+
   const role = typeof values.Q5 === 'string' ? values.Q5 : '';
   const specialty = typeof values.Q6 === 'string' ? values.Q6 : '';
   if (role && !DOCTOR_DENTIST.has(role) && specialty && specialty !== 'No specialty') {
