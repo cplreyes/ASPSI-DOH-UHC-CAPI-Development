@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: UAT Guide
+  - name: UAT Guide (F2 PWA)
     url: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/blob/main/docs/F2-PWA-UAT-Guide.md
-    about: Read the test scenarios before filing feedback
+    about: Read the test scenarios before filing F2 feedback
+  - name: CAPI QA Handoff Workflow (F1/F3/F4)
+    url: https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/blob/main/docs/CAPI-QA-Handoff-Workflow.md
+    about: F1/F3/F4 bug reporting — severity rubric, labels, and the generator-fix flow

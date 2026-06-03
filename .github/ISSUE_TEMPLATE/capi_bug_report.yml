@@ -1,0 +1,117 @@
+name: CAPI Bug Report (F1 / F3 / F4)
+description: Report a defect found while desk-testing or running the CSPro/CSEntry CAPI instruments
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For the **CSPro/CSEntry** instruments (F1 Facility Head, F3 Patient, F4 Household).
+        For the F2 Healthcare-Worker PWA, use **Bug Report** instead.
+        Fill every field — a complete report is fixed (at the generator) and re-flighted faster.
+
+  - type: dropdown
+    id: instrument
+    attributes:
+      label: Instrument
+      options:
+        - F1 — Facility Head
+        - F3 — Patient
+        - F4 — Household
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Where (section + question / PROC)
+      placeholder: 'e.g. Section F, Q121 (Q121_DOH_LIC_DIFFICULT) — or a PROC name from a compile error'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: context
+    attributes:
+      label: Test context
+      options:
+        - Designer compile (Build → Compile)
+        - Desk test (DCF + FMF walkthrough in CSEntry)
+        - CSEntry smoke test (cover → last question)
+        - Sync round-trip (tablet → CSWeb)
+        - Pretest pilot (live, real respondents)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: bugtype
+    attributes:
+      label: Bug type
+      description: The triager maps this to a `type:` label.
+      options:
+        - Skip logic — wrong routing / skip target
+        - Validation — hard / soft / gate behaves wrong
+        - GPS or photo capture
+        - Roster / occurrence flow (F4)
+        - PSGC cascade (region → province → city → barangay)
+        - Sync / CSWeb
+        - Display / form layout
+        - Question text / value set / translation
+        - Designer compile error
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the <instrument> app in CSEntry
+        2. Start a case with questionnaire number "…"
+        3. At Q__, answer "…"
+        4. …
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: 'What should have happened per the skip-logic/validation spec? (e.g. "Q__ = No should skip to Q__")'
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      placeholder: What actually happened? Paste the exact Designer/CSEntry message (PROC name + line) for a compile error.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - Critical — data loss, case won't save/sync, or cannot proceed through the interview
+        - High — wrong skip or validation (wrong data captured), interview still completes
+        - Medium — display / form-layout / UX issue; data captured correctly
+        - Low — cosmetic, typo, or label wording
+    validations:
+      required: true
+
+  - type: input
+    id: env
+    attributes:
+      label: Tablet + version
+      placeholder: 'e.g. Samsung Tab A9, CSEntry 8.0, app built from <date> generated artifacts'
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or screen recording
+      placeholder: Drag and drop images here (a photo of the CSEntry/Designer screen), or paste a link.
+    validations:
+      required: false
