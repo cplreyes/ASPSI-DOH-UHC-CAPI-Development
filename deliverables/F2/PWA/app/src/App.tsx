@@ -242,7 +242,11 @@ function AppShell() {
       // Auto-inject the active locale so the harmonization ETL can stratify
       // by language without needing the user to declare it explicitly. See
       // codebook §13 (survey_language) and §15.E.
-      const valuesWithMeta: FormValues = { ...values, survey_language: locale };
+      // §15.B: persist explicit consent. F2 has no separate consent flag —
+      // reaching submit means the respondent saw the consent disclosure and
+      // chose to submit, so consent_given = 1 (Yes), for audit parity with the
+      // F1/F3/F4 CONSENT_GIVEN field.
+      const valuesWithMeta: FormValues = { ...values, survey_language: locale, consent_given: 1 };
       await saveDraft(draftId, valuesWithMeta, enrollmentInfo);
       // Capture GPS at the click moment (5s timeout, all failures map to null).
       // Per spec §9 the disclosure is shown on the review screen near submit.
