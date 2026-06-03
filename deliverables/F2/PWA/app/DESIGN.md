@@ -38,9 +38,23 @@ the trust HCWs need to install government software on their personal phones.
 
 **Approach:** Restrained. One signal color. Warm-cool neutrals (verde-tinted) that read distinct from generic gov-tech white.
 
-> **Caveat:** Hex values below are best-fit approximations of the visible DOH seal +
-> the documented Verde Vision background tint `#e7efe7`. Refine when the official
-> DOH brand-book PDF is available (Department Order 2020-0011, Verde Vision 2023+).
+> **Brand anchors (confirmed 2026-06-03 — palette LOCKED).** Reviewed DOH AO
+> 2020-0011 (the official file is an image-only scan — no extractable hex) and the
+> DOH logo vector. **Official DOH palette:** emerald `#00A651`, inner-rim yellow
+> `#FFF200`, cherry red `#ED1C24` (+ navy `#2E3192`, maroon `#86221D`), over the
+> Verde Vision background tint `#e7efe7`. The Verde Manual tokens below are the
+> **accessibility-adjusted derivations** of those anchors — *not* the raw primaries,
+> which fail WCAG on this surface:
+> - `--signal #006B3F` = the emerald **darkened** so white-on-signal CTAs clear AA
+>   (raw `#00A651` is only ≈ 2.8:1 for white text; `#006B3F` ≈ 5.6:1).
+> - `--error #B72020` = the cherry **darkened** so error text clears AA on paper
+>   (raw `#ED1C24` ≈ 3.8:1 on `--paper`; `#B72020` ≈ 6.4:1).
+> - `--highlight #E5B23B` = a **muted gold**, not raw `#FFF200`, per the one-signal
+>   restraint rule (used only on save-confirmation punctuation).
+> - `--paper #F2F5EE` = the documented `#e7efe7` tint, warmed slightly for screen comfort.
+>
+> These are intentional, considered choices; the palette is final and not blocked
+> on any further DOH document (#163).
 
 ### Light mode (default)
 
@@ -290,6 +304,7 @@ If you're about to commit a UI change, verify:
 | ---------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 2026-04-26 | Initial design system created | Created by `/gstack-design-consultation`. Memorable thing: "real software, not a government form." Verde Manual chosen over Field Manual to ladder up to DOH institutional brand without losing craft. Hex values approximated from visible DOH seal + Verde Vision documented background; refine when official brand-book PDF is available. |
 | 2026-05-09 | Sidebar avatar swept to `rounded-sm` square monogram | Per #61 (E4-APRT-049 sweep): the circular avatar in `admin/Layout.tsx` was the most cookie-cutter SaaS-admin signal in the portal. Squared monogram aligns with the print-influenced Verde Manual aesthetic and the "no `rounded-full` except for radio dots" rule. PermDots in `roles/RolesDashboard.tsx` remain the only legitimate `rounded-full`. |
+| 2026-06-03 | Verde Manual palette LOCKED against confirmed DOH anchors (#163) | Resolved E3-F2-PWA-DESIGN-005 without the (image-only, unextractable) AO 2020-0011 scan. Confirmed the official DOH palette from the DOH logo vector: emerald `#00A651`, yellow `#FFF200`, cherry `#ED1C24`. **No token values changed** — each Verde Manual token is a deliberate accessibility-adjusted derivation (raw `#00A651` fails AA for white-on-signal CTAs at ≈2.8:1; raw `#ED1C24` fails AA as error text on paper at ≈3.8:1), so swapping in the raw primaries would regress a UAT'd, WCAG-AAA/AA production palette. Removed the "refine when official PDF available" caveat; palette is final. |
 
 ---
 
@@ -297,7 +312,7 @@ If you're about to commit a UI change, verify:
 
 - `../2026-04-17-design-spec.md` — F2 PWA architecture (this file is the visual layer)
 - `../2026-04-21-implementation-plan.md` — milestone roadmap M0–M11
-- DOH Philippines visual identity: Department Order 2020-0011, Verde Vision 2023+ (PDFs paywalled on Scribd; refine when available)
+- DOH Philippines visual identity: Department Order 2020-0011 (reviewed 2026-06-03 — official PDF is an image-only scan, no extractable hex), Verde Vision 2023+. Official palette anchors confirmed from the DOH logo vector: emerald `#00A651`, yellow `#FFF200`, cherry `#ED1C24`, navy `#2E3192`, maroon `#86221D`. Verde Manual tokens are the accessibility-adjusted derivations (see Color section). Palette locked (#163).
 - gov.uk design system — institutional restraint reference: <https://design-system.service.gov.uk/>
 - US Web Design System (Public Sans origin): <https://designsystem.digital.gov/>
 - Bunny Fonts (CDN for development): <https://fonts.bunny.net/>
