@@ -37,6 +37,7 @@ from cspro_helpers import (
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, uhc9_item, record, build_geo_id,
     _gps_fields, _photo_block, _case_control_items,
+    apply_translations,
 )
 
 # ============================================================
@@ -110,6 +111,8 @@ def build_field_control():
         # Informed consent block (Bug #5 fix from F1-Skip-Logic-and-Validations.md)
         numeric("CONSENT_GIVEN",                "Informed consent given",                       length=1,
                 value_set_options=YES_NO),
+        # §15.E — language used for the interview (getlanguage() at case start).
+        alpha("LANGUAGE_USED",                  "Language used for the interview",              length=20),
     ]
     return record("FIELD_CONTROL", "Field Control", "A", items)
 
@@ -1090,14 +1093,16 @@ def build_dictionary():
                 "labels": [{"text": "FacilityHeadSurvey Level"}],
                 "ids": {
                     "items": [
-                        {
-                            "name": "QUESTIONNAIRE_NO",
-                            "labels": [{"text": "Questionnaire No"}],
-                            "contentType": "numeric",
-                            "start": 2,
-                            "length": 6,
-                            "zeroFill": True,
-                        }
+                        {"name": "REGION_CODE",            "labels": [{"text": "Region Code (PSGC)"}],
+                         "contentType": "numeric", "start": 2,  "length": 2, "zeroFill": True},
+                        {"name": "PROVINCE_HUC_CODE",      "labels": [{"text": "Province / HUC Code (PSGC)"}],
+                         "contentType": "numeric", "start": 4,  "length": 2, "zeroFill": True},
+                        {"name": "CITY_MUNICIPALITY_CODE", "labels": [{"text": "City / Municipality Code (PSGC)"}],
+                         "contentType": "numeric", "start": 6,  "length": 3, "zeroFill": True},
+                        {"name": "FACILITY_NO",            "labels": [{"text": "Facility Number (within municipality)"}],
+                         "contentType": "numeric", "start": 9,  "length": 2, "zeroFill": True},
+                        {"name": "CASE_SEQ",               "labels": [{"text": "Case Sequence (per-facility, per-instrument)"}],
+                         "contentType": "numeric", "start": 11, "length": 3, "zeroFill": True},
                     ]
                 },
                 "records": records,
@@ -1109,6 +1114,7 @@ def build_dictionary():
 def main():
     out_path = Path(__file__).parent / "FacilityHeadSurvey.dcf"
     dictionary = build_dictionary()
+    dictionary = apply_translations(dictionary, Path(__file__).parent / "translations")
     out_path.write_text(json.dumps(dictionary, indent=2), encoding="utf-8")
 
     # Diagnostics

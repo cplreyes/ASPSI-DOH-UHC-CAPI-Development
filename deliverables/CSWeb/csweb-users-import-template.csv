@@ -1,0 +1,9 @@
+username,first name,last name,user role,password,email,phone
+root-reyes,Carl,Reyes,Administrator,REPLACE_WITH_STRONG_PW,,
+adm-cruz,Ana,Cruz,account-admin,REPLACE_WITH_STRONG_PW,,
+dm-santos,Maria,Santos,data-manager,REPLACE_WITH_STRONG_PW,,
+ra-01,Juan,Delacruz,supervisor-monitor,REPLACE_WITH_STRONG_PW,,
+fs-01,Pedro,Reyes,supervisor-monitor,REPLACE_WITH_STRONG_PW,,
+se-001,Jose,Garcia,field-sync,REPLACE_WITH_STRONG_PW,,
+se-002,Liza,Ramos,field-sync,REPLACE_WITH_STRONG_PW,,
+se-003,Mark,Tan,field-sync,REPLACE_WITH_STRONG_PW,,

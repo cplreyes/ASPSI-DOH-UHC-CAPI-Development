@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<!--
+  UHC Year 2 — BI Dashboard Prototype (#177 / E4-INT-002)
+  Self-contained: single file, no server, no account, no external dependencies.
+  Renders the 6 pages of bi-dashboard-blueprint.md §5 with the §3.2 UHC metrics
+  over a SYNTHETIC uhc_y2 sample (deterministic seed). Swap the synthetic
+  generator for the real BigQuery uhc_y2 views (etl-spec.md Load stage) to go live.
+  De-identified by construction — no name/contact/precise-GPS/photo fields exist.
+  Prepared by Carl Patrick L. Reyes · audience: DOH-PMSMD · ADB · ASPSI.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UHC Year 2 — Unified Monitoring Dashboard (Prototype)</title>
+<style>
+  :root{
+    --emerald:#15663F; --emerald-2:#2E9E6B; --emerald-3:#5FBF8C; --paper:#F4F8F4;
+    --ink:#16231C; --muted:#5C7065; --hair:#D7E3DB; --card:#FFFFFF; --warn:#B4690E;
+    --bar1:#2E9E6B; --bar2:#3E7CB1; --bar3:#9B6BC0; --bar4:#C0843E; --bar5:#C05B5B;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Public Sans","Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--paper);font-size:14px;line-height:1.45}
+  header{background:var(--emerald);color:#fff;padding:14px 22px;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  header h1{font-size:18px;margin:0;font-weight:700;letter-spacing:.2px}
+  header .sub{font-size:12px;opacity:.85}
+  header .badge{margin-left:auto;font-size:11px;background:rgba(255,255,255,.16);padding:3px 9px;border-radius:20px;font-family:ui-monospace,"JetBrains Mono",monospace}
+  .banner{background:#FBF3E3;border-bottom:1px solid #EAD9B0;color:#6B4E14;padding:7px 22px;font-size:12px}
+  .controls{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:11px 22px;background:#EAF1EB;border-bottom:1px solid var(--hair)}
+  .controls label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);display:flex;flex-direction:column;gap:3px}
+  .controls select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--hair);border-radius:6px;background:#fff;color:var(--ink);min-width:150px}
+  .controls .reset{align-self:flex-end;font-size:12px;color:var(--emerald);background:none;border:1px solid var(--emerald);border-radius:6px;padding:6px 12px;cursor:pointer}
+  nav{display:flex;gap:2px;padding:0 14px;background:#fff;border-bottom:1px solid var(--hair);overflow-x:auto}
+  nav button{font:inherit;font-size:13px;padding:11px 15px;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+  nav button.active{color:var(--emerald);border-bottom-color:var(--emerald);font-weight:600}
+  main{padding:18px 22px;max-width:1280px}
+  .page{display:none}.page.active{display:block}
+  .page-intro{color:var(--muted);font-size:12.5px;margin:-2px 0 16px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:12px;margin-bottom:20px}
+  .kpi{background:var(--card);border:1px solid var(--hair);border-left:3px solid var(--emerald-2);border-radius:8px;padding:13px 15px}
+  .kpi .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+  .kpi .val{font-size:26px;font-weight:700;font-family:ui-monospace,"JetBrains Mono",monospace;margin-top:3px;line-height:1.1}
+  .kpi .sub{font-size:11.5px;color:var(--muted);margin-top:3px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px}
+  .panel{background:var(--card);border:1px solid var(--hair);border-radius:8px;padding:14px 16px}
+  .panel h3{margin:0 0 2px;font-size:14px}.panel .cap{font-size:11.5px;color:var(--muted);margin-bottom:10px}
+  table.dt{width:100%;border-collapse:collapse;font-size:12.5px}
+  table.dt th,table.dt td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--hair)}
+  table.dt th{color:var(--muted);font-weight:600;text-transform:uppercase;font-size:10.5px;letter-spacing:.4px}
+  table.dt td.num{text-align:right;font-family:ui-monospace,monospace}
+  .chart text{font-family:"Public Sans",system-ui,sans-serif}
+  .row-label{font-size:12px;fill:var(--ink)}
+  .val-label{font-size:11px;fill:var(--muted);font-family:ui-monospace,monospace}
+  .gridline{stroke:var(--hair);stroke-width:1}
+  footer{padding:16px 22px;color:var(--muted);font-size:11.5px;border-top:1px solid var(--hair);margin-top:10px}
+  .pill{display:inline-block;background:#EAF1EB;color:var(--emerald);border-radius:4px;padding:1px 6px;font-size:11px;font-family:ui-monospace,monospace}
+  .gated{position:relative}
+  .gated .veil{position:absolute;inset:0;background:rgba(244,248,244,.78);border-radius:8px;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;font-size:12.5px;color:var(--warn)}
+</style>
+</head>
+<body>
+<header>
+  <h1>UHC Year 2 — Unified Monitoring Dashboard</h1>
+  <span class="sub">F1 Facility · F2 HCW · F3 Patient · F4 Household — harmonized <code>uhc_y2</code> store</span>
+  <span class="badge" id="provBadge">source: uhc_y2 (dry-run) · run 2026-06-04</span>
+</header>
+<div class="banner">
+  <strong>Prototype on synthetic data</strong> — deterministic sample, not real respondents. Implements
+  <code>bi-dashboard-blueprint.md</code> §5 with §3.2 metrics; swap the generator for the real BigQuery
+  <code>uhc_y2</code> views to go live. De-identified by construction.
+</div>
+<div class="controls">
+  <label>Region<select id="fRegion"></select></label>
+  <label>Facility type<select id="fType"></select></label>
+  <label>Disposition<select id="fDisp"></select></label>
+  <button class="reset" id="reset">Reset filters</button>
+  <span style="margin-left:auto;font-size:12px;color:var(--muted)" id="nLabel"></span>
+</div>
+<nav id="tabs"></nav>
+<main>
+  <section class="page" data-page="coverage"></section>
+  <section class="page" data-page="f1"></section>
+  <section class="page" data-page="f2"></section>
+  <section class="page" data-page="f3"></section>
+  <section class="page" data-page="f4"></section>
+  <section class="page" data-page="cross"></section>
+</main>
+<footer>
+  Provenance: <span class="pill">source = uhc_y2</span> <span class="pill">ETL run_date = 2026-06-04 (dry-run)</span>
+  · De-identified views only (Privacy Plan §3.3); area centroids, no household points; min cell-size suppression n&lt;5 applies on the real build.
+  · F1↔F3↔F4 linkage live via the 12-digit case key's 9-digit facility block (§15.H resolved 2026-06-04); F2↔facility linkage gated on the §15.G master list.
+  · #177 / E4-INT-002 — built from <code>bi-dashboard-blueprint.md</code>.
+</footer>
+<script>
+/* ---------- deterministic PRNG (stable sample across loads) ---------- */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const rng=mulberry32(20260604);
+const R=()=>rng();
+function pick(items,weights){let s=weights.reduce((a,b)=>a+b,0),r=R()*s;for(let i=0;i<items.length;i++){r-=weights[i];if(r<=0)return items[i];}return items[items.length-1];}
+function chance(p){return R()<p;}
+function randint(a,b){return a+Math.floor(R()*(b-a+1));}
+
+/* ---------- dimensions (codebook §1–§13) ---------- */
+const REGIONS=[
+  {n:'NCR',urban:.95,w:18},{n:'Region III',urban:.70,w:16},{n:'Region IV-A',urban:.75,w:16},
+  {n:'Region VI',urban:.55,w:14},{n:'Region VII',urban:.60,w:14},{n:'BARMM',urban:.25,w:12}];
+const REGION_W=REGIONS.map(r=>r.w);
+const FTYPES=['RHU','CHO','Hospital L1','Hospital L2','Hospital L3'];
+const FTYPE_W=[32,14,24,18,12];
+const DISPOS=['completed','partial','refused','non-contact','ineligible'];
+const DISP_W=[83,5,5,5,2];
+const DISCIPLINE=['Physician/Doctor','Nurse','Midwife','Pharmacist','Nursing assistant','Barangay Health Worker','Other'];
+const DISC_W=[15,30,15,10,10,12,8];
+const TENURE=['<1 yr','1–3 yrs','3–5 yrs','5–10 yrs','10+ yrs'];const TEN_W=[14,26,22,22,16];
+const AGEBAND=['0–17','18–34','35–49','50–64','65+'];const AGE_W=[10,30,28,22,10];
+const PH=['Member','Dependent','None'];
+const Q125=['Transfer to a new facility (same role)','Change specialization','Change profession','Extended leave','Work abroad','Retire'];
+const Q125_W=[26,14,18,8,22,12];
+const HRCHALL=['Staffing shortage','Low compensation','Heavy workload','Supply/equipment gaps','Training needs','Infrastructure'];
+
+function regionUrban(n){return REGIONS.find(r=>r.n===n).urban;}
+
+/* ---------- synthetic uhc_y2 (one array per blueprint §2 table) ---------- */
+function genFacilities(N){const a=[];for(let i=0;i<N;i++){
+  const region=pick(REGIONS.map(r=>r.n),REGION_W),u=regionUrban(region),type=pick(FTYPES,FTYPE_W);
+  const isHosp=type.startsWith('Hospital');
+  a.push({facility_id:'F1-'+String(1000+i),region,facility_type:type,
+    accredited:chance(.30+u*.42+(isHosp?.10:0)),
+    nbb_correct:chance(.38+u*.34),
+    capitation_viable:chance(.45+u*.25),
+    referral_works:chance(.5+u*.2),
+    hr_challenges:Array.from(new Set([pick(HRCHALL,[5,4,4,3,2,2]),pick(HRCHALL,[5,4,4,3,2,2])])),
+    disposition:pick(DISPOS,DISP_W)});}
+  return a;}
+function genHCWs(N){const a=[];for(let i=0;i<N;i++){
+  const region=pick(REGIONS.map(r=>r.n),REGION_W),u=regionUrban(region),type=pick(FTYPES,FTYPE_W);
+  const tenure=pick(TENURE,TEN_W),plan=pick(Q125,Q125_W);
+  const lowRisk=plan.startsWith('Transfer')||plan==='Change specialization';
+  // younger/lower-tenure tilt toward leaving
+  const tenureBoost=(tenure==='<1 yr'||tenure==='1–3 yrs')?.12:0;
+  a.push({region,facility_type:type,discipline:pick(DISCIPLINE,DISC_W),tenure_band:tenure,
+    public_private:chance(.78)?'Public':'Both',
+    uhc_aware:chance(.5+u*.3),
+    retention_risk:(!lowRisk)||(chance(tenureBoost)),
+    plan,disposition:pick(DISPOS,DISP_W)});}
+  return a;}
+function genPatients(N){const a=[];for(let i=0;i<N;i++){
+  const region=pick(REGIONS.map(r=>r.n),REGION_W),u=regionUrban(region),type=pick(FTYPES,FTYPE_W);
+  const sat=Math.min(5,Math.max(1,Math.round(3.2+u*1.3+(R()-.5)*1.6)));
+  a.push({region,facility_type:type,age_band:pick(AGEBAND,AGE_W),sex:chance(.54)?'Female':'Male',
+    philhealth:pick(PH,[58+u*18,16,26-u*18<6?6:26-u*18]),
+    visit_type:chance(.80)?'Outpatient':'Inpatient',
+    satisfaction:sat,top2:sat>=4,
+    nbb_experienced:chance(.28+u*.30),disposition:pick(DISPOS,DISP_W)});}
+  return a;}
+function genHouseholds(N){const a=[];for(let i=0;i<N;i++){
+  const region=pick(REGIONS.map(r=>r.n),REGION_W),u=regionUrban(region),type=pick(FTYPES,FTYPE_W);
+  const size=randint(1,8);
+  // capacity-to-pay (non-food exp) scales with urbanicity; OOP health is heavier-tailed & worse rurally
+  const capacity=Math.round((9000+u*42000)*(0.6+R()*0.9));
+  const oop=Math.round(capacity*((0.06+(1-u)*0.30)*(0.4+R()*1.6)));
+  const phCov=Math.min(1,Math.max(0,(0.45+u*0.4)+(R()-.5)*0.3));
+  a.push({region,facility_type:type,size,capacity_to_pay:capacity,oop_health:oop,
+    oop_share:oop/(oop+capacity),
+    che:(oop/capacity)>0.40,
+    ph_coverage:phCov,disposition:pick(DISPOS,DISP_W)});}
+  return a;}
+
+const DATA={
+  f1:genFacilities(140), f2:genHCWs(420), f3:genPatients(1150), f4:genHouseholds(840)
+};
+const TARGETS={f1:150,f2:480,f3:1300,f4:920};
+
+/* ---------- filtering ---------- */
+const state={region:'All',type:'All',disp:'completed'};
+function passes(r){return (state.region==='All'||r.region===state.region)
+  && (state.type==='All'||r.facility_type===state.type)
+  && (state.disp==='All'||r.disposition===state.disp);}
+function F(key){return DATA[key].filter(passes);}
+// AAPOR needs all dispositions regardless of the disposition filter:
+function Fall(key){return DATA[key].filter(r=>(state.region==='All'||r.region===state.region)&&(state.type==='All'||r.facility_type===state.type));}
+
+/* ---------- aggregation helpers ---------- */
+const pct=(n,d)=>d?100*n/d:0;
+const fmtPct=x=>x.toFixed(1)+'%';
+const fmtPHP=x=>'₱'+Math.round(x).toLocaleString();
+function countBy(arr,fn){const m=new Map();arr.forEach(r=>{const k=fn(r);m.set(k,(m.get(k)||0)+1);});return m;}
+function rate(arr,fn){const n=arr.filter(fn).length;return pct(n,arr.length);}
+function aapor(arr){const c=arr.filter(r=>r.disposition==='completed').length;
+  const denom=arr.filter(r=>['completed','partial','refused','non-contact'].includes(r.disposition)).length;
+  return pct(c,denom);}
+
+/* ---------- render helpers ---------- */
+function el(html){const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstChild;}
+function kpi(lbl,val,sub,color){return `<div class="kpi" style="border-left-color:${color||'var(--emerald-2)'}"><div class="lbl">${lbl}</div><div class="val">${val}</div><div class="sub">${sub||''}</div></div>`;}
+function panel(title,cap,inner,cls){return `<div class="panel ${cls||''}"><h3>${title}</h3><div class="cap">${cap||''}</div>${inner}</div>`;}
+
+// horizontal bar chart from [{label,value}]
+function hbar(rows,{fmt=(v)=>v.toFixed(0),color='var(--bar1)',max=null,colors=null}={}){
+  if(!rows.length)return '<div style="color:var(--muted);font-size:12px">No data for this filter.</div>';
+  const mx=max||Math.max(...rows.map(r=>r.value),1);
+  const rh=26,padL=140,w=520,h=rows.length*rh+8;
+  let s=`<svg class="chart" viewBox="0 0 ${w} ${h}" width="100%" height="${h}">`;
+  rows.forEach((r,i)=>{const y=i*rh+4,bw=(w-padL-70)*(r.value/mx),c=colors?colors[i%colors.length]:color;
+    s+=`<text class="row-label" x="0" y="${y+17}">${r.label}</text>`;
+    s+=`<rect x="${padL}" y="${y+5}" width="${Math.max(bw,1)}" height="15" rx="3" fill="${c}"/>`;
+    s+=`<text class="val-label" x="${padL+Math.max(bw,1)+6}" y="${y+17}">${fmt(r.value)}</text>`;});
+  return s+'</svg>';
+}
+// vertical bars (timeline-ish) from [{label,value}]
+function vbar(rows,{fmt=(v)=>v.toFixed(0),color='var(--bar2)'}={}){
+  const mx=Math.max(...rows.map(r=>r.value),1),w=520,h=180,padB=26,padT=10,bw=(w-20)/rows.length;
+  let s=`<svg class="chart" viewBox="0 0 ${w} ${h}" width="100%" height="${h}">`;
+  s+=`<line class="gridline" x1="0" y1="${h-padB}" x2="${w}" y2="${h-padB}"/>`;
+  rows.forEach((r,i)=>{const bh=(h-padB-padT)*(r.value/mx),x=10+i*bw+bw*0.18,y=h-padB-bh;
+    s+=`<rect x="${x}" y="${y}" width="${bw*0.64}" height="${Math.max(bh,1)}" rx="2" fill="${color}"/>`;
+    s+=`<text class="val-label" x="${x+bw*0.32}" y="${h-padB+15}" text-anchor="middle">${r.label}</text>`;});
+  return s+'</svg>';
+}
+function lineChart(series,labels,{color='var(--emerald-2)'}={}){
+  const w=520,h=180,padB=24,padT=10,padL=8,mx=Math.max(...series,1);
+  const sx=(w-padL-8)/(series.length-1),sy=(h-padB-padT)/mx;
+  let pts=series.map((v,i)=>`${padL+i*sx},${h-padB-v*sy}`).join(' ');
+  let s=`<svg class="chart" viewBox="0 0 ${w} ${h}" width="100%" height="${h}">`;
+  s+=`<line class="gridline" x1="0" y1="${h-padB}" x2="${w}" y2="${h-padB}"/>`;
+  s+=`<polyline fill="none" stroke="${color}" stroke-width="2" points="${pts}"/>`;
+  series.forEach((v,i)=>{s+=`<circle cx="${padL+i*sx}" cy="${h-padB-v*sy}" r="2.5" fill="${color}"/>`;});
+  s+=`<text class="val-label" x="0" y="${h-6}">${labels[0]}</text><text class="val-label" x="${w}" y="${h-6}" text-anchor="end">${labels[labels.length-1]}</text>`;
+  return s+'</svg>';
+}
+
+/* ---------- pages ---------- */
+function pCoverage(){
+  const comp={f1:F('f1').filter(r=>r.disposition==='completed').length,f2:F('f2').filter(r=>r.disposition==='completed').length,
+    f3:F('f3').filter(r=>r.disposition==='completed').length,f4:F('f4').filter(r=>r.disposition==='completed').length};
+  const totComp=comp.f1+comp.f2+comp.f3+comp.f4;
+  const totTarget=Object.values(TARGETS).reduce((a,b)=>a+b,0);
+  const aaporAll=aapor([...Fall('f1'),...Fall('f2'),...Fall('f3'),...Fall('f4')]);
+  const onHold=Math.round(totComp*0.06), dlq=Math.round(comp.f2*0.015);
+  const kpis=[kpi('Completed cases',totComp.toLocaleString(),'all four instruments','var(--emerald-2)'),
+    kpi('% of target',fmtPct(pct(totComp,totTarget)),`${totComp.toLocaleString()} / ${totTarget.toLocaleString()}`,'var(--bar2)'),
+    kpi('AAPOR response rate',fmtPct(aaporAll),'completed ÷ eligible contacts','var(--bar3)'),
+    kpi('On-Hold (QC)',onHold.toLocaleString(),'awaiting field clarification','var(--bar4)'),
+    kpi('F2 DLQ',dlq.toLocaleString(),'dead-letter (sync) queue','var(--bar5)')].join('');
+  // completed by instrument
+  const byInst=[{label:'F1 Facility',value:comp.f1},{label:'F2 HCW',value:comp.f2},{label:'F3 Patient',value:comp.f3},{label:'F4 Household',value:comp.f4}];
+  // coverage by region (completed, all instruments)
+  const regRows=REGIONS.map(rg=>({label:rg.n,value:[...F('f1'),...F('f2'),...F('f3'),...F('f4')].filter(r=>r.region===rg.n&&r.disposition==='completed').length}));
+  // synthetic 14-day submissions timeline
+  const days=14,series=[];for(let d=0;d<days;d++){series.push(Math.round((totComp/days)*(0.6+0.9*Math.abs(Math.sin((d+1)/2.2)))));}
+  const labels=Array.from({length:days},(_,i)=>'D'+(i+1));
+  // completion by facility table (expected vs landed) — top regions
+  const facRows=REGIONS.map(rg=>{const exp=Math.round(TARGETS.f1*rg.w/REGION_W.reduce((a,b)=>a+b,0));
+    const landed=F('f1').filter(r=>r.region===rg.n&&r.disposition==='completed').length;
+    return {region:rg.n,exp,landed};});
+  return `<div class="page-intro">Operations view — the unified all-4-instrument complement to the CSWeb dashboard + F2 admin portal (blueprint §5.1).</div>
+   <div class="kpis">${kpis}</div>
+   <div class="grid">
+   ${panel('Completed by instrument','count of cases with disposition = completed',hbar(byInst,{colors:['var(--bar1)','var(--bar2)','var(--bar3)','var(--bar4)']}))}
+   ${panel('Submissions / day','sync-health proxy — synthetic 14-day window',lineChart(series,labels))}
+   ${panel('Coverage by region','completed cases, all instruments (map placeholder — real build uses area-centroid points)',hbar(regRows,{color:'var(--emerald-2)'}))}
+   ${panel('Completion by facility (F1)','expected vs landed — mirrors the STL reconciliation routine',
+     `<table class="dt"><thead><tr><th>Region</th><th class="num">Expected</th><th class="num">Landed</th><th class="num">%</th></tr></thead><tbody>${
+     facRows.map(r=>`<tr><td>${r.region}</td><td class="num">${r.exp}</td><td class="num">${r.landed}</td><td class="num">${fmtPct(pct(r.landed,r.exp))}</td></tr>`).join('')}</tbody></table>`)}
+   </div>`;
+}
+function pF1(){const f=F('f1');
+  const kpis=[kpi('Facilities (F1)',f.length,'in current filter','var(--emerald-2)'),
+    kpi('YAKAP/Konsulta accredited',fmtPct(rate(f,r=>r.accredited)),'penetration','var(--bar2)'),
+    kpi('NBB knowledge correct',fmtPct(rate(f,r=>r.nbb_correct)),'facility KAP','var(--bar3)'),
+    kpi('Capitation viable',fmtPct(rate(f,r=>r.capitation_viable)),'system readiness','var(--bar4)')].join('');
+  const accByType=FTYPES.map(t=>({label:t,value:rate(f.filter(r=>r.facility_type===t),r=>r.accredited)}));
+  const kap=[{label:'UHC referral works',value:rate(f,r=>r.referral_works)},{label:'NBB correct',value:rate(f,r=>r.nbb_correct)},{label:'Capitation viable',value:rate(f,r=>r.capitation_viable)},{label:'Accredited',value:rate(f,r=>r.accredited)}];
+  const hr={};f.forEach(r=>r.hr_challenges.forEach(c=>hr[c]=(hr[c]||0)+1));
+  const hrRows=Object.entries(hr).map(([label,value])=>({label,value})).sort((a,b)=>b.value-a.value);
+  return `<div class="page-intro">Facility-head profile, KAP, and system-readiness (blueprint §5.2).</div>
+   <div class="kpis">${kpis}</div><div class="grid">
+   ${panel('Accreditation penetration by facility type','% YAKAP/Konsulta accredited',hbar(accByType,{fmt:fmtPct,color:'var(--bar1)'}))}
+   ${panel('KAP correct-rates','knowledge & system-function measures',hbar(kap,{fmt:fmtPct,color:'var(--bar3)'}))}
+   ${panel('Top HR challenges (Q163 multi-select)','count of facilities citing each',hbar(hrRows,{color:'var(--bar4)'}))}
+   </div>`;
+}
+function pF2(){const f=F('f2');
+  const kpis=[kpi('HCWs (F2)',f.length,'in current filter','var(--emerald-2)'),
+    kpi('Retention risk',fmtPct(rate(f,r=>r.retention_risk)),'Q125 plan ≠ stay/transfer-same-role','var(--bar5)'),
+    kpi('UHC aware',fmtPct(rate(f,r=>r.uhc_aware)),'KAP','var(--bar2)'),
+    kpi('Public practice',fmtPct(rate(f,r=>r.public_private==='Public')),'vs public+private','var(--bar3)')].join('');
+  const disc=DISCIPLINE.map(d=>({label:d,value:countBy(f,r=>r.discipline).get(d)||0}));
+  const ten=TENURE.map(t=>({label:t,value:countBy(f,r=>r.tenure_band).get(t)||0}));
+  const riskByDisc=DISCIPLINE.map(d=>({label:d,value:rate(f.filter(r=>r.discipline===d),r=>r.retention_risk)}));
+  const plans=Q125.map(p=>({label:p,value:countBy(f,r=>r.plan).get(p)||0}));
+  return `<div class="page-intro">Healthcare-worker profile, awareness, and retention risk (blueprint §5.3).</div>
+   <div class="kpis">${kpis}</div><div class="grid">
+   ${panel('Discipline mix','HCW count by role (§6)',hbar(disc,{color:'var(--bar2)'}))}
+   ${panel('Tenure band','count by years at facility',hbar(ten,{color:'var(--bar3)'}))}
+   ${panel('Retention risk by discipline','% planning to leave (≠ stay/transfer-same-role)',hbar(riskByDisc,{fmt:fmtPct,color:'var(--bar5)'}))}
+   ${panel('Q125 future plans','post-facility intentions (R3-corrected item)',hbar(plans,{color:'var(--bar4)'}))}
+   </div>`;
+}
+function pF3(){const f=F('f3');
+  const kpis=[kpi('Patients (F3)',f.length,'in current filter','var(--emerald-2)'),
+    kpi('Satisfaction (Top-2-box)',fmtPct(rate(f,r=>r.top2)),'rated 4–5 of 5','var(--bar2)'),
+    kpi('PhilHealth member',fmtPct(rate(f,r=>r.philhealth==='Member')),'coverage','var(--bar3)'),
+    kpi('NBB experienced',fmtPct(rate(f,r=>r.nbb_experienced)),'patient experience','var(--bar4)')].join('');
+  const age=AGEBAND.map(a=>({label:a,value:countBy(f,r=>r.age_band).get(a)||0}));
+  const opip=[{label:'Outpatient',value:countBy(f,r=>r.visit_type).get('Outpatient')||0},{label:'Inpatient',value:countBy(f,r=>r.visit_type).get('Inpatient')||0}];
+  const satByType=FTYPES.map(t=>({label:t,value:rate(f.filter(r=>r.facility_type===t),r=>r.top2)}));
+  return `<div class="page-intro">Patient profile, utilization, NBB experience, and satisfaction (blueprint §5.4).</div>
+   <div class="kpis">${kpis}</div><div class="grid">
+   ${panel('Age-band profile','patient count by age band (§4)',hbar(age,{color:'var(--bar2)'}))}
+   ${panel('Outpatient vs inpatient','visit-type split',hbar(opip,{colors:['var(--bar1)','var(--bar4)']}))}
+   ${panel('Satisfaction index by facility type','Top-2-box %',hbar(satByType,{fmt:fmtPct,color:'var(--bar3)'}))}
+   </div>`;
+}
+function pF4(){const f=F('f4');
+  const che=rate(f,r=>r.che);
+  const oopShare=(()=>{let oop=0,tot=0;f.forEach(r=>{oop+=r.oop_health;tot+=r.oop_health+r.capacity_to_pay;});return pct(oop,tot);})();
+  const phCov=f.length?100*f.reduce((a,r)=>a+r.ph_coverage,0)/f.length:0;
+  const kpis=[kpi('Households (F4)',f.length,'in current filter','var(--emerald-2)'),
+    kpi('CHE incidence',fmtPct(che),'OOP ÷ capacity > 40% (WHO)','var(--bar5)'),
+    kpi('OOP share',fmtPct(oopShare),'of health spending','var(--bar4)'),
+    kpi('PhilHealth coverage',fmtPct(phCov),'mean household coverage','var(--bar3)')].join('');
+  const cheByRegion=REGIONS.map(rg=>({label:rg.n,value:rate(f.filter(r=>r.region===rg.n),r=>r.che)}));
+  const sizeRows=[1,2,3,4,5,6,7,8].map(s=>({label:s+(s===8?'+':'')+' member'+(s>1?'s':''),value:f.filter(r=>r.size===s).length}));
+  const oopByType=FTYPES.map(t=>{const sub=f.filter(r=>r.facility_type===t);return {label:t,value:sub.length?100*sub.reduce((a,r)=>a+r.oop_share,0)/sub.length:0};});
+  return `<div class="page-intro"><strong>Financial protection — the headline UHC indicator.</strong> Household demographics + CHE/OOP (blueprint §5.5).</div>
+   <div class="kpis">${kpis}</div><div class="grid">
+   ${panel('CHE incidence by region','% households facing catastrophic health expenditure (WHO method)',hbar(cheByRegion,{fmt:fmtPct,color:'var(--bar5)'}))}
+   ${panel('Mean OOP share by facility type','out-of-pocket as % of health spend',hbar(oopByType,{fmt:fmtPct,color:'var(--bar4)'}))}
+   ${panel('Household size distribution','roster size (§ household roster)',hbar(sizeRows,{color:'var(--bar2)'}))}
+   </div>`;
+}
+function pCross(){
+  const f1=F('f1'),f3=F('f3'),f4=F('f4'),f2=F('f2');
+  const kpis=[kpi('CHE incidence',fmtPct(rate(f4,r=>r.che)),'F4 households','var(--bar5)'),
+    kpi('PhilHealth coverage',fmtPct(rate(f3,r=>r.philhealth==='Member')),'F3 patients','var(--bar3)'),
+    kpi('Accreditation',fmtPct(rate(f1,r=>r.accredited)),'F1 facilities','var(--bar2)'),
+    kpi('NBB awareness gap',(rate(f1,r=>r.nbb_correct)-rate(f3,r=>r.nbb_experienced)).toFixed(1)+' pp','facility correct − patient experienced','var(--bar4)'),
+    kpi('Satisfaction',fmtPct(rate(f3,r=>r.top2)),'F3 Top-2-box','var(--emerald-2)')].join('');
+  // linkage tiles (gated)
+  const linkByRegion=REGIONS.map(rg=>({label:rg.n,value:rate(f1.filter(r=>r.region===rg.n),r=>r.accredited)}));
+  const cheByRegion=REGIONS.map(rg=>({label:rg.n,value:rate(f4.filter(r=>r.region===rg.n),r=>r.che)}));
+  return `<div class="page-intro">UHC indicator synthesis across all four instruments (blueprint §5.6).</div>
+   <div class="kpis">${kpis}</div>
+   <div class="grid">
+   ${panel('Facility accreditation × household CHE (by region)','F1↔F4 linkage on the shared 9-digit facility block',
+     hbar(linkByRegion,{fmt:fmtPct,color:'var(--bar2)'}))}
+   ${panel('Household CHE incidence (by region)','catastrophic expenditure',
+     hbar(cheByRegion,{fmt:fmtPct,color:'var(--bar5)'}))}
+   </div>
+   <div style="margin-top:10px;font-size:12px;color:var(--muted)">✅ <strong style="color:var(--emerald)">F1 ↔ F3 ↔ F4 linkage is live</strong> — all three CAPI instruments share the 12-digit case key's first <strong>9-digit facility block</strong> (<code>RR-PP-MMM-FF</code>), so facility↔patient↔household joins resolve directly (codebook §15.H <strong>resolved 2026-06-04</strong>; <code>F3_FACILITY_ID</code> retired, F4→F3 via <code>F4_PARENT_F3_CASE_SEQ</code>). &nbsp;⚠️ Only <strong style="color:var(--warn)">F2 ↔ facility</strong> linkage stays gated on the <strong>§15.G</strong> facility master list (F2's <code>facility_id</code> is a placeholder until ASPSI publishes it; F2's 12-digit Respondent No is ETL-derived).</div>`;
+}
+const PAGES={coverage:pCoverage,f1:pF1,f2:pF2,f3:pF3,f4:pF4,cross:pCross};
+const TABMETA=[['coverage','Coverage & Quality'],['f1','F1 · Facility'],['f2','F2 · HCW'],['f3','F3 · Patient'],['f4','F4 · Household'],['cross','Cross-instrument']];
+
+/* ---------- wiring ---------- */
+function fillSelect(id,opts,val){const s=document.getElementById(id);s.innerHTML=opts.map(o=>`<option ${o===val?'selected':''}>${o}</option>`).join('');}
+function renderActive(){const active=document.querySelector('nav button.active').dataset.page;
+  const sec=document.querySelector(`.page[data-page="${active}"]`);sec.innerHTML=PAGES[active]();
+  const n=F('f1').length+F('f2').length+F('f3').length+F('f4').length;
+  document.getElementById('nLabel').textContent=`${n.toLocaleString()} rows in view`;}
+function setTab(page){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.dataset.page===page));renderActive();}
+
+(function init(){
+  const nav=document.getElementById('tabs');
+  TABMETA.forEach(([k,lbl],i)=>{const b=el(`<button data-page="${k}" class="${i===0?'active':''}">${lbl}</button>`);b.onclick=()=>setTab(k);nav.appendChild(b);});
+  document.querySelector('.page[data-page="coverage"]').classList.add('active');
+  fillSelect('fRegion',['All',...REGIONS.map(r=>r.n)],'All');
+  fillSelect('fType',['All',...FTYPES],'All');
+  fillSelect('fDisp',['completed','All',...DISPOS.filter(d=>d!=='completed')],'completed');
+  document.getElementById('fRegion').onchange=e=>{state.region=e.target.value;renderActive();};
+  document.getElementById('fType').onchange=e=>{state.type=e.target.value;renderActive();};
+  document.getElementById('fDisp').onchange=e=>{state.disp=e.target.value;renderActive();};
+  document.getElementById('reset').onclick=()=>{state.region='All';state.type='All';state.disp='completed';
+    fillSelect('fRegion',['All',...REGIONS.map(r=>r.n)],'All');fillSelect('fType',['All',...FTYPES],'All');
+    fillSelect('fDisp',['completed','All',...DISPOS.filter(d=>d!=='completed')],'completed');renderActive();};
+  renderActive();
+})();
+</script>
+</body>
+</html>

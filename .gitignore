@@ -45,6 +45,9 @@ desktop.ini
 !.claude/scripts/generate_standup.py
 !.claude/scripts/generate_retro.py
 !.claude/hooks/session-start-scrum.sh
+# Nested .claude/ dirs in subprojects (e.g. the F2 PWA app) — local config, keep ignored.
+# (The root-anchored .claude/* above no longer catches these, so match them explicitly.)
+deliverables/**/.claude/
 
 # Node deps (root-level stray install; app deps live under deliverables/**)
 node_modules/
@@ -66,3 +69,16 @@ __pycache__/
 
 # Vitest last-run artefact (per-run, not meant to be tracked)
 deliverables/F2/PWA/app/test-results/.last-run.json
+
+# Internal ASPSI comms + confidential-derived sources/analyses — kept local (verbatim/NDU-sensitive), 2026-06-07
+deliverables/comms/2026-06-01-aspsi-translation-gap-ask.md
+deliverables/comms/2026-06-03-aspsi-doh-consolidated-decision-request.md
+deliverables/comms/email-aspsi-dns-csweb.md
+deliverables/comms/email-juvy-vps-specs.md
+wiki/analyses/Analysis - 2026-05-12 Survey Manual v1.0 Divergence Re-eval.md
+wiki/analyses/Analysis - 2026-05-21 HCW R3 Myra Decisions to Build Actions.md
+wiki/sources/Source - HCW CAPI Comments Matrix (Myra answers 2026-05-21).md
+wiki/sources/Source - Sample Distribution 2026-05-12.md
+wiki/sources/Source - Survey Manual 2026-05-06 - Section 3a.md
+wiki/sources/Source - Survey Manual v1.0 (2026-05-12 Clean Final to DOH).md
+wiki/sources/Source - Survey Manual v1.0 (2026-05-12 Working File post-Myra).md

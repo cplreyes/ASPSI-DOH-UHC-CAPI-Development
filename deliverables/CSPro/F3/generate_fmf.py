@@ -43,6 +43,7 @@ DEFAULT_SIZE = "806,300"  # Designer resizes per form density
 FIELD_CONTROL_CASE_START = {
     "SURVEY_CODE", "INTERVIEWER_ID", "DATE_STARTED", "TIME_STARTED",
     "AAPOR_DISPOSITION", "PATIENT_TYPE", "PATIENT_LISTING_NO", "CONSENT_GIVEN",
+    "LANGUAGE_USED",  # §15.E — auto-set in FF preproc via getlanguage(); placed like DATE_STARTED/TIME_STARTED
 }
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
@@ -145,7 +146,7 @@ def build_fmf():
     dictionary = build_f3_dictionary()
     level = dictionary["levels"][0]
     records_by_name = {r["name"]: r for r in level["records"]}
-    id_item_name = level["ids"]["items"][0]["name"]
+    id_item_names = [it["name"] for it in level["ids"]["items"]]
 
     # Sanity: every record referenced in FORM_PLAN exists in the dictionary.
     referenced = {rec for _, parts in FORM_PLAN for rec, _ in parts}
@@ -174,7 +175,7 @@ def build_fmf():
     lines.append("  ")
 
     # FORM000 - Id Items container (QUESTIONNAIRE_NO sits at dictionary level)
-    _emit_form(lines, 0, "(Id Items)", [id_item_name])
+    _emit_form(lines, 0, "(Id Items)", id_item_names)
 
     # FORM001 - top-level container record (empty form, level-1)
     _emit_form(lines, 1, "PatientSurvey Record", [])

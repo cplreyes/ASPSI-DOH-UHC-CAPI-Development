@@ -308,6 +308,9 @@ def build_field_control(survey_code, extra_items=None, date_label_entity="the Fa
                 value_set_options=ENUM_RESULT_OPTIONS),
         numeric("CONSENT_GIVEN",           "Informed consent given",      length=1,
                 value_set_options=YES_NO),
+        # §15.E — language used for the interview (captured via getlanguage()
+        # at case start; forward-compatible with the #145 language switcher).
+        alpha("LANGUAGE_USED",             "Language used for the interview", length=20),
     ]
     if extra_items:
         items.extend(extra_items)
@@ -497,8 +500,37 @@ def build_geo_id(mode, extra_items=None):
 # 4. DICTIONARY ASSEMBLY
 # ============================================================
 
-def build_dictionary(dict_name, dict_label, id_item_name, id_item_label,
-                     id_length, records):
+def build_id_block():
+    """12-digit decomposed case key (RR-PP-MMM-FF-CCC) — adopted Questionnaire
+    Numbering Convention (2026-05-05), replacing the legacy single 6-digit
+    QUESTIONNAIRE_NO. First 7 digits are the within-parent PSA PSGC codes, then
+    a 2-digit facility number and a 3-digit per-facility / per-instrument case
+    sequence. Five contiguous numeric ID items starting at position 2 (position
+    1 is the recordType byte)."""
+    specs = [
+        ("REGION_CODE",            "Region Code (PSGC)",                           2),
+        ("PROVINCE_HUC_CODE",      "Province / HUC Code (PSGC)",                   2),
+        ("CITY_MUNICIPALITY_CODE", "City / Municipality Code (PSGC)",              3),
+        ("FACILITY_NO",            "Facility Number (within municipality)",        2),
+        ("CASE_SEQ",               "Case Sequence (per-facility, per-instrument)", 3),
+    ]
+    items, start = [], 2
+    for name, label, length in specs:
+        items.append({
+            "name": name,
+            "labels": [{"text": label}],
+            "contentType": "numeric",
+            "start": start,
+            "length": length,
+            "zeroFill": True,
+        })
+        start += length
+    return items
+
+
+def build_dictionary(dict_name, dict_label, records=None,
+                     id_items=None, id_item_name=None, id_item_label=None,
+                     id_length=None):
     """Assemble a complete CSPro 8.0 dictionary JSON structure.
 
     Parameters
@@ -525,6 +557,18 @@ def build_dictionary(dict_name, dict_label, id_item_name, id_item_label,
     level_name  = dict_name.replace("_DICT", "_LEVEL")
     level_label = dict_label + " Level"
 
+    # Backward-compat: synthesize the single-item key from legacy params when
+    # no decomposed id_items block is supplied.
+    if id_items is None:
+        id_items = [{
+            "name":        id_item_name,
+            "labels":      [{"text": id_item_label}],
+            "contentType": "numeric",
+            "start":       2,
+            "length":      id_length,
+            "zeroFill":    True,
+        }]
+
     return {
         "software":          "CSPro",
         "version":           8.0,
@@ -539,18 +583,7 @@ def build_dictionary(dict_name, dict_label, id_item_name, id_item_label,
             {
                 "name":   level_name,
                 "labels": [{"text": level_label}],
-                "ids": {
-                    "items": [
-                        {
-                            "name":        id_item_name,
-                            "labels":      [{"text": id_item_label}],
-                            "contentType": "numeric",
-                            "start":       2,
-                            "length":      id_length,
-                            "zeroFill":    True,
-                        }
-                    ]
-                },
+                "ids": {"items": id_items},
                 "records": records,
             }
         ],
@@ -582,3 +615,82 @@ def write_dcf(dictionary, out_path):
     print(f"Wrote {out_path}")
     print(f"  Records: {record_count}")
     print(f"  Items:   {item_count}")
+
+
+# ============================================================
+# 5. MULTI-LANGUAGE POST-PROCESSING
+# ============================================================
+
+# Active languages are discovered at generate time: a language is included only
+# if its translations/<file>.json exists. EN is the source (label text as
+# authored). To add Filipino once ASPSI delivers it, drop `translations/fil.json`
+# next to the generator and re-run — no code change.
+TRANSLATION_LANGUAGES = [
+    ("EN",  "English",    None),
+    ("FIL", "Filipino",   "fil.json"),
+    ("BCL", "Bikol",      "bcl.json"),
+    ("BIS", "Bisaya",     "bis.json"),
+    ("CEB", "Cebuano",    "ceb.json"),
+    ("WAR", "Waray",      "war.json"),
+    ("HIL", "Hiligaynon", "hil.json"),
+]
+
+
+def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGUAGES):
+    """Expand a single-language dictionary into a multi-language CSPro 8.0 dictionary.
+
+    Walks every `labels` list and replaces its single English entry with one
+    `{text, language}` entry per ACTIVE language. Translations are pulled from
+    `translations_dir/<file>.json`, keyed by the English label text; any key
+    missing from a map falls back to English. A language is active only if its
+    map file exists (EN is always active and first), so new locales are drop-in.
+    Mutates and returns `dictionary`; prints a per-language coverage summary.
+    """
+    translations_dir = Path(translations_dir)
+    active, maps, skipped = [], {}, []
+    for code, disp, fname in languages:
+        if fname is None:
+            active.append((code, disp))
+        elif (translations_dir / fname).exists():
+            maps[code] = json.loads((translations_dir / fname).read_text(encoding="utf-8"))
+            active.append((code, disp))
+        else:
+            skipped.append(code)
+
+    dictionary["languages"] = [{"name": c, "label": d} for c, d in active]
+    counts = {c: [0, 0] for c in maps}   # code -> [matched, total]
+
+    def expand(node):
+        if isinstance(node, dict):
+            labs = node.get("labels")
+            if isinstance(labs, list) and labs and isinstance(labs[0], dict) and "text" in labs[0]:
+                en_text = labs[0]["text"]
+                new_labels = []
+                for code, _disp in active:
+                    if code in maps:
+                        counts[code][1] += 1
+                        tr = maps[code].get(en_text)
+                        if tr is not None:
+                            counts[code][0] += 1
+                        else:
+                            tr = en_text
+                        new_labels.append({"text": tr, "language": code})
+                    else:
+                        new_labels.append({"text": en_text, "language": code})
+                node["labels"] = new_labels
+            for k, v in node.items():
+                if k != "labels":
+                    expand(v)
+        elif isinstance(node, list):
+            for it in node:
+                expand(it)
+
+    expand(dictionary)
+
+    print(f"  Languages: {', '.join(c for c, _ in active)}"
+          + (f"   (no map, skipped: {', '.join(skipped)})" if skipped else ""))
+    for code in maps:
+        matched, total = counts[code]
+        pct = (100 * matched // total) if total else 0
+        print(f"    {code}: {matched}/{total} labels translated ({pct}%)")
+    return dictionary
