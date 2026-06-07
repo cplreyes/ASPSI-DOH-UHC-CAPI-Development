@@ -50,9 +50,9 @@ Deliverable anchors:
 
 ### Goal A — PSA bundle / CSPro multi-language verify (the gate)
 
-- [ ] **E3-F1-001** F1 Facility Head — CSPro Designer + CSEntry multi-language verify (EN + Cebuano/Bisaya/Hiligaynon/Waray/Bikol). Open `.dcf` (loads with declared languages), `.fmf` renders translated labels + language selection works (sync `.qsf` `languages:` if Designer flags mismatch), CSEntry toggles each language with skip logic intact, English base signed off. **Closes the five-sprint carry.** `status::todo` `priority::critical` `estimate::4h`
-- [ ] **E3-F3-001** F3 Patient — same Phase 3 verify (EN + Cebuano/Bisaya/Waray/Bikol). Eyeball-check the lower-coverage maps (F3 Bisaya 52%, Bicolano) on a question↔translation sample per the QC caveat. `status::todo` `priority::critical` `estimate::4h`
-- [ ] **E3-F4-001** F4 Household — same Phase 3 verify (EN + Cebuano/Bisaya/Waray/Bikol). `status::todo` `priority::critical` `estimate::4h`
+- [ ] **E3-F1-001** F1 Facility Head — CSPro Designer + CSEntry multi-language verify (EN + Cebuano/Bisaya/Hiligaynon/Waray/Bikol). Open `.dcf` (loads with declared languages), `.fmf` renders translated labels + language selection works (sync `.qsf` `languages:` if Designer flags mismatch), CSEntry toggles each language with skip logic intact, English base signed off. **Closes the five-sprint carry.** `status::in-progress` `priority::critical` `estimate::4h`
+- [ ] **E3-F3-001** F3 Patient — same Phase 3 verify (EN + Cebuano/Bisaya/Waray/Bikol). Eyeball-check the lower-coverage maps (F3 Bisaya 52%, Bicolano) on a question↔translation sample per the QC caveat. `status::in-progress` `priority::critical` `estimate::4h`
+- [ ] **E3-F4-001** F4 Household — same Phase 3 verify (EN + Cebuano/Bisaya/Waray/Bikol). `status::in-progress` `priority::critical` `estimate::4h`
 - [ ] **E0-PSA-001** Assemble the PSA bundle: F1/F3/F4 CAPI app artifacts (`.pff`/`.dcf`/`.fmf`/`.apc`) + the live F2 PWA reference + a per-language coverage/gap note (from `TRANSLATION-STATUS-2026-06-03.md` + the F2 status doc). Hand to ASPSI (Kidd/Myra) for the 6/12 gate as an in-chat go/no-go checklist. `status::todo` `priority::critical` `estimate::3h`
 - [ ] **E0-PSA-002** ASPSI translation-gap go/no-go: document fil/ilo (F1/F3/F4) + hil (F3/F4) as the missing-source gap (English-fallback in the bundle), tie to the 2026-06-01 + 2026-06-03 asks, and surface the gate decision (submit best-effort vs hold) for ASPSI. `status::blocked` `priority::high` `estimate::1h`
 
@@ -86,6 +86,8 @@ Deliverable anchors:
 ## Daily Notes
 
 _Auto-standup writes here daily via the `CAPI Scrum Daily Standup MD` scheduled task (08:30 MNL, launch-independent) + the SessionStart hook as intraday top-up. Fixed 2026-06-07 (E0-AUTO-STANDUP)._
+
+**2026-06-07 (Sun) — Goal A started: CSPro multi-language verify pre-checks GREEN.** E3-F1-001/-F3-001/-F4-001 → `in-progress`. AI-side gates both clean before the GUI session: `preflight_validate.py` **ALL CLEAN** (F1 129 / F3 60 / F4 125 PROCs resolve; no setvalueset/arity/ref issues), and a label-parity pass confirms **every** label array carries all declared languages (F1 2463 EN+5, F3 2831 EN+4, F4 2232 EN+4; 0 off-parity). CSPro **8.0** confirmed installed. fil/ilo (+hil F3/F4) absent by design (ASPSI gap → E0-PSA-002). Staged the CSEntry session worksheet at `deliverables/CSPro/2026-06-07-multilang-verify-worksheet.md`. **Next (Carl, GUI):** Designer compile per instrument (F1 Id-block re-sync + 4 PSGC dicts first) → CSEntry toggle each declared language → capture P/F into the worksheet. Paste any Designer compile error for the generator fix-loop.
 
 ## Retrospective — Sprint 009
 
