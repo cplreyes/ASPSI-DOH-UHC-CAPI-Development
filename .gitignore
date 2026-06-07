@@ -33,8 +33,18 @@ desktop.ini
 .obsidian/workspace-mobile.json
 .obsidian/cache
 
-# Claude Code local config and automation scripts (contains Slack webhook secret)
-.claude/
+# Claude Code local config and automation scripts (settings.local.json holds secrets).
+# Whole tree ignored EXCEPT the secret-free scrum-automation scripts whitelisted below.
+# settings.local.json and post-daily-standup.ps1 (hardcoded Slack webhook) stay ignored.
+.claude/*
+!.claude/scripts/
+!.claude/hooks/
+.claude/scripts/*
+.claude/hooks/*
+!.claude/scripts/daily-standup-md.ps1
+!.claude/scripts/generate_standup.py
+!.claude/scripts/generate_retro.py
+!.claude/hooks/session-start-scrum.sh
 
 # Node deps (root-level stray install; app deps live under deliverables/**)
 node_modules/
