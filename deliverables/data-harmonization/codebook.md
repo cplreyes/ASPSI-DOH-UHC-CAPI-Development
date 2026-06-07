@@ -1,7 +1,7 @@
 ---
 project: UHC Survey Year 2 — CAPI Development
 artifact: Shared Codebook (cross-instrument harmonization spec)
-version: 0.2 (draft, 2026-04-25)
+version: 0.3 (draft, 2026-06-04)
 status: draft
 owners: Carl Patrick L. Reyes (data programmer)
 covers: F1 Facility Head, F2 Healthcare Worker (PWA), F3 Patient, F4 Household
@@ -60,7 +60,7 @@ The harmonization ETL emits, per instrument:
 | `city_mun_code` | string | 6-digit city/municipality code |
 | `barangay_code` | string | 9-digit barangay code (PSGC standard) |
 
-PSGC vintage: **PSA 2023Q4 (or whichever vintage ASPSI standardises on — see §15 open items).** All four instruments must consume the same vintage to avoid silent rollup drift.
+PSGC vintage: **PSA 2024 release — pinned and frozen for the engagement (§15.F resolved 2026-06-03).** All four instruments must consume the same vintage to avoid silent rollup drift.
 
 **Per-instrument source mapping**
 
@@ -91,12 +91,14 @@ The facility master list is the **single source** ASPSI must publish before fiel
 
 | Instrument | Source | Notes |
 |---|---|---|
-| F1 | `QUESTIONNAIRE_NO` (in FIELD_CONTROL); facility identity is implicit since F1 = one row per facility | use `QUESTIONNAIRE_NO` as the canonical `facility_id` and join to master list for type + name |
-| F2 | `facility_id`, `facility_type`, `facility_name` (pre-filled from facility selection) | already in the canonical shape |
-| F3 | `F3_FACILITY_ID` (pre-filled; hard consistency check enforces region match against F1 `QUESTIONNAIRE_NO`) | join to master list for type + name |
-| F4 | `HH_LISTING_NO` (tied to the listing facility); facility itself joined via the listing form output | join to master list |
+| F1 | **Case-key id-block** — `facility_id` = the first **9 digits** `REGION_CODE`+`PROVINCE_HUC_CODE`+`CITY_MUNICIPALITY_CODE`+`FACILITY_NO`. F1 = one row per facility head (`CASE_SEQ` = 001). | derive `facility_id` from the id-block; join to master list for type + name |
+| F2 | `facility_id` (pre-filled from facility selection — **placeholder pending §15.G**), `facility_type`, `facility_name`; per-response `hcw_id` | 12-digit Respondent No is **derived at ETL** (decided 2026-06-04), not minted in-app — see §11. Gated on §15.G for the real facility block |
+| F3 | **Case-key id-block** — facility is intrinsic to the F3 case key's first 9 digits (`F3_FACILITY_ID` **retired 2026-06-04**) | F3→F1 join on the shared 9 digits; join to master list for type + name |
+| F4 | **Case-key id-block** (first 9 digits) + `F4_PARENT_F3_CASE_SEQ`(3) for the F4→F3 patient link | F4→F3 join on shared 9 digits + parent seq; join to master list |
 
-**Alignment risk** (CRITICAL): every cross-instrument join keys off `facility_id`. If F1's `QUESTIONNAIRE_NO` schema differs from the facility master list's id schema, every join fails silently. **Mitigation**: F1's QUESTIONNAIRE_NO must equal the master list facility_id, enforced at instrument-design time, not ETL time.
+**Case key (12-digit Respondent / Questionnaire Number) — adopted 2026-06-04.** All instruments now key on the decomposed 12-digit case key `RR-PP-MMM-FF-CCC` (5 ID items: `REGION_CODE`(2) · `PROVINCE_HUC_CODE`(2) · `CITY_MUNICIPALITY_CODE`(3) · `FACILITY_NO`(2) · `CASE_SEQ`(3)), per the adopted Questionnaire Numbering Convention. The first **9 digits are the facility**; the last 3 are the per-facility, per-instrument case sequence. This *supersedes* the earlier single 6-digit geography-free `QUESTIONNAIRE_NO` (§15.H). These are compact **within-parent** geographic codes — distinct from the full PSGC codes stored in the geographic data items (§1); both derive from the same PSA 2024 vintage.
+
+**Alignment risk** (CRITICAL): every cross-instrument join keys off the **9-digit facility block**. F3→F1 and F4→F3 join on the shared first 9 digits (geography + facility number) — no separate facility-id field is needed (hence `F3_FACILITY_ID` was retired). **F2 remains the gap**: its `facility_id` is a placeholder until ASPSI publishes the master list (§15.G) mapping each facility to its `REGION_CODE`/`PROVINCE_HUC_CODE`/`CITY_MUNICIPALITY_CODE`/`FACILITY_NO` block. Until then, F2↔CAPI facility joins can't be verified.
 
 ---
 
@@ -309,6 +311,8 @@ F3 and F4 already use identical codes — passthrough. F1 / F2 do not collect em
 
 **Alignment**: clean — three concrete source-mode values cover all current and known-future cases.
 
+**F2 12-digit Respondent Number — derived at ETL (decided 2026-06-04).** F2 is self-admin web (no paper questionnaire number to mint), and every response already carries `facility_id` + `hcw_id`. Rather than change the production PWA, the harmonization ETL composes the convention's 12-digit `RR-PP-MMM-FF-CCC` for each F2 row: **first 9 digits** = the `facility_id`'s id-block (`REGION_CODE`+`PROVINCE_HUC_CODE`+`CITY_MUNICIPALITY_CODE`+`FACILITY_NO`, looked up via the §15.G master list) + **`CASE_SEQ`(3)** = the HCW's stable per-facility roster index. Gated on §15.G for the real facility block — until ASPSI publishes the master list, F2 rows carry a placeholder `facility_id` and the derived composite is structurally valid but unverified. (This supersedes the adopted convention's Implementation Footprint item 5, which assumed in-app minting — the as-built F2 flow makes ETL derivation the cleaner, zero-risk path.)
+
 ---
 
 ## 12. Disposition / response status
@@ -426,20 +430,25 @@ The actual implementation lives in `deliverables/data-harmonization/etl/` (to be
 | **15.D** | F2 AAPOR derivation strategy | ✓ Defined ETL derivation rule over joined `(distribution_list × IndexedDB draft state × submission row)`. See §12 above for the full code-mapping table. Refusal capture deferred until §15.B is decided. |
 | **15.E (F2 portion)** | F2 `survey_language` capture | ✓ Will ship as part of F2 v1.2.0 — `App.handleSubmit` auto-injects `useLocale()` value into submission payload; backend response sheet adds column. No ASPSI sign-off needed for F2's own field. |
 
-### 15.A Pending — needs ASPSI / instrument-design decision
+### 15.1 Resolved 2026-06-03 (Carl build-decisions; ASPSI to confirm/ratify where noted)
 
-The remaining open items have been split into a separate stakeholder-facing artefact at `deliverables/data-harmonization/open-items-for-aspsi.md`. They block production data delivery (not current instrument design):
+| # | Item | Resolution |
+|---|---|---|
+| **15.A** | F4 `Q3_SEX` allows `'Other'` (F1/F2/F3 don't) | **Carry as a separate `sex_other` flag** — keep canonical `sex` to the shared domain; don't collapse 'Other' into the 3-code set. |
+| **15.B** | F2 has no consent data field | **Add explicit `consent_given` to F2.** ✓ **Built 2026-06-03** (PR #362): `App.handleSubmit` injects `consent_given = 1` into the submission values (stored in `values_json` like `survey_language`; submitted ⟹ consent). ETL extracts to canonical `consent_given` (§9). No backend column — the response writer is header-mapped. |
+| **15.E (F1/F3/F4)** | `LANGUAGE_USED` in FIELD_CONTROL | **Add `LANGUAGE_USED`** across the three CAPI instruments. ✓ **Built 2026-06-03**: added to the shared + F1-local `build_field_control`; written via `getlanguage()` in each instrument's `*_FF` preproc. Regenerated, pre-flight clean (the single fmf "orphan" is the logic-written field itself — no form placement needed). |
+| **15.F** | PSGC vintage | **Pin PSA 2024** release and freeze for the engagement. |
+| **15.H** | Case key ≡ facility linkage | **Superseded 2026-06-04 by the 12-digit decomposed case key** (`RR-PP-MMM-FF-CCC`; adopted Questionnaire Numbering Convention). `facility_id` = the case key's first 9 digits (geography + facility number) — *not* the old 6-digit geography-free `QUESTIONNAIRE_NO`. F1/F3/F4 dcfs rebuilt + re-registered in CSWeb 2026-06-04. ASPSI still confirms the facility↔id-block mapping against the published master list (§15.G). |
+
+> **15.B and 15.E built 2026-06-03** (the field-adds). The rest are decisions of record that flow into the ETL/codebook.
+
+### 15.2 Still pending — ASPSI to publish (held)
 
 | # | Item | Decision needed | Owner |
 |---|---|---|---|
-| **15.A** | F4 respondent `Q3_SEX` allows `'Other'`; F1/F2/F3 do not | Map `'Other'` → canonical code `3`, treat as `.c`, or carry as separate `sex_other` flag? | ASPSI (instrument design) |
-| **15.B** | F2 PWA does not capture consent as a data field (F1/F3/F4 already do via `CONSENT_GIVEN`) | Add explicit `consent_given` to F2 for audit parity? | ASPSI / ethics; recommend yes |
-| **15.E (F1/F3/F4 portion)** | Add `LANGUAGE_USED` to FIELD_CONTROL across the three CAPI instruments | Sign-off on the field add (small change, big analytical value) | ASPSI (instrument-design owner) |
-| **15.F** | PSGC vintage to pin | Pick one PSA release (e.g. 2023Q4) and freeze for the engagement | ASPSI |
-| **15.G** | Facility master list publication | ASPSI to publish single canonical list; F2 PWA must consume it (currently uses placeholder) | ASPSI |
-| **15.H** | F1 `QUESTIONNAIRE_NO` ≡ master list `facility_id`? | Confirm F1's QUESTIONNAIRE_NO scheme matches the master list id scheme; otherwise F1↔F2/F3/F4 joins fail silently | Carl + ASPSI |
+| **15.G** | Facility master list publication | ASPSI publishes the single canonical list — the 6-digit `facility_id` source that §15.H assumes; F2 PWA must consume it (currently a placeholder). | ASPSI |
 
-See `open-items-for-aspsi.md` for cover note + per-item context to send to Juvy / Dr Claro.
+See `open-items-for-aspsi.md` for context.
 
 ---
 
@@ -458,3 +467,4 @@ Bump the `version` field at the top with every substantive change, and record th
 |---|---|---|
 | 0.1 | 2026-04-25 | Initial draft. Covers F1 / F2 / F3 / F4. Identifies 8 open items. Aligned to current spec/dcf state. |
 | 0.2 | 2026-04-25 | Corrections after deeper dcf grep: F3 + F4 dcfs DO have `CONSENT_GIVEN`, `AAPOR_DISPOSITION`, `DATE_STARTED`/`TIME_STARTED`, and `DATE_FIRST_VISITED`/`DATE_FINAL_VISIT` (initial v0.1 audit was overly pessimistic on these). 15.C closed. 15.D resolved with ETL derivation rule for F2 disposition. 15.E split into Carl-owned F2 portion (resolved — ships in v1.2.0) and ASPSI-owned F1/F3/F4 portion (pending). 15.B narrowed to F2 only (F3/F4 already capture consent). Open items shrunk from 8 to 6 (5 ASPSI-owned + 1 mixed Carl/ASPSI). Stakeholder-facing open-items doc created at `open-items-for-aspsi.md`. |
+| 0.3 | 2026-06-04 | **12-digit case-key alignment.** Adopted the decomposed `RR-PP-MMM-FF-CCC` Questionnaire / Respondent Number (5 ID items) across F1/F3/F4 — dcfs rebuilt + re-registered in CSWeb. `facility_id` is now the case key's first 9 digits, *superseding* §15.H's 6-digit geography-free assumption. `F3_FACILITY_ID` retired; `F4_PARENT_F3_CASE_SEQ` added. §1 PSGC vintage pinned to PSA 2024 (§15.F). F2 case-ID issuer still gated on the facility master list (§15.G). |
