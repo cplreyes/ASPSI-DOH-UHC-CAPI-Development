@@ -49,8 +49,9 @@ clear their gates.
 
 ## 3. Current state — snapshot 2026-06-07
 
-> The `product-backlog.md` headline is stale (last_updated 2026-05-10). The truth below folds in the
-> May–June work (multi-language build, CSWeb go-live, S008/S009).
+> `product-backlog.md` was refreshed to current state on 2026-06-07 (its Status-at-a-Glance tables are
+> authoritative; the per-epic narratives below them lag). This section is the condensed view — re-derive
+> live state from `scrum/sprint-current.md` + `git log` before acting.
 
 **Contractual:** D1 **Accepted**. D2/D3 **In Progress** (agreed extended timeline). D4–D6 not started.
 
