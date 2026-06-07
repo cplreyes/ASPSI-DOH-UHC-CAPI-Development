@@ -2,6 +2,51 @@
 
 Chronological record of all wiki operations.
 
+## 2026-05-25 (Ingest — Myra-answered HCW CAPI Comments Matrix, 2026-05-21)
+
+### Trigger and scope
+
+Carl asked the day-start scrum router whether email had landed answers to Marriz's R3 questionnaire-design items. Gmail MCP (connected to `clreyes6@up.edu.ph`) surfaced two thread arcs:
+
+1. **Thread `19e4360f67bb95b3`** (2026-05-20): Carl → Shan + Marriz with a 9-item decision table cross-checked against the current questionnaire (GH `#303`/`#304`/`#305`/`#306`/`#307`/`#309`/`#310`/`#311`/`#312`). Marriz acknowledged same day.
+2. **Thread `19e4910c208bc356`** (2026-05-21): Aidan re-packaged that table into a Google Doc (`Healthcare Worker CAPI_Comments`) and sent it to Dr. Myra Silva-Javier. **Same day 08:38 UTC, Myra replied: "Answered the form already."**
+
+The Google Doc URL: https://docs.google.com/document/d/1IFT6QY8JvPih2xYAui5k-4M7U0JqqE6zhsXzarmgzUI/edit. WebFetch via the `/export?format=txt` endpoint hit the signed-redirect auth wall; `/preview` returned only the doc title. Carl exported the doc to `.docx` from his UP browser session and dropped it at `raw/HCW_CAPI_Comments and Suggested Revisions_May21.docx` (370 KB; 12 inline screenshots of the Q-items).
+
+### Operations
+
+- **Conversion.** Pandoc converted the `.docx` to markdown at `/tmp/aspsi-scratch/HCW_CAPI_Comments_May21.md` (79 lines, --wrap=none). Images dropped to `media/` and skipped — the decision text in cells is what matters.
+- **Decoded Myra's decisions** across two tables in the doc:
+  - Top-of-doc structural-finding decisions (Item 3b age rule, Item 6 Q39 unreachable option).
+  - Nine-row matrix with MCG / CPR / MESJ columns; MESJ = Myra's answers.
+- **1 source-summary page created** at `wiki/sources/Source - HCW CAPI Comments Matrix (Myra answers 2026-05-21).md` — faithful capture of all Myra verdicts with verbatim quotes, coverage breakdown vs Carl's suggestions, and 5 flagged ambiguities/open questions.
+- **1 analysis page created** at `wiki/analyses/Analysis - 2026-05-21 HCW R3 Myra Decisions to Build Actions.md` — per-GH-issue action plan with build/clarify/no-op disposition, F2 v1.3.x sequencing, and PSA 2026-06-12 translation-cascade flags.
+- **Inbox sweep, 2026-05-22 to 2026-05-25** (Asia/Manila): only one non-project thread (`it@up.edu.ph` UP ITDC Google Groups housekeeping advisory). No new CAPI threads over the weekend. **Adjacent observation (worth flagging not ingesting):** thread `19e2a0c056973634` (Bisaya translation status) shows Aidan's 2026-05-21 expected-Saturday Bisaya household completion — no Saturday follow-up landed; carries into S007 PSA-gate sequencing.
+- **Index.md** updated — new source line in chronological order (after 2026-05-15 translation status); new analysis line in the comprehensive Analyses section + canonical list.
+
+### Net findings (full detail in the source + analysis pages)
+
+**Myra approved 5 of 9 items in some form, modified 3, overrode 1, left 1 unanswered:**
+
+- **Approved as suggested (3):** #303 Q11 (whole hours), #310 Q47 (None standalone), #311 Q110 (None standalone, multi-select retained).
+- **Approved with modification (2):** #304 Q52 (same outcome, explicit constraint on top 3 options), #305-3b Q9-vs-Q4 (tightened to age − 20 + in-survey hard block, not just post-survey flag).
+- **More restrictive than suggested (1):** #305-3a Q9 (years floor `[1,60]` instead of `[0,60]` — ambiguity: does this exclude sub-1-year HCWs from the frame, or is it just a phrasing of "block 0+0 only"?).
+- **Different shape from suggested (1):** #306 Q35 (per-component DK — year required, month + day independently optional — instead of whole-date DK).
+- **Overrode Carl's suggestion (1):** #307-5a Q36 (switch to multi-select; original spec was single-answer).
+- **Compound decision (1):** #309 Item 6 — remove the Q39 unreachable option (Carl's suggestion ✅) **plus** reword Q38's "Not a physician/dentist" option (Myra reads it as referring to head-of-facility, current build reads it as the respondent HCW).
+- **Not answered (1):** #307-5b Q36 past-tense wording for "already accredited" branch (Carl had flagged this as "the team's call"; Marriz had already flagged it to Merlyne).
+
+**Carry to S007 planning:** 8 of 9 R3 questionnaire items buildable in F2 v1.3.x this sprint. One short follow-up message (Carl → Shan/Merlyne, copying Myra + Marriz) bundles the 3 clarifications needed before the remaining sub-items close. Translation cascade on Q35/Q38/Q125 text changes joins the [[wiki/concepts/CAPI Seven-Language Translation Build|PSA 2026-06-12 queue]] — Q125's brand-new option text is the most exposed.
+
+**Naming flag:** Marriz appears in the project as `mmmojado@up.edu.ph` → Marriz Mojado (email signature, UAT R3 admin user) but also as Marriz Garciano in [[wiki/sources/Source - Annex J CV of ASPSI Team|Annex J CV]] + `docs/guides/CAPI-Development-Playbook.md`. Most-likely interpretation: same person, two surnames (maiden vs married). Not material to this ingest.
+
+### Contradictions / supersessions
+
+- **#305 Q9-vs-Q4 threshold supersedes prior spec.** The Apr 20 F2 ingest left the rule as `tenure > Q4 − 15 → flag for review` (post-survey only). Myra has now (a) tightened to age − 20 and (b) promoted to in-CAPI hard block. Source page flags this and the analysis page maps the in-survey error text.
+- **#307 Q36 cardinality supersedes prior spec.** Spec said single-answer; Myra now says multi-select. The Q36 → Q39 skip-logic was derived for single-answer and needs re-derivation before the cardinality flip ships.
+
+---
+
 ## 2026-05-13 (Ingest — 2026-05-12 Survey Manual v1.0 bundle)
 
 ### Trigger and scope

@@ -50,10 +50,12 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - ASPSI Team Meeting 2026-05-18]] — Carl's own stand-up notes. **This week: park HCW features, fix UAT R3 findings, back to F1/F3/F4 CSPro, stand up CSWeb on a VPS** (field visibility + tablet sync + data-manager monitoring), start dialect translation (full build next week). Myra: Tagalog help ~weekend. SJREB full-board 2nd week June (out of DP scope). Contradiction flagged: R3 "findings last week" vs #271 still OPEN/untouched since 2026-05-12.
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CAPI Translations PSA Deadline (Myra 2026-05-13)]] — **Email, Myra → Carl, call-firmed.** PSA will not clear the survey without the **CAPI app + 7 translated versions**; hard internal deadline **2026-06-12**. Separate/later PSA stream from the manual+sampling submission; this one is Carl's. Carl confirmed alignment (quality not compromised).
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Survey Tool Translation Delivery Status 2026-05-15]] — **Email thread, Aidan ↔ Myra, Carl cc'd.** Translation pipeline behind the 06-12 gate: Drive folder source-of-truth; per-language status; **7 distinct languages** (Bisaya ≠ Cebuano); QC/back-translation is the binding step; **Bisaya Household incomplete, Ilocano has no QC reviewer** (build-input risk, ASPSI-owned). Supersedes the 05-11 "6/7 done" snapshot.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - HCW CAPI Comments Matrix (Myra answers 2026-05-21)]] — **Google Doc, Aidan → Myra, Carl+Merlyne+Marriz cc'd.** Marriz's 9 R3 questionnaire-design findings (GH `#303`/`#304`/`#305`/`#306`/`#307`/`#309`/`#310`/`#311`/`#312`) sent to Myra as a decision matrix; Myra answered same day. 3 approved-as-suggested, 2 approved with modification, 1 more restrictive than suggested, 2 different shape, 1 overrode Carl's suggestion (Q36 → multi-select), 1 not answered (Q36 past-tense wording). Top-of-doc decisions tighten the Q9-vs-Q4 rule to in-survey block at `tenure < age − 20`.
 
 ### Analyses
 
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - 2026-05-12 Survey Manual v1.0 Divergence Re-eval]] — Scorecard of the 5 open divergences from May 7 ingest against the post-Myra Working File: 2 resolved (HCW self-admin, sync), 2 still open (bench-testing, case-ID §5.1), 1 shifted direction (patient listing now systematic vs F3 app's random-interval), 1 newly surfaced (SE count 100 vs 124). Residual shortlist for Kidd + PSA submission window 2026-05-19.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - 2026-05-21 HCW R3 Myra Decisions to Build Actions]] — Per-GH-issue action plan derived from Myra's 2026-05-21 decisions. 8 of 9 R3 questionnaire items buildable in F2 v1.3.x this sprint; 1 closeable as no-op (`#303`); 4 sub-items need a single follow-up to the team (year floor on `#305-3a`, wording on `#307-5b` and `#309-ii`, translation slot for new `#312-i` option text). PSA 2026-06-12 translation cascade flagged on Q35 DK labels, Q38 reword, and Q125 new option.
 
 ### Entities
 
@@ -110,6 +112,8 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 ### Analyses
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Project Intelligence Brief]] — Full project timeline, decisions, scope changes, blockers, stakeholder dynamics, Carl's positioning
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Apr 20 DCF Generator Audit]] — Per-generator patch targets for F1/F3/F4 DCF generators + F2 Google-Forms spec, mapped to Annex G remarks
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - 2026-05-12 Survey Manual v1.0 Divergence Re-eval]] — (also linked in Sources/Analyses subsection above) divergence scorecard against the post-Myra Working File
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - 2026-05-21 HCW R3 Myra Decisions to Build Actions]] — Per-GH-issue build action plan for the 9 R3 questionnaire-design items decided by Myra 2026-05-21; sequenced for F2 v1.3.x; flags 3 sub-items needing one short follow-up to the team
 
 ## Deliverables
 
