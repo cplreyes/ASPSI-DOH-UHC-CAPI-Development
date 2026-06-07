@@ -44,6 +44,7 @@ DEFAULT_SIZE = "806,300"  # Designer resizes per form density
 FIELD_CONTROL_CASE_START = {
     "SURVEY_CODE", "INTERVIEWER_ID", "DATE_STARTED", "TIME_STARTED",
     "AAPOR_DISPOSITION", "CONSENT_GIVEN", "HH_LISTING_NO",
+    "LANGUAGE_USED",  # §15.E — auto-set in FF preproc via getlanguage(); placed like DATE_STARTED/TIME_STARTED
 }
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
@@ -162,7 +163,7 @@ def build_fmf():
     dictionary = build_f4_dictionary()
     level = dictionary["levels"][0]
     records_by_name = {r["name"]: r for r in level["records"]}
-    id_item_name = level["ids"]["items"][0]["name"]
+    id_item_names = [it["name"] for it in level["ids"]["items"]]
 
     referenced = {rec for _, parts in FORM_PLAN for rec, _ in parts}
     missing = referenced - set(records_by_name)
@@ -187,7 +188,7 @@ def build_fmf():
     lines.append(f"File={DCF_REL_PATH}")
     lines.append("  ")
 
-    _emit_form(lines, 0, "(Id Items)", [id_item_name])
+    _emit_form(lines, 0, "(Id Items)", id_item_names)
     _emit_form(lines, 1, "HouseholdSurvey Record", [])
 
     for idx, (label, parts) in enumerate(FORM_PLAN, start=2):

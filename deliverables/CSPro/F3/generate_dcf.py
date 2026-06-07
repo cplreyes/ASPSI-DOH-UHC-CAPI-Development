@@ -20,7 +20,8 @@ from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, uhc9_item, record,
-    build_field_control, build_geo_id, build_dictionary, write_dcf,
+    build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
+    apply_translations,
     _gps_fields, _photo_block,
 )
 
@@ -1761,15 +1762,13 @@ def build_f3_dictionary():
     #   Chunk 6: I                               (NBB / ZBB / MAIFIP + distress)
     #   Chunk 7: J, K                            (satisfaction + meds + GAMOT)
     #   Chunk 8: L + PSGC wiring + docstring    (referrals)
-    # F3_FACILITY_ID links the F3 case back to the F1 facility record (MVP analytical linkage)
-    f3_facility_id_item = numeric(
-        "F3_FACILITY_ID", "Sampled Facility ID (F1 linkage)",
-        length=10, zero_fill=True,
-    )
+    # F3_FACILITY_ID retired 2026-06-04: under the 12-digit case key, the F3 case's
+    # own id-block (REGION_CODE+PROVINCE_HUC_CODE+CITY_MUNICIPALITY_CODE+FACILITY_NO)
+    # IS the facility reference; F3<->F1 joins on those shared fields. No separate item.
     records = [
         record("PATIENTSURVEY_REC", "PatientSurvey Record", "1", []),
         build_f3_field_control(),
-        build_geo_id("facility_and_patient", extra_items=[f3_facility_id_item]),
+        build_geo_id("facility_and_patient"),
         build_f3_facility_capture(),
         build_f3_patient_home_capture(),
         build_f3_case_verification(),
@@ -1789,16 +1788,19 @@ def build_f3_dictionary():
     return build_dictionary(
         dict_name="PATIENTSURVEY_DICT",
         dict_label="PatientSurvey",
-        id_item_name="QUESTIONNAIRE_NO",
-        id_item_label="Questionnaire No",
-        id_length=6,
+        id_items=build_id_block(),
         records=records,
     )
 
 
 def main():
     out_path = Path(__file__).parent / "PatientSurvey.dcf"
-    write_dcf(build_f3_dictionary(), out_path)
+    dictionary = build_f3_dictionary()
+    # Multi-language overlay (folded into the generator so regeneration never
+    # silently resets the .dcf to English). Auto-discovers locales by file
+    # existence in translations/; F3 has bcl/bis/ceb/war (no hil/fil).
+    dictionary = apply_translations(dictionary, Path(__file__).parent / "translations")
+    write_dcf(dictionary, out_path)
 
 
 if __name__ == "__main__":

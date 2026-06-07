@@ -20,7 +20,8 @@ from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, record,
-    build_field_control, build_geo_id, build_dictionary, write_dcf,
+    build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
+    apply_translations,
     _photo_block,
 )
 
@@ -45,6 +46,11 @@ def build_f4_geo_id():
     # GPS metadata + capture trigger added alongside; the .app handler
     # populates LATITUDE/LONGITUDE from gps(latitude/longitude) directly.
     return build_geo_id("household", extra_items=[
+        # F4->F3 linkage (adopted Questionnaire Numbering Convention): the parent
+        # patient's per-facility case sequence. The facility is shared via the
+        # id-block; this pins the specific F3 patient the household was walked from.
+        numeric("F4_PARENT_F3_CASE_SEQ", "Parent F3 Patient Case Sequence",
+                length=3, zero_fill=True),
         alpha(  "LATITUDE",          "GPS Latitude",         length=12),
         alpha(  "LONGITUDE",         "GPS Longitude",        length=12),
         alpha(  "HH_GPS_ALTITUDE",   "GPS Altitude (m)",     length=10),
@@ -1652,16 +1658,19 @@ def build_f4_dictionary():
     return build_dictionary(
         dict_name="HOUSEHOLDSURVEY_DICT",
         dict_label="HouseholdSurvey",
-        id_item_name="QUESTIONNAIRE_NO",
-        id_item_label="Questionnaire No",
-        id_length=6,
+        id_items=build_id_block(),
         records=records,
     )
 
 
 def main():
     out_path = Path(__file__).parent / "HouseholdSurvey.dcf"
-    write_dcf(build_f4_dictionary(), out_path)
+    dictionary = build_f4_dictionary()
+    # Multi-language overlay (folded into the generator so regeneration never
+    # silently resets the .dcf to English). Auto-discovers locales by file
+    # existence in translations/; F4 has bcl/bis/ceb/war (no hil/fil).
+    dictionary = apply_translations(dictionary, Path(__file__).parent / "translations")
+    write_dcf(dictionary, out_path)
 
 
 if __name__ == "__main__":
