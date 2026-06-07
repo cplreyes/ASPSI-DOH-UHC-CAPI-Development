@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-05-10
+last_updated: 2026-06-07
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -22,6 +22,17 @@ last_updated: 2026-05-10
 ## 1. Status at a Glance
 
 ### Headline (this week)
+
+**2026-06-07 — Sprint 009 active (Jun 8–12); PSA clearance gate Fri 2026-06-12 is the hard external constraint.** Current state across the project:
+
+- **F2 (PWA): production at v2.1.0 with all 7 PSA-target languages live** (Tagalog + Cebuano/Bisaya/Hiligaynon/Waray/Ilocano/Bicolano) on `main` — the PSA F2-share was met **2026-06-02, ~10 days early**. UAT Rounds 1–3 closed. Residual: app-chrome translation for ilo/hil/war/bcl + a `clasp`/#294 prod-deploy-gap tooling item (S009 Goal B, opportunistic).
+- **F1/F3/F4 (CSPro): multi-language dictionaries BUILT + QC'd (2026-06-03).** Generators self-apply translations (`generate_dcf.py`); the 12-digit `RR-PP-MMM-FF-CCC` case-key migration is folded in (2026-06-04). `preflight_validate.py` + label-parity both **ALL CLEAN / GREEN (2026-06-07)**. **Remaining = Phase-3 CSPro Designer compile + CSEntry desk-test (GUI)** — S009 Goal A, `E3-F1-001 / -F3-001 / -F4-001` **in progress**. Languages are **source-limited by ASPSI:** fil + ilo (F1/F3/F4) and hil (F3/F4) have no translated source → English-fallback + tracked go/no-go (E0-PSA-002).
+- **CSWeb (Epic 4.A): 8.0.1 LIVE on Elestio** (`csweb.asiansocial.org`, cutover ~2026-06-03; admin login + OAuth `/token` verified). E4-CSWeb-001/-002 **DONE**. Config pending: per-survey dictionary upload + user/role matrix + tablet-sync (E4-CSWeb-003/-004/-005); -005 gates E3-F1-088. ASPSI to repoint DNS; first Elestio invoice to Juvy.
+- **Deliverables drafted this period** (Epics 5/7/9/10): CSWeb VPS+Elestio runbooks + RBAC pack + ops/backup SOP + tablet-sync config; field-ops SOPs (tablet + PWA pilot); enumerator/STL/HCW training decks + a CSEntry enumerator field guide; Data-Privacy-and-Security-Plan; data-harmonization codebook + ETL spec + BI dashboard blueprint + prototype; Survey-Manual questionnaire reconciliation + F2 administration subsection.
+- **Tooling/process:** Sprints 005–008 closed (`scrum/sprints/`); the daily-standup automation silent-drop was root-caused + fixed (launch-independent Windows scheduled task, **E0-AUTO-STANDUP done**). An Android-emulator **CSEntry screenshot pipeline** is set up + proven for the enumerator guide (survey screens pending the compile + CSWeb upload).
+- **Long-pole external blockers (ASPSI/PI lane — NOT Data Programmer scope):** SJREB ethics clearance (gates the Epic-6 pretest), tablet procurement (gates Epic 5 + on-device tests), ASPSI dialect translations (fil/ilo/hil).
+
+> _Headlines below are retained as historical record (Sprint 004 era and earlier, ≤ 2026-05-10)._
 
 **Inter-sprint, Sun 2026-05-10 — Sprint 004 archived + Sprint 005 plan locked + E0-009 issue-triage commitment slotted.** Sprint 004 retro filled (drafted from log/git evidence — Carl to review/edit before Mon kickoff) and archived to `scrum/sprints/sprint-004.md`; `sprint-current.md` reset to Sprint 005 (Mon 2026-05-11 → Fri 2026-05-15) with Goal A (UHC Phase 1 sync close-out + Phase 2 plan) + Goal B (E0-009 issue-triage Day 1 ritual + Sprint 004 carry close-outs). `scrum/sprints/sprint-005-plan.md` authored capturing the 19-item slot state explicitly (15 Done from PR #136 + 4 Todo + new E0-009). **E0-009** ([#272](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/272)) created + slotted to sprint-005 in Project #8 — first explicit issue-triage ritual item, addresses Sprint 004 retro Q4: Day 1 audit Project #8 sprint-005 slot framing for the 15 PR #136 closes + dispose of the 9 R2 `fixed-pending-verify` + ~100 unscheduled Todo + post triage summary to `#capi-scrum`. Becomes recurring Day 1 ritual once first execution proves format.
 
@@ -70,29 +81,29 @@ Comms infrastructure fully provisioned (project mailbox + Viber group both live,
 
 | # | Epic | Current State | Next Milestone |
 |---|---|---|---|
-| **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** (Sprint 003 committed: E0-010 weekly status format; stretch: E0-008 auto-standup retro-injection tooling) | E0-010 weekly status update format drafted + first send to ASPSI Mgmt Committee; E0-008 lands in `.claude/scripts/generate_standup.py` |
+| **0** | CAPI Project Management & Stakeholder Engagement | **Active / Ongoing** (Sprint 009 active; Sprints 005–008 closed + archived; daily-standup automation fixed — **E0-AUTO-STANDUP done 2026-06-07**) | Close S009 (Fri 2026-06-12) + reassess roadmap toward the PSA gate |
 | **1** | Inception & Engagement Setup | **Done** | — (historical, closed Dec 2025) |
-| **2** | Survey Questionnaire Design & Dictionary | **In Progress** (**F1 Build-ready 2026-05-04** — E2-F1-010 sign-off closed Day 1 of Sprint 004; **F3 Build-ready, F4 Build-ready** — specs complete 2026-04-21; F2 data model lives inside the PWA spec; PLF Source Captured) | F3/F4 Designer validation (E2-F3-010, E2-F4-010 — Sprint 004 stretch) |
-| **3** | CAPI Application Development | **In Progress** (F2 **PWA + Admin Portal in production at v2.0.0 base + v2.0.1 patch bundle since 2026-05-09 (`9bab42b`)** — adds RBAC role-version cache invalidation, JWT pwc server-enforce, first-class Create-HCW modal, design-review 5-fix sweep, concurrency suite, last_login_at write, orphan-admin guards, user-self password rotation; Rounds 1+2 closed (PWA), **UAT Round 2 OPEN** for v2.0.0/v2.0.1 cutover validation (Shan + Kidd, both sides) — 9 R2 `status:fixed-pending-verify` issues awaiting tester re-verify on prod; **F1 Build-ready** — Designer sign-off DONE 2026-05-04; F3/F4 Build-ready) | **E3-F1-001** F1 `FacilityHeadSurvey.fmf` Section A layout (Sprint 004 — UNBLOCKED Day 1); F3/F4 build slots TBD; v2.0.1 release-notes workflow trigger (no v2.0.1 milestone yet — tag + CHANGELOG bump path TBD); F2 Round 3 UX features (#16/#17/#18) when slot opens |
-| **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Apps Script + Cloudflare Pages + Worker for PWA) | **In Progress** (PWA + Admin Portal at **v2.0.0 base + v2.0.1 patch bundle in production since 2026-05-09 (`9bab42b`)**; prod Worker now carries v2.0.1 patch fixes; prod AS `F2-PWA-Backend` carries FX-006 audit columns + SeedDemo guarded; `runAllMigrations()` ran on prod sheet; CF Pages auto-deploy via `cf-pages-deploy.yml` confirmed firing post-merge 2026-05-09; CSWeb track Not Started) | **E4-APRT-035** cross-platform QA — E2 Firefox / E3 Edge / G3/H/Z still untested; **E4-APRT-042** per-tester admin user accounts on prod (#64) — runbook landed `f17d08e`, **in-flight 2026-05-09** awaiting Carl's hands-on; **E4-APRT-043** production ADMIN_PASSWORD_HASH deletion (#65) — runbook landed `f17d08e`, source-removal commit pre-staged on `main`, **in-flight 2026-05-09** awaiting wrangler-secret-delete smoke confirmation; CSWeb provisioning + integration ETL spec drafted |
-| **5** | Field Distribution & Device Management (tablets for CAPI; URL distribution + PWA install + reminder ops for F2) | **In Progress** (PWA distribution model proven via UAT; CAPI tablet spec drafted 2026-04-29 — E5-CAPI-001 in-progress, awaiting procurement confirmation from ASPSI ops) | Tablet provisioning SOP drafted; F2 distribution-list SOP drafted |
-| **6** | Testing and Pilot | **Mode-aware:** PWA test stack live (vitest + Playwright + cross-platform QA; UAT Rounds 1+2 closed). CAPI track Not Started. | F1 desk test (follows Epic 3); QA Tester (Shan) handoff workflow extended to CAPI |
-| **7** | Training and Documentation | **In Progress** (Survey Manual CAPI section + 2 appendices drafted 2026-04-29 for Kidd's review; training decks Not Started) | Kidd's review on E7-DOC-001 draft; resolve open questions (questionnaire-number scheme, F2 manual scope, PAPI fallback); CAPI training deck E7-TRAIN-001 |
-| **8** | Fieldwork Monitoring and Quality Control | Not Started (activates at fieldwork) | Cross-track BI dashboard scaffolded (CSWeb + F2 backend in one view) |
-| **9** | Data Management and Security | **Governance Active** (NDU + privacy compliance ongoing) | Secure sync + backup strategy defined for both tracks |
-| **10** | Data Cleaning and Processing | Not Started | Shared codebook + harmonization ETL spec drafted alongside instrument design |
-| **11** | Analysis Support & Deliverables | Not Started | Interim tabulation template prepared ahead of D4; CSV + Stata export pipeline defined for both tracks |
+| **2** | Survey Questionnaire Design & Dictionary | **Done (design)** — F1/F3/F4 all Build-ready with **multi-language dictionaries built + QC'd (2026-06-03)**; 12-digit case-key migration in; F2 data model in the PWA spec; PLF Source Captured | Instrument multi-language verify is now an Epic-3 activity (E3-F1/F3/F4-001) |
+| **3** | CAPI Application Development | **In Progress** — **F2 PWA in production at v2.1.0 with all 7 PH languages** (UAT R1–R3 closed). **F1/F3/F4 multi-language BUILT**; preflight + label-parity GREEN (2026-06-07); **Phase-3 CSPro Designer compile + CSEntry verify in progress** (S009 Goal A, `E3-F1-001/-F3-001/-F4-001`) | Complete the CSEntry multi-language desk-test → assemble the PSA bundle (E0-PSA-001); opportunistic `clasp`/#294 (Goal B) |
+| **4** | Backend & Sync Infrastructure (CSWeb for CAPI; Apps Script + Cloudflare Pages + Worker for PWA) | **In Progress** — PWA backend live (prod Worker + AS); **CSWeb 8.0.1 LIVE on Elestio** `csweb.asiansocial.org` (E4-CSWeb-001/-002 **done**, cutover ~2026-06-03) | E4-CSWeb-003 dictionary upload · -004 user/role matrix · -005 tablet sync (gates E3-F1-088); ASPSI DNS repoint + Juvy invoice |
+| **5** | Field Distribution & Device Management (tablets for CAPI; URL distribution + PWA install + reminder ops for F2) | **In Progress** — F2 distribution proven; CAPI tablet + PWA-pilot field-ops SOPs drafted | **Blocked-external:** tablet procurement (ASPSI ops) for on-device provisioning |
+| **6** | Testing and Pilot | **Mode-aware:** PWA tested (UAT R1–R3 closed). CAPI desk-test pending the Designer compile (runbook §3). | F1/F3/F4 CSEntry desk-test; **pretest blocked on SJREB clearance** (ASPSI/PI lane) |
+| **7** | Training and Documentation | **In Progress** — Survey Manual sections + enumerator/STL/HCW training decks + CSEntry enumerator field guide drafted | Fill the enumerator guide screenshots (post-compile + CSWeb sync); Kidd's review on Survey Manual |
+| **8** | Fieldwork Monitoring and Quality Control | Not Started (activates at fieldwork) — **BI dashboard blueprint + prototype drafted** | Stand up the cross-track BI dashboard v0 (CSWeb + F2 backend) |
+| **9** | Data Management and Security | **Governance Active** — **Data-Privacy-and-Security-Plan drafted** | Finalize secure sync + backup strategy for both tracks |
+| **10** | Data Cleaning and Processing | Not Started — **shared codebook + harmonization ETL spec drafted** | Per-instrument batch-edit specs once data flows |
+| **11** | Analysis Support & Deliverables | Not Started | Interim tabulation template ahead of D4; CSV + Stata export pipeline |
 | **12** | Handover, Closeout & Retrospective | Not Started | NDU-compliant file disposition plan |
 
 ### By Survey Instrument
 
 | Instrument | Mode | Pages | Current State |
 |---|---|---|---|
-| **F1 — Facility Head** | Interviewer-administered (CSPro CAPI) | 34 | **Build-ready 2026-05-04** — DCF at 12 records / 671 items (post Apr 21 GPS+photo+PSGC-cascade pass); E2-F1-009b closed 2026-04-17; skip-logic spec aligned with F3/F4 on 2026-04-21; PSGC value sets still blocked on ASPSI; **E2-F1-010 Designer sign-off DONE 2026-05-04** (bug list clean — no deferrals); E3-F1-001 FMF Designer pass now unblocked |
-| **F2 — Healthcare Worker** | **Self-admin — PWA (primary). Google Forms + CSPro-encoder fallbacks retired 2026-04-17. CSPro F2 track: least priority — do not reopen.** | 14 | **Production live at v1.1.1 (2026-04-25).** UAT Rounds 1 + 2 both closed (13 issues fixed). PWA at `deliverables/F2/PWA/app/`; production https://f2-pwa.pages.dev; staging https://b1e46a55.f2-pwa-staging.pages.dev. UAT automation live (Slack events + daily digest + release-notes pipeline). Round 3 (v1.2.0) backlog queued: 3 enhancement items + Verde Manual visual-identity migration (DESIGN.md committed 2026-04-26, PRs #37 tokens + #38 fonts open, PR 3 layout deferred). |
-| **F3 — Patient** | Interviewer-administered (CSPro CAPI) | 23 | **Design — Build-ready 2026-04-21** (18 records / 840 items, sections A–L). Skip-logic + validation spec reviewed at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md`; 1 question to Juvy (Q31 IP_GROUP). |
-| **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2; CSPro CAPI) | 26 | **Design — Build-ready 2026-04-21** (22 records / 623 items, sections A–Q; skip-logic + validation spec at `deliverables/CSPro/F4/F4-Skip-Logic-and-Validations.md`; `C_HOUSEHOLD_ROSTER` already repeating at `max_occurs=20`, `J_HEALTH_SEEKING` intentionally respondent-level — assumed schema patch closed by verification). |
-| **PLF — Patient Listing Form** | Recruitment form | 1 | Source Captured |
+| **F1 — Facility Head** | Interviewer-administered (CSPro CAPI) | 34 | **Multi-language built (EN + Cebuano/Bisaya/Hiligaynon/Waray/Bicolano).** DCF 12 records, 12-digit case key; preflight + parity GREEN (2026-06-07). **Phase-3 CSPro Designer + CSEntry verify in progress** (E3-F1-001 — closes the five-sprint Designer carry). fil/ilo English-fallback (ASPSI gap). |
+| **F2 — Healthcare Worker** | **Self-admin — PWA (primary). Google Forms + CSPro-encoder fallbacks retired 2026-04-17. CSPro F2 track: least priority — do not reopen.** | 14 | **Production live at v2.1.0 — all 7 PSA-target languages** (PSA F2-share met 2026-06-02). UAT Rounds 1–3 closed. PWA at `deliverables/F2/PWA/app/`; prod https://f2-pwa.pages.dev. Residual: app-chrome translation for ilo/hil/war/bcl; `clasp`/#294 deploy-gap (S009 Goal B). |
+| **F3 — Patient** | Interviewer-administered (CSPro CAPI) | 23 | **Multi-language built (EN + Cebuano/Bisaya/Waray/Bicolano).** 18 records, 12-digit case key; preflight + parity GREEN. **Phase-3 Designer + CSEntry verify in progress** (E3-F3-001 / #251). hil/fil/ilo English-fallback (ASPSI gap). |
+| **F4 — Household** | Interviewer-administered (roster-heavy, new for Year 2; CSPro CAPI) | 26 | **Multi-language built (EN + Cebuano/Bisaya/Waray/Bicolano).** 22 records (`C_HOUSEHOLD_ROSTER` repeating), 12-digit case key; preflight + parity GREEN. **Phase-3 Designer + CSEntry verify in progress** (E3-F4-001 / #253). hil/fil/ilo English-fallback (ASPSI gap). |
+| **PLF — Patient Listing Form** | Recruitment form | 1 | Source Captured (Designer-validate + publish deferred — out of the current instrument-dev goal) |
 
 ---
 
@@ -139,6 +150,8 @@ What is being built, in numbers:
 ## 4. Workstream Epics
 
 Each epic below is a long-running workstream that spans its portion of the engagement lifecycle. Epics will be expanded into tasks as work enters active sprints.
+
+> **Note (2026-06-07):** the per-epic narratives below are reference detail and may lag — the **Status at a Glance** headline + tables in §1 are authoritative for current state (e.g. F2 is at v2.1.0/7-language, F1/F3/F4 dictionaries are multi-language with Phase-3 verify in progress, and CSWeb 8.0.1 is LIVE — superseding older "v1.1.1" / "CSWeb Not Started" phrasing in the detail sections).
 
 ---
 
