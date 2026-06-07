@@ -63,7 +63,7 @@ Headroom is ~4h, so at most one stretch item. Pull rule: pick whichever is on Ca
 
 ## Out of Sprint 005 scope
 
-- **F3/F4 build kickoff** — waits on Sprint 008+ once F1 patterns proven (per sprint-007-plan.md).
+- **F3/F4 build kickoff** — waits on Sprint 008+ once F1 patterns proven (per `sprints/sprint-007-plan.md`).
 - **CSWeb stand-up** — waits until F1 build artifact stable (Phase 1 sync close-out is prerequisite).
-- **Hard validations + soft validations + display gates + dynamic value sets + cross-field consistency** — Sprint 007 work per sprint-007-plan.md.
+- **Hard validations + soft validations + display gates + dynamic value sets + cross-field consistency** — Sprint 007 work per `sprints/sprint-007-plan.md`.
 - **Filipino translations / multi-lang switching / master skip gates** — Sprint 006 base (only pulled to Sprint 005 as stretch headroom permits).
