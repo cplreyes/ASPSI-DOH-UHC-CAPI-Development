@@ -4,7 +4,7 @@ kind: goal-prompt
 scope: end-to-end CAPI instruments (F1, F3, F4) from generator build through CSWeb deploy + Android on-device verification (F2 = done; PLF excluded)
 use_with: /goal
 created: 2026-06-07
-revised: 2026-06-08
+revised: 2026-06-09
 pairs_with: [deliverables/CSPro/preflight_validate.py, deliverables/CSPro/automation/cspro_compile_driver.py, deliverables/CSPro/bundle/build_bundle.py, deliverables/CSPro/Desk-Test-Scenario-Matrix.md, deliverables/CSPro/CSWeb-Deploy-and-Android-Verification-Runbook.md, scrum/epics/epic-04-backend-sync-infrastructure.md, scrum/sprint-current.md]
 ---
 
@@ -39,8 +39,13 @@ A CAPI instrument clears Stage 1 when all of these hold:
    (per-language `.qsf` generators; F3 verified rendering Waray). NB: form field labels are EN by CSPro
    design — the per-language channel is the question text.**
 5. **Desk-test scenarios pass** (runbook §3): happy path + targeted branches (consent refuse, eligibility/
-   age gates, F1 Q121 option logic, PSGC cascade, F4 roster/cross-member/expenditure, F3 OP/IP + terminators),
-   screenshots to the gate issue. **🟡 SMOKE PASS done (entry + range validations fire); full matrix pending.**
+   age gates, F1 Q121 option logic, PSGC cascade, F4 roster/cross-member/expenditure, F3 OP/IP + terminators).
+   **🟢 Runtime-verified 2026-06-09:** real **CSEntry compile-gate** PASS ×3 (`automation/csentry_verify.py`,
+   caught a `protect()` bug Designer had masked) · **case-key persistence DB-verified** (F4) · **all three
+   validation kinds** (cross-field-hard, range, soft-warn) fire at runtime via the **scenario runner**
+   (`automation/csentry_runner.py`) · PSGC cascade + consent `endlevel` proven live. Full per-instrument
+   happy-path matrix is optional polish. Fixed two latent runtime blockers: PSGC `[ExternalFiles]` in the
+   pffs; GPS/photo capture made **desktop-skippable via `getos()`** (Android still captures for real).
 6. **Designer validation sign-off** recorded (F3 #251 / F4 #253 FIELD_CONTROL + full walkthrough). **❌**
 7. **Gate issues closed:** F1 #161/#193 · F3 #194/#251 · F4 #195/#253. **❌**
 8. **Deployable bundle exists** — `.ent` + `dcf`/`fmf`/`ent.apc`/`ent.qsf`/`ent.mgf` + the 4 PSGC dicts +
@@ -52,6 +57,14 @@ A CAPI instrument clears Stage 1 when all of these hold:
 Builds on the Stage-1 bundles. Maps to Sprint-007 carries `E4-CSWeb-003/004/005`, `E3-F1-088` (+ F3/F4),
 and Epics 5–6. The sync chain was proven once on a real device (`E3-F1-086`); Stage 2 redoes it for the
 current rebuilt apps and adds the hardware-dependent checks.
+
+> **PREREQUISITE surfaced 2026-06-09 — the apps need sync configured.** The desk-test build has **NO
+> synchronization** (built for local entry only). Before C–E can work, add **Simple Synchronization**
+> (or sync-from-logic) targeting `https://csweb.asiansocial.org/api` + the instrument's dictionary —
+> **generated at the source (IRON RULE)**, then re-verified in CSEntry. The earlier "sync proven"
+> (`E3-F1-085`) was a *local* CSWeb deploy of an *older* F1 build; the current rebuilt apps have never
+> round-tripped on the Elestio CSWeb. **QUALITY RULE: never demo or sign off a round-trip that hasn't
+> been run successfully once, end-to-end (up → server → down).**
 10. **Apps + dictionaries on CSWeb** (`E4-CSWeb-003`) — F1/F3/F4 dictionaries + app packages uploaded to
     `csweb.asiansocial.org`. *(Stretch: script the upload via the CSWeb OAuth API — `/token` verified.)*
 11. **Enumerator access configured** (`E4-CSWeb-004`) — users/roles + a test account.
@@ -71,28 +84,42 @@ provisioning by ASPSI · **pretest with real respondents (SJREB-gated)** · fiel
 cleaning/ETL · analysis. Stage 2 stops at a device-verified, sync-proven app + handoff runbook —
 not live fieldwork. *(CSWeb config E4-CSWeb-003/004/005, previously out-of-scope, is now Stage 2.)*
 
-## CURRENT STATE (2026-06-08)
-- **STAGE 1 ~DONE.** All three instruments compile clean AND **load + run in CSEntry from pure generator
-  output** — the old "compile/desk-test is GUI-only" assumption is overturned (Designer compile + CSEntry
-  load are now agent-automated via pywinauto + screenshot/vision + the `<app>.ent.err` oracle). Multi-language
-  wired via per-language `.qsf` question text (F3 proven Waray). `preflight_validate.py` = ALL CLEAN.
-  Deployable bundles built (`bundle/dist/`). **Remaining Stage-1 QA:** full desk-test scenario matrix (#5),
-  Designer sign-off (#6), close gate issues (#7).
-- **STAGE 2 not started.** The `bundle/dist/` packages are the exact input to `E4-CSWeb-003`. Blocked on:
-  CSWeb admin config (Carl; admin + OAuth verified) and a physical Android device (ASPSI-gated). PSA gate ~Jun 12.
+## CURRENT STATE (2026-06-09)
+- **STAGE 1 DONE + runtime-verified.** All three compile clean, load+run in CSEntry from pure generator
+  output, multi-language renders (`.qsf`; F3 proven Waray), `preflight_validate.py` ALL CLEAN, bundles
+  built. This session hardened criterion #5 to runtime evidence (see #5): CSEntry compile-gate, case-key
+  DB-verified, all three validation kinds firing live, two latent blockers fixed (PSGC `[ExternalFiles]`,
+  `getos()` capture-skip). The instruments are **field-functional**. Remaining Stage-1 QA (full matrix,
+  Designer sign-off, gate issues) is optional polish, not blocking Stage 2.
+- **STAGE 2 NOW ACTIVE — F1 pilot, full CSWeb round-trip, no shortcuts.** Strategy: take **ONE instrument
+  end-to-end first** (**F1 — Facility Head**: simplest, no roster, all headline features), prove the entire
+  chain on the live Elestio CSWeb + a real Android device — deploy → CSEntry download → enter a case →
+  **sync round-trip (up → server → down)** — then **replicate A–E to F3/F4**. This realises the original
+  "complete the goal for one instrument now, others later."
+- **Newly-surfaced gap:** the apps have **no sync configured** — Stage 2 starts by sync-enabling F1 at the
+  generator (see Stage-2 prerequisite note). CSWeb has admin accounts seeded (`E4-APRT-008`); the admin
+  steps (dict upload, app deploy, tester account) are Carl's. No physical-device blocker assumed — uses a
+  real Android with CSEntry 8.x. PSA gate ~Jun 12.
 
-## PATH (sequence)
-**Stage 1 (finish QA):** full desk-test scenario matrix per instrument → record Designer sign-off → close
-gate issues (#161/#193/#194/#195/#251/#253).
-**Stage 2 (deploy + device):**
-- **A. Package** *(agent-doable now)* — CSPro "Deploy" each `.ent` → app package incl. the 4 PSGC external
-  dicts + `.dat`; author the sync spec (server = `csweb.asiansocial.org`, conflict policy).
-- **B. CSWeb config** *(Carl, admin UI)* — upload dicts + apps (003) · users/roles (004) · tablet sync (005).
-- **C. Tablet provisioning** *(ASPSI procures; Carl/agent configure)* — Android + CSEntry 8.x; add each app.
-- **D. On-device functional verification** *(needs device)* — the criterion-13 checklist (GPS + photo are the
-  headline device-only gaps).
-- **E. Sync round-trip** *(blocked on B-005 + device)* — case up → CSWeb → down.
-- **F. Sign-off + handoff** — runbook to ASPSI/Shan.
+## PATH (sequence) — F1 pilot first, then F3/F4 replicate
+**Stage 1:** ✅ build-complete + runtime-verified. *(Optional carry: full desk-test matrix · Designer
+sign-off · close gate issues #161/#193/#194/#195/#251/#253 — none block Stage 2.)*
+
+**Stage 2 — F1 round-trip, in order, no shortcuts:**
+- **A. Sync-enable F1** *(agent — generator, IRON RULE)* — add **Simple Synchronization** (or sync-from-
+  logic) to F1: server `https://csweb.asiansocial.org/api` + the F1 dictionary; regenerate; re-verify it
+  still compiles in CSEntry (`csentry_verify.py`). *This is the surfaced gap — do it first.*
+- **B. CSWeb config** *(Carl, admin UI — `E4-CSWeb-003/004/005`)* — upload F1 `.dcf` as the case store ·
+  deploy the F1 app package (incl. PSGC dicts + `.dat`) · enumerator role + test account · sync endpoint +
+  conflict policy (server-wins vs last-write-wins).
+- **C. Device install** *(real Android + CSEntry 8.x)* — Add Application ▸ from CSWeb ▸
+  `https://csweb.asiansocial.org/api` ▸ download F1; grant **Location + Camera**.
+- **D. On-device functional check** *(criterion 13)* — cascade · multi-language question text · skip logic ·
+  **real GPS + verification photo** · consent terminator.
+- **E. Sync round-trip** *(criterion 14)* — enter a complete case → sync **up** → verify it lands in the
+  CSWeb store (admin) → sync **down**. **Run this successfully once before any demo/sign-off (QUALITY RULE).**
+- **F. Sign-off + replicate** — record F1 sign-off; then repeat A–E for **F3** (OP/IP branch + 2 cascades +
+  patient-home GPS) and **F4** (roster add/edit/delete on touch + expenditure gates).
 
 ## CONSTRAINTS / RULES
 - **IRON RULE:** Designer/CSEntry error → fix the **generator source** → `generate_dcf.py && generate_apc.py
@@ -108,10 +135,11 @@ gate issues (#161/#193/#194/#195/#251/#253).
 - CSPro Designer/CSEntry 8.0 on Windows; Python under `py`/`python`.
 
 ## START HERE
-Stage 1 is build-complete and bundled. Next: either (a) finish Stage-1 QA — drive the full desk-test
-scenario matrix per instrument (the smoke pass is done), then sign-off + close gate issues; or (b) start
-Stage 2 — package the apps for deploy (agent-doable now) and run the CSWeb config go/no-go (device +
-admin access). Confirm device/admin availability before the Stage-2 device phases.
+Stage 1 is build-complete + runtime-verified. **Active focus: Stage 2 — F1 pilot, full CSWeb round-trip,
+no shortcuts.** Immediate next = **PATH-A: sync-enable F1** at the generator (add Simple Synchronization
+targeting `https://csweb.asiansocial.org/api` + the F1 dictionary), regenerate, re-verify compile — this
+is the surfaced gap. Then Carl runs the CSWeb admin steps (PATH-B), install on a real Android device
+(PATH-C/D), and prove the round-trip (PATH-E), tested once before any demo. Then replicate A–E to F3/F4.
 
 ---
 *One-line goal:* **Every CAPI instrument is generator-clean, runs in CSEntry in every delivered language,
