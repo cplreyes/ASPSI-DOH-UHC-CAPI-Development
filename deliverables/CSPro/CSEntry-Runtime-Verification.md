@@ -6,7 +6,10 @@ can report success while compiling a stale/empty in-memory app, masking real err
 CSEntry recompiles the `.ent.apc` text on every launch and is the ground truth.
 
 **Status (2026-06-09):** Stage 0 PASS for F1/F3/F4 after fixing a `protect()` bug
-that Designer had masked (61 errors in F4). Stages 1–2 are the field-behaviour pass.
+that Designer had masked (61 errors in F4). **Stage 1 PASS on F4** — case key
+`010300702015` entered + saved via consent=No→`endlevel`; verified in the `.csdb`
+(`cases.key`='010300702015', 12 chars; `level-1` ids 1/3/7/2/15, non-null). Stage 2
+(validation/skip spot-checks) is the remaining field-behaviour pass.
 
 ---
 
