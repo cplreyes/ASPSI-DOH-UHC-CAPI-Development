@@ -351,8 +351,19 @@ pipeline). `LANGUAGE_USED=getlanguage()` records the active language at case sta
 > - ⏳ **Select-all exclusive-option ("None/IDK can't combine")** — deliberately NOT auto-derived: detecting the
 >   exclusive option by label is unreliable (e.g. "Did not know where to register" / "If none, why…" false-match).
 >   Needs encoding from the spec's explicit per-group exclusive codes (F3 §3.5–3.14) — a manual table.
-> - ⏳ **Per-item numeric ranges + cross-field/soft consistency** (F3 §3.5–3.14, F4 equivalents; ~80 rules: Q58 0–365,
->   Q69/Q72 HH/MM bounds, income-bracket↔amount, age↔birth-year, Q86↔Q85, etc.) — large spec-table layer, next batch.
+> - ✅ **Per-item numeric ranges + amount-required + key cross-field** — 2026-06-09, compiles clean both instruments:
+>   - **F3 ranges (12):** Q58_WAIT_DAYS 0–365, Q58_WAIT_MINUTES 0–1440, Q69/Q72/Q150 travel HH 0–24 / MM 0–59,
+>     Q97_FINAL_AMOUNT 0–99,999,999, Q106_NIGHTS/Q106_DAYS 0–365 (+soft>90), Q115_FINAL_CASH 0–999,999,999.
+>   - **F3 amount-required (103):** `amount_required_procs()` auto-derives "if `<FLAG>`=Yes then `<FLAG>_AMT` > 0"
+>     for every payment-matrix `_AMT` (Q92/Q94/Q96/Q98/Q107/Q109/Q112/Q113).
+>   - **F3 cross-field:** Q106 pair-sanity (nights+days ≥ 1); DATE_FINAL_VISIT ≥ DATE_FIRST_VISITED.
+>   - **F4 ranges (4) + cross:** Q18_INCOME_AMOUNT 0–99,999,999, Q67_TIME_TO_PHARMACY 0–1440,
+>     TOTAL_NUMBER_OF_VISITS 1–10 (+soft>3), Q199_WTP_CONSULT ≥ 0; DATE_FINAL_VISIT ≥ DATE_FIRST_VISITED.
+> - ⏳ **Remaining (smaller tail, lower priority):** SOFT plausibility cross-checks (Q143↔Q144 recommend-vs-quality,
+>   Q97/Q98/Q113 total-vs-OOP reconciliation, Q106↔visit-dates, Q45=06→age≥60, Q84↔PATIENT_TYPE, Q85↔Q83); and
+>   **F4 Q18 amount↔bracket consistency** (F4 has 7 brackets vs F3's 6 — needs the 7-bracket boundary table from spec).
+>   The HARD "∈ value set" / "required" rules are already enforced by CSEntry at entry (dcf value sets), so they need
+>   no extra logic.
 > 2. **Refusal disposition code does not persist on F3/F4.** The consent proc sets `ENUM_RESULT_FIRST_VISIT=4`
 >    (Refused), but that item is **off-form** in F3/F4, so the logic assignment did not write (saved `None`). The
 >    refusal IS still captured via `consent_given=2` (+ `AAPOR_DISPOSITION`), so analysis can identify refusals, but

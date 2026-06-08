@@ -1720,6 +1720,45 @@ postproc
     reenter;
   endif;
 
+{ ---- Range + cross-field validations (spec §3.1-§3.12) ---- }
+PROC Q18_INCOME_AMOUNT
+postproc
+  if Q18_INCOME_AMOUNT < 0 or Q18_INCOME_AMOUNT > 99999999 then
+    errmsg("Q18_INCOME_AMOUNT must be between 0 and 99999999.");
+    reenter;
+  endif;
+
+PROC Q67_TIME_TO_PHARMACY
+postproc
+  if Q67_TIME_TO_PHARMACY < 0 or Q67_TIME_TO_PHARMACY > 1440 then
+    errmsg("Q67_TIME_TO_PHARMACY must be between 0 and 1440.");
+    reenter;
+  endif;
+
+PROC TOTAL_NUMBER_OF_VISITS
+postproc
+  if TOTAL_NUMBER_OF_VISITS < 1 or TOTAL_NUMBER_OF_VISITS > 10 then
+    errmsg("TOTAL_NUMBER_OF_VISITS must be between 1 and 10.");
+    reenter;
+  endif;
+  if TOTAL_NUMBER_OF_VISITS > 3 then
+    errmsg("TOTAL_NUMBER_OF_VISITS = %d is unusually high — confirm.", TOTAL_NUMBER_OF_VISITS);
+  endif;
+
+PROC Q199_WTP_CONSULT
+postproc
+  if Q199_WTP_CONSULT < 0 or Q199_WTP_CONSULT > 99999999 then
+    errmsg("Q199_WTP_CONSULT must be between 0 and 99999999.");
+    reenter;
+  endif;
+
+PROC DATE_FINAL_VISIT
+postproc
+  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then
+    errmsg("Final-visit date cannot be earlier than the first-visit date.");
+    reenter;
+  endif;
+
 { ============================================================================
   STILL OPEN (follow-up F4 pass):
     - Section N subtotals (Q157/Q177/Q182/Q185 _SUBTOTAL_TOTAL_PHP): auto-compute

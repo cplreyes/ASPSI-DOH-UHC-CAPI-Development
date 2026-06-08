@@ -904,3 +904,48 @@ def select_all_validation_procs(items):
         ])
         bases.append(base)
     return procs, bases
+
+
+# ---------------------------------------------------------------------------
+# Range + amount-required validations (spec §3.x per-item rules)
+# ---------------------------------------------------------------------------
+
+def range_check_proc(field, lo, hi, hard=True, soft_over=None):
+    """Numeric range check. HARD -> reenter; otherwise warn only. `soft_over`
+    adds a second soft warning when field exceeds that value (spec 'warn if >N')."""
+    lines = [f"PROC {field}", "postproc",
+             f"  if {field} < {lo} or {field} > {hi} then",
+             f"    errmsg(\"{field} must be between {lo} and {hi}.\");"]
+    if hard:
+        lines.append("    reenter;")
+    lines.append("  endif;")
+    if soft_over is not None:
+        lines += [f"  if {field} > {soft_over} then",
+                  f"    errmsg(\"{field} = %d is unusually high — confirm.\", {field});",
+                  "  endif;"]
+    return "\n".join(lines)
+
+
+def amount_required_procs(items):
+    """Payment/expenditure matrices: for each `<FLAG>_AMT` whose `<FLAG>` is a
+    Yes/No option, require a positive amount when the option is selected
+    (spec 'for each *_PAY_NN = Yes, *_AMT > 0'). Auto-derived from the dcf."""
+    procs = {}
+    for n in sorted(items):
+        if not n.endswith("_AMT"):
+            continue
+        flag = n[: -len("_AMT")]
+        f = items.get(flag)
+        if not f:
+            continue
+        codes = {str(v.get("pairs", [{}])[0].get("value"))
+                 for vs in f.get("valueSets") or [] for v in vs.get("values") or []}
+        if "1" not in codes:                       # flag must be a Yes(1)/No option
+            continue
+        procs[n] = (
+            f"PROC {n}\npostproc\n"
+            f"  if {flag} = 1 and {n} = 0 then\n"
+            f"    errmsg(\"'{flag}' was selected — enter its amount (must be greater than 0).\");\n"
+            f"    reenter;\n  endif;"
+        )
+    return procs

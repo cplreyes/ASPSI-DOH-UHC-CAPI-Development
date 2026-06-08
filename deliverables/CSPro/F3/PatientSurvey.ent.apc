@@ -1336,6 +1336,830 @@ postproc
     reenter;
   endif;
 
+{ ---- Payment-matrix amount-required (auto-derived from dcf) ---- }
+PROC Q107_PAY_01_AMT
+postproc
+  if Q107_PAY_01 = 1 and Q107_PAY_01_AMT = 0 then
+    errmsg("'Q107_PAY_01' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q107_PAY_02_AMT
+postproc
+  if Q107_PAY_02 = 1 and Q107_PAY_02_AMT = 0 then
+    errmsg("'Q107_PAY_02' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q107_PAY_03_AMT
+postproc
+  if Q107_PAY_03 = 1 and Q107_PAY_03_AMT = 0 then
+    errmsg("'Q107_PAY_03' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q107_PAY_04_AMT
+postproc
+  if Q107_PAY_04 = 1 and Q107_PAY_04_AMT = 0 then
+    errmsg("'Q107_PAY_04' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q107_PAY_05_AMT
+postproc
+  if Q107_PAY_05 = 1 and Q107_PAY_05_AMT = 0 then
+    errmsg("'Q107_PAY_05' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q107_PAY_06_AMT
+postproc
+  if Q107_PAY_06 = 1 and Q107_PAY_06_AMT = 0 then
+    errmsg("'Q107_PAY_06' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q107_PAY_07_AMT
+postproc
+  if Q107_PAY_07 = 1 and Q107_PAY_07_AMT = 0 then
+    errmsg("'Q107_PAY_07' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q107_PAY_08_AMT
+postproc
+  if Q107_PAY_08 = 1 and Q107_PAY_08_AMT = 0 then
+    errmsg("'Q107_PAY_08' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q107_PAY_09_AMT
+postproc
+  if Q107_PAY_09 = 1 and Q107_PAY_09_AMT = 0 then
+    errmsg("'Q107_PAY_09' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q107_PAY_10_AMT
+postproc
+  if Q107_PAY_10 = 1 and Q107_PAY_10_AMT = 0 then
+    errmsg("'Q107_PAY_10' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q109_PAY_01_AMT
+postproc
+  if Q109_PAY_01 = 1 and Q109_PAY_01_AMT = 0 then
+    errmsg("'Q109_PAY_01' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q109_PAY_02_AMT
+postproc
+  if Q109_PAY_02 = 1 and Q109_PAY_02_AMT = 0 then
+    errmsg("'Q109_PAY_02' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q109_PAY_03_AMT
+postproc
+  if Q109_PAY_03 = 1 and Q109_PAY_03_AMT = 0 then
+    errmsg("'Q109_PAY_03' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q109_PAY_04_AMT
+postproc
+  if Q109_PAY_04 = 1 and Q109_PAY_04_AMT = 0 then
+    errmsg("'Q109_PAY_04' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q109_PAY_05_AMT
+postproc
+  if Q109_PAY_05 = 1 and Q109_PAY_05_AMT = 0 then
+    errmsg("'Q109_PAY_05' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q109_PAY_06_AMT
+postproc
+  if Q109_PAY_06 = 1 and Q109_PAY_06_AMT = 0 then
+    errmsg("'Q109_PAY_06' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q109_PAY_07_AMT
+postproc
+  if Q109_PAY_07 = 1 and Q109_PAY_07_AMT = 0 then
+    errmsg("'Q109_PAY_07' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q109_PAY_08_AMT
+postproc
+  if Q109_PAY_08 = 1 and Q109_PAY_08_AMT = 0 then
+    errmsg("'Q109_PAY_08' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q109_PAY_09_AMT
+postproc
+  if Q109_PAY_09 = 1 and Q109_PAY_09_AMT = 0 then
+    errmsg("'Q109_PAY_09' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q112_PAY_01_AMT
+postproc
+  if Q112_PAY_01 = 1 and Q112_PAY_01_AMT = 0 then
+    errmsg("'Q112_PAY_01' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q112_PAY_02_AMT
+postproc
+  if Q112_PAY_02 = 1 and Q112_PAY_02_AMT = 0 then
+    errmsg("'Q112_PAY_02' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q112_PAY_03_AMT
+postproc
+  if Q112_PAY_03 = 1 and Q112_PAY_03_AMT = 0 then
+    errmsg("'Q112_PAY_03' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q112_PAY_04_AMT
+postproc
+  if Q112_PAY_04 = 1 and Q112_PAY_04_AMT = 0 then
+    errmsg("'Q112_PAY_04' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q112_PAY_05_AMT
+postproc
+  if Q112_PAY_05 = 1 and Q112_PAY_05_AMT = 0 then
+    errmsg("'Q112_PAY_05' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q112_PAY_06_AMT
+postproc
+  if Q112_PAY_06 = 1 and Q112_PAY_06_AMT = 0 then
+    errmsg("'Q112_PAY_06' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q112_PAY_07_AMT
+postproc
+  if Q112_PAY_07 = 1 and Q112_PAY_07_AMT = 0 then
+    errmsg("'Q112_PAY_07' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q112_PAY_08_AMT
+postproc
+  if Q112_PAY_08 = 1 and Q112_PAY_08_AMT = 0 then
+    errmsg("'Q112_PAY_08' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q112_PAY_09_AMT
+postproc
+  if Q112_PAY_09 = 1 and Q112_PAY_09_AMT = 0 then
+    errmsg("'Q112_PAY_09' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_01_AMT
+postproc
+  if Q113_PAY_01 = 1 and Q113_PAY_01_AMT = 0 then
+    errmsg("'Q113_PAY_01' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_02_AMT
+postproc
+  if Q113_PAY_02 = 1 and Q113_PAY_02_AMT = 0 then
+    errmsg("'Q113_PAY_02' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_03_AMT
+postproc
+  if Q113_PAY_03 = 1 and Q113_PAY_03_AMT = 0 then
+    errmsg("'Q113_PAY_03' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_04_AMT
+postproc
+  if Q113_PAY_04 = 1 and Q113_PAY_04_AMT = 0 then
+    errmsg("'Q113_PAY_04' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_05_AMT
+postproc
+  if Q113_PAY_05 = 1 and Q113_PAY_05_AMT = 0 then
+    errmsg("'Q113_PAY_05' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_06_AMT
+postproc
+  if Q113_PAY_06 = 1 and Q113_PAY_06_AMT = 0 then
+    errmsg("'Q113_PAY_06' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_07_AMT
+postproc
+  if Q113_PAY_07 = 1 and Q113_PAY_07_AMT = 0 then
+    errmsg("'Q113_PAY_07' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_08_AMT
+postproc
+  if Q113_PAY_08 = 1 and Q113_PAY_08_AMT = 0 then
+    errmsg("'Q113_PAY_08' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_09_AMT
+postproc
+  if Q113_PAY_09 = 1 and Q113_PAY_09_AMT = 0 then
+    errmsg("'Q113_PAY_09' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_10_AMT
+postproc
+  if Q113_PAY_10 = 1 and Q113_PAY_10_AMT = 0 then
+    errmsg("'Q113_PAY_10' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_11_AMT
+postproc
+  if Q113_PAY_11 = 1 and Q113_PAY_11_AMT = 0 then
+    errmsg("'Q113_PAY_11' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_12_AMT
+postproc
+  if Q113_PAY_12 = 1 and Q113_PAY_12_AMT = 0 then
+    errmsg("'Q113_PAY_12' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q113_PAY_13_AMT
+postproc
+  if Q113_PAY_13 = 1 and Q113_PAY_13_AMT = 0 then
+    errmsg("'Q113_PAY_13' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1141_1_AMT
+postproc
+  if Q1141_1 = 1 and Q1141_1_AMT = 0 then
+    errmsg("'Q1141_1' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1141_2_AMT
+postproc
+  if Q1141_2 = 1 and Q1141_2_AMT = 0 then
+    errmsg("'Q1141_2' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1141_3_AMT
+postproc
+  if Q1141_3 = 1 and Q1141_3_AMT = 0 then
+    errmsg("'Q1141_3' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1141_4_AMT
+postproc
+  if Q1141_4 = 1 and Q1141_4_AMT = 0 then
+    errmsg("'Q1141_4' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1141_5_AMT
+postproc
+  if Q1141_5 = 1 and Q1141_5_AMT = 0 then
+    errmsg("'Q1141_5' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1141_6_AMT
+postproc
+  if Q1141_6 = 1 and Q1141_6_AMT = 0 then
+    errmsg("'Q1141_6' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1142_1_AMT
+postproc
+  if Q1142_1 = 1 and Q1142_1_AMT = 0 then
+    errmsg("'Q1142_1' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1142_2_AMT
+postproc
+  if Q1142_2 = 1 and Q1142_2_AMT = 0 then
+    errmsg("'Q1142_2' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1142_3_AMT
+postproc
+  if Q1142_3 = 1 and Q1142_3_AMT = 0 then
+    errmsg("'Q1142_3' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1142_4_AMT
+postproc
+  if Q1142_4 = 1 and Q1142_4_AMT = 0 then
+    errmsg("'Q1142_4' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1142_5_AMT
+postproc
+  if Q1142_5 = 1 and Q1142_5_AMT = 0 then
+    errmsg("'Q1142_5' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1142_6_AMT
+postproc
+  if Q1142_6 = 1 and Q1142_6_AMT = 0 then
+    errmsg("'Q1142_6' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q1142_7_AMT
+postproc
+  if Q1142_7 = 1 and Q1142_7_AMT = 0 then
+    errmsg("'Q1142_7' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q92_PAY_01_AMT
+postproc
+  if Q92_PAY_01 = 1 and Q92_PAY_01_AMT = 0 then
+    errmsg("'Q92_PAY_01' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q92_PAY_02_AMT
+postproc
+  if Q92_PAY_02 = 1 and Q92_PAY_02_AMT = 0 then
+    errmsg("'Q92_PAY_02' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q92_PAY_03_AMT
+postproc
+  if Q92_PAY_03 = 1 and Q92_PAY_03_AMT = 0 then
+    errmsg("'Q92_PAY_03' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q92_PAY_04_AMT
+postproc
+  if Q92_PAY_04 = 1 and Q92_PAY_04_AMT = 0 then
+    errmsg("'Q92_PAY_04' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q92_PAY_05_AMT
+postproc
+  if Q92_PAY_05 = 1 and Q92_PAY_05_AMT = 0 then
+    errmsg("'Q92_PAY_05' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q92_PAY_06_AMT
+postproc
+  if Q92_PAY_06 = 1 and Q92_PAY_06_AMT = 0 then
+    errmsg("'Q92_PAY_06' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q92_PAY_07_AMT
+postproc
+  if Q92_PAY_07 = 1 and Q92_PAY_07_AMT = 0 then
+    errmsg("'Q92_PAY_07' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q92_PAY_08_AMT
+postproc
+  if Q92_PAY_08 = 1 and Q92_PAY_08_AMT = 0 then
+    errmsg("'Q92_PAY_08' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q94_PAY_01_AMT
+postproc
+  if Q94_PAY_01 = 1 and Q94_PAY_01_AMT = 0 then
+    errmsg("'Q94_PAY_01' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q94_PAY_02_AMT
+postproc
+  if Q94_PAY_02 = 1 and Q94_PAY_02_AMT = 0 then
+    errmsg("'Q94_PAY_02' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q94_PAY_03_AMT
+postproc
+  if Q94_PAY_03 = 1 and Q94_PAY_03_AMT = 0 then
+    errmsg("'Q94_PAY_03' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q94_PAY_04_AMT
+postproc
+  if Q94_PAY_04 = 1 and Q94_PAY_04_AMT = 0 then
+    errmsg("'Q94_PAY_04' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q94_PAY_05_AMT
+postproc
+  if Q94_PAY_05 = 1 and Q94_PAY_05_AMT = 0 then
+    errmsg("'Q94_PAY_05' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q94_PAY_06_AMT
+postproc
+  if Q94_PAY_06 = 1 and Q94_PAY_06_AMT = 0 then
+    errmsg("'Q94_PAY_06' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q94_PAY_07_AMT
+postproc
+  if Q94_PAY_07 = 1 and Q94_PAY_07_AMT = 0 then
+    errmsg("'Q94_PAY_07' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q94_PAY_08_AMT
+postproc
+  if Q94_PAY_08 = 1 and Q94_PAY_08_AMT = 0 then
+    errmsg("'Q94_PAY_08' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q96_PAY_01_AMT
+postproc
+  if Q96_PAY_01 = 1 and Q96_PAY_01_AMT = 0 then
+    errmsg("'Q96_PAY_01' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q96_PAY_02_AMT
+postproc
+  if Q96_PAY_02 = 1 and Q96_PAY_02_AMT = 0 then
+    errmsg("'Q96_PAY_02' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q96_PAY_03_AMT
+postproc
+  if Q96_PAY_03 = 1 and Q96_PAY_03_AMT = 0 then
+    errmsg("'Q96_PAY_03' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q96_PAY_04_AMT
+postproc
+  if Q96_PAY_04 = 1 and Q96_PAY_04_AMT = 0 then
+    errmsg("'Q96_PAY_04' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q96_PAY_05_AMT
+postproc
+  if Q96_PAY_05 = 1 and Q96_PAY_05_AMT = 0 then
+    errmsg("'Q96_PAY_05' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q96_PAY_06_AMT
+postproc
+  if Q96_PAY_06 = 1 and Q96_PAY_06_AMT = 0 then
+    errmsg("'Q96_PAY_06' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q96_PAY_07_AMT
+postproc
+  if Q96_PAY_07 = 1 and Q96_PAY_07_AMT = 0 then
+    errmsg("'Q96_PAY_07' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q96_PAY_08_AMT
+postproc
+  if Q96_PAY_08 = 1 and Q96_PAY_08_AMT = 0 then
+    errmsg("'Q96_PAY_08' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q971_1_AMT
+postproc
+  if Q971_1 = 1 and Q971_1_AMT = 0 then
+    errmsg("'Q971_1' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q971_2_AMT
+postproc
+  if Q971_2 = 1 and Q971_2_AMT = 0 then
+    errmsg("'Q971_2' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q971_3_AMT
+postproc
+  if Q971_3 = 1 and Q971_3_AMT = 0 then
+    errmsg("'Q971_3' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q971_4_AMT
+postproc
+  if Q971_4 = 1 and Q971_4_AMT = 0 then
+    errmsg("'Q971_4' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q972_1_AMT
+postproc
+  if Q972_1 = 1 and Q972_1_AMT = 0 then
+    errmsg("'Q972_1' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q972_2_AMT
+postproc
+  if Q972_2 = 1 and Q972_2_AMT = 0 then
+    errmsg("'Q972_2' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q972_3_AMT
+postproc
+  if Q972_3 = 1 and Q972_3_AMT = 0 then
+    errmsg("'Q972_3' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q972_4_AMT
+postproc
+  if Q972_4 = 1 and Q972_4_AMT = 0 then
+    errmsg("'Q972_4' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q972_5_AMT
+postproc
+  if Q972_5 = 1 and Q972_5_AMT = 0 then
+    errmsg("'Q972_5' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q972_6_AMT
+postproc
+  if Q972_6 = 1 and Q972_6_AMT = 0 then
+    errmsg("'Q972_6' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_01_AMT
+postproc
+  if Q98_PAY_01 = 1 and Q98_PAY_01_AMT = 0 then
+    errmsg("'Q98_PAY_01' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_02_AMT
+postproc
+  if Q98_PAY_02 = 1 and Q98_PAY_02_AMT = 0 then
+    errmsg("'Q98_PAY_02' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_03_AMT
+postproc
+  if Q98_PAY_03 = 1 and Q98_PAY_03_AMT = 0 then
+    errmsg("'Q98_PAY_03' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_04_AMT
+postproc
+  if Q98_PAY_04 = 1 and Q98_PAY_04_AMT = 0 then
+    errmsg("'Q98_PAY_04' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_05_AMT
+postproc
+  if Q98_PAY_05 = 1 and Q98_PAY_05_AMT = 0 then
+    errmsg("'Q98_PAY_05' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_06_AMT
+postproc
+  if Q98_PAY_06 = 1 and Q98_PAY_06_AMT = 0 then
+    errmsg("'Q98_PAY_06' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_07_AMT
+postproc
+  if Q98_PAY_07 = 1 and Q98_PAY_07_AMT = 0 then
+    errmsg("'Q98_PAY_07' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_08_AMT
+postproc
+  if Q98_PAY_08 = 1 and Q98_PAY_08_AMT = 0 then
+    errmsg("'Q98_PAY_08' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_09_AMT
+postproc
+  if Q98_PAY_09 = 1 and Q98_PAY_09_AMT = 0 then
+    errmsg("'Q98_PAY_09' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_10_AMT
+postproc
+  if Q98_PAY_10 = 1 and Q98_PAY_10_AMT = 0 then
+    errmsg("'Q98_PAY_10' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_11_AMT
+postproc
+  if Q98_PAY_11 = 1 and Q98_PAY_11_AMT = 0 then
+    errmsg("'Q98_PAY_11' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_12_AMT
+postproc
+  if Q98_PAY_12 = 1 and Q98_PAY_12_AMT = 0 then
+    errmsg("'Q98_PAY_12' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_13_AMT
+postproc
+  if Q98_PAY_13 = 1 and Q98_PAY_13_AMT = 0 then
+    errmsg("'Q98_PAY_13' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_14_AMT
+postproc
+  if Q98_PAY_14 = 1 and Q98_PAY_14_AMT = 0 then
+    errmsg("'Q98_PAY_14' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+PROC Q98_PAY_15_AMT
+postproc
+  if Q98_PAY_15 = 1 and Q98_PAY_15_AMT = 0 then
+    errmsg("'Q98_PAY_15' was selected — enter its amount (must be greater than 0).");
+    reenter;
+  endif;
+
+{ ---- Range + cross-field validations (spec §3.6-§3.13) ---- }
+PROC Q58_WAIT_DAYS
+postproc
+  if Q58_WAIT_DAYS < 0 or Q58_WAIT_DAYS > 365 then
+    errmsg("Q58_WAIT_DAYS must be between 0 and 365.");
+    reenter;
+  endif;
+
+PROC Q58_WAIT_MINUTES
+postproc
+  if Q58_WAIT_MINUTES < 0 or Q58_WAIT_MINUTES > 1440 then
+    errmsg("Q58_WAIT_MINUTES must be between 0 and 1440.");
+    reenter;
+  endif;
+
+PROC Q69_USUAL_TRAVEL_HH
+postproc
+  if Q69_USUAL_TRAVEL_HH < 0 or Q69_USUAL_TRAVEL_HH > 24 then
+    errmsg("Q69_USUAL_TRAVEL_HH must be between 0 and 24.");
+    reenter;
+  endif;
+
+PROC Q69_USUAL_TRAVEL_MM
+postproc
+  if Q69_USUAL_TRAVEL_MM < 0 or Q69_USUAL_TRAVEL_MM > 59 then
+    errmsg("Q69_USUAL_TRAVEL_MM must be between 0 and 59.");
+    reenter;
+  endif;
+
+PROC Q72_NEAREST_TRAVEL_HH
+postproc
+  if Q72_NEAREST_TRAVEL_HH < 0 or Q72_NEAREST_TRAVEL_HH > 24 then
+    errmsg("Q72_NEAREST_TRAVEL_HH must be between 0 and 24.");
+    reenter;
+  endif;
+
+PROC Q72_NEAREST_TRAVEL_MM
+postproc
+  if Q72_NEAREST_TRAVEL_MM < 0 or Q72_NEAREST_TRAVEL_MM > 59 then
+    errmsg("Q72_NEAREST_TRAVEL_MM must be between 0 and 59.");
+    reenter;
+  endif;
+
+PROC Q97_FINAL_AMOUNT
+postproc
+  if Q97_FINAL_AMOUNT < 0 or Q97_FINAL_AMOUNT > 99999999 then
+    errmsg("Q97_FINAL_AMOUNT must be between 0 and 99999999.");
+    reenter;
+  endif;
+
+PROC Q106_NIGHTS
+postproc
+  if Q106_NIGHTS < 0 or Q106_NIGHTS > 365 then
+    errmsg("Q106_NIGHTS must be between 0 and 365.");
+    reenter;
+  endif;
+  if Q106_NIGHTS > 90 then
+    errmsg("Q106_NIGHTS = %d is unusually high — confirm.", Q106_NIGHTS);
+  endif;
+
+PROC Q115_FINAL_CASH
+postproc
+  if Q115_FINAL_CASH < 0 or Q115_FINAL_CASH > 999999999 then
+    errmsg("Q115_FINAL_CASH must be between 0 and 999999999.");
+    reenter;
+  endif;
+
+PROC Q150_TRAVEL_HH
+postproc
+  if Q150_TRAVEL_HH < 0 or Q150_TRAVEL_HH > 24 then
+    errmsg("Q150_TRAVEL_HH must be between 0 and 24.");
+    reenter;
+  endif;
+
+PROC Q150_TRAVEL_MM
+postproc
+  if Q150_TRAVEL_MM < 0 or Q150_TRAVEL_MM > 59 then
+    errmsg("Q150_TRAVEL_MM must be between 0 and 59.");
+    reenter;
+  endif;
+
+PROC Q106_DAYS
+postproc
+  if Q106_DAYS < 0 or Q106_DAYS > 365 then
+    errmsg("Q106_DAYS must be between 0 and 365.");
+    reenter;
+  endif;
+  if Q106_DAYS > 90 then
+    errmsg("Length of stay (%d days) is unusually long — confirm.", Q106_DAYS);
+  endif;
+  if Q106_NIGHTS + Q106_DAYS < 1 then
+    errmsg("A confinement must be at least 1 day (nights + days).");
+    reenter;
+  endif;
+
+PROC DATE_FINAL_VISIT
+postproc
+  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then
+    errmsg("Final-visit date cannot be earlier than the first-visit date.");
+    reenter;
+  endif;
+
 { ============================================================================
   STILL OPEN (follow-up F3 pass):
     - Q93 "None"(O17)->Q95 (select-all None flag) + Q113_PAY_08 Yes -> Q114.1

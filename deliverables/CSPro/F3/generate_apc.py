@@ -25,7 +25,42 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from cspro_helpers import other_specify_procs, select_all_validation_procs
+from cspro_helpers import (
+    other_specify_procs, select_all_validation_procs,
+    range_check_proc, amount_required_procs,
+)
+
+# Per-item numeric range checks (spec §3.6/§3.9/§3.10/§3.13). (field, lo, hi, soft_over)
+# Q106_DAYS is handled in CUSTOM_VALIDATION (range + pair-sanity together).
+RANGE_CHECKS = [
+    ("Q58_WAIT_DAYS",         0, 365,       None),
+    ("Q58_WAIT_MINUTES",      0, 1440,      None),
+    ("Q69_USUAL_TRAVEL_HH",   0, 24,        None),
+    ("Q69_USUAL_TRAVEL_MM",   0, 59,        None),
+    ("Q72_NEAREST_TRAVEL_HH", 0, 24,        None),
+    ("Q72_NEAREST_TRAVEL_MM", 0, 59,        None),
+    ("Q97_FINAL_AMOUNT",      0, 99999999,  None),
+    ("Q106_NIGHTS",           0, 365,       90),
+    ("Q115_FINAL_CASH",       0, 999999999, None),
+    ("Q150_TRAVEL_HH",        0, 24,        None),
+    ("Q150_TRAVEL_MM",        0, 59,        None),
+]
+
+# Cross-field / pair-sanity validations that need a custom body (spec §3.10/§3.1).
+CUSTOM_VALIDATION = [
+    ("Q106_DAYS",
+     "PROC Q106_DAYS\npostproc\n"
+     "  if Q106_DAYS < 0 or Q106_DAYS > 365 then\n"
+     "    errmsg(\"Q106_DAYS must be between 0 and 365.\");\n    reenter;\n  endif;\n"
+     "  if Q106_DAYS > 90 then\n"
+     "    errmsg(\"Length of stay (%d days) is unusually long — confirm.\", Q106_DAYS);\n  endif;\n"
+     "  if Q106_NIGHTS + Q106_DAYS < 1 then\n"
+     "    errmsg(\"A confinement must be at least 1 day (nights + days).\");\n    reenter;\n  endif;"),
+    ("DATE_FINAL_VISIT",
+     "PROC DATE_FINAL_VISIT\npostproc\n"
+     "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
+     "    errmsg(\"Final-visit date cannot be earlier than the first-visit date.\");\n    reenter;\n  endif;"),
+]
 
 HERE = Path(__file__).parent
 OUT = HERE / "PatientSurvey.ent.apc"
@@ -497,6 +532,29 @@ def main():
         parts.append("")
         sa_emitted += 1
 
+    # Amount-required on payment-matrix _AMT fields (spec §3.9/§3.10 "if PAY=Yes, AMT>0").
+    am_procs = amount_required_procs(dcf_items_map())
+    am_emitted = 0
+    parts.append("{ ---- Payment-matrix amount-required (auto-derived from dcf) ---- }")
+    for field, proc in sorted(am_procs.items()):
+        if field in covered:
+            continue
+        covered.add(field); parts.append(proc); parts.append(""); am_emitted += 1
+
+    # Per-item numeric range checks + cross-field/pair-sanity (spec §3.6–§3.13).
+    parts.append("{ ---- Range + cross-field validations (spec §3.6-§3.13) ---- }")
+    rng_emitted = 0
+    for field, lo, hi, soft in RANGE_CHECKS:
+        if field in covered:
+            continue
+        covered.add(field)
+        parts.append(range_check_proc(field, lo, hi, hard=True, soft_over=soft))
+        parts.append(""); rng_emitted += 1
+    for field, proc in CUSTOM_VALIDATION:
+        if field in covered:
+            continue
+        covered.add(field); parts.append(proc); parts.append(""); rng_emitted += 1
+
     parts.append(TODO_NOTE)
     text = "\n".join(parts).rstrip() + "\n"
     OUT.write_text(text, encoding="utf-8")
@@ -510,6 +568,8 @@ def main():
         print(f"  other-specify SKIPPED (manual review — no resolvable trigger): {', '.join(os_skipped)}")
     print(f"  select-all validation: {sa_emitted} groups got a '>=1 ticked' check "
           f"(of {len(sa_bases)} detected; rest already drive a skip/other-specify)")
+    print(f"  amount-required: {am_emitted} payment-matrix _AMT procs; "
+          f"range/cross-field: {rng_emitted} procs")
     print("  NEXT: create the F3 .ent in Designer (input dcf + generated.fmf), set this")
     print("  as the main logic file, compile, fix any name/code mismatch, verify in CSEntry.")
 

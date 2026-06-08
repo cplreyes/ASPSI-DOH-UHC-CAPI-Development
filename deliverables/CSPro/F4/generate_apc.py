@@ -24,7 +24,25 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from cspro_helpers import other_specify_procs, select_all_validation_procs
+from cspro_helpers import (
+    other_specify_procs, select_all_validation_procs, range_check_proc,
+)
+
+# Per-item numeric range checks (spec §3.2/§3.6/§3.12). (field, lo, hi, soft_over)
+RANGE_CHECKS = [
+    ("Q18_INCOME_AMOUNT",      0, 99999999, None),
+    ("Q67_TIME_TO_PHARMACY",   0, 1440,     None),
+    ("TOTAL_NUMBER_OF_VISITS", 1, 10,       3),
+    ("Q199_WTP_CONSULT",       0, 99999999, None),
+]
+
+# Cross-field validations needing a custom body (spec §3.1 date ordering).
+CUSTOM_VALIDATION = [
+    ("DATE_FINAL_VISIT",
+     "PROC DATE_FINAL_VISIT\npostproc\n"
+     "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
+     "    errmsg(\"Final-visit date cannot be earlier than the first-visit date.\");\n    reenter;\n  endif;"),
+]
 
 HERE = Path(__file__).parent
 OUT = HERE / "HouseholdSurvey.ent.apc"
@@ -525,6 +543,20 @@ def main():
             continue
         covered.add(field); parts.append(proc); parts.append(""); sa_emitted += 1
 
+    # Per-item numeric range checks + date-ordering cross-field (spec §3.1/§3.2/§3.6/§3.12).
+    parts.append("{ ---- Range + cross-field validations (spec §3.1-§3.12) ---- }")
+    rng_emitted = 0
+    for field, lo, hi, soft in RANGE_CHECKS:
+        if field in covered:
+            continue
+        covered.add(field)
+        parts.append(range_check_proc(field, lo, hi, hard=True, soft_over=soft))
+        parts.append(""); rng_emitted += 1
+    for field, proc in CUSTOM_VALIDATION:
+        if field in covered:
+            continue
+        covered.add(field); parts.append(proc); parts.append(""); rng_emitted += 1
+
     parts.append(TODO_NOTE)
     text = "\n".join(parts).rstrip() + "\n"
     OUT.write_text(text, encoding="utf-8")
@@ -538,6 +570,7 @@ def main():
         print(f"  other-specify SKIPPED (manual review — no resolvable trigger): {', '.join(os_skipped)}")
     print(f"  select-all validation: {sa_emitted} groups got a '>=1 ticked' check (of {len(sa_bases)} detected)")
     print(f"  Section N subtotals: {len(st_procs)} auto-compute+protect procs")
+    print(f"  range/cross-field: {rng_emitted} procs")
     print("  NEXT: create the F4 .ent in Designer (input dcf + generated.fmf), compile,")
     print("  then verify the ROSTER + expenditure flow in CSEntry (riskiest untested part).")
 
