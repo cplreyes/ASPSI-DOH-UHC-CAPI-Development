@@ -35,19 +35,26 @@ SHARED_FILES = [
     "psgc_region.dat", "psgc_province.dat", "psgc_city.dat", "psgc_barangay.dat",
 ]
 
-# Per-instrument files. `ent` is the Designer-bound app (PENDING until compiled).
+# Per-instrument files. `ent` is the Designer-bound app (PENDING until it exists).
+# Components are exactly the files the .ent references (by filename) and that CSEntry
+# loads at runtime: the input .dcf, the bound .fmf (the plain one — the .ent binds
+# <stem>.fmf, NOT <stem>.generated.fmf), the logic .ent.apc, the multi-language
+# question text .ent.qsf, and the messages .ent.mgf.
 INSTRUMENTS = {
     "F1": {"dir": "F1", "stem": "FacilityHeadSurvey",
            "components": ["FacilityHeadSurvey.dcf", "FacilityHeadSurvey.fmf",
-                          "FacilityHeadSurvey.ent.apc"],
+                          "FacilityHeadSurvey.ent.apc", "FacilityHeadSurvey.ent.qsf",
+                          "FacilityHeadSurvey.ent.mgf"],
            "ent": "FacilityHeadSurvey.ent"},
     "F3": {"dir": "F3", "stem": "PatientSurvey",
-           "components": ["PatientSurvey.dcf", "PatientSurvey.generated.fmf",
-                          "PatientSurvey.ent.apc"],
+           "components": ["PatientSurvey.dcf", "PatientSurvey.fmf",
+                          "PatientSurvey.ent.apc", "PatientSurvey.ent.qsf",
+                          "PatientSurvey.ent.mgf"],
            "ent": "PatientSurvey.ent"},
     "F4": {"dir": "F4", "stem": "HouseholdSurvey",
-           "components": ["HouseholdSurvey.dcf", "HouseholdSurvey.generated.fmf",
-                          "HouseholdSurvey.ent.apc"],
+           "components": ["HouseholdSurvey.dcf", "HouseholdSurvey.fmf",
+                          "HouseholdSurvey.ent.apc", "HouseholdSurvey.ent.qsf",
+                          "HouseholdSurvey.ent.mgf"],
            "ent": "HouseholdSurvey.ent"},
 }
 
@@ -64,19 +71,24 @@ def audit():
         comp_missing = [c for c in spec["components"] if not (idir / c).exists()]
         ent_path = idir / spec["ent"]
         ent_ok = ent_path.exists()
-        # Freshness gate: a .ent OLDER than any regenerated component is a stale binding
-        # (Designer must re-open + re-bind + recompile). Presence alone is a false-positive.
-        ent_stale = False
+        # Freshness gate (content-based, NOT mtime): the .ent is a JSON manifest that
+        # REFERENCES its files by name -- CSEntry reads the current files at load, so an
+        # older .ent mtime is not staleness. What matters is that the .ent points at every
+        # component + the 4 PSGC externals. (Verified 2026-06-08: all three load+run in
+        # CSEntry from the current generator artifacts, no Designer re-bind needed.)
+        ent_missing_refs = []
         if ent_ok and not comp_missing:
-            newest_comp = max((idir / c).stat().st_mtime for c in spec["components"])
-            ent_stale = ent_path.stat().st_mtime < newest_comp
+            ent_text = ent_path.read_text(encoding="utf-8-sig")
+            expected_refs = list(spec["components"]) + [f"psgc_{x}.dcf" for x in ("region", "province", "city", "barangay")]
+            ent_missing_refs = [r for r in expected_refs if r not in ent_text]
+        ent_stale = bool(ent_missing_refs)
         comp_state = "all components present" if not comp_missing else f"MISSING {', '.join(comp_missing)}"
         if not ent_ok:
-            ent_state = "PENDING (Designer compile)"
-        elif ent_stale:
-            ent_state = "STALE (older than regenerated .dcf/.apc -- re-bind + recompile in Designer)"
+            ent_state = "PENDING (.ent not yet created)"
+        elif ent_missing_refs:
+            ent_state = "MISBOUND (.ent does not reference: " + ", ".join(ent_missing_refs) + ")"
         else:
-            ent_state = "PRESENT & current"
+            ent_state = "PRESENT & current (references all components + PSGC externals)"
         bundle_state = "READY" if (ent_ok and not ent_stale and not comp_missing and shared_ok) else "BLOCKED"
         if bundle_state == "READY":
             ready.append(key)

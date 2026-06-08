@@ -56,6 +56,11 @@ node_modules/
 __pycache__/
 *.pyc
 
+# CSPro deployable-bundle output (reproducible: build_bundle.py --assemble) + desk-test scratch
+deliverables/CSPro/bundle/dist/
+desktest*.csdb
+*_WAR.pff
+
 # Editor / IDE local state
 .vscode/
 
