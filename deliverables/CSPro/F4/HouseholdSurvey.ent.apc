@@ -388,6 +388,23 @@ postproc
     errmsg("Member is under 15 but civil status is not Single. Confirm.");
   endif;
 
+{ ---- Income amount must fall within reported bracket (spec 3.2, HARD) ---- }
+PROC Q18_INCOME_BRACKET
+postproc
+  numeric a = Q18_INCOME_AMOUNT;
+  numeric ok = 0;
+  if Q18_INCOME_BRACKET = 1 and a < 40000 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 2 and a >= 40000 and a <= 59999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 3 and a >= 60000 and a <= 99999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 4 and a >= 100000 and a <= 249999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 5 and a >= 250000 and a <= 499999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 6 and a >= 500000 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 7 then ok = 1; endif;   { 7 = Refuse to answer -> no amount check }
+  if ok = 0 then
+    errmsg("Income bracket does not match the reported amount (%d PHP). Reconcile.", a);
+    reenter;
+  endif;
+
 
 { ---- Skip logic: awareness / primary-care / bill-recall ---- }
 PROC Q7_IS_PWD

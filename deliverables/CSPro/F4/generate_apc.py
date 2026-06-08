@@ -316,6 +316,23 @@ postproc
   if Q32_AGE < 15 and Q39_CIVIL_STATUS <> 1 then   { 1 = Single (verify code) }
     errmsg("Member is under 15 but civil status is not Single. Confirm.");
   endif;
+
+{ ---- Income amount must fall within reported bracket (spec 3.2, HARD) ---- }
+PROC Q18_INCOME_BRACKET
+postproc
+  numeric a = Q18_INCOME_AMOUNT;
+  numeric ok = 0;
+  if Q18_INCOME_BRACKET = 1 and a < 40000 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 2 and a >= 40000 and a <= 59999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 3 and a >= 60000 and a <= 99999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 4 and a >= 100000 and a <= 249999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 5 and a >= 250000 and a <= 499999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 6 and a >= 500000 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 7 then ok = 1; endif;   { 7 = Refuse to answer -> no amount check }
+  if ok = 0 then
+    errmsg("Income bracket does not match the reported amount (%d PHP). Reconcile.", a);
+    reenter;
+  endif;
 """
 
 # Section D-F awareness + Section I primary-care + Section M bill-recall (spec 4.6-4.8)
@@ -496,7 +513,8 @@ def main():
                "Q141_1_NO_RECEIPT_AMT_PHP",
                "Q76_BRAND_OR_GEN", "Q78_WHY_BRANDED_O01", "Q79_REG_SOURCE",  # EXTRA_PROCS
                "Q2_BIRTH_MONTH", "Q2_BIRTH_YEAR", "Q2_1_AGE", "Q19_HH_SIZE_TOTAL",
-               "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q32_AGE", "Q39_CIVIL_STATUS"}  # VALIDATION_PROCS
+               "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q32_AGE", "Q39_CIVIL_STATUS",
+               "Q18_INCOME_BRACKET"}  # VALIDATION_PROCS
 
     parts.append("{ ---- Skip logic: awareness / primary-care / bill-recall ---- }")
     for field, cond, target in SKIP_RULES:

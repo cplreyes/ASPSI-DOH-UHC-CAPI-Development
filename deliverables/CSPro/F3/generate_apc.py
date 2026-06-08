@@ -62,6 +62,64 @@ CUSTOM_VALIDATION = [
      "    errmsg(\"Final-visit date cannot be earlier than the first-visit date.\");\n    reenter;\n  endif;"),
 ]
 
+# SOFT plausibility cross-field warnings (spec §3.5/3.6/3.7/3.9/3.10/3.12/3.13).
+# errmsg WITHOUT reenter = warn-and-continue. (attach_field, inner_body). The body
+# is merged into attach_field's existing PROC if one exists, else emitted as a new
+# PROC. attach_field is the LAST input field in form order so all refs are set.
+SOFT_CROSS = [
+    ("Q45_CATEGORY",
+     "  if Q38_PHILHEALTH_REG = 1 and Q45_CATEGORY = 6 and Q6_AGE < 60 then\n"
+     "    errmsg(\"Q45 = Senior citizen but patient age (%d) is under 60 — confirm.\", Q6_AGE);\n  endif;"),
+    ("Q58_WAIT_MINUTES",
+     "  if Q53_HAS_PCP = 1 and Q58_WAIT_DAYS = 0 and Q58_WAIT_MINUTES = 0 then\n"
+     "    errmsg(\"Q58 wait time is 0 days and 0 minutes — confirm there was genuinely no wait.\");\n  endif;"),
+    ("Q84_SERVICE_TYPE",
+     "  if Q84_SERVICE_TYPE = 1 and PATIENT_TYPE = 2 then\n"
+     "    errmsg(\"Q84 = Outpatient care but the case is flagged Inpatient (PATIENT_TYPE) — verify routing.\");\n  endif;\n"
+     "  if Q84_SERVICE_TYPE = 2 and PATIENT_TYPE = 1 then\n"
+     "    errmsg(\"Q84 = Inpatient care but the case is flagged Outpatient (PATIENT_TYPE) — verify routing.\");\n  endif;"),
+    ("Q85_CONDITIONS_O19",
+     "  if Q83_VISIT_REASON = 4 and Q85_CONDITIONS_O19 <> 1 then\n"
+     "    errmsg(\"Q83 = general check-up but Q85 is not 'No condition / regular check-up only' — confirm.\");\n  endif;"),
+    ("Q144_QUALITY",
+     "  if Q143_RECOMMEND = 1 and Q144_QUALITY >= 4 and Q144_QUALITY <= 5 then\n"
+     "    errmsg(\"Patient would recommend (Q143=Yes) yet rated overall quality dissatisfied (Q144) — confirm.\");\n  endif;\n"
+     "  if Q143_RECOMMEND = 2 and Q144_QUALITY >= 1 and Q144_QUALITY <= 2 then\n"
+     "    errmsg(\"Patient would NOT recommend (Q143=No) yet rated overall quality satisfied (Q144) — confirm.\");\n  endif;"),
+    ("Q150_TRAVEL_MM",
+     "  if Q145_PURCHASE_FREQ <> 5 and Q150_TRAVEL_HH = 0 and Q150_TRAVEL_MM = 0 then\n"
+     "    errmsg(\"Q150 travel time to pharmacy is 0h 0m — confirm the pharmacy is effectively on-site.\");\n  endif;"),
+    ("Q17_INCOME_SOURCE",
+     "  if (Q16_EMPLOYMENT = 4 or Q16_EMPLOYMENT = 5) and Q17_INCOME_SOURCE >= 1 and Q17_INCOME_SOURCE <= 5 then\n"
+     "    errmsg(\"Q16 = unemployed but Q17 reports a paid-work income source — confirm.\");\n  endif;"),
+    ("Q29_SEC_CLASS",
+     "  if Q29_SEC_CLASS = 1 and Q18_INCOME_BRACKET >= 1 and Q18_INCOME_BRACKET <= 2 then\n"
+     "    errmsg(\"Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.\");\n  endif;\n"
+     "  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 4 then\n"
+     "    errmsg(\"Q29 = socio-economic Class D/E but income is in a high bracket — confirm.\");\n  endif;"),
+    ("Q115_FINAL_CASH",
+     "  if Q107_PAY_01_AMT > 0 and (Q115_FINAL_CASH < Q107_PAY_01_AMT * 0.9\n"
+     "     or Q115_FINAL_CASH > Q107_PAY_01_AMT * 1.1) then\n"
+     "    errmsg(\"Q115 final cash differs by more than 10 percent from the out-of-pocket bill line (Q107) — confirm.\");\n  endif;"),
+    ("Q97_FINAL_AMOUNT",
+     "  if Q97_FINAL_AMOUNT > 0 and (Q92_PAY_01_AMT + Q94_PAY_01_AMT + Q96_PAY_01_AMT) > 0\n"
+     "     and (Q97_FINAL_AMOUNT < (Q92_PAY_01_AMT + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 0.9\n"
+     "          or Q97_FINAL_AMOUNT > (Q92_PAY_01_AMT + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 1.1) then\n"
+     "    errmsg(\"Q97 final amount differs by more than 10 percent from the out-of-pocket lines (Q92/Q94/Q96) — confirm.\");\n  endif;"),
+]
+
+
+def inject_soft(parts, field, body):
+    """Merge a soft-check body into field's existing PROC block, or emit a new one."""
+    header = f"PROC {field}\n"
+    for i, blk in enumerate(parts):
+        if isinstance(blk, str) and blk.startswith(header):
+            parts[i] = blk.rstrip() + "\n" + body
+            return "merged"
+    parts.append(f"PROC {field}\npostproc\n{body}")
+    parts.append("")
+    return "new"
+
 HERE = Path(__file__).parent
 OUT = HERE / "PatientSurvey.ent.apc"
 DCF = HERE / "PatientSurvey.dcf"
@@ -555,6 +613,16 @@ def main():
             continue
         covered.add(field); parts.append(proc); parts.append(""); rng_emitted += 1
 
+    # SOFT plausibility cross-field warnings (merged into existing procs where present).
+    parts.append("{ ---- Soft plausibility cross-field warnings (spec §3.5-§3.13) ---- }")
+    sc_merged = sc_new = 0
+    for field, body in SOFT_CROSS:
+        if inject_soft(parts, field, body) == "merged":
+            sc_merged += 1
+        else:
+            sc_new += 1
+        covered.add(field)
+
     parts.append(TODO_NOTE)
     text = "\n".join(parts).rstrip() + "\n"
     OUT.write_text(text, encoding="utf-8")
@@ -570,6 +638,7 @@ def main():
           f"(of {len(sa_bases)} detected; rest already drive a skip/other-specify)")
     print(f"  amount-required: {am_emitted} payment-matrix _AMT procs; "
           f"range/cross-field: {rng_emitted} procs")
+    print(f"  soft cross-field: {len(SOFT_CROSS)} checks ({sc_merged} merged, {sc_new} new procs)")
     print("  NEXT: create the F3 .ent in Designer (input dcf + generated.fmf), set this")
     print("  as the main logic file, compile, fix any name/code mismatch, verify in CSEntry.")
 

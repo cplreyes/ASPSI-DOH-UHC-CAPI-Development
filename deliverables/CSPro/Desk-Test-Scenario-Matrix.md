@@ -359,11 +359,19 @@ pipeline). `LANGUAGE_USED=getlanguage()` records the active language at case sta
 >   - **F3 cross-field:** Q106 pair-sanity (nights+days ≥ 1); DATE_FINAL_VISIT ≥ DATE_FIRST_VISITED.
 >   - **F4 ranges (4) + cross:** Q18_INCOME_AMOUNT 0–99,999,999, Q67_TIME_TO_PHARMACY 0–1440,
 >     TOTAL_NUMBER_OF_VISITS 1–10 (+soft>3), Q199_WTP_CONSULT ≥ 0; DATE_FINAL_VISIT ≥ DATE_FIRST_VISITED.
-> - ⏳ **Remaining (smaller tail, lower priority):** SOFT plausibility cross-checks (Q143↔Q144 recommend-vs-quality,
->   Q97/Q98/Q113 total-vs-OOP reconciliation, Q106↔visit-dates, Q45=06→age≥60, Q84↔PATIENT_TYPE, Q85↔Q83); and
->   **F4 Q18 amount↔bracket consistency** (F4 has 7 brackets vs F3's 6 — needs the 7-bracket boundary table from spec).
->   The HARD "∈ value set" / "required" rules are already enforced by CSEntry at entry (dcf value sets), so they need
->   no extra logic.
+> - ✅ **SOFT plausibility cross-checks + F4 Q18 bracket** — 2026-06-09, compiles clean both instruments:
+>   - **F3 (10 soft warnings, `errmsg` w/o `reenter`):** Q45=Senior→age≥60; Q58 wait 0d/0m sanity; Q84↔PATIENT_TYPE
+>     routing mismatch (both directions — Q84 codes map cleanly 1=OP/2=IP); Q85↔Q83 (check-up expects "no condition");
+>     Q143↔Q144 (recommend-vs-quality, both directions); Q150 0h/0m pharmacy sanity; Q16-unemployed↔Q17-income-source;
+>     Q29 SEC-class↔Q18 bracket; Q115↔Q107 OOP ±10 percent; Q97↔(Q92+Q94+Q96 OOP) ±10 percent. Implemented via a
+>     **merge injector** (`inject_soft`) that appends each body into the field's existing PROC rather than colliding
+>     (4 merged into range procs, 6 new). All field names + codes verified against the dcf before coding.
+>   - **F4 Q18 amount↔bracket consistency (HARD, reenter)** — mirrors F3's 6-band table + code 7 (Refuse → no check);
+>     F4's 7 brackets share F3's first 6 boundaries exactly.
+> - ⏳ **Deliberately deferred (flagged, not guessed):** Q106↔visit-dates (`abs((FINAL−FIRST)−Q106_DAYS)≤1` needs
+>   date-typed arithmetic — risk of a wrong YYYYMMDD calc); Q98-total↔Q97 ("warn if wildly different" — threshold
+>   undefined in spec); Q113-total↔Q107-OOP (needs the spec's explicit OOP-row set across the 13-row matrix).
+>   The HARD "∈ value set" / "required" rules are already enforced by CSEntry at entry (dcf value sets).
 > 2. **Refusal disposition code does not persist on F3/F4.** The consent proc sets `ENUM_RESULT_FIRST_VISIT=4`
 >    (Refused), but that item is **off-form** in F3/F4, so the logic assignment did not write (saved `None`). The
 >    refusal IS still captured via `consent_given=2` (+ `AAPOR_DISPOSITION`), so analysis can identify refusals, but
