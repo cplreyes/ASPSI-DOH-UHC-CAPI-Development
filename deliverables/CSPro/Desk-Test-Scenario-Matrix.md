@@ -91,11 +91,24 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 > earlier F3 sign-off only checked that the case *saved/appeared in the tree*, never that the **key persisted**.
 > So F1 **and** F3 (and by construction F4) all save keyless cases — every refused/saved case would collide on
 > the empty key. **Stage-1 blocker** (criterion: cases must carry a valid key for CSWeb sync/dedup).
-> **Key clue:** the Census `GEOCODES_FORM` id fields are `Protected=Yes` — i.e. the geocodes are *assigned*
-> (PFF/logic), **not operator-typed**. So "id items on the first form" is a *display* pattern for pre-set ids,
-> which suggests the fix is to **assign the case key programmatically** (e.g. from a PFF param or the geo-cascade
-> picks the operator already makes) rather than have the operator type raw id codes into key fields.
-> **Status: open — fix direction is a go/no-go for Carl (his CSPro call). DT-01 happy-path not yet run.**
+>
+> **Deeper root-cause investigation (2026-06-08), all NEGATIVE — the key never persists by any path tried:**
+> 1. **Logic-assigned key** — set `REGION_CODE=7 … CASE_SEQ=3` in `PROC FACILITYHEADSURVEY_LEVEL preproc`
+>    (compiles; the values visibly **pre-fill** the form). Completed case → **still blank key**.
+>    (Aside: assigning ids in the form-file `PROC FACILITYHEADSURVEY_FF preproc` fails to compile —
+>    `ERROR 172: Variable belongs to a record at a lower level`; the *level* proc is the right scope and compiles.)
+> 2. **`Protected=Yes` on the id fields + logic-assigned** (the exact Census pattern — CSEntry then *skips* the
+>    key form, key set by logic) → completed case → **still blank key**.
+> 3. **dcf structure is byte-equivalent to the shipping CAPI Census `Household.dcf`**: same `relativePositions:true`,
+>    same `recordType {start:1,length:1}`, same `ids.items` layout (`start` 2/4/6/9/11, zeroFill), same
+>    `recordTypeValue:null`. So it is **not** a dcf-field defect.
+> **Only structural deltas vs the known-good census dict:** (a) my **record[0] `FACILITYHEADSURVEY_REC` is EMPTY**
+> (0 items — the empty FORM001 "record"; census has no empty records); (b) record-type codes are numeric (`"1"…`)
+> vs census letters (`"P"…`). Neither obviously explains a blank *key*, but they are the remaining leads.
+> Census sources its geocodes from a **parent menu/assignment app via the PFF**, never an in-app key entry — so
+> the likely-correct pattern is **supply the key via the PFF / a parent op**, and/or remove the empty record.
+> **Status: OPEN — needs Carl's CSPro call (PFF-supplied key vs drop empty record vs forum escalation).
+> DT-01 happy-path not run (blocked by this). Tooling: `automation/csentry_drive.py` drives the repro.**
 
 ---
 
