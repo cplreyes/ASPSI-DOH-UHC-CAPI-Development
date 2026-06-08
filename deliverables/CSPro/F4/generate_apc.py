@@ -451,7 +451,7 @@ def subtotal_procs(items):
         procs[sub] = (
             f"PROC {sub}\npreproc\n"
             f"  {sub} =\n    {terms};\n"
-            f"  protect({sub});"
+            f"  protect({sub}, true);"
         )
     return procs
 
