@@ -1,0 +1,97 @@
+# F4 Stage-2 spot-check: Q18 income amount <-> bracket HARD consistency reject.
+# Path: case key -> field-control (consent=Yes) -> geo cascade -> GPS form ->
+#       PHOTO form -> Section A Q1 -> Section B Q2..Q17 -> Q18 amt=5000 + bracket=4.
+# EXPECT at the end: HARD reject "Income bracket does not match the reported amount".
+#
+# STATUS (2026-06-09): runs cleanly through the case key, field-control, the full
+# 4-level PSGC cascade, and the GPS form (dismisses the -118 GPS-hardware modal).
+# It then stalls at the SECOND device gate — CAPTURE_VERIFICATION_PHOTO ("Take
+# Verification Photo": camera unavailable on desktop -> 88889) — so the Section B
+# steps below are not yet aligned past it. Two options to finish: (a) run on an
+# Android/tablet build where GPS+camera work, or (b) make the two capture fields
+# cursor-skippable on desktop in the generators. The runner itself works; this is a
+# device-hardware gate, not a runner/logic defect.
+#
+# Cascade clicks use the picker coords proven in the 2026-06-09 live drive
+# (Region III / Bulacan / City of Malolos / Brgy Anilao).
+
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+
+# ---- case key (auto-advance at full width) ----
+casekey 01 03 007 02 030
+
+# ---- FIELD_CONTROL (each fills its width -> auto-advance) ----
+type 04
+type 1001
+type 20260609
+type 103000
+type 110
+note consent given = Yes
+type 1
+key {ENTER}
+type 0001
+
+# ---- HOUSEHOLD_GEO_ID: Classification=UHC IS, then cascade ----
+type 1
+note Region picker -> Region III (Central Luzon)
+click 1055 291
+note Province picker -> Bulacan
+click 1010 231
+note City picker -> City of Malolos
+click 1024 391
+note Barangay picker -> Anilao
+click 1005 211
+type TESTADDRESS
+key {ENTER}
+note Parent F3 case seq (no-valueset numeric)
+type 001
+
+# ---- GPS block (device-captured; type dummy values on desktop) ----
+type 14.5
+key {ENTER}
+type 120.9
+key {ENTER}
+type 10
+key {ENTER}
+type 005
+type 08
+type 20260609T103000
+key {ENTER}
+note CAPTURE_HH_GPS onfocus -> -118 GPS-hardware modal (SOFT errmsg, sets notappl); dismiss by click
+click 1172 565
+
+# ---- Section A ----
+note Q1 is HH head = Yes
+type 1
+
+# ---- Section B respondent profile ----
+type JUANDELACRUZ
+key {ENTER}
+type 06
+type 1990
+type 036
+type 1
+type 1
+type 1
+key {ENTER}
+type 1
+note Q7 PWD = No -> skips Q8/Q9/Q10 to Q11
+type 2
+type 01
+key {ENTER}
+type 1
+type 01
+note Q14 IP member = No -> skips Q15 to Q16
+type 2
+type 2
+type 01
+key {ENTER}
+
+# ---- Q18: amount 5000 (bracket 1 range) with bracket 4 (100k-249k) = MISMATCH ----
+note Q18 amount = 5000
+type 5000
+key {ENTER}
+note Q18 bracket = 4 -> EXPECT HARD reject (amount 5000 not in 100,000-249,999)
+type 4
+shot q18_bracket_reject_EXPECTED

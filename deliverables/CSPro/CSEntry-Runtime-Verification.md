@@ -94,6 +94,27 @@ traversing most of the form — budget for an interactive sitting or the Android
 
 ---
 
+## Scriptable scenarios (`csentry_runner.py`)
+
+For repeatable deep-form checks, author a scenario file and run it:
+```
+py automation/csentry_runner.py scenarios/<name>.txt          # auto-kills CSEntry
+py automation/csentry_runner.py scenarios/<name>.txt --keep    # leave it open
+```
+It drives CSEntry in one process and saves a NUMBERED screenshot after every step to
+`shots/<name>/` (review the trail to confirm the validation fired) plus `run.log`.
+DSL: `rmdata` / `launch` / `casekey` / `type` / `key` / `click` / `wait` / `shot` / `note`.
+It force-foregrounds CSEntry before every keystroke and **aborts rather than type if it
+can't** (so keystrokes never leak into the wrong window). See `scenarios/f4_q18_bracket.txt`.
+
+> **The survey body sits behind TWO device-hardware gates.** After the geo cascade,
+> F4 hits `CAPTURE_HH_GPS` (GPS) then `CAPTURE_VERIFICATION_PHOTO` (camera). On a
+> desktop both fail — GPS `-118` "hardware unavailable" (soft, dismiss by click → field
+> set `notappl`) and photo `88889`. So reaching Section B+ validations (Q18, Q58 ranges,
+> soft cross-checks) on desktop needs each capture modal dismissed per-form, OR an
+> Android/tablet run where the hardware works, OR a generator tweak to make the two
+> capture fields cursor-skippable when no hardware is present. F1/F3 have the same gates.
+
 ## Notes / gotchas (carried from 2026-06-08–09)
 
 - **PSGC geo cascade needs `[ExternalFiles]` in the pff** (else -27 "region lookup failed").
