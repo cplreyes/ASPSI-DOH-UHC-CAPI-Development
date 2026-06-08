@@ -106,27 +106,56 @@ jobs:
           workingDirectory: deliverables/F2/PWA/app
           command: pages deploy dist --project-name=${{ steps.project.outputs.name }} --branch=${{ github.event.workflow_run.head_branch }} --commit-hash=${{ github.event.workflow_run.head_sha }}
 
-      # Deploy Worker with version vars injected from package.json (#295 — keeps
-      # the Versioning panel in sync with the current release automatically).
-      # Skipped when deploy secrets aren't set (same gate as Pages deploy above).
+      # Resolve version-stamp vars for the worker deploy (#295 — keeps the
+      # Versioning panel in sync with the release). Branch-aware: main targets
+      # the top-level worker, staging targets [env.staging] with a -staging
+      # suffix on WORKER_VERSION.
+      #
+      # SECURITY: these outputs are interpolated into the wrangler `command:`
+      # below, which runs in a shell. `head_sha`/`head_branch` are passed via
+      # env (never inlined as ${{ }} into the script), and `version` (which comes
+      # from repo-controlled package.json) is validated against a strict allowlist
+      # before being exposed — so no shell metacharacter can reach the command.
+      - if: steps.secrets.outputs.ready == 'true'
+        name: Resolve worker version vars
+        id: wvars
+        env:
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          VERSION=$(node -p "require('./deliverables/F2/PWA/app/package.json').version")
+          if [[ ! "$VERSION" =~ ^[0-9A-Za-z._+-]+$ ]]; then
+            echo "::error::Refusing to deploy — package.json version '$VERSION' has unexpected characters"; exit 1
+          fi
+          SHA_SHORT="${HEAD_SHA:0:7}"
+          if [[ ! "$SHA_SHORT" =~ ^[0-9a-fA-F]{7}$ ]]; then
+            echo "::error::Unexpected head_sha '$HEAD_SHA'"; exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "sha_short=$SHA_SHORT" >> "$GITHUB_OUTPUT"
+          if [ "$HEAD_BRANCH" = "main" ]; then
+            echo "env_flag=" >> "$GITHUB_OUTPUT"
+            echo "worker_version=$VERSION" >> "$GITHUB_OUTPUT"
+          else
+            echo "env_flag=--env staging" >> "$GITHUB_OUTPUT"
+            echo "worker_version=${VERSION}-staging" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Deploy the Worker via the SAME cloudflare/wrangler-action used for Pages
+      # above — one consistent auth path. wranglerVersion is pinned to match the
+      # repo's local toolchain and to avoid wrangler-4's "no target environment
+      # specified" ambiguity on the main top-level deploy.
+      #
+      # NOTE: the CLOUDFLARE_API_TOKEN must carry BOTH `Cloudflare Pages: Edit`
+      # AND `Workers Scripts: Edit`. A Pages-only token deploys the frontend but
+      # fails here with `Authentication error [code: 10000]` (the recurring
+      # failure this step previously hit).
       - if: steps.secrets.outputs.ready == 'true'
         name: Deploy Worker (version-stamped)
-        working-directory: deliverables/F2/PWA/worker
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          VERSION=$(node -p "require('../app/package.json').version")
-          SHA="${{ github.event.workflow_run.head_sha }}"
-          SHA_SHORT="${SHA:0:7}"
-          if [ "${{ github.event.workflow_run.head_branch }}" = "main" ]; then
-            npx wrangler deploy \
-              --var PWA_VERSION:"$VERSION" \
-              --var WORKER_VERSION:"$VERSION" \
-              --var PWA_BUILD_SHA:"$SHA_SHORT"
-          else
-            npx wrangler deploy --env staging \
-              --var PWA_VERSION:"$VERSION" \
-              --var WORKER_VERSION:"${VERSION}-staging" \
-              --var PWA_BUILD_SHA:"$SHA_SHORT"
-          fi
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: deliverables/F2/PWA/worker
+          wranglerVersion: "3.114.17"
+          command: deploy ${{ steps.wvars.outputs.env_flag }} --var PWA_VERSION:${{ steps.wvars.outputs.version }} --var WORKER_VERSION:${{ steps.wvars.outputs.worker_version }} --var PWA_BUILD_SHA:${{ steps.wvars.outputs.sha_short }}
