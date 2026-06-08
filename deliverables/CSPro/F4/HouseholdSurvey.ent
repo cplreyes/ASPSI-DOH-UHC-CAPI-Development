@@ -68,7 +68,7 @@
     }, 
     "partialSave": {
       "operatorEnabled": false
-    }, 
+    },
     "showEndCaseMessage": true, 
     "showOnlyDiscreteValuesInComboBoxes": true, 
     "showFieldLabels": true, 

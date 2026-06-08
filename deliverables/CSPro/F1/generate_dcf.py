@@ -1105,7 +1105,7 @@ def build_dictionary():
                          "contentType": "numeric", "start": 11, "length": 3, "zeroFill": True},
                     ]
                 },
-                "records": records,
+                "records": [r for r in records if r.get("name") != "FACILITYHEADSURVEY_REC"],
             }
         ],
     }

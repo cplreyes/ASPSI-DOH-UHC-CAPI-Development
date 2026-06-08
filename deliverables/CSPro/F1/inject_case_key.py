@@ -122,6 +122,41 @@ def build_group_block(items, dict_name):
     return "\n".join(lines)
 
 
+def strip_empty_container(text):
+    """Remove the vestigial empty level-1 'container' form/group (FORM001 /
+    FACILITYHEADSURVEY_REC_FORM) and renumber the remaining forms so they stay
+    contiguous (key=FORM000, plan=FORM001+).
+
+    WHY: that empty item-less record (dropped from the dict in generate_dcf.py on
+    2026-06-08) was the ROOT CAUSE of the blank-case-key bug — CSEntry never
+    populated it and it blocked the level id key from persisting (confirmed on F3:
+    removing it made `cases.key` go from 12 blanks to the real 12-digit key). F3/F4
+    drop it in their generators; F1's .fmf is static, so we strip it here.
+
+    Idempotent: only acts when the container is still present, so re-runs are safe
+    (otherwise the renumber would wrongly decrement FORM001 -> FORM000).
+    """
+    if not re.search(r"\bName=FACILITYHEADSURVEY_REC_FORM\b", text):
+        return text, False  # already stripped
+
+    # Remove the empty [Form] FORM001 block (+ its trailing separator).
+    text = re.sub(r"\[Form\]\s*\nName=FORM001\b.*?\[EndForm\]\s*\n", "", text,
+                  count=1, flags=re.DOTALL)
+    # Remove the empty [Group] FACILITYHEADSURVEY_REC_FORM block (+ separator).
+    text = re.sub(r"\[Group\]\s*\nRequired=Yes\s*\nName=FACILITYHEADSURVEY_REC_FORM\b.*?\[EndGroup\]\s*\n",
+                  "", text, count=1, flags=re.DOTALL)
+
+    # Renumber: [Form] Name=FORMnnn with nnn>=2 -> nnn-1 (FORM000 key stays).
+    text = re.sub(r"Name=FORM(\d{3})\b",
+                  lambda m: f"Name=FORM{int(m.group(1)) - 1:03d}" if int(m.group(1)) >= 2 else m.group(0),
+                  text)
+    # Renumber: Form=N (group/field link) with N>=3 -> N-1 (key Form=1 stays).
+    text = re.sub(r"(?m)^Form=(\d+)\s*$",
+                  lambda m: f"Form={int(m.group(1)) - 1}" if int(m.group(1)) >= 3 else m.group(0),
+                  text)
+    return text, True
+
+
 def main():
     items = read_id_items()
     text = FMF.read_text(encoding="utf-8")
@@ -145,12 +180,15 @@ def main():
     text = form_re.sub(lambda _: new_form, text, count=1)
     text = group_re.sub(lambda _: new_group, text, count=1)
 
+    text, stripped = strip_empty_container(text)
+
     FMF.write_text(text, encoding="utf-8")
 
     print(f"Injected case-key form into {FMF.name}")
     print(f"  dict symbol : {dict_name}")
     print(f"  FORM000 items ({len(items)}): " + ", ".join(it["name"] for it in items))
     print(f"  IDS0_FORM fields: {len(items)} [Field]/[Text] blocks")
+    print(f"  empty container form/group: {'stripped + renumbered' if stripped else 'already absent'}")
 
 
 if __name__ == "__main__":

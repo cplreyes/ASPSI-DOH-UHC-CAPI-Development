@@ -215,7 +215,6 @@ def build_fmf():
     level_name = level.get("name", "HOUSEHOLDSURVEY_LEVEL")
     records_by_name = {r["name"]: r for r in level["records"]}
     id_item_names = [it["name"] for it in level["ids"]["items"]]
-    container_rec = next((r["name"] for r in level["records"] if r.get("recordType") == "1"), "HOUSEHOLDSURVEY_REC")
 
     def _roster_info(record_name):
         occ = records_by_name[record_name].get("occurrences") or {}
@@ -239,10 +238,11 @@ def build_fmf():
                   "form_item_names": [it["name"] for it in id_objs], "group_item_objs": id_objs,
                   "roster": None})
     used_group_syms.add("IDS0_FORM")
-    forms.append({"num": 1, "label": "HouseholdSurvey Record",
-                  "group_sym": _group_symbol(container_rec, used_group_syms),
-                  "form_item_names": [], "group_item_objs": [], "roster": None})
-    for idx, (label, parts) in enumerate(FORM_PLAN, start=2):
+    # FORM001.. - planned forms. (The empty level-1 "container" record/form was
+    # removed 2026-06-08 — it was a vestigial item-less record CSEntry never
+    # populated and it BLOCKED case-key persistence; see Desk-Test matrix. Forms
+    # now run key=0, plan=1+.)
+    for idx, (label, parts) in enumerate(FORM_PLAN, start=1):
         objs = []
         for rec_name, spec in parts:
             for it in _filter_items(records_by_name[rec_name]["items"], spec):

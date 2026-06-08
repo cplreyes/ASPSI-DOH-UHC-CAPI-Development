@@ -211,37 +211,6 @@
       },
       "records": [
         {
-          "name": "HOUSEHOLDSURVEY_REC",
-          "labels": [
-            {
-              "text": "HouseholdSurvey Record",
-              "language": "EN"
-            },
-            {
-              "text": "HouseholdSurvey Record",
-              "language": "BCL"
-            },
-            {
-              "text": "HouseholdSurvey Record",
-              "language": "BIS"
-            },
-            {
-              "text": "HouseholdSurvey Record",
-              "language": "CEB"
-            },
-            {
-              "text": "HouseholdSurvey Record",
-              "language": "WAR"
-            }
-          ],
-          "recordType": "1",
-          "occurrences": {
-            "required": true,
-            "maximum": 1
-          },
-          "items": []
-        },
-        {
           "name": "FIELD_CONTROL",
           "labels": [
             {

@@ -1632,7 +1632,6 @@ def build_section_q():
 
 def build_f4_dictionary():
     records = [
-        record("HOUSEHOLDSURVEY_REC", "HouseholdSurvey Record", "1", []),
         build_f4_field_control(),
         build_f4_geo_id(),
         build_f4_case_verification(),

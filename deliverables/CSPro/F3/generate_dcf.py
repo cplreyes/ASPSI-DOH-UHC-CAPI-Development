@@ -1766,7 +1766,6 @@ def build_f3_dictionary():
     # own id-block (REGION_CODE+PROVINCE_HUC_CODE+CITY_MUNICIPALITY_CODE+FACILITY_NO)
     # IS the facility reference; F3<->F1 joins on those shared fields. No separate item.
     records = [
-        record("PATIENTSURVEY_REC", "PatientSurvey Record", "1", []),
         build_f3_field_control(),
         build_geo_id("facility_and_patient"),
         build_f3_facility_capture(),

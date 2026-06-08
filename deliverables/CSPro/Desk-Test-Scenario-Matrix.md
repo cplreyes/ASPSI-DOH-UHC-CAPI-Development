@@ -107,8 +107,27 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 > vs census letters (`"P"…`). Neither obviously explains a blank *key*, but they are the remaining leads.
 > Census sources its geocodes from a **parent menu/assignment app via the PFF**, never an in-app key entry — so
 > the likely-correct pattern is **supply the key via the PFF / a parent op**, and/or remove the empty record.
-> **Status: OPEN — needs Carl's CSPro call (PFF-supplied key vs drop empty record vs forum escalation).
-> DT-01 happy-path not run (blocked by this). Tooling: `automation/csentry_drive.py` drives the repro.**
+
+> [!success] RESOLVED — 2026-06-08: it WAS the empty vestigial record
+> Dropping the empty item-less level-1 "container" record (`*_REC`, recordType `"1"`, 0 items, `required`)
+> **fixes case-key persistence on all three instruments.** The empty required record was the root cause — CSEntry
+> never populated it and it blocked the level id key from being written.
+> **Verified in CSEntry (key now persists, was 12 blanks):**
+> - **F3** → `cases.key = '010200304005'`, `level-1` ids `(1,2,3,4,5)`
+> - **F4** → `cases.key = '010300702009'`, `level-1` ids `(1,3,7,2,9)`
+> - **F1** → `cases.key = '070800906005'`, `level-1` ids `(7,8,9,6,5)`
+>
+> **The fix (per instrument):**
+> - **F3 / F4** (clean generators): removed the `record("*_REC", …, "1", [])` line in `generate_dcf.py` and the
+>   matching empty FORM001 "container" block in `generate_fmf.py` (planned forms renumbered to start at 1).
+> - **F1** (static `.fmf`, no generator): `generate_dcf.py` filters out `FACILITYHEADSURVEY_REC`, and
+>   `inject_case_key.py` gained `strip_empty_container()` — it removes the empty FORM001 + `FACILITYHEADSURVEY_REC_FORM`
+>   group and renumbers the remaining forms contiguous (idempotent; only acts when the container is still present).
+>
+> All three: **Designer "Compile Successful"** (clean dcf↔fmf reconcile, key form first → field control directly,
+> no empty form), **preflight ALL CLEAN**. The earlier "PFF-supplied key" / `Protected=Yes` leads were NOT needed —
+> operator-typed ids on FORM000 now persist correctly once the empty record is gone. **DT-01/DT-02 save path is now
+> truly unblocked for F1/F3/F4.** (`automation/csentry_drive.py` drove all the repros + confirmations.)
 
 ---
 

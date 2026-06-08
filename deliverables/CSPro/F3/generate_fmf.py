@@ -203,7 +203,6 @@ def build_fmf():
     level_name = level.get("name", "PATIENTSURVEY_LEVEL")
     records_by_name = {r["name"]: r for r in level["records"]}
     id_item_names = [it["name"] for it in level["ids"]["items"]]
-    container_rec = next((r["name"] for r in level["records"] if r.get("recordType") == "1"), "PATIENTSURVEY_REC")
 
     referenced = {rec for _, parts in FORM_PLAN for rec, _ in parts}
     missing = referenced - set(records_by_name)
@@ -225,12 +224,10 @@ def build_fmf():
     forms.append({"num": 0, "label": "Case Key (Facility + Patient ID)", "group_sym": "IDS0_FORM",
                   "form_item_names": [it["name"] for it in id_objs], "group_item_objs": id_objs})
     used_group_syms.add("IDS0_FORM")
-    # FORM001 - level-1 container record (empty group)
-    forms.append({"num": 1, "label": "PatientSurvey Record",
-                  "group_sym": _group_symbol(container_rec, used_group_syms),
-                  "form_item_names": [], "group_item_objs": []})
-    # FORM002.. - planned forms
-    for idx, (label, parts) in enumerate(FORM_PLAN, start=2):
+    # FORM001.. - planned forms. (The empty level-1 "container" record/form was
+    # removed 2026-06-08 — it was a vestigial item-less record that CSEntry never
+    # populated; suspected in the blank-case-key bug. Forms now run key=0, plan=1+.)
+    for idx, (label, parts) in enumerate(FORM_PLAN, start=1):
         objs = []
         for rec_name, spec in parts:
             for it in _filter_items(records_by_name[rec_name]["items"], spec):
