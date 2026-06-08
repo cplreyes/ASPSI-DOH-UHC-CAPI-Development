@@ -8,8 +8,15 @@ CSEntry recompiles the `.ent.apc` text on every launch and is the ground truth.
 **Status (2026-06-09):** Stage 0 PASS for F1/F3/F4 after fixing a `protect()` bug
 that Designer had masked (61 errors in F4). **Stage 1 PASS on F4** — case key
 `010300702015` entered + saved via consent=No→`endlevel`; verified in the `.csdb`
-(`cases.key`='010300702015', 12 chars; `level-1` ids 1/3/7/2/15, non-null). Stage 2
-(validation/skip spot-checks) is the remaining field-behaviour pass.
+(`cases.key`='010300702015', 12 chars; `level-1` ids 1/3/7/2/15, non-null).
+**Stage 2 (partial):** driving toward Q18 surfaced + fixed a critical runtime blocker —
+the PSGC geo cascade was dead in every desktest (the pff lacked an `[ExternalFiles]`
+section, so `loadcase` had no PSGC data → -27 "region lookup failed"). After adding
+`[ExternalFiles]` to all desktest pffs, the **full 4-level cascade works live** (drove
+Region III → Bulacan → Malolos → Anilao, all accepted). The remaining spec-validation
+spot-checks (Q18 bracket reject, Q58 ranges, soft cross-checks) sit deeper in the form,
+past the device-GPS-capture block (a no-device nuisance to traverse on desktop) — left
+for a focused interactive sitting.
 
 ---
 
@@ -89,6 +96,18 @@ traversing most of the form — budget for an interactive sitting or the Android
 
 ## Notes / gotchas (carried from 2026-06-08–09)
 
+- **PSGC geo cascade needs `[ExternalFiles]` in the pff** (else -27 "region lookup failed").
+  Each desktest pff must declare the 4 PSGC data files by dictionary name:
+  `[ExternalFiles]` / `PSGC_REGION_DICT=.\..\shared\psgc_region.dat` (+ province/city/barangay).
+  Without it, `loadcase` returns 0 and the whole survey body past field-control is unreachable.
+  Done for F1/F3/F4 desktest + F3 WAR pffs (2026-06-09).
+- **Case-key fields use full zero-padded widths** so they auto-advance cleanly (e.g. REGION_CODE
+  `01` not `1`); a single digit in a 2-wide field doesn't advance and a stray `{ENTER}` then
+  trips the 88889 nuisance on the next field.
+- No-valueset numeric fields (FACILITY_NO, PARENT_F3_CASE_SEQ) **warn 88889 on empty `{ENTER}`** —
+  type a value instead of Entering through them.
+- CSEntry opens to the **case listing** when the `.csdb` already has cases (not straight to Add);
+  point the pff at a fresh/empty `.csdb` to start in Add mode directly.
 - Numeric fields **auto-advance on fill** — type digits with NO trailing `{ENTER}`.
 - A trailing `{ENTER}` lands on the next empty field → spurious "out of range" (88889).
 - SOFT warnings = `errmsg` without `reenter`; HARD = `errmsg` + `reenter`.

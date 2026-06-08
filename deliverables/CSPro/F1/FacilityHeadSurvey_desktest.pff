@@ -5,3 +5,9 @@ AppType=Entry
 [Files]
 Application=.\FacilityHeadSurvey.ent
 InputData=.\desktest.csdb
+
+[ExternalFiles]
+PSGC_REGION_DICT=.\..\shared\psgc_region.dat
+PSGC_PROVINCE_DICT=.\..\shared\psgc_province.dat
+PSGC_CITY_DICT=.\..\shared\psgc_city.dat
+PSGC_BARANGAY_DICT=.\..\shared\psgc_barangay.dat
