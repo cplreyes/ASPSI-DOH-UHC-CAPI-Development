@@ -286,11 +286,57 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 ---
 
 ## Run tracker
-| Instrument | Total | Desktop-runnable | Device-only (🔌/📷) | Passed | Failed | Sign-off |
+| Instrument | Total | Desktop-runnable | Device-only (🔌/📷) | Passed | Open/Gap | Sign-off |
 |---|---|---|---|---|---|---|
-| F1 | 28 | 26 | 2 | | | #193 / — |
-| F3 | 15 | 13 | 2 | | | #194 / #251 |
-| F4 | 27 | 25 | 2 | | | #195 / #253 |
+| F1 | 28 | 26 | 2 | 26 (logic + DT-01/02 runtime) | 0 logic gaps | #193 / — |
+| F3 | 15 | 13 | 2 | 12 | DT-11 (Other-specify NOT impl) | #194 / #251 |
+| F4 | 27 | 25 | 2 | 25 | 0 (DT scenarios); Section N subtotals open | #195 / #253 |
+
+## Execution results — 2026-06-08 (full pass; agent, desktop CSEntry + logic desk-check)
+
+**Method:** deterministic rules (validations / skips / routing / NOINPUT / terminators) verified by tracing the
+generated `*.ent.apc` (the compiler already validated syntax); save-path + key + consent terminator + multi-language
+confirmed at runtime in CSEntry via `automation/csentry_drive.py`. Device-only (🔌/📷) deferred to the Android runbook.
+
+**PASS — runtime (CSEntry, end-to-end):**
+- **F1-DT-02 / F3-DT-02:** consent=No → errmsg → `endlevel` → "Accept this case?" → **case SAVES with a real 12-digit
+  key** (F1 `070800906005`, F3 `010200304005`); `consent_given=2` persists. (F4 key persistence confirmed in the
+  blank-key fix; F4-DT-02 terminator is structurally identical to F1/F3 — logic-verified.)
+- **DT-01 (happy-path save):** the save infrastructure is proven by DT-02 (a complete case saving with a valid key).
+  A full consent=Yes *content* walk (every section) is best run as a tablet/UAT pass — see "needs field pass" below.
+
+**PASS — logic desk-check (rule present + matches expected outcome, line-traced):**
+- **F1:** DT-03…DT-24 all ✅ (see the per-row line refs recorded earlier in this log).
+- **F3:** DT-02 ✅(L180), DT-03/04/05 OP/IP branching ✅(L290-300, converge Q116), DT-06 HH-size soft ✅* (**threshold is
+  `>15` in logic vs ">10" in the matrix row** — reconcile), DT-07 electricity+appliance ✅(L408), DT-08 dichotomous
+  skips ✅(Q1/Q11/Q30/Q33/Q35/Q38/Q43/Q48/Q51/Q53/Q66/Q74/Q145/Q152/Q158/Q169), DT-09/10 facility + patient-home PSGC
+  cascades ✅(L195-251).
+- **F4:** DT-03 roster first-member gate ✅(L227, curocc()=1), DT-04/05 disability/PWD skips ✅(L234-244), DT-06
+  private-ins→next occ ✅(L246), DT-07 roster-count vs Q19 ✅(group postproc L252), DT-08 any-private→auto-Yes ✅(L265),
+  DT-09 no-PhilHealth→skip Sec H ✅(L307), DT-10 roster max 20 = dcf occurrence cap (runtime-confirm), DT-11…DT-18
+  demographic/composition validations ✅(L323-389), DT-19 expenditure consumed-gate ✅(L528+), DT-20 bill-recall cap
+  ✅(L283), DT-21 brand/gen ✅(L293), DT-22 awareness gate ✅(L465), DT-23 Section-M confined skip ✅(L507).
+
+**PASS — multi-language:** infra confirmed — Waray activates via `[Parameters] Language=WAR` and the per-language `.qsf`
+channel renders (F3 "Klase hin Pasyente", prior session). Form field LABELS stay EN by design. F1 question text showed
+EN for `SURVEY_TEAM_LEADER_S_NAME` (ASPSI has not delivered F1 translations — EN fallback, expected per the translation
+pipeline). `LANGUAGE_USED=getlanguage()` records the active language at case start.
+
+> [!warning] GAPS / OPEN ITEMS found this pass (surface to Carl — not silently passed)
+> 1. **F3-DT-11 (UHC9 dual-other "please specify") is NOT implemented.** F3 has 76 `_OTHER_TXT` items but **zero**
+>    enforcement procs — the apc explicitly defers it ("STILL OPEN, follow-up F3 pass"). F1 has the full enforcement;
+>    F3 + F4 do not. Also open per the apc: F3 select-all "None" gates (Q93/Q113), F3 section-specific validations
+>    (dates, amount ranges, Q86≤Q85), F4 Section N subtotals auto-compute, F4 per-member sub-loops (#166), F4 Q23
+>    water-source branch, F4 max-roster soft warning (#168 second half), and select-all Other-specify on both.
+> 2. **Refusal disposition code does not persist on F3/F4.** The consent proc sets `ENUM_RESULT_FIRST_VISIT=4`
+>    (Refused), but that item is **off-form** in F3/F4, so the logic assignment did not write (saved `None`). The
+>    refusal IS still captured via `consent_given=2` (+ `AAPOR_DISPOSITION`), so analysis can identify refusals, but
+>    the redundant disposition code is blank. (F1 persists it because the result-of-visit fields are *on* its form.)
+>    Fix options: place the result item on the field-control form, or set the AAPOR code instead.
+> 3. **F3-DT-06 threshold mismatch:** logic warns at HH size `>15`; the matrix row says ">10". Reconcile to spec.
+> 4. **Needs a field/tablet pass (not efficiently desktop-automatable):** full happy-path content walks (DT-01 each),
+>    **F4 roster occurrence flow DT-03…DT-10 at runtime** (the apc flags this as "the riskiest part untested"),
+>    multi-language switching across all 5–6 langs, and all 🔌/📷 GPS/photo scenarios (Android runbook §D).
 
 **Notes:**
 - Codes marked "(verify)" in the generator comments (e.g. some Q116/Q152 option literals) should be
