@@ -24,6 +24,31 @@ case · `SKIP→` = jump to target · `NOINPUT` = field hidden/protected · 🔌
 
 ---
 
+## Execution log
+
+### Pass 1 — 2026-06-08 (agent, desktop CSEntry, F3)
+- **F3-DT-02 (consent terminator) → ❌ FINDING — survey-flow design decision needed.**
+  Consent=No does **not** cleanly terminate. The generator uses `endgroup`, which only skips the rest
+  of the metadata group and **continues into the full survey** (geo form onward) — wrong for a refusal.
+  Switching to `endlevel` (matching F1) makes CSEntry try to end the case, but it then errors
+  **"Warning (1026): All of the ID fields were not filled, please reenter"** — because F3's case-key ID
+  block (the geo codes) is collected on the **next** form, **after** consent, so there is no valid key
+  to save a refused case. **Neither construct is correct.** The real fix is a survey-flow decision:
+  collect the geo/facility case-key **before** consent, or skip-to-key-then-end on refusal. **Likely
+  affects all three** (F1 uses `endlevel` with consent before its geo block — untested; F4 uses
+  `endgroup` like F3). The speculative `endlevel` change was **reverted**; committed `endgroup` stands
+  pending the decision. → **GO/NO-GO for Carl/ASPSI.**
+- **F3-DT-14 (multi-language) → ✅.** Question text renders Waray ("Klase hin Pasyente" for
+  `PATIENT_TYPE`) under `Language=WAR` (confirmed during the multi-language wiring work).
+- **Remaining F3 scenarios:** not executed this pass. Desktop GUI-driving proved fragile — value-set
+  pickers plus the "out of range" warnings on the no-value-set metadata fields (INTERVIEWER_ID,
+  TIME_STARTED) make precise field-by-field navigation error-prone, and the deeper scenarios (OP/IP
+  branch, section skips, later-section validations) need sustained interactive entry. Recommend a
+  focused interactive pass (Carl) or a hardened automation harness; device-only DT-12/13 defer to the
+  Android runbook.
+
+---
+
 # F1 — Facility Head Survey  (gate #193)
 
 ## F1.A Happy path
