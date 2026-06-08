@@ -1056,6 +1056,350 @@ preproc
   endif;
 
 { ---- 'Other (specify)' enforcement — UHC9 dual-other ---- }
+{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 49 items) ---- }
+PROC Q101_CHECKUP_FREQ_OTHER_TXT
+postproc
+  if Q101_CHECKUP_FREQ = 7 and length(strip(Q101_CHECKUP_FREQ_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q101_CHECKUP_FREQ but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q102_VISIT_REASON_OTHER_TXT
+postproc
+  if Q102_VISIT_REASON_O08 = 1 and length(strip(Q102_VISIT_REASON_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q102_VISIT_REASON but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q103_CARE_TYPE_OTHER_TXT
+postproc
+  if Q103_CARE_TYPE_O05 = 1 and length(strip(Q103_CARE_TYPE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q103_CARE_TYPE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q106_FORGONE_WHY_OTHER_TXT
+postproc
+  if Q106_FORGONE_WHY_O08 = 1 and length(strip(Q106_FORGONE_WHY_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q106_FORGONE_WHY but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q107_OTHER_ACTIONS_OTHER_TXT
+postproc
+  if Q107_OTHER_ACTIONS_O01 = 1 and length(strip(Q107_OTHER_ACTIONS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q107_OTHER_ACTIONS but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q109_TYPE_OTHER_TXT
+postproc
+  if Q109_TYPE_O05 = 1 and length(strip(Q109_TYPE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q109_TYPE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q10_DISABILITY_OTHER_TXT
+postproc
+  if Q10_DISABILITY_TYPE = 8 and length(strip(Q10_DISABILITY_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q10_DISABILITY_TYPE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q110_SPECIALIST_OTHER_TXT
+postproc
+  if Q110_SPECIALIST = 23 and length(strip(Q110_SPECIALIST_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q110_SPECIALIST but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q111_METHOD_OTHER_TXT
+postproc
+  if Q111_METHOD = 5 and length(strip(Q111_METHOD_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q111_METHOD but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q113_WHY_NOT_OTHER_TXT
+postproc
+  if Q113_WHY_NOT_O07 = 1 and length(strip(Q113_WHY_NOT_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q113_WHY_NOT but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q11_EDUCATION_OTHER_TXT
+postproc
+  if Q11_EDUCATION = 11 and length(strip(Q11_EDUCATION_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q11_EDUCATION but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q121_WHY_HOSPITAL_OTHER_TXT
+postproc
+  if Q121_WHY_HOSPITAL_O01 = 1 and length(strip(Q121_WHY_HOSPITAL_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q121_WHY_HOSPITAL but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q127_NBB_SOURCE_OTHER_TXT
+postproc
+  if Q127_NBB_SOURCE_O08 = 1 and length(strip(Q127_NBB_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q127_NBB_SOURCE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q128_NBB_UNDERSTAND_OTHER_TXT
+postproc
+  if Q128_NBB_UNDERSTAND_O08 = 1 and length(strip(Q128_NBB_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q128_NBB_UNDERSTAND but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q133_ZBB_SOURCE_OTHER_TXT
+postproc
+  if Q133_ZBB_SOURCE_O08 = 1 and length(strip(Q133_ZBB_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q133_ZBB_SOURCE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q134_ZBB_UNDERSTAND_OTHER_TXT
+postproc
+  if Q134_ZBB_UNDERSTAND_O08 = 1 and length(strip(Q134_ZBB_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q134_ZBB_UNDERSTAND but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q137_MAIFIP_SOURCE_OTHER_TXT
+postproc
+  if Q137_MAIFIP_SOURCE_O08 = 1 and length(strip(Q137_MAIFIP_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q137_MAIFIP_SOURCE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q141_BILL_ITEMS_OTHER_TXT
+postproc
+  if Q141_BILL_ITEMS_O07 = 1 and length(strip(Q141_BILL_ITEMS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q141_BILL_ITEMS but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q143_HOW_PAID_OTHER_TXT
+postproc
+  if Q143_HOW_PAID_O10 = 1 and length(strip(Q143_HOW_PAID_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q143_HOW_PAID but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q17_DECISION_MAKER_OTHER_TXT
+postproc
+  if Q17_DECISION_MAKER = 12 and length(strip(Q17_DECISION_MAKER_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q17_DECISION_MAKER but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q196_FOREGONE_OTHER_TXT
+postproc
+  if Q196_FOREGONE_O07 = 1 and length(strip(Q196_FOREGONE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q196_FOREGONE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q199_WTP_OTHER_TXT
+postproc
+  if Q199_WTP_CONSULT = 9 and length(strip(Q199_WTP_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q199_WTP_CONSULT but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q23_WATER_OTHER_TXT
+postproc
+  if Q23_WATER_SOURCE = 4 and length(strip(Q23_WATER_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q23_WATER_SOURCE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q38_DISABILITY_OTHER_TXT
+postproc
+  if Q38_DISABILITY_TYPE = 8 and length(strip(Q38_DISABILITY_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q38_DISABILITY_TYPE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q46_MEMBER_OTHER_TXT
+postproc
+  if Q46_MEMBER_CATEGORY = 88 and length(strip(Q46_MEMBER_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q46_MEMBER_CATEGORY but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q52_UHC_SOURCE_OTHER_TXT
+postproc
+  if Q52_UHC_SOURCE_O08 = 1 and length(strip(Q52_UHC_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q52_UHC_SOURCE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q53_UHC_UNDERSTAND_OTHER_TXT
+postproc
+  if Q53_UHC_UNDERSTAND_O06 = 1 and length(strip(Q53_UHC_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q53_UHC_UNDERSTAND but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q55_YAKAP_SOURCE_OTHER_TXT
+postproc
+  if Q55_YAKAP_SOURCE_O08 = 1 and length(strip(Q55_YAKAP_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q55_YAKAP_SOURCE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q56_YAKAP_UNDERSTAND_OTHER_TXT
+postproc
+  if Q56_YAKAP_UNDERSTAND_O07 = 1 and length(strip(Q56_YAKAP_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q56_YAKAP_UNDERSTAND but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q58_BUCAS_SOURCE_OTHER_TXT
+postproc
+  if Q58_BUCAS_SOURCE_O08 = 1 and length(strip(Q58_BUCAS_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q58_BUCAS_SOURCE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q59_BUCAS_UNDERSTAND_OTHER_TXT
+postproc
+  if Q59_BUCAS_UNDERSTAND_O05 = 1 and length(strip(Q59_BUCAS_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q59_BUCAS_UNDERSTAND but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q5_GROUP_OTHER_TXT
+postproc
+  if Q5_GROUP = 8 and length(strip(Q5_GROUP_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q5_GROUP but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q61_BUCAS_SERVICES_OTHER_TXT
+postproc
+  if Q61_BUCAS_SERVICES_O07 = 1 and length(strip(Q61_BUCAS_SERVICES_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q61_BUCAS_SERVICES but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q65_CONDITIONS_OTHER_TXT
+postproc
+  if Q65_CONDITIONS_O14 = 1 and length(strip(Q65_CONDITIONS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q65_CONDITIONS but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q66_WHERE_BUY_OTHER_TXT
+postproc
+  if Q66_WHERE_BUY_O08 = 1 and length(strip(Q66_WHERE_BUY_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q66_WHERE_BUY but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q70_GAMOT_SOURCE_OTHER_TXT
+postproc
+  if Q70_GAMOT_SOURCE_O08 = 1 and length(strip(Q70_GAMOT_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q70_GAMOT_SOURCE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q71_GAMOT_UNDERSTAND_OTHER_TXT
+postproc
+  if Q71_GAMOT_UNDERSTAND_O06 = 1 and length(strip(Q71_GAMOT_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q71_GAMOT_UNDERSTAND but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q74_WHERE_REST_OTHER_TXT
+postproc
+  if Q74_WHERE_REST_O10 = 1 and length(strip(Q74_WHERE_REST_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q74_WHERE_REST but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q77_WHY_GENERIC_OTHER_TXT
+postproc
+  if Q77_WHY_GENERIC_O08 = 1 and length(strip(Q77_WHY_GENERIC_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q77_WHY_GENERIC but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q78_WHY_BRANDED_OTHER_TXT
+postproc
+  if Q78_WHY_BRANDED_O08 = 1 and length(strip(Q78_WHY_BRANDED_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q78_WHY_BRANDED but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q79_REG_SOURCE_OTHER_TXT
+postproc
+  if Q79_REG_SOURCE = 4 and length(strip(Q79_REG_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q79_REG_SOURCE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q80_ASSIST_OTHER_TXT
+postproc
+  if Q80_ASSIST = 4 and length(strip(Q80_ASSIST_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q80_ASSIST but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q82_DIFFICULTY_REASONS_OTHER_TXT
+postproc
+  if Q82_DIFFICULTY_REASONS_O08 = 1 and length(strip(Q82_DIFFICULTY_REASONS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q82_DIFFICULTY_REASONS but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q85_BENEFITS_OTHER_TXT
+postproc
+  if Q85_BENEFITS_O06 = 1 and length(strip(Q85_BENEFITS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q85_BENEFITS but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q88_DIFF_PAYING_OTHER_TXT
+postproc
+  if Q88_DIFF_PAYING_O07 = 1 and length(strip(Q88_DIFF_PAYING_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q88_DIFF_PAYING but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q91_WHY_WENT_OTHER_TXT
+postproc
+  if Q91_WHY_WENT_O09 = 1 and length(strip(Q91_WHY_WENT_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q91_WHY_WENT but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q92_FACILITY_TYPE_OTHER_TXT
+postproc
+  if Q92_FACILITY_TYPE = 9 and length(strip(Q92_FACILITY_TYPE_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected for Q92_FACILITY_TYPE but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q93_WHY_NOT_OTHER_TXT
+postproc
+  if Q93_WHY_NOT_O07 = 1 and length(strip(Q93_WHY_NOT_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q93_WHY_NOT but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+PROC Q94_TRANSPORT_OTHER_TXT
+postproc
+  if Q94_TRANSPORT_O12 = 1 and length(strip(Q94_TRANSPORT_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected for Q94_TRANSPORT but no text was entered. Please specify.");
+    reenter;
+  endif;
+
 { ============================================================================
   STILL OPEN (follow-up F4 pass):
     - Section N subtotals (Q157/Q177/Q182/Q185 _SUBTOTAL_TOTAL_PHP): auto-compute

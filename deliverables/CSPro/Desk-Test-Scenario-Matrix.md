@@ -289,8 +289,8 @@ filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respond
 | Instrument | Total | Desktop-runnable | Device-only (🔌/📷) | Passed | Open/Gap | Sign-off |
 |---|---|---|---|---|---|---|
 | F1 | 28 | 26 | 2 | 26 (logic + DT-01/02 runtime) | 0 logic gaps | #193 / — |
-| F3 | 15 | 13 | 2 | 12 | DT-11 (Other-specify NOT impl) | #194 / #251 |
-| F4 | 27 | 25 | 2 | 25 | 0 (DT scenarios); Section N subtotals open | #195 / #253 |
+| F3 | 15 | 13 | 2 | 13 | DT-11 now impl (64 procs); validations open | #194 / #251 |
+| F4 | 27 | 25 | 2 | 25 | other-specify impl (49 procs); Sec N subtotals open | #195 / #253 |
 
 ## Execution results — 2026-06-08 (full pass; agent, desktop CSEntry + logic desk-check)
 
@@ -322,12 +322,21 @@ channel renders (F3 "Klase hin Pasyente", prior session). Form field LABELS stay
 EN for `SURVEY_TEAM_LEADER_S_NAME` (ASPSI has not delivered F1 translations — EN fallback, expected per the translation
 pipeline). `LANGUAGE_USED=getlanguage()` records the active language at case start.
 
-> [!warning] GAPS / OPEN ITEMS found this pass (surface to Carl — not silently passed)
-> 1. **F3-DT-11 (UHC9 dual-other "please specify") is NOT implemented.** F3 has 76 `_OTHER_TXT` items but **zero**
->    enforcement procs — the apc explicitly defers it ("STILL OPEN, follow-up F3 pass"). F1 has the full enforcement;
->    F3 + F4 do not. Also open per the apc: F3 select-all "None" gates (Q93/Q113), F3 section-specific validations
->    (dates, amount ranges, Q86≤Q85), F4 Section N subtotals auto-compute, F4 per-member sub-loops (#166), F4 Q23
->    water-source branch, F4 max-roster soft warning (#168 second half), and select-all Other-specify on both.
+> [!success] GAP #1 RESOLVED — 2026-06-08: F3/F4 'Other (specify)' enforcement implemented
+> A shared, dcf-driven generator `cspro_helpers.other_specify_procs()` now auto-derives the enforcement and is
+> wired into F3 + F4 `generate_apc.py`. It emits `if <trigger> and length(strip(<TXT>))=0 then errmsg; reenter`
+> for two patterns: **single-choice** (parent coded field — incl. descriptive-suffix parents like
+> `Q14_DISABILITY_TYPE` / `Q23_WATER_SOURCE`) → `parent = <other code>`; and **select-all** (`_O01..`/`_01..` option
+> flags) → `<other flag> = 1`. **F3: 64 procs (20 single + 44 select-all); F4: 49 (14 + 35).** Both **Designer
+> "Compile Successful"** + preflight clean; logic follows F1's runtime-proven pattern. A runtime fires-on-blank
+> spot-check folds into the field pass. **Conservatively skipped (logged for manual review — no resolvable trigger):**
+> F3 `Q12_PWD_SPECIFY` (conditional, not other), `Q67_WHY_THIS_OTHER_TXT` + `Q98_OTHER_TXT` (orphan/duplicate — the
+> real fields `Q67_WHY_THIS_FACILITY_OTHER_TXT` / the `Q98_PAY_*` panel are handled / need manual mapping); F4
+> `Q194_OTHER_TXT`, `Q50_PRIVATE_INS_OTHER_TXT`, `Q82_DIFFICULTY_OTHER_TXT` (orphans/conditionals).
+>
+> **Still open (separate items, not other-specify):** F3 select-all "None" gates (Q93/Q113), F3 section-specific
+> validations (dates, amount ranges, Q86≤Q85), F4 Section N subtotals auto-compute, F4 per-member sub-loops (#166),
+> F4 Q23 water-source multi-category branch, F4 max-roster soft warning (#168 second half).
 > 2. **Refusal disposition code does not persist on F3/F4.** The consent proc sets `ENUM_RESULT_FIRST_VISIT=4`
 >    (Refused), but that item is **off-form** in F3/F4, so the logic assignment did not write (saved `None`). The
 >    refusal IS still captured via `consent_given=2` (+ `AAPOR_DISPOSITION`), so analysis can identify refusals, but

@@ -24,6 +24,7 @@ Compatibility guarantee:
 
 import csv
 import json
+import re
 from pathlib import Path
 
 # ============================================================
@@ -726,3 +727,107 @@ def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGU
         pct = (100 * matched // total) if total else 0
         print(f"    {code}: {matched}/{total} labels translated ({pct}%)")
     return dictionary
+
+
+# ---------------------------------------------------------------------------
+# 'Other (specify)' enforcement — auto-derived from the dictionary
+# ---------------------------------------------------------------------------
+# An "Other (specify)" option that has a free-text companion item must require
+# that text when the option is chosen. Two layouts occur in F3/F4:
+#   * single-choice — a coded parent field <BASE> with an "Other (specify)" value
+#     and a companion <BASE>_OTHER_TXT  -> require text when <BASE> = <other code>
+#   * select-all    — option-flag fields <BASE>_O01.._Onn (each 1=Yes/2=No) with a
+#     companion <BASE>_OTHER_TXT; one flag is the "Other (Specify)" option
+#     -> require text when that flag = 1
+# UHC9 dual-other (<BASE>_YES_OTHER_TXT / _NO_OTHER_TXT) is handled separately by
+# the per-instrument uhc9_other_specify_procs(); we skip those here.
+# Items whose trigger can't be resolved from the dictionary (e.g. a bare _SPECIFY
+# conditional with no coded parent and no Other option flag) are returned in
+# `skipped` for manual handling rather than guessed wrong.
+
+_OTHER_LABEL_RE = re.compile(r"specif|\bothers?\b", re.IGNORECASE)
+
+
+def _label_text(node):
+    labs = node.get("labels") or [{}]
+    return labs[0].get("text", "") or ""
+
+
+def _other_value_code(item):
+    """The 'Other (specify)' value code of a coded item, or None."""
+    for vs in item.get("valueSets") or []:
+        for val in vs.get("values") or []:
+            if _OTHER_LABEL_RE.search(_label_text(val)):
+                pairs = val.get("pairs") or [{}]
+                code = pairs[0].get("value")
+                if code is not None:
+                    return code
+    return None
+
+
+def other_specify_procs(items):
+    """Build 'Other (specify)' enforcement PROCs from a dcf items map
+    ({name: item_dict}). Returns (procs: {field: proc_text}, mapping: [(txt,
+    trigger_desc)], skipped: [names]). See module note above for the patterns."""
+    procs, mapping, skipped = {}, [], []
+    txt_items = sorted(
+        n for n in items
+        if (n.endswith("_OTHER_TXT") or n.endswith("_SPECIFY"))
+        and not (n.endswith("_YES_OTHER_TXT") or n.endswith("_NO_OTHER_TXT"))
+    )
+    for n in txt_items:
+        base = n[: -len("_OTHER_TXT")] if n.endswith("_OTHER_TXT") else n[: -len("_SPECIFY")]
+
+        # (1) single-choice coded parent carrying an 'Other (specify)' value.
+        #     Parent is usually <base>, sometimes <base>_TYPE, or a uniquely-named
+        #     descriptive sibling <base>_SOURCE / _CATEGORY / etc. We only accept a
+        #     descendant when it is the SOLE <base>_… coded field that actually has
+        #     an 'Other' value (so panels / unrelated coded fields can't mis-match).
+        cands = [base, base + "_TYPE"]
+        desc = [k for k in sorted(items)
+                if k.startswith(base + "_") and items[k].get("valueSets")
+                and not re.search(r"_O?\d+$", k)
+                and _other_value_code(items[k]) is not None]
+        if len(desc) == 1:
+            cands.append(desc[0])
+        parent_name = code = None
+        for cand in cands:
+            it = items.get(cand)
+            if it and it.get("valueSets"):
+                c = _other_value_code(it)
+                if c is not None:
+                    parent_name, code = cand, c
+                    break
+        if parent_name is not None:
+            lit = int(code) if str(code).lstrip("-").isdigit() else f'"{code}"'
+            procs[n] = (
+                f"PROC {n}\npostproc\n"
+                f"  if {parent_name} = {lit} and length(strip({n})) = 0 then\n"
+                f"    errmsg(\"'Other' was selected for {parent_name} but no text was entered. Please specify.\");\n"
+                f"    reenter;\n  endif;"
+            )
+            mapping.append((n, f"single: {parent_name} = {lit}"))
+            continue
+
+        # (2) select-all option flags — <base>_O01.. (with 'O') or <base>_01..
+        #     (without) — pick the flag whose label is the 'Other (Specify)' one.
+        #     The label gate means panels with no 'Other' option stay unmatched.
+        flag_re = re.compile(re.escape(base) + r"_O?\d+$")
+        other_flag = next(
+            (k for k in sorted(items)
+             if flag_re.match(k) and _OTHER_LABEL_RE.search(_label_text(items[k]))),
+            None,
+        )
+        if other_flag is not None:
+            procs[n] = (
+                f"PROC {n}\npostproc\n"
+                f"  if {other_flag} = 1 and length(strip({n})) = 0 then\n"
+                f"    errmsg(\"'Other (specify)' was selected for {base} but no text was entered. Please specify.\");\n"
+                f"    reenter;\n  endif;"
+            )
+            mapping.append((n, f"select-all: {other_flag} = 1"))
+            continue
+
+        # (3) unresolved -> manual
+        skipped.append(n)
+    return procs, mapping, skipped

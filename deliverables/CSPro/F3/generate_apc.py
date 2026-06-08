@@ -21,7 +21,11 @@ Invoke:  python generate_apc.py
 
 import json
 import re
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from cspro_helpers import other_specify_procs
 
 HERE = Path(__file__).parent
 OUT = HERE / "PatientSurvey.ent.apc"
@@ -410,6 +414,17 @@ def dcf_item_names():
     return names
 
 
+def dcf_items_map():
+    """{name: item_dict} for every item in the dcf (for other-specify derivation)."""
+    items = {}
+    dic = json.loads(DCF.read_text(encoding="utf-8"))
+    for level in dic["levels"]:
+        for rec in level.get("records", []):
+            for it in rec.get("items", []):
+                items[it["name"]] = it
+    return items
+
+
 def uhc9_other_specify_procs(names):
     procs = {}
     for n in names:
@@ -457,12 +472,28 @@ def main():
         parts.append(proc)
         parts.append("")
 
+    # Auto-derived single-choice + select-all 'Other (specify)' enforcement (#148).
+    os_procs, os_map, os_skipped = other_specify_procs(dcf_items_map())
+    parts.append("{ ---- 'Other (specify)' enforcement — single-choice + select-all "
+                 f"(auto-derived from dcf: {len(os_procs)} items) ---- }}")
+    for field, proc in sorted(os_procs.items()):
+        if field in covered:
+            continue
+        covered.add(field)
+        parts.append(proc)
+        parts.append("")
+
     parts.append(TODO_NOTE)
     text = "\n".join(parts).rstrip() + "\n"
     OUT.write_text(text, encoding="utf-8")
     dupes = [l for l in text.splitlines() if l.startswith("PROC ")]
     assert len(dupes) == len(set(dupes)), "duplicate PROC names emitted"
     print(f"Wrote {OUT} ({len(text)} chars, {len(dupes)} PROC blocks, no dup names).")
+    print(f"  other-specify enforcement: {len(os_procs)} auto-derived "
+          f"({sum(1 for _, d in os_map if d.startswith('single'))} single + "
+          f"{sum(1 for _, d in os_map if d.startswith('select'))} select-all)")
+    if os_skipped:
+        print(f"  other-specify SKIPPED (manual review — no resolvable trigger): {', '.join(os_skipped)}")
     print("  NEXT: create the F3 .ent in Designer (input dcf + generated.fmf), set this")
     print("  as the main logic file, compile, fix any name/code mismatch, verify in CSEntry.")
 
