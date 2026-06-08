@@ -334,9 +334,25 @@ pipeline). `LANGUAGE_USED=getlanguage()` records the active language at case sta
 > real fields `Q67_WHY_THIS_FACILITY_OTHER_TXT` / the `Q98_PAY_*` panel are handled / need manual mapping); F4
 > `Q194_OTHER_TXT`, `Q50_PRIVATE_INS_OTHER_TXT`, `Q82_DIFFICULTY_OTHER_TXT` (orphans/conditionals).
 >
-> **Still open (separate items, not other-specify):** F3 select-all "None" gates (Q93/Q113), F3 section-specific
-> validations (dates, amount ranges, Q86≤Q85), F4 Section N subtotals auto-compute, F4 per-member sub-loops (#166),
-> F4 Q23 water-source multi-category branch, F4 max-roster soft warning (#168 second half).
+> **GAP #1b — 2026-06-08: remaining open-logic items worked through.** Status of each:
+> - ✅ **F3 Q93 "None"(O17) gate** → skip Q94 lab-cost matrix (added to SKIP_RULES). Compiles clean.
+> - ✅ **F4 Section N subtotals** (Q157/Q177/Q182/Q185) — `subtotal_procs()` auto-computes each from its panel's
+>   `_PURCHASED_PHP + _INKIND_PHP` (using the AUTHORITATIVE spec Q-ranges, not record-order — Q177 must exclude the
+>   non-health Q158–Q172 items that sit between panels) + `protect()`. Compiles clean.
+> - ✅ **Select-all "≥1 ticked"** HARD rule — `select_all_validation_procs()` auto-derives a ≥1-selected check on every
+>   select-all group's last flag (F3: 40 groups, F4: 36; expenditure/amount matrices excluded). Compiles clean.
+> - ⛔ **F4 per-member sub-loops (#166)** — BLOCKED awaiting ASPSI (spec §996 routes "does Section J loop per member?"
+>   to ASPSI; J_HEALTH_SEEKING is closed-by-design respondent-level). Not ours to decide.
+> - ⚠️ **F3 Q113→Q114.1 gate** — spec says skip the "why-not-availed PhilHealth" question, but the dcf has **no `Q114_*`
+>   field** (only `Q1141_*`/`Q1142_*`); the field to skip is unresolved → needs ASPSI/spec reconciliation, not a guess.
+> - ⚠️ **F4 Q23 water-source branch (Q24/Q25)** — the spec's categories (piped/faucet/dug/tube/spring) don't map to the
+>   dcf's 4 codes (1 faucet-inside, 2 tubed/piped, 3 dug, 4 other) → code reconciliation needed before wiring the gate.
+> - ⚠️ **F4 max-roster soft warning (#168 b)** — threshold ("unusual size") not specified; Q19>10 already soft-warns.
+> - ⏳ **Select-all exclusive-option ("None/IDK can't combine")** — deliberately NOT auto-derived: detecting the
+>   exclusive option by label is unreliable (e.g. "Did not know where to register" / "If none, why…" false-match).
+>   Needs encoding from the spec's explicit per-group exclusive codes (F3 §3.5–3.14) — a manual table.
+> - ⏳ **Per-item numeric ranges + cross-field/soft consistency** (F3 §3.5–3.14, F4 equivalents; ~80 rules: Q58 0–365,
+>   Q69/Q72 HH/MM bounds, income-bracket↔amount, age↔birth-year, Q86↔Q85, etc.) — large spec-table layer, next batch.
 > 2. **Refusal disposition code does not persist on F3/F4.** The consent proc sets `ENUM_RESULT_FIRST_VISIT=4`
 >    (Refused), but that item is **off-form** in F3/F4, so the logic assignment did not write (saved `None`). The
 >    refusal IS still captured via `consent_given=2` (+ `AAPOR_DISPOSITION`), so analysis can identify refusals, but

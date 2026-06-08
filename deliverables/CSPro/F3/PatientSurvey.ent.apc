@@ -539,6 +539,12 @@ postproc
     skip to Q91_USUAL_OUTPATIENT;
   endif;
 
+PROC Q93_LABS_O17
+postproc
+  if Q93_LABS_O17 = 1 then
+    skip to Q95_PRESCRIBED;
+  endif;
+
 PROC Q95_PRESCRIBED
 postproc
   if Q95_PRESCRIBED = 2 then
@@ -1046,6 +1052,287 @@ PROC Q9_GROUP_OTHER_TXT
 postproc
   if Q9_GROUP = 8 and length(strip(Q9_GROUP_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q9_GROUP but no text was entered. Please specify.");
+    reenter;
+  endif;
+
+{ ---- Select-all validation — >=1 option ticked (auto-derived from dcf) ---- }
+PROC Q100_BUCAS_SOURCE_O08
+postproc
+  if not (Q100_BUCAS_SOURCE_O01 = 1 or Q100_BUCAS_SOURCE_O02 = 1 or Q100_BUCAS_SOURCE_O03 = 1 or Q100_BUCAS_SOURCE_O04 = 1 or Q100_BUCAS_SOURCE_O05 = 1 or Q100_BUCAS_SOURCE_O06 = 1 or Q100_BUCAS_SOURCE_O07 = 1 or Q100_BUCAS_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q100_BUCAS_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q101_BUCAS_UNDERSTAND_O05
+postproc
+  if not (Q101_BUCAS_UNDERSTAND_O01 = 1 or Q101_BUCAS_UNDERSTAND_O02 = 1 or Q101_BUCAS_UNDERSTAND_O03 = 1 or Q101_BUCAS_UNDERSTAND_O04 = 1 or Q101_BUCAS_UNDERSTAND_O05 = 1) then
+    errmsg("Select at least one option for Q101_BUCAS_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q103_BUCAS_SERVICES_O07
+postproc
+  if not (Q103_BUCAS_SERVICES_O01 = 1 or Q103_BUCAS_SERVICES_O02 = 1 or Q103_BUCAS_SERVICES_O03 = 1 or Q103_BUCAS_SERVICES_O04 = 1 or Q103_BUCAS_SERVICES_O05 = 1 or Q103_BUCAS_SERVICES_O06 = 1 or Q103_BUCAS_SERVICES_O07 = 1) then
+    errmsg("Select at least one option for Q103_BUCAS_SERVICES before continuing.");
+    reenter;
+  endif;
+
+PROC Q114_NO_PH_O07
+postproc
+  if not (Q114_NO_PH_O01 = 1 or Q114_NO_PH_O02 = 1 or Q114_NO_PH_O03 = 1 or Q114_NO_PH_O04 = 1 or Q114_NO_PH_O05 = 1 or Q114_NO_PH_O06 = 1 or Q114_NO_PH_O07 = 1) then
+    errmsg("Select at least one option for Q114_NO_PH before continuing.");
+    reenter;
+  endif;
+
+PROC Q117_NBB_SOURCE_O08
+postproc
+  if not (Q117_NBB_SOURCE_O01 = 1 or Q117_NBB_SOURCE_O02 = 1 or Q117_NBB_SOURCE_O03 = 1 or Q117_NBB_SOURCE_O04 = 1 or Q117_NBB_SOURCE_O05 = 1 or Q117_NBB_SOURCE_O06 = 1 or Q117_NBB_SOURCE_O07 = 1 or Q117_NBB_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q117_NBB_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q118_NBB_UNDERSTAND_O09
+postproc
+  if not (Q118_NBB_UNDERSTAND_O01 = 1 or Q118_NBB_UNDERSTAND_O02 = 1 or Q118_NBB_UNDERSTAND_O03 = 1 or Q118_NBB_UNDERSTAND_O04 = 1 or Q118_NBB_UNDERSTAND_O05 = 1 or Q118_NBB_UNDERSTAND_O06 = 1 or Q118_NBB_UNDERSTAND_O07 = 1 or Q118_NBB_UNDERSTAND_O08 = 1 or Q118_NBB_UNDERSTAND_O09 = 1) then
+    errmsg("Select at least one option for Q118_NBB_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q120_ZBB_SOURCE_O08
+postproc
+  if not (Q120_ZBB_SOURCE_O01 = 1 or Q120_ZBB_SOURCE_O02 = 1 or Q120_ZBB_SOURCE_O03 = 1 or Q120_ZBB_SOURCE_O04 = 1 or Q120_ZBB_SOURCE_O05 = 1 or Q120_ZBB_SOURCE_O06 = 1 or Q120_ZBB_SOURCE_O07 = 1 or Q120_ZBB_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q120_ZBB_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q121_ZBB_UNDERSTAND_O09
+postproc
+  if not (Q121_ZBB_UNDERSTAND_O01 = 1 or Q121_ZBB_UNDERSTAND_O02 = 1 or Q121_ZBB_UNDERSTAND_O03 = 1 or Q121_ZBB_UNDERSTAND_O04 = 1 or Q121_ZBB_UNDERSTAND_O05 = 1 or Q121_ZBB_UNDERSTAND_O06 = 1 or Q121_ZBB_UNDERSTAND_O07 = 1 or Q121_ZBB_UNDERSTAND_O08 = 1 or Q121_ZBB_UNDERSTAND_O09 = 1) then
+    errmsg("Select at least one option for Q121_ZBB_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q125_MAIFIP_SOURCE_O08
+postproc
+  if not (Q125_MAIFIP_SOURCE_O01 = 1 or Q125_MAIFIP_SOURCE_O02 = 1 or Q125_MAIFIP_SOURCE_O03 = 1 or Q125_MAIFIP_SOURCE_O04 = 1 or Q125_MAIFIP_SOURCE_O05 = 1 or Q125_MAIFIP_SOURCE_O06 = 1 or Q125_MAIFIP_SOURCE_O07 = 1 or Q125_MAIFIP_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q125_MAIFIP_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q128_MAIFIP_OOP_ITEMS_O04
+postproc
+  if not (Q128_MAIFIP_OOP_ITEMS_O01 = 1 or Q128_MAIFIP_OOP_ITEMS_O02 = 1 or Q128_MAIFIP_OOP_ITEMS_O03 = 1 or Q128_MAIFIP_OOP_ITEMS_O04 = 1) then
+    errmsg("Select at least one option for Q128_MAIFIP_OOP_ITEMS before continuing.");
+    reenter;
+  endif;
+
+PROC Q129_WHY_NO_MAIFIP_O04
+postproc
+  if not (Q129_WHY_NO_MAIFIP_O01 = 1 or Q129_WHY_NO_MAIFIP_O02 = 1 or Q129_WHY_NO_MAIFIP_O03 = 1 or Q129_WHY_NO_MAIFIP_O04 = 1) then
+    errmsg("Select at least one option for Q129_WHY_NO_MAIFIP before continuing.");
+    reenter;
+  endif;
+
+PROC Q148_CONDITIONS_O20
+postproc
+  if not (Q148_CONDITIONS_O01 = 1 or Q148_CONDITIONS_O02 = 1 or Q148_CONDITIONS_O03 = 1 or Q148_CONDITIONS_O04 = 1 or Q148_CONDITIONS_O05 = 1 or Q148_CONDITIONS_O06 = 1 or Q148_CONDITIONS_O07 = 1 or Q148_CONDITIONS_O08 = 1 or Q148_CONDITIONS_O09 = 1 or Q148_CONDITIONS_O10 = 1 or Q148_CONDITIONS_O11 = 1 or Q148_CONDITIONS_O12 = 1 or Q148_CONDITIONS_O13 = 1 or Q148_CONDITIONS_O14 = 1 or Q148_CONDITIONS_O15 = 1 or Q148_CONDITIONS_O16 = 1 or Q148_CONDITIONS_O17 = 1 or Q148_CONDITIONS_O18 = 1 or Q148_CONDITIONS_O19 = 1 or Q148_CONDITIONS_O20 = 1) then
+    errmsg("Select at least one option for Q148_CONDITIONS before continuing.");
+    reenter;
+  endif;
+
+PROC Q149_WHERE_BUY_O08
+postproc
+  if not (Q149_WHERE_BUY_O01 = 1 or Q149_WHERE_BUY_O02 = 1 or Q149_WHERE_BUY_O03 = 1 or Q149_WHERE_BUY_O04 = 1 or Q149_WHERE_BUY_O05 = 1 or Q149_WHERE_BUY_O06 = 1 or Q149_WHERE_BUY_O07 = 1 or Q149_WHERE_BUY_O08 = 1) then
+    errmsg("Select at least one option for Q149_WHERE_BUY before continuing.");
+    reenter;
+  endif;
+
+PROC Q153_GAMOT_SOURCE_O08
+postproc
+  if not (Q153_GAMOT_SOURCE_O01 = 1 or Q153_GAMOT_SOURCE_O02 = 1 or Q153_GAMOT_SOURCE_O03 = 1 or Q153_GAMOT_SOURCE_O04 = 1 or Q153_GAMOT_SOURCE_O05 = 1 or Q153_GAMOT_SOURCE_O06 = 1 or Q153_GAMOT_SOURCE_O07 = 1 or Q153_GAMOT_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q153_GAMOT_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q154_GAMOT_UNDERSTAND_O06
+postproc
+  if not (Q154_GAMOT_UNDERSTAND_O01 = 1 or Q154_GAMOT_UNDERSTAND_O02 = 1 or Q154_GAMOT_UNDERSTAND_O03 = 1 or Q154_GAMOT_UNDERSTAND_O04 = 1 or Q154_GAMOT_UNDERSTAND_O05 = 1 or Q154_GAMOT_UNDERSTAND_O06 = 1) then
+    errmsg("Select at least one option for Q154_GAMOT_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q157_WHERE_REST_O09
+postproc
+  if not (Q157_WHERE_REST_O01 = 1 or Q157_WHERE_REST_O02 = 1 or Q157_WHERE_REST_O03 = 1 or Q157_WHERE_REST_O04 = 1 or Q157_WHERE_REST_O05 = 1 or Q157_WHERE_REST_O06 = 1 or Q157_WHERE_REST_O07 = 1 or Q157_WHERE_REST_O08 = 1 or Q157_WHERE_REST_O09 = 1) then
+    errmsg("Select at least one option for Q157_WHERE_REST before continuing.");
+    reenter;
+  endif;
+
+PROC Q160_WHY_GENERIC_O07
+postproc
+  if not (Q160_WHY_GENERIC_O01 = 1 or Q160_WHY_GENERIC_O02 = 1 or Q160_WHY_GENERIC_O03 = 1 or Q160_WHY_GENERIC_O04 = 1 or Q160_WHY_GENERIC_O05 = 1 or Q160_WHY_GENERIC_O06 = 1 or Q160_WHY_GENERIC_O07 = 1) then
+    errmsg("Select at least one option for Q160_WHY_GENERIC before continuing.");
+    reenter;
+  endif;
+
+PROC Q161_WHY_BRANDED_O07
+postproc
+  if not (Q161_WHY_BRANDED_O01 = 1 or Q161_WHY_BRANDED_O02 = 1 or Q161_WHY_BRANDED_O03 = 1 or Q161_WHY_BRANDED_O04 = 1 or Q161_WHY_BRANDED_O05 = 1 or Q161_WHY_BRANDED_O06 = 1 or Q161_WHY_BRANDED_O07 = 1) then
+    errmsg("Select at least one option for Q161_WHY_BRANDED before continuing.");
+    reenter;
+  endif;
+
+PROC Q163_CARE_TYPE_O12
+postproc
+  if not (Q163_CARE_TYPE_O01 = 1 or Q163_CARE_TYPE_O02 = 1 or Q163_CARE_TYPE_O03 = 1 or Q163_CARE_TYPE_O04 = 1 or Q163_CARE_TYPE_O05 = 1 or Q163_CARE_TYPE_O06 = 1 or Q163_CARE_TYPE_O07 = 1 or Q163_CARE_TYPE_O08 = 1 or Q163_CARE_TYPE_O09 = 1 or Q163_CARE_TYPE_O10 = 1 or Q163_CARE_TYPE_O11 = 1 or Q163_CARE_TYPE_O12 = 1) then
+    errmsg("Select at least one option for Q163_CARE_TYPE before continuing.");
+    reenter;
+  endif;
+
+PROC Q171_WHY_NOT_O07
+postproc
+  if not (Q171_WHY_NOT_O01 = 1 or Q171_WHY_NOT_O02 = 1 or Q171_WHY_NOT_O03 = 1 or Q171_WHY_NOT_O04 = 1 or Q171_WHY_NOT_O05 = 1 or Q171_WHY_NOT_O06 = 1 or Q171_WHY_NOT_O07 = 1) then
+    errmsg("Select at least one option for Q171_WHY_NOT before continuing.");
+    reenter;
+  endif;
+
+PROC Q177_WHY_HOSPITAL_O10
+postproc
+  if not (Q177_WHY_HOSPITAL_O01 = 1 or Q177_WHY_HOSPITAL_O02 = 1 or Q177_WHY_HOSPITAL_O03 = 1 or Q177_WHY_HOSPITAL_O04 = 1 or Q177_WHY_HOSPITAL_O05 = 1 or Q177_WHY_HOSPITAL_O06 = 1 or Q177_WHY_HOSPITAL_O07 = 1 or Q177_WHY_HOSPITAL_O08 = 1 or Q177_WHY_HOSPITAL_O09 = 1 or Q177_WHY_HOSPITAL_O10 = 1) then
+    errmsg("Select at least one option for Q177_WHY_HOSPITAL before continuing.");
+    reenter;
+  endif;
+
+PROC Q36_UHC_SOURCE_O08
+postproc
+  if not (Q36_UHC_SOURCE_O01 = 1 or Q36_UHC_SOURCE_O02 = 1 or Q36_UHC_SOURCE_O03 = 1 or Q36_UHC_SOURCE_O04 = 1 or Q36_UHC_SOURCE_O05 = 1 or Q36_UHC_SOURCE_O06 = 1 or Q36_UHC_SOURCE_O07 = 1 or Q36_UHC_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q36_UHC_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q37_UHC_UNDERSTAND_O06
+postproc
+  if not (Q37_UHC_UNDERSTAND_O01 = 1 or Q37_UHC_UNDERSTAND_O02 = 1 or Q37_UHC_UNDERSTAND_O03 = 1 or Q37_UHC_UNDERSTAND_O04 = 1 or Q37_UHC_UNDERSTAND_O05 = 1 or Q37_UHC_UNDERSTAND_O06 = 1) then
+    errmsg("Select at least one option for Q37_UHC_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q42_DIFFICULTY_O08
+postproc
+  if not (Q42_DIFFICULTY_O01 = 1 or Q42_DIFFICULTY_O02 = 1 or Q42_DIFFICULTY_O03 = 1 or Q42_DIFFICULTY_O04 = 1 or Q42_DIFFICULTY_O05 = 1 or Q42_DIFFICULTY_O06 = 1 or Q42_DIFFICULTY_O07 = 1 or Q42_DIFFICULTY_O08 = 1) then
+    errmsg("Select at least one option for Q42_DIFFICULTY before continuing.");
+    reenter;
+  endif;
+
+PROC Q46_BENEFITS_O06
+postproc
+  if not (Q46_BENEFITS_O01 = 1 or Q46_BENEFITS_O02 = 1 or Q46_BENEFITS_O03 = 1 or Q46_BENEFITS_O04 = 1 or Q46_BENEFITS_O05 = 1 or Q46_BENEFITS_O06 = 1) then
+    errmsg("Select at least one option for Q46_BENEFITS before continuing.");
+    reenter;
+  endif;
+
+PROC Q50_DIFFICULTY_PAYING_O07
+postproc
+  if not (Q50_DIFFICULTY_PAYING_O01 = 1 or Q50_DIFFICULTY_PAYING_O02 = 1 or Q50_DIFFICULTY_PAYING_O03 = 1 or Q50_DIFFICULTY_PAYING_O04 = 1 or Q50_DIFFICULTY_PAYING_O05 = 1 or Q50_DIFFICULTY_PAYING_O06 = 1 or Q50_DIFFICULTY_PAYING_O07 = 1) then
+    errmsg("Select at least one option for Q50_DIFFICULTY_PAYING before continuing.");
+    reenter;
+  endif;
+
+PROC Q52_PLANS_O07
+postproc
+  if not (Q52_PLANS_O01 = 1 or Q52_PLANS_O02 = 1 or Q52_PLANS_O03 = 1 or Q52_PLANS_O04 = 1 or Q52_PLANS_O05 = 1 or Q52_PLANS_O06 = 1 or Q52_PLANS_O07 = 1) then
+    errmsg("Select at least one option for Q52_PLANS before continuing.");
+    reenter;
+  endif;
+
+PROC Q59_SCHED_COMM_O05
+postproc
+  if not (Q59_SCHED_COMM_O01 = 1 or Q59_SCHED_COMM_O02 = 1 or Q59_SCHED_COMM_O03 = 1 or Q59_SCHED_COMM_O04 = 1 or Q59_SCHED_COMM_O05 = 1) then
+    errmsg("Select at least one option for Q59_SCHED_COMM before continuing.");
+    reenter;
+  endif;
+
+PROC Q61_CONSULT_COMM_O05
+postproc
+  if not (Q61_CONSULT_COMM_O01 = 1 or Q61_CONSULT_COMM_O02 = 1 or Q61_CONSULT_COMM_O03 = 1 or Q61_CONSULT_COMM_O04 = 1 or Q61_CONSULT_COMM_O05 = 1) then
+    errmsg("Select at least one option for Q61_CONSULT_COMM before continuing.");
+    reenter;
+  endif;
+
+PROC Q65_WHY_NO_USUAL_O07
+postproc
+  if not (Q65_WHY_NO_USUAL_O01 = 1 or Q65_WHY_NO_USUAL_O02 = 1 or Q65_WHY_NO_USUAL_O03 = 1 or Q65_WHY_NO_USUAL_O04 = 1 or Q65_WHY_NO_USUAL_O05 = 1 or Q65_WHY_NO_USUAL_O06 = 1 or Q65_WHY_NO_USUAL_O07 = 1) then
+    errmsg("Select at least one option for Q65_WHY_NO_USUAL before continuing.");
+    reenter;
+  endif;
+
+PROC Q67_WHY_THIS_FACILITY_O08
+postproc
+  if not (Q67_WHY_THIS_FACILITY_O01 = 1 or Q67_WHY_THIS_FACILITY_O02 = 1 or Q67_WHY_THIS_FACILITY_O03 = 1 or Q67_WHY_THIS_FACILITY_O04 = 1 or Q67_WHY_THIS_FACILITY_O05 = 1 or Q67_WHY_THIS_FACILITY_O06 = 1 or Q67_WHY_THIS_FACILITY_O07 = 1 or Q67_WHY_THIS_FACILITY_O08 = 1) then
+    errmsg("Select at least one option for Q67_WHY_THIS_FACILITY before continuing.");
+    reenter;
+  endif;
+
+PROC Q70_USUAL_TRANSPORT_O12
+postproc
+  if not (Q70_USUAL_TRANSPORT_O01 = 1 or Q70_USUAL_TRANSPORT_O02 = 1 or Q70_USUAL_TRANSPORT_O03 = 1 or Q70_USUAL_TRANSPORT_O04 = 1 or Q70_USUAL_TRANSPORT_O05 = 1 or Q70_USUAL_TRANSPORT_O06 = 1 or Q70_USUAL_TRANSPORT_O07 = 1 or Q70_USUAL_TRANSPORT_O08 = 1 or Q70_USUAL_TRANSPORT_O09 = 1 or Q70_USUAL_TRANSPORT_O10 = 1 or Q70_USUAL_TRANSPORT_O11 = 1 or Q70_USUAL_TRANSPORT_O12 = 1) then
+    errmsg("Select at least one option for Q70_USUAL_TRANSPORT before continuing.");
+    reenter;
+  endif;
+
+PROC Q73_NEAREST_TRANSPORT_O12
+postproc
+  if not (Q73_NEAREST_TRANSPORT_O01 = 1 or Q73_NEAREST_TRANSPORT_O02 = 1 or Q73_NEAREST_TRANSPORT_O03 = 1 or Q73_NEAREST_TRANSPORT_O04 = 1 or Q73_NEAREST_TRANSPORT_O05 = 1 or Q73_NEAREST_TRANSPORT_O06 = 1 or Q73_NEAREST_TRANSPORT_O07 = 1 or Q73_NEAREST_TRANSPORT_O08 = 1 or Q73_NEAREST_TRANSPORT_O09 = 1 or Q73_NEAREST_TRANSPORT_O10 = 1 or Q73_NEAREST_TRANSPORT_O11 = 1 or Q73_NEAREST_TRANSPORT_O12 = 1) then
+    errmsg("Select at least one option for Q73_NEAREST_TRANSPORT before continuing.");
+    reenter;
+  endif;
+
+PROC Q75_KON_SOURCE_O08
+postproc
+  if not (Q75_KON_SOURCE_O01 = 1 or Q75_KON_SOURCE_O02 = 1 or Q75_KON_SOURCE_O03 = 1 or Q75_KON_SOURCE_O04 = 1 or Q75_KON_SOURCE_O05 = 1 or Q75_KON_SOURCE_O06 = 1 or Q75_KON_SOURCE_O07 = 1 or Q75_KON_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q75_KON_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q76_KON_UNDERSTAND_O07
+postproc
+  if not (Q76_KON_UNDERSTAND_O01 = 1 or Q76_KON_UNDERSTAND_O02 = 1 or Q76_KON_UNDERSTAND_O03 = 1 or Q76_KON_UNDERSTAND_O04 = 1 or Q76_KON_UNDERSTAND_O05 = 1 or Q76_KON_UNDERSTAND_O06 = 1 or Q76_KON_UNDERSTAND_O07 = 1) then
+    errmsg("Select at least one option for Q76_KON_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q82_KON_WHY_NOT_REG_O11
+postproc
+  if not (Q82_KON_WHY_NOT_REG_O01 = 1 or Q82_KON_WHY_NOT_REG_O02 = 1 or Q82_KON_WHY_NOT_REG_O03 = 1 or Q82_KON_WHY_NOT_REG_O04 = 1 or Q82_KON_WHY_NOT_REG_O05 = 1 or Q82_KON_WHY_NOT_REG_O06 = 1 or Q82_KON_WHY_NOT_REG_O07 = 1 or Q82_KON_WHY_NOT_REG_O08 = 1 or Q82_KON_WHY_NOT_REG_O09 = 1 or Q82_KON_WHY_NOT_REG_O10 = 1 or Q82_KON_WHY_NOT_REG_O11 = 1) then
+    errmsg("Select at least one option for Q82_KON_WHY_NOT_REG before continuing.");
+    reenter;
+  endif;
+
+PROC Q85_CONDITIONS_O20
+postproc
+  if not (Q85_CONDITIONS_O01 = 1 or Q85_CONDITIONS_O02 = 1 or Q85_CONDITIONS_O03 = 1 or Q85_CONDITIONS_O04 = 1 or Q85_CONDITIONS_O05 = 1 or Q85_CONDITIONS_O06 = 1 or Q85_CONDITIONS_O07 = 1 or Q85_CONDITIONS_O08 = 1 or Q85_CONDITIONS_O09 = 1 or Q85_CONDITIONS_O10 = 1 or Q85_CONDITIONS_O11 = 1 or Q85_CONDITIONS_O12 = 1 or Q85_CONDITIONS_O13 = 1 or Q85_CONDITIONS_O14 = 1 or Q85_CONDITIONS_O15 = 1 or Q85_CONDITIONS_O16 = 1 or Q85_CONDITIONS_O17 = 1 or Q85_CONDITIONS_O18 = 1 or Q85_CONDITIONS_O19 = 1 or Q85_CONDITIONS_O20 = 1) then
+    errmsg("Select at least one option for Q85_CONDITIONS before continuing.");
+    reenter;
+  endif;
+
+PROC Q86_VISIT_EVENTS_O10
+postproc
+  if not (Q86_VISIT_EVENTS_O01 = 1 or Q86_VISIT_EVENTS_O02 = 1 or Q86_VISIT_EVENTS_O03 = 1 or Q86_VISIT_EVENTS_O04 = 1 or Q86_VISIT_EVENTS_O05 = 1 or Q86_VISIT_EVENTS_O06 = 1 or Q86_VISIT_EVENTS_O07 = 1 or Q86_VISIT_EVENTS_O08 = 1 or Q86_VISIT_EVENTS_O09 = 1 or Q86_VISIT_EVENTS_O10 = 1) then
+    errmsg("Select at least one option for Q86_VISIT_EVENTS before continuing.");
+    reenter;
+  endif;
+
+PROC Q87_OTHER_ACTIONS_O07
+postproc
+  if not (Q87_OTHER_ACTIONS_O01 = 1 or Q87_OTHER_ACTIONS_O02 = 1 or Q87_OTHER_ACTIONS_O03 = 1 or Q87_OTHER_ACTIONS_O04 = 1 or Q87_OTHER_ACTIONS_O05 = 1 or Q87_OTHER_ACTIONS_O06 = 1 or Q87_OTHER_ACTIONS_O07 = 1) then
+    errmsg("Select at least one option for Q87_OTHER_ACTIONS before continuing.");
+    reenter;
+  endif;
+
+PROC Q90_NOT_CONFINED_O07
+postproc
+  if not (Q90_NOT_CONFINED_O01 = 1 or Q90_NOT_CONFINED_O02 = 1 or Q90_NOT_CONFINED_O03 = 1 or Q90_NOT_CONFINED_O04 = 1 or Q90_NOT_CONFINED_O05 = 1 or Q90_NOT_CONFINED_O06 = 1 or Q90_NOT_CONFINED_O07 = 1) then
+    errmsg("Select at least one option for Q90_NOT_CONFINED before continuing.");
     reenter;
   endif;
 

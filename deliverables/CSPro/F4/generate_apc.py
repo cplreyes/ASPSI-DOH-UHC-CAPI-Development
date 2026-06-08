@@ -24,7 +24,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from cspro_helpers import other_specify_procs
+from cspro_helpers import other_specify_procs, select_all_validation_procs
 
 HERE = Path(__file__).parent
 OUT = HERE / "HouseholdSurvey.ent.apc"
@@ -381,6 +381,46 @@ def dcf_items_map():
     return items
 
 
+# Section N subtotal panels (spec finding #9 / §4.9, item ranges from §lines 549-552).
+# Each subtotal auto-computes from its panel's _PURCHASED_PHP + _INKIND_PHP and is
+# protected (enumerator cannot edit). Ranges are the AUTHORITATIVE spec ranges — NOT
+# auto-derived by record order, because non-subtotaled items (Q158-Q172 restaurant /
+# non-food) sit between the food and 12-month-health panels and must be excluded.
+SUBTOTAL_PANELS = {
+    "Q157_FOOD_SUBTOTAL_TOTAL_PHP":       (144, 156),
+    "Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP": (173, 176),
+    "Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP":  (178, 181),
+    "Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP":  (183, 184),
+}
+
+
+def subtotal_procs(items):
+    """Section N auto-computed subtotals (#9): subtotal = sum of its panel's
+    _PURCHASED_PHP + _INKIND_PHP items (by spec Q-number range), then protect()."""
+    import re as _re
+    procs = {}
+    qnum = _re.compile(r"^Q(\d+)_")
+    for sub, (lo, hi) in SUBTOTAL_PANELS.items():
+        if sub not in items:
+            continue
+        members = []
+        for n in sorted(items):
+            if not (n.endswith("_PURCHASED_PHP") or n.endswith("_INKIND_PHP")):
+                continue
+            m = qnum.match(n)
+            if m and lo <= int(m.group(1)) <= hi:
+                members.append(n)
+        if not members:
+            continue
+        terms = "\n    + ".join(members)
+        procs[sub] = (
+            f"PROC {sub}\npreproc\n"
+            f"  {sub} =\n    {terms};\n"
+            f"  protect({sub});"
+        )
+    return procs
+
+
 def expenditure_gate_procs(names):
     """#169 (spec 4.9): for each *_CONSUMED, if not consumed (No=2) zero + skip
     the matching *_PURCHASED_PHP and *_INKIND_PHP. dcf-driven so it scales to all
@@ -468,6 +508,23 @@ def main():
             continue
         covered.add(field); parts.append(proc); parts.append("")
 
+    # Section N auto-computed subtotals (#9).
+    st_procs = subtotal_procs(dcf_items_map())
+    parts.append("{ ---- Section N subtotals — auto-compute + protect (#9, spec §4.9) ---- }")
+    for field, proc in sorted(st_procs.items()):
+        if field in covered:
+            continue
+        covered.add(field); parts.append(proc); parts.append("")
+
+    # Auto-derived select-all validation: >=1 option ticked.
+    sa_procs, sa_bases = select_all_validation_procs(dcf_items_map())
+    sa_emitted = 0
+    parts.append("{ ---- Select-all validation — >=1 option ticked (auto-derived from dcf) ---- }")
+    for field, proc in sorted(sa_procs.items()):
+        if field in covered:
+            continue
+        covered.add(field); parts.append(proc); parts.append(""); sa_emitted += 1
+
     parts.append(TODO_NOTE)
     text = "\n".join(parts).rstrip() + "\n"
     OUT.write_text(text, encoding="utf-8")
@@ -479,6 +536,8 @@ def main():
           f"{sum(1 for _, d in os_map if d.startswith('select'))} select-all)")
     if os_skipped:
         print(f"  other-specify SKIPPED (manual review — no resolvable trigger): {', '.join(os_skipped)}")
+    print(f"  select-all validation: {sa_emitted} groups got a '>=1 ticked' check (of {len(sa_bases)} detected)")
+    print(f"  Section N subtotals: {len(st_procs)} auto-compute+protect procs")
     print("  NEXT: create the F4 .ent in Designer (input dcf + generated.fmf), compile,")
     print("  then verify the ROSTER + expenditure flow in CSEntry (riskiest untested part).")
 

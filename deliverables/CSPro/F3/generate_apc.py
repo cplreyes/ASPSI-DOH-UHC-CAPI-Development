@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from cspro_helpers import other_specify_procs
+from cspro_helpers import other_specify_procs, select_all_validation_procs
 
 HERE = Path(__file__).parent
 OUT = HERE / "PatientSurvey.ent.apc"
@@ -374,6 +374,7 @@ SKIP_RULES = [
     ("Q172_PCP_REFERRAL",    "Q172_PCP_REFERRAL = 2",        "Q177_WHY_HOSPITAL_O01"),
     # Section G — Outpatient Care
     ("Q89_ADVISED_ADMIT",  "Q89_ADVISED_ADMIT = 1",                       "Q91_USUAL_OUTPATIENT"),  # Yes -> Q91 (Q90 = why-not-confined)
+    ("Q93_LABS_O17",       "Q93_LABS_O17 = 1",                            "Q95_PRESCRIBED"),         # 'None' (O17) ticked -> skip Q94 lab-cost matrix (spec G)
     ("Q95_PRESCRIBED",     "Q95_PRESCRIBED = 2",                          "Q97_FINAL_AMOUNT"),       # No prescription -> skip meds-cost matrix
     ("Q99_BUCAS_HEARD",    "Q99_BUCAS_HEARD = 2",                         "Q116_NBB_HEARD"),         # No -> end of Section G (sanity #9; skip Q100-104)
     ("Q102_BUCAS_ACCESSED","Q102_BUCAS_ACCESSED = 2",                     "Q104_WITHOUT_BUCAS"),     # No -> Q104 (skip Q103)
@@ -483,6 +484,19 @@ def main():
         parts.append(proc)
         parts.append("")
 
+    # Auto-derived select-all validation: >=1 option ticked (#3.5-3.14).
+    sa_procs, sa_bases = select_all_validation_procs(dcf_items_map())
+    sa_emitted = 0
+    parts.append("{ ---- Select-all validation — >=1 option ticked "
+                 "(auto-derived from dcf) ---- }")
+    for field, proc in sorted(sa_procs.items()):
+        if field in covered:   # last flag already drives a skip/other-specify -> don't double-PROC
+            continue
+        covered.add(field)
+        parts.append(proc)
+        parts.append("")
+        sa_emitted += 1
+
     parts.append(TODO_NOTE)
     text = "\n".join(parts).rstrip() + "\n"
     OUT.write_text(text, encoding="utf-8")
@@ -494,6 +508,8 @@ def main():
           f"{sum(1 for _, d in os_map if d.startswith('select'))} select-all)")
     if os_skipped:
         print(f"  other-specify SKIPPED (manual review — no resolvable trigger): {', '.join(os_skipped)}")
+    print(f"  select-all validation: {sa_emitted} groups got a '>=1 ticked' check "
+          f"(of {len(sa_bases)} detected; rest already drive a skip/other-specify)")
     print("  NEXT: create the F3 .ent in Designer (input dcf + generated.fmf), set this")
     print("  as the main logic file, compile, fix any name/code mismatch, verify in CSEntry.")
 

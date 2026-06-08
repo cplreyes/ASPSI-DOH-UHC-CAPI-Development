@@ -831,3 +831,76 @@ def other_specify_procs(items):
         # (3) unresolved -> manual
         skipped.append(n)
     return procs, mapping, skipped
+
+
+# ---------------------------------------------------------------------------
+# Select-all validation — auto-derived from the dictionary
+# ---------------------------------------------------------------------------
+# For every "select all that apply" group <BASE>_O01.._Onn (each flag 1=Yes/2=No)
+# the spec marks two HARD rules (F3 §3.5-3.14, F4 equivalents):
+#   * at least one option must be ticked when the group is reached;
+#   * an exclusive option ("I don't know" / "None" / "There are no benefits" /
+#     "No condition" / "Did not …") cannot be combined with any other option.
+# Both checks are emitted on the group's LAST flag's postproc (fires once the
+# whole group has been entered; a skipped group never reaches it). Expenditure /
+# payment matrices (a flag with an <flag>_AMT sibling) are EXCLUDED — they carry
+# separate amount/subtotal logic and zero selections can be valid there.
+
+_EXCLUSIVE_LABEL_RE = re.compile(
+    r"i don'?t know|none of|there are no|no condition|no benefit|did not|"
+    r"\bnone\b|not applicable",
+    re.IGNORECASE,
+)
+
+
+def _select_all_groups(items):
+    """{base: [flag names sorted]} for genuine select-all option groups
+    (>=2 yes/no flags, excluding expenditure/amount matrices)."""
+    groups = {}
+    flag_re = re.compile(r"^(?P<base>.+?)_O?\d+$")
+    for n in sorted(items):
+        m = flag_re.match(n)
+        if not m or n.endswith("_AMT") or n.endswith("_TXT"):
+            continue
+        it = items[n]
+        codes = {str(v.get("pairs", [{}])[0].get("value"))
+                 for vs in it.get("valueSets") or [] for v in vs.get("values") or []}
+        if not ({"1"} <= codes):           # must be a Yes/No-style flag (has code 1)
+            continue
+        base = m.group("base")
+        if any((f"{n}_AMT") in items for n in [n]):  # this flag has an amount -> matrix
+            continue
+        groups.setdefault(base, []).append(n)
+    # drop amount-matrix groups (any flag has an _AMT sibling) and singletons
+    out = {}
+    for base, flags in groups.items():
+        if len(flags) < 2:
+            continue
+        if any(f"{f}_AMT" in items for f in flags):
+            continue
+        out[base] = sorted(flags)
+    return out
+
+
+def select_all_validation_procs(items):
+    """'At least one option ticked' enforcement for every select-all group, emitted
+    on the group's LAST flag postproc (fires once the group is entered; a skipped
+    group never reaches it). Returns (procs: {last_flag: text}, bases: [base]).
+
+    NOTE: the *exclusive-option* rule ("'I don't know' / 'None' cannot be combined")
+    is intentionally NOT auto-derived — detecting the exclusive option by label is
+    unreliable (e.g. a regular option 'Did not know where to register' or 'If none,
+    why…' false-matches). Those must be encoded from the spec's explicit per-group
+    exclusive codes (F3 §3.5-3.14 / F4), which is the authoritative source."""
+    procs, bases = {}, []
+    for base, flags in sorted(_select_all_groups(items).items()):
+        last = flags[-1]
+        any_ticked = " or ".join(f"{f} = 1" for f in flags)
+        procs[last] = "\n".join([
+            f"PROC {last}", "postproc",
+            f"  if not ({any_ticked}) then",
+            f"    errmsg(\"Select at least one option for {base} before continuing.\");",
+            "    reenter;", "  endif;",
+        ])
+        bases.append(base)
+    return procs, bases

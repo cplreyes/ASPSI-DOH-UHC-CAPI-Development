@@ -1400,6 +1400,326 @@ postproc
     reenter;
   endif;
 
+{ ---- Section N subtotals — auto-compute + protect (#9, spec §4.9) ---- }
+PROC Q157_FOOD_SUBTOTAL_TOTAL_PHP
+preproc
+  Q157_FOOD_SUBTOTAL_TOTAL_PHP =
+    Q144_CEREALS_INKIND_PHP
+    + Q144_CEREALS_PURCHASED_PHP
+    + Q145_PULSES_INKIND_PHP
+    + Q145_PULSES_PURCHASED_PHP
+    + Q146_VEGETABLES_INKIND_PHP
+    + Q146_VEGETABLES_PURCHASED_PHP
+    + Q147_FRUITS_INKIND_PHP
+    + Q147_FRUITS_PURCHASED_PHP
+    + Q148_FISH_INKIND_PHP
+    + Q148_FISH_PURCHASED_PHP
+    + Q149_MEAT_INKIND_PHP
+    + Q149_MEAT_PURCHASED_PHP
+    + Q150_EGGS_INKIND_PHP
+    + Q150_EGGS_PURCHASED_PHP
+    + Q151_MILK_INKIND_PHP
+    + Q151_MILK_PURCHASED_PHP
+    + Q152_FATS_INKIND_PHP
+    + Q152_FATS_PURCHASED_PHP
+    + Q153_SUGAR_INKIND_PHP
+    + Q153_SUGAR_PURCHASED_PHP
+    + Q154_CONDIMENTS_INKIND_PHP
+    + Q154_CONDIMENTS_PURCHASED_PHP
+    + Q155_WATER_NA_INKIND_PHP
+    + Q155_WATER_NA_PURCHASED_PHP
+    + Q156_ALCOHOL_INKIND_PHP
+    + Q156_ALCOHOL_PURCHASED_PHP;
+  protect(Q157_FOOD_SUBTOTAL_TOTAL_PHP);
+
+PROC Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
+preproc
+  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP =
+    Q173_HEALTH_INS_INKIND_PHP
+    + Q173_HEALTH_INS_PURCHASED_PHP
+    + Q174_OTHER_INS_INKIND_PHP
+    + Q174_OTHER_INS_PURCHASED_PHP
+    + Q175_INPATIENT_INKIND_PHP
+    + Q175_INPATIENT_PURCHASED_PHP
+    + Q176_EMERGENCY_TRANSPORT_INKIND_PHP
+    + Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP;
+  protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP);
+
+PROC Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
+preproc
+  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP =
+    Q178_PREVENTIVE_INKIND_PHP
+    + Q178_PREVENTIVE_PURCHASED_PHP
+    + Q179_DIAGNOSTIC_INKIND_PHP
+    + Q179_DIAGNOSTIC_PURCHASED_PHP
+    + Q180_ASSISTIVE_INKIND_PHP
+    + Q180_ASSISTIVE_PURCHASED_PHP
+    + Q181_MEDICAL_PRODUCTS_INKIND_PHP
+    + Q181_MEDICAL_PRODUCTS_PURCHASED_PHP;
+  protect(Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP);
+
+PROC Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
+preproc
+  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP =
+    Q183_MEDICINES_INKIND_PHP
+    + Q183_MEDICINES_PURCHASED_PHP
+    + Q184_OUTPATIENT_INKIND_PHP
+    + Q184_OUTPATIENT_PURCHASED_PHP;
+  protect(Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP);
+
+{ ---- Select-all validation — >=1 option ticked (auto-derived from dcf) ---- }
+PROC Q102_VISIT_REASON_O08
+postproc
+  if not (Q102_VISIT_REASON_O01 = 1 or Q102_VISIT_REASON_O02 = 1 or Q102_VISIT_REASON_O03 = 1 or Q102_VISIT_REASON_O04 = 1 or Q102_VISIT_REASON_O05 = 1 or Q102_VISIT_REASON_O06 = 1 or Q102_VISIT_REASON_O07 = 1 or Q102_VISIT_REASON_O08 = 1) then
+    errmsg("Select at least one option for Q102_VISIT_REASON before continuing.");
+    reenter;
+  endif;
+
+PROC Q103_CARE_TYPE_O05
+postproc
+  if not (Q103_CARE_TYPE_O01 = 1 or Q103_CARE_TYPE_O02 = 1 or Q103_CARE_TYPE_O03 = 1 or Q103_CARE_TYPE_O04 = 1 or Q103_CARE_TYPE_O05 = 1) then
+    errmsg("Select at least one option for Q103_CARE_TYPE before continuing.");
+    reenter;
+  endif;
+
+PROC Q106_FORGONE_WHY_O08
+postproc
+  if not (Q106_FORGONE_WHY_O01 = 1 or Q106_FORGONE_WHY_O02 = 1 or Q106_FORGONE_WHY_O03 = 1 or Q106_FORGONE_WHY_O04 = 1 or Q106_FORGONE_WHY_O05 = 1 or Q106_FORGONE_WHY_O06 = 1 or Q106_FORGONE_WHY_O07 = 1 or Q106_FORGONE_WHY_O08 = 1) then
+    errmsg("Select at least one option for Q106_FORGONE_WHY before continuing.");
+    reenter;
+  endif;
+
+PROC Q107_OTHER_ACTIONS_O07
+postproc
+  if not (Q107_OTHER_ACTIONS_O01 = 1 or Q107_OTHER_ACTIONS_O02 = 1 or Q107_OTHER_ACTIONS_O03 = 1 or Q107_OTHER_ACTIONS_O04 = 1 or Q107_OTHER_ACTIONS_O05 = 1 or Q107_OTHER_ACTIONS_O06 = 1 or Q107_OTHER_ACTIONS_O07 = 1) then
+    errmsg("Select at least one option for Q107_OTHER_ACTIONS before continuing.");
+    reenter;
+  endif;
+
+PROC Q109_TYPE_O12
+postproc
+  if not (Q109_TYPE_O01 = 1 or Q109_TYPE_O02 = 1 or Q109_TYPE_O03 = 1 or Q109_TYPE_O04 = 1 or Q109_TYPE_O05 = 1 or Q109_TYPE_O06 = 1 or Q109_TYPE_O07 = 1 or Q109_TYPE_O08 = 1 or Q109_TYPE_O09 = 1 or Q109_TYPE_O10 = 1 or Q109_TYPE_O11 = 1 or Q109_TYPE_O12 = 1) then
+    errmsg("Select at least one option for Q109_TYPE before continuing.");
+    reenter;
+  endif;
+
+PROC Q113_WHY_NOT_O07
+postproc
+  if not (Q113_WHY_NOT_O01 = 1 or Q113_WHY_NOT_O02 = 1 or Q113_WHY_NOT_O03 = 1 or Q113_WHY_NOT_O04 = 1 or Q113_WHY_NOT_O05 = 1 or Q113_WHY_NOT_O06 = 1 or Q113_WHY_NOT_O07 = 1) then
+    errmsg("Select at least one option for Q113_WHY_NOT before continuing.");
+    reenter;
+  endif;
+
+PROC Q121_WHY_HOSPITAL_O09
+postproc
+  if not (Q121_WHY_HOSPITAL_O01 = 1 or Q121_WHY_HOSPITAL_O02 = 1 or Q121_WHY_HOSPITAL_O03 = 1 or Q121_WHY_HOSPITAL_O04 = 1 or Q121_WHY_HOSPITAL_O05 = 1 or Q121_WHY_HOSPITAL_O06 = 1 or Q121_WHY_HOSPITAL_O07 = 1 or Q121_WHY_HOSPITAL_O08 = 1 or Q121_WHY_HOSPITAL_O09 = 1) then
+    errmsg("Select at least one option for Q121_WHY_HOSPITAL before continuing.");
+    reenter;
+  endif;
+
+PROC Q127_NBB_SOURCE_O08
+postproc
+  if not (Q127_NBB_SOURCE_O01 = 1 or Q127_NBB_SOURCE_O02 = 1 or Q127_NBB_SOURCE_O03 = 1 or Q127_NBB_SOURCE_O04 = 1 or Q127_NBB_SOURCE_O05 = 1 or Q127_NBB_SOURCE_O06 = 1 or Q127_NBB_SOURCE_O07 = 1 or Q127_NBB_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q127_NBB_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q128_NBB_UNDERSTAND_O09
+postproc
+  if not (Q128_NBB_UNDERSTAND_O01 = 1 or Q128_NBB_UNDERSTAND_O02 = 1 or Q128_NBB_UNDERSTAND_O03 = 1 or Q128_NBB_UNDERSTAND_O04 = 1 or Q128_NBB_UNDERSTAND_O05 = 1 or Q128_NBB_UNDERSTAND_O06 = 1 or Q128_NBB_UNDERSTAND_O07 = 1 or Q128_NBB_UNDERSTAND_O08 = 1 or Q128_NBB_UNDERSTAND_O09 = 1) then
+    errmsg("Select at least one option for Q128_NBB_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q133_ZBB_SOURCE_O08
+postproc
+  if not (Q133_ZBB_SOURCE_O01 = 1 or Q133_ZBB_SOURCE_O02 = 1 or Q133_ZBB_SOURCE_O03 = 1 or Q133_ZBB_SOURCE_O04 = 1 or Q133_ZBB_SOURCE_O05 = 1 or Q133_ZBB_SOURCE_O06 = 1 or Q133_ZBB_SOURCE_O07 = 1 or Q133_ZBB_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q133_ZBB_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q134_ZBB_UNDERSTAND_O09
+postproc
+  if not (Q134_ZBB_UNDERSTAND_O01 = 1 or Q134_ZBB_UNDERSTAND_O02 = 1 or Q134_ZBB_UNDERSTAND_O03 = 1 or Q134_ZBB_UNDERSTAND_O04 = 1 or Q134_ZBB_UNDERSTAND_O05 = 1 or Q134_ZBB_UNDERSTAND_O06 = 1 or Q134_ZBB_UNDERSTAND_O07 = 1 or Q134_ZBB_UNDERSTAND_O08 = 1 or Q134_ZBB_UNDERSTAND_O09 = 1) then
+    errmsg("Select at least one option for Q134_ZBB_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q137_MAIFIP_SOURCE_O08
+postproc
+  if not (Q137_MAIFIP_SOURCE_O01 = 1 or Q137_MAIFIP_SOURCE_O02 = 1 or Q137_MAIFIP_SOURCE_O03 = 1 or Q137_MAIFIP_SOURCE_O04 = 1 or Q137_MAIFIP_SOURCE_O05 = 1 or Q137_MAIFIP_SOURCE_O06 = 1 or Q137_MAIFIP_SOURCE_O07 = 1 or Q137_MAIFIP_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q137_MAIFIP_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q141_BILL_ITEMS_O07
+postproc
+  if not (Q141_BILL_ITEMS_O01 = 1 or Q141_BILL_ITEMS_O02 = 1 or Q141_BILL_ITEMS_O03 = 1 or Q141_BILL_ITEMS_O04 = 1 or Q141_BILL_ITEMS_O05 = 1 or Q141_BILL_ITEMS_O06 = 1 or Q141_BILL_ITEMS_O07 = 1) then
+    errmsg("Select at least one option for Q141_BILL_ITEMS before continuing.");
+    reenter;
+  endif;
+
+PROC Q143_HOW_PAID_O10
+postproc
+  if not (Q143_HOW_PAID_O01 = 1 or Q143_HOW_PAID_O02 = 1 or Q143_HOW_PAID_O03 = 1 or Q143_HOW_PAID_O04 = 1 or Q143_HOW_PAID_O05 = 1 or Q143_HOW_PAID_O06 = 1 or Q143_HOW_PAID_O07 = 1 or Q143_HOW_PAID_O08 = 1 or Q143_HOW_PAID_O09 = 1 or Q143_HOW_PAID_O10 = 1) then
+    errmsg("Select at least one option for Q143_HOW_PAID before continuing.");
+    reenter;
+  endif;
+
+PROC Q196_FOREGONE_O08
+postproc
+  if not (Q196_FOREGONE_O01 = 1 or Q196_FOREGONE_O02 = 1 or Q196_FOREGONE_O03 = 1 or Q196_FOREGONE_O04 = 1 or Q196_FOREGONE_O05 = 1 or Q196_FOREGONE_O06 = 1 or Q196_FOREGONE_O07 = 1 or Q196_FOREGONE_O08 = 1) then
+    errmsg("Select at least one option for Q196_FOREGONE before continuing.");
+    reenter;
+  endif;
+
+PROC Q202_WORRY_REASONS_O03
+postproc
+  if not (Q202_WORRY_REASONS_O01 = 1 or Q202_WORRY_REASONS_O02 = 1 or Q202_WORRY_REASONS_O03 = 1) then
+    errmsg("Select at least one option for Q202_WORRY_REASONS before continuing.");
+    reenter;
+  endif;
+
+PROC Q52_UHC_SOURCE_O08
+postproc
+  if not (Q52_UHC_SOURCE_O01 = 1 or Q52_UHC_SOURCE_O02 = 1 or Q52_UHC_SOURCE_O03 = 1 or Q52_UHC_SOURCE_O04 = 1 or Q52_UHC_SOURCE_O05 = 1 or Q52_UHC_SOURCE_O06 = 1 or Q52_UHC_SOURCE_O07 = 1 or Q52_UHC_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q52_UHC_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q53_UHC_UNDERSTAND_O06
+postproc
+  if not (Q53_UHC_UNDERSTAND_O01 = 1 or Q53_UHC_UNDERSTAND_O02 = 1 or Q53_UHC_UNDERSTAND_O03 = 1 or Q53_UHC_UNDERSTAND_O04 = 1 or Q53_UHC_UNDERSTAND_O05 = 1 or Q53_UHC_UNDERSTAND_O06 = 1) then
+    errmsg("Select at least one option for Q53_UHC_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q55_YAKAP_SOURCE_O08
+postproc
+  if not (Q55_YAKAP_SOURCE_O01 = 1 or Q55_YAKAP_SOURCE_O02 = 1 or Q55_YAKAP_SOURCE_O03 = 1 or Q55_YAKAP_SOURCE_O04 = 1 or Q55_YAKAP_SOURCE_O05 = 1 or Q55_YAKAP_SOURCE_O06 = 1 or Q55_YAKAP_SOURCE_O07 = 1 or Q55_YAKAP_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q55_YAKAP_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q56_YAKAP_UNDERSTAND_O07
+postproc
+  if not (Q56_YAKAP_UNDERSTAND_O01 = 1 or Q56_YAKAP_UNDERSTAND_O02 = 1 or Q56_YAKAP_UNDERSTAND_O03 = 1 or Q56_YAKAP_UNDERSTAND_O04 = 1 or Q56_YAKAP_UNDERSTAND_O05 = 1 or Q56_YAKAP_UNDERSTAND_O06 = 1 or Q56_YAKAP_UNDERSTAND_O07 = 1) then
+    errmsg("Select at least one option for Q56_YAKAP_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q58_BUCAS_SOURCE_O08
+postproc
+  if not (Q58_BUCAS_SOURCE_O01 = 1 or Q58_BUCAS_SOURCE_O02 = 1 or Q58_BUCAS_SOURCE_O03 = 1 or Q58_BUCAS_SOURCE_O04 = 1 or Q58_BUCAS_SOURCE_O05 = 1 or Q58_BUCAS_SOURCE_O06 = 1 or Q58_BUCAS_SOURCE_O07 = 1 or Q58_BUCAS_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q58_BUCAS_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q59_BUCAS_UNDERSTAND_O05
+postproc
+  if not (Q59_BUCAS_UNDERSTAND_O01 = 1 or Q59_BUCAS_UNDERSTAND_O02 = 1 or Q59_BUCAS_UNDERSTAND_O03 = 1 or Q59_BUCAS_UNDERSTAND_O04 = 1 or Q59_BUCAS_UNDERSTAND_O05 = 1) then
+    errmsg("Select at least one option for Q59_BUCAS_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q61_BUCAS_SERVICES_O07
+postproc
+  if not (Q61_BUCAS_SERVICES_O01 = 1 or Q61_BUCAS_SERVICES_O02 = 1 or Q61_BUCAS_SERVICES_O03 = 1 or Q61_BUCAS_SERVICES_O04 = 1 or Q61_BUCAS_SERVICES_O05 = 1 or Q61_BUCAS_SERVICES_O06 = 1 or Q61_BUCAS_SERVICES_O07 = 1) then
+    errmsg("Select at least one option for Q61_BUCAS_SERVICES before continuing.");
+    reenter;
+  endif;
+
+PROC Q65_CONDITIONS_O20
+postproc
+  if not (Q65_CONDITIONS_O01 = 1 or Q65_CONDITIONS_O02 = 1 or Q65_CONDITIONS_O03 = 1 or Q65_CONDITIONS_O04 = 1 or Q65_CONDITIONS_O05 = 1 or Q65_CONDITIONS_O06 = 1 or Q65_CONDITIONS_O07 = 1 or Q65_CONDITIONS_O08 = 1 or Q65_CONDITIONS_O09 = 1 or Q65_CONDITIONS_O10 = 1 or Q65_CONDITIONS_O11 = 1 or Q65_CONDITIONS_O12 = 1 or Q65_CONDITIONS_O13 = 1 or Q65_CONDITIONS_O14 = 1 or Q65_CONDITIONS_O15 = 1 or Q65_CONDITIONS_O16 = 1 or Q65_CONDITIONS_O17 = 1 or Q65_CONDITIONS_O18 = 1 or Q65_CONDITIONS_O19 = 1 or Q65_CONDITIONS_O20 = 1) then
+    errmsg("Select at least one option for Q65_CONDITIONS before continuing.");
+    reenter;
+  endif;
+
+PROC Q66_WHERE_BUY_O08
+postproc
+  if not (Q66_WHERE_BUY_O01 = 1 or Q66_WHERE_BUY_O02 = 1 or Q66_WHERE_BUY_O03 = 1 or Q66_WHERE_BUY_O04 = 1 or Q66_WHERE_BUY_O05 = 1 or Q66_WHERE_BUY_O06 = 1 or Q66_WHERE_BUY_O07 = 1 or Q66_WHERE_BUY_O08 = 1) then
+    errmsg("Select at least one option for Q66_WHERE_BUY before continuing.");
+    reenter;
+  endif;
+
+PROC Q70_GAMOT_SOURCE_O08
+postproc
+  if not (Q70_GAMOT_SOURCE_O01 = 1 or Q70_GAMOT_SOURCE_O02 = 1 or Q70_GAMOT_SOURCE_O03 = 1 or Q70_GAMOT_SOURCE_O04 = 1 or Q70_GAMOT_SOURCE_O05 = 1 or Q70_GAMOT_SOURCE_O06 = 1 or Q70_GAMOT_SOURCE_O07 = 1 or Q70_GAMOT_SOURCE_O08 = 1) then
+    errmsg("Select at least one option for Q70_GAMOT_SOURCE before continuing.");
+    reenter;
+  endif;
+
+PROC Q71_GAMOT_UNDERSTAND_O06
+postproc
+  if not (Q71_GAMOT_UNDERSTAND_O01 = 1 or Q71_GAMOT_UNDERSTAND_O02 = 1 or Q71_GAMOT_UNDERSTAND_O03 = 1 or Q71_GAMOT_UNDERSTAND_O04 = 1 or Q71_GAMOT_UNDERSTAND_O05 = 1 or Q71_GAMOT_UNDERSTAND_O06 = 1) then
+    errmsg("Select at least one option for Q71_GAMOT_UNDERSTAND before continuing.");
+    reenter;
+  endif;
+
+PROC Q74_WHERE_REST_O10
+postproc
+  if not (Q74_WHERE_REST_O01 = 1 or Q74_WHERE_REST_O02 = 1 or Q74_WHERE_REST_O03 = 1 or Q74_WHERE_REST_O04 = 1 or Q74_WHERE_REST_O05 = 1 or Q74_WHERE_REST_O06 = 1 or Q74_WHERE_REST_O07 = 1 or Q74_WHERE_REST_O08 = 1 or Q74_WHERE_REST_O09 = 1 or Q74_WHERE_REST_O10 = 1) then
+    errmsg("Select at least one option for Q74_WHERE_REST before continuing.");
+    reenter;
+  endif;
+
+PROC Q77_WHY_GENERIC_O08
+postproc
+  if not (Q77_WHY_GENERIC_O01 = 1 or Q77_WHY_GENERIC_O02 = 1 or Q77_WHY_GENERIC_O03 = 1 or Q77_WHY_GENERIC_O04 = 1 or Q77_WHY_GENERIC_O05 = 1 or Q77_WHY_GENERIC_O06 = 1 or Q77_WHY_GENERIC_O07 = 1 or Q77_WHY_GENERIC_O08 = 1) then
+    errmsg("Select at least one option for Q77_WHY_GENERIC before continuing.");
+    reenter;
+  endif;
+
+PROC Q78_WHY_BRANDED_O08
+postproc
+  if not (Q78_WHY_BRANDED_O01 = 1 or Q78_WHY_BRANDED_O02 = 1 or Q78_WHY_BRANDED_O03 = 1 or Q78_WHY_BRANDED_O04 = 1 or Q78_WHY_BRANDED_O05 = 1 or Q78_WHY_BRANDED_O06 = 1 or Q78_WHY_BRANDED_O07 = 1 or Q78_WHY_BRANDED_O08 = 1) then
+    errmsg("Select at least one option for Q78_WHY_BRANDED before continuing.");
+    reenter;
+  endif;
+
+PROC Q82_DIFFICULTY_REASONS_O08
+postproc
+  if not (Q82_DIFFICULTY_REASONS_O01 = 1 or Q82_DIFFICULTY_REASONS_O02 = 1 or Q82_DIFFICULTY_REASONS_O03 = 1 or Q82_DIFFICULTY_REASONS_O04 = 1 or Q82_DIFFICULTY_REASONS_O05 = 1 or Q82_DIFFICULTY_REASONS_O06 = 1 or Q82_DIFFICULTY_REASONS_O07 = 1 or Q82_DIFFICULTY_REASONS_O08 = 1) then
+    errmsg("Select at least one option for Q82_DIFFICULTY_REASONS before continuing.");
+    reenter;
+  endif;
+
+PROC Q85_BENEFITS_O06
+postproc
+  if not (Q85_BENEFITS_O01 = 1 or Q85_BENEFITS_O02 = 1 or Q85_BENEFITS_O03 = 1 or Q85_BENEFITS_O04 = 1 or Q85_BENEFITS_O05 = 1 or Q85_BENEFITS_O06 = 1) then
+    errmsg("Select at least one option for Q85_BENEFITS before continuing.");
+    reenter;
+  endif;
+
+PROC Q88_DIFF_PAYING_O07
+postproc
+  if not (Q88_DIFF_PAYING_O01 = 1 or Q88_DIFF_PAYING_O02 = 1 or Q88_DIFF_PAYING_O03 = 1 or Q88_DIFF_PAYING_O04 = 1 or Q88_DIFF_PAYING_O05 = 1 or Q88_DIFF_PAYING_O06 = 1 or Q88_DIFF_PAYING_O07 = 1) then
+    errmsg("Select at least one option for Q88_DIFF_PAYING before continuing.");
+    reenter;
+  endif;
+
+PROC Q91_WHY_WENT_O09
+postproc
+  if not (Q91_WHY_WENT_O01 = 1 or Q91_WHY_WENT_O02 = 1 or Q91_WHY_WENT_O03 = 1 or Q91_WHY_WENT_O04 = 1 or Q91_WHY_WENT_O05 = 1 or Q91_WHY_WENT_O06 = 1 or Q91_WHY_WENT_O07 = 1 or Q91_WHY_WENT_O08 = 1 or Q91_WHY_WENT_O09 = 1) then
+    errmsg("Select at least one option for Q91_WHY_WENT before continuing.");
+    reenter;
+  endif;
+
+PROC Q93_WHY_NOT_O07
+postproc
+  if not (Q93_WHY_NOT_O01 = 1 or Q93_WHY_NOT_O02 = 1 or Q93_WHY_NOT_O03 = 1 or Q93_WHY_NOT_O04 = 1 or Q93_WHY_NOT_O05 = 1 or Q93_WHY_NOT_O06 = 1 or Q93_WHY_NOT_O07 = 1) then
+    errmsg("Select at least one option for Q93_WHY_NOT before continuing.");
+    reenter;
+  endif;
+
+PROC Q94_TRANSPORT_O12
+postproc
+  if not (Q94_TRANSPORT_O01 = 1 or Q94_TRANSPORT_O02 = 1 or Q94_TRANSPORT_O03 = 1 or Q94_TRANSPORT_O04 = 1 or Q94_TRANSPORT_O05 = 1 or Q94_TRANSPORT_O06 = 1 or Q94_TRANSPORT_O07 = 1 or Q94_TRANSPORT_O08 = 1 or Q94_TRANSPORT_O09 = 1 or Q94_TRANSPORT_O10 = 1 or Q94_TRANSPORT_O11 = 1 or Q94_TRANSPORT_O12 = 1) then
+    errmsg("Select at least one option for Q94_TRANSPORT before continuing.");
+    reenter;
+  endif;
+
 { ============================================================================
   STILL OPEN (follow-up F4 pass):
     - Section N subtotals (Q157/Q177/Q182/Q185 _SUBTOTAL_TOTAL_PHP): auto-compute
