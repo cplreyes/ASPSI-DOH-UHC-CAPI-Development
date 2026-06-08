@@ -3,14 +3,15 @@
 #       PHOTO form -> Section A Q1 -> Section B Q2..Q17 -> Q18 amt=5000 + bracket=4.
 # EXPECT at the end: HARD reject "Income bracket does not match the reported amount".
 #
-# STATUS (2026-06-09): runs cleanly through the case key, field-control, the full
-# 4-level PSGC cascade, and the GPS form (dismisses the -118 GPS-hardware modal).
-# It then stalls at the SECOND device gate — CAPTURE_VERIFICATION_PHOTO ("Take
-# Verification Photo": camera unavailable on desktop -> 88889) — so the Section B
-# steps below are not yet aligned past it. Two options to finish: (a) run on an
-# Android/tablet build where GPS+camera work, or (b) make the two capture fields
-# cursor-skippable on desktop in the generators. The runner itself works; this is a
-# device-hardware gate, not a runner/logic defect.
+# STATUS (2026-06-09): PASSES end-to-end. Drives case key -> field-control -> full
+# 4-level PSGC cascade -> GPS+photo capture forms (auto-skipped on desktop via the
+# getos() guard in Capture-Helpers.apc; trigger fields advanced by selecting value 1)
+# -> Section A -> Section B (Q1..Q17, with Q7=No / Q14=No skips) -> Q18.
+# CONFIRMED at shot 062: entering Q18 amount=5000 + bracket=4 fires the HARD reject
+# "Income bracket does not match the reported amount (5000 PHP). Reconcile." (msg -419).
+# Notes: GPS data fields use short value + {ENTER} (sub-width, no auto-advance) to stay
+# deterministic; capture TRIGGER fields take `type 1` (not {ENTER}) to set a valid
+# value and advance. Clear shots/<scenario>/ before a re-run for a clean trail.
 #
 # Cascade clicks use the picker coords proven in the 2026-06-09 live drive
 # (Region III / Bulacan / City of Malolos / Brgy Anilao).
@@ -47,24 +48,34 @@ key {ENTER}
 note Parent F3 case seq (no-valueset numeric)
 type 001
 
-# ---- GPS block (device-captured; type dummy values on desktop) ----
+# ---- GPS data fields: short value + {ENTER} each (sub-width -> no auto-advance -> deterministic) ----
 type 14.5
 key {ENTER}
 type 120.9
 key {ENTER}
 type 10
 key {ENTER}
-type 005
-type 08
-type 20260609T103000
+type 5
 key {ENTER}
-note getos guard: CAPTURE_HH_GPS auto-skips silently on desktop -> cursor lands on Verification Photo Filename
+type 8
 key {ENTER}
-note photo filename left blank; CAPTURE_VERIFICATION_PHOTO auto-skips -> Section A Q1
+type 20260609
+key {ENTER}
+shot ck_after_readtime
+note CAPTURE_HH_GPS: select "1 Capture GPS now" (onfocus already getos-skipped) -> advance
+type 1
+shot ck_after_gps_trigger
+note Verification Photo Filename (blank) -> advance
+key {ENTER}
+shot ck_after_photo_filename
+note CAPTURE_VERIFICATION_PHOTO: select 1 -> advance
+type 1
+shot ck_at_section_a
 
 # ---- Section A ----
 note Q1 is HH head = Yes
 type 1
+shot ck_after_q1
 
 # ---- Section B respondent profile ----
 type JUANDELACRUZ

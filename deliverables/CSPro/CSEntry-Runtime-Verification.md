@@ -13,10 +13,13 @@ that Designer had masked (61 errors in F4). **Stage 1 PASS on F4** — case key
 the PSGC geo cascade was dead in every desktest (the pff lacked an `[ExternalFiles]`
 section, so `loadcase` had no PSGC data → -27 "region lookup failed"). After adding
 `[ExternalFiles]` to all desktest pffs, the **full 4-level cascade works live** (drove
-Region III → Bulacan → Malolos → Anilao, all accepted). The remaining spec-validation
-spot-checks (Q18 bracket reject, Q58 ranges, soft cross-checks) sit deeper in the form,
-past the device-GPS-capture block (a no-device nuisance to traverse on desktop) — left
-for a focused interactive sitting.
+Region III → Bulacan → Malolos → Anilao). The GPS + photo capture forms were then made
+desktop-skippable (getos guard in `Capture-Helpers.apc`). **Stage 2 first spot-check
+PASS:** `scenarios/f4_q18_bracket.txt` now drives end-to-end to Q18 and the **amount↔bracket
+HARD reject fires at runtime** — amount 5000 + bracket 4 → msg -419 "Income bracket does
+not match the reported amount" (evidence: `shots/f4_q18_bracket/062_*.png`). The other
+checks (Q58 ranges, soft cross-checks) are reachable the same way — clone the scenario,
+change the tail.
 
 ---
 
