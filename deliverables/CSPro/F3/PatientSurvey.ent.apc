@@ -4,21 +4,175 @@
   Spec: F3-Skip-Logic-and-Validations.md (reviewed 2026-04-21).
   ============================================================================ }
 
-#include "../shared/Capture-Helpers.apc"
-#include "../shared/PSGC-Cascade.apc"
-
 PROC GLOBAL
 numeric currentYYYYMMDD;
 numeric currentYear;
 numeric currentMonth;
 
+{ Shared helpers inlined into this single PROC GLOBAL (PSGC-Cascade first so its
+  ROOT_PSGC_PARENT declaration precedes all functions). #include can't be used:
+  CSPro forbids it inside a PROC, and CSEntry forbids code before the first PROC.
+  Requires the 4 PSGC external dicts attached to the .ent (else R_PARENT_CODE etc.
+  are undeclared). }
+    numeric ROOT_PSGC_PARENT = 0;    { Sentinel for the region-level lookup }
+
+
+function FillRegionValueSet()
+    { setvalueset's target must be the literal dict field (an lvalue), NOT a
+      passed-by-value numeric parameter — see CSPro's "Setvalueset example":
+      setvalueset(DISTRICT, ...). REGION/PROVINCE_HUC/CITY_MUNICIPALITY/BARANGAY
+      are the shared geo-item names across F1/F3/F4, so each function targets its
+      own field directly. }
+    R_PARENT_CODE = ROOT_PSGC_PARENT;
+    if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) = 0 then
+        errmsg("PSGC region lookup failed — verify psgc_region.dat is deployed");
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_REGION_DICT.PSGC_REGION_REC)
+        vs.add(strip(R_NAME(i)), R_CODE(i));
+    enddo;
+    setvalueset(REGION, vs);
+
+end;
+
+
+function FillProvinceValueSet(numeric parentRegion)
+
+    P_PARENT_REGION = parentRegion;
+    if loadcase(PSGC_PROVINCE_DICT, P_PARENT_REGION) = 0 then
+        ValueSet empty;
+        setvalueset(PROVINCE_HUC, empty);
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_PROVINCE_DICT.PSGC_PROVINCE_REC)
+        vs.add(strip(P_NAME(i)), P_CODE(i));
+    enddo;
+    setvalueset(PROVINCE_HUC, vs);
+
+end;
+
+
+function FillCityValueSet(numeric parentProvince)
+
+    C_PARENT_PROVINCE = parentProvince;
+    if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) = 0 then
+        ValueSet empty;
+        setvalueset(CITY_MUNICIPALITY, empty);
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_CITY_DICT.PSGC_CITY_REC)
+        vs.add(strip(C_NAME(i)), C_CODE(i));
+    enddo;
+    setvalueset(CITY_MUNICIPALITY, vs);
+
+end;
+
+
+function FillBarangayValueSet(numeric parentCity)
+
+    B_PARENT_CITY = parentCity;
+    if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) = 0 then
+        ValueSet empty;
+        setvalueset(BARANGAY, empty);
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
+        vs.add(strip(B_NAME(i)), B_CODE(i));
+    enddo;
+    setvalueset(BARANGAY, vs);
+
+end;
+
+
+{ Facility PSGC handlers — attach these to main-dict field onfocus events.
+  Usage inside a form's PROC:
+      PROC REGION
+      onfocus
+          FillRegionValueSet(REGION);
+      PROC PROVINCE_HUC
+      onfocus
+          FillProvinceValueSet(PROVINCE_HUC, REGION);
+      PROC CITY_MUNICIPALITY
+      onfocus
+          FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
+      PROC BARANGAY
+      onfocus
+          FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+}
+
+function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
+    { Opens GPS, attempts a read within maxTimeSec, closes the radio,
+      and returns 1 on success / 0 on failure. Caller reads gps(latitude),
+      gps(longitude), gps(altitude), gps(accuracy), gps(satellites), and
+      gps(readtime) after a successful call. }
+
+    if not gps(open) then
+        errmsg("GPS hardware unavailable — check tablet location permission.");
+        ReadGPSReading = 0;
+        exit;
+    endif;
+
+    numeric result = gps(read, maxTimeSec, desiredAccuracyM);
+    gps(close);
+
+    if result <> 1 then
+        errmsg("GPS read failed or timed out (target accuracy %d m).", desiredAccuracyM);
+        ReadGPSReading = 0;
+        exit;
+    endif;
+
+    if gps(accuracy) > desiredAccuracyM then
+        errmsg("GPS accuracy %d m exceeds target %d m — consider a retry outdoors.",
+               gps(accuracy), desiredAccuracyM);
+        { still return success — let the caller/enumerator decide to keep or retry }
+    endif;
+
+    ReadGPSReading = 1;
+end;
+
+
+function TakeVerificationPhoto(string photoFile)
+    { Launches the Android camera, resamples to <= 1600 x 1200, and saves
+      the JPG to tablet storage under the given photoFile. Returns 1 on
+      success / 0 on cancel or error. The .app assigns `photoFile` to the
+      dictionary's *_VERIFICATION_PHOTO_FILENAME alpha item on success.
+      NB: the parameter is `photoFile`, not `filename` -- `filename` is a
+      CSPro reserved word and errors at compile (verified 2026-06-08). }
+
+    Image photo;
+
+    if not photo.takePhoto("Take a verification photo for this interview.") then
+        TakeVerificationPhoto = 0;
+        exit;
+    endif;
+
+    photo.resample(maxWidth := 1600, maxHeight := 1200);
+    photo.save(photoFile, quality := 85);
+
+    TakeVerificationPhoto = 1;
+end;
+
 PROC PATIENTSURVEY_FF
 preproc
-  currentYYYYMMDD = systemdate("YYYYMMDD");
+  currentYYYYMMDD = sysdate("YYYYMMDD");
   currentYear  = int(currentYYYYMMDD / 10000);
   currentMonth = int(currentYYYYMMDD / 100) % 100;
-  LANGUAGE_USED = getlanguage();   { §15.E — capture the active CSEntry language for this case }
-endpreproc
+
+{ LANGUAGE_USED lives in the FIELD_CONTROL record, so it can't be set from the
+  form-file/level preproc ("belongs to a record at a lower level"), and a record
+  symbol can't have a PROC. Set it in the preproc of the first FIELD_CONTROL field
+  (SURVEY_CODE) — same record, runs at case start. §15.E }
+PROC SURVEY_CODE
+preproc
+  LANGUAGE_USED = getlanguage();
 
 
 { ---- Informed consent: No (2) terminates the interview (spec 4.2) ---- }
@@ -37,30 +191,61 @@ postproc
 { ---- PSGC cascade — facility geo-ID (spec 4.3) ---- }
 PROC REGION
 onfocus
-  FillRegionValueSet(REGION);
+  FillRegionValueSet();
 PROC PROVINCE_HUC
 onfocus
-  FillProvinceValueSet(PROVINCE_HUC, REGION);
+  FillProvinceValueSet(REGION);
 PROC CITY_MUNICIPALITY
 onfocus
-  FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
+  FillCityValueSet(PROVINCE_HUC);
 PROC BARANGAY
 onfocus
-  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+  FillBarangayValueSet(CITY_MUNICIPALITY);
 
 { ---- PSGC cascade — patient geo-ID (P_* mirror) ---- }
+{ patient-home geo cascade — inlined (P_* fields are F3-only; the shared
+  PSGC-Cascade functions target the facility geo items REGION/PROVINCE_HUC/etc.,
+  and setvalueset needs the literal field, so the P_* targets are set here). }
 PROC P_REGION
 onfocus
-  FillRegionValueSet(P_REGION);
+  R_PARENT_CODE = ROOT_PSGC_PARENT;
+  if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) > 0 then
+    ValueSet vsPR;
+    do varying numeric i = 1 until i > count(PSGC_REGION_DICT.PSGC_REGION_REC)
+      vsPR.add(strip(R_NAME(i)), R_CODE(i));
+    enddo;
+    setvalueset(P_REGION, vsPR);
+  endif;
 PROC P_PROVINCE_HUC
 onfocus
-  FillProvinceValueSet(P_PROVINCE_HUC, P_REGION);
+  P_PARENT_REGION = P_REGION;
+  if loadcase(PSGC_PROVINCE_DICT, P_PARENT_REGION) > 0 then
+    ValueSet vsPP;
+    do varying numeric i = 1 until i > count(PSGC_PROVINCE_DICT.PSGC_PROVINCE_REC)
+      vsPP.add(strip(P_NAME(i)), P_CODE(i));
+    enddo;
+    setvalueset(P_PROVINCE_HUC, vsPP);
+  endif;
 PROC P_CITY_MUNICIPALITY
 onfocus
-  FillCityValueSet(P_CITY_MUNICIPALITY, P_PROVINCE_HUC);
+  C_PARENT_PROVINCE = P_PROVINCE_HUC;
+  if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) > 0 then
+    ValueSet vsPC;
+    do varying numeric i = 1 until i > count(PSGC_CITY_DICT.PSGC_CITY_REC)
+      vsPC.add(strip(C_NAME(i)), C_CODE(i));
+    enddo;
+    setvalueset(P_CITY_MUNICIPALITY, vsPC);
+  endif;
 PROC P_BARANGAY
 onfocus
-  FillBarangayValueSet(P_BARANGAY, P_CITY_MUNICIPALITY);
+  B_PARENT_CITY = P_CITY_MUNICIPALITY;
+  if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) > 0 then
+    ValueSet vsPB;
+    do varying numeric i = 1 until i > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
+      vsPB.add(strip(B_NAME(i)), B_CODE(i));
+    enddo;
+    setvalueset(P_BARANGAY, vsPB);
+  endif;
 
 { ---- GPS + verification photo (spec 4.3a; helpers in Capture-Helpers.apc) ---- }
 PROC FACILITY_CAPTURE_GPS
@@ -71,7 +256,7 @@ onfocus
     FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
     FACILITY_GPS_ACCURACY   = gps(accuracy);
     FACILITY_GPS_SATELLITES = gps(satellites);
-    FACILITY_GPS_READTIME   = gps(readtime);
+    FACILITY_GPS_READTIME   = maketext("%d", gps(readtime));
   endif;
   FACILITY_CAPTURE_GPS = notappl;
 
@@ -85,7 +270,7 @@ onfocus
     P_HOME_GPS_ALTITUDE   = maketext("%f", gps(altitude));
     P_HOME_GPS_ACCURACY   = gps(accuracy);
     P_HOME_GPS_SATELLITES = gps(satellites);
-    P_HOME_GPS_READTIME   = gps(readtime);
+    P_HOME_GPS_READTIME   = maketext("%d", gps(readtime));
   endif;
   P_HOME_CAPTURE_GPS = notappl;
 
@@ -195,7 +380,7 @@ postproc
     reenter;
   endif;
   if Q19_HH_SIZE > 15 then
-    errmsg("Household size %d is unusually large. Confirm.", Q19_HH_SIZE, soft);
+    errmsg("Household size %d is unusually large. Confirm.", Q19_HH_SIZE);
   endif;
 
 PROC Q20_HH_CHILDREN
@@ -220,7 +405,7 @@ postproc
 PROC Q28_WASHER
 postproc
   if Q22_ELECTRICITY = 2 and (Q26_REFRIGERATOR = 1 or Q27_TELEVISION = 1 or Q28_WASHER = 1) then
-    errmsg("Household reports no electricity but owns a powered appliance. Confirm.", soft);
+    errmsg("Household reports no electricity but owns a powered appliance. Confirm.");
   endif;
 
 

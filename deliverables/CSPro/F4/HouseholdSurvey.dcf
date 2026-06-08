@@ -38541,7 +38541,7 @@
               "name": "Q107_OTHER_ACTIONS_O02",
               "labels": [
                 {
-                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)",
+                  "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as...",
                   "language": "EN"
                 },
                 {
@@ -38569,7 +38569,7 @@
                   "name": "Q107_OTHER_ACTIONS_O02_VS1",
                   "labels": [
                     {
-                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)",
+                      "text": "107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? \u2014 Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as...",
                       "language": "EN"
                     },
                     {
@@ -39980,7 +39980,7 @@
               "name": "Q109_TYPE_O06",
               "labels": [
                 {
-                  "text": "109. What type of care was the referral for? \u2014 Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech and language therapy)",
+                  "text": "109. What type of care was the referral for? \u2014 Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech...",
                   "language": "EN"
                 },
                 {
@@ -40008,7 +40008,7 @@
                   "name": "Q109_TYPE_O06_VS1",
                   "labels": [
                     {
-                      "text": "109. What type of care was the referral for? \u2014 Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech and language therapy)",
+                      "text": "109. What type of care was the referral for? \u2014 Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech...",
                       "language": "EN"
                     },
                     {
@@ -59421,19 +59421,19 @@
               "name": "Q178_PREVENTIVE_CONSUMED",
               "labels": [
                 {
-                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Consumed by household in reference period?",
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Consumed...",
                   "language": "EN"
                 },
                 {
-                  "text": "Preventive services arog kan immunization/vaccinations services asin iba pang preventive services (hal., tetanus toxoid para sa bados, asin routine immunization arog kan BCG kan well child visits) Dai kasabay an cost sa vaccine pansadiri, kun pwede, Ihapot sa masunod",
+                  "text": "Preventive services arog kan immunization/vaccinations services asin iba pang preventive services (hal., tetanus toxoid para sa bados, asin routine immunization arog kan BCG kan well child visits) Dai kasabay an cost sa vaccine pansadiri, kun pwede...",
                   "language": "BCL"
                 },
                 {
-                  "text": "Preventive services sama sa immunization/vaccination services ug uban pang preventive services (pananglitan: tetanus toxoid para sa buntis, ug routine immunization sama sa BCG atol sa well-child visits). Kung mahimo, ayaw iapil ang gasto sa bakuna mismo kay pangutan-on pa kini sa sunod nga seksyon.",
+                  "text": "Preventive services sama sa immunization/vaccination services ug uban pang preventive services (pananglitan: tetanus toxoid para sa buntis, ug routine immunization sama sa BCG atol sa well-child visits). Kung mahimo, ayaw iapil ang gasto sa bakuna...",
                   "language": "BIS"
                 },
                 {
-                  "text": "Mga serbisyo sa pagpugong sama sa mga serbisyo sa immunization/bakuna ug uban pang mga serbisyo sa pagpugong (pananglitan, tetanus toxoid para sa mga mabdos, ug regular nga immunization sama sa BCG atol sa well child visits) Ayaw apila ang gasto sa bakuna mismo, kung mahimo, pangutan-on ko kini sa sunod nga seksyon.",
+                  "text": "Mga serbisyo sa pagpugong sama sa mga serbisyo sa immunization/bakuna ug uban pang mga serbisyo sa pagpugong (pananglitan, tetanus toxoid para sa mga mabdos, ug regular nga immunization sama sa BCG atol sa well child visits) Ayaw apila ang gasto sa...",
                   "language": "CEB"
                 },
                 {
@@ -59449,19 +59449,19 @@
                   "name": "Q178_PREVENTIVE_CONSUMED_VS1",
                   "labels": [
                     {
-                      "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Consumed by household in reference period?",
+                      "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Consumed...",
                       "language": "EN"
                     },
                     {
-                      "text": "Preventive services arog kan immunization/vaccinations services asin iba pang preventive services (hal., tetanus toxoid para sa bados, asin routine immunization arog kan BCG kan well child visits) Dai kasabay an cost sa vaccine pansadiri, kun pwede, Ihapot sa masunod",
+                      "text": "Preventive services arog kan immunization/vaccinations services asin iba pang preventive services (hal., tetanus toxoid para sa bados, asin routine immunization arog kan BCG kan well child visits) Dai kasabay an cost sa vaccine pansadiri, kun pwede...",
                       "language": "BCL"
                     },
                     {
-                      "text": "Preventive services sama sa immunization/vaccination services ug uban pang preventive services (pananglitan: tetanus toxoid para sa buntis, ug routine immunization sama sa BCG atol sa well-child visits). Kung mahimo, ayaw iapil ang gasto sa bakuna mismo kay pangutan-on pa kini sa sunod nga seksyon.",
+                      "text": "Preventive services sama sa immunization/vaccination services ug uban pang preventive services (pananglitan: tetanus toxoid para sa buntis, ug routine immunization sama sa BCG atol sa well-child visits). Kung mahimo, ayaw iapil ang gasto sa bakuna...",
                       "language": "BIS"
                     },
                     {
-                      "text": "Mga serbisyo sa pagpugong sama sa mga serbisyo sa immunization/bakuna ug uban pang mga serbisyo sa pagpugong (pananglitan, tetanus toxoid para sa mga mabdos, ug regular nga immunization sama sa BCG atol sa well child visits) Ayaw apila ang gasto sa bakuna mismo, kung mahimo, pangutan-on ko kini sa sunod nga seksyon.",
+                      "text": "Mga serbisyo sa pagpugong sama sa mga serbisyo sa immunization/bakuna ug uban pang mga serbisyo sa pagpugong (pananglitan, tetanus toxoid para sa mga mabdos, ug regular nga immunization sama sa BCG atol sa well child visits) Ayaw apila ang gasto sa...",
                       "language": "CEB"
                     },
                     {
@@ -59536,19 +59536,19 @@
               "name": "Q178_PREVENTIVE_PURCHASED_PHP",
               "labels": [
                 {
-                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Amount spent purchasing (PHP)",
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Amount...",
                   "language": "EN"
                 },
                 {
-                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Amount spent purchasing (PHP)",
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Amount...",
                   "language": "BCL"
                 },
                 {
-                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Amount spent purchasing (PHP)",
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Amount...",
                   "language": "BIS"
                 },
                 {
-                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Amount spent purchasing (PHP)",
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Amount...",
                   "language": "CEB"
                 },
                 {
@@ -59564,19 +59564,19 @@
               "name": "Q178_PREVENTIVE_INKIND_PHP",
               "labels": [
                 {
-                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Estimated value in-kind / received / own-produce (PHP)",
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Estimated...",
                   "language": "EN"
                 },
                 {
-                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Estimated value in-kind / received / own-produce (PHP)",
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Estimated...",
                   "language": "BCL"
                 },
                 {
-                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Estimated value in-kind / received / own-produce (PHP)",
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Estimated...",
                   "language": "BIS"
                 },
                 {
-                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Estimated value in-kind / received / own-produce (PHP)",
+                  "text": "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. \u2014 Estimated...",
                   "language": "CEB"
                 },
                 {
@@ -62930,15 +62930,15 @@
                   "language": "BCL"
                 },
                 {
-                  "text": "Sulod sa milabay nga 6 ka bulan, ikaw ba o bisan kinsa sa inyong panimalay nakakita og doktor apan wala gyud nasunod ang iyang tambag (pananglitan: pagpalit sa gireseta nga tambal, pagbalik para sa follow-up consultation, o pagpa-diagnostic tests) tungod sa kakulang sa kwarta?",
+                  "text": "Sulod sa milabay nga 6 ka bulan, ikaw ba o bisan kinsa sa inyong panimalay nakakita og doktor apan wala gyud nasunod ang iyang tambag (pananglitan: pagpalit sa gireseta nga tambal, pagbalik para sa follow-up consultation, o pagpa-diagnostic tests)...",
                   "language": "BIS"
                 },
                 {
-                  "text": "Sulod sa miaging 6 ka bulan, ikaw ba o miyembro sa inyong panimalay nakapakonsulta sa doktor ug wala hingpit nga mituman sa ilang tambag (pananglitan, pagpalit sa gireseta nga tambal, pagbalik para sa follow-up nga konsultasyon, pagkuha og dugang nga diagnostics) tungod sa pinansyal nga rason?",
+                  "text": "Sulod sa miaging 6 ka bulan, ikaw ba o miyembro sa inyong panimalay nakapakonsulta sa doktor ug wala hingpit nga mituman sa ilang tambag (pananglitan, pagpalit sa gireseta nga tambal, pagbalik para sa follow-up nga konsultasyon, pagkuha og dugang nga...",
                   "language": "CEB"
                 },
                 {
-                  "text": "Han nakalabay nga 6 ka bulan, ikaw ba o an imo kapamilya in nakapakita hin doktor ngan waray mo bug-os nga sumunod han ira mga sagdon (pananglitan, pagpalit hin ginreseta nga medisina, kumadto hin follow-up consultation, pagkuha hin kadugangan nga diagnostics) tungod han pinansyal nga mga rason?",
+                  "text": "Han nakalabay nga 6 ka bulan, ikaw ba o an imo kapamilya in nakapakita hin doktor ngan waray mo bug-os nga sumunod han ira mga sagdon (pananglitan, pagpalit hin ginreseta nga medisina, kumadto hin follow-up consultation, pagkuha hin kadugangan nga...",
                   "language": "WAR"
                 }
               ],
@@ -62958,15 +62958,15 @@
                       "language": "BCL"
                     },
                     {
-                      "text": "Sulod sa milabay nga 6 ka bulan, ikaw ba o bisan kinsa sa inyong panimalay nakakita og doktor apan wala gyud nasunod ang iyang tambag (pananglitan: pagpalit sa gireseta nga tambal, pagbalik para sa follow-up consultation, o pagpa-diagnostic tests) tungod sa kakulang sa kwarta?",
+                      "text": "Sulod sa milabay nga 6 ka bulan, ikaw ba o bisan kinsa sa inyong panimalay nakakita og doktor apan wala gyud nasunod ang iyang tambag (pananglitan: pagpalit sa gireseta nga tambal, pagbalik para sa follow-up consultation, o pagpa-diagnostic tests)...",
                       "language": "BIS"
                     },
                     {
-                      "text": "Sulod sa miaging 6 ka bulan, ikaw ba o miyembro sa inyong panimalay nakapakonsulta sa doktor ug wala hingpit nga mituman sa ilang tambag (pananglitan, pagpalit sa gireseta nga tambal, pagbalik para sa follow-up nga konsultasyon, pagkuha og dugang nga diagnostics) tungod sa pinansyal nga rason?",
+                      "text": "Sulod sa miaging 6 ka bulan, ikaw ba o miyembro sa inyong panimalay nakapakonsulta sa doktor ug wala hingpit nga mituman sa ilang tambag (pananglitan, pagpalit sa gireseta nga tambal, pagbalik para sa follow-up nga konsultasyon, pagkuha og dugang nga...",
                       "language": "CEB"
                     },
                     {
-                      "text": "Han nakalabay nga 6 ka bulan, ikaw ba o an imo kapamilya in nakapakita hin doktor ngan waray mo bug-os nga sumunod han ira mga sagdon (pananglitan, pagpalit hin ginreseta nga medisina, kumadto hin follow-up consultation, pagkuha hin kadugangan nga diagnostics) tungod han pinansyal nga mga rason?",
+                      "text": "Han nakalabay nga 6 ka bulan, ikaw ba o an imo kapamilya in nakapakita hin doktor ngan waray mo bug-os nga sumunod han ira mga sagdon (pananglitan, pagpalit hin ginreseta nga medisina, kumadto hin follow-up consultation, pagkuha hin kadugangan nga...",
                       "language": "WAR"
                     }
                   ],

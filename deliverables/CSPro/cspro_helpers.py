@@ -590,6 +590,35 @@ def build_dictionary(dict_name, dict_label, records=None,
     }
 
 
+CSPRO_LABEL_MAX = 255  # CSPro hard limit on any label (item/value/value-set/record).
+
+
+def _truncate_long_labels(node, max_len=CSPRO_LABEL_MAX):
+    """Recursively cap every labels[].text at CSPro's max_len, truncating at a word
+    boundary + '...'. CSPro rejects a dictionary outright if any label exceeds 255
+    chars; long verbatim option/category descriptions from the questionnaire trip this.
+    Returns the count truncated. The full text remains in the questionnaire source."""
+    n = 0
+    if isinstance(node, dict):
+        labs = node.get("labels")
+        if isinstance(labs, list):
+            for lab in labs:
+                t = lab.get("text")
+                if isinstance(t, str) and len(t) > max_len:
+                    cut = t[:max_len - 3]
+                    sp = cut.rfind(" ")
+                    if sp > max_len * 0.6:
+                        cut = cut[:sp]
+                    lab["text"] = cut.rstrip(" ,;:-") + "..."
+                    n += 1
+        for k, v in node.items():
+            n += _truncate_long_labels(v, max_len)
+    elif isinstance(node, list):
+        for x in node:
+            n += _truncate_long_labels(x, max_len)
+    return n
+
+
 def write_dcf(dictionary, out_path):
     """Write a CSPro dictionary to a .dcf file and print diagnostics.
 
@@ -606,6 +635,9 @@ def write_dcf(dictionary, out_path):
           Items:   <n>  (sum across all records)
     """
     out_path = Path(out_path)
+    n_truncated = _truncate_long_labels(dictionary)
+    if n_truncated:
+        print(f"  Capped {n_truncated} label(s) at {CSPRO_LABEL_MAX} chars (CSPro max)")
     out_path.write_text(json.dumps(dictionary, indent=2), encoding="utf-8")
 
     record_list = dictionary["levels"][0]["records"]

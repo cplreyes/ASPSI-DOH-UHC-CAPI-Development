@@ -25,6 +25,31 @@ from pathlib import Path
 HERE = Path(__file__).parent
 OUT = HERE / "HouseholdSurvey.ent.apc"
 DCF = HERE / "HouseholdSurvey.dcf"
+SHARED_DIR = HERE.parent / "shared"
+
+
+def _inline_shared(filename):
+    """Return a shared helper module's body with its own 'PROC GLOBAL' header
+    stripped, for pasting INSIDE the host's single PROC GLOBAL.
+
+    Why inline instead of #include (verified 2026-06-08 against the CSEntry loader):
+    CSPro forbids `#include` inside a PROC, and CSEntry forbids any code before the
+    first PROC -- so an #include of a function library satisfies neither. Inlining
+    the helper functions into PROC GLOBAL is the only arrangement both the Designer
+    compiler and the CSEntry runtime loader accept.
+    """
+    text = (SHARED_DIR / filename).read_text(encoding="utf-8")
+    body, seen_global = [], False
+    for ln in text.splitlines():
+        if not seen_global:
+            if ln.strip() == "PROC GLOBAL":
+                seen_global = True
+            continue
+        body.append(ln)
+    if not seen_global:
+        raise RuntimeError(f"{filename}: expected a 'PROC GLOBAL' line to strip")
+    return "\n".join(body).strip("\n")
+
 
 HEADER = """\
 { ============================================================================
@@ -33,21 +58,32 @@ HEADER = """\
   Spec: F4-Skip-Logic-and-Validations.md (reviewed 2026-04-21).
   ============================================================================ }
 
-#include "../shared/Capture-Helpers.apc"
-#include "../shared/PSGC-Cascade.apc"
-
 PROC GLOBAL
 numeric currentYYYYMMDD;
 numeric currentYear;
 numeric currentMonth;
 
+{ Shared helpers inlined into this single PROC GLOBAL (PSGC-Cascade first so its
+  ROOT_PSGC_PARENT declaration precedes all functions). #include can't be used:
+  CSPro forbids it inside a PROC, and CSEntry forbids code before the first PROC.
+  Requires the 4 PSGC external dicts attached to the .ent. }
+""" + _inline_shared("PSGC-Cascade.apc") + """
+
+""" + _inline_shared("Capture-Helpers.apc") + """
+
 PROC HOUSEHOLDSURVEY_FF
 preproc
-  currentYYYYMMDD = systemdate("YYYYMMDD");
+  currentYYYYMMDD = sysdate("YYYYMMDD");
   currentYear  = int(currentYYYYMMDD / 10000);
   currentMonth = int(currentYYYYMMDD / 100) % 100;
-  LANGUAGE_USED = getlanguage();   { §15.E — capture the active CSEntry language for this case }
-endpreproc
+
+{ LANGUAGE_USED lives in the FIELD_CONTROL record, so it can't be set from the
+  form-file/level preproc ("belongs to a record at a lower level"), and a record
+  symbol can't have a PROC. Set it in the preproc of the first FIELD_CONTROL field
+  (SURVEY_CODE) — same record, runs at case start. §15.E }
+PROC SURVEY_CODE
+preproc
+  LANGUAGE_USED = getlanguage();
 """
 
 CONTROL_PROCS = """\
@@ -62,16 +98,16 @@ postproc
 { ---- PSGC cascade (household geo-ID; verify item names match the F4 dcf) ---- }
 PROC REGION
 onfocus
-  FillRegionValueSet(REGION);
+  FillRegionValueSet();
 PROC PROVINCE_HUC
 onfocus
-  FillProvinceValueSet(PROVINCE_HUC, REGION);
+  FillProvinceValueSet(REGION);
 PROC CITY_MUNICIPALITY
 onfocus
-  FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
+  FillCityValueSet(PROVINCE_HUC);
 PROC BARANGAY
 onfocus
-  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+  FillBarangayValueSet(CITY_MUNICIPALITY);
 
 { ---- GPS + verification photo (helpers in Capture-Helpers.apc).
   F4 captures the HOUSEHOLD location: trigger CAPTURE_HH_GPS, fields
@@ -84,7 +120,7 @@ onfocus
     HH_GPS_ALTITUDE   = maketext("%f", gps(altitude));
     HH_GPS_ACCURACY   = gps(accuracy);
     HH_GPS_SATELLITES = gps(satellites);
-    HH_GPS_READTIME   = gps(readtime);
+    HH_GPS_READTIME   = maketext("%d", gps(readtime));
   endif;
   CAPTURE_HH_GPS = notappl;
 
@@ -104,8 +140,8 @@ ROSTER_PROCS = """\
 PROC Q34_RELATIONSHIP
 postproc
   { #167: first roster entry is normally Self/Head (soft confirm) }
-  if curocc() = 1 and Q34_RELATIONSHIP not in 1,2 then   { 1=Self, 2=Head (verify codes) }
-    errmsg("First roster entry is normally the respondent (Self) or HH head. Confirm.", soft);
+  if curocc() = 1 and not (Q34_RELATIONSHIP in 1,2) then   { 1=Self, 2=Head (verify codes) }
+    errmsg("First roster entry is normally the respondent (Self) or HH head. Confirm.");
   endif;
 
 PROC Q35_HAS_DISABILITY
@@ -122,17 +158,21 @@ postproc
 
 PROC Q49_PRIVATE_INS
 postproc
-  if Q49_PRIVATE_INS = 2 then        { no private insurance for this member }
-    endocc;                          { close this roster occurrence }
+  if Q49_PRIVATE_INS = 2 then        { no private insurance -> skip Q50, advance to next member }
+    skip to next;                    { 'next' = next roster occurrence; valid only inside the repeating group }
   endif;
 
-PROC C_HOUSEHOLD_ROSTER
+PROC C_HOUSEHOLD_ROSTER_FORM
 postproc
-  { #168 roster-count sanity (spec finding #7) }
+  { #168 roster-count sanity (spec finding #7). Attached to the roster GROUP
+    (C_HOUSEHOLD_ROSTER_FORM), NOT the C_HOUSEHOLD_ROSTER record — a record symbol
+    can't have a PROC (CSEntry, verified 2026-06-08). The group postproc fires once
+    after all occurrences are entered. }
   if count(C_HOUSEHOLD_ROSTER) <> Q19_HH_SIZE_TOTAL then
-    errmsg("Roster has %d members but Q19 says %d. Reconcile.",
+    { soft warning: reenter is not available from a group postproc, so flag it and
+      let the enumerator navigate back to fix the roster or Q19. }
+    errmsg("Roster has %d members but Q19 says %d. Go back and reconcile.",
            count(C_HOUSEHOLD_ROSTER), Q19_HH_SIZE_TOTAL);
-    reenter;
   endif;
 
 PROC Q47_HH_HAS_PRIVATE_INS
@@ -141,14 +181,14 @@ preproc
   numeric anyPrivate = 0;
   numeric i = 1;
   do while i <= count(C_HOUSEHOLD_ROSTER)
-    if C_HOUSEHOLD_ROSTER(i).Q49_PRIVATE_INS = 1 then
+    if Q49_PRIVATE_INS(i) = 1 then
       anyPrivate = 1;
     endif;
     i = i + 1;
   enddo;
   if anyPrivate = 1 then
     Q47_HH_HAS_PRIVATE_INS = 1;
-    errmsg("Auto-set to Yes: a roster member has private insurance. Confirm.", soft);
+    errmsg("Auto-set to Yes: a roster member has private insurance. Confirm.");
   endif;
 """
 
@@ -173,7 +213,7 @@ preproc
   numeric anyReg = 0;
   numeric i = 1;
   do while i <= count(C_HOUSEHOLD_ROSTER)
-    if C_HOUSEHOLD_ROSTER(i).Q45_PHILHEALTH_REG = 1 then
+    if Q45_PHILHEALTH_REG(i) = 1 then
       anyReg = 1;
     endif;
     i = i + 1;
@@ -217,7 +257,7 @@ postproc
     reenter;
   endif;
   if Q19_HH_SIZE_TOTAL > 10 then
-    errmsg("Household size %d is unusually large. Confirm.", Q19_HH_SIZE_TOTAL, soft);
+    errmsg("Household size %d is unusually large. Confirm.", Q19_HH_SIZE_TOTAL);
   endif;
 
 PROC Q20_HH_CHILDREN
@@ -250,7 +290,7 @@ postproc
 PROC Q39_CIVIL_STATUS
 postproc
   if Q32_AGE < 15 and Q39_CIVIL_STATUS <> 1 then   { 1 = Single (verify code) }
-    errmsg("Member is under 15 but civil status is not Single. Confirm.", soft);
+    errmsg("Member is under 15 but civil status is not Single. Confirm.");
   endif;
 """
 
@@ -329,19 +369,26 @@ def expenditure_gate_procs(names):
     the matching *_PURCHASED_PHP and *_INKIND_PHP. dcf-driven so it scales to all
     Section N expenditure rows automatically."""
     procs = {}
-    bases = [n[: -len("_CONSUMED")] for n in names if n.endswith("_CONSUMED")]
     have = set(names)
+    bases = [n[: -len("_CONSUMED")] for n in names if n.endswith("_CONSUMED")]
     for base in bases:
         for amt in (f"{base}_PURCHASED_PHP", f"{base}_INKIND_PHP"):
-            if amt in have:
-                procs[amt] = (
-                    f"PROC {amt}\n"
-                    f"preproc\n"
-                    f"  if {base}_CONSUMED = 2 then   {{ item not consumed -> no spend }}\n"
-                    f"    {amt} = 0;\n"
-                    f"    skip to next;\n"
-                    f"  endif;"
-                )
+            if amt not in have:
+                continue
+            # zero + skip past this amount field. `skip to next` is illegal outside a
+            # repeating group (CSEntry, verified 2026-06-08), so target the immediate
+            # next dcf field (chains correctly: PURCHASED -> INKIND -> next item).
+            idx = names.index(amt)
+            target = names[idx + 1] if idx + 1 < len(names) else None
+            skip = f"    skip to {target};\n" if target else ""
+            procs[amt] = (
+                f"PROC {amt}\n"
+                f"preproc\n"
+                f"  if {base}_CONSUMED = 2 then   {{ item not consumed -> no spend }}\n"
+                f"    {amt} = 0;\n"
+                f"{skip}"
+                f"  endif;"
+            )
     return procs
 
 
@@ -370,7 +417,7 @@ def main():
     parts = [HEADER, "", CONTROL_PROCS, "", ROSTER_PROCS, "", BILL_VALIDATION, "",
              EXTRA_PROCS, "", VALIDATION_PROCS, ""]
     covered = {"Q34_RELATIONSHIP", "Q35_HAS_DISABILITY", "Q37_PWD_CARD",
-               "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER", "Q47_HH_HAS_PRIVATE_INS",
+               "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER_FORM", "Q47_HH_HAS_PRIVATE_INS",
                "Q141_1_NO_RECEIPT_AMT_PHP",
                "Q76_BRAND_OR_GEN", "Q78_WHY_BRANDED_O01", "Q79_REG_SOURCE",  # EXTRA_PROCS
                "Q2_BIRTH_MONTH", "Q2_BIRTH_YEAR", "Q2_1_AGE", "Q19_HH_SIZE_TOTAL",

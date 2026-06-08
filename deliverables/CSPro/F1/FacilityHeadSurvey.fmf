@@ -15,7 +15,6 @@ Label=(Id Items)
 Level=1
 Size=806,300
   
-Item=QUESTIONNAIRE_NO
   
 [EndForm]
   
@@ -801,18 +800,6 @@ Name=IDS0_FORM
 Label=(Id Items)
 Form=1
 Max=1
-  
-[Field]
-Name=QUESTIONNAIRE_NO
-Position=174,27,259,47
-Item=QUESTIONNAIRE_NO,FACILITYHEADSURVEY_DICT
-DataCaptureType=TextBox
-Form=1
-  
-[Text]
-Position=50,30,160,46
-Text=Questionnaire No
- 
 [EndGroup]
   
 [Group]

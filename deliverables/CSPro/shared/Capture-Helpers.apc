@@ -70,11 +70,13 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
 end;
 
 
-function TakeVerificationPhoto(string filename)
+function TakeVerificationPhoto(string photoFile)
     { Launches the Android camera, resamples to <= 1600 x 1200, and saves
-      the JPG to tablet storage under the given filename. Returns 1 on
-      success / 0 on cancel or error. The .app assigns `filename` to the
-      dictionary's *_VERIFICATION_PHOTO_FILENAME alpha item on success. }
+      the JPG to tablet storage under the given photoFile. Returns 1 on
+      success / 0 on cancel or error. The .app assigns `photoFile` to the
+      dictionary's *_VERIFICATION_PHOTO_FILENAME alpha item on success.
+      NB: the parameter is `photoFile`, not `filename` -- `filename` is a
+      CSPro reserved word and errors at compile (verified 2026-06-08). }
 
     Image photo;
 
@@ -84,7 +86,7 @@ function TakeVerificationPhoto(string filename)
     endif;
 
     photo.resample(maxWidth := 1600, maxHeight := 1200);
-    photo.save(filename, quality := 85);
+    photo.save(photoFile, quality := 85);
 
     TakeVerificationPhoto = 1;
 end;

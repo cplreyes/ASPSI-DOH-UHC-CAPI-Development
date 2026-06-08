@@ -4,21 +4,175 @@
   Spec: F4-Skip-Logic-and-Validations.md (reviewed 2026-04-21).
   ============================================================================ }
 
-#include "../shared/Capture-Helpers.apc"
-#include "../shared/PSGC-Cascade.apc"
-
 PROC GLOBAL
 numeric currentYYYYMMDD;
 numeric currentYear;
 numeric currentMonth;
 
+{ Shared helpers inlined into this single PROC GLOBAL (PSGC-Cascade first so its
+  ROOT_PSGC_PARENT declaration precedes all functions). #include can't be used:
+  CSPro forbids it inside a PROC, and CSEntry forbids code before the first PROC.
+  Requires the 4 PSGC external dicts attached to the .ent. }
+    numeric ROOT_PSGC_PARENT = 0;    { Sentinel for the region-level lookup }
+
+
+function FillRegionValueSet()
+    { setvalueset's target must be the literal dict field (an lvalue), NOT a
+      passed-by-value numeric parameter — see CSPro's "Setvalueset example":
+      setvalueset(DISTRICT, ...). REGION/PROVINCE_HUC/CITY_MUNICIPALITY/BARANGAY
+      are the shared geo-item names across F1/F3/F4, so each function targets its
+      own field directly. }
+    R_PARENT_CODE = ROOT_PSGC_PARENT;
+    if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) = 0 then
+        errmsg("PSGC region lookup failed — verify psgc_region.dat is deployed");
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_REGION_DICT.PSGC_REGION_REC)
+        vs.add(strip(R_NAME(i)), R_CODE(i));
+    enddo;
+    setvalueset(REGION, vs);
+
+end;
+
+
+function FillProvinceValueSet(numeric parentRegion)
+
+    P_PARENT_REGION = parentRegion;
+    if loadcase(PSGC_PROVINCE_DICT, P_PARENT_REGION) = 0 then
+        ValueSet empty;
+        setvalueset(PROVINCE_HUC, empty);
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_PROVINCE_DICT.PSGC_PROVINCE_REC)
+        vs.add(strip(P_NAME(i)), P_CODE(i));
+    enddo;
+    setvalueset(PROVINCE_HUC, vs);
+
+end;
+
+
+function FillCityValueSet(numeric parentProvince)
+
+    C_PARENT_PROVINCE = parentProvince;
+    if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) = 0 then
+        ValueSet empty;
+        setvalueset(CITY_MUNICIPALITY, empty);
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_CITY_DICT.PSGC_CITY_REC)
+        vs.add(strip(C_NAME(i)), C_CODE(i));
+    enddo;
+    setvalueset(CITY_MUNICIPALITY, vs);
+
+end;
+
+
+function FillBarangayValueSet(numeric parentCity)
+
+    B_PARENT_CITY = parentCity;
+    if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) = 0 then
+        ValueSet empty;
+        setvalueset(BARANGAY, empty);
+        exit;
+    endif;
+
+    ValueSet vs;
+    do varying numeric i = 1 until i > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
+        vs.add(strip(B_NAME(i)), B_CODE(i));
+    enddo;
+    setvalueset(BARANGAY, vs);
+
+end;
+
+
+{ Facility PSGC handlers — attach these to main-dict field onfocus events.
+  setvalueset targets each function's own literal field, so callers pass only
+  the PARENT code (region takes none):
+      PROC REGION
+      onfocus
+          FillRegionValueSet();
+      PROC PROVINCE_HUC
+      onfocus
+          FillProvinceValueSet(REGION);
+      PROC CITY_MUNICIPALITY
+      onfocus
+          FillCityValueSet(PROVINCE_HUC);
+      PROC BARANGAY
+      onfocus
+          FillBarangayValueSet(CITY_MUNICIPALITY);
+}
+
+function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
+    { Opens GPS, attempts a read within maxTimeSec, closes the radio,
+      and returns 1 on success / 0 on failure. Caller reads gps(latitude),
+      gps(longitude), gps(altitude), gps(accuracy), gps(satellites), and
+      gps(readtime) after a successful call. }
+
+    if not gps(open) then
+        errmsg("GPS hardware unavailable — check tablet location permission.");
+        ReadGPSReading = 0;
+        exit;
+    endif;
+
+    numeric result = gps(read, maxTimeSec, desiredAccuracyM);
+    gps(close);
+
+    if result <> 1 then
+        errmsg("GPS read failed or timed out (target accuracy %d m).", desiredAccuracyM);
+        ReadGPSReading = 0;
+        exit;
+    endif;
+
+    if gps(accuracy) > desiredAccuracyM then
+        errmsg("GPS accuracy %d m exceeds target %d m — consider a retry outdoors.",
+               gps(accuracy), desiredAccuracyM);
+        { still return success — let the caller/enumerator decide to keep or retry }
+    endif;
+
+    ReadGPSReading = 1;
+end;
+
+
+function TakeVerificationPhoto(string photoFile)
+    { Launches the Android camera, resamples to <= 1600 x 1200, and saves
+      the JPG to tablet storage under the given photoFile. Returns 1 on
+      success / 0 on cancel or error. The .app assigns `photoFile` to the
+      dictionary's *_VERIFICATION_PHOTO_FILENAME alpha item on success.
+      NB: the parameter is `photoFile`, not `filename` -- `filename` is a
+      CSPro reserved word and errors at compile (verified 2026-06-08). }
+
+    Image photo;
+
+    if not photo.takePhoto("Take a verification photo for this interview.") then
+        TakeVerificationPhoto = 0;
+        exit;
+    endif;
+
+    photo.resample(maxWidth := 1600, maxHeight := 1200);
+    photo.save(photoFile, quality := 85);
+
+    TakeVerificationPhoto = 1;
+end;
+
 PROC HOUSEHOLDSURVEY_FF
 preproc
-  currentYYYYMMDD = systemdate("YYYYMMDD");
+  currentYYYYMMDD = sysdate("YYYYMMDD");
   currentYear  = int(currentYYYYMMDD / 10000);
   currentMonth = int(currentYYYYMMDD / 100) % 100;
-  LANGUAGE_USED = getlanguage();   { §15.E — capture the active CSEntry language for this case }
-endpreproc
+
+{ LANGUAGE_USED lives in the FIELD_CONTROL record, so it can't be set from the
+  form-file/level preproc ("belongs to a record at a lower level"), and a record
+  symbol can't have a PROC. Set it in the preproc of the first FIELD_CONTROL field
+  (SURVEY_CODE) — same record, runs at case start. §15.E }
+PROC SURVEY_CODE
+preproc
+  LANGUAGE_USED = getlanguage();
 
 
 { ---- Informed consent: No (2) terminates the interview ---- }
@@ -32,16 +186,16 @@ postproc
 { ---- PSGC cascade (household geo-ID; verify item names match the F4 dcf) ---- }
 PROC REGION
 onfocus
-  FillRegionValueSet(REGION);
+  FillRegionValueSet();
 PROC PROVINCE_HUC
 onfocus
-  FillProvinceValueSet(PROVINCE_HUC, REGION);
+  FillProvinceValueSet(REGION);
 PROC CITY_MUNICIPALITY
 onfocus
-  FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
+  FillCityValueSet(PROVINCE_HUC);
 PROC BARANGAY
 onfocus
-  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+  FillBarangayValueSet(CITY_MUNICIPALITY);
 
 { ---- GPS + verification photo (helpers in Capture-Helpers.apc).
   F4 captures the HOUSEHOLD location: trigger CAPTURE_HH_GPS, fields
@@ -54,7 +208,7 @@ onfocus
     HH_GPS_ALTITUDE   = maketext("%f", gps(altitude));
     HH_GPS_ACCURACY   = gps(accuracy);
     HH_GPS_SATELLITES = gps(satellites);
-    HH_GPS_READTIME   = gps(readtime);
+    HH_GPS_READTIME   = maketext("%d", gps(readtime));
   endif;
   CAPTURE_HH_GPS = notappl;
 
@@ -71,8 +225,8 @@ onfocus
 PROC Q34_RELATIONSHIP
 postproc
   { #167: first roster entry is normally Self/Head (soft confirm) }
-  if curocc() = 1 and Q34_RELATIONSHIP not in 1,2 then   { 1=Self, 2=Head (verify codes) }
-    errmsg("First roster entry is normally the respondent (Self) or HH head. Confirm.", soft);
+  if curocc() = 1 and not (Q34_RELATIONSHIP in 1,2) then   { 1=Self, 2=Head (verify codes) }
+    errmsg("First roster entry is normally the respondent (Self) or HH head. Confirm.");
   endif;
 
 PROC Q35_HAS_DISABILITY
@@ -89,17 +243,21 @@ postproc
 
 PROC Q49_PRIVATE_INS
 postproc
-  if Q49_PRIVATE_INS = 2 then        { no private insurance for this member }
-    endocc;                          { close this roster occurrence }
+  if Q49_PRIVATE_INS = 2 then        { no private insurance -> skip Q50, advance to next member }
+    skip to next;                    { 'next' = next roster occurrence; valid only inside the repeating group }
   endif;
 
-PROC C_HOUSEHOLD_ROSTER
+PROC C_HOUSEHOLD_ROSTER_FORM
 postproc
-  { #168 roster-count sanity (spec finding #7) }
+  { #168 roster-count sanity (spec finding #7). Attached to the roster GROUP
+    (C_HOUSEHOLD_ROSTER_FORM), NOT the C_HOUSEHOLD_ROSTER record — a record symbol
+    can't have a PROC (CSEntry, verified 2026-06-08). The group postproc fires once
+    after all occurrences are entered. }
   if count(C_HOUSEHOLD_ROSTER) <> Q19_HH_SIZE_TOTAL then
-    errmsg("Roster has %d members but Q19 says %d. Reconcile.",
+    { soft warning: reenter is not available from a group postproc, so flag it and
+      let the enumerator navigate back to fix the roster or Q19. }
+    errmsg("Roster has %d members but Q19 says %d. Go back and reconcile.",
            count(C_HOUSEHOLD_ROSTER), Q19_HH_SIZE_TOTAL);
-    reenter;
   endif;
 
 PROC Q47_HH_HAS_PRIVATE_INS
@@ -108,14 +266,14 @@ preproc
   numeric anyPrivate = 0;
   numeric i = 1;
   do while i <= count(C_HOUSEHOLD_ROSTER)
-    if C_HOUSEHOLD_ROSTER(i).Q49_PRIVATE_INS = 1 then
+    if Q49_PRIVATE_INS(i) = 1 then
       anyPrivate = 1;
     endif;
     i = i + 1;
   enddo;
   if anyPrivate = 1 then
     Q47_HH_HAS_PRIVATE_INS = 1;
-    errmsg("Auto-set to Yes: a roster member has private insurance. Confirm.", soft);
+    errmsg("Auto-set to Yes: a roster member has private insurance. Confirm.");
   endif;
 
 
@@ -149,7 +307,7 @@ preproc
   numeric anyReg = 0;
   numeric i = 1;
   do while i <= count(C_HOUSEHOLD_ROSTER)
-    if C_HOUSEHOLD_ROSTER(i).Q45_PHILHEALTH_REG = 1 then
+    if Q45_PHILHEALTH_REG(i) = 1 then
       anyReg = 1;
     endif;
     i = i + 1;
@@ -192,7 +350,7 @@ postproc
     reenter;
   endif;
   if Q19_HH_SIZE_TOTAL > 10 then
-    errmsg("Household size %d is unusually large. Confirm.", Q19_HH_SIZE_TOTAL, soft);
+    errmsg("Household size %d is unusually large. Confirm.", Q19_HH_SIZE_TOTAL);
   endif;
 
 PROC Q20_HH_CHILDREN
@@ -225,7 +383,7 @@ postproc
 PROC Q39_CIVIL_STATUS
 postproc
   if Q32_AGE < 15 and Q39_CIVIL_STATUS <> 1 then   { 1 = Single (verify code) }
-    errmsg("Member is under 15 but civil status is not Single. Confirm.", soft);
+    errmsg("Member is under 15 but civil status is not Single. Confirm.");
   endif;
 
 
@@ -367,532 +525,532 @@ PROC Q144_CEREALS_INKIND_PHP
 preproc
   if Q144_CEREALS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q144_CEREALS_INKIND_PHP = 0;
-    skip to next;
+    skip to Q145_PULSES_CONSUMED;
   endif;
 
 PROC Q144_CEREALS_PURCHASED_PHP
 preproc
   if Q144_CEREALS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q144_CEREALS_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q144_CEREALS_INKIND_PHP;
   endif;
 
 PROC Q145_PULSES_INKIND_PHP
 preproc
   if Q145_PULSES_CONSUMED = 2 then   { item not consumed -> no spend }
     Q145_PULSES_INKIND_PHP = 0;
-    skip to next;
+    skip to Q146_VEGETABLES_CONSUMED;
   endif;
 
 PROC Q145_PULSES_PURCHASED_PHP
 preproc
   if Q145_PULSES_CONSUMED = 2 then   { item not consumed -> no spend }
     Q145_PULSES_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q145_PULSES_INKIND_PHP;
   endif;
 
 PROC Q146_VEGETABLES_INKIND_PHP
 preproc
   if Q146_VEGETABLES_CONSUMED = 2 then   { item not consumed -> no spend }
     Q146_VEGETABLES_INKIND_PHP = 0;
-    skip to next;
+    skip to Q147_FRUITS_CONSUMED;
   endif;
 
 PROC Q146_VEGETABLES_PURCHASED_PHP
 preproc
   if Q146_VEGETABLES_CONSUMED = 2 then   { item not consumed -> no spend }
     Q146_VEGETABLES_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q146_VEGETABLES_INKIND_PHP;
   endif;
 
 PROC Q147_FRUITS_INKIND_PHP
 preproc
   if Q147_FRUITS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q147_FRUITS_INKIND_PHP = 0;
-    skip to next;
+    skip to Q148_FISH_CONSUMED;
   endif;
 
 PROC Q147_FRUITS_PURCHASED_PHP
 preproc
   if Q147_FRUITS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q147_FRUITS_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q147_FRUITS_INKIND_PHP;
   endif;
 
 PROC Q148_FISH_INKIND_PHP
 preproc
   if Q148_FISH_CONSUMED = 2 then   { item not consumed -> no spend }
     Q148_FISH_INKIND_PHP = 0;
-    skip to next;
+    skip to Q149_MEAT_CONSUMED;
   endif;
 
 PROC Q148_FISH_PURCHASED_PHP
 preproc
   if Q148_FISH_CONSUMED = 2 then   { item not consumed -> no spend }
     Q148_FISH_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q148_FISH_INKIND_PHP;
   endif;
 
 PROC Q149_MEAT_INKIND_PHP
 preproc
   if Q149_MEAT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q149_MEAT_INKIND_PHP = 0;
-    skip to next;
+    skip to Q150_EGGS_CONSUMED;
   endif;
 
 PROC Q149_MEAT_PURCHASED_PHP
 preproc
   if Q149_MEAT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q149_MEAT_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q149_MEAT_INKIND_PHP;
   endif;
 
 PROC Q150_EGGS_INKIND_PHP
 preproc
   if Q150_EGGS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q150_EGGS_INKIND_PHP = 0;
-    skip to next;
+    skip to Q151_MILK_CONSUMED;
   endif;
 
 PROC Q150_EGGS_PURCHASED_PHP
 preproc
   if Q150_EGGS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q150_EGGS_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q150_EGGS_INKIND_PHP;
   endif;
 
 PROC Q151_MILK_INKIND_PHP
 preproc
   if Q151_MILK_CONSUMED = 2 then   { item not consumed -> no spend }
     Q151_MILK_INKIND_PHP = 0;
-    skip to next;
+    skip to Q152_FATS_CONSUMED;
   endif;
 
 PROC Q151_MILK_PURCHASED_PHP
 preproc
   if Q151_MILK_CONSUMED = 2 then   { item not consumed -> no spend }
     Q151_MILK_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q151_MILK_INKIND_PHP;
   endif;
 
 PROC Q152_FATS_INKIND_PHP
 preproc
   if Q152_FATS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q152_FATS_INKIND_PHP = 0;
-    skip to next;
+    skip to Q153_SUGAR_CONSUMED;
   endif;
 
 PROC Q152_FATS_PURCHASED_PHP
 preproc
   if Q152_FATS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q152_FATS_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q152_FATS_INKIND_PHP;
   endif;
 
 PROC Q153_SUGAR_INKIND_PHP
 preproc
   if Q153_SUGAR_CONSUMED = 2 then   { item not consumed -> no spend }
     Q153_SUGAR_INKIND_PHP = 0;
-    skip to next;
+    skip to Q154_CONDIMENTS_CONSUMED;
   endif;
 
 PROC Q153_SUGAR_PURCHASED_PHP
 preproc
   if Q153_SUGAR_CONSUMED = 2 then   { item not consumed -> no spend }
     Q153_SUGAR_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q153_SUGAR_INKIND_PHP;
   endif;
 
 PROC Q154_CONDIMENTS_INKIND_PHP
 preproc
   if Q154_CONDIMENTS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q154_CONDIMENTS_INKIND_PHP = 0;
-    skip to next;
+    skip to Q155_WATER_NA_CONSUMED;
   endif;
 
 PROC Q154_CONDIMENTS_PURCHASED_PHP
 preproc
   if Q154_CONDIMENTS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q154_CONDIMENTS_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q154_CONDIMENTS_INKIND_PHP;
   endif;
 
 PROC Q155_WATER_NA_INKIND_PHP
 preproc
   if Q155_WATER_NA_CONSUMED = 2 then   { item not consumed -> no spend }
     Q155_WATER_NA_INKIND_PHP = 0;
-    skip to next;
+    skip to Q156_ALCOHOL_CONSUMED;
   endif;
 
 PROC Q155_WATER_NA_PURCHASED_PHP
 preproc
   if Q155_WATER_NA_CONSUMED = 2 then   { item not consumed -> no spend }
     Q155_WATER_NA_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q155_WATER_NA_INKIND_PHP;
   endif;
 
 PROC Q156_ALCOHOL_INKIND_PHP
 preproc
   if Q156_ALCOHOL_CONSUMED = 2 then   { item not consumed -> no spend }
     Q156_ALCOHOL_INKIND_PHP = 0;
-    skip to next;
+    skip to Q157_FOOD_SUBTOTAL_TOTAL_PHP;
   endif;
 
 PROC Q156_ALCOHOL_PURCHASED_PHP
 preproc
   if Q156_ALCOHOL_CONSUMED = 2 then   { item not consumed -> no spend }
     Q156_ALCOHOL_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q156_ALCOHOL_INKIND_PHP;
   endif;
 
 PROC Q158_RESTAURANT_INKIND_PHP
 preproc
   if Q158_RESTAURANT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q158_RESTAURANT_INKIND_PHP = 0;
-    skip to next;
+    skip to Q159_SMOKING_TOBACCO_CONSUMED;
   endif;
 
 PROC Q158_RESTAURANT_PURCHASED_PHP
 preproc
   if Q158_RESTAURANT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q158_RESTAURANT_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q158_RESTAURANT_INKIND_PHP;
   endif;
 
 PROC Q159_SMOKING_TOBACCO_INKIND_PHP
 preproc
   if Q159_SMOKING_TOBACCO_CONSUMED = 2 then   { item not consumed -> no spend }
     Q159_SMOKING_TOBACCO_INKIND_PHP = 0;
-    skip to next;
+    skip to Q160_PERSONAL_CARE_CONSUMED;
   endif;
 
 PROC Q159_SMOKING_TOBACCO_PURCHASED_PHP
 preproc
   if Q159_SMOKING_TOBACCO_CONSUMED = 2 then   { item not consumed -> no spend }
     Q159_SMOKING_TOBACCO_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q159_SMOKING_TOBACCO_INKIND_PHP;
   endif;
 
 PROC Q160_PERSONAL_CARE_INKIND_PHP
 preproc
   if Q160_PERSONAL_CARE_CONSUMED = 2 then   { item not consumed -> no spend }
     Q160_PERSONAL_CARE_INKIND_PHP = 0;
-    skip to next;
+    skip to Q161_HOUSEHOLD_CLEAN_CONSUMED;
   endif;
 
 PROC Q160_PERSONAL_CARE_PURCHASED_PHP
 preproc
   if Q160_PERSONAL_CARE_CONSUMED = 2 then   { item not consumed -> no spend }
     Q160_PERSONAL_CARE_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q160_PERSONAL_CARE_INKIND_PHP;
   endif;
 
 PROC Q161_HOUSEHOLD_CLEAN_INKIND_PHP
 preproc
   if Q161_HOUSEHOLD_CLEAN_CONSUMED = 2 then   { item not consumed -> no spend }
     Q161_HOUSEHOLD_CLEAN_INKIND_PHP = 0;
-    skip to next;
+    skip to Q162_UTILITIES_CONSUMED;
   endif;
 
 PROC Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP
 preproc
   if Q161_HOUSEHOLD_CLEAN_CONSUMED = 2 then   { item not consumed -> no spend }
     Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q161_HOUSEHOLD_CLEAN_INKIND_PHP;
   endif;
 
 PROC Q162_UTILITIES_INKIND_PHP
 preproc
   if Q162_UTILITIES_CONSUMED = 2 then   { item not consumed -> no spend }
     Q162_UTILITIES_INKIND_PHP = 0;
-    skip to next;
+    skip to Q163_TRANSPORT_CONSUMED;
   endif;
 
 PROC Q162_UTILITIES_PURCHASED_PHP
 preproc
   if Q162_UTILITIES_CONSUMED = 2 then   { item not consumed -> no spend }
     Q162_UTILITIES_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q162_UTILITIES_INKIND_PHP;
   endif;
 
 PROC Q163_TRANSPORT_INKIND_PHP
 preproc
   if Q163_TRANSPORT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q163_TRANSPORT_INKIND_PHP = 0;
-    skip to next;
+    skip to Q164_TELECOM_CONSUMED;
   endif;
 
 PROC Q163_TRANSPORT_PURCHASED_PHP
 preproc
   if Q163_TRANSPORT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q163_TRANSPORT_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q163_TRANSPORT_INKIND_PHP;
   endif;
 
 PROC Q164_TELECOM_INKIND_PHP
 preproc
   if Q164_TELECOM_CONSUMED = 2 then   { item not consumed -> no spend }
     Q164_TELECOM_INKIND_PHP = 0;
-    skip to next;
+    skip to Q165_RECREATION_1M_CONSUMED;
   endif;
 
 PROC Q164_TELECOM_PURCHASED_PHP
 preproc
   if Q164_TELECOM_CONSUMED = 2 then   { item not consumed -> no spend }
     Q164_TELECOM_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q164_TELECOM_INKIND_PHP;
   endif;
 
 PROC Q165_RECREATION_1M_INKIND_PHP
 preproc
   if Q165_RECREATION_1M_CONSUMED = 2 then   { item not consumed -> no spend }
     Q165_RECREATION_1M_INKIND_PHP = 0;
-    skip to next;
+    skip to Q166_POSTAL_CONSUMED;
   endif;
 
 PROC Q165_RECREATION_1M_PURCHASED_PHP
 preproc
   if Q165_RECREATION_1M_CONSUMED = 2 then   { item not consumed -> no spend }
     Q165_RECREATION_1M_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q165_RECREATION_1M_INKIND_PHP;
   endif;
 
 PROC Q166_POSTAL_INKIND_PHP
 preproc
   if Q166_POSTAL_CONSUMED = 2 then   { item not consumed -> no spend }
     Q166_POSTAL_INKIND_PHP = 0;
-    skip to next;
+    skip to Q167_HOUSING_CONSUMED;
   endif;
 
 PROC Q166_POSTAL_PURCHASED_PHP
 preproc
   if Q166_POSTAL_CONSUMED = 2 then   { item not consumed -> no spend }
     Q166_POSTAL_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q166_POSTAL_INKIND_PHP;
   endif;
 
 PROC Q167_HOUSING_INKIND_PHP
 preproc
   if Q167_HOUSING_CONSUMED = 2 then   { item not consumed -> no spend }
     Q167_HOUSING_INKIND_PHP = 0;
-    skip to next;
+    skip to Q168_RECREATION_6M_CONSUMED;
   endif;
 
 PROC Q167_HOUSING_PURCHASED_PHP
 preproc
   if Q167_HOUSING_CONSUMED = 2 then   { item not consumed -> no spend }
     Q167_HOUSING_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q167_HOUSING_INKIND_PHP;
   endif;
 
 PROC Q168_RECREATION_6M_INKIND_PHP
 preproc
   if Q168_RECREATION_6M_CONSUMED = 2 then   { item not consumed -> no spend }
     Q168_RECREATION_6M_INKIND_PHP = 0;
-    skip to next;
+    skip to Q169_CLOTHING_CONSUMED;
   endif;
 
 PROC Q168_RECREATION_6M_PURCHASED_PHP
 preproc
   if Q168_RECREATION_6M_CONSUMED = 2 then   { item not consumed -> no spend }
     Q168_RECREATION_6M_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q168_RECREATION_6M_INKIND_PHP;
   endif;
 
 PROC Q169_CLOTHING_INKIND_PHP
 preproc
   if Q169_CLOTHING_CONSUMED = 2 then   { item not consumed -> no spend }
     Q169_CLOTHING_INKIND_PHP = 0;
-    skip to next;
+    skip to Q170_EDUCATION_CONSUMED;
   endif;
 
 PROC Q169_CLOTHING_PURCHASED_PHP
 preproc
   if Q169_CLOTHING_CONSUMED = 2 then   { item not consumed -> no spend }
     Q169_CLOTHING_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q169_CLOTHING_INKIND_PHP;
   endif;
 
 PROC Q170_EDUCATION_INKIND_PHP
 preproc
   if Q170_EDUCATION_CONSUMED = 2 then   { item not consumed -> no spend }
     Q170_EDUCATION_INKIND_PHP = 0;
-    skip to next;
+    skip to Q171_ACCOMMODATION_CONSUMED;
   endif;
 
 PROC Q170_EDUCATION_PURCHASED_PHP
 preproc
   if Q170_EDUCATION_CONSUMED = 2 then   { item not consumed -> no spend }
     Q170_EDUCATION_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q170_EDUCATION_INKIND_PHP;
   endif;
 
 PROC Q171_ACCOMMODATION_INKIND_PHP
 preproc
   if Q171_ACCOMMODATION_CONSUMED = 2 then   { item not consumed -> no spend }
     Q171_ACCOMMODATION_INKIND_PHP = 0;
-    skip to next;
+    skip to Q172_GARDEN_PETS_CONSUMED;
   endif;
 
 PROC Q171_ACCOMMODATION_PURCHASED_PHP
 preproc
   if Q171_ACCOMMODATION_CONSUMED = 2 then   { item not consumed -> no spend }
     Q171_ACCOMMODATION_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q171_ACCOMMODATION_INKIND_PHP;
   endif;
 
 PROC Q172_GARDEN_PETS_INKIND_PHP
 preproc
   if Q172_GARDEN_PETS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q172_GARDEN_PETS_INKIND_PHP = 0;
-    skip to next;
+    skip to Q173_HEALTH_INS_CONSUMED;
   endif;
 
 PROC Q172_GARDEN_PETS_PURCHASED_PHP
 preproc
   if Q172_GARDEN_PETS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q172_GARDEN_PETS_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q172_GARDEN_PETS_INKIND_PHP;
   endif;
 
 PROC Q173_HEALTH_INS_INKIND_PHP
 preproc
   if Q173_HEALTH_INS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q173_HEALTH_INS_INKIND_PHP = 0;
-    skip to next;
+    skip to Q174_OTHER_INS_CONSUMED;
   endif;
 
 PROC Q173_HEALTH_INS_PURCHASED_PHP
 preproc
   if Q173_HEALTH_INS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q173_HEALTH_INS_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q173_HEALTH_INS_INKIND_PHP;
   endif;
 
 PROC Q174_OTHER_INS_INKIND_PHP
 preproc
   if Q174_OTHER_INS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q174_OTHER_INS_INKIND_PHP = 0;
-    skip to next;
+    skip to Q175_INPATIENT_CONSUMED;
   endif;
 
 PROC Q174_OTHER_INS_PURCHASED_PHP
 preproc
   if Q174_OTHER_INS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q174_OTHER_INS_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q174_OTHER_INS_INKIND_PHP;
   endif;
 
 PROC Q175_INPATIENT_INKIND_PHP
 preproc
   if Q175_INPATIENT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q175_INPATIENT_INKIND_PHP = 0;
-    skip to next;
+    skip to Q176_EMERGENCY_TRANSPORT_CONSUMED;
   endif;
 
 PROC Q175_INPATIENT_PURCHASED_PHP
 preproc
   if Q175_INPATIENT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q175_INPATIENT_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q175_INPATIENT_INKIND_PHP;
   endif;
 
 PROC Q176_EMERGENCY_TRANSPORT_INKIND_PHP
 preproc
   if Q176_EMERGENCY_TRANSPORT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q176_EMERGENCY_TRANSPORT_INKIND_PHP = 0;
-    skip to next;
+    skip to Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP;
   endif;
 
 PROC Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP
 preproc
   if Q176_EMERGENCY_TRANSPORT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q176_EMERGENCY_TRANSPORT_INKIND_PHP;
   endif;
 
 PROC Q178_PREVENTIVE_INKIND_PHP
 preproc
   if Q178_PREVENTIVE_CONSUMED = 2 then   { item not consumed -> no spend }
     Q178_PREVENTIVE_INKIND_PHP = 0;
-    skip to next;
+    skip to Q179_DIAGNOSTIC_CONSUMED;
   endif;
 
 PROC Q178_PREVENTIVE_PURCHASED_PHP
 preproc
   if Q178_PREVENTIVE_CONSUMED = 2 then   { item not consumed -> no spend }
     Q178_PREVENTIVE_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q178_PREVENTIVE_INKIND_PHP;
   endif;
 
 PROC Q179_DIAGNOSTIC_INKIND_PHP
 preproc
   if Q179_DIAGNOSTIC_CONSUMED = 2 then   { item not consumed -> no spend }
     Q179_DIAGNOSTIC_INKIND_PHP = 0;
-    skip to next;
+    skip to Q180_ASSISTIVE_CONSUMED;
   endif;
 
 PROC Q179_DIAGNOSTIC_PURCHASED_PHP
 preproc
   if Q179_DIAGNOSTIC_CONSUMED = 2 then   { item not consumed -> no spend }
     Q179_DIAGNOSTIC_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q179_DIAGNOSTIC_INKIND_PHP;
   endif;
 
 PROC Q180_ASSISTIVE_INKIND_PHP
 preproc
   if Q180_ASSISTIVE_CONSUMED = 2 then   { item not consumed -> no spend }
     Q180_ASSISTIVE_INKIND_PHP = 0;
-    skip to next;
+    skip to Q181_MEDICAL_PRODUCTS_CONSUMED;
   endif;
 
 PROC Q180_ASSISTIVE_PURCHASED_PHP
 preproc
   if Q180_ASSISTIVE_CONSUMED = 2 then   { item not consumed -> no spend }
     Q180_ASSISTIVE_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q180_ASSISTIVE_INKIND_PHP;
   endif;
 
 PROC Q181_MEDICAL_PRODUCTS_INKIND_PHP
 preproc
   if Q181_MEDICAL_PRODUCTS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q181_MEDICAL_PRODUCTS_INKIND_PHP = 0;
-    skip to next;
+    skip to Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP;
   endif;
 
 PROC Q181_MEDICAL_PRODUCTS_PURCHASED_PHP
 preproc
   if Q181_MEDICAL_PRODUCTS_CONSUMED = 2 then   { item not consumed -> no spend }
     Q181_MEDICAL_PRODUCTS_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q181_MEDICAL_PRODUCTS_INKIND_PHP;
   endif;
 
 PROC Q183_MEDICINES_INKIND_PHP
 preproc
   if Q183_MEDICINES_CONSUMED = 2 then   { item not consumed -> no spend }
     Q183_MEDICINES_INKIND_PHP = 0;
-    skip to next;
+    skip to Q184_OUTPATIENT_CONSUMED;
   endif;
 
 PROC Q183_MEDICINES_PURCHASED_PHP
 preproc
   if Q183_MEDICINES_CONSUMED = 2 then   { item not consumed -> no spend }
     Q183_MEDICINES_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q183_MEDICINES_INKIND_PHP;
   endif;
 
 PROC Q184_OUTPATIENT_INKIND_PHP
 preproc
   if Q184_OUTPATIENT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q184_OUTPATIENT_INKIND_PHP = 0;
-    skip to next;
+    skip to Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP;
   endif;
 
 PROC Q184_OUTPATIENT_PURCHASED_PHP
 preproc
   if Q184_OUTPATIENT_CONSUMED = 2 then   { item not consumed -> no spend }
     Q184_OUTPATIENT_PURCHASED_PHP = 0;
-    skip to next;
+    skip to Q184_OUTPATIENT_INKIND_PHP;
   endif;
 
 { ---- 'Other (specify)' enforcement — UHC9 dual-other ---- }

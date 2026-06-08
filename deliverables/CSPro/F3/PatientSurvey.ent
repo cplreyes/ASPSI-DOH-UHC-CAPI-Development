@@ -3,13 +3,13 @@
   "version": 8.0,
   "fileType": "application",
   "type": "entry",
-  "name": "FACILITYHEADSURVEY",
-  "label": "FacilityHeadSurvey",
+  "name": "PATIENTSURVEY",
+  "label": "PatientSurvey",
   "dictionaries": [
     {
       "type": "input",
-      "path": "FacilityHeadSurvey.dcf",
-      "parent": "FacilityHeadSurvey.fmf"
+      "path": "PatientSurvey.dcf",
+      "parent": "PatientSurvey.fmf"
     },
     {
       "type": "external",
@@ -29,19 +29,19 @@
     }
   ],
   "forms": [
-    "FacilityHeadSurvey.fmf"
+    "PatientSurvey.fmf"
   ],
   "questionText": [
-    "FacilityHeadSurvey.ent.qsf"
+    "PatientSurvey.ent.qsf"
   ],
   "code": [
     {
       "type": "main",
-      "path": "FacilityHeadSurvey.ent.apc"
+      "path": "PatientSurvey.ent.apc"
     }
   ],
   "messages": [
-    "FacilityHeadSurvey.ent.mgf"
+    "PatientSurvey.ent.mgf"
   ],
   "logicSettings": {
     "version": 2.0,

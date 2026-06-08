@@ -1,31 +1,39 @@
 """
 generate_fmf.py - F3 Patient Survey CSPro Form File generator.
 
-Emits PatientSurvey.generated.fmf - the skeleton form layout for
+Emits PatientSurvey.generated.fmf - a COMPLETE, bindable CSPro 8.0 form file for
 PatientSurvey.dcf. Mirrors the 32-form plan in F3-Form-Layout-Plan.md
 (FIELD_CONTROL -> Geo -> capture triggers -> sections A-L -> closing).
 
-Generator-first / hybrid approach (per Form-Layout-Principles.md section 6):
-this script produces form names, labels, item membership, and tab order.
-Visual polish (field positions, sizes, fonts, control types, capture-trigger
-button bindings) is Designer work on the committed PatientSurvey.fmf.
+FULL-STRUCTURE generation (2026-06-08): in addition to the visual [Form] blocks
+(item membership + tab order), this now emits the logical structure CSPro requires
+to open the file as a bound application without stripping items:
+  [Level] -> one [Group] per form (Form=N, Max=1) -> [Field] + [Text] per item.
+Auto-layout mirrors the working F1 .fmf: label at x=50, field at x=350, rows every
+30px; DataCaptureType=RadioButton for value-set (coded) items, TextBox otherwise
+(UseUnicodeTextBox=Yes for alpha). The id-items form and the level-1 container form
+are emitted as EMPTY groups (exactly as F1 does) -- id items live in the dict id block.
 
-The output is non-destructive - it writes to PatientSurvey.generated.fmf
-and never touches PatientSurvey.fmf.
+This makes the file open + compile in Designer with no [Level]/[Group] warnings,
+so the compile can be driven headlessly. Visual polish (split oversized sections,
+capture-trigger buttons, roster grids) remains optional Designer refinement.
 
 Run:
     python generate_fmf.py        # writes PatientSurvey.generated.fmf next to this file
 """
 
+import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from generate_dcf import build_f3_dictionary
+from cspro_helpers import _truncate_long_labels
 
 
-DICT_NAME = "PATIENTSURVEY_FF"
 DICT_LABEL = "PatientSurvey"
+FF_NAME = "PATIENTSURVEY_FF"
 DCF_REL_PATH = r".\PatientSurvey.dcf"
 
 DEFAULT_FONT = (
@@ -36,14 +44,24 @@ ENTRY_FONT = (
     "FieldEntryFont=0018 0000 0000 0000 0600 0000 0000 0000 "
     "0000 0000 0000 0000 0000 Courier New"
 )
-DEFAULT_SIZE = "806,300"  # Designer resizes per form density
+
+# --- Auto-layout geometry (mirrors the working F1 .fmf) ---
+ROW_H = 30          # vertical pitch between fields
+TOP_Y = 27          # first field's top
+LABEL_X = 50
+LABEL_X2 = 330
+FIELD_X = 350
+FIELD_TEXTBOX_X2 = 760
+FIELD_RADIO_X2 = 365   # radio fields are narrow; options expand below
+FIELD_H = 20
+TEXT_H = 16
+FORM_W = 806
 
 
-# Case-start items stay on Form 1; case-end items migrate to Form 32 (closing).
 FIELD_CONTROL_CASE_START = {
     "SURVEY_CODE", "INTERVIEWER_ID", "DATE_STARTED", "TIME_STARTED",
     "AAPOR_DISPOSITION", "PATIENT_TYPE", "PATIENT_LISTING_NO", "CONSENT_GIVEN",
-    "LANGUAGE_USED",  # §15.E — auto-set in FF preproc via getlanguage(); placed like DATE_STARTED/TIME_STARTED
+    "LANGUAGE_USED",
 }
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
@@ -54,62 +72,39 @@ FIELD_CONTROL_CASE_END = {
 
 
 FORM_PLAN = [
-    # (label, [(record_name, filter_spec), ...])
-    # filter_spec: None = all items; {"names": [...]} = explicit name list.
-    #
-    # Strategy: one form per record for section records. Designer splits
-    # oversized sections (B, C, D, E, G, H, I) into multiple forms per
-    # F3-Form-Layout-Plan.md screen-density budget, and wires form-level
-    # skips (Q1 gate, Q162 terminator, Q169 routing).
     ("FC Metadata - case start",
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
-
     ("FC Geographic ID + F1 linkage",
      [("PATIENT_GEO_ID", None)]),
-
     ("FC Facility GPS Capture",
      [("REC_FACILITY_CAPTURE", None)]),
-
     ("FC Patient Home GPS + Verification Photo",
      [("REC_PATIENT_HOME_CAPTURE", None),
       ("REC_CASE_VERIFICATION", None)]),
-
     ("A. Informed Consent (Q1 gate)",
      [("A_INFORMED_CONSENT", None)]),
-
-    ("B. Patient Profile - split into B1/B2/B3 in Designer",
+    ("B. Patient Profile",
      [("B_PATIENT_PROFILE", None)]),
-
-    ("C. UHC Awareness - split into C1/C2 in Designer",
+    ("C. UHC Awareness",
      [("C_UHC_AWARENESS", None)]),
-
-    ("D. PhilHealth Registration - split into D1/D2 in Designer",
+    ("D. PhilHealth Registration",
      [("D_PHILHEALTH_REG", None)]),
-
-    ("E. Primary Care + YAKAP/Konsulta - split into E1/E2/E3 in Designer",
+    ("E. Primary Care + YAKAP/Konsulta",
      [("E_PRIMARY_CARE", None)]),
-
-    ("F. Health-Seeking - split into F1/F2 in Designer",
+    ("F. Health-Seeking",
      [("F_HEALTH_SEEKING", None)]),
-
-    ("G. Outpatient Care - split into G1/G2/G3 (Q92/Q94 matrix) in Designer",
+    ("G. Outpatient Care",
      [("G_OUTPATIENT_CARE", None)]),
-
-    ("H. Inpatient Care - split into H1/H2/H3 (Q107/Q109/Q112/Q113 matrix) in Designer",
+    ("H. Inpatient Care",
      [("H_INPATIENT_CARE", None)]),
-
-    ("I. Financial Risk - split into I1 NBB/ZBB, I2 MAIFIP, I3 distress in Designer",
+    ("I. Financial Risk",
      [("I_FINANCIAL_RISK", None)]),
-
     ("J. Satisfaction",
      [("J_SATISFACTION", None)]),
-
-    ("K. Access to Medicines - split into K1/K2 in Designer",
+    ("K. Access to Medicines",
      [("K_ACCESS_MEDICINES", None)]),
-
-    ("L. Referrals - split into L1 (Q162 terminator) / L2 (Q169 routing) in Designer",
+    ("L. Referrals",
      [("L_REFERRALS", None)]),
-
     ("Closing - case end",
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_END})]),
 ]
@@ -128,12 +123,30 @@ def _filter_items(items, spec):
     raise ValueError(f"Unknown filter_spec keys: {spec!r}")
 
 
-def _emit_form(lines, form_num, label, item_names):
+def _group_symbol(primary_record, used):
+    """A unique, valid CSPro symbol for a form's [Group]; '_FORM' suffix avoids
+    colliding with the dictionary record of the same name (F1 convention)."""
+    base = re.sub(r"[^A-Za-z0-9]+", "_", primary_record).strip("_").upper() + "_FORM"
+    if not base[0].isalpha():
+        base = "F_" + base
+    sym, i = base, 2
+    while sym in used:
+        sym = f"{base}_{i}"
+        i += 1
+    used.add(sym)
+    return sym
+
+
+def _form_height(n_items):
+    return max(300, TOP_Y + n_items * ROW_H + 40)
+
+
+def _emit_form(lines, form_num, label, item_names, height):
     lines.append("[Form]")
     lines.append(f"Name=FORM{form_num:03d}")
     lines.append(f"Label={label}")
     lines.append("Level=1")
-    lines.append(f"Size={DEFAULT_SIZE}")
+    lines.append(f"Size={FORM_W},{height}")
     lines.append("  ")
     for name in item_names:
         lines.append(f"Item={name}")
@@ -142,29 +155,93 @@ def _emit_form(lines, form_num, label, item_names):
     lines.append("  ")
 
 
+def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name):
+    lines.append("[Group]")
+    lines.append("Required=Yes")
+    lines.append(f"Name={group_sym}")
+    lines.append(f"Label={label}")
+    lines.append(f"Form={form_one_based}")
+    lines.append("Max=1")
+    if not item_objs:
+        lines.append("[EndGroup]")
+        lines.append("  ")
+        return
+    lines.append("  ")
+    for i, it in enumerate(item_objs):
+        y = TOP_Y + i * ROW_H
+        coded = bool(it.get("valueSets"))
+        is_alpha = it.get("contentType") == "alpha"
+        field_x2 = FIELD_RADIO_X2 if coded else FIELD_TEXTBOX_X2
+        capture = "RadioButton" if coded else "TextBox"
+        text = (it["labels"][0]["text"] if it.get("labels") else it["name"]).replace("\n", " ").replace("\r", " ")
+        # [Field]
+        lines.append("[Field]")
+        lines.append(f"Name={it['name']}")
+        lines.append(f"Position={FIELD_X},{y},{field_x2},{y + FIELD_H}")
+        lines.append(f"Item={it['name']},{dict_name}")
+        if not coded and is_alpha:
+            lines.append("UseUnicodeTextBox=Yes")
+        lines.append(f"DataCaptureType={capture}")
+        lines.append(f"Form={form_one_based}")
+        lines.append("  ")
+        # [Text]
+        lines.append("[Text]")
+        lines.append(f"Position={LABEL_X},{y + 3},{LABEL_X2},{y + 3 + TEXT_H}")
+        lines.append(f"Text={text}")
+        lines.append(" ")
+        lines.append("  ")
+    lines.append("[EndGroup]")
+    lines.append("  ")
+
+
 def build_fmf():
     dictionary = build_f3_dictionary()
+    _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
+    dict_name = dictionary.get("name", "PATIENTSURVEY_DICT")
     level = dictionary["levels"][0]
+    level_name = level.get("name", "PATIENTSURVEY_LEVEL")
     records_by_name = {r["name"]: r for r in level["records"]}
     id_item_names = [it["name"] for it in level["ids"]["items"]]
+    container_rec = next((r["name"] for r in level["records"] if r.get("recordType") == "1"), "PATIENTSURVEY_REC")
 
-    # Sanity: every record referenced in FORM_PLAN exists in the dictionary.
     referenced = {rec for _, parts in FORM_PLAN for rec, _ in parts}
     missing = referenced - set(records_by_name)
     if missing:
-        raise RuntimeError(
-            f"FORM_PLAN references records missing from dict: {sorted(missing)}. "
-            f"Available: {sorted(records_by_name)}"
-        )
+        raise RuntimeError(f"FORM_PLAN references missing records: {sorted(missing)}")
 
-    # Track which items each record has consumed so we can flag orphans
-    # (skeleton must cover every non-container DCF item).
     record_items_consumed = {name: set() for name in records_by_name}
+    used_group_syms = set()
+
+    # forms: list of dicts {num, label, group_sym, form_item_names, group_item_objs}
+    forms = []
+    # FORM000 - id items: EMPTY form + EMPTY group (mirrors F1). Id items live in
+    # the dict ID block and are auto-associated; listing them as form Items makes
+    # CSPro report "Item ... not found in any [Group] block" and strip them.
+    _ = id_item_names  # intentionally not placed on the form
+    forms.append({"num": 0, "label": "(Id Items)", "group_sym": "IDS0_FORM",
+                  "form_item_names": [], "group_item_objs": []})
+    used_group_syms.add("IDS0_FORM")
+    # FORM001 - level-1 container record (empty group)
+    forms.append({"num": 1, "label": "PatientSurvey Record",
+                  "group_sym": _group_symbol(container_rec, used_group_syms),
+                  "form_item_names": [], "group_item_objs": []})
+    # FORM002.. - planned forms
+    for idx, (label, parts) in enumerate(FORM_PLAN, start=2):
+        objs = []
+        for rec_name, spec in parts:
+            for it in _filter_items(records_by_name[rec_name]["items"], spec):
+                record_items_consumed[rec_name].add(it["name"])
+                objs.append(it)
+        primary = parts[0][0]
+        forms.append({"num": idx, "label": label,
+                      "group_sym": _group_symbol(primary, used_group_syms),
+                      "form_item_names": [it["name"] for it in objs],
+                      "group_item_objs": objs})
 
     lines = []
     lines.append("[FormFile]")
     lines.append("Version=CSPro 8.0")
-    lines.append(f"Name={DICT_NAME}")
+    lines.append(f"Name={FF_NAME}")
     lines.append(f"Label={DICT_LABEL}")
     lines.append(DEFAULT_FONT)
     lines.append(ENTRY_FONT)
@@ -174,36 +251,31 @@ def build_fmf():
     lines.append(f"File={DCF_REL_PATH}")
     lines.append("  ")
 
-    # FORM000 - Id Items container (QUESTIONNAIRE_NO sits at dictionary level)
-    _emit_form(lines, 0, "(Id Items)", id_item_names)
+    # Visual [Form] blocks
+    for f in forms:
+        _emit_form(lines, f["num"], f["label"], f["form_item_names"],
+                   _form_height(len(f["group_item_objs"])))
 
-    # FORM001 - top-level container record (empty form, level-1)
-    _emit_form(lines, 1, "PatientSurvey Record", [])
+    # Logical structure: one [Level], one [Group] per form
+    lines.append("[Level]")
+    lines.append(f"Name={level_name}")
+    lines.append(f"Label={DICT_LABEL} Level")
+    lines.append("  ")
+    for f in forms:
+        _emit_group(lines, f["group_sym"], f["label"], f["num"] + 1,
+                    f["group_item_objs"], dict_name)
 
-    # FORM002..FORM033 - planned forms
-    for idx, (label, parts) in enumerate(FORM_PLAN, start=2):
-        collected = []
-        for rec_name, spec in parts:
-            filtered = _filter_items(records_by_name[rec_name]["items"], spec)
-            for it in filtered:
-                record_items_consumed[rec_name].add(it["name"])
-                collected.append(it["name"])
-        _emit_form(lines, idx, label, collected)
-
-    # Orphan check - any DCF item not placed on a form?
+    # Orphan check
     orphans = []
     for rec_name, rec in records_by_name.items():
         if rec["recordType"] == "1":
-            continue  # top-level container record
+            continue
         placed = record_items_consumed[rec_name]
         for it in rec["items"]:
             if it["name"] not in placed:
                 orphans.append(f"{rec_name}.{it['name']}")
     if orphans:
-        sys.stderr.write(
-            f"WARNING: {len(orphans)} items not placed on any form "
-            "(skeleton needs Q-range refinement):\n"
-        )
+        sys.stderr.write(f"WARNING: {len(orphans)} items not placed on any form:\n")
         for o in orphans:
             sys.stderr.write(f"  {o}\n")
 
