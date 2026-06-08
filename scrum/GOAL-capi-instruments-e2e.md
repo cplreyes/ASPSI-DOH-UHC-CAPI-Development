@@ -5,7 +5,7 @@ scope: end-to-end CAPI instruments (F1, F3, F4) from generator build through CSW
 use_with: /goal
 created: 2026-06-07
 revised: 2026-06-08
-pairs_with: [deliverables/CSPro/preflight_validate.py, deliverables/CSPro/automation/cspro_compile_driver.py, deliverables/CSPro/bundle/build_bundle.py, deliverables/CSPro/CSWeb-Deploy-and-Android-Verification-Runbook.md, scrum/epics/epic-04-backend-sync-infrastructure.md, scrum/sprint-current.md]
+pairs_with: [deliverables/CSPro/preflight_validate.py, deliverables/CSPro/automation/cspro_compile_driver.py, deliverables/CSPro/bundle/build_bundle.py, deliverables/CSPro/Desk-Test-Scenario-Matrix.md, deliverables/CSPro/CSWeb-Deploy-and-Android-Verification-Runbook.md, scrum/epics/epic-04-backend-sync-infrastructure.md, scrum/sprint-current.md]
 ---
 
 # /goal — End-to-End Development + Deployment of All CAPI Instruments
