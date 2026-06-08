@@ -70,6 +70,33 @@ logic **"Compile Successful"**. F1 already uses `endlevel` for consent, so the k
 the F1 equivalent of DT-02 (consent=No saves) is now structurally unblocked (interactive CSEntry
 confirmation pending F1 matrix execution). Preflight: **all 3 instruments clean.**
 
+### F1 matrix execution — 2026-06-08 (agent, desktop CSEntry)
+**Logic desk-check (DT-03…DT-24): all PASS** against the generated `FacilityHeadSurvey.ent.apc` — every
+validation / skip / routing / NOINPUT rule is present and matches the expected outcome (line refs traced;
+compiler already validated syntax). DT-25/DT-26 (GPS / photo) = device-only, deferred to the Android runbook.
+
+**Runtime DT-02 (consent=No) — partial PASS + CRITICAL FINDING.** In CSEntry the key form renders first;
+filling it then setting `CONSENT_GIVEN=2` fires the exact logic: errmsg "Respondent declined consent…",
+`ENUM_RESULT_FINAL_VISIT=4` (Refused), `endlevel` → "Accept this case?" → **case SAVES** and `consent_given=2`
+/ `enum_result_final_visit=4` persist correctly in `field_control`. ✅ for the consent/terminator logic.
+
+> [!warning] BLOCKER — cases save with a BLANK case key
+> The 5 id-key items (`REGION_CODE`/`PROVINCE_HUC_CODE`/`CITY_MUNICIPALITY_CODE`/`FACILITY_NO`/`CASE_SEQ`)
+> entered on FORM000 **do NOT persist**: saved `cases.key` = 12 spaces, `level-1` ids all `None`, the case-tree
+> node has no key label, and reopening in **MODIFY** shows all 5 id fields blank. Confirmed 4 independent ways.
+> **Ruled out:** the `endlevel` path (a mid-case **partial save**, before consent, also saved a blank key),
+> the soft "out of range" warnings (clean entry → still blank), **auto-advance vs explicit Enter** (both blank),
+> and the FMF structure (byte-identical to the CAPI Census `GEOCODES_FORM`).
+> **This is NOT F1-specific — F3's "verified" desk-test case (`F3/desktest.csdb`) ALSO has a blank key.** The
+> earlier F3 sign-off only checked that the case *saved/appeared in the tree*, never that the **key persisted**.
+> So F1 **and** F3 (and by construction F4) all save keyless cases — every refused/saved case would collide on
+> the empty key. **Stage-1 blocker** (criterion: cases must carry a valid key for CSWeb sync/dedup).
+> **Key clue:** the Census `GEOCODES_FORM` id fields are `Protected=Yes` — i.e. the geocodes are *assigned*
+> (PFF/logic), **not operator-typed**. So "id items on the first form" is a *display* pattern for pre-set ids,
+> which suggests the fix is to **assign the case key programmatically** (e.g. from a PFF param or the geo-cascade
+> picks the operator already makes) rather than have the operator type raw id codes into key fields.
+> **Status: open — fix direction is a go/no-go for Carl (his CSPro call). DT-01 happy-path not yet run.**
+
 ---
 
 # F1 — Facility Head Survey  (gate #193)
