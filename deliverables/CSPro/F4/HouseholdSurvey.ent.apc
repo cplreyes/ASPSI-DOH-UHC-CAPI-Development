@@ -180,7 +180,9 @@ PROC CONSENT_GIVEN
 postproc
   if CONSENT_GIVEN = 2 then
     ENUM_RESULT_FINAL_VISIT = 4;   { Refused / withdrew consent (verify code) }
-    endgroup;
+    errmsg("Respondent declined consent. Interview ends; case coded Refused.");
+    endlevel;   { end the CASE on refusal (endgroup only skips this group). The case key
+                  is now captured on FORM000 before consent, so the refused case saves. }
   endif;
 
 { ---- PSGC cascade (household geo-ID; verify item names match the F4 dcf) ---- }

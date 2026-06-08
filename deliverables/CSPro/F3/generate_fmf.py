@@ -215,12 +215,15 @@ def build_fmf():
 
     # forms: list of dicts {num, label, group_sym, form_item_names, group_item_objs}
     forms = []
-    # FORM000 - id items: EMPTY form + EMPTY group (mirrors F1). Id items live in
-    # the dict ID block and are auto-associated; listing them as form Items makes
-    # CSPro report "Item ... not found in any [Group] block" and strip them.
-    _ = id_item_names  # intentionally not placed on the form
-    forms.append({"num": 0, "label": "(Id Items)", "group_sym": "IDS0_FORM",
-                  "form_item_names": [], "group_item_objs": []})
+    # FORM000 - case-key ID items, entered FIRST (before consent) so a consent refusal
+    # has a valid case key to save (desk-test F3-DT-02: an empty key -> "ID fields not
+    # filled" at endlevel). CSPro DOES place id items on the first form as normal
+    # [Field]s (cf. the CAPI Census "Geocodes" form GEOCODES_FORM); the earlier
+    # "strip" note was a misdiagnosis. Enumerator types the codes from the sampling frame.
+    id_objs = list(level["ids"]["items"])
+    _ = id_item_names
+    forms.append({"num": 0, "label": "Case Key (Facility + Patient ID)", "group_sym": "IDS0_FORM",
+                  "form_item_names": [it["name"] for it in id_objs], "group_item_objs": id_objs})
     used_group_syms.add("IDS0_FORM")
     # FORM001 - level-1 container record (empty group)
     forms.append({"num": 1, "label": "PatientSurvey Record",

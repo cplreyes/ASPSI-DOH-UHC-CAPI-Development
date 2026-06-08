@@ -11,10 +11,15 @@ File=.\PatientSurvey.dcf
   
 [Form]
 Name=FORM000
-Label=(Id Items)
+Label=Case Key (Facility + Patient ID)
 Level=1
 Size=806,300
   
+Item=REGION_CODE
+Item=PROVINCE_HUC_CODE
+Item=CITY_MUNICIPALITY_CODE
+Item=FACILITY_NO
+Item=CASE_SEQ
   
 [EndForm]
   
@@ -993,9 +998,70 @@ Label=PatientSurvey Level
 [Group]
 Required=Yes
 Name=IDS0_FORM
-Label=(Id Items)
+Label=Case Key (Facility + Patient ID)
 Form=1
 Max=1
+  
+[Field]
+Name=REGION_CODE
+Position=350,27,760,47
+Item=REGION_CODE,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,30,330,46
+Text=Region Code (PSGC)
+ 
+  
+[Field]
+Name=PROVINCE_HUC_CODE
+Position=350,57,760,77
+Item=PROVINCE_HUC_CODE,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,60,330,76
+Text=Province / HUC Code (PSGC)
+ 
+  
+[Field]
+Name=CITY_MUNICIPALITY_CODE
+Position=350,87,760,107
+Item=CITY_MUNICIPALITY_CODE,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,90,330,106
+Text=City / Municipality Code (PSGC)
+ 
+  
+[Field]
+Name=FACILITY_NO
+Position=350,117,760,137
+Item=FACILITY_NO,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,120,330,136
+Text=Facility Number (within municipality)
+ 
+  
+[Field]
+Name=CASE_SEQ
+Position=350,147,760,167
+Item=CASE_SEQ,PATIENTSURVEY_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,150,330,166
+Text=Case Sequence (per-facility, per-instrument)
+ 
+  
 [EndGroup]
   
 [Group]

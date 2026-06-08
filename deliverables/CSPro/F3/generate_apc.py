@@ -96,7 +96,9 @@ PROC CONSENT_GIVEN
 postproc
   if CONSENT_GIVEN = 2 then
     ENUM_RESULT_FIRST_VISIT = 4;   { Withdraw Participation/Consent }
-    endgroup;
+    errmsg("Respondent declined consent. Interview ends; case coded Refused.");
+    endlevel;   { end the CASE on refusal (endgroup only skips this group). The case key
+                  is now captured on FORM000 before consent, so the refused case saves. }
   endif;
 
 { ---- F1 linkage: facility is intrinsic to the 12-digit case-key id-block

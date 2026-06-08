@@ -231,9 +231,13 @@ def build_fmf():
     used_group_syms = set()
 
     forms = []
-    _ = id_item_names  # id items live in the dict ID block, not on the form
-    forms.append({"num": 0, "label": "(Id Items)", "group_sym": "IDS0_FORM",
-                  "form_item_names": [], "group_item_objs": [], "roster": None})
+    # FORM000 - case-key ID items, entered FIRST (before consent) so a consent refusal
+    # has a valid case key to save (cf. F3-DT-02 + the CAPI Census "Geocodes" form).
+    id_objs = list(level["ids"]["items"])
+    _ = id_item_names
+    forms.append({"num": 0, "label": "Case Key (Facility + Household ID)", "group_sym": "IDS0_FORM",
+                  "form_item_names": [it["name"] for it in id_objs], "group_item_objs": id_objs,
+                  "roster": None})
     used_group_syms.add("IDS0_FORM")
     forms.append({"num": 1, "label": "HouseholdSurvey Record",
                   "group_sym": _group_symbol(container_rec, used_group_syms),

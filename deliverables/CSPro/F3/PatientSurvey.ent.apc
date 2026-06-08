@@ -93,19 +93,20 @@ end;
 
 
 { Facility PSGC handlers — attach these to main-dict field onfocus events.
-  Usage inside a form's PROC:
+  setvalueset targets each function's own literal field, so callers pass only
+  the PARENT code (region takes none):
       PROC REGION
       onfocus
-          FillRegionValueSet(REGION);
+          FillRegionValueSet();
       PROC PROVINCE_HUC
       onfocus
-          FillProvinceValueSet(PROVINCE_HUC, REGION);
+          FillProvinceValueSet(REGION);
       PROC CITY_MUNICIPALITY
       onfocus
-          FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
+          FillCityValueSet(PROVINCE_HUC);
       PROC BARANGAY
       onfocus
-          FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+          FillBarangayValueSet(CITY_MUNICIPALITY);
 }
 
 function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
@@ -180,7 +181,9 @@ PROC CONSENT_GIVEN
 postproc
   if CONSENT_GIVEN = 2 then
     ENUM_RESULT_FIRST_VISIT = 4;   { Withdraw Participation/Consent }
-    endgroup;
+    errmsg("Respondent declined consent. Interview ends; case coded Refused.");
+    endlevel;   { end the CASE on refusal (endgroup only skips this group). The case key
+                  is now captured on FORM000 before consent, so the refused case saves. }
   endif;
 
 { ---- F1 linkage: facility is intrinsic to the 12-digit case-key id-block

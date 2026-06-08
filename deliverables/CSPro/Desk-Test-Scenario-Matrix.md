@@ -47,6 +47,19 @@ case · `SKIP→` = jump to target · `NOINPUT` = field hidden/protected · 🔌
   focused interactive pass (Carl) or a hardened automation harness; device-only DT-12/13 defer to the
   Android runbook.
 
+### Resolution — 2026-06-08 (Option A: case-key before consent)
+**F3-DT-02 FIXED + verified end-to-end.** Root cause was deeper than the terminator: the case-key ID
+items (`REGION_CODE`/`PROVINCE_HUC_CODE`/`CITY_MUNICIPALITY_CODE`/`FACILITY_NO`/`CASE_SEQ`) were on **no
+form** and set by **nothing** → *no* F3 case could save with a valid key (consent-refusal just surfaced
+it first). Fix: `generate_fmf` now places the id items on **FORM000** (entered first, before consent —
+like the CAPI Census "Geocodes" form; the old "id items get stripped" note was a misdiagnosis), and the
+consent proc uses **`endlevel`** (not `endgroup`). Verified in CSEntry: key form renders first; consent=No
+→ "Interview ends" errmsg → `endlevel` → **"Accept this case?" → case SAVES** (no "ID fields not filled");
+case appears in the tree. **Replicated to F4** (key form first, loads clean). **F1 has the same latent
+empty-key-form bug but has no `generate_fmf.py` (static FMF) — deferred:** needs an F1 form generator or a
+post-processor; F1 already uses `endlevel`, so it only lacks the key form. Also unblocks F3-DT-01 (happy
+path can now save).
+
 ---
 
 # F1 — Facility Head Survey  (gate #193)
