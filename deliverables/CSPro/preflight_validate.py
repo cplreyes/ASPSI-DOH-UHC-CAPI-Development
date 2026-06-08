@@ -51,6 +51,20 @@ def dcf_symbols(dcf_path):
     return names
 
 
+def fmf_symbols(fmf_path):
+    """Form/group/form-file names declared in the .fmf (every `Name=` line).
+    These are valid PROC targets — logic can attach to a form GROUP (e.g. a roster
+    group like C_HOUSEHOLD_ROSTER_FORM), not only to dcf items."""
+    syms = set()
+    if not fmf_path or not Path(fmf_path).exists():
+        return syms
+    for line in open(fmf_path, encoding='utf-8-sig'):
+        m = re.match(r'\s*Name=(.+)', line.rstrip('\r\n'))
+        if m:
+            syms.add(m.group(1).strip().upper())
+    return syms
+
+
 def strip_comments(src):
     """Remove CSPro { ... } brace comments, // line comments, and string
     literals (so identifiers quoted in errmsg/maketext text don't false-flag)."""
@@ -65,8 +79,8 @@ def declared_symbols(src):
     """Symbols DECLARED in this logic file: var declarations, PROC names,
     function defs, valueset defs — all valid non-dcf references."""
     decl = set()
-    # numeric/string/alpha/array declarations:  numeric FOO, BAR;
-    for m in re.finditer(r'(?im)^\s*(?:numeric|string|alpha(?:\(\d+\))?|array)\s+([A-Za-z0-9_,\s\(\)]+);', src):
+    # numeric/string/alpha/array declarations:  numeric FOO, BAR;  /  numeric FOO = 0;
+    for m in re.finditer(r'(?im)^\s*(?:numeric|string|alpha(?:\(\d+\))?|array(?:\([^)]*\))?)\s+([A-Za-z0-9_,\s\(\)]+?)\s*(?:=|;)', src):
         for name in re.findall(r'[A-Za-z_][A-Za-z0-9_]*', m.group(1)):
             decl.add(name.upper())
     # PROC <name>
@@ -85,7 +99,7 @@ def declared_vars(src):
     """ONLY working-variable declarations (numeric/string/alpha/array NAME...;).
     A provably-non-field set, used by the setvalueset lint."""
     dv = set()
-    for m in re.finditer(r'(?im)^\s*(?:numeric|string|alpha(?:\(\d+\))?|array(?:\([^)]*\))?)\s+([A-Za-z0-9_,\s\(\)]+);', src):
+    for m in re.finditer(r'(?im)^\s*(?:numeric|string|alpha(?:\(\d+\))?|array(?:\([^)]*\))?)\s+([A-Za-z0-9_,\s\(\)]+?)\s*(?:=|;)', src):
         for name in re.findall(r'[A-Za-z_][A-Za-z0-9_]*', m.group(1)):
             dv.add(name.upper())
     return dv
@@ -191,13 +205,21 @@ REF_RE = re.compile(r'\b([A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+|Q\d+[A-Z0-9_]*)\b')
 PROC_RE = re.compile(r'(?im)^\s*PROC\s+([A-Za-z_][A-Za-z0-9_]*)')
 
 
-def validate(instrument, apc_path, dcf_path, shared_paths):
+def validate(instrument, apc_path, dcf_path, shared_paths, fmf_path=None, extra_dcf_paths=()):
     dcf = dcf_symbols(dcf_path)
     apc_raw = open(apc_path, encoding='utf-8-sig').read()
     apc = strip_comments(apc_raw)
 
     known = set(dcf) | set(CSPRO_RESERVED)
     known |= declared_symbols(apc)
+    # External dictionaries attached to the .ent (e.g. the 4 PSGC lookup dicts): their
+    # records/items are valid references in the inlined cascade logic.
+    for ed in extra_dcf_paths:
+        if Path(ed).exists():
+            known |= dcf_symbols(ed)
+    # Form/group names from the .fmf are valid PROC targets (a roster group proc, etc.).
+    form_syms = fmf_symbols(fmf_path)
+    known |= form_syms
     shared_srcs = []
     working_vars = declared_vars(apc)
     for sp in shared_paths:
@@ -211,7 +233,7 @@ def validate(instrument, apc_path, dcf_path, shared_paths):
     #    GLOBAL, a form-flow proc (<DICT>_FF), or a dcf item/record/level name.
     #    Crucially, do NOT accept a name just because a PROC declares it — that
     #    would self-whitelist `PROC <typo>` for a non-existent item.
-    proc_allowed = set(dcf) | set(CSPRO_RESERVED) | {'GLOBAL'}
+    proc_allowed = set(dcf) | set(CSPRO_RESERVED) | {'GLOBAL'} | form_syms
     proc_bad = []
     for m in PROC_RE.finditer(apc_raw):
         name = m.group(1)
@@ -243,17 +265,19 @@ def main():
     # Lives in deliverables/CSPro/ — resolve the instrument dirs relative to it.
     base = Path(__file__).resolve().parent
     shared = [base / 'shared' / 'Capture-Helpers.apc', base / 'shared' / 'PSGC-Cascade.apc']
+    # The 4 PSGC external lookup dicts attached to every .ent (referenced by the cascade).
+    psgc = [base / 'shared' / f'psgc_{x}.dcf' for x in ('region', 'province', 'city', 'barangay')]
     targets = [
-        ('F1', base / 'F1' / 'FacilityHeadSurvey.ent.apc', base / 'F1' / 'FacilityHeadSurvey.dcf'),
-        ('F3', base / 'F3' / 'PatientSurvey.ent.apc',      base / 'F3' / 'PatientSurvey.dcf'),
-        ('F4', base / 'F4' / 'HouseholdSurvey.ent.apc',    base / 'F4' / 'HouseholdSurvey.dcf'),
+        ('F1', base / 'F1' / 'FacilityHeadSurvey.ent.apc', base / 'F1' / 'FacilityHeadSurvey.dcf', base / 'F1' / 'FacilityHeadSurvey.fmf'),
+        ('F3', base / 'F3' / 'PatientSurvey.ent.apc',      base / 'F3' / 'PatientSurvey.dcf',      base / 'F3' / 'PatientSurvey.fmf'),
+        ('F4', base / 'F4' / 'HouseholdSurvey.ent.apc',    base / 'F4' / 'HouseholdSurvey.dcf',    base / 'F4' / 'HouseholdSurvey.fmf'),
     ]
     overall_clean = True
-    for name, apc, dcf in targets:
+    for name, apc, dcf, fmf in targets:
         if not apc.exists() or not dcf.exists():
             print(f'[{name}] SKIP — missing apc or dcf')
             continue
-        r = validate(name, apc, dcf, shared)
+        r = validate(name, apc, dcf, shared, fmf_path=fmf, extra_dcf_paths=psgc)
         print(f'\n========== {name} ==========')
         print(f'  dcf symbols: {r["dcf_symbol_count"]}   PROC blocks: {r["proc_count"]}')
         if r['proc_bad']:
