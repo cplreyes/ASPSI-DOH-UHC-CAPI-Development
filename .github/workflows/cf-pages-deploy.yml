@@ -150,8 +150,16 @@ jobs:
       # AND `Workers Scripts: Edit`. A Pages-only token deploys the frontend but
       # fails here with `Authentication error [code: 10000]` (the recurring
       # failure this step previously hit).
+      #
+      # TEMPORARY: continue-on-error keeps this step from failing the whole run
+      # while CLOUDFLARE_API_TOKEN still lacks `Workers Scripts: Edit` (code 10000).
+      # The Pages frontend has already deployed above, so the run goes green and the
+      # follow-up step emits a ::warning instead. REMOVE continue-on-error once the
+      # token carries Workers Scripts:Edit, so a real worker-deploy failure fails the run.
       - if: steps.secrets.outputs.ready == 'true'
         name: Deploy Worker (version-stamped)
+        id: worker_deploy
+        continue-on-error: true
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -159,3 +167,8 @@ jobs:
           workingDirectory: deliverables/F2/PWA/worker
           wranglerVersion: "3.114.17"
           command: deploy ${{ steps.wvars.outputs.env_flag }} --var PWA_VERSION:${{ steps.wvars.outputs.version }} --var WORKER_VERSION:${{ steps.wvars.outputs.worker_version }} --var PWA_BUILD_SHA:${{ steps.wvars.outputs.sha_short }}
+
+      - if: steps.worker_deploy.outcome == 'failure'
+        name: Warn — worker deploy skipped (non-blocking)
+        run: |
+          echo "::warning title=Worker deploy skipped::Version-stamped Worker deploy failed (likely CLOUDFLARE_API_TOKEN missing 'Workers Scripts: Edit' — error code 10000). The Pages frontend deployed fine. Fix the token + remove continue-on-error, or deploy the Worker manually."
