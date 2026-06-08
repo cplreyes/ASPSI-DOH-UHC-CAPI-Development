@@ -184,7 +184,8 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name):
         lines.append(f"DataCaptureType={capture}")
         lines.append(f"Form={form_one_based}")
         lines.append("  ")
-        # [Text]
+        # [Text] — single-language (EN) field label. CSPro does NOT auto-translate the
+        # form label from the dict; per-language prompts live in the question text (.qsf).
         lines.append("[Text]")
         lines.append(f"Position={LABEL_X},{y + 3},{LABEL_X2},{y + 3 + TEXT_H}")
         lines.append(f"Text={text}")
