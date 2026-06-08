@@ -107,13 +107,15 @@ DSL: `rmdata` / `launch` / `casekey` / `type` / `key` / `click` / `wait` / `shot
 It force-foregrounds CSEntry before every keystroke and **aborts rather than type if it
 can't** (so keystrokes never leak into the wrong window). See `scenarios/f4_q18_bracket.txt`.
 
-> **The survey body sits behind TWO device-hardware gates.** After the geo cascade,
-> F4 hits `CAPTURE_HH_GPS` (GPS) then `CAPTURE_VERIFICATION_PHOTO` (camera). On a
-> desktop both fail — GPS `-118` "hardware unavailable" (soft, dismiss by click → field
-> set `notappl`) and photo `88889`. So reaching Section B+ validations (Q18, Q58 ranges,
-> soft cross-checks) on desktop needs each capture modal dismissed per-form, OR an
-> Android/tablet run where the hardware works, OR a generator tweak to make the two
-> capture fields cursor-skippable when no hardware is present. F1/F3 have the same gates.
+> **Capture fields are now desktop-skippable (2026-06-09).** After the geo cascade,
+> F4 hits `CAPTURE_HH_GPS` (GPS) then `CAPTURE_VERIFICATION_PHOTO` (camera) — both need
+> device hardware absent on desktop. FIXED in `shared/Capture-Helpers.apc`: the shared
+> `ReadGPSReading` / `TakeVerificationPhoto` helpers now guard on **`if getos() in 10:19`**
+> (Windows) → return 0 silently (no `gps(open)`/camera call → **no `-118` / camera modal**).
+> Android (`getos() in 20:29`) captures normally — production unchanged. Verified: a
+> Windows CSEntry run no longer raises the GPS-hardware modal. Applies to F1/F3/F4 (shared).
+> NB the six GPS *data* fields (Lat/Long/Alt/Accuracy/Sat/ReadTime) + the filename field
+> are still normal enterable fields (no hardware), so a scenario still tabs through them.
 
 ## Notes / gotchas (carried from 2026-06-08–09)
 

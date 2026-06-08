@@ -115,6 +115,14 @@ function ReadGPSReading(numeric maxTimeSec, numeric desiredAccuracyM)
       gps(longitude), gps(altitude), gps(accuracy), gps(satellites), and
       gps(readtime) after a successful call. }
 
+    { Windows desktop (getos 10..19) has no GPS radio. Skip silently so desk-test
+      data entry flows past the capture field with no modal. Android (20..29)
+      captures normally — production behaviour is unchanged. }
+    if getos() in 10:19 then
+        ReadGPSReading = 0;
+        exit;
+    endif;
+
     if not gps(open) then
         errmsg("GPS hardware unavailable — check tablet location permission.");
         ReadGPSReading = 0;
@@ -147,6 +155,13 @@ function TakeVerificationPhoto(string photoFile)
       dictionary's *_VERIFICATION_PHOTO_FILENAME alpha item on success.
       NB: the parameter is `photoFile`, not `filename` -- `filename` is a
       CSPro reserved word and errors at compile (verified 2026-06-08). }
+
+    { Windows desktop (getos 10..19) has no camera. Skip silently so desk-test
+      flows past the capture field with no modal. Android (20..29) captures. }
+    if getos() in 10:19 then
+        TakeVerificationPhoto = 0;
+        exit;
+    endif;
 
     Image photo;
 

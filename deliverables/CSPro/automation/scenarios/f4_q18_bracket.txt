@@ -58,8 +58,9 @@ type 005
 type 08
 type 20260609T103000
 key {ENTER}
-note CAPTURE_HH_GPS onfocus -> -118 GPS-hardware modal (SOFT errmsg, sets notappl); dismiss by click
-click 1172 565
+note getos guard: CAPTURE_HH_GPS auto-skips silently on desktop -> cursor lands on Verification Photo Filename
+key {ENTER}
+note photo filename left blank; CAPTURE_VERIFICATION_PHOTO auto-skips -> Section A Q1
 
 # ---- Section A ----
 note Q1 is HH head = Yes
