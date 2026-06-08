@@ -55,10 +55,20 @@ it first). Fix: `generate_fmf` now places the id items on **FORM000** (entered f
 like the CAPI Census "Geocodes" form; the old "id items get stripped" note was a misdiagnosis), and the
 consent proc uses **`endlevel`** (not `endgroup`). Verified in CSEntry: key form renders first; consent=No
 → "Interview ends" errmsg → `endlevel` → **"Accept this case?" → case SAVES** (no "ID fields not filled");
-case appears in the tree. **Replicated to F4** (key form first, loads clean). **F1 has the same latent
-empty-key-form bug but has no `generate_fmf.py` (static FMF) — deferred:** needs an F1 form generator or a
-post-processor; F1 already uses `endlevel`, so it only lacks the key form. Also unblocks F3-DT-01 (happy
+case appears in the tree. **Replicated to F4** (key form first, loads clean). Also unblocks F3-DT-01 (happy
 path can now save).
+
+### Resolution (cont.) — 2026-06-08 (F1 case-key via post-processor)
+**F1 fixed.** F1 has no `generate_fmf.py` (static `FacilityHeadSurvey.fmf`), so instead of a generator the
+fix is a **post-processor**: `F1/inject_case_key.py` reads the dict's level ID items and regenerates the
+empty **FORM000** `[Form]` block + **IDS0_FORM** `[Group]` block, injecting the 5 case-key fields
+(`REGION_CODE`/`PROVINCE_HUC_CODE`/`CITY_MUNICIPALITY_CODE`/`FACILITY_NO`/`CASE_SEQ`) — matching F3's
+verified layout (FIELD/TEXT positions identical). Idempotent (re-run rebuilds, never double-injects);
+IRON-RULE compliant (programmatic generation, not a hand-edit). **Verified in CSPro Designer:** FMF binds
+with no reconcile dialog, `IDS0_FORM` is the **first** group in the level with all 5 fields bound, and
+logic **"Compile Successful"**. F1 already uses `endlevel` for consent, so the key form was the only gap →
+the F1 equivalent of DT-02 (consent=No saves) is now structurally unblocked (interactive CSEntry
+confirmation pending F1 matrix execution). Preflight: **all 3 instruments clean.**
 
 ---
 
