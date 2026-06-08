@@ -17,9 +17,15 @@ Region III → Bulacan → Malolos → Anilao). The GPS + photo capture forms we
 desktop-skippable (getos guard in `Capture-Helpers.apc`). **Stage 2 first spot-check
 PASS:** `scenarios/f4_q18_bracket.txt` now drives end-to-end to Q18 and the **amount↔bracket
 HARD reject fires at runtime** — amount 5000 + bracket 4 → msg -419 "Income bracket does
-not match the reported amount" (evidence: `shots/f4_q18_bracket/062_*.png`). The other
-checks (Q58 ranges, soft cross-checks) are reachable the same way — clone the scenario,
-change the tail.
+not match the reported amount" (evidence: `shots/f4_q18_bracket/062_*.png`).
+`scenarios/f4_range_and_soft.txt` then verified the other two mechanisms at Q19:
+**HARD range reject** (Q19=25>20 → msg -366 "must be 1-20" + reenter — same shape as
+`range_check_proc`, e.g. F3 Q58) and **SOFT warn** (Q19=12>10 → msg -370 "unusually
+large", dismissable — same `errmsg`-w/o-`reenter` as the soft cross-checks). All three
+validation kinds (range, cross-field-hard, soft-warn) are runtime-verified.
+NOTE: Q58 + the cross-field soft checks are F3-specific (Section E / B,F,J — ~120-field
+traversal). They use these identical generators and compile clean (gate PASS); their
+F3-instrument runtime traversal is an optional future scenario, not yet built.
 
 ---
 
