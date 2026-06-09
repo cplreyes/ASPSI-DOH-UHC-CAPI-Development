@@ -106,9 +106,15 @@ not live fieldwork. *(CSWeb config E4-CSWeb-003/004/005, previously out-of-scope
 sign-off · close gate issues #161/#193/#194/#195/#251/#253 — none block Stage 2.)*
 
 **Stage 2 — F1 round-trip, in order, no shortcuts:**
-- **A. Sync-enable F1** *(agent — generator, IRON RULE)* — add **Simple Synchronization** (or sync-from-
-  logic) to F1: server `https://csweb.asiansocial.org/api` + the F1 dictionary; regenerate; re-verify it
-  still compiles in CSEntry (`csentry_verify.py`). *This is the surfaced gap — do it first.*
+- **A. Sync-enable F1** *(Carl in Designer Options; then agent generatorizes)* — **finding 2026-06-09:**
+  sync-from-logic does NOT work for a standalone questionnaire app — a CAPI app can't `syncdata` its own
+  *input* dictionary (`syncdata` needs an *external* dict); the CSEntry compile gate rejected it
+  (`external dictionary name expected`). The correct mechanism is **Simple Synchronization**, an **.ent
+  app-property (no logic)** set in **Designer ▸ Options ▸ Synchronization ▸ Enable simple sync ▸ CSWeb ▸
+  URL `https://csweb.asiansocial.org/api` ▸ Test Connection ▸ direction BOTH ▸ save**. (Test Connection
+  is live/credentialed → Carl's step.) The agent then reads the sync block Designer wrote into
+  `FacilityHeadSurvey.ent` and bakes it into the `.ent` template (`_ent_json`) so F3/F4 inherit it
+  (IRON RULE). Enumerator syncs via **CSEntry ▸ Synchronize** (not during entry).
 - **B. CSWeb config** *(Carl, admin UI — `E4-CSWeb-003/004/005`)* — upload F1 `.dcf` as the case store ·
   deploy the F1 app package (incl. PSGC dicts + `.dat`) · enumerator role + test account · sync endpoint +
   conflict policy (server-wins vs last-write-wins).
