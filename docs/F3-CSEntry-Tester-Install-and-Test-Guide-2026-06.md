@@ -1,96 +1,215 @@
-# Patient Survey (F3) — Tester Install & Test Guide
+# Patient Survey (F3) — UAT Round 4 · End-to-End Field-Day Dry-Run — Tester Guide
 
-**UAT Round 4** · **App:** Patient Survey (F3) on **CSEntry** (Android) · **Time:** ~25–30 minutes · **Updated:** 2026-06-12 · **Report issues in:** Slack **#f3-uat** + the GitHub form (Part F)
+**Round:** 4 (CAPI testers' numbering) · **Type:** End-to-End Field-Day Dry-Run
+**Drafted:** 2026-06-12 · **Opens:** 2026-06-12 (Fri, now) · **Closes:** 2026-06-15 (Mon, AM)
+**Instrument:** F3 Patient Survey — CSPro **CSEntry** (Android) → **CSWeb**
+**Companion guide:** `docs/CAPI-CSEntry-UAT-Round-4-CSWeb-Monitoring-Companion-Guide-2026-06.md` (the CSWeb monitoring side — your STL / data monitor walks it **live** while you interview)
+**Coordinator:** Carl Patrick L. Reyes (Data Programmer / CAPI developer)
+**Window:** Opens **Fri 2026-06-12** · Closes **Mon 2026-06-15 (AM)** — a weekend dry-run
 
-This guide walks you through installing the survey app, downloading the Patient Survey, running a few short test interviews like a real patient-exit interview, sending them to the server, and reporting anything you notice. **No technical background needed** — just follow the steps in order.
+> **Project context.** This is the **DOH UHC Survey Year 2 — Patient Survey (F3)**. Field rollout hands an Android tablet running **CSEntry** to an enumerator, who interviews a **patient leaving a sampled health facility** (a patient-exit interview), then syncs the case up to **CSWeb** where the data team monitors it. F3 is the most branch-heavy of the three: the interview **routes by patient type (Outpatient vs Inpatient)**, captures the **patient's home address** as a narrowing cascade, and takes **two GPS fixes** (the facility and the patient's home). **Round 4 is an end-to-end field-day dry-run** — the first full walk of the R4 build the way fieldwork actually runs: install, download F3, interview like a real patient exit (offline, interruptions, GPS, photo), sync, and watch it land on CSWeb. Run F3 like a real field day and surface anything that would slow, confuse, or block a real enumerator or the monitoring team.
 
-> **Already installed an earlier version?** Open CSEntry's menu (**⋮**) → **Update Installed Applications** (or remove and re-add) so you get the **Round 4 build**. New in this build: related questions are now **grouped on one screen**, **GPS fills in by itself**, and the **verification photo is the last step** (only when the visit was actually done).
+> **Why this round exists.** The R4 build carries changes that have **never been walked end-to-end by a tester acting like a real enumerator**: the survey now **groups related questions on one screen** (combined view, ~5–6× fewer taps), **GPS fills in by itself** (both fixes), the **verification photo moved to the very end** and only appears **when the visit actually happened**, **"Other (specify)"** boxes open **only** when "Other" is ticked, and **"select all"** questions warn when you mix an exclusive option with others. On top of that, F3's **patient-type routing** and **home-address cascade** need a real run to prove they branch correctly. R4 is the rehearsal that proves the whole instrument holds together before it meets a real patient.
 
-## What you need
-- An **Android phone or tablet**, an **internet connection**
-- Login details (provided separately):
-  - **Server address:** `https://csweb.asiansocial.org/csweb/api`
-  - **Username:** `setest` · **Password:** _(from the admin — keep it private)_
-- Your **tester number** (a 3-digit number from the team)
-
----
-
-## Part A — Install the CSEntry app *(one time)*
-1. Open **Google Play Store** → search **CSEntry** → install **CSEntry** (publisher *U.S. Census Bureau*, free) → open it.
-
-## Part B — Download the survey from the server
-1. In CSEntry, **add an application** (**+** / **⋮**) → **from a CSWeb server**.
-2. Server address: `https://csweb.asiansocial.org/csweb/api` → **log in** (**setest** + password).
-3. Choose **PatientSurvey** → **download / add**. It now shows on the CSEntry home screen.
-
-## Part C — Allow Location & Camera
-Tap **Allow** for **Location** and **Camera** when asked. *(Denied by accident? Settings → Apps → CSEntry → Permissions.)*
-
-## Your test Questionnaire Number
-The 12-digit number is Region(2)–Province(2)–City/Mun(3)–Facility(2)–Case(3). Use the valid test prefix **`010280001`** + your **3-digit tester number**. For F3, please use numbers in the **500s** to keep cases separate from the other surveys:
-
-> **`010280001` + 5_ _** — e.g. **`010280001501`**, then `010280001502`, `010280001503`…
+> **Scope of this guide.** F3 enumerator side only — what you see on the tablet. The **CSWeb monitoring** that confirms your synced cases arrive (Sync Report, map, Outpatient-vs-Inpatient counts) is in the companion guide; your STL / data monitor runs that **at the same time**, so coordinate timing.
 
 ---
 
-## Part D — Run the test interviews *(like a patient-exit interview)*
+## ⚠️ Coordinator pre-flight (Carl — do BEFORE opening the round)
 
-### TC-1 — Completed interview (the main one)
-1. Tap **PatientSurvey** → **new interview** (**+**).
-2. **Questionnaire Number:** `010280001` + your number (e.g. `010280001501`). The app **auto-fills Region / Province / City names** — confirm they appear (read-only, intended).
-3. **Patient Type:** choose **Outpatient** or **Inpatient** — this routes the interview to the right section later (Outpatient → Section G; Inpatient → Section H). *(Run TC-1 once as Outpatient and, if you have time, once as Inpatient — see TC-6.)*
-4. **Geographic ID:** confirm the facility names auto-filled, and pick the facility **Barangay** from the list.
-5. **Patient's home address:** choose the patient's **home Region → Province → City → Barangay** from the drop-downs — confirm each list **populates after you pick the one above it** (the lists narrow down step by step).
-6. **GPS fills in by itself** — there are **two** GPS steps (the **facility** and the **patient's home**); each opens an **"Obtaining GPS Location"** box on its own (no button). Near a window / outdoors is faster.
-7. The **Informed Consent Form** (PART I: Information about the study) shows in full — **scroll through it**, then answer **Yes** to continue.
-8. Work through the questions with reasonable **test** values. Please check:
-   - **Several questions share one screen** (grouped) — scroll and answer them all.
-   - **Date picker** for dates; **drop-downs** for long lists, **radio buttons** for short ones, with **auto-advance** after you tap.
-   - **Blue instruction text** under some questions.
-9. At the **end**, set the **Result of Visit** to a **Completed** option, then the **last screen is the Verification Photo** — take any test photo. **Save / complete.**
+R4 runs on the **live CSWeb** (`csweb.asiansocial.org`). The `010280001` test prefix segregates these throwaway cases from real data; the monitor filters them out (and they can be purged after — see companion guide teardown).
 
-### TC-2 — Refused / withdrawn (no photo expected)
-Start another case (e.g. `010280001502`). Answer consent **No**, or set the **Result of Visit** to **Refused / Withdraw Participation/Consent**. The interview should **end** with **no photo step**.
+1. **Deploy the R4 build ×3 to CSWeb** — F1 + F3 + F4. The F3 package carries: combined-view screens, GPS auto-fetch (both fixes), photo-at-end + photo-gate, other-specify gating, exclusivity warnings, plus the patient-type routing + home-address cascade. Confirm `PatientSurvey` downloads cleanly on a real device once.
+2. **Create the Slack channel** `#f3-uat` on `aspsi-doh-uhc-survey2.slack.com`; add the F3 testers + their STL + the data monitor; pin this guide.
+3. **Confirm the GitHub feedback form is live** — `.github/ISSUE_TEMPLATE/capi_uat_feedback.yml`. Confirm the label `from-uat-round-4-capi-2026-06` exists and the F3 tracking issue **[#369](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/369)** is open.
+4. **Pre-assign each tester a Questionnaire-Number block** (F3 = `5xx`) in Section 3.
+5. **CSWeb users are created** (§2 / §3) — `shan` / `kidd` (**Administrator**, also test the console) and `alytest` (Aly) / `aidan` (**Field Sync**) — each with a unique password. **Share** each F3 tester's **own username + password** privately (not in the public guide). Per-tester logins make every synced case attributable; keep `setest` as a coordinator fallback only. (Canonical user list is in the companion guide §2; the same RA logins are reused across F1/F3/F4 — one account per person.)
+6. **Tell the monitor** to open the companion guide and have CSWeb up when the round starts.
 
-### TC-3 — Partial save + resume
-Answer a few questions, press **Back** → **Partial Save**. Confirm the case shows a **partial** marker and you can **reopen and continue**.
-
-### TC-4 — "Other (specify)" behaviour
-Tick **Other** on any question → confirm a **"specify" box appears and is required**. Untick Other → confirm the box **goes away / is skipped**.
-
-### TC-5 — "Select all that apply" + exclusive option
-Tick a normal option **and** an exclusive one (**"None"**, **"I don't know"**, **"There are no benefits…"**) → confirm a **gentle warning** appears (it's a warning, not a block).
-
-### TC-6 — Patient-type routing *(if time allows)*
-Run one **Outpatient** and one **Inpatient** case and confirm each reaches the **right care section** (Outpatient questions vs Inpatient questions), and you're **not** asked the other type's questions.
-
-*(Optional)* Try switching **language** to check translations.
-
-## Part E — Send your data to the server *(sync)*
-Back on the PatientSurvey case list → **Synchronize / Sync** → log in if asked → wait for **"Sync complete / success."**
-
-## Part F — Report what you found
-1. **GitHub form (one per finding):**
-   **`https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/new?template=capi_uat_feedback.yml`**
-   Pick **Instrument = F3**, the **scenario** (TC-1…TC-6), the **result**, and describe what you saw (screenshots help).
-2. **Slack #f3-uat:** quick notes / screenshots / discussion.
-
-Checklist to mention:
-- **12-digit number** accepted + **names auto-filled**? **Patient Type** routed correctly (TC-6)?
-- **Patient-home address** drop-downs narrowed down step by step? **Both GPS** filled by themselves?
-- **Consent text** displayed fully? **Grouped screens / date picker / drop-downs / auto-advance** OK?
-- **Photo** appeared **only** on Completed (TC-1), **not** on Refused/Withdraw (TC-2)?
-- **Other-specify** gated correctly (TC-4)? **Exclusive-option warning** showed (TC-5)?
-- **Partial Save + resume** (TC-3)? **Sync** finished? Anything **confusing/slow/broken**?
+> Until steps 1–6 are done, this guide is a draft. Don't send it with the assignment cells empty.
 
 ---
 
-## Quick troubleshooting
+## 1. Quick Reference
+
+| Item | Value |
+|---|---|
+| **App to install** | **CSEntry** (Android) — publisher *U.S. Census Bureau*, free, Google Play |
+| **App to download from server** | **PatientSurvey** |
+| **Server address (in CSEntry)** | `https://csweb.asiansocial.org/csweb/api` |
+| **Server login (your own)** | your own CSWeb user — `shan` / `kidd` / `alytest` (Aly) / `aidan` (see §2 / §3) · password *(coordinator shares privately)*. **Not** the shared `setest`. |
+| **Test facility prefix (always use)** | `010280001` (Region I / Ilocos Norte — passes PSGC validation) |
+| **Your QN block (F3)** | `010280001` + **5xx** — your assigned 3-digit block (see §3) |
+| **What's new to look for** | combined screens · GPS auto-fetch (×2) · photo at the end (only if visit happened) · other-specify gating · exclusive-option warning · patient-type routing · home-address cascade |
+| **Bug repo** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues |
+| **Feedback form (one per finding)** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/new?template=capi_uat_feedback.yml |
+| **Bug-filing label (auto-applied)** | `from-uat-round-4-capi-2026-06` |
+| **Slack channel** | `#f3-uat` on `aspsi-doh-uhc-survey2.slack.com` |
+| **F3 tracking issue** | [#369](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/369) |
+| **Companion (monitor) guide** | `docs/CAPI-CSEntry-UAT-Round-4-CSWeb-Monitoring-Companion-Guide-2026-06.md` |
+
+> **No technical background needed.** Follow the steps in order and tell us what you saw; a screenshot helps a lot.
+
+---
+
+## 2. Tester Roster
+
+Play your role like a real field day — you are both the **enumerator** and the stand-in **patient**. F3's catch: **both patient types must be walked**, so split them across testers.
+
+| Tester | CSWeb username | Role | Field persona for the dry-run | Test device(s) |
+|---|---|---|---|---|
+| **Shan** (ASPSI RA) | `shan` | Primary enumerator + **CSWeb Admin** | A full **Outpatient** exit interview, start to finish — then also tests the **CSWeb console** (companion guide) | 10"+ Android tablet |
+| **Kidd** (ASPSI main RA) | `kidd` | Enumerator + **CSWeb Admin** | A full **Inpatient** exit interview + the **Refused/Withdraw** path — then also tests the **CSWeb console** (companion guide) | Low-end / smaller Android phone |
+| **Aly** (ASPSI RA) | `alytest` | Enumerator (field user) | One full walk; pairs with the monitor (Marriz) at end-of-day | iPad / other tablet — variety |
+| **Aidan** (ASPSI RA) | `aidan` | Enumerator (field user) | A second independent full walk (the other patient type for extra coverage) + offline / partial-save stress | Another Android phone — variety |
+
+> **Log into CSEntry with your own username above — not the shared `setest`** — so every synced case is attributable to you. `alytest` (Aly) / `aidan` are **Field Sync** logins (CSEntry only); **Shan, Kidd and Marriz are CSWeb Administrators** who also test the server/console side (companion guide), so both CSEntry and CSWeb get walked. The coordinator sets + shares passwords privately.
+
+> **Each tester completes at least one WHOLE F3 interview.** Between you, cover **Outpatient AND Inpatient** (so the routing gets exercised both ways), plus one **Refused/Withdraw** case. Device variety (a big tablet AND a small/old phone) is how we catch combined-view layout problems before the field does.
+
+---
+
+## 3. Your Test Questionnaire-Number Assignments
+
+The interview opens with a **12-digit Questionnaire Number**: Region(2)–Province(2)–City/Mun(3)–Facility(2)–Case(3). Everyone uses the test prefix **`010280001`**; your **3-digit block** (F3 = `5xx`) keeps your cases from clashing.
+
+| Tester | CSWeb username | QN block (F3 = `5xx`) | Example cases |
+|---|---|---|---|
+| **Shan** | `shan` | `010280001` + **`500`–`519`** | `010280001500`, `010280001501`, … |
+| **Kidd** | `kidd` | `010280001` + **`520`–`539`** | `010280001520`, … |
+| **Aly** | `alytest` | `010280001` + **`540`–`559`** | `010280001540`, … |
+| **Aidan** | `aidan` | `010280001` + **`560`–`579`** | `010280001560`, … |
+
+> Use a **different last 3 digits for each case**. Coordinator fills the names + blocks above before sending. **Don't reuse another tester's block.**
+
+---
+
+## 4. Pre-Flight Checks (each tester, before testing)
+
+1. **Android device + internet** ready.
+2. **CSEntry installed** (5A.1) and **PatientSurvey downloaded** from the server (5A.2).
+3. **Already had an older version?** **⋮ → Update Installed Applications** (or remove + re-add) so you're on the **Round 4 build**. Tell-tale of R4: questions **grouped on one screen** and a **single 12-digit number**.
+4. **Permissions:** tap **Allow** for **Location** and **Camera** when asked. (Denied? Settings → Apps → CSEntry → Permissions.)
+5. **Have your own CSWeb username + password** (§2 / §3 — e.g. `shan`, *not* the shared `setest`) and your **QN block** ready.
+
+---
+
+## 5. The Field-Day Dry-Run
+
+Run it as a real patient-exit interview, in order: **5A → 5B → 5C → 5D → 5E** is one continuous pass. When you file a finding (Section 6), pick the matching **scenario** in the GitHub form — the `[TC-…]` tags tell you which.
+
+For anything wrong, jot **expected** vs **actual**. Wording issues may be survey-design items (routed to the survey team), not bugs — flag and say which.
+
+### 5A — Install + download + cold start (act like Day 1) · `[Install / download the app]`
+
+- **5A.1 (install CSEntry):** Play Store → **CSEntry** (*U.S. Census Bureau*, free) → open.
+- **5A.2 (download F3):** CSEntry → **add application** (**+** / **⋮**) → **from a CSWeb server** → server `https://csweb.asiansocial.org/csweb/api` → log in with **your own username** (e.g. `shan`, see §3) + password → **PatientSurvey** → **download / add**. **Time it.**
+- **5A.3 (start cold):** Tap **PatientSurvey** → **new interview** (**+**) → enter QN (`010280001` + your number). Expect **auto-filled Region / Province / City names** (read-only, intended). Mistyped → *"…not found in PSGC"* → re-enter.
+
+### 5B — Full interview under field conditions · `[TC-1 Completed]` `[TC-3 Partial save + resume]` `[TC-6 Patient-type routing]`
+
+**What you're rehearsing:** a patient completing the whole exit interview in a real facility — not on perfect Wi-Fi.
+
+- **5B.1 (full happy walk — the main one):** Complete the whole interview with reasonable **test** values. As you go, confirm:
+  - **Patient Type** `[TC-6]`: choose **Outpatient** or **Inpatient** at the start — this **routes the interview to the right care section later** (the type you pick determines which questions you're asked). Per your persona (A→Outpatient, B→Inpatient).
+  - **Facility geo-ID:** confirm facility names auto-filled; pick the facility **Barangay** from the list (not empty).
+  - **Patient's home address (cascade):** pick the patient's **home Region → Province → City → Barangay** from drop-downs — confirm **each list populates only after you pick the level above it** (the lists narrow down step by step).
+  - **Two GPS fixes:** there are **two** GPS steps — the **facility** and the **patient's home**. Each opens an **"Obtaining GPS Location"** box **on its own** (no button); near a window/outdoors is faster; coordinates fill and lock.
+  - **Informed Consent Form** (PART I) shows **in full** — scroll, then answer **Yes**.
+  - **Combined screens / date picker / drop-downs / auto-advance / blue instruction text** behave (see 5C).
+  - At the **end**, set **Result of Visit** to a **Completed** option → **last screen is the Verification Photo** → take a test photo → **Save / complete**.
+- **5B.2 (offline stretch):** Partway through, turn **Wi-Fi / data OFF**. Keep answering — no error banners, answers stay.
+- **5B.3 (interruption + resume) `[TC-3]`:** Mid-interview, **Back** → **Partial Save** → case shows a **partial** marker → **reopen** and continue where you left off.
+- **5B.4 (force-quit):** Once, fully **kill** CSEntry and reopen → partial case still there, reopens cleanly.
+
+### 5C — New-feature correctness spot-checks (the R4 build changes) · see TC tags
+
+Check these **as you reach them** during 5B.
+
+| # | Feature | What to do | Confirm | Form scenario |
+|---|---|---|---|---|
+| **5C.1** | **Combined screens** | Reach any grouped screen | Related questions readable on your device, scroll works, nothing cut off | `Combined screens / …` |
+| **5C.2** | **GPS auto-fetch (×2)** | Reach each GPS step | The **"Obtaining GPS Location"** box opens **on its own** at **both** the facility and home steps; coordinates fill + lock | `GPS / Camera / Verification photo` |
+| **5C.3** | **Patient-type routing** `[TC-6]` | Run one **Outpatient** and (across testers) one **Inpatient** | Each reaches the **right care section** and you are **not** asked the other type's questions | `TC-6 Patient-type routing` |
+| **5C.4** | **Home-address cascade** | At the patient-home address | Province list appears only after Region; City after Province; Barangay after City — each **narrows down**; no empty lists if you picked the level above | `General observation` |
+| **5C.5** | **Photo at the end** | Finish a **Completed** case | Verification photo is the **very last step** | `GPS / Camera / Verification photo` |
+| **5C.6** | **Photo gate (Refused)** `[TC-2]` | Run a **Refused/Withdraw** case (5C.9) | **No photo step at all** | `TC-2 Refused / Withdrawn` |
+| **5C.7** | **Other (specify) gating** `[TC-4]` | Tick **Other** on any such question | A **"specify" box appears + is required**; **un-tick Other** → box **goes away / is skipped** | `TC-4 "Other (specify)" behaviour` |
+| **5C.8** | **Exclusive-option warning** `[TC-5]` | Tick a normal option **and** an exclusive one (**"None"** / **"I don't know"** / **"There are no benefits…"**) | A **gentle warning** appears; it's a **warning, not a block** | `TC-5 "Select all" + exclusive-option warning` |
+| **5C.9** | **Refused/Withdraw path** `[TC-2]` | New case, consent **No** **or** **Result of Visit = Refused / Withdraw** | Interview **ends**, **no photo step** | `TC-2 Refused / Withdrawn` |
+
+> If any 5C item is **missing or misbehaving**, file it (Section 6). Wording problems are high-value — flag even if it "works."
+
+### 5D — Sync + confirm it landed on CSWeb · `[Sync to the server]`
+
+- **5D.1 (sync up):** PatientSurvey case list → **Synchronize / Sync** → log in with **your own username** if asked → wait for **"Sync complete / success."**
+- **5D.2 (confirm landing):** Tell your **monitor / STL** your **QN** + patient type + sync time. They confirm (companion guide) it appears in **CSWeb → Sync Report**, the **View case** opens with the right answers (and the **right patient-type branch**), the **Outpatient-vs-Inpatient counts** move correctly, and — if a GPS got a real outdoor fix — a **pin shows on the Map**. (Indoor/desk cases may be blank — say so.)
+
+### 5E — Adversarial coda
+
+- **5E.1 (real respondent text):** In an "Other (specify)" / open-text field, type `< > & " ' /` + emoji (🏥) → preserved through save + sync.
+- **5E.2 (long text):** Paste ~500 chars → accepted, preserved on reopen + sync.
+- **5E.3 (day-later resume):** Partial-save, close everything, come back next session, reopen → resumes at the saved point.
+- **5E.4 (bad QN):** Number not starting `010280001` → *"…not found in PSGC"* rejection with a clear re-enter path.
+- **5E.5 (language, optional):** Switch language → translated text appears (note anything untranslated).
+
+---
+
+## 6. Bug-Filing Format
+
+For **every** finding, open a GitHub issue via the feedback form (one per finding):
+**https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/new?template=capi_uat_feedback.yml**
+
+Pick **Instrument = F3**, the matching **scenario** from §5, the **result** (Pass / Pass-with-comment / Fail / Blocked), and describe it plainly. Auto-label: `from-uat-round-4-capi-2026-06`. By-hand shape:
+
+```
+**Round 4 (dry-run) step:** 5A / 5B / 5C.x / 5D / 5E.x
+**Type:** CAPI bug  OR  survey-design/wording question (your best guess)
+**Tester:** ‹your name / initials›
+**Device:** Android tablet (model + Android version) / phone (model) / etc.
+**Questionnaire Number:** 010280001 5xx
+**Patient type:** Outpatient / Inpatient
+**Question / screen:** (e.g. "patient-home address cascade" / "home GPS" / "care section" / "Result of Visit")
+**Expected:** [what the step says should happen]
+**Actual:** [what happened]
+**Reproduction steps:**
+  1. ...
+**Severity:** critical / high / medium / low
+**Field impact:** [would this slow / confuse / block a real enumerator? how badly?]
+**Screenshot / photo:** [attach — very helpful]
+```
+
+For quick discussion or anything urgent, post in **`#f3-uat`**. Coordinator links each finding to **#369** and triages daily.
+
+---
+
+## 7. Triage Cadence
+
+- **Daily check-in:** Coordinator posts to `#f3-uat` daily ~09:00 PHT — new F3 findings, criticals, overnight fixes.
+- **Mid-round sync:** any field-blocking critical (can't download F3, sync failing, wrong patient-type branch, a case lost) → same-day Slack huddle.
+- **R4 close:** end of the sprint week. Coordinator reconciles **#369**; opens dispositioned (fix-now / next-sprint / route-to-survey-team / won't-fix-with-rationale). Round closes when the **exit criteria** (companion guide §8) are met and F3's open finding count is **0**.
+
+---
+
+## 8. Why this round matters
+
+Every R4 change was built and gate-checked in isolation. What none of them has done is **survive a real patient-exit interview on a real device, synced to a real server, watched by a real monitor.** F3 is the branch-heavy instrument — patient-type routing and the home-address cascade are exactly the kind of logic that looks right in the editor and breaks on contact with a real interview.
+
+- **A whole F3 interview completes** for **both** patient types — not just isolated screens.
+- **Routing + cascade behave on a real device** — the right care section, the address lists narrowing correctly.
+- **Two GPS fixes + the photo behave in the real world** — auto-fetch by a window, photo only when the visit happened.
+- **The sync → CSWeb-landing loop closes**, with Outpatient/Inpatient counts that match what you entered.
+
+If F3 carries a clean field day here, it walks into the pretest confident. If it doesn't, this is the last cheap place to find out. Thanks for testing — treat it like the real day.
+
+---
+
+## Appendix — Quick troubleshooting
+
 - **Can't connect / download:** check internet; type the server address exactly (`https://…/csweb/api`).
-- **Login fails:** re-type username (lowercase, no spaces) + password.
-- **"…not found in PSGC":** re-enter the number starting `010280001` + your 3 digits (500s).
-- **Home-address list is empty:** make sure you picked the level above it first (Region → Province → City → Barangay, in order).
-- **Old-looking screens (one question per screen):** older version — **⋮ → Update Installed Applications**, or remove and re-add (Part B).
+- **Login fails:** re-type the username (lowercase, no spaces) + password.
+- **"…not found in PSGC":** re-enter the number as `010280001` + your 3 digits (500s).
+- **Home-address list is empty:** make sure you picked the level **above** it first (Region → Province → City → Barangay, in order).
+- **Old-looking screens (one question per screen):** older version — **⋮ → Update Installed Applications**, or remove and re-add (5A.2).
 - **GPS won't read / Camera won't open:** allow **Location** / **Camera** (Settings → Apps → CSEntry → Permissions); GPS may time out indoors — note it and move on.
-
-*Thank you for testing! This is a pilot run — anything that feels off is useful feedback.*
+- **Sync fails:** confirm internet, re-enter **your own username** + password, retry; if it still fails, screenshot the error and post in `#f3-uat`.
