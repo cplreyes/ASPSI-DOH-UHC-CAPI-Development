@@ -105,3 +105,6 @@ deliverables/CSPro/F1/facility_lookup.*
 deliverables/CSPro/F1/_stash/
 deliverables/CSPro/F1/.redesign_backup/
 deliverables/CSPro/automation/shots/
+
+# Private methodology — NDU/proprietary, kept local only (removed from the public repo 2026-06-12)
+deliverables/UHC-Survey-CAPI-Guide/
