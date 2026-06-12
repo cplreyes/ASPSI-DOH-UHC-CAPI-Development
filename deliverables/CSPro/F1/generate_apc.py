@@ -180,17 +180,39 @@ def auto_other_specify_procs():
     return procs, unmatched
 
 
-def uhc9_other_specify_procs(names):
+def uhc9_other_specify_procs(names, no_other_skip_targets=None):
     """#148: enforce 'Other (specify)' text on UHC9 dual-other items.
     `<FIELD>_YES_OTHER_TXT` (parent code 4) and `<FIELD>_NO_OTHER_TXT` (code 7),
     per spec 4.13. Parent = the name minus the suffix (dcf is the truth — spec
-    used shortened names like Q12_YES_OTHER_TXT)."""
+    used shortened names like Q12_YES_OTHER_TXT).
+
+    #376 data-loss fix: for a `_NO_OTHER_TXT` box whose parent owns a No-branch
+    skip whose range originally swallowed code 7 (e.g. `in 5:9`), the parent skip
+    is rewritten to EXCLUDE 7 (see exclude_code7_from_skip) so code 7 falls
+    through to this box. To still skip the Yes-only follow-up afterwards, the box's
+    postproc ends with `skip to <target>` — supplied via `no_other_skip_targets`
+    ({parent: target}). The skip runs only after a VALID entry; for any non-7 code
+    the box is `noinput`'d in preproc, and a noinput'd field never executes its
+    postproc (CSPro semantic), so the trailing skip never fires for non-7 codes.
+    """
+    no_other_skip_targets = no_other_skip_targets or {}
     procs = {}
     for n in names:
         for suffix, code, lbl in (("_YES_OTHER_TXT", 4, "Yes, other reason"),
                                   ("_NO_OTHER_TXT", 7, "No, other reason")):
             if n.endswith(suffix):
                 parent = n[: -len(suffix)]
+                # #376: tail skip past the Yes-only follow-up for the No-other path
+                tail = ""
+                target = no_other_skip_targets.get(parent)
+                if suffix == "_NO_OTHER_TXT" and target:
+                    tail = (
+                        f"\n  {{ #376: after the No-other text is entered, still skip the\n"
+                        f"     Yes-only follow-up — code 7 was excluded from {parent}'s parent\n"
+                        f"     skip so it reaches this box; runs only on a valid (code-7) entry,\n"
+                        f"     since a noinput'd field never runs its postproc. }}\n"
+                        f"  skip to {target};"
+                    )
                 procs[n] = (
                     f"PROC {n}\n"
                     f"preproc\n"
@@ -203,6 +225,7 @@ def uhc9_other_specify_procs(names):
                     f"    errmsg(\"'{lbl}' was selected for {parent}. Please specify.\");\n"
                     f"    reenter;\n"
                     f"  endif;"
+                    f"{tail}"
                 )
     return procs
 
@@ -749,6 +772,59 @@ TODO_NOTE = """\
 """
 
 
+def _skip_codes_for(field, cond):
+    """The set of parent codes that satisfy `cond` for `field`, for the simple
+    SKIP_RULES forms used here: `FIELD in lo:hi`, `FIELD in a,b,c`, `FIELD = N`,
+    `FIELD <> N`, and `or`-joined combinations of those (e.g. Q31's
+    `FIELD in 5:8 or FIELD = 9`). Returns None if the condition isn't one of these
+    recognized shapes (so callers leave it untouched rather than guess)."""
+    codes, ok = set(), True
+    for clause in re.split(r"\s+or\s+", cond.strip()):
+        c = clause.strip()
+        m = re.fullmatch(rf"{re.escape(field)}\s+in\s+(\d+)\s*:\s*(\d+)", c)
+        if m:
+            codes |= set(range(int(m.group(1)), int(m.group(2)) + 1)); continue
+        m = re.fullmatch(rf"{re.escape(field)}\s+in\s+([\d,\s]+)", c)
+        if m:
+            codes |= {int(x) for x in re.findall(r"\d+", m.group(1))}; continue
+        m = re.fullmatch(rf"{re.escape(field)}\s*=\s*(\d+)", c)
+        if m:
+            codes.add(int(m.group(1))); continue
+        # `<>` and anything else: not a positive-membership clause we can reason
+        # about for "does code 7 get swallowed" — bail and leave the rule alone.
+        ok = False
+    return codes if ok else None
+
+
+def exclude_code7_from_skip(field, cond):
+    """Rewrite a No-branch skip condition so code 7 (No-other) falls THROUGH
+    instead of being swallowed (#376). Re-emits the surviving codes as a single
+    `FIELD in a,b,...` membership (e.g. `in 5:9` -> `in 5,6,8,9`; Q31's
+    `in 5:8 or = 9` -> `in 5,6,8,9`). Returns the new condition, or the original
+    unchanged if 7 isn't in the skip set or the form isn't recognized."""
+    codes = _skip_codes_for(field, cond)
+    if codes is None or 7 not in codes:
+        return cond
+    survivors = sorted(codes - {7})
+    return f"{field} in {','.join(str(c) for c in survivors)}"
+
+
+def dual_other_no_skip_map(skip_rules, dcf_names):
+    """{parent: target} for every SKIP_RULES row that (a) has a `_NO_OTHER_TXT`
+    box in the dcf and (b) whose No-branch skip range originally swallowed code 7.
+    Drives BOTH the parent-skip rewrite (exclude 7) AND the trailing `skip to
+    <target>` appended to the NO_OTHER box, so the two stay in lockstep (#376)."""
+    have = set(dcf_names)
+    out = {}
+    for field, cond, target in skip_rules:
+        if f"{field}_NO_OTHER_TXT" not in have:
+            continue
+        codes = _skip_codes_for(field, cond)
+        if codes is not None and 7 in codes:
+            out[field] = target
+    return out
+
+
 def skip_proc(field, cond, target):
     return (
         f"PROC {field}\n"
@@ -761,6 +837,19 @@ def skip_proc(field, cond, target):
 
 def main():
     parts = [HEADER, "", APP_ENTRY, "", CONTROL_PROCS, ""]
+
+    # dcf-driven names read up-front so the #376 dual-other map can be built
+    # before we emit the skip PROCs (the map drives the skip rewrite too).
+    names = dcf_item_names()
+
+    # #376 (GH F1 Section C): the No-branch skip for an "implementation status"
+    # question swallowed code 7 ("No, other reason (specify)"), jumping over its
+    # `_NO_OTHER_TXT` box -> the other-reason text was never collected (data loss).
+    # Build {parent: target} for every such question (has a NO_OTHER box AND its
+    # skip range includes 7); use it to (1) exclude 7 from the parent skip and
+    # (2) append `skip to <target>` to the NO_OTHER box so the Yes-only follow-up
+    # is still skipped after the other-reason text is entered.
+    dual_other_skips = dual_other_no_skip_map(SKIP_RULES, names)
 
     parts.append("{ ---- Validations & cross-field checks (spec 4) ---- }")
     for field in sorted(BESPOKE_PROCS):
@@ -777,11 +866,10 @@ def main():
                 f"merge the skip into its BESPOKE_PROCS entry."
             )
         covered.add(field)
+        # #376: drop code 7 from the No-branch range so No-other reaches its box
+        cond = exclude_code7_from_skip(field, cond) if field in dual_other_skips else cond
         parts.append(skip_proc(field, cond, target))
         parts.append("")
-
-    # dcf-driven blocks (names read straight from the dictionary)
-    names = dcf_item_names()
 
     parts.append("{ ---- Why-difficult display gates (spec 4.10) ---- }")
     for field, proc in sorted(why_difficult_gate_procs(names).items()):
@@ -792,7 +880,7 @@ def main():
         parts.append("")
 
     parts.append("{ ---- 'Other (specify)' enforcement — UHC9 dual-other items (spec 4.13) ---- }")
-    for field, proc in sorted(uhc9_other_specify_procs(names).items()):
+    for field, proc in sorted(uhc9_other_specify_procs(names, dual_other_skips).items()):
         if field in covered:
             continue
         covered.add(field)

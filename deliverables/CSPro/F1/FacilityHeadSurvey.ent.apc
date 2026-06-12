@@ -568,7 +568,7 @@ postproc
 
 PROC Q14_PHU_CREATED
 postproc
-  if Q14_PHU_CREATED in 5:9 then
+  if Q14_PHU_CREATED in 5,6,8,9 then
     skip to Q16_HEALTH_PROMO_UNIT;
   endif;
 
@@ -580,49 +580,49 @@ postproc
 
 PROC Q17_HPU_CREATED
 postproc
-  if Q17_HPU_CREATED in 5:9 then
+  if Q17_HPU_CREATED in 5,6,8,9 then
     skip to Q19_NEW_ROLES;
   endif;
 
 PROC Q19_NEW_ROLES
 postproc
-  if Q19_NEW_ROLES in 5:9 then
+  if Q19_NEW_ROLES in 5,6,8,9 then
     skip to Q21_NEW_DEPTS;
   endif;
 
 PROC Q21_NEW_DEPTS
 postproc
-  if Q21_NEW_DEPTS in 5:9 then
+  if Q21_NEW_DEPTS in 5,6,8,9 then
     skip to Q23_NEW_BUILDINGS;
   endif;
 
 PROC Q23_NEW_BUILDINGS
 postproc
-  if Q23_NEW_BUILDINGS in 5:9 then
+  if Q23_NEW_BUILDINGS in 5,6,8,9 then
     skip to Q25_NEW_ROOMS;
   endif;
 
 PROC Q25_NEW_ROOMS
 postproc
-  if Q25_NEW_ROOMS in 5:9 then
+  if Q25_NEW_ROOMS in 5,6,8,9 then
     skip to Q27_INC_EQUIPMENT;
   endif;
 
 PROC Q27_INC_EQUIPMENT
 postproc
-  if Q27_INC_EQUIPMENT in 5:9 then
+  if Q27_INC_EQUIPMENT in 5,6,8,9 then
     skip to Q29_INC_SUPPLIES;
   endif;
 
 PROC Q29_INC_SUPPLIES
 postproc
-  if Q29_INC_SUPPLIES in 5:9 then
+  if Q29_INC_SUPPLIES in 5,6,8,9 then
     skip to Q31_EMR_USE;
   endif;
 
 PROC Q31_EMR_USE
 postproc
-  if Q31_EMR_USE in 5:8 or Q31_EMR_USE = 9 then
+  if Q31_EMR_USE in 5,6,8,9 then
     skip to Q35_STAFFING_CHANGED;
   endif;
 
@@ -903,6 +903,11 @@ postproc
     errmsg("'No, other reason' was selected for Q14_PHU_CREATED. Please specify.");
     reenter;
   endif;
+  { #376: after the No-other text is entered, still skip the
+     Yes-only follow-up — code 7 was excluded from Q14_PHU_CREATED's parent
+     skip so it reaches this box; runs only on a valid (code-7) entry,
+     since a noinput'd field never runs its postproc. }
+  skip to Q16_HEALTH_PROMO_UNIT;
 
 PROC Q14_PHU_CREATED_YES_OTHER_TXT
 preproc
@@ -927,6 +932,11 @@ postproc
     errmsg("'No, other reason' was selected for Q17_HPU_CREATED. Please specify.");
     reenter;
   endif;
+  { #376: after the No-other text is entered, still skip the
+     Yes-only follow-up — code 7 was excluded from Q17_HPU_CREATED's parent
+     skip so it reaches this box; runs only on a valid (code-7) entry,
+     since a noinput'd field never runs its postproc. }
+  skip to Q19_NEW_ROLES;
 
 PROC Q17_HPU_CREATED_YES_OTHER_TXT
 preproc
@@ -951,6 +961,11 @@ postproc
     errmsg("'No, other reason' was selected for Q19_NEW_ROLES. Please specify.");
     reenter;
   endif;
+  { #376: after the No-other text is entered, still skip the
+     Yes-only follow-up — code 7 was excluded from Q19_NEW_ROLES's parent
+     skip so it reaches this box; runs only on a valid (code-7) entry,
+     since a noinput'd field never runs its postproc. }
+  skip to Q21_NEW_DEPTS;
 
 PROC Q19_NEW_ROLES_YES_OTHER_TXT
 preproc
@@ -975,6 +990,11 @@ postproc
     errmsg("'No, other reason' was selected for Q21_NEW_DEPTS. Please specify.");
     reenter;
   endif;
+  { #376: after the No-other text is entered, still skip the
+     Yes-only follow-up — code 7 was excluded from Q21_NEW_DEPTS's parent
+     skip so it reaches this box; runs only on a valid (code-7) entry,
+     since a noinput'd field never runs its postproc. }
+  skip to Q23_NEW_BUILDINGS;
 
 PROC Q21_NEW_DEPTS_YES_OTHER_TXT
 preproc
@@ -999,6 +1019,11 @@ postproc
     errmsg("'No, other reason' was selected for Q23_NEW_BUILDINGS. Please specify.");
     reenter;
   endif;
+  { #376: after the No-other text is entered, still skip the
+     Yes-only follow-up — code 7 was excluded from Q23_NEW_BUILDINGS's parent
+     skip so it reaches this box; runs only on a valid (code-7) entry,
+     since a noinput'd field never runs its postproc. }
+  skip to Q25_NEW_ROOMS;
 
 PROC Q23_NEW_BUILDINGS_YES_OTHER_TXT
 preproc
@@ -1023,6 +1048,11 @@ postproc
     errmsg("'No, other reason' was selected for Q25_NEW_ROOMS. Please specify.");
     reenter;
   endif;
+  { #376: after the No-other text is entered, still skip the
+     Yes-only follow-up — code 7 was excluded from Q25_NEW_ROOMS's parent
+     skip so it reaches this box; runs only on a valid (code-7) entry,
+     since a noinput'd field never runs its postproc. }
+  skip to Q27_INC_EQUIPMENT;
 
 PROC Q25_NEW_ROOMS_YES_OTHER_TXT
 preproc
@@ -1047,6 +1077,11 @@ postproc
     errmsg("'No, other reason' was selected for Q27_INC_EQUIPMENT. Please specify.");
     reenter;
   endif;
+  { #376: after the No-other text is entered, still skip the
+     Yes-only follow-up — code 7 was excluded from Q27_INC_EQUIPMENT's parent
+     skip so it reaches this box; runs only on a valid (code-7) entry,
+     since a noinput'd field never runs its postproc. }
+  skip to Q29_INC_SUPPLIES;
 
 PROC Q27_INC_EQUIPMENT_YES_OTHER_TXT
 preproc
@@ -1071,6 +1106,11 @@ postproc
     errmsg("'No, other reason' was selected for Q29_INC_SUPPLIES. Please specify.");
     reenter;
   endif;
+  { #376: after the No-other text is entered, still skip the
+     Yes-only follow-up — code 7 was excluded from Q29_INC_SUPPLIES's parent
+     skip so it reaches this box; runs only on a valid (code-7) entry,
+     since a noinput'd field never runs its postproc. }
+  skip to Q31_EMR_USE;
 
 PROC Q29_INC_SUPPLIES_YES_OTHER_TXT
 preproc
@@ -1095,6 +1135,11 @@ postproc
     errmsg("'No, other reason' was selected for Q31_EMR_USE. Please specify.");
     reenter;
   endif;
+  { #376: after the No-other text is entered, still skip the
+     Yes-only follow-up — code 7 was excluded from Q31_EMR_USE's parent
+     skip so it reaches this box; runs only on a valid (code-7) entry,
+     since a noinput'd field never runs its postproc. }
+  skip to Q35_STAFFING_CHANGED;
 
 PROC Q31_EMR_USE_YES_OTHER_TXT
 preproc
