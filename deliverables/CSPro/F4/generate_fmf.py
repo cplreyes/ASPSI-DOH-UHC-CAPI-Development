@@ -32,6 +32,7 @@ from cspro_helpers import _truncate_long_labels
 DICT_LABEL = "HouseholdSurvey"
 FF_NAME = "HOUSEHOLDSURVEY_FF"
 DCF_REL_PATH = r".\HouseholdSurvey.dcf"
+APC_PATH = Path(__file__).resolve().parent / "HouseholdSurvey.ent.apc"
 
 DEFAULT_FONT = (
     "DefaultTextFont=-013 0000 0000 0000 0700 0000 0000 0000 "
@@ -255,11 +256,59 @@ def _chunk_label(item_objs):
     return f"Q{qs[0]}" if qs[0] == qs[-1] else f"Q{qs[0]}-Q{qs[-1]}"
 
 
-def derive_block_plan(dictionary):
+def parse_apc():
+    """-> (skip_sources, skip_targets, noinput_gated) from the generated .ent.apc.
+
+    Mirrors F1/inject_blocks.py parse_apc (the reference fix for UAT R4 GH #371/#375).
+    On a DisplayTogether screen CSEntry renders EVERY member field regardless of skip /
+    noinput logic, so a skip SOURCE (a field whose PROC does 'skip to') must END its
+    screen and a skip TARGET ('skip to <FIELD>') must START a fresh screen. We also
+    collect PROCs carrying a preproc 'noinput' gate so _is_gated_text can isolate them
+    authoritatively (suffix match alone misses non-_TXT/_SPECIFY gated fields)."""
+    if not APC_PATH.exists():
+        # Defensive: if the .apc has not been regenerated yet, fall back to the
+        # suffix-only gating (the orchestrator runs generate_apc.py BEFORE this,
+        # so in the normal pipeline the file is always present).
+        sys.stderr.write(f"WARNING: {APC_PATH.name} not found — skip-aware screen "
+                         f"breaks DISABLED (suffix-only gating)\n")
+        return set(), set(), set()
+    txt = APC_PATH.read_text(encoding="utf-8-sig")
+    txt = re.sub(r"\{[^{}]*\}", " ", txt)              # strip CSPro {…} comments
+    sources, targets, gated = set(), set(), set()
+    # procs = [preamble, name1, body1, name2, body2, ...]
+    procs = re.split(r"(?m)^PROC\s+([A-Z0-9_]+)\s*$", txt)
+    for name, body in zip(procs[1::2], procs[2::2]):
+        if re.search(r"\bskip\s+to\b", body):
+            sources.add(name)
+        if re.search(r"\bnoinput\b", body):
+            gated.add(name)
+    # 'skip to next' / 'skip to <field>' — only uppercase-starting tokens are dict
+    # fields; the CSPro keyword 'next' is lowercase and correctly NOT captured.
+    targets.update(re.findall(r"\bskip\s+to\s+([A-Z0-9_]+)", txt))
+    return sources, targets, gated
+
+
+def _is_gated_text(name, noinput_gated=frozenset()):
+    """Other-specify / specify free-text fields carry a preproc 'noinput' gate (they show
+    only when their trigger option is chosen). They MUST sit on their OWN screen — on a
+    combined DisplayTogether screen EVERY member field renders regardless of the gate, so
+    the specify box would always appear (R4 on-device bug, 2026-06-12). Catches *_OTHER_TXT,
+    *_SPECIFY, etc.; the .apc 'noinput' scan (noinput_gated, F1-parity) is authoritative for
+    any gated field the suffix check would miss. NOTE: *_AMT (amount-matrix) fields are NOT
+    gated text — they stay in the multi-select run so the matrix chunking below still applies."""
+    return name.endswith("_TXT") or name.endswith("_SPECIFY") or name in noinput_gated
+
+
+def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(), gated=frozenset()):
     """Auto DisplayTogether blocks for the survey body (moderate density). Each clean
     multi-select option set -> one screen; amount matrices (run has _AMT) and longer
-    runs -> chunked at MAX_CHUNK; other consecutive questions -> chunked. Every on-form
-    field of a processed record lands in one contiguous block (Position=start+emitted)."""
+    runs -> chunked at MAX_CHUNK; gated specify-text fields -> their OWN screen so the
+    noinput gate hides them when not applicable; other consecutive questions -> chunked.
+    Skip-awareness (sources/targets from the .apc, F1 GH #371/#375 fix) applies ONLY in
+    the simple-question chunk loop: a skip TARGET starts a fresh screen, a skip SOURCE
+    ends its screen — so a gated field can never share a DisplayTogether screen with the
+    field it skips over / into. Every on-form field of a processed record lands in one
+    contiguous block (Position=start+emitted)."""
     plan = []
     counter = [0]
 
@@ -276,11 +325,14 @@ def derive_block_plan(dictionary):
         while i < len(items):
             nm = items[i]["name"]
             ms = _MULTISELECT_RE.match(nm)
-            if ms and not nm.endswith("_TXT"):                # multi-select run + its _OTHER_TXT
-                base = ms.group(1)
-                run = []
-                while i < len(items) and (items[i]["name"].startswith(base + "_O")
-                                          or items[i]["name"] == base + "_OTHER_TXT"):
+            if _is_gated_text(nm, gated):                      # gated specify text -> its OWN screen
+                emit([items[i]], (_qnum(items[i]) and f"Q{_qnum(items[i])}") or nm)
+                i += 1
+            elif ms and not nm.endswith("_TXT"):              # multi-select OPTION run (matrix-aware)
+                base = ms.group(1)                             # gated _OTHER_TXT is excluded here and
+                run = []                                       # picked up by the gated-text branch above
+                while i < len(items) and items[i]["name"].startswith(base + "_O") \
+                        and not _is_gated_text(items[i]["name"], gated):
                     run.append(items[i]); i += 1
                 is_matrix = any(it["name"].endswith("_AMT") for it in run)
                 if not is_matrix and len(run) <= _RUN_BLOCK_CAP:
@@ -293,9 +345,13 @@ def derive_block_plan(dictionary):
                 while i < len(items) and len(chunk) < MAX_CHUNK:
                     nn = items[i]["name"]
                     mm = _MULTISELECT_RE.match(nn)
-                    if mm and not nn.endswith("_TXT"):
-                        break
+                    if (mm and not nn.endswith("_TXT")) or _is_gated_text(nn, gated):
+                        break                                  # stop before multi-select / gated text
+                    if chunk and nn in targets:
+                        break                                  # skip TARGET starts a fresh screen
                     chunk.append(items[i]); i += 1
+                    if nn in sources:
+                        break                                  # skip SOURCE ends its screen
                 emit(chunk)
     return plan
 
@@ -323,7 +379,12 @@ def build_fmf():
     dictionary = build_f4_dictionary()
     _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
     global _ACTIVE_BLOCK_PLAN
-    _ACTIVE_BLOCK_PLAN = NAMED_BLOCKS + derive_block_plan(dictionary)
+    # Skip-awareness reads the CURRENT .ent.apc — the orchestrator (cspro_compile_driver.py
+    # build_instrument) runs generate_apc.py BEFORE generate_fmf.py, so the .apc on disk is
+    # in lock-step with the .dcf the plan is derived from (see GENERATION ORDER note).
+    skip_sources, skip_targets, noinput_gated = parse_apc()
+    _ACTIVE_BLOCK_PLAN = NAMED_BLOCKS + derive_block_plan(
+        dictionary, skip_sources, skip_targets, noinput_gated)
     dict_name = dictionary.get("name", "HOUSEHOLDSURVEY_DICT")
     level = dictionary["levels"][0]
     level_name = level.get("name", "HOUSEHOLDSURVEY_LEVEL")

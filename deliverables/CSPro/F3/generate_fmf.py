@@ -35,6 +35,12 @@ from cspro_helpers import _truncate_long_labels
 DICT_LABEL = "PatientSurvey"
 FF_NAME = "PATIENTSURVEY_FF"
 DCF_REL_PATH = r".\PatientSurvey.dcf"
+# Generated CAPI logic — read for skip sources/targets + noinput gates so the
+# combined-view block plan never shares a DisplayTogether screen across a skip
+# boundary (R4 bug class GH #371/#375; fix ported from F1 inject_blocks.py).
+# The canonical build (cspro_compile_driver.build_instrument) runs generate_apc.py
+# BEFORE generate_fmf.py, so this file is current when read here.
+APC_PATH = Path(__file__).resolve().parent / "PatientSurvey.ent.apc"
 
 DEFAULT_FONT = (
     "DefaultTextFont=-013 0000 0000 0000 0700 0000 0000 0000 "
@@ -182,6 +188,9 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name):
         is_alpha = it.get("contentType") == "alpha"
         field_x2 = FIELD_RADIO_X2 if coded else FIELD_TEXTBOX_X2
         capture = "RadioButton" if coded else "TextBox"
+        if it["name"] in _CHECKBOX_FIELDS:   # alpha + value set rendered as a tick-list
+            capture = "CheckBox"
+            field_x2 = FIELD_RADIO_X2
         text = (it["labels"][0]["text"] if it.get("labels") else it["name"]).replace("\n", " ").replace("\r", " ")
         # [Field]
         lines.append("[Field]")
@@ -230,6 +239,11 @@ _NO_AUTOGROUP_RECORDS = {
     "REC_FACILITY_CAPTURE", "REC_PATIENT_HOME_CAPTURE", "REC_CASE_VERIFICATION",
 }
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
+# Single alpha fields rendered as a CSPro Check Box (one-question multi-select tick-list).
+# These get DataCaptureType=CheckBox and their own DisplayTogether screen (with any trailing
+# _OTHER_TXT / _MEDICINES_TXT gated free-text). 2026-06-12 R4 review: Q148.
+_CHECKBOX_FIELDS = {"Q148_CONDITIONS"}
+_CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share the checkbox screen
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen
 _ACTIVE_BLOCK_PLAN = []            # set per-build by build_fmf()
 
@@ -247,11 +261,57 @@ def _chunk_label(item_objs):
     return f"Q{qs[0]}" if qs[0] == qs[-1] else f"Q{qs[0]}-Q{qs[-1]}"
 
 
-def derive_block_plan(dictionary):
+def _is_gated_text(name, noinput_gated=frozenset()):
+    """Other-specify / specify free-text fields carry a preproc 'noinput' gate (they show
+    only when their trigger option is chosen). They MUST sit on their OWN screen — on a
+    combined DisplayTogether screen every member field renders regardless of the gate, so
+    the specify box would always appear (R4 on-device bug, 2026-06-12). Catches *_OTHER_TXT,
+    *_DONATION_TXT, *_SPECIFY, the Q148 medicines text, etc. Non-gated free-texts that also
+    match are harmlessly isolated onto their own screen.
+
+    `noinput_gated` (from parse_apc) is the F1-parity authority: any field whose .apc PROC
+    carries a `noinput` gate is isolated too, even when its name lacks the _TXT/_SPECIFY
+    suffix — so a renamed/non-suffixed gated field can't slip onto a shared screen."""
+    return name.endswith("_TXT") or name.endswith("_SPECIFY") or name in noinput_gated
+
+
+def parse_apc():
+    """-> (skip_sources, skip_targets, noinput_gated) from the generated .ent.apc.
+
+    Mirrors F1 inject_blocks.parse_apc: strip {...} comments, split on `^PROC <NAME>$`,
+    collect PROCs that `skip to` (sources) and that carry `noinput` (gated), plus every
+    `skip to <TARGET>` field name (targets). Returns empty sets if the .apc is absent
+    (e.g. a bare `python generate_fmf.py` before the apc exists) — the plan then degrades
+    to the pre-skip-aware chunking rather than crashing; the canonical build always
+    regenerates the apc first (cspro_compile_driver.build_instrument)."""
+    if not APC_PATH.exists():
+        return set(), set(), set()
+    txt = APC_PATH.read_text(encoding="utf-8")
+    txt = re.sub(r"\{[^{}]*\}", " ", txt)          # strip CSPro comments
+    sources, targets, gated = set(), set(), set()
+    procs = re.split(r"(?m)^PROC\s+([A-Z0-9_]+)\s*$", txt)
+    # procs = [preamble, name1, body1, name2, body2, ...]
+    for name, body in zip(procs[1::2], procs[2::2]):
+        if re.search(r"\bskip\s+to\b", body):
+            sources.add(name)
+        if re.search(r"\bnoinput\b", body):
+            gated.add(name)
+    targets.update(re.findall(r"\bskip\s+to\s+([A-Z0-9_]+)", txt))
+    return sources, targets, gated
+
+
+def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(),
+                      gated=frozenset()):
     """Auto DisplayTogether blocks for the survey body (moderate density). Each
     multi-select option set -> one screen; other consecutive questions chunked at
     MAX_CHUNK per screen. Every on-form field of a processed record lands in exactly
-    one block (contiguous, no gaps) so _emit_blocks' Position=start+emitted holds."""
+    one block (contiguous, no gaps) so _emit_blocks' Position=start+emitted holds.
+
+    Skip-awareness (ported from F1 inject_blocks.derive_plan, R4 GH #371/#375): in the
+    SIMPLE-question chunk loop, a `skip to` TARGET STARTS a new screen (nothing skipped
+    over may already render on the target's screen) and a `skip to` SOURCE ENDS its
+    screen (nothing it can skip over may share the screen). Multi-select runs and
+    Check Box fields keep their own dedicated screens unchanged."""
     plan, n = [], 0
     for rec in dictionary["levels"][0]["records"]:
         if rec["name"] in _NO_AUTOGROUP_RECORDS:
@@ -261,22 +321,30 @@ def derive_block_plan(dictionary):
         while i < len(items):
             nm = items[i]["name"]
             ms = _MULTISELECT_RE.match(nm)
-            if ms and not nm.endswith("_TXT"):           # whole multi-select run + its _OTHER_TXT
-                base = ms.group(1)
-                run = []
-                while i < len(items) and (items[i]["name"].startswith(base + "_O")
-                                          or items[i]["name"] == base + "_OTHER_TXT"):
-                    run.append(items[i]); i += 1
+            if _is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS:   # gated specify text / Check Box -> OWN screen
+                plan.append((f"DG_BLK_{n}", (_qnum(items[i]) and f"Q{_qnum(items[i])}") or nm, [nm])); n += 1; i += 1
+            elif ms:                                       # multi-select OPTION run -> one screen
+                base = ms.group(1)                          # (its trailing _OTHER_TXT is gated -> caught by
+                run = []                                    #  the gated-text branch above, on its own screen)
+                while i < len(items):
+                    m2 = _MULTISELECT_RE.match(items[i]["name"])
+                    if m2 and m2.group(1) == base:
+                        run.append(items[i]); i += 1
+                    else:
+                        break
                 label = (_qnum(run[0]) and f"Q{_qnum(run[0])}") or _chunk_label(run)
                 plan.append((f"DG_BLK_{n}", label, [it["name"] for it in run])); n += 1
-            else:                                        # chunk of up to MAX simple questions
+            else:                                          # chunk of up to MAX simple questions
                 chunk = []
                 while i < len(items) and len(chunk) < MAX_CHUNK:
                     nn = items[i]["name"]
-                    mm = _MULTISELECT_RE.match(nn)
-                    if mm and not nn.endswith("_TXT"):   # stop before the next multi-select
-                        break
+                    if _MULTISELECT_RE.match(nn) or nn in _CHECKBOX_FIELDS or _is_gated_text(nn, gated):
+                        break                               # stop before multi-select / checkbox / gated text
+                    if chunk and nn in targets:
+                        break                               # skip TARGET starts a new screen
                     chunk.append(items[i]); i += 1
+                    if nn in sources:
+                        break                               # skip SOURCE ends its screen
                 plan.append((f"DG_BLK_{n}", _chunk_label(chunk), [it["name"] for it in chunk])); n += 1
     return plan
 
@@ -304,7 +372,8 @@ def build_fmf():
     dictionary = build_f3_dictionary()
     _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
     global _ACTIVE_BLOCK_PLAN
-    _ACTIVE_BLOCK_PLAN = NAMED_BLOCKS + derive_block_plan(dictionary)
+    sources, targets, gated = parse_apc()
+    _ACTIVE_BLOCK_PLAN = NAMED_BLOCKS + derive_block_plan(dictionary, sources, targets, gated)
     dict_name = dictionary.get("name", "PATIENTSURVEY_DICT")
     level = dictionary["levels"][0]
     level_name = level.get("name", "PATIENTSURVEY_LEVEL")

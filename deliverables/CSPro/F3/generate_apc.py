@@ -470,12 +470,49 @@ preproc
     skip to Q51_OTHER_INSURANCE;
   endif;
 
-{ ---- Section L: not referred -> end of survey (Completed) ---- }
+{ ---- Section L: not referred -> end of survey. Route to the closing Result-of-Visit +
+  Verification Photo. Do NOT endlevel here: the photo form is the LAST form, so ending
+  the level at this point skips the photo (bug found in R4 on-device review 2026-06-12). ---- }
 PROC Q162_REFERRED
 postproc
   if Q162_REFERRED = 2 then
-    ENUM_RESULT_FINAL_VISIT = 1;   { Completed (verify code) }
-    endlevel;
+    ENUM_RESULT_FINAL_VISIT = 1;   { default Completed; enumerator confirms it on the closing form }
+    skip to ENUM_RESULT_FINAL_VISIT;   { skip the referred-only Q163/Q164, land on Result-of-Visit; the Verification Photo form follows it }
+  endif;
+
+{ ---- Q148 Check Box multi-select (R4 redesign 2026-06-12) — one alpha field of
+  concatenated 2-digit condition codes (CSEntry Check Box). 'Other'=99 / 'No condition'=19
+  are chosen so pos() can't false-match across code boundaries (no valid code starts with 9).
+  The old 20 Yes/No items are gone, so these are hand-written (the select-all auto-gen no
+  longer sees an _O run for Q148). ---- }
+PROC Q148_CONDITIONS
+postproc
+  if length(strip(Q148_CONDITIONS)) = 0 then
+    errmsg("Tick at least one medical condition (or 'No condition - Regular check-up only').");
+    reenter;
+  endif;
+  { exclusivity (soft warn): 'No condition - Regular check-up only' (19) should stand alone }
+  if pos("19", Q148_CONDITIONS) > 0 and length(strip(Q148_CONDITIONS)) > 2 then
+    errmsg("'No condition - Regular check-up only' is usually the only choice — please review the conditions ticked.");
+  endif;
+
+PROC Q148_CONDITIONS_OTHER_TXT
+preproc
+  if pos("99", Q148_CONDITIONS) = 0 then
+    Q148_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q148_CONDITIONS) > 0 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q148 — please specify.");
+    reenter;
+  endif;
+
+PROC Q148_MEDICINES_TXT
+preproc
+  if length(strip(Q148_CONDITIONS)) = 0 then
+    Q148_MEDICINES_TXT = "";   { gated: skipped until at least one condition is ticked }
+    noinput;
   endif;
 """
 
@@ -678,6 +715,7 @@ def main():
     covered = {"Q88_WHY_VISIT", "Q105_REASON",                    # branching PROCs
                "Q63_HAS_USUAL_FACILITY", "Q77_KON_REGISTERED",
                "Q159_BRAND_GEN_BOUGHT", "Q46_BENEFITS_O01", "Q162_REFERRED",  # EXTRA_PROCS
+               "Q148_CONDITIONS", "Q148_CONDITIONS_OTHER_TXT", "Q148_MEDICINES_TXT",  # EXTRA_PROCS (Q148 Check Box)
                "Q5_BIRTH_MONTH", "Q5_BIRTH_YEAR", "Q6_AGE", "Q18_INCOME_BRACKET",
                "Q19_HH_SIZE", "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q28_WASHER"}  # VALIDATION_PROCS
 

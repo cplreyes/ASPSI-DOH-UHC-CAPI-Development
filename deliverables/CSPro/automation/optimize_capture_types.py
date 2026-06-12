@@ -21,6 +21,9 @@ SPECS = {"F1": "FacilityHeadSurvey", "F3": "PatientSurvey", "F4": "HouseholdSurv
 # Fields whose value set is set dynamically (PSGC cascade) — force DropDown.
 CASCADE = {"REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY", "BARANGAY",
            "P_REGION", "P_PROVINCE_HUC", "P_CITY_MUNICIPALITY", "P_BARANGAY"}
+# Single alpha fields that are TRUE multi-selects (one field, codes concatenated) -> Check Box
+# tick-list. Must win over the >=7-options DropDown rule below. 2026-06-12 R4 review: F3 Q148.
+CHECKBOX = {"Q148_CONDITIONS"}
 DROPDOWN_MIN = 7   # >= this many coded options -> dropdown instead of radio
 
 
@@ -44,6 +47,8 @@ def field_meta(dcf_path):
 
 def ideal(name, meta):
     m = meta.get(name) or {}
+    if name in CHECKBOX:
+        return "CheckBox"
     if name in CASCADE:
         return "DropDown"
     if m.get("vs", 0) >= DROPDOWN_MIN:
@@ -83,6 +88,32 @@ def main():
             if want and want != have:
                 lines[i] = f"DataCaptureType={want}"
                 changes.append((cur, have, want))
+
+    # Legacy cleanup: the combined 'Date,FMT' DataCaptureType embeds the format; the
+    # publish PACKAGER rejects a leftover standalone 'CaptureDateFormat=' in the same
+    # [Field] ("Incorrect [Field] attribute: CaptureDateFormat" at Deploy 'Creating
+    # package...' — 2026-06-12 F1 legacy hand-style Date + CaptureDateFormat pair).
+    # NOTE: Designer open + COMPILE accepted that combo — the packager is the stricter
+    # parser; this cleanup is the only static guard.
+    in_field, combined, fmt_at, drop = False, False, None, []
+    for i, ln in enumerate(lines):
+        s = ln.strip()
+        if s == "[Field]":
+            in_field, combined, fmt_at = True, False, None
+        elif s.startswith("["):
+            in_field = False
+        elif in_field and s.startswith("DataCaptureType=") and "," in s:
+            combined = True
+            if fmt_at is not None:
+                drop.append(fmt_at)
+        elif in_field and s.startswith("CaptureDateFormat="):
+            if combined:
+                drop.append(i)
+            else:
+                fmt_at = i
+    for i in sorted(drop, reverse=True):
+        changes.append(("(legacy line)", lines[i].strip(), "removed"))
+        del lines[i]
 
     print(f"[{key}] {len(changes)} field(s) re-typed:")
     for n, h, w in changes:

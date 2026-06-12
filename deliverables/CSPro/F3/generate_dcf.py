@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, SATISFACTION_5PT,
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
-    select_one, select_all, uhc9_item, record,
+    select_one, select_all, checkbox_multiselect, uhc9_item, record,
     build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
     derived_geo_code_items, ENUM_RESULT_OPTIONS_F3,
     apply_translations,
@@ -1442,7 +1442,9 @@ def build_section_k():
         ("ENT (problem with ear/nose/throat)",                           "17"),
         ("Allergy",                                                      "18"),
         ("No condition - Regular check-up only",                         "19"),
-        ("Other (Specify)",                                              "20"),
+        # 'Other' uses code 99 (not 20) so pos("99",...) on the concatenated Check Box
+        # string can't false-match across code boundaries — no valid code starts with 9.
+        ("Other (Specify)",                                              "99"),
     ]
     Q149_WHERE_BUY = [
         ("Public Hospital",                                              "1"),
@@ -1525,9 +1527,15 @@ def build_section_k():
                    Q146_RX_TYPE, length=1),
         alpha("Q147_MEDS_LIST",
               "147. What are the medications that you usually take?", length=240),
-        *select_all("Q148_CONDITIONS",
+        # Q148 redesigned (R4 review 2026-06-12): ONE Check Box multi-select (tick the
+        # conditions on one screen) instead of 20 separate Yes/No items, + a gated free-text
+        # for the medicines taken (skipped until >=1 condition is ticked).
+        *checkbox_multiselect("Q148_CONDITIONS",
                     "148. What are the medical conditions that you take the medicines for?",
                     Q148_CONDITIONS),
+        alpha("Q148_MEDICINES_TXT",
+              "Which medicine(s) do you take for the condition(s) selected above?",
+              length=240),
         *select_all("Q149_WHERE_BUY",
                     "149. Where do you usually buy or receive your medicines? "
                     "Select all that apply.", Q149_WHERE_BUY),

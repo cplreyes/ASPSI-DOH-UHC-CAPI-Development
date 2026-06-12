@@ -487,12 +487,49 @@ preproc
     skip to Q51_OTHER_INSURANCE;
   endif;
 
-{ ---- Section L: not referred -> end of survey (Completed) ---- }
+{ ---- Section L: not referred -> end of survey. Route to the closing Result-of-Visit +
+  Verification Photo. Do NOT endlevel here: the photo form is the LAST form, so ending
+  the level at this point skips the photo (bug found in R4 on-device review 2026-06-12). ---- }
 PROC Q162_REFERRED
 postproc
   if Q162_REFERRED = 2 then
-    ENUM_RESULT_FINAL_VISIT = 1;   { Completed (verify code) }
-    endlevel;
+    ENUM_RESULT_FINAL_VISIT = 1;   { default Completed; enumerator confirms it on the closing form }
+    skip to ENUM_RESULT_FINAL_VISIT;   { skip the referred-only Q163/Q164, land on Result-of-Visit; the Verification Photo form follows it }
+  endif;
+
+{ ---- Q148 Check Box multi-select (R4 redesign 2026-06-12) — one alpha field of
+  concatenated 2-digit condition codes (CSEntry Check Box). 'Other'=99 / 'No condition'=19
+  are chosen so pos() can't false-match across code boundaries (no valid code starts with 9).
+  The old 20 Yes/No items are gone, so these are hand-written (the select-all auto-gen no
+  longer sees an _O run for Q148). ---- }
+PROC Q148_CONDITIONS
+postproc
+  if length(strip(Q148_CONDITIONS)) = 0 then
+    errmsg("Tick at least one medical condition (or 'No condition - Regular check-up only').");
+    reenter;
+  endif;
+  { exclusivity (soft warn): 'No condition - Regular check-up only' (19) should stand alone }
+  if pos("19", Q148_CONDITIONS) > 0 and length(strip(Q148_CONDITIONS)) > 2 then
+    errmsg("'No condition - Regular check-up only' is usually the only choice — please review the conditions ticked.");
+  endif;
+
+PROC Q148_CONDITIONS_OTHER_TXT
+preproc
+  if pos("99", Q148_CONDITIONS) = 0 then
+    Q148_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q148_CONDITIONS) > 0 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q148 — please specify.");
+    reenter;
+  endif;
+
+PROC Q148_MEDICINES_TXT
+preproc
+  if length(strip(Q148_CONDITIONS)) = 0 then
+    Q148_MEDICINES_TXT = "";   { gated: skipped until at least one condition is ticked }
+    noinput;
   endif;
 
 
@@ -971,18 +1008,6 @@ preproc
 postproc
   if Q125_MAIFIP_SOURCE_O08 = 1 and length(strip(Q125_MAIFIP_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q125_MAIFIP_SOURCE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q148_CONDITIONS_OTHER_TXT
-preproc
-  if Q148_CONDITIONS_O14 <> 1 then
-    Q148_CONDITIONS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q148_CONDITIONS_O14 = 1 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q148_CONDITIONS but no text was entered. Please specify.");
     reenter;
   endif;
 
@@ -1646,13 +1671,6 @@ postproc
   { exclusivity (soft warning): an exclusive option should be the only answer }
   if (Q129_WHY_NO_MAIFIP_O04 = 1) and (Q129_WHY_NO_MAIFIP_O01 = 1 or Q129_WHY_NO_MAIFIP_O02 = 1 or Q129_WHY_NO_MAIFIP_O03 = 1) then
     errmsg("Q129_WHY_NO_MAIFIP: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q148_CONDITIONS_O20
-postproc
-  if not (Q148_CONDITIONS_O01 = 1 or Q148_CONDITIONS_O02 = 1 or Q148_CONDITIONS_O03 = 1 or Q148_CONDITIONS_O04 = 1 or Q148_CONDITIONS_O05 = 1 or Q148_CONDITIONS_O06 = 1 or Q148_CONDITIONS_O07 = 1 or Q148_CONDITIONS_O08 = 1 or Q148_CONDITIONS_O09 = 1 or Q148_CONDITIONS_O10 = 1 or Q148_CONDITIONS_O11 = 1 or Q148_CONDITIONS_O12 = 1 or Q148_CONDITIONS_O13 = 1 or Q148_CONDITIONS_O14 = 1 or Q148_CONDITIONS_O15 = 1 or Q148_CONDITIONS_O16 = 1 or Q148_CONDITIONS_O17 = 1 or Q148_CONDITIONS_O18 = 1 or Q148_CONDITIONS_O19 = 1 or Q148_CONDITIONS_O20 = 1) then
-    errmsg("Select at least one option for Q148_CONDITIONS before continuing.");
-    reenter;
   endif;
 
 PROC Q149_WHERE_BUY_O08

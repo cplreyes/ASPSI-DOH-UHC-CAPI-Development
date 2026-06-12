@@ -66145,54 +66145,53 @@
               "length": 240
             },
             {
-              "name": "Q148_CONDITIONS_O01",
+              "name": "Q148_CONDITIONS",
               "labels": [
                 {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Upper respiratory infection",
+                  "text": "148. What are the medical conditions that you take the medicines for?",
                   "language": "EN"
                 },
                 {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Upper respiratory infection",
+                  "text": "148. What are the medical conditions that you take the medicines for?",
                   "language": "BCL"
                 },
                 {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Upper respiratory infection",
+                  "text": "148. What are the medical conditions that you take the medicines for?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Impeksyon sa ibabaw nga bahin sa respiratoryo",
+                  "text": "148. What are the medical conditions that you take the medicines for?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Impeksyon ha igbaw nga pagginhawa",
+                  "text": "148. What are the medical conditions that you take the medicines for?",
                   "language": "WAR"
                 }
               ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
+              "contentType": "alpha",
+              "length": 40,
               "valueSets": [
                 {
-                  "name": "Q148_CONDITIONS_O01_VS1",
+                  "name": "Q148_CONDITIONS_VS1",
                   "labels": [
                     {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Upper respiratory infection",
+                      "text": "148. What are the medical conditions that you take the medicines for?",
                       "language": "EN"
                     },
                     {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Upper respiratory infection",
+                      "text": "148. What are the medical conditions that you take the medicines for?",
                       "language": "BCL"
                     },
                     {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Upper respiratory infection",
+                      "text": "148. What are the medical conditions that you take the medicines for?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Impeksyon sa ibabaw nga bahin sa respiratoryo",
+                      "text": "148. What are the medical conditions that you take the medicines for?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Impeksyon ha igbaw nga pagginhawa",
+                      "text": "148. What are the medical conditions that you take the medicines for?",
                       "language": "WAR"
                     }
                   ],
@@ -66200,2243 +66199,580 @@
                     {
                       "labels": [
                         {
-                          "text": "Yes",
+                          "text": "Upper respiratory infection",
                           "language": "EN"
                         },
                         {
-                          "text": "Iyo",
+                          "text": "Upper respiratory infection",
                           "language": "BCL"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Upper respiratory infection",
                           "language": "BIS"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Upper respiratory infection",
                           "language": "CEB"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Upper respiratory infection",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "1"
+                          "value": "01"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Hypertension",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Hypertension",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Hypertension",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Hypertension",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Hypertension",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O02",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Hypertension",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Hypertension",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Hypertension",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Taas nga presyon sa dugo",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Highblood",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O02_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Hypertension",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Hypertension",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Hypertension",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Taas nga presyon sa dugo",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Highblood",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "02"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Immunization",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Immunization",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Immunization",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Immunization",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Immunization",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O03",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Immunization",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Immunization",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Immunization",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Pagbakuna",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Pagbakuna",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O03_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Immunization",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Immunization",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Immunization",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Pagbakuna",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Pagbakuna",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "03"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Pregnancy or birth",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Pregnancy or birth",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Pregnancy or birth",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Pregnancy or birth",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Pregnancy or birth",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O04",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Pregnancy or birth",
-                  "language": "EN"
-                },
-                {
-                  "text": "Pagbados/Pagaki",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Pregnancy or birth",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Pagmabdos o pagpanganak",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Pagburod o panganak",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O04_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Pregnancy or birth",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Pagbados/Pagaki",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Pregnancy or birth",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Pagmabdos o pagpanganak",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Pagburod o panganak",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "04"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Flu",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Flu",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Flu",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Flu",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Flu",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O05",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Flu",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Flu",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Flu",
-                  "language": "BIS"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Flu",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Trangkaso",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O05_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Flu",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Flu",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Flu",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Flu",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Trangkaso",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "05"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Fever",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Fever",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Fever",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Fever",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Fever",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O06",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Fever",
-                  "language": "EN"
-                },
-                {
-                  "text": "Kalintura",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Fever",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Hilanat",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Hiranat",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O06_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Fever",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Kalintura",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Fever",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Hilanat",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Hiranat",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "06"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Joint and muscle pain",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Joint and muscle pain",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Joint and muscle pain",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Joint and muscle pain",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Joint and muscle pain",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O07",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Joint and muscle pain",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Joint and muscle pain",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Joint and muscle pain",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Sakit sa lutahan ug kaunoran",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Maul-ol nga kaluluthan ngan kaunoran",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O07_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Joint and muscle pain",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Joint and muscle pain",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Joint and muscle pain",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Sakit sa lutahan ug kaunoran",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Maul-ol nga kaluluthan ngan kaunoran",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "07"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Asthma or COPD (chronic breathing problem, not cancer)",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Asthma or COPD (chronic breathing problem, not cancer)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Asthma or COPD (chronic breathing problem, not cancer)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Asthma or COPD (chronic breathing problem, not cancer)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Asthma or COPD (chronic breathing problem, not cancer)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O08",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Asthma or COPD (chronic breathing problem, not cancer)",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Asthma or COPD (chronic breathing problem, not cancer)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Asthma or COPD (chronic breathing problem, not cancer)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Hika o COPD (laygay nga problema sa pagginhawa, dili kanser)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Hika o COPD (pag-undang nga problema ha pagginhawa, diri kanser)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O08_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Asthma or COPD (chronic breathing problem, not cancer)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Asthma or COPD (chronic breathing problem, not cancer)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Asthma or COPD (chronic breathing problem, not cancer)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Hika o COPD (laygay nga problema sa pagginhawa, dili kanser)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Hika o COPD (pag-undang nga problema ha pagginhawa, diri kanser)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "08"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Diabetes",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Diabetes",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Diabetes",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Diabetes",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Diabetes",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O09",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Diabetes",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Diabetes",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Diabetes",
-                  "language": "BIS"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Diabetes",
-                  "language": "CEB"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Diabetes",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O09_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Diabetes",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Diabetes",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Diabetes",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Diabetes",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Diabetes",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "09"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Heart problem",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Heart problem",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Heart problem",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Heart problem",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Heart problem",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O10",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Heart problem",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Heart problem",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Heart problem",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Problema sa kasingkasing",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Problema ha kasingkasing",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O10_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Heart problem",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Heart problem",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Heart problem",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Problema sa kasingkasing",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Problema ha kasingkasing",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "10"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Kidney problem /Dialysis",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Kidney problem /Dialysis",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Kidney problem /Dialysis",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Kidney problem /Dialysis",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Kidney problem /Dialysis",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O11",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Kidney problem /Dialysis",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Kidney problem /Dialysis",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Kidney problem /Dialysis",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Problema sa kidney/dialysis",
-                  "language": "CEB"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Kidney problem /Dialysis",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O11_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Kidney problem /Dialysis",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Kidney problem /Dialysis",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Kidney problem /Dialysis",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Problema sa kidney/dialysis",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Kidney problem /Dialysis",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "11"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Cancer (any)",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Cancer (any)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Cancer (any)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Cancer (any)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Cancer (any)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O12",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Cancer (any)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Cancer (kun uigwa man)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Cancer (any)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Kanser (bisag unsa)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Cancer (any)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O12_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Cancer (any)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Cancer (kun uigwa man)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Cancer (any)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Kanser (bisag unsa)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Cancer (any)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "12"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Gastro problem (vomiting, diarrhea, etc.)",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Gastro problem (vomiting, diarrhea, etc.)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Gastro problem (vomiting, diarrhea, etc.)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Gastro problem (vomiting, diarrhea, etc.)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Gastro problem (vomiting, diarrhea, etc.)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O13",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Gastro problem (vomiting, diarrhea, etc.)",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Gastro problem (vomiting, diarrhea, etc.)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Gastro problem (vomiting, diarrhea, etc.)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Problema sa tiyan (pagsuka, kalibanga, ug uban pa)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Gastro problem (vomiting, diarrhea, etc.)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O13_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Gastro problem (vomiting, diarrhea, etc.)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Gastro problem (vomiting, diarrhea, etc.)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Gastro problem (vomiting, diarrhea, etc.)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Problema sa tiyan (pagsuka, kalibanga, ug uban pa)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Gastro problem (vomiting, diarrhea, etc.)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "13"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Other infection (e.g. urine, skin, other virus etc.)",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Other infection (e.g. urine, skin, other virus etc.)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Other infection (e.g. urine, skin, other virus etc.)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Other infection (e.g. urine, skin, other virus etc.)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Other infection (e.g. urine, skin, other virus etc.)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O14",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Other infection (e.g. urine, skin, other virus etc.)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Ibang infection (e.g. urine, skin, other virus etc.)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Other infection (e.g. urine, skin, other virus etc.)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Uban pang impeksyon (pananglitan, sa ihi, panit, ug uban pang virus)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Iba nga impeksyon (e.g. ihi, panit, iba pa nga virus ngan iba pa)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O14_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Other infection (e.g. urine, skin, other virus etc.)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Ibang infection (e.g. urine, skin, other virus etc.)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Other infection (e.g. urine, skin, other virus etc.)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Uban pang impeksyon (pananglitan, sa ihi, panit, ug uban pang virus)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Iba nga impeksyon (e.g. ihi, panit, iba pa nga virus ngan iba pa)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "14"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Accident/injury (e.g. wound/broken bone)",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Accident/injury (e.g. wound/broken bone)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Accident/injury (e.g. wound/broken bone)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Accident/injury (e.g. wound/broken bone)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Accident/injury (e.g. wound/broken bone)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O15",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Accident/injury (e.g. wound/broken bone)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Aksidentet/injury (e.g. lugad/pagkalapo)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Accident/injury (e.g. wound/broken bone)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Aksidente/samod (pananglitan, samad/bali sa bukog)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Aksidente/danyos ha lawas (pananglitan samad/bari nga tul-an)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O15_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Accident/injury (e.g. wound/broken bone)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Aksidentet/injury (e.g. lugad/pagkalapo)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Accident/injury (e.g. wound/broken bone)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Aksidente/samod (pananglitan, samad/bali sa bukog)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Aksidente/danyos ha lawas (pananglitan samad/bari nga tul-an)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "15"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Dental",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dental",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Dental",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Dental",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Dental",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O16",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Dental",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Dental",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Dental",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Ngipon",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Services",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O16_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Dental",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Dental",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Dental",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Ngipon",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Services",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "16"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "ENT (problem with ear/nose/throat)",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "ENT (problem with ear/nose/throat)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "ENT (problem with ear/nose/throat)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "ENT (problem with ear/nose/throat)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "ENT (problem with ear/nose/throat)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O17",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 ENT (problem with ear/nose/throat)",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 ENT (problem with ear/nose/throat)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 ENT (problem with ear/nose/throat)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "ENT (problema sa dalunggan/ilong/tutonlan)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "ENT (problema ha talinga/irong/but-ol)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O17_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 ENT (problem with ear/nose/throat)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 ENT (problem with ear/nose/throat)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 ENT (problem with ear/nose/throat)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "ENT (problema sa dalunggan/ilong/tutonlan)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "ENT (problema ha talinga/irong/but-ol)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "17"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Allergy",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Allergy",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Allergy",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Allergy",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Allergy",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O18",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Allergy",
-                  "language": "EN"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Allergy",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Allergy",
-                  "language": "BIS"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Allergy",
-                  "language": "CEB"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Allergy",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O18_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Allergy",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Allergy",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Allergy",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Allergy",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Allergy",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "18"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "No condition - Regular check-up only",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "No condition - Regular check-up only",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "No condition - Regular check-up only",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "No condition - Regular check-up only",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "No condition - Regular check-up only",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O19",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 No condition - Regular check-up only",
-                  "language": "EN"
-                },
-                {
-                  "text": "Warang ilang - regular an check up sana",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 No condition - Regular check-up only",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Walay kondisyon - regular nga check-up lang",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Waray kondisyon - Regular nga pag-check-up la",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O19_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 No condition - Regular check-up only",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Warang ilang - regular an check up sana",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 No condition - Regular check-up only",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Walay kondisyon - regular nga check-up lang",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Waray kondisyon - Regular nga pag-check-up la",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "19"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Other (Specify)",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Iba pa (ispecify)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Uban pa (I-specify)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Uban pa (isulti)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Iba pa (Ispecify)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q148_CONDITIONS_O20",
-              "labels": [
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Other (Specify)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Iba pa (ispecify)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "148. What are the medical conditions that you take the medicines for? \u2014 Other (Specify)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Uban pa (isulti)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Iba pa (Ispecify)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q148_CONDITIONS_O20_VS1",
-                  "labels": [
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Other (Specify)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Iba pa (ispecify)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "148. What are the medical conditions that you take the medicines for? \u2014 Other (Specify)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Uban pa (isulti)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Iba pa (Ispecify)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
+                          "value": "99"
                         }
                       ]
                     }
@@ -68470,6 +66806,33 @@
               ],
               "contentType": "alpha",
               "length": 120
+            },
+            {
+              "name": "Q148_MEDICINES_TXT",
+              "labels": [
+                {
+                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
+                  "language": "EN"
+                },
+                {
+                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 240
             },
             {
               "name": "Q149_WHERE_BUY_O01",

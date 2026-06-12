@@ -230,6 +230,32 @@ def select_all(prefix, label, options, with_other_txt=None):
     return items
 
 
+def checkbox_multiselect(prefix, label, options, with_other_txt=None):
+    """TRUE CSPro 'Check Box' multi-select: ONE alpha field holding the ticked option
+    codes concatenated left-to-right (CSEntry's Check Box capture writes each fixed-width
+    code into the field as a box is checked). Renders as a single question + a tick-list
+    on one screen (tick all that apply) — unlike select_all() which emits one Yes/No item
+    per option (N individual radios). length = (#options) * (code width). Codes MUST be
+    fixed width (CSPro slices the field by code width). The CheckBox capture type itself is
+    applied by name in generate_fmf / optimize_capture_types. Returns [checkbox field]
+    (+ an OTHER_TXT alpha when a 'specify' option is present)."""
+    code_w = max(len(c) for _, c in options)
+    item = {
+        "name": prefix,
+        "labels": [{"text": label}],
+        "contentType": "alpha",
+        "length": len(options) * code_w,
+        "valueSets": [_value_set(prefix, label, options)],
+    }
+    items = [item]
+    if with_other_txt is None:
+        with_other_txt = bool(options) and "specify" in options[-1][0].lower()
+    if with_other_txt:
+        items.append(alpha(f"{prefix}_OTHER_TXT",
+                           f"{label} — Other (specify) text", length=120))
+    return items
+
+
 def uhc9_item(name, label):
     """Standard UHC9 question. Emits 3 items: the main numeric (length 1,
     9-option value set) plus two free-text items for the 'Yes other'

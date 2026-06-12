@@ -138,10 +138,20 @@ def build_instrument(key):
             if rc != 0:
                 print(f"    !! {gen} exited {rc}")
 
-    # 2. bind: copy <Base>.generated.fmf -> <Base>.fmf
+    # 2. bind: copy <Base>.generated.fmf -> <Base>.fmf, then re-apply the capture-type
+    #    pass (DropDown >=7 / Date / CheckBox). The generators emit RadioButton/TextBox
+    #    defaults, so a bare copy SHIPS A REGRESSION — the 2026-06-12 F4 sweep deploy
+    #    lost 5 DropDowns + 2 date pickers this way. Promotion path is
+    #    generate -> copy -> optimize (see log 2026-06-12).
     if p["has_fmf_gen"] and p["generated_fmf"].exists():
         p["fmf"].write_bytes(p["generated_fmf"].read_bytes())
         print(f"    copied {p['generated_fmf'].name} -> {p['fmf'].name}")
+    # ... then re-apply capture types for EVERY instrument (idempotent; F1's
+    # hand-maintained fmf needs it too — its 2 date fields carried a plain
+    # 'Date' from old Designer hand-edits until 2026-06-12).
+    rc, _ = _run([sys.executable, str(HERE / "optimize_capture_types.py"), key], HERE)
+    if rc != 0:
+        print(f"    !! optimize_capture_types.py exited {rc}")
 
     # 3. ensure .ent.qsf / .ent.mgf / .ent exist (templated boilerplate)
     if not p["qsf"].exists() and F1_QSF.exists():
@@ -215,32 +225,36 @@ def _bring_to_front(main):
 
 
 def clear_known_dialogs(app, max_rounds=16):
-    """Clear CSPro's standard #32770 dialogs on open. Unknown dialogs -> screenshot + stop."""
+    """Clear CSPro's standard #32770 dialogs on open. Unknown dialogs -> screenshot + stop.
+    Every per-dialog interaction is guarded: F1's startup dialogs are TRANSIENT and can
+    close themselves between enumeration and the next call (stale handle ->
+    InvalidWindowHandle mid-round; seen 2026-06-12) — treat that as 'dialog gone, next'."""
     for _ in range(max_rounds):
         try:
             fg = app.top_window()
-        except Exception:
-            return
-        if fg.class_name() != "#32770":
-            return
-        title = fg.window_text()
-        btns = [b.window_text() for b in fg.children(class_name="Button")]
-        fg.set_focus()
-        time.sleep(0.2)
-        if title == "Rename Item":            # F1 id-block re-sync; defaults are correct
-            fg["OK"].click_input()
-        elif title in ("CSPro Designer", "CSPro 8.0", "CSPro"):
-            if "OK" in btns:
+            if fg.class_name() != "#32770":
+                return
+            title = fg.window_text()
+            btns = [b.window_text() for b in fg.children(class_name="Button")]
+            fg.set_focus()
+            time.sleep(0.2)
+            if title == "Rename Item":            # F1 id-block re-sync; defaults are correct
                 fg["OK"].click_input()
-            elif "Cancel" in btns:
-                fg["Cancel"].click_input()
-        else:
-            OUT.mkdir(parents=True, exist_ok=True)
-            shot = OUT / "UNEXPECTED_dialog.png"
-            fg.capture_as_image().save(shot)
-            print(f"  UNEXPECTED dialog {title!r} -> {shot}; stopping.")
-            return
-        time.sleep(0.9)
+            elif title in ("CSPro Designer", "CSPro 8.0", "CSPro"):
+                if "OK" in btns:
+                    fg["OK"].click_input()
+                elif "Cancel" in btns:
+                    fg["Cancel"].click_input()
+            else:
+                OUT.mkdir(parents=True, exist_ok=True)
+                shot = OUT / "UNEXPECTED_dialog.png"
+                fg.capture_as_image().save(shot)
+                print(f"  UNEXPECTED dialog {title!r} -> {shot}; stopping.")
+                return
+            time.sleep(0.9)
+        except Exception:
+            time.sleep(0.5)      # stale/transient dialog — re-enumerate next round
+            continue
 
 
 def compile_instrument(key, do_save=False):
@@ -251,13 +265,18 @@ def compile_instrument(key, do_save=False):
     OUT.mkdir(parents=True, exist_ok=True)
 
     try:
-        app = Application(backend="win32").connect(title_re=r"CSPro 8\.0.*", timeout=3)
+        app = Application(backend="win32").connect(title_re=r"CSPro 8\.0.*", timeout=3,
+                                                   found_index=0)
         print("attached to running CSPro")
     except Exception:
         print(f"launching CSPro on {p['ent'].name} ...")
-        subprocess.Popen([CSPRO_EXE, str(p["ent"])])
+        proc = subprocess.Popen([CSPRO_EXE, str(p["ent"])])
         time.sleep(16)
-        app = Application(backend="win32").connect(title_re=r"CSPro.*", timeout=20)
+        # connect by PID, not title: F1's open spawns several CSPro-titled
+        # top-level windows incl. transient dialogs (title matching hit
+        # ElementAmbiguousError, then InvalidWindowHandle as one vanished
+        # mid-connect; seen 2026-06-12 — F4 only had one window).
+        app = Application(backend="win32").connect(process=proc.pid, timeout=20)
 
     clear_known_dialogs(app)
 
