@@ -1,7 +1,7 @@
 ---
 project: UHC Survey Year 2 — CAPI Development
 artifact: Harmonization ETL Specification (E4-INT-001)
-version: 0.1 (draft, 2026-06-02)
+version: 0.2 (2026-06-12 — extract mechanism decided: CSWeb breakout DBs; skeleton dry-run passed on live test cases)
 status: draft
 owner: Carl Patrick L. Reyes (data programmer)
 closes: #176 (ETL spec); wires #178 (codebook-driven harmonization); feeds #177 (Looker dashboard)
@@ -51,14 +51,20 @@ This spec is the **E (extract) + L (load) + operations** layer. The **T (transfo
 
 One adapter per source backend. Each adapter's job: produce a raw per-instrument DataFrame keyed to the dcf/spec field names the codebook expects.
 
-### 2.1 F1 / F3 / F4 — from CSWeb (Elestio)
-Three viable mechanisms, in order of preference:
+### 2.1 F1 / F3 / F4 — from the CSWeb breakout databases  ✅ DECIDED 2026-06-12
 
-1. **CSExport (preferred, supported, dcf-aware).** Run CSPro's `CSExport.exe` (or `cstab`/the export PFF) against the synced CSWeb data with each instrument's `.dcf` → flat CSV/Stata. CSExport understands the dictionary (items, value sets, multi-occurrence roster), so flattening F4's two-level roster is handled natively rather than hand-parsing case JSON. Produces `f1_raw.csv`, `f3_raw.csv`, `f4_raw.csv` (+ `f4_roster_raw.csv`).
-2. **CSWeb REST API.** `GET` the cases for each dictionary from the CSWeb server API; parse the CSPro-8 JSON case format using the dcf. Use when CSExport can't run in the runner environment.
-3. **Direct MySQL read.** Query the CSWeb `csweb` MySQL DB cases table; each row is a case (JSON payload + key fields). Most fragile (couples to CSWeb's internal schema) — fallback only.
+**Extract reads the CSWeb case-breakout MySQL databases** — `csweb_f1_breakout`, `csweb_f3_breakout`, `csweb_f4_breakout` on the Elestio box. These went live 2026-06-12 (see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/deliverables/CSWeb/CSWeb-Sync-Report-and-Case-Breakout-Setup|CSWeb-Sync-Report-and-Case-Breakout-Setup]]): CSWeb's own `csweb:process-cases` worker (5-min cron) explodes each synced case into **relational tables — one table per dcf record, one typed column per item** — including F4's `c_household_roster` already flattened to one row per member. This supersedes the three options previously listed (CSExport / REST API / raw case-blob reads):
 
-**⟨DECISION⟩** Pick the extract mechanism after inspecting the live Elestio box (which CSPro CLI tools are installed there; whether the runner runs *on* the VPS or pulls remotely). Recommend **CSExport on the VPS**, output to a staging dir the runner reads. Extract is **read-only** against CSWeb; never writes back.
+- **Dcf-aware for free** — the breakout schema is generated *from* the registered dictionary by CSWeb itself; it is a supported product feature, not a coupling to internal schema.
+- **No CSPro CLI tooling** needed on the runner; no CSPro-8 JSON case parsing.
+- **Roster handled** — `c_household_roster` rows carry the `level-1` FK + `occ`; no hand-flattening.
+- Column types are sane (`VARCHAR(len)` for alpha, `DECIMAL` for numeric) per the on-box generator patch.
+
+**Mechanics:** read-only `SELECT`s per table (`level-1` for the 5-item case key, record tables for items), joined to the breakout `cases` table to **exclude `deleted = 1`** and to classify `partial_save_mode` (partial saves are extracted but flagged, not silently mixed with completes). Runner on the VPS connects via the compose `database` host; a remote runner tunnels over SSH. Use a dedicated read-only MySQL user (`SELECT` on the three breakout DBs only).
+
+**Caveats (both verified live):**
+1. **Breakout DBs are dropped + rebuilt whenever a dictionary is re-uploaded**, then repopulated by the next cron tick. Harmless given full re-extract per run, but a run racing a rebuild could see a partially repopulated store → QA row-count gate (§4) catches it; re-run.
+2. **Zero-padding is the extract's job**: the case-key items can arrive with lost leading zeros (alpha entry without zero-fill — observed on desk-test cases). Normalize every key to its canonical width (12-digit composite, 9-digit facility block) **before** any join or facility-prefix slice.
 
 **Incremental:** CSWeb is append-mostly (cases arrive via sync). Default to **full re-extract each run** (survey-scale data is small — thousands of cases, not millions); the transform is cheap and full-refresh removes incremental-state bugs. Revisit only if volume demands it.
 

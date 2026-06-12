@@ -108,3 +108,8 @@ deliverables/CSPro/automation/shots/
 
 # Private methodology — NDU/proprietary, kept local only (removed from the public repo 2026-06-12)
 deliverables/UHC-Survey-CAPI-Guide/
+
+# ETL working data — raw CSWeb extracts + transform outputs stay local (code is tracked)
+deliverables/data-harmonization/etl/raw/
+deliverables/data-harmonization/etl/out/
+__pycache__/
