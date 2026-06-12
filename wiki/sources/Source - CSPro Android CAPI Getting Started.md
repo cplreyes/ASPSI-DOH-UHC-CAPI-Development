@@ -1,6 +1,6 @@
 ---
 type: source-summary
-source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Documentations/CSPro Android CAPI Getting Started]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Documentations/CSPro Android CAPI Getting Started.pdf]]"
 date_ingested: 2026-04-09
 tags: [cspro, capi, csentry, android, walkthrough, tutorial]
 ---

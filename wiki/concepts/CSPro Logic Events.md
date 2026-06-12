@@ -103,6 +103,16 @@ postproc
 
 A "no field" block can also exist — useful as a control anchor for orienting skips.
 
+### Project block grammar (as-built)
+
+> [!info] As-built 2026-06-12
+> In this project, blocks are **never created through the Designer UI path above** — they are generator-emitted in the FMF, and the FMF block grammar has hard-won rules of its own.
+
+- **Generator ownership**: F3/F4 block plans come from `derive_block_plan` in each instrument's `generate_fmf.py`; F1's blocks are injected by `inject_blocks.py`. **Never hand-edit F1's block plan** — regenerate it.
+- **Position arithmetic**: within a `[Group]`, a block's `Position` = its start field index + the count of blocks emitted before it in that group.
+- **Silent failure mode**: a wrong `Position` **silently crashes Designer on open** — a clean exit with no error dialog. This is why every FMF change must pass the Designer-open gate plus `fmf_block_check.py` before it counts as good.
+- **Screen-splitting rules**: skip sources, skip targets, and gated other-specify fields each need their **own screens**. A combined screen renders *all* of its member fields regardless of `noinput`, so co-locating a gate with its gated field defeats the gating.
+
 ## Consistency edits at data entry
 
 CSPro distinguishes:
@@ -114,7 +124,7 @@ Both can be written as logic in the data entry application using the same `errms
 
 The Census Bureau guidance is that for **complex surveys with smaller volumes** (Household Surveys, Income & Expenditure Surveys), running consistency checks at entry time is desirable — errors get resolved while the questionnaire (and respondent) are still at hand. For censuses, batch edits after the fact are preferred.
 
-For UHC Survey Year 2 — small-volume, complex survey — **all consistency checks should run at entry**.
+**Project rule (reconciled 2026-06-12)**: for UHC Survey Year 2 — small-volume, complex survey — **blocking consistency checks run at entry** (`errmsg` + `reenter` while the respondent is still at hand). [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Batch Editing|Batch editing]] is reserved for **structure checks, imputation, and post-hoc QC on synced data** — it complements entry-time edits rather than replacing them. An earlier version of this page said *all* consistency checks should run at entry; that overstated it — the batch pass still owns the work that cannot (or should not) interrupt the interview.
 
 ## Other entry-time controls
 
@@ -136,7 +146,7 @@ For UHC Survey Year 2 — small-volume, complex survey — **all consistency che
 - **`onfocus` for value-set switching** — F3 outpatient/inpatient routing and F4 person-conditional questions both follow the MyCAPI walkthrough's `setvalueset` in `onfocus` pattern.
 - **`postproc` for cross-field consistency** — every "if A, then B" check in the F1/F3/F4 questionnaires (e.g., facility type vs services offered, age vs fertility questions) should live in the `postproc` of the field that triggers the check, with `errmsg` + `reenter` for blocking corrections.
 - **`OnStop` for partial save** — every CAPI app should override `OnStop` to confirm the operator's intent, save the partial case, and offer to schedule a callback (per the Census Bureau's CAPI strategies).
-- **Run consistency at entry, not in batch** — UHC Year 2 is the survey-not-census case, so all checks belong in entry-time logic.
+- **Blocking checks at entry; batch for the rest** — UHC Year 2 is the survey-not-census case, so blocking consistency checks belong in entry-time logic; [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Batch Editing|batch editing]] is reserved for structure checks, imputation, and post-hoc QC on synced data.
 
 ## Sources
 

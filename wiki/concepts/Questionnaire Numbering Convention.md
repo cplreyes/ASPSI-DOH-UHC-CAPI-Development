@@ -3,7 +3,7 @@ type: concept
 status: adopted
 date_drafted: 2026-05-02
 date_adopted: 2026-05-05
-last_updated: 2026-05-05
+last_updated: 2026-06-12
 tags: [capi, cspro, dictionary, case-id, questionnaire-numbering, working-convention, adopted]
 source_count: 4
 related_task: E7-DOC-001
@@ -11,7 +11,10 @@ related_task: E7-DOC-001
 
 # Questionnaire Numbering Convention
 
-> **Status: ADOPTED 2026-05-05.** Carl approved the decomposed scheme on 2026-05-05 in response to Kidd's coding question. Width verification against PSA 1Q 2026 PSGC + Inception-Report Table 1 (same date) revised the proposal from 11 to **12 digits** because the PSGC city/municipality slot is 3 digits, not 2 — the manual's legacy `035401` example used the pre-2008 PSGC, while the F-series build is anchored on PSA 1Q 2026. The convention below reflects the adopted, verified widths. A brief for Kidd is at `deliverables/Survey-Manual/Case-ID-Convention-Brief_2026-05-05.{md,docx}`. Implementation footprint (cspro_helpers + F1/F3/F4 generators + F2 PWA case-ID issuer + manual addendum) remains pending sprint scheduling.
+> [!important] SUPERSEDED AS-BUILT 2026-06-11 — single `QUESTIONNAIRE_NUMBER` ID item
+> The **storage shape** below (5 separate ID items) was never shipped. The as-built F1/F3/F4 dictionaries — live on CSWeb (`csweb.asiansocial.org`) as of 2026-06-12 — carry **one 12-digit `QUESTIONNAIRE_NUMBER` ID item** as the sole case key. The 12-digit `RRPPMMMFFCCC` composite *semantics* of this convention survive, but the app parses the value by **positional slice** in logic rather than separate ID items: PSA province codes are 3-digit, so per-level reconstruction into the 2/2/3-digit items below is impossible. The as-built design applies hierarchical PSGC validation to the sliced value, derives read-only geographic names, and keeps the barangay picker. The 5-item table and the implementation-footprint section below are retained as **historical design record** only. (Source: log.md entry 2026-06-11)
+
+> **Status: ADOPTED 2026-05-05** *(historical — storage shape superseded as-built 2026-06-11, see banner above).* Carl approved the decomposed scheme on 2026-05-05 in response to Kidd's coding question. Width verification against PSA 1Q 2026 PSGC + Inception-Report Table 1 (same date) revised the proposal from 11 to **12 digits** because the PSGC city/municipality slot is 3 digits, not 2 — the manual's legacy `035401` example used the pre-2008 PSGC, while the F-series build is anchored on PSA 1Q 2026. The convention below reflects the adopted, verified widths. A brief for Kidd is at `deliverables/Survey-Manual/Case-ID-Convention-Brief_2026-05-05.{md,docx}`. Implementation footprint (cspro_helpers + F1/F3/F4 generators + F2 PWA case-ID issuer + manual addendum) remains pending sprint scheduling.
 
 This document specifies the case-identifier (questionnaire-number) format for every instrument in the UHC Survey Year 2 — F1 (Facility Head, CSPro), F2 (Healthcare Worker, PWA), F3 (Patient, CSPro), F4 (Household, CSPro). It exists because the master Survey Manual (March 2026 / Apr 28 working version) prescribes a 9-digit composite that doesn't quite fit a multi-instrument health-facility survey, and because the current F-series dictionaries use a different shape (single 6-digit `QUESTIONNAIRE_NO` ID item) that under-specifies the case key.
 
@@ -45,6 +48,8 @@ The 6-digit `QUESTIONNAIRE_NO` doesn't map cleanly to either the manual's framin
 **Key insight for this survey:** UHC Year 2 is **multi-instrument and facility-anchored** — F1 is one-per-facility, F3/F2 are many-per-facility, F4 is patient-anchored interval-walked. A single 9-digit "PSGC + day-sequence" works fine for a household survey but is **insufficient here** because two F1 facilities in the same municipality collide on the 3-digit position, and there's no encoding for cross-instrument linkage at the same facility.
 
 ## Adopted convention: 12-digit decomposed scheme (PSA 1Q 2026 PSGC)
+
+> *Historical storage shape — superseded as-built 2026-06-11.* The 5-item decomposition below was the adopted design but never shipped; the as-built dictionaries use a single 12-digit `QUESTIONNAIRE_NUMBER` ID item with positional-slice parsing (see banner at top). The composite `RRPPMMMFFCCC` semantics, widths, and range allocations remain the authoritative meaning of the 12 digits.
 
 **12-digit composite case ID, stored as 5 separate ID items in the dictionary.** Composite display form is `RRPPMMMFFCCC` (zero-padded, no separators) — used in the data file. Dashed form `RR-PP-MMM-FF-CCC` is used in the manual, training, dashboards, and enumerator cards.
 
@@ -83,7 +88,7 @@ The 3-digit `CASE_SEQ` cleanly handles the manual's *"refused/cancelled cases ge
 
 - **Active range** — `001–699`, partitioned by STL across enumerators (e.g., Enumerator 1 → 001–050; Enumerator 2 → 051–100).
 - **Replacement range** — `700–899`, drawn from the alternative-respondent list per [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex D Replacement Protocol]].
-- **Refused / forfeited range** — `900–999` for attempts that did not produce data (recorded for response-rate accounting; AAPOR disposition codes in `FIELD_CONTROL` capture the why).
+- **Refused / forfeited range** — `900–999` for attempts that did not produce data (recorded for response-rate accounting; the per-instrument `ENUM_RESULT_FINAL_VISIT` disposition captures the why — `AAPOR_DISPOSITION` was removed from all three dictionaries 2026-06-12).
 
 ### Cross-instrument linkage
 
@@ -102,13 +107,13 @@ Drops into *The Survey Questionnaire → Questionnaire Number*, replacing the ex
 | Today | After |
 |---|---|
 | `QUESTIONNAIRE_NO` (single 6-digit ID item) on F1 / F3 / F4 | 5 ID items totalling 12 digits on F1 / F3 / F4; the F2 PWA generates the same 12-digit form per response |
-| `F3_FACILITY_ID` (10-digit data item) | Retired — facility identity is now in the ID item block |
+| `F3_FACILITY_ID` (10-digit data item) | Retired — facility identity is now in the ID item block *(not executed — still in the as-built F3 dictionary as of 2026-06-12; see Decisions below)* |
 | Geographic items `REGION` / `PROVINCE_HUC` / `CITY_MUNICIPALITY` / `BARANGAY` at 10 digits each (full PSA PSGC) | **Keep** — these stay as data items for joining with PSA / DOH datasets at full precision; the 2/2/3-digit ID items are the *within-parent* PSA 1Q 2026 codes derived from the same PSGC source |
 | Manual specifies 9 digits (legacy 6-digit PSGC + 3 sequence) | Manual addendum: 12 digits (PSA 1Q 2026 7-digit PSGC + 2 facility + 3 case) — replaces the legacy PSGC slice entirely |
 
-## Implementation footprint (pending sprint scheduling)
+## Implementation footprint (historical — never executed as written)
 
-Adopted; not yet executed. When scheduled:
+> *Historical.* This plan was superseded before execution by the as-built single-`QUESTIONNAIRE_NUMBER` implementation shipped 2026-06-11 (see banner at top) — no 5-item ID block was ever built. Retained as design record:
 
 1. **`deliverables/CSPro/cspro_helpers.py`** — add `build_id_block()` returning the 5 ID items; extend `build_dictionary()` to accept an `id_items=` list (replacing the current `id_item_name` / `id_length` single-item path).
 2. **`deliverables/CSPro/F1/generate_dcf.py`** — replace `id_item_name="QUESTIONNAIRE_NO" / id_length=6` with `id_items=build_id_block()`. Regenerate `FacilityHeadSurvey.dcf`.
@@ -126,7 +131,7 @@ Estimated effort: ~4–6 hours including regen + spot-check Designer open + PWA 
 - **Width:** 12 digits (`RR-PP-MMM-FF-CCC`), not 11. The 3-digit municipality slot was confirmed against the actual PSA 1Q 2026 city/municipality CSV — 73 of 80 provinces have at least one mun with slot ≥ 100.
 - **Storage shape:** 5 separate ID items, not 1 composite. Matches CSPro convention; enables Designer / CSWeb filtering by structural level.
 - **`FACILITY_NO` scoping:** per-municipality (FF=2 digits), justified by Inception-Report Table 1 ceilings (max per-province sample = 53; max HUC = 38; per-mun strictly bounded by these).
-- **`F3_FACILITY_ID`:** retired in favour of the ID-item block, to avoid drift.
+- **`F3_FACILITY_ID`:** retire decided 2026-05-05 in favour of the ID-item block, to avoid drift — **not yet executed as of 2026-06-12**: `F3_FACILITY_ID` remains in the as-built F3 dictionary (still present in `generate_dcf.py` / `generate_apc.py`).
 
 ## Cross-references
 

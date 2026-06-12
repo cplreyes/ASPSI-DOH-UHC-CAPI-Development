@@ -25,10 +25,16 @@ Tranche 1 acceptance → DOH technical clearance → SJREB ethics clearance → 
 
 Because pre-tested tools are part of [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Signed CSA Dec 15 2025|Carl's C-T2]] deliverable bundle, SJREB clearance is not just a downstream blocker — it directly gates 30% of Carl's contract value.
 
-## Status as of Apr 10, 2026
+## Status as of 2026-06-12 (current)
+
+- **Full-board review scheduled for the 2nd week of June 2026** — the submission has long since moved past the "not yet submitted" state recorded in April.
+- **SJREB-approved ICFs are already in field use**: the verbatim [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex H Informed Consent Forms|Annex H]] consent wording is wired into the CSEntry instruments (F1/F3/F4) now live on CSWeb.
+- The "#1 critical blocker" framing below is retained as history only; it no longer describes the current state.
+
+## Status as of Apr 10, 2026 (historical — superseded by the 2026-06-12 update above)
 
 - **Not yet submitted to SJREB** — DOH has not provided technical clearance because Tranche 1 is still pending formal acceptance after the Apr 8 v5 resubmission.
-- This is the project's #1 critical blocker. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Project Intelligence Brief]].
+- This was the project's #1 critical blocker at the time. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/analyses/Analysis - Project Intelligence Brief]].
 
 ## Sources
 

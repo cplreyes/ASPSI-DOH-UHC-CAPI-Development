@@ -6,7 +6,7 @@ source_count: 0
 
 # F-Series Value Set Conventions
 
-Coding conventions that apply across the F-series CSPro dictionaries (F1 Facility Head, F2/F3/F4 when built). These are project-internal decisions, not CSPro mandates — they exist to keep coding consistent across instruments and to give analysts a predictable codebook.
+Coding conventions that apply across the F-series CSPro dictionaries — F1 (Facility Head), F3, and F4, all built, with the conventions enforced in each instrument's `generate_dcf.py` plus the shared `cspro_helpers.py`. F2 is a PWA, not a CSPro instrument, and follows its own spec. These are project-internal decisions, not CSPro mandates — they exist to keep coding consistent across instruments and to give analysts a predictable codebook.
 
 Decided during the `E2-F1-010` Designer walkthrough on 2026-04-14 (see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/log]] entry for that date).
 
@@ -66,7 +66,7 @@ F1's `UHC9_OPTIONS` is the live example of the squeeze case: 7 substantive "yes/
 
 The convention lives in two places:
 1. This document, for human reference.
-2. [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/deliverables/CSPro/F1/generate_dcf.py]] — the generator is the source of truth for actual codes; any change must be made there and regenerated, never hand-edited in CSPro Designer (see [[CSPro Data Dictionary]] for the generator-vs-Designer rule).
+2. The per-instrument generators — [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/deliverables/CSPro/F1/generate_dcf.py]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/deliverables/CSPro/F3/generate_dcf.py]], and [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/deliverables/CSPro/F4/generate_dcf.py]], plus the shared [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/deliverables/CSPro/cspro_helpers.py]] — are the source of truth for actual codes; any change must be made there and regenerated, never hand-edited in CSPro Designer (see [[CSPro Data Dictionary]] for the generator-vs-Designer rule).
 
 ## Related
 

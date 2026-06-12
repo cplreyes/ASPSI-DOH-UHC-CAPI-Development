@@ -26,8 +26,8 @@ Generate evidence on how Filipinos and health facilities experience the UHC roll
 ## Four Survey Modules
 
 1. **Facility Head (F1)** — facility resources, accreditation, YAKAP/Konsulta implementation, service delivery, PhilHealth benefits impact. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F1 Facility Head Survey Questionnaire]] and [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Facility Head Data Dictionary and Value Sets]].
-2. **Healthcare Worker (F2)** — UHC awareness, HCPNs, satisfaction, compensation, PhilHealth benefits impact. Self-administered (Google Forms/paper). See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire]].
-3. **Patient (F3)** — UHC awareness, PhilHealth/YAKAP/BUCAS/GAMOT/NBB/ZBB, health-seeking behavior, quality of care, OOP costs, referral process. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3 Patient Survey Questionnaire]] and the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Patient Listing Form]].
+2. **Healthcare Worker (F2)** — UHC awareness, HCPNs, satisfaction, compensation, PhilHealth benefits impact. Self-administered via the HCW Survey **PWA** (production v2.0.0 since 2026-05-04), managed through the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]]; not a CSPro instrument. The earlier [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]] was retired 2026-04-17. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F2 Healthcare Worker Survey Questionnaire]].
+3. **Patient (F3)** — UHC awareness, PhilHealth/YAKAP/BUCAS/GAMOT/NBB/ZBB, health-seeking behavior, quality of care, OOP costs, referral process. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3 Patient Survey Questionnaire]] and the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F3b Patient Listing Protocol]].
 4. **Household (F4)** — population-level UHC awareness, health-seeking behavior, household expenditure, financial risk protection. New in Year 2. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Annex F4 Household Survey Questionnaire]].
 
 ## Conceptual Framework
@@ -45,6 +45,8 @@ Adopts the **Input-Process-Output-Outcome (IPOO)** model:
 - Inception Report submission and revision: through April 2026
 - Questionnaire finalization, CAPI development, bench/pilot testing: pre-survey phase
 - Field data collection, processing, analysis, reporting: survey and post-survey phases
+
+Full official schedule: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Timetable of Activities|Timetable of Activities]]
 
 ## Sources
 

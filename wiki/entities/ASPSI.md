@@ -16,6 +16,7 @@ ASPSI is the implementing organization responsible for the full survey lifecycle
 
 | Role | Person |
 |---|---|
+| President / Project Coordinator | [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Juvy Chavez-Rocamora|Ms. Juvy Chavez-Rocamora]] |
 | Project Lead / Public Health Specialist | Dr. Paulyn Jean A. Claro |
 | Asst. Project Lead / Survey Manager | Dr. Merlyne M. Paunlagui |
 | Health Policy Development Specialist | Dr. Ma. Esmeralda Silva-Javier |
@@ -25,11 +26,13 @@ ASPSI is the implementing organization responsible for the full survey lifecycle
 | Data Manager | Ms. Marriz M. Garciano |
 | Field Manager | Ms. Airyne D. Almendral |
 
-Support staff: project coordinator/finance officer, assistant data managers, research associates, project assistants, field supervisors, and survey enumerators.
+Support staff: finance officer, assistant data managers, research associates, project assistants, field supervisors, and survey enumerators.
+
+Note: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Juvy Chavez-Rocamora|Juvy Chavez-Rocamora]] holds two concurrent capacities — **ASPSI President** (counterparty signatory on Carl's CSA, per the signed CSA) and **Project Coordinator / formal-submissions gate** for this engagement (per the Apr 13, 2026 team meeting minutes).
 
 ## Carl's Engagement with ASPSI
 
-Carl is contracted by ASPSI as **Data Programmer** under a signed Consultancy Services Agreement (Dec 15, 2025): 6.0 person-months × PHP 65,000 = **PHP 390,000** total, deliverable-based payment in 4 tranches. ASPSI President Juvy C. Rocamora is the counterparty signatory. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Signed CSA Dec 15 2025]] for full terms.
+Carl is contracted by ASPSI as **Data Programmer** under a signed Consultancy Services Agreement (Dec 15, 2025): 6.0 person-months × PHP 65,000 = **PHP 390,000** total, deliverable-based payment in 4 tranches. ASPSI President [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Juvy Chavez-Rocamora|Juvy C. Rocamora]] (also the engagement's Project Coordinator) is the counterparty signatory. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Signed CSA Dec 15 2025]] for full terms.
 
 ## Sources
 

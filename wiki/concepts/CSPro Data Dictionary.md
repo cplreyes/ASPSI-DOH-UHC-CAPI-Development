@@ -33,7 +33,7 @@ A *case* is the primary unit — usually one questionnaire. A case decomposes in
 2101001311707199207   ← person 3
 ```
 
-For [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]: F1, F2, F3 each likely fit a single-record structure (one questionnaire = one respondent). F4 (household) is the canonical multiple-record case — household record + repeating person record + repeating expenditure rows.
+For [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]]: F1 and F3 each fit a single-record structure (one questionnaire = one respondent). F4 (household) is the canonical multiple-record case — household record + repeating person record + repeating expenditure rows. (F2 is delivered as a PWA outside the CSPro stack — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]] — so it has no CSPro dictionary.)
 
 ## Levels (rare but powerful)
 
@@ -179,7 +179,7 @@ Toggle: `Options → Relative Positions`.
 
 ## Multiple-language dictionaries
 
-`Edit → Languages` adds languages. Each label, value label, and occurrence label gets a per-language string. If unset for a given language, falls back to the primary. Switch in the editor with `Ctrl+Alt+L`. For multi-language CAPI, the CAPI Languages must match — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Multi-Language Applications]]. UHC Year 2 doesn't currently scope multilingual dictionaries (Filipino + English UI is on the CAPI side, not the dictionary).
+`Edit → Languages` adds languages. Each label, value label, and occurrence label gets a per-language string. If unset for a given language, falls back to the primary. Switch in the editor with `Ctrl+Alt+L`. For multi-language CAPI, the CAPI Languages must match — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Multi-Language Applications]]. UHC Year 2 *does* scope multilingual dictionaries: the F1/F3/F4 dictionaries carry per-language label and value-set columns for the project's seven-language translation set, emitted by the generators rather than hand-edited here — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CAPI Seven-Language Translation Build|CAPI Seven-Language Translation Build]].
 
 ## Dictionary macros (bulk operations)
 
@@ -230,7 +230,7 @@ The book recommends, and Carl should follow:
 
 ## Why this matters for UHC Year 2
 
-- **F1, F2, F3** — single-level, mostly single-record dictionaries. F1 already has a draft dictionary (see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Facility Head Data Dictionary and Value Sets]]) using `Q{n}_{DESCRIPTION}` naming.
+- **F1, F3** — single-level, mostly single-record dictionaries. F1 already has a draft dictionary (see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Facility Head Data Dictionary and Value Sets]]) using `Q{n}_{DESCRIPTION}` naming. F2 is a PWA outside the CSPro stack ([[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]]) and needs no dictionary.
 - **F4 (Household)** — multi-record. Will need at minimum: `HOUSEHOLD_REC` (singly-occurring), `PERSON_REC` (multiply-occurring with `Max ≈ 25` and required = No until at least one person is recorded), `EXPENDITURE_REC` or repeating items inside `HOUSEHOLD_REC` for the consumption rosters.
 - **Linked value sets** are worth using for region/province/municipality codes that appear across all four annexes.
 - **Encryption** is non-negotiable for any dictionary holding PHI (F3 patient records).

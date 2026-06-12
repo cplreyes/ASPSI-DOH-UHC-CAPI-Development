@@ -39,7 +39,7 @@ Detailed concept pages built from the 8.0 Users Guide:
 
 ## Role in This Project
 
-1. **Data dictionaries** — built from finalized questionnaire annexes (F1–F4), defining records, items, value sets, and validation rules.
+1. **Data dictionaries** — built from the finalized F1, F3, and F4 questionnaire annexes, defining records, items, value sets, and validation rules. F2 sits outside the CSPro stack — it is delivered as a PWA, see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]].
 2. **CAPI application** — tablet-based form with skip logic, range checks, and conversational interview flow. Runs on Android via CSEntry.
 3. **Data sync** — completed interviews sent to [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSWeb|CSWeb]] server; program modifications received from it.
 4. **Data export** — native export to Stata and other statistical packages for analysis.

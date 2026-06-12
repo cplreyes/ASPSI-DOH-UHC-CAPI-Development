@@ -10,7 +10,7 @@ superseded_by: F2 PWA (deliverables/F2/PWA/app/)
 # F2 Google Forms Track
 
 > [!warning] **SUPERSEDED 2026-04-17 — kept for historical context only.**
-> The Google Forms primary track was retired 2026-04-17 in favor of a Vite+React+TS PWA build at `deliverables/F2/PWA/app/`. The PWA reached production 2026-04-25 at v1.1.1 after two UAT rounds. Google Forms artefacts under `deliverables/F2/apps-script/` remain as fallback starting points only — do not reopen this track without a deployment-context decision reversal.
+> The Google Forms primary track was retired 2026-04-17 in favor of a Vite+React+TS PWA build at `deliverables/F2/PWA/app/`. The PWA reached production 2026-04-25 at v1.1.1 after two UAT rounds; v2.0.0 (with the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|Admin Portal]]) since 2026-05-04. Google Forms artefacts under `deliverables/F2/apps-script/` remain as fallback starting points only — do not reopen this track without a deployment-context decision reversal.
 
 ---
 

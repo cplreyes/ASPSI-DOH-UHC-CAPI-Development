@@ -1,6 +1,6 @@
 ---
 type: source-summary
-source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/garrytan_gstack_ Use Garry Tan's exact Claude Code setup_ 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/garrytan_gstack_ Use Garry Tan's exact Claude Code setup_ 23 opinionated tools that serve as CEO, Designer, Eng Manager, Release Manager, Doc Engineer, and QA.md]]"
 date_ingested: 2026-04-26
 tags: [tooling, claude-code, workflow, f2-pwa]
 ---

@@ -6,7 +6,7 @@ source_count: 0
 
 # F2 Admin Portal
 
-The F2 Admin Portal is the **operations console** for the F2 PWA stack — admin-only routes layered on top of the existing PWA at `f2-pwa.pages.dev`. It mirrors [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSWeb]]'s permission model 1:1 so the F2 backend has the same governance shape as the CSPro F1/F3/F4 stack served by CSWeb. The portal replaces the abandoned **M10 single-`ADMIN_SECRET` Apps-Script-HtmlService** approach.
+The F2 Admin Portal is the **operations console** for the F2 PWA stack — admin-only routes layered on top of the existing PWA at `f2-pwa.pages.dev`. It mirrors [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSWeb]]'s permission model 1:1 at the permission-shape level (see "Permission model" below for how 5 seeded role names map onto CSWeb's 4 shapes) so the F2 backend has the same governance shape as the CSPro F1/F3/F4 stack served by CSWeb. The portal replaces the abandoned **M10 single-`ADMIN_SECRET` Apps-Script-HtmlService** approach.
 
 > **Branch:** `f2-admin-portal` (PR #54 merged to `main` 2026-05-04; v2.0.0 cut to prod the same evening, soak waived)
 > **Spec:** `docs/superpowers/specs/2026-05-01-f2-admin-portal-design.md` (v0.2)
@@ -22,7 +22,18 @@ The F2 Admin Portal is the **operations console** for the F2 PWA stack — admin
 ## Permission model (CSWeb mirror)
 
 - **5 dashboards:** `data`, `report`, `apps`, `users`, `roles`
-- **5 IR-aligned roles** (seedable, with 2 built-ins — Administrator + Standard User — that cannot be deleted)
+- **5 IR-aligned seeded roles** — Administrator, Data Manager, Monitor, Operator, Field Supervisor (default perm matrices in spec §8.1–8.2) — plus the vestigial built-in **Standard User** (all checkboxes false; documents the equivalence "F2 PWA App ≡ CSEntry; HCWs map to CSWeb's Standard User role with JWT credential primitive instead of username/password"). Administrator and Standard User are the 2 built-ins that cannot be deleted.
+
+  | F2 seeded role | Default perms | CSWeb permission shape |
+  |---|---|---|
+  | Administrator | all 5 dashboards; all dictionaries up/down | Full admin |
+  | Data Manager | `data` + `report`; download-only on all dictionaries | Data observer |
+  | Monitor | `data` + `report`; download-only on all dictionaries | Data observer |
+  | Field Supervisor | `data` + `report`; download-only on all dictionaries | Data observer |
+  | Operator | `data` only; `paper_encoded` up/down + `self_admin` download; no `capi` | Operator |
+  | Standard User (built-in) | none — HCW sync identity via JWT | Sync identity (Standard User) |
+
+  Five role names collapse onto [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSWeb]]'s four permission shapes — Data Manager, Monitor, and Field Supervisor carry identical default permissions (the Data observer shape; the IR's functional differences between them stay project-level conventions, exactly as on the CSWeb side). The "1:1 mirror" claim therefore holds at the **permission-shape** level, not the role-name count.
 - **6 per-instrument flags** for fine-grained access (e.g. F2-only Standard User vs full-stack Administrator)
 - **Role versioning** with auto-bump on update — every Worker request validates JWT against current `role_version`, so a role change instantly invalidates all sessions for users carrying that role
 - Force-revoke session (`revoked_jti` + `revoked_user` lists in KV) — see commit `14ad3f8 feat(admin): force-revoke user sessions (KV + RBAC + UI)`
@@ -45,7 +56,7 @@ The F2 Admin Portal is the **operations console** for the F2 PWA stack — admin
 
 ## Build state (2026-05-04 — v2.0.0 live in prod)
 
-Sprints AP1–AP4 **functionally complete, end-to-end verified on staging, and cut to production 2026-05-04 evening** (PR #54 merged 15:49 PHT; v2.0.0 cutover same evening, 7-day soak explicitly waived). UAT Round 2 opened to Shan + Kidd with embedded prod-signed enrollment URLs and per-tester admin credentials. ~60 commits, ~19k LOC across the merged branch.
+Sprints AP1–AP4 **functionally complete, end-to-end verified on staging, and cut to production 2026-05-04 evening** (PR #54 merged 15:49 PHT; v2.0.0 cutover same evening, 7-day soak explicitly waived). UAT Round 2 reopened against v2.0.0 to Shan + Kidd with embedded prod-signed enrollment URLs and per-tester admin credentials (UAT Rounds 1–2 originally closed before the 2026-04-25 v1.1.1 production cut — see the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track]] banner; this is a reopen against the new version, not a new round). ~60 commits, ~19k LOC across the merged branch.
 
 ```
 beee13e docs(runbook): production cutover runbook

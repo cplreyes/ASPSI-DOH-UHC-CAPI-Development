@@ -27,7 +27,7 @@ Sync is **case-level** for CSPro data: only cases that are new or modified since
 | **Dropbox** | Small/medium surveys; no server expertise needed | Data lives on Dropbox's servers; free; zero setup |
 | **FTP** | Small/medium when Dropbox is unacceptable but CSWeb is impractical | Need to run/maintain an FTP server |
 
-> **For UHC Survey Year 2 the chosen server is CSWeb.** Dropbox is the practical fallback during early bench-testing — the same Simple Synchronization options can be flipped over without code changes.
+> **For UHC Survey Year 2 the production server is CSWeb, live at `csweb.asiansocial.org`.** Dropbox served as the zero-infrastructure fallback during early bench-testing; with CSWeb in production that fallback is retired (as-built 2026-06-12).
 
 ## Two ways to set up sync
 
@@ -124,10 +124,13 @@ The log captures all sync operations including Deploy Application uploads/downlo
 
 ## Project relevance
 
-- **CSWeb is the production target** — the project's entire data flow assumes it. Until it's stood up, Dropbox is the bench-test fallback that needs zero infrastructure.
-- **Bench test path for Tranche 2** — `Deploy Application → Dropbox` is the lowest-friction way to demonstrate end-to-end "PC → tablet → upload → Data Viewer" without waiting on the SJREB chain.
-- **Multi-app sync pattern** — if F1 / F3 / F4 end up as separate `.pen` files plus a launcher, lift the canonical example above directly. Each annex dictionary becomes one `syncdata(PUT, ...)` call.
-- **Bluetooth fallback** — relevant for facility-head visits in connectivity-poor regions; supervisor pulls from interviewers in person. Set up the supervisor app early enough to test it before fieldwork.
+> [!info] As-built (2026-06-12) — CSWeb is live, sync proven on-device
+> [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSWeb|CSWeb]] is **live in production at `csweb.asiansocial.org`** and is the only sync server in use — the Dropbox bench-test fallback is retired. F1, F3, and F4 ship as **three separate deployed packages**, each configured for **one-way sync (`direction=put`, upload only)**. End-to-end round-trips (deploy → tablet → upload) were proven on-device on 2026-06-12. (Source: log.md entry 2026-06-12)
+
+- **CSWeb is the production server** — the project's entire data flow runs through it. The Dropbox/FTP rows in the server table above are general CSPro reference only, not project options.
+- **Bench-test path (historical)** — `Deploy Application → Dropbox` was the planned zero-infrastructure demo route before CSWeb stood up; it was never needed once CSWeb went live.
+- **Multi-app sync pattern (not used)** — F1 / F3 / F4 are deployed as three independent packages with no menu launcher, so the Synchronization-from-Logic launcher pattern above stays general reference. Each instrument's package handles its own one-way `put` sync.
+- **Bluetooth fallback** — remains a contingency for connectivity-poor sites (supervisor pulls from interviewers in person); not part of the deployed configuration.
 - **`sync.log` discipline** — bake it into the enumerator manual. Any sync issue starts with "send us your sync.log".
 
 ## Sources

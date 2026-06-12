@@ -30,7 +30,7 @@ The protocol below is the corrective action.
 
 ### From team → DOH
 
-- **Authorized senders:** **Ms. Juvy Chavez-Rocamora (ASPSI Coordinator)**, **Dr. Paulyn Claro (Project Lead)**, **Dr. Merlyne Paunlagui (Asst Project Lead / Survey Manager)**. These are the only three people who may send to DOH.
+- **Authorized senders:** **[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Juvy Chavez-Rocamora|Ms. Juvy Chavez-Rocamora]] (ASPSI Coordinator)**, **[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Dr Paulyn Claro|Dr. Paulyn Claro]] (Project Lead)**, **[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Merlyne Paunlagui|Dr. Merlyne Paunlagui]] (Asst Project Lead / Survey Manager)**. These are the only three people who may send to DOH.
 - **Official submissions are done by the Project Coordinator (Juvy).**
 - **Team members must prepare and share deliverables in advance** to give the Project Coordinator sufficient time for final review before submission.
 - **Viber** — urgent updates/info only.

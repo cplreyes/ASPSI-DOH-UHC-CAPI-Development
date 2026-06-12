@@ -25,6 +25,9 @@ The Census Bureau's recommended design patterns for CAPI applications, as docume
 | Protected fields | **Use them** for calculated/derived values. |
 | Force out-of-range | **Almost always off** — interviewers should only enter valid responses. Define explicit "don't know", "refused", "not applicable" categories instead. |
 
+> [!note] Project override (as-built 2026-06-11): auto-advance is ON
+> The shipped F1/F3/F4 build deliberately departs from the "Use Enter key: On" guidance above — it sets `autoAdvanceOnSelection: true` across all three instruments (generator-enforced, live in UAT Round 4). Do not flip this back without a UAT decision.
+
 CAPI applications use alphanumeric responses more freely than key-from-paper apps because the interviewer is interactive (e.g., capturing names directly).
 
 ## Questions
@@ -103,7 +106,7 @@ A `Media Store` mechanism provides shared access to audio, image, and video cont
 
 - **Section organization** for F1 (Sections A–H), F3 (A–L), F4 (A–Q) maps cleanly onto this guidance — each questionnaire annex section becomes a CSPro section.
 - **Partial save is mandatory for F4** — household interviews can run long, and respondents may need to break for fieldwork or meals. Enable from day one.
-- **Filipino + English** — define both as CAPI languages from the start, then finalize all question text in English before commissioning the Filipino translation. (See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Multi-Language Applications]].)
+- **Seven CAPI languages** — the build targets English plus seven Philippine languages (Tagalog, Cebuano, Bisaya, Hiligaynon, Waray, Bicolano, Ilocano), not just Filipino + English; see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CAPI Seven-Language Translation Build|CAPI Seven-Language Translation Build]]. The lock-the-source-language-first workflow above still applies: all question text was finalized in English before translations were layered in. (See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Multi-Language Applications]] for the technical mechanism.)
 - **No "Force out-of-range"** — every "don't know", "refused", and "not applicable" response in F1/F3/F4 must be an explicit value-set entry.
 - **Roster patterns** — F4's household roster should follow the "gather names first, then loop" pattern.
 - **Photo / signature capture** — useful for facility consent forms and pretest documentation. Use the new `image.*` functions, not `execsystem`.

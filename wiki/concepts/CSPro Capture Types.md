@@ -10,7 +10,7 @@ CSPro lets you specify how each field is rendered for the operator. The base typ
 
 In the CSPro Designer, fields with a capture type are outlined in **blue**; Number Pad fields use a lighter blue.
 
-## The nine capture types
+## The twelve capture types
 
 | Capture type | Numeric ok | Alpha ok | What it does | Notes |
 |---|---|---|---|---|
@@ -50,13 +50,18 @@ setproperty(dictionary_symbol, "ShowExtendedControlTitle", "No");
 
 ## Project relevance
 
-For F1 (Facility Head), F3 (Patient), and F4 (Household), capture types are how the project gets enumerator-friendly tablet UX:
+> [!info] As-built (2026-06-12): capture types are generator-owned
+> For F1 (Facility Head), F3 (Patient), and F4 (Household), capture types are **not** hand-assigned in Designer (the CAPI Mode drag described above is no longer the project mechanism). They are assigned by `automation/optimize_capture_types.py`, which runs inside `cspro_compile_driver --build` for **all** instruments. The pipeline rules:
+>
+> - **Drop Down** for any value set with **>= 7 options**, and for all cascade (lookup) fields.
+> - **Numeric length-8 YYYYMMDD date fields** → the combined `Date,YYYYMMDD` capture type; legacy standalone `CaptureDateFormat` lines are **stripped**.
+> - **Multi-select questions** are modeled as **per-option Yes/No fields** — except **Q148_CONDITIONS**, which is a true **Check Box** multi-select (Other = 99). The CHECKBOX assignment wins over the DropDown rule.
+>
+> **Packager is stricter than Designer:** the Designer Publish/Deploy **packager is a stricter FMF parser than Designer open+compile**. A `Date` capture type paired with a legacy `CaptureDateFormat` line compiles cleanly in Designer but was **rejected by the deploy packager on 2026-06-12** — which is why the generator strips the legacy lines. (Source: log.md entry 2026-06-12)
 
-- **Single-select coded responses** (Sex, Yes/No, scales) → **Radio Button** (auto-chosen by CAPI Mode drag).
-- **Long lookup lists** (region, province, facility code) → **Combo Box** so enumerators can scroll.
-- **Multi-select questions** (e.g., F1 services offered, F3 reasons for visit) → **Check Box** with a wide alpha field to hold multiple codes.
-- **Dates** (interview date, birth date, last visit) → **Date** capture type — handles validation automatically.
-- **Free-text comments / "Other (specify)" fields** → **Text Box (No Tickmarks)** or **Multiline** so enumerators have room to type.
+Still-valid general notes for the tablet build:
+
+- **Free-text "Other (specify)" fields** are isolated behind gated other-specify logic in the combined-view screens rather than relying on capture-type choice alone.
 - **Signatures and consent images** → use the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro CAPI Strategies|Signature]] and Camera multimedia features (separate from capture types — driven by `image.captureSignature` / `image.takePhoto`).
 - **Number Pad** is a no-op on Android and not worth setting for the tablet build.
 

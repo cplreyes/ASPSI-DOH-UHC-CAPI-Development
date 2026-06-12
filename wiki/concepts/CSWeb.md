@@ -23,6 +23,20 @@ Web-based companion to [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concep
 - **Programmatic app updates** — `syncapp()` from logic, or `Update Installed Applications` from the device, refreshes a running app to a newer server version.
 - **File uploads via the CSWeb web UI** — admins can post arbitrary files to the server outside the Designer flow.
 
+#### Project deploy procedure (as-built 2026-06-12)
+
+The F1/F3/F4 deploy is built around one hard-won fact: **Designer's Publish auto-bundles external-dictionary `.dcf` files but NEVER their `.dat` data files** — so all 8 `psgc_*.{dcf,dat}` lookup files must be Add-Files'd on EVERY deploy or the PSGC cascades arrive empty on device.
+
+1. **Publish** from Designer (`Tools → CSPro Deploy Application`) — agent-drivable.
+2. **`automation/auto_deploy.py <F1|F3|F4>`** adds the 8 PSGC files and verifies the deploy dialog: package name, files tree, main-dcf-only sync, CSWeb URL.
+3. **`--deploy`** clicks Deploy and confirms the `Application Deployed Successfully` popup.
+
+Lessons encoded in the script:
+
+- **`.dat` is never bundled** — Designer packages the external-dict `.dcf`s automatically but silently omits the `.dat` files; the 8 `psgc_*` pairs are re-added by `auto_deploy.py` every time.
+- **The publish packager is a STRICTER FMF parser than Designer open+compile** — an application that opens and compiles clean in Designer can still be rejected at packaging time (legacy standalone `CaptureDateFormat` lines were rejected 2026-06-12; capture types are now owned by `automation/optimize_capture_types.py`, which strips the legacy lines in favor of combined `Date,YYYYMMDD`).
+- **CSDeploy.exe is its own process** — the deploy dialog does not belong to the Designer window; automation has to attach to it separately.
+
 ### C. Data movement
 - **Case-level differential sync** — `syncdata(PUT/GET, dict)` moves only new or modified cases. Direction can be one-way (upload-only or download-only) or two-way.
 - **Paradata sync** — `syncparadata(PUT/GET)` moves operator-event logs (timing, navigation, edits).
@@ -85,11 +99,14 @@ The Inception Report has 10 organizational titles. CSWeb's permission model coll
 
 Functional differences inside "Data observer" (Monitor sees alerts but no full export; Field Supervisor sees only their region) **cannot be expressed in CSWeb's permission model**. They become project-level conventions, not enforced permissions.
 
+The [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]] seeds **five named roles** (Administrator, Data Manager, Monitor, Operator, Field Supervisor) plus a vestigial built-in Standard User. The five names collapse onto exactly these shapes: Data Manager, Monitor, and Field Supervisor all carry identical default permissions (the **Data observer** shape); Administrator = Full admin; Operator = the operator split; Standard User = the sync identity. So "10 IR titles → 4 permission shapes → 5 F2 role names" is consistent — the F2 mirror is 1:1 at the permission-shape level, not the role-name count.
+
 ## Project Relevance
 
-- **Production target** — the project's entire data flow from F1/F3/F4 enumerator tablets to the server is committed to CSWeb. Dropbox is the bench-test fallback only.
-- **F2 has no CSWeb** — F2 is a Cloudflare Pages PWA with a Worker JWT proxy; its operational backplane has to be designed separately. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Synchronization]] for the F1/F3/F4 sync architecture. The F2 admin portal mirrors this concept page's permission model 1:1 so a single role taxonomy governs both systems.
-- **Multi-app sync** — F1 + F3 + F4 + a launcher will follow the canonical Synchronization-from-Logic pattern, one `syncdata(PUT, ...)` per annex dictionary.
+> [!info] Current state (as-built 2026-06-12)
+> CSWeb 8.0.1 is **LIVE at `csweb.asiansocial.org`** — no longer a future target, and Dropbox fallback framing is retired. Three application packages (F1, F3, F4) are deployed; tablet↔server sync is proven for all three instruments. The relational break-out databases and the Sync Report are running in production (breakout DBs refreshed on a 5-minute cron). Role-permission lesson from go-live: **field-sync permission is granted per dictionary** — F3/F4 syncs returned 403 until their dictionaries were explicitly enabled on the syncing role; enabling F1 alone is not enough. (Source: log.md entry 2026-06-12)
+
+- **F2 has no CSWeb** — F2 is a Cloudflare Pages PWA with a Worker JWT proxy; its operational backplane is designed separately. See [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Synchronization]] for the F1/F3/F4 sync architecture. The [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 admin portal]] mirrors this concept page's permission model (1:1 at the permission-shape level — see the role-mapping note above) so a single role taxonomy governs both systems.
 - **`sync.log` discipline** — every sync issue starts with "send us your sync.log"; bake this into the enumerator manual.
 
 ## Sources

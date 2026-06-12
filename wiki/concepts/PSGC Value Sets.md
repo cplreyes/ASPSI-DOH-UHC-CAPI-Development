@@ -10,14 +10,14 @@ source_count: 1
 
 ## Items affected
 
-In F1's `FacilityHeadSurvey.dcf` (the template for F2/F3/F4):
+In F1's `FacilityHeadSurvey.dcf` (the template for F3/F4):
 
 - `REGION` — length 10, stores full PSGC (e.g. `1300000000` for NCR)
 - `PROVINCE_HUC` — length 10, stores full PSGC; includes all 82 Prov + 33 HUCs + 2 specials (Isabela City "not a province", Special Geographic Area)
 - `CITY_MUNICIPALITY` — length 10, stores full PSGC; includes 149 City (CC/ICC/HUC) + 1,493 Mun + 14 SubMun (Manila districts) + 2 specials
 - `BARANGAY` — length 10, stores full PSGC; 42,010 barangays
 
-F2/F3/F4 inherit the same four items; the PSA source + loader is shared so those instruments can reuse without re-fetching.
+F3/F4 inherit the same four items; the PSA source + loader is shared so those instruments can reuse without re-fetching. (F2 is a PWA, not a CSPro instrument — see [[#F2 parallel]].)
 
 ## Source — PSA 1Q 2026 publication (self-served)
 
@@ -35,9 +35,13 @@ Pipeline:
 | Barangay CSV | `deliverables/CSPro/F1/inputs/psgc_barangay.csv` | 42,010 rows |
 | Builder | `deliverables/CSPro/shared/build_psgc_lookups.py` | emits 4 external lookup dicts + fixed-width .dat files |
 | External dicts | `deliverables/CSPro/shared/psgc_{region,province,city,barangay}.{dcf,dat}` | the 4 lookup dictionaries CSEntry reads via `loadcase()` |
-| Cascade logic | `deliverables/CSPro/shared/PSGC-Cascade.apc` | 4 public `Fill*ValueSet` functions invoked from each form's `onfocus` events |
-| Helper | `deliverables/CSPro/cspro_helpers._psgc_fields(prefix="")` | emits the 4 main-dict numeric items (length=10, placeholder VS) |
+| Cascade logic | `deliverables/CSPro/shared/PSGC-Cascade.apc` | public `Fill*ValueSet` functions; since the single-QN redesign only `BARANGAY` (facility side) + F3's `P_*` home block remain wired `onfocus` — see [[#Cascade handlers]] |
+| Helper | `deliverables/CSPro/cspro_helpers._psgc_fields(facility_derived=)` | emits the 4 main-dict numeric items (length=10, placeholder VS); signature changed from `prefix=""` to `facility_derived=` with the single-QN redesign (facility-side geo codes are derived read-only from the QN, not operator-selected) |
 | Wiring | `F1/F3/F4 generate_dcf.py` via `build_geo_id(mode)` | attaches the placeholder value set; runtime cascade fills the real options |
+
+### Deployment — every CSWeb deploy must Add-Files all 8 lookup files
+
+Designer's Publish step **never bundles the external `.dat` files**, so a deploy that relies on Designer alone ships the application without the PSGC lookup data — this exact gap shipped broken on 2026-06-11. Every CSWeb deploy must therefore Add-Files **all 8** `psgc_*.{dcf,dat}` artifacts (4 external dicts x dcf+dat). As of 2026-06-12 this is automated: `automation/auto_deploy.py` runs after Designer Publish, adds the 8 files, then triggers the Deploy click through to the "Application Deployed Successfully" popup. (Source: log.md entry 2026-06-12)
 
 ## Architecture — External Lookup + Cascade
 
@@ -72,7 +76,18 @@ Each external dict is keyed by a 10-digit parent code in its single ID item. Reg
 
 ### Cascade handlers
 
-`PSGC-Cascade.apc` exposes four public functions. Each form's `.app` file wires them from the corresponding main-dict item's `onfocus`:
+> [!info] As-built 2026-06-12 — single-QN redesign removed most facility-side cascades
+> With the single 12-digit `QUESTIONNAIRE_NUMBER` redesign, the `REGION` / `PROVINCE_HUC` / `CITY_MUNICIPALITY` cascade procs were **removed**: those codes are now derived **read-only in the QN `postproc`** (no operator selection, so no value-set fill is needed). Only two cascade wirings remain:
+>
+> 1. **Facility side — `BARANGAY` only:**
+>    ```
+>    PROC BARANGAY  onfocus  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
+>    ```
+> 2. **F3 patient-home block** — `P_REGION`, `P_PROVINCE_HUC`, `P_CITY_MUNICIPALITY`, `P_BARANGAY` keep the full `Fill*ValueSet` cascade, because the patient's home address is genuinely operator-selected.
+>
+> **Province-anchored barangay fallback (fixed 2026-06-11):** when a QN is anchored at province level rather than at a specific city, the barangay value set falls back to listing **every barangay of the province's cities**, each labelled `City - Barangay`, so the interviewer can still pick a valid barangay.
+
+Historical design (pre single-QN redesign): `PSGC-Cascade.apc` exposed four public functions, and each form's `.app` file wired all four from the corresponding main-dict item's `onfocus`:
 
 ```
 PROC REGION            onfocus  FillRegionValueSet(REGION);
@@ -80,8 +95,6 @@ PROC PROVINCE_HUC      onfocus  FillProvinceValueSet(PROVINCE_HUC, REGION);
 PROC CITY_MUNICIPALITY onfocus  FillCityValueSet(CITY_MUNICIPALITY, PROVINCE_HUC);
 PROC BARANGAY          onfocus  FillBarangayValueSet(BARANGAY, CITY_MUNICIPALITY);
 ```
-
-F3's patient-home block (`P_REGION`, `P_PROVINCE_HUC`, `P_CITY_MUNICIPALITY`, `P_BARANGAY`) wires the same functions against those items.
 
 ## Edge cases handled by the parser
 
@@ -92,7 +105,9 @@ F3's patient-home block (`P_REGION`, `P_PROVINCE_HUC`, `P_CITY_MUNICIPALITY`, `P
 
 ## F2 parallel
 
-[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]] takes a different UX approach: rather than shipping PSGC as drop-downs, the F2 design **absorbs geographic fields into a `FacilityMasterList` Sheet** that prefills facility-linked metadata via per-facility prefilled URLs. The underlying PSGC codes it populates with should come from the same PSA source / CSVs here — keep one source of truth.
+F2 is **not a CSPro instrument** — it is a PWA (HCW Survey + Admin Portal, production v2.0.0 since 2026-05-04; see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/gstack F2 PWA Workflow|gstack F2 PWA Workflow]] and [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]]), so it never asks the respondent for PSGC drop-downs. Instead the **F2 PWA prefills facility-linked metadata — including PSGC geography — from the facility token carried in each tokenized survey link**, issued at enrollment via the Admin Portal.
+
+The earlier design described in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms Track]] (a `FacilityMasterList` Sheet feeding per-facility prefilled Google Forms URLs) was retired 2026-04-17 and is kept for history only. The principle survives unchanged: the PSGC codes F2 populates should come from the same PSA source / CSVs documented here — keep one source of truth.
 
 ## Memory
 

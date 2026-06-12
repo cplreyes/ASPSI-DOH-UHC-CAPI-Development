@@ -1,6 +1,6 @@
 ---
 type: source-summary
-source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Documentations/CSPro 8.0 Complete Users Guide]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Documentations/CSPro 8.0 Complete Users Guide.pdf]]"
 date_ingested: 2026-04-09
 tags: [cspro, reference, official, capi, dictionary, logic, csweb, sync]
 ---

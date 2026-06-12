@@ -1,6 +1,6 @@
 ---
 type: source-summary
-source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Documentations/CSPro Android Data Transfer Guide]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/Documentations/CSPro Android Data Transfer Guide.pdf]]"
 date_ingested: 2026-04-09
 tags: [cspro, csentry, sync, csweb, dropbox, bluetooth, deployment]
 ---

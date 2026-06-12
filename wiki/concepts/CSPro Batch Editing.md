@@ -8,7 +8,7 @@ source_count: 1
 
 **Batch editing** is the post-collection cleaning pass: a separate CSPro application reads raw data files, runs structure/validity/consistency checks, optionally imputes missing or invalid values, and writes a corrected file plus reports. Built in the **Batch Edit Designer**, run by **CSBatch**. Source: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CSPro 8.0 Complete Users Guide]] (Batch Editing section, pp. 273–301).
 
-This is the *back-end* counterpart to data entry: you cannot fully validate during entry without slowing the enumerator, so most consistency edits run here. Built on the same dictionary, the same logic language, and the same logic events as CAPI ([[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Language Fundamentals]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Logic Events]]).
+This is the *back-end* counterpart to data entry. **Project rule (reconciled 2026-06-12)**: blocking consistency checks run **at entry** (see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Logic Events]]); batch editing is reserved for **structure checks, imputation, and post-hoc QC on synced data** — the work that cannot (or should not) interrupt the interview. Built on the same dictionary, the same logic language, and the same logic events as CAPI ([[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Language Fundamentals]], [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Logic Events]]).
 
 ## Application files
 
@@ -226,7 +226,7 @@ Codes: `E` = system error, `W` = system warning, `U` = user-defined `errmsg`.
 ## Why this matters for UHC Year 2
 
 - **Two-pass design**: F4 (Household) needs a structure pass (housing record present, at least one person record) before consistency edits can run. F1/F3 are simpler — one pass each.
-- **Consistency checks**: F4 has the largest surface — sex × relationship × age × parity, household head uniqueness, expenditure totals must reconcile against per-item rows. These are the canonical hot-deck candidates.
+- **Consistency checks**: F4 has the largest surface — sex × relationship × age × parity, household head uniqueness, expenditure totals must reconcile against per-item rows. Per the project rule, the **blocking** versions of these checks run at entry ([[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CSPro Logic Events]]); the batch pass re-runs them as post-hoc QC on synced data and owns the imputation side — these are the canonical hot-deck candidates.
 - **Hot decks for missing age/sex**: standard hot deck pattern keyed on relationship — straight from the book example.
 - **DeckArrays**: cleaner than raw arrays for our value sets; province/region/age-group hot decks should use them.
 - **Numbered `errmsg` + .mgf**: gives the DOH validation team a clean report grouped by message ID. Should be designed at the same time as the dictionary.

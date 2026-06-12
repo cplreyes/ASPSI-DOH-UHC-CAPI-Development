@@ -1,6 +1,6 @@
 ---
 type: source-summary
-source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/DOH UHC Year 2_Survey Manual Apr 28]]"
+source: "[[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/raw/DOH UHC Year 2_Survey Manual Apr 28.docx]]"
 date_ingested: 2026-05-02
 tags: [survey-manual, fieldwork, sop, capi, papi, hcw-protocol, quality-control, aspsi]
 ---

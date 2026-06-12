@@ -6,7 +6,7 @@ source_count: 1
 
 # CSPro Multi-Language Applications
 
-CSPro supports building a single CAPI application that contains question text, dictionary labels, and runtime messages in multiple languages. The interviewer switches between them on the fly during the interview. This is essential for the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] project, where DOH surveys are administered in **English and Filipino** (and possibly other regional languages).
+CSPro supports building a single CAPI application that contains question text, dictionary labels, and runtime messages in multiple languages. The interviewer switches between them on the fly during the interview. This is essential for the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2|UHC Survey Year 2]] project, where the F1/F3/F4 CAPI apps must ship in English plus the **seven-language Philippine translation set** (Tagalog, Cebuano, Bisaya, Hiligaynon, Waray, Bicolano, Ilocano) — see [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CAPI Seven-Language Translation Build|CAPI Seven-Language Translation Build]].
 
 ## What can be localized
 
@@ -54,12 +54,15 @@ For multilingual fills, the fills themselves don't need to be translated — the
 
 ## Project relevance
 
-1. **Define `EN` and `FIL` from day one** in every CAPI application (F1, F3, F4). Even if Filipino translations are not yet available, having the language defined means the dictionary, message file, and PFF are all wired up — adding the strings later is purely an editor task.
-2. **Lock English first**, then commission the Filipino translation. Avoid the temptation to translate as questions are written.
-3. **Use ISO codes** (`EN`, `FIL`) so on Filipino-locale tablets the app starts in Filipino automatically without enumerator intervention.
+> [!info] As-built status (2026-06-12)
+> The project's language set is the **seven-language** requirement of [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CAPI Seven-Language Translation Build|CAPI Seven-Language Translation Build]], not the earlier English + Filipino framing. Per-language QSF plumbing has been wired into the generators since 2026-06-04 (translation overlays folded into the one-step generator pipeline; the generators already emit multi-language QSFs — F1 ×6, F3/F4 ×5), so each delivered translation is a drop-in locale. Batch 1 (Bicolano, Bisaya, Cebuano, Waray) was delivered by ASPSI 2026-06-02 as v3.2 clean files but is not yet wired in; Batch 2 (Tagalog, Ilocano, Hiligaynon) is still pending ASPSI's translation check.
+
+1. **Provision all seven translation languages plus English** in every CAPI application (F1, F3, F4). The generators do this — language definitions, dictionary columns, message file, and PFF are wired up even before a translation lands, so adding the strings later is a drop-in operation, not a rebuild.
+2. **Lock English first**, then wire in ASPSI's translated batches as their QC completes. Avoid the temptation to translate as questions are written.
+3. **Use ISO codes** so the app starts in the device locale's language automatically without enumerator intervention.
 4. **Wrap all `errmsg` strings in the message file** with multi-language entries. Validation errors that appear only in English will confuse Filipino-speaking enumerators in pretests.
 5. **Train interviewers on the language switch.** If a respondent prefers English mid-interview, the interviewer needs to know how to flip languages without restarting.
-6. **Pretest with both languages.** Translation issues only surface during real interviews — bake bilingual coverage into the bench test and the SJREB-tracked pretest.
+6. **Pretest in every wired language.** Translation issues only surface during real interviews — bake multi-language coverage into the bench test and the SJREB-tracked pretest as each batch is wired in.
 
 ## Sources
 

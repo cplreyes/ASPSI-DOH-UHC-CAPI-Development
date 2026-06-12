@@ -61,7 +61,7 @@ Bun's Playwright pipe transport is broken on Windows ([bun#4253](https://github.
 
 ### Real-browser QA shares cookies with browser
 
-Use `/setup-browser-cookies` to import auth cookies from real Chrome before `/qa` hits authenticated routes. F2 PWA staging at `https://5466a539.f2-pwa-staging.pages.dev` is unauthenticated; production at `https://f2-pwa.pages.dev` likewise. **No cookie import needed for F2 PWA QA** unless we add admin auth in a future epic.
+Use `/setup-browser-cookies` to import auth cookies from real Chrome before `/qa` hits authenticated routes. **Updated 2026-05-04:** admin auth shipped — the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Admin Portal|F2 Admin Portal]] (JWT login + RBAC) has been in production since v2.0.0 (2026-05-04). `/admin/*` routes now require an authenticated JWT session, so `/qa` runs that touch the admin portal must log in first. The public HCW survey routes remain unauthenticated — no session setup needed for survey-flow QA.
 
 ### Telemetry stays off
 

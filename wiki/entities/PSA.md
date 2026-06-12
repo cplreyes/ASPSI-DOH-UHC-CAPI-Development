@@ -13,6 +13,7 @@ The Philippine government statistical agency. For the [[1_Projects/ASPSI-DOH-CAP
 - **Sampling endorsement**: [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/DOH-PMSMD|DOH-PMSMD]] forwards [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASPSI|ASPSI]]'s sampling design to PSA for endorsement (Mar 2 commitment). PSA endorsement is part of the Tranche 2 deliverable bundle.
 - **Sampling consultation**: PSA participated in the Mar 12, 2026 sampling meeting with DOH and ADB; recommended ~11,000 housing units for the household survey (per Mar 3 review).
 - **Statistical authority**: PSA's involvement lends statistical legitimacy to the sample design — important for downstream policy use of UHC Survey results.
+- **CAPI clearance stream** (distinct from the sampling endorsement above): PSA also gates the CAPI instruments and their translations — the Carl-owned stream tracked in [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/CAPI Seven-Language Translation Build|CAPI Seven-Language Translation Build]]. The PSA gate date of **2026-06-12** has been reached; **outcome pending** as of 2026-06-12.
 
 ## Why PSA matters to Carl
 

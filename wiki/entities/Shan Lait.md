@@ -12,11 +12,19 @@ ASPSI Research Assistant formally introduced at the [[1_Projects/ASPSI-DOH-CAPI-
 > [!note] Name correction
 > Earlier wiki entries and scrum/log content (pre-Apr 15, 2026) referred to this person as **"Sean"** based on a phonetic mishearing. The formal Apr 13 meeting minutes (docx) introduced **Shan Lait** as the canonical spelling. The wiki was swept on 2026-04-15 to replace all "Sean" references with "Shan" / "Shan Lait"; `aliases: [Sean]` is preserved in frontmatter so searches on the old name still land here.
 
-## Role
+## Role (April 2026 — historical; see "Role as of June 2026" below)
 
 - Executes the test passes in `deliverables/F2/F2-Build-Handoff.md` (Phase 3: one pass per facility type — DOH-retained, Public non-DOH-retained, RHU — covering consent pathway, facility confirmation, age/role validation, section routing per role bucket, ZBB/NBB facility splits, Q103/Q111 terminal branch, POST-rule validation in the response Sheet).
 - Reports bugs per the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Forward-Only Sign-Off|forward-only sign-off rule]] — symptoms route back to the owning source doc (spec / skip-logic / validation / cross-field / cover-block) rather than cascading gate approvals.
 - Test comms flow through the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/ASPSI|ASPSI]] project mailbox (`aspsi.doh.uhc.survey2.data@gmail.com`) and the CAPI Viber group.
+
+## Role as of June 2026
+
+The April scope above describes the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track|F2 Google Forms track]], which was retired on 2026-04-17 in favor of the F2 PWA. Shan's current roles:
+
+- **F2 PWA UAT tester** — tests the production PWA (v2.0.0, HCW Survey + Admin Portal).
+- **CAPI UAT Round 4 primary enumerator** (round open 2026-06-12 → 2026-06-15) for the F1/F3/F4 CSEntry instruments, and **CSWeb Administrator** — per-tester CSWeb user `shan` on `csweb.asiansocial.org`.
+- **Comms** now run through Slack (`#f1-uat` / `#f3-uat` / `#f4-uat`) and the GitHub UAT feedback forms, superseding the earlier Viber + project-mailbox flow.
 
 ## Context
 
