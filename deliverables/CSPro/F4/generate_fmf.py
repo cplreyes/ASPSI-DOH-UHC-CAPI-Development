@@ -3,7 +3,7 @@ generate_fmf.py - F4 Household Survey CSPro Form File generator.
 
 Emits HouseholdSurvey.generated.fmf - a COMPLETE, bindable CSPro 8.0 form file for
 HouseholdSurvey.dcf. Mirrors the form plan in F4-Form-Layout-Plan.md
-(FIELD_CONTROL -> Geo+GPS -> photo -> sections A-Q -> closing).
+(FIELD_CONTROL -> Geo+GPS -> sections A-Q -> closing -> verification photo).
 
 FULL-STRUCTURE generation (2026-06-08): emits the logical structure CSPro requires
 to open the file as a bound application without stripping items:
@@ -55,10 +55,9 @@ TEXT_H = 16
 FORM_W = 806
 
 
-FIELD_CONTROL_CASE_START = {
-    "SURVEY_CODE", "INTERVIEWER_ID", "DATE_STARTED", "TIME_STARTED",
-    "AAPOR_DISPOSITION", "CONSENT_GIVEN", "HH_LISTING_NO", "LANGUAGE_USED",
-}
+# Case-start metadata form removed 2026-06-12 — all its items (interviewer ID,
+# timestamps, AAPOR, consent, HH listing) deleted; LANGUAGE_USED is off-form
+# (set in the QUESTIONNAIRE_NUMBER postproc). The FORM_PLAN no longer emits it.
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
     "FIELD_VALIDATED_BY", "FIELD_EDITED_BY",
@@ -68,12 +67,12 @@ FIELD_CONTROL_CASE_END = {
 
 
 FORM_PLAN = [
-    ("FC Metadata - case start",
-     [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
     ("FC Geographic ID + HH GPS Capture",
-     [("HOUSEHOLD_GEO_ID", None)]),
-    ("FC Case Verification Photo",
-     [("REC_CASE_VERIFICATION", None)]),
+     # Single-number redesign (2026-06-11): household region/province/city are
+     # derived from QUESTIONNAIRE_NUMBER (off-form); show the read-only PSGC
+     # names + keep the barangay picker.
+     [("FIELD_CONTROL", {"names": ["REGION_NAME", "PROVINCE_NAME", "CITY_NAME"]}),
+      ("HOUSEHOLD_GEO_ID", {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"]})]),
     ("A. Informed Consent (Q1 gate)",
      [("A_INFORMED_CONSENT", None)]),
     ("B. Respondent Profile",
@@ -112,6 +111,11 @@ FORM_PLAN = [
      [("Q_FINANCIAL_ANXIETY", None)]),
     ("Closing - case end",
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_END})]),
+    # Verification photo moved to the very end (2026-06-12): the enumerator
+    # photographs the completed visit, and the survey no longer opens with a
+    # camera prompt. HH GPS stays early so it auto-locks while the form is worked.
+    ("Case Verification Photo",
+     [("REC_CASE_VERIFICATION", None)]),
 ]
 
 
@@ -203,13 +207,123 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name, r
         lines.append(f"Text={text}")
         lines.append(" ")
         lines.append("  ")
+    if not roster:
+        _emit_blocks(lines, item_objs)
     lines.append("[EndGroup]")
     lines.append("  ")
+
+
+# Blocks — Designer-verified grammar (learned from a Designer-authored save on F1
+# 2026-06-11; hand-rolled blocks with wrong Position silently CRASH Designer on open):
+# [Block] sections go at the END of the [Group], before [EndGroup]. Position indexes
+# the group's item sequence in which each earlier block ALSO occupies one slot
+# (so block 2 after a 4-field block 1 starts at 0+1+4=5, not 4). DisplayTogether=Yes
+# is what combines the fields onto one screen in Android CSEntry (phone + tablet).
+# Named blocks for the admin Field-Control fields (kept verbatim — Designer-verified).
+NAMED_BLOCKS = [
+    ("INTERVIEW_STAFF_BLOCK", "Interview Staff",
+     ["SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
+      "FIELD_VALIDATED_BY", "FIELD_EDITED_BY"]),
+    ("VISIT_RECORD_BLOCK", "Visit Record",
+     ["DATE_FIRST_VISITED", "DATE_FINAL_VISIT", "TOTAL_NUMBER_OF_VISITS",
+      "ENUM_RESULT_FIRST_VISIT", "ENUM_RESULT_FINAL_VISIT"]),
+]
+
+# UI/UX combined-views (2026-06-12, "moderate" density) — same auto-deriver as F3.
+# Admin uses NAMED_BLOCKS; geo / GPS / photo and the repeating C_HOUSEHOLD_ROSTER
+# (emitted as a roster, never blocked) are NOT auto-grouped.
+_NO_AUTOGROUP_RECORDS = {
+    "FIELD_CONTROL", "HOUSEHOLD_GEO_ID", "REC_CASE_VERIFICATION", "C_HOUSEHOLD_ROSTER",
+}
+_MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
+MAX_CHUNK = 5
+_RUN_BLOCK_CAP = 22     # a real multi-select up to ~22 options is one checklist screen;
+                        # an amount matrix (run has _AMT siblings) or a longer run is chunked.
+_ACTIVE_BLOCK_PLAN = []
+
+
+def _qnum(item):
+    lab = (item.get("labels") or [{}])[0].get("text", "") or ""
+    m = re.match(r"\s*(\d+)", lab) or re.match(r"Q(\d+)", item["name"])
+    return m.group(1) if m else None
+
+
+def _chunk_label(item_objs):
+    qs = [q for q in (_qnum(it) for it in item_objs) if q]
+    if not qs:
+        return "Questions"
+    return f"Q{qs[0]}" if qs[0] == qs[-1] else f"Q{qs[0]}-Q{qs[-1]}"
+
+
+def derive_block_plan(dictionary):
+    """Auto DisplayTogether blocks for the survey body (moderate density). Each clean
+    multi-select option set -> one screen; amount matrices (run has _AMT) and longer
+    runs -> chunked at MAX_CHUNK; other consecutive questions -> chunked. Every on-form
+    field of a processed record lands in one contiguous block (Position=start+emitted)."""
+    plan = []
+    counter = [0]
+
+    def emit(item_objs, label=None):
+        plan.append((f"DG_BLK_{counter[0]}", label or _chunk_label(item_objs),
+                     [it["name"] for it in item_objs]))
+        counter[0] += 1
+
+    for rec in dictionary["levels"][0]["records"]:
+        if rec["name"] in _NO_AUTOGROUP_RECORDS:
+            continue
+        items = rec["items"]
+        i = 0
+        while i < len(items):
+            nm = items[i]["name"]
+            ms = _MULTISELECT_RE.match(nm)
+            if ms and not nm.endswith("_TXT"):                # multi-select run + its _OTHER_TXT
+                base = ms.group(1)
+                run = []
+                while i < len(items) and (items[i]["name"].startswith(base + "_O")
+                                          or items[i]["name"] == base + "_OTHER_TXT"):
+                    run.append(items[i]); i += 1
+                is_matrix = any(it["name"].endswith("_AMT") for it in run)
+                if not is_matrix and len(run) <= _RUN_BLOCK_CAP:
+                    emit(run, (_qnum(run[0]) and f"Q{_qnum(run[0])}"))
+                else:                                          # amount matrix / huge run -> chunk
+                    for j in range(0, len(run), MAX_CHUNK):
+                        emit(run[j:j + MAX_CHUNK])
+            else:                                              # chunk of simple questions
+                chunk = []
+                while i < len(items) and len(chunk) < MAX_CHUNK:
+                    nn = items[i]["name"]
+                    mm = _MULTISELECT_RE.match(nn)
+                    if mm and not nn.endswith("_TXT"):
+                        break
+                    chunk.append(items[i]); i += 1
+                emit(chunk)
+    return plan
+
+
+def _emit_blocks(lines, item_objs):
+    names = [it["name"] for it in item_objs]
+    emitted = 0
+    for bname, blabel, fields in _ACTIVE_BLOCK_PLAN:
+        if not all(f in names for f in fields):
+            continue
+        start = names.index(fields[0])
+        if names[start:start + len(fields)] != fields:   # must be a consecutive run
+            continue
+        lines.append("[Block]")
+        lines.append(f"Name={bname}")
+        lines.append(f"Label={blabel}")
+        lines.append("DisplayTogether=Yes")
+        lines.append(f"Position={start + emitted}")
+        lines.append(f"Length={len(fields)}")
+        lines.append("  ")
+        emitted += 1
 
 
 def build_fmf():
     dictionary = build_f4_dictionary()
     _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
+    global _ACTIVE_BLOCK_PLAN
+    _ACTIVE_BLOCK_PLAN = NAMED_BLOCKS + derive_block_plan(dictionary)
     dict_name = dictionary.get("name", "HOUSEHOLDSURVEY_DICT")
     level = dictionary["levels"][0]
     level_name = level.get("name", "HOUSEHOLDSURVEY_LEVEL")

@@ -21,22 +21,28 @@ from cspro_helpers import (
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, uhc9_item, record,
     build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
+    derived_geo_code_items, ENUM_RESULT_OPTIONS_F3,
     apply_translations,
     _gps_fields, _photo_block,
 )
 
 
 # ============================================================
-# FIELD CONTROL — shared + patient type extra
+# FIELD CONTROL — paper FC block + PATIENT_TYPE (OP/IP routing gate)
 # ============================================================
 
 def build_f3_field_control():
+    # PATIENT_TYPE stays (off the paper FC box, but it's the master OP/IP
+    # routing gate — PATIENT_TYPE=1 Outpatient → Section G, =2 Inpatient →
+    # Section H). PATIENT_LISTING_NO removed 2026-06-12 (unnecessary input;
+    # the 12-digit Questionnaire Number already identifies the case).
     extra = [
         numeric("PATIENT_TYPE", "Type of Patient", length=1,
                 value_set_options=[("Outpatient", "1"), ("Inpatient", "2")]),
-        numeric("PATIENT_LISTING_NO", "Patient Listing Reference Number", length=4, zero_fill=True),
     ]
-    return build_field_control(survey_code="F3", extra_items=extra, date_label_entity="the Patient")
+    return build_field_control(survey_code="F3", extra_items=extra + derived_geo_code_items(),
+                               date_label_entity="the Patient",
+                               result_options=ENUM_RESULT_OPTIONS_F3)
 
 
 # ============================================================
@@ -671,8 +677,10 @@ def build_section_e():
                "66. Is [facility_name_input] the facility you usually go to for general health concerns?"),
         *select_all("Q67_WHY_THIS_FACILITY",
                     "67. Why did you go to this facility instead of your usual facility?", Q67_WHY_THIS),
-        alpha("Q67_WHY_THIS_OTHER_TXT",
-              "67. Why this facility — Other (specify) text", length=120),
+        # select_all() above already emits the canonical Q67_WHY_THIS_FACILITY_OTHER_TXT
+        # (gated on the 'Other' option flag). A second standalone Q67_WHY_THIS_OTHER_TXT used to
+        # live here — a duplicate with no option flag, i.e. an ungated free-text box on the form.
+        # Removed 2026-06-12 (other-specify audit).
         select_one("Q68_USUAL_FAC_TYPE",
                    "68. What is the type of health facility that you usually go to?",
                    Q68_FACILITY_TYPE, length=1),
@@ -1787,7 +1795,7 @@ def build_f3_dictionary():
     return build_dictionary(
         dict_name="PATIENTSURVEY_DICT",
         dict_label="PatientSurvey",
-        id_items=build_id_block(),
+        id_items=build_id_block(single_questionnaire_number=True),
         records=records,
     )
 

@@ -108,13 +108,31 @@ SATISFACTION_5PT = [
     ("Not applicable",                        "9"),
 ]
 
-# NEW — shared by all FIELD_CONTROL records (F1, F3, F4)
-ENUM_RESULT_OPTIONS = [
+# Result-of-visit disposition codes. Per-instrument — transcribed from the
+# paper FIELD CONTROL block (2026-06-12). The consent/refusal outcome is now
+# captured HERE (no separate "Informed consent given" field): F1 = "Refused";
+# F3/F4 = "Withdraw Participation/Consent".
+ENUM_RESULT_OPTIONS_F1 = [          # F1 Facility Head
     ("Completed",  "1"),
     ("Postponed",  "2"),
     ("Refused",    "3"),
     ("Incomplete", "4"),
 ]
+ENUM_RESULT_OPTIONS_F3 = [          # F3 Patient
+    ("Completed",                       "1"),
+    ("Completed at the Hospital",       "2"),
+    ("Postponed",                       "3"),
+    ("Incomplete",                      "4"),
+    ("Completed at Home",               "5"),
+    ("Withdraw Participation/Consent",  "6"),
+]
+ENUM_RESULT_OPTIONS_F4 = [          # F4 Household
+    ("Completed",                       "1"),
+    ("Postponed",                       "2"),
+    ("Incomplete",                      "3"),
+    ("Withdraw Participation/Consent",  "4"),
+]
+ENUM_RESULT_OPTIONS = ENUM_RESULT_OPTIONS_F1   # default / back-compat
 
 # AAPOR Standard Definitions 10th ed. (2023) — Final Disposition Codes
 # adapted for in-person CAPI health surveys. 3-digit numeric (zero-filled)
@@ -240,44 +258,35 @@ def record(name, label, record_type, items, max_occurs=1, required=True):
 # ============================================================
 
 def _case_control_items(survey_code):
-    """Five case-control items prepended to every FIELD_CONTROL record (F1/F3/F4).
+    """Case-start operational metadata — NOW EMPTY (returns []).
 
-    Captures case-start metadata: instrument identification, interviewer,
-    start-timestamps, and initial AAPOR disposition. Populated by the
-    FIELD_CONTROL.preproc handler in the instrument's .apc file — see the
-    corresponding F*-Skip-Logic-and-Validations spec §2 for PROC snippets.
+    Per Carl 2026-06-12, the FIELD CONTROL section of each instrument should
+    match the paper questionnaire exactly: just the team-leader/enumerator
+    names, validated/edited-by, visit dates, result dispositions, and total
+    visits. Everything previously prepended here was "unnecessary input data":
+      - SURVEY_CODE        — the installed questionnaire identifies the instrument
+      - INTERVIEWER_ID     — not in the paper FC (Enumerator's Name covers it)
+      - DATE_STARTED /
+        TIME_STARTED       — not in the paper FC (Date First/Final Visited covers it)
+      - AAPOR_DISPOSITION  — not in the paper FC (Result-of-Visit codes cover it)
+    Interview language is still recorded (LANGUAGE_USED, auto-set from
+    getlanguage() in the QUESTIONNAIRE_NUMBER postproc — off-form, not input).
 
-    Parameters
-    ----------
-    survey_code : str
-        The instrument code string — one of "F1", "F3", "F4". Attached to
-        the SURVEY_CODE item's value set as the sole allowed value so the
-        DCF self-documents which instrument the dictionary belongs to.
-
-    Returns
-    -------
-    list of dict
-        [SURVEY_CODE, INTERVIEWER_ID, DATE_STARTED, TIME_STARTED,
-         AAPOR_DISPOSITION]
+    `survey_code` retained for caller compatibility; emits nothing.
     """
-    return [
-        alpha("SURVEY_CODE",        "Survey Instrument Code",              length=2),
-        numeric("INTERVIEWER_ID",   "Interviewer ID",                      length=4,
-                zero_fill=True),
-        numeric("DATE_STARTED",     "Date Interview Started (YYYYMMDD)",   length=8),
-        numeric("TIME_STARTED",     "Time Interview Started (HHMMSS)",     length=6),
-        numeric("AAPOR_DISPOSITION", "AAPOR Disposition Code",             length=3,
-                zero_fill=True, value_set_options=AAPOR_DISPOSITION_OPTIONS),
-    ]
+    return []
 
 
-def build_field_control(survey_code, extra_items=None, date_label_entity="the Facility"):
+def build_field_control(survey_code, extra_items=None, date_label_entity="the Facility",
+                        result_options=None):
     """Build a FIELD_CONTROL record (record type "A").
 
     Parameters
     ----------
     survey_code : str
-        Instrument code ("F1", "F3", "F4") — prepended as SURVEY_CODE item.
+        Instrument code ("F1", "F3", "F4"). No longer emits a SURVEY_CODE
+        item (removed 2026-06-12 — the per-instrument dictionary already
+        identifies the instrument); retained for caller compatibility.
     extra_items : list, optional
         Additional item dicts to append after the standard block.
         Use this when a survey needs fields not present in the base template.
@@ -286,13 +295,19 @@ def build_field_control(survey_code, extra_items=None, date_label_entity="the Fa
         Defaults to "the Facility" (matching F1 semantics).
         Pass "the Patient" for F3, "the Household" for F4, etc.
 
-    Standard items (in order):
-        SURVEY_CODE, INTERVIEWER_ID, DATE_STARTED, TIME_STARTED, AAPOR_DISPOSITION,
+    Standard items (in order) — matches the paper FIELD CONTROL block:
         SURVEY_TEAM_LEADER_S_NAME, ENUMERATOR_S_NAME, FIELD_VALIDATED_BY,
         FIELD_EDITED_BY, DATE_FIRST_VISITED (length 8), DATE_FINAL_VISIT (length 8),
-        TOTAL_NUMBER_OF_VISITS, ENUM_RESULT_FIRST_VISIT, ENUM_RESULT_FINAL_VISIT,
-        CONSENT_GIVEN.
+        TOTAL_NUMBER_OF_VISITS, ENUM_RESULT_FIRST_VISIT, ENUM_RESULT_FINAL_VISIT.
+    Plus LANGUAGE_USED (off-form metadata, auto-set from getlanguage()).
+    CONSENT_GIVEN was removed 2026-06-12 — consent outcome is now the Result
+    disposition (Refused / Withdraw Participation/Consent), and the read-aloud
+    consent script is off the CAPI (read from the printed sheet).
+
+    result_options : list, optional
+        Per-instrument Result-of-Visit value set. Defaults to the F1 codes.
     """
+    results = result_options or ENUM_RESULT_OPTIONS
     items = _case_control_items(survey_code) + [
         alpha("SURVEY_TEAM_LEADER_S_NAME", "Survey Team Leader's Name",   length=50),
         alpha("ENUMERATOR_S_NAME",         "Enumerator's Name",           length=50),
@@ -304,13 +319,11 @@ def build_field_control(survey_code, extra_items=None, date_label_entity="the Fa
                 f"Date of Final Visit to {date_label_entity} (YYYYMMDD)", length=8),
         numeric("TOTAL_NUMBER_OF_VISITS",  "Total Number of Visits",      length=3),
         numeric("ENUM_RESULT_FIRST_VISIT", "Result of First Visit",       length=1,
-                value_set_options=ENUM_RESULT_OPTIONS),
+                value_set_options=results),
         numeric("ENUM_RESULT_FINAL_VISIT", "Result of Final Visit",       length=1,
-                value_set_options=ENUM_RESULT_OPTIONS),
-        numeric("CONSENT_GIVEN",           "Informed consent given",      length=1,
-                value_set_options=YES_NO),
+                value_set_options=results),
         # §15.E — language used for the interview (captured via getlanguage()
-        # at case start; forward-compatible with the #145 language switcher).
+        # in the QUESTIONNAIRE_NUMBER postproc; off-form, not enumerator input).
         alpha("LANGUAGE_USED",             "Language used for the interview", length=20),
     ]
     if extra_items:
@@ -337,7 +350,9 @@ def _gps_fields(prefix=""):
     list of dict
         [LAT, LON, ALT, ACCURACY, SATELLITES, READTIME, CAPTURE_TRIGGER]
     """
-    capture_vs = [("Capture GPS now", "1")]
+    # GPS is AUTO-FETCHED on focus now (2026-06-12) — no manual "Capture GPS"
+    # trigger button. The coordinate + metadata fields are auto-populated and
+    # protected (read-only) by the <prefix>GPS_LATITUDE onfocus PROC in the .apc.
     return [
         alpha(  f"{prefix}GPS_LATITUDE",   "GPS Latitude",   length=12),
         alpha(  f"{prefix}GPS_LONGITUDE",  "GPS Longitude",  length=12),
@@ -345,8 +360,6 @@ def _gps_fields(prefix=""):
         numeric(f"{prefix}GPS_ACCURACY",   "GPS Accuracy (m)", length=3),
         numeric(f"{prefix}GPS_SATELLITES", "GPS Satellites",   length=2),
         alpha(  f"{prefix}GPS_READTIME",   "GPS Read Time (UTC)", length=19),
-        numeric(f"{prefix}CAPTURE_GPS",    "Capture GPS", length=1,
-                value_set_options=capture_vs),
     ]
 
 
@@ -381,8 +394,8 @@ def _photo_block(prefix=""):
     ]
 
 
-def _psgc_fields(prefix=""):
-    """Return the four standard PSGC geographic code items.
+def _psgc_fields(prefix="", facility_derived=False):
+    """Return PSGC geographic code items.
 
     Items are length=10 numeric zero-filled, holding the full 10-digit PSA
     PSGC code. Value sets are deliberately NOT baked in — the four PSGC
@@ -399,23 +412,38 @@ def _psgc_fields(prefix=""):
         Optional prefix to disambiguate when two PSGC blocks live in the
         same record (e.g. facility vs patient-home). Names become
         {prefix}REGION, {prefix}PROVINCE_HUC, etc.
+    facility_derived : bool
+        Single-number redesign (2026-06-10): when True the facility geo
+        region/province/city are DERIVED from QUESTIONNAIRE_NUMBER (shown
+        read-only as REGION_NAME/PROVINCE_NAME/CITY_NAME in FIELD_CONTROL),
+        so only the BARANGAY picker is captured here (barangay isn't in the
+        12-digit code). Default False keeps the full manual cascade — used by
+        the F3 patient-home (P_) block, which is a separate location.
 
     Returns
     -------
     list of dict
-        [REGION, PROVINCE_HUC, CITY_MUNICIPALITY, BARANGAY]
+        [BARANGAY] when facility_derived else [REGION, PROVINCE_HUC, CITY_MUNICIPALITY, BARANGAY]
     """
     placeholder = [("(set at runtime)", "0" * 10)]
+    barangay = numeric(f"{prefix}BARANGAY", "Barangay", length=10, zero_fill=True, value_set_options=placeholder)
+    if facility_derived:
+        return [barangay]
     return [
         numeric(f"{prefix}REGION",            "Region",               length=10, zero_fill=True, value_set_options=placeholder),
         numeric(f"{prefix}PROVINCE_HUC",      "Province / HUC",       length=10, zero_fill=True, value_set_options=placeholder),
         numeric(f"{prefix}CITY_MUNICIPALITY", "City / Municipality",  length=10, zero_fill=True, value_set_options=placeholder),
-        numeric(f"{prefix}BARANGAY",          "Barangay",             length=10, zero_fill=True, value_set_options=placeholder),
+        barangay,
     ]
 
 
-def build_geo_id(mode, extra_items=None):
+def build_geo_id(mode, extra_items=None, facility_derived=False):
     """Build a geographic identification record.
+
+    facility_derived (2026-06-10 single-number redesign): when True the FACILITY
+    PSGC region/province/city are derived from QUESTIONNAIRE_NUMBER and only the
+    barangay picker is captured here. The F3 patient-home (P_) block is never
+    affected — it stays a full manual cascade.
 
     Parameters
     ----------
@@ -443,14 +471,15 @@ def build_geo_id(mode, extra_items=None):
                                   ])
 
     if mode == "facility":
+        # LATITUDE/LONGITUDE removed here 2026-06-12 — they were redundant
+        # typed fields; F1's canonical GPS is the auto-fetched FACILITY_GPS_*
+        # block (REC_FACILITY_CAPTURE), so no manual coordinates on the geo form.
         items = (
             [classification_item]
-            + _psgc_fields()
+            + _psgc_fields(facility_derived=facility_derived)
             + [
                 alpha("FACILITY_NAME",    "Facility Name",    length=100),
                 alpha("FACILITY_ADDRESS", "Facility Address", length=200),
-                alpha("LATITUDE",  "Latitude",  length=12),
-                alpha("LONGITUDE", "Longitude", length=12),
             ]
         )
         if extra_items:
@@ -467,7 +496,7 @@ def build_geo_id(mode, extra_items=None):
             it["labels"][0]["text"] = "Patient Home " + it["labels"][0]["text"]
         items = (
             [classification_item]
-            + _psgc_fields()
+            + _psgc_fields(facility_derived=facility_derived)
             + [
                 alpha("FACILITY_NAME",    "Facility Name",    length=100),
                 alpha("FACILITY_ADDRESS", "Facility Address", length=200),
@@ -481,7 +510,7 @@ def build_geo_id(mode, extra_items=None):
     elif mode == "household":
         items = (
             [classification_item]
-            + _psgc_fields()
+            + _psgc_fields(facility_derived=facility_derived)
             + [
                 alpha("HH_ADDRESS", "Household Address", length=200),
             ]
@@ -501,13 +530,30 @@ def build_geo_id(mode, extra_items=None):
 # 4. DICTIONARY ASSEMBLY
 # ============================================================
 
-def build_id_block():
-    """12-digit decomposed case key (RR-PP-MMM-FF-CCC) — adopted Questionnaire
-    Numbering Convention (2026-05-05), replacing the legacy single 6-digit
-    QUESTIONNAIRE_NO. First 7 digits are the within-parent PSA PSGC codes, then
-    a 2-digit facility number and a 3-digit per-facility / per-instrument case
-    sequence. Five contiguous numeric ID items starting at position 2 (position
-    1 is the recordType byte)."""
+def build_id_block(single_questionnaire_number=False):
+    """Case key for the level-1 ID block.
+
+    `single_questionnaire_number=False` (legacy, default): five contiguous numeric
+    ID items (RR-PP-MMM-FF-CCC) per the 2026-05-05 Questionnaire Numbering
+    Convention. Kept default so un-migrated instruments regenerate unchanged.
+
+    `single_questionnaire_number=True` (redesign 2026-06-10, Carl): ONE 12-digit
+    `QUESTIONNAIRE_NUMBER` id item. The enumerator types one number; the component
+    codes are DERIVED from it in logic and live as non-id FIELD_CONTROL items (see
+    `derived_geo_code_items()`), so every existing PROC reference to REGION_CODE
+    etc. keeps working. Spec:
+    deliverables/CSPro/2026-06-10-single-questionnaire-number-redesign.md.
+    NB: only flip this WITH the matching .apc (QUESTIONNAIRE_NUMBER postproc) and
+    .fmf (one-field key form) in the same regen, or the build breaks."""
+    if single_questionnaire_number:
+        return [{
+            "name": "QUESTIONNAIRE_NUMBER",
+            "labels": [{"text": "Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)"}],
+            "contentType": "numeric",
+            "start": 2,
+            "length": 12,
+            "zeroFill": True,
+        }]
     specs = [
         ("REGION_CODE",            "Region Code (PSGC)",                           2),
         ("PROVINCE_HUC_CODE",      "Province / HUC Code (PSGC)",                   2),
@@ -527,6 +573,24 @@ def build_id_block():
         })
         start += length
     return items
+
+
+def derived_geo_code_items():
+    """Component PSGC codes + read-only PSGC names, parsed from QUESTIONNAIRE_NUMBER
+    at case start and stored as non-id FIELD_CONTROL items (single-number redesign,
+    2026-06-10). The codes reuse the exact legacy id names so existing PROC refs
+    (photo filename, skip gates) resolve unchanged; the names are filled read-only
+    from the PSGC external dicts for on-screen confirmation."""
+    return [
+        numeric("REGION_CODE",            "Region Code (PSGC)",                           length=2,  zero_fill=True),
+        numeric("PROVINCE_HUC_CODE",      "Province / HUC Code (PSGC)",                   length=2,  zero_fill=True),
+        numeric("CITY_MUNICIPALITY_CODE", "City / Municipality Code (PSGC)",              length=3,  zero_fill=True),
+        numeric("FACILITY_NO",            "Facility Number (within municipality)",        length=2,  zero_fill=True),
+        numeric("CASE_SEQ",               "Case Sequence (per-facility, per-instrument)", length=3,  zero_fill=True),
+        alpha("REGION_NAME",   "Region (from PSGC)",              length=80),
+        alpha("PROVINCE_NAME", "Province / HUC (from PSGC)",      length=80),
+        alpha("CITY_NAME",     "City / Municipality (from PSGC)", length=80),
+    ]
 
 
 def build_dictionary(dict_name, dict_label, records=None,
@@ -801,7 +865,11 @@ def other_specify_procs(items):
         if parent_name is not None:
             lit = int(code) if str(code).lstrip("-").isdigit() else f'"{code}"'
             procs[n] = (
-                f"PROC {n}\npostproc\n"
+                f"PROC {n}\npreproc\n"
+                f"  if {parent_name} <> {lit} then\n"
+                f"    {n} = \"\";   {{ skip + clear: 'Other' not chosen -> field must not be enterable }}\n"
+                f"    noinput;\n  endif;\n"
+                f"postproc\n"
                 f"  if {parent_name} = {lit} and length(strip({n})) = 0 then\n"
                 f"    errmsg(\"'Other' was selected for {parent_name} but no text was entered. Please specify.\");\n"
                 f"    reenter;\n  endif;"
@@ -820,7 +888,11 @@ def other_specify_procs(items):
         )
         if other_flag is not None:
             procs[n] = (
-                f"PROC {n}\npostproc\n"
+                f"PROC {n}\npreproc\n"
+                f"  if {other_flag} <> 1 then\n"
+                f"    {n} = \"\";   {{ skip + clear: 'Other (specify)' not ticked -> field must not be enterable }}\n"
+                f"    noinput;\n  endif;\n"
+                f"postproc\n"
                 f"  if {other_flag} = 1 and length(strip({n})) = 0 then\n"
                 f"    errmsg(\"'Other (specify)' was selected for {base} but no text was entered. Please specify.\");\n"
                 f"    reenter;\n  endif;"
@@ -882,26 +954,97 @@ def _select_all_groups(items):
     return out
 
 
+# ---------------------------------------------------------------------------
+# Exclusive-option detection — SOFT warning when an exclusive answer is combined
+# ---------------------------------------------------------------------------
+# An "exclusive" select-all option ('I don't know' / 'None of the above' / 'There
+# are no benefits…' / 'Not applicable') is a standalone answer that should NOT be
+# ticked together with substantive options. CSPro can hard-block this, but
+# auto-detecting WHICH option is exclusive by label is imperfect — so we emit a
+# SOFT warning (errmsg, no reenter): even a mis-detection only adds a confirm
+# prompt, it never traps the enumerator. Detection matches the OPTION text (after
+# the em-dash in the dcf label) as a near-whole phrase, so a shared question stem
+# ('If none, why…') or a 'don't know how/what X' specific reason cannot false-match.
+
+_EXCL_EXACT = {
+    "i don't know", "i dont know", "don't know", "dont know", "none", "wala",
+    "none of the above", "none of these", "none of the above options",
+    "not applicable", "n/a", "na", "refused", "not sure", "unsure",
+    "i am not sure", "prefer not to say", "prefer not to answer", "no answer",
+}
+
+
+def is_exclusive_option(label):
+    """True when a select-all option label denotes an EXCLUSIVE / standalone answer."""
+    opt = label.rsplit("—", 1)[-1]            # option text after the em-dash
+    t = re.sub(r"\s+", " ", opt.lower()).strip().rstrip(".").strip()
+    if t in _EXCL_EXACT:
+        return True
+    if t.startswith("there are no") or t.startswith("there is no"):
+        return True
+    if re.search(r"^no (benefits?\b|forms? of professional|available)", t):
+        return True
+    return False
+
+
+def _exclusive_split(flags, items):
+    """Partition a group's flags into (exclusive, substantive)."""
+    excl = [f for f in flags if is_exclusive_option(_label_text(items[f]))]
+    sub = [f for f in flags if f not in excl]
+    return excl, sub
+
+
+def _exclusivity_warning_lines(base, excl, sub):
+    """CSPro statement lines (soft warning) for an exclusive-vs-substantive clash."""
+    excl_or = " or ".join(f"{f} = 1" for f in excl)
+    sub_or = " or ".join(f"{f} = 1" for f in sub)
+    return [
+        "  { exclusivity (soft warning): an exclusive option should be the only answer }",
+        f"  if ({excl_or}) and ({sub_or}) then",
+        f"    errmsg(\"{base}: an exclusive option (e.g. 'None' or 'Do not know') was ticked "
+        f"together with other answers. Please review - an exclusive option should be the only choice.\");",
+        "  endif;",
+    ]
+
+
+def select_all_exclusive_warning_procs(items):
+    """Standalone soft-warning PROCs ({last_flag: proc_text}) for select-all groups
+    that carry an exclusive option. For instruments WITHOUT the at-least-one check
+    (F1); F3/F4 get the warning merged into select_all_validation_procs()."""
+    out = {}
+    for base, flags in sorted(_select_all_groups(items).items()):
+        excl, sub = _exclusive_split(flags, items)
+        if not (excl and sub):
+            continue
+        last = flags[-1]
+        out[last] = "\n".join([f"PROC {last}", "postproc"] + _exclusivity_warning_lines(base, excl, sub))
+    return out
+
+
 def select_all_validation_procs(items):
-    """'At least one option ticked' enforcement for every select-all group, emitted
+    """'At least one option ticked' enforcement for every select-all group, PLUS a
+    SOFT exclusivity warning when the group carries an exclusive option. Both emitted
     on the group's LAST flag postproc (fires once the group is entered; a skipped
     group never reaches it). Returns (procs: {last_flag: text}, bases: [base]).
 
-    NOTE: the *exclusive-option* rule ("'I don't know' / 'None' cannot be combined")
-    is intentionally NOT auto-derived — detecting the exclusive option by label is
-    unreliable (e.g. a regular option 'Did not know where to register' or 'If none,
-    why…' false-matches). Those must be encoded from the spec's explicit per-group
-    exclusive codes (F3 §3.5-3.14 / F4), which is the authoritative source."""
+    Exclusivity is a soft warning (errmsg, no reenter) — see is_exclusive_option():
+    auto-detecting the exclusive option by label is imperfect, so we warn rather than
+    hard-block, which stays safe even on a mis-detection. Specific groups could be
+    upgraded to a hard reenter later from the spec's explicit exclusive codes."""
     procs, bases = {}, []
     for base, flags in sorted(_select_all_groups(items).items()):
         last = flags[-1]
         any_ticked = " or ".join(f"{f} = 1" for f in flags)
-        procs[last] = "\n".join([
+        lines = [
             f"PROC {last}", "postproc",
             f"  if not ({any_ticked}) then",
             f"    errmsg(\"Select at least one option for {base} before continuing.\");",
             "    reenter;", "  endif;",
-        ])
+        ]
+        excl, sub = _exclusive_split(flags, items)
+        if excl and sub:
+            lines.extend(_exclusivity_warning_lines(base, excl, sub))
+        procs[last] = "\n".join(lines)
         bases.append(base)
     return procs, bases
 
@@ -942,9 +1085,11 @@ def amount_required_procs(items):
                  for vs in f.get("valueSets") or [] for v in vs.get("values") or []}
         if "1" not in codes:                       # flag must be a Yes(1)/No option
             continue
+        # blank (notappl) must fail too — a CSPro blank numeric is notappl,
+        # NOT 0, so `= 0` alone let an empty amount slip through
         procs[n] = (
             f"PROC {n}\npostproc\n"
-            f"  if {flag} = 1 and {n} = 0 then\n"
+            f"  if {flag} = 1 and ({n} = 0 or {n} = notappl) then\n"
             f"    errmsg(\"'{flag}' was selected — enter its amount (must be greater than 0).\");\n"
             f"    reenter;\n  endif;"
         )

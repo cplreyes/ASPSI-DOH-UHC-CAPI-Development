@@ -78,17 +78,39 @@ end;
 function FillBarangayValueSet(numeric parentCity)
 
     B_PARENT_CITY = parentCity;
-    if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) = 0 then
+    if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) <> 0 then
+        ValueSet vs;
+        do varying numeric i = 1 until i > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
+            vs.add(strip(B_NAME(i)), B_CODE(i));
+        enddo;
+        setvalueset(BARANGAY, vs);
+        exit;
+    endif;
+
+    { Fallback (found in the 2026-06-11 audit walk): province-anchored
+      questionnaire numbers (district hospitals etc.) derive a CITY_MUNICIPALITY
+      with no barangays directly under it, which left the picker EMPTY and
+      hard-blocked entry ("out of range" on any input). Offer every barangay of
+      the province's cities/municipalities instead, labelled "City - Barangay"
+      so duplicate barangay names stay distinguishable. }
+    { positional slice: PSA provinces are 3-digit — the full province code is
+      the first FIVE digits of the 10-digit PSGC (RR PPP), zero-padded }
+    C_PARENT_PROVINCE = int(parentCity / 100000) * 100000;
+    if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) = 0 then
         ValueSet empty;
         setvalueset(BARANGAY, empty);
         exit;
     endif;
-
-    ValueSet vs;
-    do varying numeric i = 1 until i > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
-        vs.add(strip(B_NAME(i)), B_CODE(i));
+    ValueSet vsAll;
+    do varying numeric c = 1 until c > count(PSGC_CITY_DICT.PSGC_CITY_REC)
+        B_PARENT_CITY = C_CODE(c);
+        if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) <> 0 then
+            do varying numeric i = 1 until i > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
+                vsAll.add(strip(C_NAME(c)) + " - " + strip(B_NAME(i)), B_CODE(i));
+            enddo;
+        endif;
     enddo;
-    setvalueset(BARANGAY, vs);
+    setvalueset(BARANGAY, vsAll);
 
 end;
 

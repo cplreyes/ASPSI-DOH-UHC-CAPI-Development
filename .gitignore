@@ -87,3 +87,21 @@ wiki/sources/Source - Sample Distribution 2026-05-12.md
 wiki/sources/Source - Survey Manual 2026-05-06 - Section 3a.md
 wiki/sources/Source - Survey Manual v1.0 (2026-05-12 Clean Final to DOH).md
 wiki/sources/Source - Survey Manual v1.0 (2026-05-12 Working File post-Myra).md
+
+# CSPro build artefacts & local-only copies — regenerable, not source (2026-06-12)
+deliverables/CSPro/**/*.pen
+deliverables/CSPro/**/*.csidx
+deliverables/CSPro/**/*.bak
+deliverables/CSPro/**/*.orig-8.0.1
+deliverables/CSPro/**/*.csdb
+deliverables/CSPro/**/*.cslog
+# per-instrument PSGC + facility-lookup copies (the shared/ originals are tracked; these
+# are large binaries the deploy step copies in — ~4MB barangay.dat each, redundant)
+deliverables/CSPro/F1/psgc_*
+deliverables/CSPro/F3/psgc_*
+deliverables/CSPro/F4/psgc_*
+deliverables/CSPro/F1/facility_lookup.*
+# local scratch / backup dirs + driver screenshots
+deliverables/CSPro/F1/_stash/
+deliverables/CSPro/F1/.redesign_backup/
+deliverables/CSPro/automation/shots/

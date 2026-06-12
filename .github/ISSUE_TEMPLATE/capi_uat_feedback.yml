@@ -1,0 +1,102 @@
+name: CAPI UAT Feedback (F1 / F3 / F4)
+description: Report something you saw while testing the CSEntry CAPI surveys (Round 4)
+title: "[UAT R4][__] "
+labels: ["uat-feedback", "from-uat-round-4-capi-2026-06"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing the CAPI surveys! Fill in what you observed — **no technical knowledge needed**, just describe what you saw. One form per finding. A screenshot or photo of the screen helps a lot.
+
+        💬 For quick discussion, also post in your instrument's Slack channel: **#f1-uat**, **#f3-uat**, or **#f4-uat**.
+
+  - type: dropdown
+    id: instrument
+    attributes:
+      label: Which survey were you testing?
+      options:
+        - F1 — Facility Head Survey
+        - F3 — Patient Survey
+        - F4 — Household Survey
+    validations:
+      required: true
+
+  - type: input
+    id: tester
+    attributes:
+      label: Your name or initials
+      placeholder: e.g. MRD or Maria Dela Cruz
+    validations:
+      required: true
+
+  - type: input
+    id: test_date
+    attributes:
+      label: Date of testing
+      placeholder: e.g. 2026-06-15
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scenario
+    attributes:
+      label: Which test were you doing? (from the Tester Guide)
+      options:
+        - TC-1 Completed interview
+        - TC-2 Refused / Withdrawn (no photo expected)
+        - TC-3 Partial save + resume
+        - TC-4 "Other (specify)" behaviour
+        - TC-5 "Select all that apply" + exclusive-option warning
+        - TC-6 Patient-type routing (F3 only)
+        - Household roster — repeating members (F4 only)
+        - Install / download the app
+        - Sync to the server
+        - GPS / Camera / Verification photo
+        - Combined screens / date picker / drop-downs / auto-advance
+        - General observation
+    validations:
+      required: true
+
+  - type: dropdown
+    id: result
+    attributes:
+      label: Test result
+      options:
+        - Pass — worked exactly as described
+        - Pass with comment — worked but I noticed something
+        - Fail — did not work as described
+        - Blocked — could not complete the test
+    validations:
+      required: true
+
+  - type: textarea
+    id: observation
+    attributes:
+      label: What did you observe?
+      placeholder: Describe what happened in plain language. If there was an error message, type it here exactly. No need to be technical.
+    validations:
+      required: true
+
+  - type: input
+    id: questionnaire_number
+    attributes:
+      label: Questionnaire Number of the test case (if any)
+      placeholder: e.g. 010280001101
+    validations:
+      required: false
+
+  - type: input
+    id: device
+    attributes:
+      label: Phone/tablet model + Android version (if you know it)
+      placeholder: e.g. Samsung A14, Android 14
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshot or photo of the screen (optional but very helpful)
+      placeholder: Drag and drop an image here, or describe what the screen showed.
+    validations:
+      required: false

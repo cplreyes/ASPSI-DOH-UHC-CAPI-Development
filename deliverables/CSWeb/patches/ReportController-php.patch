@@ -1,0 +1,11 @@
+--- src/AppBundle/Controller/api/ReportController.php.orig-8.0.1	2026-06-12 01:30:48.650570767 +0000
++++ src/AppBundle/Controller/api/ReportController.php	2026-06-12 01:30:48.674570961 +0000
+@@ -572,7 +572,7 @@
+     }
+ 
+     #[Route('/import-area-names', methods: ['POST'])]
+-            function importAreaNames(Request $request): CSProResponse {
++            function importAreaNames(Request $request) { // ASPSI 2026-06-12: convertGeocodesToAreaNames returns StreamedResponse; the CSProResponse return type made every successful import 500 with a TypeError
+         $response = new CSProResponse();
+         $cType = $request->headers->get('Content-Type');
+         $this->logger->debug('Content Type: ' . $cType);

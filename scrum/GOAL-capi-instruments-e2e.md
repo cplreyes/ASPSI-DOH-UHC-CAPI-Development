@@ -60,7 +60,7 @@ current rebuilt apps and adds the hardware-dependent checks.
 
 > **PREREQUISITE surfaced 2026-06-09 — the apps need sync configured.** The desk-test build has **NO
 > synchronization** (built for local entry only). Before C–E can work, add **Simple Synchronization**
-> (or sync-from-logic) targeting `https://csweb.asiansocial.org/api` + the instrument's dictionary —
+> (or sync-from-logic) targeting `https://csweb.asiansocial.org/csweb/api` + the instrument's dictionary —
 > **generated at the source (IRON RULE)**, then re-verified in CSEntry. The earlier "sync proven"
 > (`E3-F1-085`) was a *local* CSWeb deploy of an *older* F1 build; the current rebuilt apps have never
 > round-tripped on the Elestio CSWeb. **QUALITY RULE: never demo or sign off a round-trip that hasn't
@@ -75,7 +75,11 @@ current rebuilt apps and adds the hardware-dependent checks.
     works** (camera); F4 roster add/edit/delete on touch; PSGC cascade loads from on-device external dicts.
 14. **Sync round-trip proven** (`E3-F1-088` + F3/F4) — enter a test case on-device → sync **up** → it appears
     in the CSWeb dictionary store; sync **down** propagates app updates; Myra's "errors to capture in CSWeb"
-    flows through.
+    flows through. **✅ DONE ×3 (2026-06-12):** F1 proven 2026-06-11 (revision 2); F3 case `010280001501` +
+    F4 case `010280001601` synced "Successfully synced" 2026-06-12 (emulator, consent-refusal minimal cases).
+    *Down N/A by design (direction=`put`).* **Gap found+fixed en route:** the CSWeb `field-sync` role only had
+    F1 dictionary permissions (pilot-era B3) → F3/F4 sync 403'd until Carl added PatientSurvey+HouseholdSurvey
+    data permissions to the role.
 15. **Repeatable deploy runbook** recorded and handed to ASPSI/Shan for enumerator training + pretest (Epic 7).
 
 ## OUT OF SCOPE
@@ -106,20 +110,26 @@ not live fieldwork. *(CSWeb config E4-CSWeb-003/004/005, previously out-of-scope
 sign-off · close gate issues #161/#193/#194/#195/#251/#253 — none block Stage 2.)*
 
 **Stage 2 — F1 round-trip, in order, no shortcuts:**
-- **A. Sync-enable F1** *(Carl in Designer Options; then agent generatorizes)* — **finding 2026-06-09:**
-  sync-from-logic does NOT work for a standalone questionnaire app — a CAPI app can't `syncdata` its own
-  *input* dictionary (`syncdata` needs an *external* dict); the CSEntry compile gate rejected it
-  (`external dictionary name expected`). The correct mechanism is **Simple Synchronization**, an **.ent
-  app-property (no logic)** set in **Designer ▸ Options ▸ Synchronization ▸ Enable simple sync ▸ CSWeb ▸
-  URL `https://csweb.asiansocial.org/api` ▸ Test Connection ▸ direction BOTH ▸ save**. (Test Connection
-  is live/credentialed → Carl's step.) The agent then reads the sync block Designer wrote into
-  `FacilityHeadSurvey.ent` and bakes it into the `.ent` template (`_ent_json`) so F3/F4 inherit it
-  (IRON RULE). Enumerator syncs via **CSEntry ▸ Synchronize** (not during entry).
-- **B. CSWeb config** *(Carl, admin UI — `E4-CSWeb-003/004/005`)* — upload F1 `.dcf` as the case store ·
-  deploy the F1 app package (incl. PSGC dicts + `.dat`) · enumerator role + test account · sync endpoint +
-  conflict policy (server-wins vs last-write-wins).
+- **A. Sync-enable F1 — ✅ DONE 2026-06-09.** Mechanism = **Simple Synchronization**, an **.ent app-property
+  (no logic)**. *(Finding: sync-from-logic does NOT work for a standalone questionnaire app — a CAPI app can't
+  `syncdata` its own input dict; the CSEntry gate rejected it with `external dictionary name expected`.)* Carl
+  set it in **Designer ▸ Options ▸ Synchronization** (CSWeb, URL `https://csweb.asiansocial.org/csweb/api`,
+  **Test Connection PASS**), Designer wrote `"sync": {"server": ".../csweb/api", "direction": "put"}` under
+  `properties`. Agent baked it into the generator (`cspro_compile_driver.py` `_ent_json` + idempotent merge on
+  existing `.ent`), regenerated F3/F4 (preflight ALL CLEAN), and **all three `.ent` now carry the block**;
+  **F1 passes the CSEntry compile gate**. *direction = `put` (upload-only) — sufficient for the pilot
+  round-trip; switch to `both` if devices must also pull cases down.* Enumerator syncs via **CSEntry ▸
+  Synchronize** (not during entry).
+- **B. CSWeb config — ✅ DONE 2026-06-09** *(verified read-only over SSH/DB).* **B1** F1 `.dcf` registered as
+  case store (`FACILITYHEADSURVEY_DICT`). **B2** F1 app deployed via Designer ▸ Publish and Deploy → CSWeb
+  (`cspro_apps` row + `apps/FacilityHeadSurvey.zip`; package = `.pen`+`.pff`+`package.json`, PSGC bundled in the
+  `.pen`, case dict `uploadForSync:true`); deploy API = `PUT /csweb/api/apps/{name}`. **B3** role **`Field Sync`**
+  (FacilityHeadSurvey upload+download, **no dashboards**) + test user **`setest`** (pw set, role bound).
+  *Note: the prod-deploy CLICK and any credentialed prod write/auth are gated by the safety classifier → Carl's
+  hand needed for those; agent SSH is read-only-verified. The PSGC dicts are bundled inside the `.pen` (not separate
+  syncable stores), so they need no role permission.*
 - **C. Device install** *(real Android + CSEntry 8.x)* — Add Application ▸ from CSWeb ▸
-  `https://csweb.asiansocial.org/api` ▸ download F1; grant **Location + Camera**.
+  `https://csweb.asiansocial.org/csweb/api` ▸ download F1; grant **Location + Camera**.
 - **D. On-device functional check** *(criterion 13)* — cascade · multi-language question text · skip logic ·
   **real GPS + verification photo** · consent terminator.
 - **E. Sync round-trip** *(criterion 14)* — enter a complete case → sync **up** → verify it lands in the
@@ -140,12 +150,21 @@ sign-off · close gate issues #161/#193/#194/#195/#251/#253 — none block Stage
 - Multi-language is **source-limited by ASPSI** — wire delivered languages; EN fallback + documented gap.
 - CSPro Designer/CSEntry 8.0 on Windows; Python under `py`/`python`.
 
-## START HERE
-Stage 1 is build-complete + runtime-verified. **Active focus: Stage 2 — F1 pilot, full CSWeb round-trip,
-no shortcuts.** Immediate next = **PATH-A: sync-enable F1** at the generator (add Simple Synchronization
-targeting `https://csweb.asiansocial.org/api` + the F1 dictionary), regenerate, re-verify compile — this
-is the surfaced gap. Then Carl runs the CSWeb admin steps (PATH-B), install on a real Android device
-(PATH-C/D), and prove the round-trip (PATH-E), tested once before any demo. Then replicate A–E to F3/F4.
+## START HERE (updated 2026-06-12)
+**Stage 1 ✅ · Stage 2 criteria 10–12 ✅ · criterion 14 (sync round-trip) ✅ ×3 · criterion 13 ✅ except the
+hardware-only checks.** All three instruments are LIVE on CSWeb (shipped 2026-06-12) with the full feature set:
+single 12-digit Questionnaire Number with hierarchical PSGC validation + auto-filled read-only geo names ·
+verbatim Annex H consent screens · per-question enumerator instructions + section intros · capture-type pass
+(DropDowns, native Date pickers, auto-advance) · combined-view blocks (Interview Staff + Visit Record) ·
+operator partial save · audited skip/validation logic (dead gates fixed, F4 roster auto-end at Q19,
+province-anchored barangay fallback, other-specify enforcement complete). Clean tester-path verified on the
+emulator ×3 (install → entry → validation → consent endlevel → **sync up "Successfully synced"**). The earlier
+FACILITY_LOOKUP auto-fill was **dropped** (Android indexing loop) — superseded by the QN redesign.
+**TO CLOSE THE GOAL:** (1) **Carl's real-phone pass — live GPS capture + verification photo** (criterion 13's
+device-only items; ~10 min with `docs/F1-CSEntry-Tester-Install-and-Test-Guide-2026-06.md`, already on the
+12-digit flow); (2) record the ASPSI/Shan handoff (criterion 15 — runbook + tester guide are current).
+*Optional paperwork:* Designer sign-off note (#6) · parked gate issues (#161/#193/#194/#195/#251/#253).
+*Small open decisions:* duplicate other-specify twins (F3 Q67/F4 Q82) · F4 Q24/Q25 water conditionality.
 
 ---
 *One-line goal:* **Every CAPI instrument is generator-clean, runs in CSEntry in every delivered language,

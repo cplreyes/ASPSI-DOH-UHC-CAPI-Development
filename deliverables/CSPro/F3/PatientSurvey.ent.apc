@@ -6,6 +6,12 @@
 
 PROC GLOBAL
 numeric currentYYYYMMDD;
+{ Single-number redesign (2026-06-11): the questionnaire number's first 7 digits
+  are a POSITIONAL slice of the 10-digit PSA PSGC - validated hierarchically
+  (region exact -> region's provinces -> each province's cities). }
+numeric regionFull;
+numeric geoFull;
+numeric geoFound;
 numeric currentYear;
 numeric currentMonth;
 
@@ -77,17 +83,39 @@ end;
 function FillBarangayValueSet(numeric parentCity)
 
     B_PARENT_CITY = parentCity;
-    if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) = 0 then
+    if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) <> 0 then
+        ValueSet vs;
+        do varying numeric i = 1 until i > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
+            vs.add(strip(B_NAME(i)), B_CODE(i));
+        enddo;
+        setvalueset(BARANGAY, vs);
+        exit;
+    endif;
+
+    { Fallback (found in the 2026-06-11 audit walk): province-anchored
+      questionnaire numbers (district hospitals etc.) derive a CITY_MUNICIPALITY
+      with no barangays directly under it, which left the picker EMPTY and
+      hard-blocked entry ("out of range" on any input). Offer every barangay of
+      the province's cities/municipalities instead, labelled "City - Barangay"
+      so duplicate barangay names stay distinguishable. }
+    { positional slice: PSA provinces are 3-digit — the full province code is
+      the first FIVE digits of the 10-digit PSGC (RR PPP), zero-padded }
+    C_PARENT_PROVINCE = int(parentCity / 100000) * 100000;
+    if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) = 0 then
         ValueSet empty;
         setvalueset(BARANGAY, empty);
         exit;
     endif;
-
-    ValueSet vs;
-    do varying numeric i = 1 until i > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
-        vs.add(strip(B_NAME(i)), B_CODE(i));
+    ValueSet vsAll;
+    do varying numeric c = 1 until c > count(PSGC_CITY_DICT.PSGC_CITY_REC)
+        B_PARENT_CITY = C_CODE(c);
+        if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) <> 0 then
+            do varying numeric i = 1 until i > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
+                vsAll.add(strip(C_NAME(c)) + " - " + strip(B_NAME(i)), B_CODE(i));
+            enddo;
+        endif;
     enddo;
-    setvalueset(BARANGAY, vs);
+    setvalueset(BARANGAY, vsAll);
 
 end;
 
@@ -182,40 +210,92 @@ preproc
   currentYear  = int(currentYYYYMMDD / 10000);
   currentMonth = int(currentYYYYMMDD / 100) % 100;
 
-{ LANGUAGE_USED lives in the FIELD_CONTROL record, so it can't be set from the
-  form-file/level preproc ("belongs to a record at a lower level"), and a record
-  symbol can't have a PROC. Set it in the preproc of the first FIELD_CONTROL field
-  (SURVEY_CODE) — same record, runs at case start. §15.E }
-PROC SURVEY_CODE
-preproc
-  LANGUAGE_USED = getlanguage();
+{ LANGUAGE_USED is captured in the QUESTIONNAIRE_NUMBER postproc (case key, the
+  very first field) — see PROC QUESTIONNAIRE_NUMBER below. (Was on SURVEY_CODE,
+  then INTERVIEWER_ID; both removed 2026-06-12 — consolidated to the id postproc.) }
 
 
-{ ---- Informed consent: No (2) terminates the interview (spec 4.2) ---- }
-PROC CONSENT_GIVEN
-postproc
-  if CONSENT_GIVEN = 2 then
-    ENUM_RESULT_FIRST_VISIT = 4;   { Withdraw Participation/Consent }
-    errmsg("Respondent declined consent. Interview ends; case coded Refused.");
-    endlevel;   { end the CASE on refusal (endgroup only skips this group). The case key
-                  is now captured on FORM000 before consent, so the refused case saves. }
-  endif;
+{ Informed consent: the separate CONSENT_GIVEN field was removed 2026-06-12.
+  Consent refusal is now recorded as the Result-of-Visit disposition
+  ("Withdraw Participation/Consent" = code 6); the read-aloud consent script is
+  read from the printed sheet (off the CAPI). No consent gate PROC. }
 
 { ---- F1 linkage: facility is intrinsic to the 12-digit case-key id-block
   (REGION_CODE + PROVINCE_HUC_CODE + CITY_MUNICIPALITY_CODE + FACILITY_NO);
   F3_FACILITY_ID retired 2026-06-04. The cross-check against the synced F1
   facility set moves to the CSWeb sync step (E4-CSWeb-005). ---- }
 
-{ ---- PSGC cascade — facility geo-ID (spec 4.3) ---- }
-PROC REGION
-onfocus
-  FillRegionValueSet();
-PROC PROVINCE_HUC
-onfocus
-  FillProvinceValueSet(REGION);
-PROC CITY_MUNICIPALITY
-onfocus
-  FillCityValueSet(PROVINCE_HUC);
+{ ---- Single 12-digit Questionnaire Number (redesign 2026-06-11; mirrors F1) ----
+  Parse the number into the component codes (FIELD_CONTROL items - downstream
+  PROCs keep working), validate the 7-digit geo prefix hierarchically against
+  the PSGC dicts, fill the read-only *_NAME items, and set the full PSGC codes
+  on the off-form geo items so the BARANGAY cascade filters correctly. ---- }
+PROC QUESTIONNAIRE_NUMBER
+postproc
+  LANGUAGE_USED = getlanguage();   { record interview language at case start (§15.E) }
+  REGION_CODE            = int(QUESTIONNAIRE_NUMBER / 10000000000);
+  PROVINCE_HUC_CODE      = int(QUESTIONNAIRE_NUMBER / 100000000) % 100;
+  CITY_MUNICIPALITY_CODE = int(QUESTIONNAIRE_NUMBER / 100000) % 1000;
+  FACILITY_NO            = int(QUESTIONNAIRE_NUMBER / 1000) % 100;
+  CASE_SEQ               = QUESTIONNAIRE_NUMBER % 1000;
+
+  regionFull = REGION_CODE * 100000000;
+  geoFull    = int(QUESTIONNAIRE_NUMBER / 100000) * 1000;
+  REGION     = regionFull;
+
+  geoFound = 0;
+  R_PARENT_CODE = 0;
+  if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) <> 0 then
+    do varying numeric ri = 1 until ri > count(PSGC_REGION_DICT.PSGC_REGION_REC)
+      if R_CODE(ri) = regionFull then
+        REGION_NAME = strip(R_NAME(ri));
+        geoFound = 1;
+      endif;
+    enddo;
+  endif;
+  if geoFound = 0 then
+    errmsg("Region code %02d not found in PSGC. Check the Questionnaire Number.", REGION_CODE);
+    reenter;
+  endif;
+
+  geoFound = 0;
+  P_PARENT_REGION = regionFull;
+  if loadcase(PSGC_PROVINCE_DICT, P_PARENT_REGION) <> 0 then
+    do varying numeric pi = 1 until pi > count(PSGC_PROVINCE_DICT.PSGC_PROVINCE_REC) or geoFound = 1
+      if P_CODE(pi) = geoFull then
+        PROVINCE_NAME     = strip(P_NAME(pi));
+        CITY_NAME         = strip(P_NAME(pi));
+        PROVINCE_HUC      = geoFull;
+        CITY_MUNICIPALITY = geoFull;
+        geoFound = 1;
+      else
+        C_PARENT_PROVINCE = P_CODE(pi);
+        if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) <> 0 then
+          do varying numeric ci = 1 until ci > count(PSGC_CITY_DICT.PSGC_CITY_REC) or geoFound = 1
+            if C_CODE(ci) = geoFull then
+              PROVINCE_NAME     = strip(P_NAME(pi));
+              CITY_NAME         = strip(C_NAME(ci));
+              PROVINCE_HUC      = P_CODE(pi);
+              CITY_MUNICIPALITY = geoFull;
+              geoFound = 1;
+            endif;
+          enddo;
+        endif;
+      endif;
+    enddo;
+  endif;
+  if geoFound = 0 then
+    errmsg("Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.", int(QUESTIONNAIRE_NUMBER / 100000));
+    reenter;
+  endif;
+
+  protect(REGION_NAME, true);
+  protect(PROVINCE_NAME, true);
+  protect(CITY_NAME, true);
+
+{ ---- Barangay picker (facility geo): region/province/city are derived from the
+  Questionnaire Number (off-form); only barangay is picked, filtered by the
+  derived city/province code. ---- }
 PROC BARANGAY
 onfocus
   FillBarangayValueSet(CITY_MUNICIPALITY);
@@ -265,38 +345,81 @@ onfocus
     setvalueset(P_BARANGAY, vsPB);
   endif;
 
-{ ---- GPS + verification photo (spec 4.3a; helpers in Capture-Helpers.apc) ---- }
-PROC FACILITY_CAPTURE_GPS
+{ ---- GPS — AUTO-FETCHED on focus (2026-06-12; no manual trigger). Captured
+  once (guarded on read-time), then all GPS fields protected (read-only) so
+  coordinates can't be typed. Helpers in Capture-Helpers.apc. Desktop (getos
+  10-19) has no GPS radio → fields stay blank there (device-only). ---- }
+PROC FACILITY_GPS_LATITUDE
 onfocus
-  if ReadGPSReading(120, 20) then
-    FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
-    FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
-    FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
-    FACILITY_GPS_ACCURACY   = gps(accuracy);
-    FACILITY_GPS_SATELLITES = gps(satellites);
-    FACILITY_GPS_READTIME   = maketext("%d", gps(readtime));
+  if length(strip(FACILITY_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
+    if ReadGPSReading(120, 20) then
+      FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
+      FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+      FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+      FACILITY_GPS_ACCURACY   = gps(accuracy);
+      FACILITY_GPS_SATELLITES = gps(satellites);
+      FACILITY_GPS_READTIME   = maketext("%d", gps(readtime));
+    endif;
   endif;
-  FACILITY_CAPTURE_GPS = notappl;
+  { Protect ONLY once captured — protecting a blank numeric (no fix / desktop)
+    triggers "protected field is out of range - value is NOTAPPL". }
+  if length(strip(FACILITY_GPS_READTIME)) > 0 then
+    protect(FACILITY_GPS_LATITUDE, true);
+    protect(FACILITY_GPS_LONGITUDE, true);
+    protect(FACILITY_GPS_ALTITUDE, true);
+    protect(FACILITY_GPS_ACCURACY, true);
+    protect(FACILITY_GPS_SATELLITES, true);
+    protect(FACILITY_GPS_READTIME, true);
+  endif;
 
-PROC P_HOME_CAPTURE_GPS
+PROC P_HOME_GPS_LATITUDE
 onfocus
-  { Home-visit GPS (outpatient / home interview). Trigger item is
-    P_HOME_CAPTURE_GPS per the dcf; fields are P_HOME_GPS_*. }
-  if ReadGPSReading(120, 20) then
-    P_HOME_GPS_LATITUDE   = maketext("%f", gps(latitude));
-    P_HOME_GPS_LONGITUDE  = maketext("%f", gps(longitude));
-    P_HOME_GPS_ALTITUDE   = maketext("%f", gps(altitude));
-    P_HOME_GPS_ACCURACY   = gps(accuracy);
-    P_HOME_GPS_SATELLITES = gps(satellites);
-    P_HOME_GPS_READTIME   = maketext("%d", gps(readtime));
+  { Home-visit GPS (outpatient / home interview); fields are P_HOME_GPS_*. }
+  if length(strip(P_HOME_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
+    if ReadGPSReading(120, 20) then
+      P_HOME_GPS_LATITUDE   = maketext("%f", gps(latitude));
+      P_HOME_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+      P_HOME_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+      P_HOME_GPS_ACCURACY   = gps(accuracy);
+      P_HOME_GPS_SATELLITES = gps(satellites);
+      P_HOME_GPS_READTIME   = maketext("%d", gps(readtime));
+    endif;
   endif;
-  P_HOME_CAPTURE_GPS = notappl;
+  { Protect ONLY once captured — see FACILITY_GPS_LATITUDE note above. }
+  if length(strip(P_HOME_GPS_READTIME)) > 0 then
+    protect(P_HOME_GPS_LATITUDE, true);
+    protect(P_HOME_GPS_LONGITUDE, true);
+    protect(P_HOME_GPS_ALTITUDE, true);
+    protect(P_HOME_GPS_ACCURACY, true);
+    protect(P_HOME_GPS_SATELLITES, true);
+    protect(P_HOME_GPS_READTIME, true);
+  endif;
+
+{ ---- #231 Verification photo (moved to the END of the form 2026-06-12). CONDITIONAL on
+  the visit outcome and soft-validated (warn, don't trap, on camera failure). ---- }
+PROC VERIFICATION_PHOTO_FILENAME
+preproc
+  { display-only — the camera trigger fills this; it is never typed }
+  noinput;
 
 PROC CAPTURE_VERIFICATION_PHOTO
+preproc
+  { gate: photograph only visits where an interview occurred — 1 Completed,
+    2 Completed at the Hospital, 4 Incomplete, 5 Completed at Home; skip
+    3 Postponed / 6 Withdraw Participation/Consent }
+  if not (ENUM_RESULT_FINAL_VISIT in 1, 2, 4, 5) then
+    VERIFICATION_PHOTO_FILENAME = "";   { clear any stale name if outcome was changed back }
+    noinput;
+  endif;
 onfocus
-  string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
-  if TakeVerificationPhoto(fn) then
-    VERIFICATION_PHOTO_FILENAME = fn;
+  { capture once: an empty filename means no photo yet, so (re)try the camera }
+  if length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
+    string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
+    if TakeVerificationPhoto(fn) then
+      VERIFICATION_PHOTO_FILENAME = fn;
+    else
+      errmsg("Verification photo not captured (camera cancelled or unavailable). Re-enter this field to retry, or note the reason in your field report.");
+    endif;
   endif;
   CAPTURE_VERIFICATION_PHOTO = notappl;
 
@@ -314,6 +437,31 @@ preproc
     skip to Q116_NBB_HEARD;
   endif;
 
+
+{ ---- 'Other (specify)' enforcement -- Q98 payment-matrix others (audit 2026-06-11) ---- }
+PROC Q98_OTHER_DONATION_TXT
+preproc
+  if Q98_PAY_06 <> 1 then
+    Q98_OTHER_DONATION_TXT = "";   { skip + clear: this donation option not ticked }
+    noinput;
+  endif;
+postproc
+  if Q98_PAY_06 = 1 and length(strip(Q98_OTHER_DONATION_TXT)) = 0 then
+    errmsg("'Other Donation/Charity/Assistance' was selected in Q98. Please specify.");
+    reenter;
+  endif;
+
+PROC Q98_OTHER_TXT
+preproc
+  if Q98_PAY_15 <> 1 then
+    Q98_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked }
+    noinput;
+  endif;
+postproc
+  if Q98_PAY_15 = 1 and length(strip(Q98_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected in Q98. Please specify.");
+    reenter;
+  endif;
 
 { ---- Multi-branch routing (spec 2) ---- }
 PROC Q63_HAS_USUAL_FACILITY
@@ -623,6 +771,11 @@ postproc
 { ---- 'Other (specify)' enforcement — UHC9 dual-other (spec 4) ---- }
 { ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 64 items) ---- }
 PROC Q100_BUCAS_SOURCE_OTHER_TXT
+preproc
+  if Q100_BUCAS_SOURCE_O08 <> 1 then
+    Q100_BUCAS_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q100_BUCAS_SOURCE_O08 = 1 and length(strip(Q100_BUCAS_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q100_BUCAS_SOURCE but no text was entered. Please specify.");
@@ -630,6 +783,11 @@ postproc
   endif;
 
 PROC Q101_BUCAS_UNDERSTAND_OTHER_TXT
+preproc
+  if Q101_BUCAS_UNDERSTAND_O05 <> 1 then
+    Q101_BUCAS_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q101_BUCAS_UNDERSTAND_O05 = 1 and length(strip(Q101_BUCAS_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q101_BUCAS_UNDERSTAND but no text was entered. Please specify.");
@@ -637,6 +795,11 @@ postproc
   endif;
 
 PROC Q103_BUCAS_SERVICES_OTHER_TXT
+preproc
+  if Q103_BUCAS_SERVICES_O07 <> 1 then
+    Q103_BUCAS_SERVICES_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q103_BUCAS_SERVICES_O07 = 1 and length(strip(Q103_BUCAS_SERVICES_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q103_BUCAS_SERVICES but no text was entered. Please specify.");
@@ -644,6 +807,11 @@ postproc
   endif;
 
 PROC Q104_WITHOUT_BUCAS_OTHER_TXT
+preproc
+  if Q104_WITHOUT_BUCAS <> 6 then
+    Q104_WITHOUT_BUCAS_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q104_WITHOUT_BUCAS = 6 and length(strip(Q104_WITHOUT_BUCAS_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q104_WITHOUT_BUCAS but no text was entered. Please specify.");
@@ -651,6 +819,11 @@ postproc
   endif;
 
 PROC Q105_REASON_OTHER_TXT
+preproc
+  if Q105_REASON <> 5 then
+    Q105_REASON_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q105_REASON = 5 and length(strip(Q105_REASON_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q105_REASON but no text was entered. Please specify.");
@@ -658,6 +831,11 @@ postproc
   endif;
 
 PROC Q107_PAY_OTHER_TXT
+preproc
+  if Q107_PAY_10 <> 1 then
+    Q107_PAY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q107_PAY_10 = 1 and length(strip(Q107_PAY_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q107_PAY but no text was entered. Please specify.");
@@ -665,6 +843,11 @@ postproc
   endif;
 
 PROC Q109_PAY_OTHER_TXT
+preproc
+  if Q109_PAY_09 <> 1 then
+    Q109_PAY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q109_PAY_09 = 1 and length(strip(Q109_PAY_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q109_PAY but no text was entered. Please specify.");
@@ -672,6 +855,11 @@ postproc
   endif;
 
 PROC Q112_PAY_OTHER_TXT
+preproc
+  if Q112_PAY_09 <> 1 then
+    Q112_PAY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q112_PAY_09 = 1 and length(strip(Q112_PAY_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q112_PAY but no text was entered. Please specify.");
@@ -679,6 +867,11 @@ postproc
   endif;
 
 PROC Q113_PAY_OTHER_TXT
+preproc
+  if Q113_PAY_06 <> 1 then
+    Q113_PAY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q113_PAY_06 = 1 and length(strip(Q113_PAY_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q113_PAY but no text was entered. Please specify.");
@@ -686,6 +879,11 @@ postproc
   endif;
 
 PROC Q1141_OTHER_TXT
+preproc
+  if Q1141_1 <> 1 then
+    Q1141_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q1141_1 = 1 and length(strip(Q1141_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q1141 but no text was entered. Please specify.");
@@ -693,6 +891,11 @@ postproc
   endif;
 
 PROC Q1142_OTHER_TXT
+preproc
+  if Q1142_1 <> 1 then
+    Q1142_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q1142_1 = 1 and length(strip(Q1142_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q1142 but no text was entered. Please specify.");
@@ -700,6 +903,11 @@ postproc
   endif;
 
 PROC Q114_NO_PH_OTHER_TXT
+preproc
+  if Q114_NO_PH_O07 <> 1 then
+    Q114_NO_PH_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q114_NO_PH_O07 = 1 and length(strip(Q114_NO_PH_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q114_NO_PH but no text was entered. Please specify.");
@@ -707,6 +915,11 @@ postproc
   endif;
 
 PROC Q117_NBB_SOURCE_OTHER_TXT
+preproc
+  if Q117_NBB_SOURCE_O08 <> 1 then
+    Q117_NBB_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q117_NBB_SOURCE_O08 = 1 and length(strip(Q117_NBB_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q117_NBB_SOURCE but no text was entered. Please specify.");
@@ -714,6 +927,11 @@ postproc
   endif;
 
 PROC Q118_NBB_UNDERSTAND_OTHER_TXT
+preproc
+  if Q118_NBB_UNDERSTAND_O09 <> 1 then
+    Q118_NBB_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q118_NBB_UNDERSTAND_O09 = 1 and length(strip(Q118_NBB_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q118_NBB_UNDERSTAND but no text was entered. Please specify.");
@@ -721,6 +939,11 @@ postproc
   endif;
 
 PROC Q120_ZBB_SOURCE_OTHER_TXT
+preproc
+  if Q120_ZBB_SOURCE_O08 <> 1 then
+    Q120_ZBB_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q120_ZBB_SOURCE_O08 = 1 and length(strip(Q120_ZBB_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q120_ZBB_SOURCE but no text was entered. Please specify.");
@@ -728,6 +951,11 @@ postproc
   endif;
 
 PROC Q121_ZBB_UNDERSTAND_OTHER_TXT
+preproc
+  if Q121_ZBB_UNDERSTAND_O09 <> 1 then
+    Q121_ZBB_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q121_ZBB_UNDERSTAND_O09 = 1 and length(strip(Q121_ZBB_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q121_ZBB_UNDERSTAND but no text was entered. Please specify.");
@@ -735,6 +963,11 @@ postproc
   endif;
 
 PROC Q125_MAIFIP_SOURCE_OTHER_TXT
+preproc
+  if Q125_MAIFIP_SOURCE_O08 <> 1 then
+    Q125_MAIFIP_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q125_MAIFIP_SOURCE_O08 = 1 and length(strip(Q125_MAIFIP_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q125_MAIFIP_SOURCE but no text was entered. Please specify.");
@@ -742,6 +975,11 @@ postproc
   endif;
 
 PROC Q148_CONDITIONS_OTHER_TXT
+preproc
+  if Q148_CONDITIONS_O14 <> 1 then
+    Q148_CONDITIONS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q148_CONDITIONS_O14 = 1 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q148_CONDITIONS but no text was entered. Please specify.");
@@ -749,6 +987,11 @@ postproc
   endif;
 
 PROC Q149_WHERE_BUY_OTHER_TXT
+preproc
+  if Q149_WHERE_BUY_O08 <> 1 then
+    Q149_WHERE_BUY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q149_WHERE_BUY_O08 = 1 and length(strip(Q149_WHERE_BUY_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q149_WHERE_BUY but no text was entered. Please specify.");
@@ -756,6 +999,11 @@ postproc
   endif;
 
 PROC Q14_DISABILITY_OTHER_TXT
+preproc
+  if Q14_DISABILITY_TYPE <> 8 then
+    Q14_DISABILITY_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q14_DISABILITY_TYPE = 8 and length(strip(Q14_DISABILITY_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q14_DISABILITY_TYPE but no text was entered. Please specify.");
@@ -763,6 +1011,11 @@ postproc
   endif;
 
 PROC Q153_GAMOT_SOURCE_OTHER_TXT
+preproc
+  if Q153_GAMOT_SOURCE_O08 <> 1 then
+    Q153_GAMOT_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q153_GAMOT_SOURCE_O08 = 1 and length(strip(Q153_GAMOT_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q153_GAMOT_SOURCE but no text was entered. Please specify.");
@@ -770,6 +1023,11 @@ postproc
   endif;
 
 PROC Q154_GAMOT_UNDERSTAND_OTHER_TXT
+preproc
+  if Q154_GAMOT_UNDERSTAND_O06 <> 1 then
+    Q154_GAMOT_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q154_GAMOT_UNDERSTAND_O06 = 1 and length(strip(Q154_GAMOT_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q154_GAMOT_UNDERSTAND but no text was entered. Please specify.");
@@ -777,6 +1035,11 @@ postproc
   endif;
 
 PROC Q157_WHERE_REST_OTHER_TXT
+preproc
+  if Q157_WHERE_REST_O09 <> 1 then
+    Q157_WHERE_REST_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q157_WHERE_REST_O09 = 1 and length(strip(Q157_WHERE_REST_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q157_WHERE_REST but no text was entered. Please specify.");
@@ -784,6 +1047,11 @@ postproc
   endif;
 
 PROC Q15_EDUCATION_OTHER_TXT
+preproc
+  if Q15_EDUCATION <> 11 then
+    Q15_EDUCATION_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q15_EDUCATION = 11 and length(strip(Q15_EDUCATION_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q15_EDUCATION but no text was entered. Please specify.");
@@ -791,6 +1059,11 @@ postproc
   endif;
 
 PROC Q160_WHY_GENERIC_OTHER_TXT
+preproc
+  if Q160_WHY_GENERIC_O07 <> 1 then
+    Q160_WHY_GENERIC_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q160_WHY_GENERIC_O07 = 1 and length(strip(Q160_WHY_GENERIC_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q160_WHY_GENERIC but no text was entered. Please specify.");
@@ -798,6 +1071,11 @@ postproc
   endif;
 
 PROC Q161_WHY_BRANDED_OTHER_TXT
+preproc
+  if Q161_WHY_BRANDED_O07 <> 1 then
+    Q161_WHY_BRANDED_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q161_WHY_BRANDED_O07 = 1 and length(strip(Q161_WHY_BRANDED_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q161_WHY_BRANDED but no text was entered. Please specify.");
@@ -805,6 +1083,11 @@ postproc
   endif;
 
 PROC Q163_CARE_TYPE_OTHER_TXT
+preproc
+  if Q163_CARE_TYPE_O05 <> 1 then
+    Q163_CARE_TYPE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q163_CARE_TYPE_O05 = 1 and length(strip(Q163_CARE_TYPE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q163_CARE_TYPE but no text was entered. Please specify.");
@@ -812,6 +1095,11 @@ postproc
   endif;
 
 PROC Q164_SPECIALIST_OTHER_TXT
+preproc
+  if Q164_SPECIALIST <> 23 then
+    Q164_SPECIALIST_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q164_SPECIALIST = 23 and length(strip(Q164_SPECIALIST_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q164_SPECIALIST but no text was entered. Please specify.");
@@ -819,6 +1107,11 @@ postproc
   endif;
 
 PROC Q165_HOW_REFERRED_OTHER_TXT
+preproc
+  if Q165_HOW_REFERRED <> 5 then
+    Q165_HOW_REFERRED_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q165_HOW_REFERRED = 5 and length(strip(Q165_HOW_REFERRED_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q165_HOW_REFERRED but no text was entered. Please specify.");
@@ -826,6 +1119,11 @@ postproc
   endif;
 
 PROC Q171_WHY_NOT_OTHER_TXT
+preproc
+  if Q171_WHY_NOT_O07 <> 1 then
+    Q171_WHY_NOT_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q171_WHY_NOT_O07 = 1 and length(strip(Q171_WHY_NOT_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q171_WHY_NOT but no text was entered. Please specify.");
@@ -833,6 +1131,11 @@ postproc
   endif;
 
 PROC Q177_WHY_HOSPITAL_OTHER_TXT
+preproc
+  if Q177_WHY_HOSPITAL_O01 <> 1 then
+    Q177_WHY_HOSPITAL_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q177_WHY_HOSPITAL_O01 = 1 and length(strip(Q177_WHY_HOSPITAL_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q177_WHY_HOSPITAL but no text was entered. Please specify.");
@@ -840,6 +1143,11 @@ postproc
   endif;
 
 PROC Q23_WATER_OTHER_TXT
+preproc
+  if Q23_WATER <> 4 then
+    Q23_WATER_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q23_WATER = 4 and length(strip(Q23_WATER_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q23_WATER but no text was entered. Please specify.");
@@ -847,6 +1155,11 @@ postproc
   endif;
 
 PROC Q2_RELATIONSHIP_OTHER_TXT
+preproc
+  if Q2_RELATIONSHIP <> 19 then
+    Q2_RELATIONSHIP_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q2_RELATIONSHIP = 19 and length(strip(Q2_RELATIONSHIP_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q2_RELATIONSHIP but no text was entered. Please specify.");
@@ -854,6 +1167,11 @@ postproc
   endif;
 
 PROC Q34_WHO_DECIDES_OTHER_TXT
+preproc
+  if Q34_WHO_DECIDES <> 11 then
+    Q34_WHO_DECIDES_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q34_WHO_DECIDES = 11 and length(strip(Q34_WHO_DECIDES_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q34_WHO_DECIDES but no text was entered. Please specify.");
@@ -861,6 +1179,11 @@ postproc
   endif;
 
 PROC Q36_UHC_SOURCE_OTHER_TXT
+preproc
+  if Q36_UHC_SOURCE_O08 <> 1 then
+    Q36_UHC_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q36_UHC_SOURCE_O08 = 1 and length(strip(Q36_UHC_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q36_UHC_SOURCE but no text was entered. Please specify.");
@@ -868,6 +1191,11 @@ postproc
   endif;
 
 PROC Q37_UHC_UNDERSTAND_OTHER_TXT
+preproc
+  if Q37_UHC_UNDERSTAND_O06 <> 1 then
+    Q37_UHC_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q37_UHC_UNDERSTAND_O06 = 1 and length(strip(Q37_UHC_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q37_UHC_UNDERSTAND but no text was entered. Please specify.");
@@ -875,6 +1203,11 @@ postproc
   endif;
 
 PROC Q39_HOW_FIND_OUT_OTHER_TXT
+preproc
+  if Q39_HOW_FIND_OUT <> 4 then
+    Q39_HOW_FIND_OUT_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q39_HOW_FIND_OUT = 4 and length(strip(Q39_HOW_FIND_OUT_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q39_HOW_FIND_OUT but no text was entered. Please specify.");
@@ -882,6 +1215,11 @@ postproc
   endif;
 
 PROC Q40_WHO_ASSISTED_OTHER_TXT
+preproc
+  if Q40_WHO_ASSISTED <> 4 then
+    Q40_WHO_ASSISTED_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q40_WHO_ASSISTED = 4 and length(strip(Q40_WHO_ASSISTED_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q40_WHO_ASSISTED but no text was entered. Please specify.");
@@ -889,6 +1227,11 @@ postproc
   endif;
 
 PROC Q42_DIFFICULTY_OTHER_TXT
+preproc
+  if Q42_DIFFICULTY_O08 <> 1 then
+    Q42_DIFFICULTY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q42_DIFFICULTY_O08 = 1 and length(strip(Q42_DIFFICULTY_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q42_DIFFICULTY but no text was entered. Please specify.");
@@ -896,6 +1239,11 @@ postproc
   endif;
 
 PROC Q44_WHERE_ASSIST_OTHER_TXT
+preproc
+  if Q44_WHERE_ASSIST <> 4 then
+    Q44_WHERE_ASSIST_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q44_WHERE_ASSIST = 4 and length(strip(Q44_WHERE_ASSIST_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q44_WHERE_ASSIST but no text was entered. Please specify.");
@@ -903,6 +1251,11 @@ postproc
   endif;
 
 PROC Q45_CATEGORY_OTHER_TXT
+preproc
+  if Q45_CATEGORY <> 2 then
+    Q45_CATEGORY_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q45_CATEGORY = 2 and length(strip(Q45_CATEGORY_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q45_CATEGORY but no text was entered. Please specify.");
@@ -910,6 +1263,11 @@ postproc
   endif;
 
 PROC Q46_BENEFITS_OTHER_TXT
+preproc
+  if Q46_BENEFITS_O06 <> 1 then
+    Q46_BENEFITS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q46_BENEFITS_O06 = 1 and length(strip(Q46_BENEFITS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q46_BENEFITS but no text was entered. Please specify.");
@@ -917,6 +1275,11 @@ postproc
   endif;
 
 PROC Q50_DIFFICULTY_PAYING_OTHER_TXT
+preproc
+  if Q50_DIFFICULTY_PAYING_O07 <> 1 then
+    Q50_DIFFICULTY_PAYING_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q50_DIFFICULTY_PAYING_O07 = 1 and length(strip(Q50_DIFFICULTY_PAYING_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q50_DIFFICULTY_PAYING but no text was entered. Please specify.");
@@ -924,6 +1287,11 @@ postproc
   endif;
 
 PROC Q52_PLANS_OTHER_TXT
+preproc
+  if Q52_PLANS_O07 <> 1 then
+    Q52_PLANS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q52_PLANS_O07 = 1 and length(strip(Q52_PLANS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q52_PLANS but no text was entered. Please specify.");
@@ -931,6 +1299,11 @@ postproc
   endif;
 
 PROC Q54_PCP_TYPE_OTHER_TXT
+preproc
+  if Q54_PCP_TYPE <> 4 then
+    Q54_PCP_TYPE_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q54_PCP_TYPE = 4 and length(strip(Q54_PCP_TYPE_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q54_PCP_TYPE but no text was entered. Please specify.");
@@ -938,6 +1311,11 @@ postproc
   endif;
 
 PROC Q65_WHY_NO_USUAL_OTHER_TXT
+preproc
+  if Q65_WHY_NO_USUAL_O07 <> 1 then
+    Q65_WHY_NO_USUAL_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q65_WHY_NO_USUAL_O07 = 1 and length(strip(Q65_WHY_NO_USUAL_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q65_WHY_NO_USUAL but no text was entered. Please specify.");
@@ -945,6 +1323,11 @@ postproc
   endif;
 
 PROC Q67_WHY_THIS_FACILITY_OTHER_TXT
+preproc
+  if Q67_WHY_THIS_FACILITY_O08 <> 1 then
+    Q67_WHY_THIS_FACILITY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q67_WHY_THIS_FACILITY_O08 = 1 and length(strip(Q67_WHY_THIS_FACILITY_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q67_WHY_THIS_FACILITY but no text was entered. Please specify.");
@@ -952,6 +1335,11 @@ postproc
   endif;
 
 PROC Q68_USUAL_FAC_TYPE_OTHER_TXT
+preproc
+  if Q68_USUAL_FAC_TYPE <> 9 then
+    Q68_USUAL_FAC_TYPE_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q68_USUAL_FAC_TYPE = 9 and length(strip(Q68_USUAL_FAC_TYPE_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q68_USUAL_FAC_TYPE but no text was entered. Please specify.");
@@ -959,6 +1347,11 @@ postproc
   endif;
 
 PROC Q70_USUAL_TRANSPORT_OTHER_TXT
+preproc
+  if Q70_USUAL_TRANSPORT_O12 <> 1 then
+    Q70_USUAL_TRANSPORT_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q70_USUAL_TRANSPORT_O12 = 1 and length(strip(Q70_USUAL_TRANSPORT_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q70_USUAL_TRANSPORT but no text was entered. Please specify.");
@@ -966,6 +1359,11 @@ postproc
   endif;
 
 PROC Q71_NEAREST_TYPE_OTHER_TXT
+preproc
+  if Q71_NEAREST_TYPE <> 8 then
+    Q71_NEAREST_TYPE_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q71_NEAREST_TYPE = 8 and length(strip(Q71_NEAREST_TYPE_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q71_NEAREST_TYPE but no text was entered. Please specify.");
@@ -973,6 +1371,11 @@ postproc
   endif;
 
 PROC Q73_NEAREST_TRANSPORT_OTHER_TXT
+preproc
+  if Q73_NEAREST_TRANSPORT_O12 <> 1 then
+    Q73_NEAREST_TRANSPORT_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q73_NEAREST_TRANSPORT_O12 = 1 and length(strip(Q73_NEAREST_TRANSPORT_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q73_NEAREST_TRANSPORT but no text was entered. Please specify.");
@@ -980,6 +1383,11 @@ postproc
   endif;
 
 PROC Q75_KON_SOURCE_OTHER_TXT
+preproc
+  if Q75_KON_SOURCE_O08 <> 1 then
+    Q75_KON_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q75_KON_SOURCE_O08 = 1 and length(strip(Q75_KON_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q75_KON_SOURCE but no text was entered. Please specify.");
@@ -987,6 +1395,11 @@ postproc
   endif;
 
 PROC Q76_KON_UNDERSTAND_OTHER_TXT
+preproc
+  if Q76_KON_UNDERSTAND_O07 <> 1 then
+    Q76_KON_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q76_KON_UNDERSTAND_O07 = 1 and length(strip(Q76_KON_UNDERSTAND_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q76_KON_UNDERSTAND but no text was entered. Please specify.");
@@ -994,6 +1407,11 @@ postproc
   endif;
 
 PROC Q82_KON_WHY_NOT_REG_OTHER_TXT
+preproc
+  if Q82_KON_WHY_NOT_REG_O09 <> 1 then
+    Q82_KON_WHY_NOT_REG_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q82_KON_WHY_NOT_REG_O09 = 1 and length(strip(Q82_KON_WHY_NOT_REG_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q82_KON_WHY_NOT_REG but no text was entered. Please specify.");
@@ -1001,6 +1419,11 @@ postproc
   endif;
 
 PROC Q83_VISIT_REASON_OTHER_TXT
+preproc
+  if Q83_VISIT_REASON <> 8 then
+    Q83_VISIT_REASON_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q83_VISIT_REASON = 8 and length(strip(Q83_VISIT_REASON_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q83_VISIT_REASON but no text was entered. Please specify.");
@@ -1008,6 +1431,11 @@ postproc
   endif;
 
 PROC Q84_SERVICE_TYPE_OTHER_TXT
+preproc
+  if Q84_SERVICE_TYPE <> 5 then
+    Q84_SERVICE_TYPE_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q84_SERVICE_TYPE = 5 and length(strip(Q84_SERVICE_TYPE_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q84_SERVICE_TYPE but no text was entered. Please specify.");
@@ -1015,6 +1443,11 @@ postproc
   endif;
 
 PROC Q85_CONDITIONS_OTHER_TXT
+preproc
+  if Q85_CONDITIONS_O14 <> 1 then
+    Q85_CONDITIONS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q85_CONDITIONS_O14 = 1 and length(strip(Q85_CONDITIONS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q85_CONDITIONS but no text was entered. Please specify.");
@@ -1022,6 +1455,11 @@ postproc
   endif;
 
 PROC Q87_OTHER_ACTIONS_OTHER_TXT
+preproc
+  if Q87_OTHER_ACTIONS_O01 <> 1 then
+    Q87_OTHER_ACTIONS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q87_OTHER_ACTIONS_O01 = 1 and length(strip(Q87_OTHER_ACTIONS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q87_OTHER_ACTIONS but no text was entered. Please specify.");
@@ -1029,6 +1467,11 @@ postproc
   endif;
 
 PROC Q88_WHY_VISIT_OTHER_TXT
+preproc
+  if Q88_WHY_VISIT <> 8 then
+    Q88_WHY_VISIT_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q88_WHY_VISIT = 8 and length(strip(Q88_WHY_VISIT_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q88_WHY_VISIT but no text was entered. Please specify.");
@@ -1036,6 +1479,11 @@ postproc
   endif;
 
 PROC Q90_NOT_CONFINED_OTHER_TXT
+preproc
+  if Q90_NOT_CONFINED_O07 <> 1 then
+    Q90_NOT_CONFINED_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q90_NOT_CONFINED_O07 = 1 and length(strip(Q90_NOT_CONFINED_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q90_NOT_CONFINED but no text was entered. Please specify.");
@@ -1043,6 +1491,11 @@ postproc
   endif;
 
 PROC Q93_LABS_OTHER_TXT
+preproc
+  if Q93_LABS_O16 <> 1 then
+    Q93_LABS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q93_LABS_O16 = 1 and length(strip(Q93_LABS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q93_LABS but no text was entered. Please specify.");
@@ -1050,6 +1503,11 @@ postproc
   endif;
 
 PROC Q971_OTHER_TXT
+preproc
+  if Q971_1 <> 1 then
+    Q971_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q971_1 = 1 and length(strip(Q971_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q971 but no text was entered. Please specify.");
@@ -1057,6 +1515,11 @@ postproc
   endif;
 
 PROC Q972_OTHER_TXT
+preproc
+  if Q972_1 <> 1 then
+    Q972_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q972_1 = 1 and length(strip(Q972_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected for Q972 but no text was entered. Please specify.");
@@ -1064,6 +1527,11 @@ postproc
   endif;
 
 PROC Q9_GROUP_OTHER_TXT
+preproc
+  if Q9_GROUP <> 8 then
+    Q9_GROUP_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
+    noinput;
+  endif;
 postproc
   if Q9_GROUP = 8 and length(strip(Q9_GROUP_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q9_GROUP but no text was entered. Please specify.");
@@ -1076,6 +1544,10 @@ postproc
   if not (Q100_BUCAS_SOURCE_O01 = 1 or Q100_BUCAS_SOURCE_O02 = 1 or Q100_BUCAS_SOURCE_O03 = 1 or Q100_BUCAS_SOURCE_O04 = 1 or Q100_BUCAS_SOURCE_O05 = 1 or Q100_BUCAS_SOURCE_O06 = 1 or Q100_BUCAS_SOURCE_O07 = 1 or Q100_BUCAS_SOURCE_O08 = 1) then
     errmsg("Select at least one option for Q100_BUCAS_SOURCE before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q100_BUCAS_SOURCE_O07 = 1) and (Q100_BUCAS_SOURCE_O01 = 1 or Q100_BUCAS_SOURCE_O02 = 1 or Q100_BUCAS_SOURCE_O03 = 1 or Q100_BUCAS_SOURCE_O04 = 1 or Q100_BUCAS_SOURCE_O05 = 1 or Q100_BUCAS_SOURCE_O06 = 1 or Q100_BUCAS_SOURCE_O08 = 1) then
+    errmsg("Q100_BUCAS_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q101_BUCAS_UNDERSTAND_O05
@@ -1091,6 +1563,10 @@ postproc
     errmsg("Select at least one option for Q103_BUCAS_SERVICES before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q103_BUCAS_SERVICES_O06 = 1) and (Q103_BUCAS_SERVICES_O01 = 1 or Q103_BUCAS_SERVICES_O02 = 1 or Q103_BUCAS_SERVICES_O03 = 1 or Q103_BUCAS_SERVICES_O04 = 1 or Q103_BUCAS_SERVICES_O05 = 1 or Q103_BUCAS_SERVICES_O07 = 1) then
+    errmsg("Q103_BUCAS_SERVICES: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q114_NO_PH_O07
 postproc
@@ -1105,12 +1581,20 @@ postproc
     errmsg("Select at least one option for Q117_NBB_SOURCE before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q117_NBB_SOURCE_O07 = 1) and (Q117_NBB_SOURCE_O01 = 1 or Q117_NBB_SOURCE_O02 = 1 or Q117_NBB_SOURCE_O03 = 1 or Q117_NBB_SOURCE_O04 = 1 or Q117_NBB_SOURCE_O05 = 1 or Q117_NBB_SOURCE_O06 = 1 or Q117_NBB_SOURCE_O08 = 1) then
+    errmsg("Q117_NBB_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q118_NBB_UNDERSTAND_O09
 postproc
   if not (Q118_NBB_UNDERSTAND_O01 = 1 or Q118_NBB_UNDERSTAND_O02 = 1 or Q118_NBB_UNDERSTAND_O03 = 1 or Q118_NBB_UNDERSTAND_O04 = 1 or Q118_NBB_UNDERSTAND_O05 = 1 or Q118_NBB_UNDERSTAND_O06 = 1 or Q118_NBB_UNDERSTAND_O07 = 1 or Q118_NBB_UNDERSTAND_O08 = 1 or Q118_NBB_UNDERSTAND_O09 = 1) then
     errmsg("Select at least one option for Q118_NBB_UNDERSTAND before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q118_NBB_UNDERSTAND_O08 = 1) and (Q118_NBB_UNDERSTAND_O01 = 1 or Q118_NBB_UNDERSTAND_O02 = 1 or Q118_NBB_UNDERSTAND_O03 = 1 or Q118_NBB_UNDERSTAND_O04 = 1 or Q118_NBB_UNDERSTAND_O05 = 1 or Q118_NBB_UNDERSTAND_O06 = 1 or Q118_NBB_UNDERSTAND_O07 = 1 or Q118_NBB_UNDERSTAND_O09 = 1) then
+    errmsg("Q118_NBB_UNDERSTAND: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q120_ZBB_SOURCE_O08
@@ -1119,6 +1603,10 @@ postproc
     errmsg("Select at least one option for Q120_ZBB_SOURCE before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q120_ZBB_SOURCE_O07 = 1) and (Q120_ZBB_SOURCE_O01 = 1 or Q120_ZBB_SOURCE_O02 = 1 or Q120_ZBB_SOURCE_O03 = 1 or Q120_ZBB_SOURCE_O04 = 1 or Q120_ZBB_SOURCE_O05 = 1 or Q120_ZBB_SOURCE_O06 = 1 or Q120_ZBB_SOURCE_O08 = 1) then
+    errmsg("Q120_ZBB_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q121_ZBB_UNDERSTAND_O09
 postproc
@@ -1126,12 +1614,20 @@ postproc
     errmsg("Select at least one option for Q121_ZBB_UNDERSTAND before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q121_ZBB_UNDERSTAND_O08 = 1) and (Q121_ZBB_UNDERSTAND_O01 = 1 or Q121_ZBB_UNDERSTAND_O02 = 1 or Q121_ZBB_UNDERSTAND_O03 = 1 or Q121_ZBB_UNDERSTAND_O04 = 1 or Q121_ZBB_UNDERSTAND_O05 = 1 or Q121_ZBB_UNDERSTAND_O06 = 1 or Q121_ZBB_UNDERSTAND_O07 = 1 or Q121_ZBB_UNDERSTAND_O09 = 1) then
+    errmsg("Q121_ZBB_UNDERSTAND: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q125_MAIFIP_SOURCE_O08
 postproc
   if not (Q125_MAIFIP_SOURCE_O01 = 1 or Q125_MAIFIP_SOURCE_O02 = 1 or Q125_MAIFIP_SOURCE_O03 = 1 or Q125_MAIFIP_SOURCE_O04 = 1 or Q125_MAIFIP_SOURCE_O05 = 1 or Q125_MAIFIP_SOURCE_O06 = 1 or Q125_MAIFIP_SOURCE_O07 = 1 or Q125_MAIFIP_SOURCE_O08 = 1) then
     errmsg("Select at least one option for Q125_MAIFIP_SOURCE before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q125_MAIFIP_SOURCE_O07 = 1) and (Q125_MAIFIP_SOURCE_O01 = 1 or Q125_MAIFIP_SOURCE_O02 = 1 or Q125_MAIFIP_SOURCE_O03 = 1 or Q125_MAIFIP_SOURCE_O04 = 1 or Q125_MAIFIP_SOURCE_O05 = 1 or Q125_MAIFIP_SOURCE_O06 = 1 or Q125_MAIFIP_SOURCE_O08 = 1) then
+    errmsg("Q125_MAIFIP_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q128_MAIFIP_OOP_ITEMS_O04
@@ -1146,6 +1642,10 @@ postproc
   if not (Q129_WHY_NO_MAIFIP_O01 = 1 or Q129_WHY_NO_MAIFIP_O02 = 1 or Q129_WHY_NO_MAIFIP_O03 = 1 or Q129_WHY_NO_MAIFIP_O04 = 1) then
     errmsg("Select at least one option for Q129_WHY_NO_MAIFIP before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q129_WHY_NO_MAIFIP_O04 = 1) and (Q129_WHY_NO_MAIFIP_O01 = 1 or Q129_WHY_NO_MAIFIP_O02 = 1 or Q129_WHY_NO_MAIFIP_O03 = 1) then
+    errmsg("Q129_WHY_NO_MAIFIP: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q148_CONDITIONS_O20
@@ -1168,12 +1668,20 @@ postproc
     errmsg("Select at least one option for Q153_GAMOT_SOURCE before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q153_GAMOT_SOURCE_O07 = 1) and (Q153_GAMOT_SOURCE_O01 = 1 or Q153_GAMOT_SOURCE_O02 = 1 or Q153_GAMOT_SOURCE_O03 = 1 or Q153_GAMOT_SOURCE_O04 = 1 or Q153_GAMOT_SOURCE_O05 = 1 or Q153_GAMOT_SOURCE_O06 = 1 or Q153_GAMOT_SOURCE_O08 = 1) then
+    errmsg("Q153_GAMOT_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q154_GAMOT_UNDERSTAND_O06
 postproc
   if not (Q154_GAMOT_UNDERSTAND_O01 = 1 or Q154_GAMOT_UNDERSTAND_O02 = 1 or Q154_GAMOT_UNDERSTAND_O03 = 1 or Q154_GAMOT_UNDERSTAND_O04 = 1 or Q154_GAMOT_UNDERSTAND_O05 = 1 or Q154_GAMOT_UNDERSTAND_O06 = 1) then
     errmsg("Select at least one option for Q154_GAMOT_UNDERSTAND before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q154_GAMOT_UNDERSTAND_O05 = 1) and (Q154_GAMOT_UNDERSTAND_O01 = 1 or Q154_GAMOT_UNDERSTAND_O02 = 1 or Q154_GAMOT_UNDERSTAND_O03 = 1 or Q154_GAMOT_UNDERSTAND_O04 = 1 or Q154_GAMOT_UNDERSTAND_O06 = 1) then
+    errmsg("Q154_GAMOT_UNDERSTAND: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q157_WHERE_REST_O09
@@ -1189,6 +1697,10 @@ postproc
     errmsg("Select at least one option for Q160_WHY_GENERIC before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q160_WHY_GENERIC_O06 = 1) and (Q160_WHY_GENERIC_O01 = 1 or Q160_WHY_GENERIC_O02 = 1 or Q160_WHY_GENERIC_O03 = 1 or Q160_WHY_GENERIC_O04 = 1 or Q160_WHY_GENERIC_O05 = 1 or Q160_WHY_GENERIC_O07 = 1) then
+    errmsg("Q160_WHY_GENERIC: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q161_WHY_BRANDED_O07
 postproc
@@ -1196,12 +1708,20 @@ postproc
     errmsg("Select at least one option for Q161_WHY_BRANDED before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q161_WHY_BRANDED_O06 = 1) and (Q161_WHY_BRANDED_O01 = 1 or Q161_WHY_BRANDED_O02 = 1 or Q161_WHY_BRANDED_O03 = 1 or Q161_WHY_BRANDED_O04 = 1 or Q161_WHY_BRANDED_O05 = 1 or Q161_WHY_BRANDED_O07 = 1) then
+    errmsg("Q161_WHY_BRANDED: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q163_CARE_TYPE_O12
 postproc
   if not (Q163_CARE_TYPE_O01 = 1 or Q163_CARE_TYPE_O02 = 1 or Q163_CARE_TYPE_O03 = 1 or Q163_CARE_TYPE_O04 = 1 or Q163_CARE_TYPE_O05 = 1 or Q163_CARE_TYPE_O06 = 1 or Q163_CARE_TYPE_O07 = 1 or Q163_CARE_TYPE_O08 = 1 or Q163_CARE_TYPE_O09 = 1 or Q163_CARE_TYPE_O10 = 1 or Q163_CARE_TYPE_O11 = 1 or Q163_CARE_TYPE_O12 = 1) then
     errmsg("Select at least one option for Q163_CARE_TYPE before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q163_CARE_TYPE_O11 = 1) and (Q163_CARE_TYPE_O01 = 1 or Q163_CARE_TYPE_O02 = 1 or Q163_CARE_TYPE_O03 = 1 or Q163_CARE_TYPE_O04 = 1 or Q163_CARE_TYPE_O05 = 1 or Q163_CARE_TYPE_O06 = 1 or Q163_CARE_TYPE_O07 = 1 or Q163_CARE_TYPE_O08 = 1 or Q163_CARE_TYPE_O09 = 1 or Q163_CARE_TYPE_O10 = 1 or Q163_CARE_TYPE_O12 = 1) then
+    errmsg("Q163_CARE_TYPE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q171_WHY_NOT_O07
@@ -1217,12 +1737,20 @@ postproc
     errmsg("Select at least one option for Q177_WHY_HOSPITAL before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q177_WHY_HOSPITAL_O09 = 1) and (Q177_WHY_HOSPITAL_O01 = 1 or Q177_WHY_HOSPITAL_O02 = 1 or Q177_WHY_HOSPITAL_O03 = 1 or Q177_WHY_HOSPITAL_O04 = 1 or Q177_WHY_HOSPITAL_O05 = 1 or Q177_WHY_HOSPITAL_O06 = 1 or Q177_WHY_HOSPITAL_O07 = 1 or Q177_WHY_HOSPITAL_O08 = 1 or Q177_WHY_HOSPITAL_O10 = 1) then
+    errmsg("Q177_WHY_HOSPITAL: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q36_UHC_SOURCE_O08
 postproc
   if not (Q36_UHC_SOURCE_O01 = 1 or Q36_UHC_SOURCE_O02 = 1 or Q36_UHC_SOURCE_O03 = 1 or Q36_UHC_SOURCE_O04 = 1 or Q36_UHC_SOURCE_O05 = 1 or Q36_UHC_SOURCE_O06 = 1 or Q36_UHC_SOURCE_O07 = 1 or Q36_UHC_SOURCE_O08 = 1) then
     errmsg("Select at least one option for Q36_UHC_SOURCE before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q36_UHC_SOURCE_O07 = 1) and (Q36_UHC_SOURCE_O01 = 1 or Q36_UHC_SOURCE_O02 = 1 or Q36_UHC_SOURCE_O03 = 1 or Q36_UHC_SOURCE_O04 = 1 or Q36_UHC_SOURCE_O05 = 1 or Q36_UHC_SOURCE_O06 = 1 or Q36_UHC_SOURCE_O08 = 1) then
+    errmsg("Q36_UHC_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q37_UHC_UNDERSTAND_O06
@@ -1231,12 +1759,20 @@ postproc
     errmsg("Select at least one option for Q37_UHC_UNDERSTAND before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q37_UHC_UNDERSTAND_O05 = 1) and (Q37_UHC_UNDERSTAND_O01 = 1 or Q37_UHC_UNDERSTAND_O02 = 1 or Q37_UHC_UNDERSTAND_O03 = 1 or Q37_UHC_UNDERSTAND_O04 = 1 or Q37_UHC_UNDERSTAND_O06 = 1) then
+    errmsg("Q37_UHC_UNDERSTAND: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q42_DIFFICULTY_O08
 postproc
   if not (Q42_DIFFICULTY_O01 = 1 or Q42_DIFFICULTY_O02 = 1 or Q42_DIFFICULTY_O03 = 1 or Q42_DIFFICULTY_O04 = 1 or Q42_DIFFICULTY_O05 = 1 or Q42_DIFFICULTY_O06 = 1 or Q42_DIFFICULTY_O07 = 1 or Q42_DIFFICULTY_O08 = 1) then
     errmsg("Select at least one option for Q42_DIFFICULTY before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q42_DIFFICULTY_O07 = 1) and (Q42_DIFFICULTY_O01 = 1 or Q42_DIFFICULTY_O02 = 1 or Q42_DIFFICULTY_O03 = 1 or Q42_DIFFICULTY_O04 = 1 or Q42_DIFFICULTY_O05 = 1 or Q42_DIFFICULTY_O06 = 1 or Q42_DIFFICULTY_O08 = 1) then
+    errmsg("Q42_DIFFICULTY: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q46_BENEFITS_O06
@@ -1245,6 +1781,10 @@ postproc
     errmsg("Select at least one option for Q46_BENEFITS before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q46_BENEFITS_O04 = 1 or Q46_BENEFITS_O05 = 1) and (Q46_BENEFITS_O01 = 1 or Q46_BENEFITS_O02 = 1 or Q46_BENEFITS_O03 = 1 or Q46_BENEFITS_O06 = 1) then
+    errmsg("Q46_BENEFITS: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q50_DIFFICULTY_PAYING_O07
 postproc
@@ -1252,12 +1792,20 @@ postproc
     errmsg("Select at least one option for Q50_DIFFICULTY_PAYING before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q50_DIFFICULTY_PAYING_O06 = 1) and (Q50_DIFFICULTY_PAYING_O01 = 1 or Q50_DIFFICULTY_PAYING_O02 = 1 or Q50_DIFFICULTY_PAYING_O03 = 1 or Q50_DIFFICULTY_PAYING_O04 = 1 or Q50_DIFFICULTY_PAYING_O05 = 1 or Q50_DIFFICULTY_PAYING_O07 = 1) then
+    errmsg("Q50_DIFFICULTY_PAYING: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q52_PLANS_O07
 postproc
   if not (Q52_PLANS_O01 = 1 or Q52_PLANS_O02 = 1 or Q52_PLANS_O03 = 1 or Q52_PLANS_O04 = 1 or Q52_PLANS_O05 = 1 or Q52_PLANS_O06 = 1 or Q52_PLANS_O07 = 1) then
     errmsg("Select at least one option for Q52_PLANS before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q52_PLANS_O06 = 1) and (Q52_PLANS_O01 = 1 or Q52_PLANS_O02 = 1 or Q52_PLANS_O03 = 1 or Q52_PLANS_O04 = 1 or Q52_PLANS_O05 = 1 or Q52_PLANS_O07 = 1) then
+    errmsg("Q52_PLANS: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q59_SCHED_COMM_O05
@@ -1279,6 +1827,10 @@ postproc
   if not (Q65_WHY_NO_USUAL_O01 = 1 or Q65_WHY_NO_USUAL_O02 = 1 or Q65_WHY_NO_USUAL_O03 = 1 or Q65_WHY_NO_USUAL_O04 = 1 or Q65_WHY_NO_USUAL_O05 = 1 or Q65_WHY_NO_USUAL_O06 = 1 or Q65_WHY_NO_USUAL_O07 = 1) then
     errmsg("Select at least one option for Q65_WHY_NO_USUAL before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q65_WHY_NO_USUAL_O06 = 1) and (Q65_WHY_NO_USUAL_O01 = 1 or Q65_WHY_NO_USUAL_O02 = 1 or Q65_WHY_NO_USUAL_O03 = 1 or Q65_WHY_NO_USUAL_O04 = 1 or Q65_WHY_NO_USUAL_O05 = 1 or Q65_WHY_NO_USUAL_O07 = 1) then
+    errmsg("Q65_WHY_NO_USUAL: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q67_WHY_THIS_FACILITY_O08
@@ -1308,6 +1860,10 @@ postproc
     errmsg("Select at least one option for Q75_KON_SOURCE before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q75_KON_SOURCE_O07 = 1) and (Q75_KON_SOURCE_O01 = 1 or Q75_KON_SOURCE_O02 = 1 or Q75_KON_SOURCE_O03 = 1 or Q75_KON_SOURCE_O04 = 1 or Q75_KON_SOURCE_O05 = 1 or Q75_KON_SOURCE_O06 = 1 or Q75_KON_SOURCE_O08 = 1) then
+    errmsg("Q75_KON_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q76_KON_UNDERSTAND_O07
 postproc
@@ -1315,12 +1871,20 @@ postproc
     errmsg("Select at least one option for Q76_KON_UNDERSTAND before continuing.");
     reenter;
   endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q76_KON_UNDERSTAND_O05 = 1 or Q76_KON_UNDERSTAND_O06 = 1) and (Q76_KON_UNDERSTAND_O01 = 1 or Q76_KON_UNDERSTAND_O02 = 1 or Q76_KON_UNDERSTAND_O03 = 1 or Q76_KON_UNDERSTAND_O04 = 1 or Q76_KON_UNDERSTAND_O07 = 1) then
+    errmsg("Q76_KON_UNDERSTAND: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
+  endif;
 
 PROC Q82_KON_WHY_NOT_REG_O11
 postproc
   if not (Q82_KON_WHY_NOT_REG_O01 = 1 or Q82_KON_WHY_NOT_REG_O02 = 1 or Q82_KON_WHY_NOT_REG_O03 = 1 or Q82_KON_WHY_NOT_REG_O04 = 1 or Q82_KON_WHY_NOT_REG_O05 = 1 or Q82_KON_WHY_NOT_REG_O06 = 1 or Q82_KON_WHY_NOT_REG_O07 = 1 or Q82_KON_WHY_NOT_REG_O08 = 1 or Q82_KON_WHY_NOT_REG_O09 = 1 or Q82_KON_WHY_NOT_REG_O10 = 1 or Q82_KON_WHY_NOT_REG_O11 = 1) then
     errmsg("Select at least one option for Q82_KON_WHY_NOT_REG before continuing.");
     reenter;
+  endif;
+  { exclusivity (soft warning): an exclusive option should be the only answer }
+  if (Q82_KON_WHY_NOT_REG_O10 = 1) and (Q82_KON_WHY_NOT_REG_O01 = 1 or Q82_KON_WHY_NOT_REG_O02 = 1 or Q82_KON_WHY_NOT_REG_O03 = 1 or Q82_KON_WHY_NOT_REG_O04 = 1 or Q82_KON_WHY_NOT_REG_O05 = 1 or Q82_KON_WHY_NOT_REG_O06 = 1 or Q82_KON_WHY_NOT_REG_O07 = 1 or Q82_KON_WHY_NOT_REG_O08 = 1 or Q82_KON_WHY_NOT_REG_O09 = 1 or Q82_KON_WHY_NOT_REG_O11 = 1) then
+    errmsg("Q82_KON_WHY_NOT_REG: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q85_CONDITIONS_O20
@@ -1354,721 +1918,721 @@ postproc
 { ---- Payment-matrix amount-required (auto-derived from dcf) ---- }
 PROC Q107_PAY_01_AMT
 postproc
-  if Q107_PAY_01 = 1 and Q107_PAY_01_AMT = 0 then
+  if Q107_PAY_01 = 1 and (Q107_PAY_01_AMT = 0 or Q107_PAY_01_AMT = notappl) then
     errmsg("'Q107_PAY_01' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q107_PAY_02_AMT
 postproc
-  if Q107_PAY_02 = 1 and Q107_PAY_02_AMT = 0 then
+  if Q107_PAY_02 = 1 and (Q107_PAY_02_AMT = 0 or Q107_PAY_02_AMT = notappl) then
     errmsg("'Q107_PAY_02' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q107_PAY_03_AMT
 postproc
-  if Q107_PAY_03 = 1 and Q107_PAY_03_AMT = 0 then
+  if Q107_PAY_03 = 1 and (Q107_PAY_03_AMT = 0 or Q107_PAY_03_AMT = notappl) then
     errmsg("'Q107_PAY_03' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q107_PAY_04_AMT
 postproc
-  if Q107_PAY_04 = 1 and Q107_PAY_04_AMT = 0 then
+  if Q107_PAY_04 = 1 and (Q107_PAY_04_AMT = 0 or Q107_PAY_04_AMT = notappl) then
     errmsg("'Q107_PAY_04' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q107_PAY_05_AMT
 postproc
-  if Q107_PAY_05 = 1 and Q107_PAY_05_AMT = 0 then
+  if Q107_PAY_05 = 1 and (Q107_PAY_05_AMT = 0 or Q107_PAY_05_AMT = notappl) then
     errmsg("'Q107_PAY_05' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q107_PAY_06_AMT
 postproc
-  if Q107_PAY_06 = 1 and Q107_PAY_06_AMT = 0 then
+  if Q107_PAY_06 = 1 and (Q107_PAY_06_AMT = 0 or Q107_PAY_06_AMT = notappl) then
     errmsg("'Q107_PAY_06' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q107_PAY_07_AMT
 postproc
-  if Q107_PAY_07 = 1 and Q107_PAY_07_AMT = 0 then
+  if Q107_PAY_07 = 1 and (Q107_PAY_07_AMT = 0 or Q107_PAY_07_AMT = notappl) then
     errmsg("'Q107_PAY_07' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q107_PAY_08_AMT
 postproc
-  if Q107_PAY_08 = 1 and Q107_PAY_08_AMT = 0 then
+  if Q107_PAY_08 = 1 and (Q107_PAY_08_AMT = 0 or Q107_PAY_08_AMT = notappl) then
     errmsg("'Q107_PAY_08' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q107_PAY_09_AMT
 postproc
-  if Q107_PAY_09 = 1 and Q107_PAY_09_AMT = 0 then
+  if Q107_PAY_09 = 1 and (Q107_PAY_09_AMT = 0 or Q107_PAY_09_AMT = notappl) then
     errmsg("'Q107_PAY_09' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q107_PAY_10_AMT
 postproc
-  if Q107_PAY_10 = 1 and Q107_PAY_10_AMT = 0 then
+  if Q107_PAY_10 = 1 and (Q107_PAY_10_AMT = 0 or Q107_PAY_10_AMT = notappl) then
     errmsg("'Q107_PAY_10' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q109_PAY_01_AMT
 postproc
-  if Q109_PAY_01 = 1 and Q109_PAY_01_AMT = 0 then
+  if Q109_PAY_01 = 1 and (Q109_PAY_01_AMT = 0 or Q109_PAY_01_AMT = notappl) then
     errmsg("'Q109_PAY_01' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q109_PAY_02_AMT
 postproc
-  if Q109_PAY_02 = 1 and Q109_PAY_02_AMT = 0 then
+  if Q109_PAY_02 = 1 and (Q109_PAY_02_AMT = 0 or Q109_PAY_02_AMT = notappl) then
     errmsg("'Q109_PAY_02' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q109_PAY_03_AMT
 postproc
-  if Q109_PAY_03 = 1 and Q109_PAY_03_AMT = 0 then
+  if Q109_PAY_03 = 1 and (Q109_PAY_03_AMT = 0 or Q109_PAY_03_AMT = notappl) then
     errmsg("'Q109_PAY_03' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q109_PAY_04_AMT
 postproc
-  if Q109_PAY_04 = 1 and Q109_PAY_04_AMT = 0 then
+  if Q109_PAY_04 = 1 and (Q109_PAY_04_AMT = 0 or Q109_PAY_04_AMT = notappl) then
     errmsg("'Q109_PAY_04' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q109_PAY_05_AMT
 postproc
-  if Q109_PAY_05 = 1 and Q109_PAY_05_AMT = 0 then
+  if Q109_PAY_05 = 1 and (Q109_PAY_05_AMT = 0 or Q109_PAY_05_AMT = notappl) then
     errmsg("'Q109_PAY_05' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q109_PAY_06_AMT
 postproc
-  if Q109_PAY_06 = 1 and Q109_PAY_06_AMT = 0 then
+  if Q109_PAY_06 = 1 and (Q109_PAY_06_AMT = 0 or Q109_PAY_06_AMT = notappl) then
     errmsg("'Q109_PAY_06' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q109_PAY_07_AMT
 postproc
-  if Q109_PAY_07 = 1 and Q109_PAY_07_AMT = 0 then
+  if Q109_PAY_07 = 1 and (Q109_PAY_07_AMT = 0 or Q109_PAY_07_AMT = notappl) then
     errmsg("'Q109_PAY_07' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q109_PAY_08_AMT
 postproc
-  if Q109_PAY_08 = 1 and Q109_PAY_08_AMT = 0 then
+  if Q109_PAY_08 = 1 and (Q109_PAY_08_AMT = 0 or Q109_PAY_08_AMT = notappl) then
     errmsg("'Q109_PAY_08' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q109_PAY_09_AMT
 postproc
-  if Q109_PAY_09 = 1 and Q109_PAY_09_AMT = 0 then
+  if Q109_PAY_09 = 1 and (Q109_PAY_09_AMT = 0 or Q109_PAY_09_AMT = notappl) then
     errmsg("'Q109_PAY_09' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q112_PAY_01_AMT
 postproc
-  if Q112_PAY_01 = 1 and Q112_PAY_01_AMT = 0 then
+  if Q112_PAY_01 = 1 and (Q112_PAY_01_AMT = 0 or Q112_PAY_01_AMT = notappl) then
     errmsg("'Q112_PAY_01' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q112_PAY_02_AMT
 postproc
-  if Q112_PAY_02 = 1 and Q112_PAY_02_AMT = 0 then
+  if Q112_PAY_02 = 1 and (Q112_PAY_02_AMT = 0 or Q112_PAY_02_AMT = notappl) then
     errmsg("'Q112_PAY_02' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q112_PAY_03_AMT
 postproc
-  if Q112_PAY_03 = 1 and Q112_PAY_03_AMT = 0 then
+  if Q112_PAY_03 = 1 and (Q112_PAY_03_AMT = 0 or Q112_PAY_03_AMT = notappl) then
     errmsg("'Q112_PAY_03' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q112_PAY_04_AMT
 postproc
-  if Q112_PAY_04 = 1 and Q112_PAY_04_AMT = 0 then
+  if Q112_PAY_04 = 1 and (Q112_PAY_04_AMT = 0 or Q112_PAY_04_AMT = notappl) then
     errmsg("'Q112_PAY_04' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q112_PAY_05_AMT
 postproc
-  if Q112_PAY_05 = 1 and Q112_PAY_05_AMT = 0 then
+  if Q112_PAY_05 = 1 and (Q112_PAY_05_AMT = 0 or Q112_PAY_05_AMT = notappl) then
     errmsg("'Q112_PAY_05' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q112_PAY_06_AMT
 postproc
-  if Q112_PAY_06 = 1 and Q112_PAY_06_AMT = 0 then
+  if Q112_PAY_06 = 1 and (Q112_PAY_06_AMT = 0 or Q112_PAY_06_AMT = notappl) then
     errmsg("'Q112_PAY_06' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q112_PAY_07_AMT
 postproc
-  if Q112_PAY_07 = 1 and Q112_PAY_07_AMT = 0 then
+  if Q112_PAY_07 = 1 and (Q112_PAY_07_AMT = 0 or Q112_PAY_07_AMT = notappl) then
     errmsg("'Q112_PAY_07' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q112_PAY_08_AMT
 postproc
-  if Q112_PAY_08 = 1 and Q112_PAY_08_AMT = 0 then
+  if Q112_PAY_08 = 1 and (Q112_PAY_08_AMT = 0 or Q112_PAY_08_AMT = notappl) then
     errmsg("'Q112_PAY_08' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q112_PAY_09_AMT
 postproc
-  if Q112_PAY_09 = 1 and Q112_PAY_09_AMT = 0 then
+  if Q112_PAY_09 = 1 and (Q112_PAY_09_AMT = 0 or Q112_PAY_09_AMT = notappl) then
     errmsg("'Q112_PAY_09' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_01_AMT
 postproc
-  if Q113_PAY_01 = 1 and Q113_PAY_01_AMT = 0 then
+  if Q113_PAY_01 = 1 and (Q113_PAY_01_AMT = 0 or Q113_PAY_01_AMT = notappl) then
     errmsg("'Q113_PAY_01' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_02_AMT
 postproc
-  if Q113_PAY_02 = 1 and Q113_PAY_02_AMT = 0 then
+  if Q113_PAY_02 = 1 and (Q113_PAY_02_AMT = 0 or Q113_PAY_02_AMT = notappl) then
     errmsg("'Q113_PAY_02' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_03_AMT
 postproc
-  if Q113_PAY_03 = 1 and Q113_PAY_03_AMT = 0 then
+  if Q113_PAY_03 = 1 and (Q113_PAY_03_AMT = 0 or Q113_PAY_03_AMT = notappl) then
     errmsg("'Q113_PAY_03' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_04_AMT
 postproc
-  if Q113_PAY_04 = 1 and Q113_PAY_04_AMT = 0 then
+  if Q113_PAY_04 = 1 and (Q113_PAY_04_AMT = 0 or Q113_PAY_04_AMT = notappl) then
     errmsg("'Q113_PAY_04' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_05_AMT
 postproc
-  if Q113_PAY_05 = 1 and Q113_PAY_05_AMT = 0 then
+  if Q113_PAY_05 = 1 and (Q113_PAY_05_AMT = 0 or Q113_PAY_05_AMT = notappl) then
     errmsg("'Q113_PAY_05' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_06_AMT
 postproc
-  if Q113_PAY_06 = 1 and Q113_PAY_06_AMT = 0 then
+  if Q113_PAY_06 = 1 and (Q113_PAY_06_AMT = 0 or Q113_PAY_06_AMT = notappl) then
     errmsg("'Q113_PAY_06' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_07_AMT
 postproc
-  if Q113_PAY_07 = 1 and Q113_PAY_07_AMT = 0 then
+  if Q113_PAY_07 = 1 and (Q113_PAY_07_AMT = 0 or Q113_PAY_07_AMT = notappl) then
     errmsg("'Q113_PAY_07' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_08_AMT
 postproc
-  if Q113_PAY_08 = 1 and Q113_PAY_08_AMT = 0 then
+  if Q113_PAY_08 = 1 and (Q113_PAY_08_AMT = 0 or Q113_PAY_08_AMT = notappl) then
     errmsg("'Q113_PAY_08' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_09_AMT
 postproc
-  if Q113_PAY_09 = 1 and Q113_PAY_09_AMT = 0 then
+  if Q113_PAY_09 = 1 and (Q113_PAY_09_AMT = 0 or Q113_PAY_09_AMT = notappl) then
     errmsg("'Q113_PAY_09' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_10_AMT
 postproc
-  if Q113_PAY_10 = 1 and Q113_PAY_10_AMT = 0 then
+  if Q113_PAY_10 = 1 and (Q113_PAY_10_AMT = 0 or Q113_PAY_10_AMT = notappl) then
     errmsg("'Q113_PAY_10' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_11_AMT
 postproc
-  if Q113_PAY_11 = 1 and Q113_PAY_11_AMT = 0 then
+  if Q113_PAY_11 = 1 and (Q113_PAY_11_AMT = 0 or Q113_PAY_11_AMT = notappl) then
     errmsg("'Q113_PAY_11' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_12_AMT
 postproc
-  if Q113_PAY_12 = 1 and Q113_PAY_12_AMT = 0 then
+  if Q113_PAY_12 = 1 and (Q113_PAY_12_AMT = 0 or Q113_PAY_12_AMT = notappl) then
     errmsg("'Q113_PAY_12' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q113_PAY_13_AMT
 postproc
-  if Q113_PAY_13 = 1 and Q113_PAY_13_AMT = 0 then
+  if Q113_PAY_13 = 1 and (Q113_PAY_13_AMT = 0 or Q113_PAY_13_AMT = notappl) then
     errmsg("'Q113_PAY_13' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1141_1_AMT
 postproc
-  if Q1141_1 = 1 and Q1141_1_AMT = 0 then
+  if Q1141_1 = 1 and (Q1141_1_AMT = 0 or Q1141_1_AMT = notappl) then
     errmsg("'Q1141_1' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1141_2_AMT
 postproc
-  if Q1141_2 = 1 and Q1141_2_AMT = 0 then
+  if Q1141_2 = 1 and (Q1141_2_AMT = 0 or Q1141_2_AMT = notappl) then
     errmsg("'Q1141_2' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1141_3_AMT
 postproc
-  if Q1141_3 = 1 and Q1141_3_AMT = 0 then
+  if Q1141_3 = 1 and (Q1141_3_AMT = 0 or Q1141_3_AMT = notappl) then
     errmsg("'Q1141_3' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1141_4_AMT
 postproc
-  if Q1141_4 = 1 and Q1141_4_AMT = 0 then
+  if Q1141_4 = 1 and (Q1141_4_AMT = 0 or Q1141_4_AMT = notappl) then
     errmsg("'Q1141_4' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1141_5_AMT
 postproc
-  if Q1141_5 = 1 and Q1141_5_AMT = 0 then
+  if Q1141_5 = 1 and (Q1141_5_AMT = 0 or Q1141_5_AMT = notappl) then
     errmsg("'Q1141_5' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1141_6_AMT
 postproc
-  if Q1141_6 = 1 and Q1141_6_AMT = 0 then
+  if Q1141_6 = 1 and (Q1141_6_AMT = 0 or Q1141_6_AMT = notappl) then
     errmsg("'Q1141_6' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1142_1_AMT
 postproc
-  if Q1142_1 = 1 and Q1142_1_AMT = 0 then
+  if Q1142_1 = 1 and (Q1142_1_AMT = 0 or Q1142_1_AMT = notappl) then
     errmsg("'Q1142_1' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1142_2_AMT
 postproc
-  if Q1142_2 = 1 and Q1142_2_AMT = 0 then
+  if Q1142_2 = 1 and (Q1142_2_AMT = 0 or Q1142_2_AMT = notappl) then
     errmsg("'Q1142_2' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1142_3_AMT
 postproc
-  if Q1142_3 = 1 and Q1142_3_AMT = 0 then
+  if Q1142_3 = 1 and (Q1142_3_AMT = 0 or Q1142_3_AMT = notappl) then
     errmsg("'Q1142_3' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1142_4_AMT
 postproc
-  if Q1142_4 = 1 and Q1142_4_AMT = 0 then
+  if Q1142_4 = 1 and (Q1142_4_AMT = 0 or Q1142_4_AMT = notappl) then
     errmsg("'Q1142_4' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1142_5_AMT
 postproc
-  if Q1142_5 = 1 and Q1142_5_AMT = 0 then
+  if Q1142_5 = 1 and (Q1142_5_AMT = 0 or Q1142_5_AMT = notappl) then
     errmsg("'Q1142_5' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1142_6_AMT
 postproc
-  if Q1142_6 = 1 and Q1142_6_AMT = 0 then
+  if Q1142_6 = 1 and (Q1142_6_AMT = 0 or Q1142_6_AMT = notappl) then
     errmsg("'Q1142_6' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q1142_7_AMT
 postproc
-  if Q1142_7 = 1 and Q1142_7_AMT = 0 then
+  if Q1142_7 = 1 and (Q1142_7_AMT = 0 or Q1142_7_AMT = notappl) then
     errmsg("'Q1142_7' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q92_PAY_01_AMT
 postproc
-  if Q92_PAY_01 = 1 and Q92_PAY_01_AMT = 0 then
+  if Q92_PAY_01 = 1 and (Q92_PAY_01_AMT = 0 or Q92_PAY_01_AMT = notappl) then
     errmsg("'Q92_PAY_01' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q92_PAY_02_AMT
 postproc
-  if Q92_PAY_02 = 1 and Q92_PAY_02_AMT = 0 then
+  if Q92_PAY_02 = 1 and (Q92_PAY_02_AMT = 0 or Q92_PAY_02_AMT = notappl) then
     errmsg("'Q92_PAY_02' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q92_PAY_03_AMT
 postproc
-  if Q92_PAY_03 = 1 and Q92_PAY_03_AMT = 0 then
+  if Q92_PAY_03 = 1 and (Q92_PAY_03_AMT = 0 or Q92_PAY_03_AMT = notappl) then
     errmsg("'Q92_PAY_03' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q92_PAY_04_AMT
 postproc
-  if Q92_PAY_04 = 1 and Q92_PAY_04_AMT = 0 then
+  if Q92_PAY_04 = 1 and (Q92_PAY_04_AMT = 0 or Q92_PAY_04_AMT = notappl) then
     errmsg("'Q92_PAY_04' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q92_PAY_05_AMT
 postproc
-  if Q92_PAY_05 = 1 and Q92_PAY_05_AMT = 0 then
+  if Q92_PAY_05 = 1 and (Q92_PAY_05_AMT = 0 or Q92_PAY_05_AMT = notappl) then
     errmsg("'Q92_PAY_05' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q92_PAY_06_AMT
 postproc
-  if Q92_PAY_06 = 1 and Q92_PAY_06_AMT = 0 then
+  if Q92_PAY_06 = 1 and (Q92_PAY_06_AMT = 0 or Q92_PAY_06_AMT = notappl) then
     errmsg("'Q92_PAY_06' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q92_PAY_07_AMT
 postproc
-  if Q92_PAY_07 = 1 and Q92_PAY_07_AMT = 0 then
+  if Q92_PAY_07 = 1 and (Q92_PAY_07_AMT = 0 or Q92_PAY_07_AMT = notappl) then
     errmsg("'Q92_PAY_07' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q92_PAY_08_AMT
 postproc
-  if Q92_PAY_08 = 1 and Q92_PAY_08_AMT = 0 then
+  if Q92_PAY_08 = 1 and (Q92_PAY_08_AMT = 0 or Q92_PAY_08_AMT = notappl) then
     errmsg("'Q92_PAY_08' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q94_PAY_01_AMT
 postproc
-  if Q94_PAY_01 = 1 and Q94_PAY_01_AMT = 0 then
+  if Q94_PAY_01 = 1 and (Q94_PAY_01_AMT = 0 or Q94_PAY_01_AMT = notappl) then
     errmsg("'Q94_PAY_01' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q94_PAY_02_AMT
 postproc
-  if Q94_PAY_02 = 1 and Q94_PAY_02_AMT = 0 then
+  if Q94_PAY_02 = 1 and (Q94_PAY_02_AMT = 0 or Q94_PAY_02_AMT = notappl) then
     errmsg("'Q94_PAY_02' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q94_PAY_03_AMT
 postproc
-  if Q94_PAY_03 = 1 and Q94_PAY_03_AMT = 0 then
+  if Q94_PAY_03 = 1 and (Q94_PAY_03_AMT = 0 or Q94_PAY_03_AMT = notappl) then
     errmsg("'Q94_PAY_03' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q94_PAY_04_AMT
 postproc
-  if Q94_PAY_04 = 1 and Q94_PAY_04_AMT = 0 then
+  if Q94_PAY_04 = 1 and (Q94_PAY_04_AMT = 0 or Q94_PAY_04_AMT = notappl) then
     errmsg("'Q94_PAY_04' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q94_PAY_05_AMT
 postproc
-  if Q94_PAY_05 = 1 and Q94_PAY_05_AMT = 0 then
+  if Q94_PAY_05 = 1 and (Q94_PAY_05_AMT = 0 or Q94_PAY_05_AMT = notappl) then
     errmsg("'Q94_PAY_05' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q94_PAY_06_AMT
 postproc
-  if Q94_PAY_06 = 1 and Q94_PAY_06_AMT = 0 then
+  if Q94_PAY_06 = 1 and (Q94_PAY_06_AMT = 0 or Q94_PAY_06_AMT = notappl) then
     errmsg("'Q94_PAY_06' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q94_PAY_07_AMT
 postproc
-  if Q94_PAY_07 = 1 and Q94_PAY_07_AMT = 0 then
+  if Q94_PAY_07 = 1 and (Q94_PAY_07_AMT = 0 or Q94_PAY_07_AMT = notappl) then
     errmsg("'Q94_PAY_07' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q94_PAY_08_AMT
 postproc
-  if Q94_PAY_08 = 1 and Q94_PAY_08_AMT = 0 then
+  if Q94_PAY_08 = 1 and (Q94_PAY_08_AMT = 0 or Q94_PAY_08_AMT = notappl) then
     errmsg("'Q94_PAY_08' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q96_PAY_01_AMT
 postproc
-  if Q96_PAY_01 = 1 and Q96_PAY_01_AMT = 0 then
+  if Q96_PAY_01 = 1 and (Q96_PAY_01_AMT = 0 or Q96_PAY_01_AMT = notappl) then
     errmsg("'Q96_PAY_01' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q96_PAY_02_AMT
 postproc
-  if Q96_PAY_02 = 1 and Q96_PAY_02_AMT = 0 then
+  if Q96_PAY_02 = 1 and (Q96_PAY_02_AMT = 0 or Q96_PAY_02_AMT = notappl) then
     errmsg("'Q96_PAY_02' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q96_PAY_03_AMT
 postproc
-  if Q96_PAY_03 = 1 and Q96_PAY_03_AMT = 0 then
+  if Q96_PAY_03 = 1 and (Q96_PAY_03_AMT = 0 or Q96_PAY_03_AMT = notappl) then
     errmsg("'Q96_PAY_03' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q96_PAY_04_AMT
 postproc
-  if Q96_PAY_04 = 1 and Q96_PAY_04_AMT = 0 then
+  if Q96_PAY_04 = 1 and (Q96_PAY_04_AMT = 0 or Q96_PAY_04_AMT = notappl) then
     errmsg("'Q96_PAY_04' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q96_PAY_05_AMT
 postproc
-  if Q96_PAY_05 = 1 and Q96_PAY_05_AMT = 0 then
+  if Q96_PAY_05 = 1 and (Q96_PAY_05_AMT = 0 or Q96_PAY_05_AMT = notappl) then
     errmsg("'Q96_PAY_05' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q96_PAY_06_AMT
 postproc
-  if Q96_PAY_06 = 1 and Q96_PAY_06_AMT = 0 then
+  if Q96_PAY_06 = 1 and (Q96_PAY_06_AMT = 0 or Q96_PAY_06_AMT = notappl) then
     errmsg("'Q96_PAY_06' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q96_PAY_07_AMT
 postproc
-  if Q96_PAY_07 = 1 and Q96_PAY_07_AMT = 0 then
+  if Q96_PAY_07 = 1 and (Q96_PAY_07_AMT = 0 or Q96_PAY_07_AMT = notappl) then
     errmsg("'Q96_PAY_07' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q96_PAY_08_AMT
 postproc
-  if Q96_PAY_08 = 1 and Q96_PAY_08_AMT = 0 then
+  if Q96_PAY_08 = 1 and (Q96_PAY_08_AMT = 0 or Q96_PAY_08_AMT = notappl) then
     errmsg("'Q96_PAY_08' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q971_1_AMT
 postproc
-  if Q971_1 = 1 and Q971_1_AMT = 0 then
+  if Q971_1 = 1 and (Q971_1_AMT = 0 or Q971_1_AMT = notappl) then
     errmsg("'Q971_1' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q971_2_AMT
 postproc
-  if Q971_2 = 1 and Q971_2_AMT = 0 then
+  if Q971_2 = 1 and (Q971_2_AMT = 0 or Q971_2_AMT = notappl) then
     errmsg("'Q971_2' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q971_3_AMT
 postproc
-  if Q971_3 = 1 and Q971_3_AMT = 0 then
+  if Q971_3 = 1 and (Q971_3_AMT = 0 or Q971_3_AMT = notappl) then
     errmsg("'Q971_3' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q971_4_AMT
 postproc
-  if Q971_4 = 1 and Q971_4_AMT = 0 then
+  if Q971_4 = 1 and (Q971_4_AMT = 0 or Q971_4_AMT = notappl) then
     errmsg("'Q971_4' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q972_1_AMT
 postproc
-  if Q972_1 = 1 and Q972_1_AMT = 0 then
+  if Q972_1 = 1 and (Q972_1_AMT = 0 or Q972_1_AMT = notappl) then
     errmsg("'Q972_1' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q972_2_AMT
 postproc
-  if Q972_2 = 1 and Q972_2_AMT = 0 then
+  if Q972_2 = 1 and (Q972_2_AMT = 0 or Q972_2_AMT = notappl) then
     errmsg("'Q972_2' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q972_3_AMT
 postproc
-  if Q972_3 = 1 and Q972_3_AMT = 0 then
+  if Q972_3 = 1 and (Q972_3_AMT = 0 or Q972_3_AMT = notappl) then
     errmsg("'Q972_3' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q972_4_AMT
 postproc
-  if Q972_4 = 1 and Q972_4_AMT = 0 then
+  if Q972_4 = 1 and (Q972_4_AMT = 0 or Q972_4_AMT = notappl) then
     errmsg("'Q972_4' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q972_5_AMT
 postproc
-  if Q972_5 = 1 and Q972_5_AMT = 0 then
+  if Q972_5 = 1 and (Q972_5_AMT = 0 or Q972_5_AMT = notappl) then
     errmsg("'Q972_5' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q972_6_AMT
 postproc
-  if Q972_6 = 1 and Q972_6_AMT = 0 then
+  if Q972_6 = 1 and (Q972_6_AMT = 0 or Q972_6_AMT = notappl) then
     errmsg("'Q972_6' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_01_AMT
 postproc
-  if Q98_PAY_01 = 1 and Q98_PAY_01_AMT = 0 then
+  if Q98_PAY_01 = 1 and (Q98_PAY_01_AMT = 0 or Q98_PAY_01_AMT = notappl) then
     errmsg("'Q98_PAY_01' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_02_AMT
 postproc
-  if Q98_PAY_02 = 1 and Q98_PAY_02_AMT = 0 then
+  if Q98_PAY_02 = 1 and (Q98_PAY_02_AMT = 0 or Q98_PAY_02_AMT = notappl) then
     errmsg("'Q98_PAY_02' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_03_AMT
 postproc
-  if Q98_PAY_03 = 1 and Q98_PAY_03_AMT = 0 then
+  if Q98_PAY_03 = 1 and (Q98_PAY_03_AMT = 0 or Q98_PAY_03_AMT = notappl) then
     errmsg("'Q98_PAY_03' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_04_AMT
 postproc
-  if Q98_PAY_04 = 1 and Q98_PAY_04_AMT = 0 then
+  if Q98_PAY_04 = 1 and (Q98_PAY_04_AMT = 0 or Q98_PAY_04_AMT = notappl) then
     errmsg("'Q98_PAY_04' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_05_AMT
 postproc
-  if Q98_PAY_05 = 1 and Q98_PAY_05_AMT = 0 then
+  if Q98_PAY_05 = 1 and (Q98_PAY_05_AMT = 0 or Q98_PAY_05_AMT = notappl) then
     errmsg("'Q98_PAY_05' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_06_AMT
 postproc
-  if Q98_PAY_06 = 1 and Q98_PAY_06_AMT = 0 then
+  if Q98_PAY_06 = 1 and (Q98_PAY_06_AMT = 0 or Q98_PAY_06_AMT = notappl) then
     errmsg("'Q98_PAY_06' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_07_AMT
 postproc
-  if Q98_PAY_07 = 1 and Q98_PAY_07_AMT = 0 then
+  if Q98_PAY_07 = 1 and (Q98_PAY_07_AMT = 0 or Q98_PAY_07_AMT = notappl) then
     errmsg("'Q98_PAY_07' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_08_AMT
 postproc
-  if Q98_PAY_08 = 1 and Q98_PAY_08_AMT = 0 then
+  if Q98_PAY_08 = 1 and (Q98_PAY_08_AMT = 0 or Q98_PAY_08_AMT = notappl) then
     errmsg("'Q98_PAY_08' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_09_AMT
 postproc
-  if Q98_PAY_09 = 1 and Q98_PAY_09_AMT = 0 then
+  if Q98_PAY_09 = 1 and (Q98_PAY_09_AMT = 0 or Q98_PAY_09_AMT = notappl) then
     errmsg("'Q98_PAY_09' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_10_AMT
 postproc
-  if Q98_PAY_10 = 1 and Q98_PAY_10_AMT = 0 then
+  if Q98_PAY_10 = 1 and (Q98_PAY_10_AMT = 0 or Q98_PAY_10_AMT = notappl) then
     errmsg("'Q98_PAY_10' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_11_AMT
 postproc
-  if Q98_PAY_11 = 1 and Q98_PAY_11_AMT = 0 then
+  if Q98_PAY_11 = 1 and (Q98_PAY_11_AMT = 0 or Q98_PAY_11_AMT = notappl) then
     errmsg("'Q98_PAY_11' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_12_AMT
 postproc
-  if Q98_PAY_12 = 1 and Q98_PAY_12_AMT = 0 then
+  if Q98_PAY_12 = 1 and (Q98_PAY_12_AMT = 0 or Q98_PAY_12_AMT = notappl) then
     errmsg("'Q98_PAY_12' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_13_AMT
 postproc
-  if Q98_PAY_13 = 1 and Q98_PAY_13_AMT = 0 then
+  if Q98_PAY_13 = 1 and (Q98_PAY_13_AMT = 0 or Q98_PAY_13_AMT = notappl) then
     errmsg("'Q98_PAY_13' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_14_AMT
 postproc
-  if Q98_PAY_14 = 1 and Q98_PAY_14_AMT = 0 then
+  if Q98_PAY_14 = 1 and (Q98_PAY_14_AMT = 0 or Q98_PAY_14_AMT = notappl) then
     errmsg("'Q98_PAY_14' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;
 
 PROC Q98_PAY_15_AMT
 postproc
-  if Q98_PAY_15 = 1 and Q98_PAY_15_AMT = 0 then
+  if Q98_PAY_15 = 1 and (Q98_PAY_15_AMT = 0 or Q98_PAY_15_AMT = notappl) then
     errmsg("'Q98_PAY_15' was selected — enter its amount (must be greater than 0).");
     reenter;
   endif;

@@ -13,19 +13,19 @@
     }, 
     {
       "type": "external", 
-      "path": "../shared/psgc_region.dcf"
+      "path": "psgc_region.dcf"
     }, 
     {
       "type": "external", 
-      "path": "../shared/psgc_province.dcf"
+      "path": "psgc_province.dcf"
     }, 
     {
       "type": "external", 
-      "path": "../shared/psgc_city.dcf"
+      "path": "psgc_city.dcf"
     }, 
     {
       "type": "external", 
-      "path": "../shared/psgc_barangay.dcf"
+      "path": "psgc_barangay.dcf"
     }
   ], 
   "forms": [
@@ -55,7 +55,7 @@
   }, 
   "properties": {
     "askOperatorId": false, 
-    "autoAdvanceOnSelection": false, 
+    "autoAdvanceOnSelection": true, 
     "caseTree": "mobileOnly", 
     "centerForms": false, 
     "createListing": false, 
@@ -67,14 +67,18 @@
       "edit": "all"
     }, 
     "partialSave": {
-      "operatorEnabled": false
-    },
+      "operatorEnabled": true
+    }, 
     "showEndCaseMessage": true, 
     "showOnlyDiscreteValuesInComboBoxes": true, 
     "showFieldLabels": true, 
     "showErrorMessageNumbers": false, 
     "showQuestionText": true, 
     "showRefusals": true, 
+    "sync": {
+      "server": "https://csweb.asiansocial.org/csweb/api", 
+      "direction": "put"
+    }, 
     "verify": {
       "frequency": 1, 
       "start": 1

@@ -82,6 +82,12 @@ HEADER = """\
 
 PROC GLOBAL
 numeric currentYYYYMMDD;
+{ Single-number redesign (2026-06-11): the questionnaire number's first 7 digits
+  are a POSITIONAL slice of the 10-digit PSA PSGC - validated hierarchically
+  (region exact -> region's provinces -> each province's cities). }
+numeric regionFull;
+numeric geoFull;
+numeric geoFound;
 numeric currentYear;
 numeric currentMonth;
 
@@ -99,60 +105,143 @@ preproc
   currentYear  = int(currentYYYYMMDD / 10000);
   currentMonth = int(currentYYYYMMDD / 100) % 100;
 
-{ LANGUAGE_USED lives in the FIELD_CONTROL record, so it can't be set from the
-  form-file/level preproc ("belongs to a record at a lower level"), and a record
-  symbol can't have a PROC. Set it in the preproc of the first FIELD_CONTROL field
-  (SURVEY_CODE) — same record, runs at case start. §15.E }
-PROC SURVEY_CODE
-preproc
-  LANGUAGE_USED = getlanguage();
+{ LANGUAGE_USED is captured in the QUESTIONNAIRE_NUMBER postproc (case key, the
+  very first field) — see PROC QUESTIONNAIRE_NUMBER below. (Was on SURVEY_CODE,
+  then INTERVIEWER_ID; both removed 2026-06-12 — consolidated to the id postproc.) }
 """
 
 CONTROL_PROCS = """\
-{ ---- Informed consent: No (2) terminates the interview ---- }
-PROC CONSENT_GIVEN
+{ Informed consent: the separate CONSENT_GIVEN field was removed 2026-06-12.
+  Consent refusal is now recorded as the Result-of-Visit disposition
+  ("Withdraw Participation/Consent" = code 4); the read-aloud consent script is
+  read from the printed sheet (off the CAPI). No consent gate PROC. }
+
+{ ---- Single 12-digit Questionnaire Number (redesign 2026-06-11; mirrors F1) ----
+  Parse the number into the component codes (FIELD_CONTROL items - downstream
+  PROCs keep working), validate the 7-digit geo prefix hierarchically against
+  the PSGC dicts, fill the read-only *_NAME items, and set the full PSGC codes
+  on the off-form geo items so the BARANGAY cascade filters correctly. ---- }
+PROC QUESTIONNAIRE_NUMBER
 postproc
-  if CONSENT_GIVEN = 2 then
-    ENUM_RESULT_FINAL_VISIT = 4;   { Refused / withdrew consent (verify code) }
-    errmsg("Respondent declined consent. Interview ends; case coded Refused.");
-    endlevel;   { end the CASE on refusal (endgroup only skips this group). The case key
-                  is now captured on FORM000 before consent, so the refused case saves. }
+  LANGUAGE_USED = getlanguage();   { record interview language at case start (§15.E) }
+  REGION_CODE            = int(QUESTIONNAIRE_NUMBER / 10000000000);
+  PROVINCE_HUC_CODE      = int(QUESTIONNAIRE_NUMBER / 100000000) % 100;
+  CITY_MUNICIPALITY_CODE = int(QUESTIONNAIRE_NUMBER / 100000) % 1000;
+  FACILITY_NO            = int(QUESTIONNAIRE_NUMBER / 1000) % 100;
+  CASE_SEQ               = QUESTIONNAIRE_NUMBER % 1000;
+
+  regionFull = REGION_CODE * 100000000;
+  geoFull    = int(QUESTIONNAIRE_NUMBER / 100000) * 1000;
+  REGION     = regionFull;
+
+  geoFound = 0;
+  R_PARENT_CODE = 0;
+  if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) <> 0 then
+    do varying numeric ri = 1 until ri > count(PSGC_REGION_DICT.PSGC_REGION_REC)
+      if R_CODE(ri) = regionFull then
+        REGION_NAME = strip(R_NAME(ri));
+        geoFound = 1;
+      endif;
+    enddo;
+  endif;
+  if geoFound = 0 then
+    errmsg("Region code %02d not found in PSGC. Check the Questionnaire Number.", REGION_CODE);
+    reenter;
   endif;
 
-{ ---- PSGC cascade (household geo-ID; verify item names match the F4 dcf) ---- }
-PROC REGION
-onfocus
-  FillRegionValueSet();
-PROC PROVINCE_HUC
-onfocus
-  FillProvinceValueSet(REGION);
-PROC CITY_MUNICIPALITY
-onfocus
-  FillCityValueSet(PROVINCE_HUC);
+  geoFound = 0;
+  P_PARENT_REGION = regionFull;
+  if loadcase(PSGC_PROVINCE_DICT, P_PARENT_REGION) <> 0 then
+    do varying numeric pi = 1 until pi > count(PSGC_PROVINCE_DICT.PSGC_PROVINCE_REC) or geoFound = 1
+      if P_CODE(pi) = geoFull then
+        PROVINCE_NAME     = strip(P_NAME(pi));
+        CITY_NAME         = strip(P_NAME(pi));
+        PROVINCE_HUC      = geoFull;
+        CITY_MUNICIPALITY = geoFull;
+        geoFound = 1;
+      else
+        C_PARENT_PROVINCE = P_CODE(pi);
+        if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) <> 0 then
+          do varying numeric ci = 1 until ci > count(PSGC_CITY_DICT.PSGC_CITY_REC) or geoFound = 1
+            if C_CODE(ci) = geoFull then
+              PROVINCE_NAME     = strip(P_NAME(pi));
+              CITY_NAME         = strip(C_NAME(ci));
+              PROVINCE_HUC      = P_CODE(pi);
+              CITY_MUNICIPALITY = geoFull;
+              geoFound = 1;
+            endif;
+          enddo;
+        endif;
+      endif;
+    enddo;
+  endif;
+  if geoFound = 0 then
+    errmsg("Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.", int(QUESTIONNAIRE_NUMBER / 100000));
+    reenter;
+  endif;
+
+  protect(REGION_NAME, true);
+  protect(PROVINCE_NAME, true);
+  protect(CITY_NAME, true);
+
+{ ---- Barangay picker (household geo): region/province/city derived from the
+  Questionnaire Number (off-form); only barangay picked, filtered by the
+  derived city/province code. ---- }
 PROC BARANGAY
 onfocus
   FillBarangayValueSet(CITY_MUNICIPALITY);
 
-{ ---- GPS + verification photo (helpers in Capture-Helpers.apc).
-  F4 captures the HOUSEHOLD location: trigger CAPTURE_HH_GPS, fields
-  LATITUDE/LONGITUDE + HH_GPS_* per the dcf (not the F1 FACILITY_* names). ---- }
-PROC CAPTURE_HH_GPS
+{ ---- GPS — AUTO-FETCHED on focus (2026-06-12; no manual trigger). F4 captures
+  the HOUSEHOLD location into LATITUDE/LONGITUDE + HH_GPS_* (not the F1 FACILITY_*
+  names). Captured once (guarded on read-time), then all GPS fields protected
+  (read-only). Desktop (getos 10-19) has no GPS radio → blank there (device-only). ---- }
+PROC LATITUDE
 onfocus
-  if ReadGPSReading(120, 20) then
-    LATITUDE          = maketext("%f", gps(latitude));
-    LONGITUDE         = maketext("%f", gps(longitude));
-    HH_GPS_ALTITUDE   = maketext("%f", gps(altitude));
-    HH_GPS_ACCURACY   = gps(accuracy);
-    HH_GPS_SATELLITES = gps(satellites);
-    HH_GPS_READTIME   = maketext("%d", gps(readtime));
+  if length(strip(HH_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
+    if ReadGPSReading(120, 20) then
+      LATITUDE          = maketext("%f", gps(latitude));
+      LONGITUDE         = maketext("%f", gps(longitude));
+      HH_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+      HH_GPS_ACCURACY   = gps(accuracy);
+      HH_GPS_SATELLITES = gps(satellites);
+      HH_GPS_READTIME   = maketext("%d", gps(readtime));
+    endif;
   endif;
-  CAPTURE_HH_GPS = notappl;
+  { Protect ONLY once captured — protecting a blank numeric (no fix / desktop)
+    triggers "protected field is out of range - value is NOTAPPL". }
+  if length(strip(HH_GPS_READTIME)) > 0 then
+    protect(LATITUDE, true);
+    protect(LONGITUDE, true);
+    protect(HH_GPS_ALTITUDE, true);
+    protect(HH_GPS_ACCURACY, true);
+    protect(HH_GPS_SATELLITES, true);
+    protect(HH_GPS_READTIME, true);
+  endif;
+
+{ ---- #231 Verification photo (moved to the END of the form 2026-06-12). CONDITIONAL on
+  the visit outcome and soft-validated (warn, don't trap, on camera failure). ---- }
+PROC VERIFICATION_PHOTO_FILENAME
+preproc
+  { display-only — the camera trigger fills this; it is never typed }
+  noinput;
 
 PROC CAPTURE_VERIFICATION_PHOTO
+preproc
+  { gate: photograph only visits where an interview occurred (1 Completed,
+    3 Incomplete); skip 2 Postponed / 4 Withdraw Participation/Consent }
+  if not (ENUM_RESULT_FINAL_VISIT in 1, 3) then
+    VERIFICATION_PHOTO_FILENAME = "";   { clear any stale name if outcome was changed back }
+    noinput;
+  endif;
 onfocus
-  string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
-  if TakeVerificationPhoto(fn) then
-    VERIFICATION_PHOTO_FILENAME = fn;
+  { capture once: an empty filename means no photo yet, so (re)try the camera }
+  if length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
+    string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
+    if TakeVerificationPhoto(fn) then
+      VERIFICATION_PHOTO_FILENAME = fn;
+    else
+      errmsg("Verification photo not captured (camera cancelled or unavailable). Re-enter this field to retry, or note the reason in your field report.");
+    endif;
   endif;
   CAPTURE_VERIFICATION_PHOTO = notappl;
 """
@@ -161,6 +250,17 @@ onfocus
 # #168 roster-count = Q19 + Q47 auto-set from any member's private insurance.
 ROSTER_PROCS = """\
 { ---- Household roster loop (C_HOUSEHOLD_ROSTER, max 20) ---- }
+PROC MEMBER_LINE_NO
+preproc
+  { Auto-end the roster once the declared household size (Q19) is reached --
+    without this, entry rolls into member N+1 and the enumerator must know to
+    end the group manually. Also auto-fill the line number from the occurrence. }
+  if curocc() > Q19_HH_SIZE_TOTAL then
+    endgroup;
+  endif;
+  MEMBER_LINE_NO = curocc();
+  noinput;
+
 PROC Q34_RELATIONSHIP
 postproc
   { #167: first roster entry is normally Self/Head (soft confirm) }
@@ -170,7 +270,7 @@ postproc
 
 PROC Q35_HAS_DISABILITY
 postproc
-  if Q35_HAS_DISABILITY = 2 then
+  if Q35_HAS_DISABILITY = 0 then   { coded No=0/Yes=1 -- `= 2` was a dead condition }
     skip to Q39_CIVIL_STATUS;
   endif;
 
@@ -217,6 +317,31 @@ preproc
 """
 
 EXTRA_PROCS = """\
+{ ---- 'Other (specify)' enforcement -- Q50 roster insurance + Q194 funds (audit 2026-06-11) ---- }
+PROC Q50_PRIVATE_INS_OTHER_TXT
+preproc
+  if Q49_PRIVATE_INS <> 1 then
+    Q50_PRIVATE_INS_OTHER_TXT = "";   { skip + clear: this member has no private insurance }
+    noinput;
+  endif;
+postproc
+  if Q49_PRIVATE_INS = 1 and length(strip(Q50_PRIVATE_INS_OTHER_TXT)) = 0 then
+    errmsg("Q49 says this member has private insurance. Please specify it in Q50.");
+    reenter;
+  endif;
+
+PROC Q194_OTHER_TXT
+preproc
+  if Q194_OTHER_SOURCE <> 1 then
+    Q194_OTHER_TXT = "";   { skip + clear: 'Other' source not ticked }
+    noinput;
+  endif;
+postproc
+  if Q194_OTHER_SOURCE = 1 and length(strip(Q194_OTHER_TXT)) = 0 then
+    errmsg("'Other' was selected in Q194. Please specify.");
+    reenter;
+  endif;
+
 { ---- Section G: branded/generic multi-branch (spec 2 Q76) ---- }
 PROC Q76_BRAND_OR_GEN
 postproc
@@ -354,9 +479,11 @@ SKIP_RULES = [
     ("Q86_PREMIUM_PAY",      "Q86_PREMIUM_PAY = 2",         "Q89_HAS_USUAL_FACILITY"),
     ("Q87_PREMIUM_DIFFICULT","Q87_PREMIUM_DIFFICULT = 2",   "Q89_HAS_USUAL_FACILITY"),
     # D-F awareness gates
-    ("Q51_UHC_HEARD",        "Q51_UHC_HEARD in 2,3",        "Q54_YAKAP_HEARD"),
-    ("Q54_YAKAP_HEARD",      "Q54_YAKAP_HEARD in 2,3",      "Q57_BUCAS_HEARD"),
-    ("Q57_BUCAS_HEARD",      "Q57_BUCAS_HEARD in 2,3",      "Q62_PURCHASE_FREQ"),
+    # value sets are Yes(1)/No(2) only — no "Don't know" code 3 here (matches F3's
+    # UHC/KON/BUCAS heard gates which use "= 2"); the old "in 2,3" carried a dead 3.
+    ("Q51_UHC_HEARD",        "Q51_UHC_HEARD = 2",           "Q54_YAKAP_HEARD"),
+    ("Q54_YAKAP_HEARD",      "Q54_YAKAP_HEARD = 2",         "Q57_BUCAS_HEARD"),
+    ("Q57_BUCAS_HEARD",      "Q57_BUCAS_HEARD = 2",         "Q62_PURCHASE_FREQ"),
     ("Q60_BUCAS_ACCESSED",   "Q60_BUCAS_ACCESSED = 2",      "Q62_PURCHASE_FREQ"),
     # Section I primary-care routing
     ("Q89_HAS_USUAL_FACILITY","Q89_HAS_USUAL_FACILITY = 2", "Q93_WHY_NOT_O01"),
@@ -492,7 +619,11 @@ def uhc9_other_specify_procs(names):
             if n.endswith(suffix):
                 parent = n[: -len(suffix)]
                 procs[n] = (
-                    f"PROC {n}\npostproc\n"
+                    f"PROC {n}\npreproc\n"
+                    f"  if {parent} <> {code} then\n"
+                    f"    {n} = \"\";   {{ skip + clear: '{lbl}' not chosen }}\n"
+                    f"    noinput;\n  endif;\n"
+                    f"postproc\n"
                     f"  if {parent} = {code} and length(strip({n})) = 0 then\n"
                     f"    errmsg(\"'{lbl}' was selected for {parent}. Please specify.\");\n"
                     f"    reenter;\n  endif;"
@@ -508,7 +639,7 @@ def main():
     names = dcf_item_names()
     parts = [HEADER, "", CONTROL_PROCS, "", ROSTER_PROCS, "", BILL_VALIDATION, "",
              EXTRA_PROCS, "", VALIDATION_PROCS, ""]
-    covered = {"Q34_RELATIONSHIP", "Q35_HAS_DISABILITY", "Q37_PWD_CARD",
+    covered = {"MEMBER_LINE_NO", "Q34_RELATIONSHIP", "Q35_HAS_DISABILITY", "Q37_PWD_CARD",
                "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER_FORM", "Q47_HH_HAS_PRIVATE_INS",
                "Q141_1_NO_RECEIPT_AMT_PHP",
                "Q76_BRAND_OR_GEN", "Q78_WHY_BRANDED_O01", "Q79_REG_SOURCE",  # EXTRA_PROCS

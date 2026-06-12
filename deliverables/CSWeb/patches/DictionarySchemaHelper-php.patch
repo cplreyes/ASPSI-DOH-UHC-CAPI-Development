@@ -1,0 +1,19 @@
+--- src/AppBundle/CSPro/DictionarySchemaHelper.php.orig-8.0.1	2026-06-11 17:51:42.954300563 +0000
++++ src/AppBundle/CSPro/DictionarySchemaHelper.php	2026-06-11 17:52:10.358163863 +0000
+@@ -218,10 +218,12 @@
+             $processCasesOptions = $this->getProcessCaseOptions();
+             $schema = $dictionarySchema->generateDictionary($this->dictionary, $processCasesOptions);
+             $dictionarySQL = $schema->toSql($this->conn->getDatabasePlatform());
+-            $dictionarySQL = implode(";" . PHP_EOL, $dictionarySQL);
+-            $this->logger->debug("writing schema SQL " . $dictionarySQL);
+-
+-            $this->conn->prepare($dictionarySQL)->execute();
++            // execute statements individually: a single multi-statement prepare()
++            // only reports first-statement errors and silently skips the rest
++            foreach ($dictionarySQL as $statementSQL) {
++                $this->logger->debug("writing schema SQL " . $statementSQL);
++                $this->conn->executeStatement($statementSQL);
++            }
+ 
+             //insert into cspro_meta dictionary information
+             $dictionaryVersion = $this->dictionary->getVersion();

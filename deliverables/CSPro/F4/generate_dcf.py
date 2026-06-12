@@ -21,20 +21,22 @@ from cspro_helpers import (
     numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, record,
     build_field_control, build_geo_id, build_dictionary, build_id_block, write_dcf,
+    derived_geo_code_items, ENUM_RESULT_OPTIONS_F4,
     apply_translations,
     _photo_block,
 )
 
 
 # ============================================================
-# FIELD CONTROL — shared + HH listing ref
+# FIELD CONTROL — paper FC block only
 # ============================================================
 
 def build_f4_field_control():
-    extra = [
-        numeric("HH_LISTING_NO", "Household Listing Reference Number", length=4, zero_fill=True),
-    ]
-    return build_field_control(survey_code="F4", extra_items=extra, date_label_entity="the Household")
+    # HH_LISTING_NO removed 2026-06-12 (unnecessary input; the 12-digit
+    # Questionnaire Number already identifies the case). FC = paper block only.
+    return build_field_control(survey_code="F4", extra_items=derived_geo_code_items(),
+                               date_label_entity="the Household",
+                               result_options=ENUM_RESULT_OPTIONS_F4)
 
 
 # ============================================================
@@ -42,9 +44,9 @@ def build_f4_field_control():
 # ============================================================
 
 def build_f4_geo_id():
-    # Existing LATITUDE/LONGITUDE kept unchanged (baseline preservation).
-    # GPS metadata + capture trigger added alongside; the .app handler
-    # populates LATITUDE/LONGITUDE from gps(latitude/longitude) directly.
+    # GPS auto-fetched on focus (2026-06-12) — no manual "Capture GPS" trigger;
+    # LATITUDE/LONGITUDE + HH_GPS_* are auto-populated and protected (read-only)
+    # by the PROC LATITUDE onfocus in generate_apc.py.
     return build_geo_id("household", extra_items=[
         # F4->F3 linkage (adopted Questionnaire Numbering Convention): the parent
         # patient's per-facility case sequence. The facility is shared via the
@@ -57,8 +59,6 @@ def build_f4_geo_id():
         numeric("HH_GPS_ACCURACY",   "GPS Accuracy (m)",     length=3),
         numeric("HH_GPS_SATELLITES", "GPS Satellites",       length=2),
         alpha(  "HH_GPS_READTIME",   "GPS Read Time (UTC)",  length=19),
-        numeric("CAPTURE_HH_GPS",    "Capture GPS",          length=1,
-                value_set_options=[("Capture GPS now", "1")]),
     ])
 
 
@@ -856,8 +856,10 @@ def build_section_h():
         *select_all("Q82_DIFFICULTY_REASONS",
                     "82. What did you find difficult about the process?",
                     Q82_DIFFICULTY_REASONS),
-        alpha("Q82_DIFFICULTY_OTHER_TXT",
-              "82. Difficulty — Other (Specify) text", length=120),
+        # select_all() above already emits the canonical Q82_DIFFICULTY_REASONS_OTHER_TXT
+        # (gated on the 'Other' option flag). A second standalone Q82_DIFFICULTY_OTHER_TXT used
+        # to live here — a duplicate with no option flag, i.e. an ungated free-text box on the
+        # form. Removed 2026-06-12 (other-specify audit).
         yes_no("Q83_KNOWS_ASSIST",
                "83. Would you know where to go to seek assistance in registration?"),
         alpha("Q84_WHERE_ASSIST",
@@ -1657,7 +1659,7 @@ def build_f4_dictionary():
     return build_dictionary(
         dict_name="HOUSEHOLDSURVEY_DICT",
         dict_label="HouseholdSurvey",
-        id_items=build_id_block(),
+        id_items=build_id_block(single_questionnaire_number=True),
         records=records,
     )
 

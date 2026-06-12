@@ -63,148 +63,32 @@
       "ids": {
         "items": [
           {
-            "name": "REGION_CODE",
+            "name": "QUESTIONNAIRE_NUMBER",
             "labels": [
               {
-                "text": "Region Code (PSGC)",
+                "text": "Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)",
                 "language": "EN"
               },
               {
-                "text": "Region Code (PSGC)",
+                "text": "Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)",
                 "language": "BCL"
               },
               {
-                "text": "Region Code (PSGC)",
+                "text": "Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)",
                 "language": "BIS"
               },
               {
-                "text": "Region Code (PSGC)",
+                "text": "Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)",
                 "language": "CEB"
               },
               {
-                "text": "Region Code (PSGC)",
+                "text": "Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)",
                 "language": "WAR"
               }
             ],
             "contentType": "numeric",
             "start": 2,
-            "length": 2,
-            "zeroFill": true
-          },
-          {
-            "name": "PROVINCE_HUC_CODE",
-            "labels": [
-              {
-                "text": "Province / HUC Code (PSGC)",
-                "language": "EN"
-              },
-              {
-                "text": "Province / HUC Code (PSGC)",
-                "language": "BCL"
-              },
-              {
-                "text": "Province / HUC Code (PSGC)",
-                "language": "BIS"
-              },
-              {
-                "text": "Province / HUC Code (PSGC)",
-                "language": "CEB"
-              },
-              {
-                "text": "Province / HUC Code (PSGC)",
-                "language": "WAR"
-              }
-            ],
-            "contentType": "numeric",
-            "start": 4,
-            "length": 2,
-            "zeroFill": true
-          },
-          {
-            "name": "CITY_MUNICIPALITY_CODE",
-            "labels": [
-              {
-                "text": "City / Municipality Code (PSGC)",
-                "language": "EN"
-              },
-              {
-                "text": "City / Municipality Code (PSGC)",
-                "language": "BCL"
-              },
-              {
-                "text": "City / Municipality Code (PSGC)",
-                "language": "BIS"
-              },
-              {
-                "text": "City / Municipality Code (PSGC)",
-                "language": "CEB"
-              },
-              {
-                "text": "City / Municipality Code (PSGC)",
-                "language": "WAR"
-              }
-            ],
-            "contentType": "numeric",
-            "start": 6,
-            "length": 3,
-            "zeroFill": true
-          },
-          {
-            "name": "FACILITY_NO",
-            "labels": [
-              {
-                "text": "Facility Number (within municipality)",
-                "language": "EN"
-              },
-              {
-                "text": "Facility Number (within municipality)",
-                "language": "BCL"
-              },
-              {
-                "text": "Facility Number (within municipality)",
-                "language": "BIS"
-              },
-              {
-                "text": "Facility Number (within municipality)",
-                "language": "CEB"
-              },
-              {
-                "text": "Facility Number (within municipality)",
-                "language": "WAR"
-              }
-            ],
-            "contentType": "numeric",
-            "start": 9,
-            "length": 2,
-            "zeroFill": true
-          },
-          {
-            "name": "CASE_SEQ",
-            "labels": [
-              {
-                "text": "Case Sequence (per-facility, per-instrument)",
-                "language": "EN"
-              },
-              {
-                "text": "Case Sequence (per-facility, per-instrument)",
-                "language": "BCL"
-              },
-              {
-                "text": "Case Sequence (per-facility, per-instrument)",
-                "language": "BIS"
-              },
-              {
-                "text": "Case Sequence (per-facility, per-instrument)",
-                "language": "CEB"
-              },
-              {
-                "text": "Case Sequence (per-facility, per-instrument)",
-                "language": "WAR"
-              }
-            ],
-            "contentType": "numeric",
-            "start": 11,
-            "length": 3,
+            "length": 12,
             "zeroFill": true
           }
         ]
@@ -240,493 +124,6 @@
             "maximum": 1
           },
           "items": [
-            {
-              "name": "SURVEY_CODE",
-              "labels": [
-                {
-                  "text": "Survey Instrument Code",
-                  "language": "EN"
-                },
-                {
-                  "text": "Survey Instrument Code",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Survey Instrument Code",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Survey Instrument Code",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Survey Instrument Code",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 2
-            },
-            {
-              "name": "INTERVIEWER_ID",
-              "labels": [
-                {
-                  "text": "Interviewer ID",
-                  "language": "EN"
-                },
-                {
-                  "text": "Interviewer ID",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Interviewer ID",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Interviewer ID",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Interviewer ID",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 4,
-              "zeroFill": true
-            },
-            {
-              "name": "DATE_STARTED",
-              "labels": [
-                {
-                  "text": "Date Interview Started (YYYYMMDD)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Date Interview Started (YYYYMMDD)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Date Interview Started (YYYYMMDD)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Date Interview Started (YYYYMMDD)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Date Interview Started (YYYYMMDD)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 8,
-              "zeroFill": false
-            },
-            {
-              "name": "TIME_STARTED",
-              "labels": [
-                {
-                  "text": "Time Interview Started (HHMMSS)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Time Interview Started (HHMMSS)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Time Interview Started (HHMMSS)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Time Interview Started (HHMMSS)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Time Interview Started (HHMMSS)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 6,
-              "zeroFill": false
-            },
-            {
-              "name": "AAPOR_DISPOSITION",
-              "labels": [
-                {
-                  "text": "AAPOR Disposition Code",
-                  "language": "EN"
-                },
-                {
-                  "text": "AAPOR Disposition Code",
-                  "language": "BCL"
-                },
-                {
-                  "text": "AAPOR Disposition Code",
-                  "language": "BIS"
-                },
-                {
-                  "text": "AAPOR Disposition Code",
-                  "language": "CEB"
-                },
-                {
-                  "text": "AAPOR Disposition Code",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 3,
-              "zeroFill": true,
-              "valueSets": [
-                {
-                  "name": "AAPOR_DISPOSITION_VS1",
-                  "labels": [
-                    {
-                      "text": "AAPOR Disposition Code",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "AAPOR Disposition Code",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "AAPOR Disposition Code",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "AAPOR Disposition Code",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "AAPOR Disposition Code",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "000 \u2014 In Progress (initial)",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "000 \u2014 In Progress (initial)",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "000 \u2014 In Progress (initial)",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "000 \u2014 In Progress (initial)",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "000 \u2014 In Progress (initial)",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "000"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "110 \u2014 Complete interview",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "110 \u2014 Complete interview",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "110 \u2014 Complete interview",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "110 \u2014 Complete interview",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "110 \u2014 Complete interview",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "110"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "120 \u2014 Partial interview / break-off",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "120 \u2014 Partial interview / break-off",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "120 \u2014 Partial interview / break-off",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "120 \u2014 Partial interview / break-off",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "120 \u2014 Partial interview / break-off",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "120"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "210 \u2014 Refusal \u2014 respondent",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "210 \u2014 Refusal \u2014 respondent",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "210 \u2014 Refusal \u2014 respondent",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "210 \u2014 Refusal \u2014 respondent",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "210 \u2014 Refusal \u2014 respondent",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "210"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "211 \u2014 Refusal \u2014 gatekeeper / household",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "211 \u2014 Refusal \u2014 gatekeeper / household",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "211 \u2014 Refusal \u2014 gatekeeper / household",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "211 \u2014 Refusal \u2014 gatekeeper / household",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "211 \u2014 Refusal \u2014 gatekeeper / household",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "211"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "220 \u2014 Non-contact \u2014 respondent unavailable",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "220 \u2014 Non-contact \u2014 respondent unavailable",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "220 \u2014 Non-contact \u2014 respondent unavailable",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "220 \u2014 Non-contact \u2014 respondent unavailable",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "220 \u2014 Non-contact \u2014 respondent unavailable",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "220"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "230 \u2014 Other eligible non-interview",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "230 \u2014 Other eligible non-interview",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "230 \u2014 Other eligible non-interview",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "230 \u2014 Other eligible non-interview",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "230 \u2014 Other eligible non-interview",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "230"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "310 \u2014 Unknown eligibility \u2014 facility/household",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "310 \u2014 Unknown eligibility \u2014 facility/household",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "310 \u2014 Unknown eligibility \u2014 facility/household",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "310 \u2014 Unknown eligibility \u2014 facility/household",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "310 \u2014 Unknown eligibility \u2014 facility/household",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "310"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "320 \u2014 Unknown eligibility \u2014 respondent",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "320 \u2014 Unknown eligibility \u2014 respondent",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "320 \u2014 Unknown eligibility \u2014 respondent",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "320 \u2014 Unknown eligibility \u2014 respondent",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "320 \u2014 Unknown eligibility \u2014 respondent",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "320"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "410 \u2014 Not eligible \u2014 out of sample / ineligible",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "410 \u2014 Not eligible \u2014 out of sample / ineligible",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "410 \u2014 Not eligible \u2014 out of sample / ineligible",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "410 \u2014 Not eligible \u2014 out of sample / ineligible",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "410 \u2014 Not eligible \u2014 out of sample / ineligible",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "410"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "450 \u2014 Not eligible \u2014 other",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "450 \u2014 Not eligible \u2014 other",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "450 \u2014 Not eligible \u2014 other",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "450 \u2014 Not eligible \u2014 other",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "450 \u2014 Not eligible \u2014 other",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "450"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
             {
               "name": "SURVEY_TEAM_LEADER_S_NAME",
               "labels": [
@@ -1004,23 +401,23 @@
                     {
                       "labels": [
                         {
-                          "text": "Postponed",
+                          "text": "Completed at the Hospital",
                           "language": "EN"
                         },
                         {
-                          "text": "Postponed",
+                          "text": "Completed at the Hospital",
                           "language": "BCL"
                         },
                         {
-                          "text": "Postponed",
+                          "text": "Completed at the Hospital",
                           "language": "BIS"
                         },
                         {
-                          "text": "Postponed",
+                          "text": "Completed at the Hospital",
                           "language": "CEB"
                         },
                         {
-                          "text": "Postponed",
+                          "text": "Completed at the Hospital",
                           "language": "WAR"
                         }
                       ],
@@ -1033,23 +430,23 @@
                     {
                       "labels": [
                         {
-                          "text": "Refused",
+                          "text": "Postponed",
                           "language": "EN"
                         },
                         {
-                          "text": "Refused",
+                          "text": "Postponed",
                           "language": "BCL"
                         },
                         {
-                          "text": "Refused",
+                          "text": "Postponed",
                           "language": "BIS"
                         },
                         {
-                          "text": "Refused",
+                          "text": "Postponed",
                           "language": "CEB"
                         },
                         {
-                          "text": "Refused",
+                          "text": "Postponed",
                           "language": "WAR"
                         }
                       ],
@@ -1085,6 +482,64 @@
                       "pairs": [
                         {
                           "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Completed at Home",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Completed at Home",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Completed at Home",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Completed at Home",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Completed at Home",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Withdraw Participation/Consent",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
                         }
                       ]
                     }
@@ -1177,23 +632,23 @@
                     {
                       "labels": [
                         {
-                          "text": "Postponed",
+                          "text": "Completed at the Hospital",
                           "language": "EN"
                         },
                         {
-                          "text": "Postponed",
+                          "text": "Completed at the Hospital",
                           "language": "BCL"
                         },
                         {
-                          "text": "Postponed",
+                          "text": "Completed at the Hospital",
                           "language": "BIS"
                         },
                         {
-                          "text": "Postponed",
+                          "text": "Completed at the Hospital",
                           "language": "CEB"
                         },
                         {
-                          "text": "Postponed",
+                          "text": "Completed at the Hospital",
                           "language": "WAR"
                         }
                       ],
@@ -1206,23 +661,23 @@
                     {
                       "labels": [
                         {
-                          "text": "Refused",
+                          "text": "Postponed",
                           "language": "EN"
                         },
                         {
-                          "text": "Refused",
+                          "text": "Postponed",
                           "language": "BCL"
                         },
                         {
-                          "text": "Refused",
+                          "text": "Postponed",
                           "language": "BIS"
                         },
                         {
-                          "text": "Refused",
+                          "text": "Postponed",
                           "language": "CEB"
                         },
                         {
-                          "text": "Refused",
+                          "text": "Postponed",
                           "language": "WAR"
                         }
                       ],
@@ -1260,119 +715,62 @@
                           "value": "4"
                         }
                       ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "CONSENT_GIVEN",
-              "labels": [
-                {
-                  "text": "Informed consent given",
-                  "language": "EN"
-                },
-                {
-                  "text": "Informed consent given",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Informed consent given",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Informed consent given",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Informed consent given",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "CONSENT_GIVEN_VS1",
-                  "labels": [
-                    {
-                      "text": "Informed consent given",
-                      "language": "EN"
                     },
-                    {
-                      "text": "Informed consent given",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Informed consent given",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Informed consent given",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Informed consent given",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
                     {
                       "labels": [
                         {
-                          "text": "Yes",
+                          "text": "Completed at Home",
                           "language": "EN"
                         },
                         {
-                          "text": "Iyo",
+                          "text": "Completed at Home",
                           "language": "BCL"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Completed at Home",
                           "language": "BIS"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Completed at Home",
                           "language": "CEB"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Completed at Home",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "1"
+                          "value": "5"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Withdraw Participation/Consent",
                           "language": "EN"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Withdraw Participation/Consent",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Withdraw Participation/Consent",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Withdraw Participation/Consent",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Withdraw Participation/Consent",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
+                          "value": "6"
                         }
                       ]
                     }
@@ -1523,32 +921,225 @@
               ]
             },
             {
-              "name": "PATIENT_LISTING_NO",
+              "name": "REGION_CODE",
               "labels": [
                 {
-                  "text": "Patient Listing Reference Number",
+                  "text": "Region Code (PSGC)",
                   "language": "EN"
                 },
                 {
-                  "text": "Patient Listing Reference Number",
+                  "text": "Region Code (PSGC)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Patient Listing Reference Number",
+                  "text": "Region Code (PSGC)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Patient Listing Reference Number",
+                  "text": "Region Code (PSGC)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Patient Listing Reference Number",
+                  "text": "Region Code (PSGC)",
                   "language": "WAR"
                 }
               ],
               "contentType": "numeric",
-              "length": 4,
+              "length": 2,
               "zeroFill": true
+            },
+            {
+              "name": "PROVINCE_HUC_CODE",
+              "labels": [
+                {
+                  "text": "Province / HUC Code (PSGC)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Province / HUC Code (PSGC)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Province / HUC Code (PSGC)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Province / HUC Code (PSGC)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Province / HUC Code (PSGC)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true
+            },
+            {
+              "name": "CITY_MUNICIPALITY_CODE",
+              "labels": [
+                {
+                  "text": "City / Municipality Code (PSGC)",
+                  "language": "EN"
+                },
+                {
+                  "text": "City / Municipality Code (PSGC)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "City / Municipality Code (PSGC)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "City / Municipality Code (PSGC)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "City / Municipality Code (PSGC)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true
+            },
+            {
+              "name": "FACILITY_NO",
+              "labels": [
+                {
+                  "text": "Facility Number (within municipality)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Facility Number (within municipality)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Facility Number (within municipality)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Facility Number (within municipality)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Facility Number (within municipality)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true
+            },
+            {
+              "name": "CASE_SEQ",
+              "labels": [
+                {
+                  "text": "Case Sequence (per-facility, per-instrument)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Case Sequence (per-facility, per-instrument)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Case Sequence (per-facility, per-instrument)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Case Sequence (per-facility, per-instrument)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Case Sequence (per-facility, per-instrument)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": true
+            },
+            {
+              "name": "REGION_NAME",
+              "labels": [
+                {
+                  "text": "Region (from PSGC)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Region (from PSGC)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Region (from PSGC)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Region (from PSGC)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Region (from PSGC)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 80
+            },
+            {
+              "name": "PROVINCE_NAME",
+              "labels": [
+                {
+                  "text": "Province / HUC (from PSGC)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Province / HUC (from PSGC)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Province / HUC (from PSGC)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Province / HUC (from PSGC)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Province / HUC (from PSGC)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 80
+            },
+            {
+              "name": "CITY_NAME",
+              "labels": [
+                {
+                  "text": "City / Municipality (from PSGC)",
+                  "language": "EN"
+                },
+                {
+                  "text": "City / Municipality (from PSGC)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "City / Municipality (from PSGC)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "City / Municipality (from PSGC)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "City / Municipality (from PSGC)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 80
             }
           ]
         },
@@ -2634,92 +2225,6 @@
               ],
               "contentType": "alpha",
               "length": 19
-            },
-            {
-              "name": "FACILITY_CAPTURE_GPS",
-              "labels": [
-                {
-                  "text": "Capture GPS",
-                  "language": "EN"
-                },
-                {
-                  "text": "Capture GPS",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Capture GPS",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Capture GPS",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Capture GPS",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "FACILITY_CAPTURE_GPS_VS1",
-                  "labels": [
-                    {
-                      "text": "Capture GPS",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Capture GPS",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Capture GPS",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Capture GPS",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Capture GPS",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Capture GPS now",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Capture GPS now",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Capture GPS now",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Capture GPS now",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Capture GPS now",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -2916,92 +2421,6 @@
               ],
               "contentType": "alpha",
               "length": 19
-            },
-            {
-              "name": "P_HOME_CAPTURE_GPS",
-              "labels": [
-                {
-                  "text": "Capture GPS",
-                  "language": "EN"
-                },
-                {
-                  "text": "Capture GPS",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Capture GPS",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Capture GPS",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Capture GPS",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "P_HOME_CAPTURE_GPS_VS1",
-                  "labels": [
-                    {
-                      "text": "Capture GPS",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Capture GPS",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Capture GPS",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Capture GPS",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Capture GPS",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Capture GPS now",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Capture GPS now",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Capture GPS now",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Capture GPS now",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Capture GPS now",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -21227,33 +20646,6 @@
                 },
                 {
                   "text": "67. Why did you go to this facility instead of your usual facility? \u2014 Other (specify) text",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 120
-            },
-            {
-              "name": "Q67_WHY_THIS_OTHER_TXT",
-              "labels": [
-                {
-                  "text": "67. Why this facility \u2014 Other (specify) text",
-                  "language": "EN"
-                },
-                {
-                  "text": "67. Why this facility \u2014 Other (specify) text",
-                  "language": "BCL"
-                },
-                {
-                  "text": "67. Why this facility \u2014 Other (specify) text",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Uban pa (Isulti)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "67. Why this facility \u2014 Other (specify) text",
                   "language": "WAR"
                 }
               ],

@@ -11,7 +11,7 @@ Output is Slack-friendly mrkdwn, ~15 lines, designed to append to the
 existing :sunrise: CAPI Scrum daily post body.
 
 Usage:
-    python .claude/scripts/snapshot_instruments.py [--repo PATH]
+    python scripts/snapshot_instruments.py [--repo PATH]
 
 Exits 0 on success; prints to stdout. Never raises — missing files degrade
 to the literal string "snapshot unavailable" so the daily poster still runs.

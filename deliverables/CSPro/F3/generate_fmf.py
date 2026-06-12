@@ -58,10 +58,11 @@ TEXT_H = 16
 FORM_W = 806
 
 
+# Case-start form: just PATIENT_TYPE now (the OP/IP routing gate, entered before
+# Sections G/H). All other case-start metadata removed 2026-06-12; LANGUAGE_USED
+# is off-form (set in the QUESTIONNAIRE_NUMBER postproc).
 FIELD_CONTROL_CASE_START = {
-    "SURVEY_CODE", "INTERVIEWER_ID", "DATE_STARTED", "TIME_STARTED",
-    "AAPOR_DISPOSITION", "PATIENT_TYPE", "PATIENT_LISTING_NO", "CONSENT_GIVEN",
-    "LANGUAGE_USED",
+    "PATIENT_TYPE",
 }
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
@@ -72,15 +73,18 @@ FIELD_CONTROL_CASE_END = {
 
 
 FORM_PLAN = [
-    ("FC Metadata - case start",
+    ("Patient Type (Outpatient / Inpatient)",
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
     ("FC Geographic ID + F1 linkage",
-     [("PATIENT_GEO_ID", None)]),
+     # Single-number redesign (2026-06-11): facility region/province/city are
+     # derived from QUESTIONNAIRE_NUMBER (off-form); show the read-only PSGC
+     # names + keep the barangay picker. Patient-home P_* cascade stays manual.
+     [("FIELD_CONTROL", {"names": ["REGION_NAME", "PROVINCE_NAME", "CITY_NAME"]}),
+      ("PATIENT_GEO_ID", {"exclude": ["REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY"]})]),
     ("FC Facility GPS Capture",
      [("REC_FACILITY_CAPTURE", None)]),
-    ("FC Patient Home GPS + Verification Photo",
-     [("REC_PATIENT_HOME_CAPTURE", None),
-      ("REC_CASE_VERIFICATION", None)]),
+    ("FC Patient Home GPS",
+     [("REC_PATIENT_HOME_CAPTURE", None)]),
     ("A. Informed Consent (Q1 gate)",
      [("A_INFORMED_CONSENT", None)]),
     ("B. Patient Profile",
@@ -107,6 +111,11 @@ FORM_PLAN = [
      [("L_REFERRALS", None)]),
     ("Closing - case end",
      [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_END})]),
+    # Verification photo moved to the very end (2026-06-12): the enumerator
+    # photographs the completed visit, and the survey no longer opens with a
+    # camera prompt. GPS stays early so it auto-locks while the form is worked.
+    ("Case Verification Photo",
+     [("REC_CASE_VERIFICATION", None)]),
 ]
 
 
@@ -191,13 +200,111 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name):
         lines.append(f"Text={text}")
         lines.append(" ")
         lines.append("  ")
+    _emit_blocks(lines, item_objs)
     lines.append("[EndGroup]")
     lines.append("  ")
+
+
+# Blocks — Designer-verified grammar (learned from a Designer-authored save on F1
+# 2026-06-11; hand-rolled blocks with wrong Position silently CRASH Designer on open):
+# [Block] sections go at the END of the [Group], before [EndGroup]. Position indexes
+# the group's item sequence in which each earlier block ALSO occupies one slot
+# (so block 2 after a 4-field block 1 starts at 0+1+4=5, not 4). DisplayTogether=Yes
+# is what combines the fields onto one screen in Android CSEntry (phone + tablet).
+# Named blocks for the admin Field-Control fields (kept verbatim — Designer-verified).
+NAMED_BLOCKS = [
+    ("INTERVIEW_STAFF_BLOCK", "Interview Staff",
+     ["SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
+      "FIELD_VALIDATED_BY", "FIELD_EDITED_BY"]),
+    ("VISIT_RECORD_BLOCK", "Visit Record",
+     ["DATE_FIRST_VISITED", "DATE_FINAL_VISIT", "TOTAL_NUMBER_OF_VISITS",
+      "ENUM_RESULT_FIRST_VISIT", "ENUM_RESULT_FINAL_VISIT"]),
+]
+
+# UI/UX combined-views (2026-06-12, "moderate" density): auto-group the survey body
+# into DisplayTogether screens so related questions render together instead of one-
+# field-per-screen. Records below keep their special single-screen handling and are
+# NOT auto-grouped (admin uses NAMED_BLOCKS; geo cascade / GPS / photo stay as-is).
+_NO_AUTOGROUP_RECORDS = {
+    "FIELD_CONTROL", "PATIENT_GEO_ID",
+    "REC_FACILITY_CAPTURE", "REC_PATIENT_HOME_CAPTURE", "REC_CASE_VERIFICATION",
+}
+_MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
+MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen
+_ACTIVE_BLOCK_PLAN = []            # set per-build by build_fmf()
+
+
+def _qnum(item):
+    lab = (item.get("labels") or [{}])[0].get("text", "") or ""
+    m = re.match(r"\s*(\d+)", lab) or re.match(r"Q(\d+)", item["name"])
+    return m.group(1) if m else None
+
+
+def _chunk_label(item_objs):
+    qs = [q for q in (_qnum(it) for it in item_objs) if q]
+    if not qs:
+        return "Questions"
+    return f"Q{qs[0]}" if qs[0] == qs[-1] else f"Q{qs[0]}-Q{qs[-1]}"
+
+
+def derive_block_plan(dictionary):
+    """Auto DisplayTogether blocks for the survey body (moderate density). Each
+    multi-select option set -> one screen; other consecutive questions chunked at
+    MAX_CHUNK per screen. Every on-form field of a processed record lands in exactly
+    one block (contiguous, no gaps) so _emit_blocks' Position=start+emitted holds."""
+    plan, n = [], 0
+    for rec in dictionary["levels"][0]["records"]:
+        if rec["name"] in _NO_AUTOGROUP_RECORDS:
+            continue
+        items = rec["items"]
+        i = 0
+        while i < len(items):
+            nm = items[i]["name"]
+            ms = _MULTISELECT_RE.match(nm)
+            if ms and not nm.endswith("_TXT"):           # whole multi-select run + its _OTHER_TXT
+                base = ms.group(1)
+                run = []
+                while i < len(items) and (items[i]["name"].startswith(base + "_O")
+                                          or items[i]["name"] == base + "_OTHER_TXT"):
+                    run.append(items[i]); i += 1
+                label = (_qnum(run[0]) and f"Q{_qnum(run[0])}") or _chunk_label(run)
+                plan.append((f"DG_BLK_{n}", label, [it["name"] for it in run])); n += 1
+            else:                                        # chunk of up to MAX simple questions
+                chunk = []
+                while i < len(items) and len(chunk) < MAX_CHUNK:
+                    nn = items[i]["name"]
+                    mm = _MULTISELECT_RE.match(nn)
+                    if mm and not nn.endswith("_TXT"):   # stop before the next multi-select
+                        break
+                    chunk.append(items[i]); i += 1
+                plan.append((f"DG_BLK_{n}", _chunk_label(chunk), [it["name"] for it in chunk])); n += 1
+    return plan
+
+
+def _emit_blocks(lines, item_objs):
+    names = [it["name"] for it in item_objs]
+    emitted = 0
+    for bname, blabel, fields in _ACTIVE_BLOCK_PLAN:
+        if not all(f in names for f in fields):
+            continue
+        start = names.index(fields[0])
+        if names[start:start + len(fields)] != fields:   # must be a consecutive run
+            continue
+        lines.append("[Block]")
+        lines.append(f"Name={bname}")
+        lines.append(f"Label={blabel}")
+        lines.append("DisplayTogether=Yes")
+        lines.append(f"Position={start + emitted}")
+        lines.append(f"Length={len(fields)}")
+        lines.append("  ")
+        emitted += 1
 
 
 def build_fmf():
     dictionary = build_f3_dictionary()
     _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
+    global _ACTIVE_BLOCK_PLAN
+    _ACTIVE_BLOCK_PLAN = NAMED_BLOCKS + derive_block_plan(dictionary)
     dict_name = dictionary.get("name", "PATIENTSURVEY_DICT")
     level = dictionary["levels"][0]
     level_name = level.get("name", "PATIENTSURVEY_LEVEL")

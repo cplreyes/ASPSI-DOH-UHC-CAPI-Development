@@ -15,29 +15,17 @@ Label=Case Key (Facility + Patient ID)
 Level=1
 Size=806,300
   
-Item=REGION_CODE
-Item=PROVINCE_HUC_CODE
-Item=CITY_MUNICIPALITY_CODE
-Item=FACILITY_NO
-Item=CASE_SEQ
+Item=QUESTIONNAIRE_NUMBER
   
 [EndForm]
   
 [Form]
 Name=FORM001
-Label=FC Metadata - case start
+Label=Patient Type (Outpatient / Inpatient)
 Level=1
-Size=806,337
+Size=806,300
   
-Item=SURVEY_CODE
-Item=INTERVIEWER_ID
-Item=DATE_STARTED
-Item=TIME_STARTED
-Item=AAPOR_DISPOSITION
-Item=CONSENT_GIVEN
-Item=LANGUAGE_USED
 Item=PATIENT_TYPE
-Item=PATIENT_LISTING_NO
   
 [EndForm]
   
@@ -47,10 +35,10 @@ Label=FC Geographic ID + F1 linkage
 Level=1
 Size=806,397
   
+Item=REGION_NAME
+Item=PROVINCE_NAME
+Item=CITY_NAME
 Item=CLASSIFICATION
-Item=REGION
-Item=PROVINCE_HUC
-Item=CITY_MUNICIPALITY
 Item=BARANGAY
 Item=FACILITY_NAME
 Item=FACILITY_ADDRESS
@@ -73,15 +61,14 @@ Item=FACILITY_GPS_ALTITUDE
 Item=FACILITY_GPS_ACCURACY
 Item=FACILITY_GPS_SATELLITES
 Item=FACILITY_GPS_READTIME
-Item=FACILITY_CAPTURE_GPS
   
 [EndForm]
   
 [Form]
 Name=FORM004
-Label=FC Patient Home GPS + Verification Photo
+Label=FC Patient Home GPS
 Level=1
-Size=806,337
+Size=806,300
   
 Item=P_HOME_GPS_LATITUDE
 Item=P_HOME_GPS_LONGITUDE
@@ -89,9 +76,6 @@ Item=P_HOME_GPS_ALTITUDE
 Item=P_HOME_GPS_ACCURACY
 Item=P_HOME_GPS_SATELLITES
 Item=P_HOME_GPS_READTIME
-Item=P_HOME_CAPTURE_GPS
-Item=VERIFICATION_PHOTO_FILENAME
-Item=CAPTURE_VERIFICATION_PHOTO
   
 [EndForm]
   
@@ -244,7 +228,7 @@ Item=Q52_PLANS_OTHER_TXT
 Name=FORM009
 Label=E. Primary Care + YAKAP/Konsulta
 Level=1
-Size=806,3367
+Size=806,3337
   
 Item=Q53_HAS_PCP
 Item=Q54_PCP_TYPE
@@ -286,7 +270,6 @@ Item=Q67_WHY_THIS_FACILITY_O06
 Item=Q67_WHY_THIS_FACILITY_O07
 Item=Q67_WHY_THIS_FACILITY_O08
 Item=Q67_WHY_THIS_FACILITY_OTHER_TXT
-Item=Q67_WHY_THIS_OTHER_TXT
 Item=Q68_USUAL_FAC_TYPE
 Item=Q68_USUAL_FAC_TYPE_OTHER_TXT
 Item=Q69_USUAL_TRAVEL_HH
@@ -982,6 +965,17 @@ Item=ENUM_RESULT_FINAL_VISIT
   
 [EndForm]
   
+[Form]
+Name=FORM018
+Label=Case Verification Photo
+Level=1
+Size=806,300
+  
+Item=VERIFICATION_PHOTO_FILENAME
+Item=CAPTURE_VERIFICATION_PHOTO
+  
+[EndForm]
+  
 [Level]
 Name=PATIENTSURVEY_LEVEL
 Label=PatientSurvey Level
@@ -994,63 +988,15 @@ Form=1
 Max=1
   
 [Field]
-Name=REGION_CODE
+Name=QUESTIONNAIRE_NUMBER
 Position=350,27,760,47
-Item=REGION_CODE,PATIENTSURVEY_DICT
+Item=QUESTIONNAIRE_NUMBER,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
 Form=1
   
 [Text]
 Position=50,30,330,46
-Text=Region Code (PSGC)
- 
-  
-[Field]
-Name=PROVINCE_HUC_CODE
-Position=350,57,760,77
-Item=PROVINCE_HUC_CODE,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=1
-  
-[Text]
-Position=50,60,330,76
-Text=Province / HUC Code (PSGC)
- 
-  
-[Field]
-Name=CITY_MUNICIPALITY_CODE
-Position=350,87,760,107
-Item=CITY_MUNICIPALITY_CODE,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=1
-  
-[Text]
-Position=50,90,330,106
-Text=City / Municipality Code (PSGC)
- 
-  
-[Field]
-Name=FACILITY_NO
-Position=350,117,760,137
-Item=FACILITY_NO,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=1
-  
-[Text]
-Position=50,120,330,136
-Text=Facility Number (within municipality)
- 
-  
-[Field]
-Name=CASE_SEQ
-Position=350,147,760,167
-Item=CASE_SEQ,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=1
-  
-[Text]
-Position=50,150,330,166
-Text=Case Sequence (per-facility, per-instrument)
+Text=Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)
  
   
 [EndGroup]
@@ -1058,175 +1004,80 @@ Text=Case Sequence (per-facility, per-instrument)
 [Group]
 Required=Yes
 Name=FIELD_CONTROL_FORM
-Label=FC Metadata - case start
+Label=Patient Type (Outpatient / Inpatient)
 Form=2
 Max=1
   
 [Field]
-Name=SURVEY_CODE
-Position=350,27,760,47
-Item=SURVEY_CODE,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,30,330,46
-Text=Survey Instrument Code
- 
-  
-[Field]
-Name=INTERVIEWER_ID
-Position=350,57,760,77
-Item=INTERVIEWER_ID,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,60,330,76
-Text=Interviewer ID
- 
-  
-[Field]
-Name=DATE_STARTED
-Position=350,87,760,107
-Item=DATE_STARTED,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,90,330,106
-Text=Date Interview Started (YYYYMMDD)
- 
-  
-[Field]
-Name=TIME_STARTED
-Position=350,117,760,137
-Item=TIME_STARTED,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,120,330,136
-Text=Time Interview Started (HHMMSS)
- 
-  
-[Field]
-Name=AAPOR_DISPOSITION
-Position=350,147,365,167
-Item=AAPOR_DISPOSITION,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,150,330,166
-Text=AAPOR Disposition Code
- 
-  
-[Field]
-Name=CONSENT_GIVEN
-Position=350,177,365,197
-Item=CONSENT_GIVEN,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,180,330,196
-Text=Informed consent given
- 
-  
-[Field]
-Name=LANGUAGE_USED
-Position=350,207,760,227
-Item=LANGUAGE_USED,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,210,330,226
-Text=Language used for the interview
- 
-  
-[Field]
 Name=PATIENT_TYPE
-Position=350,237,365,257
+Position=350,27,365,47
 Item=PATIENT_TYPE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=2
   
 [Text]
-Position=50,240,330,256
+Position=50,30,330,46
 Text=Type of Patient
- 
-  
-[Field]
-Name=PATIENT_LISTING_NO
-Position=350,267,760,287
-Item=PATIENT_LISTING_NO,PATIENTSURVEY_DICT
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,270,330,286
-Text=Patient Listing Reference Number
  
   
 [EndGroup]
   
 [Group]
 Required=Yes
-Name=PATIENT_GEO_ID_FORM
+Name=FIELD_CONTROL_FORM_2
 Label=FC Geographic ID + F1 linkage
 Form=3
 Max=1
   
 [Field]
+Name=REGION_NAME
+Position=350,27,760,47
+Item=REGION_NAME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=3
+  
+[Text]
+Position=50,30,330,46
+Text=Region (from PSGC)
+ 
+  
+[Field]
+Name=PROVINCE_NAME
+Position=350,57,760,77
+Item=PROVINCE_NAME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=3
+  
+[Text]
+Position=50,60,330,76
+Text=Province / HUC (from PSGC)
+ 
+  
+[Field]
+Name=CITY_NAME
+Position=350,87,760,107
+Item=CITY_NAME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=3
+  
+[Text]
+Position=50,90,330,106
+Text=City / Municipality (from PSGC)
+ 
+  
+[Field]
 Name=CLASSIFICATION
-Position=350,27,365,47
+Position=350,117,365,137
 Item=CLASSIFICATION,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=3
   
 [Text]
-Position=50,30,330,46
-Text=Classification
- 
-  
-[Field]
-Name=REGION
-Position=350,57,365,77
-Item=REGION,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
-Position=50,60,330,76
-Text=Region
- 
-  
-[Field]
-Name=PROVINCE_HUC
-Position=350,87,365,107
-Item=PROVINCE_HUC,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
-Position=50,90,330,106
-Text=Province / HUC
- 
-  
-[Field]
-Name=CITY_MUNICIPALITY
-Position=350,117,365,137
-Item=CITY_MUNICIPALITY,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=3
-  
-[Text]
 Position=50,120,330,136
-Text=City / Municipality
+Text=Classification
  
   
 [Field]
@@ -1400,24 +1251,12 @@ Position=50,180,330,196
 Text=GPS Read Time (UTC)
  
   
-[Field]
-Name=FACILITY_CAPTURE_GPS
-Position=350,207,365,227
-Item=FACILITY_CAPTURE_GPS,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=4
-  
-[Text]
-Position=50,210,330,226
-Text=Capture GPS
- 
-  
 [EndGroup]
   
 [Group]
 Required=Yes
 Name=REC_PATIENT_HOME_CAPTURE_FORM
-Label=FC Patient Home GPS + Verification Photo
+Label=FC Patient Home GPS
 Form=5
 Max=1
   
@@ -1497,43 +1336,6 @@ Position=50,180,330,196
 Text=GPS Read Time (UTC)
  
   
-[Field]
-Name=P_HOME_CAPTURE_GPS
-Position=350,207,365,227
-Item=P_HOME_CAPTURE_GPS,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=5
-  
-[Text]
-Position=50,210,330,226
-Text=Capture GPS
- 
-  
-[Field]
-Name=VERIFICATION_PHOTO_FILENAME
-Position=350,237,760,257
-Item=VERIFICATION_PHOTO_FILENAME,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=5
-  
-[Text]
-Position=50,240,330,256
-Text=Verification Photo Filename
- 
-  
-[Field]
-Name=CAPTURE_VERIFICATION_PHOTO
-Position=350,267,365,287
-Item=CAPTURE_VERIFICATION_PHOTO,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=5
-  
-[Text]
-Position=50,270,330,286
-Text=Take Verification Photo
- 
-  
 [EndGroup]
   
 [Group]
@@ -1591,6 +1393,13 @@ Form=6
 Position=50,120,330,136
 Text=3. Do you live in the same house as the patient?
  
+  
+[Block]
+Name=DG_BLK_0
+Label=Q1-Q3
+DisplayTogether=Yes
+Position=0
+Length=4
   
 [EndGroup]
   
@@ -2064,6 +1873,62 @@ Position=50,1140,330,1156
 Text=34. Decision maker — Other (specify) text
  
   
+[Block]
+Name=DG_BLK_1
+Label=Q4-Q7
+DisplayTogether=Yes
+Position=0
+Length=5
+  
+[Block]
+Name=DG_BLK_2
+Label=Q8-Q11
+DisplayTogether=Yes
+Position=6
+Length=5
+  
+[Block]
+Name=DG_BLK_3
+Label=Q12-Q15
+DisplayTogether=Yes
+Position=12
+Length=5
+  
+[Block]
+Name=DG_BLK_4
+Label=Q15-Q18
+DisplayTogether=Yes
+Position=18
+Length=5
+  
+[Block]
+Name=DG_BLK_5
+Label=Q19-Q23
+DisplayTogether=Yes
+Position=24
+Length=5
+  
+[Block]
+Name=DG_BLK_6
+Label=Q23-Q27
+DisplayTogether=Yes
+Position=30
+Length=5
+  
+[Block]
+Name=DG_BLK_7
+Label=Q28-Q32
+DisplayTogether=Yes
+Position=36
+Length=5
+  
+[Block]
+Name=DG_BLK_8
+Label=Q33-Q34
+DisplayTogether=Yes
+Position=42
+Length=3
+  
 [EndGroup]
   
 [Group]
@@ -2278,6 +2143,27 @@ Form=8
 Position=50,510,330,526
 Text=37. What is your understanding about UHC? — Other (specify) text
  
+  
+[Block]
+Name=DG_BLK_9
+Label=Q35
+DisplayTogether=Yes
+Position=0
+Length=1
+  
+[Block]
+Name=DG_BLK_10
+Label=Q36
+DisplayTogether=Yes
+Position=2
+Length=9
+  
+[Block]
+Name=DG_BLK_11
+Label=Q37
+DisplayTogether=Yes
+Position=12
+Length=7
   
 [EndGroup]
   
@@ -2896,6 +2782,76 @@ Position=50,1500,330,1516
 Text=52. Which health insurance plan/s are you enrolled in? — Other (specify) text
  
   
+[Block]
+Name=DG_BLK_12
+Label=Q38-Q40
+DisplayTogether=Yes
+Position=0
+Length=5
+  
+[Block]
+Name=DG_BLK_13
+Label=Q41
+DisplayTogether=Yes
+Position=6
+Length=1
+  
+[Block]
+Name=DG_BLK_14
+Label=Q42
+DisplayTogether=Yes
+Position=8
+Length=9
+  
+[Block]
+Name=DG_BLK_15
+Label=Q43-Q45
+DisplayTogether=Yes
+Position=18
+Length=5
+  
+[Block]
+Name=DG_BLK_16
+Label=Q46
+DisplayTogether=Yes
+Position=24
+Length=7
+  
+[Block]
+Name=DG_BLK_17
+Label=Q47-Q48
+DisplayTogether=Yes
+Position=32
+Length=5
+  
+[Block]
+Name=DG_BLK_18
+Label=Q49
+DisplayTogether=Yes
+Position=38
+Length=1
+  
+[Block]
+Name=DG_BLK_19
+Label=Q50
+DisplayTogether=Yes
+Position=40
+Length=8
+  
+[Block]
+Name=DG_BLK_20
+Label=Q51
+DisplayTogether=Yes
+Position=49
+Length=1
+  
+[Block]
+Name=DG_BLK_21
+Label=Q52
+DisplayTogether=Yes
+Position=51
+Length=8
+  
 [EndGroup]
   
 [Group]
@@ -3390,852 +3346,965 @@ Text=67. Why did you go to this facility instead of your usual facility? — Oth
  
   
 [Field]
-Name=Q67_WHY_THIS_OTHER_TXT
-Position=350,1227,760,1247
-Item=Q67_WHY_THIS_OTHER_TXT,PATIENTSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=10
-  
-[Text]
-Position=50,1230,330,1246
-Text=67. Why this facility — Other (specify) text
- 
-  
-[Field]
 Name=Q68_USUAL_FAC_TYPE
-Position=350,1257,365,1277
+Position=350,1227,365,1247
 Item=Q68_USUAL_FAC_TYPE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1260,330,1276
+Position=50,1230,330,1246
 Text=68. What is the type of health facility that you usually go to?
  
   
 [Field]
 Name=Q68_USUAL_FAC_TYPE_OTHER_TXT
-Position=350,1287,760,1307
+Position=350,1257,760,1277
 Item=Q68_USUAL_FAC_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1290,330,1306
+Position=50,1260,330,1276
 Text=68. Usual facility type — Other (specify) text
  
   
 [Field]
 Name=Q69_USUAL_TRAVEL_HH
-Position=350,1317,760,1337
+Position=350,1287,760,1307
 Item=Q69_USUAL_TRAVEL_HH,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1320,330,1336
+Position=50,1290,330,1306
 Text=69. How long does it take you to travel to the health facility you usually go to — Hours
  
   
 [Field]
 Name=Q69_USUAL_TRAVEL_MM
-Position=350,1347,760,1367
+Position=350,1317,760,1337
 Item=Q69_USUAL_TRAVEL_MM,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1350,330,1366
+Position=50,1320,330,1336
 Text=69. How long does it take you to travel to the health facility you usually go to — Minutes
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O01
-Position=350,1377,365,1397
+Position=350,1347,365,1367
 Item=Q70_USUAL_TRANSPORT_O01,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1380,330,1396
+Position=50,1350,330,1366
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Walk
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O02
-Position=350,1407,365,1427
+Position=350,1377,365,1397
 Item=Q70_USUAL_TRANSPORT_O02,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1410,330,1426
+Position=50,1380,330,1396
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Bike
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O03
-Position=350,1437,365,1457
+Position=350,1407,365,1427
 Item=Q70_USUAL_TRANSPORT_O03,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1440,330,1456
+Position=50,1410,330,1426
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Public Bus
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O04
-Position=350,1467,365,1487
+Position=350,1437,365,1457
 Item=Q70_USUAL_TRANSPORT_O04,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1470,330,1486
+Position=50,1440,330,1456
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Jeepney
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O05
-Position=350,1497,365,1517
+Position=350,1467,365,1487
 Item=Q70_USUAL_TRANSPORT_O05,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1500,330,1516
+Position=50,1470,330,1486
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Tricycle
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O06
-Position=350,1527,365,1547
+Position=350,1497,365,1517
 Item=Q70_USUAL_TRANSPORT_O06,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1530,330,1546
+Position=50,1500,330,1516
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Car (including private taxi/cab)
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O07
-Position=350,1557,365,1577
+Position=350,1527,365,1547
 Item=Q70_USUAL_TRANSPORT_O07,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1560,330,1576
+Position=50,1530,330,1546
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Motorcycle
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O08
-Position=350,1587,365,1607
+Position=350,1557,365,1577
 Item=Q70_USUAL_TRANSPORT_O08,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1590,330,1606
+Position=50,1560,330,1576
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Boat
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O09
-Position=350,1617,365,1637
+Position=350,1587,365,1607
 Item=Q70_USUAL_TRANSPORT_O09,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1620,330,1636
+Position=50,1590,330,1606
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Taxi
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O10
-Position=350,1647,365,1667
+Position=350,1617,365,1637
 Item=Q70_USUAL_TRANSPORT_O10,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1650,330,1666
+Position=50,1620,330,1636
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Pedicab
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O11
-Position=350,1677,365,1697
+Position=350,1647,365,1667
 Item=Q70_USUAL_TRANSPORT_O11,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1680,330,1696
+Position=50,1650,330,1666
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — E-bike
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_O12
-Position=350,1707,365,1727
+Position=350,1677,365,1697
 Item=Q70_USUAL_TRANSPORT_O12,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1710,330,1726
+Position=50,1680,330,1696
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Other (Specify)
  
   
 [Field]
 Name=Q70_USUAL_TRANSPORT_OTHER_TXT
-Position=350,1737,760,1757
+Position=350,1707,760,1727
 Item=Q70_USUAL_TRANSPORT_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1740,330,1756
+Position=50,1710,330,1726
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Other (specify) text
  
   
 [Field]
 Name=Q71_NEAREST_TYPE
-Position=350,1767,365,1787
+Position=350,1737,365,1757
 Item=Q71_NEAREST_TYPE,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1770,330,1786
+Position=50,1740,330,1756
 Text=71. What is the type of the primary care facility nearest to your house?
  
   
 [Field]
 Name=Q71_NEAREST_TYPE_OTHER_TXT
-Position=350,1797,760,1817
+Position=350,1767,760,1787
 Item=Q71_NEAREST_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1800,330,1816
+Position=50,1770,330,1786
 Text=71. Nearest primary care facility type — Other (specify) text
  
   
 [Field]
 Name=Q72_NEAREST_TRAVEL_HH
-Position=350,1827,760,1847
+Position=350,1797,760,1817
 Item=Q72_NEAREST_TRAVEL_HH,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1830,330,1846
+Position=50,1800,330,1816
 Text=72. How long does it take you to travel from your house when going to the nearest primary care facility? — Hours
  
   
 [Field]
 Name=Q72_NEAREST_TRAVEL_MM
-Position=350,1857,760,1877
+Position=350,1827,760,1847
 Item=Q72_NEAREST_TRAVEL_MM,PATIENTSURVEY_DICT
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1860,330,1876
+Position=50,1830,330,1846
 Text=72. How long does it take you to travel from your house when going to the nearest primary care facility? — Minutes
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O01
-Position=350,1887,365,1907
+Position=350,1857,365,1877
 Item=Q73_NEAREST_TRANSPORT_O01,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1890,330,1906
+Position=50,1860,330,1876
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Walk
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O02
-Position=350,1917,365,1937
+Position=350,1887,365,1907
 Item=Q73_NEAREST_TRANSPORT_O02,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1920,330,1936
+Position=50,1890,330,1906
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Bike
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O03
-Position=350,1947,365,1967
+Position=350,1917,365,1937
 Item=Q73_NEAREST_TRANSPORT_O03,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1950,330,1966
+Position=50,1920,330,1936
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Public Bus
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O04
-Position=350,1977,365,1997
+Position=350,1947,365,1967
 Item=Q73_NEAREST_TRANSPORT_O04,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1980,330,1996
+Position=50,1950,330,1966
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Jeepney
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O05
-Position=350,2007,365,2027
+Position=350,1977,365,1997
 Item=Q73_NEAREST_TRANSPORT_O05,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2010,330,2026
+Position=50,1980,330,1996
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Tricycle
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O06
-Position=350,2037,365,2057
+Position=350,2007,365,2027
 Item=Q73_NEAREST_TRANSPORT_O06,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2040,330,2056
+Position=50,2010,330,2026
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Car (including private taxi/cab)
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O07
-Position=350,2067,365,2087
+Position=350,2037,365,2057
 Item=Q73_NEAREST_TRANSPORT_O07,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2070,330,2086
+Position=50,2040,330,2056
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Motorcycle
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O08
-Position=350,2097,365,2117
+Position=350,2067,365,2087
 Item=Q73_NEAREST_TRANSPORT_O08,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2100,330,2116
+Position=50,2070,330,2086
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Boat
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O09
-Position=350,2127,365,2147
+Position=350,2097,365,2117
 Item=Q73_NEAREST_TRANSPORT_O09,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2130,330,2146
+Position=50,2100,330,2116
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Taxi
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O10
-Position=350,2157,365,2177
+Position=350,2127,365,2147
 Item=Q73_NEAREST_TRANSPORT_O10,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2160,330,2176
+Position=50,2130,330,2146
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Pedicab
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O11
-Position=350,2187,365,2207
+Position=350,2157,365,2177
 Item=Q73_NEAREST_TRANSPORT_O11,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2190,330,2206
+Position=50,2160,330,2176
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — E-bike
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_O12
-Position=350,2217,365,2237
+Position=350,2187,365,2207
 Item=Q73_NEAREST_TRANSPORT_O12,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2220,330,2236
+Position=50,2190,330,2206
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Other (Specify)
  
   
 [Field]
 Name=Q73_NEAREST_TRANSPORT_OTHER_TXT
-Position=350,2247,760,2267
+Position=350,2217,760,2237
 Item=Q73_NEAREST_TRANSPORT_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,2250,330,2266
+Position=50,2220,330,2236
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Other (specify) text
  
   
 [Field]
 Name=Q74_KON_HEARD
-Position=350,2277,365,2297
+Position=350,2247,365,2267
 Item=Q74_KON_HEARD,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2280,330,2296
+Position=50,2250,330,2266
 Text=74. Have you heard of the term "YAKAP/ Konsulta package"?
  
   
 [Field]
 Name=Q75_KON_SOURCE_O01
-Position=350,2307,365,2327
+Position=350,2277,365,2297
 Item=Q75_KON_SOURCE_O01,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2310,330,2326
+Position=50,2280,330,2296
 Text=75. What are your sources of information about the YAKAP/Konsulta package? — News
  
   
 [Field]
 Name=Q75_KON_SOURCE_O02
-Position=350,2337,365,2357
+Position=350,2307,365,2327
 Item=Q75_KON_SOURCE_O02,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2340,330,2356
+Position=50,2310,330,2326
 Text=75. What are your sources of information about the YAKAP/Konsulta package? — Legislation
  
   
 [Field]
 Name=Q75_KON_SOURCE_O03
-Position=350,2367,365,2387
+Position=350,2337,365,2357
 Item=Q75_KON_SOURCE_O03,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2370,330,2386
+Position=50,2340,330,2356
 Text=75. What are your sources of information about the YAKAP/Konsulta package? — Social Media
  
   
 [Field]
 Name=Q75_KON_SOURCE_O04
-Position=350,2397,365,2417
+Position=350,2367,365,2387
 Item=Q75_KON_SOURCE_O04,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2400,330,2416
+Position=50,2370,330,2386
 Text=75. What are your sources of information about the YAKAP/Konsulta package? — Friends / Family
  
   
 [Field]
 Name=Q75_KON_SOURCE_O05
-Position=350,2427,365,2447
+Position=350,2397,365,2417
 Item=Q75_KON_SOURCE_O05,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2430,330,2446
+Position=50,2400,330,2416
 Text=75. What are your sources of information about the YAKAP/Konsulta package? — Health center/facility
  
   
 [Field]
 Name=Q75_KON_SOURCE_O06
-Position=350,2457,365,2477
+Position=350,2427,365,2447
 Item=Q75_KON_SOURCE_O06,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2460,330,2476
+Position=50,2430,330,2446
 Text=75. What are your sources of information about the YAKAP/Konsulta package? — LGU/Barangay
  
   
 [Field]
 Name=Q75_KON_SOURCE_O07
-Position=350,2487,365,2507
+Position=350,2457,365,2477
 Item=Q75_KON_SOURCE_O07,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2490,330,2506
+Position=50,2460,330,2476
 Text=75. What are your sources of information about the YAKAP/Konsulta package? — I don't know
  
   
 [Field]
 Name=Q75_KON_SOURCE_O08
-Position=350,2517,365,2537
+Position=350,2487,365,2507
 Item=Q75_KON_SOURCE_O08,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2520,330,2536
+Position=50,2490,330,2506
 Text=75. What are your sources of information about the YAKAP/Konsulta package? — Other (Specify)
  
   
 [Field]
 Name=Q75_KON_SOURCE_OTHER_TXT
-Position=350,2547,760,2567
+Position=350,2517,760,2537
 Item=Q75_KON_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,2550,330,2566
+Position=50,2520,330,2536
 Text=75. What are your sources of information about the YAKAP/Konsulta package? — Other (specify) text
  
   
 [Field]
 Name=Q76_KON_UNDERSTAND_O01
-Position=350,2577,365,2597
+Position=350,2547,365,2567
 Item=Q76_KON_UNDERSTAND_O01,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2580,330,2596
+Position=50,2550,330,2566
 Text=76. What is your understanding about the YAKAP/Konsulta package? — Free primary care consultation (with a registered YAKAP/Konsulta provider)
  
   
 [Field]
 Name=Q76_KON_UNDERSTAND_O02
-Position=350,2607,365,2627
+Position=350,2577,365,2597
 Item=Q76_KON_UNDERSTAND_O02,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2610,330,2626
+Position=50,2580,330,2596
 Text=76. What is your understanding about the YAKAP/Konsulta package? — Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)
  
   
 [Field]
 Name=Q76_KON_UNDERSTAND_O03
-Position=350,2637,365,2657
+Position=350,2607,365,2627
 Item=Q76_KON_UNDERSTAND_O03,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2640,330,2656
+Position=50,2610,330,2626
 Text=76. What is your understanding about the YAKAP/Konsulta package? — Free selected laboratory / diagnostics examination
  
   
 [Field]
 Name=Q76_KON_UNDERSTAND_O04
-Position=350,2667,365,2687
+Position=350,2637,365,2657
 Item=Q76_KON_UNDERSTAND_O04,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2670,330,2686
+Position=50,2640,330,2656
 Text=76. What is your understanding about the YAKAP/Konsulta package? — Free selected drugs and medicines
  
   
 [Field]
 Name=Q76_KON_UNDERSTAND_O05
-Position=350,2697,365,2717
+Position=350,2667,365,2687
 Item=Q76_KON_UNDERSTAND_O05,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2700,330,2716
+Position=50,2670,330,2686
 Text=76. What is your understanding about the YAKAP/Konsulta package? — There are no benefits of the package
  
   
 [Field]
 Name=Q76_KON_UNDERSTAND_O06
-Position=350,2727,365,2747
+Position=350,2697,365,2717
 Item=Q76_KON_UNDERSTAND_O06,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2730,330,2746
+Position=50,2700,330,2716
 Text=76. What is your understanding about the YAKAP/Konsulta package? — I don't know
  
   
 [Field]
 Name=Q76_KON_UNDERSTAND_O07
-Position=350,2757,365,2777
+Position=350,2727,365,2747
 Item=Q76_KON_UNDERSTAND_O07,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2760,330,2776
+Position=50,2730,330,2746
 Text=76. What is your understanding about the YAKAP/Konsulta package? — Other (Specify)
  
   
 [Field]
 Name=Q76_KON_UNDERSTAND_OTHER_TXT
-Position=350,2787,760,2807
+Position=350,2757,760,2777
 Item=Q76_KON_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,2790,330,2806
+Position=50,2760,330,2776
 Text=76. What is your understanding about the YAKAP/Konsulta package? — Other (specify) text
  
   
 [Field]
 Name=Q77_KON_REGISTERED
-Position=350,2817,365,2837
+Position=350,2787,365,2807
 Item=Q77_KON_REGISTERED,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2820,330,2836
+Position=50,2790,330,2806
 Text=77. Are you registered with a YAKAP/Konsulta package provider?
  
   
 [Field]
 Name=Q78_KON_WHEN_REG
-Position=350,2847,365,2867
+Position=350,2817,365,2837
 Item=Q78_KON_WHEN_REG,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2850,330,2866
+Position=50,2820,330,2836
 Text=78. When did you register with a YAKAP/Konsulta package provider?
  
   
 [Field]
 Name=Q79_KON_HAD_APPT
-Position=350,2877,365,2897
+Position=350,2847,365,2867
 Item=Q79_KON_HAD_APPT,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2880,330,2896
+Position=50,2850,330,2866
 Text=79. Since registering, have you had an appointment with your YAKAP/Konsulta package provider?
  
   
 [Field]
 Name=Q80_KON_KNOWS_BOOKING
-Position=350,2907,365,2927
+Position=350,2877,365,2897
 Item=Q80_KON_KNOWS_BOOKING,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2910,330,2926
+Position=50,2880,330,2896
 Text=80. When you have a health problem, do you know how to book an appointment at your YAKAP/Konsulta package provider?
  
   
 [Field]
 Name=Q81_KON_APPT_CHECKUP
-Position=350,2937,365,2957
+Position=350,2907,365,2927
 Item=Q81_KON_APPT_CHECKUP,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2940,330,2956
+Position=50,2910,330,2926
 Text=81. Was that appointment for a general check-up (i.e. not related to an illness or injury)?
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O01
-Position=350,2967,365,2987
+Position=350,2937,365,2957
 Item=Q82_KON_WHY_NOT_REG_O01,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2970,330,2986
+Position=50,2940,330,2956
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Don't know what a YAKAP/Konsulta provider is
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O02
-Position=350,2997,365,3017
+Position=350,2967,365,2987
 Item=Q82_KON_WHY_NOT_REG_O02,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,3000,330,3016
+Position=50,2970,330,2986
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Don't trust PhilHealth
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O03
-Position=350,3027,365,3047
+Position=350,2997,365,3017
 Item=Q82_KON_WHY_NOT_REG_O03,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,3030,330,3046
+Position=50,3000,330,3016
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Don't know how to register
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O04
-Position=350,3057,365,3077
+Position=350,3027,365,3047
 Item=Q82_KON_WHY_NOT_REG_O04,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,3060,330,3076
+Position=50,3030,330,3046
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Registration is confusing/time-consuming/inconvenient
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O05
-Position=350,3087,365,3107
+Position=350,3057,365,3077
 Item=Q82_KON_WHY_NOT_REG_O05,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,3090,330,3106
+Position=50,3060,330,3076
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Intend to register but do not have found a time to do it.
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O06
-Position=350,3117,365,3137
+Position=350,3087,365,3107
 Item=Q82_KON_WHY_NOT_REG_O06,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,3120,330,3136
+Position=50,3090,330,3106
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — YAKAP/Konsulta is not available in my local area
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O07
-Position=350,3147,365,3167
+Position=350,3117,365,3137
 Item=Q82_KON_WHY_NOT_REG_O07,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,3150,330,3166
+Position=50,3120,330,3136
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Already have a usual primary care provider that I go to
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O08
-Position=350,3177,365,3197
+Position=350,3147,365,3167
 Item=Q82_KON_WHY_NOT_REG_O08,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,3180,330,3196
+Position=50,3150,330,3166
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Don't have the required PhilHealth ID to register for YAKAP/Konsulta
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O09
-Position=350,3207,365,3227
+Position=350,3177,365,3197
 Item=Q82_KON_WHY_NOT_REG_O09,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,3210,330,3226
+Position=50,3180,330,3196
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Don't have the other requirements to register
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O10
-Position=350,3237,365,3257
+Position=350,3207,365,3227
 Item=Q82_KON_WHY_NOT_REG_O10,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,3240,330,3256
+Position=50,3210,330,3226
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — I don't know
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_O11
-Position=350,3267,365,3287
+Position=350,3237,365,3257
 Item=Q82_KON_WHY_NOT_REG_O11,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,3270,330,3286
+Position=50,3240,330,3256
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Other (specify)
  
   
 [Field]
 Name=Q82_KON_WHY_NOT_REG_OTHER_TXT
-Position=350,3297,760,3317
+Position=350,3267,760,3287
 Item=Q82_KON_WHY_NOT_REG_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,3300,330,3316
+Position=50,3270,330,3286
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Other (specify) text
  
+  
+[Block]
+Name=DG_BLK_22
+Label=Q53-Q56
+DisplayTogether=Yes
+Position=0
+Length=5
+  
+[Block]
+Name=DG_BLK_23
+Label=Q57-Q58
+DisplayTogether=Yes
+Position=6
+Length=3
+  
+[Block]
+Name=DG_BLK_24
+Label=Q59
+DisplayTogether=Yes
+Position=10
+Length=5
+  
+[Block]
+Name=DG_BLK_25
+Label=Q60
+DisplayTogether=Yes
+Position=16
+Length=1
+  
+[Block]
+Name=DG_BLK_26
+Label=Q61
+DisplayTogether=Yes
+Position=18
+Length=5
+  
+[Block]
+Name=DG_BLK_27
+Label=Q62-Q64
+DisplayTogether=Yes
+Position=24
+Length=3
+  
+[Block]
+Name=DG_BLK_28
+Label=Q65
+DisplayTogether=Yes
+Position=28
+Length=8
+  
+[Block]
+Name=DG_BLK_29
+Label=Q66
+DisplayTogether=Yes
+Position=37
+Length=1
+  
+[Block]
+Name=DG_BLK_30
+Label=Q67
+DisplayTogether=Yes
+Position=39
+Length=9
+  
+[Block]
+Name=DG_BLK_31
+Label=Q68-Q69
+DisplayTogether=Yes
+Position=49
+Length=4
+  
+[Block]
+Name=DG_BLK_32
+Label=Q70
+DisplayTogether=Yes
+Position=54
+Length=13
+  
+[Block]
+Name=DG_BLK_33
+Label=Q71-Q72
+DisplayTogether=Yes
+Position=68
+Length=4
+  
+[Block]
+Name=DG_BLK_34
+Label=Q73
+DisplayTogether=Yes
+Position=73
+Length=13
+  
+[Block]
+Name=DG_BLK_35
+Label=Q74
+DisplayTogether=Yes
+Position=87
+Length=1
+  
+[Block]
+Name=DG_BLK_36
+Label=Q75
+DisplayTogether=Yes
+Position=89
+Length=9
+  
+[Block]
+Name=DG_BLK_37
+Label=Q76
+DisplayTogether=Yes
+Position=99
+Length=8
+  
+[Block]
+Name=DG_BLK_38
+Label=Q77-Q81
+DisplayTogether=Yes
+Position=108
+Length=5
+  
+[Block]
+Name=DG_BLK_39
+Label=Q82
+DisplayTogether=Yes
+Position=114
+Length=12
   
 [EndGroup]
   
@@ -4765,6 +4834,34 @@ Form=11
 Position=50,1290,330,1306
 Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Other (specify) text
  
+  
+[Block]
+Name=DG_BLK_40
+Label=Q83-Q84
+DisplayTogether=Yes
+Position=0
+Length=4
+  
+[Block]
+Name=DG_BLK_41
+Label=Q85
+DisplayTogether=Yes
+Position=5
+Length=21
+  
+[Block]
+Name=DG_BLK_42
+Label=Q86
+DisplayTogether=Yes
+Position=27
+Length=10
+  
+[Block]
+Name=DG_BLK_43
+Label=Q87
+DisplayTogether=Yes
+Position=38
+Length=8
   
 [EndGroup]
   
@@ -6718,6 +6815,216 @@ Position=50,4830,330,4846
 Text=104. Without BUCAS — Others specify text
  
   
+[Block]
+Name=DG_BLK_44
+Label=Q88-Q89
+DisplayTogether=Yes
+Position=0
+Length=3
+  
+[Block]
+Name=DG_BLK_45
+Label=Q90
+DisplayTogether=Yes
+Position=4
+Length=8
+  
+[Block]
+Name=DG_BLK_46
+Label=Q91-Q92
+DisplayTogether=Yes
+Position=13
+Length=5
+  
+[Block]
+Name=DG_BLK_47
+Label=Q92
+DisplayTogether=Yes
+Position=19
+Length=5
+  
+[Block]
+Name=DG_BLK_48
+Label=Q92
+DisplayTogether=Yes
+Position=25
+Length=5
+  
+[Block]
+Name=DG_BLK_49
+Label=Q92
+DisplayTogether=Yes
+Position=31
+Length=2
+  
+[Block]
+Name=DG_BLK_50
+Label=Q93
+DisplayTogether=Yes
+Position=34
+Length=18
+  
+[Block]
+Name=DG_BLK_51
+Label=Q94
+DisplayTogether=Yes
+Position=53
+Length=5
+  
+[Block]
+Name=DG_BLK_52
+Label=Q94
+DisplayTogether=Yes
+Position=59
+Length=5
+  
+[Block]
+Name=DG_BLK_53
+Label=Q94
+DisplayTogether=Yes
+Position=65
+Length=5
+  
+[Block]
+Name=DG_BLK_54
+Label=Q94-Q96
+DisplayTogether=Yes
+Position=71
+Length=5
+  
+[Block]
+Name=DG_BLK_55
+Label=Q96
+DisplayTogether=Yes
+Position=77
+Length=5
+  
+[Block]
+Name=DG_BLK_56
+Label=Q96
+DisplayTogether=Yes
+Position=83
+Length=5
+  
+[Block]
+Name=DG_BLK_57
+Label=Q96-Q97
+DisplayTogether=Yes
+Position=89
+Length=5
+  
+[Block]
+Name=DG_BLK_58
+Label=Q97
+DisplayTogether=Yes
+Position=95
+Length=5
+  
+[Block]
+Name=DG_BLK_59
+Label=Q97
+DisplayTogether=Yes
+Position=101
+Length=5
+  
+[Block]
+Name=DG_BLK_60
+Label=Q97
+DisplayTogether=Yes
+Position=107
+Length=5
+  
+[Block]
+Name=DG_BLK_61
+Label=Q97
+DisplayTogether=Yes
+Position=113
+Length=5
+  
+[Block]
+Name=DG_BLK_62
+Label=Q97-Q98
+DisplayTogether=Yes
+Position=119
+Length=5
+  
+[Block]
+Name=DG_BLK_63
+Label=Q98
+DisplayTogether=Yes
+Position=125
+Length=5
+  
+[Block]
+Name=DG_BLK_64
+Label=Q98
+DisplayTogether=Yes
+Position=131
+Length=5
+  
+[Block]
+Name=DG_BLK_65
+Label=Q98
+DisplayTogether=Yes
+Position=137
+Length=5
+  
+[Block]
+Name=DG_BLK_66
+Label=Q98
+DisplayTogether=Yes
+Position=143
+Length=5
+  
+[Block]
+Name=DG_BLK_67
+Label=Q98
+DisplayTogether=Yes
+Position=149
+Length=5
+  
+[Block]
+Name=DG_BLK_68
+Label=Q98-Q99
+DisplayTogether=Yes
+Position=155
+Length=4
+  
+[Block]
+Name=DG_BLK_69
+Label=Q100
+DisplayTogether=Yes
+Position=160
+Length=9
+  
+[Block]
+Name=DG_BLK_70
+Label=Q101
+DisplayTogether=Yes
+Position=170
+Length=6
+  
+[Block]
+Name=DG_BLK_71
+Label=Q102
+DisplayTogether=Yes
+Position=177
+Length=1
+  
+[Block]
+Name=DG_BLK_72
+Label=Q103
+DisplayTogether=Yes
+Position=179
+Length=8
+  
+[Block]
+Name=DG_BLK_73
+Label=Q104
+DisplayTogether=Yes
+Position=188
+Length=2
+  
 [EndGroup]
   
 [Group]
@@ -8296,6 +8603,188 @@ Position=50,3900,330,3916
 Text=115. What was the final amount you paid in cash at the hospital cashier upon discharge? (Amount in Pesos)
  
   
+[Block]
+Name=DG_BLK_74
+Label=Q105-Q107
+DisplayTogether=Yes
+Position=0
+Length=5
+  
+[Block]
+Name=DG_BLK_75
+Label=Q107
+DisplayTogether=Yes
+Position=6
+Length=5
+  
+[Block]
+Name=DG_BLK_76
+Label=Q107
+DisplayTogether=Yes
+Position=12
+Length=5
+  
+[Block]
+Name=DG_BLK_77
+Label=Q107
+DisplayTogether=Yes
+Position=18
+Length=5
+  
+[Block]
+Name=DG_BLK_78
+Label=Q107
+DisplayTogether=Yes
+Position=24
+Length=5
+  
+[Block]
+Name=DG_BLK_79
+Label=Q108-Q109
+DisplayTogether=Yes
+Position=30
+Length=5
+  
+[Block]
+Name=DG_BLK_80
+Label=Q109
+DisplayTogether=Yes
+Position=36
+Length=5
+  
+[Block]
+Name=DG_BLK_81
+Label=Q109
+DisplayTogether=Yes
+Position=42
+Length=5
+  
+[Block]
+Name=DG_BLK_82
+Label=Q109
+DisplayTogether=Yes
+Position=48
+Length=5
+  
+[Block]
+Name=DG_BLK_83
+Label=Q110-Q112
+DisplayTogether=Yes
+Position=54
+Length=5
+  
+[Block]
+Name=DG_BLK_84
+Label=Q112
+DisplayTogether=Yes
+Position=60
+Length=5
+  
+[Block]
+Name=DG_BLK_85
+Label=Q112
+DisplayTogether=Yes
+Position=66
+Length=5
+  
+[Block]
+Name=DG_BLK_86
+Label=Q112
+DisplayTogether=Yes
+Position=72
+Length=5
+  
+[Block]
+Name=DG_BLK_87
+Label=Q112-Q113
+DisplayTogether=Yes
+Position=78
+Length=5
+  
+[Block]
+Name=DG_BLK_88
+Label=Q113
+DisplayTogether=Yes
+Position=84
+Length=5
+  
+[Block]
+Name=DG_BLK_89
+Label=Q113
+DisplayTogether=Yes
+Position=90
+Length=5
+  
+[Block]
+Name=DG_BLK_90
+Label=Q113
+DisplayTogether=Yes
+Position=96
+Length=5
+  
+[Block]
+Name=DG_BLK_91
+Label=Q113
+DisplayTogether=Yes
+Position=102
+Length=5
+  
+[Block]
+Name=DG_BLK_92
+Label=Q113
+DisplayTogether=Yes
+Position=108
+Length=3
+  
+[Block]
+Name=DG_BLK_93
+Label=Q114
+DisplayTogether=Yes
+Position=112
+Length=8
+  
+[Block]
+Name=DG_BLK_94
+Label=Q114
+DisplayTogether=Yes
+Position=121
+Length=5
+  
+[Block]
+Name=DG_BLK_95
+Label=Q114
+DisplayTogether=Yes
+Position=127
+Length=5
+  
+[Block]
+Name=DG_BLK_96
+Label=Q114
+DisplayTogether=Yes
+Position=133
+Length=5
+  
+[Block]
+Name=DG_BLK_97
+Label=Q114
+DisplayTogether=Yes
+Position=139
+Length=5
+  
+[Block]
+Name=DG_BLK_98
+Label=Q114
+DisplayTogether=Yes
+Position=145
+Length=5
+  
+[Block]
+Name=DG_BLK_99
+Label=Q114-Q115
+DisplayTogether=Yes
+Position=151
+Length=4
+  
 [EndGroup]
   
 [Group]
@@ -9066,6 +9555,90 @@ Position=50,1890,330,1906
 Text=130. Have you or your household had to reduce spending on things you need (such as food, housing, or utilities) because of this health expenditure in the last 1 month?
  
   
+[Block]
+Name=DG_BLK_100
+Label=Q116
+DisplayTogether=Yes
+Position=0
+Length=1
+  
+[Block]
+Name=DG_BLK_101
+Label=Q117
+DisplayTogether=Yes
+Position=2
+Length=9
+  
+[Block]
+Name=DG_BLK_102
+Label=Q118
+DisplayTogether=Yes
+Position=12
+Length=10
+  
+[Block]
+Name=DG_BLK_103
+Label=Q119
+DisplayTogether=Yes
+Position=23
+Length=1
+  
+[Block]
+Name=DG_BLK_104
+Label=Q120
+DisplayTogether=Yes
+Position=25
+Length=9
+  
+[Block]
+Name=DG_BLK_105
+Label=Q121
+DisplayTogether=Yes
+Position=35
+Length=10
+  
+[Block]
+Name=DG_BLK_106
+Label=Q122-Q124
+DisplayTogether=Yes
+Position=46
+Length=3
+  
+[Block]
+Name=DG_BLK_107
+Label=Q125
+DisplayTogether=Yes
+Position=50
+Length=9
+  
+[Block]
+Name=DG_BLK_108
+Label=Q126-Q127
+DisplayTogether=Yes
+Position=60
+Length=2
+  
+[Block]
+Name=DG_BLK_109
+Label=Q128
+DisplayTogether=Yes
+Position=63
+Length=4
+  
+[Block]
+Name=DG_BLK_110
+Label=Q129
+DisplayTogether=Yes
+Position=68
+Length=4
+  
+[Block]
+Name=DG_BLK_111
+Label=Q130
+DisplayTogether=Yes
+Position=73
+Length=1
+  
 [EndGroup]
   
 [Group]
@@ -9242,6 +9815,27 @@ Form=15
 Position=50,420,330,436
 Text=144. How would the patient rate the quality of care you received at [facility_name_input]?
  
+  
+[Block]
+Name=DG_BLK_112
+Label=Q131-Q135
+DisplayTogether=Yes
+Position=0
+Length=5
+  
+[Block]
+Name=DG_BLK_113
+Label=Q136-Q140
+DisplayTogether=Yes
+Position=6
+Length=5
+  
+[Block]
+Name=DG_BLK_114
+Label=Q141-Q144
+DisplayTogether=Yes
+Position=12
+Length=4
   
 [EndGroup]
   
@@ -10257,6 +10851,83 @@ Position=50,2490,330,2506
 Text=161. If branded, why did you buy branded medicine? — Other (specify) text
  
   
+[Block]
+Name=DG_BLK_115
+Label=Q145-Q147
+DisplayTogether=Yes
+Position=0
+Length=3
+  
+[Block]
+Name=DG_BLK_116
+Label=Q148
+DisplayTogether=Yes
+Position=4
+Length=21
+  
+[Block]
+Name=DG_BLK_117
+Label=Q149
+DisplayTogether=Yes
+Position=26
+Length=9
+  
+[Block]
+Name=DG_BLK_118
+Label=Q150-Q152
+DisplayTogether=Yes
+Position=36
+Length=4
+  
+[Block]
+Name=DG_BLK_119
+Label=Q153
+DisplayTogether=Yes
+Position=41
+Length=9
+  
+[Block]
+Name=DG_BLK_120
+Label=Q154
+DisplayTogether=Yes
+Position=51
+Length=7
+  
+[Block]
+Name=DG_BLK_121
+Label=Q155-Q156
+DisplayTogether=Yes
+Position=59
+Length=2
+  
+[Block]
+Name=DG_BLK_122
+Label=Q157
+DisplayTogether=Yes
+Position=62
+Length=10
+  
+[Block]
+Name=DG_BLK_123
+Label=Q158-Q159
+DisplayTogether=Yes
+Position=73
+Length=2
+  
+[Block]
+Name=DG_BLK_124
+Label=Q160
+DisplayTogether=Yes
+Position=76
+Length=8
+  
+[Block]
+Name=DG_BLK_125
+Label=Q161
+DisplayTogether=Yes
+Position=85
+Length=8
+  
 [EndGroup]
   
 [Group]
@@ -10847,11 +11518,67 @@ Position=50,1440,330,1456
 Text=178. Overall, how would you rate your experience with the referral process?
  
   
+[Block]
+Name=DG_BLK_126
+Label=Q162
+DisplayTogether=Yes
+Position=0
+Length=1
+  
+[Block]
+Name=DG_BLK_127
+Label=Q163
+DisplayTogether=Yes
+Position=2
+Length=13
+  
+[Block]
+Name=DG_BLK_128
+Label=Q164-Q166
+DisplayTogether=Yes
+Position=16
+Length=5
+  
+[Block]
+Name=DG_BLK_129
+Label=Q167-Q170
+DisplayTogether=Yes
+Position=22
+Length=4
+  
+[Block]
+Name=DG_BLK_130
+Label=Q171
+DisplayTogether=Yes
+Position=27
+Length=8
+  
+[Block]
+Name=DG_BLK_131
+Label=Q172-Q176
+DisplayTogether=Yes
+Position=36
+Length=5
+  
+[Block]
+Name=DG_BLK_132
+Label=Q177
+DisplayTogether=Yes
+Position=42
+Length=11
+  
+[Block]
+Name=DG_BLK_133
+Label=Q178
+DisplayTogether=Yes
+Position=54
+Length=1
+  
 [EndGroup]
   
 [Group]
 Required=Yes
-Name=FIELD_CONTROL_FORM_2
+Name=FIELD_CONTROL_FORM_3
 Label=Closing - case end
 Form=18
 Max=1
@@ -10966,6 +11693,54 @@ Form=18
 [Text]
 Position=50,270,330,286
 Text=Result of Final Visit
+ 
+  
+[Block]
+Name=INTERVIEW_STAFF_BLOCK
+Label=Interview Staff
+DisplayTogether=Yes
+Position=0
+Length=4
+  
+[Block]
+Name=VISIT_RECORD_BLOCK
+Label=Visit Record
+DisplayTogether=Yes
+Position=5
+Length=5
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=REC_CASE_VERIFICATION_FORM
+Label=Case Verification Photo
+Form=19
+Max=1
+  
+[Field]
+Name=VERIFICATION_PHOTO_FILENAME
+Position=350,27,760,47
+Item=VERIFICATION_PHOTO_FILENAME,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=19
+  
+[Text]
+Position=50,30,330,46
+Text=Verification Photo Filename
+ 
+  
+[Field]
+Name=CAPTURE_VERIFICATION_PHOTO
+Position=350,57,365,77
+Item=CAPTURE_VERIFICATION_PHOTO,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=19
+  
+[Text]
+Position=50,60,330,76
+Text=Take Verification Photo
  
   
 [EndGroup]

@@ -1,0 +1,31 @@
+--- src/AppBundle/CSPro/Dictionary/MySQLDictionarySchemaGenerator.php.orig-8.0.1	2026-06-11 17:51:42.953300568 +0000
++++ src/AppBundle/CSPro/Dictionary/MySQLDictionarySchemaGenerator.php	2026-06-11 17:52:10.358163863 +0000
+@@ -27,6 +27,7 @@
+     public const COLUMN_TYPE_INTEGER = 'integer';
+     public const COLUMN_TYPE_DECIMAL = 'decimal';
+     public const COLUMN_TYPE_TEXT = 'text';
++    public const COLUMN_TYPE_STRING = 'string';
+ 
+     private $schema;
+ 
+@@ -37,6 +38,10 @@
+     public static function generateColumnType(Item $item): string {
+         if ($item->getDataType() === "Numeric") {
+             return self::COLUMN_TYPE_DECIMAL;
++        } elseif ($item->getLength() <= 255) {
++            // alpha items have fixed lengths; VARCHAR(len) avoids InnoDB's
++            // row-size limit (error 1118) on records with many alpha items
++            return self::COLUMN_TYPE_STRING;
+         } else {
+             return self::COLUMN_TYPE_TEXT;
+         }
+@@ -163,6 +168,9 @@
+             $options["precision"] = $item->getLength();
+             $options["scale"] = $item->getDecimalPlaces();
+         }
++        if ($itemType === self::COLUMN_TYPE_STRING) {
++            $options["length"] = max(1, (int) $item->getLength());
++        }
+         if ($itemOccurrences == 1) {
+             $table->addColumn($itemName, $itemType, $options);
+         } else {

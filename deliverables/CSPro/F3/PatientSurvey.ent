@@ -1,93 +1,97 @@
 {
-  "software": "CSPro",
-  "version": 8.0,
-  "fileType": "application",
-  "type": "entry",
-  "name": "PATIENTSURVEY",
-  "label": "PatientSurvey",
+  "software": "CSPro", 
+  "version": 8.0, 
+  "fileType": "application", 
+  "type": "entry", 
+  "name": "PATIENTSURVEY", 
+  "label": "PatientSurvey", 
   "dictionaries": [
     {
-      "type": "input",
-      "path": "PatientSurvey.dcf",
+      "type": "input", 
+      "path": "PatientSurvey.dcf", 
       "parent": "PatientSurvey.fmf"
-    },
+    }, 
     {
-      "type": "external",
-      "path": "../shared/psgc_region.dcf"
-    },
+      "type": "external", 
+      "path": "psgc_region.dcf"
+    }, 
     {
-      "type": "external",
-      "path": "../shared/psgc_province.dcf"
-    },
+      "type": "external", 
+      "path": "psgc_province.dcf"
+    }, 
     {
-      "type": "external",
-      "path": "../shared/psgc_city.dcf"
-    },
+      "type": "external", 
+      "path": "psgc_city.dcf"
+    }, 
     {
-      "type": "external",
-      "path": "../shared/psgc_barangay.dcf"
+      "type": "external", 
+      "path": "psgc_barangay.dcf"
     }
-  ],
+  ], 
   "forms": [
     "PatientSurvey.fmf"
-  ],
+  ], 
   "questionText": [
     "PatientSurvey.ent.qsf"
-  ],
+  ], 
   "code": [
     {
-      "type": "main",
+      "type": "main", 
       "path": "PatientSurvey.ent.apc"
     }
-  ],
+  ], 
   "messages": [
     "PatientSurvey.ent.mgf"
-  ],
+  ], 
   "logicSettings": {
-    "version": 2.0,
+    "version": 2.0, 
     "caseSensitive": {
       "symbols": false
-    },
+    }, 
     "actionInvoker": {
-      "accessFromExternalCaller": "promptIfNoValidAccessToken",
+      "accessFromExternalCaller": "promptIfNoValidAccessToken", 
       "convertResultsForLogic": true
     }
-  },
+  }, 
   "properties": {
-    "askOperatorId": false,
-    "autoAdvanceOnSelection": false,
-    "caseTree": "mobileOnly",
-    "centerForms": false,
-    "createListing": false,
-    "createLog": false,
-    "decimalMark": "dot",
-    "displayCodesAlongsideLabels": false,
+    "askOperatorId": false, 
+    "autoAdvanceOnSelection": true, 
+    "caseTree": "mobileOnly", 
+    "centerForms": false, 
+    "createListing": false, 
+    "createLog": false, 
+    "decimalMark": "dot", 
+    "displayCodesAlongsideLabels": false, 
     "notes": {
-      "delete": "all",
+      "delete": "all", 
       "edit": "all"
-    },
+    }, 
     "partialSave": {
-      "operatorEnabled": false
-    },
-    "showEndCaseMessage": true,
-    "showOnlyDiscreteValuesInComboBoxes": true,
-    "showFieldLabels": true,
-    "showErrorMessageNumbers": false,
-    "showQuestionText": true,
-    "showRefusals": true,
+      "operatorEnabled": true
+    }, 
+    "showEndCaseMessage": true, 
+    "showOnlyDiscreteValuesInComboBoxes": true, 
+    "showFieldLabels": true, 
+    "showErrorMessageNumbers": false, 
+    "showQuestionText": true, 
+    "showRefusals": true, 
+    "sync": {
+      "server": "https://csweb.asiansocial.org/csweb/api", 
+      "direction": "put"
+    }, 
     "verify": {
-      "frequency": 1,
+      "frequency": 1, 
       "start": 1
-    },
-    "htmlDialogs": true,
+    }, 
+    "htmlDialogs": true, 
     "paradata": {
-      "collection": "all",
-      "recordCoordinates": false,
-      "recordInitialPropertyValues": false,
-      "recordIteratorLoadCases": false,
-      "recordValues": false,
+      "collection": "all", 
+      "recordCoordinates": false, 
+      "recordInitialPropertyValues": false, 
+      "recordIteratorLoadCases": false, 
+      "recordValues": false, 
       "deviceStateIntervalMinutes": 5
-    },
+    }, 
     "useHtmlComponentsInsteadOfNativeVersions": false
   }
 }

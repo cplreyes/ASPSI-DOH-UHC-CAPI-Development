@@ -23,7 +23,11 @@ Invoke:  python generate_apc.py
 
 import json
 import re
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from cspro_helpers import select_all_exclusive_warning_procs
 
 HERE = Path(__file__).parent
 OUT = HERE / "FacilityHeadSurvey.ent.apc"
@@ -65,6 +69,117 @@ def dcf_item_names():
     return names
 
 
+def dcf_items_full():
+    """name -> full item dict (labels + value sets), plus dcf order."""
+    dic = json.loads(DCF.read_text(encoding="utf-8"))
+    items, order = {}, []
+    for level in dic["levels"]:
+        for rec in level.get("records", []):
+            for it in rec.get("items", []):
+                items[it["name"]] = it
+                order.append(it["name"])
+    return items, order
+
+
+def auto_other_specify_procs():
+    """Generic 'Other (specify)' enforcement for the remaining *_TXT items
+    (closes the spec-4.13 tail that was listed as STILL OPEN): derive each
+    text field's trigger from the dcf itself.
+      - select-all groups: the sibling option flag (same Q number, _O## name)
+        whose EN label mentions 'other'  -> text required when flag = 1
+      - single-choice:     the same-Q parent whose value set has 'other'-
+        labelled code(s)                 -> text required when parent hits one
+    Only emits when the trigger is unambiguous (exactly one candidate);
+    everything else is returned as unmatched for the report."""
+    items, order = dcf_items_full()
+
+    def en_label(it):
+        for l in it.get("labels") or []:
+            if l.get("language") in (None, "EN"):
+                return l.get("text", "")
+        return ""
+
+    def qnum(n):
+        m = re.match(r"^Q(\d+)_", n)
+        return int(m.group(1)) if m else None
+
+    by_q = {}
+    for n in order:
+        q = qnum(n)
+        if q is not None:
+            by_q.setdefault(q, []).append(n)
+
+    procs, unmatched = {}, []
+    for n in order:
+        if not n.endswith("_TXT"):
+            continue
+        q = qnum(n)
+        if q is None:
+            continue
+        siblings = by_q.get(q, [])
+        flags = [m for m in siblings
+                 if re.search(r"_O\d+$", m)
+                 and "other" in en_label(items[m]).lower()]
+        if len(flags) > 1:
+            # disambiguate: 'other' also appears inside unrelated option labels
+            # ("other government agencies", "other health facilities") — the
+            # true trigger is the option whose label ENDS with "Other (specify)"
+            exact = [m for m in flags
+                     if re.search(r"other(\s*\(specify\))?\s*$",
+                                  en_label(items[m]), re.IGNORECASE)]
+            if len(exact) == 1:
+                flags = exact
+        if len(flags) == 1:
+            procs[n] = (
+                f"PROC {n}\n"
+                f"preproc\n"
+                f"  if {flags[0]} <> 1 then\n"
+                f"    {n} = \"\";   {{ skip + clear: 'Other (specify)' not ticked }}\n"
+                f"    noinput;\n"
+                f"  endif;\n"
+                f"postproc\n"
+                f"  if {flags[0]} = 1 and length(strip({n})) = 0 then\n"
+                f"    errmsg(\"'Other (specify)' was selected for Q{q}. Please specify.\");\n"
+                f"    reenter;\n"
+                f"  endif;"
+            )
+            continue
+        parents = []
+        for m in siblings:
+            if m == n or m.endswith("_TXT") or re.search(r"_O\d+$", m):
+                continue
+            vss = items[m].get("valueSets") or []
+            if not vss:
+                continue
+            codes = []
+            for v in vss[0].get("values", []):
+                vlab = next((l.get("text", "") for l in v.get("labels", [])
+                             if l.get("language") in (None, "EN")), "")
+                if "other" in vlab.lower() and v.get("pairs"):
+                    codes.append(v["pairs"][0].get("value"))
+            if codes:
+                parents.append((m, codes))
+        if len(parents) == 1:
+            m, codes = parents[0]
+            cond = " or ".join(f"{m} = {c}" for c in codes)
+            procs[n] = (
+                f"PROC {n}\n"
+                f"preproc\n"
+                f"  if not ({cond}) then\n"
+                f"    {n} = \"\";   {{ skip + clear: no 'other' option chosen }}\n"
+                f"    noinput;\n"
+                f"  endif;\n"
+                f"postproc\n"
+                f"  if ({cond}) and length(strip({n})) = 0 then\n"
+                f"    errmsg(\"An 'other' option was selected for Q{q}. Please specify.\");\n"
+                f"    reenter;\n"
+                f"  endif;"
+            )
+        else:
+            unmatched.append(n)
+    return procs, unmatched
+
+
 def uhc9_other_specify_procs(names):
     """#148: enforce 'Other (specify)' text on UHC9 dual-other items.
     `<FIELD>_YES_OTHER_TXT` (parent code 4) and `<FIELD>_NO_OTHER_TXT` (code 7),
@@ -78,6 +193,11 @@ def uhc9_other_specify_procs(names):
                 parent = n[: -len(suffix)]
                 procs[n] = (
                     f"PROC {n}\n"
+                    f"preproc\n"
+                    f"  if {parent} <> {code} then\n"
+                    f"    {n} = \"\";   {{ skip + clear: '{lbl}' not chosen }}\n"
+                    f"    noinput;\n"
+                    f"  endif;\n"
                     f"postproc\n"
                     f"  if {parent} = {code} and length(strip({n})) = 0 then\n"
                     f"    errmsg(\"'{lbl}' was selected for {parent}. Please specify.\");\n"
@@ -128,10 +248,13 @@ def why_difficult_gate_procs(names):
                            if qnum_of.get(names[j]) != q), None)
             if target is None:
                 continue
+            # Gate options are coded Yes=1/No=2 — skip unless explicitly flagged
+            # Yes. (`= 0` was a dead condition: 0 isn't in the value set and a
+            # blank is notappl, not 0, so the cluster was NEVER skipped.)
             procs[field] = (
                 f"PROC {field}\n"
                 f"preproc\n"
-                f"  if {gate} = 0 then   {{ Q{q} cluster shown only if {gate} was flagged }}\n"
+                f"  if {gate} <> 1 then   {{ Q{q} cluster shown only if {gate} was flagged Yes }}\n"
                 f"    skip to {target};\n"
                 f"  endif;"
             )
@@ -150,6 +273,17 @@ numeric currentYYYYMMDD;
 numeric currentYear;
 numeric currentMonth;
 
+{ Single-number redesign (2026-06-10): the questionnaire number's first 7 digits
+  are a POSITIONAL slice of the 10-digit PSA PSGC (RR|PP|MMM = positions 1-7 per
+  the adopted Questionnaire Numbering Convention) - they cannot be split into
+  per-level codes (PSA provinces are 3-digit; the slice straddles levels). So
+  validation resolves geoFull = first7*1000 hierarchically: region exact, then
+  scan the region's provinces (a province-level match covers province-anchored
+  facilities, e.g. district hospitals), else each province's cities. }
+numeric regionFull;
+numeric geoFull;
+numeric geoFound;
+
 { Shared helpers inlined into this single PROC GLOBAL (PSGC-Cascade first so its
   ROOT_PSGC_PARENT declaration precedes all functions). #include can't be used:
   CSPro forbids it inside a PROC, and CSEntry forbids code before the first PROC.
@@ -167,66 +301,162 @@ preproc
   currentYear  = int(currentYYYYMMDD / 10000);
   currentMonth = int(currentYYYYMMDD / 100) % 100;
 
-{ LANGUAGE_USED lives in the FIELD_CONTROL record, so it can't be set from the
-  form-file/level preproc ("belongs to a record at a lower level"), and a record
-  symbol can't have a PROC. Set it in the preproc of the first FIELD_CONTROL field
-  (SURVEY_CODE) — same record, runs at case start. §15.E }
-PROC SURVEY_CODE
-preproc
-  LANGUAGE_USED = getlanguage();
+{ LANGUAGE_USED is captured in the QUESTIONNAIRE_NUMBER postproc (case key, the
+  very first field) — see PROC QUESTIONNAIRE_NUMBER below. (Previously rode on
+  SURVEY_CODE / SURVEY_TEAM_LEADER_S_NAME; consolidated to the id postproc
+  2026-06-12 so it fires at the true case start regardless of FC form layout.) }
 """
 
 # --- Interview-control scaffolding: consent gate, GPS, photo, PSGC -----------
 # Item names per generate_dcf.py (FIELD_CONTROL, REC_FACILITY_CAPTURE, geo-ID).
 CONTROL_PROCS = """\
-{ ---- #154 Informed consent: Consent = No (2) aborts the interview ---- }
-PROC CONSENT_GIVEN
+{ ---- Single 12-digit Questionnaire Number (redesign 2026-06-10) ----
+  The enumerator types ONE number (RR PP MMM FF CCC). Parse it into the component
+  PSGC codes (kept as FIELD_CONTROL items so every downstream PROC keeps working),
+  validate region/province/city against the PSGC external dicts (hard-stop on a bad
+  code), and fill the read-only *_NAME items shown on the form. The full 10-digit
+  PSGC codes are also written to the off-form REGION/PROVINCE_HUC/CITY_MUNICIPALITY
+  items so the BARANGAY cascade filters correctly. ---- }
+PROC QUESTIONNAIRE_NUMBER
 postproc
-  if CONSENT_GIVEN = 2 then    { 1 = Yes, 2 = No }
-    ENUM_RESULT_FINAL_VISIT = 4;   { 4 = Refused (set disposition before ending) }
-    errmsg("Respondent declined consent. Interview ends; case coded Refused.");
-    endlevel;
+  { 0. record the interview language at the true case start (§15.E) }
+  LANGUAGE_USED = getlanguage();
+  { 1. decompose the within-parent codes }
+  REGION_CODE            = int(QUESTIONNAIRE_NUMBER / 10000000000);
+  PROVINCE_HUC_CODE      = int(QUESTIONNAIRE_NUMBER / 100000000) % 100;
+  CITY_MUNICIPALITY_CODE = int(QUESTIONNAIRE_NUMBER / 100000) % 1000;
+  FACILITY_NO            = int(QUESTIONNAIRE_NUMBER / 1000) % 100;
+  CASE_SEQ               = QUESTIONNAIRE_NUMBER % 1000;
+
+  { 2. geo prefix: the number's first 7 digits ARE positions 1-7 of the 10-digit
+       PSGC (positional slice per the adopted convention) - append 000 for the
+       full geo code. It matches either a city/municipality code or, for
+       province-anchored facilities (e.g. district hospitals), a province code. }
+  regionFull = REGION_CODE * 100000000;
+  geoFull    = int(QUESTIONNAIRE_NUMBER / 100000) * 1000;
+  REGION     = regionFull;
+
+  { 3a. region: exact match + name }
+  geoFound = 0;
+  R_PARENT_CODE = 0;
+  if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) <> 0 then
+    do varying numeric ri = 1 until ri > count(PSGC_REGION_DICT.PSGC_REGION_REC)
+      if R_CODE(ri) = regionFull then
+        REGION_NAME = strip(R_NAME(ri));
+        geoFound = 1;
+      endif;
+    enddo;
+  endif;
+  if geoFound = 0 then
+    errmsg("Region code %02d not found in PSGC. Check the Questionnaire Number.", REGION_CODE);
+    reenter;
   endif;
 
-{ ---- #157 Facility GPS capture (REC_FACILITY_CAPTURE, type Z, off-form) ----
-  Enumerator taps the FACILITY_CAPTURE_GPS trigger; ReadGPSReading() lives in
-  Capture-Helpers.apc. }
-PROC FACILITY_CAPTURE_GPS
+  { 3b. resolve the 7-digit prefix hierarchically: province-level match first,
+       else scan that province's cities. Fills both names + the full PSGC codes
+       (CITY_MUNICIPALITY feeds the barangay cascade). }
+  geoFound = 0;
+  P_PARENT_REGION = regionFull;
+  if loadcase(PSGC_PROVINCE_DICT, P_PARENT_REGION) <> 0 then
+    do varying numeric pi = 1 until pi > count(PSGC_PROVINCE_DICT.PSGC_PROVINCE_REC) or geoFound = 1
+      if P_CODE(pi) = geoFull then
+        { province-anchored facility: geo resolves at province level }
+        PROVINCE_NAME     = strip(P_NAME(pi));
+        CITY_NAME         = strip(P_NAME(pi));
+        PROVINCE_HUC      = geoFull;
+        CITY_MUNICIPALITY = geoFull;
+        geoFound = 1;
+      else
+        C_PARENT_PROVINCE = P_CODE(pi);
+        if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) <> 0 then
+          do varying numeric ci = 1 until ci > count(PSGC_CITY_DICT.PSGC_CITY_REC) or geoFound = 1
+            if C_CODE(ci) = geoFull then
+              PROVINCE_NAME     = strip(P_NAME(pi));
+              CITY_NAME         = strip(C_NAME(ci));
+              PROVINCE_HUC      = P_CODE(pi);
+              CITY_MUNICIPALITY = geoFull;
+              geoFound = 1;
+            endif;
+          enddo;
+        endif;
+      endif;
+    enddo;
+  endif;
+  if geoFound = 0 then
+    errmsg("Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.", int(QUESTIONNAIRE_NUMBER / 100000));
+    reenter;
+  endif;
+
+  { 4. the geo names are display-only confirmations - lock them read-only }
+  protect(REGION_NAME, true);
+  protect(PROVINCE_NAME, true);
+  protect(CITY_NAME, true);
+
+{ Informed consent: the separate CONSENT_GIVEN field was removed 2026-06-12.
+  Consent refusal is now recorded by the enumerator as the Result-of-Visit
+  disposition ("Refused" = code 3); the read-aloud consent script is read from
+  the printed sheet (off the CAPI). No consent gate PROC. }
+
+{ ---- #157 Facility GPS — AUTO-FETCHED on focus (2026-06-12; no manual trigger).
+  Fires when the enumerator reaches the coordinates; captured once (guarded on
+  read-time), then every GPS field is protected (read-only) so coordinates can't
+  be typed. ReadGPSReading() lives in Capture-Helpers.apc. Desktop (getos 10-19)
+  has no GPS radio → fields stay blank there (device-only). ---- }
+PROC FACILITY_GPS_LATITUDE
 onfocus
-  if ReadGPSReading(120, 20) then
-    FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
-    FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
-    FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
-    FACILITY_GPS_ACCURACY   = gps(accuracy);
-    FACILITY_GPS_SATELLITES = gps(satellites);
-    FACILITY_GPS_READTIME   = maketext("%d", gps(readtime));
+  if length(strip(FACILITY_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
+    if ReadGPSReading(120, 20) then
+      FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
+      FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+      FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+      FACILITY_GPS_ACCURACY   = gps(accuracy);
+      FACILITY_GPS_SATELLITES = gps(satellites);
+      FACILITY_GPS_READTIME   = maketext("%d", gps(readtime));
+    endif;
   endif;
-  FACILITY_CAPTURE_GPS = notappl;   { reset trigger so the button re-arms }
+  { Protect ONLY once captured — protecting a blank numeric (no fix / desktop)
+    triggers "protected field is out of range - value is NOTAPPL". }
+  if length(strip(FACILITY_GPS_READTIME)) > 0 then
+    protect(FACILITY_GPS_LATITUDE, true);
+    protect(FACILITY_GPS_LONGITUDE, true);
+    protect(FACILITY_GPS_ALTITUDE, true);
+    protect(FACILITY_GPS_ACCURACY, true);
+    protect(FACILITY_GPS_SATELLITES, true);
+    protect(FACILITY_GPS_READTIME, true);
+  endif;
 
-{ ---- #231 Verification photo. Filename pattern case-{12-digit case id RR-PP-MMM-FF-CCC}-verification.jpg.
-  Trigger item is CAPTURE_VERIFICATION_PHOTO per the dcf (off-form, type Z). ---- }
+{ ---- #231 Verification photo (moved to the END of the form 2026-06-12). Filename
+  pattern case-{12-digit case id RR-PP-MMM-FF-CCC}-verification.jpg. Now CONDITIONAL on
+  the visit outcome and soft-validated (warn, don't trap, on camera failure). ---- }
+PROC VERIFICATION_PHOTO_FILENAME
+preproc
+  { display-only — the camera trigger fills this; it is never typed }
+  noinput;
+
 PROC CAPTURE_VERIFICATION_PHOTO
+preproc
+  { gate: photograph only visits where an interview occurred
+    (1 Completed, 4 Incomplete); skip 2 Postponed / 3 Refused }
+  if not (ENUM_RESULT_FINAL_VISIT in 1, 4) then
+    VERIFICATION_PHOTO_FILENAME = "";   { clear any stale name if outcome was changed back }
+    noinput;
+  endif;
 onfocus
-  string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
-  if TakeVerificationPhoto(fn) then
-    VERIFICATION_PHOTO_FILENAME = fn;
+  { capture once: an empty filename means no photo yet, so (re)try the camera }
+  if length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
+    string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
+    if TakeVerificationPhoto(fn) then
+      VERIFICATION_PHOTO_FILENAME = fn;
+    else
+      errmsg("Verification photo not captured (camera cancelled or unavailable). Re-enter this field to retry, or note the reason in your field report.");
+    endif;
   endif;
   CAPTURE_VERIFICATION_PHOTO = notappl;
 
-{ ---- #232 / #151 PSGC cascade: each child's value set is filtered to children
-  of the chosen parent at onfocus (handlers in PSGC-Cascade.apc). ---- }
-PROC REGION
-onfocus
-  FillRegionValueSet();
-
-PROC PROVINCE_HUC
-onfocus
-  FillProvinceValueSet(REGION);
-
-PROC CITY_MUNICIPALITY
-onfocus
-  FillCityValueSet(PROVINCE_HUC);
-
+{ ---- #232 / #151 Barangay cascade (single-number redesign): region/province/city
+  are derived from the Questionnaire Number (off-form), so only barangay is picked
+  here — its value set is filtered to the children of the derived city. CITY_MUNICIPALITY
+  holds the full 10-digit city PSGC code (set in QUESTIONNAIRE_NUMBER postproc). ---- }
 PROC BARANGAY
 onfocus
   FillBarangayValueSet(CITY_MUNICIPALITY);
@@ -236,6 +466,28 @@ onfocus
 # Each entry is keyed by the field name it owns so we never emit a duplicate
 # PROC for a field that also appears in a table-driven skip below.
 BESPOKE_PROCS = {
+    # G1 (F2 benchmark — PROF-01 family): Q3_AGE plausibility. 2-digit field, so the
+    # only impossible-high value is a typo; hard floor 18 (a facility head is an adult),
+    # soft confirm at F2's tester-validated 80. Guarded against a blank (notappl) age.
+    "Q3_AGE": """\
+PROC Q3_AGE
+postproc
+  if Q3_AGE <> notappl and Q3_AGE < 18 then
+    errmsg("Age (%d) is below 18 - a facility head must be an adult. Please re-enter.", Q3_AGE);
+    reenter;
+  endif;
+  if Q3_AGE <> notappl and Q3_AGE > 80 then
+    errmsg("Age (%d) is unusually high for a facility head - please confirm.", Q3_AGE);
+  endif;""",
+    # G3 (F2 benchmark — DISP-02 / parity with F3 + F4): final-visit date cannot precede
+    # the first-visit date. Guarded so a blank final date (single visit) never false-fires.
+    "DATE_OF_FINAL_VISIT_TO_THE_FACILITY": """\
+PROC DATE_OF_FINAL_VISIT_TO_THE_FACILITY
+postproc
+  if DATE_OF_FINAL_VISIT_TO_THE_FACILITY <> notappl and DATE_FIRST_VISITED_THE_FACILITY <> notappl and DATE_OF_FINAL_VISIT_TO_THE_FACILITY < DATE_FIRST_VISITED_THE_FACILITY then
+    errmsg("Final-visit date cannot be earlier than the first-visit date.");
+    reenter;
+  endif;""",
     # 4.2 + 4.3 eligibility / tenure (Section A) — #148 hard, #152 cross-field
     "Q5_MONTHS_AT_FACILITY": """\
 PROC Q5_MONTHS_AT_FACILITY
@@ -245,9 +497,9 @@ postproc
     ENUM_RESULT_FINAL_VISIT = 4;   { Refused/Incomplete }
     endlevel;
   endif;
-  if Q5_YEARS_AT_FACILITY > (Q3_AGE - 18) then
+  if Q5_YEARS_AT_FACILITY > (Q3_AGE - 20) then
     errmsg("Years at facility (%d) exceeds working-age years available (%d). Reenter.",
-           Q5_YEARS_AT_FACILITY, Q3_AGE - 18);
+           Q5_YEARS_AT_FACILITY, Q3_AGE - 20);
     reenter;
   endif;""",
     "Q6_MONTHS_HEALTH": """\
@@ -260,9 +512,9 @@ postproc
            healthMos, tenureMos);
     reenter;
   endif;
-  if Q6_YEARS_HEALTH > (Q3_AGE - 18) then
+  if Q6_YEARS_HEALTH > (Q3_AGE - 20) then
     errmsg("Years in health (%d) exceeds working-age years available (%d).",
-           Q6_YEARS_HEALTH, Q3_AGE - 18);
+           Q6_YEARS_HEALTH, Q3_AGE - 20);
     reenter;
   endif;""",
     # 4.6 YAKAP accreditation date (Section D) — #148 hard
@@ -485,15 +737,14 @@ SKIP_RULES = [
 TODO_NOTE = """\
 { ============================================================================
   STILL OPEN (need per-item data or FMF/CSEntry verification):
-    - "Other (specify)" on SINGLE-choice + SELECT-ALL items (non-UHC9): each
-      needs its own parent field + trigger code/flag (e.g. Q11_OTHER_TXT ->
-      Q11_PRIMARY_PKG_STATUS = 5; Q104_..._OTHER_TXT -> the option's _O##_OTHER
-      flag). ~80 items; transcribe per item from the dcf value sets.
-    - Q65 / Q121 "None of the above only" -> skip the whole why-difficult block
-      (Q65_ACCRED_DIFFICULT_O10 / Q121_DOH_LIC_DIFFICULT_O14 = the None flag).
     - #144/#145 Filipino label content + setlanguage (FMF Designer side).
-    - Verify every literal option CODE marked "(verify codes)" against the dcf
-      value sets on first Designer compile.
+  CLOSED 2026-06-11: "Other (specify)" enforcement now auto-derived from the
+    dcf for all *_TXT items (see the auto-derived section above); Q65/Q121
+    why-difficult gates fixed (`<> 1` -- the old `= 0` was a dead condition,
+    options are coded Yes=1/No=2, blank is notappl) which also implements the
+    "None of the above only" routing: with no cluster option flagged Yes,
+    every cluster skips and entry lands at Q75/Q135. Literal option codes
+    audited mechanically against the dcf value sets (dead-condition scan).
   ============================================================================ }
 """
 
@@ -547,6 +798,33 @@ def main():
         covered.add(field)
         parts.append(proc)
         parts.append("")
+
+    parts.append("{ ---- 'Other (specify)' enforcement — auto-derived from the dcf (spec 4.13 tail) ---- }")
+    auto_procs, unmatched = auto_other_specify_procs()
+    auto_emitted = 0
+    for field, proc in sorted(auto_procs.items()):
+        if field in covered:
+            continue
+        covered.add(field)
+        parts.append(proc)
+        parts.append("")
+        auto_emitted += 1
+    print(f"  other-specify: {auto_emitted} auto-derived procs; "
+          f"{len([u for u in unmatched if u not in covered])} unmatched: "
+          f"{[u for u in unmatched if u not in covered]}")
+
+    parts.append("{ ---- Select-all exclusivity (soft warning — F2-benchmark deferred item) ---- }")
+    excl_emitted = excl_skipped = 0
+    for field, proc in sorted(select_all_exclusive_warning_procs(dcf_items_full()[0]).items()):
+        if field in covered:
+            excl_skipped += 1
+            continue
+        covered.add(field)
+        parts.append(proc)
+        parts.append("")
+        excl_emitted += 1
+    print(f"  select-all exclusivity: {excl_emitted} soft-warning procs"
+          + (f" ({excl_skipped} skipped — last flag already owns a proc)" if excl_skipped else ""))
 
     parts.append(TODO_NOTE)
 

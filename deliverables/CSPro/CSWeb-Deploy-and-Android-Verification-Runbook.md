@@ -51,14 +51,50 @@ Two ways to get this onto CSEntry:
 ---
 
 ## §B — CSWeb server config  *(Carl, admin UI — `E4-CSWeb-003/004/005`)*
-Do in this order; each is a Sprint-007 carry.
-1. **`E4-CSWeb-003` — upload dictionaries + apps (~4h).** For F1/F3/F4: create the dictionary
-   (upload the `.dcf`) so CSWeb has a case store, then host the app package (from §A.1).
-   *Stretch:* the OAuth `/token` works — see §G for scripting this via the CSWeb API.
-2. **`E4-CSWeb-004` — users/roles (~3h).** Create enumerator role + **one test account** for §E.
-3. **`E4-CSWeb-005` — tablet sync config (~3h).** Endpoint URL (`csweb.asiansocial.org`), sync
-   schedule, **conflict policy** (decide: server-wins vs last-write-wins for re-synced cases).
-   *This gates the §E round-trip.*
+> **PATH-B checklist — F1 PILOT FIRST.** Do top-to-bottom on `https://csweb.asiansocial.org/csweb/`,
+> logged in as built-in `admin` (the `<csweb-admin-password>` from the setup runbook / password manager).
+> Each box is one admin action. F3/F4 repeat B1/B2 with their own `.dcf` + `.pen` once F1 round-trips.
+> **State carried in:** F1/F3/F4 **dictionaries already registered** (Jun-4, 12-digit `RR-PP-MMM-FF-CCC`
+> key) — so **B1 is likely already done**; **verify** rather than re-upload. The real open item is **B2
+> (app deploy, #235)** — the canonical F1 `.pen` was never pushed.
+
+**B0 — Pre-flight (no admin login needed)**
+- [ ] F1 `.ent` carries the sync block (`properties.sync` → `…/csweb/api`, `put`) — ✅ done 2026-06-09,
+      baked into the generator; verify with: `grep -A2 '"sync"' deliverables/CSPro/F1/FacilityHeadSurvey.ent`.
+- [ ] F1 passes the CSEntry compile gate — ✅ `py automation/csentry_verify.py F1` → PASS.
+- [ ] Produce the F1 **deploy package** (the `.pen` + PSGC `.dcf`/`.dat`): CSPro Designer ▸ open
+      `F1/FacilityHeadSurvey.ent` ▸ **File ▸ Deploy Application ▸ To Package File** → `FacilityHeadSurvey.pen`.
+      *(Agent-automatable via pywinauto — see §G; no prod access needed for this step.)*
+
+**B1 — Case store / dictionary  (`E4-CSWeb-003`, part 1)** — *verify, likely already present*
+- [ ] **Data dashboard** → confirm `FACILITYHEADSURVEY_DICT` exists with the **12-digit** key and **0 cases**.
+- [ ] If missing/old: **Add dictionary** → upload `F1/FacilityHeadSurvey.dcf`.
+
+**B2 — App deploy  (`E4-CSWeb-003`, part 2 — the #235 residual, the real gap)**
+- [ ] **Apps dashboard** → host the F1 app so CSEntry can pull it. Two routes:
+  - **Designer push (preferred):** Designer ▸ `FacilityHeadSurvey.ent` ▸ **File ▸ Deploy Application ▸
+    To CSWeb** → server `https://csweb.asiansocial.org/csweb/api`, **admin creds** → deploy. Designer
+    packages the `.ent` + 4 PSGC externals **+ their `.dat`** automatically.
+  - **Manual upload:** Apps dashboard ▸ upload the B0 `.pen`.
+- [ ] Confirm the F1 app appears under **Apps** and lists the 4 PSGC externals.
+
+**B3 — Roles + one test account  (`E4-CSWeb-004`)** — *minimum for the pilot*
+- [ ] **Roles dashboard** → create role **`field-sync`** (no dashboards; tick **F1 dictionary up/down sync**).
+      *(Full 5-role matrix is in `CSWeb/CSWeb-User-Management-and-RBAC-Provisioning-Pack.md` — not needed
+      for the pilot; one role + one user is enough.)*
+- [ ] **Users dashboard** → add **one** test enumerator, username `se-test` (or `se-001`), role `field-sync`,
+      a strong password (≥8, store it). First/last name **letters only**.
+- [ ] Spot-check: `se-test` **cannot** log into the web UI (no dashboard) — sync-only, by design.
+
+**B4 — Sync config / conflict policy  (`E4-CSWeb-005`, gates §E)**
+- [ ] Confirm the F1 dictionary's sync is enabled for `field-sync` (set in B3).
+- [ ] **Conflict policy decision** (server-wins vs last-write-wins for a re-synced edited case) —
+      ⟨go/no-go⟩, recorded for §E. Default suggestion: **last-write-wins** for a single-tablet pilot.
+- [ ] Endpoint sanity: `https://csweb.asiansocial.org/csweb/api/token` returns **405** to a GET
+      (exists, POST-only) — ✅ verified 2026-06-09.
+
+> *Scripting B1/B2/B3:* the OAuth `/token` works — see §G. App deploy + user create are **production,
+> ASPSI-gated, credentialed** writes → do with Carl's explicit go-ahead + admin creds, not speculatively.
 
 ---
 
@@ -117,6 +153,7 @@ capture a screenshot per check to the gate issue. Mark ✅/❌/N-A.
 | **Sync up** | case uploads; appears in the CSWeb dictionary store (verify in CSWeb admin) | |
 | **Sync down** | an app update / new case pulls to the device | |
 | Re-sync an edited case | conflict policy (from §B-005) behaves as configured | |
+| **Verification-photo binary sync** | photo taken via `CAPTURE_VERIFICATION_PHOTO` syncs up: file appears in `files/binary-items/<dict>/` on the server (named by MD5 signature), one matching row in `csweb_uhc_y2.<DICT>_case_binary_data` for the case GUID, and `verification_photo_filename` populated in the breakout record. Server check: `ls /opt/app/lamp/www/csweb/files/binary-items/facilityheadsurvey_dict/` + `SELECT COUNT(*) FROM csweb_uhc_y2.FACILITYHEADSURVEY_DICT_case_binary_data;` (CSWeb UI doesn't render photos — view via CSPro Data Viewer or the file itself) | |
 | "Errors to capture in CSWeb" (Myra's open item) | edit/error data is present in the synced case | |
 
 ---

@@ -1,0 +1,25 @@
+--- dist/css/cspro-styles.css.orig-8.0.1	2026-06-11 18:04:45.615705494 +0000
++++ dist/css/cspro-styles.css	2026-06-11 18:09:29.111754325 +0000
+@@ -165,4 +165,20 @@
+ }
+ .cspro-nav-item {
+   white-space: normal !important;
+-}
+\ No newline at end of file
++}
++/* ASPSI 2026-06-12: long dictionary names (e.g. "FACILITYHEADSURVEY_DICT")
++   overflow the sidebar submenu box; let them wrap inside it */
++.sidebar .nav-item .collapse .collapse-inner .collapse-item,
++.sidebar .nav-item .collapsing .collapse-inner .collapse-item {
++    white-space: normal;
++    overflow-wrap: anywhere;
++    word-break: break-word;
++}
++
++/* ASPSI 2026-06-12: "View case" modal — Bootstrap's modal-lg max-width (800px)
++   overrides the template's inline width:80%, clipping the record tables.
++   Let the dialog actually use the viewport. */
++#pointInfoModal .modal-dialog {
++    max-width: 92vw;
++    width: 92vw;
++}

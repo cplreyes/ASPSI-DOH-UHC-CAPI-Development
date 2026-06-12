@@ -1,0 +1,20 @@
+--- templates/mapReport.twig.orig-8.0.1	2026-06-11 18:29:50.919860348 +0000
++++ templates/mapReport.twig	2026-06-11 18:32:47.272010455 +0000
+@@ -98,7 +98,7 @@
+                                    var map =
+                                            {
+                                                mymap: L.map('mapid', {
+-                                               }).fitWorld(),
++                                               }).setView([12.88, 121.77], 6), // ASPSI 2026-06-12: default to Philippines instead of fitWorld()
+                                                index: undefined,
+                                                clusterLayer: undefined,
+                                                tileLayer: undefined,
+@@ -193,7 +193,7 @@
+                                                        fitWorld: mapInfo.service.name === 'File' ? false : true,
+                                                    }).done((map.handleResponse)).then(function () {
+                                                        if (this.fitWorld) {
+-                                                           map.mymap.fitWorld();
++                                                           map.mymap.setView([12.88, 121.77], 6); // ASPSI 2026-06-12: Philippines, not fitWorld()
+                                                        }
+                                                    });  //fitworld does not work for some mbtiles changed it to be used only when it is not mbtile
+                                                },

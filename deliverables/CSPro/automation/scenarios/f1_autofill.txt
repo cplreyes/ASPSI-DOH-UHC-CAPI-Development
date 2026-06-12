@@ -1,0 +1,9 @@
+# F1 auto-fill smoke: enter a valid 12-digit Questionnaire Number and confirm the
+# CASE_SEQ postproc looks up the facility (FACILITY_LOOKUP) without the "not found"
+# error. Code 01-02-800-01-001 => facility code 010280001 = BANGUI DISTRICT HOSPITAL.
+# EXPECT: after the key, NO "Facility code not found" error -> loadcase resolved.
+rmdata ../F1/sample042126.csdb
+launch ../F1/FacilityHeadSurvey.pff
+casekey 01 02 800 01 001
+shot
+note entered key 010280001; if no 'not found' error, auto-fill loadcase worked

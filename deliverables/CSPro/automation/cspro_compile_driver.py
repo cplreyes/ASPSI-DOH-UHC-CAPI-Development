@@ -46,6 +46,14 @@ CSPRO_DIR = HERE.parent                          # deliverables/CSPro
 OUT = HERE / "shots"
 F1_QSF = CSPRO_DIR / "F1" / "FacilityHeadSurvey.ent.qsf"   # boilerplate question-text template
 
+# CSWeb Simple Synchronization (an .ent app-property, NOT logic). Baked here from the
+# block CSPro Designer wrote into FacilityHeadSurvey.ent after Options > Synchronization
+# (Test Connection PASS 2026-06-09). Same CSWeb for all three instruments, so it is
+# instrument-independent. direction "put" = device->server upload (covers the pilot
+# round-trip: collect -> sync up -> verify in CSWeb). Switch to "both" to also pull cases down.
+SYNC_SERVER = "https://csweb.asiansocial.org/csweb/api"
+SYNC_DIRECTION = "put"
+
 # base = file stem; ent_name = the .ent "name" (uppercase, no suffix).
 SPECS = {
     "F1": {"dir": "F1", "base": "FacilityHeadSurvey", "ent_name": "FACILITYHEADSURVEY", "has_fmf_gen": False},
@@ -82,10 +90,13 @@ def _ent_json(p):
         "name": p["ent_name"], "label": p["base"],
         "dictionaries": [
             {"type": "input", "path": f"{p['base']}.dcf", "parent": f"{p['base']}.fmf"},
-            {"type": "external", "path": "../shared/psgc_region.dcf"},
-            {"type": "external", "path": "../shared/psgc_province.dcf"},
-            {"type": "external", "path": "../shared/psgc_city.dcf"},
-            {"type": "external", "path": "../shared/psgc_barangay.dcf"},
+            {"type": "external", "path": "psgc_region.dcf"},
+            {"type": "external", "path": "psgc_province.dcf"},
+            {"type": "external", "path": "psgc_city.dcf"},
+            {"type": "external", "path": "psgc_barangay.dcf"},
+            # facility_lookup removed 2026-06-10: its text-repo indexing infinite-loops
+            # Android CSEntry at app start (the auto-fill it served is gone in the
+            # single-Questionnaire-Number redesign). See the redesign spec + blockers memo.
         ],
         "forms": [f"{p['base']}.fmf"],
         "questionText": [f"{p['base']}.ent.qsf"],
@@ -94,12 +105,13 @@ def _ent_json(p):
         "logicSettings": {"version": 2.0, "caseSensitive": {"symbols": False},
                           "actionInvoker": {"accessFromExternalCaller": "promptIfNoValidAccessToken",
                                             "convertResultsForLogic": True}},
-        "properties": {"askOperatorId": False, "autoAdvanceOnSelection": False, "caseTree": "mobileOnly",
+        "properties": {"askOperatorId": False, "autoAdvanceOnSelection": True, "caseTree": "mobileOnly",
                        "centerForms": False, "createListing": False, "createLog": False, "decimalMark": "dot",
                        "displayCodesAlongsideLabels": False, "notes": {"delete": "all", "edit": "all"},
-                       "partialSave": {"operatorEnabled": False}, "showEndCaseMessage": True,
+                       "partialSave": {"operatorEnabled": True}, "showEndCaseMessage": True,
                        "showOnlyDiscreteValuesInComboBoxes": True, "showFieldLabels": True,
                        "showErrorMessageNumbers": False, "showQuestionText": True, "showRefusals": True,
+                       "sync": {"server": SYNC_SERVER, "direction": SYNC_DIRECTION},
                        "verify": {"frequency": 1, "start": 1}, "htmlDialogs": True,
                        "paradata": {"collection": "all", "recordCoordinates": False,
                                     "recordInitialPropertyValues": False, "recordIteratorLoadCases": False,
@@ -141,6 +153,28 @@ def build_instrument(key):
     if not p["ent"].exists():
         p["ent"].write_text(_ent_json(p), encoding="utf-8")
         print(f"    templated {p['ent'].name}")
+    else:
+        # ensure required properties are present on a pre-existing .ent (idempotent;
+        # surgical merge so we never clobber other Designer-set properties):
+        #   - CSWeb sync block
+        #   - operator partial save (stop mid-interview + resume; 2026-06-11)
+        #   - auto-advance on selection (tap a choice -> next field, no extra Next tap; 2026-06-11)
+        ent_obj = json.loads(p["ent"].read_text(encoding="utf-8"))
+        props = ent_obj.setdefault("properties", {})
+        changed = []
+        want_sync = {"server": SYNC_SERVER, "direction": SYNC_DIRECTION}
+        if props.get("sync") != want_sync:
+            props["sync"] = want_sync
+            changed.append("CSWeb sync")
+        if props.get("partialSave", {}).get("operatorEnabled") is not True:
+            props["partialSave"] = {"operatorEnabled": True}
+            changed.append("operator partialSave")
+        if props.get("autoAdvanceOnSelection") is not True:
+            props["autoAdvanceOnSelection"] = True
+            changed.append("autoAdvanceOnSelection")
+        if changed:
+            p["ent"].write_text(json.dumps(ent_obj, indent=2), encoding="utf-8")
+            print(f"    set {' + '.join(changed)} in {p['ent'].name}")
 
     # 4. preflight (report; compile is the real gate)
     if (CSPRO_DIR / "preflight_validate.py").exists():

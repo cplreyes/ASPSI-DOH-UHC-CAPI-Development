@@ -1,4 +1,4 @@
-[Run Information]
+﻿[Run Information]
 Version=CSPro 8.0
 AppType=Entry
 
@@ -7,7 +7,7 @@ Application=.\PatientSurvey.ent
 InputData=.\desktest.csdb
 
 [ExternalFiles]
-PSGC_REGION_DICT=.\..\shared\psgc_region.dat
-PSGC_PROVINCE_DICT=.\..\shared\psgc_province.dat
-PSGC_CITY_DICT=.\..\shared\psgc_city.dat
-PSGC_BARANGAY_DICT=.\..\shared\psgc_barangay.dat
+PSGC_REGION_DICT=.\psgc_region.dat
+PSGC_PROVINCE_DICT=.\psgc_province.dat
+PSGC_CITY_DICT=.\psgc_city.dat
+PSGC_BARANGAY_DICT=.\psgc_barangay.dat

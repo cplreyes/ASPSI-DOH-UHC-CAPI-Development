@@ -36,7 +36,7 @@ from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, FREQUENCY, WHY_DIFF_OPTIONS,
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
     select_one, select_all, uhc9_item, record, build_geo_id,
-    _gps_fields, _photo_block, _case_control_items,
+    _gps_fields, _photo_block, _case_control_items, derived_geo_code_items,
     apply_translations,
 )
 
@@ -82,7 +82,10 @@ Q121_DYNAMIC_VALUE_SET = False
 # ============================================================
 
 def build_field_control():
-    items = _case_control_items("F1") + [
+    # Field Control = exactly the paper FIELD CONTROL block (2026-06-12).
+    # Case-start operational metadata (interviewer/timestamps/AAPOR) removed;
+    # instrument identity comes from the installed questionnaire.
+    items = [
         # Header — preserves exact item names from Carl's scaffold so
         # any prior PROC code keeps working.
         alpha("SURVEY_TEAM_LEADER_S_NAME",      "Survey Team Leader's Name",                    length=50),
@@ -108,12 +111,13 @@ def build_field_control():
                     ("Refused",    "3"),
                     ("Incomplete", "4"),
                 ]),
-        # Informed consent block (Bug #5 fix from F1-Skip-Logic-and-Validations.md)
-        numeric("CONSENT_GIVEN",                "Informed consent given",                       length=1,
-                value_set_options=YES_NO),
-        # §15.E — language used for the interview (getlanguage() at case start).
+        # §15.E — language used for the interview (getlanguage() in the
+        # QUESTIONNAIRE_NUMBER postproc; off-form, not enumerator input).
         alpha("LANGUAGE_USED",                  "Language used for the interview",              length=20),
-    ]
+    ] + derived_geo_code_items()
+    # ^ single-number redesign (2026-06-10): REGION_CODE/PROVINCE_HUC_CODE/
+    #   CITY_MUNICIPALITY_CODE/FACILITY_NO/CASE_SEQ (derived from QUESTIONNAIRE_NUMBER)
+    #   + REGION_NAME/PROVINCE_NAME/CITY_NAME (read-only PSGC names) live here now.
     return record("FIELD_CONTROL", "Field Control", "A", items)
 
 
@@ -1065,6 +1069,11 @@ def build_dictionary():
         # Root record (recordType "1") — required by CSPro hierarchy
         record("FACILITYHEADSURVEY_REC", "FacilityHeadSurvey Record", "1", []),
         build_field_control(),
+        # Single-number redesign: REGION/PROVINCE_HUC/CITY_MUNICIPALITY stay in the
+        # dict but go OFF-FORM (logic-set to the full PSGC codes from the
+        # Questionnaire Number); the form shows the read-only *_NAME items +
+        # the BARANGAY picker. Keeping the four geo fields lets the shared
+        # PSGC-Cascade.apc functions compile unchanged.
         build_geo_id("facility"),
         build_capture_record(),
         build_section_a(),
@@ -1092,17 +1101,14 @@ def build_dictionary():
                 "name": "FACILITYHEADSURVEY_LEVEL",
                 "labels": [{"text": "FacilityHeadSurvey Level"}],
                 "ids": {
+                    # Single 12-digit Questionnaire Number (RR-PP-MMM-FF-CCC encoded).
+                    # Redesign 2026-06-10: component codes are derived in logic from
+                    # this number and live as non-id FIELD_CONTROL items (see
+                    # build_field_control + the QUESTIONNAIRE_NUMBER postproc in the .apc).
                     "items": [
-                        {"name": "REGION_CODE",            "labels": [{"text": "Region Code (PSGC)"}],
-                         "contentType": "numeric", "start": 2,  "length": 2, "zeroFill": True},
-                        {"name": "PROVINCE_HUC_CODE",      "labels": [{"text": "Province / HUC Code (PSGC)"}],
-                         "contentType": "numeric", "start": 4,  "length": 2, "zeroFill": True},
-                        {"name": "CITY_MUNICIPALITY_CODE", "labels": [{"text": "City / Municipality Code (PSGC)"}],
-                         "contentType": "numeric", "start": 6,  "length": 3, "zeroFill": True},
-                        {"name": "FACILITY_NO",            "labels": [{"text": "Facility Number (within municipality)"}],
-                         "contentType": "numeric", "start": 9,  "length": 2, "zeroFill": True},
-                        {"name": "CASE_SEQ",               "labels": [{"text": "Case Sequence (per-facility, per-instrument)"}],
-                         "contentType": "numeric", "start": 11, "length": 3, "zeroFill": True},
+                        {"name": "QUESTIONNAIRE_NUMBER",
+                         "labels": [{"text": "Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)"}],
+                         "contentType": "numeric", "start": 2, "length": 12, "zeroFill": True},
                     ]
                 },
                 "records": [r for r in records if r.get("name") != "FACILITYHEADSURVEY_REC"],

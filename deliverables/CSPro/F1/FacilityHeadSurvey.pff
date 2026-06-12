@@ -4,5 +4,10 @@ AppType=Entry
 
 [Files]
 Application=.\FacilityHeadSurvey.ent
-InputData=.\sample042126.csdb
-Paradata=.\FacilityHeadSurvey.cslog
+InputData=.\FacilityHeadSurvey.csdb
+
+[ExternalFiles]
+PSGC_REGION_DICT=.\psgc_region.dat
+PSGC_PROVINCE_DICT=.\psgc_province.dat
+PSGC_CITY_DICT=.\psgc_city.dat
+PSGC_BARANGAY_DICT=.\psgc_barangay.dat

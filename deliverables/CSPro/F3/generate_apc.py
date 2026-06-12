@@ -160,6 +160,12 @@ HEADER = """\
 
 PROC GLOBAL
 numeric currentYYYYMMDD;
+{ Single-number redesign (2026-06-11): the questionnaire number's first 7 digits
+  are a POSITIONAL slice of the 10-digit PSA PSGC - validated hierarchically
+  (region exact -> region's provinces -> each province's cities). }
+numeric regionFull;
+numeric geoFull;
+numeric geoFound;
 numeric currentYear;
 numeric currentMonth;
 
@@ -178,41 +184,93 @@ preproc
   currentYear  = int(currentYYYYMMDD / 10000);
   currentMonth = int(currentYYYYMMDD / 100) % 100;
 
-{ LANGUAGE_USED lives in the FIELD_CONTROL record, so it can't be set from the
-  form-file/level preproc ("belongs to a record at a lower level"), and a record
-  symbol can't have a PROC. Set it in the preproc of the first FIELD_CONTROL field
-  (SURVEY_CODE) — same record, runs at case start. §15.E }
-PROC SURVEY_CODE
-preproc
-  LANGUAGE_USED = getlanguage();
+{ LANGUAGE_USED is captured in the QUESTIONNAIRE_NUMBER postproc (case key, the
+  very first field) — see PROC QUESTIONNAIRE_NUMBER below. (Was on SURVEY_CODE,
+  then INTERVIEWER_ID; both removed 2026-06-12 — consolidated to the id postproc.) }
 """
 
 CONTROL_PROCS = """\
-{ ---- Informed consent: No (2) terminates the interview (spec 4.2) ---- }
-PROC CONSENT_GIVEN
-postproc
-  if CONSENT_GIVEN = 2 then
-    ENUM_RESULT_FIRST_VISIT = 4;   { Withdraw Participation/Consent }
-    errmsg("Respondent declined consent. Interview ends; case coded Refused.");
-    endlevel;   { end the CASE on refusal (endgroup only skips this group). The case key
-                  is now captured on FORM000 before consent, so the refused case saves. }
-  endif;
+{ Informed consent: the separate CONSENT_GIVEN field was removed 2026-06-12.
+  Consent refusal is now recorded as the Result-of-Visit disposition
+  ("Withdraw Participation/Consent" = code 6); the read-aloud consent script is
+  read from the printed sheet (off the CAPI). No consent gate PROC. }
 
 { ---- F1 linkage: facility is intrinsic to the 12-digit case-key id-block
   (REGION_CODE + PROVINCE_HUC_CODE + CITY_MUNICIPALITY_CODE + FACILITY_NO);
   F3_FACILITY_ID retired 2026-06-04. The cross-check against the synced F1
   facility set moves to the CSWeb sync step (E4-CSWeb-005). ---- }
 
-{ ---- PSGC cascade — facility geo-ID (spec 4.3) ---- }
-PROC REGION
-onfocus
-  FillRegionValueSet();
-PROC PROVINCE_HUC
-onfocus
-  FillProvinceValueSet(REGION);
-PROC CITY_MUNICIPALITY
-onfocus
-  FillCityValueSet(PROVINCE_HUC);
+{ ---- Single 12-digit Questionnaire Number (redesign 2026-06-11; mirrors F1) ----
+  Parse the number into the component codes (FIELD_CONTROL items - downstream
+  PROCs keep working), validate the 7-digit geo prefix hierarchically against
+  the PSGC dicts, fill the read-only *_NAME items, and set the full PSGC codes
+  on the off-form geo items so the BARANGAY cascade filters correctly. ---- }
+PROC QUESTIONNAIRE_NUMBER
+postproc
+  LANGUAGE_USED = getlanguage();   { record interview language at case start (§15.E) }
+  REGION_CODE            = int(QUESTIONNAIRE_NUMBER / 10000000000);
+  PROVINCE_HUC_CODE      = int(QUESTIONNAIRE_NUMBER / 100000000) % 100;
+  CITY_MUNICIPALITY_CODE = int(QUESTIONNAIRE_NUMBER / 100000) % 1000;
+  FACILITY_NO            = int(QUESTIONNAIRE_NUMBER / 1000) % 100;
+  CASE_SEQ               = QUESTIONNAIRE_NUMBER % 1000;
+
+  regionFull = REGION_CODE * 100000000;
+  geoFull    = int(QUESTIONNAIRE_NUMBER / 100000) * 1000;
+  REGION     = regionFull;
+
+  geoFound = 0;
+  R_PARENT_CODE = 0;
+  if loadcase(PSGC_REGION_DICT, R_PARENT_CODE) <> 0 then
+    do varying numeric ri = 1 until ri > count(PSGC_REGION_DICT.PSGC_REGION_REC)
+      if R_CODE(ri) = regionFull then
+        REGION_NAME = strip(R_NAME(ri));
+        geoFound = 1;
+      endif;
+    enddo;
+  endif;
+  if geoFound = 0 then
+    errmsg("Region code %02d not found in PSGC. Check the Questionnaire Number.", REGION_CODE);
+    reenter;
+  endif;
+
+  geoFound = 0;
+  P_PARENT_REGION = regionFull;
+  if loadcase(PSGC_PROVINCE_DICT, P_PARENT_REGION) <> 0 then
+    do varying numeric pi = 1 until pi > count(PSGC_PROVINCE_DICT.PSGC_PROVINCE_REC) or geoFound = 1
+      if P_CODE(pi) = geoFull then
+        PROVINCE_NAME     = strip(P_NAME(pi));
+        CITY_NAME         = strip(P_NAME(pi));
+        PROVINCE_HUC      = geoFull;
+        CITY_MUNICIPALITY = geoFull;
+        geoFound = 1;
+      else
+        C_PARENT_PROVINCE = P_CODE(pi);
+        if loadcase(PSGC_CITY_DICT, C_PARENT_PROVINCE) <> 0 then
+          do varying numeric ci = 1 until ci > count(PSGC_CITY_DICT.PSGC_CITY_REC) or geoFound = 1
+            if C_CODE(ci) = geoFull then
+              PROVINCE_NAME     = strip(P_NAME(pi));
+              CITY_NAME         = strip(C_NAME(ci));
+              PROVINCE_HUC      = P_CODE(pi);
+              CITY_MUNICIPALITY = geoFull;
+              geoFound = 1;
+            endif;
+          enddo;
+        endif;
+      endif;
+    enddo;
+  endif;
+  if geoFound = 0 then
+    errmsg("Geo prefix %07d not found in PSGC (no province or city/municipality matches). Check the Questionnaire Number.", int(QUESTIONNAIRE_NUMBER / 100000));
+    reenter;
+  endif;
+
+  protect(REGION_NAME, true);
+  protect(PROVINCE_NAME, true);
+  protect(CITY_NAME, true);
+
+{ ---- Barangay picker (facility geo): region/province/city are derived from the
+  Questionnaire Number (off-form); only barangay is picked, filtered by the
+  derived city/province code. ---- }
 PROC BARANGAY
 onfocus
   FillBarangayValueSet(CITY_MUNICIPALITY);
@@ -262,38 +320,81 @@ onfocus
     setvalueset(P_BARANGAY, vsPB);
   endif;
 
-{ ---- GPS + verification photo (spec 4.3a; helpers in Capture-Helpers.apc) ---- }
-PROC FACILITY_CAPTURE_GPS
+{ ---- GPS — AUTO-FETCHED on focus (2026-06-12; no manual trigger). Captured
+  once (guarded on read-time), then all GPS fields protected (read-only) so
+  coordinates can't be typed. Helpers in Capture-Helpers.apc. Desktop (getos
+  10-19) has no GPS radio → fields stay blank there (device-only). ---- }
+PROC FACILITY_GPS_LATITUDE
 onfocus
-  if ReadGPSReading(120, 20) then
-    FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
-    FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
-    FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
-    FACILITY_GPS_ACCURACY   = gps(accuracy);
-    FACILITY_GPS_SATELLITES = gps(satellites);
-    FACILITY_GPS_READTIME   = maketext("%d", gps(readtime));
+  if length(strip(FACILITY_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
+    if ReadGPSReading(120, 20) then
+      FACILITY_GPS_LATITUDE   = maketext("%f", gps(latitude));
+      FACILITY_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+      FACILITY_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+      FACILITY_GPS_ACCURACY   = gps(accuracy);
+      FACILITY_GPS_SATELLITES = gps(satellites);
+      FACILITY_GPS_READTIME   = maketext("%d", gps(readtime));
+    endif;
   endif;
-  FACILITY_CAPTURE_GPS = notappl;
+  { Protect ONLY once captured — protecting a blank numeric (no fix / desktop)
+    triggers "protected field is out of range - value is NOTAPPL". }
+  if length(strip(FACILITY_GPS_READTIME)) > 0 then
+    protect(FACILITY_GPS_LATITUDE, true);
+    protect(FACILITY_GPS_LONGITUDE, true);
+    protect(FACILITY_GPS_ALTITUDE, true);
+    protect(FACILITY_GPS_ACCURACY, true);
+    protect(FACILITY_GPS_SATELLITES, true);
+    protect(FACILITY_GPS_READTIME, true);
+  endif;
 
-PROC P_HOME_CAPTURE_GPS
+PROC P_HOME_GPS_LATITUDE
 onfocus
-  { Home-visit GPS (outpatient / home interview). Trigger item is
-    P_HOME_CAPTURE_GPS per the dcf; fields are P_HOME_GPS_*. }
-  if ReadGPSReading(120, 20) then
-    P_HOME_GPS_LATITUDE   = maketext("%f", gps(latitude));
-    P_HOME_GPS_LONGITUDE  = maketext("%f", gps(longitude));
-    P_HOME_GPS_ALTITUDE   = maketext("%f", gps(altitude));
-    P_HOME_GPS_ACCURACY   = gps(accuracy);
-    P_HOME_GPS_SATELLITES = gps(satellites);
-    P_HOME_GPS_READTIME   = maketext("%d", gps(readtime));
+  { Home-visit GPS (outpatient / home interview); fields are P_HOME_GPS_*. }
+  if length(strip(P_HOME_GPS_READTIME)) = 0 then   { capture once; not on back-nav }
+    if ReadGPSReading(120, 20) then
+      P_HOME_GPS_LATITUDE   = maketext("%f", gps(latitude));
+      P_HOME_GPS_LONGITUDE  = maketext("%f", gps(longitude));
+      P_HOME_GPS_ALTITUDE   = maketext("%f", gps(altitude));
+      P_HOME_GPS_ACCURACY   = gps(accuracy);
+      P_HOME_GPS_SATELLITES = gps(satellites);
+      P_HOME_GPS_READTIME   = maketext("%d", gps(readtime));
+    endif;
   endif;
-  P_HOME_CAPTURE_GPS = notappl;
+  { Protect ONLY once captured — see FACILITY_GPS_LATITUDE note above. }
+  if length(strip(P_HOME_GPS_READTIME)) > 0 then
+    protect(P_HOME_GPS_LATITUDE, true);
+    protect(P_HOME_GPS_LONGITUDE, true);
+    protect(P_HOME_GPS_ALTITUDE, true);
+    protect(P_HOME_GPS_ACCURACY, true);
+    protect(P_HOME_GPS_SATELLITES, true);
+    protect(P_HOME_GPS_READTIME, true);
+  endif;
+
+{ ---- #231 Verification photo (moved to the END of the form 2026-06-12). CONDITIONAL on
+  the visit outcome and soft-validated (warn, don't trap, on camera failure). ---- }
+PROC VERIFICATION_PHOTO_FILENAME
+preproc
+  { display-only — the camera trigger fills this; it is never typed }
+  noinput;
 
 PROC CAPTURE_VERIFICATION_PHOTO
+preproc
+  { gate: photograph only visits where an interview occurred — 1 Completed,
+    2 Completed at the Hospital, 4 Incomplete, 5 Completed at Home; skip
+    3 Postponed / 6 Withdraw Participation/Consent }
+  if not (ENUM_RESULT_FINAL_VISIT in 1, 2, 4, 5) then
+    VERIFICATION_PHOTO_FILENAME = "";   { clear any stale name if outcome was changed back }
+    noinput;
+  endif;
 onfocus
-  string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
-  if TakeVerificationPhoto(fn) then
-    VERIFICATION_PHOTO_FILENAME = fn;
+  { capture once: an empty filename means no photo yet, so (re)try the camera }
+  if length(strip(VERIFICATION_PHOTO_FILENAME)) = 0 then
+    string fn = "case-" + maketext("%02d%02d%03d%02d%03d", REGION_CODE, PROVINCE_HUC_CODE, CITY_MUNICIPALITY_CODE, FACILITY_NO, CASE_SEQ) + "-verification.jpg";
+    if TakeVerificationPhoto(fn) then
+      VERIFICATION_PHOTO_FILENAME = fn;
+    else
+      errmsg("Verification photo not captured (camera cancelled or unavailable). Re-enter this field to retry, or note the reason in your field report.");
+    endif;
   endif;
   CAPTURE_VERIFICATION_PHOTO = notappl;
 """
@@ -320,6 +421,31 @@ preproc
 
 # Multi-branch routing + end-of-survey + cross-field gate (spec 2 D-F/J-L).
 EXTRA_PROCS = """\
+{ ---- 'Other (specify)' enforcement -- Q98 payment-matrix others (audit 2026-06-11) ---- }
+PROC Q98_OTHER_DONATION_TXT
+preproc
+  if Q98_PAY_06 <> 1 then
+    Q98_OTHER_DONATION_TXT = "";   { skip + clear: this donation option not ticked }
+    noinput;
+  endif;
+postproc
+  if Q98_PAY_06 = 1 and length(strip(Q98_OTHER_DONATION_TXT)) = 0 then
+    errmsg("'Other Donation/Charity/Assistance' was selected in Q98. Please specify.");
+    reenter;
+  endif;
+
+PROC Q98_OTHER_TXT
+preproc
+  if Q98_PAY_15 <> 1 then
+    Q98_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked }
+    noinput;
+  endif;
+postproc
+  if Q98_PAY_15 = 1 and length(strip(Q98_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected in Q98. Please specify.");
+    reenter;
+  endif;
+
 { ---- Multi-branch routing (spec 2) ---- }
 PROC Q63_HAS_USUAL_FACILITY
 postproc
@@ -528,6 +654,11 @@ def uhc9_other_specify_procs(names):
                 parent = n[: -len(suffix)]
                 procs[n] = (
                     f"PROC {n}\n"
+                    f"preproc\n"
+                    f"  if {parent} <> {code} then\n"
+                    f"    {n} = \"\";   {{ skip + clear: '{lbl}' not chosen }}\n"
+                    f"    noinput;\n"
+                    f"  endif;\n"
                     f"postproc\n"
                     f"  if {parent} = {code} and length(strip({n})) = 0 then\n"
                     f"    errmsg(\"'{lbl}' was selected for {parent}. Please specify.\");\n"
