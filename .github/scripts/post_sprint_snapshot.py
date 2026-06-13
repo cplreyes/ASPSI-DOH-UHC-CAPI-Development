@@ -1,7 +1,21 @@
 """Post cross-sprint summary snapshot to Slack #capi-scrum.
 
-Queries GH Project #8 (UHC CAPI - Backlog) for all cards, aggregates by
-Sprint Slot x Status, and posts a monospace summary table.
+Tallies the repo's scrum/ markdown — the single source of truth — and posts a
+monospace summary table:
+  - one row per archived sprint (scrum/sprints/sprint-*.md, excluding *-plan.md)
+  - one row for the active sprint (scrum/sprint-current.md)
+  - one row for the epic backlogs (scrum/epics/*.md, summed)
+
+RE-POINTED 2026-06-13 (S009 close, E0-SCRUM-SYNC): previously this queried the
+GH Projects board (#8) via GraphQL — but the board was deliberately parked on
+2026-06-05 (items closed not-planned; reopen trigger = the desk-test session),
+so every snapshot tallied a frozen "unscheduled 103" state while the real work
+lived in scrum/*.md. The repo files are maintained at sprint ceremonies (and
+auto-checked by the daily standup task), so they are the honest feed.
+
+A task = a markdown checkbox line. done = `- [x]`, open = `- [ ]`;
+open lines carrying `status::in-progress` / `status::blocked` are surfaced
+in the breakdown line under the table.
 
 Modes (controls header framing only; table contents identical):
   start   Monday morning sprint kickoff: ":rocket: Sprint NNN kickoff snapshot"
@@ -10,7 +24,6 @@ Modes (controls header framing only; table contents identical):
 
 Env:
   SLACK_WEBHOOK_URL   required for non-test modes
-  GH_PROJECTS_TOKEN   required PAT with `read:project` scope (or `project` for classic)
   GITHUB_WORKSPACE    set in Actions; falls back to script's repo root locally
 
 Usage:
@@ -25,122 +38,64 @@ import os
 import re
 import sys
 import urllib.request
-from collections import defaultdict
 from pathlib import Path
 
 REPO_ROOT = Path(os.environ.get("GITHUB_WORKSPACE") or Path(__file__).resolve().parents[2])
-SPRINT_CURRENT = REPO_ROOT / "scrum" / "sprint-current.md"
+SCRUM = REPO_ROOT / "scrum"
+SPRINT_CURRENT = SCRUM / "sprint-current.md"
+SPRINTS_DIR = SCRUM / "sprints"
+EPICS_DIR = SCRUM / "epics"
 
 OWNER = "cplreyes"
-PROJECT_NUMBER = 8
-PROJECT_URL = f"https://github.com/users/{OWNER}/projects/{PROJECT_NUMBER}"
+REPO = "ASPSI-DOH-UHC-CAPI-Development"
+SCRUM_URL = f"https://github.com/{OWNER}/{REPO}/tree/main/scrum"
 
-# Order to display rows (Sprint Slot column).
-SPRINT_ORDER = [
-    "sprint-001", "sprint-002", "sprint-003", "sprint-004",
-    "sprint-005", "sprint-006", "sprint-007", "sprint-008",
-]
-
-
-def gh_token() -> str:
-    tok = os.environ.get("GH_PROJECTS_TOKEN") or os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
-    if not tok:
-        print("ERROR: no GH token in env (set GH_PROJECTS_TOKEN with `read:project` scope).", file=sys.stderr)
-        sys.exit(1)
-    return tok
+CHECKBOX_DONE = re.compile(r"^\s*- \[x\]", re.MULTILINE | re.IGNORECASE)
+CHECKBOX_OPEN = re.compile(r"^\s*- \[ \]", re.MULTILINE)
+OPEN_IN_PROGRESS = re.compile(r"^\s*- \[ \].*status::in-progress", re.MULTILINE)
+OPEN_BLOCKED = re.compile(r"^\s*- \[ \].*status::blocked", re.MULTILINE)
 
 
-def gh_graphql(query: str, variables: dict | None = None) -> dict:
-    payload = json.dumps({"query": query, "variables": variables or {}}).encode("utf-8")
-    req = urllib.request.Request(
-        "https://api.github.com/graphql",
-        data=payload,
-        headers={
-            "Authorization": f"Bearer {gh_token()}",
-            "Content-Type": "application/json",
-            "Accept": "application/vnd.github+json",
-            "User-Agent": "uhc-capi-sprint-snapshot",
-        },
-    )
-    with urllib.request.urlopen(req, timeout=30) as r:
-        body = json.loads(r.read())
-    if "errors" in body:
-        print(f"GraphQL errors: {body['errors']}", file=sys.stderr)
-        sys.exit(1)
-    return body["data"]
-
-
-def fetch_project_items() -> list[dict]:
-    """Return list of {sprint_slot, status} for every card on Project #8."""
-    q = """
-    query($cursor: String) {
-      user(login: "%s") {
-        projectV2(number: %d) {
-          items(first: 100, after: $cursor) {
-            pageInfo { hasNextPage endCursor }
-            nodes {
-              fieldValues(first: 30) {
-                nodes {
-                  ... on ProjectV2ItemFieldSingleSelectValue {
-                    field { ... on ProjectV2SingleSelectField { name } }
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+def tally(path: Path) -> dict:
+    text = path.read_text(encoding="utf-8")
+    return {
+        "done": len(CHECKBOX_DONE.findall(text)),
+        "open": len(CHECKBOX_OPEN.findall(text)),
+        "in_progress": len(OPEN_IN_PROGRESS.findall(text)),
+        "blocked": len(OPEN_BLOCKED.findall(text)),
     }
-    """ % (OWNER, PROJECT_NUMBER)
-
-    items = []
-    cursor = None
-    while True:
-        data = gh_graphql(q, {"cursor": cursor})
-        page = data["user"]["projectV2"]["items"]
-        for it in page["nodes"]:
-            fields = {}
-            for fv in it["fieldValues"]["nodes"]:
-                if fv and fv.get("field") and fv.get("name"):
-                    fields[fv["field"]["name"]] = fv["name"]
-            items.append({
-                "sprint_slot": fields.get("Sprint Slot"),
-                "status": fields.get("Status"),
-            })
-        if not page["pageInfo"]["hasNextPage"]:
-            break
-        cursor = page["pageInfo"]["endCursor"]
-    return items
 
 
-def aggregate(items: list[dict]) -> tuple[dict, int, int, int]:
-    """Returns (counts_by_slot, total_done, total_todo, grand_total).
+def collect() -> tuple[list[tuple[str, dict]], dict]:
+    """Returns ([(row_label, counts), ...] in display order, totals)."""
+    rows: list[tuple[str, dict]] = []
 
-    counts_by_slot[slot] = {"done": N, "todo": M, "in_progress": K}
-    """
-    counts = defaultdict(lambda: {"done": 0, "todo": 0, "in_progress": 0, "review": 0})
-    for it in items:
-        slot = it.get("sprint_slot") or "(no slot)"
-        status = (it.get("status") or "Todo").lower().replace(" ", "_")
-        # Bucket: Done vs anything-else (Todo / In Progress / Review)
-        if status == "done":
-            counts[slot]["done"] += 1
-        elif status == "in_progress":
-            counts[slot]["in_progress"] += 1
-        elif status == "review":
-            counts[slot]["review"] += 1
-        else:
-            counts[slot]["todo"] += 1
+    for p in sorted(SPRINTS_DIR.glob("sprint-*.md")):
+        if p.stem.endswith("-plan"):
+            continue
+        rows.append((p.stem, tally(p)))
 
-    total_done = sum(c["done"] for c in counts.values())
-    total_open = sum(c["todo"] + c["in_progress"] + c["review"] for c in counts.values())
-    grand_total = sum(c["done"] + c["todo"] + c["in_progress"] + c["review"] for c in counts.values())
-    return dict(counts), total_done, total_open, grand_total
+    if SPRINT_CURRENT.exists():
+        text = SPRINT_CURRENT.read_text(encoding="utf-8")
+        m = re.search(r"^sprint:\s*(\d+)", text, re.MULTILINE)
+        label = f"sprint-{m.group(1)}*" if m else "current*"
+        rows.append((label, tally(SPRINT_CURRENT)))
+
+    epics = {"done": 0, "open": 0, "in_progress": 0, "blocked": 0}
+    for p in sorted(EPICS_DIR.glob("epic-*.md")):
+        t = tally(p)
+        for k in epics:
+            epics[k] += t[k]
+    rows.append(("epics (all)", epics))
+
+    totals = {"done": 0, "open": 0, "in_progress": 0, "blocked": 0}
+    for _, c in rows:
+        for k in totals:
+            totals[k] += c[k]
+    return rows, totals
 
 
 def get_current_sprint_number() -> str:
-    """Best-effort: read sprint number from sprint-current.md frontmatter."""
     if not SPRINT_CURRENT.exists():
         return "?"
     text = SPRINT_CURRENT.read_text(encoding="utf-8")
@@ -148,84 +103,49 @@ def get_current_sprint_number() -> str:
     return m.group(1) if m else "?"
 
 
-def render_table(counts: dict, total_done: int, total_open: int, grand_total: int) -> str:
-    """Monospace table fitted for Slack code block."""
-    rows = []
-    rows.append(("Sprint", "Done", "Open", "Total"))
-    rows.append(("-" * 12, "-" * 4, "-" * 4, "-" * 5))
+def render_table(rows: list[tuple[str, dict]], totals: dict) -> str:
+    out = [("Source", "Done", "Open", "Total")]
+    out.append(("-" * 12, "-" * 4, "-" * 4, "-" * 5))
+    for label, c in rows:
+        done_str = str(c["done"]) if c["done"] else "-"
+        open_str = str(c["open"]) if c["open"] else "-"
+        out.append((label, done_str, open_str, str(c["done"] + c["open"])))
+    out.append(("-" * 12, "-" * 4, "-" * 4, "-" * 5))
+    out.append(("TOTAL", str(totals["done"]), str(totals["open"]),
+                str(totals["done"] + totals["open"])))
 
-    # Pre-defined sprint slots in order
-    slots_seen = set()
-    for slot in SPRINT_ORDER:
-        if slot not in counts:
-            continue
-        c = counts[slot]
-        open_n = c["todo"] + c["in_progress"] + c["review"]
-        done_n = c["done"]
-        total = open_n + done_n
-        done_str = str(done_n) if done_n else "-"
-        open_str = str(open_n) if open_n else "-"
-        rows.append((slot, done_str, open_str, str(total)))
-        slots_seen.add(slot)
-
-    # Any other slots (unscheduled, no-slot, future labels)
-    for slot in sorted(counts.keys()):
-        if slot in slots_seen:
-            continue
-        c = counts[slot]
-        open_n = c["todo"] + c["in_progress"] + c["review"]
-        done_n = c["done"]
-        total = open_n + done_n
-        done_str = str(done_n) if done_n else "-"
-        open_str = str(open_n) if open_n else "-"
-        rows.append((slot, done_str, open_str, str(total)))
-
-    rows.append(("-" * 12, "-" * 4, "-" * 4, "-" * 5))
-    rows.append(("TOTAL", str(total_done), str(total_open), str(grand_total)))
-
-    # Compute column widths
-    widths = [max(len(row[i]) for row in rows) for i in range(4)]
-    lines = []
-    for row in rows:
-        lines.append(f"{row[0]:<{widths[0]}}  {row[1]:>{widths[1]}}  {row[2]:>{widths[2]}}  {row[3]:>{widths[3]}}")
-    return "\n".join(lines)
+    widths = [max(len(r[i]) for r in out) for i in range(4)]
+    return "\n".join(
+        f"{r[0]:<{widths[0]}}  {r[1]:>{widths[1]}}  {r[2]:>{widths[2]}}  {r[3]:>{widths[3]}}"
+        for r in out
+    )
 
 
-def render_breakdown_by_status(counts: dict) -> str:
-    """If any sprint has cards in In Progress or Review, surface that."""
-    in_progress_total = sum(c["in_progress"] for c in counts.values())
-    review_total = sum(c["review"] for c in counts.values())
-    if in_progress_total + review_total == 0:
-        return ""
+def render_breakdown(totals: dict) -> str:
     parts = []
-    if in_progress_total:
-        parts.append(f":hammer_and_wrench: {in_progress_total} In Progress")
-    if review_total:
-        parts.append(f":mag: {review_total} Review")
+    if totals["in_progress"]:
+        parts.append(f":hammer_and_wrench: {totals['in_progress']} In Progress")
+    if totals["blocked"]:
+        parts.append(f":no_entry: {totals['blocked']} Blocked")
     return " · ".join(parts)
 
 
-def render_message(mode: str, counts: dict, total_done: int, total_open: int, grand_total: int) -> str:
+def render_message(mode: str, rows: list[tuple[str, dict]], totals: dict) -> str:
     sprint_n = get_current_sprint_number()
 
     if mode == "start":
-        header = f":rocket: *Sprint {sprint_n} — kickoff snapshot* (active backlog state)"
+        header = f":rocket: *Sprint {sprint_n} — kickoff snapshot* (scrum/ task state)"
     elif mode == "close":
-        header = f":bar_chart: *Sprint {sprint_n} — closeout snapshot* (active backlog state)"
+        header = f":bar_chart: *Sprint {sprint_n} — closeout snapshot* (scrum/ task state)"
     else:
         header = f":clipboard: *Backlog snapshot — Sprint {sprint_n}* (manual run)"
 
-    table = render_table(counts, total_done, total_open, grand_total)
-    breakdown = render_breakdown_by_status(counts)
-
-    lines = [header, ""]
-    lines.append("```")
-    lines.append(table)
-    lines.append("```")
+    lines = [header, "", "```", render_table(rows, totals), "```"]
+    breakdown = render_breakdown(totals)
     if breakdown:
         lines.append(breakdown)
     lines.append("")
-    lines.append(f"<{PROJECT_URL}|Open board on GitHub Projects>")
+    lines.append(f"_* = active sprint_ · <{SCRUM_URL}|scrum/ on GitHub>")
     return "\n".join(lines)
 
 
@@ -251,12 +171,8 @@ def main() -> None:
     mode = sys.argv[1]
     submode = sys.argv[2] if len(sys.argv) >= 3 else "start"
 
-    items = fetch_project_items()
-    counts, total_done, total_open, grand_total = aggregate(items)
-    text = render_message(
-        submode if mode == "test" else mode,
-        counts, total_done, total_open, grand_total,
-    )
+    rows, totals = collect()
+    text = render_message(submode if mode == "test" else mode, rows, totals)
 
     if mode in ("start", "close"):
         post_to_slack(text)

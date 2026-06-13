@@ -51,11 +51,11 @@ Deliverable anchors:
 
 ### Goal A — PSA bundle / CSPro multi-language verify (the gate)
 
-- [ ] **E3-F1-001** F1 Facility Head — CSPro Designer + CSEntry multi-language verify (EN + Cebuano/Bisaya/Hiligaynon/Waray/Bikol). Open `.dcf` (loads with declared languages), `.fmf` renders translated labels + language selection works (sync `.qsf` `languages:` if Designer flags mismatch), CSEntry toggles each language with skip logic intact, English base signed off. **Closes the five-sprint carry.** `status::in-progress` `priority::critical` `estimate::4h`
-- [ ] **E3-F3-001** F3 Patient — same Phase 3 verify (EN + Cebuano/Bisaya/Waray/Bikol). Eyeball-check the lower-coverage maps (F3 Bisaya 52%, Bicolano) on a question↔translation sample per the QC caveat. `status::in-progress` `priority::critical` `estimate::4h`
-- [ ] **E3-F4-001** F4 Household — same Phase 3 verify (EN + Cebuano/Bisaya/Waray/Bikol). `status::in-progress` `priority::critical` `estimate::4h`
+- [x] **E3-F1-001** F1 Facility Head — CSPro Designer + CSEntry multi-language verify (EN + Cebuano/Bisaya/Hiligaynon/Waray/Bikol). Open `.dcf` (loads with declared languages), `.fmf` renders translated labels + language selection works (sync `.qsf` `languages:` if Designer flags mismatch), CSEntry toggles each language with skip logic intact, English base signed off. **Closes the five-sprint carry.** `status::done` `priority::critical` `estimate::4h`
+- [x] **E3-F3-001** F3 Patient — same Phase 3 verify (EN + Cebuano/Bisaya/Waray/Bikol). Eyeball-check the lower-coverage maps (F3 Bisaya 52%, Bicolano) on a question↔translation sample per the QC caveat. `status::done` `priority::critical` `estimate::4h`
+- [x] **E3-F4-001** F4 Household — same Phase 3 verify (EN + Cebuano/Bisaya/Waray/Bikol). `status::done` `priority::critical` `estimate::4h`
 - [ ] **E0-PSA-001** Assemble the PSA bundle: F1/F3/F4 CAPI app artifacts (`.pff`/`.dcf`/`.fmf`/`.apc`) + the live F2 PWA reference + a per-language coverage/gap note (from `TRANSLATION-STATUS-2026-06-03.md` + the F2 status doc). Hand to ASPSI (Kidd/Myra) for the 6/12 gate as an in-chat go/no-go checklist. `status::todo` `priority::critical` `estimate::3h`
-- [ ] **E0-PSA-002** ASPSI translation-gap go/no-go: document fil/ilo (F1/F3/F4) + hil (F3/F4) as the missing-source gap (English-fallback in the bundle), tie to the 2026-06-01 + 2026-06-03 asks, and surface the gate decision (submit best-effort vs hold) for ASPSI. `status::blocked` `priority::high` `estimate::1h`
+- [x] **E0-PSA-002** ASPSI translation-gap go/no-go: document fil/ilo (F1/F3/F4) + hil (F3/F4) as the missing-source gap (English-fallback in the bundle), tie to the 2026-06-01 + 2026-06-03 asks, and surface the gate decision (submit best-effort vs hold) for ASPSI. `status::blocked` `priority::high` `estimate::1h`
 
 ### Goal B — clasp + #294 deploy-gap close (OPPORTUNISTIC — only if Goal A lands early)
 

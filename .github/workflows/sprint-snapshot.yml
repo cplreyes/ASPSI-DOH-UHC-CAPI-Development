@@ -50,7 +50,9 @@ jobs:
       - name: Post snapshot to Slack
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          GH_PROJECTS_TOKEN: ${{ secrets.GH_PROJECTS_TOKEN }}
+          # GH_PROJECTS_TOKEN no longer needed — 2026-06-13 re-point: the tally
+          # reads scrum/*.md from the checkout (the parked GH Projects board was
+          # feeding a frozen "unscheduled 103" table; see post_sprint_snapshot.py)
           PYTHONIOENCODING: utf-8
         run: |
           python .github/scripts/post_sprint_snapshot.py "${{ steps.mode.outputs.mode }}"
