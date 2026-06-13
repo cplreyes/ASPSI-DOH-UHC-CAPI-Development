@@ -1,101 +1,70 @@
 ---
-sprint: 009
-start: 2026-06-08
-end: 2026-06-12
-status: active
+sprint: 010
+start: 2026-06-15
+end: 2026-06-19
+status: planning
 sprint_length: 1 week (5 working days)
-deliverable_anchor: Goal A — PSA bundle / CSPro F1·F3·F4 multi-language CSEntry+Designer verification (Phase 3) + bundle assembly for the 2026-06-12 PSA gate · Goal B (opportunistic) — clasp + #294 deploy-gap close. PSA gate falls on the LAST day of this sprint.
-created: 2026-06-07 — Mode D skeleton at the S008→S009 boundary
-locked: 2026-06-07 — Mode A planning locked early (PSA gate is Fri 6/12). Headline = PSA bundle / CSPro multi-language verify; clasp/#294 demoted to opportunistic second goal. Gate posture = verify+bundle the ASPSI-delivered languages, gap-checklist fil/ilo/(hil-F3F4) for ASPSI.
+deliverable_anchor: UAT Round 4 closeout → field-ready sign-off posture · PhilHealth reinstatement build (F3/F4) · PSA gate outcome confirm
+created: 2026-06-13 — Mode D skeleton at the S009→S010 boundary
+locked: (pending — Mode A lock Mon 2026-06-15)
 ---
 
-# Sprint 009 — PSA bundle / CSPro F1·F3·F4 multi-language verify (+ opportunistic clasp/#294)
+# Sprint 010 — R4 closeout + PhilHealth reinstatement (+ PSA confirm) — SKELETON, lock Monday
 
-> [!warning] PSA clearance gate lands on the last day of this sprint — 2026-06-12
-> PSA will not clear the survey without the CAPI app + **distinct translated versions** bundled (Bisaya ≠ Cebuano). **F2 PWA share met** (all 7 languages on `main`, S008). **CSPro F1/F3/F4 multi-language is BUILT** (dictionaries multi-language, generator-first, QC'd 2026-06-03) — what remains is **Phase 3: CSPro Designer + CSEntry verification on Windows** (Carl-gated). **Content block:** fil (Tagalog) + ilo (Ilocano) for F1/F3/F4, and hil for F3/F4, have **no ASPSI translation source** — they stay English-fallback and are tracked as a go/no-go gap. Source of truth: `deliverables/CSPro/TRANSLATION-STATUS-2026-06-03.md`.
+> [!info] Where S009 left the project
+> All three CAPI instruments are **live on CSWeb, multi-language (F1 ×7 / F3 ×6 / F4 ×6), under active UAT Round 4** (closes **Mon 2026-06-15 AM**). The publish→deploy pipeline is fully agent-driven; mid-round patching is routine (9 deploys in S009 Day 5 alone). Full record: `scrum/sprints/sprint-009.md` + `log.md` 2026-06-12 entries.
 
-## Carry-in from Sprint 008
+## Carry-in from Sprint 009
 
-S008 closed 1 committed goal (Goal A — the PSA F2-share, the critical path; landed Day 1–2 and exceeded). Goal B (clasp/#294), Goal C (F1 Designer), and the process item (E0-AUTO-STANDUP) did not start. CSWeb went LIVE off-plan (E4-CSWeb-001/-002). Full S008 record + retro: `scrum/sprints/sprint-008.md`.
-
-| ID | Item | State | S009 disposition |
+| ID | Item | State | S010 disposition |
 |---|---|---|---|
-| **E3-F1-001 / -F3-001 / -F4-001** | FMF Designer + CSEntry multi-language verify (Phase 3) | carry — **now Goal A** | **PSA critical path & headline.** The build is done; this is the Designer/CSEntry verification of the already-multi-language `.dcf`/`.fmf`. Finally forces the long-carried Designer time (F1 = five-sprint carry S005→S009). Committed below. |
-| **PSA bundle assembly** | Package CAPI app (F1/F3/F4 + F2 PWA) + per-language versions + coverage/gap note for the gate | new — **Goal A** | Committed below as E0-PSA-001. |
-| **ASPSI translation gap** | fil/ilo (F1/F3/F4) + hil (F3/F4) — no source | `status:blocked` | Go/no-go for the gate; escalate (asks sent 2026-06-01 + 2026-06-03). Committed below as E0-PSA-002. |
-| **E4-PWA-014-clasp** | Wire `clasp` for the F2 PWA backend (close the deploy-gap class) | carry from S008 | **Demoted to opportunistic Goal B** — real debt but NOT PSA-gating; do only if the gate work lands early. `priority::high` `estimate::2h` |
-| **#294** | Push v2.0.1 admin handlers to prod Web App via clasp; retest #317/#319/#325/#326/#330 | carry from S008 | Follows E4-PWA-014-clasp (Goal B, opportunistic). `priority::high` `estimate::1h` |
-| **E0-AUTO-STANDUP** | Verify/fix the SessionStart standup hook | ✅ **RESOLVED 2026-06-07** | Root cause: the daily `.md` rode only on the project-scoped SessionStart hook (fires only when Claude is launched in the ASPSI dir), and the time-based scheduled task had been DISABLED since 4/15. On days Carl launched elsewhere → silent drop (5/27 onward). Fix: new launch-independent Windows task **`CAPI Scrum Daily Standup MD`** (daily 08:30, `StartWhenAvailable`) runs `daily-standup-md.ps1` → `generate_standup.py` + `generate_retro.py` + a self-check probe that logs `PROBE-MISSING`/`PROBE-STALE`. Hook kept as intraday top-up. Tested: wrote `2026-06-07.md`, probe `ok`. `status::done` |
-| **E4-CSWeb-003 / -004 / -005** | per-survey app upload · user/role matrix · tablet sync | server LIVE — config-ready | Doable in the admin UI. -005 gates E3-F1-088. Also: ASPSI points `csweb.asiansocial.org` → 1-line `API_URL` repoint; **send Juvy the first Elestio invoice.** |
-| **E3-F1-088** | F1 Phase-1 tablet sync-verify | blocked behind E4-CSWeb-005 | Chain dependency. |
-| **#336** | Open PR — R3 #314 diagnosis (open since 5/19) | carry | Disposition this sprint: merge, close-with-rationale, or carry. |
-| **3 Myra clarifications** | Q9 0+0 (#305-3a) / Q36 wording (#307-5b) / Q38 wording (#309-ii) | `status:blocked` | Opportunistic — fold into a PR if any respond. |
+| **E0-PSA-001** | PSA bundle / gate outcome | gate date passed, outcome **unrecorded** | **Confirm with Kidd/Myra first** — if PSA still needs a formal bundle, assemble from the live deployed artifacts (now stronger than the planned bundle); else close as overtaken. |
+| **R4 tracking #368/#369/#370** | UAT Round 4 closeout | round closes Mon AM | Headline candidate: ingest findings, triage fix-vs-route, patch via the (now-encoded) `cspro-patch-fix` loop, reconcile + close tracking issues, drive to zero. Includes #371–#375 + #376 retest confirmations. |
+| **PhilHealth reinstatement** | F3 Q38.1/Q38.2 + F4 Q45.1/Q45.2 (Kidd 6/9 email; DOH-agreed) | **blocked on Carl**: save the 3 value-set PNGs from the email | Build rides the patch loop once unblocked (dcf+apc+qsf ×2 + codebook ripple). |
+| **Translations Batch 2** | Tagalog (checked-final) / Ilocano / Hiligaynon-F3F4 | blocked on ASPSI translation check | Drop-in when delivered (pipeline proven: maps → regenerate → deploy). **Relay the F4 Flu/Fever doc defect to Kidd.** |
+| **Q148 CheckBox rollout decision** | ~60 remaining select-alls across F1/F3/F4 | awaiting R4 verdict on the Q148 pilot | Decide post-R4; recipe encoded in `cspro-patch-fix`. |
+| **Harmonization codebook ripple** | Q148 data-shape change (+ PhilHealth adds when built) | ETL skeleton live | Update codebook + breakout ETL before any real data flows. |
+| **Goal B (clasp/#294)** | #294 prod retests (#317/#319/#325/#326/#330) | clasp CI landed 6/1 (#348); retests unverified | Verify-and-close, ~1h. Third-sprint carry — close it or kill it. |
+| **#336** | R3 #314 diagnosis PR | open since 5/19 | Disposition: merge / close-with-rationale / kill. |
+| **3 Myra clarifications** | #305-3a / #307-5b / #309-ii | `status:blocked` | Opportunistic fold-in if responses land. |
 
-## Hard external constraint
+## Process change committed from the S009 retro
 
-- **PSA clearance gate — 2026-06-12 (last day of Sprint 009).** F2 share met; CSPro F1/F3/F4 multi-language layers + per-language tester verify remain. This sprint owns submission readiness.
+- [ ] **E0-SCRUM-SYNC** Mid-sprint + close-of-sprint scrum-state sync: fold log.md/GH outcomes into this file's `status::` fields at least once mid-week; extend the 08:30 generator to flag drift (log.md newer than sprint-current by >2 days → canary line). Prevents the stale Mon/Fri Slack snapshots. `status::todo` `priority::high` `estimate::1h`
 
-## Sprint Goal — LOCKED 2026-06-07
+## Candidate Committed Items (lock Monday — Mode A)
 
-> **Get the CAPI survey PSA-bundle-ready for the 2026-06-12 gate.** Verify the already-built CSPro F1/F3/F4 **multi-language** instruments in **CSPro Designer + CSEntry** (Phase 3 — load with declared languages, forms render translated labels + language selection works, CSEntry toggles each ASPSI-delivered language with skip logic intact, English base signed off), then **assemble the PSA bundle** (F1/F3/F4 CAPI app + the live F2 PWA + per-language coverage/gap note) and hand it to ASPSI for the gate. **Verify-and-bundle the languages ASPSI has delivered**; document fil/ilo (F1/F3/F4) + hil (F3/F4) as a **go/no-go gap** and escalate — those have no source and are not Carl's to author. **Opportunistically** close the `clasp`/#294 deploy-gap (Goal B) only if the gate work lands early — do not let it pull focus.
+### Goal A (candidate) — UAT Round 4 closeout → field-ready posture
 
-Deliverable anchors:
+- [ ] **E6-CAPI-R4-CLOSE** Ingest all R4 findings (#368/#369/#370 + channel reports), triage fix-vs-route, patch + deploy + notify per instrument, reconcile + close the tracking issues. Includes #371–#375 (AWSP retest) + #376 verify. `status::todo` `priority::critical` `estimate::1d`
+- [ ] **E2-F3-PHILHEALTH / E2-F4-PHILHEALTH** Build Q38.1/Q38.2 + Q45.1/Q45.2 reinstatement (conditional; value sets from the email PNGs), gates + deploy + patch notes + codebook addition. `status::blocked` (PNGs) `priority::critical` `estimate::3h`
+- [ ] **E0-PSA-001b** Confirm the PSA gate outcome with ASPSI; assemble-or-close the bundle accordingly. `status::todo` `priority::high` `estimate::1h`
 
-- **Goal A — PSA bundle / CSPro multi-language verify (the gate).** Phase 3 CSEntry+Designer verification of F1/F3/F4 (closes the long-carried E3-F1-001/-F3-001/-F4-001 as *language-verify*-shaped passes) + PSA bundle assembly + the ASPSI translation-gap go/no-go. This is the only hard external deadline this sprint and it is now Carl-controllable (build done; only verify + package remain).
-- **Goal B — clasp + #294 deploy-gap close (OPPORTUNISTIC).** Real tooling debt from S007/S008, but **not PSA-gating**. Per S008 retro Q4, bank the headline win into this *if* Goal A lands early — otherwise it carries to S010. Do not co-prioritize against the gate.
+### Goal B (candidate, opportunistic)
 
-> **Designer-time risk (named up front):** Phase 3 is hands-on Carl time in CSPro Designer/CSEntry on Windows — the exact constraint that carried E3-F1-001 for five sprints. The Friday gate is what finally forces it. If Designer time doesn't open, the gate slips — there is no AI-side substitute for the CSEntry click-through. Mitigation: sequence F1 first (smallest, most-prepped), then F3, then F4; bundle incrementally so a partial verify still yields a partial submittable bundle.
+- [ ] **#294 verify-and-close** + **#336 disposition**. `status::todo` `priority::high` `estimate::2h`
 
-## Committed Items
+## Definition of Done — Sprint 010
 
-### Goal A — PSA bundle / CSPro multi-language verify (the gate)
+_(to be finalized at Monday's lock)_
 
-- [ ] **E3-F1-001** F1 Facility Head — CSPro Designer + CSEntry multi-language verify (EN + Cebuano/Bisaya/Hiligaynon/Waray/Bikol). Open `.dcf` (loads with declared languages), `.fmf` renders translated labels + language selection works (sync `.qsf` `languages:` if Designer flags mismatch), CSEntry toggles each language with skip logic intact, English base signed off. **Closes the five-sprint carry.** `status::in-progress` `priority::critical` `estimate::4h`
-- [ ] **E3-F3-001** F3 Patient — same Phase 3 verify (EN + Cebuano/Bisaya/Waray/Bikol). Eyeball-check the lower-coverage maps (F3 Bisaya 52%, Bicolano) on a question↔translation sample per the QC caveat. `status::in-progress` `priority::critical` `estimate::4h`
-- [ ] **E3-F4-001** F4 Household — same Phase 3 verify (EN + Cebuano/Bisaya/Waray/Bikol). `status::in-progress` `priority::critical` `estimate::4h`
-- [ ] **E0-PSA-001** Assemble the PSA bundle: F1/F3/F4 CAPI app artifacts (`.pff`/`.dcf`/`.fmf`/`.apc`) + the live F2 PWA reference + a per-language coverage/gap note (from `TRANSLATION-STATUS-2026-06-03.md` + the F2 status doc). Hand to ASPSI (Kidd/Myra) for the 6/12 gate as an in-chat go/no-go checklist. `status::todo` `priority::critical` `estimate::3h`
-- [ ] **E0-PSA-002** ASPSI translation-gap go/no-go: document fil/ilo (F1/F3/F4) + hil (F3/F4) as the missing-source gap (English-fallback in the bundle), tie to the 2026-06-01 + 2026-06-03 asks, and surface the gate decision (submit best-effort vs hold) for ASPSI. `status::blocked` `priority::high` `estimate::1h`
-
-### Goal B — clasp + #294 deploy-gap close (OPPORTUNISTIC — only if Goal A lands early)
-
-- [ ] **E4-PWA-014-clasp** Wire `clasp` for the F2 PWA backend: `.clasp.json` + clean push dir from `dist/Code.gs` + `appsscript.json`, smoke-test `clasp push`, runbook. `status::todo` `priority::high` `estimate::2h`
-- [ ] **#294** Push v2.0.1 admin handlers to the prod Web App via clasp; verify `admin_users_change_password` answers; retest #317/#319/#325/#326/#330 and close what resolves. `status::todo` `priority::high` `estimate::1h`
-
-> **Opportunistic / fold-in if they surface (do not block the gate):** ASPSI points `csweb.asiansocial.org` → 1-line `API_URL` repoint + send Juvy the first Elestio invoice (E4-CSWeb side); `#336` PR disposition; the 3 Myra clarifications (#305-3a / #307-5b / #309-ii) if responses land.
-
-## Sprint Backlog Sizing
-
-| Class | Items | Estimate | Notes |
-|---|---|---|---|
-| **Goal A — verify** | E3-F1-001, E3-F3-001, E3-F4-001 | ~12h | Hands-on CSEntry/Designer time (Carl, Windows). The big rock + the standing risk. |
-| **Goal A — bundle** | E0-PSA-001, E0-PSA-002 | ~4h | Assembly + the ASPSI go/no-go (E0-PSA-002 partly blocked). |
-| **Goal B (opportunistic)** | E4-PWA-014-clasp, #294 | ~3h | Only if Goal A lands early; else carries to S010. |
-| **Buffer / overhead** | ceremonies + comms + verify | ~2h | — |
-| **Committed total (Goal A)** | | **~16h** | A full, focused 1-week load on its own — Goal B is genuinely stretch. |
-
-> **Sizing call:** Goal A alone (~16h) fills the sprint at the solo+AI 1-week cadence. Per the S008 retro, the headline is committed **singularly**; Goal B is explicitly opportunistic so an early Goal-A finish has somewhere disciplined to go rather than drifting. The Designer-time gate is the live risk, not the estimate.
-
-## Definition of Done — Sprint 009
-
-- [ ] **E3-F1-001 / -F3-001 / -F4-001** closed: each `.dcf` loads in Designer with its declared languages; `.fmf` renders translated labels + language selection works; CSEntry toggles every ASPSI-delivered language with skip logic intact; English base signed off.
-- [ ] **E0-PSA-001** closed: PSA bundle assembled (F1/F3/F4 + F2 PWA + coverage/gap note) and handed to ASPSI as a go/no-go checklist for the 6/12 gate.
-- [ ] **E0-PSA-002** closed: fil/ilo/(hil-F3F4) gap documented + escalated; the submit-vs-hold gate decision surfaced to ASPSI.
-- [ ] **Goal B (clasp/#294)** — closed if Goal A landed early; else carried to S010 with an unblock note (not a sprint failure).
-- [ ] **Sprint 009 retrospective** filled Fri 2026-06-12; archived to `scrum/sprints/sprint-009.md`; `sprint-current.md` reset for Sprint 010.
+- [ ] R4 closed: every finding fixed+deployed or dispositioned; tracking issues #368/#369/#370 reconciled + closed.
+- [ ] PhilHealth questions live on F3+F4 (or explicitly blocked-on-ASPSI documented).
+- [ ] PSA gate outcome recorded; bundle assembled or closed as overtaken.
+- [ ] E0-SCRUM-SYNC in place (no stale snapshot on Fri 6/19).
+- [ ] Sprint 010 retrospective filled Fri 2026-06-19; archived; `sprint-current.md` reset for Sprint 011.
 
 ## Daily Notes
 
-_Auto-standup writes here daily via the `CAPI Scrum Daily Standup MD` scheduled task (08:30 MNL, launch-independent) + the SessionStart hook as intraday top-up. Fixed 2026-06-07 (E0-AUTO-STANDUP)._
+_Auto-standup writes here daily via the `CAPI Scrum Daily Standup MD` scheduled task (08:30 MNL) + the SessionStart hook as intraday top-up._
 
-**2026-06-07 (Sun) — Goal A started: CSPro multi-language verify pre-checks GREEN.** E3-F1-001/-F3-001/-F4-001 → `in-progress`. AI-side gates both clean before the GUI session: `preflight_validate.py` **ALL CLEAN** (F1 129 / F3 60 / F4 125 PROCs resolve; no setvalueset/arity/ref issues), and a label-parity pass confirms **every** label array carries all declared languages (F1 2463 EN+5, F3 2831 EN+4, F4 2232 EN+4; 0 off-parity). CSPro **8.0** confirmed installed. fil/ilo (+hil F3/F4) absent by design (ASPSI gap → E0-PSA-002). Staged the CSEntry session worksheet at `deliverables/CSPro/2026-06-07-multilang-verify-worksheet.md`. **Next (Carl, GUI):** Designer compile per instrument (F1 Id-block re-sync + 4 PSGC dicts first) → CSEntry toggle each declared language → capture P/F into the worksheet. Paste any Designer compile error for the generator fix-loop.
-
-## Retrospective — Sprint 009
+## Retrospective — Sprint 010
 
 > 5-minute time-box. Four questions, fixed order. Written, not thought-through-only.
 
 ### 1. Did the sprint goal land? (yes / partial / no — one line why)
 
-_TBD 2026-06-12._
+_TBD 2026-06-19._
 
 ### 2. What surprised me? (process, not work — max 3 bullets)
 
@@ -105,6 +74,6 @@ _TBD_
 
 _Informational only (out of Data Programmer scope per CSA D1–D6)._
 
-### 4. One thing to change in Sprint 010
+### 4. One thing to change in Sprint 011
 
 _TBD_
