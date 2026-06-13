@@ -50,13 +50,13 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
 
 ### CSWeb Track *(Sprint 006 — VPS provisioning + install committed; per 2026-05-18 ASPSI Team Meeting: stand up CSWeb on a VPS for field-response visibility + tablet-sync mgmt + data-manager monitoring. Local CSWeb deploy already proven — `E3-F1-085` — so VPS work is replication, not first-build; epic estimates likely compress.)*
 
-- [ ] **E4-CSWeb-001** CSWeb server provisioning — host selection, OS, network, TLS. **Sprint 006 committed (Goal D).** `status::todo` `priority::critical` `estimate::1d`
-- [ ] **E4-CSWeb-002** CSWeb installation + admin account setup. **Sprint 006 committed (Goal D).** `status::todo` `priority::critical` `estimate::4h`
-- [ ] **E4-CSWeb-003** Per-survey project upload (F1, F3, F4 dictionaries + apps) — **Sprint 007 carry** (subset commit: S006 = 001+002 only). `status::todo` `priority::high` `estimate::4h`
-- [ ] **E4-CSWeb-004** User management — enumerator credentials, role-based access `status::todo` `priority::high` `estimate::3h`
-- [ ] **E4-CSWeb-005** Field-tablet sync configuration — endpoint URLs, sync schedule, conflict policy. **Sprint 007 carry**; **gates `E3-F1-088`** (F1 tablet sync-verify). `status::todo` `priority::high` `estimate::3h`
+- [x] **E4-CSWeb-001** CSWeb server provisioning — host selection, OS, network, TLS. **Sprint 006 committed (Goal D).** `status::done` `priority::critical` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: LIVE: Elestio LAMP + CSWeb 8.0.1 deployed 6/2; csweb.asiansocial.org DNS 6/3)*
+- [x] **E4-CSWeb-002** CSWeb installation + admin account setup. **Sprint 006 committed (Goal D).** `status::done` `priority::critical` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: installed + admin set up 6/2 (headless wizard; MySQL 8.4 trigger workaround))*
+- [x] **E4-CSWeb-003** Per-survey project upload (F1, F3, F4 dictionaries + apps) — **Sprint 007 carry** (subset commit: S006 = 001+002 only). `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: all three packages live (FacilityHeadSurvey/PatientSurvey/HouseholdSurvey), redeployed through the 6/12 patch train)*
+- [x] **E4-CSWeb-004** User management — enumerator credentials, role-based access `status::done` `priority::high` `estimate::3h` ✅ *(swept 2026-06-13 @ S009 close: per-tester users + roles live 6/12 (admins shan/kidd/marriz; field alytest/aidan; field-sync role has all 3 dictionaries after the 403 fix))*
+- [x] **E4-CSWeb-005** Field-tablet sync configuration — endpoint URLs, sync schedule, conflict policy. **Sprint 007 carry**; **gates `E3-F1-088`** (F1 tablet sync-verify). `status::done` `priority::high` `estimate::3h` ✅ *(swept 2026-06-13 @ S009 close: tablet sync live: direction=put, round-trips proven 6/12, R4 testers syncing)*
 - [ ] **E4-CSWeb-006** Backup strategy for CSWeb data (frequency, retention, restore drill) `status::todo` `priority::medium` `estimate::4h`
-- [ ] **E4-CSWeb-007** Monitoring dashboard — sync health, submission counts, field-device status `status::todo` `priority::medium` `estimate::1d`
+- [x] **E4-CSWeb-007** Monitoring dashboard — sync health, submission counts, field-device status `status::done` `priority::medium` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: as-built: Sync Report + 5-min case-breakout cron live 6/12 (monitoring hub; on-box patches documented for re-apply after upgrades))*
 
 ### F2 Admin Portal Track *(planning complete 2026-05-01 — CSWeb-mirror admin for the F2 PWA stack)*
 
@@ -139,7 +139,7 @@ Server-side and synchronization layer for both survey tracks: **Apps Script + Cl
 
 ### Integration ETL *(not started — feeds Epic 8 monitoring + Epic 10 cleaning)*
 
-- [ ] **E4-INT-001** ETL spec drafted — CSWeb (F1/F3/F4) + F2 PWA backend → unified analysis store `status::todo` `priority::high` `estimate::1d`
+- [x] **E4-INT-001** ETL spec drafted — CSWeb (F1/F3/F4) + F2 PWA backend → unified analysis store `status::done` `priority::high` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: etl-spec + skeleton live (extract_csweb pulls breakout DBs; dry-run passed 6/12))*
 - [ ] **E4-INT-002** Looker Studio (or equivalent) dashboard prototype over the unified store `status::todo` `priority::medium` `estimate::1d`
 - [ ] **E4-INT-003** Codebook-driven harmonization (per `concepts/aspsi-data-harmonization`) wired into ETL `status::todo` `priority::medium` `estimate::1d` *(scope sized assuming codebook spec exists; refine after E4-INT-001 lands)*
 

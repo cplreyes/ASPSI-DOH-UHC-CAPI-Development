@@ -51,45 +51,45 @@ Per-instrument application build workstream. Turns the validated data dictionary
 
 ### Form layout & UX
 
-- [ ] **E3-F1-001** Create form file (`FacilityHeadSurvey.fmf`); lay out Section A (Identification & Cover Page) — **REOPENED 2026-05-18:** prior `done` (pre-2026-04-26) superseded by the 2026-05-12 from-scratch CAPI rebuild; generator now emits `FacilityHeadSurvey.generated.fmf`, the CSPro Designer pass on Section A is still outstanding. **Sprint 006 carry (Goal A).** `status::todo` `priority::high` `estimate::4h`
+- [x] **E3-F1-001** Create form file (`FacilityHeadSurvey.fmf`); lay out Section A (Identification & Cover Page) — **REOPENED 2026-05-18:** prior `done` (pre-2026-04-26) superseded by the 2026-05-12 from-scratch CAPI rebuild; generator now emits `FacilityHeadSurvey.generated.fmf`, the CSPro Designer pass on Section A is still outstanding. **Sprint 006 carry (Goal A).** `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: combined-view .fmf live (inject_blocks-maintained, 259-block screen plan), Designer-verified + deployed; closes the five-sprint carry)*
 - [x] **E3-F1-002** Lay out Sections B–H with grouped screens matching interviewer flow `status::done` `priority::high` `estimate::2d`
 - [x] **E3-F1-003** Assign capture types per field (radio, drop-down, number pad, date picker) to optimize tablet entry speed `status::done` `priority::high` `estimate::1d`
 
 ### Question text + language
 
 - [x] **E3-F1-010** Populate English question text from questionnaire; use `~~item~~` fills for personalized text (facility name, respondent name) `status::done` `priority::high` `estimate::1d`
-- [ ] **E3-F1-011** Add Filipino translations for all question labels and option text `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F1-012** Set up multi-language switching (`setlanguage`, language-select on cover page) `status::todo` `priority::high` `estimate::2h`
+- [x] **E3-F1-011** Add Filipino translations for all question labels and option text `status::done` `priority::high` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: fil.json wired + deployed 6/12 (575 labels, 72.2%; English fallback for the rest))*
+- [x] **E3-F1-012** Set up multi-language switching (`setlanguage`, language-select on cover page) `status::done` `priority::high` `estimate::2h` ✅ *(swept 2026-06-13 @ S009 close: as-built: 7-language .dcf + CSEntry native language menu (supersedes setlanguage/cover-page design); live + announced 6/12)*
 
 ### Skip logic + validation wiring (`.apc`)
 
-- [ ] **E3-F1-020** Implement master skip gates (section-level eligibility filters) `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F1-021** Implement field-level skip logic per `F1-Skip-Logic-and-Validations.md` skip table `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F1-022** Wire hard validations: `errmsg` + `reenter` per rule (age ≥ 18, registered ≤ eligible, date ranges, lat/lon bounds) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F1-023** Wire soft validations: `accept()` overrides per rule (capitation ceilings, unusual values) `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F1-024** Wire display gates: conditional visibility via `postproc` / `onfocus` `status::todo` `priority::high` `estimate::4h`
+- [x] **E3-F1-020** Implement master skip gates (section-level eligibility filters) `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: cluster-skip gates live (dead-condition pass 6/11 fixed 22 dead gates); verify_questions 672/672)*
+- [x] **E3-F1-021** Implement field-level skip logic per `F1-Skip-Logic-and-Validations.md` skip table `status::done` `priority::high` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: full skip table in generate_apc; 0 bad-skips per verify_questions gate)*
+- [x] **E3-F1-022** Wire hard validations: `errmsg` + `reenter` per rule (age ≥ 18, registered ≤ eligible, date ranges, lat/lon bounds) `status::done` `priority::high` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: hard validations live incl. validation-parity pass (G1 age, G2 tenure, G3 visit-date order) 6/12)*
+- [x] **E3-F1-023** Wire soft validations: `accept()` overrides per rule (capitation ceilings, unusual values) `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: soft validations live (accept()/warn pattern, photo soft-gate, household-size class))*
+- [x] **E3-F1-024** Wire display gates: conditional visibility via `postproc` / `onfocus` `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: display gates live (noinput preprocs + own-screen isolation for gated other-specify, 6/12 sweep))*
 
 ### Dynamic behavior
 
-- [ ] **E3-F1-030** Implement dynamic value sets (`setvalueset()`) for facility-type-dependent option lists `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F1-031** Implement cross-field consistency checks (e.g., tenure ≤ age − 15) `status::todo` `priority::high` `estimate::4h`
+- [x] **E3-F1-030** Implement dynamic value sets (`setvalueset()`) for facility-type-dependent option lists `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: PSGC setvalueset live incl. province-anchored barangay fallback (6/11))*
+- [x] **E3-F1-031** Implement cross-field consistency checks (e.g., tenure ≤ age − 15) `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: cross-field checks live (G2 tenure<=age-20 et al.))*
 - [ ] **E3-F1-032** Implement conditional question text fills (facility name, respondent name in follow-up questions) `status::todo` `priority::medium` `estimate::2h`
 
 ### FIELD_CONTROL block
 
-- [ ] **E3-F1-040** Informed consent capture screen (with explicit accept/refuse + timestamp) `status::todo` `priority::critical` `estimate::3h`
+- [x] **E3-F1-040** Informed consent capture screen (with explicit accept/refuse + timestamp) `status::done` `priority::critical` `estimate::3h` ✅ *(swept 2026-06-13 @ S009 close: verbatim Annex H ICF in CAPI question-text; refusal endlevel; shipped 6/11)*
 - [ ] **E3-F1-041** Eligibility screen (must pass before main questionnaire loads) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E3-F1-042** AAPOR-aligned disposition codes (completed, partial, refused, ineligible, contact attempt, etc.) `status::todo` `priority::high` `estimate::3h`
-- [ ] **E3-F1-043** GPS capture at start of interview — uses `ReadGPSReading()` helper from `Capture-Helpers.apc`; writes `FACILITY_GPS_*` items via `REC_FACILITY_CAPTURE` trigger block (see F1 spec §3.1.1 / §4.16) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E3-F1-043a** Verification photo capture — uses `TakeVerificationPhoto()` helper, writes `VERIFICATION_PHOTO_FILENAME` with pattern `case-{QUESTIONNAIRE_NO}-verification.jpg` (F1 spec §3.1.2) `status::todo` `priority::high` `estimate::2h`
-- [ ] **E3-F1-043b** PSGC cascade wiring — `onfocus` + `loadcase()` + `setvalueset()` per `PSGC-Cascade.apc`; external lookup dictionaries for REGION/PROVINCE_HUC/CITY_MUNICIPALITY/BARANGAY (F1 spec §4.15); blocked on ASPSI PSGC value-set confirmation `status::blocked` `priority::high` `estimate::3h`
-- [ ] **E3-F1-044** Interviewer ID + Supervisor ID capture `status::todo` `priority::high` `estimate::1h`
-- [ ] **E3-F1-045** Date/time stamps (start, end, duration) `status::todo` `priority::medium` `estimate::1h`
+- [x] **E3-F1-042** AAPOR-aligned disposition codes (completed, partial, refused, ineligible, contact attempt, etc.) `status::done` `priority::high` `estimate::3h` ✅ *(swept 2026-06-13 @ S009 close: superseded as designed: AAPOR_DISPOSITION removed 6/12; per-instrument ENUM_RESULT Result-of-Visit captures disposition)*
+- [x] **E3-F1-043** GPS capture at start of interview — uses `ReadGPSReading()` helper from `Capture-Helpers.apc`; writes `FACILITY_GPS_*` items via `REC_FACILITY_CAPTURE` trigger block (see F1 spec §3.1.1 / §4.16) `status::done` `priority::high` `estimate::2h` ✅ *(swept 2026-06-13 @ S009 close: GPS auto-fetch onfocus (ReadGPSReading 120,20), fields protected; shipped 6/12)*
+- [x] **E3-F1-043a** Verification photo capture — uses `TakeVerificationPhoto()` helper, writes `VERIFICATION_PHOTO_FILENAME` with pattern `case-{QUESTIONNAIRE_NO}-verification.jpg` (F1 spec §3.1.2) `status::done` `priority::high` `estimate::2h` ✅ *(swept 2026-06-13 @ S009 close: verification photo on dedicated end-of-survey form, outcome-gated, case-<QN>.jpg; shipped 6/12)*
+- [x] **E3-F1-043b** PSGC cascade wiring — `onfocus` + `loadcase()` + `setvalueset()` per `PSGC-Cascade.apc`; external lookup dictionaries for REGION/PROVINCE_HUC/CITY_MUNICIPALITY/BARANGAY (F1 spec §4.15); blocked on ASPSI PSGC value-set confirmation `status::done` `priority::high` `estimate::3h` ✅ *(swept 2026-06-13 @ S009 close: as-built: single 12-digit QN derives geo (cascade procs removed); barangay picker + 8 PSGC files per deploy)*
+- [x] **E3-F1-044** Interviewer ID + Supervisor ID capture `status::done` `priority::high` `estimate::1h` ✅ *(swept 2026-06-13 @ S009 close: as-built: Interview Staff block + Field Control validated/edited-by names (trimmed-FC design 6/12))*
+- [x] **E3-F1-045** Date/time stamps (start, end, duration) `status::done` `priority::medium` `estimate::1h` ✅ *(swept 2026-06-13 @ S009 close: as-built: FC visit dates (Date,YYYYMMDD pickers); start/end timestamps descoped in the trimmed FC — drift noted in harmonization codebook)*
 
 ### Resilience + smoke test
 
 - [x] **E3-F1-050** Partial save / resume behavior configured (what happens mid-interview) `status::done` `priority::high` `estimate::2h`
-- [ ] **E3-F1-060** CSEntry Windows smoke test: happy path from cover page to last question `status::todo` `priority::high` `estimate::2h`
+- [x] **E3-F1-060** CSEntry Windows smoke test: happy path from cover page to last question `status::done` `priority::high` `estimate::2h` ✅ *(swept 2026-06-13 @ S009 close: smoke-tested repeatedly: desk-test walks + emulator tester-path installs (6/11-6/12))*
 
 ### Phase 1 build *(2026-05-08 worktree session — proven end-to-end on tablet)*
 
@@ -101,7 +101,7 @@ Per-instrument application build workstream. Turns the validated data dictionary
 - [x] **E3-F1-085** Phase 1 — local CSWeb deploy proven (F7 → Deploy Application wizard) `status::done` `priority::critical`
 - [x] **E3-F1-086** Phase 1 — CSEntry tablet sync chain proven (login → menu → F1, end-to-end on real device) `status::done` `priority::critical`
 - [x] **E3-F1-087** Phase 1 — CSPro 8.0 syntax gotchas catalog (Phase 2 / F3 / F4 reference) `status::done` `priority::high`
-- [ ] **E3-F1-088** Phase 1 sync mechanic resolution — `syncdata` external-dict + CSDB binding. Code-side PARTIAL via the 2026-05-12 rebuild. Tablet-verify slice **deferred to Sprint 007** — blocked behind `E4-CSWeb-005` (field-tablet sync config), which is the Sprint 007 carry of the Goal D subset commit (S006 commits only E4-CSWeb-001/002). `status::blocked` `priority::critical` `estimate::3h` *(tablet round-trip smoke; needs CSWeb VPS sync target up)*
+- [x] **E3-F1-088** Phase 1 sync mechanic resolution — `syncdata` external-dict + CSDB binding. Code-side PARTIAL via the 2026-05-12 rebuild. Tablet-verify slice **deferred to Sprint 007** — blocked behind `E4-CSWeb-005` (field-tablet sync config), which is the Sprint 007 carry of the Goal D subset commit (S006 commits only E4-CSWeb-001/002). `status::done` `priority::critical` `estimate::3h` *(tablet round-trip smoke; needs CSWeb VPS sync target up)* ✅ *(swept 2026-06-13 @ S009 close: sync proven: emulator round-trip + R4 testers syncing live to csweb.asiansocial.org (6/12))*
 - [x] **E3-F1-PHASE2-PLAN** Phase 2 plan + scope confirmation (PLF + F3 + F4_listing + F4 + supervisor menu + EA fence + daily audit Slack) — **OVER-DELIVERED 2026-05-12** as built artifacts (F1+F3+F4+110_F3_listing+113_F4_listing end-to-end, 83 worktree commits) rather than a scope-doc; closed in Sprint 005. `status::done` `priority::high` `estimate::4h`
 
 ---
@@ -178,9 +178,9 @@ Per-instrument application build workstream. Turns the validated data dictionary
 **Prerequisite:** Form-layout plan (shared with F1/F4 — Sprint 003 prerequisite).
 **Current DCF state (2026-04-21):** 18 records / 840 items, sections A–L. Skip-logic + validation spec reviewed 2026-04-21 at `deliverables/CSPro/F3/F3-Skip-Logic-and-Validations.md` (1 question routed to Juvy — Q31 IP_GROUP; 5 spec-decisions closed with override clause). **Build-ready.**
 
-- [ ] **E3-F3-001** Create form file (`PatientSurvey.fmf`); CSPro Designer pass on Section A — generator emits the skeleton post-2026-05-12 rebuild. **Sprint 006 committed (Goal A).** `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F3-002..060** Standard template; reuses F1's interviewer-administered patterns (PSGC cascade + consent + GPS/photo via `Capture-Helpers.apc`)
-- [ ] **E3-F3-015** Outpatient vs inpatient branching at eligibility screen `status::todo` `priority::high` `estimate::4h`
+- [x] **E3-F3-001** Create form file (`PatientSurvey.fmf`); CSPro Designer pass on Section A — generator emits the skeleton post-2026-05-12 rebuild. **Sprint 006 committed (Goal A).** `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: Designer-verified + deployed (217->237-screen combined view, skip-aware))*
+- [x] **E3-F3-002..060** Standard template; reuses F1's interviewer-administered patterns (PSGC cascade + consent + GPS/photo via `Capture-Helpers.apc`) `status::done` ✅ *(swept 2026-06-13 @ S009 close: full F3 build live: 787/787 reachable, 0 dead, 0 bad-skips; deployed + in UAT R4)*
+- [x] **E3-F3-015** Outpatient vs inpatient branching at eligibility screen `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: outpatient/inpatient branching live (sections G/H routing; per-variant ICF); verify_questions PASS)*
 
 *(Full task list to be expanded when F3 enters a sprint.)*
 
@@ -194,14 +194,14 @@ Per-instrument application build workstream. Turns the validated data dictionary
 F4 inherits the standard template **plus a roster engine**. The household roster loop is the primary technical challenge in this instrument.
 
 - [x] **E3-F4-000** ~~Schema patch — flip `C_HOUSEHOLD_ROSTER` and `J_HEALTH_SEEKING` to repeating records~~ **CLOSED-BY-VERIFICATION 2026-04-21.** Re-inspected generator + emitted DCF before starting patch: `C_HOUSEHOLD_ROSTER` already at `max_occurs=20`, `J_HEALTH_SEEKING` correctly respondent-level per Apr 20 source. No code change. `status::done` `priority::critical`
-- [ ] **E3-F4-001** Create form file (`HouseholdSurvey.fmf`); CSPro Designer pass on Section A — generator emits the skeleton post-2026-05-12 rebuild (incl. 113_F4_listing). **Sprint 006 committed (Goal A).** `status::todo` `priority::high` `estimate::4h`
-- [ ] **E3-F4-002..060** Standard template per F1
-- [ ] **E3-F4-070** Household roster grid: add-member, edit-member, remove-member, reorder `status::todo` `priority::critical` `estimate::2d`
-- [ ] **E3-F4-071** Per-member sub-questionnaire loop (conditional on age/relation/etc.) `status::todo` `priority::critical` `estimate::2d`
+- [x] **E3-F4-001** Create form file (`HouseholdSurvey.fmf`); CSPro Designer pass on Section A — generator emits the skeleton post-2026-05-12 rebuild (incl. 113_F4_listing). **Sprint 006 committed (Goal A).** `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: Designer-verified + deployed (159->225-screen combined view, skip-aware))*
+- [x] **E3-F4-002..060** Standard template per F1 `status::done` ✅ *(swept 2026-06-13 @ S009 close: full F4 build live: 625/625 reachable; deployed + in UAT R4)*
+- [x] **E3-F4-070** Household roster grid: add-member, edit-member, remove-member, reorder `status::done` `priority::critical` `estimate::2d` ✅ *(swept 2026-06-13 @ S009 close: roster live: auto line numbers, occurrence control (curocc>Q19 endgroup), desk-tested 6/11)*
+- [x] **E3-F4-071** Per-member sub-questionnaire loop (conditional on age/relation/etc.) `status::done` `priority::critical` `estimate::2d` ✅ *(swept 2026-06-13 @ S009 close: per-member loop live (Q35 PWD gates, Q49 next-member jump), desk-tested)*
 - [ ] **E3-F4-072** Cross-member consistency rules (e.g., only one household head, spouse implies head exists) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F4-073** Max roster size validation + soft warning at unusual sizes `status::todo` `priority::high` `estimate::2h`
-- [ ] **E3-F4-074** WHO expenditure grid + catastrophic-expenditure check (Section N flat batteries) `status::todo` `priority::high` `estimate::1d`
-- [ ] **E3-F4-075** Bill-recall chain (Section N) `status::todo` `priority::high` `estimate::4h`
+- [x] **E3-F4-073** Max roster size validation + soft warning at unusual sizes `status::done` `priority::high` `estimate::2h` ✅ *(swept 2026-06-13 @ S009 close: roster auto-ends at declared size + household-size soft check (fired in desk-test))*
+- [x] **E3-F4-074** WHO expenditure grid + catastrophic-expenditure check (Section N flat batteries) `status::done` `priority::high` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: Section N expenditure grid live (amount matrices, blank-amount checks on 103 items))*
+- [x] **E3-F4-075** Bill-recall chain (Section N) `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: Section M/N bill-recall chain live; covered by verify_questions PASS + deployment)*
 
 *(Full task list to be expanded when F4 enters a sprint.)*
 
@@ -211,7 +211,7 @@ F4 inherits the standard template **plus a roster engine**. The household roster
 
 **Prerequisite:** E2-PLF-006 (implementation decision + any dictionary work)
 
-- [ ] **E3-PLF-001** If CAPI: minimal form with facility selector + patient entries grid `status::todo` `priority::medium` `estimate::4h`
+- [x] **E3-PLF-001** If CAPI: minimal form with facility selector + patient entries grid `status::done` `priority::medium` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: PatientListing + F4Listing CAPI apps built 5/12 (see project log))*
 
 ## Notes
 

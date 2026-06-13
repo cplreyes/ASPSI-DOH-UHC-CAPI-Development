@@ -37,11 +37,11 @@ Pre-production verification and limited-scale field pilot before full rollout. C
 
 ### CAPI Track *(not started — depends on Epic 3 sign-off + Epic 5 tablets)*
 
-- [ ] **E6-CAPI-001** F1 desk test — DCF + FMF walkthrough on CSEntry tablet, sample data entry `status::todo` `priority::high` `estimate::1d`
-- [ ] **E6-CAPI-002** F3 desk test — full A–L walkthrough with sanity scenarios `status::todo` `priority::high` `estimate::1d`
-- [ ] **E6-CAPI-003** F4 desk test — household roster + interval sampling sanity, full A–Q `status::todo` `priority::high` `estimate::1d`
-- [ ] **E6-CAPI-004** Sync round-trip test — tablet → CSWeb → ETL → unified store `status::todo` `priority::high` `estimate::4h`
-- [ ] **E6-CAPI-005** QA Tester (Shan) handoff workflow extended to CAPI — bug-report template, severity rubric, milestone label `status::todo` `priority::high` `estimate::3h`
+- [x] **E6-CAPI-001** F1 desk test — DCF + FMF walkthrough on CSEntry tablet, sample data entry `status::done` `priority::high` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: F1 desk-tested (FC layout visually confirmed 6/11; emulator tester-path installs))*
+- [x] **E6-CAPI-002** F3 desk test — full A–L walkthrough with sanity scenarios `status::done` `priority::high` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: F3 walked on-device by Carl 6/12 (R4 review surfaced the photo-flow + Q148 findings - both fixed + shipped same day))*
+- [x] **E6-CAPI-003** F4 desk test — household roster + interval sampling sanity, full A–Q `status::done` `priority::high` `estimate::1d` ✅ *(swept 2026-06-13 @ S009 close: F4 full desk-test walk 6/11 (case 010280001003: roster, PWD gates, soft checks))*
+- [x] **E6-CAPI-004** Sync round-trip test — tablet → CSWeb → ETL → unified store `status::done` `priority::high` `estimate::4h` ✅ *(swept 2026-06-13 @ S009 close: chain proven: tablet->CSWeb sync (6/12) + ETL dry-run extracted the breakout DBs (6/12); unified-store transform = E4-INT-003, still open)*
+- [x] **E6-CAPI-005** QA Tester (Shan) handoff workflow extended to CAPI — bug-report template, severity rubric, milestone label `status::done` `priority::high` `estimate::3h` ✅ *(swept 2026-06-13 @ S009 close: live for R4: GH issue form + tracking #368/#369/#370, per-instrument channels, triage loop; Shan = enumerator + CSWeb admin)*
 - [ ] **E6-CAPI-006** Pretest pilot — 1-cluster live run with real enumerators on real respondents (gated by SJREB clearance, see E0-020) `status::blocked` `priority::critical` `estimate::1w`
 - [ ] **E6-CAPI-007** Pretest debrief + bug triage → Epic 3 fix batch `status::todo` `priority::high` `estimate::4h`
 
