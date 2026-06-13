@@ -34,6 +34,19 @@ INSTRUMENTS = ["F1", "F2", "F3", "F4", "PLF"]
 EPIC_PREFIXES = {
     "Design":  ("E2",),   # Questionnaire design
     "Build":   ("E3",),   # CAPI / Google Forms build
+    "Test":    ("E6",),   # Testing & pilot (added 2026-06-13, S010)
+}
+
+# Epic 6 task IDs are not instrument-coded (E6-CAPI-001 = F1 desk test, etc.) —
+# explicit map; shared chain items credit every CAPI instrument they exercise.
+E6_INSTRUMENT_MAP = {
+    "E6-CAPI-001": ["F1"],
+    "E6-CAPI-002": ["F3"],
+    "E6-CAPI-003": ["F4"],
+    "E6-CAPI-004": ["F1", "F3", "F4"],   # sync round-trip chain
+    "E6-CAPI-005": ["F1", "F3", "F4"],   # QA handoff workflow (R4)
+    "E6-CAPI-006": ["F1", "F3", "F4"],   # pretest pilot
+    "E6-CAPI-007": ["F1", "F3", "F4"],   # pretest debrief
 }
 
 TASK_LINE = re.compile(r"^- \[(?P<mark>[ xX~!])\] \*\*(?P<id>E\d+-(?:[A-Z0-9]+-)?(?P<inst>F\d|PLF|GF|[A-Z]+)-?\d*[a-z]?)\*\*.*?(?:`status::(?P<status>[a-z-]+)`)?", re.IGNORECASE)
@@ -55,6 +68,16 @@ def classify_instrument(task_id: str) -> str | None:
     return None
 
 
+def classify_instruments_multi(task_id: str) -> list[str]:
+    """Instrument list for a task; handles E6's non-instrument-coded IDs."""
+    if task_id in E6_INSTRUMENT_MAP:
+        return E6_INSTRUMENT_MAP[task_id]
+    if task_id.startswith("E6-PWA"):
+        return ["F2"]
+    one = classify_instrument(task_id)
+    return [one] if one else []
+
+
 def classify_epic(task_id: str) -> str | None:
     m = re.match(r"E(\d+)-", task_id)
     if not m:
@@ -64,6 +87,8 @@ def classify_epic(task_id: str) -> str | None:
         return "Design"
     if n == 3:
         return "Build"
+    if n == 6:
+        return "Test"
     return None
 
 
@@ -71,7 +96,8 @@ def scan_epics(repo: Path) -> dict:
     """Return {instrument: {epic: {done, open, blocked, deferred}}}."""
     tally: dict[str, dict[str, dict[str, int]]] = {
         inst: {"Design": {"done": 0, "open": 0, "blocked": 0, "deferred": 0},
-               "Build":  {"done": 0, "open": 0, "blocked": 0, "deferred": 0}}
+               "Build":  {"done": 0, "open": 0, "blocked": 0, "deferred": 0},
+               "Test":   {"done": 0, "open": 0, "blocked": 0, "deferred": 0}}
         for inst in INSTRUMENTS
     }
     epic_dir = repo / "scrum" / "epics"
@@ -87,20 +113,20 @@ def scan_epics(repo: Path) -> dict:
             if not m:
                 continue
             task_id = m.group("id")
-            inst = classify_instrument(task_id)
             epic = classify_epic(task_id)
-            if inst not in tally or epic not in tally[inst]:
-                continue
             status_match = STATUS_RE.search(line)
             status = status_match.group(1) if status_match else None
-            if status == "deferred":
-                tally[inst][epic]["deferred"] += 1
-            elif status == "blocked":
-                tally[inst][epic]["blocked"] += 1
-            elif m.group("mark").lower() == "x" or status == "done":
-                tally[inst][epic]["done"] += 1
-            else:
-                tally[inst][epic]["open"] += 1
+            for inst in classify_instruments_multi(task_id):
+                if inst not in tally or epic not in tally[inst]:
+                    continue
+                if status == "deferred":
+                    tally[inst][epic]["deferred"] += 1
+                elif status == "blocked":
+                    tally[inst][epic]["blocked"] += 1
+                elif m.group("mark").lower() == "x" or status == "done":
+                    tally[inst][epic]["done"] += 1
+                else:
+                    tally[inst][epic]["open"] += 1
     return tally
 
 
@@ -137,26 +163,30 @@ def progress_bar(done: int, total: int, width: int = 10) -> str:
 
 
 def render(tally: dict, sprint: dict) -> str:
-    lines = ["*By Survey Instrument* (Epic 2 Design · Epic 3 Build · Sprint)"]
+    lines = ["*By Survey Instrument* (Epic 2 Design · Epic 3 Build · Epic 6 Test · Sprint)"]
     lines.append("```")
     for inst in INSTRUMENTS:
         t = tally[inst]
         d = t["Design"]
         b = t["Build"]
+        ts = t["Test"]
         design_total = d["done"] + d["open"] + d["blocked"]
         build_total = b["done"] + b["open"] + b["blocked"]
+        test_total = ts["done"] + ts["open"] + ts["blocked"]
         # Deferred tasks excluded from totals (F2 CSPro track)
         s = sprint[inst]
         design_bar = progress_bar(d["done"], design_total, 8)
         build_bar = progress_bar(b["done"], build_total, 8)
+        test_bar = progress_bar(ts["done"], test_total, 8)
         sprint_str = f"{s['done']}/{s['committed']}" if s["committed"] else "—"
         flags = []
         if d["blocked"]: flags.append(f"{d['blocked']}blk")
         if b["blocked"]: flags.append(f"{b['blocked']}blk")
-        if d["deferred"] or b["deferred"]:
-            flags.append(f"{d['deferred'] + b['deferred']}def")
+        if ts["blocked"]: flags.append(f"{ts['blocked']}blk")
+        if d["deferred"] or b["deferred"] or ts["deferred"]:
+            flags.append(f"{d['deferred'] + b['deferred'] + ts['deferred']}def")
         flag_str = (" ⚠ " + ",".join(flags)) if flags else ""
-        lines.append(f"{inst:<4}  D:{design_bar}  B:{build_bar}  sprint:{sprint_str}{flag_str}")
+        lines.append(f"{inst:<4}  D:{design_bar}  B:{build_bar}  T:{test_bar}  sprint:{sprint_str}{flag_str}")
     lines.append("```")
     return "\n".join(lines)
 
