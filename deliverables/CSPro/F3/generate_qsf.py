@@ -200,7 +200,7 @@ INSTRUCTIONS = {
     147: "PLEASE LIST DOWN ALL MEDICINES THAT YOU TOOK FOR THE HEALTH CONDITION.",
     150: ("A Pharmacy is an ancillary primary care facility with a FDA LTO "
           "where registered medicines can be bought."),
-    152: ("Q144 to Q149, Q151 are applicable only to respondents in areas "
+    152: ("Q152 to Q157, Q159 are applicable only to respondents in areas "
           "with GAMOT. Otherwise, skip."),
 }
 
@@ -242,7 +242,50 @@ SECTION_INTROS = {
     162: "We will be asking about the patient’s experience and satisfaction on referrals.",
 }
 
+# Filipino read-aloud scripts (#407/#410/#411/#433), exact-matched from the v2.1.2 source
+# (no machine translation). FIL renders these; other languages fall back to the EN script
+# above until similarly translated. Q4 + Q113 not in source as exact matches -> stay EN.
+SECTION_INTROS_FIL = {
+    35: "Magtatanong kami ngayon tungkol sa kaalaman ng pasyente sa Universal Health Care (UHC).",
+    38: ("Ang mga susunod na tanong ay tungkol sa karanasan ng pasyente sa pagpaparehistro sa "
+         "PhilHealth. Kukumpirmahin din namin ang status ng pagpaparehistro at pagiging miyembro "
+         "sa PhilHealth, pati na rin ang kanilang pagpaparehistro sa iba pang health insurance."),
+    53: "Magtatanong kami ngayon tungkol sa access ng pasyente sa isang primary care provider.",
+    74: "Magtatanong kami ngayon tungkol sa kaalaman ng pasyente sa YAKAP/Konsulta package.",
+    83: ("Magtatanong kami ngayon tungkol sa mga ginawa ng pasyente na pangkalusugan. Kabilang "
+         "dito ang uri ng mga serbisyong ginagamit at mga pasilidad na pinupuntahan para sa "
+         "kalusugan at kagalingan."),
+    88: "Para sa mga susunod na tanong, magtatanong kami tungkol sa pinakahuling outpatient visit ng pasyente.",
+    98: ("Nais naming malaman kung saan nanggaling ang pera na ipinanambayad sa mga gastusing "
+         "medikal (IN ___, at ___) sa (URI NG PASILIDAD SA ___)."),
+    99: "Magtatanong kami ngayon tungkol sa kaalaman ng pasyente sa BUCAS at sa mga serbisyong natanggap sa isang BUCAS Center.",
+    105: "Para sa mga susunod na tanong, magtatanong kami tungkol sa pinakahuling inpatient visit ng pasyente.",
+    116: "Para sa seksyon na ito, magtatanong kami tungkol sa kaalaman ninyo tungkol sa NBB, ZBB at MAIFIP.",
+    131: ("Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa "
+          "[facility_name_input] bilang isang [inpatient] o [outpatient], kung saan inanyayahan "
+          "kayong lumahok sa aming survey noong [date_formatted]."),
+    145: ("Ang mga susunod na tanong ay may kaugnayan sa access ng pasyente sa mga gamot. Nais "
+          "naming malaman kung gaano kadali o kahirap na bumili o tumanggap ng mga gamot. "
+          "Magtatanong din kami ng ilang katanungan tungkol sa kanilang pananaw sa pagbili ng "
+          "generic o branded na gamot."),
+    152: "Itatanong namin ngayon ang tungkol sa kaalaman ng pasyente sa GAMOT package at sa mga gamot na nakuha sa isang GAMOT pharmacy.",
+    162: "Tatanungin namin ang karanasan at kasiyahan ng pasyente sa referral.",
+}
+
 _QNUM = re.compile(r"^Q(\d{1,3})_")
+
+# Facility-name piping (#421/#443/#488/#510): the question stems carry a literal
+# placeholder [facility_name_input] / [FACILITY_NAME_INPUT]. CSPro CAPI question text
+# supports fills — a logic expression wrapped in double tildes, evaluated at runtime
+# (https://www.csprousers.org/help/CSPro/create_fills_in_questions.html). FACILITY_NAME
+# is the cover-level facility field, in scope for the whole case, so ~~FACILITY_NAME~~
+# renders the captured name in the prompt (every language). Double tilde = plain-text
+# fill (FACILITY_NAME has no HTML to preserve).
+_FACILITY_PLACEHOLDER_RE = re.compile(r"\[?\bfacility_name_input\b\]?", re.IGNORECASE)
+
+
+def _pipe_fills(text):
+    return _FACILITY_PLACEHOLDER_RE.sub("~~FACILITY_NAME~~", text)
 
 
 def _esc(t):
@@ -250,22 +293,36 @@ def _esc(t):
 
 
 def question_extras(nm, intro_used):
-    """(pre, post) HTML for an item: section intro + enumerator instruction."""
+    """(intro_q | None, instr | None, intro_here) — caller builds per-language pre/post.
+    The intro attaches once, to the first item at/after its target question (within +3 —
+    some paper intros sit before unnumbered or merged fields)."""
     m = _QNUM.match(nm)
     if not m:
-        return "", ""
+        return None, None, False
     q = int(m.group(1))
-    pre = post = ""
-    # the intro attaches once, to the first item at/after its target question
-    # (within +3 — some paper intros sit before unnumbered or merged fields)
+    intro_q = None
     for tgt in SECTION_INTROS:
         if tgt not in intro_used and tgt <= q <= tgt + 3:
-            pre = f"<p>{_esc(SECTION_INTROS[tgt])}</p>"
+            intro_q = tgt
             intro_used.add(tgt)
             break
-    instr = INSTRUCTIONS.get(q)
-    if instr and not nm.endswith("_TXT"):
-        post = f'<p class="instruction">{_esc(instr)}</p>'
+    instr = INSTRUCTIONS.get(q) if not nm.endswith("_TXT") else None
+    return intro_q, instr, (intro_q is not None)
+
+
+def build_extras(intro_q, instr, intro_here, lnm):
+    """Per-language (pre, post): section read-aloud script in the CURRENT language (FIL
+    translated #407/#410/#411/#433, other dialects EN fallback); the do-not-read enumerator
+    note stays English. At a section start, script + note form one block BEFORE the question."""
+    pre = post = ""
+    if intro_q is not None:
+        script = (SECTION_INTROS_FIL.get(intro_q) if lnm == "FIL" else None) or SECTION_INTROS[intro_q]
+        pre = f"<p>{_esc(script)}</p>"
+    if instr:
+        if intro_here:
+            pre += f'<p class="instruction">{_esc(instr)}</p>'
+        else:
+            post = f'<p class="instruction">{_esc(instr)}</p>'
     return pre, post
 
 
@@ -293,10 +350,15 @@ def main():
                 labmap = {l.get("language"): l.get("text", "") for l in (it.get("labels") or [])}
                 en = labmap.get("EN") or nm
                 ov = OVERRIDES.get(nm)
-                pre, post = ("", "") if ov else question_extras(nm, intro_used)
+                extras = (None, None, False) if ov else question_extras(nm, intro_used)
                 lines += [f"  - name: {dict_name}.{nm}", "    conditions:", "      - questionText:"]
                 for lnm, _ in langs:
-                    body = ov or (pre + _html(labmap.get(lnm) or en) + post)
+                    if ov:
+                        body = ov
+                    else:
+                        pre, post = build_extras(*extras, lnm)
+                        body = pre + _html(labmap.get(lnm) or en) + post
+                    body = _pipe_fills(body)
                     lines += [f"          {lnm}: |", f"            {body}"]
                 n += 1
     lines.append("...")

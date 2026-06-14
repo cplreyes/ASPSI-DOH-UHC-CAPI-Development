@@ -2968,7 +2968,7 @@ Form=7
 
 Position=50,180,330,196
 
-Text=8. Is the patient part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.).
+Text=8. Is the patient part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.). It is fine if not comfortable answering.
 
  
 
@@ -3772,13 +3772,13 @@ Length=5
 
 Name=DG_BLK_5
 
-Label=Q8-Q9
+Label=Q8
 
 DisplayTogether=Yes
 
 Position=6
 
-Length=2
+Length=1
 
   
 
@@ -3790,7 +3790,7 @@ Label=Q9
 
 DisplayTogether=Yes
 
-Position=9
+Position=8
 
 Length=1
 
@@ -3800,25 +3800,11 @@ Length=1
 
 Name=DG_BLK_7
 
-Label=Q10-Q11
+Label=Q9
 
 DisplayTogether=Yes
 
-Position=11
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_8
-
-Label=Q12
-
-DisplayTogether=Yes
-
-Position=14
+Position=10
 
 Length=1
 
@@ -3826,13 +3812,13 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_9
+Name=DG_BLK_8
 
-Label=Q13-Q14
+Label=Q10-Q11
 
 DisplayTogether=Yes
 
-Position=16
+Position=12
 
 Length=2
 
@@ -3840,7 +3826,35 @@ Length=2
 
 [Block]
 
+Name=DG_BLK_9
+
+Label=Q12
+
+DisplayTogether=Yes
+
+Position=15
+
+Length=1
+
+  
+
+[Block]
+
 Name=DG_BLK_10
+
+Label=Q13
+
+DisplayTogether=Yes
+
+Position=17
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_11
 
 Label=Q14
 
@@ -3854,9 +3868,9 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_11
+Name=DG_BLK_12
 
-Label=Q15
+Label=Q14
 
 DisplayTogether=Yes
 
@@ -3868,7 +3882,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_12
+Name=DG_BLK_13
 
 Label=Q15
 
@@ -3882,29 +3896,15 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_13
+Name=DG_BLK_14
 
-Label=Q16-Q19
+Label=Q15
 
 DisplayTogether=Yes
 
 Position=25
 
-Length=5
-
-  
-
-[Block]
-
-Name=DG_BLK_14
-
-Label=Q20-Q23
-
-DisplayTogether=Yes
-
-Position=31
-
-Length=4
+Length=1
 
   
 
@@ -3912,25 +3912,11 @@ Length=4
 
 Name=DG_BLK_15
 
-Label=Q23
+Label=Q16-Q19
 
 DisplayTogether=Yes
 
-Position=36
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_16
-
-Label=Q24-Q28
-
-DisplayTogether=Yes
-
-Position=38
+Position=27
 
 Length=5
 
@@ -3938,27 +3924,27 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_17
+Name=DG_BLK_16
 
-Label=Q29-Q30
+Label=Q20-Q23
 
 DisplayTogether=Yes
 
-Position=44
+Position=33
 
-Length=2
+Length=4
 
   
 
 [Block]
 
-Name=DG_BLK_18
+Name=DG_BLK_17
 
-Label=Q31
+Label=Q23
 
 DisplayTogether=Yes
 
-Position=47
+Position=38
 
 Length=1
 
@@ -3966,13 +3952,27 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_19
+Name=DG_BLK_18
 
-Label=Q32-Q33
+Label=Q24-Q28
 
 DisplayTogether=Yes
 
-Position=49
+Position=40
+
+Length=5
+
+  
+
+[Block]
+
+Name=DG_BLK_19
+
+Label=Q29-Q30
+
+DisplayTogether=Yes
+
+Position=46
 
 Length=2
 
@@ -3982,11 +3982,11 @@ Length=2
 
 Name=DG_BLK_20
 
-Label=Q34
+Label=Q31
 
 DisplayTogether=Yes
 
-Position=52
+Position=49
 
 Length=1
 
@@ -3996,11 +3996,39 @@ Length=1
 
 Name=DG_BLK_21
 
+Label=Q32-Q33
+
+DisplayTogether=Yes
+
+Position=51
+
+Length=2
+
+  
+
+[Block]
+
+Name=DG_BLK_22
+
 Label=Q34
 
 DisplayTogether=Yes
 
 Position=54
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_23
+
+Label=Q34
+
+DisplayTogether=Yes
+
+Position=56
 
 Length=1
 
@@ -4438,7 +4466,7 @@ Text=37. What is your understanding about UHC? — Other (specify) text
 
 [Block]
 
-Name=DG_BLK_22
+Name=DG_BLK_24
 
 Label=Q35
 
@@ -4452,7 +4480,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_23
+Name=DG_BLK_25
 
 Label=Q36
 
@@ -4466,7 +4494,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_24
+Name=DG_BLK_26
 
 Label=Q36
 
@@ -4480,7 +4508,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_25
+Name=DG_BLK_27
 
 Label=Q37
 
@@ -4494,7 +4522,7 @@ Length=6
 
 [Block]
 
-Name=DG_BLK_26
+Name=DG_BLK_28
 
 Label=Q37
 
@@ -5742,7 +5770,7 @@ Text=52. Which health insurance plan/s are you enrolled in? — Other (specify) 
 
 [Block]
 
-Name=DG_BLK_27
+Name=DG_BLK_29
 
 Label=Q38
 
@@ -5756,7 +5784,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_28
+Name=DG_BLK_30
 
 Label=Q39
 
@@ -5770,7 +5798,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_29
+Name=DG_BLK_31
 
 Label=Q39
 
@@ -5784,7 +5812,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_30
+Name=DG_BLK_32
 
 Label=Q40
 
@@ -5798,7 +5826,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_31
+Name=DG_BLK_33
 
 Label=Q40
 
@@ -5812,7 +5840,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_32
+Name=DG_BLK_34
 
 Label=Q41
 
@@ -5826,7 +5854,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_33
+Name=DG_BLK_35
 
 Label=Q42
 
@@ -5840,7 +5868,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_34
+Name=DG_BLK_36
 
 Label=Q42
 
@@ -5854,7 +5882,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_35
+Name=DG_BLK_37
 
 Label=Q43
 
@@ -5868,7 +5896,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_36
+Name=DG_BLK_38
 
 Label=Q44
 
@@ -5882,7 +5910,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_37
+Name=DG_BLK_39
 
 Label=Q44
 
@@ -5896,7 +5924,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_38
+Name=DG_BLK_40
 
 Label=Q45
 
@@ -5910,7 +5938,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_39
+Name=DG_BLK_41
 
 Label=Q45
 
@@ -5924,7 +5952,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_40
+Name=DG_BLK_42
 
 Label=Q46
 
@@ -5938,7 +5966,7 @@ Length=6
 
 [Block]
 
-Name=DG_BLK_41
+Name=DG_BLK_43
 
 Label=Q46
 
@@ -5952,7 +5980,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_42
+Name=DG_BLK_44
 
 Label=Q47-Q48
 
@@ -5966,7 +5994,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_43
+Name=DG_BLK_45
 
 Label=Q49
 
@@ -5980,7 +6008,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_44
+Name=DG_BLK_46
 
 Label=Q50
 
@@ -5994,7 +6022,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_45
+Name=DG_BLK_47
 
 Label=Q50
 
@@ -6008,7 +6036,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_46
+Name=DG_BLK_48
 
 Label=Q51
 
@@ -6022,7 +6050,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_47
+Name=DG_BLK_49
 
 Label=Q52
 
@@ -6036,7 +6064,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_48
+Name=DG_BLK_50
 
 Label=Q52
 
@@ -8706,7 +8734,7 @@ Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — 
 
 [Block]
 
-Name=DG_BLK_49
+Name=DG_BLK_51
 
 Label=Q53
 
@@ -8720,7 +8748,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_50
+Name=DG_BLK_52
 
 Label=Q54
 
@@ -8734,7 +8762,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_51
+Name=DG_BLK_53
 
 Label=Q54
 
@@ -8748,7 +8776,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_52
+Name=DG_BLK_54
 
 Label=Q55-Q58
 
@@ -8762,7 +8790,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_53
+Name=DG_BLK_55
 
 Label=Q59
 
@@ -8776,7 +8804,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_54
+Name=DG_BLK_56
 
 Label=Q60
 
@@ -8790,7 +8818,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_55
+Name=DG_BLK_57
 
 Label=Q61
 
@@ -8804,7 +8832,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_56
+Name=DG_BLK_58
 
 Label=Q62
 
@@ -8818,7 +8846,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_57
+Name=DG_BLK_59
 
 Label=Q63
 
@@ -8832,7 +8860,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_58
+Name=DG_BLK_60
 
 Label=Q64
 
@@ -8846,7 +8874,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_59
+Name=DG_BLK_61
 
 Label=Q65
 
@@ -8860,7 +8888,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_60
+Name=DG_BLK_62
 
 Label=Q65
 
@@ -8874,7 +8902,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_61
+Name=DG_BLK_63
 
 Label=Q66
 
@@ -8888,7 +8916,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_62
+Name=DG_BLK_64
 
 Label=Q67
 
@@ -8902,7 +8930,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_63
+Name=DG_BLK_65
 
 Label=Q67
 
@@ -8916,7 +8944,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_64
+Name=DG_BLK_66
 
 Label=Q68
 
@@ -8930,7 +8958,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_65
+Name=DG_BLK_67
 
 Label=Q68
 
@@ -8944,7 +8972,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_66
+Name=DG_BLK_68
 
 Label=Q69
 
@@ -8958,7 +8986,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_67
+Name=DG_BLK_69
 
 Label=Q70
 
@@ -8972,7 +9000,7 @@ Length=12
 
 [Block]
 
-Name=DG_BLK_68
+Name=DG_BLK_70
 
 Label=Q70
 
@@ -8986,7 +9014,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_69
+Name=DG_BLK_71
 
 Label=Q71
 
@@ -9000,7 +9028,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_70
+Name=DG_BLK_72
 
 Label=Q71
 
@@ -9014,7 +9042,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_71
+Name=DG_BLK_73
 
 Label=Q72
 
@@ -9028,7 +9056,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_72
+Name=DG_BLK_74
 
 Label=Q73
 
@@ -9042,7 +9070,7 @@ Length=12
 
 [Block]
 
-Name=DG_BLK_73
+Name=DG_BLK_75
 
 Label=Q73
 
@@ -9056,7 +9084,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_74
+Name=DG_BLK_76
 
 Label=Q74
 
@@ -9070,7 +9098,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_75
+Name=DG_BLK_77
 
 Label=Q75
 
@@ -9084,7 +9112,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_76
+Name=DG_BLK_78
 
 Label=Q75
 
@@ -9098,7 +9126,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_77
+Name=DG_BLK_79
 
 Label=Q76
 
@@ -9112,7 +9140,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_78
+Name=DG_BLK_80
 
 Label=Q76
 
@@ -9126,7 +9154,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_79
+Name=DG_BLK_81
 
 Label=Q77
 
@@ -9140,7 +9168,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_80
+Name=DG_BLK_82
 
 Label=Q78-Q81
 
@@ -9154,7 +9182,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_81
+Name=DG_BLK_83
 
 Label=Q82
 
@@ -9168,7 +9196,7 @@ Length=11
 
 [Block]
 
-Name=DG_BLK_82
+Name=DG_BLK_84
 
 Label=Q82
 
@@ -10240,7 +10268,7 @@ Text=87. Apart from this visit, has the patient done anything else to improve hi
 
 [Block]
 
-Name=DG_BLK_83
+Name=DG_BLK_85
 
 Label=Q83
 
@@ -10254,7 +10282,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_84
+Name=DG_BLK_86
 
 Label=Q83
 
@@ -10268,7 +10296,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_85
+Name=DG_BLK_87
 
 Label=Q84
 
@@ -10282,7 +10310,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_86
+Name=DG_BLK_88
 
 Label=Q84
 
@@ -10296,7 +10324,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_87
+Name=DG_BLK_89
 
 Label=Q85
 
@@ -10310,7 +10338,7 @@ Length=20
 
 [Block]
 
-Name=DG_BLK_88
+Name=DG_BLK_90
 
 Label=Q85
 
@@ -10324,7 +10352,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_89
+Name=DG_BLK_91
 
 Label=Q86
 
@@ -10338,7 +10366,7 @@ Length=10
 
 [Block]
 
-Name=DG_BLK_90
+Name=DG_BLK_92
 
 Label=Q87
 
@@ -10352,7 +10380,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_91
+Name=DG_BLK_93
 
 Label=Q87
 
@@ -14270,7 +14298,7 @@ Text=104. Without BUCAS — Others specify text
 
 [Block]
 
-Name=DG_BLK_92
+Name=DG_BLK_94
 
 Label=Q88
 
@@ -14284,7 +14312,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_93
+Name=DG_BLK_95
 
 Label=Q88
 
@@ -14298,7 +14326,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_94
+Name=DG_BLK_96
 
 Label=Q89
 
@@ -14312,7 +14340,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_95
+Name=DG_BLK_97
 
 Label=Q90
 
@@ -14326,7 +14354,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_96
+Name=DG_BLK_98
 
 Label=Q90
 
@@ -14340,7 +14368,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_97
+Name=DG_BLK_99
 
 Label=Q91-Q92
 
@@ -14354,7 +14382,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_98
+Name=DG_BLK_100
 
 Label=Q92
 
@@ -14368,7 +14396,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_99
+Name=DG_BLK_101
 
 Label=Q92
 
@@ -14382,7 +14410,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_100
+Name=DG_BLK_102
 
 Label=Q92
 
@@ -14396,7 +14424,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_101
+Name=DG_BLK_103
 
 Label=Q93
 
@@ -14410,7 +14438,7 @@ Length=17
 
 [Block]
 
-Name=DG_BLK_102
+Name=DG_BLK_104
 
 Label=Q93
 
@@ -14424,7 +14452,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_103
+Name=DG_BLK_105
 
 Label=Q94
 
@@ -14438,7 +14466,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_104
+Name=DG_BLK_106
 
 Label=Q94
 
@@ -14452,7 +14480,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_105
+Name=DG_BLK_107
 
 Label=Q94
 
@@ -14466,7 +14494,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_106
+Name=DG_BLK_108
 
 Label=Q94
 
@@ -14480,7 +14508,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_107
+Name=DG_BLK_109
 
 Label=Q95
 
@@ -14494,7 +14522,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_108
+Name=DG_BLK_110
 
 Label=Q96
 
@@ -14508,7 +14536,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_109
+Name=DG_BLK_111
 
 Label=Q96
 
@@ -14522,7 +14550,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_110
+Name=DG_BLK_112
 
 Label=Q96
 
@@ -14536,7 +14564,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_111
+Name=DG_BLK_113
 
 Label=Q96
 
@@ -14550,7 +14578,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_112
+Name=DG_BLK_114
 
 Label=Q97
 
@@ -14564,7 +14592,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_113
+Name=DG_BLK_115
 
 Label=Q97
 
@@ -14578,7 +14606,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_114
+Name=DG_BLK_116
 
 Label=Q97
 
@@ -14592,7 +14620,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_115
+Name=DG_BLK_117
 
 Label=Q97
 
@@ -14606,7 +14634,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_116
+Name=DG_BLK_118
 
 Label=Q97
 
@@ -14620,7 +14648,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_117
+Name=DG_BLK_119
 
 Label=Q97
 
@@ -14634,7 +14662,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_118
+Name=DG_BLK_120
 
 Label=Q97
 
@@ -14648,7 +14676,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_119
+Name=DG_BLK_121
 
 Label=Q98
 
@@ -14662,7 +14690,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_120
+Name=DG_BLK_122
 
 Label=Q98
 
@@ -14676,7 +14704,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_121
+Name=DG_BLK_123
 
 Label=Q98
 
@@ -14690,7 +14718,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_122
+Name=DG_BLK_124
 
 Label=Q98
 
@@ -14704,7 +14732,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_123
+Name=DG_BLK_125
 
 Label=Q98
 
@@ -14718,7 +14746,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_124
+Name=DG_BLK_126
 
 Label=Q98
 
@@ -14732,7 +14760,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_125
+Name=DG_BLK_127
 
 Label=Q98
 
@@ -14746,7 +14774,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_126
+Name=DG_BLK_128
 
 Label=Q98
 
@@ -14760,7 +14788,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_127
+Name=DG_BLK_129
 
 Label=Q99
 
@@ -14774,7 +14802,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_128
+Name=DG_BLK_130
 
 Label=Q100
 
@@ -14788,7 +14816,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_129
+Name=DG_BLK_131
 
 Label=Q100
 
@@ -14802,7 +14830,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_130
+Name=DG_BLK_132
 
 Label=Q101
 
@@ -14816,7 +14844,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_131
+Name=DG_BLK_133
 
 Label=Q101
 
@@ -14830,7 +14858,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_132
+Name=DG_BLK_134
 
 Label=Q102
 
@@ -14844,7 +14872,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_133
+Name=DG_BLK_135
 
 Label=Q103
 
@@ -14858,7 +14886,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_134
+Name=DG_BLK_136
 
 Label=Q103
 
@@ -14872,7 +14900,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_135
+Name=DG_BLK_137
 
 Label=Q104
 
@@ -14886,7 +14914,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_136
+Name=DG_BLK_138
 
 Label=Q104
 
@@ -18056,7 +18084,7 @@ Text=115. What was the final amount you paid in cash at the hospital cashier upo
 
 [Block]
 
-Name=DG_BLK_137
+Name=DG_BLK_139
 
 Label=Q105
 
@@ -18070,7 +18098,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_138
+Name=DG_BLK_140
 
 Label=Q105
 
@@ -18084,7 +18112,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_139
+Name=DG_BLK_141
 
 Label=Q106-Q107
 
@@ -18098,7 +18126,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_140
+Name=DG_BLK_142
 
 Label=Q107
 
@@ -18112,7 +18140,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_141
+Name=DG_BLK_143
 
 Label=Q107
 
@@ -18126,7 +18154,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_142
+Name=DG_BLK_144
 
 Label=Q107
 
@@ -18140,7 +18168,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_143
+Name=DG_BLK_145
 
 Label=Q107
 
@@ -18154,7 +18182,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_144
+Name=DG_BLK_146
 
 Label=Q107
 
@@ -18168,7 +18196,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_145
+Name=DG_BLK_147
 
 Label=Q108
 
@@ -18182,7 +18210,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_146
+Name=DG_BLK_148
 
 Label=Q109
 
@@ -18196,7 +18224,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_147
+Name=DG_BLK_149
 
 Label=Q109
 
@@ -18210,7 +18238,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_148
+Name=DG_BLK_150
 
 Label=Q109
 
@@ -18224,7 +18252,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_149
+Name=DG_BLK_151
 
 Label=Q109
 
@@ -18238,7 +18266,7 @@ Length=3
 
 [Block]
 
-Name=DG_BLK_150
+Name=DG_BLK_152
 
 Label=Q109
 
@@ -18252,7 +18280,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_151
+Name=DG_BLK_153
 
 Label=Q110
 
@@ -18266,7 +18294,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_152
+Name=DG_BLK_154
 
 Label=Q111-Q112
 
@@ -18280,7 +18308,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_153
+Name=DG_BLK_155
 
 Label=Q112
 
@@ -18294,7 +18322,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_154
+Name=DG_BLK_156
 
 Label=Q112
 
@@ -18308,7 +18336,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_155
+Name=DG_BLK_157
 
 Label=Q112
 
@@ -18322,7 +18350,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_156
+Name=DG_BLK_158
 
 Label=Q112
 
@@ -18336,7 +18364,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_157
+Name=DG_BLK_159
 
 Label=Q113
 
@@ -18350,7 +18378,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_158
+Name=DG_BLK_160
 
 Label=Q113
 
@@ -18364,7 +18392,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_159
+Name=DG_BLK_161
 
 Label=Q113
 
@@ -18378,7 +18406,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_160
+Name=DG_BLK_162
 
 Label=Q113
 
@@ -18392,7 +18420,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_161
+Name=DG_BLK_163
 
 Label=Q113
 
@@ -18406,7 +18434,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_162
+Name=DG_BLK_164
 
 Label=Q113
 
@@ -18420,7 +18448,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_163
+Name=DG_BLK_165
 
 Label=Q113
 
@@ -18434,7 +18462,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_164
+Name=DG_BLK_166
 
 Label=Q114
 
@@ -18448,7 +18476,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_165
+Name=DG_BLK_167
 
 Label=Q114
 
@@ -18462,7 +18490,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_166
+Name=DG_BLK_168
 
 Label=Q114
 
@@ -18476,7 +18504,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_167
+Name=DG_BLK_169
 
 Label=Q114
 
@@ -18490,7 +18518,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_168
+Name=DG_BLK_170
 
 Label=Q114
 
@@ -18504,7 +18532,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_169
+Name=DG_BLK_171
 
 Label=Q114
 
@@ -18518,7 +18546,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_170
+Name=DG_BLK_172
 
 Label=Q114
 
@@ -18532,7 +18560,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_171
+Name=DG_BLK_173
 
 Label=Q114
 
@@ -18546,7 +18574,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_172
+Name=DG_BLK_174
 
 Label=Q114
 
@@ -18560,7 +18588,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_173
+Name=DG_BLK_175
 
 Label=Q114
 
@@ -18574,7 +18602,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_174
+Name=DG_BLK_176
 
 Label=Q115
 
@@ -20024,7 +20052,7 @@ Form=14
 
 Position=50,1770,330,1786
 
-Text=129. Why did you not avail of MAIFP during this last confinement? — Not eligible
+Text=129. Why did you not avail of MAIFIP during this last confinement? — Not eligible
 
  
 
@@ -20048,7 +20076,7 @@ Form=14
 
 Position=50,1800,330,1816
 
-Text=129. Why did you not avail of MAIFP during this last confinement? — Too complicated
+Text=129. Why did you not avail of MAIFIP during this last confinement? — Too complicated
 
  
 
@@ -20072,7 +20100,7 @@ Form=14
 
 Position=50,1830,330,1846
 
-Text=129. Why did you not avail of MAIFP during this last confinement? — I don't like to stay in basic ward
+Text=129. Why did you not avail of MAIFIP during this last confinement? — I don't like to stay in basic ward
 
  
 
@@ -20096,7 +20124,7 @@ Form=14
 
 Position=50,1860,330,1876
 
-Text=129. Why did you not avail of MAIFP during this last confinement? — There is no available basic ward
+Text=129. Why did you not avail of MAIFIP during this last confinement? — There is no available basic ward
 
  
 
@@ -20128,7 +20156,7 @@ Text=130. Have you or your household had to reduce spending on things you need (
 
 [Block]
 
-Name=DG_BLK_175
+Name=DG_BLK_177
 
 Label=Q116
 
@@ -20142,7 +20170,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_176
+Name=DG_BLK_178
 
 Label=Q117
 
@@ -20156,7 +20184,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_177
+Name=DG_BLK_179
 
 Label=Q117
 
@@ -20170,7 +20198,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_178
+Name=DG_BLK_180
 
 Label=Q118
 
@@ -20184,7 +20212,7 @@ Length=9
 
 [Block]
 
-Name=DG_BLK_179
+Name=DG_BLK_181
 
 Label=Q118
 
@@ -20198,7 +20226,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_180
+Name=DG_BLK_182
 
 Label=Q119
 
@@ -20212,7 +20240,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_181
+Name=DG_BLK_183
 
 Label=Q120
 
@@ -20226,7 +20254,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_182
+Name=DG_BLK_184
 
 Label=Q120
 
@@ -20240,7 +20268,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_183
+Name=DG_BLK_185
 
 Label=Q121
 
@@ -20254,7 +20282,7 @@ Length=9
 
 [Block]
 
-Name=DG_BLK_184
+Name=DG_BLK_186
 
 Label=Q121
 
@@ -20268,27 +20296,13 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_185
+Name=DG_BLK_187
 
-Label=Q122-Q123
+Label=Q122
 
 DisplayTogether=Yes
 
 Position=50
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_186
-
-Label=Q124
-
-DisplayTogether=Yes
-
-Position=53
 
 Length=1
 
@@ -20296,27 +20310,13 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_187
-
-Label=Q125
-
-DisplayTogether=Yes
-
-Position=55
-
-Length=8
-
-  
-
-[Block]
-
 Name=DG_BLK_188
 
-Label=Q125
+Label=Q123
 
 DisplayTogether=Yes
 
-Position=64
+Position=52
 
 Length=1
 
@@ -20326,11 +20326,11 @@ Length=1
 
 Name=DG_BLK_189
 
-Label=Q126
+Label=Q124
 
 DisplayTogether=Yes
 
-Position=66
+Position=54
 
 Length=1
 
@@ -20340,13 +20340,13 @@ Length=1
 
 Name=DG_BLK_190
 
-Label=Q127
+Label=Q125
 
 DisplayTogether=Yes
 
-Position=68
+Position=56
 
-Length=1
+Length=8
 
   
 
@@ -20354,13 +20354,13 @@ Length=1
 
 Name=DG_BLK_191
 
-Label=Q128
+Label=Q125
 
 DisplayTogether=Yes
 
-Position=70
+Position=65
 
-Length=4
+Length=1
 
   
 
@@ -20368,13 +20368,13 @@ Length=4
 
 Name=DG_BLK_192
 
-Label=Q129
+Label=Q126
 
 DisplayTogether=Yes
 
-Position=75
+Position=67
 
-Length=4
+Length=1
 
   
 
@@ -20382,11 +20382,53 @@ Length=4
 
 Name=DG_BLK_193
 
+Label=Q127
+
+DisplayTogether=Yes
+
+Position=69
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_194
+
+Label=Q128
+
+DisplayTogether=Yes
+
+Position=71
+
+Length=4
+
+  
+
+[Block]
+
+Name=DG_BLK_195
+
+Label=Q129
+
+DisplayTogether=Yes
+
+Position=76
+
+Length=4
+
+  
+
+[Block]
+
+Name=DG_BLK_196
+
 Label=Q130
 
 DisplayTogether=Yes
 
-Position=80
+Position=81
 
 Length=1
 
@@ -20748,7 +20790,7 @@ Text=144. How would the patient rate the quality of care you received at [facili
 
 [Block]
 
-Name=DG_BLK_194
+Name=DG_BLK_197
 
 Label=Q131-Q135
 
@@ -20762,7 +20804,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_195
+Name=DG_BLK_198
 
 Label=Q136-Q140
 
@@ -20776,7 +20818,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_196
+Name=DG_BLK_199
 
 Label=Q141-Q144
 
@@ -22388,7 +22430,7 @@ Text=161. If branded, why did you buy branded medicine? — Other (specify) text
 
 [Block]
 
-Name=DG_BLK_197
+Name=DG_BLK_200
 
 Label=Q145
 
@@ -22402,7 +22444,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_198
+Name=DG_BLK_201
 
 Label=Q146-Q147
 
@@ -22416,7 +22458,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_199
+Name=DG_BLK_202
 
 Label=Q148
 
@@ -22430,7 +22472,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_200
+Name=DG_BLK_203
 
 Label=Q148
 
@@ -22444,7 +22486,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_201
+Name=DG_BLK_204
 
 Label=Q148
 
@@ -22458,7 +22500,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_202
+Name=DG_BLK_205
 
 Label=Q149
 
@@ -22472,7 +22514,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_203
+Name=DG_BLK_206
 
 Label=Q149
 
@@ -22486,7 +22528,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_204
+Name=DG_BLK_207
 
 Label=Q150-Q151
 
@@ -22500,7 +22542,7 @@ Length=3
 
 [Block]
 
-Name=DG_BLK_205
+Name=DG_BLK_208
 
 Label=Q152
 
@@ -22514,7 +22556,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_206
+Name=DG_BLK_209
 
 Label=Q153
 
@@ -22528,7 +22570,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_207
+Name=DG_BLK_210
 
 Label=Q153
 
@@ -22542,7 +22584,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_208
+Name=DG_BLK_211
 
 Label=Q154
 
@@ -22556,7 +22598,7 @@ Length=6
 
 [Block]
 
-Name=DG_BLK_209
+Name=DG_BLK_212
 
 Label=Q154
 
@@ -22570,55 +22612,13 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_210
+Name=DG_BLK_213
 
-Label=Q155-Q156
+Label=Q155
 
 DisplayTogether=Yes
 
 Position=48
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_211
-
-Label=Q157
-
-DisplayTogether=Yes
-
-Position=51
-
-Length=9
-
-  
-
-[Block]
-
-Name=DG_BLK_212
-
-Label=Q157
-
-DisplayTogether=Yes
-
-Position=61
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_213
-
-Label=Q158
-
-DisplayTogether=Yes
-
-Position=63
 
 Length=1
 
@@ -22628,11 +22628,11 @@ Length=1
 
 Name=DG_BLK_214
 
-Label=Q159
+Label=Q156
 
 DisplayTogether=Yes
 
-Position=65
+Position=50
 
 Length=1
 
@@ -22642,13 +22642,13 @@ Length=1
 
 Name=DG_BLK_215
 
-Label=Q160
+Label=Q157
 
 DisplayTogether=Yes
 
-Position=67
+Position=52
 
-Length=7
+Length=9
 
   
 
@@ -22656,11 +22656,11 @@ Length=7
 
 Name=DG_BLK_216
 
-Label=Q160
+Label=Q157
 
 DisplayTogether=Yes
 
-Position=75
+Position=62
 
 Length=1
 
@@ -22670,13 +22670,13 @@ Length=1
 
 Name=DG_BLK_217
 
-Label=Q161
+Label=Q158
 
 DisplayTogether=Yes
 
-Position=77
+Position=64
 
-Length=7
+Length=1
 
   
 
@@ -22684,11 +22684,67 @@ Length=7
 
 Name=DG_BLK_218
 
+Label=Q159
+
+DisplayTogether=Yes
+
+Position=66
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_219
+
+Label=Q160
+
+DisplayTogether=Yes
+
+Position=68
+
+Length=7
+
+  
+
+[Block]
+
+Name=DG_BLK_220
+
+Label=Q160
+
+DisplayTogether=Yes
+
+Position=76
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_221
+
 Label=Q161
 
 DisplayTogether=Yes
 
-Position=85
+Position=78
+
+Length=7
+
+  
+
+[Block]
+
+Name=DG_BLK_222
+
+Label=Q161
+
+DisplayTogether=Yes
+
+Position=86
 
 Length=1
 
@@ -23876,7 +23932,7 @@ Text=178. Overall, how would you rate your experience with the referral process?
 
 [Block]
 
-Name=DG_BLK_219
+Name=DG_BLK_223
 
 Label=Q162
 
@@ -23890,7 +23946,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_220
+Name=DG_BLK_224
 
 Label=Q163
 
@@ -23904,7 +23960,7 @@ Length=12
 
 [Block]
 
-Name=DG_BLK_221
+Name=DG_BLK_225
 
 Label=Q163
 
@@ -23918,7 +23974,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_222
+Name=DG_BLK_226
 
 Label=Q164
 
@@ -23932,7 +23988,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_223
+Name=DG_BLK_227
 
 Label=Q164
 
@@ -23946,7 +24002,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_224
+Name=DG_BLK_228
 
 Label=Q165
 
@@ -23960,7 +24016,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_225
+Name=DG_BLK_229
 
 Label=Q165
 
@@ -23974,7 +24030,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_226
+Name=DG_BLK_230
 
 Label=Q166-Q169
 
@@ -23988,7 +24044,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_227
+Name=DG_BLK_231
 
 Label=Q170
 
@@ -24002,7 +24058,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_228
+Name=DG_BLK_232
 
 Label=Q171
 
@@ -24016,7 +24072,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_229
+Name=DG_BLK_233
 
 Label=Q171
 
@@ -24030,7 +24086,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_230
+Name=DG_BLK_234
 
 Label=Q172
 
@@ -24044,7 +24100,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_231
+Name=DG_BLK_235
 
 Label=Q173-Q176
 
@@ -24058,7 +24114,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_232
+Name=DG_BLK_236
 
 Label=Q177
 
@@ -24072,7 +24128,7 @@ Length=10
 
 [Block]
 
-Name=DG_BLK_233
+Name=DG_BLK_237
 
 Label=Q177
 
@@ -24086,7 +24142,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_234
+Name=DG_BLK_238
 
 Label=Q178
 

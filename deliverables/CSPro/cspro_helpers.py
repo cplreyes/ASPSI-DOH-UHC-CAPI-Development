@@ -907,11 +907,25 @@ def other_specify_procs(items):
         #     (without) — pick the flag whose label is the 'Other (Specify)' one.
         #     The label gate means panels with no 'Other' option stay unmatched.
         flag_re = re.compile(re.escape(base) + r"_O?\d+$")
+        group_flags = [k for k in sorted(items) if flag_re.match(k)]
+
+        def _opt_text(k):
+            lbl = _label_text(items[k])
+            return lbl.rsplit("—", 1)[-1] if "—" in lbl else lbl
+
+        # Prefer the flag whose OPTION text (after the em-dash) literally says
+        # 'specify'. A substantive option that merely contains the word 'other'
+        # ('Other facility visits', 'Referred by other specialist', 'Other
+        # infection…') must NOT capture the gate — otherwise the real 'Other
+        # (specify)' box never appears (#507/#513, + Q82/Q85/Q87/Q113/Q1142).
+        # Fall back to the loose match for groups with no 'specify' option (e.g.
+        # amount-matrix 'Other expenses' rows) so those are unchanged.
         other_flag = next(
-            (k for k in sorted(items)
-             if flag_re.match(k) and _OTHER_LABEL_RE.search(_label_text(items[k]))),
-            None,
-        )
+            (k for k in group_flags if re.search(r"specif", _opt_text(k), re.I)), None)
+        if other_flag is None:
+            other_flag = next(
+                (k for k in group_flags
+                 if _OTHER_LABEL_RE.search(_label_text(items[k]))), None)
         if other_flag is not None:
             procs[n] = (
                 f"PROC {n}\npreproc\n"
@@ -1117,6 +1131,11 @@ def amount_required_procs(items):
             f"PROC {n}\npostproc\n"
             f"  if {flag} = 1 and ({n} = 0 or {n} = notappl) then\n"
             f"    errmsg(\"'{flag}' was selected — enter its amount (must be greater than 0).\");\n"
+            f"    reenter;\n  endif;\n"
+            # reverse check (F3 #457/#460/#463): NOT selected -> amount must be 0/blank.
+            # A No-ticked source/expense item carrying a positive amount is invalid data.
+            f"  if {flag} <> 1 and {n} > 0 then\n"
+            f"    errmsg(\"'{flag}' was not selected — its amount must be 0 or blank. Clear the amount.\");\n"
             f"    reenter;\n  endif;"
         )
     return procs

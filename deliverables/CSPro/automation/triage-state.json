@@ -1,1 +1,35 @@
-﻿{"processed_issues":[367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390],"slack_ts":{"C0ASSTPLX9A":"1781316000.000000","C0B5TL0BT37":"1781280428.000000","C0B5X1ZPYHY":"1781313863.000000","C0B60KYFBKN":"1781260031.000000"},"last_run":"2026-06-14T08:50+08:00","f1_deployed":"2026-06-13T08:32+08:00 (… + 381 Q90 + 383 Section-D + 386 Q152)","f3_deployed":"2026-06-13T09:24+08:00 (screen-plan + 389 Q82 gate)","f4_deployed":"2026-06-12T22:21+08:00","update_propagation_issue":"VERIFIED on emulator 2026-06-14: Update DETECTION works (no version bump needed/done). Install fails on emulator with TLS BAD_DECRYPT (emulator SSL quirk; host TLS fine). Tester \u0027no update\u0027 likely sideloaded app -\u003e remove+re-add FROM CSWeb. Skill patch-note template updated to lead with remove+re-add."}
+{
+"processed_issues": [
+367, 368, 369, 370, 382, 385, 390,
+391, 392, 393, 394, 395, 396, 397, 398, 399, 400,
+401, 402, 403, 404, 405, 406, 407, 408, 409, 410,
+411, 412, 413, 414, 415, 416, 417, 418, 419, 420,
+421, 422, 423, 424, 425, 426, 427, 428, 429, 430,
+431, 432, 433, 434, 435, 436, 437, 438, 439, 440,
+441, 442, 443, 444, 445, 446, 447, 448, 449, 450,
+451, 452, 453, 454, 455, 456, 457, 458, 459, 460,
+461, 462, 463, 464, 465, 466, 467, 468, 469, 470,
+471, 472, 473, 474, 475, 476, 477, 478, 479, 480,
+481, 482, 483, 484, 485, 486, 487, 488, 489, 490,
+491, 492, 493, 494, 495, 496, 497, 498, 499, 500,
+501, 502, 503, 504, 505, 506, 507, 508, 509, 510,
+511, 512, 513, 514, 515
+],
+"slack_ts": {
+"C0ASSTPLX9A": "1781451159.978529",
+"C0B5TL0BT37": "1781447538.658479",
+"C0B5X1ZPYHY": "1781451159.978529",
+"C0B60KYFBKN": "1781274096.436769"
+},
+"last_run": "2026-06-14T23:48+08:00 (no new tester activity — 0 new GH issues, all 4 Slack channels quiet; testers appear paused after Wave 4)",
+"facility_piping": "#421/#443/#488/#510 RESOLVED + deployed (#15, 2026-06-14). CSPro CAPI question-text fill: ~~FACILITY_NAME~~ (double-tilde = plain-text fill, ~~~ for HTML; docs csprousers.org/help/CSPro/create_fills_in_questions.html). Added _pipe_fills() in F3/generate_qsf.py replacing [facility_name_input]/[FACILITY_NAME_INPUT] (+ bracketless variant in FIL) -> ~~FACILITY_NAME~~, 35 occurrences all langs. Passed Designer compile + publish fill-validation. ON-DEVICE RENDER UNVERIFIED: if FACILITY_NAME not captured for a case, fill renders blank -> may need to wire capture. F1/F4 have own generate_qsf.py — apply same if placeholders exist (unchecked). [date_formatted]/[inpatient]/[outpatient] placeholders NOT piped (need conditional/date fills, not requested).",
+"f1_deployed": "2026-06-15T06:45+08:00 (Filipino translations: #468 Q12, #469 Q14, #475 Q17-Q50, #484 Q57/Q58)",
+"f3_deployed": "2026-06-14T23:10+08:00 (DEPLOY #13 — Wave 4 Section K/L Tagalog: #492/496/497/499/502/504/506/509/512 main-question + option translations, #489/494/505 section scripts, #494 Q152 note renumber. Rebuilt compound select-all labels {stem_fil} — {opt_fil} from fil_F3.json. DEPLOY #12 was the K/L routing fixes #490/498/501/503/508/511.)",
+"wave4_translation": "Tool: job tmp fil_KL_rebuild.py (stem from v2.1.2 md + Q171 stem override line 8218; options from fil_F3.json compound keys + option-only fallback). 56 option/stem fixes. SOURCE GAPS (no FIL in fil_F3.json, left EN): Q149_O06 'Barangay Health Station', Q177_O08 'ZBB eligibility' — need ASPSI Tagalog. generate_qsf.py INSTRUCTIONS[152] renumbered Q144-149,Q151 -> Q152-157,Q159 (flagged to Carl, reversible). SECTION_INTROS_FIL already had 145/152/162 — QSF regen surfaced them. fil.json backup: job tmp fil.json.prewave4.",
+"f4_deployed": "2026-06-12T22:21+08:00",
+"wave4": "#488-515 (Marriz, F3 Sections K/L sweep, filed 2026-06-13/14). CLOSED routing+deployed: #490 (Q147 required), #498 (Q155/156), #501 (Q159 N/A->Q162, resolves spec sanity #7 per tester), #503 (Q161 gate), #508 (Q170->Q172), #511 (Q177 gate). ASPSI-flagged OPEN: #491 (Q148 medicines field / Q147=NONE), #493 (Q150 paper wording + xl8), #495 (no GAMOT-area gate question exists), #500 (Q157 got-all-from-GAMOT value), #514 (Q178 N/A option), #515 (mid-interview withdrawal path). TRANSLATION batch OPEN (tooling ready): #489 (Sec K script), #492 (Q149), #494 (before-Q152 script+renumber), #496 (Q153+LGU option), #497 (Q154), #499 (Q157), #502 (Q160), #504 (Q161), #505 (Sec L script), #506 (Q163+Special-therapy option), #509 (Q171), #512 (Q177+ZBB-eligibility option). DEVICE-dependent OPEN: #488/#510 (facility-name piping into Q143/144/172), #507/#513 (other-specify boxes Q163/Q177).",
+"specify_box_FIXED": "#507/#513 RESOLVED + deployed (#14, 2026-06-14). Root cause: cspro_helpers.other_specify_procs select-all path matched _OTHER_LABEL_RE (specif|\\bother\\b) against the full label, so a substantive 'other X' option captured the gate ahead of real 'Other (Specify)'. Fix: require 'specif' in the OPTION part (after em-dash); fall back to loose match only when no 'specify' option exists (amount-matrix 'Other expenses'). Fixed 7 select-all questions: Q82/Q85/Q87/Q113/Q163/Q177/Q1142. SHARED helper -> F1/F4 get it on next regen. LATENT-OPEN: amount-matrix other-specify (Q1141/Q971/Q972 'Other expenses') still gated on wrong/first flag via fallback — needs amount-based gate (not reported yet). Path-1 single-choice _other_value_code has same loose-match weakness (not yet hardened, not reported).",
+"aspsi_decision_sheet": "deliverables/comms/2026-06-14-aspsi-r4-capi-decision-request.md (draft, pending Carl send). Parks the open ASPSI calls (all from Marriz/mmgarciano): #515 withdrawal-path, #495 GAMOT-area gate, #514 Q178 N/A intent, #491 Q148 field intent, #493 Q150 wording -> Dr. Myra; #500 Q157 value + Q149/Q177 source-gap Tagalog -> Marriz/source-holder. Pointer on #369. These stay OPEN until ASPSI responds; don't re-triage as new.",
+"standing_prefs": "AUTODEPLOY: do not ask before each deploy during active round; autodeploy after compile-verify. TRANSLATIONS-ONLY: never edit English wordings in a translation pass; English stays verbatim, only add FIL from ASPSI source. 'include exact paper wording' asks = ASPSI English-content decision. NEVER close CSPro Deploy Application dialogs (Carl pre-opens F1+F3; F4 not open). Republish via job-tmp republish.py (Desktop-filtered Designer frame, click 115,338 = Publish and Deploy) then auto_deploy.py F<n> --deploy-only.",
+"deploy_flow_note": "Designer 'Publish and Deploy' does NOT rewrite the local .pen (that's F7 'Publish Entry Application'); it packages to CSWeb from on-disk project files. .pen timestamp staying old is normal. Republish opened a NEW PatientSurvey deploy dialog (hwnd=1838354); old stale one (131976) still parked. auto_deploy locks by Package name = safe."
+}

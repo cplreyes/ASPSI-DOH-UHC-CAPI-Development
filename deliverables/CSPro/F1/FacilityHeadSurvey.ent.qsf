@@ -1676,7 +1676,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — OPD/IPD census and morbidity reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — OPD/IPD census and morbidity reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — OPD/IPD census and morbidity reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>OPD/IPD census asin morbidity reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1693,7 +1693,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — Maternal, newborn, child, and adolescent health (MNCAH) reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — Maternal, newborn, child, and adolescent health (MNCAH) reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — Maternal, newborn, child, and adolescent health (MNCAH) reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Maternal, bagong aki, child, asin adolescent health (MNCAH) reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1710,7 +1710,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — Notifiable diseases / surveillance reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — Notifiable diseases / surveillance reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — Notifiable diseases / surveillance reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Notifiable diseases/ surveilance reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1727,7 +1727,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — Expenditure and budget utilization reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — Expenditure and budget utilization reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — Expenditure and budget utilization reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Expenditure asin budget utilization reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1744,7 +1744,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — PhilHealth claims and reimbursement reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — PhilHealth claims and reimbursement reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — PhilHealth claims and reimbursement reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Philhealth claims asin reimbursement reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1761,7 +1761,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — YAKAP/Konsulta utilization reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — YAKAP/Konsulta utilization reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — YAKAP/Konsulta utilization reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>YAKAP/Konsulta utilization reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1778,7 +1778,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — NBB compliance reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — NBB compliance reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — NBB compliance reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>NBB compliance</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1795,7 +1795,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — ZBB compliance / monitoring reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — ZBB compliance / monitoring reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — ZBB compliance / monitoring reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>ZBB compliance/monitoring reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1812,7 +1812,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — HRH staffing and deployment reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — HRH staffing and deployment reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — HRH staffing and deployment reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>HRH staffing asin deployment reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1829,7 +1829,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — Medicines availability and stock status reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — Medicines availability and stock status reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — Medicines availability and stock status reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Availability nin medisina asin stock status reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1846,7 +1846,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — Facility performance scorecards / quality reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>34. Which of the submitted reports are actually used for decision-making? — Facility performance scorecards / quality reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — Facility performance scorecards / quality reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Facility performance scorecards/quality reports</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -1863,7 +1863,7 @@ questions:
           EN: |
             <p>34. Which of the submitted reports are actually used for decision-making? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -2543,7 +2543,7 @@ questions:
           EN: |
             <p>49. What are the major challenges to improving the quality of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           FIL: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>Ano ang mga pangunahing hamon sa pagpapabuti ng kalidad ng pangangalaga sa pasyente sa inyong lokal na lugar?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           BCL: |
             <p>49. What are the major challenges to improving the quality of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           BIS: |
@@ -2577,7 +2577,7 @@ questions:
           EN: |
             <p>50. What are the major challenges to improving the accessibility of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           FIL: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>Ano ang mga pangunahing hamon sa pagpapabuti ng aksesibilidad ng pangangalaga sa pasyente sa inyong lokal na lugar?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           BCL: |
             <p>50. What are the major challenges to improving the accessibility of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           BIS: |
@@ -2662,7 +2662,7 @@ questions:
           EN: |
             <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung akreditado, alin sa mga sumusunod ang kasama sa YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -2764,7 +2764,7 @@ questions:
           EN: |
             <p>58. What are the performance indicators you need to meet to receive the second tranche payment?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
           FIL: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
+            <p>Ano ang mga performance indicator na kailangan ninyong matugunan upang matanggap ang ikalawang tranche ng bayad?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
           BCL: |
             <p>58. What are the performance indicators you need to meet to receive the second tranche payment?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
           BIS: |
@@ -2900,7 +2900,7 @@ questions:
           EN: |
             <p>64. Why did you apply to become a YAKAP/Konsulta provider? — Incentives (capitation/payment for registered patients)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga insentibo (hal., tumatanggap ang pasilidad ng capitation/bayad para sa nakarehistrong pasyente)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit kayo nag-aplay upang maging YAKAP/Konsulta provider? — Mga insentibo (hal., tumatanggap ang pasilidad ng capitation/bayad para sa nakarehistrong pasyente)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>nsentibo (I.e., mga pasilidad na nakaresiba ki capitation o bayad sa mga rehistradong pasyente)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -2917,7 +2917,7 @@ questions:
           EN: |
             <p>64. Why did you apply to become a YAKAP/Konsulta provider? — Aligns with facility's mission</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Ayon sa misyon ng pasilidad (hal., naka-align ang mga layunin ng UHC sa pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit kayo nag-aplay upang maging YAKAP/Konsulta provider? — Ayon sa misyon ng pasilidad (hal., naka-align ang mga layunin ng UHC sa pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Nakalinyada sa misyon kan pasilidad (I.e., goal kan UHC buda kan pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -2934,7 +2934,7 @@ questions:
           EN: |
             <p>64. Why did you apply to become a YAKAP/Konsulta provider? — Encouraged by LGU</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Hinimok ng LGU</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit kayo nag-aplay upang maging YAKAP/Konsulta provider? — Hinimok ng LGU</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Tigpapatupad mismo kan LGU</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -2951,7 +2951,7 @@ questions:
           EN: |
             <p>64. Why did you apply to become a YAKAP/Konsulta provider? — Mandated/required by DOH/UHC</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Ipinaguutos/kinakailangan ng DOH/UHC</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit kayo nag-aplay upang maging YAKAP/Konsulta provider? — Ipinaguutos/kinakailangan ng DOH/UHC</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kaipuhanan kan DOH/UHC</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -2968,7 +2968,7 @@ questions:
           EN: |
             <p>64. Why did you apply to become a YAKAP/Konsulta provider? — To improve facility services</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Upang mapabuti ang mga serbisyo ng pasilidad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit kayo nag-aplay upang maging YAKAP/Konsulta provider? — Upang mapabuti ang mga serbisyo ng pasilidad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Para maparahay an serbisyo kan pasilidad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -2985,7 +2985,7 @@ questions:
           EN: |
             <p>64. Why did you apply to become a YAKAP/Konsulta provider? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit kayo nag-aplay upang maging YAKAP/Konsulta provider? — Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -3019,7 +3019,7 @@ questions:
           EN: |
             <p>65. Which of the following requirements were difficult to comply with for accreditation? — Ability to conduct preventive/screening services and health education</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kakayahang magsagawa ng preventive/screening services at health education</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na kinakailangan ang mahirap sunurin para sa akreditasyon? — Kakayahang magsagawa ng preventive/screening services at health education</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>May kakayahan sa pagconduct/screening services asin health education</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -3036,7 +3036,7 @@ questions:
           EN: |
             <p>65. Which of the following requirements were difficult to comply with for accreditation? — Capability to provide laboratory and radiologic services</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kakayahang magbigay ng kinakailangang laboratoryo at radiologic services</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na kinakailangan ang mahirap sunurin para sa akreditasyon? — Kakayahang magbigay ng kinakailangang laboratoryo at radiologic services</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kakayahan sa pagprovide ki serbisyo sa laboratory asin radiologic services</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -3053,7 +3053,7 @@ questions:
           EN: |
             <p>65. Which of the following requirements were difficult to comply with for accreditation? — Capability to dispense required medicines</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kakayahang magbigay ng kinakailangang gamot</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na kinakailangan ang mahirap sunurin para sa akreditasyon? — Kakayahang magbigay ng kinakailangang gamot</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kakayahan sa pagdispense ki tamang mga bulong</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -3070,7 +3070,7 @@ questions:
           EN: |
             <p>65. Which of the following requirements were difficult to comply with for accreditation? — General Infrastructure</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pangkalahatang imprastruktura</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na kinakailangan ang mahirap sunurin para sa akreditasyon? — Pangkalahatang imprastruktura</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Para sa gabos manungod sa imprastaktura</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -3087,7 +3087,7 @@ questions:
           EN: |
             <p>65. Which of the following requirements were difficult to comply with for accreditation? — Equipment and Supplies</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kagamitan at supplies</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na kinakailangan ang mahirap sunurin para sa akreditasyon? — Kagamitan at supplies</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mga kagamitan asin supplies</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -3104,7 +3104,7 @@ questions:
           EN: |
             <p>65. Which of the following requirements were difficult to comply with for accreditation? — Human resource</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Tauhan</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na kinakailangan ang mahirap sunurin para sa akreditasyon? — Tauhan</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Human resource/Empleyado</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -3121,7 +3121,7 @@ questions:
           EN: |
             <p>65. Which of the following requirements were difficult to comply with for accreditation? — Functional Health Information System</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Gumaganang Health Information System</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na kinakailangan ang mahirap sunurin para sa akreditasyon? — Gumaganang Health Information System</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Functional Health Information System</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -3138,7 +3138,7 @@ questions:
           EN: |
             <p>65. Which of the following requirements were difficult to comply with for accreditation? — Documentary requirements</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga kinakailangang dokumento</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na kinakailangan ang mahirap sunurin para sa akreditasyon? — Mga kinakailangang dokumento</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mga kaipuhanang dokumento</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -3155,7 +3155,7 @@ questions:
           EN: |
             <p>65. Which of the following requirements were difficult to comply with for accreditation? — DOH licensing requirements</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga kailangang dokumento para sa lisensya ng DOH</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na kinakailangan ang mahirap sunurin para sa akreditasyon? — Mga kailangang dokumento para sa lisensya ng DOH</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>DOH licensing requirements</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -3172,7 +3172,7 @@ questions:
           EN: |
             <p>65. Which of the following requirements were difficult to comply with for accreditation? — None of the above</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Wala sa nabanggit</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na kinakailangan ang mahirap sunurin para sa akreditasyon? — Wala sa nabanggit</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Wara sa mga opsyon</p><p class="instruction">These are the requirements for YAKAP/Konsulta accreditation outlined by DOH. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4413,7 +4413,7 @@ questions:
           EN: |
             <p>75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — Patients' own initiative</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Sariling inisyatiba ng pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Batay sa iyong pag-unawa, kaninong responsibilidad ang mag-enroll ng mga pasyente sa YAKAP/Konsulta? — Sariling inisyatiba ng pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Sadiring initiative kan pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4430,7 +4430,7 @@ questions:
           EN: |
             <p>75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — Facility</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pasilidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Batay sa iyong pag-unawa, kaninong responsibilidad ang mag-enroll ng mga pasyente sa YAKAP/Konsulta? — Pasilidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pasilidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4447,7 +4447,7 @@ questions:
           EN: |
             <p>75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — LGU</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Lokal na Pamahalaan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Batay sa iyong pag-unawa, kaninong responsibilidad ang mag-enroll ng mga pasyente sa YAKAP/Konsulta? — Lokal na Pamahalaan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>LGU</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4464,7 +4464,7 @@ questions:
           EN: |
             <p>75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — Someone else</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Ibang tao</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Batay sa iyong pag-unawa, kaninong responsibilidad ang mag-enroll ng mga pasyente sa YAKAP/Konsulta? — Ibang tao</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pang tawo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4481,7 +4481,7 @@ questions:
           EN: |
             <p>75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — PhilHealth</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — PhilHealth</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Batay sa iyong pag-unawa, kaninong responsibilidad ang mag-enroll ng mga pasyente sa YAKAP/Konsulta? — PhilHealth</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Philhealth</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4498,7 +4498,7 @@ questions:
           EN: |
             <p>75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — I don't know</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Hindi ko alam</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Batay sa iyong pag-unawa, kaninong responsibilidad ang mag-enroll ng mga pasyente sa YAKAP/Konsulta? — Hindi ko alam</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Dai aram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4515,7 +4515,7 @@ questions:
           EN: |
             <p>75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Batay sa iyong pag-unawa, kaninong responsibilidad ang mag-enroll ng mga pasyente sa YAKAP/Konsulta? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4549,7 +4549,7 @@ questions:
           EN: |
             <p>76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — On-site Enrollment</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>On-site Enrollment (hal., pag-aalok ng enrollment ng pasyente mismo sa pasilidad pangkalusugan)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na inisyatiba ang inyong ginagawa upang ma-enroll ang mga pasyente sa pasilidad na ito sa YAKAP/Konsulta? — On-site Enrollment (hal., pag-aalok ng enrollment ng pasyente mismo sa pasilidad pangkalusugan)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>On-site Enrollment (e.g., pag enroll digdi mismo sa pasilidad)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4566,7 +4566,7 @@ questions:
           EN: |
             <p>76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — LGU Outreach</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>LGU Outreach (hal., pakikilahok sa mga outreach activity ng LGU tulad ng mga umiiral na programa sa nutrisyon)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na inisyatiba ang inyong ginagawa upang ma-enroll ang mga pasyente sa pasilidad na ito sa YAKAP/Konsulta? — LGU Outreach (hal., pakikilahok sa mga outreach activity ng LGU tulad ng mga umiiral na programa sa nutrisyon)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>LGU Outreach (e.g., mga aktibidad kan LGU sa komunidad asin ongoing nutrition programs.)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4583,7 +4583,7 @@ questions:
           EN: |
             <p>76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — Facility Outreach</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Facility Outreach (hal., pagsasagawa ng mga outreach activity na direktang pinamumunuan ng pasilidad)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na inisyatiba ang inyong ginagawa upang ma-enroll ang mga pasyente sa pasilidad na ito sa YAKAP/Konsulta? — Facility Outreach (hal., pagsasagawa ng mga outreach activity na direktang pinamumunuan ng pasilidad)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Outreach kan pasilidad (e.g., mga outreach hali mismo sa pasilidad)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4600,7 +4600,7 @@ questions:
           EN: |
             <p>76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — Barangay Health Workers (BHWs) Support</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Suporta ng mga Barangay Health Worker (BHW) (hal., pagtanggap ng tulong mula sa mga lokal na BHW)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na inisyatiba ang inyong ginagawa upang ma-enroll ang mga pasyente sa pasilidad na ito sa YAKAP/Konsulta? — Suporta ng mga Barangay Health Worker (BHW) (hal., pagtanggap ng tulong mula sa mga lokal na BHW)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Barangay Health Workers (BHWs) Support (e.g., nakakaresiba ki suportang lokal sa BHWs)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4617,7 +4617,7 @@ questions:
           EN: |
             <p>76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — Information Campaigns</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga Information Campaign (hal., pagsasagawa ng mga information campaign sa iba’t ibang paraan, kabilang ngunit hindi limitado sa online campaigns at house-to-house visits)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na inisyatiba ang inyong ginagawa upang ma-enroll ang mga pasyente sa pasilidad na ito sa YAKAP/Konsulta? — Mga Information Campaign (hal., pagsasagawa ng mga information campaign sa iba’t ibang paraan, kabilang ngunit hindi limitado sa online campaigns at house-to-house visits)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mga information campaigns (e.g., naga conduct ki lain lain na mga information campaigns sa iba iba channels, oonline campaigns asin mga house to house na pagbisita)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4634,7 +4634,7 @@ questions:
           EN: |
             <p>76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — Local Health Insurance Offices (LHIO) / YAKAP caravans</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Local Health Insurance Offices (LHIOs) (hal., tulong o pakikipag-partner sa mga YAKAP/Konsulta caravans</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na inisyatiba ang inyong ginagawa upang ma-enroll ang mga pasyente sa pasilidad na ito sa YAKAP/Konsulta? — Local Health Insurance Offices (LHIOs) (hal., tulong o pakikipag-partner sa mga YAKAP/Konsulta caravans</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Local Health Inusurance Officer (LHIOs) (pagaassist asin partnership an YAKAP/Kosnulta caravans)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4651,7 +4651,7 @@ questions:
           EN: |
             <p>76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — Coordination with other government agencies and private sector</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pakikipag-ugnayan sa iba pang ahensya ng gobyerno at pribadong sektor</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na inisyatiba ang inyong ginagawa upang ma-enroll ang mga pasyente sa pasilidad na ito sa YAKAP/Konsulta? — Pakikipag-ugnayan sa iba pang ahensya ng gobyerno at pribadong sektor</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Koordinasyon kan mga iba pang ahensya kan gobyerno asin mga pribadong sektor</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4668,7 +4668,7 @@ questions:
           EN: |
             <p>76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — No initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Walang isinagawang inisiyatiba</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na inisyatiba ang inyong ginagawa upang ma-enroll ang mga pasyente sa pasilidad na ito sa YAKAP/Konsulta? — Walang isinagawang inisiyatiba</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Wara ki initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4685,7 +4685,7 @@ questions:
           EN: |
             <p>76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na inisyatiba ang inyong ginagawa upang ma-enroll ang mga pasyente sa pasilidad na ito sa YAKAP/Konsulta? — Iba pa (tukuyin</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4736,7 +4736,7 @@ questions:
           EN: |
             <p>78. What are the challenges you have faced? — Lack of patient awareness</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kakulangan sa kaalaman ng mga pasyente (hal., hindi alam ng mga pasyente ang tungkol sa YAKAP/Konsulta, mga benepisyo nito, at ang proseso ng pagpaparehistro)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga hamon o suliranin na inyong kinaharap? — Kakulangan sa kaalaman ng mga pasyente (hal., hindi alam ng mga pasyente ang tungkol sa YAKAP/Konsulta, mga benepisyo nito, at ang proseso ng pagpaparehistro)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kulang sa kaaraman an pasyente (I.e., ang pasyente ay daing aram manungod sa YAKAP/Konsulta asin mga benefits buda an registration process)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4753,7 +4753,7 @@ questions:
           EN: |
             <p>78. What are the challenges you have faced? — Lack of patient willingness</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kakulangan sa kagustuhan ng mga pasyente (hal., nag-aalangan ang pasyente na magbigay ng personal na impormasyon o may pangamba tungkol sa seguridad ng datos)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga hamon o suliranin na inyong kinaharap? — Kakulangan sa kagustuhan ng mga pasyente (hal., nag-aalangan ang pasyente na magbigay ng personal na impormasyon o may pangamba tungkol sa seguridad ng datos)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kulang sa kahandaan an pasyente (I.e., an pasyente ay may pagaalangan na itao an saiyang personal na impormasyon manungod sa saiyan data security)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4770,7 +4770,7 @@ questions:
           EN: |
             <p>78. What are the challenges you have faced? — Lack of resources (manpower)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kakulangan sa resources (hal., hindi sapat ang manpower upang magsagawa ng information campaigns o outreach para ma-enroll ang mga pasyente sa YAKAP/Konsulta)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga hamon o suliranin na inyong kinaharap? — Kakulangan sa resources (hal., hindi sapat ang manpower upang magsagawa ng information campaigns o outreach para ma-enroll ang mga pasyente sa YAKAP/Konsulta)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kulang sa resources (e.g., warang sapat na manpower na ipagconduct an campaigns asin mga outreach para sa pagenroll kan pasyente para sa YAKAP/Konsulta)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4787,7 +4787,7 @@ questions:
           EN: |
             <p>78. What are the challenges you have faced? — Competition with other health facilities</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kumpetisyon sa ibang mga pasilidad pangkalusugan sa pagrerehistro ng mga pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga hamon o suliranin na inyong kinaharap? — Kumpetisyon sa ibang mga pasilidad pangkalusugan sa pagrerehistro ng mga pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kompetensya manungos sa ibang health facility sagkod sa pagparehistro kan pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4804,7 +4804,7 @@ questions:
           EN: |
             <p>78. What are the challenges you have faced? — Technical / system issues of PhilHealth</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga teknikal o isyu sa sistema ng PhilHealth (hal., pagkawala ng datos, mga error, o problema sa access ng platform)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga hamon o suliranin na inyong kinaharap? — Mga teknikal o isyu sa sistema ng PhilHealth (hal., pagkawala ng datos, mga error, o problema sa access ng platform)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Teknikal/System issues kan Philhealth (e.g., data loss, errors asin problema sa platfor acccessibility)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4821,7 +4821,7 @@ questions:
           EN: |
             <p>78. What are the challenges you have faced? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga hamon o suliranin na inyong kinaharap? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4855,7 +4855,7 @@ questions:
           EN: |
             <p>79. If not YAKAP/ KONSULTA accredited, why are you not accredited? — Difficult process</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mahirap na proseso</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung hindi akreditado sa YAKAP/Konsulta, bakit kayo hindi akreditado? — Mahirap na proseso</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mahirap na proseso</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4872,7 +4872,7 @@ questions:
           EN: |
             <p>79. If not YAKAP/ KONSULTA accredited, why are you not accredited? — No time</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Walang Oras</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung hindi akreditado sa YAKAP/Konsulta, bakit kayo hindi akreditado? — Walang Oras</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Wara ki oras</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4889,7 +4889,7 @@ questions:
           EN: |
             <p>79. If not YAKAP/ KONSULTA accredited, why are you not accredited? — Ongoing application</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Patuloy na applikasyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung hindi akreditado sa YAKAP/Konsulta, bakit kayo hindi akreditado? — Patuloy na applikasyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Padagos pa an aplikasyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -4906,7 +4906,7 @@ questions:
           EN: |
             <p>79. If not YAKAP/ KONSULTA accredited, why are you not accredited? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung hindi akreditado sa YAKAP/Konsulta, bakit kayo hindi akreditado? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5178,7 +5178,7 @@ questions:
           EN: |
             <p>94. What is/are the reason/s for the facility to charge additional capitation fees? — Cover building maintenance, equipment, non-clinical staff</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Upang tustusan ang mga gastusin na may kaugnayan sa pagpapanatili ng gusali, kagamitan, at hindi-klinikal na staff</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga dahilan kung bakit naniningil ang pasilidad ng karagdagang capitation fees? — Upang tustusan ang mga gastusin na may kaugnayan sa pagpapanatili ng gusali, kagamitan, at hindi-klinikal na staff</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Para mabayadan an pagmanitinir kan building, mga gamit asin non-clinical staaff</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5195,7 +5195,7 @@ questions:
           EN: |
             <p>94. What is/are the reason/s for the facility to charge additional capitation fees? — Patient care costs exceed predetermined fixed payment</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Ang gastos sa pangangalaga ng pasyente ay lumalagpas sa itinakdang fixed payment</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga dahilan kung bakit naniningil ang pasilidad ng karagdagang capitation fees? — Ang gastos sa pangangalaga ng pasyente ay lumalagpas sa itinakdang fixed payment</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>An pagaling sa pasyente minsan nglalagpas sa budget dapat may primerong fixed payment</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5212,7 +5212,7 @@ questions:
           EN: |
             <p>94. What is/are the reason/s for the facility to charge additional capitation fees? — Services excluded from capitation coverage</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga serbisyo na hindi sakop ng capitation coverage</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga dahilan kung bakit naniningil ang pasilidad ng karagdagang capitation fees? — Mga serbisyo na hindi sakop ng capitation coverage</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>An serbisyo ay naglagpas sa capitation coverage</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5229,7 +5229,7 @@ questions:
           EN: |
             <p>94. What is/are the reason/s for the facility to charge additional capitation fees? — Provide preventive care not adequately compensated</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Magbigay ng preventive care na maaaring hindi sapat ang kompensasyon sa ilalim ng basic capitation plan</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga dahilan kung bakit naniningil ang pasilidad ng karagdagang capitation fees? — Magbigay ng preventive care na maaaring hindi sapat ang kompensasyon sa ilalim ng basic capitation plan</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Magprovide ki preventice care na minsan dai compensated sa basic capitation plan</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5246,7 +5246,7 @@ questions:
           EN: |
             <p>94. What is/are the reason/s for the facility to charge additional capitation fees? — Offset losses</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>94. What is/are the reason/s for the facility to charge additional capitation fees? — Offset losses</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga dahilan kung bakit naniningil ang pasilidad ng karagdagang capitation fees? — Offset losses</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>May dai tigsasadya na losses</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5263,7 +5263,7 @@ questions:
           EN: |
             <p>94. What is/are the reason/s for the facility to charge additional capitation fees? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga dahilan kung bakit naniningil ang pasilidad ng karagdagang capitation fees? — Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5314,7 +5314,7 @@ questions:
           EN: |
             <p>96. Why not? — Delays in PhilHealth processing</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pagkaantala sa pagproseso ng PhilHealth</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Pagkaantala sa pagproseso ng PhilHealth</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagka-antala sa Philhealth processing</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5331,7 +5331,7 @@ questions:
           EN: |
             <p>96. Why not? — Delays in facility's tracking of patient enrollment</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pagkaantala sa pagsubaybay ng pasilidad sa enrollment ng pasyente</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Pagkaantala sa pagsubaybay ng pasilidad sa enrollment ng pasyente</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagka-antala sa tracking kan patient enrollment</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5348,7 +5348,7 @@ questions:
           EN: |
             <p>96. Why not? — Difficulties verifying patient enrollment (PhilHealth)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kahirapan sa pag-verify ng enrollment ng pasyente (PhilHealth)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Kahirapan sa pag-verify ng enrollment ng pasyente (PhilHealth)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagka-antala sa tracking kan patient enrollment</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5365,7 +5365,7 @@ questions:
           EN: |
             <p>96. Why not? — Facility not active in meeting payment criteria</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Ang pasilidad ay hindi aktibo sa pagtupad sa mga criteria para sa bayad (hal., hindi nagsusumite ng kinakailangang requirements, hindi nag-e-enroll ng mga pasyente sa YAKAP/Konsulta)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Ang pasilidad ay hindi aktibo sa pagtupad sa mga criteria para sa bayad (hal., hindi nagsusumite ng kinakailangang requirements, hindi nag-e-enroll ng mga pasyente sa YAKAP/Konsulta)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>An pasilidad dai nakakatugon sa criteria (e.g., dae ngsusumitir kan mga importantent requirements, as mismong pasilidad dai naeenroll an mga pasyente sa YAKAP/Konsulta)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5382,7 +5382,7 @@ questions:
           EN: |
             <p>96. Why not? — Criteria for payments is unclear</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Hindi malinaw ang criteria para sa bayad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Hindi malinaw ang criteria para sa bayad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Daing klaro an criteria para sa pagbayad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5399,7 +5399,7 @@ questions:
           EN: |
             <p>96. Why not? — I don't know</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Hindi ko alam</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Hindi ko alam</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Dai aram</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5416,7 +5416,7 @@ questions:
           EN: |
             <p>96. Why not? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5467,7 +5467,7 @@ questions:
           EN: |
             <p>98. What were these challenges? — Delayed payment process</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Naantalang proseso ng bayad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga pagsubok na ito — Naantalang proseso ng bayad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Naantalang proseso nin bayad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5484,7 +5484,7 @@ questions:
           EN: |
             <p>98. What were these challenges? — Unclear criteria for capitation</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Hindi malinaw ang criteria para sa capitation</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga pagsubok na ito — Hindi malinaw ang criteria para sa capitation</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Dai klaro an criteris sa capitation</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5501,7 +5501,7 @@ questions:
           EN: |
             <p>98. What were these challenges? — Difficult to meet criteria for capitation</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mahirap matugunan ang criteria para sa capitation</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga pagsubok na ito — Mahirap matugunan ang criteria para sa capitation</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mahirap abuton an criteria</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5518,7 +5518,7 @@ questions:
           EN: |
             <p>98. What were these challenges? — PhilHealth process to apply for payments is difficult/unclear</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mahirap o hindi malinaw ang proseso ng PhilHealth sa pag-aaplay ng bayad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga pagsubok na ito — Mahirap o hindi malinaw ang proseso ng PhilHealth sa pag-aaplay ng bayad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mahirap o dai klaro an proseso kan Philhealth</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5535,7 +5535,7 @@ questions:
           EN: |
             <p>98. What were these challenges? — I don't know</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Hindi ko alam</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga pagsubok na ito — Hindi ko alam</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Dai aram</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5552,7 +5552,7 @@ questions:
           EN: |
             <p>98. What were these challenges? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano-ano ang mga pagsubok na ito — Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5586,7 +5586,7 @@ questions:
           EN: |
             <p>99. If you were to expand the YAKAP/Konsulta package, what would you expand next? — Current list of medicines and drugs</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Ang kasalukuyang listahan ng mga gamot at medisina na ibinibigay</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung palalawakin mo ang YAKAP/Konsulta package, ano ang susunod mong palalawakin? — Ang kasalukuyang listahan ng mga gamot at medisina na ibinibigay</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>An kasalukuyang listahan nin medisina asin gamot na ino-offer</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5603,7 +5603,7 @@ questions:
           EN: |
             <p>99. If you were to expand the YAKAP/Konsulta package, what would you expand next? — Current laboratory/diagnostic services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Ang kasalukuyang laboratoryo/diagnostic na serbisyo na ibinibigay</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung palalawakin mo ang YAKAP/Konsulta package, ano ang susunod mong palalawakin? — Ang kasalukuyang laboratoryo/diagnostic na serbisyo na ibinibigay</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>An kasalukuyan listahan nin laboratory/diagnostic service na ino-offer</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5620,7 +5620,7 @@ questions:
           EN: |
             <p>99. If you were to expand the YAKAP/Konsulta package, what would you expand next? — Additional features</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Karagdagang mga tampok</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung palalawakin mo ang YAKAP/Konsulta package, ano ang susunod mong palalawakin? — Karagdagang mga tampok</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mga dagdag na katangian</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5637,7 +5637,7 @@ questions:
           EN: |
             <p>99. If you were to expand the YAKAP/Konsulta package, what would you expand next? — I don't know</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Hindi ko alam</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung palalawakin mo ang YAKAP/Konsulta package, ano ang susunod mong palalawakin? — Hindi ko alam</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Dai aram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5654,7 +5654,7 @@ questions:
           EN: |
             <p>99. If you were to expand the YAKAP/Konsulta package, what would you expand next? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung palalawakin mo ang YAKAP/Konsulta package, ano ang susunod mong palalawakin? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5773,7 +5773,7 @@ questions:
           EN: |
             <p>104. What are the available services offered by your BUCAS Center? — Urgent care and consultation</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Agarang pangangalaga at konsultasyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga serbisyong available na inaalok ng inyong BUCAS Center? — Agarang pangangalaga at konsultasyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Konsultasyon para sa urgent care</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5790,7 +5790,7 @@ questions:
           EN: |
             <p>104. What are the available services offered by your BUCAS Center? — Minor surgical procedures</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Minor na mga operasyong kirurhiko</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga serbisyong available na inaalok ng inyong BUCAS Center? — Minor na mga operasyong kirurhiko</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Minor surgical procedures</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5807,7 +5807,7 @@ questions:
           EN: |
             <p>104. What are the available services offered by your BUCAS Center? — Diagnostic and laboratory services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga serbisyong diagnostic at laboratoryo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga serbisyong available na inaalok ng inyong BUCAS Center? — Mga serbisyong diagnostic at laboratoryo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Serbisyo para sa diagnostics asin laboratory</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5824,7 +5824,7 @@ questions:
           EN: |
             <p>104. What are the available services offered by your BUCAS Center? — Reproductive and special health services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga serbisyong reproduktibo at espesyal na pangkalusugan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga serbisyong available na inaalok ng inyong BUCAS Center? — Mga serbisyong reproduktibo at espesyal na pangkalusugan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Reproductive asin special health services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5841,7 +5841,7 @@ questions:
           EN: |
             <p>104. What are the available services offered by your BUCAS Center? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga serbisyong available na inaalok ng inyong BUCAS Center? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5875,7 +5875,7 @@ questions:
           EN: |
             <p>105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? — Patient awareness</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kaalaman ng pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa iyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng BUCAS sa inyong pasilidad? — Kaalaman ng pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kaaraman kan pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5892,7 +5892,7 @@ questions:
           EN: |
             <p>105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? — Facility location and accessibility</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Lokasyon at aksesibilidad ng pasilidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa iyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng BUCAS sa inyong pasilidad? — Lokasyon at aksesibilidad ng pasilidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Lokasyon asin accessibility kan pasilidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5909,7 +5909,7 @@ questions:
           EN: |
             <p>105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? — Referral patterns</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Paraan ng pagrerefer</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa iyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng BUCAS sa inyong pasilidad? — Paraan ng pagrerefer</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pattern kan referral</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5926,7 +5926,7 @@ questions:
           EN: |
             <p>105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? — PhilHealth coverage and reimbursement</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Saklaw at reimbursement ng PhilHealth</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa iyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng BUCAS sa inyong pasilidad? — Saklaw at reimbursement ng PhilHealth</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Philhealth coverage asin reimbursement</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5943,7 +5943,7 @@ questions:
           EN: |
             <p>105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? — Availability of staff/services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Sapat na tauhan at serbisyong magagamit</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa iyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng BUCAS sa inyong pasilidad? — Sapat na tauhan at serbisyong magagamit</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagka-available kan staff/serbisyo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -5960,7 +5960,7 @@ questions:
           EN: |
             <p>105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa iyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng BUCAS sa inyong pasilidad? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6096,7 +6096,7 @@ questions:
           EN: |
             <p>111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility? — Availability of GAMOT medicines</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pagkakaroon at suplay ng mga gamot sa ilalim ng GAMOT</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng GAMOT Program sa inyong pasilidad? — Pagkakaroon at suplay ng mga gamot sa ilalim ng GAMOT</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagkakaavailable kan GAMOT na medisina</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6113,7 +6113,7 @@ questions:
           EN: |
             <p>111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility? — Pharmacy capacity</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kapasidad ng pharmacy</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng GAMOT Program sa inyong pasilidad? — Kapasidad ng pharmacy</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kakayahan kan botika</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6130,7 +6130,7 @@ questions:
           EN: |
             <p>111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility? — Patient awareness of the program</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kaalaman ng pasyente sa programa</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng GAMOT Program sa inyong pasilidad? — Kaalaman ng pasyente sa programa</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kaaraman kan pasyente sa programa</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6147,7 +6147,7 @@ questions:
           EN: |
             <p>111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility? — PhilHealth eligibility and reimbursement processes</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pagiging eligible sa PhilHealth at reimbursement processes</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng GAMOT Program sa inyong pasilidad? — Pagiging eligible sa PhilHealth at reimbursement processes</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Philhealth eligibilty asin reimbursement process</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6164,7 +6164,7 @@ questions:
           EN: |
             <p>111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility? — Prescribing practices of physicians</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pamamaraan ng pagrereseta ng mga doktor</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng GAMOT Program sa inyong pasilidad? — Pamamaraan ng pagrereseta ng mga doktor</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mga praktis sa pagreseta kan mga doktor</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6181,7 +6181,7 @@ questions:
           EN: |
             <p>111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pagsusuri, ano ang mga pangunahing salik na nakakaapekto sa paggamit ng GAMOT Program sa inyong pasilidad? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6300,7 +6300,7 @@ questions:
           EN: |
             <p>117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package? — Resorted to alternative procurement</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Gumamit ng alternatibong paraan ng pagkuha (procurement)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung oo, ano ang ginawa ninyo upang matugunan ang stock-out ng mga gamot sa GAMOT Package? — Gumamit ng alternatibong paraan ng pagkuha (procurement)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>May igwang alternative na procurement</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6317,7 +6317,7 @@ questions:
           EN: |
             <p>117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package? — Active inventory monitoring</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Aktibong pagsubaybay ng imbentaryo</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung oo, ano ang ginawa ninyo upang matugunan ang stock-out ng mga gamot sa GAMOT Package? — Aktibong pagsubaybay ng imbentaryo</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Aktibong pagmonitor sa inventory</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6334,7 +6334,7 @@ questions:
           EN: |
             <p>117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package? — Improve forecasting and quantification</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pagpapabuti ng pagtataya at pagkuwenta ng pangangailangan (forecasting and quantification)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung oo, ano ang ginawa ninyo upang matugunan ang stock-out ng mga gamot sa GAMOT Package? — Pagpapabuti ng pagtataya at pagkuwenta ng pangangailangan (forecasting and quantification)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagimporve kan forecasting asin quantification</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6351,7 +6351,7 @@ questions:
           EN: |
             <p>117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kung oo, ano ang ginawa ninyo upang matugunan ang stock-out ng mga gamot sa GAMOT Package? — Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6436,7 +6436,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Patient rights and organization ethics</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Karapatan ng pasyente at etika ng organisasyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Karapatan ng pasyente at etika ng organisasyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Karapatan kan pasyente asin organization ethics</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6453,7 +6453,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Patient care</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pangangalaga sa pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Pangangalaga sa pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagaalaga sa pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6470,7 +6470,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Leadership and management</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pamumuno at pamamahala</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Pamumuno at pamamahala</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pamumuno asin pamamahala</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6487,7 +6487,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Human resource management</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pamamahala ng tauhan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Pamamahala ng tauhan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Human resource management</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6504,7 +6504,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Information management</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pamamahala ng impormasyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Pamamahala ng impormasyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Information management</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6521,7 +6521,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Safe practice and environment</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Ligtas na pagsasanay at kapaligiran</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Ligtas na pagsasanay at kapaligiran</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Ligtas asin marhay ba kapaligiran</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6538,7 +6538,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Improving performance</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pagpapahusay ng pagganap</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Pagpapahusay ng pagganap</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagrahay kan performance</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6555,7 +6555,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Physical plant</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pisikal na planta</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Pisikal na planta</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Physical Plant</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6572,7 +6572,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Equipment and instruments</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kagamitan at mga instrumento</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Kagamitan at mga instrumento</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mga kagamitan asin instrumento</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6589,7 +6589,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — National laws and DOH issuances (hospitals only)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga batas na pambansa at mga kautusan ng DOH na ipinatutupad sa mga ospital at iba pang kalusugang pasilidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Mga batas na pambansa at mga kautusan ng DOH na ipinatutupad sa mga ospital at iba pang kalusugang pasilidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>National laws asin pagimplementar kan iba pang DOH issuances sa mga hospitals asin iba pang health facilities</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6606,7 +6606,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Emergency cart contents (hospitals only)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Nilalaman ng emergency cart</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Nilalaman ng emergency cart</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mga laog kan emergency cart</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6623,7 +6623,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Add-on services (hospitals only)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>mga add-on na serbisyo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — mga add-on na serbisyo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Dagdag na serbisyo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6640,7 +6640,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — Public access to price information (PCF only)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pagbibigay‑access ng publiko sa impormasyon ng presyo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Pagbibigay‑access ng publiko sa impormasyon ng presyo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Akses sa public price information</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -6657,7 +6657,7 @@ questions:
           EN: |
             <p>121. Which of the following requirements were difficult to comply with in the DOH licensing process? — None of the above</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Wala sa mga nabanggit</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Alin sa mga sumusunod na requirements ang mahirap tugunan sa proseso ng DOH licensing? — Wala sa mga nabanggit</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Wara sa mga opsyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -8918,7 +8918,7 @@ questions:
           EN: |
             <p>137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — Complying with no fees for basic/ward accommodation</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pagsunod sa prinsipyong walang dagdag na bayad para sa basic o ward accommodation</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pananaw, ano ang ilang mga hadlang sa pagpapatupad ng no balance billing (NBB) policy? — Pagsunod sa prinsipyong walang dagdag na bayad para sa basic o ward accommodation</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagsunod sa patakaran na dae pwedeng maningil para sa basic o ward accommodation</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -8935,7 +8935,7 @@ questions:
           EN: |
             <p>137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — Complying with prescribed allocation ratio (basic vs non-basic)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pagsunod sa itinakdang ratio ng alokasyon para sa basic at non-basic accommodation</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pananaw, ano ang ilang mga hadlang sa pagpapatupad ng no balance billing (NBB) policy? — Pagsunod sa itinakdang ratio ng alokasyon para sa basic at non-basic accommodation</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagsunod sa itinakdang ratio kan basic asin non-basic accommodation</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -8952,7 +8952,7 @@ questions:
           EN: |
             <p>137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — Patients do not go through the process of availing it</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Hindi dumadaan sa proseso ng pag-avail ang mga pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pananaw, ano ang ilang mga hadlang sa pagpapatupad ng no balance billing (NBB) policy? — Hindi dumadaan sa proseso ng pag-avail ang mga pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>An mga pasyente dae nagdadaan sa proseso kan pag-avail</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -8969,7 +8969,7 @@ questions:
           EN: |
             <p>137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — Insufficient PhilHealth support value</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — Insufficient PhilHealth support value</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pananaw, ano ang ilang mga hadlang sa pagpapatupad ng no balance billing (NBB) policy? — Insufficient PhilHealth support value</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kulang an PhilHealth support value</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -8986,7 +8986,7 @@ questions:
           EN: |
             <p>137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — Insufficient other sources (MAIFIP, DSWD, PCSO)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Hindi sapat ang suportang halaga ng PhilHealth at/o hindi sapat ang ibang mapagkukunan (hal. MAIFIP, DSWD, PCSO)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pananaw, ano ang ilang mga hadlang sa pagpapatupad ng no balance billing (NBB) policy? — Hindi sapat ang suportang halaga ng PhilHealth at/o hindi sapat ang ibang mapagkukunan (hal. MAIFIP, DSWD, PCSO)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kulang an PhilHealth support value asin/o iba pang pinagkukunan (hal. MAIFIP, DSWD, PCSO)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9003,7 +9003,7 @@ questions:
           EN: |
             <p>137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — PhilHealth delayed payment</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — PhilHealth delayed payment</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pananaw, ano ang ilang mga hadlang sa pagpapatupad ng no balance billing (NBB) policy? — PhilHealth delayed payment</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pagkahaloy kan Philhealth payment</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9020,7 +9020,7 @@ questions:
           EN: |
             <p>137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — None of the above</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Wala sa mga nabanggit</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pananaw, ano ang ilang mga hadlang sa pagpapatupad ng no balance billing (NBB) policy? — Wala sa mga nabanggit</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Wara sa mga opsyon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9037,7 +9037,7 @@ questions:
           EN: |
             <p>137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa inyong pananaw, ano ang ilang mga hadlang sa pagpapatupad ng no balance billing (NBB) policy? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9326,7 +9326,7 @@ questions:
           EN: |
             <p>144. Why is this difficult to implement? — UHC implementation heavily reliant on LGU decisions</p>
           FIL: |
-            <p>Ang pagpapatupad ng UHC benefits ay lubos na nakasalalay sa mga desisyon ng LGU</p>
+            <p>Bakit ito mahirap ipatupad? — Ang pagpapatupad ng UHC benefits ay lubos na nakasalalay sa mga desisyon ng LGU</p>
           BCL: |
             <p>An pagimplementar kan UHC benefits ay narely sa LGU</p>
           BIS: |
@@ -9343,7 +9343,7 @@ questions:
           EN: |
             <p>144. Why is this difficult to implement? — Not enough funding/budget</p>
           FIL: |
-            <p>Hindi sapat ang pondo/budget</p>
+            <p>Bakit ito mahirap ipatupad? — Hindi sapat ang pondo/budget</p>
           BCL: |
             <p>Kulang an budget asin pondo</p>
           BIS: |
@@ -9360,7 +9360,7 @@ questions:
           EN: |
             <p>144. Why is this difficult to implement? — Technical/system issues of PhilHealth</p>
           FIL: |
-            <p>Mga teknikal/system issues ng PhilHealth (hal., pagkawala ng data, mga error, o problema sa accessibility ng platform)</p>
+            <p>Bakit ito mahirap ipatupad? — Mga teknikal/system issues ng PhilHealth (hal., pagkawala ng data, mga error, o problema sa accessibility ng platform)</p>
           BCL: |
             <p>Teknikal/System issues kan Philhealth (e.g., data loss, errors asin problema sa platfor acccessibility)</p>
           BIS: |
@@ -9377,7 +9377,7 @@ questions:
           EN: |
             <p>144. Why is this difficult to implement? — Other (specify)</p>
           FIL: |
-            <p>Iba pa, tukuyin</p>
+            <p>Bakit ito mahirap ipatupad? — Iba pa, tukuyin</p>
           BCL: |
             <p>Iba pa (ispecify)</p>
           BIS: |
@@ -9428,7 +9428,7 @@ questions:
           EN: |
             <p>146. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Streamline access to medical and financial aid for indigent patients</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pabilisin ang pag-access sa medikal at pinansyal na tulong para sa mga indigent at financially incapacitated na pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>&lt;Proceed to Q148&gt; — Pabilisin ang pag-access sa medikal at pinansyal na tulong para sa mga indigent at financially incapacitated na pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Streamline access sa medical asin tabang pinansyal para sa mga indigent asin financially incapacitated patients</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9445,7 +9445,7 @@ questions:
           EN: |
             <p>146. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Reduce out-of-pocket expenses</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Bawasan ang out-of-pocket expenses</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>&lt;Proceed to Q148&gt; — Bawasan ang out-of-pocket expenses</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mabawasan an mga out-of-pocket expenses</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9462,7 +9462,7 @@ questions:
           EN: |
             <p>146. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Eliminate the need to travel to multiple government agencies</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Alisin ang pangangailangan na pumunta sa iba't ibang ahensya ng gobyerno</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>&lt;Proceed to Q148&gt; — Alisin ang pangangailangan na pumunta sa iba't ibang ahensya ng gobyerno</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mahali an kaipuhan na mga travel to multiple government agencies</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9479,7 +9479,7 @@ questions:
           EN: |
             <p>146. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Foster a more compassionate approach to healthcare</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Itaguyod ang mas mahabaging pamamaraan sa pangangalagang pangkalusugan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>&lt;Proceed to Q148&gt; — Itaguyod ang mas mahabaging pamamaraan sa pangangalagang pangkalusugan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Para maka-foster ki mas compassionate na paagi nin healthcare</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9496,7 +9496,7 @@ questions:
           EN: |
             <p>146. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>&lt;Proceed to Q148&gt; — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9530,7 +9530,7 @@ questions:
           EN: |
             <p>147. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Limited budget</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Limitadong badyet</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi nagbibigay ang pasilidad ng medical social welfare o tulong sa pamamagitan ng Malasakit Centers o MAIFIP? — Limitadong badyet</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kakulangan sa budget</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9547,7 +9547,7 @@ questions:
           EN: |
             <p>147. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Stringent eligibility requirements</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mahigpit na mga kinakailangan para sa pagiging karapat-dapat</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi nagbibigay ang pasilidad ng medical social welfare o tulong sa pamamagitan ng Malasakit Centers o MAIFIP? — Mahigpit na mga kinakailangan para sa pagiging karapat-dapat</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Istriktong pagkuha ki mga requirements</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9564,7 +9564,7 @@ questions:
           EN: |
             <p>147. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Incomplete documentation from patients</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kakulangan sa kumpletong dokumentasyon mula sa mga pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi nagbibigay ang pasilidad ng medical social welfare o tulong sa pamamagitan ng Malasakit Centers o MAIFIP? — Kakulangan sa kumpletong dokumentasyon mula sa mga pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kulang an dokumento kan pasyente</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9581,7 +9581,7 @@ questions:
           EN: |
             <p>147. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — High patient volume / service bottlenecks</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mataas na dami ng pasyente na nagdudulot ng bottleneck sa serbisyo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi nagbibigay ang pasilidad ng medical social welfare o tulong sa pamamagitan ng Malasakit Centers o MAIFIP? — Mataas na dami ng pasyente na nagdudulot ng bottleneck sa serbisyo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Paglangkaw kan patient volume leading to service bottlenecks</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9598,7 +9598,7 @@ questions:
           EN: |
             <p>147. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi nagbibigay ang pasilidad ng medical social welfare o tulong sa pamamagitan ng Malasakit Centers o MAIFIP? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9649,7 +9649,7 @@ questions:
           EN: |
             <p>149. What forms of support do you receive? — Financial assistance</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pinansiyal na tulong</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Anong-anong uri ng suporta ang inyong natatanggap? — Pinansiyal na tulong</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Tulong pinansyal</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9666,7 +9666,7 @@ questions:
           EN: |
             <p>149. What forms of support do you receive? — Technical assistance</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Teknikal na tulong</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Anong-anong uri ng suporta ang inyong natatanggap? — Teknikal na tulong</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Teknikal na tulong</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9683,7 +9683,7 @@ questions:
           EN: |
             <p>149. What forms of support do you receive? — Medical supplies and equipment</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Medikal na suplay at kagamitan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Anong-anong uri ng suporta ang inyong natatanggap? — Medikal na suplay at kagamitan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mga medical supplies asin kagamitan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9700,7 +9700,7 @@ questions:
           EN: |
             <p>149. What forms of support do you receive? — Manpower support</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Suporta sa manpower</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Anong-anong uri ng suporta ang inyong natatanggap? — Suporta sa manpower</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Suporta sa manpower</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9717,7 +9717,7 @@ questions:
           EN: |
             <p>149. What forms of support do you receive? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Anong-anong uri ng suporta ang inyong natatanggap? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9768,7 +9768,7 @@ questions:
           EN: |
             <p>151. Why not? — Insufficient</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Kulang</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Kulang</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Kulang</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9785,7 +9785,7 @@ questions:
           EN: |
             <p>151. Why not? — Hard to coordinate</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mahirap makipagugnayan</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Mahirap makipagugnayan</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Mahirap i-coordinate</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9802,7 +9802,7 @@ questions:
           EN: |
             <p>151. Why not? — Support given is not aligned with the needs</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Ang suporta ay hindi tumutugma sa pangangailangan ng pasilidad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Ang suporta ay hindi tumutugma sa pangangailangan ng pasilidad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>An suportang tinatao dae tugma sa pangangaipo kan pasilidad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9819,7 +9819,7 @@ questions:
           EN: |
             <p>151. Why not? — I don't know</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Hindi ko alam</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Hindi ko alam</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Dai aram</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9836,7 +9836,7 @@ questions:
           EN: |
             <p>151. Why not? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi? — Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9921,7 +9921,7 @@ questions:
           EN: |
             <p>155. What are the most common ways you send referrals to higher level facilities/specialists? — Physical referral slip</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pisikal na referral slip</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga pinakakaraniwang paraan ng pagpapadala ninyo ng referral sa mas mataas na antas ng pasilidad o mga espesyalista? — Pisikal na referral slip</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pisikal na referral slip</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9938,7 +9938,7 @@ questions:
           EN: |
             <p>155. What are the most common ways you send referrals to higher level facilities/specialists? — E-referral</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>155. What are the most common ways you send referrals to higher level facilities/specialists? — E-referral</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga pinakakaraniwang paraan ng pagpapadala ninyo ng referral sa mas mataas na antas ng pasilidad o mga espesyalista? — E-referral</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>E-referral</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9955,7 +9955,7 @@ questions:
           EN: |
             <p>155. What are the most common ways you send referrals to higher level facilities/specialists? — Referring facility calls receiving facility</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Tumatawag ang nagre-refer na pasilidad sa tumatanggap na pasilidad</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga pinakakaraniwang paraan ng pagpapadala ninyo ng referral sa mas mataas na antas ng pasilidad o mga espesyalista? — Tumatawag ang nagre-refer na pasilidad sa tumatanggap na pasilidad</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>An nagre-refer na pasilidad nagtatawag sa receiving facility</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -9972,7 +9972,7 @@ questions:
           EN: |
             <p>155. What are the most common ways you send referrals to higher level facilities/specialists? — Other (specify)</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Ano ang mga pinakakaraniwang paraan ng pagpapadala ninyo ng referral sa mas mataas na antas ng pasilidad o mga espesyalista? — Iba pa (tukuyin)</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">Our focus is specifically on referrals external to the facility, excluding internal referrals. READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -10159,7 +10159,7 @@ questions:
           EN: |
             <p>159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities? — Physical referral slip</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Pisikal na referral slip</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa mga na-refer na pasyente, alin sa mga sumusunod ang mga pinakakaraniwang paraan ng pagtanggap ninyo ng referral mula sa mga lower-level health facilities? — Pisikal na referral slip</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Pisikal na referral slip</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -10176,7 +10176,7 @@ questions:
           EN: |
             <p>159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities? — E-referral</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities? — E-referral</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa mga na-refer na pasyente, alin sa mga sumusunod ang mga pinakakaraniwang paraan ng pagtanggap ninyo ng referral mula sa mga lower-level health facilities? — E-referral</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>E-referral</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -10193,7 +10193,7 @@ questions:
           EN: |
             <p>159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities? — Referring facility calls receiving facility</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Tumatawag ang nagre-refer na pasilidad sa tumatanggap na pasilidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa mga na-refer na pasyente, alin sa mga sumusunod ang mga pinakakaraniwang paraan ng pagtanggap ninyo ng referral mula sa mga lower-level health facilities? — Tumatawag ang nagre-refer na pasilidad sa tumatanggap na pasilidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>An nagre-refer na pasilidad nagtatawag sa receiving facility</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -10210,7 +10210,7 @@ questions:
           EN: |
             <p>159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa mga na-refer na pasyente, alin sa mga sumusunod ang mga pinakakaraniwang paraan ng pagtanggap ninyo ng referral mula sa mga lower-level health facilities? — Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -10244,7 +10244,7 @@ questions:
           EN: |
             <p>160. Where do your patients go to get the services not available at this facility? — External laboratory</p>
           FIL: |
-            <p>Panlabas na laboratoryo</p>
+            <p>Saan pumupunta ang inyong mga pasyente upang makuha ang mga serbisyong hindi available sa pasilidad na ito? — Panlabas na laboratoryo</p>
           BCL: |
             <p>External laboratory</p>
           BIS: |
@@ -10261,7 +10261,7 @@ questions:
           EN: |
             <p>160. Where do your patients go to get the services not available at this facility? — Other private facility</p>
           FIL: |
-            <p>Ibang pribadong pasilidad</p>
+            <p>Saan pumupunta ang inyong mga pasyente upang makuha ang mga serbisyong hindi available sa pasilidad na ito? — Ibang pribadong pasilidad</p>
           BCL: |
             <p>Ibang pribadong pasilidad</p>
           BIS: |
@@ -10278,7 +10278,7 @@ questions:
           EN: |
             <p>160. Where do your patients go to get the services not available at this facility? — Other public facility</p>
           FIL: |
-            <p>Ibang pampublikong pasilidad (hal. urban/rural health centers, barangay health centers, city/municipal health offices)</p>
+            <p>Saan pumupunta ang inyong mga pasyente upang makuha ang mga serbisyong hindi available sa pasilidad na ito? — Ibang pampublikong pasilidad (hal. urban/rural health centers, barangay health centers, city/municipal health offices)</p>
           BCL: |
             <p>Ibang public na pasilidad (e.g., urban/rural health centers, barangay health centers, city/municipal health offices)</p>
           BIS: |
@@ -10295,7 +10295,7 @@ questions:
           EN: |
             <p>160. Where do your patients go to get the services not available at this facility? — I don't know</p>
           FIL: |
-            <p>Hindi ko alam</p>
+            <p>Saan pumupunta ang inyong mga pasyente upang makuha ang mga serbisyong hindi available sa pasilidad na ito? — Hindi ko alam</p>
           BCL: |
             <p>Dai aram</p>
           BIS: |
@@ -10312,7 +10312,7 @@ questions:
           EN: |
             <p>160. Where do your patients go to get the services not available at this facility? — Other (specify)</p>
           FIL: |
-            <p>Iba pa, (tukuyin)</p>
+            <p>Saan pumupunta ang inyong mga pasyente upang makuha ang mga serbisyong hindi available sa pasilidad na ito? — Iba pa, (tukuyin)</p>
           BCL: |
             <p>Iba pa (ispecify)</p>
           BIS: |
@@ -10363,7 +10363,7 @@ questions:
           EN: |
             <p>162. Why are you not satisfied with the current referral system? — Facilities overcrowded / do not accept our patient referrals</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Masikip/puno ang mga pasilidad at hindi tinatanggap ang aming mga referral ng pasyente</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi ka nasisiyahan sa kasalukuyang sistema ng referral? — Masikip/puno ang mga pasilidad at hindi tinatanggap ang aming mga referral ng pasyente</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Siksikan na an mga pasilidad / sobra na sa kapasidad asin dae nag-aako kan referrals</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -10380,7 +10380,7 @@ questions:
           EN: |
             <p>162. Why are you not satisfied with the current referral system? — Referral process is slow</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mabagal ang proseso ng referral</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi ka nasisiyahan sa kasalukuyang sistema ng referral? — Mabagal ang proseso ng referral</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Maluya an referral process</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -10397,7 +10397,7 @@ questions:
           EN: |
             <p>162. Why are you not satisfied with the current referral system? — Poor coordination between facilities</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mahina ang koordinasyon sa pagitan ng aming pasilidad at ng mga pinapadalang pasilidad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi ka nasisiyahan sa kasalukuyang sistema ng referral? — Mahina ang koordinasyon sa pagitan ng aming pasilidad at ng mga pinapadalang pasilidad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Maluya an koordinasyon kan saindong pasilidad asin kan mga gin-referan</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
@@ -10414,7 +10414,7 @@ questions:
           EN: |
             <p>162. Why are you not satisfied with the current referral system? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Bakit hindi ka nasisiyahan sa kasalukuyang sistema ng referral? — Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
             <p>Iba pa (ispecify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |

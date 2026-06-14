@@ -67,9 +67,7 @@ CUSTOM_VALIDATION = [
 # is merged into attach_field's existing PROC if one exists, else emitted as a new
 # PROC. attach_field is the LAST input field in form order so all refs are set.
 SOFT_CROSS = [
-    ("Q45_CATEGORY",
-     "  if Q38_PHILHEALTH_REG = 1 and Q45_CATEGORY = 6 and Q6_AGE < 60 then\n"
-     "    errmsg(\"Q45 = Senior citizen but patient age (%d) is under 60 — confirm.\", Q6_AGE);\n  endif;"),
+    # Q45_CATEGORY senior-citizen soft-warn folded into its EXTRA_PROCS PROC (#402 gate).
     ("Q58_WAIT_MINUTES",
      "  if Q53_HAS_PCP = 1 and Q58_WAIT_DAYS = 0 and Q58_WAIT_MINUTES = 0 then\n"
      "    errmsg(\"Q58 wait time is 0 days and 0 minutes — confirm there was genuinely no wait.\");\n  endif;"),
@@ -80,7 +78,16 @@ SOFT_CROSS = [
      "    errmsg(\"Q84 = Inpatient care but the case is flagged Outpatient (PATIENT_TYPE) — verify routing.\");\n  endif;"),
     ("Q85_CONDITIONS_O19",
      "  if Q83_VISIT_REASON = 4 and Q85_CONDITIONS_O19 <> 1 then\n"
-     "    errmsg(\"Q83 = general check-up but Q85 is not 'No condition / regular check-up only' — confirm.\");\n  endif;"),
+     "    errmsg(\"Q83 = general check-up but Q85 is not 'No condition / regular check-up only' — confirm.\");\n  endif;\n"
+     "  { #435: 'No condition - Regular check-up only' (19) should stand alone — warn if combined (mirrors Q148) }\n"
+     "  if Q85_CONDITIONS_O19 = 1 and (Q85_CONDITIONS_O01 = 1 or Q85_CONDITIONS_O02 = 1 or\n"
+     "      Q85_CONDITIONS_O03 = 1 or Q85_CONDITIONS_O04 = 1 or Q85_CONDITIONS_O05 = 1 or\n"
+     "      Q85_CONDITIONS_O06 = 1 or Q85_CONDITIONS_O07 = 1 or Q85_CONDITIONS_O08 = 1 or\n"
+     "      Q85_CONDITIONS_O09 = 1 or Q85_CONDITIONS_O10 = 1 or Q85_CONDITIONS_O11 = 1 or\n"
+     "      Q85_CONDITIONS_O12 = 1 or Q85_CONDITIONS_O13 = 1 or Q85_CONDITIONS_O14 = 1 or\n"
+     "      Q85_CONDITIONS_O15 = 1 or Q85_CONDITIONS_O16 = 1 or Q85_CONDITIONS_O17 = 1 or\n"
+     "      Q85_CONDITIONS_O18 = 1 or Q85_CONDITIONS_O20 = 1) then\n"
+     "    errmsg(\"'No condition - Regular check-up only' was ticked with other condition(s) — it should usually be the only choice. Please review.\");\n  endif;"),
     ("Q144_QUALITY",
      "  if Q143_RECOMMEND = 1 and Q144_QUALITY >= 4 and Q144_QUALITY <= 5 then\n"
      "    errmsg(\"Patient would recommend (Q143=Yes) yet rated overall quality dissatisfied (Q144) — confirm.\");\n  endif;\n"
@@ -408,8 +415,12 @@ BRANCHING = """\
 { ---- #164 Outpatient vs Inpatient branching ---- }
 PROC Q88_WHY_VISIT
 preproc
-  if PATIENT_TYPE <> 1 then    { not Outpatient -> skip Section G entirely }
-    skip to Q116_NBB_HEARD;
+  { #441: not Outpatient -> skip Section G to the START of Section H (Q105), NOT to Q116.
+    The old target (Q116) jumped past Section H entirely, so INPATIENTS lost all of Section H.
+    Q105's own gate (PATIENT_TYPE <> 2 -> skip to Q116) then decides: inpatient keeps H,
+    a blank/other type falls through to Q116. }
+  if PATIENT_TYPE <> 1 then    { not Outpatient -> skip Section G; land at Section H start }
+    skip to Q105_REASON;
   endif;
 
 PROC Q105_REASON
@@ -447,10 +458,25 @@ postproc
   endif;
 
 { ---- Multi-branch routing (spec 2) ---- }
+{ #418/#419 (R4): Q63 usual-facility block. Spec 3.6 — Q64 (facility name) and Q66-Q70
+  are enabled when Q63=Yes; Q65 (why-no-usual) is enabled when Q63=No. The old logic was
+  inverted: it skipped Q64 on Yes (jumped straight to Q66) and never gated Q66-Q70 off on
+  No (so they were asked for everyone). Corrected routing:
+    Q63=Yes(1) -> fall through to Q64 -> (Q64 postproc) skip Q65 -> Q66..Q70 -> Q71
+    Q63=No(2)  -> skip Q64 -> Q65 reasons -> (Q66 preproc) skip Q66-Q70 -> Q71 }
 PROC Q63_HAS_USUAL_FACILITY
 postproc
-  if Q63_HAS_USUAL_FACILITY = 2 then  skip to Q65_WHY_NO_USUAL_O01; endif;  { No usual facility -> reasons }
-  if Q63_HAS_USUAL_FACILITY = 1 then  skip to Q66_SAME_AS_USUAL;    endif;  { Yes -> skip Q64 reason-for-none }
+  if Q63_HAS_USUAL_FACILITY = 2 then  skip to Q65_WHY_NO_USUAL_O01; endif;  { No -> reasons-why-none (skip Q64) }
+
+PROC Q64_FACILITY_NAME
+postproc
+  skip to Q66_SAME_AS_USUAL;   { reached only when Q63=Yes -> skip Q65 why-no-usual block }
+
+PROC Q66_SAME_AS_USUAL
+preproc
+  if Q63_HAS_USUAL_FACILITY <> 1 then  skip to Q71_NEAREST_TYPE; endif;  { No-usual path: skip the Q66-Q70 facility block }
+postproc
+  if Q66_SAME_AS_USUAL = 1 then  skip to Q68_USUAL_FAC_TYPE; endif;       { this IS the usual facility -> skip Q67 why-different }
 
 PROC Q77_KON_REGISTERED
 postproc
@@ -467,7 +493,7 @@ PROC Q159_BRAND_GEN_BOUGHT
 postproc
   if Q159_BRAND_GEN_BOUGHT = 1 then  skip to Q161_WHY_BRANDED_O01; endif;  { Branded -> why-branded }
   if Q159_BRAND_GEN_BOUGHT = 4 then  skip to Q162_REFERRED;        endif;  { Don't know diff -> exit K }
-  if Q159_BRAND_GEN_BOUGHT = 5 then  skip to Q164_SPECIALIST;      endif;  { N/A -> source cross-jump (sanity #7) }
+  if Q159_BRAND_GEN_BOUGHT = 5 then  skip to Q162_REFERRED;        endif;  { #501: N/A -> exit K to Section L start (Q162). Was Q164 (sanity #7); Q164 is a Q162=Yes follow-up, so the source's K->Q164 jump landed on an orphaned question. Tester (ASPSI) confirmed Q162. }
 
 { ---- Section D: non-members skip the benefits/premium block (Q46-Q50) ---- }
 PROC Q46_BENEFITS_O01
@@ -475,6 +501,64 @@ preproc
   if Q38_PHILHEALTH_REG <> 1 then   { not a PhilHealth member -> skip benefits/packages/premiums }
     skip to Q51_OTHER_INSURANCE;
   endif;
+
+{ ---- R4 sweep enabled-when GATES (#402 / #415 / #417) ---- }
+PROC Q45_CATEGORY
+preproc
+  { #402: member-category (Q45) is PhilHealth-members-only (spec 3.5: Q45 enabled when
+    Q38=Yes). A non-member must skip the whole Q45-Q50 member/benefits/premium block to Q51. }
+  if Q38_PHILHEALTH_REG <> 1 then  skip to Q51_OTHER_INSURANCE; endif;
+postproc
+  { spec 3.5 SOFT: 'Senior citizen' category (6) but patient under 60 — warn-and-continue }
+  if Q38_PHILHEALTH_REG = 1 and Q45_CATEGORY = 6 and Q6_AGE < 60 then
+    errmsg("Q45 = Senior citizen but patient age (%d) is under 60 — confirm.", Q6_AGE);
+  endif;
+
+PROC Q60_SCHED_TELECON_OK
+preproc
+  { #415: scheduling-teleconsult-success (Q60) only if 'Teleconsultation' (option 2) was
+    ticked in the Q59 select-all (spec 3.6: Q60 enabled when Q59 includes Teleconsultation). }
+  if Q59_SCHED_COMM_O02 <> 1 then  skip to Q61_CONSULT_COMM_O01; endif;
+
+PROC Q62_CONSULT_TELECON_OK
+preproc
+  { #417: consultation-teleconsult-success (Q62) only if 'Teleconsultation' (option 2) was
+    ticked in the Q61 select-all (spec 3.6: Q62 enabled when Q61 includes Teleconsultation). }
+  if Q61_CONSULT_COMM_O02 <> 1 then  skip to Q63_HAS_USUAL_FACILITY; endif;
+
+{ ---- Q93 labs: 'None' exclusivity (#448) + skip the Q94 cost matrix (spec G).
+  Moved out of SKIP_RULES so the exclusivity warn runs BEFORE the skip short-circuits. ---- }
+PROC Q93_LABS_O17
+postproc
+  { #448: 'None' (O17) shouldn't be combined with any actual lab test (O01-O16) — warn (mirrors Q85/Q148) }
+  if Q93_LABS_O17 = 1 and (Q93_LABS_O01 = 1 or Q93_LABS_O02 = 1 or Q93_LABS_O03 = 1 or
+      Q93_LABS_O04 = 1 or Q93_LABS_O05 = 1 or Q93_LABS_O06 = 1 or Q93_LABS_O07 = 1 or
+      Q93_LABS_O08 = 1 or Q93_LABS_O09 = 1 or Q93_LABS_O10 = 1 or Q93_LABS_O11 = 1 or
+      Q93_LABS_O12 = 1 or Q93_LABS_O13 = 1 or Q93_LABS_O14 = 1 or Q93_LABS_O15 = 1 or
+      Q93_LABS_O16 = 1) then
+    errmsg("'None' was ticked with other lab tests in Q93 — it should be the only choice. Please review.");
+  endif;
+  if Q93_LABS_O17 = 1 then  skip to Q95_PRESCRIBED; endif;   { 'None' -> skip Q94 lab-cost matrix }
+
+{ ---- Section I confinement-context gates (#476/#479): ZBB 'upon admission' (Q122/Q123)
+  and MAIFIP 'this last confinement' (Q126-Q129) are inpatient-only — an outpatient has no
+  confinement to answer about. Q120/Q121 (general ZBB awareness) and Q130 (general spending)
+  stay for both. ---- }
+PROC Q122_ZBB_INFORMED
+preproc
+  if PATIENT_TYPE <> 2 then  skip to Q124_MAIFIP_HEARD; endif;   { #476: skip Q122/Q123 for outpatient }
+
+PROC Q126_MAIFIP_AVAILED
+preproc
+  if PATIENT_TYPE <> 2 then  skip to Q130_REDUCED_SPEND; endif;  { #479: skip Q126-Q129 for outpatient }
+postproc
+  if Q126_MAIFIP_AVAILED = 2 then  skip to Q129_WHY_NO_MAIFIP_O01; endif;  { #482: didn't avail -> ask why-not (skip Q127/Q128) }
+
+{ ---- Q129 'why not avail MAIFIP' (#482): only for those who did NOT avail (Q126=No=2).
+  Reached directly when Q126=No; on the Q126=Yes path (after Q127/Q128) skip it to Q130. ---- }
+PROC Q129_WHY_NO_MAIFIP_O01
+preproc
+  if Q126_MAIFIP_AVAILED <> 2 then  skip to Q130_REDUCED_SPEND; endif;
 
 { ---- Section L: not referred -> end of survey. Route to the closing Result-of-Visit +
   Verification Photo. Do NOT endlevel here: the photo form is the LAST form, so ending
@@ -485,6 +569,53 @@ postproc
     ENUM_RESULT_FINAL_VISIT = 1;   { default Completed; enumerator confirms it on the closing form }
     skip to ENUM_RESULT_FINAL_VISIT;   { skip the referred-only Q163/Q164, land on Result-of-Visit; the Verification Photo form follows it }
   endif;
+
+{ ---- Section K/L R4 sweep (Wave 4, 2026-06-14): gating + required fixes ---- }
+
+{ #490: Q147 meds list is required when reached (Q145<>5 already gates the whole Q146-Q151
+  block, so reaching Q147 means the patient purchases meds). Was advanceable while blank. }
+PROC Q147_MEDS_LIST
+postproc
+  if length(strip(Q147_MEDS_LIST)) = 0 then
+    errmsg("Q147: list the medications taken (type 'None' if the patient takes none) — required.");
+    reenter;
+  endif;
+
+{ #498: Q156 'list the GAMOT medicines' + Q157 'where got the rest' are both enabled only when
+  Q155 = Yes (got meds from GAMOT). Was: Q156/Q157 always asked, Q156 advanceable while blank. }
+PROC Q155_GAMOT_GOT_MEDS
+postproc
+  if Q155_GAMOT_GOT_MEDS = 2 then  skip to Q158_BRAND_GEN_KNOW; endif;  { No -> skip Q156/Q157 }
+
+PROC Q156_GAMOT_MEDS_LIST
+preproc
+  if Q155_GAMOT_GOT_MEDS <> 1 then
+    Q156_GAMOT_MEDS_LIST = "";   { gated: only when Q155 = Yes }
+    noinput;
+  endif;
+postproc
+  if Q155_GAMOT_GOT_MEDS = 1 and length(strip(Q156_GAMOT_MEDS_LIST)) = 0 then
+    errmsg("Q156: list the medicines obtained from GAMOT — required when Q155 = Yes.");
+    reenter;
+  endif;
+
+{ #503: Q161 'why branded' is enabled only for Branded/Both (Q159 in 1,3). Generic (2) falls
+  through Q160 into Q161 — gate it out to Section L. Q159 = 4/5 already skip to Q162 earlier. }
+PROC Q161_WHY_BRANDED_O01
+preproc
+  if Q159_BRAND_GEN_BOUGHT <> 1 and Q159_BRAND_GEN_BOUGHT <> 3 then  skip to Q162_REFERRED; endif;
+
+{ #508: Q170 follow-up is reached only on Q169 = Yes (Q169 in 2,3 skips to Q171). After the
+  follow-up, the Yes path skips Q171 'why not visited' to Q172 (spec §4.15, explicit). }
+PROC Q170_FOLLOWUP
+postproc
+  skip to Q172_PCP_REFERRAL;
+
+{ #511: Q177 'why hospital' is enabled only when Q172 = No (Q172 = 2 skips Q173-Q176 to Q177).
+  The Q172 = Yes path falls through Q173-Q176 into Q177 — gate it out to Q178. }
+PROC Q177_WHY_HOSPITAL_O01
+preproc
+  if Q172_PCP_REFERRAL = 1 then  skip to Q178_SAT_REFERRAL; endif;
 
 { ---- Q148 Check Box multi-select (R4 redesign 2026-06-12) — one alpha field of
   concatenated 2-digit condition codes (CSEntry Check Box). 'Other'=99 / 'No condition'=19
@@ -610,8 +741,10 @@ SKIP_RULES = [
     # Section A — Introduction & Consent
     ("Q1_IS_PATIENT",        "Q1_IS_PATIENT = 1",            "Q4_NAME"),                 # respondent IS the patient -> skip Q2,Q3
     # Section B — Patient Profile
+    ("Q8_LGBTQIA",           "Q8_LGBTQIA <> 1",              "Q10_CIVIL_STATUS"),        # #392: Q9 (LGBTQIA+ group) only when Q8=Yes
     ("Q11_PWD",              "Q11_PWD = 2",                  "Q15_EDUCATION"),
     ("Q12_PWD_SPECIFY",      "Q12_PWD_SPECIFY = 2",          "Q15_EDUCATION"),
+    ("Q13_PWD_CARD",         "Q13_PWD_CARD <> 1",            "Q15_EDUCATION"),           # #393: Q14 (disability type) only when card presented & verified (Q13=1)
     ("Q30_IP",               "Q30_IP = 2",                   "Q32_4PS"),
     ("Q33_DECISION_MAKER",   "Q33_DECISION_MAKER in 1,3",    "Q35_UHC_HEARD"),
     # Section C — UHC Awareness
@@ -625,7 +758,7 @@ SKIP_RULES = [
     ("Q51_OTHER_INSURANCE",  "Q51_OTHER_INSURANCE = 2",      "Q53_HAS_PCP"),
     # Section E — Primary Care Utilization
     ("Q53_HAS_PCP",          "Q53_HAS_PCP = 2",              "Q63_HAS_USUAL_FACILITY"),
-    ("Q66_SAME_AS_USUAL",    "Q66_SAME_AS_USUAL = 1",        "Q68_USUAL_FAC_TYPE"),
+    # Q66_SAME_AS_USUAL routing now lives in EXTRA_PROCS (Q63 usual-facility block, #418/#419).
     ("Q74_KON_HEARD",        "Q74_KON_HEARD = 2",            "Q83_VISIT_REASON"),
     # Section K — Access to Medicines
     ("Q145_PURCHASE_FREQ",   "Q145_PURCHASE_FREQ = 5",       "Q152_GAMOT_HEARD"),        # Never -> skip meds-access
@@ -636,7 +769,7 @@ SKIP_RULES = [
     ("Q172_PCP_REFERRAL",    "Q172_PCP_REFERRAL = 2",        "Q177_WHY_HOSPITAL_O01"),
     # Section G — Outpatient Care
     ("Q89_ADVISED_ADMIT",  "Q89_ADVISED_ADMIT = 1",                       "Q91_USUAL_OUTPATIENT"),  # Yes -> Q91 (Q90 = why-not-confined)
-    ("Q93_LABS_O17",       "Q93_LABS_O17 = 1",                            "Q95_PRESCRIBED"),         # 'None' (O17) ticked -> skip Q94 lab-cost matrix (spec G)
+    # Q93_LABS_O17 'None' routing now in EXTRA_PROCS (exclusivity warn must precede the skip, #448).
     ("Q95_PRESCRIBED",     "Q95_PRESCRIBED = 2",                          "Q97_FINAL_AMOUNT"),       # No prescription -> skip meds-cost matrix
     ("Q99_BUCAS_HEARD",    "Q99_BUCAS_HEARD = 2",                         "Q116_NBB_HEARD"),         # No -> end of Section G (sanity #9; skip Q100-104)
     ("Q102_BUCAS_ACCESSED","Q102_BUCAS_ACCESSED = 2",                     "Q104_WITHOUT_BUCAS"),     # No -> Q104 (skip Q103)
@@ -647,7 +780,7 @@ SKIP_RULES = [
     ("Q116_NBB_HEARD",     "Q116_NBB_HEARD in 2,3",                       "Q119_ZBB_HEARD"),         # No / IDK -> skip Q117,Q118
     ("Q119_ZBB_HEARD",     "Q119_ZBB_HEARD in 2,3",                       "Q124_MAIFIP_HEARD"),      # No / IDK -> skip Q120-123
     ("Q124_MAIFIP_HEARD",  "Q124_MAIFIP_HEARD in 2,3",                    "Q130_REDUCED_SPEND"),     # No / IDK -> skip Q125-129
-    ("Q126_MAIFIP_AVAILED","Q126_MAIFIP_AVAILED = 2",                     "Q130_REDUCED_SPEND"),     # No -> skip Q127-129 (spec: -> Q129; using end-of-MAIFIP)
+    # Q126_MAIFIP_AVAILED routing now in EXTRA_PROCS (inpatient gate #479 + #482 No->Q129).
     ("Q127_MAIFIP_OOP",    "Q127_MAIFIP_OOP = 2",                         "Q130_REDUCED_SPEND"),     # No -> skip Q128,Q129
 ]
 
@@ -722,7 +855,14 @@ def main():
                "Q63_HAS_USUAL_FACILITY", "Q77_KON_REGISTERED",
                "Q159_BRAND_GEN_BOUGHT", "Q46_BENEFITS_O01", "Q162_REFERRED",  # EXTRA_PROCS
                "Q82_KON_WHY_NOT_REG_O01",  # EXTRA_PROCS (#389 not-registered gate)
+               "Q64_FACILITY_NAME", "Q66_SAME_AS_USUAL",   # EXTRA_PROCS (#418/#419 Q63 block)
+               "Q45_CATEGORY", "Q60_SCHED_TELECON_OK", "Q62_CONSULT_TELECON_OK",  # EXTRA_PROCS (#402/#415/#417 gates)
+               "Q93_LABS_O17",   # EXTRA_PROCS (#448 None exclusivity + skip)
+               "Q129_WHY_NO_MAIFIP_O01",   # EXTRA_PROCS (#482 why-not-avail gate)
+               "Q122_ZBB_INFORMED", "Q126_MAIFIP_AVAILED",   # EXTRA_PROCS (#476/#479 confinement gates)
                "Q148_CONDITIONS", "Q148_CONDITIONS_OTHER_TXT", "Q148_MEDICINES_TXT",  # EXTRA_PROCS (Q148 Check Box)
+               "Q147_MEDS_LIST", "Q155_GAMOT_GOT_MEDS", "Q156_GAMOT_MEDS_LIST",   # EXTRA_PROCS (Wave 4 #490/#498)
+               "Q161_WHY_BRANDED_O01", "Q170_FOLLOWUP", "Q177_WHY_HOSPITAL_O01",  # EXTRA_PROCS (Wave 4 #503/#508/#511)
                "Q5_BIRTH_MONTH", "Q5_BIRTH_YEAR", "Q6_AGE", "Q18_INCOME_BRACKET",
                "Q19_HH_SIZE", "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q28_WASHER"}  # VALIDATION_PROCS
 

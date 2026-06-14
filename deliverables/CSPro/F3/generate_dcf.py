@@ -244,7 +244,7 @@ def build_section_b():
         select_one("Q7_SEX",
                    "7. What is the patient's sex at birth?", Q7_SEX, length=1),
         select_one("Q8_LGBTQIA",
-                   "8. Is the patient part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.).",
+                   "8. Is the patient part of the LGBTQIA+ community? (e.g., gay, lesbian, bisexual, etc.). It is fine if not comfortable answering.",
                    Q8_LGBTQIA, length=1),
         select_one("Q9_GROUP",
                    "9. Which group does the patient identify with?", Q9_GROUP, length=1),
@@ -1336,7 +1336,7 @@ def build_section_i():
                     "128. Which items did you have to pay for out-of-pocket?",
                     Q128_OOP_ITEMS),
         *select_all("Q129_WHY_NO_MAIFIP",
-                    "129. Why did you not avail of MAIFP during this last confinement?",
+                    "129. Why did you not avail of MAIFIP during this last confinement?",
                     Q129_WHY_NO_MAIFIP),
         select_one("Q130_REDUCED_SPEND",
                    "130. Have you or your household had to reduce spending on things you need "
