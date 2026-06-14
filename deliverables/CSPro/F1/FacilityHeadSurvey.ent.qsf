@@ -2537,176 +2537,23 @@ questions:
             <p>48. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text</p>
           HIL: |
             <p>48. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act? — No, other (specify) text</p>
-  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_O01
+  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL
     conditions:
       - questionText:
           EN: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Limited resources (personnel, equipment, supplies, funding)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>49. What are the major challenges to improving the quality of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           FIL: |
-            <p>Limitadong mapagkukunan (hal. kakulangan sa healthcare personnel/manpower, medikal na kagamitan, mahahalagang suplay, o pondo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>49. What are the major challenges to improving the quality of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           BCL: |
-            <p>Limitadong na mga resources (kakulangan sa healthcare personnel/manpower, medical na mga gamit, essential asin supplies, o kaya pondo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>49. What are the major challenges to improving the quality of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           BIS: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Limited resources (personnel, equipment, supplies, funding)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>49. What are the major challenges to improving the quality of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           CEB: |
-            <p>Limitado ang resources (e.g. kulang sa health workers/tauhan, medical equipment, kinahanglanong mga supplies, o funding</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>49. What are the major challenges to improving the quality of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           WAR: |
-            <p>Limitado nga mga kagamitan (pananglitan, kakulang hin mga tawohan/tawo ha pag-ataman han panlawas, mga gamit medikal, mga kinahanglanon nga mga suplay, o pondo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>49. What are the major challenges to improving the quality of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           HIL: |
-            <p>Kulang sa resources/rekurso (e.g., kulang sa healthcare personnel/manpower, medical equipment, essential supplies, ukon pondo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_O02
-    conditions:
-      - questionText:
-          EN: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Challenging quality standards</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Hamon sa kalidad ng pamantayan (hal. mataas na pamantayan na mahirap maabot)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Dipisil na quality standards (halangkaw na standard dipisil makuha)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Challenging quality standards</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Hagit sa quality standards (e.g. taas nga sumbanan nga lisud makab-ot)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Pag-ayat hin mga pamantayan han kalidad (pananglitan, hataas nga mga pamantayan nga makuri makuha)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Mabudlay nga quality standards (e.g., mataas nga standards nga indi masarangan)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_O03
-    conditions:
-      - questionText:
-          EN: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Healthcare decisions made by LGUs not the facility</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Ang ilang desisyon sa pangangalaga sa kalusugan ay ginagawa ng lokal na pamahalaan at hindi ng pasilidad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Mga desisyon ginigibo kan LGU bako kan pasilidad bako an nasa health facility</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Healthcare decisions made by LGUs not the facility</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Pipila ka mga desisyon sa healthcare gihimo sa lokal nga gobyerno ug dili sa health facility</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>An pipira nga mga desisyon ha pag-ataman han kahimsog ginhihimo han mga yunit han lokal nga gobyerno ngan diri han pasilidad ha kahimsog</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Ang pila ka healthcare decisions ginahimo sang local government units kag indi sang health facility</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_O04
-    conditions:
-      - questionText:
-          EN: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Lack of specific healthcare skills</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Kakulangan sa partikular na kasanayan sa pangangalaga sa kalusugan (hal. kulang ang mga espesyalista, surgeon, o ibang propesyonal na may espesyal na kasanayan na kailangan sa pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Kulang sa specific healthcare skills ( I.e., Kakulangan ki mga espesyalista, surgeons, asin iba pang healthcare professionals na igwa ki specialized skills na kaipuhan kan pasalidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Lack of specific healthcare skills</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Kakulangan sa specific healthcare skills (I.e. dili paigo ang espesyalista, surgeon, o uban pang healthcare professionals)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Kakulang hin partikular nga mga abilidad ha pag-ataman han panlawas (i.e., Kulang nga mga espesyalista, mga siruhano, o iba pa nga mga propesyonal ha pag-ataman han panlawas nga mayda mga espesyalista nga mga abilidad nga ginkikinahanglan ha pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Kulang sa specific healthcare skills (e.g., kulang sa specialists, surgeons, ukon iban nga professionals nga may espesyal nga abilidad nga kinahanglanon sang pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_O05
-    conditions:
-      - questionText:
-          EN: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Inadequate training of healthcare workers</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Hindi sapat na pagsasanay ng mga healthcare worker (hal. kailangan ng karagdagang training upang maabot ang kalidad ng pamantayan ng pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Daing sapat na training sa mga healthcare workers (I.e., healthcare workers kaipuhan ki dagdag na trasining para sa marhay na quality standards kan pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Inadequate training of healthcare workers</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Kakulangan ug training sa mga healthcare workers (I.e. kinahanglang ang mga dugang nga training para sa mga healthcare workers aron maka meet sa quality standard sa pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Kulang nga pag-aram han mga trabahador ha pag-ataman han panlawas (i.e., Mga trabahador ha pag-ataman han panlawas nga nagkikinahanglan hin kadugangan nga paghag-id para matuman an mga suruklan han kalidad han pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Indi bastante/Kulang ang training sang healthcare workers (e.g., kinahanglan pa sang dugang nga training agud masunod ang quality standards sang pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_O06
-    conditions:
-      - questionText:
-          EN: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Lack of patient awareness of UHC benefits</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Kakulangan sa kamalayan ng pasyente tungkol sa benepisyo ng UHC (hal. hindi alam ng pasyente na maaari silang makinabang sa libreng konsultasyon, piling gamot, at serbisyo sa laboratoryo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Kulang an kaaraman kan pasyente manungod sa benepisyo kan UHC (e.g., Warang kaaraman an pasyente na pwede palan magavail ki libreng konsultasyon asin mga selected na bulong asin mga iba laboratory services</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Lack of patient awareness of UHC benefits</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Kulang sa kahibalo ang mga pasyente bahin sa mga benepisyo sa UHC (e.g. mga pasyente wala kabalo nga pwede sila maka avail ug libre nga konsultasyon, mga pili nga tambal ug laboratory services)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Kakulang hin kaaram han pasyente han mga benepisyo han UHC (e.g., diri maaram an mga pasyente nga makakapahimulos hira hin libre nga konsultasyon, ngan pinili nga mga medisina ngan mga serbisyo ha laboratoryo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Kulang ang ihibalo sang pasyente parte sa benepisyo sang UHC (e.g., indi kabalo nga pwede sila makakuha sang libre nga consultation, bulong, kag laboratory services)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_O07
-    conditions:
-      - questionText:
-          EN: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Limited accessibility of public healthcare facilities</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Limitadong aksesibilidad ng mga pampublikong pasilidad sa kalusugan (hal. kakulangan sa transportasyon, hindi maginhawang lokasyon, o pisikal na hadlang na nagpapahirap sa pasyente)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Limitadong access sa pasilidad kan public healthcare (e.g., kulang sa transportation options, incovenient location, asin physical barriers sagabal sa access sa pasyente.)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Limited accessibility of public healthcare facilities</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Limitado ang accessibility sa public healthcare facilities (e.g. kulang sa transportasyon, dili convenient ang lokasyon, o pisikal nga mga babag nga nag-pugong sa pag-access para sa pasyente</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Limitado nga pag-agi han mga pasilidad han panlawas han pampubliko (pananglitan, kakulang hin mga kapilian hin transportasyon, diri kombenyente nga lokasyon, o pisikal nga mga ulang nga nakakaulang han pag-agi para han mga pasyente.)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Limitado ang access sa public healthcare facilities (e.g., kulang sa transportasyon, indi maayo ang lokasyon, ukon may physical barriers nga naga-upang sa pasyente)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_O08
-    conditions:
-      - questionText:
-          EN: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Infrastructure not conducive for patient care</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>mprastraktura na hindi angkop para sa pangangalaga ng pasyente (hal. walang ground floor, kakulangan sa mga silid, hindi sapat na pasilidad sa kalinisan, kawalan ng accessibility para sa wheelchair, atbp.)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Imprastaktura kan pasilidad dae angay sa pagaalaga sa pasyente (e.g., wara ki ground flr, kakulangan kan mga kwarto, warang marhay na sanitation, kakulangan ki wheelchair, etc.)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Infrastructure not conducive for patient care</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Ang imprastraktyur dili maayo alang sa patient care (e.g. walay ground floor, kulang sa mga rooms, dili igo ang sanitation facilities, kulang sa wheelchair accessibility, etc)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Mga imprastraktura nga diri maupay para han pag-ataman han pasyente (e.g., waray salog ha ubos, kakulang hin mga kwarto, diri igo nga mga pasilidad ha kalimpyo, kakulang hin pag-agi han mga lingkuran nga de-kaliding, ngan iba pa)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Indi maayo ang infrastructure para sa pag-atipan sang pasyente (e.g., wala ground floor, kulang sang kuwarto, indi maayo ang sanitation facilities, kulang sa wheelchair accessibility, etc.)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_O09
-    conditions:
-      - questionText:
-          EN: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — I don't know</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Hindi ko alam</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Dai aram</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>Wala ko kahibalo</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Wala ko kahibalo</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Dire ako maaram</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Wala ko kabalo</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_O10
-    conditions:
-      - questionText:
-          EN: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Iba pa (ispecify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>Uban pa (I-specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Uban pa (Isulti)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>49. What are the major challenges to improving the quality of patient care in your local area? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>49. What are the major challenges to improving the quality of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
   - name: FACILITYHEADSURVEY_DICT.Q49_QUALITY_CHALL_OTHER_TXT
     conditions:
       - questionText:
@@ -2724,176 +2571,23 @@ questions:
             <p>49. What are the major challenges to improving the quality of patient care in your local area? — Other (specify) text</p>
           HIL: |
             <p>49. What are the major challenges to improving the quality of patient care in your local area? — Other (specify) text</p>
-  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_O01
+  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL
     conditions:
       - questionText:
           EN: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Limited resources (personnel, equipment, supplies, funding)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>50. What are the major challenges to improving the accessibility of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           FIL: |
-            <p>Limitadong mapagkukunan (hal. kakulangan sa healthcare personnel/manpower, medikal na kagamitan, mahahalagang suplay, o pondo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>50. What are the major challenges to improving the accessibility of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           BCL: |
-            <p>Limitadong na mga resources (kakulangan sa healthcare personnel/manpower, medical na mga gamit, essential asin supplies, o kaya pondo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>50. What are the major challenges to improving the accessibility of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           BIS: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Limited resources (personnel, equipment, supplies, funding)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>50. What are the major challenges to improving the accessibility of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           CEB: |
-            <p>Limitado ang resources (e.g. kulang sa health workers/tauhan, medical equipment, kinahanglanong mga supplies, o funding</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>50. What are the major challenges to improving the accessibility of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           WAR: |
-            <p>Limitado nga mga kagamitan (pananglitan, kakulang hin mga tawohan/tawo ha pag-ataman han panlawas, mga gamit medikal, mga kinahanglanon nga mga suplay, o pondo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>50. What are the major challenges to improving the accessibility of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
           HIL: |
-            <p>Kulang sa resources/rekurso (e.g., kulang sa healthcare personnel/manpower, medical equipment, essential supplies, ukon pondo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_O02
-    conditions:
-      - questionText:
-          EN: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Challenging quality standards</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Hamon sa kalidad ng pamantayan (hal. mataas na pamantayan na mahirap maabot)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Dipisil na quality standards (halangkaw na standard dipisil makuha)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Challenging quality standards</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Hagit sa quality standards (e.g. taas nga sumbanan nga lisud makab-ot)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Pag-ayat hin mga pamantayan han kalidad (pananglitan, hataas nga mga pamantayan nga makuri makuha)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Mabudlay nga quality standards (e.g., mataas nga standards nga indi masarangan)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_O03
-    conditions:
-      - questionText:
-          EN: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Healthcare decisions made by LGUs not the facility</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Ang ilang desisyon sa pangangalaga sa kalusugan ay ginagawa ng lokal na pamahalaan at hindi ng pasilidad</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Mga desisyon ginigibo kan LGU bako kan pasilidad bako an nasa health facility</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Healthcare decisions made by LGUs not the facility</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Pipila ka mga desisyon sa healthcare gihimo sa lokal nga gobyerno ug dili sa health facility</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>An pipira nga mga desisyon ha pag-ataman han kahimsog ginhihimo han mga yunit han lokal nga gobyerno ngan diri han pasilidad ha kahimsog</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Ang pila ka healthcare decisions ginahimo sang local government units kag indi sang health facility</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_O04
-    conditions:
-      - questionText:
-          EN: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Lack of specific healthcare skills</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Kakulangan sa partikular na kasanayan sa pangangalaga sa kalusugan (hal. kulang ang mga espesyalista, surgeon, o ibang propesyonal na may espesyal na kasanayan na kailangan sa pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Kulang sa specific healthcare skills ( I.e., Kakulangan ki mga espesyalista, surgeons, asin iba pang healthcare professionals na igwa ki specialized skills na kaipuhan kan pasalidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Lack of specific healthcare skills</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Kakulangan sa specific healthcare skills (I.e. dili paigo ang espesyalista, surgeon, o uban pang healthcare professionals)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Kakulang hin partikular nga mga abilidad ha pag-ataman han panlawas (i.e., Kulang nga mga espesyalista, mga siruhano, o iba pa nga mga propesyonal ha pag-ataman han panlawas nga mayda mga espesyalista nga mga abilidad nga ginkikinahanglan ha pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Kulang sa specific healthcare skills (e.g., kulang sa specialists, surgeons, ukon iban nga professionals nga may espesyal nga abilidad nga kinahanglanon sang pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_O05
-    conditions:
-      - questionText:
-          EN: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Inadequate training of healthcare workers</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Hindi sapat na pagsasanay ng mga healthcare worker (hal. kailangan ng karagdagang training upang maabot ang kalidad ng pamantayan ng pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Daing sapat na training sa mga healthcare workers (I.e., healthcare workers kaipuhan ki dagdag na trasining para sa marhay na quality standards kan pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Inadequate training of healthcare workers</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Kakulangan ug training sa mga healthcare workers (I.e. kinahanglang ang mga dugang nga training para sa mga healthcare workers aron maka meet sa quality standard sa pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Kulang nga pag-aram han mga trabahador ha pag-ataman han panlawas (i.e., Mga trabahador ha pag-ataman han panlawas nga nagkikinahanglan hin kadugangan nga paghag-id para matuman an mga suruklan han kalidad han pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Indi bastante/Kulang ang training sang healthcare workers (e.g., kinahanglan pa sang dugang nga training agud masunod ang quality standards sang pasilidad)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_O06
-    conditions:
-      - questionText:
-          EN: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Lack of patient awareness of UHC benefits</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Kakulangan sa kamalayan ng pasyente tungkol sa benepisyo ng UHC (hal. hindi alam ng pasyente na maaari silang makinabang sa libreng konsultasyon, piling gamot, at serbisyo sa laboratoryo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Kulang an kaaraman kan pasyente manungod sa benepisyo kan UHC (e.g., Warang kaaraman an pasyente na pwede palan magavail ki libreng konsultasyon asin mga selected na bulong asin mga iba laboratory services</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Lack of patient awareness of UHC benefits</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Kulang sa kahibalo ang mga pasyente bahin sa mga benepisyo sa UHC (e.g. mga pasyente wala kabalo nga pwede sila maka avail ug libre nga konsultasyon, mga pili nga tambal ug laboratory services)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Kakulang hin kaaram han pasyente han mga benepisyo han UHC (e.g., diri maaram an mga pasyente nga makakapahimulos hira hin libre nga konsultasyon, ngan pinili nga mga medisina ngan mga serbisyo ha laboratoryo)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Kulang ang ihibalo sang pasyente parte sa benepisyo sang UHC (e.g., indi kabalo nga pwede sila makakuha sang libre nga consultation, bulong, kag laboratory services)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_O07
-    conditions:
-      - questionText:
-          EN: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Limited accessibility of public healthcare facilities</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Limitadong aksesibilidad ng mga pampublikong pasilidad sa kalusugan (hal. kakulangan sa transportasyon, hindi maginhawang lokasyon, o pisikal na hadlang na nagpapahirap sa pasyente)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Limitadong access sa pasilidad kan public healthcare (e.g., kulang sa transportation options, incovenient location, asin physical barriers sagabal sa access sa pasyente.)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Limited accessibility of public healthcare facilities</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Limitado ang accessibility sa public healthcare facilities (e.g. kulang sa transportasyon, dili convenient ang lokasyon, o pisikal nga mga babag nga nag-pugong sa pag-access para sa pasyente</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Limitado nga pag-agi han mga pasilidad han panlawas han pampubliko (pananglitan, kakulang hin mga kapilian hin transportasyon, diri kombenyente nga lokasyon, o pisikal nga mga ulang nga nakakaulang han pag-agi para han mga pasyente.)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Limitado ang access sang public healthcare facilities (e.g., kulang sa transportasyon, indi maayo ang lokasyon, ukon may physical barriers nga naga-ulang sa pasyente)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_O08
-    conditions:
-      - questionText:
-          EN: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Infrastructure not conducive for patient care</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Imprastraktura na hindi angkop para sa pangangalaga ng pasyente (hal. walang ground floor, kakulangan sa mga silid, hindi sapat na pasilidad sa kalinisan, kawalan ng accessibility para sa wheelchair, atbp.)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Imprastaktura kan pasilidad dae angay sa pagaalaga sa pasyente (e.g., wara ki ground flr, kakulangan kan mga kwarto, warang marhay na sanitation, kakulangan ki wheelchair, etc.)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Infrastructure not conducive for patient care</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Ang imprastraktyur dili maayo alang sa patient care (e.g. walay ground floor, kulang sa mga rooms, dili igo ang sanitation facilities, kulang sa wheelchair accessibility, etc)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Mga imprastraktura nga diri maupay para han pag-ataman han pasyente (e.g., waray salog ha ubos, kakulang hin mga kwarto, diri igo nga mga pasilidad ha kalimpyo, kakulang hin pag-agi han mga lingkuran nga de-kaliding, ngan iba pa)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Indi maayo ang infrastructure para sa pag-atipan sang pasyente (e.g., wala ground floor, kulang sang kuwarto, indi maayo ang sanitation facilities, kulang sa wheelchair accessibility, etc.)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_O09
-    conditions:
-      - questionText:
-          EN: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — I don't know</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Hindi ko alam</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Dai aram</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>Wala ko kahibalo</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Wala ko kahibalo</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>Dire ako maaram</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>Wala ko kabalo</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_O10
-    conditions:
-      - questionText:
-          EN: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BCL: |
-            <p>Iba pa (ispecify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          BIS: |
-            <p>Uban pa (I-specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          CEB: |
-            <p>Uban pa (Isulti)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          WAR: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
-          HIL: |
-            <p>50. What are the major challenges to improving the accessibility of patient care in your local area? — Other (specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
+            <p>50. What are the major challenges to improving the accessibility of patient care in your local area?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING.</p>
   - name: FACILITYHEADSURVEY_DICT.Q50_ACCESS_CHALL_OTHER_TXT
     conditions:
       - questionText:
@@ -2962,176 +2656,23 @@ questions:
             <p>Tuig</p>
           HIL: |
             <p>52. If yes, since when? Year</p>
-  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_O01
+  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE
     conditions:
       - questionText:
           EN: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Pap smear</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Pap smear</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
-            <p>Pap smear</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Pap smear</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           CEB: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Pap smear</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           WAR: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Pap smear</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           HIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Pap smear</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_O02
-    conditions:
-      - questionText:
-          EN: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Mammogram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          FIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Mammogram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BCL: |
-            <p>Mammogram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BIS: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Mammogram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          CEB: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Mammogram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          WAR: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Mammogram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          HIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Mammogram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_O03
-    conditions:
-      - questionText:
-          EN: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Lipid profile</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          FIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Lipid profile</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BCL: |
-            <p>Lipid profile</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BIS: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Lipid profile</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          CEB: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Lipid profile</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          WAR: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Lipid profile</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          HIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Lipid profile</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_O04
-    conditions:
-      - questionText:
-          EN: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Thyroid function test</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          FIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Thyroid function test</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BCL: |
-            <p>Thyroid function test</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BIS: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Thyroid function test</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          CEB: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Thyroid function test</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          WAR: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Thyroid function test</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          HIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Thyroid function test</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_O05
-    conditions:
-      - questionText:
-          EN: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Chest X-ray</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          FIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Chest X-ray</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BCL: |
-            <p>Chest X-ray</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BIS: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Chest X-ray</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          CEB: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Chest X-ray</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          WAR: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Chest X-ray</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          HIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Chest X-ray</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_O06
-    conditions:
-      - questionText:
-          EN: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Low-dose CT scan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          FIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Low-dose CT scan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BCL: |
-            <p>Ibabang dose kan CT scan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BIS: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Low-dose CT scan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          CEB: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Low-dose CT scan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          WAR: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Low-dose CT scan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          HIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Low-dose CT scan</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_O07
-    conditions:
-      - questionText:
-          EN: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Dental services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          FIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Dental services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BCL: |
-            <p>Dental services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BIS: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Dental services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          CEB: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Dental services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          WAR: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Dental services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          HIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Dental services</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_O08
-    conditions:
-      - questionText:
-          EN: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — All of the above</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          FIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — All of the above</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BCL: |
-            <p>Gabos na nasa ibabaw</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BIS: |
-            <p>Tanan nga giingon</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          CEB: |
-            <p>Tanan sa ibabaw</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          WAR: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — All of the above</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          HIL: |
-            <p>Tanan nga gin-mention sa ibabaw</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_O09
-    conditions:
-      - questionText:
-          EN: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — I don't know</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          FIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — I don't know</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BCL: |
-            <p>Dai aram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BIS: |
-            <p>Wala ko kahibalo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          CEB: |
-            <p>Wala ko kahibalo</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          WAR: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — I don't know</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          HIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — I don't know</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_O10
-    conditions:
-      - questionText:
-          EN: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BCL: |
-            <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          BIS: |
-            <p>Uban pa (I-specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          CEB: |
-            <p>Uban pa (Isulti)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          WAR: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
-          HIL: |
-            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>53. If accredited, which of the following are included in the YAKAP/Konsulta package?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
   - name: FACILITYHEADSURVEY_DICT.Q53_YK_PACKAGE_OTHER_TXT
     conditions:
       - questionText:
@@ -3217,142 +2758,23 @@ questions:
             <p>Base han imo nahibabaroan, ano an capitation amount han putos han YAKAP/Konsulta? (An capitasyon amo an kantidad kada tuig kada rehistrado nga pasyente para han paghatag han YAKAP/Konsulta package services.)</p>
           HIL: |
             <p>Base sa imo ihibalo, pila ang capitation amount sang YAKAP/Konsulta package? (Ang capitation amo ang kantidad nga ginahatag kada tuig para sa kada narehistro nga pasyente agud mahatagan sang YAKAP/Konsulta nga serbisyo.)</p>
-  - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS_O01
+  - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS
     conditions:
       - questionText:
           EN: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — Beneficiaries consulted a primary care doctor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
+            <p>58. What are the performance indicators you need to meet to receive the second tranche payment?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
           FIL: |
-            <p>Ang mga benepisyaryo ay kumonsulta sa isang primary care doctor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
+            <p>58. What are the performance indicators you need to meet to receive the second tranche payment?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
           BCL: |
-            <p>Mga benepisyaryo na consulted kan primary care doktor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
+            <p>58. What are the performance indicators you need to meet to receive the second tranche payment?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
           BIS: |
-            <p>Ang mga benepisyaryo mikonsulta sa primary care nga doktor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
+            <p>58. What are the performance indicators you need to meet to receive the second tranche payment?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
           CEB: |
-            <p>Ang beneficiaries ni konsulta ug primary care doctor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
+            <p>58. What are the performance indicators you need to meet to receive the second tranche payment?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
           WAR: |
-            <p>An mga benepisyaryo nagkonsulta ha doktor nga mñnag-aataman ha siyahan nga mga tawo</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
+            <p>58. What are the performance indicators you need to meet to receive the second tranche payment?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
           HIL: |
-            <p>Ang mga benepisyaryo nakonsulta sa primary care doctor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS_O02
-    conditions:
-      - questionText:
-          EN: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — Utilization of laboratory services</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          FIL: |
-            <p>Paggamit ng mga serbisyong laboratoryo</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BCL: |
-            <p>Pagpagamit kan mga laboratory services</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BIS: |
-            <p>Paggamit sa mga serbisyo sa laboratoryo</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          CEB: |
-            <p>Paggamit ug mga laboratory services</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          WAR: |
-            <p>Paggamit han mga gamit ha laboratoryo</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          HIL: |
-            <p>Nagamit sang laboratory services</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS_O03
-    conditions:
-      - questionText:
-          EN: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — Beneficiaries received antibiotics as prescribed</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          FIL: |
-            <p>Ang mga benepisyaryo ay nakatanggap ng antibiotics ayon sa reseta ng kanilang primary care doctor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BCL: |
-            <p>Mga benepisyaryo na nakaresiba ki antiobitics na tigpreskriba kan saindang doktor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BIS: |
-            <p>Ang mga benepisyaryo nakadawat og antibiotics sumala sa reseta sa ilang primary care nga doktor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          CEB: |
-            <p>Ang beneficiaries nakadawat ug antibiotics nga gi resita sa ilang primary care doctor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          WAR: |
-            <p>An mga benepisyaryo nakarawat hin antibiotiks sugad han iginreseta han ira doktor nga nag-aataman han ira panguna nga panlawas.</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          HIL: |
-            <p>Ang mga benepisyaryo nakabaton sang antibiotics nga ginreseta sang ila primary care doctor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS_O04
-    conditions:
-      - questionText:
-          EN: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — Beneficiaries received NCD medicine as prescribed</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          FIL: |
-            <p>Ang mga benepisyaryo ay nakatanggap ng antibiotics ayon sa reseta ng kanilang primary care doctor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BCL: |
-            <p>Mga benepisyaryo na nakaresiba ki noncommunicable disease (NCD) medicine na tigpreskriba kan saindang doktor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BIS: |
-            <p>Ang mga benepisyaryo nakadawat og tambal para sa noncommunicable diseases (NCD) sumala sa reseta sa ilang primary care nga doktor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          CEB: |
-            <p>Ang mga beneficiaries nakadawat ug tambal sa noncommunicable disease (NCD) nga gi resita sa ilang primary care doctor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          WAR: |
-            <p>An mga benepisyaryo in nakarawat hin medisina para ha diri nakakatapon nga sakit sugad han iginreseta han ira panguna nga nag-aataman nga doktor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          HIL: |
-            <p>Ang mga benepisyaryo nakabaton sang noncommunicable disease (NCD) medicine nga ginreseta sang ila primary care doctor</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS_O05
-    conditions:
-      - questionText:
-          EN: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — No requirements</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          FIL: |
-            <p>Walang kinakailangan</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BCL: |
-            <p>Wara nin requirements</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BIS: |
-            <p>Walay mga kinahanglanon</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          CEB: |
-            <p>Walay requirements</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          WAR: |
-            <p>Waray mga kinahanglanon</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          HIL: |
-            <p>Wala sang requirements</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS_O06
-    conditions:
-      - questionText:
-          EN: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — 1st patient encounter</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          FIL: |
-            <p>Unang pakikipag-ugnayan sa pasyente</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BCL: |
-            <p>Primerong encounter kan pasyente</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BIS: |
-            <p>Unang pagkita sa pasyente</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          CEB: |
-            <p>1st patient encounter</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          WAR: |
-            <p>Una nga pakigkita han pasyente</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          HIL: |
-            <p>Una nga pasyente nga na encounter</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS_O07
-    conditions:
-      - questionText:
-          EN: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — I don't know</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          FIL: |
-            <p>Hindi ko alam</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BCL: |
-            <p>Dai aram</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BIS: |
-            <p>Wala ko kahibalo</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          CEB: |
-            <p>Wala ko kahibalo</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          WAR: |
-            <p>Dire ako maaram</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          HIL: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — I don't know</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-  - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS_O08
-    conditions:
-      - questionText:
-          EN: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — Other (specify)</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BCL: |
-            <p>Iba pa (ispecify)</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          BIS: |
-            <p>Uban pa (I-specify)</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          CEB: |
-            <p>Uban pa (Isulti)</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          WAR: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — Other (specify)</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
-          HIL: |
-            <p>58. What are the performance indicators you need to meet to receive the second tranche payment? — Other (specify)</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
+            <p>58. What are the performance indicators you need to meet to receive the second tranche payment?</p><p class="instruction">Performance indicators are the defined set of healthcare goods and services to be provided for each enrolled patient to receive the full capitation payment. DO NOT READ OPTIONS OUT LOUD. SELECT ALL THE ANSWER OPTIONS THAT THE RESPONDENT GIVES WITHOUT PROMPTING. RESPONDENT MAY NOT BE ALLOWED TO LOOK FOR REFERENCE PRIOR TO ANSWERING THIS QUESTION.</p>
   - name: FACILITYHEADSURVEY_DICT.Q58_PERF_INDICATORS_OTHER_TXT
     conditions:
       - questionText:
@@ -10701,36 +10123,36 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>157. Do you have a network of specialist providers to refer patients to, if needed?</p>
+            <p>157. Do you have a network of specialist providers to refer patients to, if needed?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           FIL: |
-            <p>Mayroon ba kayong network ng mga espesyalista na maaaring padalhan ng mga pasyente kung kinakailangan?</p>
+            <p>Mayroon ba kayong network ng mga espesyalista na maaaring padalhan ng mga pasyente kung kinakailangan?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           BCL: |
-            <p>May network ba kamo kan mga specialist providers na puwedeng pag-referan kan mga pasyente, kun kinakailangan?</p>
+            <p>May network ba kamo kan mga specialist providers na puwedeng pag-referan kan mga pasyente, kun kinakailangan?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           BIS: |
-            <p>Aduna ba moy network sa mga espesyalista nga provider nga inyong masaligan aron I-refer ang mga pasyente kung kinahanglan?</p>
+            <p>Aduna ba moy network sa mga espesyalista nga provider nga inyong masaligan aron I-refer ang mga pasyente kung kinahanglan?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           CEB: |
-            <p>Aduna ba ka network sa mga espesyalista nga mahimong i-referan sa mga pasyente, kung gikinahanglan?</p>
+            <p>Aduna ba ka network sa mga espesyalista nga mahimong i-referan sa mga pasyente, kung gikinahanglan?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           WAR: |
-            <p>Mayda ba kamo network hin mga espesyalista nga mga tagahatag nga igrerefer an mga pasyente, kun kinahanglanon?</p>
+            <p>Mayda ba kamo network hin mga espesyalista nga mga tagahatag nga igrerefer an mga pasyente, kun kinahanglanon?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           HIL: |
-            <p>May yara bala kamo sang network sang mga espesyalista nga pwede padal-an sang referral sang mga pasyente kon kinahanglan?</p>
+            <p>May yara bala kamo sang network sang mga espesyalista nga pwede padal-an sang referral sang mga pasyente kon kinahanglan?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
   - name: FACILITYHEADSURVEY_DICT.Q158_REF_PROPORTION
     conditions:
       - questionText:
           EN: |
-            <p>158. Considering all patients who come to your facility for the past 6 months, what is the proportion of patients referred by another facility compared to those who self-refer/walk-in?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>158. Considering all patients who come to your facility for the past 6 months, what is the proportion of patients referred by another facility compared to those who self-refer/walk-in?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           FIL: |
-            <p>Sa lahat ng pasyenteng dumarating sa inyong pasilidad, ano ang proporsyon ng mga pasyenteng na-refer mula sa ibang pasilidad kumpara sa mga pasyenteng pumapasok nang mag-isa / walk-in?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa lahat ng pasyenteng dumarating sa inyong pasilidad, ano ang proporsyon ng mga pasyenteng na-refer mula sa ibang pasilidad kumpara sa mga pasyenteng pumapasok nang mag-isa / walk-in?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           BCL: |
-            <p>Sa gabos na mga pasyenteng nagaabot sa saindong pasilidad sa nakaaging 6 na bulan, ano an proporsyon kan mga pasyenteng na-refer kan ibang pasilidad kumpara sa mga walk-in o self-referred?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa gabos na mga pasyenteng nagaabot sa saindong pasilidad sa nakaaging 6 na bulan, ano an proporsyon kan mga pasyenteng na-refer kan ibang pasilidad kumpara sa mga walk-in o self-referred?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           BIS: |
-            <p>Sa tanang pasyenteng niadto dinhi niining pasilidad sa milabay nga 6 ka bulan, pila ka proporsyon ang girefer gikan sa ubang pasilidad kumpara sa mga pasyenteng nag self-refer o walk-in?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa tanang pasyenteng niadto dinhi niining pasilidad sa milabay nga 6 ka bulan, pila ka proporsyon ang girefer gikan sa ubang pasilidad kumpara sa mga pasyenteng nag self-refer o walk-in?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           CEB: |
-            <p>Sa tanang mga pasyente nga miabot sa inyong pasilidad sa miaging 6 ka bulan, unsa ang proporsyon sa mga pasyente nga gi-refer sa laing pasilidad kumpara sa mga nag-refer sa ilang kaugalingon/walk-in?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa tanang mga pasyente nga miabot sa inyong pasilidad sa miaging 6 ka bulan, unsa ang proporsyon sa mga pasyente nga gi-refer sa laing pasilidad kumpara sa mga nag-refer sa ilang kaugalingon/walk-in?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           WAR: |
-            <p>Kun huhunahunaon an tanan nga pasyente nga nakanhi ha iyo pasilidad han nakalabay nga 6 ka bulan, ano an proporsyon han mga pasyente nga ginrefer han iba nga pasilidad kumpara han mga self-refer/walk-in?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Kun huhunahunaon an tanan nga pasyente nga nakanhi ha iyo pasilidad han nakalabay nga 6 ka bulan, ano an proporsyon han mga pasyente nga ginrefer han iba nga pasilidad kumpara han mga self-refer/walk-in?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           HIL: |
-            <p>Sa tanan nga mga pasyente nga nagkadto sa inyo pasilidad sa nagligad nga 6 ka bulan, pila ka porsyento ang ginrefer sang iban nga pasilidad kag pila ka porsyento ang direkta lang nga nagkadto?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa tanan nga mga pasyente nga nagkadto sa inyo pasilidad sa nagligad nga 6 ka bulan, pila ka porsyento ang ginrefer sang iban nga pasilidad kag pila ka porsyento ang direkta lang nga nagkadto?</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
   - name: FACILITYHEADSURVEY_DICT.Q159_RECEIVE_REFERRAL_HOW_O01
     conditions:
       - questionText:
@@ -11313,136 +10735,136 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga pagpupulong para sa quality assurance</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
-            <p>Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
-            <p>Mga miting sa quality assurance</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           CEB: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           WAR: |
-            <p>Mga katitirok han pagsiguto han kalidad</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           HIL: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Quality assurance meetings</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
   - name: FACILITYHEADSURVEY_DICT.Q166_PD_NURSES_O02
     conditions:
       - questionText:
           EN: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Seminars, conferences, workshops</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Seminars, conferences, workshops</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga seminar, kumperensya, workshop</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Seminars, conferences, workshops</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
-            <p>Mga seminar, conference, asin workshop</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Seminars, conferences, workshops</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
-            <p>Mga seminar, conference, ug workshop</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Seminars, conferences, workshops</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           CEB: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Seminars, conferences, workshops</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Seminars, conferences, workshops</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           WAR: |
-            <p>Mga seminar, Komprensya,workshop</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Seminars, conferences, workshops</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           HIL: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Seminars, conferences, workshops</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Seminars, conferences, workshops</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
   - name: FACILITYHEADSURVEY_DICT.Q166_PD_NURSES_O03
     conditions:
       - questionText:
           EN: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Suporta para sa independent na propesyonal na pag-unlad: mga scholarship</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
-            <p>Suporta para sa independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           CEB: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           WAR: |
-            <p>Pagsuporta para han lugaring nga pag-uswag han propesyon: mga iskolar</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           HIL: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: scholarships</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
   - name: FACILITYHEADSURVEY_DICT.Q166_PD_NURSES_O04
     conditions:
       - questionText:
           EN: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Suporta para sa independent na propesyonal na pag-unlad: mga grant para sa pananaliksik</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
-            <p>Suporta para sa independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
-            <p>Suporta sa independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           CEB: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           WAR: |
-            <p>Suporta para han lugaring nga pag-uswag han propesyon: mga pinansyal na bulig han pag-aram</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           HIL: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Independent professional development: research grants</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
   - name: FACILITYHEADSURVEY_DICT.Q166_PD_NURSES_O05
     conditions:
       - questionText:
           EN: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — LGU/DOH led workshops/initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — LGU/DOH led workshops/initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Mga workshop/inisyatibo na pinangunahan ng LGU/DOH</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — LGU/DOH led workshops/initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
-            <p>Mga workshop o inisyatiba na pinangungunahan kan LGU/DOH</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — LGU/DOH led workshops/initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
-            <p>Mga workshop/inisyatibo nga gipangulohan sa LGU/DOH</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — LGU/DOH led workshops/initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           CEB: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — LGU/DOH led workshops/initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — LGU/DOH led workshops/initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           WAR: |
-            <p>Mga workshop/inisyatiba nga pinangungunahan han LGU/DOG</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — LGU/DOH led workshops/initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           HIL: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — LGU/DOH led workshops/initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — LGU/DOH led workshops/initiatives</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
   - name: FACILITYHEADSURVEY_DICT.Q166_PD_NURSES_O06
     conditions:
       - questionText:
           EN: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Walang mga anyo ng propesyonal na pag-unlad na ibinibigay sa aming mga nars</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
-            <p>Wara nin anomang porma kan professional development para sa mga doktor</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           CEB: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           WAR: |
-            <p>Waray porma hin pag-uswag ha propesyon nga iginhahatag ha aton mga nars</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           HIL: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — No forms of professional development are provided</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
   - name: FACILITYHEADSURVEY_DICT.Q166_PD_NURSES_O07
     conditions:
       - questionText:
           EN: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           FIL: |
-            <p>Iba pa (tukuyin)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BCL: |
-            <p>Iba pa (ispecify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           BIS: |
-            <p>Uban pa (I-specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           CEB: |
-            <p>Uban pa (Isulti)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           WAR: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
           HIL: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify)</p><p class="instruction">READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
   - name: FACILITYHEADSURVEY_DICT.Q166_PD_NURSES_OTHER_TXT
     conditions:
       - questionText:
           EN: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify) text</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify) text</p>
           FIL: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify) text</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify) text</p>
           BCL: |
-            <p>Iba pa (ispecify)</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify) text</p>
           BIS: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify) text</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify) text</p>
           CEB: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify) text</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify) text</p>
           WAR: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify) text</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify) text</p>
           HIL: |
-            <p>166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify) text</p>
+            <p>166. What forms of professional development do you provide to your nurses? — Other (specify) text</p>
 ...

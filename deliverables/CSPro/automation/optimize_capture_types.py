@@ -22,8 +22,11 @@ SPECS = {"F1": "FacilityHeadSurvey", "F3": "PatientSurvey", "F4": "HouseholdSurv
 CASCADE = {"REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY", "BARANGAY",
            "P_REGION", "P_PROVINCE_HUC", "P_CITY_MUNICIPALITY", "P_BARANGAY"}
 # Single alpha fields that are TRUE multi-selects (one field, codes concatenated) -> Check Box
-# tick-list. Must win over the >=7-options DropDown rule below. 2026-06-12 R4 review: F3 Q148.
-CHECKBOX = {"Q148_CONDITIONS"}
+# tick-list. Must win over the >=7-options DropDown rule below. 2026-06-12 R4 review: F3 Q148;
+# F1 Q49/Q50/Q53/Q58 (GH #377/#378/#379 — select-all -> Check Box redesign mirroring Q148).
+CHECKBOX = {"Q148_CONDITIONS",
+            "Q49_QUALITY_CHALL", "Q50_ACCESS_CHALL",
+            "Q53_YK_PACKAGE", "Q58_PERF_INDICATORS"}
 DROPDOWN_MIN = 7   # >= this many coded options -> dropdown instead of radio
 
 

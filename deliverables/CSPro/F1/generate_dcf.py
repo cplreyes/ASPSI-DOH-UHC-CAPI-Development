@@ -35,7 +35,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from cspro_helpers import (
     YES_NO, YES_NO_DK, YES_NO_NA, UHC9_OPTIONS, FREQUENCY, WHY_DIFF_OPTIONS,
     _value_set, numeric, alpha, yes_no, yes_no_dk, yes_no_na,
-    select_one, select_all, uhc9_item, record, build_geo_id,
+    select_one, select_all, checkbox_multiselect, uhc9_item, record, build_geo_id,
     _gps_fields, _photo_block, _case_control_items, derived_geo_code_items,
     apply_translations,
 )
@@ -245,17 +245,22 @@ def build_section_c():
         ("Facility performance scorecards / quality reports", "11"),
         ("Other (specify)", "12"),
     ]
+    # Q49/Q50 redesigned to a TRUE Check Box multi-select (GH #377/#378/#379,
+    # mirrors F3 Q148): codes are fixed-width 2-digit so CSEntry's Check Box
+    # capture can slice the concatenated field by code width, and 'Other' uses
+    # the high non-prefixing code 99 (no valid code starts with 9) so pos("99",..)
+    # on the concatenated string can't false-match across code boundaries.
     QUALITY_ACCESS_CHALLENGES = [
-        ("Limited resources (personnel, equipment, supplies, funding)", "1"),
-        ("Challenging quality standards", "2"),
-        ("Healthcare decisions made by LGUs not the facility", "3"),
-        ("Lack of specific healthcare skills", "4"),
-        ("Inadequate training of healthcare workers", "5"),
-        ("Lack of patient awareness of UHC benefits", "6"),
-        ("Limited accessibility of public healthcare facilities", "7"),
-        ("Infrastructure not conducive for patient care", "8"),
-        ("I don't know", "9"),
-        ("Other (specify)", "10"),
+        ("Limited resources (personnel, equipment, supplies, funding)", "01"),
+        ("Challenging quality standards", "02"),
+        ("Healthcare decisions made by LGUs not the facility", "03"),
+        ("Lack of specific healthcare skills", "04"),
+        ("Inadequate training of healthcare workers", "05"),
+        ("Lack of patient awareness of UHC benefits", "06"),
+        ("Limited accessibility of public healthcare facilities", "07"),
+        ("Infrastructure not conducive for patient care", "08"),
+        ("I don't know", "09"),
+        ("Other (specify)", "99"),
     ]
 
     items = []
@@ -336,10 +341,13 @@ def build_section_c():
                            "47. Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
     items.extend(uhc9_item("Q48_PCQM",
                            "48. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))
-    items.extend(select_all("Q49_QUALITY_CHALL",
+    # Q49/Q50 — TRUE Check Box multi-select (GH #377/#378/#379): ONE alpha field of
+    # concatenated 2-digit option codes (tick-list on one screen) + a gated
+    # _OTHER_TXT, replacing the N Yes/No radios of select_all(). Mirrors F3 Q148.
+    items.extend(checkbox_multiselect("Q49_QUALITY_CHALL",
                             "49. What are the major challenges to improving the quality of patient care in your local area?",
                             QUALITY_ACCESS_CHALLENGES))
-    items.extend(select_all("Q50_ACCESS_CHALL",
+    items.extend(checkbox_multiselect("Q50_ACCESS_CHALL",
                             "50. What are the major challenges to improving the accessibility of patient care in your local area?",
                             QUALITY_ACCESS_CHALLENGES))
     return record("C_UHC_IMPLEMENTATION", "C. Universal Health Care (UHC) Implementation", "4", items)
@@ -350,21 +358,25 @@ def build_section_c():
 # ============================================================
 
 def build_section_d():
+    # Q53 redesigned to a TRUE Check Box multi-select (GH #377/#378/#379, mirrors
+    # F3 Q148): fixed-width 2-digit codes; 'Other' -> high non-prefixing code 99.
     Q53_PACKAGE = [
-        ("Pap smear", "1"), ("Mammogram", "2"), ("Lipid profile", "3"),
-        ("Thyroid function test", "4"), ("Chest X-ray", "5"),
-        ("Low-dose CT scan", "6"), ("Dental services", "7"),
-        ("All of the above", "8"), ("I don't know", "9"), ("Other (specify)", "10"),
+        ("Pap smear", "01"), ("Mammogram", "02"), ("Lipid profile", "03"),
+        ("Thyroid function test", "04"), ("Chest X-ray", "05"),
+        ("Low-dose CT scan", "06"), ("Dental services", "07"),
+        ("All of the above", "08"), ("I don't know", "09"), ("Other (specify)", "99"),
     ]
+    # Q58 redesigned to a TRUE Check Box multi-select (GH #377/#378/#379, mirrors
+    # F3 Q148): fixed-width 2-digit codes; 'Other' -> high non-prefixing code 99.
     Q58_PERF = [
-        ("Beneficiaries consulted a primary care doctor", "1"),
-        ("Utilization of laboratory services", "2"),
-        ("Beneficiaries received antibiotics as prescribed", "3"),
-        ("Beneficiaries received NCD medicine as prescribed", "4"),
-        ("No requirements", "5"),
-        ("1st patient encounter", "6"),
-        ("I don't know", "7"),
-        ("Other (specify)", "8"),
+        ("Beneficiaries consulted a primary care doctor", "01"),
+        ("Utilization of laboratory services", "02"),
+        ("Beneficiaries received antibiotics as prescribed", "03"),
+        ("Beneficiaries received NCD medicine as prescribed", "04"),
+        ("No requirements", "05"),
+        ("1st patient encounter", "06"),
+        ("I don't know", "07"),
+        ("Other (specify)", "99"),
     ]
     Q60_PAY_FREQ = [
         ("Monthly", "1"), ("Quarterly", "2"), ("Semi-annually", "3"), ("Annually", "4"),
@@ -482,7 +494,8 @@ def build_section_d():
     items.append(yes_no("Q51_YK_ACCRED", "51. Are you currently an accredited YAKAP/Konsulta provider?"))
     items.append(numeric("Q52_YK_SINCE_MONTH", "52. If yes, since when? Month", length=2))
     items.append(numeric("Q52_YK_SINCE_YEAR",  "52. If yes, since when? Year",  length=4))
-    items.extend(select_all("Q53_YK_PACKAGE",
+    # Q53 — TRUE Check Box multi-select (GH #377/#378/#379). Mirrors F3 Q148.
+    items.extend(checkbox_multiselect("Q53_YK_PACKAGE",
                             "53. If accredited, which of the following are included in the YAKAP/Konsulta package?",
                             Q53_PACKAGE))
     items.append(yes_no_dk("Q54_YK_REG_INDIV",
@@ -494,7 +507,8 @@ def build_section_d():
     items.append(numeric("Q57_CAPITATION_AMT",
                          "57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package? (Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.)",
                          length=6))
-    items.extend(select_all("Q58_PERF_INDICATORS",
+    # Q58 — TRUE Check Box multi-select (GH #377/#378/#379). Mirrors F3 Q148.
+    items.extend(checkbox_multiselect("Q58_PERF_INDICATORS",
                             "58. What are the performance indicators you need to meet to receive the second tranche payment?",
                             Q58_PERF))
     items.append(yes_no("Q59_KNOW_PAY_FREQ",
@@ -1028,9 +1042,11 @@ def build_section_h():
     items.extend(select_all("Q165_PD_DOCTORS",
                             "165. What forms of professional development do you provide to your doctors?",
                             PD_DOCTORS))
+    # #388: the internal "[PENDING DESIGN…]" flag was leaking into the on-screen label.
+    # The default (omit audits) already matches the printed questionnaire, so the displayed
+    # text is now clean; the toggle + comment retain the ASPSI-confirm note in source only.
     items.extend(select_all("Q166_PD_NURSES",
-                            "166. What forms of professional development do you provide to your nurses?" +
-                            (" [PENDING DESIGN: printed list omits audits]" if not Q166_NURSES_INCLUDE_AUDITS else ""),
+                            "166. What forms of professional development do you provide to your nurses?",
                             PD_NURSES))
     return record("H_HUMAN_RESOURCES", "H. Human Resources for Health", "9", items)
 

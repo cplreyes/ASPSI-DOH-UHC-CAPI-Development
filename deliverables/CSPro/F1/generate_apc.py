@@ -581,15 +581,21 @@ postproc
       reenter;
     endif;
   endif;""",
-    # 4.9 Q121 "select all that apply" DOH-licensing-difficulty (Section F).
-    # Reconciled vs the Apr 20 questionnaire (#151): the dcf models Q121 as 14
-    # binary option fields (_O01..O14), so facility-type option visibility is a
-    # PER-OPTION gate, not a setvalueset on a single field (the old PROC named a
-    # field — Q121_DOH_LIC_DIFFICULT — that does not exist in the dcf, a hard
-    # compile error). Per the questionnaire: O10/O11/O12 are hospital-only, O13
-    # (public access to price information) is primary-care-only, O14 = "None of
-    # the above" -> skip the why-difficult cluster to Q135. Q8_SERVICE_LEVEL = 1
-    # is Primary Care Facility.
+    # 4.9 Q121 "select all that apply" DOH-licensing-difficulty (Section F). #385.
+    # CONFIRMED against the authoritative printed questionnaire (Filipino v2.1.1
+    # Apr30, option order = dcf _O## order): the dcf models Q121 as 14 binary option
+    # fields (_O01..O14), so facility-type option visibility is a PER-OPTION gate,
+    # not a setvalueset on a single field — there is NO single Q121 field to retarget
+    # (Q121_DYNAMIC_VALUE_SET = False in generate_dcf.py is therefore moot, not a gap).
+    # Printed per-option tags:
+    #   O10 "National laws and DOH issuances…"  hospital-only
+    #   O11 "Emergency cart contents"           hospital-only
+    #   O12 "Add-on services"                   hospital-only
+    #   O13 "Public access to price information" primary-care-only
+    #   O14 "None of the above"                 -> skip the why-difficult cluster to Q135
+    # O01..O09 are universal. Q8_SERVICE_LEVEL=1 is Primary Care Facility; 2/3/4 are
+    # hospitals. The `noinput` gate IS the safety net the spec asked for: a hidden
+    # option can't be ticked, so no out-of-scope data is captured for the wrong tier.
     # DESIGNER-VERIFY: the `noinput` conditional-hide idiom for a multi-select
     # option is the one bit to confirm on compile; symbols all resolve.
     "Q121_DOH_LIC_DIFFICULT_O10": """\
@@ -616,6 +622,117 @@ postproc
   endif;""",
 }
 
+# --- Check Box multi-select redesign (GH #377/#378/#379, mirrors F3 Q148) -----
+# Q49/Q50/Q53/Q58 are now ONE alpha field each holding the ticked option codes
+# concatenated left-to-right (CSEntry Check Box capture), so the old 20-ish Yes/No
+# _O## flags are GONE. The dcf-derived auto-gens used to drive these:
+#   * auto_other_specify_procs() gated <PREFIX>_OTHER_TXT on <PREFIX>_O## <> 1
+#     (the 'Other' flag) — that flag no longer exists, so the gate is hand-written
+#     here on `pos("99", <PREFIX>) = 0` instead (no valid code starts with 9, so a
+#     pos() membership test can't false-match across code boundaries).
+#   * select_all_exclusive_warning_procs() emitted the exclusive-option soft-warn on
+#     the last _O## flag — also gone; the exclusivity warn is hand-written here on a
+#     pos() check of the exclusive code ("I don't know").
+# Keying each PROC by its field name seeds `covered` (= set(BESPOKE_PROCS)), so both
+# auto-gens SKIP these fields and never mis-fire on the alpha checkbox / its text.
+# 'Other' = 99 in all four (set in generate_dcf.py); the exclusive 'I don't know'
+# code is 09 (Q49/Q50/Q53) / 07 (Q58).
+CHECKBOX_MULTISELECT_PROCS = {
+    "Q49_QUALITY_CHALL": """\
+PROC Q49_QUALITY_CHALL
+postproc
+  if length(strip(Q49_QUALITY_CHALL)) = 0 then
+    errmsg("Select at least one option for Q49 before continuing.");
+    reenter;
+  endif;
+  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  if pos("09", Q49_QUALITY_CHALL) > 0 and length(strip(Q49_QUALITY_CHALL)) > 2 then
+    errmsg("Q49: 'I don't know' is usually the only choice — please review the options ticked.");
+  endif;""",
+    "Q49_QUALITY_CHALL_OTHER_TXT": """\
+PROC Q49_QUALITY_CHALL_OTHER_TXT
+preproc
+  if pos("99", Q49_QUALITY_CHALL) = 0 then
+    Q49_QUALITY_CHALL_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q49_QUALITY_CHALL) > 0 and length(strip(Q49_QUALITY_CHALL_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q49 — please specify.");
+    reenter;
+  endif;""",
+    "Q50_ACCESS_CHALL": """\
+PROC Q50_ACCESS_CHALL
+postproc
+  if length(strip(Q50_ACCESS_CHALL)) = 0 then
+    errmsg("Select at least one option for Q50 before continuing.");
+    reenter;
+  endif;
+  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  if pos("09", Q50_ACCESS_CHALL) > 0 and length(strip(Q50_ACCESS_CHALL)) > 2 then
+    errmsg("Q50: 'I don't know' is usually the only choice — please review the options ticked.");
+  endif;""",
+    "Q50_ACCESS_CHALL_OTHER_TXT": """\
+PROC Q50_ACCESS_CHALL_OTHER_TXT
+preproc
+  if pos("99", Q50_ACCESS_CHALL) = 0 then
+    Q50_ACCESS_CHALL_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q50_ACCESS_CHALL) > 0 and length(strip(Q50_ACCESS_CHALL_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q50 — please specify.");
+    reenter;
+  endif;""",
+    "Q53_YK_PACKAGE": """\
+PROC Q53_YK_PACKAGE
+postproc
+  if length(strip(Q53_YK_PACKAGE)) = 0 then
+    errmsg("Select at least one option for Q53 before continuing.");
+    reenter;
+  endif;
+  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  if pos("09", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
+    errmsg("Q53: 'I don't know' is usually the only choice — please review the options ticked.");
+  endif;""",
+    "Q53_YK_PACKAGE_OTHER_TXT": """\
+PROC Q53_YK_PACKAGE_OTHER_TXT
+preproc
+  if pos("99", Q53_YK_PACKAGE) = 0 then
+    Q53_YK_PACKAGE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q53 — please specify.");
+    reenter;
+  endif;""",
+    "Q58_PERF_INDICATORS": """\
+PROC Q58_PERF_INDICATORS
+postproc
+  if length(strip(Q58_PERF_INDICATORS)) = 0 then
+    errmsg("Select at least one option for Q58 before continuing.");
+    reenter;
+  endif;
+  { exclusivity (soft warn): 'I don't know' (07) should stand alone }
+  if pos("07", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
+    errmsg("Q58: 'I don't know' is usually the only choice — please review the options ticked.");
+  endif;""",
+    "Q58_PERF_INDICATORS_OTHER_TXT": """\
+PROC Q58_PERF_INDICATORS_OTHER_TXT
+preproc
+  if pos("99", Q58_PERF_INDICATORS) = 0 then
+    Q58_PERF_INDICATORS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q58 — please specify.");
+    reenter;
+  endif;""",
+}
+BESPOKE_PROCS.update(CHECKBOX_MULTISELECT_PROCS)
+
 # --- Multi-branch routing (spec 2 Section D/E/G) deferred from pass 1. Branch
 # VALUES are from the spec's skip table; controlling-field item names confirmed
 # against the dcf. Single-choice control fields, so these are field PROCs.
@@ -636,6 +753,24 @@ postproc
   if Q61_TRANCHE_DELAY = 2 then     { No }
     skip to Q62_TRANCHE_INTERVAL;
   endif;""",
+    # Section D: reverse gate on the not-accredited block (GH #380). The Q51
+    # master gate sends Q51=2 (No / not-accredited) -> Q79 (skipping the
+    # accredited block Q52-Q78); Q51=1 (Yes) flows THROUGH Q52-Q78. But the
+    # accredited block had no reverse skip, so after it ends (Q78) an accredited
+    # facility fell straight into the not-accredited block Q79-Q84 (manifests for
+    # Q51=Yes AND Q77=Yes: Q77=No already skips to Q85, Q77=Yes -> Q78 -> Q79).
+    # Spec §4 is explicit: "Q79-Q84: Only entered if Q51 = No" / "If Q51 = Yes, no
+    # answers should be present for Q79-Q84 (HARD)". Gate the FIRST not-accredited
+    # field: bounce anyone who is NOT not-accredited (Q51 <> 2 — accredited Q51=1
+    # plus any DK/other fall-through) past the whole Q79-Q84 block to Q85. The
+    # legit Q51=2 path lands here via the Q51 postproc skip, sees Q51<>2 == false,
+    # stays and answers Q79. Q85_CATCHMENT_AREA is the same resume point Q77=No uses.
+    "Q79_NOT_ACCRED_REASON_O01": """\
+PROC Q79_NOT_ACCRED_REASON_O01
+preproc
+  if Q51_YK_ACCRED <> 2 then   { Q79-Q84 only for not-accredited (Q51=No); accredited fall-through -> Q85 }
+    skip to Q85_CATCHMENT_AREA;
+  endif;""",
     # Section D: Q80 5-way intend-accredit routing
     "Q80_INTEND_ACCRED": """\
 PROC Q80_INTEND_ACCRED
@@ -645,13 +780,41 @@ postproc
   if Q80_INTEND_ACCRED = 4    then  skip to Q83_TRIED_FAILED_REASON;  endif;  { No, tried and failed }
   if Q80_INTEND_ACCRED = 5    then  skip to Q81_KNOW_HOW_START;       endif;  { No, haven't thought }
   if Q80_INTEND_ACCRED = 6    then  skip to Q85_CATCHMENT_AREA;   endif;  { I don't know }""",
-    # Section D: Q90 costing-viable x Q51 accreditation status
+    # Section D: Q90 costing-viable routes by its OWN answer (#381). Printed Q90
+    # has NO Q51 dependency: Yes(1)/Don't-know(3) -> Q93; No(2) -> Q91. (The old
+    # PROC gated each branch on a matching Q51 code, so an accredited "No" or a
+    # non-accredited "Yes" fell through with no skip — wrong per the questionnaire.)
     "Q90_COSTING_VIABLE": """\
 PROC Q90_COSTING_VIABLE
 postproc
-  if Q90_COSTING_VIABLE = 1 and Q51_YK_ACCRED = 1 then  skip to Q91_MIN_CAP_VALUE_ACC;    endif;  { Viable + accredited }
-  if Q90_COSTING_VIABLE = 2 and Q51_YK_ACCRED = 2 then  skip to Q92_MIN_CAP_VALUE_NONACC; endif;  { Not viable + non-accredited }
-  if Q90_COSTING_VIABLE = 3 then                        skip to Q93_CHARGE_ADDL_CAP;      endif;  { I don't know }""",
+  if Q90_COSTING_VIABLE = 2 then     skip to Q91_MIN_CAP_VALUE_ACC; endif;  { No -> Q91 }
+  if Q90_COSTING_VIABLE in 1,3 then  skip to Q93_CHARGE_ADDL_CAP;   endif;  { Yes / Don't know -> Q93 }""",
+    # Section D master gate (#383): the costing block splits by accreditation.
+    # Printed: "Q85 to Q91; Q93 to Q100 are only relevant to YAKAP-accredited,
+    # otherwise proceed to Q101" + "Q92 is only relevant to not-accredited."
+    #   - Accredited (Q51=1): answer Q85-Q91, SKIP Q92, answer Q93-Q100 -> Q101.
+    #   - Not-accredited (Q51=2): Q84 -> SKIP Q85-Q91 -> answer Q92 -> SKIP Q93-Q100 -> Q101.
+    # Q85 first-field preproc: a not-accredited respondent jumps the whole accredited
+    # costing block straight to Q92. (An accredited respondent stays and answers Q85.)
+    "Q85_CATCHMENT_AREA": """\
+PROC Q85_CATCHMENT_AREA
+preproc
+  if Q51_YK_ACCRED = 2 then   { not-accredited: skip the accredited costing block Q85-Q91 -> Q92 }
+    skip to Q92_MIN_CAP_VALUE_NONACC;
+  endif;""",
+    # Q92 (#383): only the not-accredited reach it as a question; accredited respondents
+    # arrive here via fall-through from the Q85-Q91 block and must SKIP it. preproc bounces
+    # accredited past Q92 to Q93; postproc sends the not-accredited (who answered Q92) past
+    # the entire Q93-Q100 accredited block to Section E (Q101).
+    "Q92_MIN_CAP_VALUE_NONACC": """\
+PROC Q92_MIN_CAP_VALUE_NONACC
+preproc
+  if Q51_YK_ACCRED <> 2 then   { accredited (or any non-2): Q92 is not for them -> Q93 }
+    skip to Q93_CHARGE_ADDL_CAP;
+  endif;
+postproc
+  { not-accredited finished Q92 -> skip the accredited block Q93-Q100, go to Section E }
+  skip to Q101_HEARD_BUCAS;""",
     # Section D: Q95 received-payments (Yes-all / Yes-some) -> Q97
     "Q95_RECEIVED_PAYMENTS": """\
 PROC Q95_RECEIVED_PAYMENTS
@@ -681,6 +844,12 @@ postproc
     # Section E: Q116 = No / Did-not-experience -> Q118 (codes per dcf value set; verify)
     "Q116_ADDR_STOCKOUT": """\
 PROC Q116_ADDR_STOCKOUT
+preproc
+  { #384: Q116/Q117 only if heard GAMOT (Q108=Yes) AND accredited (Q109=Yes) AND had a
+    stockout (Q112=Yes) — spec 3.6 GATE. Otherwise skip both to Q118. }
+  if not (Q108_HEARD_GAMOT = 1 and Q109_GAMOT_ACCRED = 1 and Q112_STOCKOUT = 1) then
+    skip to Q118_DOH_LICENSED;
+  endif;
 postproc
   if Q116_ADDR_STOCKOUT in 2,3 then  { 2 = No, 3 = Did not experience (verify codes in Designer) }
     skip to Q118_DOH_LICENSED;
@@ -701,11 +870,20 @@ preproc
   if Q145_MALASAKIT_PROVIDED = 1 then   { Yes -> Q146 already asked; skip the not-provided block }
     skip to Q148_LGU_SUPPORT;
   endif;""",
-    # Section G: Q152 protocol clarity (Very Clear / Clear) -> Q154
+    # Section G: Q152 protocol clarity. #386: printed Q152 is "only for respondents
+    # from public hospitals" — public hospital = Q7_OWNERSHIP=1 (Public) AND
+    # Q8_SERVICE_LEVEL in 2,3,4 (Level 1/2/3 Hospital; Q8=1 is a Primary Care
+    # Facility). preproc gates ENTRY: any non-public-hospital skips both Q152 and its
+    # follow-up Q153 to Q154. postproc keeps the clarity routing (Very Clear/Clear
+    # need no "which protocol unclear" detail -> skip Q153 -> Q154).
     "Q152_PHO_PROTOCOL_CLARITY": """\
 PROC Q152_PHO_PROTOCOL_CLARITY
+preproc
+  if not (Q7_OWNERSHIP = 1 and Q8_SERVICE_LEVEL in 2,3,4) then
+    skip to Q154_NUM_REFERRED_OUT;   { Q152/Q153 only for public hospitals }
+  endif;
 postproc
-  if Q152_PHO_PROTOCOL_CLARITY in 1,2 then   { Very Clear / Clear (verify codes) }
+  if Q152_PHO_PROTOCOL_CLARITY in 1,2 then   { Very Clear / Clear -> skip Q153 detail }
     skip to Q154_NUM_REFERRED_OUT;
   endif;""",
 }

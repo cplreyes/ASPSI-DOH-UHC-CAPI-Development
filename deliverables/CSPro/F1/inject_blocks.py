@@ -52,6 +52,12 @@ APC = HERE / "FacilityHeadSurvey.ent.apc"
 
 MAX_CHUNK = 5
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
+# TRUE Check Box multi-select fields (single alpha, codes concatenated) — each gets
+# its OWN DisplayTogether screen, mirroring F3 generate_fmf._CHECKBOX_FIELDS, so the
+# tick-list renders alone (its trailing _OTHER_TXT is gated -> already isolated by
+# _is_gated_text). GH #377/#378/#379 Check Box redesign of Q49/Q50/Q53/Q58.
+_CHECKBOX_FIELDS = {"Q49_QUALITY_CHALL", "Q50_ACCESS_CHALL",
+                    "Q53_YK_PACKAGE", "Q58_PERF_INDICATORS"}
 
 
 def _is_gated_text(name, noinput_gated):
@@ -90,7 +96,7 @@ def derive_plan(fields, sources, targets, gated):
     while i < n:
         nm = fields[i]
         ms = _MULTISELECT_RE.match(nm)
-        if _is_gated_text(nm, gated):
+        if _is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS:   # gated text / Check Box -> own screen
             plan.append((qlabel([nm]), [nm])); i += 1
         elif ms:
             base, run = ms.group(1), []
@@ -105,7 +111,7 @@ def derive_plan(fields, sources, targets, gated):
             chunk = []
             while i < n and len(chunk) < MAX_CHUNK:
                 nn = fields[i]
-                if _MULTISELECT_RE.match(nn) or _is_gated_text(nn, gated):
+                if _MULTISELECT_RE.match(nn) or nn in _CHECKBOX_FIELDS or _is_gated_text(nn, gated):
                     break                          # next block kind
                 if chunk and nn in targets:
                     break                          # skip TARGET starts a screen

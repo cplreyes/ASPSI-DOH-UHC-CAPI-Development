@@ -204,27 +204,9 @@ Item=Q47_SVC_DELIVERY_PROT_NO_OTHER_TXT
 Item=Q48_PCQM
 Item=Q48_PCQM_YES_OTHER_TXT
 Item=Q48_PCQM_NO_OTHER_TXT
-Item=Q49_QUALITY_CHALL_O01
-Item=Q49_QUALITY_CHALL_O02
-Item=Q49_QUALITY_CHALL_O03
-Item=Q49_QUALITY_CHALL_O04
-Item=Q49_QUALITY_CHALL_O05
-Item=Q49_QUALITY_CHALL_O06
-Item=Q49_QUALITY_CHALL_O07
-Item=Q49_QUALITY_CHALL_O08
-Item=Q49_QUALITY_CHALL_O09
-Item=Q49_QUALITY_CHALL_O10
+Item=Q49_QUALITY_CHALL
 Item=Q49_QUALITY_CHALL_OTHER_TXT
-Item=Q50_ACCESS_CHALL_O01
-Item=Q50_ACCESS_CHALL_O02
-Item=Q50_ACCESS_CHALL_O03
-Item=Q50_ACCESS_CHALL_O04
-Item=Q50_ACCESS_CHALL_O05
-Item=Q50_ACCESS_CHALL_O06
-Item=Q50_ACCESS_CHALL_O07
-Item=Q50_ACCESS_CHALL_O08
-Item=Q50_ACCESS_CHALL_O09
-Item=Q50_ACCESS_CHALL_O10
+Item=Q50_ACCESS_CHALL
 Item=Q50_ACCESS_CHALL_OTHER_TXT
   
 [EndForm]
@@ -238,29 +220,13 @@ Size=2438,5970
 Item=Q51_YK_ACCRED
 Item=Q52_YK_SINCE_MONTH
 Item=Q52_YK_SINCE_YEAR
-Item=Q53_YK_PACKAGE_O01
-Item=Q53_YK_PACKAGE_O02
-Item=Q53_YK_PACKAGE_O03
-Item=Q53_YK_PACKAGE_O04
-Item=Q53_YK_PACKAGE_O05
-Item=Q53_YK_PACKAGE_O06
-Item=Q53_YK_PACKAGE_O07
-Item=Q53_YK_PACKAGE_O08
-Item=Q53_YK_PACKAGE_O09
-Item=Q53_YK_PACKAGE_O10
+Item=Q53_YK_PACKAGE
 Item=Q53_YK_PACKAGE_OTHER_TXT
 Item=Q54_YK_REG_INDIV
 Item=Q55_YK_REG_FAM
 Item=Q56_YK_REG_BOTH
 Item=Q57_CAPITATION_AMT
-Item=Q58_PERF_INDICATORS_O01
-Item=Q58_PERF_INDICATORS_O02
-Item=Q58_PERF_INDICATORS_O03
-Item=Q58_PERF_INDICATORS_O04
-Item=Q58_PERF_INDICATORS_O05
-Item=Q58_PERF_INDICATORS_O06
-Item=Q58_PERF_INDICATORS_O07
-Item=Q58_PERF_INDICATORS_O08
+Item=Q58_PERF_INDICATORS
 Item=Q58_PERF_INDICATORS_OTHER_TXT
 Item=Q59_KNOW_PAY_FREQ
 Item=Q60_PAY_FREQ
@@ -2585,123 +2551,15 @@ Text=48. Have the primary care quality measures been implemented since the UHC A
  
   
 [Field]
-Name=Q49_QUALITY_CHALL_O01
+Name=Q49_QUALITY_CHALL
 Position=1695,3027,1710,3047
-Item=Q49_QUALITY_CHALL_O01,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q49_QUALITY_CHALL,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
 Form=7
   
 [Text]
 Position=50,3030,1044,3046
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — Limited resources (personnel, equipment, supplies, funding)
- 
-  
-[Field]
-Name=Q49_QUALITY_CHALL_O02
-Position=1695,3057,1710,3077
-Item=Q49_QUALITY_CHALL_O02,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3060,853,3076
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — Challenging quality standards
- 
-  
-[Field]
-Name=Q49_QUALITY_CHALL_O03
-Position=1695,3087,1710,3107
-Item=Q49_QUALITY_CHALL_O03,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3090,986,3106
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — Healthcare decisions made by LGUs not the facility
- 
-  
-[Field]
-Name=Q49_QUALITY_CHALL_O04
-Position=1695,3117,1710,3137
-Item=Q49_QUALITY_CHALL_O04,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3120,869,3136
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — Lack of specific healthcare skills
- 
-  
-[Field]
-Name=Q49_QUALITY_CHALL_O05
-Position=1695,3147,1710,3167
-Item=Q49_QUALITY_CHALL_O05,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3150,931,3166
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — Inadequate training of healthcare workers
- 
-  
-[Field]
-Name=Q49_QUALITY_CHALL_O06
-Position=1695,3177,1710,3197
-Item=Q49_QUALITY_CHALL_O06,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3180,931,3196
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — Lack of patient awareness of UHC benefits
- 
-  
-[Field]
-Name=Q49_QUALITY_CHALL_O07
-Position=1695,3207,1710,3227
-Item=Q49_QUALITY_CHALL_O07,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3210,981,3226
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — Limited accessibility of public healthcare facilities
- 
-  
-[Field]
-Name=Q49_QUALITY_CHALL_O08
-Position=1695,3237,1710,3257
-Item=Q49_QUALITY_CHALL_O08,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3240,942,3256
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — Infrastructure not conducive for patient care
- 
-  
-[Field]
-Name=Q49_QUALITY_CHALL_O09
-Position=1695,3267,1710,3287
-Item=Q49_QUALITY_CHALL_O09,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3270,741,3286
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — I don't know
- 
-  
-[Field]
-Name=Q49_QUALITY_CHALL_O10
-Position=1695,3297,1710,3317
-Item=Q49_QUALITY_CHALL_O10,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3300,755,3316
-Text=49. What are the major challenges to improving the quality of patient care in your local area? — Other (specify)
+Text=49. What are the major challenges to improving the quality of patient care in your local area?
  
   
 [Field]
@@ -2718,123 +2576,15 @@ Text=49. What are the major challenges to improving the quality of patient care 
  
   
 [Field]
-Name=Q50_ACCESS_CHALL_O01
+Name=Q50_ACCESS_CHALL
 Position=1695,3357,1710,3377
-Item=Q50_ACCESS_CHALL_O01,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q50_ACCESS_CHALL,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
 Form=7
   
 [Text]
 Position=50,3360,1078,3376
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — Limited resources (personnel, equipment, supplies, funding)
- 
-  
-[Field]
-Name=Q50_ACCESS_CHALL_O02
-Position=1695,3387,1710,3407
-Item=Q50_ACCESS_CHALL_O02,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3390,887,3406
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — Challenging quality standards
- 
-  
-[Field]
-Name=Q50_ACCESS_CHALL_O03
-Position=1695,3417,1710,3437
-Item=Q50_ACCESS_CHALL_O03,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3420,1020,3436
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — Healthcare decisions made by LGUs not the facility
- 
-  
-[Field]
-Name=Q50_ACCESS_CHALL_O04
-Position=1695,3447,1710,3467
-Item=Q50_ACCESS_CHALL_O04,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3450,903,3466
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — Lack of specific healthcare skills
- 
-  
-[Field]
-Name=Q50_ACCESS_CHALL_O05
-Position=1695,3477,1710,3497
-Item=Q50_ACCESS_CHALL_O05,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3480,965,3496
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — Inadequate training of healthcare workers
- 
-  
-[Field]
-Name=Q50_ACCESS_CHALL_O06
-Position=1695,3507,1710,3527
-Item=Q50_ACCESS_CHALL_O06,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3510,965,3526
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — Lack of patient awareness of UHC benefits
- 
-  
-[Field]
-Name=Q50_ACCESS_CHALL_O07
-Position=1695,3537,1710,3557
-Item=Q50_ACCESS_CHALL_O07,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3540,1015,3556
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — Limited accessibility of public healthcare facilities
- 
-  
-[Field]
-Name=Q50_ACCESS_CHALL_O08
-Position=1695,3567,1710,3587
-Item=Q50_ACCESS_CHALL_O08,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3570,976,3586
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — Infrastructure not conducive for patient care
- 
-  
-[Field]
-Name=Q50_ACCESS_CHALL_O09
-Position=1695,3597,1710,3617
-Item=Q50_ACCESS_CHALL_O09,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3600,775,3616
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — I don't know
- 
-  
-[Field]
-Name=Q50_ACCESS_CHALL_O10
-Position=1695,3627,1710,3647
-Item=Q50_ACCESS_CHALL_O10,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,3630,789,3646
-Text=50. What are the major challenges to improving the accessibility of patient care in your local area? — Other (specify)
+Text=50. What are the major challenges to improving the accessibility of patient care in your local area?
  
   
 [Field]
@@ -3470,27 +3220,27 @@ Name=DG_C_UHC_IMPLEMENTATION_FORM_92
 Label=Q49
 DisplayTogether=Yes
 Position=188
-Length=10
+Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_93
 Label=Q49
 DisplayTogether=Yes
-Position=199
+Position=190
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_94
 Label=Q50
 DisplayTogether=Yes
-Position=201
-Length=10
+Position=192
+Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_95
 Label=Q50
 DisplayTogether=Yes
-Position=212
+Position=194
 Length=1
   
 [EndGroup]
@@ -3539,123 +3289,15 @@ Text=52. If yes, since when? Year
  
   
 [Field]
-Name=Q53_YK_PACKAGE_O01
+Name=Q53_YK_PACKAGE
 Position=1564,117,1579,137
-Item=Q53_YK_PACKAGE_O01,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q53_YK_PACKAGE,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
 Form=8
   
 [Text]
 Position=50,120,686,136
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Pap smear
- 
-  
-[Field]
-Name=Q53_YK_PACKAGE_O02
-Position=1564,147,1579,167
-Item=Q53_YK_PACKAGE_O02,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,150,702,166
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Mammogram
- 
-  
-[Field]
-Name=Q53_YK_PACKAGE_O03
-Position=1564,177,1579,197
-Item=Q53_YK_PACKAGE_O03,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,180,695,196
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Lipid profile
- 
-  
-[Field]
-Name=Q53_YK_PACKAGE_O04
-Position=1564,207,1579,227
-Item=Q53_YK_PACKAGE_O04,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,210,747,226
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Thyroid function test
- 
-  
-[Field]
-Name=Q53_YK_PACKAGE_O05
-Position=1564,237,1579,257
-Item=Q53_YK_PACKAGE_O05,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,240,690,256
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Chest X-ray
- 
-  
-[Field]
-Name=Q53_YK_PACKAGE_O06
-Position=1564,267,1579,287
-Item=Q53_YK_PACKAGE_O06,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,270,733,286
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Low-dose CT scan
- 
-  
-[Field]
-Name=Q53_YK_PACKAGE_O07
-Position=1564,297,1579,317
-Item=Q53_YK_PACKAGE_O07,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,300,714,316
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Dental services
- 
-  
-[Field]
-Name=Q53_YK_PACKAGE_O08
-Position=1564,327,1579,347
-Item=Q53_YK_PACKAGE_O08,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,330,718,346
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — All of the above
- 
-  
-[Field]
-Name=Q53_YK_PACKAGE_O09
-Position=1564,357,1579,377
-Item=Q53_YK_PACKAGE_O09,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,360,695,376
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — I don't know
- 
-  
-[Field]
-Name=Q53_YK_PACKAGE_O10
-Position=1564,387,1579,407
-Item=Q53_YK_PACKAGE_O10,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,390,709,406
-Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package? — Other (specify)
+Text=53. If accredited, which of the following are included in the YAKAP/Konsulta package?
  
   
 [Field]
@@ -3720,99 +3362,15 @@ Text=57. Based on your knowledge, what is the capitation amount of the YAKAP/Kon
  
   
 [Field]
-Name=Q58_PERF_INDICATORS_O01
+Name=Q58_PERF_INDICATORS
 Position=1564,567,1579,587
-Item=Q58_PERF_INDICATORS_O01,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q58_PERF_INDICATORS,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
 Form=8
   
 [Text]
 Position=50,570,989,586
-Text=58. What are the performance indicators you need to meet to receive the second tranche payment? — Beneficiaries consulted a primary care doctor
- 
-  
-[Field]
-Name=Q58_PERF_INDICATORS_O02
-Position=1564,597,1579,617
-Item=Q58_PERF_INDICATORS_O02,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,600,904,616
-Text=58. What are the performance indicators you need to meet to receive the second tranche payment? — Utilization of laboratory services
- 
-  
-[Field]
-Name=Q58_PERF_INDICATORS_O03
-Position=1564,627,1579,647
-Item=Q58_PERF_INDICATORS_O03,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,630,1000,646
-Text=58. What are the performance indicators you need to meet to receive the second tranche payment? — Beneficiaries received antibiotics as prescribed
- 
-  
-[Field]
-Name=Q58_PERF_INDICATORS_O04
-Position=1564,657,1579,677
-Item=Q58_PERF_INDICATORS_O04,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,660,1025,676
-Text=58. What are the performance indicators you need to meet to receive the second tranche payment? — Beneficiaries received NCD medicine as prescribed
- 
-  
-[Field]
-Name=Q58_PERF_INDICATORS_O05
-Position=1564,687,1579,707
-Item=Q58_PERF_INDICATORS_O05,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,690,805,706
-Text=58. What are the performance indicators you need to meet to receive the second tranche payment? — No requirements
- 
-  
-[Field]
-Name=Q58_PERF_INDICATORS_O06
-Position=1564,717,1579,737
-Item=Q58_PERF_INDICATORS_O06,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,720,833,736
-Text=58. What are the performance indicators you need to meet to receive the second tranche payment? — 1st patient encounter
- 
-  
-[Field]
-Name=Q58_PERF_INDICATORS_O07
-Position=1564,747,1579,767
-Item=Q58_PERF_INDICATORS_O07,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,750,777,766
-Text=58. What are the performance indicators you need to meet to receive the second tranche payment? — I don't know
- 
-  
-[Field]
-Name=Q58_PERF_INDICATORS_O08
-Position=1564,777,1579,797
-Item=Q58_PERF_INDICATORS_O08,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,780,791,796
-Text=58. What are the performance indicators you need to meet to receive the second tranche payment? — Other (specify)
+Text=58. What are the performance indicators you need to meet to receive the second tranche payment?
  
   
 [Field]
@@ -5922,426 +5480,433 @@ Name=DG_D_YAKAP_KONSULTA_FORM_98
 Label=Q53
 DisplayTogether=Yes
 Position=5
-Length=10
+Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_99
 Label=Q53
 DisplayTogether=Yes
-Position=16
+Position=7
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_100
 Label=Q54-Q57
 DisplayTogether=Yes
-Position=18
+Position=9
 Length=4
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_101
 Label=Q58
 DisplayTogether=Yes
-Position=23
-Length=8
+Position=14
+Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_102
 Label=Q58
 DisplayTogether=Yes
-Position=32
+Position=16
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_103
 Label=Q59
 DisplayTogether=Yes
-Position=34
+Position=18
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_104
 Label=Q60
 DisplayTogether=Yes
-Position=36
+Position=20
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_105
 Label=Q61
 DisplayTogether=Yes
-Position=38
+Position=22
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_106
 Label=Q61
 DisplayTogether=Yes
-Position=40
+Position=24
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_107
 Label=Q62-Q63
 DisplayTogether=Yes
-Position=42
+Position=26
 Length=2
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_108
 Label=Q64
 DisplayTogether=Yes
-Position=45
+Position=29
 Length=6
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_109
 Label=Q64
 DisplayTogether=Yes
-Position=52
+Position=36
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_110
 Label=Q65
 DisplayTogether=Yes
-Position=54
+Position=38
 Length=10
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_111
 Label=Q66
 DisplayTogether=Yes
-Position=65
+Position=49
 Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_112
 Label=Q66
 DisplayTogether=Yes
-Position=73
+Position=57
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_113
 Label=Q67
 DisplayTogether=Yes
-Position=75
+Position=59
 Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_114
 Label=Q67
 DisplayTogether=Yes
-Position=83
+Position=67
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_115
 Label=Q68
 DisplayTogether=Yes
-Position=85
+Position=69
 Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_116
 Label=Q68
 DisplayTogether=Yes
-Position=93
+Position=77
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_117
 Label=Q69
 DisplayTogether=Yes
-Position=95
+Position=79
 Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_118
 Label=Q69
 DisplayTogether=Yes
-Position=103
+Position=87
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_119
 Label=Q70
 DisplayTogether=Yes
-Position=105
+Position=89
 Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_120
 Label=Q70
 DisplayTogether=Yes
-Position=113
+Position=97
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_121
 Label=Q71
 DisplayTogether=Yes
-Position=115
+Position=99
 Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_122
 Label=Q71
 DisplayTogether=Yes
-Position=123
+Position=107
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_123
 Label=Q72
 DisplayTogether=Yes
-Position=125
+Position=109
 Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_124
 Label=Q72
 DisplayTogether=Yes
-Position=133
+Position=117
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_125
 Label=Q73
 DisplayTogether=Yes
-Position=135
+Position=119
 Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_126
 Label=Q73
 DisplayTogether=Yes
-Position=143
+Position=127
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_127
 Label=Q74
 DisplayTogether=Yes
-Position=145
+Position=129
 Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_128
 Label=Q74
 DisplayTogether=Yes
-Position=153
+Position=137
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_129
 Label=Q75
 DisplayTogether=Yes
-Position=155
+Position=139
 Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_130
 Label=Q75
 DisplayTogether=Yes
-Position=163
+Position=147
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_131
 Label=Q76
 DisplayTogether=Yes
-Position=165
+Position=149
 Length=9
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_132
 Label=Q76
 DisplayTogether=Yes
-Position=175
+Position=159
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_133
 Label=Q77
 DisplayTogether=Yes
-Position=177
+Position=161
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_134
 Label=Q78
 DisplayTogether=Yes
-Position=179
+Position=163
 Length=6
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_135
 Label=Q78
 DisplayTogether=Yes
-Position=186
+Position=170
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_136
 Label=Q79
 DisplayTogether=Yes
-Position=188
+Position=172
 Length=4
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_137
 Label=Q79
 DisplayTogether=Yes
-Position=193
+Position=177
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_138
 Label=Q80
 DisplayTogether=Yes
-Position=195
+Position=179
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_139
 Label=Q81
 DisplayTogether=Yes
-Position=197
+Position=181
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_140
 Label=Q82
 DisplayTogether=Yes
-Position=199
+Position=183
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_141
 Label=Q83
 DisplayTogether=Yes
-Position=201
+Position=185
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_142
 Label=Q84
 DisplayTogether=Yes
-Position=203
+Position=187
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_143
-Label=Q85-Q89
+Label=Q85
 DisplayTogether=Yes
-Position=205
-Length=5
-  
-[Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_144
-Label=Q90
-DisplayTogether=Yes
-Position=211
+Position=189
 Length=1
   
 [Block]
-Name=DG_D_YAKAP_KONSULTA_FORM_145
-Label=Q91
+Name=DG_D_YAKAP_KONSULTA_FORM_144
+Label=Q86-Q89
 DisplayTogether=Yes
-Position=213
+Position=191
+Length=4
+  
+[Block]
+Name=DG_D_YAKAP_KONSULTA_FORM_145
+Label=Q90
+DisplayTogether=Yes
+Position=196
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_146
-Label=Q92
+Label=Q91
 DisplayTogether=Yes
-Position=215
+Position=198
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_147
-Label=Q93
+Label=Q92
 DisplayTogether=Yes
-Position=217
+Position=200
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_148
-Label=Q94
+Label=Q93
 DisplayTogether=Yes
-Position=219
-Length=6
+Position=202
+Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_149
 Label=Q94
 DisplayTogether=Yes
-Position=226
-Length=1
+Position=204
+Length=6
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_150
-Label=Q95
+Label=Q94
 DisplayTogether=Yes
-Position=228
+Position=211
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_151
-Label=Q96
+Label=Q95
 DisplayTogether=Yes
-Position=230
-Length=7
+Position=213
+Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_152
 Label=Q96
 DisplayTogether=Yes
-Position=238
-Length=1
+Position=215
+Length=7
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_153
-Label=Q97
+Label=Q96
 DisplayTogether=Yes
-Position=240
+Position=223
 Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_154
-Label=Q98
+Label=Q97
 DisplayTogether=Yes
-Position=242
-Length=6
+Position=225
+Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_155
 Label=Q98
 DisplayTogether=Yes
-Position=249
-Length=1
+Position=227
+Length=6
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_156
-Label=Q99
+Label=Q98
 DisplayTogether=Yes
-Position=251
-Length=5
+Position=234
+Length=1
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_157
 Label=Q99
 DisplayTogether=Yes
-Position=257
-Length=1
+Position=236
+Length=5
   
 [Block]
 Name=DG_D_YAKAP_KONSULTA_FORM_158
+Label=Q99
+DisplayTogether=Yes
+Position=242
+Length=1
+  
+[Block]
+Name=DG_D_YAKAP_KONSULTA_FORM_159
 Label=Q100
 DisplayTogether=Yes
-Position=259
+Position=244
 Length=1
   
 [EndGroup]
@@ -6841,133 +6406,133 @@ Position=50,1200,743,1216
 Text=117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package? — Other (specify) text
  
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_159
+Name=DG_E_BUCAS_GAMOT_FORM_160
 Label=Q101
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_160
+Name=DG_E_BUCAS_GAMOT_FORM_161
 Label=Q102
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_161
+Name=DG_E_BUCAS_GAMOT_FORM_162
 Label=Q103
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_162
+Name=DG_E_BUCAS_GAMOT_FORM_163
 Label=Q103
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_163
+Name=DG_E_BUCAS_GAMOT_FORM_164
 Label=Q104
 DisplayTogether=Yes
 Position=8
 Length=5
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_164
+Name=DG_E_BUCAS_GAMOT_FORM_165
 Label=Q104
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_165
+Name=DG_E_BUCAS_GAMOT_FORM_166
 Label=Q105
 DisplayTogether=Yes
 Position=16
 Length=6
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_166
+Name=DG_E_BUCAS_GAMOT_FORM_167
 Label=Q105
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_167
+Name=DG_E_BUCAS_GAMOT_FORM_168
 Label=Q106-Q107
 DisplayTogether=Yes
 Position=25
 Length=2
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_168
+Name=DG_E_BUCAS_GAMOT_FORM_169
 Label=Q108
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_169
+Name=DG_E_BUCAS_GAMOT_FORM_170
 Label=Q109
 DisplayTogether=Yes
 Position=30
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_170
+Name=DG_E_BUCAS_GAMOT_FORM_171
 Label=Q110
 DisplayTogether=Yes
 Position=32
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_171
+Name=DG_E_BUCAS_GAMOT_FORM_172
 Label=Q110
 DisplayTogether=Yes
 Position=34
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_172
+Name=DG_E_BUCAS_GAMOT_FORM_173
 Label=Q111
 DisplayTogether=Yes
 Position=36
 Length=6
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_173
+Name=DG_E_BUCAS_GAMOT_FORM_174
 Label=Q111
 DisplayTogether=Yes
 Position=43
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_174
+Name=DG_E_BUCAS_GAMOT_FORM_175
 Label=Q112
 DisplayTogether=Yes
 Position=45
 Length=1
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_175
+Name=DG_E_BUCAS_GAMOT_FORM_176
 Label=Q113-Q116
 DisplayTogether=Yes
 Position=47
 Length=4
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_176
+Name=DG_E_BUCAS_GAMOT_FORM_177
 Label=Q117
 DisplayTogether=Yes
 Position=52
 Length=4
   
 [Block]
-Name=DG_E_BUCAS_GAMOT_FORM_177
+Name=DG_E_BUCAS_GAMOT_FORM_178
 Label=Q117
 DisplayTogether=Yes
 Position=57
@@ -8759,238 +8324,238 @@ Position=50,4410,635,4426
 Text=134. Why was it difficult to comply with the following? Add-on services — Other (specify) text
  
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_178
+Name=DG_F_DOH_LICENSING_FORM_179
 Label=Q118
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_179
+Name=DG_F_DOH_LICENSING_FORM_180
 Label=Q119-Q120
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_180
+Name=DG_F_DOH_LICENSING_FORM_181
 Label=Q121
 DisplayTogether=Yes
 Position=5
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_181
+Name=DG_F_DOH_LICENSING_FORM_182
 Label=Q121
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_182
+Name=DG_F_DOH_LICENSING_FORM_183
 Label=Q121
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_183
+Name=DG_F_DOH_LICENSING_FORM_184
 Label=Q121
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_184
+Name=DG_F_DOH_LICENSING_FORM_185
 Label=Q121
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_185
+Name=DG_F_DOH_LICENSING_FORM_186
 Label=Q121
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_186
+Name=DG_F_DOH_LICENSING_FORM_187
 Label=Q122
 DisplayTogether=Yes
 Position=25
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_187
+Name=DG_F_DOH_LICENSING_FORM_188
 Label=Q122
 DisplayTogether=Yes
 Position=35
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_188
+Name=DG_F_DOH_LICENSING_FORM_189
 Label=Q123
 DisplayTogether=Yes
 Position=37
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_189
+Name=DG_F_DOH_LICENSING_FORM_190
 Label=Q123
 DisplayTogether=Yes
 Position=47
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_190
+Name=DG_F_DOH_LICENSING_FORM_191
 Label=Q124
 DisplayTogether=Yes
 Position=49
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_191
+Name=DG_F_DOH_LICENSING_FORM_192
 Label=Q124
 DisplayTogether=Yes
 Position=59
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_192
+Name=DG_F_DOH_LICENSING_FORM_193
 Label=Q125
 DisplayTogether=Yes
 Position=61
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_193
+Name=DG_F_DOH_LICENSING_FORM_194
 Label=Q125
 DisplayTogether=Yes
 Position=71
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_194
+Name=DG_F_DOH_LICENSING_FORM_195
 Label=Q126
 DisplayTogether=Yes
 Position=73
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_195
+Name=DG_F_DOH_LICENSING_FORM_196
 Label=Q126
 DisplayTogether=Yes
 Position=83
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_196
+Name=DG_F_DOH_LICENSING_FORM_197
 Label=Q127
 DisplayTogether=Yes
 Position=85
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_197
+Name=DG_F_DOH_LICENSING_FORM_198
 Label=Q127
 DisplayTogether=Yes
 Position=95
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_198
+Name=DG_F_DOH_LICENSING_FORM_199
 Label=Q128
 DisplayTogether=Yes
 Position=97
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_199
+Name=DG_F_DOH_LICENSING_FORM_200
 Label=Q128
 DisplayTogether=Yes
 Position=107
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_200
+Name=DG_F_DOH_LICENSING_FORM_201
 Label=Q129
 DisplayTogether=Yes
 Position=109
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_201
+Name=DG_F_DOH_LICENSING_FORM_202
 Label=Q129
 DisplayTogether=Yes
 Position=119
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_202
+Name=DG_F_DOH_LICENSING_FORM_203
 Label=Q130
 DisplayTogether=Yes
 Position=121
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_203
+Name=DG_F_DOH_LICENSING_FORM_204
 Label=Q130
 DisplayTogether=Yes
 Position=131
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_204
+Name=DG_F_DOH_LICENSING_FORM_205
 Label=Q131
 DisplayTogether=Yes
 Position=133
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_205
+Name=DG_F_DOH_LICENSING_FORM_206
 Label=Q131
 DisplayTogether=Yes
 Position=143
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_206
+Name=DG_F_DOH_LICENSING_FORM_207
 Label=Q132
 DisplayTogether=Yes
 Position=145
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_207
+Name=DG_F_DOH_LICENSING_FORM_208
 Label=Q132
 DisplayTogether=Yes
 Position=155
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_208
+Name=DG_F_DOH_LICENSING_FORM_209
 Label=Q133
 DisplayTogether=Yes
 Position=157
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_209
+Name=DG_F_DOH_LICENSING_FORM_210
 Label=Q133
 DisplayTogether=Yes
 Position=167
 Length=1
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_210
+Name=DG_F_DOH_LICENSING_FORM_211
 Label=Q134
 DisplayTogether=Yes
 Position=169
 Length=9
   
 [Block]
-Name=DG_F_DOH_LICENSING_FORM_211
+Name=DG_F_DOH_LICENSING_FORM_212
 Label=Q134
 DisplayTogether=Yes
 Position=179
@@ -10124,280 +9689,280 @@ Position=50,2760,589,2776
 Text=162. Why are you not satisfied with the current referral system? — Other (specify) text
  
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_212
+Name=DG_G_SERVICE_DELIVERY_FORM_213
 Label=Q135
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_213
+Name=DG_G_SERVICE_DELIVERY_FORM_214
 Label=Q136
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_214
+Name=DG_G_SERVICE_DELIVERY_FORM_215
 Label=Q137
 DisplayTogether=Yes
 Position=4
 Length=8
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_215
+Name=DG_G_SERVICE_DELIVERY_FORM_216
 Label=Q137
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_216
+Name=DG_G_SERVICE_DELIVERY_FORM_217
 Label=Q138
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_217
+Name=DG_G_SERVICE_DELIVERY_FORM_218
 Label=Q139
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_218
+Name=DG_G_SERVICE_DELIVERY_FORM_219
 Label=Q140
 DisplayTogether=Yes
 Position=19
 Length=8
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_219
+Name=DG_G_SERVICE_DELIVERY_FORM_220
 Label=Q140
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_220
+Name=DG_G_SERVICE_DELIVERY_FORM_221
 Label=Q141
 DisplayTogether=Yes
 Position=30
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_221
+Name=DG_G_SERVICE_DELIVERY_FORM_222
 Label=Q142
 DisplayTogether=Yes
 Position=32
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_222
+Name=DG_G_SERVICE_DELIVERY_FORM_223
 Label=Q143
 DisplayTogether=Yes
 Position=34
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_223
+Name=DG_G_SERVICE_DELIVERY_FORM_224
 Label=Q143
 DisplayTogether=Yes
 Position=36
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_224
+Name=DG_G_SERVICE_DELIVERY_FORM_225
 Label=Q144
 DisplayTogether=Yes
 Position=38
 Length=4
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_225
+Name=DG_G_SERVICE_DELIVERY_FORM_226
 Label=Q144
 DisplayTogether=Yes
 Position=43
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_226
+Name=DG_G_SERVICE_DELIVERY_FORM_227
 Label=Q145
 DisplayTogether=Yes
 Position=45
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_227
+Name=DG_G_SERVICE_DELIVERY_FORM_228
 Label=Q146
 DisplayTogether=Yes
 Position=47
 Length=5
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_228
+Name=DG_G_SERVICE_DELIVERY_FORM_229
 Label=Q146
 DisplayTogether=Yes
 Position=53
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_229
+Name=DG_G_SERVICE_DELIVERY_FORM_230
 Label=Q147
 DisplayTogether=Yes
 Position=55
 Length=5
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_230
+Name=DG_G_SERVICE_DELIVERY_FORM_231
 Label=Q147
 DisplayTogether=Yes
 Position=61
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_231
+Name=DG_G_SERVICE_DELIVERY_FORM_232
 Label=Q148
 DisplayTogether=Yes
 Position=63
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_232
+Name=DG_G_SERVICE_DELIVERY_FORM_233
 Label=Q149
 DisplayTogether=Yes
 Position=65
 Length=5
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_233
+Name=DG_G_SERVICE_DELIVERY_FORM_234
 Label=Q149
 DisplayTogether=Yes
 Position=71
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_234
+Name=DG_G_SERVICE_DELIVERY_FORM_235
 Label=Q150
 DisplayTogether=Yes
 Position=73
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_235
+Name=DG_G_SERVICE_DELIVERY_FORM_236
 Label=Q151
 DisplayTogether=Yes
 Position=75
 Length=5
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_236
+Name=DG_G_SERVICE_DELIVERY_FORM_237
 Label=Q151
 DisplayTogether=Yes
 Position=81
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_237
+Name=DG_G_SERVICE_DELIVERY_FORM_238
 Label=Q152
 DisplayTogether=Yes
 Position=83
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_238
+Name=DG_G_SERVICE_DELIVERY_FORM_239
 Label=Q153
 DisplayTogether=Yes
 Position=85
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_239
+Name=DG_G_SERVICE_DELIVERY_FORM_240
 Label=Q154
 DisplayTogether=Yes
 Position=87
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_240
+Name=DG_G_SERVICE_DELIVERY_FORM_241
 Label=Q155
 DisplayTogether=Yes
 Position=89
 Length=4
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_241
+Name=DG_G_SERVICE_DELIVERY_FORM_242
 Label=Q155
 DisplayTogether=Yes
 Position=94
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_242
+Name=DG_G_SERVICE_DELIVERY_FORM_243
 Label=Q156
 DisplayTogether=Yes
 Position=96
 Length=6
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_243
+Name=DG_G_SERVICE_DELIVERY_FORM_244
 Label=Q156
 DisplayTogether=Yes
 Position=103
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_244
+Name=DG_G_SERVICE_DELIVERY_FORM_245
 Label=Q157-Q158
 DisplayTogether=Yes
 Position=105
 Length=2
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_245
+Name=DG_G_SERVICE_DELIVERY_FORM_246
 Label=Q159
 DisplayTogether=Yes
 Position=108
 Length=4
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_246
+Name=DG_G_SERVICE_DELIVERY_FORM_247
 Label=Q159
 DisplayTogether=Yes
 Position=113
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_247
+Name=DG_G_SERVICE_DELIVERY_FORM_248
 Label=Q160
 DisplayTogether=Yes
 Position=115
 Length=5
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_248
+Name=DG_G_SERVICE_DELIVERY_FORM_249
 Label=Q160
 DisplayTogether=Yes
 Position=121
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_249
+Name=DG_G_SERVICE_DELIVERY_FORM_250
 Label=Q161
 DisplayTogether=Yes
 Position=123
 Length=1
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_250
+Name=DG_G_SERVICE_DELIVERY_FORM_251
 Label=Q162
 DisplayTogether=Yes
 Position=125
 Length=4
   
 [Block]
-Name=DG_G_SERVICE_DELIVERY_FORM_251
+Name=DG_G_SERVICE_DELIVERY_FORM_252
 Label=Q162
 DisplayTogether=Yes
 Position=130
@@ -10716,49 +10281,49 @@ Position=50,750,953,766
 Text=166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify) text
  
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_252
+Name=DG_H_HUMAN_RESOURCES_FORM_253
 Label=Q163
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_253
+Name=DG_H_HUMAN_RESOURCES_FORM_254
 Label=Q163
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_254
+Name=DG_H_HUMAN_RESOURCES_FORM_255
 Label=Q164
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_255
+Name=DG_H_HUMAN_RESOURCES_FORM_256
 Label=Q165
 DisplayTogether=Yes
 Position=10
 Length=9
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_256
+Name=DG_H_HUMAN_RESOURCES_FORM_257
 Label=Q165
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_257
+Name=DG_H_HUMAN_RESOURCES_FORM_258
 Label=Q166
 DisplayTogether=Yes
 Position=22
 Length=7
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_258
+Name=DG_H_HUMAN_RESOURCES_FORM_259
 Label=Q166
 DisplayTogether=Yes
 Position=30

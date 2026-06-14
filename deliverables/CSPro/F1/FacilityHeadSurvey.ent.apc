@@ -400,6 +400,12 @@ postproc
   skip to Q112_STOCKOUT;             { any answer -> Q112 (skip Q111) }
 
 PROC Q116_ADDR_STOCKOUT
+preproc
+  { #384: Q116/Q117 only if heard GAMOT (Q108=Yes) AND accredited (Q109=Yes) AND had a
+    stockout (Q112=Yes) — spec 3.6 GATE. Otherwise skip both to Q118. }
+  if not (Q108_HEARD_GAMOT = 1 and Q109_GAMOT_ACCRED = 1 and Q112_STOCKOUT = 1) then
+    skip to Q118_DOH_LICENSED;
+  endif;
 postproc
   if Q116_ADDR_STOCKOUT in 2,3 then  { 2 = No, 3 = Did not experience (verify codes in Designer) }
     skip to Q118_DOH_LICENSED;
@@ -440,8 +446,12 @@ preproc
   endif;
 
 PROC Q152_PHO_PROTOCOL_CLARITY
+preproc
+  if not (Q7_OWNERSHIP = 1 and Q8_SERVICE_LEVEL in 2,3,4) then
+    skip to Q154_NUM_REFERRED_OUT;   { Q152/Q153 only for public hospitals }
+  endif;
 postproc
-  if Q152_PHO_PROTOCOL_CLARITY in 1,2 then   { Very Clear / Clear (verify codes) }
+  if Q152_PHO_PROTOCOL_CLARITY in 1,2 then   { Very Clear / Clear -> skip Q153 detail }
     skip to Q154_NUM_REFERRED_OUT;
   endif;
 
@@ -459,6 +469,52 @@ postproc
   endif;
   if Q3_AGE <> notappl and Q3_AGE > 80 then
     errmsg("Age (%d) is unusually high for a facility head - please confirm.", Q3_AGE);
+  endif;
+
+PROC Q49_QUALITY_CHALL
+postproc
+  if length(strip(Q49_QUALITY_CHALL)) = 0 then
+    errmsg("Select at least one option for Q49 before continuing.");
+    reenter;
+  endif;
+  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  if pos("09", Q49_QUALITY_CHALL) > 0 and length(strip(Q49_QUALITY_CHALL)) > 2 then
+    errmsg("Q49: 'I don't know' is usually the only choice — please review the options ticked.");
+  endif;
+
+PROC Q49_QUALITY_CHALL_OTHER_TXT
+preproc
+  if pos("99", Q49_QUALITY_CHALL) = 0 then
+    Q49_QUALITY_CHALL_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q49_QUALITY_CHALL) > 0 and length(strip(Q49_QUALITY_CHALL_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q49 — please specify.");
+    reenter;
+  endif;
+
+PROC Q50_ACCESS_CHALL
+postproc
+  if length(strip(Q50_ACCESS_CHALL)) = 0 then
+    errmsg("Select at least one option for Q50 before continuing.");
+    reenter;
+  endif;
+  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  if pos("09", Q50_ACCESS_CHALL) > 0 and length(strip(Q50_ACCESS_CHALL)) > 2 then
+    errmsg("Q50: 'I don't know' is usually the only choice — please review the options ticked.");
+  endif;
+
+PROC Q50_ACCESS_CHALL_OTHER_TXT
+preproc
+  if pos("99", Q50_ACCESS_CHALL) = 0 then
+    Q50_ACCESS_CHALL_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q50_ACCESS_CHALL) > 0 and length(strip(Q50_ACCESS_CHALL_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q50 — please specify.");
+    reenter;
   endif;
 
 PROC Q52_YK_SINCE_MONTH
@@ -479,6 +535,29 @@ postproc
     reenter;
   endif;
 
+PROC Q53_YK_PACKAGE
+postproc
+  if length(strip(Q53_YK_PACKAGE)) = 0 then
+    errmsg("Select at least one option for Q53 before continuing.");
+    reenter;
+  endif;
+  { exclusivity (soft warn): 'I don't know' (09) should stand alone }
+  if pos("09", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
+    errmsg("Q53: 'I don't know' is usually the only choice — please review the options ticked.");
+  endif;
+
+PROC Q53_YK_PACKAGE_OTHER_TXT
+preproc
+  if pos("99", Q53_YK_PACKAGE) = 0 then
+    Q53_YK_PACKAGE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q53 — please specify.");
+    reenter;
+  endif;
+
 PROC Q57_CAPITATION_AMT
 postproc
   if Q57_CAPITATION_AMT > 5000 then
@@ -489,6 +568,29 @@ postproc
     if accept("Capitation %d exceeds the PHP 1,700 PhilHealth max. Confirm?", "Yes", "No") <> 1 then
       reenter;
     endif;
+  endif;
+
+PROC Q58_PERF_INDICATORS
+postproc
+  if length(strip(Q58_PERF_INDICATORS)) = 0 then
+    errmsg("Select at least one option for Q58 before continuing.");
+    reenter;
+  endif;
+  { exclusivity (soft warn): 'I don't know' (07) should stand alone }
+  if pos("07", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS)) > 2 then
+    errmsg("Q58: 'I don't know' is usually the only choice — please review the options ticked.");
+  endif;
+
+PROC Q58_PERF_INDICATORS_OTHER_TXT
+preproc
+  if pos("99", Q58_PERF_INDICATORS) = 0 then
+    Q58_PERF_INDICATORS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q58_PERF_INDICATORS) > 0 and length(strip(Q58_PERF_INDICATORS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q58 — please specify.");
+    reenter;
   endif;
 
 PROC Q5_MONTHS_AT_FACILITY
@@ -525,6 +627,12 @@ postproc
     reenter;
   endif;
 
+PROC Q79_NOT_ACCRED_REASON_O01
+preproc
+  if Q51_YK_ACCRED <> 2 then   { Q79-Q84 only for not-accredited (Q51=No); accredited fall-through -> Q85 }
+    skip to Q85_CATCHMENT_AREA;
+  endif;
+
 PROC Q80_INTEND_ACCRED
 postproc
   if Q80_INTEND_ACCRED in 1,2 then  skip to Q84_PROCESS_CHALL;        endif;  { Yes (in/ not-in process) }
@@ -532,6 +640,12 @@ postproc
   if Q80_INTEND_ACCRED = 4    then  skip to Q83_TRIED_FAILED_REASON;  endif;  { No, tried and failed }
   if Q80_INTEND_ACCRED = 5    then  skip to Q81_KNOW_HOW_START;       endif;  { No, haven't thought }
   if Q80_INTEND_ACCRED = 6    then  skip to Q85_CATCHMENT_AREA;   endif;  { I don't know }
+
+PROC Q85_CATCHMENT_AREA
+preproc
+  if Q51_YK_ACCRED = 2 then   { not-accredited: skip the accredited costing block Q85-Q91 -> Q92 }
+    skip to Q92_MIN_CAP_VALUE_NONACC;
+  endif;
 
 PROC Q87_REGISTERED_PATIENTS
 postproc
@@ -543,9 +657,17 @@ postproc
 
 PROC Q90_COSTING_VIABLE
 postproc
-  if Q90_COSTING_VIABLE = 1 and Q51_YK_ACCRED = 1 then  skip to Q91_MIN_CAP_VALUE_ACC;    endif;  { Viable + accredited }
-  if Q90_COSTING_VIABLE = 2 and Q51_YK_ACCRED = 2 then  skip to Q92_MIN_CAP_VALUE_NONACC; endif;  { Not viable + non-accredited }
-  if Q90_COSTING_VIABLE = 3 then                        skip to Q93_CHARGE_ADDL_CAP;      endif;  { I don't know }
+  if Q90_COSTING_VIABLE = 2 then     skip to Q91_MIN_CAP_VALUE_ACC; endif;  { No -> Q91 }
+  if Q90_COSTING_VIABLE in 1,3 then  skip to Q93_CHARGE_ADDL_CAP;   endif;  { Yes / Don't know -> Q93 }
+
+PROC Q92_MIN_CAP_VALUE_NONACC
+preproc
+  if Q51_YK_ACCRED <> 2 then   { accredited (or any non-2): Q92 is not for them -> Q93 }
+    skip to Q93_CHARGE_ADDL_CAP;
+  endif;
+postproc
+  { not-accredited finished Q92 -> skip the accredited block Q93-Q100, go to Section E }
+  skip to Q101_HEARD_BUCAS;
 
 PROC Q95_RECEIVED_PAYMENTS
 postproc
@@ -1922,54 +2044,6 @@ postproc
     reenter;
   endif;
 
-PROC Q49_QUALITY_CHALL_OTHER_TXT
-preproc
-  if Q49_QUALITY_CHALL_O10 <> 1 then
-    Q49_QUALITY_CHALL_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked }
-    noinput;
-  endif;
-postproc
-  if Q49_QUALITY_CHALL_O10 = 1 and length(strip(Q49_QUALITY_CHALL_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q49. Please specify.");
-    reenter;
-  endif;
-
-PROC Q50_ACCESS_CHALL_OTHER_TXT
-preproc
-  if Q50_ACCESS_CHALL_O10 <> 1 then
-    Q50_ACCESS_CHALL_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked }
-    noinput;
-  endif;
-postproc
-  if Q50_ACCESS_CHALL_O10 = 1 and length(strip(Q50_ACCESS_CHALL_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q50. Please specify.");
-    reenter;
-  endif;
-
-PROC Q53_YK_PACKAGE_OTHER_TXT
-preproc
-  if Q53_YK_PACKAGE_O10 <> 1 then
-    Q53_YK_PACKAGE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked }
-    noinput;
-  endif;
-postproc
-  if Q53_YK_PACKAGE_O10 = 1 and length(strip(Q53_YK_PACKAGE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q53. Please specify.");
-    reenter;
-  endif;
-
-PROC Q58_PERF_INDICATORS_OTHER_TXT
-preproc
-  if Q58_PERF_INDICATORS_O08 <> 1 then
-    Q58_PERF_INDICATORS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked }
-    noinput;
-  endif;
-postproc
-  if Q58_PERF_INDICATORS_O08 = 1 and length(strip(Q58_PERF_INDICATORS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q58. Please specify.");
-    reenter;
-  endif;
-
 PROC Q64_APPLY_REASON_OTHER_TXT
 preproc
   if Q64_APPLY_REASON_O06 <> 1 then
@@ -2234,34 +2308,6 @@ postproc
   { exclusivity (soft warning): an exclusive option should be the only answer }
   if (Q166_PD_NURSES_O06 = 1) and (Q166_PD_NURSES_O01 = 1 or Q166_PD_NURSES_O02 = 1 or Q166_PD_NURSES_O03 = 1 or Q166_PD_NURSES_O04 = 1 or Q166_PD_NURSES_O05 = 1 or Q166_PD_NURSES_O07 = 1) then
     errmsg("Q166_PD_NURSES: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q49_QUALITY_CHALL_O10
-postproc
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q49_QUALITY_CHALL_O09 = 1) and (Q49_QUALITY_CHALL_O01 = 1 or Q49_QUALITY_CHALL_O02 = 1 or Q49_QUALITY_CHALL_O03 = 1 or Q49_QUALITY_CHALL_O04 = 1 or Q49_QUALITY_CHALL_O05 = 1 or Q49_QUALITY_CHALL_O06 = 1 or Q49_QUALITY_CHALL_O07 = 1 or Q49_QUALITY_CHALL_O08 = 1 or Q49_QUALITY_CHALL_O10 = 1) then
-    errmsg("Q49_QUALITY_CHALL: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q50_ACCESS_CHALL_O10
-postproc
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q50_ACCESS_CHALL_O09 = 1) and (Q50_ACCESS_CHALL_O01 = 1 or Q50_ACCESS_CHALL_O02 = 1 or Q50_ACCESS_CHALL_O03 = 1 or Q50_ACCESS_CHALL_O04 = 1 or Q50_ACCESS_CHALL_O05 = 1 or Q50_ACCESS_CHALL_O06 = 1 or Q50_ACCESS_CHALL_O07 = 1 or Q50_ACCESS_CHALL_O08 = 1 or Q50_ACCESS_CHALL_O10 = 1) then
-    errmsg("Q50_ACCESS_CHALL: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q53_YK_PACKAGE_O10
-postproc
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q53_YK_PACKAGE_O09 = 1) and (Q53_YK_PACKAGE_O01 = 1 or Q53_YK_PACKAGE_O02 = 1 or Q53_YK_PACKAGE_O03 = 1 or Q53_YK_PACKAGE_O04 = 1 or Q53_YK_PACKAGE_O05 = 1 or Q53_YK_PACKAGE_O06 = 1 or Q53_YK_PACKAGE_O07 = 1 or Q53_YK_PACKAGE_O08 = 1 or Q53_YK_PACKAGE_O10 = 1) then
-    errmsg("Q53_YK_PACKAGE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q58_PERF_INDICATORS_O08
-postproc
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q58_PERF_INDICATORS_O07 = 1) and (Q58_PERF_INDICATORS_O01 = 1 or Q58_PERF_INDICATORS_O02 = 1 or Q58_PERF_INDICATORS_O03 = 1 or Q58_PERF_INDICATORS_O04 = 1 or Q58_PERF_INDICATORS_O05 = 1 or Q58_PERF_INDICATORS_O06 = 1 or Q58_PERF_INDICATORS_O08 = 1) then
-    errmsg("Q58_PERF_INDICATORS: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
   endif;
 
 PROC Q65_ACCRED_DIFFICULT_O10

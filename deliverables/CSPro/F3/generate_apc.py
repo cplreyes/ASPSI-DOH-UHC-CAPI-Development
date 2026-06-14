@@ -457,6 +457,12 @@ postproc
   if Q77_KON_REGISTERED = 2    then  skip to Q82_KON_WHY_NOT_REG_O01; endif;  { Not registered -> reasons }
   if Q77_KON_REGISTERED in 3,4 then  skip to Q83_VISIT_REASON;        endif;  { Never heard / IDK -> exit E }
 
+PROC Q82_KON_WHY_NOT_REG_O01
+preproc
+  { #389: "why NOT registered" is only for not-registered patients (Q77=No=2). A registered
+    patient (Q77=Yes) falls through Q78-Q81 into Q82 — gate it out to Section F (Q83). }
+  if Q77_KON_REGISTERED <> 2 then  skip to Q83_VISIT_REASON; endif;
+
 PROC Q159_BRAND_GEN_BOUGHT
 postproc
   if Q159_BRAND_GEN_BOUGHT = 1 then  skip to Q161_WHY_BRANDED_O01; endif;  { Branded -> why-branded }
@@ -715,6 +721,7 @@ def main():
     covered = {"Q88_WHY_VISIT", "Q105_REASON",                    # branching PROCs
                "Q63_HAS_USUAL_FACILITY", "Q77_KON_REGISTERED",
                "Q159_BRAND_GEN_BOUGHT", "Q46_BENEFITS_O01", "Q162_REFERRED",  # EXTRA_PROCS
+               "Q82_KON_WHY_NOT_REG_O01",  # EXTRA_PROCS (#389 not-registered gate)
                "Q148_CONDITIONS", "Q148_CONDITIONS_OTHER_TXT", "Q148_MEDICINES_TXT",  # EXTRA_PROCS (Q148 Check Box)
                "Q5_BIRTH_MONTH", "Q5_BIRTH_YEAR", "Q6_AGE", "Q18_INCOME_BRACKET",
                "Q19_HH_SIZE", "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q28_WASHER"}  # VALIDATION_PROCS
