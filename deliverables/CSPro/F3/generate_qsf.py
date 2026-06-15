@@ -282,10 +282,19 @@ _QNUM = re.compile(r"^Q(\d{1,3})_")
 # renders the captured name in the prompt (every language). Double tilde = plain-text
 # fill (FACILITY_NAME has no HTML to preserve).
 _FACILITY_PLACEHOLDER_RE = re.compile(r"\[?\bfacility_name_input\b\]?", re.IGNORECASE)
+# Patient-type piping (#485): the Section J script reads "...as an [inpatient] o/or
+# [outpatient]...". Pipe the captured PATIENT_TYPE value label (Outpatient/Inpatient)
+# via getvaluelabel so the enumerator sees the actual type. [date_formatted] is left
+# as-is (ambiguous which date field, and the tester asked only for facility + type).
+_PATIENT_TYPE_PAIR_RE = re.compile(
+    r"\[inpatient\]\s*(?:o|or)\s*\[outpatient\]|\[outpatient\]\s*(?:o|or)\s*\[inpatient\]",
+    re.IGNORECASE)
 
 
 def _pipe_fills(text):
-    return _FACILITY_PLACEHOLDER_RE.sub("~~FACILITY_NAME~~", text)
+    text = _FACILITY_PLACEHOLDER_RE.sub("~~FACILITY_NAME~~", text)
+    text = _PATIENT_TYPE_PAIR_RE.sub("~~getvaluelabel(PATIENT_TYPE)~~", text)
+    return text
 
 
 def _esc(t):

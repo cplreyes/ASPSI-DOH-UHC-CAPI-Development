@@ -1353,24 +1353,24 @@ postproc
 
 PROC Q39_HOW_FIND_OUT_OTHER_TXT
 preproc
-  if Q39_HOW_FIND_OUT <> 4 then
+  if Q39_HOW_FIND_OUT <> 10 then
     Q39_HOW_FIND_OUT_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
     noinput;
   endif;
 postproc
-  if Q39_HOW_FIND_OUT = 4 and length(strip(Q39_HOW_FIND_OUT_OTHER_TXT)) = 0 then
+  if Q39_HOW_FIND_OUT = 10 and length(strip(Q39_HOW_FIND_OUT_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q39_HOW_FIND_OUT but no text was entered. Please specify.");
     reenter;
   endif;
 
 PROC Q40_WHO_ASSISTED_OTHER_TXT
 preproc
-  if Q40_WHO_ASSISTED <> 4 then
+  if Q40_WHO_ASSISTED <> 10 then
     Q40_WHO_ASSISTED_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
     noinput;
   endif;
 postproc
-  if Q40_WHO_ASSISTED = 4 and length(strip(Q40_WHO_ASSISTED_OTHER_TXT)) = 0 then
+  if Q40_WHO_ASSISTED = 10 and length(strip(Q40_WHO_ASSISTED_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q40_WHO_ASSISTED but no text was entered. Please specify.");
     reenter;
   endif;
@@ -1389,24 +1389,24 @@ postproc
 
 PROC Q44_WHERE_ASSIST_OTHER_TXT
 preproc
-  if Q44_WHERE_ASSIST <> 4 then
+  if Q44_WHERE_ASSIST <> 10 then
     Q44_WHERE_ASSIST_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
     noinput;
   endif;
 postproc
-  if Q44_WHERE_ASSIST = 4 and length(strip(Q44_WHERE_ASSIST_OTHER_TXT)) = 0 then
+  if Q44_WHERE_ASSIST = 10 and length(strip(Q44_WHERE_ASSIST_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q44_WHERE_ASSIST but no text was entered. Please specify.");
     reenter;
   endif;
 
 PROC Q45_CATEGORY_OTHER_TXT
 preproc
-  if Q45_CATEGORY <> 2 then
+  if Q45_CATEGORY <> 99 then
     Q45_CATEGORY_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
     noinput;
   endif;
 postproc
-  if Q45_CATEGORY = 2 and length(strip(Q45_CATEGORY_OTHER_TXT)) = 0 then
+  if Q45_CATEGORY = 99 and length(strip(Q45_CATEGORY_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q45_CATEGORY but no text was entered. Please specify.");
     reenter;
   endif;

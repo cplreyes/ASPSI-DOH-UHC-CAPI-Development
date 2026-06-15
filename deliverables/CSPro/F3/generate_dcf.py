@@ -1200,27 +1200,29 @@ def build_section_h():
                     "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)",
                     Q114_NO_PH),
     ])
-    # Q114.1 other expenses included in bill — 6 items with amount
-    for label, code in Q1141_IN_BILL:
-        items.append(yes_no(f"Q1141_{code}",
-                            f"114.1 Other items included in the bill — {label}"))
-        items.append(numeric(f"Q1141_{code}_AMT",
-                             f"114.1 Other items included in the bill — {label} (Amount in Pesos)",
-                             length=9))
-    items.append(alpha("Q1141_OTHER_TXT",
-                       "114.1 Other expenses — specify text", length=120))
-    # Q114.2 other expenses NOT included in bill — 7 items with amount
-    for label, code in Q1142_NOT_IN_BILL:
-        items.append(yes_no(f"Q1142_{code}",
-                            f"114.2 Other expenses during confinement not in bill — {label}"))
-        items.append(numeric(f"Q1142_{code}_AMT",
-                             f"114.2 Other expenses during confinement not in bill — {label} "
-                             "(Amount in Pesos)", length=9))
-    items.append(alpha("Q1142_OTHER_TXT",
-                       "114.2 Other expenses — specify text", length=120))
+    # Q115 final cash first, then the 115.1/115.2 breakdowns sit UNDER it (#517 — mirrors
+    # the outpatient side, where Q97 total precedes Q97.1/Q97.2).
     items.append(numeric("Q115_FINAL_CASH",
                          "115. What was the final amount you paid in cash at the hospital cashier "
                          "upon discharge? (Amount in Pesos)", length=9))
+    # Q115.1 other items included in bill — 6 items with amount
+    for label, code in Q1141_IN_BILL:
+        items.append(yes_no(f"Q1141_{code}",
+                            f"115.1 Other items included in the bill — {label}"))
+        items.append(numeric(f"Q1141_{code}_AMT",
+                             f"115.1 Other items included in the bill — {label} (Amount in Pesos)",
+                             length=9))
+    items.append(alpha("Q1141_OTHER_TXT",
+                       "115.1 Other expenses — specify text", length=120))
+    # Q115.2 other expenses NOT included in bill — 7 items with amount
+    for label, code in Q1142_NOT_IN_BILL:
+        items.append(yes_no(f"Q1142_{code}",
+                            f"115.2 Other expenses during confinement not in bill — {label}"))
+        items.append(numeric(f"Q1142_{code}_AMT",
+                             f"115.2 Other expenses during confinement not in bill — {label} "
+                             "(Amount in Pesos)", length=9))
+    items.append(alpha("Q1142_OTHER_TXT",
+                       "115.2 Other expenses — specify text", length=120))
     return record("H_INPATIENT_CARE",
                   "H. Inpatient Care", "J", items)
 

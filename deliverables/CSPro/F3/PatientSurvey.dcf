@@ -61415,30 +61415,62 @@
               "length": 120
             },
             {
-              "name": "Q1141_1",
+              "name": "Q115_FINAL_CASH",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee",
+                  "text": "115. What was the final amount you paid in cash at the hospital cashier upon discharge? (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Bayad sa konsulta",
+                  "text": "Magkano ang kabuuang halagang binayaran mo nang cash sa hospital cashier sa paglabas (discharge) mula sa ospital?",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee",
+                  "text": "115. What was the final amount you paid in cash at the hospital cashier upon discharge? (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Bayad sa Doktor",
+                  "text": "Pila ang kinatibuk-ang kantidad nga imong gibayran cash sa hospital cashier pag-discharge?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Propesyonal nga bayad sa doktor",
+                  "text": "Unsa ang katapusang kantidad nga imong gibayran og cash sa hospital cashier pagka-discharge?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Propesyonal nga Bayad han Doktor",
+                  "text": "Ano an katapusan nga kantidad nga imo ginbayad nga cash ha kahera han ospital han paggawas?",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 9,
+              "zeroFill": false
+            },
+            {
+              "name": "Q1141_1",
+              "labels": [
+                {
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
+                  "language": "EN"
+                },
+                {
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
+                  "language": "FIL"
+                },
+                {
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
+                  "language": "BCL"
+                },
+                {
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
+                  "language": "BIS"
+                },
+                {
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
+                  "language": "CEB"
+                },
+                {
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
                   "language": "WAR"
                 }
               ],
@@ -61450,27 +61482,27 @@
                   "name": "Q1141_1_VS1",
                   "labels": [
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee",
+                      "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
                       "language": "EN"
                     },
                     {
-                      "text": "Bayad sa konsulta",
+                      "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee",
+                      "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
                       "language": "BCL"
                     },
                     {
-                      "text": "Bayad sa Doktor",
+                      "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
                       "language": "BIS"
                     },
                     {
-                      "text": "Propesyonal nga bayad sa doktor",
+                      "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
                       "language": "CEB"
                     },
                     {
-                      "text": "Propesyonal nga Bayad han Doktor",
+                      "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee",
                       "language": "WAR"
                     }
                   ],
@@ -61549,27 +61581,27 @@
               "name": "Q1141_1_AMT",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Bayad sa konsulta",
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Propesyonal nga bayad sa doktor",
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Doctor's Professional Fee (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -61581,27 +61613,27 @@
               "name": "Q1141_2",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                   "language": "EN"
                 },
                 {
-                  "text": "Medikal na kagamitan o suplay",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                   "language": "BCL"
                 },
                 {
-                  "text": "Medikal nga gamit ug supplies",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                   "language": "BIS"
                 },
                 {
-                  "text": "Medikal nga kagamitan o suplay",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                   "language": "CEB"
                 },
                 {
-                  "text": "Mga gamit o mga suplay ha medisina",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                   "language": "WAR"
                 }
               ],
@@ -61613,27 +61645,27 @@
                   "name": "Q1141_2_VS1",
                   "labels": [
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies",
+                      "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                       "language": "EN"
                     },
                     {
-                      "text": "Medikal na kagamitan o suplay",
+                      "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies",
+                      "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                       "language": "BCL"
                     },
                     {
-                      "text": "Medikal nga gamit ug supplies",
+                      "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                       "language": "BIS"
                     },
                     {
-                      "text": "Medikal nga kagamitan o suplay",
+                      "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                       "language": "CEB"
                     },
                     {
-                      "text": "Mga gamit o mga suplay ha medisina",
+                      "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies",
                       "language": "WAR"
                     }
                   ],
@@ -61712,27 +61744,27 @@
               "name": "Q1141_2_AMT",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Medikal na kagamitan o suplay",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Medikal nga kagamitan o suplay",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Medical equipment or supplies (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -61744,27 +61776,27 @@
               "name": "Q1141_3",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                   "language": "EN"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Non-medical expenses (pananglitan: hygiene kit)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Dili medikal nga galastohan (pananglitan, hygiene kit)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Mga gastos nga diri medikal: (pananglitan, kit ha kalimpyo)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                   "language": "WAR"
                 }
               ],
@@ -61776,27 +61808,27 @@
                   "name": "Q1141_3_VS1",
                   "labels": [
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
+                      "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                       "language": "EN"
                     },
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
+                      "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
+                      "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                       "language": "BCL"
                     },
                     {
-                      "text": "Non-medical expenses (pananglitan: hygiene kit)",
+                      "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                       "language": "BIS"
                     },
                     {
-                      "text": "Dili medikal nga galastohan (pananglitan, hygiene kit)",
+                      "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                       "language": "CEB"
                     },
                     {
-                      "text": "Mga gastos nga diri medikal: (pananglitan, kit ha kalimpyo)",
+                      "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit)",
                       "language": "WAR"
                     }
                   ],
@@ -61875,27 +61907,27 @@
               "name": "Q1141_3_AMT",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Dili medikal nga galastohan (pananglitan, hygiene kit)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -61907,27 +61939,27 @@
               "name": "Q1141_4",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                   "language": "EN"
                 },
                 {
-                  "text": "Diagnostic o palaboratoryo sa loob ng pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                   "language": "BCL"
                 },
                 {
-                  "text": "Diagnostic o laboratory procedure sulod sa pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                   "language": "BIS"
                 },
                 {
-                  "text": "Diagnostic o laboratory procedure sulod sa pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                   "language": "CEB"
                 },
                 {
-                  "text": "Pag-eksamin o pamaagi ha laboratoryo ha sulod han pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                   "language": "WAR"
                 }
               ],
@@ -61939,27 +61971,27 @@
                   "name": "Q1141_4_VS1",
                   "labels": [
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
+                      "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                       "language": "EN"
                     },
                     {
-                      "text": "Diagnostic o palaboratoryo sa loob ng pasilidad",
+                      "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
+                      "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                       "language": "BCL"
                     },
                     {
-                      "text": "Diagnostic o laboratory procedure sulod sa pasilidad",
+                      "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                       "language": "BIS"
                     },
                     {
-                      "text": "Diagnostic o laboratory procedure sulod sa pasilidad",
+                      "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                       "language": "CEB"
                     },
                     {
-                      "text": "Pag-eksamin o pamaagi ha laboratoryo ha sulod han pasilidad",
+                      "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility",
                       "language": "WAR"
                     }
                   ],
@@ -62038,27 +62070,27 @@
               "name": "Q1141_4_AMT",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Diagnostic o palaboratoryo sa loob ng pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Diagnostic o laboratory procedure sulod sa pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Diagnostic or laboratory procedure inside the facility (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -62070,27 +62102,27 @@
               "name": "Q1141_5",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                   "language": "EN"
                 },
                 {
-                  "text": "Mga gamot sa loob ng pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                   "language": "BCL"
                 },
                 {
-                  "text": "Tambal o medisina sulod sa pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                   "language": "BIS"
                 },
                 {
-                  "text": "Tambal o droga sulod sa pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                   "language": "CEB"
                 },
                 {
-                  "text": "Mga medisina o droga ha sulod han pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                   "language": "WAR"
                 }
               ],
@@ -62102,27 +62134,27 @@
                   "name": "Q1141_5_VS1",
                   "labels": [
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
+                      "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                       "language": "EN"
                     },
                     {
-                      "text": "Mga gamot sa loob ng pasilidad",
+                      "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
+                      "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                       "language": "BCL"
                     },
                     {
-                      "text": "Tambal o medisina sulod sa pasilidad",
+                      "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                       "language": "BIS"
                     },
                     {
-                      "text": "Tambal o droga sulod sa pasilidad",
+                      "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                       "language": "CEB"
                     },
                     {
-                      "text": "Mga medisina o droga ha sulod han pasilidad",
+                      "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility",
                       "language": "WAR"
                     }
                   ],
@@ -62201,27 +62233,27 @@
               "name": "Q1141_5_AMT",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Mga gamot sa loob ng pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Tambal o droga sulod sa pasilidad",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Medicines or drugs inside the facility (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -62233,27 +62265,27 @@
               "name": "Q1141_6",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Other expenses",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses",
                   "language": "EN"
                 },
                 {
-                  "text": "Iba pang mga gastos",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Other expenses",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses",
                   "language": "BCL"
                 },
                 {
-                  "text": "Uban pang gasto",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses",
                   "language": "BIS"
                 },
                 {
-                  "text": "Uban pang galastohan",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses",
                   "language": "CEB"
                 },
                 {
-                  "text": "Iba pa nga mga gastos",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses",
                   "language": "WAR"
                 }
               ],
@@ -62265,27 +62297,27 @@
                   "name": "Q1141_6_VS1",
                   "labels": [
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Other expenses",
+                      "text": "115.1 Other items included in the bill \u2014 Other expenses",
                       "language": "EN"
                     },
                     {
-                      "text": "Iba pang mga gastos",
+                      "text": "115.1 Other items included in the bill \u2014 Other expenses",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.1 Other items included in the bill \u2014 Other expenses",
+                      "text": "115.1 Other items included in the bill \u2014 Other expenses",
                       "language": "BCL"
                     },
                     {
-                      "text": "Uban pang gasto",
+                      "text": "115.1 Other items included in the bill \u2014 Other expenses",
                       "language": "BIS"
                     },
                     {
-                      "text": "Uban pang galastohan",
+                      "text": "115.1 Other items included in the bill \u2014 Other expenses",
                       "language": "CEB"
                     },
                     {
-                      "text": "Iba pa nga mga gastos",
+                      "text": "115.1 Other items included in the bill \u2014 Other expenses",
                       "language": "WAR"
                     }
                   ],
@@ -62364,27 +62396,27 @@
               "name": "Q1141_6_AMT",
               "labels": [
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Iba pang mga gastos",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Uban pang galastohan",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)",
+                  "text": "115.1 Other items included in the bill \u2014 Other expenses (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -62396,27 +62428,27 @@
               "name": "Q1141_OTHER_TXT",
               "labels": [
                 {
-                  "text": "114.1 Other expenses \u2014 specify text",
+                  "text": "115.1 Other expenses \u2014 specify text",
                   "language": "EN"
                 },
                 {
-                  "text": "114.1 Other expenses \u2014 specify text",
+                  "text": "115.1 Other expenses \u2014 specify text",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.1 Other expenses \u2014 specify text",
+                  "text": "115.1 Other expenses \u2014 specify text",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.1 Other expenses \u2014 specify text",
+                  "text": "115.1 Other expenses \u2014 specify text",
                   "language": "BIS"
                 },
                 {
-                  "text": "Uban pa (isulti)",
+                  "text": "115.1 Other expenses \u2014 specify text",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.1 Other expenses \u2014 specify text",
+                  "text": "115.1 Other expenses \u2014 specify text",
                   "language": "WAR"
                 }
               ],
@@ -62427,27 +62459,27 @@
               "name": "Q1142_1",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                   "language": "EN"
                 },
                 {
-                  "text": "Medikal na kagamitan o suplay na binili sa labas ng pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                   "language": "BCL"
                 },
                 {
-                  "text": "Tambal o medisina gipalit gawas sa pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                   "language": "BIS"
                 },
                 {
-                  "text": "Medikal nga kagamitan o suplay nga gipalit gawas sa pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                   "language": "CEB"
                 },
                 {
-                  "text": "Medikal nga mga gamit o mga suplay nga ginpalit ha gawas han pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                   "language": "WAR"
                 }
               ],
@@ -62459,27 +62491,27 @@
                   "name": "Q1142_1_VS1",
                   "labels": [
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                       "language": "EN"
                     },
                     {
-                      "text": "Medikal na kagamitan o suplay na binili sa labas ng pasilidad",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                       "language": "BCL"
                     },
                     {
-                      "text": "Tambal o medisina gipalit gawas sa pasilidad",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                       "language": "BIS"
                     },
                     {
-                      "text": "Medikal nga kagamitan o suplay nga gipalit gawas sa pasilidad",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                       "language": "CEB"
                     },
                     {
-                      "text": "Medikal nga mga gamit o mga suplay nga ginpalit ha gawas han pasilidad",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility",
                       "language": "WAR"
                     }
                   ],
@@ -62558,27 +62590,27 @@
               "name": "Q1142_1_AMT",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Medikal na kagamitan o suplay na binili sa labas ng pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Medikal nga kagamitan o suplay nga gipalit gawas sa pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Medical equipment or supplies bought outside the facility (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -62590,27 +62622,27 @@
               "name": "Q1142_2",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                   "language": "EN"
                 },
                 {
-                  "text": "Ang bayad ay ibingay sa sekretarya o sa doktor",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                   "language": "BCL"
                 },
                 {
-                  "text": "Bayad nga direktang gihatag sa doktor/doktor ug ilang secretary",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                   "language": "BIS"
                 },
                 {
-                  "text": "Direkta nga bayad sa doktor ug ilang secretary",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                   "language": "CEB"
                 },
                 {
-                  "text": "Pagbayad direkta ha doktor/ mga doktor ngan ha ira sekretarya",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                   "language": "WAR"
                 }
               ],
@@ -62622,27 +62654,27 @@
                   "name": "Q1142_2_VS1",
                   "labels": [
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                       "language": "EN"
                     },
                     {
-                      "text": "Ang bayad ay ibingay sa sekretarya o sa doktor",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                       "language": "BCL"
                     },
                     {
-                      "text": "Bayad nga direktang gihatag sa doktor/doktor ug ilang secretary",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                       "language": "BIS"
                     },
                     {
-                      "text": "Direkta nga bayad sa doktor ug ilang secretary",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                       "language": "CEB"
                     },
                     {
-                      "text": "Pagbayad direkta ha doktor/ mga doktor ngan ha ira sekretarya",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary",
                       "language": "WAR"
                     }
                   ],
@@ -62721,27 +62753,27 @@
               "name": "Q1142_2_AMT",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Ang bayad ay ibingay sa sekretarya o sa doktor",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Direkta nga bayad sa doktor ug ilang secretary",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Payment made directly to doctor/s and their secretary (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -62753,27 +62785,27 @@
               "name": "Q1142_3",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Food",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                   "language": "EN"
                 },
                 {
-                  "text": "Pagkain",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Food",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                   "language": "BCL"
                 },
                 {
-                  "text": "Pagkaon",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                   "language": "BIS"
                 },
                 {
-                  "text": "Pagkaon",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                   "language": "CEB"
                 },
                 {
-                  "text": "Pagkaon",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                   "language": "WAR"
                 }
               ],
@@ -62785,27 +62817,27 @@
                   "name": "Q1142_3_VS1",
                   "labels": [
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Food",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                       "language": "EN"
                     },
                     {
-                      "text": "Pagkain",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Food",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                       "language": "BCL"
                     },
                     {
-                      "text": "Pagkaon",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                       "language": "BIS"
                     },
                     {
-                      "text": "Pagkaon",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                       "language": "CEB"
                     },
                     {
-                      "text": "Pagkaon",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Food",
                       "language": "WAR"
                     }
                   ],
@@ -62884,27 +62916,27 @@
               "name": "Q1142_3_AMT",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Pagkain",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Pagkaon",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Food (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -62916,27 +62948,27 @@
               "name": "Q1142_4",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                   "language": "EN"
                 },
                 {
-                  "text": "Transportasyon",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                   "language": "BCL"
                 },
                 {
-                  "text": "Plete/Pamasahe",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                   "language": "BIS"
                 },
                 {
-                  "text": "Plete sa transportasyon",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                   "language": "CEB"
                 },
                 {
-                  "text": "Transportasyon",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                   "language": "WAR"
                 }
               ],
@@ -62948,27 +62980,27 @@
                   "name": "Q1142_4_VS1",
                   "labels": [
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                       "language": "EN"
                     },
                     {
-                      "text": "Transportasyon",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                       "language": "BCL"
                     },
                     {
-                      "text": "Plete/Pamasahe",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                       "language": "BIS"
                     },
                     {
-                      "text": "Plete sa transportasyon",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                       "language": "CEB"
                     },
                     {
-                      "text": "Transportasyon",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation",
                       "language": "WAR"
                     }
                   ],
@@ -63047,27 +63079,27 @@
               "name": "Q1142_4_AMT",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Transportasyon",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Plete sa transportasyon",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Transportation (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -63079,27 +63111,27 @@
               "name": "Q1142_5",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                   "language": "EN"
                 },
                 {
-                  "text": "Donasyon sa pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                   "language": "BCL"
                 },
                 {
-                  "text": "Donasyon sa Pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                   "language": "BIS"
                 },
                 {
-                  "text": "Donasyon sa pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                   "language": "CEB"
                 },
                 {
-                  "text": "Donasyon ha pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                   "language": "WAR"
                 }
               ],
@@ -63111,27 +63143,27 @@
                   "name": "Q1142_5_VS1",
                   "labels": [
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                       "language": "EN"
                     },
                     {
-                      "text": "Donasyon sa pasilidad",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                       "language": "BCL"
                     },
                     {
-                      "text": "Donasyon sa Pasilidad",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                       "language": "BIS"
                     },
                     {
-                      "text": "Donasyon sa pasilidad",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                       "language": "CEB"
                     },
                     {
-                      "text": "Donasyon ha pasilidad",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility",
                       "language": "WAR"
                     }
                   ],
@@ -63210,27 +63242,27 @@
               "name": "Q1142_5_AMT",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Donasyon sa pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Donasyon sa pasilidad",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Donation to the facility (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -63242,27 +63274,27 @@
               "name": "Q1142_6",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                   "language": "EN"
                 },
                 {
-                  "text": "Allowance para sa tagapagalaga",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                   "language": "BCL"
                 },
                 {
-                  "text": "Allowance sa Tigbantay/Tig-atiman",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                   "language": "BIS"
                 },
                 {
-                  "text": "Allowance sa tig-atiman",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                   "language": "CEB"
                 },
                 {
-                  "text": "Pangasto para han nag-aataman",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                   "language": "WAR"
                 }
               ],
@@ -63274,27 +63306,27 @@
                   "name": "Q1142_6_VS1",
                   "labels": [
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                       "language": "EN"
                     },
                     {
-                      "text": "Allowance para sa tagapagalaga",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                       "language": "BCL"
                     },
                     {
-                      "text": "Allowance sa Tigbantay/Tig-atiman",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                       "language": "BIS"
                     },
                     {
-                      "text": "Allowance sa tig-atiman",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                       "language": "CEB"
                     },
                     {
-                      "text": "Pangasto para han nag-aataman",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver",
                       "language": "WAR"
                     }
                   ],
@@ -63373,27 +63405,27 @@
               "name": "Q1142_6_AMT",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Allowance para sa tagapagalaga",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Allowance sa tig-atiman",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Allowance for caregiver (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -63405,27 +63437,27 @@
               "name": "Q1142_7",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                   "language": "EN"
                 },
                 {
-                  "text": "Iba pa (tukuyin)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Uban pa (isulti)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Iba pa (Ispecify)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                   "language": "WAR"
                 }
               ],
@@ -63437,27 +63469,27 @@
                   "name": "Q1142_7_VS1",
                   "labels": [
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify)",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                       "language": "EN"
                     },
                     {
-                      "text": "Iba pa (tukuyin)",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                       "language": "FIL"
                     },
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify)",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                       "language": "BCL"
                     },
                     {
-                      "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify)",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                       "language": "BIS"
                     },
                     {
-                      "text": "Uban pa (isulti)",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                       "language": "CEB"
                     },
                     {
-                      "text": "Iba pa (Ispecify)",
+                      "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify)",
                       "language": "WAR"
                     }
                   ],
@@ -63536,27 +63568,27 @@
               "name": "Q1142_7_AMT",
               "labels": [
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Iba pa (tukuyin)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Uban pa (isulti)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)",
+                  "text": "115.2 Other expenses during confinement not in bill \u2014 Other (specify) (Amount in Pesos)",
                   "language": "WAR"
                 }
               ],
@@ -63568,64 +63600,32 @@
               "name": "Q1142_OTHER_TXT",
               "labels": [
                 {
-                  "text": "114.2 Other expenses \u2014 specify text",
+                  "text": "115.2 Other expenses \u2014 specify text",
                   "language": "EN"
                 },
                 {
-                  "text": "114.2 Other expenses \u2014 specify text",
+                  "text": "115.2 Other expenses \u2014 specify text",
                   "language": "FIL"
                 },
                 {
-                  "text": "114.2 Other expenses \u2014 specify text",
+                  "text": "115.2 Other expenses \u2014 specify text",
                   "language": "BCL"
                 },
                 {
-                  "text": "114.2 Other expenses \u2014 specify text",
+                  "text": "115.2 Other expenses \u2014 specify text",
                   "language": "BIS"
                 },
                 {
-                  "text": "Uban pa (isulti)",
+                  "text": "115.2 Other expenses \u2014 specify text",
                   "language": "CEB"
                 },
                 {
-                  "text": "114.2 Other expenses \u2014 specify text",
+                  "text": "115.2 Other expenses \u2014 specify text",
                   "language": "WAR"
                 }
               ],
               "contentType": "alpha",
               "length": 120
-            },
-            {
-              "name": "Q115_FINAL_CASH",
-              "labels": [
-                {
-                  "text": "115. What was the final amount you paid in cash at the hospital cashier upon discharge? (Amount in Pesos)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Magkano ang kabuuang halagang binayaran mo nang cash sa hospital cashier sa paglabas (discharge) mula sa ospital?",
-                  "language": "FIL"
-                },
-                {
-                  "text": "115. What was the final amount you paid in cash at the hospital cashier upon discharge? (Amount in Pesos)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Pila ang kinatibuk-ang kantidad nga imong gibayran cash sa hospital cashier pag-discharge?",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Unsa ang katapusang kantidad nga imong gibayran og cash sa hospital cashier pagka-discharge?",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Ano an katapusan nga kantidad nga imo ginbayad nga cash ha kahera han ospital han paggawas?",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 9,
-              "zeroFill": false
             }
           ]
         },

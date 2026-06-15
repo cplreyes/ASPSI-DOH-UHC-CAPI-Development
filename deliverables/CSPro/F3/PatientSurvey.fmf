@@ -1344,6 +1344,8 @@ Item=Q114_NO_PH_O07
 
 Item=Q114_NO_PH_OTHER_TXT
 
+Item=Q115_FINAL_CASH
+
 Item=Q1141_1
 
 Item=Q1141_1_AMT
@@ -1399,8 +1401,6 @@ Item=Q1142_7
 Item=Q1142_7_AMT
 
 Item=Q1142_OTHER_TXT
-
-Item=Q115_FINAL_CASH
 
   
 
@@ -17384,9 +17384,33 @@ Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not a
 
 [Field]
 
+Name=Q115_FINAL_CASH
+
+Position=350,3057,760,3077
+
+Item=Q115_FINAL_CASH,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=13
+
+  
+
+[Text]
+
+Position=50,3060,330,3076
+
+Text=115. What was the final amount you paid in cash at the hospital cashier upon discharge? (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
 Name=Q1141_1
 
-Position=350,3057,365,3077
+Position=350,3087,365,3107
 
 Item=Q1141_1,PATIENTSURVEY_DICT
 
@@ -17398,9 +17422,9 @@ Form=13
 
 [Text]
 
-Position=50,3060,330,3076
+Position=50,3090,330,3106
 
-Text=114.1 Other items included in the bill — Doctor's Professional Fee
+Text=115.1 Other items included in the bill — Doctor's Professional Fee
 
  
 
@@ -17410,7 +17434,7 @@ Text=114.1 Other items included in the bill — Doctor's Professional Fee
 
 Name=Q1141_1_AMT
 
-Position=350,3087,760,3107
+Position=350,3117,760,3137
 
 Item=Q1141_1_AMT,PATIENTSURVEY_DICT
 
@@ -17422,9 +17446,9 @@ Form=13
 
 [Text]
 
-Position=50,3090,330,3106
+Position=50,3120,330,3136
 
-Text=114.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)
+Text=115.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)
 
  
 
@@ -17434,7 +17458,7 @@ Text=114.1 Other items included in the bill — Doctor's Professional Fee (Amoun
 
 Name=Q1141_2
 
-Position=350,3117,365,3137
+Position=350,3147,365,3167
 
 Item=Q1141_2,PATIENTSURVEY_DICT
 
@@ -17446,9 +17470,9 @@ Form=13
 
 [Text]
 
-Position=50,3120,330,3136
+Position=50,3150,330,3166
 
-Text=114.1 Other items included in the bill — Medical equipment or supplies
+Text=115.1 Other items included in the bill — Medical equipment or supplies
 
  
 
@@ -17458,7 +17482,7 @@ Text=114.1 Other items included in the bill — Medical equipment or supplies
 
 Name=Q1141_2_AMT
 
-Position=350,3147,760,3167
+Position=350,3177,760,3197
 
 Item=Q1141_2_AMT,PATIENTSURVEY_DICT
 
@@ -17470,9 +17494,9 @@ Form=13
 
 [Text]
 
-Position=50,3150,330,3166
+Position=50,3180,330,3196
 
-Text=114.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)
+Text=115.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)
 
  
 
@@ -17482,7 +17506,7 @@ Text=114.1 Other items included in the bill — Medical equipment or supplies (A
 
 Name=Q1141_3
 
-Position=350,3177,365,3197
+Position=350,3207,365,3227
 
 Item=Q1141_3,PATIENTSURVEY_DICT
 
@@ -17494,9 +17518,9 @@ Form=13
 
 [Text]
 
-Position=50,3180,330,3196
+Position=50,3210,330,3226
 
-Text=114.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)
+Text=115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)
 
  
 
@@ -17506,7 +17530,7 @@ Text=114.1 Other items included in the bill — Non-medical expenses (e.g. Hygie
 
 Name=Q1141_3_AMT
 
-Position=350,3207,760,3227
+Position=350,3237,760,3257
 
 Item=Q1141_3_AMT,PATIENTSURVEY_DICT
 
@@ -17518,9 +17542,9 @@ Form=13
 
 [Text]
 
-Position=50,3210,330,3226
+Position=50,3240,330,3256
 
-Text=114.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)
+Text=115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)
 
  
 
@@ -17530,7 +17554,7 @@ Text=114.1 Other items included in the bill — Non-medical expenses (e.g. Hygie
 
 Name=Q1141_4
 
-Position=350,3237,365,3257
+Position=350,3267,365,3287
 
 Item=Q1141_4,PATIENTSURVEY_DICT
 
@@ -17542,9 +17566,9 @@ Form=13
 
 [Text]
 
-Position=50,3240,330,3256
+Position=50,3270,330,3286
 
-Text=114.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility
+Text=115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility
 
  
 
@@ -17554,7 +17578,7 @@ Text=114.1 Other items included in the bill — Diagnostic or laboratory procedu
 
 Name=Q1141_4_AMT
 
-Position=350,3267,760,3287
+Position=350,3297,760,3317
 
 Item=Q1141_4_AMT,PATIENTSURVEY_DICT
 
@@ -17566,9 +17590,9 @@ Form=13
 
 [Text]
 
-Position=50,3270,330,3286
+Position=50,3300,330,3316
 
-Text=114.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)
+Text=115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)
 
  
 
@@ -17578,7 +17602,7 @@ Text=114.1 Other items included in the bill — Diagnostic or laboratory procedu
 
 Name=Q1141_5
 
-Position=350,3297,365,3317
+Position=350,3327,365,3347
 
 Item=Q1141_5,PATIENTSURVEY_DICT
 
@@ -17590,9 +17614,9 @@ Form=13
 
 [Text]
 
-Position=50,3300,330,3316
+Position=50,3330,330,3346
 
-Text=114.1 Other items included in the bill — Medicines or drugs inside the facility
+Text=115.1 Other items included in the bill — Medicines or drugs inside the facility
 
  
 
@@ -17602,7 +17626,7 @@ Text=114.1 Other items included in the bill — Medicines or drugs inside the fa
 
 Name=Q1141_5_AMT
 
-Position=350,3327,760,3347
+Position=350,3357,760,3377
 
 Item=Q1141_5_AMT,PATIENTSURVEY_DICT
 
@@ -17614,9 +17638,9 @@ Form=13
 
 [Text]
 
-Position=50,3330,330,3346
+Position=50,3360,330,3376
 
-Text=114.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)
+Text=115.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)
 
  
 
@@ -17626,7 +17650,7 @@ Text=114.1 Other items included in the bill — Medicines or drugs inside the fa
 
 Name=Q1141_6
 
-Position=350,3357,365,3377
+Position=350,3387,365,3407
 
 Item=Q1141_6,PATIENTSURVEY_DICT
 
@@ -17638,9 +17662,9 @@ Form=13
 
 [Text]
 
-Position=50,3360,330,3376
+Position=50,3390,330,3406
 
-Text=114.1 Other items included in the bill — Other expenses
+Text=115.1 Other items included in the bill — Other expenses
 
  
 
@@ -17650,7 +17674,7 @@ Text=114.1 Other items included in the bill — Other expenses
 
 Name=Q1141_6_AMT
 
-Position=350,3387,760,3407
+Position=350,3417,760,3437
 
 Item=Q1141_6_AMT,PATIENTSURVEY_DICT
 
@@ -17662,9 +17686,9 @@ Form=13
 
 [Text]
 
-Position=50,3390,330,3406
+Position=50,3420,330,3436
 
-Text=114.1 Other items included in the bill — Other expenses (Amount in Pesos)
+Text=115.1 Other items included in the bill — Other expenses (Amount in Pesos)
 
  
 
@@ -17674,7 +17698,7 @@ Text=114.1 Other items included in the bill — Other expenses (Amount in Pesos)
 
 Name=Q1141_OTHER_TXT
 
-Position=350,3417,760,3437
+Position=350,3447,760,3467
 
 Item=Q1141_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -17688,9 +17712,9 @@ Form=13
 
 [Text]
 
-Position=50,3420,330,3436
+Position=50,3450,330,3466
 
-Text=114.1 Other expenses — specify text
+Text=115.1 Other expenses — specify text
 
  
 
@@ -17700,7 +17724,7 @@ Text=114.1 Other expenses — specify text
 
 Name=Q1142_1
 
-Position=350,3447,365,3467
+Position=350,3477,365,3497
 
 Item=Q1142_1,PATIENTSURVEY_DICT
 
@@ -17712,9 +17736,9 @@ Form=13
 
 [Text]
 
-Position=50,3450,330,3466
+Position=50,3480,330,3496
 
-Text=114.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility
+Text=115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility
 
  
 
@@ -17724,7 +17748,7 @@ Text=114.2 Other expenses during confinement not in bill — Medical equipment o
 
 Name=Q1142_1_AMT
 
-Position=350,3477,760,3497
+Position=350,3507,760,3527
 
 Item=Q1142_1_AMT,PATIENTSURVEY_DICT
 
@@ -17736,9 +17760,9 @@ Form=13
 
 [Text]
 
-Position=50,3480,330,3496
+Position=50,3510,330,3526
 
-Text=114.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)
+Text=115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)
 
  
 
@@ -17748,7 +17772,7 @@ Text=114.2 Other expenses during confinement not in bill — Medical equipment o
 
 Name=Q1142_2
 
-Position=350,3507,365,3527
+Position=350,3537,365,3557
 
 Item=Q1142_2,PATIENTSURVEY_DICT
 
@@ -17760,9 +17784,9 @@ Form=13
 
 [Text]
 
-Position=50,3510,330,3526
+Position=50,3540,330,3556
 
-Text=114.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary
+Text=115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary
 
  
 
@@ -17772,7 +17796,7 @@ Text=114.2 Other expenses during confinement not in bill — Payment made direct
 
 Name=Q1142_2_AMT
 
-Position=350,3537,760,3557
+Position=350,3567,760,3587
 
 Item=Q1142_2_AMT,PATIENTSURVEY_DICT
 
@@ -17784,9 +17808,9 @@ Form=13
 
 [Text]
 
-Position=50,3540,330,3556
+Position=50,3570,330,3586
 
-Text=114.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)
+Text=115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)
 
  
 
@@ -17796,7 +17820,7 @@ Text=114.2 Other expenses during confinement not in bill — Payment made direct
 
 Name=Q1142_3
 
-Position=350,3567,365,3587
+Position=350,3597,365,3617
 
 Item=Q1142_3,PATIENTSURVEY_DICT
 
@@ -17808,9 +17832,9 @@ Form=13
 
 [Text]
 
-Position=50,3570,330,3586
+Position=50,3600,330,3616
 
-Text=114.2 Other expenses during confinement not in bill — Food
+Text=115.2 Other expenses during confinement not in bill — Food
 
  
 
@@ -17820,7 +17844,7 @@ Text=114.2 Other expenses during confinement not in bill — Food
 
 Name=Q1142_3_AMT
 
-Position=350,3597,760,3617
+Position=350,3627,760,3647
 
 Item=Q1142_3_AMT,PATIENTSURVEY_DICT
 
@@ -17832,9 +17856,9 @@ Form=13
 
 [Text]
 
-Position=50,3600,330,3616
+Position=50,3630,330,3646
 
-Text=114.2 Other expenses during confinement not in bill — Food (Amount in Pesos)
+Text=115.2 Other expenses during confinement not in bill — Food (Amount in Pesos)
 
  
 
@@ -17844,7 +17868,7 @@ Text=114.2 Other expenses during confinement not in bill — Food (Amount in Pes
 
 Name=Q1142_4
 
-Position=350,3627,365,3647
+Position=350,3657,365,3677
 
 Item=Q1142_4,PATIENTSURVEY_DICT
 
@@ -17856,9 +17880,9 @@ Form=13
 
 [Text]
 
-Position=50,3630,330,3646
+Position=50,3660,330,3676
 
-Text=114.2 Other expenses during confinement not in bill — Transportation
+Text=115.2 Other expenses during confinement not in bill — Transportation
 
  
 
@@ -17868,7 +17892,7 @@ Text=114.2 Other expenses during confinement not in bill — Transportation
 
 Name=Q1142_4_AMT
 
-Position=350,3657,760,3677
+Position=350,3687,760,3707
 
 Item=Q1142_4_AMT,PATIENTSURVEY_DICT
 
@@ -17880,9 +17904,9 @@ Form=13
 
 [Text]
 
-Position=50,3660,330,3676
+Position=50,3690,330,3706
 
-Text=114.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)
+Text=115.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)
 
  
 
@@ -17892,7 +17916,7 @@ Text=114.2 Other expenses during confinement not in bill — Transportation (Amo
 
 Name=Q1142_5
 
-Position=350,3687,365,3707
+Position=350,3717,365,3737
 
 Item=Q1142_5,PATIENTSURVEY_DICT
 
@@ -17904,9 +17928,9 @@ Form=13
 
 [Text]
 
-Position=50,3690,330,3706
+Position=50,3720,330,3736
 
-Text=114.2 Other expenses during confinement not in bill — Donation to the facility
+Text=115.2 Other expenses during confinement not in bill — Donation to the facility
 
  
 
@@ -17916,7 +17940,7 @@ Text=114.2 Other expenses during confinement not in bill — Donation to the fac
 
 Name=Q1142_5_AMT
 
-Position=350,3717,760,3737
+Position=350,3747,760,3767
 
 Item=Q1142_5_AMT,PATIENTSURVEY_DICT
 
@@ -17928,9 +17952,9 @@ Form=13
 
 [Text]
 
-Position=50,3720,330,3736
+Position=50,3750,330,3766
 
-Text=114.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)
+Text=115.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)
 
  
 
@@ -17940,7 +17964,7 @@ Text=114.2 Other expenses during confinement not in bill — Donation to the fac
 
 Name=Q1142_6
 
-Position=350,3747,365,3767
+Position=350,3777,365,3797
 
 Item=Q1142_6,PATIENTSURVEY_DICT
 
@@ -17952,9 +17976,9 @@ Form=13
 
 [Text]
 
-Position=50,3750,330,3766
+Position=50,3780,330,3796
 
-Text=114.2 Other expenses during confinement not in bill — Allowance for caregiver
+Text=115.2 Other expenses during confinement not in bill — Allowance for caregiver
 
  
 
@@ -17964,7 +17988,7 @@ Text=114.2 Other expenses during confinement not in bill — Allowance for careg
 
 Name=Q1142_6_AMT
 
-Position=350,3777,760,3797
+Position=350,3807,760,3827
 
 Item=Q1142_6_AMT,PATIENTSURVEY_DICT
 
@@ -17976,9 +18000,9 @@ Form=13
 
 [Text]
 
-Position=50,3780,330,3796
+Position=50,3810,330,3826
 
-Text=114.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)
+Text=115.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)
 
  
 
@@ -17988,7 +18012,7 @@ Text=114.2 Other expenses during confinement not in bill — Allowance for careg
 
 Name=Q1142_7
 
-Position=350,3807,365,3827
+Position=350,3837,365,3857
 
 Item=Q1142_7,PATIENTSURVEY_DICT
 
@@ -18000,9 +18024,9 @@ Form=13
 
 [Text]
 
-Position=50,3810,330,3826
+Position=50,3840,330,3856
 
-Text=114.2 Other expenses during confinement not in bill — Other (specify)
+Text=115.2 Other expenses during confinement not in bill — Other (specify)
 
  
 
@@ -18012,7 +18036,7 @@ Text=114.2 Other expenses during confinement not in bill — Other (specify)
 
 Name=Q1142_7_AMT
 
-Position=350,3837,760,3857
+Position=350,3867,760,3887
 
 Item=Q1142_7_AMT,PATIENTSURVEY_DICT
 
@@ -18024,9 +18048,9 @@ Form=13
 
 [Text]
 
-Position=50,3840,330,3856
+Position=50,3870,330,3886
 
-Text=114.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)
+Text=115.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)
 
  
 
@@ -18036,7 +18060,7 @@ Text=114.2 Other expenses during confinement not in bill — Other (specify) (Am
 
 Name=Q1142_OTHER_TXT
 
-Position=350,3867,760,3887
+Position=350,3897,760,3917
 
 Item=Q1142_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -18050,33 +18074,9 @@ Form=13
 
 [Text]
 
-Position=50,3870,330,3886
-
-Text=114.2 Other expenses — specify text
-
- 
-
-  
-
-[Field]
-
-Name=Q115_FINAL_CASH
-
-Position=350,3897,760,3917
-
-Item=Q115_FINAL_CASH,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=13
-
-  
-
-[Text]
-
 Position=50,3900,330,3916
 
-Text=115. What was the final amount you paid in cash at the hospital cashier upon discharge? (Amount in Pesos)
+Text=115.2 Other expenses — specify text
 
  
 
@@ -18492,7 +18492,7 @@ Length=1
 
 Name=DG_BLK_168
 
-Label=Q114
+Label=Q115
 
 DisplayTogether=Yes
 
@@ -18506,7 +18506,7 @@ Length=5
 
 Name=DG_BLK_169
 
-Label=Q114
+Label=Q115
 
 DisplayTogether=Yes
 
@@ -18520,13 +18520,13 @@ Length=5
 
 Name=DG_BLK_170
 
-Label=Q114
+Label=Q115
 
 DisplayTogether=Yes
 
 Position=142
 
-Length=2
+Length=3
 
   
 
@@ -18534,11 +18534,11 @@ Length=2
 
 Name=DG_BLK_171
 
-Label=Q114
+Label=Q115
 
 DisplayTogether=Yes
 
-Position=145
+Position=146
 
 Length=1
 
@@ -18548,11 +18548,11 @@ Length=1
 
 Name=DG_BLK_172
 
-Label=Q114
+Label=Q115
 
 DisplayTogether=Yes
 
-Position=147
+Position=148
 
 Length=5
 
@@ -18562,11 +18562,11 @@ Length=5
 
 Name=DG_BLK_173
 
-Label=Q114
+Label=Q115
 
 DisplayTogether=Yes
 
-Position=153
+Position=154
 
 Length=5
 
@@ -18576,11 +18576,11 @@ Length=5
 
 Name=DG_BLK_174
 
-Label=Q114
+Label=Q115
 
 DisplayTogether=Yes
 
-Position=159
+Position=160
 
 Length=4
 
@@ -18590,25 +18590,11 @@ Length=4
 
 Name=DG_BLK_175
 
-Label=Q114
-
-DisplayTogether=Yes
-
-Position=164
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_176
-
 Label=Q115
 
 DisplayTogether=Yes
 
-Position=166
+Position=165
 
 Length=1
 
@@ -20156,7 +20142,7 @@ Text=130. Have you or your household had to reduce spending on things you need (
 
 [Block]
 
-Name=DG_BLK_177
+Name=DG_BLK_176
 
 Label=Q116
 
@@ -20170,7 +20156,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_178
+Name=DG_BLK_177
 
 Label=Q117
 
@@ -20184,7 +20170,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_179
+Name=DG_BLK_178
 
 Label=Q117
 
@@ -20198,7 +20184,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_180
+Name=DG_BLK_179
 
 Label=Q118
 
@@ -20212,7 +20198,7 @@ Length=9
 
 [Block]
 
-Name=DG_BLK_181
+Name=DG_BLK_180
 
 Label=Q118
 
@@ -20226,7 +20212,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_182
+Name=DG_BLK_181
 
 Label=Q119
 
@@ -20240,7 +20226,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_183
+Name=DG_BLK_182
 
 Label=Q120
 
@@ -20254,7 +20240,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_184
+Name=DG_BLK_183
 
 Label=Q120
 
@@ -20268,7 +20254,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_185
+Name=DG_BLK_184
 
 Label=Q121
 
@@ -20282,7 +20268,7 @@ Length=9
 
 [Block]
 
-Name=DG_BLK_186
+Name=DG_BLK_185
 
 Label=Q121
 
@@ -20296,7 +20282,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_187
+Name=DG_BLK_186
 
 Label=Q122
 
@@ -20310,7 +20296,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_188
+Name=DG_BLK_187
 
 Label=Q123
 
@@ -20324,7 +20310,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_189
+Name=DG_BLK_188
 
 Label=Q124
 
@@ -20338,7 +20324,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_190
+Name=DG_BLK_189
 
 Label=Q125
 
@@ -20352,7 +20338,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_191
+Name=DG_BLK_190
 
 Label=Q125
 
@@ -20366,7 +20352,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_192
+Name=DG_BLK_191
 
 Label=Q126
 
@@ -20380,7 +20366,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_193
+Name=DG_BLK_192
 
 Label=Q127
 
@@ -20394,7 +20380,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_194
+Name=DG_BLK_193
 
 Label=Q128
 
@@ -20408,7 +20394,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_195
+Name=DG_BLK_194
 
 Label=Q129
 
@@ -20422,7 +20408,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_196
+Name=DG_BLK_195
 
 Label=Q130
 
@@ -20790,7 +20776,7 @@ Text=144. How would the patient rate the quality of care you received at [facili
 
 [Block]
 
-Name=DG_BLK_197
+Name=DG_BLK_196
 
 Label=Q131-Q135
 
@@ -20804,7 +20790,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_198
+Name=DG_BLK_197
 
 Label=Q136-Q140
 
@@ -20818,7 +20804,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_199
+Name=DG_BLK_198
 
 Label=Q141-Q144
 
@@ -22430,7 +22416,7 @@ Text=161. If branded, why did you buy branded medicine? — Other (specify) text
 
 [Block]
 
-Name=DG_BLK_200
+Name=DG_BLK_199
 
 Label=Q145
 
@@ -22444,7 +22430,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_201
+Name=DG_BLK_200
 
 Label=Q146-Q147
 
@@ -22458,7 +22444,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_202
+Name=DG_BLK_201
 
 Label=Q148
 
@@ -22472,7 +22458,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_203
+Name=DG_BLK_202
 
 Label=Q148
 
@@ -22486,7 +22472,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_204
+Name=DG_BLK_203
 
 Label=Q148
 
@@ -22500,7 +22486,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_205
+Name=DG_BLK_204
 
 Label=Q149
 
@@ -22514,7 +22500,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_206
+Name=DG_BLK_205
 
 Label=Q149
 
@@ -22528,7 +22514,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_207
+Name=DG_BLK_206
 
 Label=Q150-Q151
 
@@ -22542,7 +22528,7 @@ Length=3
 
 [Block]
 
-Name=DG_BLK_208
+Name=DG_BLK_207
 
 Label=Q152
 
@@ -22556,7 +22542,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_209
+Name=DG_BLK_208
 
 Label=Q153
 
@@ -22570,7 +22556,7 @@ Length=8
 
 [Block]
 
-Name=DG_BLK_210
+Name=DG_BLK_209
 
 Label=Q153
 
@@ -22584,7 +22570,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_211
+Name=DG_BLK_210
 
 Label=Q154
 
@@ -22598,7 +22584,7 @@ Length=6
 
 [Block]
 
-Name=DG_BLK_212
+Name=DG_BLK_211
 
 Label=Q154
 
@@ -22612,7 +22598,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_213
+Name=DG_BLK_212
 
 Label=Q155
 
@@ -22626,7 +22612,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_214
+Name=DG_BLK_213
 
 Label=Q156
 
@@ -22640,7 +22626,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_215
+Name=DG_BLK_214
 
 Label=Q157
 
@@ -22654,7 +22640,7 @@ Length=9
 
 [Block]
 
-Name=DG_BLK_216
+Name=DG_BLK_215
 
 Label=Q157
 
@@ -22668,7 +22654,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_217
+Name=DG_BLK_216
 
 Label=Q158
 
@@ -22682,7 +22668,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_218
+Name=DG_BLK_217
 
 Label=Q159
 
@@ -22696,7 +22682,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_219
+Name=DG_BLK_218
 
 Label=Q160
 
@@ -22710,7 +22696,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_220
+Name=DG_BLK_219
 
 Label=Q160
 
@@ -22724,7 +22710,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_221
+Name=DG_BLK_220
 
 Label=Q161
 
@@ -22738,7 +22724,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_222
+Name=DG_BLK_221
 
 Label=Q161
 
@@ -23932,7 +23918,7 @@ Text=178. Overall, how would you rate your experience with the referral process?
 
 [Block]
 
-Name=DG_BLK_223
+Name=DG_BLK_222
 
 Label=Q162
 
@@ -23946,7 +23932,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_224
+Name=DG_BLK_223
 
 Label=Q163
 
@@ -23960,7 +23946,7 @@ Length=12
 
 [Block]
 
-Name=DG_BLK_225
+Name=DG_BLK_224
 
 Label=Q163
 
@@ -23974,7 +23960,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_226
+Name=DG_BLK_225
 
 Label=Q164
 
@@ -23988,7 +23974,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_227
+Name=DG_BLK_226
 
 Label=Q164
 
@@ -24002,7 +23988,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_228
+Name=DG_BLK_227
 
 Label=Q165
 
@@ -24016,7 +24002,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_229
+Name=DG_BLK_228
 
 Label=Q165
 
@@ -24030,7 +24016,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_230
+Name=DG_BLK_229
 
 Label=Q166-Q169
 
@@ -24044,7 +24030,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_231
+Name=DG_BLK_230
 
 Label=Q170
 
@@ -24058,7 +24044,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_232
+Name=DG_BLK_231
 
 Label=Q171
 
@@ -24072,7 +24058,7 @@ Length=7
 
 [Block]
 
-Name=DG_BLK_233
+Name=DG_BLK_232
 
 Label=Q171
 
@@ -24086,7 +24072,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_234
+Name=DG_BLK_233
 
 Label=Q172
 
@@ -24100,7 +24086,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_235
+Name=DG_BLK_234
 
 Label=Q173-Q176
 
@@ -24114,7 +24100,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_236
+Name=DG_BLK_235
 
 Label=Q177
 
@@ -24128,7 +24114,7 @@ Length=10
 
 [Block]
 
-Name=DG_BLK_237
+Name=DG_BLK_236
 
 Label=Q177
 
@@ -24142,7 +24128,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_238
+Name=DG_BLK_237
 
 Label=Q178
 

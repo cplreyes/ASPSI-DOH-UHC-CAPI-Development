@@ -8541,426 +8541,6 @@ questions:
             <p>Uban pa (isulti)</p>
           WAR: |
             <p>114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — Other (specify) text</p>
-  - name: PATIENTSURVEY_DICT.Q1141_1
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Doctor's Professional Fee</p>
-          FIL: |
-            <p>Bayad sa konsulta</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Doctor's Professional Fee</p>
-          BIS: |
-            <p>Bayad sa Doktor</p>
-          CEB: |
-            <p>Propesyonal nga bayad sa doktor</p>
-          WAR: |
-            <p>Propesyonal nga Bayad han Doktor</p>
-  - name: PATIENTSURVEY_DICT.Q1141_1_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)</p>
-          FIL: |
-            <p>Bayad sa konsulta</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)</p>
-          BIS: |
-            <p>114.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)</p>
-          CEB: |
-            <p>Propesyonal nga bayad sa doktor</p>
-          WAR: |
-            <p>114.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1141_2
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Medical equipment or supplies</p>
-          FIL: |
-            <p>Medikal na kagamitan o suplay</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Medical equipment or supplies</p>
-          BIS: |
-            <p>Medikal nga gamit ug supplies</p>
-          CEB: |
-            <p>Medikal nga kagamitan o suplay</p>
-          WAR: |
-            <p>Mga gamit o mga suplay ha medisina</p>
-  - name: PATIENTSURVEY_DICT.Q1141_2_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p>
-          FIL: |
-            <p>Medikal na kagamitan o suplay</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p>
-          BIS: |
-            <p>114.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p>
-          CEB: |
-            <p>Medikal nga kagamitan o suplay</p>
-          WAR: |
-            <p>114.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1141_3
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p>
-          FIL: |
-            <p>114.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p>
-          BIS: |
-            <p>Non-medical expenses (pananglitan: hygiene kit)</p>
-          CEB: |
-            <p>Dili medikal nga galastohan (pananglitan, hygiene kit)</p>
-          WAR: |
-            <p>Mga gastos nga diri medikal: (pananglitan, kit ha kalimpyo)</p>
-  - name: PATIENTSURVEY_DICT.Q1141_3_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
-          FIL: |
-            <p>114.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
-          BIS: |
-            <p>114.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
-          CEB: |
-            <p>Dili medikal nga galastohan (pananglitan, hygiene kit)</p>
-          WAR: |
-            <p>114.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1141_4
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility</p>
-          FIL: |
-            <p>Diagnostic o palaboratoryo sa loob ng pasilidad</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility</p>
-          BIS: |
-            <p>Diagnostic o laboratory procedure sulod sa pasilidad</p>
-          CEB: |
-            <p>Diagnostic o laboratory procedure sulod sa pasilidad</p>
-          WAR: |
-            <p>Pag-eksamin o pamaagi ha laboratoryo ha sulod han pasilidad</p>
-  - name: PATIENTSURVEY_DICT.Q1141_4_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)</p>
-          FIL: |
-            <p>Diagnostic o palaboratoryo sa loob ng pasilidad</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)</p>
-          BIS: |
-            <p>114.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)</p>
-          CEB: |
-            <p>Diagnostic o laboratory procedure sulod sa pasilidad</p>
-          WAR: |
-            <p>114.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1141_5
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Medicines or drugs inside the facility</p>
-          FIL: |
-            <p>Mga gamot sa loob ng pasilidad</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Medicines or drugs inside the facility</p>
-          BIS: |
-            <p>Tambal o medisina sulod sa pasilidad</p>
-          CEB: |
-            <p>Tambal o droga sulod sa pasilidad</p>
-          WAR: |
-            <p>Mga medisina o droga ha sulod han pasilidad</p>
-  - name: PATIENTSURVEY_DICT.Q1141_5_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)</p>
-          FIL: |
-            <p>Mga gamot sa loob ng pasilidad</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)</p>
-          BIS: |
-            <p>114.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)</p>
-          CEB: |
-            <p>Tambal o droga sulod sa pasilidad</p>
-          WAR: |
-            <p>114.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1141_6
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Other expenses</p>
-          FIL: |
-            <p>Iba pang mga gastos</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Other expenses</p>
-          BIS: |
-            <p>Uban pang gasto</p>
-          CEB: |
-            <p>Uban pang galastohan</p>
-          WAR: |
-            <p>Iba pa nga mga gastos</p>
-  - name: PATIENTSURVEY_DICT.Q1141_6_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other items included in the bill — Other expenses (Amount in Pesos)</p>
-          FIL: |
-            <p>Iba pang mga gastos</p>
-          BCL: |
-            <p>114.1 Other items included in the bill — Other expenses (Amount in Pesos)</p>
-          BIS: |
-            <p>114.1 Other items included in the bill — Other expenses (Amount in Pesos)</p>
-          CEB: |
-            <p>Uban pang galastohan</p>
-          WAR: |
-            <p>114.1 Other items included in the bill — Other expenses (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1141_OTHER_TXT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.1 Other expenses — specify text</p>
-          FIL: |
-            <p>114.1 Other expenses — specify text</p>
-          BCL: |
-            <p>114.1 Other expenses — specify text</p>
-          BIS: |
-            <p>114.1 Other expenses — specify text</p>
-          CEB: |
-            <p>Uban pa (isulti)</p>
-          WAR: |
-            <p>114.1 Other expenses — specify text</p>
-  - name: PATIENTSURVEY_DICT.Q1142_1
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility</p>
-          FIL: |
-            <p>Medikal na kagamitan o suplay na binili sa labas ng pasilidad</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility</p>
-          BIS: |
-            <p>Tambal o medisina gipalit gawas sa pasilidad</p>
-          CEB: |
-            <p>Medikal nga kagamitan o suplay nga gipalit gawas sa pasilidad</p>
-          WAR: |
-            <p>Medikal nga mga gamit o mga suplay nga ginpalit ha gawas han pasilidad</p>
-  - name: PATIENTSURVEY_DICT.Q1142_1_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)</p>
-          FIL: |
-            <p>Medikal na kagamitan o suplay na binili sa labas ng pasilidad</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)</p>
-          BIS: |
-            <p>114.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)</p>
-          CEB: |
-            <p>Medikal nga kagamitan o suplay nga gipalit gawas sa pasilidad</p>
-          WAR: |
-            <p>114.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1142_2
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary</p>
-          FIL: |
-            <p>Ang bayad ay ibingay sa sekretarya o sa doktor</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary</p>
-          BIS: |
-            <p>Bayad nga direktang gihatag sa doktor/doktor ug ilang secretary</p>
-          CEB: |
-            <p>Direkta nga bayad sa doktor ug ilang secretary</p>
-          WAR: |
-            <p>Pagbayad direkta ha doktor/ mga doktor ngan ha ira sekretarya</p>
-  - name: PATIENTSURVEY_DICT.Q1142_2_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)</p>
-          FIL: |
-            <p>Ang bayad ay ibingay sa sekretarya o sa doktor</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)</p>
-          BIS: |
-            <p>114.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)</p>
-          CEB: |
-            <p>Direkta nga bayad sa doktor ug ilang secretary</p>
-          WAR: |
-            <p>114.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1142_3
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Food</p>
-          FIL: |
-            <p>Pagkain</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Food</p>
-          BIS: |
-            <p>Pagkaon</p>
-          CEB: |
-            <p>Pagkaon</p>
-          WAR: |
-            <p>Pagkaon</p>
-  - name: PATIENTSURVEY_DICT.Q1142_3_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Food (Amount in Pesos)</p>
-          FIL: |
-            <p>Pagkain</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Food (Amount in Pesos)</p>
-          BIS: |
-            <p>114.2 Other expenses during confinement not in bill — Food (Amount in Pesos)</p>
-          CEB: |
-            <p>Pagkaon</p>
-          WAR: |
-            <p>114.2 Other expenses during confinement not in bill — Food (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1142_4
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Transportation</p>
-          FIL: |
-            <p>Transportasyon</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Transportation</p>
-          BIS: |
-            <p>Plete/Pamasahe</p>
-          CEB: |
-            <p>Plete sa transportasyon</p>
-          WAR: |
-            <p>Transportasyon</p>
-  - name: PATIENTSURVEY_DICT.Q1142_4_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)</p>
-          FIL: |
-            <p>Transportasyon</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)</p>
-          BIS: |
-            <p>114.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)</p>
-          CEB: |
-            <p>Plete sa transportasyon</p>
-          WAR: |
-            <p>114.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1142_5
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Donation to the facility</p>
-          FIL: |
-            <p>Donasyon sa pasilidad</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Donation to the facility</p>
-          BIS: |
-            <p>Donasyon sa Pasilidad</p>
-          CEB: |
-            <p>Donasyon sa pasilidad</p>
-          WAR: |
-            <p>Donasyon ha pasilidad</p>
-  - name: PATIENTSURVEY_DICT.Q1142_5_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)</p>
-          FIL: |
-            <p>Donasyon sa pasilidad</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)</p>
-          BIS: |
-            <p>114.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)</p>
-          CEB: |
-            <p>Donasyon sa pasilidad</p>
-          WAR: |
-            <p>114.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1142_6
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Allowance for caregiver</p>
-          FIL: |
-            <p>Allowance para sa tagapagalaga</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Allowance for caregiver</p>
-          BIS: |
-            <p>Allowance sa Tigbantay/Tig-atiman</p>
-          CEB: |
-            <p>Allowance sa tig-atiman</p>
-          WAR: |
-            <p>Pangasto para han nag-aataman</p>
-  - name: PATIENTSURVEY_DICT.Q1142_6_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)</p>
-          FIL: |
-            <p>Allowance para sa tagapagalaga</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)</p>
-          BIS: |
-            <p>114.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)</p>
-          CEB: |
-            <p>Allowance sa tig-atiman</p>
-          WAR: |
-            <p>114.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1142_7
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Other (specify)</p>
-          FIL: |
-            <p>Iba pa (tukuyin)</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Other (specify)</p>
-          BIS: |
-            <p>114.2 Other expenses during confinement not in bill — Other (specify)</p>
-          CEB: |
-            <p>Uban pa (isulti)</p>
-          WAR: |
-            <p>Iba pa (Ispecify)</p>
-  - name: PATIENTSURVEY_DICT.Q1142_7_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)</p>
-          FIL: |
-            <p>Iba pa (tukuyin)</p>
-          BCL: |
-            <p>114.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)</p>
-          BIS: |
-            <p>114.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)</p>
-          CEB: |
-            <p>Uban pa (isulti)</p>
-          WAR: |
-            <p>114.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q1142_OTHER_TXT
-    conditions:
-      - questionText:
-          EN: |
-            <p>114.2 Other expenses — specify text</p>
-          FIL: |
-            <p>114.2 Other expenses — specify text</p>
-          BCL: |
-            <p>114.2 Other expenses — specify text</p>
-          BIS: |
-            <p>114.2 Other expenses — specify text</p>
-          CEB: |
-            <p>Uban pa (isulti)</p>
-          WAR: |
-            <p>114.2 Other expenses — specify text</p>
   - name: PATIENTSURVEY_DICT.Q115_FINAL_CASH
     conditions:
       - questionText:
@@ -8976,6 +8556,426 @@ questions:
             <p>Unsa ang katapusang kantidad nga imong gibayran og cash sa hospital cashier pagka-discharge?</p>
           WAR: |
             <p>Ano an katapusan nga kantidad nga imo ginbayad nga cash ha kahera han ospital han paggawas?</p>
+  - name: PATIENTSURVEY_DICT.Q1141_1
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee</p>
+  - name: PATIENTSURVEY_DICT.Q1141_1_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1141_2
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies</p>
+  - name: PATIENTSURVEY_DICT.Q1141_2_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1141_3
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p>
+  - name: PATIENTSURVEY_DICT.Q1141_3_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1141_4
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility</p>
+  - name: PATIENTSURVEY_DICT.Q1141_4_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1141_5
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility</p>
+  - name: PATIENTSURVEY_DICT.Q1141_5_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1141_6
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Other expenses</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Other expenses</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Other expenses</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Other expenses</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Other expenses</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Other expenses</p>
+  - name: PATIENTSURVEY_DICT.Q1141_6_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other items included in the bill — Other expenses (Amount in Pesos)</p>
+          FIL: |
+            <p>115.1 Other items included in the bill — Other expenses (Amount in Pesos)</p>
+          BCL: |
+            <p>115.1 Other items included in the bill — Other expenses (Amount in Pesos)</p>
+          BIS: |
+            <p>115.1 Other items included in the bill — Other expenses (Amount in Pesos)</p>
+          CEB: |
+            <p>115.1 Other items included in the bill — Other expenses (Amount in Pesos)</p>
+          WAR: |
+            <p>115.1 Other items included in the bill — Other expenses (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1141_OTHER_TXT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.1 Other expenses — specify text</p>
+          FIL: |
+            <p>115.1 Other expenses — specify text</p>
+          BCL: |
+            <p>115.1 Other expenses — specify text</p>
+          BIS: |
+            <p>115.1 Other expenses — specify text</p>
+          CEB: |
+            <p>115.1 Other expenses — specify text</p>
+          WAR: |
+            <p>115.1 Other expenses — specify text</p>
+  - name: PATIENTSURVEY_DICT.Q1142_1
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility</p>
+  - name: PATIENTSURVEY_DICT.Q1142_1_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1142_2
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary</p>
+  - name: PATIENTSURVEY_DICT.Q1142_2_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1142_3
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Food</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Food</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Food</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Food</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Food</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Food</p>
+  - name: PATIENTSURVEY_DICT.Q1142_3_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Food (Amount in Pesos)</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Food (Amount in Pesos)</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Food (Amount in Pesos)</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Food (Amount in Pesos)</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Food (Amount in Pesos)</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Food (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1142_4
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation</p>
+  - name: PATIENTSURVEY_DICT.Q1142_4_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1142_5
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility</p>
+  - name: PATIENTSURVEY_DICT.Q1142_5_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1142_6
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver</p>
+  - name: PATIENTSURVEY_DICT.Q1142_6_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1142_7
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify)</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify)</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify)</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify)</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify)</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify)</p>
+  - name: PATIENTSURVEY_DICT.Q1142_7_AMT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)</p>
+          FIL: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)</p>
+          BCL: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)</p>
+          BIS: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)</p>
+          CEB: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)</p>
+          WAR: |
+            <p>115.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)</p>
+  - name: PATIENTSURVEY_DICT.Q1142_OTHER_TXT
+    conditions:
+      - questionText:
+          EN: |
+            <p>115.2 Other expenses — specify text</p>
+          FIL: |
+            <p>115.2 Other expenses — specify text</p>
+          BCL: |
+            <p>115.2 Other expenses — specify text</p>
+          BIS: |
+            <p>115.2 Other expenses — specify text</p>
+          CEB: |
+            <p>115.2 Other expenses — specify text</p>
+          WAR: |
+            <p>115.2 Other expenses — specify text</p>
   - name: PATIENTSURVEY_DICT.Q116_NBB_HEARD
     conditions:
       - questionText:
@@ -9925,17 +9925,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an [inpatient] or [outpatient], where we invited you to participate in our survey on [date_formatted].</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on [date_formatted].</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
           FIL: |
-            <p>Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa ~~FACILITY_NAME~~ bilang isang [inpatient] o [outpatient], kung saan inanyayahan kayong lumahok sa aming survey noong [date_formatted].</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
+            <p>Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa ~~FACILITY_NAME~~ bilang isang ~~getvaluelabel(PATIENT_TYPE)~~, kung saan inanyayahan kayong lumahok sa aming survey noong [date_formatted].</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
           BCL: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an [inpatient] or [outpatient], where we invited you to participate in our survey on [date_formatted].</p><p>Mga waiting area</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on [date_formatted].</p><p>Mga waiting area</p>
           BIS: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an [inpatient] or [outpatient], where we invited you to participate in our survey on [date_formatted].</p><p>Hulatanan</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on [date_formatted].</p><p>Hulatanan</p>
           CEB: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an [inpatient] or [outpatient], where we invited you to participate in our survey on [date_formatted].</p><p>Mga lugar-hulatanan</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on [date_formatted].</p><p>Mga lugar-hulatanan</p>
           WAR: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an [inpatient] or [outpatient], where we invited you to participate in our survey on [date_formatted].</p><p>Mga lugar hin paghulat</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on [date_formatted].</p><p>Mga lugar hin paghulat</p>
   - name: PATIENTSURVEY_DICT.Q132_AMEN_BATHROOMS
     conditions:
       - questionText:

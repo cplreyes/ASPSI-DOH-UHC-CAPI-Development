@@ -836,6 +836,12 @@ def apply_translations(dictionary, translations_dir, languages=TRANSLATION_LANGU
 # `skipped` for manual handling rather than guessed wrong.
 
 _OTHER_LABEL_RE = re.compile(r"specif|\bothers?\b", re.IGNORECASE)
+# The real 'Other (specify)' marker: 'specif' immediately after an opening paren or a
+# comma — 'Other (Specify)', 'Other, specify', 'Other disability (specify)'. This does
+# NOT match 'specif' buried in a definition (e.g. Q45 'Indigent (i.e., ... as specified
+# ...)') or a substantive 'Other health care provider', so the gate can't latch onto the
+# wrong value (#400 Q40 + Q39/Q44/Q45).
+_SPECIFY_OPTION_RE = re.compile(r"[(,]\s*specif", re.IGNORECASE)
 
 
 def _label_text(node):
@@ -844,12 +850,15 @@ def _label_text(node):
 
 
 def _other_value_code(item):
-    """The 'Other (specify)' value code of a coded item, or None."""
-    for vs in item.get("valueSets") or []:
-        for val in vs.get("values") or []:
-            if _OTHER_LABEL_RE.search(_label_text(val)):
-                pairs = val.get("pairs") or [{}]
-                code = pairs[0].get("value")
+    """The 'Other (specify)' value code of a coded item, or None. Prefer a value whose
+    label carries the parenthetical/comma 'specify' marker; fall back to the loose match
+    only when no such value exists (so legacy 'Others'-style options are unchanged)."""
+    vals = [(val, _label_text(val)) for vs in (item.get("valueSets") or [])
+            for val in (vs.get("values") or [])]
+    for matcher in (_SPECIFY_OPTION_RE, _OTHER_LABEL_RE):
+        for val, lbl in vals:
+            if matcher.search(lbl):
+                code = (val.get("pairs") or [{}])[0].get("value")
                 if code is not None:
                     return code
     return None
