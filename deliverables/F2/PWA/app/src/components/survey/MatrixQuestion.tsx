@@ -60,7 +60,7 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
             const out: React.ReactElement[] = [
               <tr key={item.id} className="border-b">
                 <th scope="row" className="py-2 pr-2 text-left text-sm font-normal">
-                  <span className="mr-1 text-muted-foreground">{item.id}.</span>
+                  <span className="mr-1 text-muted-foreground">{item.displayNumber ?? item.id}.</span>
                   {localized(item.label, locale)}
                   {item.required ? <span className="ml-1 text-destructive">*</span> : null}
                 </th>
@@ -69,7 +69,7 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
                     <input
                       type="radio"
                       value={c.value}
-                      aria-label={`${item.id} ${localized(c.label, locale)}`}
+                      aria-label={`${item.displayNumber ?? item.id} ${localized(c.label, locale)}`}
                       checked={currentValue === c.value}
                       onChange={() =>
                         setValue(item.id, c.value, {
@@ -110,7 +110,7 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
           return (
             <div key={item.id} className="flex flex-col gap-2 border-t pt-3">
               <p id={groupId} className="text-sm font-medium">
-                <span className="mr-1 text-muted-foreground">{item.id}.</span>
+                <span className="mr-1 text-muted-foreground">{item.displayNumber ?? item.id}.</span>
                 {localized(item.label, locale)}
                 {item.required ? <span className="ml-1 text-destructive">*</span> : null}
               </p>
@@ -120,7 +120,7 @@ export function MatrixQuestion({ items, choices }: MatrixQuestionProps) {
                     <input
                       type="radio"
                       value={c.value}
-                      aria-label={`${item.id} ${localized(c.label, locale)}`}
+                      aria-label={`${item.displayNumber ?? item.id} ${localized(c.label, locale)}`}
                       checked={currentValue === c.value}
                       onChange={() =>
                         setValue(item.id, c.value, {

@@ -36,6 +36,14 @@ export interface SubField {
 export interface Item {
   id: string;
   legacyId?: string;
+  // Contiguous on-screen number. `id` stays 1:1 with the source PDF (data keys,
+  // cross-field rules, the Apps Script column map all depend on it), but the
+  // official questionnaire skips Q108 (Q107→Q109), which reads as a missing item
+  // to respondents. displayNumber removes that gap for DISPLAY ONLY — any id
+  // numbered above the gap shows one less (Q109→Q108 … Q125→Q124). Absent for
+  // items at/below the gap (there the displayed number already equals `id`).
+  // (#519.) Always render the number as `item.displayNumber ?? item.id`.
+  displayNumber?: string;
   section: string;
   type: ItemType;
   required: boolean;

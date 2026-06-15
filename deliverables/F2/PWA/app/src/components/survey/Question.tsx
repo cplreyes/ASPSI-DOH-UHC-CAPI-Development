@@ -53,12 +53,12 @@ export function Question({ item }: QuestionProps) {
         aria-hidden="true"
         className="font-mono text-sm text-muted-foreground sm:pt-1 sm:pr-4 sm:text-right sm:text-base sm:leading-snug"
       >
-        {item.id}
+        {item.displayNumber ?? item.id}
       </span>
       <div className="flex min-w-0 flex-col gap-2">
         <Heading {...headingProps} className="text-base font-medium leading-snug">
           <span className="sr-only">
-            {item.id}
+            {item.displayNumber ?? item.id}
             {'. '}
           </span>
           {localized(item.label, locale)}

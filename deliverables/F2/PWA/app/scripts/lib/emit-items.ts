@@ -37,14 +37,30 @@ function emitSectionConst(section: Section): string {
   return `export const section${section.id}: Section = {\n${parts.join(',\n')},\n};`;
 }
 
+// #519: the source questionnaire numbers items Q1–Q125 but omits Q108 (the
+// numbering jumps Q107→Q109), so `id` (which is 1:1 with the PDF) carries that
+// gap. For DISPLAY we want a contiguous number so the gap doesn't read as a
+// missing question — any id above the gap shows one less (Q109→Q108 … Q125→Q124).
+// Returns undefined at/below the gap, where the displayed number already == id.
+const NUMBERING_GAP = 108;
+function displayNumberFor(id: string): string | undefined {
+  const m = /^Q(\d+)(.*)$/.exec(id);
+  if (!m) return undefined;
+  const n = Number(m[1]);
+  if (n <= NUMBERING_GAP) return undefined;
+  return `Q${n - 1}${m[2]}`;
+}
+
 function emitItem(item: Item): string {
-  const fields: string[] = [
-    `id: '${item.id}'`,
+  const fields: string[] = [`id: '${item.id}'`];
+  const dn = displayNumberFor(item.id);
+  if (dn) fields.push(`displayNumber: '${dn}'`);
+  fields.push(
     `section: '${item.section}'`,
     `type: '${item.type}'`,
     `required: ${item.required}`,
     `label: ${quoteLocalized(item.label)}`,
-  ];
+  );
   if (item.conditional) fields.push(`conditional: true`);
   if (item.legacyId) fields.push(`legacyId: '${item.legacyId}'`);
   if (item.help) fields.push(`help: ${quoteLocalized(item.help)}`);

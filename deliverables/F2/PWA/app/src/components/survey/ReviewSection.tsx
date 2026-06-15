@@ -65,7 +65,7 @@ function rowsForItem(
     return item.subFields
       .map((sf) => ({
         key: sf.id,
-        label: `${item.id} ${localized(sf.label, locale)}`,
+        label: `${item.displayNumber ?? item.id} ${localized(sf.label, locale)}`,
         value: formatValue(values[sf.id]),
       }))
       .filter((r) => r.value !== '');
@@ -75,12 +75,13 @@ function rowsForItem(
   if (primary !== '')
     rows.push({
       key: item.id,
-      label: `${item.id} ${localized(item.label, locale)}`,
+      label: `${item.displayNumber ?? item.id} ${localized(item.label, locale)}`,
       value: primary,
     });
   const otherKey = `${item.id}_other`;
   const otherVal = formatValue(values[otherKey]);
-  if (otherVal !== '') rows.push({ key: otherKey, label: `${item.id} (specify)`, value: otherVal });
+  if (otherVal !== '')
+    rows.push({ key: otherKey, label: `${item.displayNumber ?? item.id} (specify)`, value: otherVal });
   return rows;
 }
 
@@ -154,7 +155,7 @@ export function ReviewSection({ values, onEdit, onSubmit, mode = 'hcw' }: Review
                         {block.group.items.map((it) => (
                           <tr key={it.id}>
                             <td className="py-1 pr-2 text-muted-foreground">
-                              {it.id} {localized(it.label, locale)}
+                              {it.displayNumber ?? it.id} {localized(it.label, locale)}
                             </td>
                             <td className="py-1 text-foreground">{formatValue(values[it.id])}</td>
                           </tr>
