@@ -33,10 +33,20 @@ export const LOCALE_META: Record<Locale, { native: string; ready: boolean }> = {
   bcl: { native: 'Bikol', ready: true },
 };
 
+// TEMPORARY English-only mode — Shan request 2026-06-16: ship the survey English-only
+// so the team can capture clean English screenshots. When the production build sets
+// VITE_ENGLISH_ONLY=true (.env.production), READY_LOCALES collapses to just English,
+// which (a) hides the language switcher — LanguageSwitcher returns null at <=1 ready
+// locale — and (b) makes any persisted dialect fall back to English (see locale-context).
+// vitest runs in test mode WITHOUT the flag, so all 7 PSA languages stay wired + fully
+// tested and CI stays green. REVERT: delete .env.production (or its VITE_ENGLISH_ONLY
+// line) and let CI redeploy, or `git revert` the commit.
+export const ENGLISH_ONLY = import.meta.env.VITE_ENGLISH_ONLY === 'true';
+
 // Locales offered in the language switcher (those with delivered translations).
-export const READY_LOCALES: readonly Locale[] = (SUPPORTED_LOCALES as readonly Locale[]).filter(
-  (l) => LOCALE_META[l].ready,
-);
+export const READY_LOCALES: readonly Locale[] = ENGLISH_ONLY
+  ? (['en'] as const)
+  : (SUPPORTED_LOCALES as readonly Locale[]).filter((l) => LOCALE_META[l].ready);
 
 export function isLocale(value: unknown): value is Locale {
   return typeof value === 'string' && (SUPPORTED_LOCALES as readonly string[]).includes(value);

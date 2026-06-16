@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { i18n, isLocale, type Locale } from './index';
+import { i18n, isLocale, READY_LOCALES, type Locale } from './index';
 
 const STORAGE_KEY = 'f2_locale';
 
@@ -13,7 +13,10 @@ const LocaleContext = createContext<LocaleContextValue | null>(null);
 function readPersisted(): Locale {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return isLocale(raw) ? raw : 'en';
+    // Honour a persisted locale only when it's actually offered (READY_LOCALES). In
+    // English-only mode (VITE_ENGLISH_ONLY) READY_LOCALES is just ['en'], so a device
+    // that previously selected a dialect resets to English for clean screenshots.
+    return isLocale(raw) && READY_LOCALES.includes(raw) ? raw : 'en';
   } catch {
     return 'en';
   }
