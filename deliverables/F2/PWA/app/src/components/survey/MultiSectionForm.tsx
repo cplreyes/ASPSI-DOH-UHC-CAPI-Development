@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ZodTypeAny } from 'zod';
 import type { Item, Section as SectionModel } from '@/types/survey';
@@ -142,6 +142,10 @@ export function MultiSectionForm({
   const [lockMsg, setLockMsg] = useState('');
   const submitRef = useRef<(() => void) | null>(null);
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Pending auto-advance timer (#524). Held in a ref so a user interaction can
+  // cancel it synchronously — before the 500ms autosave debounce reflects their
+  // input — so they're never bounced to the next section mid-answer.
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const directionRef = useRef<'forward' | 'back'>('forward');
   const touchStartXRef = useRef(0);
@@ -205,7 +209,12 @@ export function MultiSectionForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
-  // Auto-advance when current section transitions from non-complete to complete
+  // Auto-advance when current section transitions from non-complete to complete.
+  // The timer is held in advanceTimerRef so handleInteract can cancel it the
+  // instant the user touches a field again (#524) — otherwise the 400ms advance
+  // could outrun the 500ms autosave debounce and bounce the user past a
+  // multi-select they're still filling or a conditional question their next
+  // answer would reveal. It re-schedules when sectionStatuses next settles.
   useEffect(() => {
     if (isReview) return;
     const currentStatus = sectionStatuses[index];
@@ -213,11 +222,27 @@ export function MultiSectionForm({
     if (entryStatusRef.current === 'complete') return; // was already complete on arrival
 
     const timer = setTimeout(() => {
+      advanceTimerRef.current = null;
       handleNext();
     }, 400);
-    return () => clearTimeout(timer);
+    advanceTimerRef.current = timer;
+    return () => {
+      clearTimeout(timer);
+      if (advanceTimerRef.current === timer) advanceTimerRef.current = null;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionStatuses]);
+
+  // Cancel a pending auto-advance the moment the user interacts with any field.
+  // Fired synchronously by Section.onInteract (before the debounced autosave),
+  // so an actively-answering user is never bounced; the advance re-schedules
+  // once their input settles into `merged` and the section is still complete.
+  const handleInteract = useCallback(() => {
+    if (advanceTimerRef.current !== null) {
+      clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = null;
+    }
+  }, []);
 
   const showLockMsg = () => {
     setLockMsg(t('navigator.sectionLocked'));
@@ -498,6 +523,7 @@ export function MultiSectionForm({
             hideSubmit
             submitRef={submitRef}
             onAutosave={handleSectionAutosave}
+            onInteract={handleInteract}
             onSubmit={handleSectionValid}
           />
         </div>

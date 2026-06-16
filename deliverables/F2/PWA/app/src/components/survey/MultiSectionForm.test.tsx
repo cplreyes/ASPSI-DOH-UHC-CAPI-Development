@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type * as React from 'react';
 import { LocaleProvider } from '@/i18n/locale-context';
@@ -306,6 +306,68 @@ describe('<MultiSectionForm>', () => {
     await waitFor(() =>
       expect(screen.getByRole('heading', { name: /Section B/ })).toBeInTheDocument(),
     );
+  });
+
+  it('#524: continued interaction cancels a pending auto-advance (no mid-answer bounce)', async () => {
+    // Bug: once the visible-required set is filled the section reads "complete"
+    // and a 400ms auto-advance fires — but that 400ms is shorter than the 500ms
+    // autosave debounce, so a user still answering (adding multi-select options,
+    // or about to reveal a conditional required question) gets bounced to the
+    // next section. Fix: Section.onInteract fires synchronously on every field
+    // change and cancels the pending advance; it only re-schedules once input
+    // settles. Without the fix this test lands on Section B; with it, stays on A.
+    vi.useFakeTimers();
+    try {
+      renderWithProviders(
+        <MultiSectionForm
+          initialValues={{
+            // Section A — everything required except Q11 (last field) → A starts incomplete.
+            Q1_1: 'Reyes',
+            Q1_2: 'Carl',
+            Q1_3: 'P',
+            Q2: 'Regular',
+            Q3: 'Female',
+            Q4: 30,
+            Q5: 'Nurse',
+            Q7: 'No',
+            Q9_1: 3,
+            Q9_2: 6,
+            Q10: 5,
+          }}
+          onAutosave={vi.fn()}
+          onSubmit={vi.fn()}
+        />,
+      );
+      expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
+
+      // Fill the last required field → after the 500ms autosave, A is complete
+      // and a 400ms auto-advance is scheduled. (fireEvent, not userEvent, to
+      // avoid the userEvent+fake-timers deadlock.)
+      await act(async () => {
+        fireEvent.change(screen.getByLabelText(/hours do you work/), { target: { value: '8' } });
+      });
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(500);
+      });
+
+      // The user keeps editing the section BEFORE the 400ms advance elapses.
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(150);
+      });
+      await act(async () => {
+        fireEvent.change(screen.getByLabelText(/days in a week/), { target: { value: '6' } });
+      }); // onInteract → cancels the pending advance
+
+      // Let the original 400ms advance window fully elapse (150 + 300 > 400).
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(300);
+      });
+
+      // Still on Section A — the interaction canceled the pending auto-advance.
+      expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('renders Section G Q75-Q81 as a single matrix table on tablet+', async () => {
