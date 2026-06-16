@@ -58,7 +58,24 @@ Notes:
 | Admin Portal | 0.85 | ≤ 4.0 s | ≤ 200 ms | ≤ 0.1 |
 | Bundle size (gzipped, single chunk) | — | — | ≤ 350 KB | — |
 
-Floor values are intentionally below current baseline — they're regression triggers, not aspirational targets. If a future release drops below any floor, a perf-regression issue gets filed automatically (TODO: wire to CI in #275 follow-up).
+Floor values are intentionally below current baseline — they're regression triggers, not aspirational targets.
+
+### Bundle-size gate (E6-PWA-010 — wired to CI 2026-06-16)
+
+`scripts/check-bundle-budget.mjs` runs as the last step of `npm run build` (after
+`check-bundle-secrets`), so CI and Cloudflare Pages **fail the build** on a gzip
+regression past these budgets:
+
+| Budget | Limit (gzip) | Current (2026-06-16) | Why |
+|---|---|---|---|
+| Eager first-paint JS (`index` + `vendor`) | ≤ 250 KB | 185 KB | What HCW field tablets download at boot — the tight, important one |
+| `admin` chunk (lazy) | ≤ 150 KB | 105 KB | Looser — only admins load it; never on the respondent path |
+| Largest single chunk | ≤ 350 KB | 176 KB (vendor) | Documented per-chunk ceiling |
+
+Budgets carry ~35-45% headroom over current so ordinary feature growth doesn't
+trip the gate. If an increase is intentional, raise the limit in the script and
+update the "Current" column here. (Lighthouse score floors above are still
+checked manually via Re-measurement — only the bundle-size budget is gated.)
 
 ## Re-measurement
 

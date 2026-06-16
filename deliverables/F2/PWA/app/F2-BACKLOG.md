@@ -145,9 +145,13 @@ Ordered by severity / blocking impact.
 - [ ] **E6-PWA-009 — a11y audit** · **PARTIAL → BUILDABLE NOW (frontend/CI-only).**
   37 axe-core component tests already exist (`a11y.test.tsx`, `admin*.a11y.test.tsx`, `survey.a11y.test.tsx`).
   Remaining: a Lighthouse a11y run + report file + an AA-compliance CI gate.
-- [ ] **E6-PWA-010 — Performance baseline** · **PARTIAL → BUILDABLE NOW (frontend/CI-only).**
-  `PERFORMANCE.md` has the 2026-05-12 baseline (HCW 0.91 / Admin 0.93; 250 KB gz first-paint).
-  Remaining: a CI Lighthouse/bundle-size gate to enforce budgets on PRs; vendor chunk still >500 KB.
+- [~] **E6-PWA-010 — Performance baseline** · **bundle-size gate DONE; Lighthouse-score gate still manual.**
+  `PERFORMANCE.md` has the baseline. The **bundle-size budget is now CI-gated** (2026-06-16):
+  `scripts/check-bundle-budget.mjs` runs in `npm run build` and **fails the build** on a gzip
+  regression (eager first-paint ≤ 250 KB, admin ≤ 150 KB, any chunk ≤ 350 KB). Verified it
+  fails when exceeded. Still open: an automated **Lighthouse-score** gate (LCP/TBT/CLS floors) —
+  needs `@lhci/cli` + headless Chrome in CI against a served build; scores are checked manually
+  via the Re-measurement steps today.
 
 ## G. Deferred / not committed (slot in only if pilot demands)
 
