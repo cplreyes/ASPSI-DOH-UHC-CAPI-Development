@@ -104,18 +104,14 @@ const PAIRS = [
   ['warning-foreground', 'warning'], // text on a warning fill
 ];
 
-// Documented sub-AA pairs pending a Verde Manual palette review. Floors are the
-// current ratio rounded down — a regression trigger, not an endorsement. Keep in
-// sync with A11Y.md "Known contrast exceptions".
+// All theme pairs now meet WCAG 2.1 AA (4.5:1 normal text). The former
+// sub-AA Verde Manual pairs (light ochre warning-as-text, dark primary/
+// destructive CTA text) were raised to AA on 2026-06-17 — see DESIGN.md
+// Decisions Log + A11Y.md. Re-add an entry here only with a matching
+// DESIGN.md row and sign-off (palette is locked, #163).
 const EXCEPTIONS = {
-  light: {
-    'warning/background': 2.6, // ochre #C68A2E warning text on paper — 2.70:1
-    'warning-foreground/warning': 2.6, // paper on ochre — 2.70:1
-  },
-  dark: {
-    'primary-foreground/primary': 2.9, // button text on dark emerald — 2.99:1
-    'destructive-foreground/destructive': 3.0, // 3.13:1 — meets 3:1 UI, not 4.5 text
-  },
+  light: {},
+  dark: {},
 };
 
 console.log('check-contrast — WCAG 2.1 AA (4.5:1 normal text), theme tokens:');
