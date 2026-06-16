@@ -41,18 +41,27 @@ Ordered by severity / blocking impact.
   Pre-filled token rejected as **"Token malformed. Contact ASPSI ops."** — user cannot
   enroll at all. Likely token format/validation or the enrollment-URL token param. Pairs
   with #528. *(Windows Chrome.)*
-- [ ] **#539 — Role-Select (section role-gating)** · `High` · routing
-  Section visibility per persona doesn't match the spec'd routing. Required behavior:
-  **C/D/E1** = Admin, Physician, Nurse, Midwife, Dentist, Nutritionist-Dietician only;
-  **Pharmacist/Dispenser + Asst. Pharmacist** → skip to **E2**; **Physician Assistant,
-  Nursing/Lab/Med-tech, Health Promo, Nutrition officer, PT, Dentist aide, BHW, Other** →
-  no C–E1, go to E2; **Section G** = Physicians + Dentists only. Fix in `spec/F2-Spec.md`
-  role-gating + `skip-logic.ts`. *(Biggest logic item.)*
-- [ ] **#524 — Skip Logic (premature auto-advance)** · `High` · navigation
-  Answering a question auto-skips to the next section while required-but-initially-hidden
-  questions remain (observed **Q23, Q44, Q54, Q123**; worse toward section end). Same class
-  as the historical #10 auto-advance bug — section-completion predicate in
-  `MultiSectionForm.tsx` / `handleSectionValid`. *(Windows Chrome.)*
+- [ ] **#539 — Role-Select (section role-gating)** · `High` · routing · **FIX ON STAGING (`45144cf`) — pending tester UAT**
+  Section visibility per persona didn't match the spec'd routing. Required behavior:
+  **C/D/E1** = Admin, Physician/Doctor, Nurse, Midwife, Dentist only (note: there is **no**
+  "Nutritionist-Dietician" Q5 choice — the spec's summary word maps to no real role, and the
+  detailed/exclude lists put *Nutrition action officer/coordinator* in the **excluded** set);
+  **Pharmacist/Dispenser** → skip to **E2**; **Physician Assistant, Nursing/Lab/Med-tech,
+  Health Promo, Nutrition officer, PT, Dentist aide, BHW, Other** → no C–E1, go to E2;
+  **Section G** = Physicians + Dentists only.
+  Root cause: `SECTION_CDE_ROLES`/`SECTION_G_ROLES` in `skip-logic.ts` still held the stale
+  R2-#114 list (Physician assistant + Nutrition officer leaked C/D/E; PA also leaked G).
+  Fix removed all three + collapsed `cross-field.ts`'s duplicate `BUCKET_CD` into the exported
+  `SECTION_CDE_ROLES` (single source of truth). All 16 roles traced vs spec; 214 lib tests +
+  #539 persona regressions green. *(Aidan re-test 2026-06-16: only PA + Nutrition officer
+  remained.)*
+- [ ] **#524 — Skip Logic (premature auto-advance)** · `High` · navigation · **FIX ON STAGING (`da7bfb7`) — pending tester UAT**
+  Answering a question auto-skipped to the next section while required-but-initially-hidden
+  questions remained (observed **Q23, Q44, Q54, Q123**; worse toward section end). Same class
+  as the historical #10 auto-advance bug. Fix: `Section.tsx` fires an un-debounced `onInteract`
+  on every field change; `MultiSectionForm.tsx` holds the 400ms advance timer in a ref and
+  cancels it on any interaction, so a section only advances after the respondent goes idle.
+  Regression test added. *(Windows Chrome.)*
 - [ ] **#528 — Token Auto-prefilled** · `Medium-High` · Enrollment
   Token is **not** auto-prefilled when the enrollment URL is opened fresh/incognito (5A.1);
   Verify should be one-tap. Related to #543 (token handling). *(Android tablet Chrome.)*
