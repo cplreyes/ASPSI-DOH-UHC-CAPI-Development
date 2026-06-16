@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { evaluateCrossField, type Warning } from './cross-field';
+import { evaluateCrossField, sectionBlockingErrors, type Warning } from './cross-field';
 
 describe('evaluateCrossField', () => {
   it('returns no warnings on a clean nurse profile', () => {
@@ -123,5 +123,37 @@ describe('evaluateCrossField', () => {
       values: { years: 15, age: 25 },
     });
     expect(prof01?.fields).toEqual(['Q4', 'Q9_1']);
+  });
+});
+
+// #587: inline section-exit gate — the error-severity findings whose fields
+// belong to the section the respondent is leaving.
+describe('sectionBlockingErrors', () => {
+  // Section A owns the age (Q4) and tenure (Q9_1 years / Q9_2 months) fields.
+  const sectionA = new Set(['Q4', 'Q9_1', 'Q9_2']);
+
+  it('returns PROF-01 when tenure ≥ age − 20 and the field is in the section', () => {
+    const out = sectionBlockingErrors({ Q4: 30, Q9_1: 15 }, sectionA);
+    expect(out.map((w) => w.id)).toContain('PROF-01');
+  });
+
+  it('returns PROF-05 for the zero-tenure block', () => {
+    const out = sectionBlockingErrors({ Q4: 30, Q9_1: 0, Q9_2: 0 }, sectionA);
+    expect(out.map((w) => w.id)).toContain('PROF-05');
+  });
+
+  it('is empty when the tenure is plausible', () => {
+    expect(sectionBlockingErrors({ Q4: 40, Q9_1: 5, Q9_2: 0 }, sectionA)).toEqual([]);
+  });
+
+  it('ignores error findings whose fields are outside the given section', () => {
+    // A later section that does not own Q4/Q9 must not block on a tenure error.
+    expect(sectionBlockingErrors({ Q4: 30, Q9_1: 15 }, new Set(['Q31', 'Q41']))).toEqual([]);
+  });
+
+  it('does not block on warn-severity findings (e.g. PROF-04 weekly workload)', () => {
+    // Q10 × Q11 = 91 > 80 → PROF-04 (warn), not a hard block.
+    const out = sectionBlockingErrors({ Q10: 7, Q11: 13 }, new Set(['Q10', 'Q11']));
+    expect(out).toEqual([]);
   });
 });

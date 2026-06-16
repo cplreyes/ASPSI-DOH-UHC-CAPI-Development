@@ -53,6 +53,35 @@ describe('<MultiSectionForm>', () => {
     expect(screen.getByText(/Section 2 of 9/)).toBeInTheDocument();
   });
 
+  it('#587: blocks advance out of Section A on an implausible tenure (PROF-01) with an inline error', async () => {
+    renderWithProviders(
+      <MultiSectionForm
+        initialValues={{
+          Q1_1: 'Reyes',
+          Q1_2: 'Carl',
+          Q1_3: 'P',
+          Q2: 'Regular',
+          Q3: 'Female',
+          Q4: 30,
+          Q5: 'Nurse',
+          Q7: 'No',
+          Q9_1: 15, // age 30 → threshold age − 20 = 10; tenure 15 ≥ 10 → PROF-01 hard block
+          Q9_2: 6,
+          Q10: 5,
+          Q11: 8,
+        }}
+        onAutosave={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    // The cross-field error fires inline at section exit — not only at review.
+    await waitFor(() =>
+      expect(screen.getByText(/must be less than your age/i)).toBeInTheDocument(),
+    );
+    expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
+  });
+
   it('applies intra-section skip logic — Q8 appears when Q7 = Yes', async () => {
     const user = userEvent.setup();
     renderWithProviders(

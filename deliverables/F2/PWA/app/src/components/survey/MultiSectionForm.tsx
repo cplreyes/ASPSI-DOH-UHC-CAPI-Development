@@ -30,6 +30,7 @@ import {
   sectionJSchema,
 } from '@/generated/schema';
 import { shouldShow, shouldShowSection, type FormValues } from '@/lib/skip-logic';
+import { sectionBlockingErrors } from '@/lib/cross-field';
 import { Section } from './Section';
 import { ProgressBar } from './ProgressBar';
 import { ReviewSection } from './ReviewSection';
@@ -140,6 +141,9 @@ export function MultiSectionForm({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [animKey, setAnimKey] = useState(0);
   const [lockMsg, setLockMsg] = useState('');
+  // #587: inline cross-field error shown when the respondent tries to leave a
+  // section that has an error-severity cross-field finding (e.g. tenure ≥ age−20).
+  const [crossFieldError, setCrossFieldError] = useState('');
   const submitRef = useRef<(() => void) | null>(null);
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Pending auto-advance timer (#524). Held in a ref so a user interaction can
@@ -206,6 +210,7 @@ export function MultiSectionForm({
   // Reset entry status when navigating to a new section (must be before the auto-advance effect)
   useEffect(() => {
     entryStatusRef.current = sectionStatuses[index] ?? 'empty';
+    setCrossFieldError(''); // #587: don't carry a section's cross-field error across nav
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [index]);
 
@@ -242,6 +247,9 @@ export function MultiSectionForm({
       clearTimeout(advanceTimerRef.current);
       advanceTimerRef.current = null;
     }
+    // #587: clear a shown cross-field error the moment the user edits a field —
+    // it re-evaluates on the next advance attempt.
+    setCrossFieldError('');
   }, []);
 
   const showLockMsg = () => {
@@ -272,6 +280,21 @@ export function MultiSectionForm({
     if (getSectionStatus(SECTIONS[index]!, next) !== 'complete') {
       return;
     }
+    // #587: fire the existing error-severity cross-field gate inline at section
+    // exit (not only at review). Block advance and surface the message so the
+    // respondent corrects e.g. an implausible tenure on Section A before leaving
+    // the section that owns the offending fields.
+    const sectionFieldIds = new Set<string>();
+    for (const it of SECTIONS[index]!.section.items) {
+      sectionFieldIds.add(it.id);
+      for (const sf of it.subFields ?? []) sectionFieldIds.add(sf.id);
+    }
+    const blocking = sectionBlockingErrors(next, sectionFieldIds);
+    if (blocking.length > 0) {
+      setCrossFieldError(blocking.map((w) => t(w.message.key, w.message.values ?? {})).join(' '));
+      return;
+    }
+    setCrossFieldError('');
     let nextIndex = index + 1;
     while (nextIndex < SECTIONS.length && !shouldShowSection(SECTIONS[nextIndex]!.id, next)) {
       nextIndex++;
@@ -494,6 +517,16 @@ export function MultiSectionForm({
           {lockMsg ? (
             <div className="border-t border-warning/30 bg-warning/10 px-4 py-1.5 text-xs text-warning">
               {lockMsg}
+            </div>
+          ) : null}
+
+          {/* #587: inline cross-field error strip (error-severity, blocks advance) */}
+          {crossFieldError ? (
+            <div
+              role="alert"
+              className="border-t border-destructive/30 bg-destructive/10 px-4 py-1.5 text-xs text-destructive"
+            >
+              {crossFieldError}
             </div>
           ) : null}
 

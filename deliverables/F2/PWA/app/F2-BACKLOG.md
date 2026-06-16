@@ -65,11 +65,14 @@ Ordered by severity / blocking impact.
 - [ ] **#528 — Token Auto-prefilled** · `Medium-High` · Enrollment
   Token is **not** auto-prefilled when the enrollment URL is opened fresh/incognito (5A.1);
   Verify should be one-tap. Related to #543 (token handling). *(Android tablet Chrome.)*
-- [ ] **#587 — Q9 vs Q4 inline validation timing (Section A)** · `Medium` · validation UX
-  The tenure-vs-age cross-field check (`Prof-01`: years of service < age − 20) only fires at
-  the **review** stage, not before section navigation — want it enforced inline so the
-  respondent corrects before proceeding. The rule works; it's a *when-it-fires* fix.
-  *(iPad Safari, v2.1.0.)*
+- [ ] **#587 — Q9 vs Q4 inline validation timing (Section A)** · `Medium` · validation UX · **FIX ON STAGING — pending tester UAT**
+  The tenure-vs-age cross-field check (`PROF-01`: years of service < age − 20) only fired at
+  the **review** stage, not before section navigation. Fix: new pure `sectionBlockingErrors()`
+  in `cross-field.ts` returns error-severity findings whose fields belong to the section being
+  left; `MultiSectionForm.handleSectionValid` fires it inline at section exit (covers manual
+  Next *and* #524 auto-advance), blocks the advance, and shows the message in a destructive
+  strip that clears on edit/nav. Also catches `PROF-05` (zero tenure). Unit + integration
+  tests added. The rule itself was unchanged — a *when-it-fires* fix. *(iPad Safari, v2.1.0.)*
 
 ## B. Survey — Features / polish
 
