@@ -142,9 +142,16 @@ Ordered by severity / blocking impact.
 ## F. Testing / Pilot / Quality
 
 - [ ] **E6-PWA-008 — F2 production pilot batch** — small facility cohort, success criteria, go/no-go · `est 1d` · *(needs real facilities — see Section B.)*
-- [ ] **E6-PWA-009 — a11y audit** · **PARTIAL → BUILDABLE NOW (frontend/CI-only).**
-  37 axe-core component tests already exist (`a11y.test.tsx`, `admin*.a11y.test.tsx`, `survey.a11y.test.tsx`).
-  Remaining: a Lighthouse a11y run + report file + an AA-compliance CI gate.
+- [~] **E6-PWA-009 — a11y audit** · **report + contrast gate DONE; full-page Lighthouse CI gate still optional.**
+  37 axe-core component tests already gated a11y in CI; added the missing pieces (2026-06-16):
+  **`A11Y.md`** report (Lighthouse a11y **100/100** on HCW enrollment + admin login, staging) and a
+  **contrast gate** (`scripts/check-contrast.mjs`, in `npm run build`) that parses `index.css` and
+  **fails CI on a WCAG-AA contrast regression** — closing the color-contrast blind spot the axe tests
+  skip (jsdom). It surfaced real **sub-AA findings pending a Verde Manual palette review** (need DESIGN.md
+  sign-off): light `warning` ochre 2.70:1 (lock strip / broadcast banner / warn alerts), dark primary
+  button text 2.99:1, dark destructive button text 3.13:1 — pinned at a regression floor for now.
+  Still open (heavier infra): a **full-page Lighthouse-score CI gate** (`@lhci/cli` + headless Chrome
+  in a workflow) to audit deep authed surfaces automatically.
 - [~] **E6-PWA-010 — Performance baseline** · **bundle-size gate DONE; Lighthouse-score gate still manual.**
   `PERFORMANCE.md` has the baseline. The **bundle-size budget is now CI-gated** (2026-06-16):
   `scripts/check-bundle-budget.mjs` runs in `npm run build` and **fails the build** on a gzip

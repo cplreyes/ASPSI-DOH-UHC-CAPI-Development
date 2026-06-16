@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/check-bundle-secrets.mjs && node scripts/check-bundle-budget.mjs",
+    "build": "tsc -b && vite build && node scripts/check-bundle-secrets.mjs && node scripts/check-bundle-budget.mjs && node scripts/check-contrast.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -16,6 +16,7 @@
     "gen:icons": "node scripts/gen-icons.mjs",
     "generate": "tsx scripts/generate.ts",
     "audit:pwa": "lighthouse http://localhost:4173 --only-categories=pwa --chrome-flags=\"--headless=new\" --output=json --output-path=./lighthouse-pwa.json --quiet",
+    "audit:a11y": "lighthouse https://f2-pwa-staging.pages.dev --only-categories=accessibility --chrome-flags=\"--headless=new\" --output=html --output-path=./lighthouse-a11y.html --quiet",
     "audit:bundle": "node scripts/audit-bundle.mjs",
     "e2e": "playwright test -c e2e/playwright.config.ts",
     "e2e:ui": "playwright test -c e2e/playwright.config.ts --ui",
