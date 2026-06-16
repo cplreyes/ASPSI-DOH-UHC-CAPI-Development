@@ -546,3 +546,68 @@ export async function handleKillSwitchSet(
   }
   return jsonResponse({ ok: true, data: { kill_switch: body.kill_switch } satisfies KillSwitchData }, 200);
 }
+
+// ----- Broadcast message (M12d) ---------------------------------------------
+// broadcast_message is an app-config key (like kill_switch) surfaced to every
+// respondent via BroadcastBanner. Admins read/set it here; both go through the
+// same generic AS config get/set. An empty string clears the banner.
+
+export interface BroadcastData {
+  broadcast_message: string;
+}
+
+// Mirror the PWA banner's practical limit — a short ops notice, not an article.
+export const BROADCAST_MAX_LEN = 280;
+
+export type BroadcastGetAsCallable = () => Promise<AppsScriptResponse<{ config: Record<string, string> }>>;
+export type BroadcastSetAsCallable = (
+  payload: { key: string; value: string },
+) => Promise<AppsScriptResponse<{ key: string; value: string }>>;
+
+export async function handleBroadcastGet(asCallable: BroadcastGetAsCallable): Promise<Response> {
+  const r = await asCallable();
+  if (!r.ok || !r.data) {
+    return jsonResponse(
+      { ok: false, error: r.error ?? { code: 'E_BACKEND', message: 'Apps Script unavailable' } },
+      502,
+    );
+  }
+  const broadcast_message = r.data.config['broadcast_message'] ?? '';
+  // Success bodies are the raw data (the admin-fetch convention — see the Files
+  // handlers); only errors carry the { ok:false, error } envelope.
+  return jsonResponse({ broadcast_message } satisfies BroadcastData, 200);
+}
+
+export async function handleBroadcastSet(
+  req: Request,
+  asCallable: BroadcastSetAsCallable,
+): Promise<Response> {
+  const body = (await req.json().catch(() => ({}))) as { broadcast_message?: unknown };
+  if (typeof body.broadcast_message !== 'string') {
+    return jsonResponse(
+      { ok: false, error: { code: 'E_VALIDATION', message: 'broadcast_message must be a string' } },
+      400,
+    );
+  }
+  const value = body.broadcast_message.trim();
+  if (value.length > BROADCAST_MAX_LEN) {
+    return jsonResponse(
+      {
+        ok: false,
+        error: {
+          code: 'E_VALIDATION',
+          message: `broadcast_message must be ${BROADCAST_MAX_LEN} characters or fewer`,
+        },
+      },
+      400,
+    );
+  }
+  const r = await asCallable({ key: 'broadcast_message', value });
+  if (!r.ok) {
+    return jsonResponse(
+      { ok: false, error: r.error ?? { code: 'E_BACKEND', message: 'Apps Script unavailable' } },
+      502,
+    );
+  }
+  return jsonResponse({ broadcast_message: value } satisfies BroadcastData, 200);
+}
