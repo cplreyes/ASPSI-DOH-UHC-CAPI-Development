@@ -1,4 +1,4 @@
-import type { FormValues } from './skip-logic';
+import { SECTION_CDE_ROLES, type FormValues } from './skip-logic';
 
 export type Severity = 'info' | 'warn' | 'clean' | 'error';
 
@@ -10,14 +10,11 @@ export interface Warning {
   derived?: Record<string, string>;
 }
 
-const BUCKET_CD = new Set([
-  'Administrator',
-  'Physician/Doctor',
-  'Physician assistant',
-  'Nurse',
-  'Midwife',
-  'Dentist',
-]);
+// #539: GATE-05 (Section C/D data filled by a role that shouldn't answer them)
+// must use the same role policy as the skip-logic section gate. This set
+// previously carried the stale 'Physician assistant' entry and disagreed with
+// skip-logic on the nutrition role; alias the canonical set so they can't drift.
+const BUCKET_CD = SECTION_CDE_ROLES;
 
 const DOCTOR_DENTIST = new Set(['Physician/Doctor', 'Dentist']);
 

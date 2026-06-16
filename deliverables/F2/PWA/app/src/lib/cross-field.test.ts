@@ -103,6 +103,18 @@ describe('evaluateCrossField', () => {
     expect(out.map((w) => w.id)).not.toContain('GATE-05');
   });
 
+  // #539: these two roles were removed from the C/D set; the data-quality gate
+  // shares that set, so it must now flag C/D data from either of them.
+  it('#539: flags GATE-05 for Physician assistant who answered Section C', () => {
+    const out = evaluateCrossField({ Q5: 'Physician assistant', Q31: 'Yes' });
+    expect(out.map((w) => w.id)).toContain('GATE-05');
+  });
+
+  it('#539: flags GATE-05 for Nutrition action officer/coordinator who answered Section C', () => {
+    const out = evaluateCrossField({ Q5: 'Nutrition action officer/ coordinator', Q31: 'Yes' });
+    expect(out.map((w) => w.id)).toContain('GATE-05');
+  });
+
   it('warning has a human-readable message and lists involved fields', () => {
     const out = evaluateCrossField({ Q4: 25, Q5: 'Nurse', Q9_1: 15 });
     const prof01 = out.find((w): w is Warning => w.id === 'PROF-01');
