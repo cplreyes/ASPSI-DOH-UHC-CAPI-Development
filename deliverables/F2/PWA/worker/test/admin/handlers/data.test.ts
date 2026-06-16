@@ -7,6 +7,8 @@ import { describe, expect, it } from 'vitest';
 import {
   handleListResponses,
   handleGetResponseById,
+  handleKillSwitchGet,
+  handleKillSwitchSet,
   handleBroadcastGet,
   handleBroadcastSet,
   BROADCAST_MAX_LEN,
@@ -200,6 +202,62 @@ describe('handleBroadcastSet', () => {
 
   it('502s when Apps Script rejects the write', async () => {
     const r = await handleBroadcastSet(req({ broadcast_message: 'hi' }), () => asErr('E_BACKEND', 'down'));
+    expect(r.status).toBe(502);
+  });
+});
+
+// ----- Kill switch — regression for the double-wrap fix -----------------------
+// These pin the unwrapped success-body convention. Before the fix the handlers
+// returned { ok:true, data:{ kill_switch } }, so KillSwitchSection read
+// r.data.kill_switch as undefined and the admin toggle always showed OFF.
+
+describe('handleKillSwitchGet', () => {
+  it('returns an unwrapped { kill_switch: true } body when config has "true"', async () => {
+    const r = await handleKillSwitchGet(() => asOk({ config: { kill_switch: 'true' } }));
+    expect(r.status).toBe(200);
+    const body = await r.json();
+    expect(body).toEqual({ kill_switch: true });
+  });
+
+  it('coerces any non-"true" value to false', async () => {
+    const r = await handleKillSwitchGet(() => asOk({ config: { kill_switch: 'false' } }));
+    const body = await r.json();
+    expect(body).toEqual({ kill_switch: false });
+  });
+
+  it('502s when Apps Script is unavailable', async () => {
+    const r = await handleKillSwitchGet(() => asErr('E_BACKEND', 'down'));
+    expect(r.status).toBe(502);
+  });
+});
+
+describe('handleKillSwitchSet', () => {
+  function req(body: unknown): Request {
+    return new Request('https://x/admin/api/dashboards/apps/kill-switch', {
+      method: 'PATCH',
+      body: JSON.stringify(body),
+    });
+  }
+
+  it('persists the flag and returns an unwrapped { kill_switch } body', async () => {
+    let captured: { key: string; value: string } | null = null;
+    const r = await handleKillSwitchSet(req({ kill_switch: true }), (p) => {
+      captured = p;
+      return asOk({ key: p.key, value: p.value });
+    });
+    expect(r.status).toBe(200);
+    expect(captured).toEqual({ key: 'kill_switch', value: 'true' });
+    const body = await r.json();
+    expect(body).toEqual({ kill_switch: true });
+  });
+
+  it('400s when kill_switch is not a boolean', async () => {
+    const r = await handleKillSwitchSet(req({ kill_switch: 'yes' }), () => asOk({ key: '', value: '' }));
+    expect(r.status).toBe(400);
+  });
+
+  it('502s when Apps Script rejects the write', async () => {
+    const r = await handleKillSwitchSet(req({ kill_switch: false }), () => asErr('E_BACKEND', 'down'));
     expect(r.status).toBe(502);
   });
 });

@@ -287,7 +287,10 @@ export async function handleBulkImportUsers(
     };
   });
 
-  return jsonResponse({ ok: true, data: { results: merged, total, created, rejected } }, 200);
+  // Unwrapped success body (admin-fetch convention) — BulkImportModal reads
+  // r.data.created/.rejected/.results directly. The previous { ok, data } wrap
+  // made those fields undefined (the results summary showed blank counts).
+  return jsonResponse({ results: merged, total, created, rejected }, 200);
 }
 
 export async function handleCreateUser(

@@ -522,7 +522,11 @@ export async function handleKillSwitchGet(
     );
   }
   const kill_switch = r.data.config['kill_switch'] === 'true';
-  return jsonResponse({ ok: true, data: { kill_switch } satisfies KillSwitchData }, 200);
+  // Unwrapped success body — the admin-fetch convention (errors carry the
+  // { ok:false, error } envelope; success is the raw data). Previously this
+  // double-wrapped, so KillSwitchSection read r.data.kill_switch as undefined
+  // and the admin toggle always showed OFF.
+  return jsonResponse({ kill_switch } satisfies KillSwitchData, 200);
 }
 
 export async function handleKillSwitchSet(
@@ -544,7 +548,7 @@ export async function handleKillSwitchSet(
       502,
     );
   }
-  return jsonResponse({ ok: true, data: { kill_switch: body.kill_switch } satisfies KillSwitchData }, 200);
+  return jsonResponse({ kill_switch: body.kill_switch } satisfies KillSwitchData, 200);
 }
 
 // ----- Broadcast message (M12d) ---------------------------------------------
