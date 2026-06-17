@@ -17,7 +17,22 @@ describe('BroadcastSection (M12d broadcast editor)', () => {
     const authOpts = () => ({ fetchImpl });
     const { container } = render(<BroadcastSection apiBaseUrl="https://api" authOpts={authOpts} />);
     await waitFor(() => expect(fetchImpl).toHaveBeenCalled());
-    // GET failed → the whole section renders null, no stray broken editor.
+    // 404 (route not deployed) → the whole section renders null, no stray editor.
+    expect(container.querySelector('textarea')).toBeNull();
+  });
+
+  it('shows an error (does not self-hide) when the route exists but the GET errors', async () => {
+    const fetchImpl = vi.fn(async () =>
+      jsonResponse(
+        { ok: false, error: { code: 'E_BACKEND', message: 'Apps Script unavailable' } },
+        502,
+      ),
+    );
+    const authOpts = () => ({ fetchImpl });
+    const { container } = render(<BroadcastSection apiBaseUrl="https://api" authOpts={authOpts} />);
+    // A 502 means the route IS deployed (the request reached the handler), so
+    // surface the failure instead of vanishing the way a 404 does.
+    expect(await screen.findByRole('alert')).toHaveTextContent('Apps Script unavailable');
     expect(container.querySelector('textarea')).toBeNull();
   });
 

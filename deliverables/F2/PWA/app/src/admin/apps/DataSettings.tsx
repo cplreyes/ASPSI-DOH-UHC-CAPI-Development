@@ -582,8 +582,15 @@ function KillSwitchSection({
 // ----- Broadcast message editor (M12d) ---------------------------------------
 // Sets the app-config `broadcast_message` (shown to every respondent via
 // BroadcastBanner) without ops hand-editing the Config sheet. Mirrors the
-// kill-switch's GET/PATCH pattern. Renders null until the admin broadcast route
-// answers, so it self-hides where the Worker route isn't deployed yet.
+// kill-switch's GET/PATCH pattern. Self-hides (renders null) when the route
+// 404s — i.e. the Worker isn't deployed yet — but surfaces any other load
+// failure instead of vanishing, so a transient backend error stays visible.
+
+type BroadcastLoad =
+  | { kind: 'loading' }
+  | { kind: 'absent' } // route 404s (Worker not deployed) → render null
+  | { kind: 'ready'; current: string }
+  | { kind: 'loadError'; message: string };
 
 export function BroadcastSection({
   apiBaseUrl,
@@ -592,11 +599,11 @@ export function BroadcastSection({
   apiBaseUrl: string;
   authOpts: () => AdminFetchOptions;
 }): JSX.Element | null {
-  const [current, setCurrent] = useState<string | null>(null);
+  const [load, setLoad] = useState<BroadcastLoad>({ kind: 'loading' });
   const [draft, setDraft] = useState('');
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -610,24 +617,47 @@ export function BroadcastSection({
       if (r.ok) {
         // Coerce a missing/non-string field to '' — the response is untrusted.
         const msg = r.data.broadcast_message ?? '';
-        setCurrent(msg);
+        setLoad({ kind: 'ready', current: msg });
         setDraft(msg);
+      } else if (r.error.code === 'E_NOT_FOUND') {
+        // Worker broadcast route not deployed yet (M12d deploy-gate) → hide.
+        setLoad({ kind: 'absent' });
+      } else {
+        // Route exists but the GET failed (AS down, perms, network). Show it
+        // rather than silently disappearing, the way the kill-switch does.
+        setLoad({
+          kind: 'loadError',
+          message: r.error.message || 'Failed to load the broadcast message.',
+        });
       }
-      // Any failure (incl. route-not-deployed) leaves current=null → section hidden.
     })();
     return () => {
       cancelled = true;
     };
   }, [apiBaseUrl, authOpts]);
 
-  if (current === null) return null;
+  if (load.kind === 'loading' || load.kind === 'absent') return null;
 
+  if (load.kind === 'loadError') {
+    return (
+      <div className="flex flex-col gap-2 border-b border-hairline pb-5">
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          Broadcast message
+        </span>
+        <p role="alert" className="text-sm text-error">
+          {load.message}
+        </p>
+      </div>
+    );
+  }
+
+  const current = load.current;
   const dirty = draft.trim() !== current.trim();
 
   async function save(): Promise<void> {
     setSaving(true);
     setSaved(false);
-    setError(null);
+    setSaveError(null);
     try {
       const r = await adminFetch<{ broadcast_message?: string }>(
         `${apiBaseUrl}/admin/api/dashboards/apps/broadcast`,
@@ -636,11 +666,11 @@ export function BroadcastSection({
       );
       if (r.ok) {
         const msg = r.data.broadcast_message ?? '';
-        setCurrent(msg);
+        setLoad({ kind: 'ready', current: msg });
         setDraft(msg);
         setSaved(true);
       } else {
-        setError(r.error.message || 'Save failed.');
+        setSaveError(r.error.message || 'Save failed.');
       }
     } finally {
       setSaving(false);
@@ -684,9 +714,9 @@ export function BroadcastSection({
         ) : null}
         <span className="ml-auto font-mono text-[10px] text-muted-foreground">{draft.length}/280</span>
       </div>
-      {error ? (
+      {saveError ? (
         <p role="alert" className="text-sm text-error">
-          {error}
+          {saveError}
         </p>
       ) : null}
     </div>

@@ -24,7 +24,7 @@
 ## What's actually actionable (post-audit)
 
 - **Buildable now, frontend/CI-only (fully shippable via Pages):** _none open_ — E6-PWA-009 (a11y: axe + contrast + Lighthouse gates) and E6-PWA-010 (perf: bundle-size + Lighthouse gates) both shipped 2026-06-17.
-- **Buildable now but Worker-deploy-gated** (code can land; goes live only once the Worker deploys): **broadcast_message admin editor** (the one remaining M12d piece).
+- **Code-complete, Worker-deploy-gated to go live** (last M12d piece): **broadcast_message admin editor** — built + wired + tested across all layers (2026-06-17); the new Worker route only answers once the Worker redeploys (CF token fix), so the editor self-hides on staging until then.
 - **Blocked on Carl/ASPSI inputs:** #543 + #528 (a staging token) · DESIGN-005 (DOH brand-book PDF) · FacilityMasterList real rows + M8/M9 facility flags (real facility data incl. BUCAS/GAMOT) · E4-INT-003 (ASPSI sign-offs).
 - **Not started:** E4-INT-002 Looker dashboard.
 
@@ -108,16 +108,19 @@ Ordered by severity / blocking impact.
 
 - [x] **E4-APRT-046 — Files: Create Folder** — ✅ **DONE end-to-end** (`Files.tsx` + worker `apps.ts`/`routes.ts` + AS `AdminFiles.js` + tests).
 - [x] **E4-APRT-047 — Files: Rename** — ✅ **DONE end-to-end** (inline rename + worker PATCH + AS RPC + tests).
-- [ ] **Admin mutations (was M12d)** — mostly shipped; **one piece remains:**
+- [x] **Admin mutations (was M12d)** — ✅ **all code shipped;** the broadcast editor only awaits the Worker deploy to go live:
   - [x] **Kill-switch toggle** — ✅ DONE (`DataSettings.tsx` + worker `/kill-switch` + AS + a11y/E2E/backend tests).
   - [x] **Requeue-from-DLQ** — ✅ DONE (`DLQTab.tsx` Replay/Delete + worker + AS + a11y test).
   - [x] **`admin_users_change_password` + bulk-import** — ✅ DONE (`ChangePasswordPage` + `BulkImportModal` + worker handlers + 8-case test suite).
-  - [ ] **`broadcast_message` editor** — ⚠️ **BUILDABLE but Worker-deploy-gated.** Consumption is
-    done (`BroadcastBanner.tsx` displays it; runtime-config polls it; `Schema.js:52` default).
-    Missing: an admin UI section (mirror the kill-switch editor in `DataSettings.tsx`) + a worker
-    route (`broadcast_message` is app-config like `kill_switch`, dispatched to the AS generic
-    config-set — needs a dedicated/generalized worker route, hence the deploy-gap dependency).
-    *(Removes the "ops edits the Config sheet directly" workaround.)*
+  - [x] **`broadcast_message` editor** — ✅ **CODE-COMPLETE across all layers + tests; goes live on the
+    Worker deploy.** Admin UI (`BroadcastSection` in `DataSettings.tsx` — self-hides on a 404 until the
+    route deploys, surfaces other load errors instead of vanishing; 2026-06-17), worker route + handler
+    (`BROADCAST_RE` + `handleBroadcastGet/Set` in `routes.ts`/`handlers/data.ts` — dash_apps-gated, audited
+    `admin_broadcast_set`, 280-char cap, empty clears), and AS dispatch (`admin_config_get/set` →
+    `adminConfigGet/Set`, `broadcast_message` seeded in `Schema.js` `F2_CONFIG_DEFAULTS`) all in place and
+    tested (FE 4 + worker 23 + backend 22 green). **Still Worker-deploy-gated:** the new route only answers
+    once the Worker redeploys (CF token fix) — until then the editor self-hides. Removes the "ops edits the
+    Config sheet directly" workaround.
 - [x] **Admin Portal design-review MINORs** — ✅ **DONE.** All 15 MINOR-tier findings shipped in the
   v2.0.1 patch bundle (E4-APRT-049a..e), verified in UAT R3.
 
