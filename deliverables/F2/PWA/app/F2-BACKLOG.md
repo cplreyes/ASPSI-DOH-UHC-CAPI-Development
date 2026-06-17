@@ -23,7 +23,7 @@
 
 ## What's actually actionable (post-audit)
 
-- **Buildable now, frontend/CI-only (fully shippable via Pages):** E6-PWA-009 Lighthouse a11y report + AA gate · E6-PWA-010 CI perf/bundle gate.
+- **Buildable now, frontend/CI-only (fully shippable via Pages):** _none open_ — E6-PWA-009 (a11y: axe + contrast + Lighthouse gates) and E6-PWA-010 (perf: bundle-size + Lighthouse gates) both shipped 2026-06-17.
 - **Buildable now but Worker-deploy-gated** (code can land; goes live only once the Worker deploys): **broadcast_message admin editor** (the one remaining M12d piece).
 - **Blocked on Carl/ASPSI inputs:** #543 + #528 (a staging token) · DESIGN-005 (DOH brand-book PDF) · FacilityMasterList real rows + M8/M9 facility flags (real facility data incl. BUCAS/GAMOT) · E4-INT-003 (ASPSI sign-offs).
 - **Not started:** E4-INT-002 Looker dashboard.
@@ -142,23 +142,20 @@ Ordered by severity / blocking impact.
 ## F. Testing / Pilot / Quality
 
 - [ ] **E6-PWA-008 — F2 production pilot batch** — small facility cohort, success criteria, go/no-go · `est 1d` · *(needs real facilities — see Section B.)*
-- [~] **E6-PWA-009 — a11y audit** · **report + contrast gate DONE; full-page Lighthouse CI gate still optional.**
-  37 axe-core component tests already gated a11y in CI; added the missing pieces (2026-06-16):
-  **`A11Y.md`** report (Lighthouse a11y **100/100** on HCW enrollment + admin login, staging) and a
-  **contrast gate** (`scripts/check-contrast.mjs`, in `npm run build`) that parses `index.css` and
-  **fails CI on a WCAG-AA contrast regression** — closing the color-contrast blind spot the axe tests
-  skip (jsdom). It surfaced real **sub-AA findings pending a Verde Manual palette review** (need DESIGN.md
-  sign-off): light `warning` ochre 2.70:1 (lock strip / broadcast banner / warn alerts), dark primary
-  button text 2.99:1, dark destructive button text 3.13:1 — pinned at a regression floor for now.
-  Still open (heavier infra): a **full-page Lighthouse-score CI gate** (`@lhci/cli` + headless Chrome
-  in a workflow) to audit deep authed surfaces automatically.
-- [~] **E6-PWA-010 — Performance baseline** · **bundle-size gate DONE; Lighthouse-score gate still manual.**
-  `PERFORMANCE.md` has the baseline. The **bundle-size budget is now CI-gated** (2026-06-16):
-  `scripts/check-bundle-budget.mjs` runs in `npm run build` and **fails the build** on a gzip
-  regression (eager first-paint ≤ 250 KB, admin ≤ 150 KB, any chunk ≤ 350 KB). Verified it
-  fails when exceeded. Still open: an automated **Lighthouse-score** gate (LCP/TBT/CLS floors) —
-  needs `@lhci/cli` + headless Chrome in CI against a served build; scores are checked manually
-  via the Re-measurement steps today.
+- [x] **E6-PWA-009 — a11y audit** — ✅ **DONE.** Three CI gates now cover a11y: the 37 axe-core
+  component tests, the **contrast gate** (`scripts/check-contrast.mjs` in `npm run build` — parses
+  `index.css`, fails on a WCAG-AA regression), and the **full-page Lighthouse a11y-score gate**
+  (`@lhci/cli`, `lighthouse` job in `ci.yml` — fails if `/` or `/admin/login` drops below 100/100,
+  audited in headless Chrome ×3). The sub-AA Verde Manual findings the contrast gate first surfaced
+  (light ochre 2.70:1, dark primary 2.99:1, dark destructive 3.13:1) were **fixed 2026-06-17** (`343b1a0`,
+  DESIGN.md Decisions Log) — all 20 pairs now ≥ AA, **zero exceptions**. **Deferred:** deep authed
+  surfaces (Lighthouse needs a session token, blocked #543/#528) — public entry points gated today.
+- [x] **E6-PWA-010 — Performance baseline** — ✅ **DONE.** Two CI gates: the **bundle-size budget**
+  (`scripts/check-bundle-budget.mjs` in `npm run build` — gzip floors: eager first-paint ≤ 250 KB,
+  admin ≤ 150 KB, any chunk ≤ 350 KB) and the **Lighthouse-score gate** (`@lhci/cli`, `lighthouse`
+  job in `ci.yml`) asserting perf/LCP/CLS/TBT against a served build on every push/PR
+  (`PERFORMANCE.md` → "Lighthouse-score gate"). CLS is a hard `error`; perf/LCP/TBT are `warn` pending
+  a few green CI runs to establish the runner baseline, then promoted to `error`.
 
 ## G. Deferred / not committed (slot in only if pilot demands)
 
@@ -169,6 +166,9 @@ Ordered by severity / blocking impact.
 ## ✅ Done / superseded (kept for traceability — do NOT re-do)
 
 - **Survey bugs shipped this session (staging, pending UAT):** #524, #539, #587.
+- **a11y + perf CI gates (2026-06-17, staging):** WCAG-AA contrast fix (`343b1a0` — all 20 token
+  pairs ≥ AA, gate exceptions removed) + full-page **Lighthouse-score gate** (`@lhci/cli`, `lighthouse`
+  job in `ci.yml`; a11y + CLS hard-gated, perf/LCP/TBT warn). Closes **E6-PWA-009 + E6-PWA-010**.
 - **Already shipped but were stale-listed as TODO (v2.0.1/v2.0.2):** DESIGN-004 fonts,
   E4-APRT-046 Create Folder, E4-APRT-047 Rename, kill-switch, DLQ requeue, change-password,
   bulk-import, admin design MINORs, E4-PWA-015 PBKDF2, E4-PWA-010 secrets runbook,
