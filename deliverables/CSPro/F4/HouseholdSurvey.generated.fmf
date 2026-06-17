@@ -144,24 +144,12 @@ Item=Q47_HH_HAS_PRIVATE_INS
 Name=FORM006
 Label=D. UHC Awareness
 Level=1
-Size=806,577
+Size=806,300
   
 Item=Q51_UHC_HEARD
-Item=Q52_UHC_SOURCE_O01
-Item=Q52_UHC_SOURCE_O02
-Item=Q52_UHC_SOURCE_O03
-Item=Q52_UHC_SOURCE_O04
-Item=Q52_UHC_SOURCE_O05
-Item=Q52_UHC_SOURCE_O06
-Item=Q52_UHC_SOURCE_O07
-Item=Q52_UHC_SOURCE_O08
+Item=Q52_UHC_SOURCE
 Item=Q52_UHC_SOURCE_OTHER_TXT
-Item=Q53_UHC_UNDERSTAND_O01
-Item=Q53_UHC_UNDERSTAND_O02
-Item=Q53_UHC_UNDERSTAND_O03
-Item=Q53_UHC_UNDERSTAND_O04
-Item=Q53_UHC_UNDERSTAND_O05
-Item=Q53_UHC_UNDERSTAND_O06
+Item=Q53_UHC_UNDERSTAND
 Item=Q53_UHC_UNDERSTAND_OTHER_TXT
   
 [EndForm]
@@ -170,25 +158,12 @@ Item=Q53_UHC_UNDERSTAND_OTHER_TXT
 Name=FORM007
 Label=E. YAKAP / Konsulta
 Level=1
-Size=806,607
+Size=806,300
   
 Item=Q54_YAKAP_HEARD
-Item=Q55_YAKAP_SOURCE_O01
-Item=Q55_YAKAP_SOURCE_O02
-Item=Q55_YAKAP_SOURCE_O03
-Item=Q55_YAKAP_SOURCE_O04
-Item=Q55_YAKAP_SOURCE_O05
-Item=Q55_YAKAP_SOURCE_O06
-Item=Q55_YAKAP_SOURCE_O07
-Item=Q55_YAKAP_SOURCE_O08
+Item=Q55_YAKAP_SOURCE
 Item=Q55_YAKAP_SOURCE_OTHER_TXT
-Item=Q56_YAKAP_UNDERSTAND_O01
-Item=Q56_YAKAP_UNDERSTAND_O02
-Item=Q56_YAKAP_UNDERSTAND_O03
-Item=Q56_YAKAP_UNDERSTAND_O04
-Item=Q56_YAKAP_UNDERSTAND_O05
-Item=Q56_YAKAP_UNDERSTAND_O06
-Item=Q56_YAKAP_UNDERSTAND_O07
+Item=Q56_YAKAP_UNDERSTAND
 Item=Q56_YAKAP_UNDERSTAND_OTHER_TXT
   
 [EndForm]
@@ -197,32 +172,15 @@ Item=Q56_YAKAP_UNDERSTAND_OTHER_TXT
 Name=FORM008
 Label=F. BUCAS Awareness
 Level=1
-Size=806,817
+Size=806,307
   
 Item=Q57_BUCAS_HEARD
-Item=Q58_BUCAS_SOURCE_O01
-Item=Q58_BUCAS_SOURCE_O02
-Item=Q58_BUCAS_SOURCE_O03
-Item=Q58_BUCAS_SOURCE_O04
-Item=Q58_BUCAS_SOURCE_O05
-Item=Q58_BUCAS_SOURCE_O06
-Item=Q58_BUCAS_SOURCE_O07
-Item=Q58_BUCAS_SOURCE_O08
+Item=Q58_BUCAS_SOURCE
 Item=Q58_BUCAS_SOURCE_OTHER_TXT
-Item=Q59_BUCAS_UNDERSTAND_O01
-Item=Q59_BUCAS_UNDERSTAND_O02
-Item=Q59_BUCAS_UNDERSTAND_O03
-Item=Q59_BUCAS_UNDERSTAND_O04
-Item=Q59_BUCAS_UNDERSTAND_O05
+Item=Q59_BUCAS_UNDERSTAND
 Item=Q59_BUCAS_UNDERSTAND_OTHER_TXT
 Item=Q60_BUCAS_ACCESSED
-Item=Q61_BUCAS_SERVICES_O01
-Item=Q61_BUCAS_SERVICES_O02
-Item=Q61_BUCAS_SERVICES_O03
-Item=Q61_BUCAS_SERVICES_O04
-Item=Q61_BUCAS_SERVICES_O05
-Item=Q61_BUCAS_SERVICES_O06
-Item=Q61_BUCAS_SERVICES_O07
+Item=Q61_BUCAS_SERVICES
 Item=Q61_BUCAS_SERVICES_OTHER_TXT
   
 [EndForm]
@@ -231,92 +189,32 @@ Item=Q61_BUCAS_SERVICES_OTHER_TXT
 Name=FORM009
 Label=G. Access to Medicines
 Level=1
-Size=806,2617
+Size=806,817
   
 Item=Q62_PURCHASE_FREQ
 Item=Q63_PRESCRIPTION_TYPE
 Item=Q64_MEDICATIONS_LIST
-Item=Q65_CONDITIONS_O01
-Item=Q65_CONDITIONS_O02
-Item=Q65_CONDITIONS_O03
-Item=Q65_CONDITIONS_O04
-Item=Q65_CONDITIONS_O05
-Item=Q65_CONDITIONS_O06
-Item=Q65_CONDITIONS_O07
-Item=Q65_CONDITIONS_O08
-Item=Q65_CONDITIONS_O09
-Item=Q65_CONDITIONS_O10
-Item=Q65_CONDITIONS_O11
-Item=Q65_CONDITIONS_O12
-Item=Q65_CONDITIONS_O13
-Item=Q65_CONDITIONS_O14
-Item=Q65_CONDITIONS_O15
-Item=Q65_CONDITIONS_O16
-Item=Q65_CONDITIONS_O17
-Item=Q65_CONDITIONS_O18
-Item=Q65_CONDITIONS_O19
-Item=Q65_CONDITIONS_O20
+Item=Q65_CONDITIONS
 Item=Q65_CONDITIONS_OTHER_TXT
-Item=Q66_WHERE_BUY_O01
-Item=Q66_WHERE_BUY_O02
-Item=Q66_WHERE_BUY_O03
-Item=Q66_WHERE_BUY_O04
-Item=Q66_WHERE_BUY_O05
-Item=Q66_WHERE_BUY_O06
-Item=Q66_WHERE_BUY_O07
-Item=Q66_WHERE_BUY_O08
+Item=Q66_WHERE_BUY
 Item=Q66_WHERE_BUY_OTHER_TXT
-Item=Q67_TIME_TO_PHARMACY
+Item=Q67_TRAVEL_HH
+Item=Q67_TRAVEL_MM
 Item=Q68_PHARMACY_ACCESS
 Item=Q69_GAMOT_HEARD
-Item=Q70_GAMOT_SOURCE_O01
-Item=Q70_GAMOT_SOURCE_O02
-Item=Q70_GAMOT_SOURCE_O03
-Item=Q70_GAMOT_SOURCE_O04
-Item=Q70_GAMOT_SOURCE_O05
-Item=Q70_GAMOT_SOURCE_O06
-Item=Q70_GAMOT_SOURCE_O07
-Item=Q70_GAMOT_SOURCE_O08
+Item=Q70_GAMOT_SOURCE
 Item=Q70_GAMOT_SOURCE_OTHER_TXT
-Item=Q71_GAMOT_UNDERSTAND_O01
-Item=Q71_GAMOT_UNDERSTAND_O02
-Item=Q71_GAMOT_UNDERSTAND_O03
-Item=Q71_GAMOT_UNDERSTAND_O04
-Item=Q71_GAMOT_UNDERSTAND_O05
-Item=Q71_GAMOT_UNDERSTAND_O06
+Item=Q71_GAMOT_UNDERSTAND
 Item=Q71_GAMOT_UNDERSTAND_OTHER_TXT
 Item=Q72_GAMOT_OBTAINED
 Item=Q73_GAMOT_MEDS_LIST
-Item=Q74_WHERE_REST_O01
-Item=Q74_WHERE_REST_O02
-Item=Q74_WHERE_REST_O03
-Item=Q74_WHERE_REST_O04
-Item=Q74_WHERE_REST_O05
-Item=Q74_WHERE_REST_O06
-Item=Q74_WHERE_REST_O07
-Item=Q74_WHERE_REST_O08
-Item=Q74_WHERE_REST_O09
-Item=Q74_WHERE_REST_O10
+Item=Q74_WHERE_REST
 Item=Q74_WHERE_REST_OTHER_TXT
 Item=Q75_BRAND_GEN_KNOWS
 Item=Q76_BRAND_OR_GEN
-Item=Q77_WHY_GENERIC_O01
-Item=Q77_WHY_GENERIC_O02
-Item=Q77_WHY_GENERIC_O03
-Item=Q77_WHY_GENERIC_O04
-Item=Q77_WHY_GENERIC_O05
-Item=Q77_WHY_GENERIC_O06
-Item=Q77_WHY_GENERIC_O07
-Item=Q77_WHY_GENERIC_O08
+Item=Q77_WHY_GENERIC
 Item=Q77_WHY_GENERIC_OTHER_TXT
-Item=Q78_WHY_BRANDED_O01
-Item=Q78_WHY_BRANDED_O02
-Item=Q78_WHY_BRANDED_O03
-Item=Q78_WHY_BRANDED_O04
-Item=Q78_WHY_BRANDED_O05
-Item=Q78_WHY_BRANDED_O06
-Item=Q78_WHY_BRANDED_O07
-Item=Q78_WHY_BRANDED_O08
+Item=Q78_WHY_BRANDED
 Item=Q78_WHY_BRANDED_OTHER_TXT
   
 [EndForm]
@@ -325,40 +223,22 @@ Item=Q78_WHY_BRANDED_OTHER_TXT
 Name=FORM010
 Label=H. PhilHealth Registration
 Level=1
-Size=806,1057
+Size=806,517
   
 Item=Q79_REG_SOURCE
 Item=Q79_REG_SOURCE_OTHER_TXT
 Item=Q80_ASSIST
 Item=Q80_ASSIST_OTHER_TXT
 Item=Q81_REG_DIFFICULTY
-Item=Q82_DIFFICULTY_REASONS_O01
-Item=Q82_DIFFICULTY_REASONS_O02
-Item=Q82_DIFFICULTY_REASONS_O03
-Item=Q82_DIFFICULTY_REASONS_O04
-Item=Q82_DIFFICULTY_REASONS_O05
-Item=Q82_DIFFICULTY_REASONS_O06
-Item=Q82_DIFFICULTY_REASONS_O07
-Item=Q82_DIFFICULTY_REASONS_O08
+Item=Q82_DIFFICULTY_REASONS
 Item=Q82_DIFFICULTY_REASONS_OTHER_TXT
 Item=Q83_KNOWS_ASSIST
 Item=Q84_WHERE_ASSIST
-Item=Q85_BENEFITS_O01
-Item=Q85_BENEFITS_O02
-Item=Q85_BENEFITS_O03
-Item=Q85_BENEFITS_O04
-Item=Q85_BENEFITS_O05
-Item=Q85_BENEFITS_O06
+Item=Q85_BENEFITS
 Item=Q85_BENEFITS_OTHER_TXT
 Item=Q86_PREMIUM_PAY
 Item=Q87_PREMIUM_DIFFICULT
-Item=Q88_DIFF_PAYING_O01
-Item=Q88_DIFF_PAYING_O02
-Item=Q88_DIFF_PAYING_O03
-Item=Q88_DIFF_PAYING_O04
-Item=Q88_DIFF_PAYING_O05
-Item=Q88_DIFF_PAYING_O06
-Item=Q88_DIFF_PAYING_O07
+Item=Q88_DIFF_PAYING
 Item=Q88_DIFF_PAYING_OTHER_TXT
   
 [EndForm]
@@ -367,43 +247,18 @@ Item=Q88_DIFF_PAYING_OTHER_TXT
 Name=FORM011
 Label=I. Primary Care
 Level=1
-Size=806,1327
+Size=806,577
   
 Item=Q89_HAS_USUAL_FACILITY
 Item=Q89_1_FACILITY_NAME
 Item=Q90_IS_USUAL_FOR_GENERAL
-Item=Q91_WHY_WENT_O01
-Item=Q91_WHY_WENT_O02
-Item=Q91_WHY_WENT_O03
-Item=Q91_WHY_WENT_O04
-Item=Q91_WHY_WENT_O05
-Item=Q91_WHY_WENT_O06
-Item=Q91_WHY_WENT_O07
-Item=Q91_WHY_WENT_O08
-Item=Q91_WHY_WENT_O09
+Item=Q91_WHY_WENT
 Item=Q91_WHY_WENT_OTHER_TXT
 Item=Q92_FACILITY_TYPE
 Item=Q92_FACILITY_TYPE_OTHER_TXT
-Item=Q93_WHY_NOT_O01
-Item=Q93_WHY_NOT_O02
-Item=Q93_WHY_NOT_O03
-Item=Q93_WHY_NOT_O04
-Item=Q93_WHY_NOT_O05
-Item=Q93_WHY_NOT_O06
-Item=Q93_WHY_NOT_O07
+Item=Q93_WHY_NOT
 Item=Q93_WHY_NOT_OTHER_TXT
-Item=Q94_TRANSPORT_O01
-Item=Q94_TRANSPORT_O02
-Item=Q94_TRANSPORT_O03
-Item=Q94_TRANSPORT_O04
-Item=Q94_TRANSPORT_O05
-Item=Q94_TRANSPORT_O06
-Item=Q94_TRANSPORT_O07
-Item=Q94_TRANSPORT_O08
-Item=Q94_TRANSPORT_O09
-Item=Q94_TRANSPORT_O10
-Item=Q94_TRANSPORT_O11
-Item=Q94_TRANSPORT_O12
+Item=Q94_TRANSPORT
 Item=Q94_TRANSPORT_OTHER_TXT
 Item=Q95_TRAVEL_TIME_MIN
 Item=Q96_TRAVEL_COST_PHP
@@ -418,43 +273,19 @@ Item=Q100_LEAVE_WORK_SCHOOL
 Name=FORM012
 Label=J. Health Seeking
 Level=1
-Size=806,1147
+Size=806,427
   
 Item=Q101_CHECKUP_FREQ
 Item=Q101_CHECKUP_FREQ_OTHER_TXT
-Item=Q102_VISIT_REASON_O01
-Item=Q102_VISIT_REASON_O02
-Item=Q102_VISIT_REASON_O03
-Item=Q102_VISIT_REASON_O04
-Item=Q102_VISIT_REASON_O05
-Item=Q102_VISIT_REASON_O06
-Item=Q102_VISIT_REASON_O07
-Item=Q102_VISIT_REASON_O08
+Item=Q102_VISIT_REASON
 Item=Q102_VISIT_REASON_OTHER_TXT
-Item=Q103_CARE_TYPE_O01
-Item=Q103_CARE_TYPE_O02
-Item=Q103_CARE_TYPE_O03
-Item=Q103_CARE_TYPE_O04
-Item=Q103_CARE_TYPE_O05
+Item=Q103_CARE_TYPE
 Item=Q103_CARE_TYPE_OTHER_TXT
 Item=Q104_PREVENTIVE
 Item=Q105_FORGONE_CARE
-Item=Q106_FORGONE_WHY_O01
-Item=Q106_FORGONE_WHY_O02
-Item=Q106_FORGONE_WHY_O03
-Item=Q106_FORGONE_WHY_O04
-Item=Q106_FORGONE_WHY_O05
-Item=Q106_FORGONE_WHY_O06
-Item=Q106_FORGONE_WHY_O07
-Item=Q106_FORGONE_WHY_O08
+Item=Q106_FORGONE_WHY
 Item=Q106_FORGONE_WHY_OTHER_TXT
-Item=Q107_OTHER_ACTIONS_O01
-Item=Q107_OTHER_ACTIONS_O02
-Item=Q107_OTHER_ACTIONS_O03
-Item=Q107_OTHER_ACTIONS_O04
-Item=Q107_OTHER_ACTIONS_O05
-Item=Q107_OTHER_ACTIONS_O06
-Item=Q107_OTHER_ACTIONS_O07
+Item=Q107_OTHER_ACTIONS
 Item=Q107_OTHER_ACTIONS_OTHER_TXT
   
 [EndForm]
@@ -463,34 +294,17 @@ Item=Q107_OTHER_ACTIONS_OTHER_TXT
 Name=FORM013
 Label=K. Referrals
 Level=1
-Size=806,1507
+Size=806,757
   
 Item=Q108_REFERRED
-Item=Q109_TYPE_O01
-Item=Q109_TYPE_O02
-Item=Q109_TYPE_O03
-Item=Q109_TYPE_O04
-Item=Q109_TYPE_O05
-Item=Q109_TYPE_O06
-Item=Q109_TYPE_O07
-Item=Q109_TYPE_O08
-Item=Q109_TYPE_O09
-Item=Q109_TYPE_O10
-Item=Q109_TYPE_O11
-Item=Q109_TYPE_O12
+Item=Q109_TYPE
 Item=Q109_TYPE_OTHER_TXT
 Item=Q110_SPECIALIST
 Item=Q110_SPECIALIST_OTHER_TXT
 Item=Q111_METHOD
 Item=Q111_METHOD_OTHER_TXT
 Item=Q112_VISITED
-Item=Q113_WHY_NOT_O01
-Item=Q113_WHY_NOT_O02
-Item=Q113_WHY_NOT_O03
-Item=Q113_WHY_NOT_O04
-Item=Q113_WHY_NOT_O05
-Item=Q113_WHY_NOT_O06
-Item=Q113_WHY_NOT_O07
+Item=Q113_WHY_NOT
 Item=Q113_WHY_NOT_OTHER_TXT
 Item=Q114_DISCUSSED_PLACES
 Item=Q115_HELPED_APPT
@@ -499,15 +313,7 @@ Item=Q117_SPECIALIST_FOLLOWUP
 Item=Q118_SAT_REFERRAL_PROCESS
 Item=Q119_PCF_REFERRAL
 Item=Q120_PCP_KNOWS
-Item=Q121_WHY_HOSPITAL_O01
-Item=Q121_WHY_HOSPITAL_O02
-Item=Q121_WHY_HOSPITAL_O03
-Item=Q121_WHY_HOSPITAL_O04
-Item=Q121_WHY_HOSPITAL_O05
-Item=Q121_WHY_HOSPITAL_O06
-Item=Q121_WHY_HOSPITAL_O07
-Item=Q121_WHY_HOSPITAL_O08
-Item=Q121_WHY_HOSPITAL_O09
+Item=Q121_WHY_HOSPITAL
 Item=Q121_WHY_HOSPITAL_OTHER_TXT
 Item=Q122_PCP_DISCUSSED_PLACES
 Item=Q123_PCP_HELPED_APPT
@@ -520,27 +326,12 @@ Item=Q125_SAT_REFERRAL_EXP
 Name=FORM014
 Label=L. NBB Awareness
 Level=1
-Size=806,757
+Size=806,307
   
 Item=Q126_NBB_HEARD
-Item=Q127_NBB_SOURCE_O01
-Item=Q127_NBB_SOURCE_O02
-Item=Q127_NBB_SOURCE_O03
-Item=Q127_NBB_SOURCE_O04
-Item=Q127_NBB_SOURCE_O05
-Item=Q127_NBB_SOURCE_O06
-Item=Q127_NBB_SOURCE_O07
-Item=Q127_NBB_SOURCE_O08
+Item=Q127_NBB_SOURCE
 Item=Q127_NBB_SOURCE_OTHER_TXT
-Item=Q128_NBB_UNDERSTAND_O01
-Item=Q128_NBB_UNDERSTAND_O02
-Item=Q128_NBB_UNDERSTAND_O03
-Item=Q128_NBB_UNDERSTAND_O04
-Item=Q128_NBB_UNDERSTAND_O05
-Item=Q128_NBB_UNDERSTAND_O06
-Item=Q128_NBB_UNDERSTAND_O07
-Item=Q128_NBB_UNDERSTAND_O08
-Item=Q128_NBB_UNDERSTAND_O09
+Item=Q128_NBB_UNDERSTAND
 Item=Q128_NBB_UNDERSTAND_OTHER_TXT
 Item=Q129_HH_CONFINED
 Item=Q130_HOSPITAL_TYPE
@@ -552,62 +343,25 @@ Item=Q131_NBB_OOP
 Name=FORM015
 Label=M. ZBB / MAIFIP / Bill-Recall
 Level=1
-Size=806,1717
+Size=806,607
   
 Item=Q132_ZBB_HEARD
-Item=Q133_ZBB_SOURCE_O01
-Item=Q133_ZBB_SOURCE_O02
-Item=Q133_ZBB_SOURCE_O03
-Item=Q133_ZBB_SOURCE_O04
-Item=Q133_ZBB_SOURCE_O05
-Item=Q133_ZBB_SOURCE_O06
-Item=Q133_ZBB_SOURCE_O07
-Item=Q133_ZBB_SOURCE_O08
+Item=Q133_ZBB_SOURCE
 Item=Q133_ZBB_SOURCE_OTHER_TXT
-Item=Q134_ZBB_UNDERSTAND_O01
-Item=Q134_ZBB_UNDERSTAND_O02
-Item=Q134_ZBB_UNDERSTAND_O03
-Item=Q134_ZBB_UNDERSTAND_O04
-Item=Q134_ZBB_UNDERSTAND_O05
-Item=Q134_ZBB_UNDERSTAND_O06
-Item=Q134_ZBB_UNDERSTAND_O07
-Item=Q134_ZBB_UNDERSTAND_O08
-Item=Q134_ZBB_UNDERSTAND_O09
+Item=Q134_ZBB_UNDERSTAND
 Item=Q134_ZBB_UNDERSTAND_OTHER_TXT
 Item=Q135_ZBB_OOP
 Item=Q136_MAIFIP_HEARD
-Item=Q137_MAIFIP_SOURCE_O01
-Item=Q137_MAIFIP_SOURCE_O02
-Item=Q137_MAIFIP_SOURCE_O03
-Item=Q137_MAIFIP_SOURCE_O04
-Item=Q137_MAIFIP_SOURCE_O05
-Item=Q137_MAIFIP_SOURCE_O06
-Item=Q137_MAIFIP_SOURCE_O07
-Item=Q137_MAIFIP_SOURCE_O08
+Item=Q137_MAIFIP_SOURCE
 Item=Q137_MAIFIP_SOURCE_OTHER_TXT
 Item=Q138_MOST_EXPENSIVE
 Item=Q139_FINAL_AMOUNT_PHP
 Item=Q140_RECALL_BREAKDOWN
-Item=Q141_BILL_ITEMS_O01
-Item=Q141_BILL_ITEMS_O02
-Item=Q141_BILL_ITEMS_O03
-Item=Q141_BILL_ITEMS_O04
-Item=Q141_BILL_ITEMS_O05
-Item=Q141_BILL_ITEMS_O06
-Item=Q141_BILL_ITEMS_O07
+Item=Q141_BILL_ITEMS
 Item=Q141_BILL_ITEMS_OTHER_TXT
 Item=Q141_1_NO_RECEIPT_AMT_PHP
 Item=Q142_RECALL_PAYMENT
-Item=Q143_HOW_PAID_O01
-Item=Q143_HOW_PAID_O02
-Item=Q143_HOW_PAID_O03
-Item=Q143_HOW_PAID_O04
-Item=Q143_HOW_PAID_O05
-Item=Q143_HOW_PAID_O06
-Item=Q143_HOW_PAID_O07
-Item=Q143_HOW_PAID_O08
-Item=Q143_HOW_PAID_O09
-Item=Q143_HOW_PAID_O10
+Item=Q143_HOW_PAID
 Item=Q143_HOW_PAID_OTHER_TXT
   
 [EndForm]
@@ -1517,121 +1271,135 @@ Length=5
   
 [Block]
 Name=DG_BLK_2
-Label=Q4-Q5
+Label=Q4
 DisplayTogether=Yes
 Position=6
-Length=2
+Length=1
   
 [Block]
 Name=DG_BLK_3
 Label=Q5
 DisplayTogether=Yes
-Position=9
+Position=8
 Length=1
   
 [Block]
 Name=DG_BLK_4
-Label=Q6-Q7
+Label=Q5
 DisplayTogether=Yes
-Position=11
-Length=2
+Position=10
+Length=1
   
 [Block]
 Name=DG_BLK_5
-Label=Q8-Q9
+Label=Q6-Q7
 DisplayTogether=Yes
-Position=14
+Position=12
 Length=2
   
 [Block]
 Name=DG_BLK_6
-Label=Q10
+Label=Q8
+DisplayTogether=Yes
+Position=15
+Length=1
+  
+[Block]
+Name=DG_BLK_7
+Label=Q9
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_7
+Name=DG_BLK_8
 Label=Q10
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_8
-Label=Q11
+Name=DG_BLK_9
+Label=Q10
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_BLK_9
+Name=DG_BLK_10
 Label=Q11
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_10
-Label=Q12-Q14
+Name=DG_BLK_11
+Label=Q11
 DisplayTogether=Yes
 Position=25
-Length=3
-  
-[Block]
-Name=DG_BLK_11
-Label=Q15
-DisplayTogether=Yes
-Position=29
 Length=1
   
 [Block]
 Name=DG_BLK_12
-Label=Q16-Q17
+Label=Q12-Q14
 DisplayTogether=Yes
-Position=31
-Length=2
+Position=27
+Length=3
   
 [Block]
 Name=DG_BLK_13
-Label=Q17
+Label=Q15
 DisplayTogether=Yes
-Position=34
+Position=31
 Length=1
   
 [Block]
 Name=DG_BLK_14
-Label=Q18-Q21
+Label=Q16-Q17
 DisplayTogether=Yes
-Position=36
-Length=5
-  
-[Block]
-Name=DG_BLK_15
-Label=Q22-Q23
-DisplayTogether=Yes
-Position=42
+Position=33
 Length=2
   
 [Block]
-Name=DG_BLK_16
-Label=Q23
+Name=DG_BLK_15
+Label=Q17
 DisplayTogether=Yes
-Position=45
+Position=36
 Length=1
   
 [Block]
-Name=DG_BLK_17
-Label=Q24-Q28
+Name=DG_BLK_16
+Label=Q18-Q21
 DisplayTogether=Yes
-Position=47
+Position=38
 Length=5
   
 [Block]
+Name=DG_BLK_17
+Label=Q22-Q23
+DisplayTogether=Yes
+Position=44
+Length=2
+  
+[Block]
 Name=DG_BLK_18
+Label=Q23
+DisplayTogether=Yes
+Position=47
+Length=1
+  
+[Block]
+Name=DG_BLK_19
+Label=Q24-Q28
+DisplayTogether=Yes
+Position=49
+Length=5
+  
+[Block]
+Name=DG_BLK_20
 Label=Q29
 DisplayTogether=Yes
-Position=53
+Position=55
 Length=1
   
 [EndGroup]
@@ -1872,7 +1640,7 @@ Form=5
   
 [Text]
 Position=50,570,330,586
-Text=46. What is his/her membership category? (Only answer if 'Yes' in Q45)
+Text=46. What is his/her membership category?
  
   
 [Field]
@@ -1948,7 +1716,7 @@ Text=47. Do you or other members of your HH have private insurance?
  
   
 [Block]
-Name=DG_BLK_19
+Name=DG_BLK_21
 Label=Q47
 DisplayTogether=Yes
 Position=0
@@ -1976,232 +1744,88 @@ Text=51. Have you heard about Universal Health Care (UHC) prior to this survey?
  
   
 [Field]
-Name=Q52_UHC_SOURCE_O01
+Name=Q52_UHC_SOURCE
 Position=350,57,365,77
-Item=Q52_UHC_SOURCE_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q52_UHC_SOURCE,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=7
   
 [Text]
 Position=50,60,330,76
-Text=52. What is your source of information about UHC? — News
- 
-  
-[Field]
-Name=Q52_UHC_SOURCE_O02
-Position=350,87,365,107
-Item=Q52_UHC_SOURCE_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,90,330,106
-Text=52. What is your source of information about UHC? — Legislation
- 
-  
-[Field]
-Name=Q52_UHC_SOURCE_O03
-Position=350,117,365,137
-Item=Q52_UHC_SOURCE_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,120,330,136
-Text=52. What is your source of information about UHC? — Social Media
- 
-  
-[Field]
-Name=Q52_UHC_SOURCE_O04
-Position=350,147,365,167
-Item=Q52_UHC_SOURCE_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,150,330,166
-Text=52. What is your source of information about UHC? — Friends / Family
- 
-  
-[Field]
-Name=Q52_UHC_SOURCE_O05
-Position=350,177,365,197
-Item=Q52_UHC_SOURCE_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,180,330,196
-Text=52. What is your source of information about UHC? — Health center/facility
- 
-  
-[Field]
-Name=Q52_UHC_SOURCE_O06
-Position=350,207,365,227
-Item=Q52_UHC_SOURCE_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,210,330,226
-Text=52. What is your source of information about UHC? — LGU/Barangay
- 
-  
-[Field]
-Name=Q52_UHC_SOURCE_O07
-Position=350,237,365,257
-Item=Q52_UHC_SOURCE_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,240,330,256
-Text=52. What is your source of information about UHC? — I don't know
- 
-  
-[Field]
-Name=Q52_UHC_SOURCE_O08
-Position=350,267,365,287
-Item=Q52_UHC_SOURCE_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,270,330,286
-Text=52. What is your source of information about UHC? — Other (Specify)
+Text=52. What is your source of information about UHC?
  
   
 [Field]
 Name=Q52_UHC_SOURCE_OTHER_TXT
-Position=350,297,760,317
+Position=350,87,760,107
 Item=Q52_UHC_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,300,330,316
+Position=50,90,330,106
 Text=52. What is your source of information about UHC? — Other (specify) text
  
   
 [Field]
-Name=Q53_UHC_UNDERSTAND_O01
-Position=350,327,365,347
-Item=Q53_UHC_UNDERSTAND_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q53_UHC_UNDERSTAND
+Position=350,117,365,137
+Item=Q53_UHC_UNDERSTAND,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=7
   
 [Text]
-Position=50,330,330,346
-Text=53. What is your understanding about UHC? — Protection from financial risk/decreased out-of-pocket spending
- 
-  
-[Field]
-Name=Q53_UHC_UNDERSTAND_O02
-Position=350,357,365,377
-Item=Q53_UHC_UNDERSTAND_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,360,330,376
-Text=53. What is your understanding about UHC? — Access to quality and affordable health care goods and services
- 
-  
-[Field]
-Name=Q53_UHC_UNDERSTAND_O03
-Position=350,387,365,407
-Item=Q53_UHC_UNDERSTAND_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,390,330,406
-Text=53. What is your understanding about UHC? — Automatic enrollment into PhilHealth
- 
-  
-[Field]
-Name=Q53_UHC_UNDERSTAND_O04
-Position=350,417,365,437
-Item=Q53_UHC_UNDERSTAND_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,420,330,436
-Text=53. What is your understanding about UHC? — Primary care provider for every Filipino
- 
-  
-[Field]
-Name=Q53_UHC_UNDERSTAND_O05
-Position=350,447,365,467
-Item=Q53_UHC_UNDERSTAND_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,450,330,466
-Text=53. What is your understanding about UHC? — I don't know
- 
-  
-[Field]
-Name=Q53_UHC_UNDERSTAND_O06
-Position=350,477,365,497
-Item=Q53_UHC_UNDERSTAND_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,480,330,496
-Text=53. What is your understanding about UHC? — Other (Specify)
+Position=50,120,330,136
+Text=53. What is your understanding about UHC?
  
   
 [Field]
 Name=Q53_UHC_UNDERSTAND_OTHER_TXT
-Position=350,507,760,527
+Position=350,147,760,167
 Item=Q53_UHC_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=7
   
 [Text]
-Position=50,510,330,526
+Position=50,150,330,166
 Text=53. What is your understanding about UHC? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_20
+Name=DG_BLK_22
 Label=Q51
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_21
+Name=DG_BLK_23
 Label=Q52
 DisplayTogether=Yes
 Position=2
-Length=8
-  
-[Block]
-Name=DG_BLK_22
-Label=Q52
-DisplayTogether=Yes
-Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_23
-Label=Q53
+Name=DG_BLK_24
+Label=Q52
 DisplayTogether=Yes
-Position=13
-Length=6
+Position=4
+Length=1
   
 [Block]
-Name=DG_BLK_24
+Name=DG_BLK_25
 Label=Q53
 DisplayTogether=Yes
-Position=20
+Position=6
+Length=1
+  
+[Block]
+Name=DG_BLK_26
+Label=Q53
+DisplayTogether=Yes
+Position=8
 Length=1
   
 [EndGroup]
@@ -2226,244 +1850,88 @@ Text=54. Have you heard of the term "YAKAP/Konsulta package"?
  
   
 [Field]
-Name=Q55_YAKAP_SOURCE_O01
+Name=Q55_YAKAP_SOURCE
 Position=350,57,365,77
-Item=Q55_YAKAP_SOURCE_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q55_YAKAP_SOURCE,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=8
   
 [Text]
 Position=50,60,330,76
-Text=55. What are your sources of information about the YAKAP/Konsulta package? — News
- 
-  
-[Field]
-Name=Q55_YAKAP_SOURCE_O02
-Position=350,87,365,107
-Item=Q55_YAKAP_SOURCE_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,90,330,106
-Text=55. What are your sources of information about the YAKAP/Konsulta package? — Legislation
- 
-  
-[Field]
-Name=Q55_YAKAP_SOURCE_O03
-Position=350,117,365,137
-Item=Q55_YAKAP_SOURCE_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,120,330,136
-Text=55. What are your sources of information about the YAKAP/Konsulta package? — Social Media
- 
-  
-[Field]
-Name=Q55_YAKAP_SOURCE_O04
-Position=350,147,365,167
-Item=Q55_YAKAP_SOURCE_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,150,330,166
-Text=55. What are your sources of information about the YAKAP/Konsulta package? — Friends / Family
- 
-  
-[Field]
-Name=Q55_YAKAP_SOURCE_O05
-Position=350,177,365,197
-Item=Q55_YAKAP_SOURCE_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,180,330,196
-Text=55. What are your sources of information about the YAKAP/Konsulta package? — Health center/facility
- 
-  
-[Field]
-Name=Q55_YAKAP_SOURCE_O06
-Position=350,207,365,227
-Item=Q55_YAKAP_SOURCE_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,210,330,226
-Text=55. What are your sources of information about the YAKAP/Konsulta package? — LGU/Barangay
- 
-  
-[Field]
-Name=Q55_YAKAP_SOURCE_O07
-Position=350,237,365,257
-Item=Q55_YAKAP_SOURCE_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,240,330,256
-Text=55. What are your sources of information about the YAKAP/Konsulta package? — I don't know
- 
-  
-[Field]
-Name=Q55_YAKAP_SOURCE_O08
-Position=350,267,365,287
-Item=Q55_YAKAP_SOURCE_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,270,330,286
-Text=55. What are your sources of information about the YAKAP/Konsulta package? — Other (Specify)
+Text=55. What are your sources of information about the YAKAP/Konsulta package?
  
   
 [Field]
 Name=Q55_YAKAP_SOURCE_OTHER_TXT
-Position=350,297,760,317
+Position=350,87,760,107
 Item=Q55_YAKAP_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=8
   
 [Text]
-Position=50,300,330,316
+Position=50,90,330,106
 Text=55. What are your sources of information about the YAKAP/Konsulta package? — Other (specify) text
  
   
 [Field]
-Name=Q56_YAKAP_UNDERSTAND_O01
-Position=350,327,365,347
-Item=Q56_YAKAP_UNDERSTAND_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q56_YAKAP_UNDERSTAND
+Position=350,117,365,137
+Item=Q56_YAKAP_UNDERSTAND,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=8
   
 [Text]
-Position=50,330,330,346
-Text=56. What is your understanding about the YAKAP/Konsulta package? — Free primary care consultation (with a registered YAKAP/Konsulta provider)
- 
-  
-[Field]
-Name=Q56_YAKAP_UNDERSTAND_O02
-Position=350,357,365,377
-Item=Q56_YAKAP_UNDERSTAND_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,360,330,376
-Text=56. What is your understanding about the YAKAP/Konsulta package? — Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)
- 
-  
-[Field]
-Name=Q56_YAKAP_UNDERSTAND_O03
-Position=350,387,365,407
-Item=Q56_YAKAP_UNDERSTAND_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,390,330,406
-Text=56. What is your understanding about the YAKAP/Konsulta package? — Free selected laboratory / diagnostics examination
- 
-  
-[Field]
-Name=Q56_YAKAP_UNDERSTAND_O04
-Position=350,417,365,437
-Item=Q56_YAKAP_UNDERSTAND_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,420,330,436
-Text=56. What is your understanding about the YAKAP/Konsulta package? — Free selected drugs and medicines
- 
-  
-[Field]
-Name=Q56_YAKAP_UNDERSTAND_O05
-Position=350,447,365,467
-Item=Q56_YAKAP_UNDERSTAND_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,450,330,466
-Text=56. What is your understanding about the YAKAP/Konsulta package? — There are no benefits in the package
- 
-  
-[Field]
-Name=Q56_YAKAP_UNDERSTAND_O06
-Position=350,477,365,497
-Item=Q56_YAKAP_UNDERSTAND_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,480,330,496
-Text=56. What is your understanding about the YAKAP/Konsulta package? — I don't know
- 
-  
-[Field]
-Name=Q56_YAKAP_UNDERSTAND_O07
-Position=350,507,365,527
-Item=Q56_YAKAP_UNDERSTAND_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=8
-  
-[Text]
-Position=50,510,330,526
-Text=56. What is your understanding about the YAKAP/Konsulta package? — Other (Specify)
+Position=50,120,330,136
+Text=56. What is your understanding about the YAKAP/Konsulta package?
  
   
 [Field]
 Name=Q56_YAKAP_UNDERSTAND_OTHER_TXT
-Position=350,537,760,557
+Position=350,147,760,167
 Item=Q56_YAKAP_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=8
   
 [Text]
-Position=50,540,330,556
+Position=50,150,330,166
 Text=56. What is your understanding about the YAKAP/Konsulta package? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_25
+Name=DG_BLK_27
 Label=Q54
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_26
+Name=DG_BLK_28
 Label=Q55
 DisplayTogether=Yes
 Position=2
-Length=8
-  
-[Block]
-Name=DG_BLK_27
-Label=Q55
-DisplayTogether=Yes
-Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_28
-Label=Q56
+Name=DG_BLK_29
+Label=Q55
 DisplayTogether=Yes
-Position=13
-Length=7
+Position=4
+Length=1
   
 [Block]
-Name=DG_BLK_29
+Name=DG_BLK_30
 Label=Q56
 DisplayTogether=Yes
-Position=21
+Position=6
+Length=1
+  
+[Block]
+Name=DG_BLK_31
+Label=Q56
+DisplayTogether=Yes
+Position=8
 Length=1
   
 [EndGroup]
@@ -2488,350 +1956,146 @@ Text=57. Have you heard about Bagong Urgent Care and Ambulatory Service (BUCAS) 
  
   
 [Field]
-Name=Q58_BUCAS_SOURCE_O01
+Name=Q58_BUCAS_SOURCE
 Position=350,57,365,77
-Item=Q58_BUCAS_SOURCE_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q58_BUCAS_SOURCE,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=9
   
 [Text]
 Position=50,60,330,76
-Text=58. If yes, what are your sources of information about this BUCAS center? — News
- 
-  
-[Field]
-Name=Q58_BUCAS_SOURCE_O02
-Position=350,87,365,107
-Item=Q58_BUCAS_SOURCE_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,90,330,106
-Text=58. If yes, what are your sources of information about this BUCAS center? — Legislation
- 
-  
-[Field]
-Name=Q58_BUCAS_SOURCE_O03
-Position=350,117,365,137
-Item=Q58_BUCAS_SOURCE_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,120,330,136
-Text=58. If yes, what are your sources of information about this BUCAS center? — Social Media
- 
-  
-[Field]
-Name=Q58_BUCAS_SOURCE_O04
-Position=350,147,365,167
-Item=Q58_BUCAS_SOURCE_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,150,330,166
-Text=58. If yes, what are your sources of information about this BUCAS center? — Friends / Family
- 
-  
-[Field]
-Name=Q58_BUCAS_SOURCE_O05
-Position=350,177,365,197
-Item=Q58_BUCAS_SOURCE_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,180,330,196
-Text=58. If yes, what are your sources of information about this BUCAS center? — Health center/facility
- 
-  
-[Field]
-Name=Q58_BUCAS_SOURCE_O06
-Position=350,207,365,227
-Item=Q58_BUCAS_SOURCE_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,210,330,226
-Text=58. If yes, what are your sources of information about this BUCAS center? — LGU/Barangay
- 
-  
-[Field]
-Name=Q58_BUCAS_SOURCE_O07
-Position=350,237,365,257
-Item=Q58_BUCAS_SOURCE_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,240,330,256
-Text=58. If yes, what are your sources of information about this BUCAS center? — I don't know
- 
-  
-[Field]
-Name=Q58_BUCAS_SOURCE_O08
-Position=350,267,365,287
-Item=Q58_BUCAS_SOURCE_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,270,330,286
-Text=58. If yes, what are your sources of information about this BUCAS center? — Other (Specify)
+Text=58. If yes, what are your sources of information about this BUCAS center?
  
   
 [Field]
 Name=Q58_BUCAS_SOURCE_OTHER_TXT
-Position=350,297,760,317
+Position=350,87,760,107
 Item=Q58_BUCAS_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=9
   
 [Text]
-Position=50,300,330,316
+Position=50,90,330,106
 Text=58. If yes, what are your sources of information about this BUCAS center? — Other (specify) text
  
   
 [Field]
-Name=Q59_BUCAS_UNDERSTAND_O01
-Position=350,327,365,347
-Item=Q59_BUCAS_UNDERSTAND_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q59_BUCAS_UNDERSTAND
+Position=350,117,365,137
+Item=Q59_BUCAS_UNDERSTAND,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=9
   
 [Text]
-Position=50,330,330,346
-Text=59. What is your understanding about a BUCAS center? — Provides urgent care for non-life-threatening/serious conditions
- 
-  
-[Field]
-Name=Q59_BUCAS_UNDERSTAND_O02
-Position=350,357,365,377
-Item=Q59_BUCAS_UNDERSTAND_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,360,330,376
-Text=59. What is your understanding about a BUCAS center? — Offers outpatient and ambulatory health services
- 
-  
-[Field]
-Name=Q59_BUCAS_UNDERSTAND_O03
-Position=350,387,365,407
-Item=Q59_BUCAS_UNDERSTAND_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,390,330,406
-Text=59. What is your understanding about a BUCAS center? — Helps reduce overcrowding in hospitals
- 
-  
-[Field]
-Name=Q59_BUCAS_UNDERSTAND_O04
-Position=350,417,365,437
-Item=Q59_BUCAS_UNDERSTAND_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,420,330,436
-Text=59. What is your understanding about a BUCAS center? — Allows access to timely medical consultation and treatment
- 
-  
-[Field]
-Name=Q59_BUCAS_UNDERSTAND_O05
-Position=350,447,365,467
-Item=Q59_BUCAS_UNDERSTAND_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,450,330,466
-Text=59. What is your understanding about a BUCAS center? — Other (specify)
+Position=50,120,330,136
+Text=59. What is your understanding about a BUCAS center?
  
   
 [Field]
 Name=Q59_BUCAS_UNDERSTAND_OTHER_TXT
-Position=350,477,760,497
+Position=350,147,760,167
 Item=Q59_BUCAS_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=9
   
 [Text]
-Position=50,480,330,496
+Position=50,150,330,166
 Text=59. What is your understanding about a BUCAS center? — Other (specify) text
  
   
 [Field]
 Name=Q60_BUCAS_ACCESSED
-Position=350,507,365,527
+Position=350,177,365,197
 Item=Q60_BUCAS_ACCESSED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=9
   
 [Text]
-Position=50,510,330,526
+Position=50,180,330,196
 Text=60. In the last six months, did you or any member of your HH accessed the services in a BUCAS center?
  
   
 [Field]
-Name=Q61_BUCAS_SERVICES_O01
-Position=350,537,365,557
-Item=Q61_BUCAS_SERVICES_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q61_BUCAS_SERVICES
+Position=350,207,365,227
+Item=Q61_BUCAS_SERVICES,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=9
   
 [Text]
-Position=50,540,330,556
-Text=61. If yes, which of the services did you avail? — Medical consultation for urgent or minor conditions
- 
-  
-[Field]
-Name=Q61_BUCAS_SERVICES_O02
-Position=350,567,365,587
-Item=Q61_BUCAS_SERVICES_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,570,330,586
-Text=61. If yes, which of the services did you avail? — Outpatient or ambulatory care services
- 
-  
-[Field]
-Name=Q61_BUCAS_SERVICES_O03
-Position=350,597,365,617
-Item=Q61_BUCAS_SERVICES_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,600,330,616
-Text=61. If yes, which of the services did you avail? — Basic diagnostic services (e.g., laboratory tests, X-ray)
- 
-  
-[Field]
-Name=Q61_BUCAS_SERVICES_O04
-Position=350,627,365,647
-Item=Q61_BUCAS_SERVICES_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,630,330,646
-Text=61. If yes, which of the services did you avail? — Minor procedures or treatments
- 
-  
-[Field]
-Name=Q61_BUCAS_SERVICES_O05
-Position=350,657,365,677
-Item=Q61_BUCAS_SERVICES_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,660,330,676
-Text=61. If yes, which of the services did you avail? — Referral to higher-level health facilities
- 
-  
-[Field]
-Name=Q61_BUCAS_SERVICES_O06
-Position=350,687,365,707
-Item=Q61_BUCAS_SERVICES_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,690,330,706
-Text=61. If yes, which of the services did you avail? — I don't know
- 
-  
-[Field]
-Name=Q61_BUCAS_SERVICES_O07
-Position=350,717,365,737
-Item=Q61_BUCAS_SERVICES_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=9
-  
-[Text]
-Position=50,720,330,736
-Text=61. If yes, which of the services did you avail? — Other (specify)
+Position=50,210,330,226
+Text=61. If yes, which of the services did you avail?
  
   
 [Field]
 Name=Q61_BUCAS_SERVICES_OTHER_TXT
-Position=350,747,760,767
+Position=350,237,760,257
 Item=Q61_BUCAS_SERVICES_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=9
   
 [Text]
-Position=50,750,330,766
+Position=50,240,330,256
 Text=61. If yes, which of the services did you avail? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_30
+Name=DG_BLK_32
 Label=Q57
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_31
+Name=DG_BLK_33
 Label=Q58
 DisplayTogether=Yes
 Position=2
-Length=8
-  
-[Block]
-Name=DG_BLK_32
-Label=Q58
-DisplayTogether=Yes
-Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_33
-Label=Q59
-DisplayTogether=Yes
-Position=13
-Length=5
-  
-[Block]
 Name=DG_BLK_34
-Label=Q59
+Label=Q58
 DisplayTogether=Yes
-Position=19
+Position=4
 Length=1
   
 [Block]
 Name=DG_BLK_35
-Label=Q60
+Label=Q59
 DisplayTogether=Yes
-Position=21
+Position=6
 Length=1
   
 [Block]
 Name=DG_BLK_36
-Label=Q61
+Label=Q59
 DisplayTogether=Yes
-Position=23
-Length=7
+Position=8
+Length=1
   
 [Block]
 Name=DG_BLK_37
+Label=Q60
+DisplayTogether=Yes
+Position=10
+Length=1
+  
+[Block]
+Name=DG_BLK_38
 Label=Q61
 DisplayTogether=Yes
-Position=31
+Position=12
+Length=1
+  
+[Block]
+Name=DG_BLK_39
+Label=Q61
+DisplayTogether=Yes
+Position=14
 Length=1
   
 [EndGroup]
@@ -2881,1149 +2145,429 @@ Text=64. What are the medications that you or any member of your household usual
  
   
 [Field]
-Name=Q65_CONDITIONS_O01
+Name=Q65_CONDITIONS
 Position=350,117,365,137
-Item=Q65_CONDITIONS_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q65_CONDITIONS,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=10
   
 [Text]
 Position=50,120,330,136
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Upper respiratory infection
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O02
-Position=350,147,365,167
-Item=Q65_CONDITIONS_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,150,330,166
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Hypertension
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O03
-Position=350,177,365,197
-Item=Q65_CONDITIONS_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,180,330,196
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Immunization
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O04
-Position=350,207,365,227
-Item=Q65_CONDITIONS_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,210,330,226
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Pregnancy or birth
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O05
-Position=350,237,365,257
-Item=Q65_CONDITIONS_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,240,330,256
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Flu
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O06
-Position=350,267,365,287
-Item=Q65_CONDITIONS_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,270,330,286
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Fever
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O07
-Position=350,297,365,317
-Item=Q65_CONDITIONS_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,300,330,316
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Joint and muscle pain
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O08
-Position=350,327,365,347
-Item=Q65_CONDITIONS_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,330,330,346
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Asthma or COPD (chronic breathing problem, not cancer)
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O09
-Position=350,357,365,377
-Item=Q65_CONDITIONS_O09,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,360,330,376
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Diabetes
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O10
-Position=350,387,365,407
-Item=Q65_CONDITIONS_O10,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,390,330,406
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Heart problem
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O11
-Position=350,417,365,437
-Item=Q65_CONDITIONS_O11,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,420,330,436
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Kidney problem / Dialysis
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O12
-Position=350,447,365,467
-Item=Q65_CONDITIONS_O12,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,450,330,466
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Cancer (any)
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O13
-Position=350,477,365,497
-Item=Q65_CONDITIONS_O13,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,480,330,496
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Gastro problem (vomiting, diarrhea, etc.)
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O14
-Position=350,507,365,527
-Item=Q65_CONDITIONS_O14,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,510,330,526
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Other infection (e.g. urine, skin, other virus etc.)
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O15
-Position=350,537,365,557
-Item=Q65_CONDITIONS_O15,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,540,330,556
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Accident/injury (e.g. wound/broken bone)
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O16
-Position=350,567,365,587
-Item=Q65_CONDITIONS_O16,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,570,330,586
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Dental
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O17
-Position=350,597,365,617
-Item=Q65_CONDITIONS_O17,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,600,330,616
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — ENT (problem with ear/nose/throat)
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O18
-Position=350,627,365,647
-Item=Q65_CONDITIONS_O18,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,630,330,646
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Allergy
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O19
-Position=350,657,365,677
-Item=Q65_CONDITIONS_O19,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,660,330,676
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — No condition - Regular check-up only
- 
-  
-[Field]
-Name=Q65_CONDITIONS_O20
-Position=350,687,365,707
-Item=Q65_CONDITIONS_O20,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,690,330,706
-Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Other (Specify)
+Text=65. What are the medical conditions that you/your household member/s take the medicine/s for?
  
   
 [Field]
 Name=Q65_CONDITIONS_OTHER_TXT
-Position=350,717,760,737
+Position=350,147,760,167
 Item=Q65_CONDITIONS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,720,330,736
+Position=50,150,330,166
 Text=65. What are the medical conditions that you/your household member/s take the medicine/s for? — Other (specify) text
  
   
 [Field]
-Name=Q66_WHERE_BUY_O01
-Position=350,747,365,767
-Item=Q66_WHERE_BUY_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q66_WHERE_BUY
+Position=350,177,365,197
+Item=Q66_WHERE_BUY,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,750,330,766
-Text=66. Where do you usually buy or receive your medicines? — Public Hospital
- 
-  
-[Field]
-Name=Q66_WHERE_BUY_O02
-Position=350,777,365,797
-Item=Q66_WHERE_BUY_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,780,330,796
-Text=66. Where do you usually buy or receive your medicines? — Private Hospital
- 
-  
-[Field]
-Name=Q66_WHERE_BUY_O03
-Position=350,807,365,827
-Item=Q66_WHERE_BUY_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,810,330,826
-Text=66. Where do you usually buy or receive your medicines? — Chain Pharmacies (e.g. Mercury Drug, Watsons, TGP, Generika)
- 
-  
-[Field]
-Name=Q66_WHERE_BUY_O04
-Position=350,837,365,857
-Item=Q66_WHERE_BUY_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,840,330,856
-Text=66. Where do you usually buy or receive your medicines? — Local pharmacies
- 
-  
-[Field]
-Name=Q66_WHERE_BUY_O05
-Position=350,867,365,887
-Item=Q66_WHERE_BUY_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,870,330,886
-Text=66. Where do you usually buy or receive your medicines? — Online stores (e.g. Shopee, Lazada)
- 
-  
-[Field]
-Name=Q66_WHERE_BUY_O06
-Position=350,897,365,917
-Item=Q66_WHERE_BUY_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,900,330,916
-Text=66. Where do you usually buy or receive your medicines? — Barangay Health Station
- 
-  
-[Field]
-Name=Q66_WHERE_BUY_O07
-Position=350,927,365,947
-Item=Q66_WHERE_BUY_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,930,330,946
-Text=66. Where do you usually buy or receive your medicines? — Rural Health Unit or City Health Office
- 
-  
-[Field]
-Name=Q66_WHERE_BUY_O08
-Position=350,957,365,977
-Item=Q66_WHERE_BUY_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,960,330,976
-Text=66. Where do you usually buy or receive your medicines? — Other (specify)
+Position=50,180,330,196
+Text=66. Where do you usually buy or receive your medicines?
  
   
 [Field]
 Name=Q66_WHERE_BUY_OTHER_TXT
-Position=350,987,760,1007
+Position=350,207,760,227
 Item=Q66_WHERE_BUY_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,990,330,1006
+Position=50,210,330,226
 Text=66. Where do you usually buy or receive your medicines? — Other (specify) text
  
   
 [Field]
-Name=Q67_TIME_TO_PHARMACY
-Position=350,1017,760,1037
-Item=Q67_TIME_TO_PHARMACY,HOUSEHOLDSURVEY_DICT
+Name=Q67_TRAVEL_HH
+Position=350,237,760,257
+Item=Q67_TRAVEL_HH,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1020,330,1036
-Text=67. How much time does it take for you to reach the nearest pharmacy from your home? (HHMM)
+Position=50,240,330,256
+Text=67. How much time does it take to reach the nearest pharmacy from your home? — Hours
+ 
+  
+[Field]
+Name=Q67_TRAVEL_MM
+Position=350,267,760,287
+Item=Q67_TRAVEL_MM,HOUSEHOLDSURVEY_DICT
+DataCaptureType=TextBox
+Form=10
+  
+[Text]
+Position=50,270,330,286
+Text=67. How much time does it take to reach the nearest pharmacy from your home? — Minutes
  
   
 [Field]
 Name=Q68_PHARMACY_ACCESS
-Position=350,1047,365,1067
+Position=350,297,365,317
 Item=Q68_PHARMACY_ACCESS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1050,330,1066
+Position=50,300,330,316
 Text=68. How easy is it for you to access a pharmacy or drugstore?
  
   
 [Field]
 Name=Q69_GAMOT_HEARD
-Position=350,1077,365,1097
+Position=350,327,365,347
 Item=Q69_GAMOT_HEARD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1080,330,1096
+Position=50,330,330,346
 Text=69. Have you heard of the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's YAKAP/Konsulta or primary care benefit package?
  
   
 [Field]
-Name=Q70_GAMOT_SOURCE_O01
-Position=350,1107,365,1127
-Item=Q70_GAMOT_SOURCE_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q70_GAMOT_SOURCE
+Position=350,357,365,377
+Item=Q70_GAMOT_SOURCE,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,1110,330,1126
-Text=70. If yes, what are your sources of information for GAMOT Package? — News
- 
-  
-[Field]
-Name=Q70_GAMOT_SOURCE_O02
-Position=350,1137,365,1157
-Item=Q70_GAMOT_SOURCE_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1140,330,1156
-Text=70. If yes, what are your sources of information for GAMOT Package? — Legislation
- 
-  
-[Field]
-Name=Q70_GAMOT_SOURCE_O03
-Position=350,1167,365,1187
-Item=Q70_GAMOT_SOURCE_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1170,330,1186
-Text=70. If yes, what are your sources of information for GAMOT Package? — Social Media
- 
-  
-[Field]
-Name=Q70_GAMOT_SOURCE_O04
-Position=350,1197,365,1217
-Item=Q70_GAMOT_SOURCE_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1200,330,1216
-Text=70. If yes, what are your sources of information for GAMOT Package? — Friends / Family
- 
-  
-[Field]
-Name=Q70_GAMOT_SOURCE_O05
-Position=350,1227,365,1247
-Item=Q70_GAMOT_SOURCE_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1230,330,1246
-Text=70. If yes, what are your sources of information for GAMOT Package? — Health center/facility
- 
-  
-[Field]
-Name=Q70_GAMOT_SOURCE_O06
-Position=350,1257,365,1277
-Item=Q70_GAMOT_SOURCE_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1260,330,1276
-Text=70. If yes, what are your sources of information for GAMOT Package? — LGU/Barangay
- 
-  
-[Field]
-Name=Q70_GAMOT_SOURCE_O07
-Position=350,1287,365,1307
-Item=Q70_GAMOT_SOURCE_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1290,330,1306
-Text=70. If yes, what are your sources of information for GAMOT Package? — I don't know
- 
-  
-[Field]
-Name=Q70_GAMOT_SOURCE_O08
-Position=350,1317,365,1337
-Item=Q70_GAMOT_SOURCE_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1320,330,1336
-Text=70. If yes, what are your sources of information for GAMOT Package? — Other (Specify)
+Position=50,360,330,376
+Text=70. If yes, what are your sources of information for GAMOT Package?
  
   
 [Field]
 Name=Q70_GAMOT_SOURCE_OTHER_TXT
-Position=350,1347,760,1367
+Position=350,387,760,407
 Item=Q70_GAMOT_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1350,330,1366
+Position=50,390,330,406
 Text=70. If yes, what are your sources of information for GAMOT Package? — Other (specify) text
  
   
 [Field]
-Name=Q71_GAMOT_UNDERSTAND_O01
-Position=350,1377,365,1397
-Item=Q71_GAMOT_UNDERSTAND_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q71_GAMOT_UNDERSTAND
+Position=350,417,365,437
+Item=Q71_GAMOT_UNDERSTAND,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,1380,330,1396
-Text=71. What is your understanding of the GAMOT Package? — Provides free or affordable medicines for outpatients
- 
-  
-[Field]
-Name=Q71_GAMOT_UNDERSTAND_O02
-Position=350,1407,365,1427
-Item=Q71_GAMOT_UNDERSTAND_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1410,330,1426
-Text=71. What is your understanding of the GAMOT Package? — Ensures continuous availability of essential medicines
- 
-  
-[Field]
-Name=Q71_GAMOT_UNDERSTAND_O03
-Position=350,1437,365,1457
-Item=Q71_GAMOT_UNDERSTAND_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1440,330,1456
-Text=71. What is your understanding of the GAMOT Package? — Helps reduce out-of-pocket expenses for medicines
- 
-  
-[Field]
-Name=Q71_GAMOT_UNDERSTAND_O04
-Position=350,1467,365,1487
-Item=Q71_GAMOT_UNDERSTAND_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1470,330,1486
-Text=71. What is your understanding of the GAMOT Package? — Supports treatment of common illnesses and chronic conditions
- 
-  
-[Field]
-Name=Q71_GAMOT_UNDERSTAND_O05
-Position=350,1497,365,1517
-Item=Q71_GAMOT_UNDERSTAND_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1500,330,1516
-Text=71. What is your understanding of the GAMOT Package? — I don't know
- 
-  
-[Field]
-Name=Q71_GAMOT_UNDERSTAND_O06
-Position=350,1527,365,1547
-Item=Q71_GAMOT_UNDERSTAND_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1530,330,1546
-Text=71. What is your understanding of the GAMOT Package? — Other (specify)
+Position=50,420,330,436
+Text=71. What is your understanding of the GAMOT Package?
  
   
 [Field]
 Name=Q71_GAMOT_UNDERSTAND_OTHER_TXT
-Position=350,1557,760,1577
+Position=350,447,760,467
 Item=Q71_GAMOT_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1560,330,1576
+Position=50,450,330,466
 Text=71. What is your understanding of the GAMOT Package? — Other (specify) text
  
   
 [Field]
 Name=Q72_GAMOT_OBTAINED
-Position=350,1587,365,1607
+Position=350,477,365,497
 Item=Q72_GAMOT_OBTAINED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1590,330,1606
+Position=50,480,330,496
 Text=72. Did you get the medicines from the GAMOT Package during the past 6 months?
  
   
 [Field]
 Name=Q73_GAMOT_MEDS_LIST
-Position=350,1617,760,1637
+Position=350,507,760,527
 Item=Q73_GAMOT_MEDS_LIST,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1620,330,1636
+Position=50,510,330,526
 Text=73. What are the medications that you obtained from the GAMOT Package? [LIST]
  
   
 [Field]
-Name=Q74_WHERE_REST_O01
-Position=350,1647,365,1667
-Item=Q74_WHERE_REST_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q74_WHERE_REST
+Position=350,537,365,557
+Item=Q74_WHERE_REST,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,1650,330,1666
-Text=74. Where did you get the rest of the medicines? — Purchased from pharmacy
- 
-  
-[Field]
-Name=Q74_WHERE_REST_O02
-Position=350,1677,365,1697
-Item=Q74_WHERE_REST_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1680,330,1696
-Text=74. Where did you get the rest of the medicines? — Purchased from public hospital
- 
-  
-[Field]
-Name=Q74_WHERE_REST_O03
-Position=350,1707,365,1727
-Item=Q74_WHERE_REST_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1710,330,1726
-Text=74. Where did you get the rest of the medicines? — Purchased from private hospital
- 
-  
-[Field]
-Name=Q74_WHERE_REST_O04
-Position=350,1737,365,1757
-Item=Q74_WHERE_REST_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1740,330,1756
-Text=74. Where did you get the rest of the medicines? — Purchased from primary care provider (PCP)
- 
-  
-[Field]
-Name=Q74_WHERE_REST_O05
-Position=350,1767,365,1787
-Item=Q74_WHERE_REST_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1770,330,1786
-Text=74. Where did you get the rest of the medicines? — Received from PCP for free
- 
-  
-[Field]
-Name=Q74_WHERE_REST_O06
-Position=350,1797,365,1817
-Item=Q74_WHERE_REST_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1800,330,1816
-Text=74. Where did you get the rest of the medicines? — Received from LGU for free
- 
-  
-[Field]
-Name=Q74_WHERE_REST_O07
-Position=350,1827,365,1847
-Item=Q74_WHERE_REST_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1830,330,1846
-Text=74. Where did you get the rest of the medicines? — Received from public hospital for free
- 
-  
-[Field]
-Name=Q74_WHERE_REST_O08
-Position=350,1857,365,1877
-Item=Q74_WHERE_REST_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1860,330,1876
-Text=74. Where did you get the rest of the medicines? — Received from private hospital for free
- 
-  
-[Field]
-Name=Q74_WHERE_REST_O09
-Position=350,1887,365,1907
-Item=Q74_WHERE_REST_O09,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1890,330,1906
-Text=74. Where did you get the rest of the medicines? — Not applicable
- 
-  
-[Field]
-Name=Q74_WHERE_REST_O10
-Position=350,1917,365,1937
-Item=Q74_WHERE_REST_O10,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,1920,330,1936
-Text=74. Where did you get the rest of the medicines? — Other (Specify)
+Position=50,540,330,556
+Text=74. Where did you get the rest of the medicines?
  
   
 [Field]
 Name=Q74_WHERE_REST_OTHER_TXT
-Position=350,1947,760,1967
+Position=350,567,760,587
 Item=Q74_WHERE_REST_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,1950,330,1966
+Position=50,570,330,586
 Text=74. Where did you get the rest of the medicines? — Other (specify) text
  
   
 [Field]
 Name=Q75_BRAND_GEN_KNOWS
-Position=350,1977,365,1997
+Position=350,597,365,617
 Item=Q75_BRAND_GEN_KNOWS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,1980,330,1996
+Position=50,600,330,616
 Text=75. Do you know the difference between a 'branded' and a 'generic' medicine?
  
   
 [Field]
 Name=Q76_BRAND_OR_GEN
-Position=350,2007,365,2027
+Position=350,627,365,647
 Item=Q76_BRAND_OR_GEN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=10
   
 [Text]
-Position=50,2010,330,2026
+Position=50,630,330,646
 Text=76. Was/were the medicine/s you bought outside of GAMOT pharmacy branded or generic?
  
   
 [Field]
-Name=Q77_WHY_GENERIC_O01
-Position=350,2037,365,2057
-Item=Q77_WHY_GENERIC_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q77_WHY_GENERIC
+Position=350,657,365,677
+Item=Q77_WHY_GENERIC,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,2040,330,2056
-Text=77. If generic, why did you buy generic medicine? — Lower cost
- 
-  
-[Field]
-Name=Q77_WHY_GENERIC_O02
-Position=350,2067,365,2087
-Item=Q77_WHY_GENERIC_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2070,330,2086
-Text=77. If generic, why did you buy generic medicine? — Prescribed by doctor
- 
-  
-[Field]
-Name=Q77_WHY_GENERIC_O03
-Position=350,2097,365,2117
-Item=Q77_WHY_GENERIC_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2100,330,2116
-Text=77. If generic, why did you buy generic medicine? — Readily available
- 
-  
-[Field]
-Name=Q77_WHY_GENERIC_O04
-Position=350,2127,365,2147
-Item=Q77_WHY_GENERIC_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2130,330,2146
-Text=77. If generic, why did you buy generic medicine? — Given for free
- 
-  
-[Field]
-Name=Q77_WHY_GENERIC_O05
-Position=350,2157,365,2177
-Item=Q77_WHY_GENERIC_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2160,330,2176
-Text=77. If generic, why did you buy generic medicine? — More or as effective as branded medicine
- 
-  
-[Field]
-Name=Q77_WHY_GENERIC_O06
-Position=350,2187,365,2207
-Item=Q77_WHY_GENERIC_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2190,330,2206
-Text=77. If generic, why did you buy generic medicine? — I don't know
- 
-  
-[Field]
-Name=Q77_WHY_GENERIC_O07
-Position=350,2217,365,2237
-Item=Q77_WHY_GENERIC_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2220,330,2236
-Text=77. If generic, why did you buy generic medicine? — Not applicable
- 
-  
-[Field]
-Name=Q77_WHY_GENERIC_O08
-Position=350,2247,365,2267
-Item=Q77_WHY_GENERIC_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2250,330,2266
-Text=77. If generic, why did you buy generic medicine? — Other (Specify)
+Position=50,660,330,676
+Text=77. If generic, why did you buy generic medicine?
  
   
 [Field]
 Name=Q77_WHY_GENERIC_OTHER_TXT
-Position=350,2277,760,2297
+Position=350,687,760,707
 Item=Q77_WHY_GENERIC_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,2280,330,2296
+Position=50,690,330,706
 Text=77. If generic, why did you buy generic medicine? — Other (specify) text
  
   
 [Field]
-Name=Q78_WHY_BRANDED_O01
-Position=350,2307,365,2327
-Item=Q78_WHY_BRANDED_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q78_WHY_BRANDED
+Position=350,717,365,737
+Item=Q78_WHY_BRANDED,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=10
   
 [Text]
-Position=50,2310,330,2326
-Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) — Branded medicine is more effective than generic
- 
-  
-[Field]
-Name=Q78_WHY_BRANDED_O02
-Position=350,2337,365,2357
-Item=Q78_WHY_BRANDED_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2340,330,2356
-Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) — Not aware of generic option
- 
-  
-[Field]
-Name=Q78_WHY_BRANDED_O03
-Position=350,2367,365,2387
-Item=Q78_WHY_BRANDED_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2370,330,2386
-Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) — Prescribed by doctor
- 
-  
-[Field]
-Name=Q78_WHY_BRANDED_O04
-Position=350,2397,365,2417
-Item=Q78_WHY_BRANDED_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2400,330,2416
-Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) — Given for free
- 
-  
-[Field]
-Name=Q78_WHY_BRANDED_O05
-Position=350,2427,365,2447
-Item=Q78_WHY_BRANDED_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2430,330,2446
-Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) — Prefer branded over generic option
- 
-  
-[Field]
-Name=Q78_WHY_BRANDED_O06
-Position=350,2457,365,2477
-Item=Q78_WHY_BRANDED_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2460,330,2476
-Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) — I don't know
- 
-  
-[Field]
-Name=Q78_WHY_BRANDED_O07
-Position=350,2487,365,2507
-Item=Q78_WHY_BRANDED_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2490,330,2506
-Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) — Not applicable
- 
-  
-[Field]
-Name=Q78_WHY_BRANDED_O08
-Position=350,2517,365,2537
-Item=Q78_WHY_BRANDED_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=10
-  
-[Text]
-Position=50,2520,330,2536
-Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) — Other (Specify)
+Position=50,720,330,736
+Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.)
  
   
 [Field]
 Name=Q78_WHY_BRANDED_OTHER_TXT
-Position=350,2547,760,2567
+Position=350,747,760,767
 Item=Q78_WHY_BRANDED_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=10
   
 [Text]
-Position=50,2550,330,2566
+Position=50,750,330,766
 Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_38
+Name=DG_BLK_40
 Label=Q62
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_39
+Name=DG_BLK_41
 Label=Q63-Q64
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_BLK_40
+Name=DG_BLK_42
 Label=Q65
 DisplayTogether=Yes
 Position=5
-Length=20
-  
-[Block]
-Name=DG_BLK_41
-Label=Q65
-DisplayTogether=Yes
-Position=26
 Length=1
   
 [Block]
-Name=DG_BLK_42
-Label=Q66
+Name=DG_BLK_43
+Label=Q65
 DisplayTogether=Yes
-Position=28
-Length=8
+Position=7
+Length=1
   
 [Block]
-Name=DG_BLK_43
+Name=DG_BLK_44
 Label=Q66
+DisplayTogether=Yes
+Position=9
+Length=1
+  
+[Block]
+Name=DG_BLK_45
+Label=Q66
+DisplayTogether=Yes
+Position=11
+Length=1
+  
+[Block]
+Name=DG_BLK_46
+Label=Q67-Q68
+DisplayTogether=Yes
+Position=13
+Length=3
+  
+[Block]
+Name=DG_BLK_47
+Label=Q69
+DisplayTogether=Yes
+Position=17
+Length=1
+  
+[Block]
+Name=DG_BLK_48
+Label=Q70
+DisplayTogether=Yes
+Position=19
+Length=1
+  
+[Block]
+Name=DG_BLK_49
+Label=Q70
+DisplayTogether=Yes
+Position=21
+Length=1
+  
+[Block]
+Name=DG_BLK_50
+Label=Q71
+DisplayTogether=Yes
+Position=23
+Length=1
+  
+[Block]
+Name=DG_BLK_51
+Label=Q71
+DisplayTogether=Yes
+Position=25
+Length=1
+  
+[Block]
+Name=DG_BLK_52
+Label=Q72
+DisplayTogether=Yes
+Position=27
+Length=1
+  
+[Block]
+Name=DG_BLK_53
+Label=Q73
+DisplayTogether=Yes
+Position=29
+Length=1
+  
+[Block]
+Name=DG_BLK_54
+Label=Q74
+DisplayTogether=Yes
+Position=31
+Length=1
+  
+[Block]
+Name=DG_BLK_55
+Label=Q74
+DisplayTogether=Yes
+Position=33
+Length=1
+  
+[Block]
+Name=DG_BLK_56
+Label=Q75
+DisplayTogether=Yes
+Position=35
+Length=1
+  
+[Block]
+Name=DG_BLK_57
+Label=Q76
 DisplayTogether=Yes
 Position=37
 Length=1
   
 [Block]
-Name=DG_BLK_44
-Label=Q67-Q68
+Name=DG_BLK_58
+Label=Q77
 DisplayTogether=Yes
 Position=39
-Length=2
-  
-[Block]
-Name=DG_BLK_45
-Label=Q69
-DisplayTogether=Yes
-Position=42
 Length=1
-  
-[Block]
-Name=DG_BLK_46
-Label=Q70
-DisplayTogether=Yes
-Position=44
-Length=8
-  
-[Block]
-Name=DG_BLK_47
-Label=Q70
-DisplayTogether=Yes
-Position=53
-Length=1
-  
-[Block]
-Name=DG_BLK_48
-Label=Q71
-DisplayTogether=Yes
-Position=55
-Length=6
-  
-[Block]
-Name=DG_BLK_49
-Label=Q71
-DisplayTogether=Yes
-Position=62
-Length=1
-  
-[Block]
-Name=DG_BLK_50
-Label=Q72
-DisplayTogether=Yes
-Position=64
-Length=1
-  
-[Block]
-Name=DG_BLK_51
-Label=Q73
-DisplayTogether=Yes
-Position=66
-Length=1
-  
-[Block]
-Name=DG_BLK_52
-Label=Q74
-DisplayTogether=Yes
-Position=68
-Length=10
-  
-[Block]
-Name=DG_BLK_53
-Label=Q74
-DisplayTogether=Yes
-Position=79
-Length=1
-  
-[Block]
-Name=DG_BLK_54
-Label=Q75
-DisplayTogether=Yes
-Position=81
-Length=1
-  
-[Block]
-Name=DG_BLK_55
-Label=Q76
-DisplayTogether=Yes
-Position=83
-Length=1
-  
-[Block]
-Name=DG_BLK_56
-Label=Q77
-DisplayTogether=Yes
-Position=85
-Length=8
-  
-[Block]
-Name=DG_BLK_57
-Label=Q77
-DisplayTogether=Yes
-Position=94
-Length=1
-  
-[Block]
-Name=DG_BLK_58
-Label=Q78
-DisplayTogether=Yes
-Position=96
-Length=8
   
 [Block]
 Name=DG_BLK_59
+Label=Q77
+DisplayTogether=Yes
+Position=41
+Length=1
+  
+[Block]
+Name=DG_BLK_60
 Label=Q78
 DisplayTogether=Yes
-Position=105
+Position=43
+Length=1
+  
+[Block]
+Name=DG_BLK_61
+Label=Q78
+DisplayTogether=Yes
+Position=45
 Length=1
   
 [EndGroup]
@@ -4098,448 +2642,232 @@ Text=81. Did you have any difficulties in the registration process?
  
   
 [Field]
-Name=Q82_DIFFICULTY_REASONS_O01
+Name=Q82_DIFFICULTY_REASONS
 Position=350,177,365,197
-Item=Q82_DIFFICULTY_REASONS_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q82_DIFFICULTY_REASONS,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=11
   
 [Text]
 Position=50,180,330,196
-Text=82. What did you find difficult about the process? — Unclear process
- 
-  
-[Field]
-Name=Q82_DIFFICULTY_REASONS_O02
-Position=350,207,365,227
-Item=Q82_DIFFICULTY_REASONS_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,210,330,226
-Text=82. What did you find difficult about the process? — Took a long time
- 
-  
-[Field]
-Name=Q82_DIFFICULTY_REASONS_O03
-Position=350,237,365,257
-Item=Q82_DIFFICULTY_REASONS_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,240,330,256
-Text=82. What did you find difficult about the process? — Did not know where to ask for help
- 
-  
-[Field]
-Name=Q82_DIFFICULTY_REASONS_O04
-Position=350,267,365,287
-Item=Q82_DIFFICULTY_REASONS_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,270,330,286
-Text=82. What did you find difficult about the process? — Had to travel a long way
- 
-  
-[Field]
-Name=Q82_DIFFICULTY_REASONS_O05
-Position=350,297,365,317
-Item=Q82_DIFFICULTY_REASONS_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,300,330,316
-Text=82. What did you find difficult about the process? — No valid ID
- 
-  
-[Field]
-Name=Q82_DIFFICULTY_REASONS_O06
-Position=350,327,365,347
-Item=Q82_DIFFICULTY_REASONS_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,330,330,346
-Text=82. What did you find difficult about the process? — Did not know the required documents to register
- 
-  
-[Field]
-Name=Q82_DIFFICULTY_REASONS_O07
-Position=350,357,365,377
-Item=Q82_DIFFICULTY_REASONS_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,360,330,376
-Text=82. What did you find difficult about the process? — I don't know
- 
-  
-[Field]
-Name=Q82_DIFFICULTY_REASONS_O08
-Position=350,387,365,407
-Item=Q82_DIFFICULTY_REASONS_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,390,330,406
-Text=82. What did you find difficult about the process? — Other (Specify)
+Text=82. What did you find difficult about the process?
  
   
 [Field]
 Name=Q82_DIFFICULTY_REASONS_OTHER_TXT
-Position=350,417,760,437
+Position=350,207,760,227
 Item=Q82_DIFFICULTY_REASONS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,420,330,436
+Position=50,210,330,226
 Text=82. What did you find difficult about the process? — Other (specify) text
  
   
 [Field]
 Name=Q83_KNOWS_ASSIST
-Position=350,447,365,467
+Position=350,237,365,257
 Item=Q83_KNOWS_ASSIST,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=11
   
 [Text]
-Position=50,450,330,466
+Position=50,240,330,256
 Text=83. Would you know where to go to seek assistance in registration?
  
   
 [Field]
 Name=Q84_WHERE_ASSIST
-Position=350,477,760,497
+Position=350,267,760,287
 Item=Q84_WHERE_ASSIST,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,480,330,496
+Position=50,270,330,286
 Text=84. Where would you go to seek assistance?
  
   
 [Field]
-Name=Q85_BENEFITS_O01
-Position=350,507,365,527
-Item=Q85_BENEFITS_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q85_BENEFITS
+Position=350,297,365,317
+Item=Q85_BENEFITS,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=11
   
 [Text]
-Position=50,510,330,526
-Text=85. What are some of the benefits that come with being a PhilHealth member? — No balance billing for basic ward accommodation
- 
-  
-[Field]
-Name=Q85_BENEFITS_O02
-Position=350,537,365,557
-Item=Q85_BENEFITS_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,540,330,556
-Text=85. What are some of the benefits that come with being a PhilHealth member? — Subsidized inpatient services
- 
-  
-[Field]
-Name=Q85_BENEFITS_O03
-Position=350,567,365,587
-Item=Q85_BENEFITS_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,570,330,586
-Text=85. What are some of the benefits that come with being a PhilHealth member? — Subsidized outpatient services
- 
-  
-[Field]
-Name=Q85_BENEFITS_O04
-Position=350,597,365,617
-Item=Q85_BENEFITS_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,600,330,616
-Text=85. What are some of the benefits that come with being a PhilHealth member? — There are no benefits to being a member
- 
-  
-[Field]
-Name=Q85_BENEFITS_O05
-Position=350,627,365,647
-Item=Q85_BENEFITS_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,630,330,646
-Text=85. What are some of the benefits that come with being a PhilHealth member? — I don't know
- 
-  
-[Field]
-Name=Q85_BENEFITS_O06
-Position=350,657,365,677
-Item=Q85_BENEFITS_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,660,330,676
-Text=85. What are some of the benefits that come with being a PhilHealth member? — Other (Specify)
+Position=50,300,330,316
+Text=85. What are some of the benefits that come with being a PhilHealth member?
  
   
 [Field]
 Name=Q85_BENEFITS_OTHER_TXT
-Position=350,687,760,707
+Position=350,327,760,347
 Item=Q85_BENEFITS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,690,330,706
+Position=50,330,330,346
 Text=85. What are some of the benefits that come with being a PhilHealth member? — Other (specify) text
  
   
 [Field]
 Name=Q86_PREMIUM_PAY
-Position=350,717,365,737
+Position=350,357,365,377
 Item=Q86_PREMIUM_PAY,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=11
   
 [Text]
-Position=50,720,330,736
+Position=50,360,330,376
 Text=86. Do you and members of your HH pay PhilHealth premiums every month?
  
   
 [Field]
 Name=Q87_PREMIUM_DIFFICULT
-Position=350,747,365,767
+Position=350,387,365,407
 Item=Q87_PREMIUM_DIFFICULT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=11
   
 [Text]
-Position=50,750,330,766
+Position=50,390,330,406
 Text=87. Do you find it difficult to pay the PhilHealth premiums every month?
  
   
 [Field]
-Name=Q88_DIFF_PAYING_O01
-Position=350,777,365,797
-Item=Q88_DIFF_PAYING_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q88_DIFF_PAYING
+Position=350,417,365,437
+Item=Q88_DIFF_PAYING,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=11
   
 [Text]
-Position=50,780,330,796
-Text=88. Why did you find it difficult? — Cannot afford the premium
- 
-  
-[Field]
-Name=Q88_DIFF_PAYING_O02
-Position=350,807,365,827
-Item=Q88_DIFF_PAYING_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,810,330,826
-Text=88. Why did you find it difficult? — Payment options are inconvenient
- 
-  
-[Field]
-Name=Q88_DIFF_PAYING_O03
-Position=350,837,365,857
-Item=Q88_DIFF_PAYING_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,840,330,856
-Text=88. Why did you find it difficult? — No time to pay
- 
-  
-[Field]
-Name=Q88_DIFF_PAYING_O04
-Position=350,867,365,887
-Item=Q88_DIFF_PAYING_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,870,330,886
-Text=88. Why did you find it difficult? — Don't see value in paying
- 
-  
-[Field]
-Name=Q88_DIFF_PAYING_O05
-Position=350,897,365,917
-Item=Q88_DIFF_PAYING_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,900,330,916
-Text=88. Why did you find it difficult? — System of PhilHealth is unreliable/usually down
- 
-  
-[Field]
-Name=Q88_DIFF_PAYING_O06
-Position=350,927,365,947
-Item=Q88_DIFF_PAYING_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,930,330,946
-Text=88. Why did you find it difficult? — I don't know
- 
-  
-[Field]
-Name=Q88_DIFF_PAYING_O07
-Position=350,957,365,977
-Item=Q88_DIFF_PAYING_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=11
-  
-[Text]
-Position=50,960,330,976
-Text=88. Why did you find it difficult? — Other (Specify)
+Position=50,420,330,436
+Text=88. Why did you find it difficult?
  
   
 [Field]
 Name=Q88_DIFF_PAYING_OTHER_TXT
-Position=350,987,760,1007
+Position=350,447,760,467
 Item=Q88_DIFF_PAYING_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,990,330,1006
+Position=50,450,330,466
 Text=88. Why did you find it difficult? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_60
+Name=DG_BLK_62
 Label=Q79
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_61
+Name=DG_BLK_63
 Label=Q79
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_62
+Name=DG_BLK_64
 Label=Q80
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_63
+Name=DG_BLK_65
 Label=Q80
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_64
+Name=DG_BLK_66
 Label=Q81
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_65
+Name=DG_BLK_67
 Label=Q82
 DisplayTogether=Yes
 Position=10
-Length=8
-  
-[Block]
-Name=DG_BLK_66
-Label=Q82
-DisplayTogether=Yes
-Position=19
-Length=1
-  
-[Block]
-Name=DG_BLK_67
-Label=Q83
-DisplayTogether=Yes
-Position=21
 Length=1
   
 [Block]
 Name=DG_BLK_68
-Label=Q84
+Label=Q82
 DisplayTogether=Yes
-Position=23
+Position=12
 Length=1
   
 [Block]
 Name=DG_BLK_69
-Label=Q85
+Label=Q83
 DisplayTogether=Yes
-Position=25
-Length=6
+Position=14
+Length=1
   
 [Block]
 Name=DG_BLK_70
-Label=Q85
+Label=Q84
 DisplayTogether=Yes
-Position=32
+Position=16
 Length=1
   
 [Block]
 Name=DG_BLK_71
-Label=Q86
+Label=Q85
 DisplayTogether=Yes
-Position=34
+Position=18
 Length=1
   
 [Block]
 Name=DG_BLK_72
-Label=Q87
+Label=Q85
 DisplayTogether=Yes
-Position=36
+Position=20
 Length=1
   
 [Block]
 Name=DG_BLK_73
-Label=Q88
+Label=Q86
 DisplayTogether=Yes
-Position=38
-Length=7
+Position=22
+Length=1
   
 [Block]
 Name=DG_BLK_74
+Label=Q87
+DisplayTogether=Yes
+Position=24
+Length=1
+  
+[Block]
+Name=DG_BLK_75
 Label=Q88
 DisplayTogether=Yes
-Position=46
+Position=26
+Length=1
+  
+[Block]
+Name=DG_BLK_76
+Label=Q88
+DisplayTogether=Yes
+Position=28
 Length=1
   
 [EndGroup]
@@ -4589,566 +2917,266 @@ Text=90. Is this the facility you usually go to for general health concerns?
  
   
 [Field]
-Name=Q91_WHY_WENT_O01
+Name=Q91_WHY_WENT
 Position=350,117,365,137
-Item=Q91_WHY_WENT_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q91_WHY_WENT,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=12
   
 [Text]
 Position=50,120,330,136
-Text=91. Why did you go to this facility? — This facility is more accessible than my usual facility (i.e., nearer, has more transportation options to get to, and cheaper to travel to)
- 
-  
-[Field]
-Name=Q91_WHY_WENT_O02
-Position=350,147,365,167
-Item=Q91_WHY_WENT_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,150,330,166
-Text=91. Why did you go to this facility? — Needed a service/specialist not available at my usual facility
- 
-  
-[Field]
-Name=Q91_WHY_WENT_O03
-Position=350,177,365,197
-Item=Q91_WHY_WENT_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,180,330,196
-Text=91. Why did you go to this facility? — Recommended by friends/family
- 
-  
-[Field]
-Name=Q91_WHY_WENT_O04
-Position=350,207,365,227
-Item=Q91_WHY_WENT_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,210,330,226
-Text=91. Why did you go to this facility? — Wanted to try another facility than my usual
- 
-  
-[Field]
-Name=Q91_WHY_WENT_O05
-Position=350,237,365,257
-Item=Q91_WHY_WENT_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,240,330,256
-Text=91. Why did you go to this facility? — Prefer this facility than my usual
- 
-  
-[Field]
-Name=Q91_WHY_WENT_O06
-Position=350,267,365,287
-Item=Q91_WHY_WENT_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,270,330,286
-Text=91. Why did you go to this facility? — This was referred to me by my usual facility
- 
-  
-[Field]
-Name=Q91_WHY_WENT_O07
-Position=350,297,365,317
-Item=Q91_WHY_WENT_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,300,330,316
-Text=91. Why did you go to this facility? — Usual facility is closed for today
- 
-  
-[Field]
-Name=Q91_WHY_WENT_O08
-Position=350,327,365,347
-Item=Q91_WHY_WENT_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,330,330,346
-Text=91. Why did you go to this facility? — The doctor I trust/familiar with transferred in this facility
- 
-  
-[Field]
-Name=Q91_WHY_WENT_O09
-Position=350,357,365,377
-Item=Q91_WHY_WENT_O09,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,360,330,376
-Text=91. Why did you go to this facility? — Other (Specify)
+Text=91. Why did you go to this facility?
  
   
 [Field]
 Name=Q91_WHY_WENT_OTHER_TXT
-Position=350,387,760,407
+Position=350,147,760,167
 Item=Q91_WHY_WENT_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,390,330,406
+Position=50,150,330,166
 Text=91. Why did you go to this facility? — Other (specify) text
  
   
 [Field]
 Name=Q92_FACILITY_TYPE
-Position=350,417,365,437
+Position=350,177,365,197
 Item=Q92_FACILITY_TYPE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=12
   
 [Text]
-Position=50,420,330,436
+Position=50,180,330,196
 Text=92. What is the type of facility that you usually go to?
  
   
 [Field]
 Name=Q92_FACILITY_TYPE_OTHER_TXT
-Position=350,447,760,467
+Position=350,207,760,227
 Item=Q92_FACILITY_TYPE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,450,330,466
+Position=50,210,330,226
 Text=92. Type of facility — Other (specify) text
  
   
 [Field]
-Name=Q93_WHY_NOT_O01
-Position=350,477,365,497
-Item=Q93_WHY_NOT_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q93_WHY_NOT
+Position=350,237,365,257
+Item=Q93_WHY_NOT,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=12
   
 [Text]
-Position=50,480,330,496
-Text=93. If not, why do you not have a usual clinic, or health center that you usually go to? — I don't get sick
- 
-  
-[Field]
-Name=Q93_WHY_NOT_O02
-Position=350,507,365,527
-Item=Q93_WHY_NOT_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,510,330,526
-Text=93. If not, why do you not have a usual clinic, or health center that you usually go to? — I recently moved into the area
- 
-  
-[Field]
-Name=Q93_WHY_NOT_O03
-Position=350,537,365,557
-Item=Q93_WHY_NOT_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,540,330,556
-Text=93. If not, why do you not have a usual clinic, or health center that you usually go to? — It's expensive
- 
-  
-[Field]
-Name=Q93_WHY_NOT_O04
-Position=350,567,365,587
-Item=Q93_WHY_NOT_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,570,330,586
-Text=93. If not, why do you not have a usual clinic, or health center that you usually go to? — I can treat myself
- 
-  
-[Field]
-Name=Q93_WHY_NOT_O05
-Position=350,597,365,617
-Item=Q93_WHY_NOT_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,600,330,616
-Text=93. If not, why do you not have a usual clinic, or health center that you usually go to? — I don't know where to go for care
- 
-  
-[Field]
-Name=Q93_WHY_NOT_O06
-Position=350,627,365,647
-Item=Q93_WHY_NOT_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,630,330,646
-Text=93. If not, why do you not have a usual clinic, or health center that you usually go to? — I don't know
- 
-  
-[Field]
-Name=Q93_WHY_NOT_O07
-Position=350,657,365,677
-Item=Q93_WHY_NOT_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,660,330,676
-Text=93. If not, why do you not have a usual clinic, or health center that you usually go to? — Other (Specify)
+Position=50,240,330,256
+Text=93. If not, why do you not have a usual clinic, or health center that you usually go to?
  
   
 [Field]
 Name=Q93_WHY_NOT_OTHER_TXT
-Position=350,687,760,707
+Position=350,267,760,287
 Item=Q93_WHY_NOT_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,690,330,706
+Position=50,270,330,286
 Text=93. If not, why do you not have a usual clinic, or health center that you usually go to? — Other (specify) text
  
   
 [Field]
-Name=Q94_TRANSPORT_O01
-Position=350,717,365,737
-Item=Q94_TRANSPORT_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q94_TRANSPORT
+Position=350,297,365,317
+Item=Q94_TRANSPORT,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=12
   
 [Text]
-Position=50,720,330,736
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Walk
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O02
-Position=350,747,365,767
-Item=Q94_TRANSPORT_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,750,330,766
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Bike
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O03
-Position=350,777,365,797
-Item=Q94_TRANSPORT_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,780,330,796
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Public Bus
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O04
-Position=350,807,365,827
-Item=Q94_TRANSPORT_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,810,330,826
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Jeepney
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O05
-Position=350,837,365,857
-Item=Q94_TRANSPORT_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,840,330,856
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Tricycle
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O06
-Position=350,867,365,887
-Item=Q94_TRANSPORT_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,870,330,886
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Car (including private taxi/cab)
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O07
-Position=350,897,365,917
-Item=Q94_TRANSPORT_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,900,330,916
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Motorcycle
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O08
-Position=350,927,365,947
-Item=Q94_TRANSPORT_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,930,330,946
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Boat
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O09
-Position=350,957,365,977
-Item=Q94_TRANSPORT_O09,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,960,330,976
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Taxi
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O10
-Position=350,987,365,1007
-Item=Q94_TRANSPORT_O10,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,990,330,1006
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Pedicab
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O11
-Position=350,1017,365,1037
-Item=Q94_TRANSPORT_O11,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,1020,330,1036
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — E-bike
- 
-  
-[Field]
-Name=Q94_TRANSPORT_O12
-Position=350,1047,365,1067
-Item=Q94_TRANSPORT_O12,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=12
-  
-[Text]
-Position=50,1050,330,1066
-Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Other (Specify)
+Position=50,300,330,316
+Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility?
  
   
 [Field]
 Name=Q94_TRANSPORT_OTHER_TXT
-Position=350,1077,760,1097
+Position=350,327,760,347
 Item=Q94_TRANSPORT_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,1080,330,1096
+Position=50,330,330,346
 Text=94. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Other (specify) text
  
   
 [Field]
 Name=Q95_TRAVEL_TIME_MIN
-Position=350,1107,760,1127
+Position=350,357,760,377
 Item=Q95_TRAVEL_TIME_MIN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,1110,330,1126
+Position=50,360,330,376
 Text=95. How long does it take you to travel from your house when going to the nearest primary care facility? (one-way, minutes)
  
   
 [Field]
 Name=Q96_TRAVEL_COST_PHP
-Position=350,1137,760,1157
+Position=350,387,760,407
 Item=Q96_TRAVEL_COST_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,1140,330,1156
+Position=50,390,330,406
 Text=96. How much does it usually cost for you to travel to this facility from your home? (PHP, one-way)
  
   
 [Field]
 Name=Q97_KNOWS_BOOKING
-Position=350,1167,365,1187
+Position=350,417,365,437
 Item=Q97_KNOWS_BOOKING,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=12
   
 [Text]
-Position=50,1170,330,1186
+Position=50,420,330,436
 Text=97. When you have a health problem, do you know how to book an appointment at a primary care facility?
  
   
 [Field]
 Name=Q98_PHONE_ADVICE_OPEN
-Position=350,1197,365,1217
+Position=350,447,365,467
 Item=Q98_PHONE_ADVICE_OPEN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=12
   
 [Text]
-Position=50,1200,330,1216
+Position=50,450,330,466
 Text=98. When your primary care facility is open, can you get advice quickly over the phone if you need it?
  
   
 [Field]
 Name=Q99_PHONE_ADVICE_CLOSED
-Position=350,1227,365,1247
+Position=350,477,365,497
 Item=Q99_PHONE_ADVICE_CLOSED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=12
   
 [Text]
-Position=50,1230,330,1246
+Position=50,480,330,496
 Text=99. When your primary care facility is closed, is there a phone number you can call when you get sick?
  
   
 [Field]
 Name=Q100_LEAVE_WORK_SCHOOL
-Position=350,1257,365,1277
+Position=350,507,365,527
 Item=Q100_LEAVE_WORK_SCHOOL,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=12
   
 [Text]
-Position=50,1260,330,1276
+Position=50,510,330,526
 Text=100. When you have to visit your primary care facility, do you have to take a leave from work or school to go?
  
   
 [Block]
-Name=DG_BLK_75
+Name=DG_BLK_77
 Label=Q89
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_76
+Name=DG_BLK_78
 Label=Q89-Q90
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_BLK_77
+Name=DG_BLK_79
 Label=Q91
 DisplayTogether=Yes
 Position=5
-Length=9
+Length=1
   
 [Block]
-Name=DG_BLK_78
+Name=DG_BLK_80
 Label=Q91
+DisplayTogether=Yes
+Position=7
+Length=1
+  
+[Block]
+Name=DG_BLK_81
+Label=Q92
+DisplayTogether=Yes
+Position=9
+Length=1
+  
+[Block]
+Name=DG_BLK_82
+Label=Q92
+DisplayTogether=Yes
+Position=11
+Length=1
+  
+[Block]
+Name=DG_BLK_83
+Label=Q93
+DisplayTogether=Yes
+Position=13
+Length=1
+  
+[Block]
+Name=DG_BLK_84
+Label=Q93
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_79
-Label=Q92
+Name=DG_BLK_85
+Label=Q94
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_80
-Label=Q92
+Name=DG_BLK_86
+Label=Q94
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_81
-Label=Q93
-DisplayTogether=Yes
-Position=21
-Length=7
-  
-[Block]
-Name=DG_BLK_82
-Label=Q93
-DisplayTogether=Yes
-Position=29
-Length=1
-  
-[Block]
-Name=DG_BLK_83
-Label=Q94
-DisplayTogether=Yes
-Position=31
-Length=12
-  
-[Block]
-Name=DG_BLK_84
-Label=Q94
-DisplayTogether=Yes
-Position=44
-Length=1
-  
-[Block]
-Name=DG_BLK_85
+Name=DG_BLK_87
 Label=Q95-Q97
 DisplayTogether=Yes
-Position=46
+Position=21
 Length=3
   
 [Block]
-Name=DG_BLK_86
+Name=DG_BLK_88
 Label=Q98-Q99
 DisplayTogether=Yes
-Position=50
+Position=25
 Length=2
   
 [Block]
-Name=DG_BLK_87
+Name=DG_BLK_89
 Label=Q100
 DisplayTogether=Yes
-Position=53
+Position=28
 Length=1
   
 [EndGroup]
@@ -5186,492 +3214,204 @@ Text=101. Checkup frequency — Other (Specify) text
  
   
 [Field]
-Name=Q102_VISIT_REASON_O01
+Name=Q102_VISIT_REASON
 Position=350,87,365,107
-Item=Q102_VISIT_REASON_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q102_VISIT_REASON,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=13
   
 [Text]
 Position=50,90,330,106
-Text=102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? — Consultation for new health problem
- 
-  
-[Field]
-Name=Q102_VISIT_REASON_O02
-Position=350,117,365,137
-Item=Q102_VISIT_REASON_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,120,330,136
-Text=102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? — Consultation to follow-up an ongoing health problem
- 
-  
-[Field]
-Name=Q102_VISIT_REASON_O03
-Position=350,147,365,167
-Item=Q102_VISIT_REASON_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,150,330,166
-Text=102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? — For tests/diagnostics only
- 
-  
-[Field]
-Name=Q102_VISIT_REASON_O04
-Position=350,177,365,197
-Item=Q102_VISIT_REASON_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,180,330,196
-Text=102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? — For a general check-up
- 
-  
-[Field]
-Name=Q102_VISIT_REASON_O05
-Position=350,207,365,227
-Item=Q102_VISIT_REASON_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,210,330,226
-Text=102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? — To get a health certificate/administrative reason
- 
-  
-[Field]
-Name=Q102_VISIT_REASON_O06
-Position=350,237,365,257
-Item=Q102_VISIT_REASON_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,240,330,256
-Text=102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? — For immunizations/vaccinations
- 
-  
-[Field]
-Name=Q102_VISIT_REASON_O07
-Position=350,267,365,287
-Item=Q102_VISIT_REASON_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,270,330,286
-Text=102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? — My doctor transferred to this health facility
- 
-  
-[Field]
-Name=Q102_VISIT_REASON_O08
-Position=350,297,365,317
-Item=Q102_VISIT_REASON_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,300,330,316
-Text=102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? — Other (Specify)
+Text=102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)?
  
   
 [Field]
 Name=Q102_VISIT_REASON_OTHER_TXT
-Position=350,327,760,347
+Position=350,117,760,137
 Item=Q102_VISIT_REASON_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=13
   
 [Text]
-Position=50,330,330,346
+Position=50,120,330,136
 Text=102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)? — Other (specify) text
  
   
 [Field]
-Name=Q103_CARE_TYPE_O01
-Position=350,357,365,377
-Item=Q103_CARE_TYPE_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q103_CARE_TYPE
+Position=350,147,365,167
+Item=Q103_CARE_TYPE,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=13
   
 [Text]
-Position=50,360,330,376
-Text=103. Have you accessed any of the following forms of care in the last 6 months? — Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)
- 
-  
-[Field]
-Name=Q103_CARE_TYPE_O02
-Position=350,387,365,407
-Item=Q103_CARE_TYPE_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,390,330,406
-Text=103. Have you accessed any of the following forms of care in the last 6 months? — Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)
- 
-  
-[Field]
-Name=Q103_CARE_TYPE_O03
-Position=350,417,365,437
-Item=Q103_CARE_TYPE_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,420,330,436
-Text=103. Have you accessed any of the following forms of care in the last 6 months? — Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)
- 
-  
-[Field]
-Name=Q103_CARE_TYPE_O04
-Position=350,447,365,467
-Item=Q103_CARE_TYPE_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,450,330,466
-Text=103. Have you accessed any of the following forms of care in the last 6 months? — Primary care consultation
- 
-  
-[Field]
-Name=Q103_CARE_TYPE_O05
-Position=350,477,365,497
-Item=Q103_CARE_TYPE_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,480,330,496
-Text=103. Have you accessed any of the following forms of care in the last 6 months? — Other (Specify)
+Position=50,150,330,166
+Text=103. Have you accessed any of the following forms of care in the last 6 months?
  
   
 [Field]
 Name=Q103_CARE_TYPE_OTHER_TXT
-Position=350,507,760,527
+Position=350,177,760,197
 Item=Q103_CARE_TYPE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=13
   
 [Text]
-Position=50,510,330,526
+Position=50,180,330,196
 Text=103. Have you accessed any of the following forms of care in the last 6 months? — Other (specify) text
  
   
 [Field]
 Name=Q104_PREVENTIVE
-Position=350,537,365,557
+Position=350,207,365,227
 Item=Q104_PREVENTIVE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=13
   
 [Text]
-Position=50,540,330,556
+Position=50,210,330,226
 Text=104. Have you ever consulted a physician for preventative reasons, such as to consult about your lifestyle, weight loss, stopping smoking, etc.?
  
   
 [Field]
 Name=Q105_FORGONE_CARE
-Position=350,567,365,587
+Position=350,237,365,257
 Item=Q105_FORGONE_CARE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=13
   
 [Text]
-Position=50,570,330,586
+Position=50,240,330,256
 Text=105. In the last 6 months, have you or any of your household members had a medical problem and chosen NOT to see a healthcare provider?
  
   
 [Field]
-Name=Q106_FORGONE_WHY_O01
-Position=350,597,365,617
-Item=Q106_FORGONE_WHY_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q106_FORGONE_WHY
+Position=350,267,365,287
+Item=Q106_FORGONE_WHY,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=13
   
 [Text]
-Position=50,600,330,616
-Text=106. Why not? — Not sick enough
- 
-  
-[Field]
-Name=Q106_FORGONE_WHY_O02
-Position=350,627,365,647
-Item=Q106_FORGONE_WHY_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,630,330,646
-Text=106. Why not? — It's too expensive
- 
-  
-[Field]
-Name=Q106_FORGONE_WHY_O03
-Position=350,657,365,677
-Item=Q106_FORGONE_WHY_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,660,330,676
-Text=106. Why not? — Could not take time off work
- 
-  
-[Field]
-Name=Q106_FORGONE_WHY_O04
-Position=350,687,365,707
-Item=Q106_FORGONE_WHY_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,690,330,706
-Text=106. Why not? — Could not get an appointment soon enough
- 
-  
-[Field]
-Name=Q106_FORGONE_WHY_O05
-Position=350,717,365,737
-Item=Q106_FORGONE_WHY_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,720,330,736
-Text=106. Why not? — No transportation available
- 
-  
-[Field]
-Name=Q106_FORGONE_WHY_O06
-Position=350,747,365,767
-Item=Q106_FORGONE_WHY_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,750,330,766
-Text=106. Why not? — Afraid to know my illness
- 
-  
-[Field]
-Name=Q106_FORGONE_WHY_O07
-Position=350,777,365,797
-Item=Q106_FORGONE_WHY_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,780,330,796
-Text=106. Why not? — I don't know
- 
-  
-[Field]
-Name=Q106_FORGONE_WHY_O08
-Position=350,807,365,827
-Item=Q106_FORGONE_WHY_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,810,330,826
-Text=106. Why not? — Other (Specify)
+Position=50,270,330,286
+Text=106. Why not?
  
   
 [Field]
 Name=Q106_FORGONE_WHY_OTHER_TXT
-Position=350,837,760,857
+Position=350,297,760,317
 Item=Q106_FORGONE_WHY_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=13
   
 [Text]
-Position=50,840,330,856
+Position=50,300,330,316
 Text=106. Why not? — Other (specify) text
  
   
 [Field]
-Name=Q107_OTHER_ACTIONS_O01
-Position=350,867,365,887
-Item=Q107_OTHER_ACTIONS_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q107_OTHER_ACTIONS
+Position=350,327,365,347
+Item=Q107_OTHER_ACTIONS,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=13
   
 [Text]
-Position=50,870,330,886
-Text=107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? — Visited other healthcare facility
- 
-  
-[Field]
-Name=Q107_OTHER_ACTIONS_O02
-Position=350,897,365,917
-Item=Q107_OTHER_ACTIONS_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,900,330,916
-Text=107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? — Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as...
- 
-  
-[Field]
-Name=Q107_OTHER_ACTIONS_O03
-Position=350,927,365,947
-Item=Q107_OTHER_ACTIONS_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,930,330,946
-Text=107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? — Sought telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)
- 
-  
-[Field]
-Name=Q107_OTHER_ACTIONS_O04
-Position=350,957,365,977
-Item=Q107_OTHER_ACTIONS_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,960,330,976
-Text=107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? — Used home care (Healthcare services and support provided to individuals in their own homes)
- 
-  
-[Field]
-Name=Q107_OTHER_ACTIONS_O05
-Position=350,987,365,1007
-Item=Q107_OTHER_ACTIONS_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,990,330,1006
-Text=107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? — Bought medicine from a pharmacy
- 
-  
-[Field]
-Name=Q107_OTHER_ACTIONS_O06
-Position=350,1017,365,1037
-Item=Q107_OTHER_ACTIONS_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,1020,330,1036
-Text=107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? — Did not seek other forms of care
- 
-  
-[Field]
-Name=Q107_OTHER_ACTIONS_O07
-Position=350,1047,365,1067
-Item=Q107_OTHER_ACTIONS_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=13
-  
-[Text]
-Position=50,1050,330,1066
-Text=107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? — Other (Specify)
+Position=50,330,330,346
+Text=107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern?
  
   
 [Field]
 Name=Q107_OTHER_ACTIONS_OTHER_TXT
-Position=350,1077,760,1097
+Position=350,357,760,377
 Item=Q107_OTHER_ACTIONS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=13
   
 [Text]
-Position=50,1080,330,1096
+Position=50,360,330,376
 Text=107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_88
+Name=DG_BLK_90
 Label=Q101
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_89
+Name=DG_BLK_91
 Label=Q101
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_90
+Name=DG_BLK_92
 Label=Q102
 DisplayTogether=Yes
 Position=4
-Length=8
-  
-[Block]
-Name=DG_BLK_91
-Label=Q102
-DisplayTogether=Yes
-Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_92
-Label=Q103
-DisplayTogether=Yes
-Position=15
-Length=5
-  
-[Block]
 Name=DG_BLK_93
-Label=Q103
+Label=Q102
 DisplayTogether=Yes
-Position=21
+Position=6
 Length=1
   
 [Block]
 Name=DG_BLK_94
-Label=Q104-Q105
+Label=Q103
 DisplayTogether=Yes
-Position=23
-Length=2
-  
-[Block]
-Name=DG_BLK_95
-Label=Q106
-DisplayTogether=Yes
-Position=26
-Length=8
-  
-[Block]
-Name=DG_BLK_96
-Label=Q106
-DisplayTogether=Yes
-Position=35
+Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_97
-Label=Q107
+Name=DG_BLK_95
+Label=Q103
 DisplayTogether=Yes
-Position=37
-Length=7
+Position=10
+Length=1
+  
+[Block]
+Name=DG_BLK_96
+Label=Q104-Q105
+DisplayTogether=Yes
+Position=12
+Length=2
+  
+[Block]
+Name=DG_BLK_97
+Label=Q106
+DisplayTogether=Yes
+Position=15
+Length=1
   
 [Block]
 Name=DG_BLK_98
+Label=Q106
+DisplayTogether=Yes
+Position=17
+Length=1
+  
+[Block]
+Name=DG_BLK_99
 Label=Q107
 DisplayTogether=Yes
-Position=45
+Position=19
+Length=1
+  
+[Block]
+Name=DG_BLK_100
+Label=Q107
+DisplayTogether=Yes
+Position=21
 Length=1
   
 [EndGroup]
@@ -5696,677 +3436,384 @@ Text=108. In the past 6 months, did a healthcare worker refer you to another fac
  
   
 [Field]
-Name=Q109_TYPE_O01
+Name=Q109_TYPE
 Position=350,57,365,77
-Item=Q109_TYPE_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q109_TYPE,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=14
   
 [Text]
 Position=50,60,330,76
-Text=109. What type of care was the referral for? — Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)
- 
-  
-[Field]
-Name=Q109_TYPE_O02
-Position=350,87,365,107
-Item=Q109_TYPE_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,90,330,106
-Text=109. What type of care was the referral for? — Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)
- 
-  
-[Field]
-Name=Q109_TYPE_O03
-Position=350,117,365,137
-Item=Q109_TYPE_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,120,330,136
-Text=109. What type of care was the referral for? — Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)
- 
-  
-[Field]
-Name=Q109_TYPE_O04
-Position=350,147,365,167
-Item=Q109_TYPE_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,150,330,166
-Text=109. What type of care was the referral for? — Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)
- 
-  
-[Field]
-Name=Q109_TYPE_O05
-Position=350,177,365,197
-Item=Q109_TYPE_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,180,330,196
-Text=109. What type of care was the referral for? — Other facility visits (Care that is provided in a facility that is not a health center or hospital, such as independent diagnostic centers, TB dispensaries, etc.)
- 
-  
-[Field]
-Name=Q109_TYPE_O06
-Position=350,207,365,227
-Item=Q109_TYPE_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,210,330,226
-Text=109. What type of care was the referral for? — Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech...
- 
-  
-[Field]
-Name=Q109_TYPE_O07
-Position=350,237,365,257
-Item=Q109_TYPE_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,240,330,256
-Text=109. What type of care was the referral for? — Alternative care (Healthcare apart from medical doctors or the formal health care system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)
- 
-  
-[Field]
-Name=Q109_TYPE_O08
-Position=350,267,365,287
-Item=Q109_TYPE_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,270,330,286
-Text=109. What type of care was the referral for? — Outreach / medical missions (Care provided by the government or an NGO through an outreach or medical mission within a community)
- 
-  
-[Field]
-Name=Q109_TYPE_O09
-Position=350,297,365,317
-Item=Q109_TYPE_O09,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,300,330,316
-Text=109. What type of care was the referral for? — Home healthcare (Care that is administered at the patient's home, such as birth delivery, checkups, immunization, rehabilitation, etc.)
- 
-  
-[Field]
-Name=Q109_TYPE_O10
-Position=350,327,365,347
-Item=Q109_TYPE_O10,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,330,330,346
-Text=109. What type of care was the referral for? — Telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)
- 
-  
-[Field]
-Name=Q109_TYPE_O11
-Position=350,357,365,377
-Item=Q109_TYPE_O11,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,360,330,376
-Text=109. What type of care was the referral for? — None of the above
- 
-  
-[Field]
-Name=Q109_TYPE_O12
-Position=350,387,365,407
-Item=Q109_TYPE_O12,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,390,330,406
-Text=109. What type of care was the referral for? — Other (Specify)
+Text=109. What type of care was the referral for?
  
   
 [Field]
 Name=Q109_TYPE_OTHER_TXT
-Position=350,417,760,437
+Position=350,87,760,107
 Item=Q109_TYPE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,420,330,436
+Position=50,90,330,106
 Text=109. What type of care was the referral for? — Other (specify) text
  
   
 [Field]
 Name=Q110_SPECIALIST
-Position=350,447,365,467
+Position=350,117,365,137
 Item=Q110_SPECIALIST,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,450,330,466
+Position=50,120,330,136
 Text=110. What kind of specialist did they recommend?
  
   
 [Field]
 Name=Q110_SPECIALIST_OTHER_TXT
-Position=350,477,760,497
+Position=350,147,760,167
 Item=Q110_SPECIALIST_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,480,330,496
+Position=50,150,330,166
 Text=110. Specialist — Other (Specify) text
  
   
 [Field]
 Name=Q111_METHOD
-Position=350,507,365,527
+Position=350,177,365,197
 Item=Q111_METHOD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,510,330,526
+Position=50,180,330,196
 Text=111. How did they refer you to the doctor?
  
   
 [Field]
 Name=Q111_METHOD_OTHER_TXT
-Position=350,537,760,557
+Position=350,207,760,227
 Item=Q111_METHOD_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,540,330,556
+Position=50,210,330,226
 Text=111. Referral method — Other (Specify) text
  
   
 [Field]
 Name=Q112_VISITED
-Position=350,567,365,587
+Position=350,237,365,257
 Item=Q112_VISITED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,570,330,586
+Position=50,240,330,256
 Text=112. Did you visit another facility after the referral?
  
   
 [Field]
-Name=Q113_WHY_NOT_O01
-Position=350,597,365,617
-Item=Q113_WHY_NOT_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q113_WHY_NOT
+Position=350,267,365,287
+Item=Q113_WHY_NOT,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=14
   
 [Text]
-Position=50,600,330,616
-Text=113. Why are you not planning to visit? — Facility is too far
- 
-  
-[Field]
-Name=Q113_WHY_NOT_O02
-Position=350,627,365,647
-Item=Q113_WHY_NOT_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,630,330,646
-Text=113. Why are you not planning to visit? — Do not trust the referred facility
- 
-  
-[Field]
-Name=Q113_WHY_NOT_O03
-Position=350,657,365,677
-Item=Q113_WHY_NOT_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,660,330,676
-Text=113. Why are you not planning to visit? — No time
- 
-  
-[Field]
-Name=Q113_WHY_NOT_O04
-Position=350,687,365,707
-Item=Q113_WHY_NOT_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,690,330,706
-Text=113. Why are you not planning to visit? — Worried about additional costs
- 
-  
-[Field]
-Name=Q113_WHY_NOT_O05
-Position=350,717,365,737
-Item=Q113_WHY_NOT_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,720,330,736
-Text=113. Why are you not planning to visit? — Not needed
- 
-  
-[Field]
-Name=Q113_WHY_NOT_O06
-Position=350,747,365,767
-Item=Q113_WHY_NOT_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,750,330,766
-Text=113. Why are you not planning to visit? — Don't know how to get to facility
- 
-  
-[Field]
-Name=Q113_WHY_NOT_O07
-Position=350,777,365,797
-Item=Q113_WHY_NOT_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,780,330,796
-Text=113. Why are you not planning to visit? — Other (Specify)
+Position=50,270,330,286
+Text=113. Why are you not planning to visit?
  
   
 [Field]
 Name=Q113_WHY_NOT_OTHER_TXT
-Position=350,807,760,827
+Position=350,297,760,317
 Item=Q113_WHY_NOT_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,810,330,826
+Position=50,300,330,316
 Text=113. Why are you not planning to visit? — Other (specify) text
  
   
 [Field]
 Name=Q114_DISCUSSED_PLACES
-Position=350,837,365,857
+Position=350,327,365,347
 Item=Q114_DISCUSSED_PLACES,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,840,330,856
+Position=50,330,330,346
 Text=114. Did they discuss with you the different places you could have gone to get help with your problem?
  
   
 [Field]
 Name=Q115_HELPED_APPT
-Position=350,867,365,887
+Position=350,357,365,377
 Item=Q115_HELPED_APPT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,870,330,886
+Position=50,360,330,376
 Text=115. Did they help you make the appointment for that visit?
  
   
 [Field]
 Name=Q116_WROTE_INFO
-Position=350,897,365,917
+Position=350,387,365,407
 Item=Q116_WROTE_INFO,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,900,330,916
+Position=50,390,330,406
 Text=116. Did they write down any information for the specialist about the reason for that visit?
  
   
 [Field]
 Name=Q117_SPECIALIST_FOLLOWUP
-Position=350,927,365,947
+Position=350,417,365,437
 Item=Q117_SPECIALIST_FOLLOWUP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,930,330,946
+Position=50,420,330,436
 Text=117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)
  
   
 [Field]
 Name=Q118_SAT_REFERRAL_PROCESS
-Position=350,957,365,977
+Position=350,447,365,467
 Item=Q118_SAT_REFERRAL_PROCESS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,960,330,976
+Position=50,450,330,466
 Text=118. Overall, how would you rate your satisfaction with the referral process? (Only if Q112=Yes)
  
   
 [Field]
 Name=Q119_PCF_REFERRAL
-Position=350,987,365,1007
+Position=350,477,365,497
 Item=Q119_PCF_REFERRAL,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,990,330,1006
+Position=50,480,330,496
 Text=119. Was the visit to the facility a referral from your primary care facility?
  
   
 [Field]
 Name=Q120_PCP_KNOWS
-Position=350,1017,365,1037
+Position=350,507,365,527
 Item=Q120_PCP_KNOWS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,1020,330,1036
+Position=50,510,330,526
 Text=120. Does your primary care provider know that you made the visit?
  
   
 [Field]
-Name=Q121_WHY_HOSPITAL_O01
-Position=350,1047,365,1067
-Item=Q121_WHY_HOSPITAL_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q121_WHY_HOSPITAL
+Position=350,537,365,557
+Item=Q121_WHY_HOSPITAL,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=14
   
 [Text]
-Position=50,1050,330,1066
-Text=121. As it was not a referral, why did you decide to visit a hospital? — Referred by other specialist (doctor in another hospital)
- 
-  
-[Field]
-Name=Q121_WHY_HOSPITAL_O02
-Position=350,1077,365,1097
-Item=Q121_WHY_HOSPITAL_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,1080,330,1096
-Text=121. As it was not a referral, why did you decide to visit a hospital? — Nearest facility to house
- 
-  
-[Field]
-Name=Q121_WHY_HOSPITAL_O03
-Position=350,1107,365,1127
-Item=Q121_WHY_HOSPITAL_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,1110,330,1126
-Text=121. As it was not a referral, why did you decide to visit a hospital? — Facility is usual source of care
- 
-  
-[Field]
-Name=Q121_WHY_HOSPITAL_O04
-Position=350,1137,365,1157
-Item=Q121_WHY_HOSPITAL_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,1140,330,1156
-Text=121. As it was not a referral, why did you decide to visit a hospital? — Facility is the only place that can perform a certain test
- 
-  
-[Field]
-Name=Q121_WHY_HOSPITAL_O05
-Position=350,1167,365,1187
-Item=Q121_WHY_HOSPITAL_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,1170,330,1186
-Text=121. As it was not a referral, why did you decide to visit a hospital? — Referred by BHW/nurse/midwife/other community health professional
- 
-  
-[Field]
-Name=Q121_WHY_HOSPITAL_O06
-Position=350,1197,365,1217
-Item=Q121_WHY_HOSPITAL_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,1200,330,1216
-Text=121. As it was not a referral, why did you decide to visit a hospital? — Referred by family / friends
- 
-  
-[Field]
-Name=Q121_WHY_HOSPITAL_O07
-Position=350,1227,365,1247
-Item=Q121_WHY_HOSPITAL_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,1230,330,1246
-Text=121. As it was not a referral, why did you decide to visit a hospital? — Facility offers subsidized or free health services
- 
-  
-[Field]
-Name=Q121_WHY_HOSPITAL_O08
-Position=350,1257,365,1277
-Item=Q121_WHY_HOSPITAL_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,1260,330,1276
-Text=121. As it was not a referral, why did you decide to visit a hospital? — I don't know
- 
-  
-[Field]
-Name=Q121_WHY_HOSPITAL_O09
-Position=350,1287,365,1307
-Item=Q121_WHY_HOSPITAL_O09,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,1290,330,1306
-Text=121. As it was not a referral, why did you decide to visit a hospital? — Other (Specify)
+Position=50,540,330,556
+Text=121. As it was not a referral, why did you decide to visit a hospital?
  
   
 [Field]
 Name=Q121_WHY_HOSPITAL_OTHER_TXT
-Position=350,1317,760,1337
+Position=350,567,760,587
 Item=Q121_WHY_HOSPITAL_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=14
   
 [Text]
-Position=50,1320,330,1336
+Position=50,570,330,586
 Text=121. As it was not a referral, why did you decide to visit a hospital? — Other (specify) text
  
   
 [Field]
 Name=Q122_PCP_DISCUSSED_PLACES
-Position=350,1347,365,1367
+Position=350,597,365,617
 Item=Q122_PCP_DISCUSSED_PLACES,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,1350,330,1366
+Position=50,600,330,616
 Text=122. Did your primary care provider discuss with you different places you could have gone to get help with your problem?
  
   
 [Field]
 Name=Q123_PCP_HELPED_APPT
-Position=350,1377,365,1397
+Position=350,627,365,647
 Item=Q123_PCP_HELPED_APPT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,1380,330,1396
+Position=50,630,330,646
 Text=123. Did your primary care provider (PCP) or someone working with your PCP help you make the appointment for that visit?
  
   
 [Field]
 Name=Q124_PCP_WROTE_INFO
-Position=350,1407,365,1427
+Position=350,657,365,677
 Item=Q124_PCP_WROTE_INFO,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,1410,330,1426
+Position=50,660,330,676
 Text=124. Did your primary care provider write down any information for the specialist about the reason for that visit?
  
   
 [Field]
 Name=Q125_SAT_REFERRAL_EXP
-Position=350,1437,365,1457
+Position=350,687,365,707
 Item=Q125_SAT_REFERRAL_EXP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,1440,330,1456
+Position=50,690,330,706
 Text=125. Overall, how would you rate your experience with the referral process?
  
   
 [Block]
-Name=DG_BLK_99
+Name=DG_BLK_101
 Label=Q108
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_100
+Name=DG_BLK_102
 Label=Q109
 DisplayTogether=Yes
 Position=2
-Length=12
-  
-[Block]
-Name=DG_BLK_101
-Label=Q109
-DisplayTogether=Yes
-Position=15
-Length=1
-  
-[Block]
-Name=DG_BLK_102
-Label=Q110
-DisplayTogether=Yes
-Position=17
 Length=1
   
 [Block]
 Name=DG_BLK_103
-Label=Q110
+Label=Q109
 DisplayTogether=Yes
-Position=19
+Position=4
 Length=1
   
 [Block]
 Name=DG_BLK_104
-Label=Q111
+Label=Q110
 DisplayTogether=Yes
-Position=21
+Position=6
 Length=1
   
 [Block]
 Name=DG_BLK_105
-Label=Q111
+Label=Q110
 DisplayTogether=Yes
-Position=23
+Position=8
 Length=1
   
 [Block]
 Name=DG_BLK_106
-Label=Q112
+Label=Q111
 DisplayTogether=Yes
-Position=25
+Position=10
 Length=1
   
 [Block]
 Name=DG_BLK_107
-Label=Q113
+Label=Q111
 DisplayTogether=Yes
-Position=27
-Length=7
+Position=12
+Length=1
   
 [Block]
 Name=DG_BLK_108
-Label=Q113
+Label=Q112
 DisplayTogether=Yes
-Position=35
+Position=14
 Length=1
   
 [Block]
 Name=DG_BLK_109
-Label=Q114-Q118
+Label=Q113
 DisplayTogether=Yes
-Position=37
-Length=5
+Position=16
+Length=1
   
 [Block]
 Name=DG_BLK_110
-Label=Q119-Q120
+Label=Q113
 DisplayTogether=Yes
-Position=43
-Length=2
+Position=18
+Length=1
   
 [Block]
 Name=DG_BLK_111
-Label=Q121
+Label=Q114-Q118
 DisplayTogether=Yes
-Position=46
-Length=9
+Position=20
+Length=5
   
 [Block]
 Name=DG_BLK_112
-Label=Q121
+Label=Q119
 DisplayTogether=Yes
-Position=56
+Position=26
 Length=1
   
 [Block]
 Name=DG_BLK_113
+Label=Q120
+DisplayTogether=Yes
+Position=28
+Length=1
+  
+[Block]
+Name=DG_BLK_114
+Label=Q121
+DisplayTogether=Yes
+Position=30
+Length=1
+  
+[Block]
+Name=DG_BLK_115
+Label=Q121
+DisplayTogether=Yes
+Position=32
+Length=1
+  
+[Block]
+Name=DG_BLK_116
 Label=Q122-Q125
 DisplayTogether=Yes
-Position=58
+Position=34
 Length=4
   
 [EndGroup]
@@ -6391,318 +3838,138 @@ Text=126. Have you heard of the No Balance Billing (NBB)?
  
   
 [Field]
-Name=Q127_NBB_SOURCE_O01
+Name=Q127_NBB_SOURCE
 Position=350,57,365,77
-Item=Q127_NBB_SOURCE_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q127_NBB_SOURCE,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=15
   
 [Text]
 Position=50,60,330,76
-Text=127. If yes, what are your sources of information about NBB? — News
- 
-  
-[Field]
-Name=Q127_NBB_SOURCE_O02
-Position=350,87,365,107
-Item=Q127_NBB_SOURCE_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,90,330,106
-Text=127. If yes, what are your sources of information about NBB? — Legislation
- 
-  
-[Field]
-Name=Q127_NBB_SOURCE_O03
-Position=350,117,365,137
-Item=Q127_NBB_SOURCE_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,120,330,136
-Text=127. If yes, what are your sources of information about NBB? — Social Media
- 
-  
-[Field]
-Name=Q127_NBB_SOURCE_O04
-Position=350,147,365,167
-Item=Q127_NBB_SOURCE_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,150,330,166
-Text=127. If yes, what are your sources of information about NBB? — Friends / Family
- 
-  
-[Field]
-Name=Q127_NBB_SOURCE_O05
-Position=350,177,365,197
-Item=Q127_NBB_SOURCE_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,180,330,196
-Text=127. If yes, what are your sources of information about NBB? — Health center/facility
- 
-  
-[Field]
-Name=Q127_NBB_SOURCE_O06
-Position=350,207,365,227
-Item=Q127_NBB_SOURCE_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,210,330,226
-Text=127. If yes, what are your sources of information about NBB? — LGU/Barangay
- 
-  
-[Field]
-Name=Q127_NBB_SOURCE_O07
-Position=350,237,365,257
-Item=Q127_NBB_SOURCE_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,240,330,256
-Text=127. If yes, what are your sources of information about NBB? — I don't know
- 
-  
-[Field]
-Name=Q127_NBB_SOURCE_O08
-Position=350,267,365,287
-Item=Q127_NBB_SOURCE_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,270,330,286
-Text=127. If yes, what are your sources of information about NBB? — Other (Specify)
+Text=127. If yes, what are your sources of information about NBB?
  
   
 [Field]
 Name=Q127_NBB_SOURCE_OTHER_TXT
-Position=350,297,760,317
+Position=350,87,760,107
 Item=Q127_NBB_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=15
   
 [Text]
-Position=50,300,330,316
+Position=50,90,330,106
 Text=127. If yes, what are your sources of information about NBB? — Other (specify) text
  
   
 [Field]
-Name=Q128_NBB_UNDERSTAND_O01
-Position=350,327,365,347
-Item=Q128_NBB_UNDERSTAND_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q128_NBB_UNDERSTAND
+Position=350,117,365,137
+Item=Q128_NBB_UNDERSTAND,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=15
   
 [Text]
-Position=50,330,330,346
-Text=128. What is your understanding about NBB? — Patient does not pay any hospital bill
- 
-  
-[Field]
-Name=Q128_NBB_UNDERSTAND_O02
-Position=350,357,365,377
-Item=Q128_NBB_UNDERSTAND_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,360,330,376
-Text=128. What is your understanding about NBB? — Bills are settled between the hospital and PhilHealth
- 
-  
-[Field]
-Name=Q128_NBB_UNDERSTAND_O03
-Position=350,387,365,407
-Item=Q128_NBB_UNDERSTAND_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,390,330,406
-Text=128. What is your understanding about NBB? — PhilHealth will cover cost of treatment
- 
-  
-[Field]
-Name=Q128_NBB_UNDERSTAND_O04
-Position=350,417,365,437
-Item=Q128_NBB_UNDERSTAND_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,420,330,436
-Text=128. What is your understanding about NBB? — Patients should not be charged extra fees
- 
-  
-[Field]
-Name=Q128_NBB_UNDERSTAND_O05
-Position=350,447,365,467
-Item=Q128_NBB_UNDERSTAND_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,450,330,466
-Text=128. What is your understanding about NBB? — Medicine and service are already included
- 
-  
-[Field]
-Name=Q128_NBB_UNDERSTAND_O06
-Position=350,477,365,497
-Item=Q128_NBB_UNDERSTAND_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,480,330,496
-Text=128. What is your understanding about NBB? — I don't know
- 
-  
-[Field]
-Name=Q128_NBB_UNDERSTAND_O07
-Position=350,507,365,527
-Item=Q128_NBB_UNDERSTAND_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,510,330,526
-Text=128. What is your understanding about NBB? — No cash payment required upon discharge
- 
-  
-[Field]
-Name=Q128_NBB_UNDERSTAND_O08
-Position=350,537,365,557
-Item=Q128_NBB_UNDERSTAND_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,540,330,556
-Text=128. What is your understanding about NBB? — Other (Specify)
- 
-  
-[Field]
-Name=Q128_NBB_UNDERSTAND_O09
-Position=350,567,365,587
-Item=Q128_NBB_UNDERSTAND_O09,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=15
-  
-[Text]
-Position=50,570,330,586
-Text=128. What is your understanding about NBB? — Applies only to certain patients or hospitals
+Position=50,120,330,136
+Text=128. What is your understanding about NBB?
  
   
 [Field]
 Name=Q128_NBB_UNDERSTAND_OTHER_TXT
-Position=350,597,760,617
+Position=350,147,760,167
 Item=Q128_NBB_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=15
   
 [Text]
-Position=50,600,330,616
-Text=128. NBB understanding — Other (Specify) text
+Position=50,150,330,166
+Text=128. What is your understanding about NBB? — Other (specify) text
  
   
 [Field]
 Name=Q129_HH_CONFINED
-Position=350,627,365,647
+Position=350,177,365,197
 Item=Q129_HH_CONFINED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=15
   
 [Text]
-Position=50,630,330,646
+Position=50,180,330,196
 Text=129. Were you or any of your household members confined in a hospital during the past 6 months?
  
   
 [Field]
 Name=Q130_HOSPITAL_TYPE
-Position=350,657,365,677
+Position=350,207,365,227
 Item=Q130_HOSPITAL_TYPE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=15
   
 [Text]
-Position=50,660,330,676
+Position=50,210,330,226
 Text=130. For the most recent hospitalization, what type of hospital?
  
   
 [Field]
 Name=Q131_NBB_OOP
-Position=350,687,365,707
+Position=350,237,365,257
 Item=Q131_NBB_OOP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=15
   
 [Text]
-Position=50,690,330,706
+Position=50,240,330,256
 Text=131. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under NBB?
  
   
 [Block]
-Name=DG_BLK_114
+Name=DG_BLK_117
 Label=Q126
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_115
+Name=DG_BLK_118
 Label=Q127
 DisplayTogether=Yes
 Position=2
-Length=8
-  
-[Block]
-Name=DG_BLK_116
-Label=Q127
-DisplayTogether=Yes
-Position=11
-Length=1
-  
-[Block]
-Name=DG_BLK_117
-Label=Q128
-DisplayTogether=Yes
-Position=13
-Length=9
-  
-[Block]
-Name=DG_BLK_118
-Label=Q128
-DisplayTogether=Yes
-Position=23
 Length=1
   
 [Block]
 Name=DG_BLK_119
-Label=Q129
+Label=Q127
 DisplayTogether=Yes
-Position=25
+Position=4
 Length=1
   
 [Block]
 Name=DG_BLK_120
+Label=Q128
+DisplayTogether=Yes
+Position=6
+Length=1
+  
+[Block]
+Name=DG_BLK_121
+Label=Q128
+DisplayTogether=Yes
+Position=8
+Length=1
+  
+[Block]
+Name=DG_BLK_122
+Label=Q129
+DisplayTogether=Yes
+Position=10
+Length=1
+  
+[Block]
+Name=DG_BLK_123
 Label=Q130-Q131
 DisplayTogether=Yes
-Position=27
+Position=12
 Length=2
   
 [EndGroup]
@@ -6727,761 +3994,331 @@ Text=132. Have you heard of the Zero Balance Billing (ZBB)?
  
   
 [Field]
-Name=Q133_ZBB_SOURCE_O01
+Name=Q133_ZBB_SOURCE
 Position=350,57,365,77
-Item=Q133_ZBB_SOURCE_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q133_ZBB_SOURCE,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=16
   
 [Text]
 Position=50,60,330,76
-Text=133. If yes, what are your sources of information about ZBB? — News
- 
-  
-[Field]
-Name=Q133_ZBB_SOURCE_O02
-Position=350,87,365,107
-Item=Q133_ZBB_SOURCE_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,90,330,106
-Text=133. If yes, what are your sources of information about ZBB? — Legislation
- 
-  
-[Field]
-Name=Q133_ZBB_SOURCE_O03
-Position=350,117,365,137
-Item=Q133_ZBB_SOURCE_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,120,330,136
-Text=133. If yes, what are your sources of information about ZBB? — Social Media
- 
-  
-[Field]
-Name=Q133_ZBB_SOURCE_O04
-Position=350,147,365,167
-Item=Q133_ZBB_SOURCE_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,150,330,166
-Text=133. If yes, what are your sources of information about ZBB? — Friends / Family
- 
-  
-[Field]
-Name=Q133_ZBB_SOURCE_O05
-Position=350,177,365,197
-Item=Q133_ZBB_SOURCE_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,180,330,196
-Text=133. If yes, what are your sources of information about ZBB? — Health center/facility
- 
-  
-[Field]
-Name=Q133_ZBB_SOURCE_O06
-Position=350,207,365,227
-Item=Q133_ZBB_SOURCE_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,210,330,226
-Text=133. If yes, what are your sources of information about ZBB? — LGU/Barangay
- 
-  
-[Field]
-Name=Q133_ZBB_SOURCE_O07
-Position=350,237,365,257
-Item=Q133_ZBB_SOURCE_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,240,330,256
-Text=133. If yes, what are your sources of information about ZBB? — I don't know
- 
-  
-[Field]
-Name=Q133_ZBB_SOURCE_O08
-Position=350,267,365,287
-Item=Q133_ZBB_SOURCE_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,270,330,286
-Text=133. If yes, what are your sources of information about ZBB? — Other (Specify)
+Text=133. If yes, what are your sources of information about ZBB?
  
   
 [Field]
 Name=Q133_ZBB_SOURCE_OTHER_TXT
-Position=350,297,760,317
+Position=350,87,760,107
 Item=Q133_ZBB_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=16
   
 [Text]
-Position=50,300,330,316
+Position=50,90,330,106
 Text=133. If yes, what are your sources of information about ZBB? — Other (specify) text
  
   
 [Field]
-Name=Q134_ZBB_UNDERSTAND_O01
-Position=350,327,365,347
-Item=Q134_ZBB_UNDERSTAND_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q134_ZBB_UNDERSTAND
+Position=350,117,365,137
+Item=Q134_ZBB_UNDERSTAND,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=16
   
 [Text]
-Position=50,330,330,346
-Text=134. What is your understanding about ZBB? — Patient does not pay any hospital bill
- 
-  
-[Field]
-Name=Q134_ZBB_UNDERSTAND_O02
-Position=350,357,365,377
-Item=Q134_ZBB_UNDERSTAND_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,360,330,376
-Text=134. What is your understanding about ZBB? — Bills are settled between the hospital and PhilHealth
- 
-  
-[Field]
-Name=Q134_ZBB_UNDERSTAND_O03
-Position=350,387,365,407
-Item=Q134_ZBB_UNDERSTAND_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,390,330,406
-Text=134. What is your understanding about ZBB? — PhilHealth will cover cost of treatment
- 
-  
-[Field]
-Name=Q134_ZBB_UNDERSTAND_O04
-Position=350,417,365,437
-Item=Q134_ZBB_UNDERSTAND_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,420,330,436
-Text=134. What is your understanding about ZBB? — Patients should not be charged extra fees
- 
-  
-[Field]
-Name=Q134_ZBB_UNDERSTAND_O05
-Position=350,447,365,467
-Item=Q134_ZBB_UNDERSTAND_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,450,330,466
-Text=134. What is your understanding about ZBB? — Medicine and service are already included
- 
-  
-[Field]
-Name=Q134_ZBB_UNDERSTAND_O06
-Position=350,477,365,497
-Item=Q134_ZBB_UNDERSTAND_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,480,330,496
-Text=134. What is your understanding about ZBB? — I don't know
- 
-  
-[Field]
-Name=Q134_ZBB_UNDERSTAND_O07
-Position=350,507,365,527
-Item=Q134_ZBB_UNDERSTAND_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,510,330,526
-Text=134. What is your understanding about ZBB? — No cash payment required upon discharge
- 
-  
-[Field]
-Name=Q134_ZBB_UNDERSTAND_O08
-Position=350,537,365,557
-Item=Q134_ZBB_UNDERSTAND_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,540,330,556
-Text=134. What is your understanding about ZBB? — Other (Specify)
- 
-  
-[Field]
-Name=Q134_ZBB_UNDERSTAND_O09
-Position=350,567,365,587
-Item=Q134_ZBB_UNDERSTAND_O09,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,570,330,586
-Text=134. What is your understanding about ZBB? — Applies only to certain patients or hospitals
+Position=50,120,330,136
+Text=134. What is your understanding about ZBB?
  
   
 [Field]
 Name=Q134_ZBB_UNDERSTAND_OTHER_TXT
-Position=350,597,760,617
+Position=350,147,760,167
 Item=Q134_ZBB_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=16
   
 [Text]
-Position=50,600,330,616
-Text=134. ZBB understanding — Other (Specify) text
+Position=50,150,330,166
+Text=134. What is your understanding about ZBB? — Other (specify) text
  
   
 [Field]
 Name=Q135_ZBB_OOP
-Position=350,627,365,647
+Position=350,177,365,197
 Item=Q135_ZBB_OOP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=16
   
 [Text]
-Position=50,630,330,646
+Position=50,180,330,196
 Text=135. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under ZBB?
  
   
 [Field]
 Name=Q136_MAIFIP_HEARD
-Position=350,657,365,677
+Position=350,207,365,227
 Item=Q136_MAIFIP_HEARD,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=16
   
 [Text]
-Position=50,660,330,676
+Position=50,210,330,226
 Text=136. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?
  
   
 [Field]
-Name=Q137_MAIFIP_SOURCE_O01
-Position=350,687,365,707
-Item=Q137_MAIFIP_SOURCE_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q137_MAIFIP_SOURCE
+Position=350,237,365,257
+Item=Q137_MAIFIP_SOURCE,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=16
   
 [Text]
-Position=50,690,330,706
-Text=137. What are your sources of information about MAIFIP? — News
- 
-  
-[Field]
-Name=Q137_MAIFIP_SOURCE_O02
-Position=350,717,365,737
-Item=Q137_MAIFIP_SOURCE_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,720,330,736
-Text=137. What are your sources of information about MAIFIP? — Legislation
- 
-  
-[Field]
-Name=Q137_MAIFIP_SOURCE_O03
-Position=350,747,365,767
-Item=Q137_MAIFIP_SOURCE_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,750,330,766
-Text=137. What are your sources of information about MAIFIP? — Social Media
- 
-  
-[Field]
-Name=Q137_MAIFIP_SOURCE_O04
-Position=350,777,365,797
-Item=Q137_MAIFIP_SOURCE_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,780,330,796
-Text=137. What are your sources of information about MAIFIP? — Friends / Family
- 
-  
-[Field]
-Name=Q137_MAIFIP_SOURCE_O05
-Position=350,807,365,827
-Item=Q137_MAIFIP_SOURCE_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,810,330,826
-Text=137. What are your sources of information about MAIFIP? — Health center/facility
- 
-  
-[Field]
-Name=Q137_MAIFIP_SOURCE_O06
-Position=350,837,365,857
-Item=Q137_MAIFIP_SOURCE_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,840,330,856
-Text=137. What are your sources of information about MAIFIP? — LGU/Barangay
- 
-  
-[Field]
-Name=Q137_MAIFIP_SOURCE_O07
-Position=350,867,365,887
-Item=Q137_MAIFIP_SOURCE_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,870,330,886
-Text=137. What are your sources of information about MAIFIP? — I don't know
- 
-  
-[Field]
-Name=Q137_MAIFIP_SOURCE_O08
-Position=350,897,365,917
-Item=Q137_MAIFIP_SOURCE_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,900,330,916
-Text=137. What are your sources of information about MAIFIP? — Other (Specify)
+Position=50,240,330,256
+Text=137. What are your sources of information about MAIFIP?
  
   
 [Field]
 Name=Q137_MAIFIP_SOURCE_OTHER_TXT
-Position=350,927,760,947
+Position=350,267,760,287
 Item=Q137_MAIFIP_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=16
   
 [Text]
-Position=50,930,330,946
+Position=50,270,330,286
 Text=137. What are your sources of information about MAIFIP? — Other (specify) text
  
   
 [Field]
 Name=Q138_MOST_EXPENSIVE
-Position=350,957,365,977
+Position=350,297,365,317
 Item=Q138_MOST_EXPENSIVE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=16
   
 [Text]
-Position=50,960,330,976
+Position=50,300,330,316
 Text=138. From your most recent visit, which among the charges was the most expensive?
  
   
 [Field]
 Name=Q139_FINAL_AMOUNT_PHP
-Position=350,987,760,1007
+Position=350,327,760,347
 Item=Q139_FINAL_AMOUNT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=16
   
 [Text]
-Position=50,990,330,1006
+Position=50,330,330,346
 Text=139. From your most recent visit, what was the final amount you paid in cash at the hospital cashier upon discharge? (PHP)
  
   
 [Field]
 Name=Q140_RECALL_BREAKDOWN
-Position=350,1017,365,1037
+Position=350,357,365,377
 Item=Q140_RECALL_BREAKDOWN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=16
   
 [Text]
-Position=50,1020,330,1036
+Position=50,360,330,376
 Text=140. From your most recent visit, do you recall the breakdown of the bill?
  
   
 [Field]
-Name=Q141_BILL_ITEMS_O01
-Position=350,1047,365,1067
-Item=Q141_BILL_ITEMS_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q141_BILL_ITEMS
+Position=350,387,365,407
+Item=Q141_BILL_ITEMS,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=16
   
 [Text]
-Position=50,1050,330,1066
-Text=141. From your most recent visit, which of the following were included in the bill? — Rooms <for inpatients only>
- 
-  
-[Field]
-Name=Q141_BILL_ITEMS_O02
-Position=350,1077,365,1097
-Item=Q141_BILL_ITEMS_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1080,330,1096
-Text=141. From your most recent visit, which of the following were included in the bill? — Doctor's Fee
- 
-  
-[Field]
-Name=Q141_BILL_ITEMS_O03
-Position=350,1107,365,1127
-Item=Q141_BILL_ITEMS_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1110,330,1126
-Text=141. From your most recent visit, which of the following were included in the bill? — Diagnostic or laboratory procedure
- 
-  
-[Field]
-Name=Q141_BILL_ITEMS_O04
-Position=350,1137,365,1157
-Item=Q141_BILL_ITEMS_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1140,330,1156
-Text=141. From your most recent visit, which of the following were included in the bill? — Medical equipment or supplies
- 
-  
-[Field]
-Name=Q141_BILL_ITEMS_O05
-Position=350,1167,365,1187
-Item=Q141_BILL_ITEMS_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1170,330,1186
-Text=141. From your most recent visit, which of the following were included in the bill? — Medicines or drugs
- 
-  
-[Field]
-Name=Q141_BILL_ITEMS_O06
-Position=350,1197,365,1217
-Item=Q141_BILL_ITEMS_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1200,330,1216
-Text=141. From your most recent visit, which of the following were included in the bill? — Non-medical expenses (e.g. hygiene kit)
- 
-  
-[Field]
-Name=Q141_BILL_ITEMS_O07
-Position=350,1227,365,1247
-Item=Q141_BILL_ITEMS_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1230,330,1246
-Text=141. From your most recent visit, which of the following were included in the bill? — Other expenses
+Position=50,390,330,406
+Text=141. From your most recent visit, which of the following were included in the bill?
  
   
 [Field]
 Name=Q141_BILL_ITEMS_OTHER_TXT
-Position=350,1257,760,1277
+Position=350,417,760,437
 Item=Q141_BILL_ITEMS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=16
   
 [Text]
-Position=50,1260,330,1276
+Position=50,420,330,436
 Text=141. Bill items — Other expenses (Specify) text
  
   
 [Field]
 Name=Q141_1_NO_RECEIPT_AMT_PHP
-Position=350,1287,760,1307
+Position=350,447,760,467
 Item=Q141_1_NO_RECEIPT_AMT_PHP,HOUSEHOLDSURVEY_DICT
 DataCaptureType=TextBox
 Form=16
   
 [Text]
-Position=50,1290,330,1306
+Position=50,450,330,466
 Text=141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)
  
   
 [Field]
 Name=Q142_RECALL_PAYMENT
-Position=350,1317,365,1337
+Position=350,477,365,497
 Item=Q142_RECALL_PAYMENT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=16
   
 [Text]
-Position=50,1320,330,1336
+Position=50,480,330,496
 Text=142. From your most recent visit, do you recall how you paid for your bill?
  
   
 [Field]
-Name=Q143_HOW_PAID_O01
-Position=350,1347,365,1367
-Item=Q143_HOW_PAID_O01,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q143_HOW_PAID
+Position=350,507,365,527
+Item=Q143_HOW_PAID,HOUSEHOLDSURVEY_DICT
+DataCaptureType=CheckBox
 Form=16
   
 [Text]
-Position=50,1350,330,1366
-Text=143. From your most recent visit, how did you pay? — Own income/ household income
- 
-  
-[Field]
-Name=Q143_HOW_PAID_O02
-Position=350,1377,365,1397
-Item=Q143_HOW_PAID_O02,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1380,330,1396
-Text=143. From your most recent visit, how did you pay? — PhilHealth
- 
-  
-[Field]
-Name=Q143_HOW_PAID_O03
-Position=350,1407,365,1427
-Item=Q143_HOW_PAID_O03,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1410,330,1426
-Text=143. From your most recent visit, how did you pay? — Private insurance / HMO
- 
-  
-[Field]
-Name=Q143_HOW_PAID_O04
-Position=350,1437,365,1457
-Item=Q143_HOW_PAID_O04,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1440,330,1456
-Text=143. From your most recent visit, how did you pay? — Loan
- 
-  
-[Field]
-Name=Q143_HOW_PAID_O05
-Position=350,1467,365,1487
-Item=Q143_HOW_PAID_O05,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1470,330,1486
-Text=143. From your most recent visit, how did you pay? — Sale of assets
- 
-  
-[Field]
-Name=Q143_HOW_PAID_O06
-Position=350,1497,365,1517
-Item=Q143_HOW_PAID_O06,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1500,330,1516
-Text=143. From your most recent visit, how did you pay? — Donations from charities / NGOs
- 
-  
-[Field]
-Name=Q143_HOW_PAID_O07
-Position=350,1527,365,1547
-Item=Q143_HOW_PAID_O07,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1530,330,1546
-Text=143. From your most recent visit, how did you pay? — Donations from LGUs / LGU programs
- 
-  
-[Field]
-Name=Q143_HOW_PAID_O08
-Position=350,1557,365,1577
-Item=Q143_HOW_PAID_O08,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1560,330,1576
-Text=143. From your most recent visit, how did you pay? — National Government Agencies (DSWD, etc.)
- 
-  
-[Field]
-Name=Q143_HOW_PAID_O09
-Position=350,1587,365,1607
-Item=Q143_HOW_PAID_O09,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1590,330,1606
-Text=143. From your most recent visit, how did you pay? — Paid by someone else
- 
-  
-[Field]
-Name=Q143_HOW_PAID_O10
-Position=350,1617,365,1637
-Item=Q143_HOW_PAID_O10,HOUSEHOLDSURVEY_DICT
-DataCaptureType=RadioButton
-Form=16
-  
-[Text]
-Position=50,1620,330,1636
-Text=143. From your most recent visit, how did you pay? — Other (Specify)
+Position=50,510,330,526
+Text=143. From your most recent visit, how did you pay?
  
   
 [Field]
 Name=Q143_HOW_PAID_OTHER_TXT
-Position=350,1647,760,1667
+Position=350,537,760,557
 Item=Q143_HOW_PAID_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=16
   
 [Text]
-Position=50,1650,330,1666
+Position=50,540,330,556
 Text=143. From your most recent visit, how did you pay? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_121
+Name=DG_BLK_124
 Label=Q132
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_122
+Name=DG_BLK_125
 Label=Q133
 DisplayTogether=Yes
 Position=2
-Length=8
-  
-[Block]
-Name=DG_BLK_123
-Label=Q133
-DisplayTogether=Yes
-Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_124
-Label=Q134
+Name=DG_BLK_126
+Label=Q133
 DisplayTogether=Yes
-Position=13
-Length=9
+Position=4
+Length=1
   
 [Block]
-Name=DG_BLK_125
+Name=DG_BLK_127
 Label=Q134
+DisplayTogether=Yes
+Position=6
+Length=1
+  
+[Block]
+Name=DG_BLK_128
+Label=Q134
+DisplayTogether=Yes
+Position=8
+Length=1
+  
+[Block]
+Name=DG_BLK_129
+Label=Q135
+DisplayTogether=Yes
+Position=10
+Length=1
+  
+[Block]
+Name=DG_BLK_130
+Label=Q136
+DisplayTogether=Yes
+Position=12
+Length=1
+  
+[Block]
+Name=DG_BLK_131
+Label=Q137
+DisplayTogether=Yes
+Position=14
+Length=1
+  
+[Block]
+Name=DG_BLK_132
+Label=Q137
+DisplayTogether=Yes
+Position=16
+Length=1
+  
+[Block]
+Name=DG_BLK_133
+Label=Q138
+DisplayTogether=Yes
+Position=18
+Length=1
+  
+[Block]
+Name=DG_BLK_134
+Label=Q139-Q140
+DisplayTogether=Yes
+Position=20
+Length=2
+  
+[Block]
+Name=DG_BLK_135
+Label=Q141
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_126
-Label=Q135-Q136
+Name=DG_BLK_136
+Label=Q141
 DisplayTogether=Yes
 Position=25
-Length=2
-  
-[Block]
-Name=DG_BLK_127
-Label=Q137
-DisplayTogether=Yes
-Position=28
-Length=8
-  
-[Block]
-Name=DG_BLK_128
-Label=Q137
-DisplayTogether=Yes
-Position=37
 Length=1
   
 [Block]
-Name=DG_BLK_129
-Label=Q138-Q140
-DisplayTogether=Yes
-Position=39
-Length=3
-  
-[Block]
-Name=DG_BLK_130
+Name=DG_BLK_137
 Label=Q141
 DisplayTogether=Yes
-Position=43
-Length=7
-  
-[Block]
-Name=DG_BLK_131
-Label=Q141
-DisplayTogether=Yes
-Position=51
+Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_132
-Label=Q141
-DisplayTogether=Yes
-Position=53
-Length=1
-  
-[Block]
-Name=DG_BLK_133
+Name=DG_BLK_138
 Label=Q142
 DisplayTogether=Yes
-Position=55
+Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_134
+Name=DG_BLK_139
 Label=Q143
 DisplayTogether=Yes
-Position=57
-Length=10
+Position=31
+Length=1
   
 [Block]
-Name=DG_BLK_135
+Name=DG_BLK_140
 Label=Q143
 DisplayTogether=Yes
-Position=68
+Position=33
 Length=1
   
 [EndGroup]
@@ -8910,542 +5747,535 @@ Text=185. Total value of 183 and 184 (health, 1-month) — Auto-computed total (
  
   
 [Block]
-Name=DG_BLK_136
+Name=DG_BLK_141
 Label=Q144
 DisplayTogether=Yes
 Position=0
 Length=2
   
 [Block]
-Name=DG_BLK_137
+Name=DG_BLK_142
 Label=Q144
 DisplayTogether=Yes
 Position=3
 Length=1
   
 [Block]
-Name=DG_BLK_138
+Name=DG_BLK_143
 Label=Q145
 DisplayTogether=Yes
 Position=5
 Length=2
   
 [Block]
-Name=DG_BLK_139
+Name=DG_BLK_144
 Label=Q145
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_140
+Name=DG_BLK_145
 Label=Q146
 DisplayTogether=Yes
 Position=10
 Length=2
   
 [Block]
-Name=DG_BLK_141
+Name=DG_BLK_146
 Label=Q146
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_142
+Name=DG_BLK_147
 Label=Q147
 DisplayTogether=Yes
 Position=15
 Length=2
   
 [Block]
-Name=DG_BLK_143
+Name=DG_BLK_148
 Label=Q147
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_144
+Name=DG_BLK_149
 Label=Q148
 DisplayTogether=Yes
 Position=20
 Length=2
   
 [Block]
-Name=DG_BLK_145
+Name=DG_BLK_150
 Label=Q148
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_146
+Name=DG_BLK_151
 Label=Q149
 DisplayTogether=Yes
 Position=25
 Length=2
   
 [Block]
-Name=DG_BLK_147
+Name=DG_BLK_152
 Label=Q149
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_BLK_148
+Name=DG_BLK_153
 Label=Q150
 DisplayTogether=Yes
 Position=30
 Length=2
   
 [Block]
-Name=DG_BLK_149
+Name=DG_BLK_154
 Label=Q150
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_150
+Name=DG_BLK_155
 Label=Q151
 DisplayTogether=Yes
 Position=35
 Length=2
   
 [Block]
-Name=DG_BLK_151
+Name=DG_BLK_156
 Label=Q151
 DisplayTogether=Yes
 Position=38
 Length=1
   
 [Block]
-Name=DG_BLK_152
+Name=DG_BLK_157
 Label=Q152
 DisplayTogether=Yes
 Position=40
 Length=2
   
 [Block]
-Name=DG_BLK_153
+Name=DG_BLK_158
 Label=Q152
 DisplayTogether=Yes
 Position=43
 Length=1
   
 [Block]
-Name=DG_BLK_154
+Name=DG_BLK_159
 Label=Q153
 DisplayTogether=Yes
 Position=45
 Length=2
   
 [Block]
-Name=DG_BLK_155
+Name=DG_BLK_160
 Label=Q153
 DisplayTogether=Yes
 Position=48
 Length=1
   
 [Block]
-Name=DG_BLK_156
+Name=DG_BLK_161
 Label=Q154
 DisplayTogether=Yes
 Position=50
 Length=2
   
 [Block]
-Name=DG_BLK_157
+Name=DG_BLK_162
 Label=Q154
 DisplayTogether=Yes
 Position=53
 Length=1
   
 [Block]
-Name=DG_BLK_158
+Name=DG_BLK_163
 Label=Q155
 DisplayTogether=Yes
 Position=55
 Length=2
   
 [Block]
-Name=DG_BLK_159
+Name=DG_BLK_164
 Label=Q155
 DisplayTogether=Yes
 Position=58
 Length=1
   
 [Block]
-Name=DG_BLK_160
+Name=DG_BLK_165
 Label=Q156
 DisplayTogether=Yes
 Position=60
 Length=2
   
 [Block]
-Name=DG_BLK_161
+Name=DG_BLK_166
 Label=Q156
 DisplayTogether=Yes
 Position=63
 Length=1
   
 [Block]
-Name=DG_BLK_162
-Label=Q157-Q158
+Name=DG_BLK_167
+Label=Q158
 DisplayTogether=Yes
-Position=65
-Length=3
+Position=66
+Length=2
   
 [Block]
-Name=DG_BLK_163
+Name=DG_BLK_168
 Label=Q158
 DisplayTogether=Yes
 Position=69
 Length=1
   
 [Block]
-Name=DG_BLK_164
+Name=DG_BLK_169
 Label=Q159
 DisplayTogether=Yes
 Position=71
 Length=2
   
 [Block]
-Name=DG_BLK_165
+Name=DG_BLK_170
 Label=Q159
 DisplayTogether=Yes
 Position=74
 Length=1
   
 [Block]
-Name=DG_BLK_166
+Name=DG_BLK_171
 Label=Q160
 DisplayTogether=Yes
 Position=76
 Length=2
   
 [Block]
-Name=DG_BLK_167
+Name=DG_BLK_172
 Label=Q160
 DisplayTogether=Yes
 Position=79
 Length=1
   
 [Block]
-Name=DG_BLK_168
+Name=DG_BLK_173
 Label=Q161
 DisplayTogether=Yes
 Position=81
 Length=2
   
 [Block]
-Name=DG_BLK_169
+Name=DG_BLK_174
 Label=Q161
 DisplayTogether=Yes
 Position=84
 Length=1
   
 [Block]
-Name=DG_BLK_170
+Name=DG_BLK_175
 Label=Q162
 DisplayTogether=Yes
 Position=86
 Length=2
   
 [Block]
-Name=DG_BLK_171
+Name=DG_BLK_176
 Label=Q162
 DisplayTogether=Yes
 Position=89
 Length=1
   
 [Block]
-Name=DG_BLK_172
+Name=DG_BLK_177
 Label=Q163
 DisplayTogether=Yes
 Position=91
 Length=2
   
 [Block]
-Name=DG_BLK_173
+Name=DG_BLK_178
 Label=Q163
 DisplayTogether=Yes
 Position=94
 Length=1
   
 [Block]
-Name=DG_BLK_174
+Name=DG_BLK_179
 Label=Q164
 DisplayTogether=Yes
 Position=96
 Length=2
   
 [Block]
-Name=DG_BLK_175
+Name=DG_BLK_180
 Label=Q164
 DisplayTogether=Yes
 Position=99
 Length=1
   
 [Block]
-Name=DG_BLK_176
+Name=DG_BLK_181
 Label=Q165
 DisplayTogether=Yes
 Position=101
 Length=2
   
 [Block]
-Name=DG_BLK_177
+Name=DG_BLK_182
 Label=Q165
 DisplayTogether=Yes
 Position=104
 Length=1
   
 [Block]
-Name=DG_BLK_178
+Name=DG_BLK_183
 Label=Q166
 DisplayTogether=Yes
 Position=106
 Length=2
   
 [Block]
-Name=DG_BLK_179
+Name=DG_BLK_184
 Label=Q166
 DisplayTogether=Yes
 Position=109
 Length=1
   
 [Block]
-Name=DG_BLK_180
+Name=DG_BLK_185
 Label=Q167
 DisplayTogether=Yes
 Position=111
 Length=2
   
 [Block]
-Name=DG_BLK_181
+Name=DG_BLK_186
 Label=Q167
 DisplayTogether=Yes
 Position=114
 Length=1
   
 [Block]
-Name=DG_BLK_182
+Name=DG_BLK_187
 Label=Q168
 DisplayTogether=Yes
 Position=116
 Length=2
   
 [Block]
-Name=DG_BLK_183
+Name=DG_BLK_188
 Label=Q168
 DisplayTogether=Yes
 Position=119
 Length=1
   
 [Block]
-Name=DG_BLK_184
+Name=DG_BLK_189
 Label=Q169
 DisplayTogether=Yes
 Position=121
 Length=2
   
 [Block]
-Name=DG_BLK_185
+Name=DG_BLK_190
 Label=Q169
 DisplayTogether=Yes
 Position=124
 Length=1
   
 [Block]
-Name=DG_BLK_186
+Name=DG_BLK_191
 Label=Q170
 DisplayTogether=Yes
 Position=126
 Length=2
   
 [Block]
-Name=DG_BLK_187
+Name=DG_BLK_192
 Label=Q170
 DisplayTogether=Yes
 Position=129
 Length=1
   
 [Block]
-Name=DG_BLK_188
+Name=DG_BLK_193
 Label=Q171
 DisplayTogether=Yes
 Position=131
 Length=2
   
 [Block]
-Name=DG_BLK_189
+Name=DG_BLK_194
 Label=Q171
 DisplayTogether=Yes
 Position=134
 Length=1
   
 [Block]
-Name=DG_BLK_190
+Name=DG_BLK_195
 Label=Q172
 DisplayTogether=Yes
 Position=136
 Length=2
   
 [Block]
-Name=DG_BLK_191
+Name=DG_BLK_196
 Label=Q172
 DisplayTogether=Yes
 Position=139
 Length=1
   
 [Block]
-Name=DG_BLK_192
+Name=DG_BLK_197
 Label=Q173
 DisplayTogether=Yes
 Position=141
 Length=2
   
 [Block]
-Name=DG_BLK_193
+Name=DG_BLK_198
 Label=Q173
 DisplayTogether=Yes
 Position=144
 Length=1
   
 [Block]
-Name=DG_BLK_194
+Name=DG_BLK_199
 Label=Q174
 DisplayTogether=Yes
 Position=146
 Length=2
   
 [Block]
-Name=DG_BLK_195
+Name=DG_BLK_200
 Label=Q174
 DisplayTogether=Yes
 Position=149
 Length=1
   
 [Block]
-Name=DG_BLK_196
+Name=DG_BLK_201
 Label=Q175
 DisplayTogether=Yes
 Position=151
 Length=2
   
 [Block]
-Name=DG_BLK_197
+Name=DG_BLK_202
 Label=Q175
 DisplayTogether=Yes
 Position=154
 Length=1
   
 [Block]
-Name=DG_BLK_198
+Name=DG_BLK_203
 Label=Q176
 DisplayTogether=Yes
 Position=156
 Length=2
   
 [Block]
-Name=DG_BLK_199
+Name=DG_BLK_204
 Label=Q176
 DisplayTogether=Yes
 Position=159
 Length=1
   
 [Block]
-Name=DG_BLK_200
-Label=Q177-Q178
+Name=DG_BLK_205
+Label=Q178
 DisplayTogether=Yes
-Position=161
-Length=3
+Position=162
+Length=2
   
 [Block]
-Name=DG_BLK_201
+Name=DG_BLK_206
 Label=Q178
 DisplayTogether=Yes
 Position=165
 Length=1
   
 [Block]
-Name=DG_BLK_202
+Name=DG_BLK_207
 Label=Q179
 DisplayTogether=Yes
 Position=167
 Length=2
   
 [Block]
-Name=DG_BLK_203
+Name=DG_BLK_208
 Label=Q179
 DisplayTogether=Yes
 Position=170
 Length=1
   
 [Block]
-Name=DG_BLK_204
+Name=DG_BLK_209
 Label=Q180
 DisplayTogether=Yes
 Position=172
 Length=2
   
 [Block]
-Name=DG_BLK_205
+Name=DG_BLK_210
 Label=Q180
 DisplayTogether=Yes
 Position=175
 Length=1
   
 [Block]
-Name=DG_BLK_206
+Name=DG_BLK_211
 Label=Q181
 DisplayTogether=Yes
 Position=177
 Length=2
   
 [Block]
-Name=DG_BLK_207
+Name=DG_BLK_212
 Label=Q181
 DisplayTogether=Yes
 Position=180
 Length=1
   
 [Block]
-Name=DG_BLK_208
-Label=Q182-Q183
+Name=DG_BLK_213
+Label=Q183
 DisplayTogether=Yes
-Position=182
-Length=3
+Position=183
+Length=2
   
 [Block]
-Name=DG_BLK_209
+Name=DG_BLK_214
 Label=Q183
 DisplayTogether=Yes
 Position=186
 Length=1
   
 [Block]
-Name=DG_BLK_210
+Name=DG_BLK_215
 Label=Q184
 DisplayTogether=Yes
 Position=188
 Length=2
   
 [Block]
-Name=DG_BLK_211
+Name=DG_BLK_216
 Label=Q184
 DisplayTogether=Yes
 Position=191
-Length=1
-  
-[Block]
-Name=DG_BLK_212
-Label=Q185
-DisplayTogether=Yes
-Position=193
 Length=1
   
 [EndGroup]
@@ -9700,42 +6530,42 @@ Text=196. Other (please specify) — text
  
   
 [Block]
-Name=DG_BLK_213
+Name=DG_BLK_217
 Label=Q186-Q190
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_BLK_214
+Name=DG_BLK_218
 Label=Q191-Q194
 DisplayTogether=Yes
 Position=6
 Length=4
   
 [Block]
-Name=DG_BLK_215
+Name=DG_BLK_219
 Label=Q194
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_216
+Name=DG_BLK_220
 Label=Q195
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_217
+Name=DG_BLK_221
 Label=Q196
 DisplayTogether=Yes
 Position=15
 Length=8
   
 [Block]
-Name=DG_BLK_218
+Name=DG_BLK_222
 Label=Q196
 DisplayTogether=Yes
 Position=24
@@ -9800,14 +6630,14 @@ Text=199. Other (Specify) — text
  
   
 [Block]
-Name=DG_BLK_219
+Name=DG_BLK_223
 Label=Q197-Q199
 DisplayTogether=Yes
 Position=0
 Length=3
   
 [Block]
-Name=DG_BLK_220
+Name=DG_BLK_224
 Label=Q199
 DisplayTogether=Yes
 Position=4
@@ -9883,14 +6713,14 @@ Text=202. Do any of the following reasons describe why you are worried about you
  
   
 [Block]
-Name=DG_BLK_221
+Name=DG_BLK_225
 Label=Q200-Q201
 DisplayTogether=Yes
 Position=0
 Length=2
   
 [Block]
-Name=DG_BLK_222
+Name=DG_BLK_226
 Label=Q202
 DisplayTogether=Yes
 Position=3

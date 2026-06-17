@@ -1134,17 +1134,21 @@ def amount_required_procs(items):
                  for vs in f.get("valueSets") or [] for v in vs.get("values") or []}
         if "1" not in codes:                       # flag must be a Yes(1)/No option
             continue
-        # blank (notappl) must fail too — a CSPro blank numeric is notappl,
-        # NOT 0, so `= 0` alone let an empty amount slip through
+        # F3 #553 (retest fix): when the row's flag is NOT selected, auto-set the
+        # amount to 0 and skip the field (noinput). Earlier we set it to `notappl`
+        # (blank), but the _AMT fields render on a combined/DisplayTogether screen
+        # where `noinput` is ignored, and a blank numeric trips CSEntry's built-in
+        # range check ("Out of range! enter a valid value for <AMT>" — Marriz's
+        # retest, Q107_PAY_03). 0 is in range, so it passes silently and is pre-filled
+        # — the enumerator never has to type it. A No row is recorded as 0 (clean).
         procs[n] = (
-            f"PROC {n}\npostproc\n"
+            f"PROC {n}\npreproc\n"
+            f"  if {flag} <> 1 then\n"
+            f"    {n} = 0;   {{ #553: No-ticked row -> amount auto-set 0 (in range) + skip }}\n"
+            f"    noinput;\n  endif;\n"
+            f"postproc\n"
             f"  if {flag} = 1 and ({n} = 0 or {n} = notappl) then\n"
             f"    errmsg(\"'{flag}' was selected — enter its amount (must be greater than 0).\");\n"
-            f"    reenter;\n  endif;\n"
-            # reverse check (F3 #457/#460/#463): NOT selected -> amount must be 0/blank.
-            # A No-ticked source/expense item carrying a positive amount is invalid data.
-            f"  if {flag} <> 1 and {n} > 0 then\n"
-            f"    errmsg(\"'{flag}' was not selected — its amount must be 0 or blank. Clear the amount.\");\n"
             f"    reenter;\n  endif;"
         )
     return procs

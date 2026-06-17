@@ -40,6 +40,27 @@ from cspro_helpers import (
     apply_translations,
 )
 
+
+def _cb_codes(options):
+    """#529: re-code a select_all option list for checkbox_multiselect — real
+    options -> 01,02,...; 'Other (specify)' -> 99; a standalone exclusive option
+    ('None…', 'No initiatives', 'I don't know') -> 90. Fixed-width 2-char codes in
+    the 9x range for specials so pos() membership tests can't false-match (matches
+    the Q49/Q50/Q53/Q58 convention). The 01.. order is preserved, so gate logic that
+    references option N stays valid (e.g. Q66-74 gated on Q65 difficulty N)."""
+    out, n = [], 0
+    for text, _ in options:
+        low = text.strip().lower()
+        if "specif" in low or low.startswith("other"):
+            out.append((text, "99"))
+        elif (low.startswith(("none", "no initiative")) or "don't know" in low
+              or "dont know" in low):
+            out.append((text, "90"))
+        else:
+            n += 1
+            out.append((text, f"{n:02d}"))
+    return out
+
 # ============================================================
 # 2. PENDING DESIGN DECISIONS — flip these when ASPSI confirms
 # ============================================================
@@ -389,13 +410,15 @@ def build_section_d():
     Q63_LABEL_SUFFIX = " [PENDING DESIGN: printed text says days, buckets are months]"
     Q63_BUCKETS = Q62_TRANCHE_INTERVAL  # same shape until ASPSI confirms
 
+    # checkbox_multiselect (#529): fixed-width 2-char codes, Other=99 (matches the
+    # Q49/Q50/Q53/Q58 checkbox convention so pos("99",field) can't false-match).
     Q64_REASONS = [
-        ("Incentives (capitation/payment for registered patients)", "1"),
-        ("Aligns with facility's mission", "2"),
-        ("Encouraged by LGU", "3"),
-        ("Mandated/required by DOH/UHC", "4"),
-        ("To improve facility services", "5"),
-        ("Other (specify)", "6"),
+        ("Incentives (capitation/payment for registered patients)", "01"),
+        ("Aligns with facility's mission", "02"),
+        ("Encouraged by LGU", "03"),
+        ("Mandated/required by DOH/UHC", "04"),
+        ("To improve facility services", "05"),
+        ("Other (specify)", "99"),
     ]
     Q65_DIFFICULT = [
         ("Ability to conduct preventive/screening services and health education", "1"),
@@ -525,12 +548,12 @@ def build_section_d():
     items.append(select_one("Q63_ACCRED_WAIT",
                             "63. How many days did you wait from application submission to accreditation approval?" + Q63_LABEL_SUFFIX,
                             Q63_BUCKETS))
-    items.extend(select_all("Q64_APPLY_REASON",
+    items.extend(checkbox_multiselect("Q64_APPLY_REASON",
                             "64. Why did you apply to become a YAKAP/Konsulta provider?",
                             Q64_REASONS))
-    items.extend(select_all("Q65_ACCRED_DIFFICULT",
+    items.extend(checkbox_multiselect("Q65_ACCRED_DIFFICULT",
                             "65. Which of the following requirements were difficult to comply with for accreditation?",
-                            Q65_DIFFICULT, with_other_txt=False))
+                            _cb_codes(Q65_DIFFICULT), with_other_txt=False))
     # Q66-Q74 = nine "why difficult" select-alls, gated on Q65 in PROC.
     Q66_74_TOPICS = [
         ("Q66_WHY_DIFF_PREVENTIVE",  "66. Why was it difficult to comply with the following? Ability to conduct preventive/screening services and health education"),
@@ -544,21 +567,21 @@ def build_section_d():
         ("Q74_WHY_DIFF_DOH_LIC",     "74. Why was it difficult to comply with the following? DOH Licensing requirements"),
     ]
     for prefix, label in Q66_74_TOPICS:
-        items.extend(select_all(prefix, label, WHY_DIFF_OPTIONS[:6] + [WHY_DIFF_OPTIONS[8]]))
-    items.extend(select_all("Q75_ENROLL_RESPONSIBILITY",
+        items.extend(checkbox_multiselect(prefix, label, _cb_codes(WHY_DIFF_OPTIONS[:6] + [WHY_DIFF_OPTIONS[8]])))
+    items.extend(checkbox_multiselect("Q75_ENROLL_RESPONSIBILITY",
                             "75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta?",
-                            Q75_RESPONSIBILITY))
-    items.extend(select_all("Q76_ENROLL_INITIATIVES",
+                            _cb_codes(Q75_RESPONSIBILITY)))
+    items.extend(checkbox_multiselect("Q76_ENROLL_INITIATIVES",
                             "76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta?",
-                            Q76_INITIATIVES))
+                            _cb_codes(Q76_INITIATIVES)))
     items.append(yes_no("Q77_ENROLL_CHALL",
                         "77. Did you experience any challenges in enrolling patients to YAKAP/Konsulta?"))
-    items.extend(select_all("Q78_ENROLL_CHALL_LIST",
+    items.extend(checkbox_multiselect("Q78_ENROLL_CHALL_LIST",
                             "78. What are the challenges you have faced?",
-                            Q78_ENROLL_CHALL))
-    items.extend(select_all("Q79_NOT_ACCRED_REASON",
+                            _cb_codes(Q78_ENROLL_CHALL)))
+    items.extend(checkbox_multiselect("Q79_NOT_ACCRED_REASON",
                             "79. If not YAKAP/ KONSULTA accredited, why are you not accredited?",
-                            Q79_NOT_ACCRED))
+                            _cb_codes(Q79_NOT_ACCRED)))
     items.append(select_one("Q80_INTEND_ACCRED",
                             "80. Are you intending to become a YAKAP/Konsulta provider?",
                             Q80_INTEND))
@@ -594,22 +617,22 @@ def build_section_d():
                          "92. What would be the minimum acceptable capitation value per patient per year for you to consider being a YAKAP/Konsulta provider?",
                          length=6))
     items.append(yes_no("Q93_CHARGE_ADDL_CAP", "93. Does your facility charge additional capitation fees?"))
-    items.extend(select_all("Q94_CHARGE_ADDL_CAP_REASONS",
+    items.extend(checkbox_multiselect("Q94_CHARGE_ADDL_CAP_REASONS",
                             "94. What is/are the reason/s for the facility to charge additional capitation fees?",
-                            Q94_ADDL_CAP_REASONS))
+                            _cb_codes(Q94_ADDL_CAP_REASONS)))
     items.append(select_one("Q95_RECEIVED_PAYMENTS",
                             "95. Have you already received payments for patients enrolled?",
                             Q95_RECEIVED))
-    items.extend(select_all("Q96_NOT_RECEIVED_REASONS",
+    items.extend(checkbox_multiselect("Q96_NOT_RECEIVED_REASONS",
                             "96. Why not?",
-                            Q96_NOT_RECEIVED))
+                            _cb_codes(Q96_NOT_RECEIVED)))
     items.append(yes_no("Q97_PAYMENT_CHALL", "97. Did you face any challenges in getting these payments?"))
-    items.extend(select_all("Q98_PAYMENT_CHALL_LIST",
+    items.extend(checkbox_multiselect("Q98_PAYMENT_CHALL_LIST",
                             "98. What were these challenges?",
-                            Q98_PAY_CHALL))
-    items.extend(select_all("Q99_EXPAND_NEXT",
+                            _cb_codes(Q98_PAY_CHALL)))
+    items.extend(checkbox_multiselect("Q99_EXPAND_NEXT",
                             "99. If you were to expand the YAKAP/Konsulta package, what would you expand next?",
-                            Q99_EXPAND))
+                            _cb_codes(Q99_EXPAND)))
     items.append(alpha("Q100_ADDL_FEATURES",
                        "100. What additional features would you add?", length=240))
     return record("D_YAKAP_KONSULTA", "D. YAKAP / Konsulta Package", "5", items)
@@ -691,12 +714,12 @@ def build_section_e():
                             "103. If none, what is the primary reason?", Q103_REASON))
     items.append(alpha("Q103_OTHER_TXT",
                        "103. If none, what is the primary reason? Other (specify)", length=120))
-    items.extend(select_all("Q104_BUCAS_SERVICES",
+    items.extend(checkbox_multiselect("Q104_BUCAS_SERVICES",
                             "104. What are the available services offered by your BUCAS Center?",
-                            Q104_SERVICES))
-    items.extend(select_all("Q105_BUCAS_FACTORS",
+                            _cb_codes(Q104_SERVICES)))
+    items.extend(checkbox_multiselect("Q105_BUCAS_FACTORS",
                             "105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility?",
-                            Q105_FACTORS))
+                            _cb_codes(Q105_FACTORS)))
     items.append(alpha("Q106_BUCAS_RESOURCES_NEEDED",
                        "106. What are the resources you need to support/sustain the BUCAS center?",
                        length=240))
@@ -709,9 +732,9 @@ def build_section_e():
                             "110. If no, what is the primary reason?", Q110_REASON))
     items.append(alpha("Q110_OTHER_TXT",
                        "110. If no, what is the primary reason? Other (specify)", length=120))
-    items.extend(select_all("Q111_GAMOT_FACTORS",
+    items.extend(checkbox_multiselect("Q111_GAMOT_FACTORS",
                             "111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility?",
-                            Q111_FACTORS))
+                            _cb_codes(Q111_FACTORS)))
     items.append(yes_no("Q112_STOCKOUT",
                         "112. In the past 3 months, has this facility experienced a stock-out (zero supply) of any tracer essential medicines?"))
     items.append(alpha("Q113_STOCKOUT_MEDS",
@@ -723,9 +746,9 @@ def build_section_e():
     items.append(select_one("Q116_ADDR_STOCKOUT",
                             "116. Did you do anything to address the medicine stock-outs in the GAMOT Package?",
                             Q116_ADDR))
-    items.extend(select_all("Q117_ADDR_STOCKOUT_HOW",
+    items.extend(checkbox_multiselect("Q117_ADDR_STOCKOUT_HOW",
                             "117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package?",
-                            Q117_HOW))
+                            _cb_codes(Q117_HOW)))
     return record("E_BUCAS_GAMOT", "E. Awareness on Expanded Health Programs (BUCAS and GAMOT)", "6", items)
 
 
@@ -776,10 +799,10 @@ def build_section_f():
                             Q119_WHEN))
     items.append(select_one("Q120_LIC_DAYS",
                             "120. How many days did it take you to receive the license?", Q120_DAYS))
-    items.extend(select_all("Q121_DOH_LIC_DIFFICULT",
+    items.extend(checkbox_multiselect("Q121_DOH_LIC_DIFFICULT",
                             "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
-                            Q121_DIFFICULT, with_other_txt=False))
-    # Q122-Q134 = thirteen "why difficult for X" select-alls, gated on Q121.
+                            _cb_codes(Q121_DIFFICULT), with_other_txt=False))
+    # Q122-Q134 = thirteen "why difficult for X" Check Box multi-selects, gated on Q121.
     Q122_134_TOPICS = [
         ("Q122_WHY_DIFF_PT_RIGHTS",  "122. Why was it difficult to comply with the following? Patient rights and organization ethics"),
         ("Q123_WHY_DIFF_PT_CARE",    "123. Why was it difficult to comply with the following? Patient care"),
@@ -796,7 +819,7 @@ def build_section_f():
         ("Q134_WHY_DIFF_ADDONS",     "134. Why was it difficult to comply with the following? Add-on services"),
     ]
     for prefix, label in Q122_134_TOPICS:
-        items.extend(select_all(prefix, label, WHY_DIFF_OPTIONS))
+        items.extend(checkbox_multiselect(prefix, label, _cb_codes(WHY_DIFF_OPTIONS)))
     return record("F_DOH_LICENSING", "F. DOH Licensing: Status and Barriers", "7", items)
 
 
@@ -922,16 +945,16 @@ def build_section_g():
                         "135. Do you currently implement the \"no balance billing\" policy for your patients?"))
     items.append(yes_no("Q136_NBB_ALL_PATIENTS",
                         "136. Are you able to implement it for all patients, to the best of your knowledge, for the last 6 months?"))
-    items.extend(select_all("Q137_NBB_BARRIERS",
+    items.extend(checkbox_multiselect("Q137_NBB_BARRIERS",
                             "137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy?",
-                            NBB_ZBB_BARRIERS))
+                            _cb_codes(NBB_ZBB_BARRIERS)))
     items.append(yes_no("Q138_ZBB_CURR",
                         "138. Do you currently implement the \"Zero Balance Billing\" policy for your patients?"))
     items.append(yes_no("Q139_ZBB_ALL_PATIENTS",
                         "139. If currently implementing ZBB, are you able to implement it for all patients, to the best of your knowledge, for the last six months?"))
-    items.extend(select_all("Q140_ZBB_BARRIERS",
+    items.extend(checkbox_multiselect("Q140_ZBB_BARRIERS",
                             "140. In your view, what are some of the barriers to implementing the \"zero balance billing\" policy?",
-                            NBB_ZBB_BARRIERS))
+                            _cb_codes(NBB_ZBB_BARRIERS)))
     items.append(yes_no("Q141_ALLOW_OOP_BASIC",
                         "141. Does the facility allow out-of-pocket (OOP) expenses for basic accommodation?"))
     items.append(alpha("Q142_OOP_REASON",
@@ -943,24 +966,24 @@ def build_section_g():
     items.append(alpha("Q143_OTHER_TXT",
                        "143. Which of the UHC benefits do you find most difficult to implement? Other (specify)",
                        length=120))
-    items.extend(select_all("Q144_DIFFICULT_REASON",
-                            "144. Why is this difficult to implement?", Q144_REASONS))
+    items.extend(checkbox_multiselect("Q144_DIFFICULT_REASON",
+                            "144. Why is this difficult to implement?", _cb_codes(Q144_REASONS)))
     items.append(yes_no("Q145_MALASAKIT_PROVIDED",
                         "145. Has the facility been providing medical social welfare or assistance (e.g., through Malasakit Centers, MAIFIP)?"))
-    items.extend(select_all("Q146_MALASAKIT_WHY",
+    items.extend(checkbox_multiselect("Q146_MALASAKIT_WHY",
                             "146. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP?",
-                            Q146_MALASAKIT_WHY))
-    items.extend(select_all("Q147_NO_MALASAKIT_WHY",
+                            _cb_codes(Q146_MALASAKIT_WHY)))
+    items.extend(checkbox_multiselect("Q147_NO_MALASAKIT_WHY",
                             "147. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP?",
-                            Q147_NO_MALASAKIT_WHY))
+                            _cb_codes(Q147_NO_MALASAKIT_WHY)))
     items.append(yes_no("Q148_LGU_SUPPORT",
                         "148. Do you receive any support from your LGU to implement UHC reforms?"))
-    items.extend(select_all("Q149_LGU_SUPPORT_FORMS",
-                            "149. What forms of support do you receive?", Q149_LGU_FORMS))
+    items.extend(checkbox_multiselect("Q149_LGU_SUPPORT_FORMS",
+                            "149. What forms of support do you receive?", _cb_codes(Q149_LGU_FORMS)))
     items.append(yes_no("Q150_LGU_SATISFIED",
                         "150. Are you satisfied with the support you receive from your LGU?"))
-    items.extend(select_all("Q151_LGU_NOT_SAT_WHY",
-                            "151. Why not?", Q151_NOT_SAT_WHY))
+    items.extend(checkbox_multiselect("Q151_LGU_NOT_SAT_WHY",
+                            "151. Why not?", _cb_codes(Q151_NOT_SAT_WHY)))
     items.append(select_one("Q152_PHO_PROTOCOL_CLARITY",
                             "152. How clear are the protocols regarding which decisions require Provincial Health Office approval versus those you can decide at the facility level?",
                             Q152_CLARITY))
@@ -969,30 +992,30 @@ def build_section_g():
     items.append(numeric("Q154_NUM_REFERRED_OUT",
                          "154. In the past 6 months, how many patients were referred to a higher-level facility within the referral network?",
                          length=6))
-    items.extend(select_all("Q155_SEND_REFERRAL_HOW",
+    items.extend(checkbox_multiselect("Q155_SEND_REFERRAL_HOW",
                             "155. What are the most common ways you send referrals to higher level facilities/specialists?",
-                            Q155_SEND_REF))
-    items.extend(select_all("Q156_REFERRAL_FORM_TYPE",
+                            _cb_codes(Q155_SEND_REF)))
+    items.extend(checkbox_multiselect("Q156_REFERRAL_FORM_TYPE",
                             "156. What type of referral form do you use to send to higher level facilities?",
-                            Q156_FORM_TYPE))
+                            _cb_codes(Q156_FORM_TYPE)))
     items.append(select_one("Q157_SPECIALIST_NETWORK",
                             "157. Do you have a network of specialist providers to refer patients to, if needed?",
                             Q157_NETWORK))
     items.append(select_one("Q158_REF_PROPORTION",
                             "158. Considering all patients who come to your facility for the past 6 months, what is the proportion of patients referred by another facility compared to those who self-refer/walk-in?",
                             Q158_PROPORTION))
-    items.extend(select_all("Q159_RECEIVE_REFERRAL_HOW",
+    items.extend(checkbox_multiselect("Q159_RECEIVE_REFERRAL_HOW",
                             "159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities?",
-                            Q159_RECEIVE_REF))
-    items.extend(select_all("Q160_EXTERNAL_SERVICES_GO",
+                            _cb_codes(Q159_RECEIVE_REF)))
+    items.append(select_one("Q160_EXTERNAL_SERVICES_GO",
                             "160. Where do your patients go to get the services not available at this facility?",
-                            Q160_EXTERNAL))
+                            Q160_EXTERNAL, length=2))
     items.append(select_one("Q161_REF_SATISFACTION",
                             "161. How would you rate your satisfaction with your current referral system?",
                             Q161_SATISFACTION))
-    items.extend(select_all("Q162_NOT_SATISFIED_WHY",
+    items.extend(checkbox_multiselect("Q162_NOT_SATISFIED_WHY",
                             "162. Why are you not satisfied with the current referral system?",
-                            Q162_NOT_SAT))
+                            _cb_codes(Q162_NOT_SAT)))
     return record("G_SERVICE_DELIVERY", "G. Service Delivery Process", "8", items)
 
 
@@ -1035,19 +1058,19 @@ def build_section_h():
         ]
 
     items = []
-    items.extend(select_all("Q163_HR_CHALL",
-                            "163. What challenges in human resources do you have?", Q163_CHALL))
+    items.extend(checkbox_multiselect("Q163_HR_CHALL",
+                            "163. What challenges in human resources do you have?", _cb_codes(Q163_CHALL)))
     items.append(alpha("Q164_IMPROVEMENT_AREA",
                        "164. What area do you find the most room for improvement in your staff?", length=240))
-    items.extend(select_all("Q165_PD_DOCTORS",
+    items.extend(checkbox_multiselect("Q165_PD_DOCTORS",
                             "165. What forms of professional development do you provide to your doctors?",
-                            PD_DOCTORS))
+                            _cb_codes(PD_DOCTORS)))
     # #388: the internal "[PENDING DESIGN…]" flag was leaking into the on-screen label.
     # The default (omit audits) already matches the printed questionnaire, so the displayed
     # text is now clean; the toggle + comment retain the ASPSI-confirm note in source only.
-    items.extend(select_all("Q166_PD_NURSES",
+    items.extend(checkbox_multiselect("Q166_PD_NURSES",
                             "166. What forms of professional development do you provide to your nurses?",
-                            PD_NURSES))
+                            _cb_codes(PD_NURSES)))
     return record("H_HUMAN_RESOURCES", "H. Human Resources for Health", "9", items)
 
 def build_secondary_data_stubs():

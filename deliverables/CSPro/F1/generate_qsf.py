@@ -152,9 +152,11 @@ _PROBE = ("DO NOT READ OPTIONS OUT LOUD. USE THE FOLLOWING GUIDE QUESTIONS TO "
 INSTRUCTIONS = {
     **dict.fromkeys([12, 14, 17, 19, 21, 23, 25, 27, 29, 31, 36, 38, 39, 40,
                      41, 42, 44, 45, 46, 47, 48], _PROBE),
-    **dict.fromkeys([15, 18, 32, 60, 95, 103, 110, 157, 158], _READ_ONE),  # #387: Q157/Q158 are select-one
+    # #387: Q157/Q158 are select-one. #576: Q161 is single-select (rating scale) —
+    # moved out of _READ_ALL so its instruction reads "SELECT ONE ANSWER ONLY".
+    **dict.fromkeys([15, 18, 32, 60, 95, 103, 110, 157, 158, 161], _READ_ONE),
     **dict.fromkeys([34, 53, 75, 76, 78, 79, 99, 104, 105, 111, 121, 137, 140,
-                     146, 147, 149, 156, 159, 161, 163, 165, 166], _READ_ALL),
+                     146, 147, 149, 156, 159, 163, 165, 166], _READ_ALL),
     **dict.fromkeys([64, 66, 67, 68, 69, 70, 71, 72, 73, 74, 94, 96, 98, 117,
                      122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132,
                      133, 134, 151, 162], _DNR_ALL),

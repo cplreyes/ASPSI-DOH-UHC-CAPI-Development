@@ -12,6 +12,7 @@ Run:
     python generate_dcf.py        # writes PatientSurvey.dcf next to this file
 """
 
+import re
 import sys
 from pathlib import Path
 
@@ -25,6 +26,40 @@ from cspro_helpers import (
     apply_translations,
     _gps_fields, _photo_block,
 )
+
+
+def _cb_codes(options):
+    """#529: re-code a select_all option list for checkbox_multiselect — real
+    options -> 01,02,...; 'Other (specify)' -> 99; a standalone exclusive option
+    ('None…', 'No initiatives', 'I don't know') -> 90. Fixed-width 2-char codes in
+    the 9x range for specials so pos() membership tests can't false-match (matches
+    the Q148 convention). The 01.. order is preserved, so any gate logic that
+    references option N by position stays valid. Ported from F1's generate_dcf.py
+    for the 13-question F3 select_all -> Check Box conversion.
+
+    F3 fix vs the F1 original: the don't-know exclusive is matched as a (near-)whole
+    option phrase, NOT as a substring. F3 carries substantive options that merely
+    CONTAIN 'don't know' — Q65 'I don't know where to go for care', Q171 'Don't know
+    how to get to facility' — which F1's `"don't know" in low` substring test wrongly
+    collapsed to the exclusive code 90 (two options -> same code; a real reason lost).
+    Whole-phrase matching keeps those as ordinary 01.. options."""
+    out, n = [], 0
+    for text, _ in options:
+        low = text.strip().lower()
+        # normalised phrase (strip leading 'i ', trailing punctuation) for the
+        # don't-know exclusive test — must be the WHOLE option, not a prefix of a
+        # longer reason like "I don't know where to go for care".
+        norm = re.sub(r"\s+", " ", low).strip().rstrip(".").strip()
+        norm = re.sub(r"^i\s+", "", norm)
+        is_dont_know = norm in ("don't know", "dont know")
+        if "specif" in low or low.startswith("other"):
+            out.append((text, "99"))
+        elif low.startswith(("none", "no initiative")) or is_dont_know:
+            out.append((text, "90"))
+        else:
+            n += 1
+            out.append((text, f"{n:02d}"))
+    return out
 
 
 # ============================================================
@@ -181,13 +216,23 @@ def build_section_b():
         ("Unemployed and not looking for work",                "09"),
         ("I don't know",                                       "99"),
     ]
+    # #631 (ASPSI updated questionnaire, 2026-06-17): income categories revised to
+    # 11 contiguous 50k bands (was 6 uneven bands). 2-digit codes (field length 2).
+    # NOTE: the tester's printed "150,000 - 199,000" is a transcription typo —
+    # corrected to 199,999 to keep the bands contiguous and non-overlapping with the
+    # 200,000 band (every other band ends in 9,999). Flagged for ASPSI confirmation.
     Q18_BRACKET = [
-        ("Under 40,000",      "1"),
-        ("40,000 - 59,999",   "2"),
-        ("60,000 - 99,999",   "3"),
-        ("100,000 - 249,999", "4"),
-        ("250,000 - 499,999", "5"),
-        ("500,000 and over",  "6"),
+        ("Under 50,000",      "01"),
+        ("50,000 - 99,999",   "02"),
+        ("100,000 - 149,999", "03"),
+        ("150,000 - 199,999", "04"),
+        ("200,000 - 249,999", "05"),
+        ("250,000 - 299,999", "06"),
+        ("300,000 - 349,999", "07"),
+        ("350,000 - 399,999", "08"),
+        ("400,000 - 449,999", "09"),
+        ("450,000 - 499,999", "10"),
+        ("500,000 and above", "11"),
     ]
     Q23_WATER = [
         ("Faucet inside the house", "1"),
@@ -280,7 +325,7 @@ def build_section_b():
                 length=8),
         select_one("Q18_INCOME_BRACKET",
                    "18. Income category corresponding to the respondent's approximate household income",
-                   Q18_BRACKET, length=1),
+                   Q18_BRACKET, length=2),   # #631: 11 brackets -> 2-digit codes
         numeric("Q19_HH_SIZE",
                 "19. How many total individuals (including children) live in the patient's house now?",
                 length=2),
@@ -363,10 +408,12 @@ def build_section_c():
         select_one("Q35_UHC_HEARD",
                    "35. Have you heard about Universal Health Care (UHC) prior to this survey?",
                    Q35_OPTIONS, length=1),
-        *select_all("Q36_UHC_SOURCE",
-                    "36. What is your source of information about UHC?", Q36_SOURCE),
-        *select_all("Q37_UHC_UNDERSTAND",
-                    "37. What is your understanding about UHC?", Q37_UNDERSTANDING),
+        *checkbox_multiselect("Q36_UHC_SOURCE",
+                    "36. What is your source of information about UHC?",
+                    _cb_codes(Q36_SOURCE), with_other_txt=True),
+        *checkbox_multiselect("Q37_UHC_UNDERSTAND",
+                    "37. What is your understanding about UHC?",
+                    _cb_codes(Q37_UNDERSTANDING), with_other_txt=True),
     ]
     return record("C_UHC_AWARENESS",
                   "C. Awareness on Universal Health Care (UHC)", "E", items)
@@ -497,9 +544,9 @@ def build_section_d():
                    Q45_CATEGORY, length=2),
         alpha("Q45_CATEGORY_OTHER_TXT",
               "45. Category — Other (specify) text", length=120),
-        *select_all("Q46_BENEFITS",
+        *checkbox_multiselect("Q46_BENEFITS",
                     "46. What are some of the benefits that come with being a PhilHealth member?",
-                    Q46_BENEFITS),
+                    _cb_codes(Q46_BENEFITS), with_other_txt=True),
     ]
     for name, label in Q47_PACKAGES:
         items.append(yes_no(name, label))
@@ -670,13 +717,14 @@ def build_section_e():
                "63. In the past 12 months, do you have a clinic, or health center that you usually go to?"),
         alpha("Q64_FACILITY_NAME",
               "64. What is the name of the facility?", length=120),
-        *select_all("Q65_WHY_NO_USUAL",
+        *checkbox_multiselect("Q65_WHY_NO_USUAL",
                     "65. If none, why do you not have a usual clinic, or health center that you usually go to?",
-                    Q65_WHY_NOT),
+                    _cb_codes(Q65_WHY_NOT), with_other_txt=True),
         yes_no("Q66_SAME_AS_USUAL",
                "66. Is [facility_name_input] the facility you usually go to for general health concerns?"),
-        *select_all("Q67_WHY_THIS_FACILITY",
-                    "67. Why did you go to this facility instead of your usual facility?", Q67_WHY_THIS),
+        *checkbox_multiselect("Q67_WHY_THIS_FACILITY",
+                    "67. Why did you go to this facility instead of your usual facility?",
+                    _cb_codes(Q67_WHY_THIS), with_other_txt=True),
         # select_all() above already emits the canonical Q67_WHY_THIS_FACILITY_OTHER_TXT
         # (gated on the 'Other' option flag). A second standalone Q67_WHY_THIS_OTHER_TXT used to
         # live here — a duplicate with no option flag, i.e. an ungated free-text box on the form.
@@ -714,9 +762,9 @@ def build_section_e():
         *select_all("Q75_KON_SOURCE",
                     "75. What are your sources of information about the YAKAP/Konsulta package?",
                     Q75_KON_SOURCE),
-        *select_all("Q76_KON_UNDERSTAND",
+        *checkbox_multiselect("Q76_KON_UNDERSTAND",
                     "76. What is your understanding about the YAKAP/Konsulta package?",
-                    Q76_KON_UNDERSTAND),
+                    _cb_codes(Q76_KON_UNDERSTAND), with_other_txt=True),
         select_one("Q77_KON_REGISTERED",
                    "77. Are you registered with a YAKAP/Konsulta package provider?",
                    Q77_KON_REGISTERED, length=1),
@@ -977,11 +1025,17 @@ def build_section_g():
         yes_no("Q91_USUAL_OUTPATIENT",
                "91. Do you usually avail consultation services for outpatient care?"),
     ]
-    # Q92 consultation cost — payment-source matrix
+    # Q92 consultation cost — payment-source matrix.
+    # #446: only amount-bearing options carry an 'Amount in Pesos' box — per the paper that's
+    # Out-of-pocket(01) + Donation(02). Free/charged-to-X/In-kind/Don't-know are Yes/No only
+    # (a 'Free' option that demanded an amount was the reported data-quality bug). The kept
+    # amounts stay gated on their Yes flag by amount_required_procs (#553: No -> amount 0 + skip).
+    Q92_AMT_CODES = {"01", "02"}
     for label, code in Q92_PAYMENT_SRC:
         items.append(yes_no(f"Q92_PAY_{code}", f"92. Cost of consultation — {label}"))
-        items.append(numeric(f"Q92_PAY_{code}_AMT",
-                             f"92. Cost of consultation — {label} (Amount in Pesos)", length=8))
+        if code in Q92_AMT_CODES:
+            items.append(numeric(f"Q92_PAY_{code}_AMT",
+                                 f"92. Cost of consultation — {label} (Amount in Pesos)", length=8))
     items.extend([
         *select_all("Q93_LABS",
                     "93. Did you have any of the following laboratory tests done during your outpatient care?",
@@ -989,23 +1043,30 @@ def build_section_g():
         alpha("Q93_LABS_OTHER_TXT",
               "93. Lab tests — Other, specify text", length=120),
     ])
-    # Q94 lab test cost — payment-source matrix (aggregate; spec asks per-test roster)
+    # Q94 lab test cost — payment-source matrix (aggregate; spec asks per-test roster).
+    # #451: only Out-of-pocket(01) carries an 'Amount in Pesos' box (per the paper); all
+    # other options are Yes/No only.
     for label, code in Q92_PAYMENT_SRC:
         items.append(yes_no(f"Q94_PAY_{code}",
                             f"94. Cost of laboratory test/s — {label}"))
-        items.append(numeric(f"Q94_PAY_{code}_AMT",
-                             f"94. Cost of laboratory test/s — {label} (Amount in Pesos)", length=8))
+        if code == "01":
+            items.append(numeric(f"Q94_PAY_{code}_AMT",
+                                 f"94. Cost of laboratory test/s — {label} (Amount in Pesos)", length=8))
     items.extend([
         yes_no("Q95_PRESCRIBED",
                "95. Were you prescribed medicine/s after your check-up?"),
     ])
-    # Q96 prescribed meds cost — payment-source matrix
+    # Q96 prescribed meds cost — payment-source matrix.
+    # #453: only Out-of-pocket(01) + In-kind(06) + Donation(07) carry an 'Amount in Pesos'
+    # box (per the paper); all other options are Yes/No only.
+    Q96_AMT_CODES = {"01", "06", "07"}
     for label, code in Q96_MEDS_PAY:
         items.append(yes_no(f"Q96_PAY_{code}",
                             f"96. Amount spent for prescribed medicines — {label}"))
-        items.append(numeric(f"Q96_PAY_{code}_AMT",
-                             f"96. Amount spent for prescribed medicines — {label} (Amount in Pesos)",
-                             length=8))
+        if code in Q96_AMT_CODES:
+            items.append(numeric(f"Q96_PAY_{code}_AMT",
+                                 f"96. Amount spent for prescribed medicines — {label} (Amount in Pesos)",
+                                 length=8))
     items.append(numeric("Q97_FINAL_AMOUNT",
                          "97. What was the final amount you paid in cash for your outpatient care? "
                          "(Amount in Pesos)", length=8))
@@ -1046,9 +1107,9 @@ def build_section_g():
         *select_all("Q100_BUCAS_SOURCE",
                     "100. If yes, what are your sources of information about this BUCAS center?",
                     Q100_BUCAS_SOURCE),
-        *select_all("Q101_BUCAS_UNDERSTAND",
+        *checkbox_multiselect("Q101_BUCAS_UNDERSTAND",
                     "101. What is your understanding about a BUCAS center?",
-                    Q101_BUCAS_UNDERSTAND),
+                    _cb_codes(Q101_BUCAS_UNDERSTAND), with_other_txt=True),
         yes_no("Q102_BUCAS_ACCESSED",
                "102. Have you accessed the services in a BUCAS center?"),
         *select_all("Q103_BUCAS_SERVICES",
@@ -1308,17 +1369,21 @@ def build_section_i():
         select_one("Q116_NBB_HEARD",
                    "116. Have you heard of the No Balance Billing (NBB)?",
                    Q116_HEARD, length=1),
-        *select_all("Q117_NBB_SOURCE",
-                    "117. If yes, what are your sources of information about NBB?", SOURCE_8),
-        *select_all("Q118_NBB_UNDERSTAND",
-                    "118. What is your understanding about NBB?", Q118_UNDERSTAND_NBB),
+        *checkbox_multiselect("Q117_NBB_SOURCE",
+                    "117. If yes, what are your sources of information about NBB?",
+                    _cb_codes(SOURCE_8), with_other_txt=True),
+        *checkbox_multiselect("Q118_NBB_UNDERSTAND",
+                    "118. What is your understanding about NBB?",
+                    _cb_codes(Q118_UNDERSTAND_NBB), with_other_txt=True),
         select_one("Q119_ZBB_HEARD",
                    "119. Have you heard of the Zero Balance Billing (ZBB)?",
                    Q119_HEARD, length=1),
-        *select_all("Q120_ZBB_SOURCE",
-                    "120. If yes, what are your sources of information about ZBB?", SOURCE_8),
-        *select_all("Q121_ZBB_UNDERSTAND",
-                    "121. What is your understanding about ZBB?", Q121_UNDERSTAND_ZBB),
+        *checkbox_multiselect("Q120_ZBB_SOURCE",
+                    "120. If yes, what are your sources of information about ZBB?",
+                    _cb_codes(SOURCE_8), with_other_txt=True),
+        *checkbox_multiselect("Q121_ZBB_UNDERSTAND",
+                    "121. What is your understanding about ZBB?",
+                    _cb_codes(Q121_UNDERSTAND_ZBB), with_other_txt=True),
         yes_no("Q122_ZBB_INFORMED",
                "122. Were you informed about ZBB upon admission?"),
         select_one("Q123_ZBB_EXTENT",
@@ -1328,8 +1393,8 @@ def build_section_i():
                    "124. Have you heard of the Medical Assistance for Indigent and "
                    "Financially Incapacitated Patients (MAIFIP)? (SKIP IF ANSWERED MAIFIP IN Q113)",
                    Q124_HEARD, length=1),
-        *select_all("Q125_MAIFIP_SOURCE",
-                    "125. What are your sources of information about MAIFIP?", SOURCE_8),
+        *checkbox_multiselect("Q125_MAIFIP_SOURCE",
+                    "125. What are your sources of information about MAIFIP?", _cb_codes(SOURCE_8)),
         yes_no("Q126_MAIFIP_AVAILED",
                "126. Did you avail of MAIFIP in this last confinement?"),
         yes_no("Q127_MAIFIP_OOP",
@@ -1385,7 +1450,7 @@ def build_section_j():
         items.append(select_one(name, label, SATISFACTION_5PT, length=1))
     items.append(select_one("Q135_SAT_OVERALL_TIME",
                             "135. Were you satisfied with the overall time spent from registration "
-                            "to exiting the facility? (For inpatients only)",
+                            "to exiting the facility?",   # #487: deleted '(For inpatients only)' — Marriz confirmed Q135 is asked for all patients
                             SATISFACTION_5PT, length=1))
     for name, label in STAFF_FREQ_ITEMS:
         items.append(select_one(name, label, FREQUENCY_5PT, length=1))
@@ -1713,9 +1778,9 @@ def build_section_l():
         yes_no("Q170_FOLLOWUP",
                "170. After your visit to the referral hospital/ specialist, did they follow "
                "up with you about what happened at the visit?"),
-        *select_all("Q171_WHY_NOT",
+        *checkbox_multiselect("Q171_WHY_NOT",
                     "171. Why are you NOT planning to visit?",
-                    Q171_WHY_NOT),
+                    _cb_codes(Q171_WHY_NOT), with_other_txt=True),
         yes_no("Q172_PCP_REFERRAL",
                "172. Was the visit to [facility_name_input] a referral from your primary "
                "care facility?"),
@@ -1731,9 +1796,9 @@ def build_section_l():
         yes_no("Q176_PCP_WROTE_INFO",
                "176. Did your primary care provider write down any information for the "
                "specialist about the reason for that visit?"),
-        *select_all("Q177_WHY_HOSPITAL",
+        *checkbox_multiselect("Q177_WHY_HOSPITAL",
                     "177. As it was not a referral, why did you decide to visit a hospital?",
-                    Q177_WHY_HOSPITAL),
+                    _cb_codes(Q177_WHY_HOSPITAL), with_other_txt=True),
         select_one("Q178_SAT_REFERRAL",
                    "178. Overall, how would you rate your experience with the referral process?",
                    Q178_SAT_REFERRAL, length=1),

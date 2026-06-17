@@ -12,6 +12,7 @@ Steps (run with a step name so a vision model can read each screenshot and guide
   py csweb_deploy_designer.py shot         # just screenshot current state
   py csweb_deploy_designer.py keys "<seq>" # send a pywinauto key sequence, then screenshot
 """
+import os
 import subprocess
 import sys
 import time
@@ -27,7 +28,7 @@ from cspro_compile_driver import (  # reuse hardened helpers
 from pywinauto.application import Application
 
 OUT = Path(__file__).resolve().parent / "shots" / "deploy"
-KEY = "F1"
+KEY = os.environ.get("DEPLOY_KEY", "F1")
 
 
 def _attach():

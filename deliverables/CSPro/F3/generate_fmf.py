@@ -241,8 +241,15 @@ _NO_AUTOGROUP_RECORDS = {
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
 # Single alpha fields rendered as a CSPro Check Box (one-question multi-select tick-list).
 # These get DataCaptureType=CheckBox and their own DisplayTogether screen (with any trailing
-# _OTHER_TXT / _MEDICINES_TXT gated free-text). 2026-06-12 R4 review: Q148.
-_CHECKBOX_FIELDS = {"Q148_CONDITIONS"}
+# _OTHER_TXT / _MEDICINES_TXT gated free-text). 2026-06-12 R4 review: Q148. 2026-06-16 (#529):
+# the 13 'Patient Survey' select_all -> Check Box conversions (mirrors F1 Q49/Q50/Q53/Q58).
+_CHECKBOX_FIELDS = {
+    "Q148_CONDITIONS",
+    "Q36_UHC_SOURCE", "Q37_UHC_UNDERSTAND", "Q46_BENEFITS", "Q65_WHY_NO_USUAL",
+    "Q67_WHY_THIS_FACILITY", "Q76_KON_UNDERSTAND", "Q101_BUCAS_UNDERSTAND",
+    "Q117_NBB_SOURCE", "Q118_NBB_UNDERSTAND", "Q120_ZBB_SOURCE", "Q121_ZBB_UNDERSTAND",
+    "Q171_WHY_NOT", "Q177_WHY_HOSPITAL", "Q125_MAIFIP_SOURCE",   # #560
+}
 _CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share the checkbox screen
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen
 _ACTIVE_BLOCK_PLAN = []            # set per-build by build_fmf()

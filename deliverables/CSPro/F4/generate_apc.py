@@ -20,6 +20,7 @@ Invoke:  python generate_apc.py
 """
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -31,7 +32,10 @@ from cspro_helpers import (
 # Per-item numeric range checks (spec §3.2/§3.6/§3.12). (field, lo, hi, soft_over)
 RANGE_CHECKS = [
     ("Q18_INCOME_AMOUNT",      0, 99999999, None),
-    ("Q67_TIME_TO_PHARMACY",   0, 1440,     None),
+    # #572: Q67 single HHMM field split into separate Hours + Minutes boxes
+    # (mirrors F3 Q69_USUAL_TRAVEL_HH/MM range checks).
+    ("Q67_TRAVEL_HH",          0, 24,       None),
+    ("Q67_TRAVEL_MM",          0, 59,       None),
     ("TOTAL_NUMBER_OF_VISITS", 1, 10,       3),
     ("Q199_WTP_CONSULT",       0, 99999999, None),
 ]
@@ -42,6 +46,13 @@ CUSTOM_VALIDATION = [
      "PROC DATE_FINAL_VISIT\npostproc\n"
      "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
      "    errmsg(\"Final-visit date cannot be earlier than the first-visit date.\");\n    reenter;\n  endif;"),
+    # #625/#626: now that Q129 = No/Don't-know routes to Q132 (ZBB awareness asked regardless of
+    # confinement), the bill-recall tail (Q138-Q143) must still be confinement-dependent -> gate it
+    # here so only Q129=Yes (confined) reaches it; everyone else skips to Section N.
+    ("Q138_MOST_EXPENSIVE",
+     "PROC Q138_MOST_EXPENSIVE\npreproc\n"
+     "  if Q129_HH_CONFINED <> 1 then   { bill-recall (Q138-143) is for confined HHs only }\n"
+     "    skip to Q144_CEREALS_CONSUMED;\n  endif;"),
 ]
 
 HERE = Path(__file__).parent
@@ -274,9 +285,15 @@ postproc
     skip to Q39_CIVIL_STATUS;
   endif;
 
+PROC Q36_SPECIFY_DISABILITY
+postproc
+  if Q36_SPECIFY_DISABILITY = 0 then   { #604: No = doesn't want to specify -> skip Q37 (card) + Q38 (type) to Q39 (YN_01: No=0) }
+    skip to Q39_CIVIL_STATUS;
+  endif;
+
 PROC Q37_PWD_CARD
 postproc
-  if Q37_PWD_CARD = 2 then
+  if Q37_PWD_CARD <> 1 then   { #605: Q38 reads the *presented* card, so skip it unless Yes=1 (card shown). Covers No=0 AND Refused=2; was `= 2` which only caught Refused and let No fall through to Q38. }
     skip to Q39_CIVIL_STATUS;
   endif;
 
@@ -317,6 +334,16 @@ preproc
 """
 
 EXTRA_PROCS = """\
+{ ---- Section A: Q1 household-head soft confirm (#520). If the respondent is NOT the
+       HH head (Q1 = No), warn the enumerator and CONTINUE — no skip, no terminate.
+       Per spec (Section A): some items may still be asked but flagged; the survey-design
+       decision is soft-warn-and-continue, not a hard stop. ---- }
+PROC Q1_IS_HH_HEAD
+postproc
+  if Q1_IS_HH_HEAD = 2 then
+    errmsg("Respondent is not the household head. Confirm they are a household decision-maker per the sampling protocol before continuing.");
+  endif;
+
 { ---- 'Other (specify)' enforcement -- Q50 roster insurance + Q194 funds (audit 2026-06-11) ---- }
 PROC Q50_PRIVATE_INS_OTHER_TXT
 preproc
@@ -345,15 +372,27 @@ postproc
 { ---- Section G: branded/generic multi-branch (spec 2 Q76) ---- }
 PROC Q76_BRAND_OR_GEN
 postproc
-  if Q76_BRAND_OR_GEN = 1    then  skip to Q78_WHY_BRANDED_O01; endif;  { Branded only -> why-branded (skip Q77) }
-  if Q76_BRAND_OR_GEN in 3,4 then  skip to Q79_REG_SOURCE;      endif;  { Don't know / N/A -> exit Section G }
-  { Generic (2) falls through to Q77 why-generic }
+  { Q76 codes: 1 Branded / 2 Generic / 3 Both / 4 Don't know / 9 Not applicable.
+    Q77 (why-generic) asked for Generic+Both; Q78 (why-branded) for Branded+Both. (#536/#540) }
+  if Q76_BRAND_OR_GEN = 1    then  skip to Q78_WHY_BRANDED; endif;  { Branded only -> why-branded (skip Q77) }
+  if Q76_BRAND_OR_GEN in 4,9 then  skip to Q79_REG_SOURCE;  endif;  { Don't know (4) / Not applicable (9) -> exit Section G }
+  { Generic (2) or Both (3) fall through to Q77 why-generic }
 
-PROC Q78_WHY_BRANDED_O01
-preproc
-  if Q76_BRAND_OR_GEN <> 1 then   { only branded buyers answer why-branded }
-    skip to Q79_REG_SOURCE;
+{ Q78_WHY_BRANDED is now a Check Box base (#578) — its branded-only preproc gate
+  (was PROC Q78_WHY_BRANDED_O01) is migrated into CHECKBOX_CONVERT's gate param. }
+
+{ ---- Section K: Q112 referral-visit multi-branch (spec 2 Section K) ----
+  Q112 codes: 1 Yes / 2 "No, I'm not planning to" / 3 "Not yet, but I'm planning to".
+  Q113 (why-not-planning) is asked ONLY for code 2; Yes(1) and Not-yet-planning(3)
+  proceed straight to Q114 (skip Q113). (#590/#591/#592/#593: Q112 was always
+  falling through to Q113.) Q113's own postproc then skips to Q126 (handled in the
+  Check Box conversion's postproc tail). ---- }
+PROC Q112_VISITED
+postproc
+  if Q112_VISITED = 1 or Q112_VISITED = 3 then   { Yes / Not yet but planning -> skip Q113 why-not }
+    skip to Q114_DISCUSSED_PLACES;
   endif;
+  { code 2 ("No, I'm not planning to") falls through to Q113 why-not }
 
 { ---- Section H gate: skip entire Section H if NO roster member is PhilHealth-
   registered (Q45 = Yes anywhere in the roster). Spec 2 Section H note. ---- }
@@ -371,6 +410,150 @@ preproc
     skip to Q89_HAS_USUAL_FACILITY;   { no registered member -> skip Section H to Section I }
   endif;
 """
+
+
+# --- #529 (+#573/#574, +#577-585/#588/#590-591) multi-select conversion: the F4
+# 'Household Survey' select_all bases that became single Check Box fields (mirrors F3
+# generate_apc.py's CHECKBOX_CONVERT). Each base gets a select->=1 validation (hard), an
+# optional exclusivity soft-warn (the standalone option coded 90 should stand alone), an
+# optional preproc gate, and (when present) an 'Other (specify)' text gate on
+# pos("99", base). Codes are from generate_dcf._cb_codes: real options 01.., exclusive
+# 'I don't know'/'None' -> 90, 'Other (specify)' -> 99. (base, has_other, exclusive,
+# preproc_gate).
+#
+# F4 special-case discovery (grep of every <base>_O0 reference in this file): the #529
+# batch's only refs were three SKIP_RULES targets (Q85/Q93/Q94 _O01), repointed to the
+# bare base. The #577+ batch adds two more skip-target repoints (Q82, Q107 _O01 -> base;
+# Q105=2 chains into Q107) plus ONE gated preproc to migrate: Q78_WHY_BRANDED carried a
+# `PROC Q78_WHY_BRANDED_O01` branded-only preproc (Q76 in 1,3) — its body is moved into
+# the CHECKBOX_CONVERT gate param below, and the `skip to Q78_WHY_BRANDED_O01` in PROC
+# Q76_BRAND_OR_GEN postproc is repointed to the bare base. All other entries gate=None.
+CHECKBOX_BASES = {
+    "Q52_UHC_SOURCE", "Q53_UHC_UNDERSTAND", "Q55_YAKAP_SOURCE", "Q56_YAKAP_UNDERSTAND",
+    "Q58_BUCAS_SOURCE", "Q59_BUCAS_UNDERSTAND", "Q61_BUCAS_SERVICES",
+    "Q65_CONDITIONS", "Q66_WHERE_BUY", "Q85_BENEFITS", "Q91_WHY_WENT",
+    "Q93_WHY_NOT", "Q94_TRANSPORT", "Q113_WHY_NOT", "Q121_WHY_HOSPITAL",
+    "Q70_GAMOT_SOURCE", "Q71_GAMOT_UNDERSTAND",   # #573/#574
+    "Q127_NBB_SOURCE", "Q128_NBB_UNDERSTAND", "Q133_ZBB_SOURCE", "Q134_ZBB_UNDERSTAND",
+    "Q137_MAIFIP_SOURCE",
+    "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill select_all -> Check Box
+    # #577-585/#588/#590-591: 10 more 'Household Survey' select_all -> Check Box (tick-all)
+    "Q74_WHERE_REST", "Q77_WHY_GENERIC", "Q78_WHY_BRANDED", "Q82_DIFFICULTY_REASONS",
+    "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
+    "Q107_OTHER_ACTIONS", "Q109_TYPE",
+}
+
+CHECKBOX_CONVERT = [
+    # base                       has_other  exclusive  preproc_gate
+    ("Q52_UHC_SOURCE",           True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q53_UHC_UNDERSTAND",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q55_YAKAP_SOURCE",         True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q56_YAKAP_UNDERSTAND",     True,  True,  None),   # 'I don't know' (90) exclusive ('no benefits in the package' stays an 01.. option, mirroring F3 Q46); 'Other (Specify)' (99)
+    ("Q58_BUCAS_SOURCE",         True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q59_BUCAS_UNDERSTAND",     True,  False, None),   # no None/IDK option; 'Other (specify)' (99)
+    ("Q61_BUCAS_SERVICES",       True,  True,  None),   # #570: 'I don't know' (90) exclusive; 'Other (specify)' (99)
+    ("Q65_CONDITIONS",           True,  False, None),   # #571: no 90-coded exclusive — 'No condition - Regular check-up only' stays an 01.. option (mirrors F3 Q46/Q85); 'Other (Specify)' (99) [the substantive 'Other infection' is now an 01.. option, no longer colliding on 99 — see _cb_codes fix]
+    ("Q66_WHERE_BUY",            True,  False, None),   # #568: no None/IDK option; 'Other (specify)' (99)
+    ("Q85_BENEFITS",             True,  True,  None),   # 'I don't know' (90) exclusive ('no benefits to being a member' stays an 01.. option, mirroring F3 Q46); 'Other (Specify)' (99)
+    ("Q91_WHY_WENT",             True,  False, None),   # no None/IDK option; 'Other (Specify)' (99)
+    ("Q93_WHY_NOT",              True,  True,
+     "  { #624: Q93 (why NO usual facility) only applies when Q89=No; the Q89=Yes/Q90=No path\n"
+     "    (Q91 -> Q92) falls through to here, so skip Q93. }\n"
+     "  if Q89_HAS_USUAL_FACILITY <> 2 then\n"
+     "    skip to Q94_TRANSPORT;\n"
+     "  endif;"),                                 # 'I don't know' (90) exclusive — NOT 'I don't know where to go for care' (05); 'Other (Specify)' (99)
+    ("Q94_TRANSPORT",            True,  False, None),   # no None/IDK option; 'Other (Specify)' (99)
+    ("Q113_WHY_NOT",             True,  False, None),   # no None/IDK option — 'Don't know how to get to facility' (06) is substantive; 'Other (Specify)' (99)
+    ("Q121_WHY_HOSPITAL",        True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q127_NBB_SOURCE",          True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q128_NBB_UNDERSTAND",      True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q133_ZBB_SOURCE",          True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q134_ZBB_UNDERSTAND",      True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q137_MAIFIP_SOURCE",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q70_GAMOT_SOURCE",         True,  True,  None),   # #573 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q71_GAMOT_UNDERSTAND",     True,  True,  None),   # #574 'I don't know' (90); 'Other (specify)' (99)
+    # --- #577-585/#588/#590-591: 10 more tick-all conversions ---
+    ("Q74_WHERE_REST",           True,  False, None),   # #585: 'Not applicable' (09) is an ordinary 01.. option (NOT 90-coded by _cb_codes); 'Other (Specify)' (10->99)
+    ("Q77_WHY_GENERIC",          True,  True,  None),   # #578: 'I don't know' (90) exclusive; 'Not applicable' stays 01..; 'Other (Specify)' (99). Q77 asked for Generic/Both (falls through Q76 postproc) — no preproc gate
+    ("Q78_WHY_BRANDED",          True,  True,
+     "  if Q76_BRAND_OR_GEN <> 1 and Q76_BRAND_OR_GEN <> 3 then   { only Branded (1) or Both (3) answer why-branded }\n"
+     "    skip to Q79_REG_SOURCE;\n"
+     "  endif;"),                                       # #578: gate migrated from old PROC Q78_WHY_BRANDED_O01 preproc; 'I don't know' (90) exclusive; 'Other (Specify)' (99)
+    ("Q82_DIFFICULTY_REASONS",   True,  True,  None),   # #582: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Not a skip-target (Q81=No skips PAST it to Q83); falls through from Q81=Yes
+    ("Q88_DIFF_PAYING",          True,  True,  None),   # #582: 'I don't know' (90) exclusive; 'Other (Specify)' (99)
+    ("Q102_VISIT_REASON",        True,  False, None),   # #583: no None/IDK option; 'Other (Specify)' (99)
+    ("Q103_CARE_TYPE",           True,  False, None),   # #583: no None/IDK option; 'Other (Specify)' (99)
+    ("Q106_FORGONE_WHY",         True,  True,  None),   # #584: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Skip-target from Q105=2 (skip rule repointed to bare base)
+    ("Q107_OTHER_ACTIONS",       True,  False, None),   # #584: 'Did not seek other forms of care' (06) is substantive (NOT 90-coded); 'Other (Specify)' (99). Skip-target from Q105=2 chains here via the bare base
+    ("Q109_TYPE",                True,  True,  None),   # #588: 'None of the above' (11->90) exclusive; 'Other (Specify)' (12->99)
+    ("Q141_BILL_ITEMS",          False, False, None),   # #615: 'Other expenses' (07) is NOT a 'specif' option (no 99 gate); ungated Q141_BILL_ITEMS_OTHER_TXT kept as plain alpha
+    ("Q143_HOW_PAID",            True,  False, None),   # #616: 'Other (Specify)' (10->99); no None/IDK exclusive; reached via Q142=Yes (Q142=No skips to Q144)
+]
+
+
+def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None):
+    """Emit the bespoke PROC(s) for one converted Check Box base — select->=1 (hard),
+    an optional exclusivity soft-warn (the 90-coded standalone option should stand alone),
+    an optional preproc gate, an optional postproc tail (e.g. a `skip to` that fires
+    AFTER the option-count validation), and (when present) the 'Other (specify)' text
+    gate on pos("99", base). Ported from F3 generate_apc._gen_checkbox_proc (+ tail)."""
+    qn = re.match(r"Q(\d+)", base).group(1)
+    body = [f"PROC {base}"]
+    if gate:
+        body += ["preproc", gate]
+    body += ["postproc",
+             f"  if length(strip({base})) = 0 then",
+             f'    errmsg("Select at least one option for Q{qn} before continuing.");',
+             "    reenter;", "  endif;"]
+    if exclusive:
+        body += [f'  if pos("90", {base}) > 0 and length(strip({base})) > 2 then',
+                 f'    errmsg("Q{qn}: an exclusive option (None / I don\'t know) should be the '
+                 f'only choice - please review the options ticked.");',
+                 "  endif;"]
+    if postproc_tail:
+        body += [postproc_tail]
+    procs = {base: "\n".join(body)}
+    if has_other:
+        procs[f"{base}_OTHER_TXT"] = (
+            f"PROC {base}_OTHER_TXT\npreproc\n"
+            f'  if pos("99", {base}) = 0 then\n'
+            f'    {base}_OTHER_TXT = "";   {{ gated: \'Other (specify)\' not ticked -> not enterable }}\n'
+            f"    noinput;\n  endif;\npostproc\n"
+            f'  if pos("99", {base}) > 0 and length(strip({base}_OTHER_TXT)) = 0 then\n'
+            f'    errmsg("\'Other (specify)\' was ticked for Q{qn} - please specify.");\n'
+            "    reenter;\n  endif;"
+        )
+    return procs
+
+
+# Optional postproc tails for specific Check Box bases — fire AFTER the
+# >=1-option validation. Q113 (why-not-planning, asked only when Q112=2): once
+# answered, route straight to Section L gate Q126 — Q114-Q125 belong to the
+# Q112=Yes/Not-yet branch which Q113 is NOT on. (#590-593 Q112 cluster.)
+CHECKBOX_POSTPROC_TAILS = {
+    "Q113_WHY_NOT": "  skip to Q126_NBB_HEARD;   { after why-not -> Section L NBB (skip Q114-Q125 referral-experience tail) }",
+}
+
+CHECKBOX_MULTISELECT_PROCS = {}
+for _b, _o, _x, _g in CHECKBOX_CONVERT:
+    CHECKBOX_MULTISELECT_PROCS.update(
+        _gen_checkbox_proc(_b, _o, _x, _g, CHECKBOX_POSTPROC_TAILS.get(_b)))
+
+# Append the generated Check Box PROCs to EXTRA_PROCS so they emit alongside the rest
+# and are seeded into `covered` (via CHECKBOX_COVERED).
+EXTRA_PROCS = (EXTRA_PROCS.rstrip("\n")
+               + "\n\n{ ---- #529 + #573/#574 + #577-585/#588/#590-591: select_all -> Check "
+                 "Box conversions — config-driven from CHECKBOX_CONVERT ---- }\n"
+               + "\n\n".join(CHECKBOX_MULTISELECT_PROCS[k]
+                             for k in sorted(CHECKBOX_MULTISELECT_PROCS))
+               + "\n")
+
+# Every field name owned by a Check Box bespoke PROC (the 17 bases + their _OTHER_TXT)
+# — seeded into `covered` so the dcf-driven other-specify / select-all auto-gens skip
+# them (the alpha checkbox base carries the 'Other (Specify)' code 99 in its value set,
+# which would otherwise mis-fire the generic single-choice other-specify gate).
+CHECKBOX_COVERED = set(CHECKBOX_MULTISELECT_PROCS)
+
 
 VALIDATION_PROCS = """\
 { ---- Validations: respondent demographics + household composition (spec 3.3) ---- }
@@ -463,19 +646,40 @@ postproc
 # Section D-F awareness + Section I primary-care + Section M bill-recall (spec 4.6-4.8)
 SKIP_RULES = [
     # Section B — Respondent Profile
+    # Q5 ("which LGBTQIA+ group do you identify with?") only applies when Q4 = Yes.
+    # Q4 codes: 1 Yes / 2 No / 3 Not comfortable / 4 Don't know / 5 Refused — every
+    # non-Yes answer makes Q5 nonsensical, so skip Q5(+its other-specify) to Q6 unless
+    # Q4 = 1. (#518: Q4 = No was wrongly requiring Q5.) "<> 1" not "= 2" so the CAPI
+    # non-response codes 3/4/5 skip too, matching the printed form's "If No -> Q6".
+    ("Q4_LGBTQIA",           "Q4_LGBTQIA <> 1",             "Q6_CIVIL_STATUS"),
     ("Q7_IS_PWD",            "Q7_IS_PWD = 2",               "Q11_EDUCATION"),
-    ("Q9_PWD_CARD",          "Q9_PWD_CARD = 2",             "Q11_EDUCATION"),
+    # #598 (ASPSI/Carl, 2026-06-17 — go-with-ASPSI): Q8 "Would you like to specify the type
+    # of disability?" = No skips the rest of the disability block (Q9 PWD card + Q10 type) to
+    # Q11 — the respondent declined to give detail, so don't ask for the card or type. Making
+    # Q8 a skip SOURCE also takes it off the same screen as Q9 (the tester's other complaint).
+    # (Carl's call: Q8=No -> Q11, NOT the ticket's literal "Q8=Yes -> Q11", which would have
+    # reversed #523 and dropped the type for people who AGREED to specify it.)
+    ("Q8_SPECIFY_DISABILITY","Q8_SPECIFY_DISABILITY = 2",   "Q11_EDUCATION"),
+    # Q10 (disability type) appears only for PWDs who agreed to specify (Q8=Yes, guaranteed
+    # here) AND presented or declined a card (Q9=1 or Q9=2). #523 scenarios A (Q8Y,Q9Y) and
+    # C (Q8Y,Q9N) -> show Q10; Q9=3 (refused to present card) -> Q11. (Scenario B (Q8N,*) now
+    # exits earlier at the Q8=No rule above, so the Q9 gate no longer needs the Q8 term.)
+    ("Q9_PWD_CARD",          "Q9_PWD_CARD <> 1 and Q9_PWD_CARD <> 2", "Q11_EDUCATION"),
     ("Q14_IP_MEMBER",        "Q14_IP_MEMBER = 2",           "Q16_4PS"),
     # Section C roster — PhilHealth-registration detail
-    ("Q45_PHILHEALTH_REG",   "Q45_PHILHEALTH_REG = 2",      "Q48_NAME_FIRST"),
+    ("Q45_PHILHEALTH_REG",   "Q45_PHILHEALTH_REG = 2 or Q45_PHILHEALTH_REG = 55",      "Q48_NAME_FIRST"),  # #563: No(02) OR I-don't-know(55) skip Q46 (Q46 is Yes-only per spec)
     # Section G — Access to Medicines
     ("Q62_PURCHASE_FREQ",    "Q62_PURCHASE_FREQ = 5",       "Q69_GAMOT_HEARD"),   # Never -> skip Rx/where/travel
     ("Q69_GAMOT_HEARD",      "Q69_GAMOT_HEARD = 2",         "Q75_BRAND_GEN_KNOWS"),
-    ("Q72_GAMOT_OBTAINED",   "Q72_GAMOT_OBTAINED = 2",      "Q75_BRAND_GEN_KNOWS"),
+    # #575 (ASPSI, 2026-06-17 — go-with-ASPSI): Q72 "obtained meds via GAMOT?" = No skips
+    # only Q73 (the GAMOT meds list) but STILL asks Q74 "where did you get the rest" (you
+    # sourced them outside GAMOT). Was -> Q75 (skipped Q73+Q74); spec doc said Q75 but ASPSI
+    # confirmed Q74 is the intended target. Q74 -> Q75 chains on naturally afterwards.
+    ("Q72_GAMOT_OBTAINED",   "Q72_GAMOT_OBTAINED = 2",      "Q74_WHERE_REST"),
     ("Q75_BRAND_GEN_KNOWS",  "Q75_BRAND_GEN_KNOWS = 2",     "Q79_REG_SOURCE"),    # exit Section G
     # Section H — PhilHealth / Insurance
     ("Q81_REG_DIFFICULTY",   "Q81_REG_DIFFICULTY = 2",      "Q83_KNOWS_ASSIST"),
-    ("Q83_KNOWS_ASSIST",     "Q83_KNOWS_ASSIST = 2",        "Q85_BENEFITS_O01"),
+    ("Q83_KNOWS_ASSIST",     "Q83_KNOWS_ASSIST = 2",        "Q85_BENEFITS"),   # #529: Q85 is now a Check Box base (was _O01)
     ("Q86_PREMIUM_PAY",      "Q86_PREMIUM_PAY = 2",         "Q89_HAS_USUAL_FACILITY"),
     ("Q87_PREMIUM_DIFFICULT","Q87_PREMIUM_DIFFICULT = 2",   "Q89_HAS_USUAL_FACILITY"),
     # D-F awareness gates
@@ -486,11 +690,43 @@ SKIP_RULES = [
     ("Q57_BUCAS_HEARD",      "Q57_BUCAS_HEARD = 2",         "Q62_PURCHASE_FREQ"),
     ("Q60_BUCAS_ACCESSED",   "Q60_BUCAS_ACCESSED = 2",      "Q62_PURCHASE_FREQ"),
     # Section I primary-care routing
-    ("Q89_HAS_USUAL_FACILITY","Q89_HAS_USUAL_FACILITY = 2", "Q93_WHY_NOT_O01"),
-    ("Q90_IS_USUAL_FOR_GENERAL","Q90_IS_USUAL_FOR_GENERAL = 1","Q94_TRANSPORT_O01"),
+    ("Q89_HAS_USUAL_FACILITY","Q89_HAS_USUAL_FACILITY = 2", "Q93_WHY_NOT"),       # #529: Q93 is now a Check Box base (was _O01)
+    ("Q90_IS_USUAL_FOR_GENERAL","Q90_IS_USUAL_FOR_GENERAL = 1","Q94_TRANSPORT"),  # #529: Q94 is now a Check Box base (was _O01)
     ("Q97_KNOWS_BOOKING",    "Q97_KNOWS_BOOKING = 2",       "Q100_LEAVE_WORK_SCHOOL"),
+    # Section J — Health-Seeking Behavior (Q101-Q107). #544: Q105 "forgone care" = No
+    # means there was no forgone care, so Q106 "why did you forgo" is N/A -> skip it to
+    # Q107 (other actions). Spec (generate_dcf Section J): "Q105 No -> Q107 (bypass Q106)".
+    ("Q105_FORGONE_CARE",    "Q105_FORGONE_CARE = 2",       "Q107_OTHER_ACTIONS"),  # #584: Q107 is now a Check Box base (was _O01)
+    # Section K — Referrals (Q108-Q125). Q108/Q112 cluster/Q119/Q120 routing.
+    # Q108 (yes_no 1/2): No referral -> skip the ENTIRE Section K (Q109-Q125) to
+    # Section L NBB gate Q126. (#588: was falling through to Q109.)
+    ("Q108_REFERRED",        "Q108_REFERRED = 2",           "Q126_NBB_HEARD"),
+    # Q119 (yes_no 1/2): visit was NOT a PCF referral -> skip Q120 (PCP-knows, the
+    # Q119=Yes branch) straight to Q121 why-hospital. (#594: was falling to Q120.)
+    ("Q119_PCF_REFERRAL",    "Q119_PCF_REFERRAL = 2",       "Q121_WHY_HOSPITAL"),
+    # Q120 (yes_no_dk 1/2/3): only reached on the Q119=Yes branch. Q121 belongs to
+    # the Q119=No branch, so for EVERY Q120 answer skip Q121 -> Q122 (both branches
+    # reconverge at Q122). (#595: Yes was falling through to Q121.) Unconditional
+    # skip — no value test, so no dead-condition risk.
+    ("Q120_PCP_KNOWS",       "1 = 1",                       "Q122_PCP_DISCUSSED_PLACES"),
+    # Section L — NBB awareness (Q126-Q131). Q126 (yes_no_dk 1/2/3): not heard of NBB
+    # (No=2 OR I-don't-know=3) -> skip Q127 sources + Q128 understanding to Section M
+    # gate Q132. (#596: was falling through to Q127; IDK=3 also covered.)
+    ("Q126_NBB_HEARD",       "Q126_NBB_HEARD = 2 or Q126_NBB_HEARD = 3", "Q132_ZBB_HEARD"),
     # Section M bill-recall chain (#170), gated on Q129 confinement
-    ("Q129_HH_CONFINED",     "Q129_HH_CONFINED = 2",        "Q144_CEREALS_CONSUMED"),  # no confinement -> skip M -> Section N
+    # #625/#626 (ASPSI, 2026-06-17): Q129 (HH confined?) = No(2) OR Don't-know(3) -> Q132 (ZBB
+    # awareness is asked REGARDLESS of confinement per the printed form / spec §M note), NOT
+    # straight to Q144. Only the bill-recall tail (Q138-Q143) is confinement-dependent and is
+    # gated separately at Q138 (CUSTOM_VALIDATION). Was "= 2 -> Q144" (followed spec line 180,
+    # which contradicts the §M note; tester + note win). Q129=Yes(1) -> Q130 (NBB utilization).
+    ("Q129_HH_CONFINED",     "Q129_HH_CONFINED = 2 or Q129_HH_CONFINED = 3", "Q132_ZBB_HEARD"),
+    # Section M ZBB/MAIFIP awareness sub-blocks. #627: Q132 ZBB_HEARD (yes_no_dk 1/2/3)
+    # = No(2) OR Don't-know(3) -> skip ZBB sources/understanding/OOP (Q133-Q135) to Q136
+    # (spec §M line 190). #628: Q136 MAIFIP_HEARD = No/Don't-know -> skip Q137 sources to
+    # Q138 (spec line 192). Q133/Q134 already gated on Q132=Yes, Q137 on Q136=Yes, but the
+    # respondent-facing routing skip was missing so No/DK fell through to the source list.
+    ("Q132_ZBB_HEARD",       "Q132_ZBB_HEARD = 2 or Q132_ZBB_HEARD = 3",     "Q136_MAIFIP_HEARD"),
+    ("Q136_MAIFIP_HEARD",    "Q136_MAIFIP_HEARD = 2 or Q136_MAIFIP_HEARD = 3", "Q138_MOST_EXPENSIVE"),
     ("Q140_RECALL_BREAKDOWN","Q140_RECALL_BREAKDOWN = 2",   "Q142_RECALL_PAYMENT"),    # no breakdown -> skip Q141/Q141.1
     ("Q142_RECALL_PAYMENT",  "Q142_RECALL_PAYMENT = 2",     "Q144_CEREALS_CONSUMED"),  # no payment -> skip Q143 -> Section N
 ]
@@ -556,30 +792,116 @@ SUBTOTAL_PANELS = {
 }
 
 
-def subtotal_procs(items):
-    """Section N auto-computed subtotals (#9): subtotal = sum of its panel's
-    _PURCHASED_PHP + _INKIND_PHP items (by spec Q-number range), then protect()."""
+def _subtotal_members(sub, items):
+    """The _PURCHASED_PHP + _INKIND_PHP fields that feed a subtotal panel, by spec
+    Q-number range (ordered)."""
     import re as _re
-    procs = {}
+    lo, hi = SUBTOTAL_PANELS[sub]
     qnum = _re.compile(r"^Q(\d+)_")
-    for sub, (lo, hi) in SUBTOTAL_PANELS.items():
-        if sub not in items:
+    members = []
+    for n in sorted(items):
+        if not (n.endswith("_PURCHASED_PHP") or n.endswith("_INKIND_PHP")):
             continue
-        members = []
-        for n in sorted(items):
-            if not (n.endswith("_PURCHASED_PHP") or n.endswith("_INKIND_PHP")):
-                continue
-            m = qnum.match(n)
-            if m and lo <= int(m.group(1)) <= hi:
-                members.append(n)
+        m = qnum.match(n)
+        if m and lo <= int(m.group(1)) <= hi:
+            members.append(n)
+    return members
+
+
+def _subtotal_compute_body(sub, items, indent="  "):
+    """The accumulate + protect() statements for a Section N subtotal, ready to embed in
+    the FOLLOWER field's preproc (the question right after the subtotal — see #617).
+
+    #617 (root-caused at runtime 2026-06-17). Two CSPro facts force this shape:
+      1. A protect()ed field is SKIPPED WITHOUT running its preproc, so computing the
+         subtotal in its own preproc never ran -> it stayed `notappl` and its range check
+         HARD-ERRORED ("out of range - value is NOTAPPL"), blocking the interview.
+      2. In a DisplayTogether amount matrix the NOT-consumed items' amount-field gate
+         preprocs never run, so those amounts stay `notappl`; AND `if X = notappl then
+         X = 0` does NOT work in CSPro (notappl = notappl is falsy), so a coalesce can't
+         rescue them. A plain `sum(members)` therefore hits a notappl term and the whole
+         subtotal becomes notappl (wrong value, masked by the init=0 so it doesn't crash).
+
+    Robust compute: accumulate ONLY the items whose _CONSUMED = 1 (Yes). `_CONSUMED` is
+    always a valid 1/2 (never notappl), and a consumed item's amounts are always entered
+    (the amount box rejects blank), so no notappl ever enters the sum. Not-consumed items
+    contribute nothing — their notappl amounts are never referenced."""
+    members = _subtotal_members(sub, items)
+    if not members:
+        return None
+    # group the _PURCHASED_PHP / _INKIND_PHP amounts by their item base
+    by_base = {}
+    order = []
+    for m in members:
+        base = m[:-len("_PURCHASED_PHP")] if m.endswith("_PURCHASED_PHP") else m[:-len("_INKIND_PHP")]
+        if base not in by_base:
+            by_base[base] = []; order.append(base)
+        by_base[base].append(m)
+    lines = [f"{indent}{sub} = 0;   {{ #617: accumulate only CONSUMED items -> no notappl propagation }}"]
+    for base in order:
+        amts = by_base[base]
+        terms = " + ".join(amts)
+        consumed = f"{base}_CONSUMED"
+        if consumed in items:
+            lines.append(f"{indent}if {consumed} = 1 then {sub} = {sub} + {terms}; endif;")
+        else:
+            # no consumed gate for this item -> it's always asked, so always add it
+            lines.append(f"{indent}{sub} = {sub} + {terms};")
+    lines.append(f"{indent}protect({sub}, true);")
+    return "\n".join(lines)
+
+
+def subtotal_init_compute_procs(names, items):
+    """#617 (Critical, root-caused at runtime 2026-06-17): a protect()ed Section N
+    subtotal is range-checked the instant flow reaches it (on DisplayTogether block
+    exit), but CSEntry SKIPS the protected field WITHOUT executing its own preproc, so
+    it stayed `notappl` and HARD-ERRORED ("out of range - value is NOTAPPL"), blocking
+    the whole interview at Q157 (also Q177/Q182/Q185). Neither a combined nor an
+    own-screen layout helps (the protected field is never focused either way), and the
+    block-exit field is data-dependent (the last item's _CONSUMED when not consumed, its
+    _INKIND_PHP when consumed), so no single preceding-field proc reliably fires first.
+
+    Fix = two guaranteed-run sites per panel, both first-fields-of-a-block (their
+    preprocs always run on block entry):
+      * INIT the subtotal to 0 + protect in the panel's FIRST member's _CONSUMED preproc.
+        Runs on block entry, so the protected field is a valid 0 (never notappl) when the
+        block exits and validates it -> the blocking error can never fire.
+      * COMPUTE the real sum + protect in the FOLLOWER field's preproc (the question right
+        after the subtotal). Runs once the whole panel is done with every amount final,
+        regardless of which field was the block-exit field.
+    Adjacent panels share a field (e.g. the 6M-health first member IS the 12M-health
+    follower), so statements are accumulated per field and emitted as one preproc."""
+    import re as _re
+    qn = _re.compile(r"^Q(\d+)_")
+    pre = {}  # field -> [statement blocks], in emission order
+
+    def add(field, stmt):
+        pre.setdefault(field, []).append(stmt)
+
+    for sub, (lo, hi) in SUBTOTAL_PANELS.items():
+        if sub not in names:
+            continue
+        members = _subtotal_members(sub, items)
         if not members:
             continue
-        terms = "\n    + ".join(members)
-        procs[sub] = (
-            f"PROC {sub}\npreproc\n"
-            f"  {sub} =\n    {terms};\n"
-            f"  protect({sub}, true);"
-        )
+        # init at the panel's first member _CONSUMED (block entry)
+        first_consumed = next(
+            (n for n in names if n.endswith("_CONSUMED")
+             and qn.match(n) and int(qn.match(n).group(1)) == lo), None)
+        if first_consumed:
+            add(first_consumed,
+                f"  {sub} = 0;   {{ #617 init: protected subtotal must be valid (not notappl) when its block exits }}\n"
+                f"  protect({sub}, true);")
+        # real compute at the follower (field right after the subtotal)
+        idx = names.index(sub)
+        follower = names[idx + 1] if idx + 1 < len(names) else None
+        if follower:
+            body = _subtotal_compute_body(sub, items, indent="  ")
+            add(follower, f"  { '{' } #617 real {sub} sum, now that the panel is complete { '}' }\n{body}")
+
+    procs = {}
+    for field, blocks in pre.items():
+        procs[field] = f"PROC {field}\npreproc\n" + "\n".join(blocks)
     return procs
 
 
@@ -639,13 +961,27 @@ def main():
     names = dcf_item_names()
     parts = [HEADER, "", CONTROL_PROCS, "", ROSTER_PROCS, "", BILL_VALIDATION, "",
              EXTRA_PROCS, "", VALIDATION_PROCS, ""]
-    covered = {"MEMBER_LINE_NO", "Q34_RELATIONSHIP", "Q35_HAS_DISABILITY", "Q37_PWD_CARD",
+    covered = {"MEMBER_LINE_NO", "Q34_RELATIONSHIP", "Q35_HAS_DISABILITY",
+               "Q36_SPECIFY_DISABILITY", "Q37_PWD_CARD",  # #604: Q36 now has a bespoke skip PROC
                "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER_FORM", "Q47_HH_HAS_PRIVATE_INS",
                "Q141_1_NO_RECEIPT_AMT_PHP",
-               "Q76_BRAND_OR_GEN", "Q78_WHY_BRANDED_O01", "Q79_REG_SOURCE",  # EXTRA_PROCS
+               # #615: Q141_BILL_ITEMS is now a Check Box base whose 'Other expenses' (07)
+               # is NOT 99-coded, so it's not in CHECKBOX_COVERED. Mark its _OTHER_TXT
+               # covered so the generic other-specify auto-gen doesn't emit the invalid
+               # `if Q141_BILL_ITEMS <> 7` gate (alpha field vs numeric) — keep it a plain
+               # ungated free-text, exactly as it was under select_all.
+               "Q141_BILL_ITEMS_OTHER_TXT",
+               "Q1_IS_HH_HEAD",  # EXTRA_PROCS (#520 soft confirm)
+               "Q76_BRAND_OR_GEN", "Q79_REG_SOURCE",  # EXTRA_PROCS (Q78_WHY_BRANDED now a Check Box base, covered via CHECKBOX_COVERED)
+               "Q112_VISITED",  # EXTRA_PROCS (#590-593 Q112 referral-visit multi-branch)
                "Q2_BIRTH_MONTH", "Q2_BIRTH_YEAR", "Q2_1_AGE", "Q19_HH_SIZE_TOTAL",
                "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q32_AGE", "Q39_CIVIL_STATUS",
-               "Q18_INCOME_BRACKET"}  # VALIDATION_PROCS
+               "Q18_INCOME_BRACKET",  # VALIDATION_PROCS
+               # #529: the 17 select_all -> Check Box bases (+ their _OTHER_TXT) get
+               # bespoke PROCs from CHECKBOX_MULTISELECT_PROCS (in EXTRA_PROCS) — seed
+               # them into `covered` so the dcf-driven other-specify / select-all
+               # auto-gens never mis-fire on the alpha checkbox field or its gated text.
+               *CHECKBOX_COVERED}
 
     parts.append("{ ---- Skip logic: awareness / primary-care / bill-recall ---- }")
     for field, cond, target in SKIP_RULES:
@@ -675,12 +1011,15 @@ def main():
             continue
         covered.add(field); parts.append(proc); parts.append("")
 
-    # Section N auto-computed subtotals (#9).
-    st_procs = subtotal_procs(dcf_items_map())
-    parts.append("{ ---- Section N subtotals — auto-compute + protect (#9, spec §4.9) ---- }")
+    # Section N auto-computed subtotals (#9 / #617): init=0 at each panel's first-member
+    # _CONSUMED (so the protected field is never notappl when validated) + real sum at the
+    # follower field (see subtotal_init_compute_procs). The protected subtotal itself gets
+    # NO proc — CSEntry skips it without running any preproc.
+    st_procs = subtotal_init_compute_procs(names, dcf_items_map())
+    parts.append("{ ---- Section N subtotals — init + auto-compute + protect (#9/#617, spec §4.9) ---- }")
     for field, proc in sorted(st_procs.items()):
         if field in covered:
-            continue
+            raise SystemExit(f"#617 subtotal proc collides with an existing proc: {field}")
         covered.add(field); parts.append(proc); parts.append("")
 
     # Auto-derived select-all validation: >=1 option ticked.
@@ -718,7 +1057,7 @@ def main():
     if os_skipped:
         print(f"  other-specify SKIPPED (manual review — no resolvable trigger): {', '.join(os_skipped)}")
     print(f"  select-all validation: {sa_emitted} groups got a '>=1 ticked' check (of {len(sa_bases)} detected)")
-    print(f"  Section N subtotals: {len(st_procs)} auto-compute+protect procs")
+    print(f"  Section N subtotals: {len(st_procs)} init/compute procs (#617 init=0 + follower sum)")
     print(f"  range/cross-field: {rng_emitted} procs")
     print("  NEXT: create the F4 .ent in Designer (input dcf + generated.fmf), compile,")
     print("  then verify the ROSTER + expenditure flow in CSEntry (riskiest untested part).")

@@ -79,35 +79,87 @@ def restore(dd):
     time.sleep(0.3)
 
 
+def _get_picker():
+    """The 'Add files to deployment package' modal, race-safe (windows can vanish
+    mid-enumeration)."""
+    try:
+        for w in Desktop(backend="win32").windows():
+            try:
+                if w.is_visible() and (w.window_text() or "") == "Add files to deployment package":
+                    return w
+            except Exception:
+                continue
+    except Exception:
+        return None
+    return None
+
+
+def _picker_filename_edit(pk):
+    """The file-name Edit inside the open-file dialog (prefer the one in the combo)."""
+    edits = [c for c in pk.descendants() if c.friendly_class_name() == "Edit"]
+    for e in edits:
+        try:
+            if "Combo" in e.parent().friendly_class_name() and e.is_enabled():
+                return e
+        except Exception:
+            pass
+    for e in edits:
+        try:
+            if e.is_visible() and e.is_enabled():
+                return e
+        except Exception:
+            pass
+    return None
+
+
 def add_files(dd, base):
+    """Add the PSGC external dicts to the package. MESSAGE-based throughout (BM_CLICK +
+    WM_SETTEXT), so it works even when another app (e.g. a Zoom meeting toolbar/overlay)
+    sits over the dialog and swallows physical clicks — the failure mode that silently
+    produced a PSGC-less package on 2026-06-17. Falls back to a coord click only if the
+    button can't be resolved."""
     added = []
     for fn in PSGC:
         src = base / fn
         if not src.exists():
             print(f"   ! missing {src} -- skipped"); continue
-        b = btn(dd, "Add files...")
-        if not b:
-            print("   ! no 'Add files...' button"); return added
-        b.click_input(); time.sleep(1.2)
-        pk = [w for w in Desktop(backend="win32").windows()
-              if (w.window_text() or "") == "Add files to deployment package"]
+        pk = _get_picker()
+        if not pk:
+            b = btn(dd, "Add files...")
+            if not b:
+                print("   ! no 'Add files...' button"); return added
+            try:
+                b.click()           # BM_CLICK message — overlay/focus-proof
+            except Exception:
+                b.click_input()     # last-resort physical
+            time.sleep(1.4)
+            pk = _get_picker()
         if not pk:
             print(f"   ! no file picker for {fn}"); return added
-        p = pk[0]; p.set_focus(); time.sleep(0.3)
-        # File name field: proven relative-coord click (battle-tested for THIS picker),
-        # then full-path type + Enter. (Alt+N is flaky across Win versions.)
+        e = _picker_filename_edit(pk)
+        if not e:
+            print(f"   ! no file-name field in picker for {fn}"); return added
+        e.set_edit_text(str(src)); time.sleep(0.3)   # WM_SETTEXT
+        ob = None
+        for c in pk.descendants():
+            try:
+                if c.friendly_class_name() == "Button" and (c.window_text() or "").strip().strip("&").lower() == "open":
+                    ob = c; break
+            except Exception:
+                pass
         try:
-            p.click_input(coords=(550, 578))
+            (ob.click() if ob else e.type_keys("{ENTER}"))
         except Exception:
-            pass
-        time.sleep(0.2)
-        keyboard.send_keys("^a{BACKSPACE}")
-        keyboard.send_keys(str(src), with_spaces=True, pause=0.0)
-        time.sleep(0.3)
-        keyboard.send_keys("{ENTER}")
-        time.sleep(1.0)
+            e.type_keys("{ENTER}")
+        for _ in range(14):
+            if not _get_picker():
+                break
+            time.sleep(0.3)
+        if _get_picker():
+            print(f"   ! picker did not close for {fn}"); return added
         added.append(fn)
         print(f"   + {fn}")
+        time.sleep(0.3)
     return added
 
 
@@ -182,7 +234,10 @@ def deploy_one(inst, do_deploy, skip_add=False):
     db = btn(dd, "Deploy")
     if not db:
         print("   ! no Deploy button"); return False
-    db.click_input()
+    try:
+        db.click()            # BM_CLICK message — overlay/focus-proof (Zoom-overlay safe)
+    except Exception:
+        db.click_input()      # last-resort physical
     print("   clicked Deploy; capturing result ...")
     for i in range(6):
         time.sleep(4)

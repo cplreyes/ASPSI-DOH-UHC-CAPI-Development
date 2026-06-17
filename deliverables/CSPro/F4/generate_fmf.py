@@ -193,6 +193,9 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name, r
         is_alpha = it.get("contentType") == "alpha"
         field_x2 = FIELD_RADIO_X2 if coded else FIELD_TEXTBOX_X2
         capture = "RadioButton" if coded else "TextBox"
+        if it["name"] in _CHECKBOX_FIELDS:   # alpha + value set rendered as a tick-list (#529)
+            capture = "CheckBox"
+            field_x2 = FIELD_RADIO_X2
         text = (it["labels"][0]["text"] if it.get("labels") else it["name"]).replace("\n", " ").replace("\r", " ")
         lines.append("[Field]")
         lines.append(f"Name={it['name']}")
@@ -237,6 +240,24 @@ _NO_AUTOGROUP_RECORDS = {
     "FIELD_CONTROL", "HOUSEHOLD_GEO_ID", "REC_CASE_VERIFICATION", "C_HOUSEHOLD_ROSTER",
 }
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
+# Single alpha fields rendered as a CSPro Check Box (one-question multi-select tick-list).
+# These get DataCaptureType=CheckBox and their own DisplayTogether screen (with any trailing
+# gated _OTHER_TXT free-text on its own screen). 2026-06-16 (#529): the 17 'Household Survey'
+# select_all -> Check Box conversions (mirrors F3's _CHECKBOX_FIELDS / F1 Q49/Q50/Q53/Q58).
+_CHECKBOX_FIELDS = {
+    "Q52_UHC_SOURCE", "Q53_UHC_UNDERSTAND", "Q55_YAKAP_SOURCE", "Q56_YAKAP_UNDERSTAND",
+    "Q58_BUCAS_SOURCE", "Q59_BUCAS_UNDERSTAND", "Q61_BUCAS_SERVICES",
+    "Q65_CONDITIONS", "Q66_WHERE_BUY", "Q85_BENEFITS", "Q91_WHY_WENT",
+    "Q93_WHY_NOT", "Q94_TRANSPORT", "Q113_WHY_NOT", "Q121_WHY_HOSPITAL",
+    "Q127_NBB_SOURCE", "Q128_NBB_UNDERSTAND", "Q133_ZBB_SOURCE", "Q134_ZBB_UNDERSTAND",
+    "Q137_MAIFIP_SOURCE",
+    "Q70_GAMOT_SOURCE", "Q71_GAMOT_UNDERSTAND",   # #573/#574
+    # #577-585/#588/#590-591: 10 more select_all -> Check Box (tick-all-that-apply)
+    "Q74_WHERE_REST", "Q77_WHY_GENERIC", "Q78_WHY_BRANDED", "Q82_DIFFICULTY_REASONS",
+    "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
+    "Q107_OTHER_ACTIONS", "Q109_TYPE",
+    "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill
+}
 MAX_CHUNK = 5
 _RUN_BLOCK_CAP = 22     # a real multi-select up to ~22 options is one checklist screen;
                         # an amount matrix (run has _AMT siblings) or a longer run is chunked.
@@ -324,8 +345,23 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(), gate
         i = 0
         while i < len(items):
             nm = items[i]["name"]
+            if nm.endswith("_SUBTOTAL_TOTAL_PHP"):
+                # #617 (Critical): a protect()ed computed subtotal (Q157/Q177/Q182/Q185) must
+                # NOT sit in a DisplayTogether block. In a DG block CSEntry only lets you focus
+                # ENTERABLE fields, so a protected member is never visited -> its compute preproc
+                # never runs -> it stays notappl -> CSEntry hard-errors "out of range - value is
+                # NOTAPPL" on block exit, blocking the whole interview at Q157. A 1-field DG block
+                # whose only field is protected has nothing enterable either, so own-screen-as-DG
+                # does not help. Leave it UNBLOCKED -> it renders as a standalone linear [Field];
+                # CSPro's normal field flow DOES pass through protected fields (runs preproc, shows
+                # the value read-only, auto-advances), so the total is computed before its range is
+                # validated. The chunk-break below keeps neighbours off the same screen as it.
+                i += 1
+                continue
             ms = _MULTISELECT_RE.match(nm)
-            if _is_gated_text(nm, gated):                      # gated specify text -> its OWN screen
+            if _is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS:
+                # gated specify text / Check Box (#529) -> its OWN screen so the noinput gate
+                # hides it when not applicable.
                 emit([items[i]], (_qnum(items[i]) and f"Q{_qnum(items[i])}") or nm)
                 i += 1
             elif ms and not nm.endswith("_TXT"):              # multi-select OPTION run (matrix-aware)
@@ -345,8 +381,9 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(), gate
                 while i < len(items) and len(chunk) < MAX_CHUNK:
                     nn = items[i]["name"]
                     mm = _MULTISELECT_RE.match(nn)
-                    if (mm and not nn.endswith("_TXT")) or _is_gated_text(nn, gated):
-                        break                                  # stop before multi-select / gated text
+                    if (mm and not nn.endswith("_TXT")) or nn in _CHECKBOX_FIELDS or _is_gated_text(nn, gated) \
+                            or nn.endswith("_SUBTOTAL_TOTAL_PHP"):
+                        break                                  # stop before multi-select / checkbox (#529) / gated text / #617 subtotal
                     if chunk and nn in targets:
                         break                                  # skip TARGET starts a fresh screen
                     chunk.append(items[i]); i += 1

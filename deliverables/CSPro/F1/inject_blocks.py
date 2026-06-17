@@ -57,7 +57,33 @@ _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
 # tick-list renders alone (its trailing _OTHER_TXT is gated -> already isolated by
 # _is_gated_text). GH #377/#378/#379 Check Box redesign of Q49/Q50/Q53/Q58.
 _CHECKBOX_FIELDS = {"Q49_QUALITY_CHALL", "Q50_ACCESS_CHALL",
-                    "Q53_YK_PACKAGE", "Q58_PERF_INDICATORS"}
+                    "Q53_YK_PACKAGE", "Q58_PERF_INDICATORS",
+                    # #529 multi-select conversion
+                    "Q64_APPLY_REASON", "Q75_ENROLL_RESPONSIBILITY",
+                    "Q76_ENROLL_INITIATIVES", "Q78_ENROLL_CHALL_LIST",
+                    "Q79_NOT_ACCRED_REASON", "Q94_CHARGE_ADDL_CAP_REASONS",
+                    "Q96_NOT_RECEIVED_REASONS", "Q98_PAYMENT_CHALL_LIST",
+                    "Q99_EXPAND_NEXT",
+                    "Q65_ACCRED_DIFFICULT", "Q66_WHY_DIFF_PREVENTIVE", "Q67_WHY_DIFF_LAB", "Q68_WHY_DIFF_MEDS", "Q69_WHY_DIFF_INFRA", "Q70_WHY_DIFF_EQUIPMENT", "Q71_WHY_DIFF_HR", "Q72_WHY_DIFF_HIS", "Q73_WHY_DIFF_DOCS", "Q74_WHY_DIFF_DOH_LIC",
+                    # #542 Section E (BUCAS / GAMOT)
+                    "Q104_BUCAS_SERVICES", "Q105_BUCAS_FACTORS", "Q111_GAMOT_FACTORS",
+                    # Section E/G DO-NOT-READ select-all -> Check Box
+                    "Q117_ADDR_STOCKOUT_HOW", "Q151_LGU_NOT_SAT_WHY", "Q162_NOT_SATISFIED_WHY",
+                    # #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box.
+                    # (#586: Q144 re-added as Check Box per PAPI; Q160 stays single.)
+                    "Q144_DIFFICULT_REASON",
+                    "Q137_NBB_BARRIERS", "Q140_ZBB_BARRIERS", "Q146_MALASAKIT_WHY",
+                    "Q147_NO_MALASAKIT_WHY", "Q149_LGU_SUPPORT_FORMS", "Q155_SEND_REFERRAL_HOW",
+                    "Q156_REFERRAL_FORM_TYPE", "Q159_RECEIVE_REFERRAL_HOW", "Q163_HR_CHALL",
+                    "Q165_PD_DOCTORS", "Q166_PD_NURSES",
+                    # #567 parts 1 & 2: Section F DOH-licensing why-difficult battery
+                    # (Q121 gate + Q122-134 per-topic "why"), select_all -> Check Box.
+                    "Q121_DOH_LIC_DIFFICULT",
+                    "Q122_WHY_DIFF_PT_RIGHTS", "Q123_WHY_DIFF_PT_CARE", "Q124_WHY_DIFF_LEADERSHIP",
+                    "Q125_WHY_DIFF_HRM", "Q126_WHY_DIFF_INFO_MGMT", "Q127_WHY_DIFF_SAFE",
+                    "Q128_WHY_DIFF_PERF", "Q129_WHY_DIFF_PHYS_PLANT", "Q130_WHY_DIFF_PRICE_INFO",
+                    "Q131_WHY_DIFF_EQUIPMENT", "Q132_WHY_DIFF_NAT_LAWS", "Q133_WHY_DIFF_EMERG_CART",
+                    "Q134_WHY_DIFF_ADDONS"}
 
 
 def _is_gated_text(name, noinput_gated):

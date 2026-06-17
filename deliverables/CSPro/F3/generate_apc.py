@@ -55,7 +55,12 @@ CUSTOM_VALIDATION = [
      "  if Q106_DAYS > 90 then\n"
      "    errmsg(\"Length of stay (%d days) is unusually long — confirm.\", Q106_DAYS);\n  endif;\n"
      "  if Q106_NIGHTS + Q106_DAYS < 1 then\n"
-     "    errmsg(\"A confinement must be at least 1 day (nights + days).\");\n    reenter;\n  endif;"),
+     "    errmsg(\"A confinement must be at least 1 day (nights + days).\");\n    reenter;\n  endif;\n"
+     "  { #554: nights/days pair sanity — neither can be 0 while the other is > 1 }\n"
+     "  if Q106_DAYS > 1 and Q106_NIGHTS = 0 then\n"
+     "    errmsg(\"%d day(s) of stay but 0 nights — nights cannot be 0 when days is greater than 1. Please correct.\", Q106_DAYS);\n    reenter;\n  endif;\n"
+     "  if Q106_NIGHTS > 1 and Q106_DAYS = 0 then\n"
+     "    errmsg(\"%d night(s) of stay but 0 days — days cannot be 0 when nights is greater than 1. Please correct.\", Q106_NIGHTS);\n    reenter;\n  endif;"),
     ("DATE_FINAL_VISIT",
      "PROC DATE_FINAL_VISIT\npostproc\n"
      "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
@@ -100,9 +105,12 @@ SOFT_CROSS = [
      "  if (Q16_EMPLOYMENT = 4 or Q16_EMPLOYMENT = 5) and Q17_INCOME_SOURCE >= 1 and Q17_INCOME_SOURCE <= 5 then\n"
      "    errmsg(\"Q16 = unemployed but Q17 reports a paid-work income source — confirm.\");\n  endif;"),
     ("Q29_SEC_CLASS",
+     # #631: re-mapped to the new 11-band income value set, preserving the original peso
+     # intent (low ~under 100k; high ~100k+). SOFT confirm only. ASPSI may recalibrate the
+     # socio-economic-class income thresholds against the updated brackets.
      "  if Q29_SEC_CLASS = 1 and Q18_INCOME_BRACKET >= 1 and Q18_INCOME_BRACKET <= 2 then\n"
      "    errmsg(\"Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.\");\n  endif;\n"
-     "  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 4 then\n"
+     "  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 then\n"
      "    errmsg(\"Q29 = socio-economic Class D/E but income is in a high bracket — confirm.\");\n  endif;"),
     ("Q115_FINAL_CASH",
      "  if Q107_PAY_01_AMT > 0 and (Q115_FINAL_CASH < Q107_PAY_01_AMT * 0.9\n"
@@ -457,6 +465,18 @@ postproc
     reenter;
   endif;
 
+{ ---- #558 (R4): Q114 (why no PhilHealth) gate ---- }
+{ Spec 3.x — Q114 is asked ONLY when PhilHealth was NOT availed in Q113. When the
+  PhilHealth payment row (Q113_PAY_08) = Yes, the why-not-availed reasons block is
+  moot: skip the whole Q114 select-all and go straight to the Q114.1 out-of-bill
+  amount matrix (Q1141_1). Gate sits on Q114's first option so the entire group +
+  its Other-specify box are bypassed (their postprocs never fire). }
+PROC Q114_NO_PH_O01
+preproc
+  if Q113_PAY_08 = 1 then
+    skip to Q1141_1;
+  endif;
+
 { ---- Multi-branch routing (spec 2) ---- }
 { #418/#419 (R4): Q63 usual-facility block. Spec 3.6 — Q64 (facility name) and Q66-Q70
   are enabled when Q63=Yes; Q65 (why-no-usual) is enabled when Q63=No. The old logic was
@@ -466,7 +486,7 @@ postproc
     Q63=No(2)  -> skip Q64 -> Q65 reasons -> (Q66 preproc) skip Q66-Q70 -> Q71 }
 PROC Q63_HAS_USUAL_FACILITY
 postproc
-  if Q63_HAS_USUAL_FACILITY = 2 then  skip to Q65_WHY_NO_USUAL_O01; endif;  { No -> reasons-why-none (skip Q64) }
+  if Q63_HAS_USUAL_FACILITY = 2 then  skip to Q65_WHY_NO_USUAL; endif;  { No -> reasons-why-none (skip Q64). #529: Q65 is now the Check Box base (was _O01) }
 
 PROC Q64_FACILITY_NAME
 postproc
@@ -495,12 +515,9 @@ postproc
   if Q159_BRAND_GEN_BOUGHT = 4 then  skip to Q162_REFERRED;        endif;  { Don't know diff -> exit K }
   if Q159_BRAND_GEN_BOUGHT = 5 then  skip to Q162_REFERRED;        endif;  { #501: N/A -> exit K to Section L start (Q162). Was Q164 (sanity #7); Q164 is a Q162=Yes follow-up, so the source's K->Q164 jump landed on an orphaned question. Tester (ASPSI) confirmed Q162. }
 
-{ ---- Section D: non-members skip the benefits/premium block (Q46-Q50) ---- }
-PROC Q46_BENEFITS_O01
-preproc
-  if Q38_PHILHEALTH_REG <> 1 then   { not a PhilHealth member -> skip benefits/packages/premiums }
-    skip to Q51_OTHER_INSURANCE;
-  endif;
+{ ---- Section D: non-members skip the benefits/premium block (Q46-Q50). #529: Q46 is now
+  a Check Box field — this gate moved into the Q46_BENEFITS checkbox PROC's `gate` param
+  (CHECKBOX_CONVERT below); the old PROC Q46_BENEFITS_O01 field no longer exists. ---- }
 
 { ---- R4 sweep enabled-when GATES (#402 / #415 / #417) ---- }
 PROC Q45_CATEGORY
@@ -612,10 +629,9 @@ postproc
   skip to Q172_PCP_REFERRAL;
 
 { #511: Q177 'why hospital' is enabled only when Q172 = No (Q172 = 2 skips Q173-Q176 to Q177).
-  The Q172 = Yes path falls through Q173-Q176 into Q177 — gate it out to Q178. }
-PROC Q177_WHY_HOSPITAL_O01
-preproc
-  if Q172_PCP_REFERRAL = 1 then  skip to Q178_SAT_REFERRAL; endif;
+  The Q172 = Yes path falls through Q173-Q176 into Q177 — gate it out to Q178. #529: Q177 is
+  now a Check Box field — this gate moved into the Q177_WHY_HOSPITAL checkbox PROC's `gate`
+  param (CHECKBOX_CONVERT below); the old PROC Q177_WHY_HOSPITAL_O01 field no longer exists. }
 
 { ---- Q148 Check Box multi-select (R4 redesign 2026-06-12) — one alpha field of
   concatenated 2-digit condition codes (CSEntry Check Box). 'Other'=99 / 'No condition'=19
@@ -653,6 +669,98 @@ preproc
   endif;
 """
 
+
+# --- #529 multi-select conversion: the 13 F3 'Patient Survey' select_all bases that
+# became single Check Box fields (mirrors F1 generate_apc.py's CHECKBOX_CONVERT_A,
+# and the hand-written F3 Q148_CONDITIONS in EXTRA_PROCS above). Each base gets a
+# select->=1 validation, an optional exclusivity soft-warn (the standalone option coded
+# 90 should stand alone), an optional preproc gate, and (when present) an 'Other (specify)'
+# text gate on pos("99", base). Codes are from generate_dcf._cb_codes: real options 01..,
+# exclusive 'I don't know'/'None' -> 90, 'Other (specify)' -> 99. (base, has_other,
+# exclusive, preproc_gate). Q148 stays hand-written in EXTRA_PROCS (not in this table).
+CHECKBOX_BASES = {
+    "Q36_UHC_SOURCE", "Q37_UHC_UNDERSTAND", "Q46_BENEFITS", "Q65_WHY_NO_USUAL",
+    "Q67_WHY_THIS_FACILITY", "Q76_KON_UNDERSTAND", "Q101_BUCAS_UNDERSTAND",
+    "Q117_NBB_SOURCE", "Q118_NBB_UNDERSTAND", "Q120_ZBB_SOURCE", "Q121_ZBB_UNDERSTAND",
+    "Q171_WHY_NOT", "Q177_WHY_HOSPITAL", "Q125_MAIFIP_SOURCE",   # #560 (Marriz confirmed Q125 not-read-aloud)
+    "Q148_CONDITIONS",   # hand-written in EXTRA_PROCS, but a checkbox base for exclusion logic
+}
+
+CHECKBOX_CONVERT = [
+    # base                       has_other  exclusive  preproc_gate
+    ("Q36_UHC_SOURCE",           True,  True,  None),   # 'I don't know' (90) exclusive; 'Other (Specify)' (99)
+    ("Q37_UHC_UNDERSTAND",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    # Q46 inherits the non-member gate that used to live on Q46_BENEFITS_O01 (Section D).
+    ("Q46_BENEFITS",             True,  True,
+     "  if Q38_PHILHEALTH_REG <> 1 then   { #529: non-member -> skip the benefits block (was PROC Q46_BENEFITS_O01) }\n"
+     "    skip to Q51_OTHER_INSURANCE;\n  endif;"),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q65_WHY_NO_USUAL",         True,  True,  None),   # 'I don't know' (90) exclusive — NOT 'I don't know where to go for care' (05); 'Other (Specify)' (99)
+    ("Q67_WHY_THIS_FACILITY",    True,  False, None),   # no None/IDK option; 'Other (Specify)' (99)
+    ("Q76_KON_UNDERSTAND",       True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q101_BUCAS_UNDERSTAND",    True,  False, None),   # no None/IDK option; 'Other (specify)' (99)
+    ("Q117_NBB_SOURCE",          True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q118_NBB_UNDERSTAND",      True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q125_MAIFIP_SOURCE",       True,  True,  None),   # #560 SOURCE_8: 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q120_ZBB_SOURCE",          True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q121_ZBB_UNDERSTAND",      True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
+    ("Q171_WHY_NOT",             True,  False, None),   # no None/IDK option — 'Don't know how to get to facility' (06) is substantive; 'Other (Specify)' (99)
+    # Q177 inherits the not-referral gate that used to live on Q177_WHY_HOSPITAL_O01 (Section L).
+    ("Q177_WHY_HOSPITAL",        True,  True,
+     "  if Q172_PCP_REFERRAL = 1 then   { #529: was-a-referral -> skip why-hospital (was PROC Q177_WHY_HOSPITAL_O01) }\n"
+     "    skip to Q178_SAT_REFERRAL;\n  endif;"),   # 'I don't know' (90); 'Other (Specify)' (99)
+]
+
+
+def _gen_checkbox_proc(base, has_other, exclusive, gate=None):
+    """Emit the bespoke PROC(s) for one converted Check Box base — select->=1 (hard),
+    an optional exclusivity soft-warn (the 90-coded standalone option should stand alone),
+    an optional preproc gate, and (when present) the 'Other (specify)' text gate on
+    pos("99", base). Mirrors F1 generate_apc._gen_checkbox_proc / the F3 Q148 hand-write."""
+    qn = re.match(r"Q(\d+)", base).group(1)
+    body = [f"PROC {base}"]
+    if gate:
+        body += ["preproc", gate]
+    body += ["postproc",
+             f"  if length(strip({base})) = 0 then",
+             f'    errmsg("Select at least one option for Q{qn} before continuing.");',
+             "    reenter;", "  endif;"]
+    if exclusive:
+        body += [f'  if pos("90", {base}) > 0 and length(strip({base})) > 2 then',
+                 f'    errmsg("Q{qn}: an exclusive option (None / I don\'t know) should be the '
+                 f'only choice - please review the options ticked.");',
+                 "  endif;"]
+    procs = {base: "\n".join(body)}
+    if has_other:
+        procs[f"{base}_OTHER_TXT"] = (
+            f"PROC {base}_OTHER_TXT\npreproc\n"
+            f'  if pos("99", {base}) = 0 then\n'
+            f'    {base}_OTHER_TXT = "";   {{ gated: \'Other (specify)\' not ticked -> not enterable }}\n'
+            f"    noinput;\n  endif;\npostproc\n"
+            f'  if pos("99", {base}) > 0 and length(strip({base}_OTHER_TXT)) = 0 then\n'
+            f'    errmsg("\'Other (specify)\' was ticked for Q{qn} - please specify.");\n'
+            "    reenter;\n  endif;"
+        )
+    return procs
+
+
+CHECKBOX_MULTISELECT_PROCS = {}
+for _b, _o, _x, _g in CHECKBOX_CONVERT:
+    CHECKBOX_MULTISELECT_PROCS.update(_gen_checkbox_proc(_b, _o, _x, _g))
+
+# Append the generated Check Box PROCs to EXTRA_PROCS so they emit alongside the
+# hand-written Q148 block and are seeded into `covered` (via CHECKBOX_COVERED).
+EXTRA_PROCS = (EXTRA_PROCS.rstrip("\n")
+               + "\n\n{ ---- #529: select_all -> Check Box conversions (13 questions) "
+                 "— config-driven from CHECKBOX_CONVERT ---- }\n"
+               + "\n\n".join(CHECKBOX_MULTISELECT_PROCS[k]
+                             for k in sorted(CHECKBOX_MULTISELECT_PROCS))
+               + "\n")
+
+# Every field name owned by a Check Box bespoke PROC (the 13 bases + their _OTHER_TXT)
+# — seeded into `covered` so the dcf-driven other-specify / select-all auto-gens skip them.
+CHECKBOX_COVERED = set(CHECKBOX_MULTISELECT_PROCS)
+
+
 # Validations (spec 3.3 demographics + household-composition consistency).
 VALIDATION_PROCS = """\
 { ---- Validations: demographics + household composition (spec 3.3) ---- }
@@ -684,15 +792,20 @@ postproc
 
 PROC Q18_INCOME_BRACKET
 postproc
-  { bracket must contain Q18_INCOME_AMOUNT (spec 3.3 bracket table) }
+  { bracket must contain Q18_INCOME_AMOUNT — #631: 11 contiguous 50k bands }
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;
-  if Q18_INCOME_BRACKET = 1 and a < 40000 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 2 and a >= 40000 and a <= 59999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 3 and a >= 60000 and a <= 99999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 4 and a >= 100000 and a <= 249999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 5 and a >= 250000 and a <= 499999 then ok = 1; endif;
-  if Q18_INCOME_BRACKET = 6 and a >= 500000 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 1  and a < 50000 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 2  and a >= 50000  and a <= 99999  then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 3  and a >= 100000 and a <= 149999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 4  and a >= 150000 and a <= 199999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 5  and a >= 200000 and a <= 249999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 6  and a >= 250000 and a <= 299999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 7  and a >= 300000 and a <= 349999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 8  and a >= 350000 and a <= 399999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 9  and a >= 400000 and a <= 449999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 10 and a >= 450000 and a <= 499999 then ok = 1; endif;
+  if Q18_INCOME_BRACKET = 11 and a >= 500000 then ok = 1; endif;
   if ok = 0 then
     errmsg("Income bracket does not match the reported amount (%d PHP/month). Reconcile.", a);
     reenter;
@@ -765,8 +878,8 @@ SKIP_RULES = [
     ("Q152_GAMOT_HEARD",     "Q152_GAMOT_HEARD = 2",         "Q158_BRAND_GEN_KNOW"),
     ("Q158_BRAND_GEN_KNOW",  "Q158_BRAND_GEN_KNOW = 2",      "Q162_REFERRED"),
     # Section L — Referrals
-    ("Q169_VISITED",         "Q169_VISITED in 2,3",          "Q171_WHY_NOT_O01"),
-    ("Q172_PCP_REFERRAL",    "Q172_PCP_REFERRAL = 2",        "Q177_WHY_HOSPITAL_O01"),
+    ("Q169_VISITED",         "Q169_VISITED in 2,3",          "Q171_WHY_NOT"),        # #529: Q171 is now the Check Box base (was _O01)
+    ("Q172_PCP_REFERRAL",    "Q172_PCP_REFERRAL = 2",        "Q177_WHY_HOSPITAL"),   # #529: Q177 is now the Check Box base (was _O01)
     # Section G — Outpatient Care
     ("Q89_ADVISED_ADMIT",  "Q89_ADVISED_ADMIT = 1",                       "Q91_USUAL_OUTPATIENT"),  # Yes -> Q91 (Q90 = why-not-confined)
     # Q93_LABS_O17 'None' routing now in EXTRA_PROCS (exclusivity warn must precede the skip, #448).
@@ -853,7 +966,7 @@ def main():
              VALIDATION_PROCS, ""]
     covered = {"Q88_WHY_VISIT", "Q105_REASON",                    # branching PROCs
                "Q63_HAS_USUAL_FACILITY", "Q77_KON_REGISTERED",
-               "Q159_BRAND_GEN_BOUGHT", "Q46_BENEFITS_O01", "Q162_REFERRED",  # EXTRA_PROCS
+               "Q159_BRAND_GEN_BOUGHT", "Q162_REFERRED",  # EXTRA_PROCS (#529: Q46_BENEFITS_O01 gone — Q46 is now a Check Box, gate folded into its checkbox PROC)
                "Q82_KON_WHY_NOT_REG_O01",  # EXTRA_PROCS (#389 not-registered gate)
                "Q64_FACILITY_NAME", "Q66_SAME_AS_USUAL",   # EXTRA_PROCS (#418/#419 Q63 block)
                "Q45_CATEGORY", "Q60_SCHED_TELECON_OK", "Q62_CONSULT_TELECON_OK",  # EXTRA_PROCS (#402/#415/#417 gates)
@@ -862,9 +975,15 @@ def main():
                "Q122_ZBB_INFORMED", "Q126_MAIFIP_AVAILED",   # EXTRA_PROCS (#476/#479 confinement gates)
                "Q148_CONDITIONS", "Q148_CONDITIONS_OTHER_TXT", "Q148_MEDICINES_TXT",  # EXTRA_PROCS (Q148 Check Box)
                "Q147_MEDS_LIST", "Q155_GAMOT_GOT_MEDS", "Q156_GAMOT_MEDS_LIST",   # EXTRA_PROCS (Wave 4 #490/#498)
-               "Q161_WHY_BRANDED_O01", "Q170_FOLLOWUP", "Q177_WHY_HOSPITAL_O01",  # EXTRA_PROCS (Wave 4 #503/#508/#511)
+               "Q161_WHY_BRANDED_O01", "Q170_FOLLOWUP",  # EXTRA_PROCS (Wave 4 #503/#508/#511; #529: Q177_WHY_HOSPITAL_O01 gone — gate folded into its checkbox PROC)
+               "Q114_NO_PH_O01",   # EXTRA_PROCS (#558 Q113_PAY_08=Yes -> skip Q114)
                "Q5_BIRTH_MONTH", "Q5_BIRTH_YEAR", "Q6_AGE", "Q18_INCOME_BRACKET",
-               "Q19_HH_SIZE", "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q28_WASHER"}  # VALIDATION_PROCS
+               "Q19_HH_SIZE", "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q28_WASHER",  # VALIDATION_PROCS
+               # #529: the 13 select_all -> Check Box bases (+ their _OTHER_TXT) get
+               # bespoke PROCs from CHECKBOX_MULTISELECT_PROCS (added below) — seed them
+               # into `covered` so the dcf-driven other-specify / select-all auto-gens
+               # never mis-fire on the alpha checkbox field or its gated text.
+               *CHECKBOX_COVERED}
 
     parts.append("{ ---- Skip logic (spec 2) ---- }")
     for field, cond, target in SKIP_RULES:
@@ -914,6 +1033,35 @@ def main():
         if field in covered:
             continue
         covered.add(field); parts.append(proc); parts.append(""); am_emitted += 1
+
+    # Payment-matrix '>=1 row ticked' (#555/#556/#557). These three Section H matrices
+    # carry per-row amounts, so they are EXCLUDED from the generic select-all >=1 check
+    # (amount matrices can legitimately be all-zero elsewhere). But here the spec/tester
+    # require at least one payment source once the gate opens: Q109 (Q108=Yes, meds bought
+    # outside), Q112 (Q110=Yes, tests done outside), Q113 (the hospital bill, always asked).
+    # Emit the check on each matrix's LAST flag — all rows are entered by then.
+    paymatrix_atleast1 = {
+        "Q109_PAY": "at least one payment source for the medicines bought outside (Q109)",
+        "Q112_PAY": "at least one payment source for the tests done outside (Q112)",
+        "Q113_PAY": "at least one payment source for the hospital bill (Q113)",
+    }
+    pm_items = dcf_items_map()
+    parts.append("{ ---- Payment-matrix '>=1 ticked' (#555/#556/#557) ---- }")
+    pm_emitted = 0
+    for base, desc in paymatrix_atleast1.items():
+        flags = sorted(n for n in pm_items
+                       if n.startswith(base + "_") and n[len(base) + 1:].isdigit())
+        if len(flags) < 2:
+            continue
+        last = flags[-1]
+        any_ticked = " or ".join(f"{f} = 1" for f in flags)
+        body = (f"  if not ({any_ticked}) then\n"
+                f"    errmsg(\"Select {desc} before continuing — "
+                f"at least one option must be 'Yes'.\");\n"
+                f"    reenter;\n  endif;")
+        inject_soft(parts, last, body)
+        covered.add(last)
+        pm_emitted += 1
 
     # Per-item numeric range checks + cross-field/pair-sanity (spec §3.6–§3.13).
     parts.append("{ ---- Range + cross-field validations (spec §3.6-§3.13) ---- }")

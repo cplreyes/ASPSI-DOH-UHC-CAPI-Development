@@ -113,6 +113,11 @@ def auto_other_specify_procs():
     for n in order:
         if not n.endswith("_TXT"):
             continue
+        # #529: a checkbox base's _OTHER_TXT is gated by pos("99", base) in the
+        # checkbox PROC / why_difficult_gate_procs — never by the auto-derived
+        # `parent = <other code>` path (the base is alpha, the _O## flag is gone).
+        if n.endswith("_OTHER_TXT") and n[:-len("_OTHER_TXT")] in CHECKBOX_BASES:
+            continue
         q = qnum(n)
         if q is None:
             continue
@@ -191,9 +196,15 @@ def uhc9_other_specify_procs(names, no_other_skip_targets=None):
     is rewritten to EXCLUDE 7 (see exclude_code7_from_skip) so code 7 falls
     through to this box. To still skip the Yes-only follow-up afterwards, the box's
     postproc ends with `skip to <target>` — supplied via `no_other_skip_targets`
-    ({parent: target}). The skip runs only after a VALID entry; for any non-7 code
-    the box is `noinput`'d in preproc, and a noinput'd field never executes its
-    postproc (CSPro semantic), so the trailing skip never fires for non-7 codes.
+    ({parent: target}).
+
+    #630/#632 fix: that trailing skip MUST be guarded `if {parent} = {code}`. The
+    original code left it unconditional on the false premise that "a noinput'd field
+    never runs its postproc". In CSEntry `noinput` only suppresses data ENTRY — the
+    postproc STILL executes. So the unconditional skip fired for EVERY parent value
+    (incl. the Yes branches 1-4 that noinput this box), wrongly dropping the Yes-only
+    follow-up for the whole Section C chain (Q15/Q18/Q20/Q22/Q24/Q26/Q28/Q30/Q32-34).
+    Guarding on the No-other code makes it fire only when the box is genuinely shown.
     """
     no_other_skip_targets = no_other_skip_targets or {}
     procs = {}
@@ -207,11 +218,13 @@ def uhc9_other_specify_procs(names, no_other_skip_targets=None):
                 target = no_other_skip_targets.get(parent)
                 if suffix == "_NO_OTHER_TXT" and target:
                     tail = (
-                        f"\n  {{ #376: after the No-other text is entered, still skip the\n"
-                        f"     Yes-only follow-up — code 7 was excluded from {parent}'s parent\n"
-                        f"     skip so it reaches this box; runs only on a valid (code-7) entry,\n"
-                        f"     since a noinput'd field never runs its postproc. }}\n"
-                        f"  skip to {target};"
+                        f"\n  {{ #630/#632: skip the Yes-only follow-up ONLY for the real\n"
+                        f"     No-other branch (code {code}). noinput suppresses ENTRY but the\n"
+                        f"     postproc STILL runs in CSEntry, so an unconditional skip here\n"
+                        f"     fired for the Yes branches too and dropped the follow-up. }}\n"
+                        f"  if {parent} = {code} then\n"
+                        f"    skip to {target};\n"
+                        f"  endif;"
                     )
                 procs[n] = (
                     f"PROC {n}\n"
@@ -232,55 +245,113 @@ def uhc9_other_specify_procs(names, no_other_skip_targets=None):
 
 # Why-difficult display gates (spec 4.10): each Q66-74 option-set is shown only
 # if the matching Q65 difficulty option was flagged; same for Q122-134 vs Q121.
-# Gate fires as a first-field (O01) preproc. Question number -> option index by
-# position (Q66->Q65 O01 ... Q74->Q65 O09; Q122->Q121 O01 ... Q134->Q121 O13).
+# Both batteries are now Check Box (Q65->Q66-74 via #529; Q121->Q122-134 via #567
+# parts 1 & 2), so the gate is `pos("0N", <gate_cb>) = 0` on the Check Box field.
+# Question number -> option index by POSITION, PRESERVED 1:1 from the original
+# select_all gating (Q66->Q65 O01 ... Q74->Q65 O09; Q122->Q121 O01 ... Q134->Q121 O13).
 WHY_DIFF_GATES = [
     (range(66, 75), "Q65_ACCRED_DIFFICULT", 66),   # Q66..Q74 -> Q65 O01..O09
     (range(122, 135), "Q121_DOH_LIC_DIFFICULT", 122),  # Q122..Q134 -> Q121 O01..O13
 ]
 
 
-def why_difficult_gate_procs(names):
+# #529: every select_all base converted to a single Check Box field. As of #567
+# (parts 1 & 2) the Section F DOH-licensing why-difficult battery (Q121 gate +
+# Q122-134 per-topic "why") is ALSO converted — mirroring the proven Q65->Q66-74
+# gated-battery pattern. why_difficult_gate_procs reads this set to switch the
+# Q121->Q122-134 gates from `_O01 <> 1` to `pos("0N", Q121_DOH_LIC_DIFFICULT) = 0`.
+CHECKBOX_BASES = {
+    "Q49_QUALITY_CHALL", "Q50_ACCESS_CHALL", "Q53_YK_PACKAGE", "Q58_PERF_INDICATORS",
+    "Q64_APPLY_REASON", "Q75_ENROLL_RESPONSIBILITY", "Q76_ENROLL_INITIATIVES",
+    "Q78_ENROLL_CHALL_LIST", "Q79_NOT_ACCRED_REASON", "Q94_CHARGE_ADDL_CAP_REASONS",
+    "Q96_NOT_RECEIVED_REASONS", "Q98_PAYMENT_CHALL_LIST", "Q99_EXPAND_NEXT",
+    "Q65_ACCRED_DIFFICULT",
+    "Q66_WHY_DIFF_PREVENTIVE", "Q67_WHY_DIFF_LAB", "Q68_WHY_DIFF_MEDS",
+    "Q69_WHY_DIFF_INFRA", "Q70_WHY_DIFF_EQUIPMENT", "Q71_WHY_DIFF_HR",
+    "Q72_WHY_DIFF_HIS", "Q73_WHY_DIFF_DOCS", "Q74_WHY_DIFF_DOH_LIC",
+    # #542 Section E BUCAS/GAMOT
+    "Q104_BUCAS_SERVICES", "Q105_BUCAS_FACTORS", "Q111_GAMOT_FACTORS",
+    # Section E/G DO-NOT-READ select-all -> Check Box (this task)
+    "Q117_ADDR_STOCKOUT_HOW", "Q151_LGU_NOT_SAT_WHY", "Q162_NOT_SATISFIED_WHY",
+    # #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box.
+    # (#586: Q144 re-converted to Check Box per the tester's PAPI screenshot showing
+    # checkboxes — undoing the #576 single-select revert. Q160 stays single select_one:
+    # no PAPI evidence either way, flagged for ASPSI confirmation.)
+    "Q144_DIFFICULT_REASON",
+    "Q137_NBB_BARRIERS", "Q140_ZBB_BARRIERS", "Q146_MALASAKIT_WHY",
+    "Q147_NO_MALASAKIT_WHY", "Q149_LGU_SUPPORT_FORMS", "Q155_SEND_REFERRAL_HOW",
+    "Q156_REFERRAL_FORM_TYPE", "Q159_RECEIVE_REFERRAL_HOW", "Q163_HR_CHALL",
+    "Q165_PD_DOCTORS", "Q166_PD_NURSES",
+    # #567 parts 1 & 2: Section F DOH-licensing why-difficult battery (Q121 gate +
+    # Q122-134 per-topic "why"), select_all -> Check Box (gated like Q65->Q66-74).
+    "Q121_DOH_LIC_DIFFICULT",
+    "Q122_WHY_DIFF_PT_RIGHTS", "Q123_WHY_DIFF_PT_CARE", "Q124_WHY_DIFF_LEADERSHIP",
+    "Q125_WHY_DIFF_HRM", "Q126_WHY_DIFF_INFO_MGMT", "Q127_WHY_DIFF_SAFE",
+    "Q128_WHY_DIFF_PERF", "Q129_WHY_DIFF_PHYS_PLANT", "Q130_WHY_DIFF_PRICE_INFO",
+    "Q131_WHY_DIFF_EQUIPMENT", "Q132_WHY_DIFF_NAT_LAWS", "Q133_WHY_DIFF_EMERG_CART",
+    "Q134_WHY_DIFF_ADDONS",
+}
+
+
+def why_difficult_gate_procs(names, checkbox_fields):
+    """Each Q66-74 (Q122-134) is shown only if the matching Q65 (Q121) difficulty was
+    flagged. After the checkbox conversions (Q65/Q66-74 via #529, Q121/Q122-134 via
+    #567 parts 1 & 2) both gate fields are single Check Box fields, so the gate is
+    `pos("0N", <gate_cb>) = 0` and the preproc lives on the Check Box field itself,
+    carrying the select->=1 validation + 'Other' gate too. (The else-branch _O01-field
+    gate is retained for any battery still left as select_all.)"""
     procs = {}
-    first_field_by_q = {}
-    qnum_of = {}
+    qnum_of = {n: int(re.match(r"^Q(\d+)_", n).group(1))
+               for n in names if re.match(r"^Q(\d+)_", n)}
+    primary = {}                                   # question number -> gate field
     for n in names:
-        m = re.match(r"^Q(\d+)_", n)
-        if m:
-            qnum_of[n] = int(m.group(1))
+        if n in checkbox_fields:
+            primary[qnum_of[n]] = n                # Check Box base
     for n in names:
-        m = re.match(r"^Q(\d+)_(WHY_DIFF_[A-Z0-9_]+?)_O(\d+)$", n)
-        if not m:
-            continue
-        q, opt = int(m.group(1)), int(m.group(3))
-        if opt == 1:
-            first_field_by_q[q] = n  # the O01 field is where the gate preproc lives
+        q = qnum_of.get(n)
+        if n.endswith("_O01") and q is not None and q not in primary:
+            primary[q] = n                         # non-converted: the _O01 field
     for qrange, gate_dict, start in WHY_DIFF_GATES:
+        gate_cb = gate_dict in checkbox_fields
+        gateq = start - 1
         for q in qrange:
-            field = first_field_by_q.get(q)
+            field = primary.get(q)
             if not field:
                 continue
             opt_idx = q - start + 1
-            gate = f"{gate_dict}_O{opt_idx:02d}"
-            # If the gate option wasn't flagged, skip the WHOLE Qq option cluster.
-            # `skip to next` is illegal outside a repeating group (CSEntry, verified
-            # 2026-06-08), so target the first field AFTER this question's cluster
-            # (the next field with a different question number in dcf order).
+            cond = (f'pos("{opt_idx:02d}", {gate_dict}) = 0' if gate_cb
+                    else f"{gate_dict}_O{opt_idx:02d} <> 1")
             idx = names.index(field)
             target = next((names[j] for j in range(idx + 1, len(names))
                            if qnum_of.get(names[j]) != q), None)
             if target is None:
                 continue
-            # Gate options are coded Yes=1/No=2 — skip unless explicitly flagged
-            # Yes. (`= 0` was a dead condition: 0 isn't in the value set and a
-            # blank is notappl, not 0, so the cluster was NEVER skipped.)
-            procs[field] = (
-                f"PROC {field}\n"
-                f"preproc\n"
-                f"  if {gate} <> 1 then   {{ Q{q} cluster shown only if {gate} was flagged Yes }}\n"
-                f"    skip to {target};\n"
-                f"  endif;"
-            )
+            if field in checkbox_fields:           # gate + validation on the Check Box
+                procs[field] = (
+                    f"PROC {field}\npreproc\n"
+                    f"  if {cond} then   {{ Q{q} shown only if Q{gateq} difficulty {opt_idx} ticked }}\n"
+                    f"    skip to {target};\n  endif;\npostproc\n"
+                    f"  if length(strip({field})) = 0 then\n"
+                    f'    errmsg("Select at least one option for Q{q} before continuing.");\n'
+                    f"    reenter;\n  endif;"
+                )
+                otxt = f"{field}_OTHER_TXT"
+                if otxt in names:
+                    procs[otxt] = (
+                        f"PROC {otxt}\npreproc\n"
+                        f'  if pos("99", {field}) = 0 then\n'
+                        f'    {otxt} = "";   {{ gated: \'Other (specify)\' not ticked }}\n'
+                        f"    noinput;\n  endif;\npostproc\n"
+                        f'  if pos("99", {field}) > 0 and length(strip({otxt})) = 0 then\n'
+                        f'    errmsg("\'Other (specify)\' was ticked for Q{q} - please specify.");\n'
+                        f"    reenter;\n  endif;"
+                    )
+            else:                                  # non-converted select_all -> _O01 gate
+                procs[field] = (
+                    f"PROC {field}\npreproc\n"
+                    f"  if {cond} then   {{ Q{q} cluster shown only if {gate_dict}_O{opt_idx:02d} flagged Yes }}\n"
+                    f"    skip to {target};\n  endif;"
+                )
     return procs
 
 HEADER = """\
@@ -581,45 +652,17 @@ postproc
       reenter;
     endif;
   endif;""",
-    # 4.9 Q121 "select all that apply" DOH-licensing-difficulty (Section F). #385.
-    # CONFIRMED against the authoritative printed questionnaire (Filipino v2.1.1
-    # Apr30, option order = dcf _O## order): the dcf models Q121 as 14 binary option
-    # fields (_O01..O14), so facility-type option visibility is a PER-OPTION gate,
-    # not a setvalueset on a single field — there is NO single Q121 field to retarget
-    # (Q121_DYNAMIC_VALUE_SET = False in generate_dcf.py is therefore moot, not a gap).
-    # Printed per-option tags:
-    #   O10 "National laws and DOH issuances…"  hospital-only
-    #   O11 "Emergency cart contents"           hospital-only
-    #   O12 "Add-on services"                   hospital-only
-    #   O13 "Public access to price information" primary-care-only
-    #   O14 "None of the above"                 -> skip the why-difficult cluster to Q135
-    # O01..O09 are universal. Q8_SERVICE_LEVEL=1 is Primary Care Facility; 2/3/4 are
-    # hospitals. The `noinput` gate IS the safety net the spec asked for: a hidden
-    # option can't be ticked, so no out-of-scope data is captured for the wrong tier.
-    # DESIGNER-VERIFY: the `noinput` conditional-hide idiom for a multi-select
-    # option is the one bit to confirm on compile; symbols all resolve.
-    "Q121_DOH_LIC_DIFFICULT_O10": """\
-PROC Q121_DOH_LIC_DIFFICULT_O10
-preproc
-  if Q8_SERVICE_LEVEL = 1 then noinput; endif;   { hospital-only option; hide for primary-care facilities }""",
-    "Q121_DOH_LIC_DIFFICULT_O11": """\
-PROC Q121_DOH_LIC_DIFFICULT_O11
-preproc
-  if Q8_SERVICE_LEVEL = 1 then noinput; endif;   { hospital-only option; hide for primary-care facilities }""",
-    "Q121_DOH_LIC_DIFFICULT_O12": """\
-PROC Q121_DOH_LIC_DIFFICULT_O12
-preproc
-  if Q8_SERVICE_LEVEL = 1 then noinput; endif;   { hospital-only option; hide for primary-care facilities }""",
-    "Q121_DOH_LIC_DIFFICULT_O13": """\
-PROC Q121_DOH_LIC_DIFFICULT_O13
-preproc
-  if Q8_SERVICE_LEVEL <> 1 then noinput; endif;  { primary-care-only option; hide for hospitals }""",
-    "Q121_DOH_LIC_DIFFICULT_O14": """\
-PROC Q121_DOH_LIC_DIFFICULT_O14
-postproc
-  if Q121_DOH_LIC_DIFFICULT_O14 = 1 then   { "None of the above" -> skip the why-difficult cluster }
-    skip to Q135_NBB_CURR;
-  endif;""",
+    # 4.9 Q121 DOH-licensing-difficulty (Section F). #385 / #567.
+    # As of #567 (parts 1 & 2) Q121 is a single Check Box field (no per-option _O##
+    # fields), so the former per-option PROCs below are GONE:
+    #   - O14 "None of the above" -> skip-to-Q135: now IMPLICIT. 'None' recodes to 90
+    #     and is exclusive, so no O01-O13 codes are present and every Q122-134 display
+    #     gate `pos("0N", Q121_DOH_LIC_DIFFICULT) = 0` fires -> the cluster skips to Q135.
+    #   - O10/O11/O12 (hospital-only) + O13 (PCF-only) `noinput` visibility gates were
+    #     #567 part 3 (PCF/hospital category visibility) — OUT OF SCOPE for this task.
+    #     They depended on per-option fields that no longer exist, so they are dropped
+    #     (NOT reimplemented on the single Check Box field). Q121 select->=1 +
+    #     exclusivity('None'=90) come from CHECKBOX_CONVERT_A / _gen_checkbox_proc.
 }
 
 # --- Check Box multi-select redesign (GH #377/#378/#379, mirrors F3 Q148) -----
@@ -730,7 +773,139 @@ postproc
     errmsg("'Other (specify)' was ticked for Q58 — please specify.");
     reenter;
   endif;""",
+    # --- #529 multi-select conversion (select_all -> checkbox): Q64 (no exclusive option) ---
+    "Q64_APPLY_REASON": """\
+PROC Q64_APPLY_REASON
+postproc
+  if length(strip(Q64_APPLY_REASON)) = 0 then
+    errmsg("Select at least one option for Q64 before continuing.");
+    reenter;
+  endif;""",
+    "Q64_APPLY_REASON_OTHER_TXT": """\
+PROC Q64_APPLY_REASON_OTHER_TXT
+preproc
+  if pos("99", Q64_APPLY_REASON) = 0 then
+    Q64_APPLY_REASON_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q64_APPLY_REASON) > 0 and length(strip(Q64_APPLY_REASON_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q64 — please specify.");
+    reenter;
+  endif;""",
 }
+
+
+# --- #529 multi-select conversion, Sub-phase A: config-driven checkbox PROCs.
+# Each base gets a select->=1 validation, an optional exclusivity soft-warn (a
+# standalone option coded 90 should stand alone), an optional preproc gate, and
+# (when present) an 'Other (specify)' text gate on pos("99",field). Mirrors the
+# hand-written Q49/Q50/Q53/Q58 pattern. (base, has_other, exclusive, preproc_gate)
+CHECKBOX_CONVERT_A = [
+    # Q65 gates Q66-74 (handled in why_difficult_gate_procs); here it just gets its
+    # own select->=1 + exclusivity ('None of the above' coded 90). No 'Other'.
+    ("Q65_ACCRED_DIFFICULT",        False, True, None),
+    ("Q75_ENROLL_RESPONSIBILITY",   True, True,  None),
+    ("Q76_ENROLL_INITIATIVES",      True, True,  None),
+    ("Q78_ENROLL_CHALL_LIST",       True, False, None),
+    # Q79 inherits the not-accredited block gate that used to live on Q79_..._O01.
+    ("Q79_NOT_ACCRED_REASON",       True, False,
+     "  if Q51_YK_ACCRED <> 2 then   { Q79-Q84 only for not-accredited (Q51=No); "
+     "accredited fall-through -> Q85 }\n    skip to Q85_CATCHMENT_AREA;\n  endif;"),
+    ("Q94_CHARGE_ADDL_CAP_REASONS", True, False, None),
+    ("Q96_NOT_RECEIVED_REASONS",    True, True,  None),
+    ("Q98_PAYMENT_CHALL_LIST",      True, True,  None),
+    ("Q99_EXPAND_NEXT",             True, True,  None),
+    # #542 Section E (BUCAS/GAMOT) — Other-specify, no exclusive option. Q104/Q111 are
+    # skip TARGETS (Q102=Yes -> Q104, Q109=Yes -> Q111); those skip-to refs are repointed
+    # from <base>_O01 to <base> in the Q102/Q109 ROUTING_PROCS.
+    ("Q104_BUCAS_SERVICES",         True, False, None),
+    ("Q105_BUCAS_FACTORS",          True, False, None),
+    ("Q111_GAMOT_FACTORS",          True, False, None),
+    # Section E/G DO-NOT-READ select-all -> Check Box (this task). All three carry an
+    # 'Other (specify)' (code 99). None is a skip TARGET: Q117 is reached via Q116's
+    # gate/skip (Q116 in 2,3 -> Q118, never to Q117_..._O01); Q151 via Q150=1 -> Q154;
+    # Q162 via Q161 in 1,2 -> Q163 — all skip-to refs point at the *next* question, not
+    # an _O01 field, so nothing to repoint. No gated _O01 preproc existed for any of
+    # them -> gate=None. Q151 has a standalone 'I don't know' (recoded 90) -> exclusive.
+    ("Q117_ADDR_STOCKOUT_HOW",      True, False, None),
+    ("Q151_LGU_NOT_SAT_WHY",        True, True,  None),
+    ("Q162_NOT_SATISFIED_WHY",      True, False, None),
+    # #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box. has_other =
+    # every one carries an 'Other (specify)' (code 99). exclusive = the list has a
+    # standalone option _cb_codes recodes to 90 ('None of the above' for Q137/Q140;
+    # "I don't know" for Q163). Q146/Q147/Q149/Q155/Q159 = Other-only, no exclusive.
+    # Q156 'No standard referral form' and Q165/Q166 'No forms ... provided' do NOT
+    # start with 'none'/'no initiative' nor contain "don't know", so _cb_codes leaves
+    # them as normal sequential codes -> NOT exclusive.
+    # #586: Q144 re-converted to Check Box (PAPI shows checkboxes). Other-specify (code
+    # 99) present; no exclusive None/IDK option -> exclusive=False. Not a skip target.
+    ("Q144_DIFFICULT_REASON",       True, False, None),
+    ("Q137_NBB_BARRIERS",           True, True,  None),
+    ("Q140_ZBB_BARRIERS",           True, True,  None),
+    ("Q146_MALASAKIT_WHY",          True, False, None),
+    # Q147 inherits the Q145=Yes -> skip-to-Q148 gate that used to live on the old
+    # Q147_NO_MALASAKIT_WHY_O01 field's preproc (was a ROUTING_PROCS entry; removed).
+    # Q145=No reaches Q147 normally (Q145 postproc sends No -> Q147 directly).
+    ("Q147_NO_MALASAKIT_WHY",       True, False,
+     "  if Q145_MALASAKIT_PROVIDED = 1 then   { Yes -> Q146 already asked; skip the "
+     "not-provided block }\n    skip to Q148_LGU_SUPPORT;\n  endif;"),
+    ("Q149_LGU_SUPPORT_FORMS",      True, False, None),
+    ("Q155_SEND_REFERRAL_HOW",      True, False, None),
+    ("Q156_REFERRAL_FORM_TYPE",     True, False, None),
+    ("Q159_RECEIVE_REFERRAL_HOW",   True, False, None),
+    ("Q163_HR_CHALL",               True, True,  None),
+    ("Q165_PD_DOCTORS",             True, False, None),
+    ("Q166_PD_NURSES",              True, False, None),
+    # #567 parts 1 & 2: Section F DOH-licensing why-difficult battery.
+    # Q121 = the gate (14 options, last is 'None of the above' -> recoded 90 ->
+    # exclusive; no 'Other'). It gates Q122-134 the same way Q65 gates Q66-74; the
+    # per-question gate PROCs are emitted by why_difficult_gate_procs (keyed off
+    # CHECKBOX_BASES), so Q121 here just gets its own select->=1 + exclusivity warn.
+    # The old select_all O14 ('None') -> skip-to-Q135 is now implicit: ticking 'None'
+    # (90) means no O01-O13 codes are present, so EVERY Q122-134 gate `pos("0N",...)=0`
+    # fires and the whole cluster is skipped to Q135. (The per-option hospital/PCF
+    # visibility O10-O13 gates were #567 part 3 — out of scope; dropped with the
+    # _O## fields, NOT reimplemented.)
+    ("Q121_DOH_LIC_DIFFICULT",      False, True, None),
+    # NOTE: Q122-134 are deliberately NOT listed here. Exactly like Q66-74 (gated by
+    # Q65), the per-topic "why" Check Box fields get their full PROC — display gate
+    # `pos("0N", Q121_DOH_LIC_DIFFICULT) = 0` + select->=1 + 'Other (specify)' gate —
+    # from why_difficult_gate_procs(). Adding them here would shadow that gate PROC
+    # (BESPOKE_PROCS is seeded into `covered` first) and SILENTLY DROP the skip logic.
+]
+
+
+def _gen_checkbox_proc(base, has_other, exclusive, gate=None):
+    qn = re.match(r"Q(\d+)", base).group(1)
+    body = [f"PROC {base}"]
+    if gate:
+        body += ["preproc", gate]
+    body += ["postproc",
+             f"  if length(strip({base})) = 0 then",
+             f'    errmsg("Select at least one option for Q{qn} before continuing.");',
+             "    reenter;", "  endif;"]
+    if exclusive:
+        body += [f'  if pos("90", {base}) > 0 and length(strip({base})) > 2 then',
+                 f'    errmsg("Q{qn}: an exclusive option (None / No initiatives / Do not know) '
+                 f'should be the only choice - please review the options ticked.");',
+                 "  endif;"]
+    procs = {base: "\n".join(body)}
+    if has_other:
+        procs[f"{base}_OTHER_TXT"] = (
+            f"PROC {base}_OTHER_TXT\npreproc\n"
+            f'  if pos("99", {base}) = 0 then\n'
+            f'    {base}_OTHER_TXT = "";   {{ gated: \'Other (specify)\' not ticked -> not enterable }}\n'
+            f"    noinput;\n  endif;\npostproc\n"
+            f'  if pos("99", {base}) > 0 and length(strip({base}_OTHER_TXT)) = 0 then\n'
+            f'    errmsg("\'Other (specify)\' was ticked for Q{qn} - please specify.");\n'
+            "    reenter;\n  endif;"
+        )
+    return procs
+
+
+for _b, _o, _x, _g in CHECKBOX_CONVERT_A:
+    CHECKBOX_MULTISELECT_PROCS.update(_gen_checkbox_proc(_b, _o, _x, _g))
 BESPOKE_PROCS.update(CHECKBOX_MULTISELECT_PROCS)
 
 # --- Multi-branch routing (spec 2 Section D/E/G) deferred from pass 1. Branch
@@ -765,12 +940,9 @@ postproc
     # plus any DK/other fall-through) past the whole Q79-Q84 block to Q85. The
     # legit Q51=2 path lands here via the Q51 postproc skip, sees Q51<>2 == false,
     # stays and answers Q79. Q85_CATCHMENT_AREA is the same resume point Q77=No uses.
-    "Q79_NOT_ACCRED_REASON_O01": """\
-PROC Q79_NOT_ACCRED_REASON_O01
-preproc
-  if Q51_YK_ACCRED <> 2 then   { Q79-Q84 only for not-accredited (Q51=No); accredited fall-through -> Q85 }
-    skip to Q85_CATCHMENT_AREA;
-  endif;""",
+    # (#529) Q79 is now a Check Box field — its not-accredited gate (Q51<>2 -> Q85)
+    # moved into the Q79_NOT_ACCRED_REASON checkbox PROC's preproc (CHECKBOX_CONVERT_A);
+    # the old Q79_NOT_ACCRED_REASON_O01 field no longer exists.
     # Section D: Q80 5-way intend-accredit routing
     "Q80_INTEND_ACCRED": """\
 PROC Q80_INTEND_ACCRED
@@ -822,11 +994,27 @@ postproc
   if Q95_RECEIVED_PAYMENTS in 1,2 then   { Yes, all / Yes, some }
     skip to Q97_PAYMENT_CHALL;
   endif;""",
+    # #541: Q100 ('what additional features would you add?') is only relevant when
+    # 'Additional features' (Q99 option, checkbox code 03) is ticked. It was an ungated
+    # free-text -> answerable even when Additional features was not selected (wrong data).
+    # Gate it on pos("03", Q99_EXPAND_NEXT): noinput when not ticked; require text when it is.
+    "Q100_ADDL_FEATURES": """\
+PROC Q100_ADDL_FEATURES
+preproc
+  if pos("03", Q99_EXPAND_NEXT) = 0 then   { 'Additional features' not ticked in Q99 -> N/A }
+    Q100_ADDL_FEATURES = "";
+    noinput;
+  endif;
+postproc
+  if pos("03", Q99_EXPAND_NEXT) > 0 and length(strip(Q100_ADDL_FEATURES)) = 0 then
+    errmsg("'Additional features' was ticked in Q99 - please specify what you would add.");
+    reenter;
+  endif;""",
     # Section E: Q102 has-BUCAS 3-way (No falls through to Q103)
     "Q102_HAS_BUCAS": """\
 PROC Q102_HAS_BUCAS
 postproc
-  if Q102_HAS_BUCAS = 1 then  skip to Q104_BUCAS_SERVICES_O01; endif;  { Yes -> services (skip Q103) }
+  if Q102_HAS_BUCAS = 1 then  skip to Q104_BUCAS_SERVICES; endif;  { Yes -> services (skip Q103) }
   if Q102_HAS_BUCAS = 3 then  skip to Q108_HEARD_GAMOT;        endif;  { I don't know -> Q108 }""",
     "Q103_NO_BUCAS_REASON": """\
 PROC Q103_NO_BUCAS_REASON
@@ -836,7 +1024,7 @@ postproc
     "Q109_GAMOT_ACCRED": """\
 PROC Q109_GAMOT_ACCRED
 postproc
-  if Q109_GAMOT_ACCRED = 1 then  skip to Q111_GAMOT_FACTORS_O01; endif;  { Yes (skip Q110) }""",
+  if Q109_GAMOT_ACCRED = 1 then  skip to Q111_GAMOT_FACTORS; endif;  { Yes (skip Q110) }""",
     "Q110_NO_GAMOT_REASON": """\
 PROC Q110_NO_GAMOT_REASON
 postproc
@@ -859,17 +1047,13 @@ postproc
 PROC Q145_MALASAKIT_PROVIDED
 postproc
   if Q145_MALASAKIT_PROVIDED = 2 then    { No -> skip the why-provided block to the not-provided block }
-    skip to Q147_NO_MALASAKIT_WHY_O01;
+    skip to Q147_NO_MALASAKIT_WHY;
   endif;""",
-    # Q145=Yes path: Q146 (why-provided) is asked, then Q147 (not-provided) must
-    # be skipped. Gate Q147's first field on Q145=Yes -> jump to Q148 (spec 4.10
-    # first-field-preproc pattern; Q145=No reaches Q147 normally).
-    "Q147_NO_MALASAKIT_WHY_O01": """\
-PROC Q147_NO_MALASAKIT_WHY_O01
-preproc
-  if Q145_MALASAKIT_PROVIDED = 1 then   { Yes -> Q146 already asked; skip the not-provided block }
-    skip to Q148_LGU_SUPPORT;
-  endif;""",
+    # Q145=Yes path: Q146 (why-provided) is asked, then Q147 (not-provided) must be
+    # skipped. #576: Q147 is now a Check Box base; the old Q147_..._O01 first-field
+    # preproc gate (Q145=Yes -> skip to Q148) moved into Q147_NO_MALASAKIT_WHY's
+    # checkbox PROC preproc (CHECKBOX_CONVERT_A gate param). Q145=No reaches Q147
+    # normally via the postproc skip above.
     # Section G: Q152 protocol clarity. #386: printed Q152 is "only for respondents
     # from public hospitals" — public hospital = Q7_OWNERSHIP=1 (Public) AND
     # Q8_SERVICE_LEVEL in 2,3,4 (Level 1/2/3 Hospital; Q8=1 is a Primary Care
@@ -910,12 +1094,12 @@ SKIP_RULES = [
     ("Q35_STAFFING_CHANGED",  "Q35_STAFFING_CHANGED = 2",       "Q37_REFERRAL_CHANGED"),
     ("Q37_REFERRAL_CHANGED",  "Q37_REFERRAL_CHANGED = 2",       "Q39_MOU_MOA"),
     # Section D — YAKAP / Konsulta
-    ("Q51_YK_ACCRED",         "Q51_YK_ACCRED = 2",              "Q79_NOT_ACCRED_REASON_O01"),
+    ("Q51_YK_ACCRED",         "Q51_YK_ACCRED = 2",              "Q79_NOT_ACCRED_REASON"),
     ("Q59_KNOW_PAY_FREQ",     "Q59_KNOW_PAY_FREQ = 2",          "Q61_TRANCHE_DELAY"),
     ("Q77_ENROLL_CHALL",      "Q77_ENROLL_CHALL = 2",           "Q85_CATCHMENT_AREA"),
     ("Q89_COSTING_DONE",      "Q89_COSTING_DONE = 2",           "Q91_MIN_CAP_VALUE_ACC"),
     ("Q93_CHARGE_ADDL_CAP",   "Q93_CHARGE_ADDL_CAP = 2",        "Q95_RECEIVED_PAYMENTS"),
-    ("Q97_PAYMENT_CHALL",     "Q97_PAYMENT_CHALL = 2",          "Q99_EXPAND_NEXT_O01"),
+    ("Q97_PAYMENT_CHALL",     "Q97_PAYMENT_CHALL = 2",          "Q99_EXPAND_NEXT"),
     # Section E — BUCAS / GAMOT
     ("Q101_HEARD_BUCAS",      "Q101_HEARD_BUCAS = 2",           "Q108_HEARD_GAMOT"),
     ("Q108_HEARD_GAMOT",      "Q108_HEARD_GAMOT = 2",           "Q112_STOCKOUT"),
@@ -928,7 +1112,7 @@ SKIP_RULES = [
     ("Q141_ALLOW_OOP_BASIC",  "Q141_ALLOW_OOP_BASIC = 2",       "Q143_DIFFICULT_BENEFIT"),
     ("Q148_LGU_SUPPORT",      "Q148_LGU_SUPPORT = 2",           "Q152_PHO_PROTOCOL_CLARITY"),
     ("Q150_LGU_SATISFIED",    "Q150_LGU_SATISFIED = 1",         "Q154_NUM_REFERRED_OUT"),
-    ("Q161_REF_SATISFACTION", "Q161_REF_SATISFACTION in 1,2",   "Q163_HR_CHALL_O01"),
+    ("Q161_REF_SATISFACTION", "Q161_REF_SATISFACTION in 1,2",   "Q163_HR_CHALL"),
 ]
 
 # Multi-branch / routing skips left for a follow-up pass (need careful per-branch
@@ -1050,7 +1234,7 @@ def main():
         parts.append("")
 
     parts.append("{ ---- Why-difficult display gates (spec 4.10) ---- }")
-    for field, proc in sorted(why_difficult_gate_procs(names).items()):
+    for field, proc in sorted(why_difficult_gate_procs(names, CHECKBOX_BASES).items()):
         if field in covered:
             continue
         covered.add(field)

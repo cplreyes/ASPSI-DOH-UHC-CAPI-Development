@@ -374,9 +374,15 @@ postproc
     skip to Q39_CIVIL_STATUS;
   endif;
 
+PROC Q36_SPECIFY_DISABILITY
+postproc
+  if Q36_SPECIFY_DISABILITY = 0 then   { #604: No = doesn't want to specify -> skip Q37 (card) + Q38 (type) to Q39 (YN_01: No=0) }
+    skip to Q39_CIVIL_STATUS;
+  endif;
+
 PROC Q37_PWD_CARD
 postproc
-  if Q37_PWD_CARD = 2 then
+  if Q37_PWD_CARD <> 1 then   { #605: Q38 reads the *presented* card, so skip it unless Yes=1 (card shown). Covers No=0 AND Refused=2; was `= 2` which only caught Refused and let No fall through to Q38. }
     skip to Q39_CIVIL_STATUS;
   endif;
 
@@ -426,6 +432,16 @@ postproc
   endif;
 
 
+{ ---- Section A: Q1 household-head soft confirm (#520). If the respondent is NOT the
+       HH head (Q1 = No), warn the enumerator and CONTINUE — no skip, no terminate.
+       Per spec (Section A): some items may still be asked but flagged; the survey-design
+       decision is soft-warn-and-continue, not a hard stop. ---- }
+PROC Q1_IS_HH_HEAD
+postproc
+  if Q1_IS_HH_HEAD = 2 then
+    errmsg("Respondent is not the household head. Confirm they are a household decision-maker per the sampling protocol before continuing.");
+  endif;
+
 { ---- 'Other (specify)' enforcement -- Q50 roster insurance + Q194 funds (audit 2026-06-11) ---- }
 PROC Q50_PRIVATE_INS_OTHER_TXT
 preproc
@@ -454,15 +470,27 @@ postproc
 { ---- Section G: branded/generic multi-branch (spec 2 Q76) ---- }
 PROC Q76_BRAND_OR_GEN
 postproc
-  if Q76_BRAND_OR_GEN = 1    then  skip to Q78_WHY_BRANDED_O01; endif;  { Branded only -> why-branded (skip Q77) }
-  if Q76_BRAND_OR_GEN in 3,4 then  skip to Q79_REG_SOURCE;      endif;  { Don't know / N/A -> exit Section G }
-  { Generic (2) falls through to Q77 why-generic }
+  { Q76 codes: 1 Branded / 2 Generic / 3 Both / 4 Don't know / 9 Not applicable.
+    Q77 (why-generic) asked for Generic+Both; Q78 (why-branded) for Branded+Both. (#536/#540) }
+  if Q76_BRAND_OR_GEN = 1    then  skip to Q78_WHY_BRANDED; endif;  { Branded only -> why-branded (skip Q77) }
+  if Q76_BRAND_OR_GEN in 4,9 then  skip to Q79_REG_SOURCE;  endif;  { Don't know (4) / Not applicable (9) -> exit Section G }
+  { Generic (2) or Both (3) fall through to Q77 why-generic }
 
-PROC Q78_WHY_BRANDED_O01
-preproc
-  if Q76_BRAND_OR_GEN <> 1 then   { only branded buyers answer why-branded }
-    skip to Q79_REG_SOURCE;
+{ Q78_WHY_BRANDED is now a Check Box base (#578) — its branded-only preproc gate
+  (was PROC Q78_WHY_BRANDED_O01) is migrated into CHECKBOX_CONVERT's gate param. }
+
+{ ---- Section K: Q112 referral-visit multi-branch (spec 2 Section K) ----
+  Q112 codes: 1 Yes / 2 "No, I'm not planning to" / 3 "Not yet, but I'm planning to".
+  Q113 (why-not-planning) is asked ONLY for code 2; Yes(1) and Not-yet-planning(3)
+  proceed straight to Q114 (skip Q113). (#590/#591/#592/#593: Q112 was always
+  falling through to Q113.) Q113's own postproc then skips to Q126 (handled in the
+  Check Box conversion's postproc tail). ---- }
+PROC Q112_VISITED
+postproc
+  if Q112_VISITED = 1 or Q112_VISITED = 3 then   { Yes / Not yet but planning -> skip Q113 why-not }
+    skip to Q114_DISCUSSED_PLACES;
   endif;
+  { code 2 ("No, I'm not planning to") falls through to Q113 why-not }
 
 { ---- Section H gate: skip entire Section H if NO roster member is PhilHealth-
   registered (Q45 = Yes anywhere in the roster). Spec 2 Section H note. ---- }
@@ -478,6 +506,718 @@ preproc
   enddo;
   if anyReg = 0 then
     skip to Q89_HAS_USUAL_FACILITY;   { no registered member -> skip Section H to Section I }
+  endif;
+
+{ ---- #529 + #573/#574 + #577-585/#588/#590-591: select_all -> Check Box conversions — config-driven from CHECKBOX_CONVERT ---- }
+PROC Q102_VISIT_REASON
+postproc
+  if length(strip(Q102_VISIT_REASON)) = 0 then
+    errmsg("Select at least one option for Q102 before continuing.");
+    reenter;
+  endif;
+
+PROC Q102_VISIT_REASON_OTHER_TXT
+preproc
+  if pos("99", Q102_VISIT_REASON) = 0 then
+    Q102_VISIT_REASON_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q102_VISIT_REASON) > 0 and length(strip(Q102_VISIT_REASON_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q102 - please specify.");
+    reenter;
+  endif;
+
+PROC Q103_CARE_TYPE
+postproc
+  if length(strip(Q103_CARE_TYPE)) = 0 then
+    errmsg("Select at least one option for Q103 before continuing.");
+    reenter;
+  endif;
+
+PROC Q103_CARE_TYPE_OTHER_TXT
+preproc
+  if pos("99", Q103_CARE_TYPE) = 0 then
+    Q103_CARE_TYPE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q103_CARE_TYPE) > 0 and length(strip(Q103_CARE_TYPE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q103 - please specify.");
+    reenter;
+  endif;
+
+PROC Q106_FORGONE_WHY
+postproc
+  if length(strip(Q106_FORGONE_WHY)) = 0 then
+    errmsg("Select at least one option for Q106 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q106_FORGONE_WHY) > 0 and length(strip(Q106_FORGONE_WHY)) > 2 then
+    errmsg("Q106: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q106_FORGONE_WHY_OTHER_TXT
+preproc
+  if pos("99", Q106_FORGONE_WHY) = 0 then
+    Q106_FORGONE_WHY_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q106_FORGONE_WHY) > 0 and length(strip(Q106_FORGONE_WHY_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q106 - please specify.");
+    reenter;
+  endif;
+
+PROC Q107_OTHER_ACTIONS
+postproc
+  if length(strip(Q107_OTHER_ACTIONS)) = 0 then
+    errmsg("Select at least one option for Q107 before continuing.");
+    reenter;
+  endif;
+
+PROC Q107_OTHER_ACTIONS_OTHER_TXT
+preproc
+  if pos("99", Q107_OTHER_ACTIONS) = 0 then
+    Q107_OTHER_ACTIONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q107_OTHER_ACTIONS) > 0 and length(strip(Q107_OTHER_ACTIONS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q107 - please specify.");
+    reenter;
+  endif;
+
+PROC Q109_TYPE
+postproc
+  if length(strip(Q109_TYPE)) = 0 then
+    errmsg("Select at least one option for Q109 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q109_TYPE) > 0 and length(strip(Q109_TYPE)) > 2 then
+    errmsg("Q109: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q109_TYPE_OTHER_TXT
+preproc
+  if pos("99", Q109_TYPE) = 0 then
+    Q109_TYPE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q109_TYPE) > 0 and length(strip(Q109_TYPE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q109 - please specify.");
+    reenter;
+  endif;
+
+PROC Q113_WHY_NOT
+postproc
+  if length(strip(Q113_WHY_NOT)) = 0 then
+    errmsg("Select at least one option for Q113 before continuing.");
+    reenter;
+  endif;
+  skip to Q126_NBB_HEARD;   { after why-not -> Section L NBB (skip Q114-Q125 referral-experience tail) }
+
+PROC Q113_WHY_NOT_OTHER_TXT
+preproc
+  if pos("99", Q113_WHY_NOT) = 0 then
+    Q113_WHY_NOT_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q113_WHY_NOT) > 0 and length(strip(Q113_WHY_NOT_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q113 - please specify.");
+    reenter;
+  endif;
+
+PROC Q121_WHY_HOSPITAL
+postproc
+  if length(strip(Q121_WHY_HOSPITAL)) = 0 then
+    errmsg("Select at least one option for Q121 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q121_WHY_HOSPITAL) > 0 and length(strip(Q121_WHY_HOSPITAL)) > 2 then
+    errmsg("Q121: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q121_WHY_HOSPITAL_OTHER_TXT
+preproc
+  if pos("99", Q121_WHY_HOSPITAL) = 0 then
+    Q121_WHY_HOSPITAL_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q121_WHY_HOSPITAL) > 0 and length(strip(Q121_WHY_HOSPITAL_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q121 - please specify.");
+    reenter;
+  endif;
+
+PROC Q127_NBB_SOURCE
+postproc
+  if length(strip(Q127_NBB_SOURCE)) = 0 then
+    errmsg("Select at least one option for Q127 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q127_NBB_SOURCE) > 0 and length(strip(Q127_NBB_SOURCE)) > 2 then
+    errmsg("Q127: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q127_NBB_SOURCE_OTHER_TXT
+preproc
+  if pos("99", Q127_NBB_SOURCE) = 0 then
+    Q127_NBB_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q127_NBB_SOURCE) > 0 and length(strip(Q127_NBB_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q127 - please specify.");
+    reenter;
+  endif;
+
+PROC Q128_NBB_UNDERSTAND
+postproc
+  if length(strip(Q128_NBB_UNDERSTAND)) = 0 then
+    errmsg("Select at least one option for Q128 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q128_NBB_UNDERSTAND) > 0 and length(strip(Q128_NBB_UNDERSTAND)) > 2 then
+    errmsg("Q128: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q128_NBB_UNDERSTAND_OTHER_TXT
+preproc
+  if pos("99", Q128_NBB_UNDERSTAND) = 0 then
+    Q128_NBB_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q128_NBB_UNDERSTAND) > 0 and length(strip(Q128_NBB_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q128 - please specify.");
+    reenter;
+  endif;
+
+PROC Q133_ZBB_SOURCE
+postproc
+  if length(strip(Q133_ZBB_SOURCE)) = 0 then
+    errmsg("Select at least one option for Q133 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q133_ZBB_SOURCE) > 0 and length(strip(Q133_ZBB_SOURCE)) > 2 then
+    errmsg("Q133: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q133_ZBB_SOURCE_OTHER_TXT
+preproc
+  if pos("99", Q133_ZBB_SOURCE) = 0 then
+    Q133_ZBB_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q133_ZBB_SOURCE) > 0 and length(strip(Q133_ZBB_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q133 - please specify.");
+    reenter;
+  endif;
+
+PROC Q134_ZBB_UNDERSTAND
+postproc
+  if length(strip(Q134_ZBB_UNDERSTAND)) = 0 then
+    errmsg("Select at least one option for Q134 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q134_ZBB_UNDERSTAND) > 0 and length(strip(Q134_ZBB_UNDERSTAND)) > 2 then
+    errmsg("Q134: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q134_ZBB_UNDERSTAND_OTHER_TXT
+preproc
+  if pos("99", Q134_ZBB_UNDERSTAND) = 0 then
+    Q134_ZBB_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q134_ZBB_UNDERSTAND) > 0 and length(strip(Q134_ZBB_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q134 - please specify.");
+    reenter;
+  endif;
+
+PROC Q137_MAIFIP_SOURCE
+postproc
+  if length(strip(Q137_MAIFIP_SOURCE)) = 0 then
+    errmsg("Select at least one option for Q137 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q137_MAIFIP_SOURCE) > 0 and length(strip(Q137_MAIFIP_SOURCE)) > 2 then
+    errmsg("Q137: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q137_MAIFIP_SOURCE_OTHER_TXT
+preproc
+  if pos("99", Q137_MAIFIP_SOURCE) = 0 then
+    Q137_MAIFIP_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q137_MAIFIP_SOURCE) > 0 and length(strip(Q137_MAIFIP_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q137 - please specify.");
+    reenter;
+  endif;
+
+PROC Q141_BILL_ITEMS
+postproc
+  if length(strip(Q141_BILL_ITEMS)) = 0 then
+    errmsg("Select at least one option for Q141 before continuing.");
+    reenter;
+  endif;
+
+PROC Q143_HOW_PAID
+postproc
+  if length(strip(Q143_HOW_PAID)) = 0 then
+    errmsg("Select at least one option for Q143 before continuing.");
+    reenter;
+  endif;
+
+PROC Q143_HOW_PAID_OTHER_TXT
+preproc
+  if pos("99", Q143_HOW_PAID) = 0 then
+    Q143_HOW_PAID_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q143_HOW_PAID) > 0 and length(strip(Q143_HOW_PAID_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q143 - please specify.");
+    reenter;
+  endif;
+
+PROC Q52_UHC_SOURCE
+postproc
+  if length(strip(Q52_UHC_SOURCE)) = 0 then
+    errmsg("Select at least one option for Q52 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q52_UHC_SOURCE) > 0 and length(strip(Q52_UHC_SOURCE)) > 2 then
+    errmsg("Q52: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q52_UHC_SOURCE_OTHER_TXT
+preproc
+  if pos("99", Q52_UHC_SOURCE) = 0 then
+    Q52_UHC_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q52_UHC_SOURCE) > 0 and length(strip(Q52_UHC_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q52 - please specify.");
+    reenter;
+  endif;
+
+PROC Q53_UHC_UNDERSTAND
+postproc
+  if length(strip(Q53_UHC_UNDERSTAND)) = 0 then
+    errmsg("Select at least one option for Q53 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q53_UHC_UNDERSTAND) > 0 and length(strip(Q53_UHC_UNDERSTAND)) > 2 then
+    errmsg("Q53: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q53_UHC_UNDERSTAND_OTHER_TXT
+preproc
+  if pos("99", Q53_UHC_UNDERSTAND) = 0 then
+    Q53_UHC_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q53_UHC_UNDERSTAND) > 0 and length(strip(Q53_UHC_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q53 - please specify.");
+    reenter;
+  endif;
+
+PROC Q55_YAKAP_SOURCE
+postproc
+  if length(strip(Q55_YAKAP_SOURCE)) = 0 then
+    errmsg("Select at least one option for Q55 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q55_YAKAP_SOURCE) > 0 and length(strip(Q55_YAKAP_SOURCE)) > 2 then
+    errmsg("Q55: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q55_YAKAP_SOURCE_OTHER_TXT
+preproc
+  if pos("99", Q55_YAKAP_SOURCE) = 0 then
+    Q55_YAKAP_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q55_YAKAP_SOURCE) > 0 and length(strip(Q55_YAKAP_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q55 - please specify.");
+    reenter;
+  endif;
+
+PROC Q56_YAKAP_UNDERSTAND
+postproc
+  if length(strip(Q56_YAKAP_UNDERSTAND)) = 0 then
+    errmsg("Select at least one option for Q56 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND)) > 2 then
+    errmsg("Q56: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q56_YAKAP_UNDERSTAND_OTHER_TXT
+preproc
+  if pos("99", Q56_YAKAP_UNDERSTAND) = 0 then
+    Q56_YAKAP_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q56_YAKAP_UNDERSTAND) > 0 and length(strip(Q56_YAKAP_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q56 - please specify.");
+    reenter;
+  endif;
+
+PROC Q58_BUCAS_SOURCE
+postproc
+  if length(strip(Q58_BUCAS_SOURCE)) = 0 then
+    errmsg("Select at least one option for Q58 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q58_BUCAS_SOURCE) > 0 and length(strip(Q58_BUCAS_SOURCE)) > 2 then
+    errmsg("Q58: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q58_BUCAS_SOURCE_OTHER_TXT
+preproc
+  if pos("99", Q58_BUCAS_SOURCE) = 0 then
+    Q58_BUCAS_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q58_BUCAS_SOURCE) > 0 and length(strip(Q58_BUCAS_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q58 - please specify.");
+    reenter;
+  endif;
+
+PROC Q59_BUCAS_UNDERSTAND
+postproc
+  if length(strip(Q59_BUCAS_UNDERSTAND)) = 0 then
+    errmsg("Select at least one option for Q59 before continuing.");
+    reenter;
+  endif;
+
+PROC Q59_BUCAS_UNDERSTAND_OTHER_TXT
+preproc
+  if pos("99", Q59_BUCAS_UNDERSTAND) = 0 then
+    Q59_BUCAS_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q59_BUCAS_UNDERSTAND) > 0 and length(strip(Q59_BUCAS_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q59 - please specify.");
+    reenter;
+  endif;
+
+PROC Q61_BUCAS_SERVICES
+postproc
+  if length(strip(Q61_BUCAS_SERVICES)) = 0 then
+    errmsg("Select at least one option for Q61 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q61_BUCAS_SERVICES) > 0 and length(strip(Q61_BUCAS_SERVICES)) > 2 then
+    errmsg("Q61: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q61_BUCAS_SERVICES_OTHER_TXT
+preproc
+  if pos("99", Q61_BUCAS_SERVICES) = 0 then
+    Q61_BUCAS_SERVICES_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q61_BUCAS_SERVICES) > 0 and length(strip(Q61_BUCAS_SERVICES_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q61 - please specify.");
+    reenter;
+  endif;
+
+PROC Q65_CONDITIONS
+postproc
+  if length(strip(Q65_CONDITIONS)) = 0 then
+    errmsg("Select at least one option for Q65 before continuing.");
+    reenter;
+  endif;
+
+PROC Q65_CONDITIONS_OTHER_TXT
+preproc
+  if pos("99", Q65_CONDITIONS) = 0 then
+    Q65_CONDITIONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q65_CONDITIONS) > 0 and length(strip(Q65_CONDITIONS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q65 - please specify.");
+    reenter;
+  endif;
+
+PROC Q66_WHERE_BUY
+postproc
+  if length(strip(Q66_WHERE_BUY)) = 0 then
+    errmsg("Select at least one option for Q66 before continuing.");
+    reenter;
+  endif;
+
+PROC Q66_WHERE_BUY_OTHER_TXT
+preproc
+  if pos("99", Q66_WHERE_BUY) = 0 then
+    Q66_WHERE_BUY_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q66_WHERE_BUY) > 0 and length(strip(Q66_WHERE_BUY_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q66 - please specify.");
+    reenter;
+  endif;
+
+PROC Q70_GAMOT_SOURCE
+postproc
+  if length(strip(Q70_GAMOT_SOURCE)) = 0 then
+    errmsg("Select at least one option for Q70 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q70_GAMOT_SOURCE) > 0 and length(strip(Q70_GAMOT_SOURCE)) > 2 then
+    errmsg("Q70: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q70_GAMOT_SOURCE_OTHER_TXT
+preproc
+  if pos("99", Q70_GAMOT_SOURCE) = 0 then
+    Q70_GAMOT_SOURCE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q70_GAMOT_SOURCE) > 0 and length(strip(Q70_GAMOT_SOURCE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q70 - please specify.");
+    reenter;
+  endif;
+
+PROC Q71_GAMOT_UNDERSTAND
+postproc
+  if length(strip(Q71_GAMOT_UNDERSTAND)) = 0 then
+    errmsg("Select at least one option for Q71 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q71_GAMOT_UNDERSTAND) > 0 and length(strip(Q71_GAMOT_UNDERSTAND)) > 2 then
+    errmsg("Q71: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q71_GAMOT_UNDERSTAND_OTHER_TXT
+preproc
+  if pos("99", Q71_GAMOT_UNDERSTAND) = 0 then
+    Q71_GAMOT_UNDERSTAND_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q71_GAMOT_UNDERSTAND) > 0 and length(strip(Q71_GAMOT_UNDERSTAND_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q71 - please specify.");
+    reenter;
+  endif;
+
+PROC Q74_WHERE_REST
+postproc
+  if length(strip(Q74_WHERE_REST)) = 0 then
+    errmsg("Select at least one option for Q74 before continuing.");
+    reenter;
+  endif;
+
+PROC Q74_WHERE_REST_OTHER_TXT
+preproc
+  if pos("99", Q74_WHERE_REST) = 0 then
+    Q74_WHERE_REST_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q74_WHERE_REST) > 0 and length(strip(Q74_WHERE_REST_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q74 - please specify.");
+    reenter;
+  endif;
+
+PROC Q77_WHY_GENERIC
+postproc
+  if length(strip(Q77_WHY_GENERIC)) = 0 then
+    errmsg("Select at least one option for Q77 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q77_WHY_GENERIC) > 0 and length(strip(Q77_WHY_GENERIC)) > 2 then
+    errmsg("Q77: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q77_WHY_GENERIC_OTHER_TXT
+preproc
+  if pos("99", Q77_WHY_GENERIC) = 0 then
+    Q77_WHY_GENERIC_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q77_WHY_GENERIC) > 0 and length(strip(Q77_WHY_GENERIC_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q77 - please specify.");
+    reenter;
+  endif;
+
+PROC Q78_WHY_BRANDED
+preproc
+  if Q76_BRAND_OR_GEN <> 1 and Q76_BRAND_OR_GEN <> 3 then   { only Branded (1) or Both (3) answer why-branded }
+    skip to Q79_REG_SOURCE;
+  endif;
+postproc
+  if length(strip(Q78_WHY_BRANDED)) = 0 then
+    errmsg("Select at least one option for Q78 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q78_WHY_BRANDED) > 0 and length(strip(Q78_WHY_BRANDED)) > 2 then
+    errmsg("Q78: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q78_WHY_BRANDED_OTHER_TXT
+preproc
+  if pos("99", Q78_WHY_BRANDED) = 0 then
+    Q78_WHY_BRANDED_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q78_WHY_BRANDED) > 0 and length(strip(Q78_WHY_BRANDED_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q78 - please specify.");
+    reenter;
+  endif;
+
+PROC Q82_DIFFICULTY_REASONS
+postproc
+  if length(strip(Q82_DIFFICULTY_REASONS)) = 0 then
+    errmsg("Select at least one option for Q82 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q82_DIFFICULTY_REASONS) > 0 and length(strip(Q82_DIFFICULTY_REASONS)) > 2 then
+    errmsg("Q82: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q82_DIFFICULTY_REASONS_OTHER_TXT
+preproc
+  if pos("99", Q82_DIFFICULTY_REASONS) = 0 then
+    Q82_DIFFICULTY_REASONS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q82_DIFFICULTY_REASONS) > 0 and length(strip(Q82_DIFFICULTY_REASONS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q82 - please specify.");
+    reenter;
+  endif;
+
+PROC Q85_BENEFITS
+postproc
+  if length(strip(Q85_BENEFITS)) = 0 then
+    errmsg("Select at least one option for Q85 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS)) > 2 then
+    errmsg("Q85: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q85_BENEFITS_OTHER_TXT
+preproc
+  if pos("99", Q85_BENEFITS) = 0 then
+    Q85_BENEFITS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q85_BENEFITS) > 0 and length(strip(Q85_BENEFITS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q85 - please specify.");
+    reenter;
+  endif;
+
+PROC Q88_DIFF_PAYING
+postproc
+  if length(strip(Q88_DIFF_PAYING)) = 0 then
+    errmsg("Select at least one option for Q88 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q88_DIFF_PAYING) > 0 and length(strip(Q88_DIFF_PAYING)) > 2 then
+    errmsg("Q88: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q88_DIFF_PAYING_OTHER_TXT
+preproc
+  if pos("99", Q88_DIFF_PAYING) = 0 then
+    Q88_DIFF_PAYING_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q88_DIFF_PAYING) > 0 and length(strip(Q88_DIFF_PAYING_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q88 - please specify.");
+    reenter;
+  endif;
+
+PROC Q91_WHY_WENT
+postproc
+  if length(strip(Q91_WHY_WENT)) = 0 then
+    errmsg("Select at least one option for Q91 before continuing.");
+    reenter;
+  endif;
+
+PROC Q91_WHY_WENT_OTHER_TXT
+preproc
+  if pos("99", Q91_WHY_WENT) = 0 then
+    Q91_WHY_WENT_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q91_WHY_WENT) > 0 and length(strip(Q91_WHY_WENT_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q91 - please specify.");
+    reenter;
+  endif;
+
+PROC Q93_WHY_NOT
+preproc
+  { #624: Q93 (why NO usual facility) only applies when Q89=No; the Q89=Yes/Q90=No path
+    (Q91 -> Q92) falls through to here, so skip Q93. }
+  if Q89_HAS_USUAL_FACILITY <> 2 then
+    skip to Q94_TRANSPORT;
+  endif;
+postproc
+  if length(strip(Q93_WHY_NOT)) = 0 then
+    errmsg("Select at least one option for Q93 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q93_WHY_NOT) > 0 and length(strip(Q93_WHY_NOT)) > 2 then
+    errmsg("Q93: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q93_WHY_NOT_OTHER_TXT
+preproc
+  if pos("99", Q93_WHY_NOT) = 0 then
+    Q93_WHY_NOT_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q93_WHY_NOT) > 0 and length(strip(Q93_WHY_NOT_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q93 - please specify.");
+    reenter;
+  endif;
+
+PROC Q94_TRANSPORT
+postproc
+  if length(strip(Q94_TRANSPORT)) = 0 then
+    errmsg("Select at least one option for Q94 before continuing.");
+    reenter;
+  endif;
+
+PROC Q94_TRANSPORT_OTHER_TXT
+preproc
+  if pos("99", Q94_TRANSPORT) = 0 then
+    Q94_TRANSPORT_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q94_TRANSPORT) > 0 and length(strip(Q94_TRANSPORT_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q94 - please specify.");
+    reenter;
   endif;
 
 
@@ -569,15 +1309,27 @@ postproc
 
 
 { ---- Skip logic: awareness / primary-care / bill-recall ---- }
+PROC Q4_LGBTQIA
+postproc
+  if Q4_LGBTQIA <> 1 then
+    skip to Q6_CIVIL_STATUS;
+  endif;
+
 PROC Q7_IS_PWD
 postproc
   if Q7_IS_PWD = 2 then
     skip to Q11_EDUCATION;
   endif;
 
+PROC Q8_SPECIFY_DISABILITY
+postproc
+  if Q8_SPECIFY_DISABILITY = 2 then
+    skip to Q11_EDUCATION;
+  endif;
+
 PROC Q9_PWD_CARD
 postproc
-  if Q9_PWD_CARD = 2 then
+  if Q9_PWD_CARD <> 1 and Q9_PWD_CARD <> 2 then
     skip to Q11_EDUCATION;
   endif;
 
@@ -589,7 +1341,7 @@ postproc
 
 PROC Q45_PHILHEALTH_REG
 postproc
-  if Q45_PHILHEALTH_REG = 2 then
+  if Q45_PHILHEALTH_REG = 2 or Q45_PHILHEALTH_REG = 55 then
     skip to Q48_NAME_FIRST;
   endif;
 
@@ -608,7 +1360,7 @@ postproc
 PROC Q72_GAMOT_OBTAINED
 postproc
   if Q72_GAMOT_OBTAINED = 2 then
-    skip to Q75_BRAND_GEN_KNOWS;
+    skip to Q74_WHERE_REST;
   endif;
 
 PROC Q75_BRAND_GEN_KNOWS
@@ -626,7 +1378,7 @@ postproc
 PROC Q83_KNOWS_ASSIST
 postproc
   if Q83_KNOWS_ASSIST = 2 then
-    skip to Q85_BENEFITS_O01;
+    skip to Q85_BENEFITS;
   endif;
 
 PROC Q86_PREMIUM_PAY
@@ -668,13 +1420,13 @@ postproc
 PROC Q89_HAS_USUAL_FACILITY
 postproc
   if Q89_HAS_USUAL_FACILITY = 2 then
-    skip to Q93_WHY_NOT_O01;
+    skip to Q93_WHY_NOT;
   endif;
 
 PROC Q90_IS_USUAL_FOR_GENERAL
 postproc
   if Q90_IS_USUAL_FOR_GENERAL = 1 then
-    skip to Q94_TRANSPORT_O01;
+    skip to Q94_TRANSPORT;
   endif;
 
 PROC Q97_KNOWS_BOOKING
@@ -683,10 +1435,52 @@ postproc
     skip to Q100_LEAVE_WORK_SCHOOL;
   endif;
 
+PROC Q105_FORGONE_CARE
+postproc
+  if Q105_FORGONE_CARE = 2 then
+    skip to Q107_OTHER_ACTIONS;
+  endif;
+
+PROC Q108_REFERRED
+postproc
+  if Q108_REFERRED = 2 then
+    skip to Q126_NBB_HEARD;
+  endif;
+
+PROC Q119_PCF_REFERRAL
+postproc
+  if Q119_PCF_REFERRAL = 2 then
+    skip to Q121_WHY_HOSPITAL;
+  endif;
+
+PROC Q120_PCP_KNOWS
+postproc
+  if 1 = 1 then
+    skip to Q122_PCP_DISCUSSED_PLACES;
+  endif;
+
+PROC Q126_NBB_HEARD
+postproc
+  if Q126_NBB_HEARD = 2 or Q126_NBB_HEARD = 3 then
+    skip to Q132_ZBB_HEARD;
+  endif;
+
 PROC Q129_HH_CONFINED
 postproc
-  if Q129_HH_CONFINED = 2 then
-    skip to Q144_CEREALS_CONSUMED;
+  if Q129_HH_CONFINED = 2 or Q129_HH_CONFINED = 3 then
+    skip to Q132_ZBB_HEARD;
+  endif;
+
+PROC Q132_ZBB_HEARD
+postproc
+  if Q132_ZBB_HEARD = 2 or Q132_ZBB_HEARD = 3 then
+    skip to Q136_MAIFIP_HEARD;
+  endif;
+
+PROC Q136_MAIFIP_HEARD
+postproc
+  if Q136_MAIFIP_HEARD = 2 or Q136_MAIFIP_HEARD = 3 then
+    skip to Q138_MOST_EXPENSIVE;
   endif;
 
 PROC Q140_RECALL_BREAKDOWN
@@ -1248,66 +2042,6 @@ postproc
     reenter;
   endif;
 
-PROC Q102_VISIT_REASON_OTHER_TXT
-preproc
-  if Q102_VISIT_REASON_O08 <> 1 then
-    Q102_VISIT_REASON_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q102_VISIT_REASON_O08 = 1 and length(strip(Q102_VISIT_REASON_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q102_VISIT_REASON but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q103_CARE_TYPE_OTHER_TXT
-preproc
-  if Q103_CARE_TYPE_O05 <> 1 then
-    Q103_CARE_TYPE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q103_CARE_TYPE_O05 = 1 and length(strip(Q103_CARE_TYPE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q103_CARE_TYPE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q106_FORGONE_WHY_OTHER_TXT
-preproc
-  if Q106_FORGONE_WHY_O08 <> 1 then
-    Q106_FORGONE_WHY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q106_FORGONE_WHY_O08 = 1 and length(strip(Q106_FORGONE_WHY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q106_FORGONE_WHY but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q107_OTHER_ACTIONS_OTHER_TXT
-preproc
-  if Q107_OTHER_ACTIONS_O01 <> 1 then
-    Q107_OTHER_ACTIONS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q107_OTHER_ACTIONS_O01 = 1 and length(strip(Q107_OTHER_ACTIONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q107_OTHER_ACTIONS but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q109_TYPE_OTHER_TXT
-preproc
-  if Q109_TYPE_O05 <> 1 then
-    Q109_TYPE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q109_TYPE_O05 = 1 and length(strip(Q109_TYPE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q109_TYPE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
 PROC Q10_DISABILITY_OTHER_TXT
 preproc
   if Q10_DISABILITY_TYPE <> 8 then
@@ -1344,18 +2078,6 @@ postproc
     reenter;
   endif;
 
-PROC Q113_WHY_NOT_OTHER_TXT
-preproc
-  if Q113_WHY_NOT_O07 <> 1 then
-    Q113_WHY_NOT_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q113_WHY_NOT_O07 = 1 and length(strip(Q113_WHY_NOT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q113_WHY_NOT but no text was entered. Please specify.");
-    reenter;
-  endif;
-
 PROC Q11_EDUCATION_OTHER_TXT
 preproc
   if Q11_EDUCATION <> 11 then
@@ -1365,102 +2087,6 @@ preproc
 postproc
   if Q11_EDUCATION = 11 and length(strip(Q11_EDUCATION_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q11_EDUCATION but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q121_WHY_HOSPITAL_OTHER_TXT
-preproc
-  if Q121_WHY_HOSPITAL_O01 <> 1 then
-    Q121_WHY_HOSPITAL_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q121_WHY_HOSPITAL_O01 = 1 and length(strip(Q121_WHY_HOSPITAL_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q121_WHY_HOSPITAL but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q127_NBB_SOURCE_OTHER_TXT
-preproc
-  if Q127_NBB_SOURCE_O08 <> 1 then
-    Q127_NBB_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q127_NBB_SOURCE_O08 = 1 and length(strip(Q127_NBB_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q127_NBB_SOURCE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q128_NBB_UNDERSTAND_OTHER_TXT
-preproc
-  if Q128_NBB_UNDERSTAND_O08 <> 1 then
-    Q128_NBB_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q128_NBB_UNDERSTAND_O08 = 1 and length(strip(Q128_NBB_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q128_NBB_UNDERSTAND but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q133_ZBB_SOURCE_OTHER_TXT
-preproc
-  if Q133_ZBB_SOURCE_O08 <> 1 then
-    Q133_ZBB_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q133_ZBB_SOURCE_O08 = 1 and length(strip(Q133_ZBB_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q133_ZBB_SOURCE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q134_ZBB_UNDERSTAND_OTHER_TXT
-preproc
-  if Q134_ZBB_UNDERSTAND_O08 <> 1 then
-    Q134_ZBB_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q134_ZBB_UNDERSTAND_O08 = 1 and length(strip(Q134_ZBB_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q134_ZBB_UNDERSTAND but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q137_MAIFIP_SOURCE_OTHER_TXT
-preproc
-  if Q137_MAIFIP_SOURCE_O08 <> 1 then
-    Q137_MAIFIP_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q137_MAIFIP_SOURCE_O08 = 1 and length(strip(Q137_MAIFIP_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q137_MAIFIP_SOURCE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q141_BILL_ITEMS_OTHER_TXT
-preproc
-  if Q141_BILL_ITEMS_O07 <> 1 then
-    Q141_BILL_ITEMS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q141_BILL_ITEMS_O07 = 1 and length(strip(Q141_BILL_ITEMS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q141_BILL_ITEMS but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q143_HOW_PAID_OTHER_TXT
-preproc
-  if Q143_HOW_PAID_O10 <> 1 then
-    Q143_HOW_PAID_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q143_HOW_PAID_O10 = 1 and length(strip(Q143_HOW_PAID_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q143_HOW_PAID but no text was entered. Please specify.");
     reenter;
   endif;
 
@@ -1536,78 +2162,6 @@ postproc
     reenter;
   endif;
 
-PROC Q52_UHC_SOURCE_OTHER_TXT
-preproc
-  if Q52_UHC_SOURCE_O08 <> 1 then
-    Q52_UHC_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q52_UHC_SOURCE_O08 = 1 and length(strip(Q52_UHC_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q52_UHC_SOURCE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q53_UHC_UNDERSTAND_OTHER_TXT
-preproc
-  if Q53_UHC_UNDERSTAND_O06 <> 1 then
-    Q53_UHC_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q53_UHC_UNDERSTAND_O06 = 1 and length(strip(Q53_UHC_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q53_UHC_UNDERSTAND but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q55_YAKAP_SOURCE_OTHER_TXT
-preproc
-  if Q55_YAKAP_SOURCE_O08 <> 1 then
-    Q55_YAKAP_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q55_YAKAP_SOURCE_O08 = 1 and length(strip(Q55_YAKAP_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q55_YAKAP_SOURCE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q56_YAKAP_UNDERSTAND_OTHER_TXT
-preproc
-  if Q56_YAKAP_UNDERSTAND_O07 <> 1 then
-    Q56_YAKAP_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q56_YAKAP_UNDERSTAND_O07 = 1 and length(strip(Q56_YAKAP_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q56_YAKAP_UNDERSTAND but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q58_BUCAS_SOURCE_OTHER_TXT
-preproc
-  if Q58_BUCAS_SOURCE_O08 <> 1 then
-    Q58_BUCAS_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q58_BUCAS_SOURCE_O08 = 1 and length(strip(Q58_BUCAS_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q58_BUCAS_SOURCE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q59_BUCAS_UNDERSTAND_OTHER_TXT
-preproc
-  if Q59_BUCAS_UNDERSTAND_O05 <> 1 then
-    Q59_BUCAS_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q59_BUCAS_UNDERSTAND_O05 = 1 and length(strip(Q59_BUCAS_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q59_BUCAS_UNDERSTAND but no text was entered. Please specify.");
-    reenter;
-  endif;
-
 PROC Q5_GROUP_OTHER_TXT
 preproc
   if Q5_GROUP <> 8 then
@@ -1620,171 +2174,27 @@ postproc
     reenter;
   endif;
 
-PROC Q61_BUCAS_SERVICES_OTHER_TXT
-preproc
-  if Q61_BUCAS_SERVICES_O07 <> 1 then
-    Q61_BUCAS_SERVICES_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q61_BUCAS_SERVICES_O07 = 1 and length(strip(Q61_BUCAS_SERVICES_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q61_BUCAS_SERVICES but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q65_CONDITIONS_OTHER_TXT
-preproc
-  if Q65_CONDITIONS_O14 <> 1 then
-    Q65_CONDITIONS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q65_CONDITIONS_O14 = 1 and length(strip(Q65_CONDITIONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q65_CONDITIONS but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q66_WHERE_BUY_OTHER_TXT
-preproc
-  if Q66_WHERE_BUY_O08 <> 1 then
-    Q66_WHERE_BUY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q66_WHERE_BUY_O08 = 1 and length(strip(Q66_WHERE_BUY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q66_WHERE_BUY but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q70_GAMOT_SOURCE_OTHER_TXT
-preproc
-  if Q70_GAMOT_SOURCE_O08 <> 1 then
-    Q70_GAMOT_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q70_GAMOT_SOURCE_O08 = 1 and length(strip(Q70_GAMOT_SOURCE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q70_GAMOT_SOURCE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q71_GAMOT_UNDERSTAND_OTHER_TXT
-preproc
-  if Q71_GAMOT_UNDERSTAND_O06 <> 1 then
-    Q71_GAMOT_UNDERSTAND_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q71_GAMOT_UNDERSTAND_O06 = 1 and length(strip(Q71_GAMOT_UNDERSTAND_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q71_GAMOT_UNDERSTAND but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q74_WHERE_REST_OTHER_TXT
-preproc
-  if Q74_WHERE_REST_O10 <> 1 then
-    Q74_WHERE_REST_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q74_WHERE_REST_O10 = 1 and length(strip(Q74_WHERE_REST_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q74_WHERE_REST but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q77_WHY_GENERIC_OTHER_TXT
-preproc
-  if Q77_WHY_GENERIC_O08 <> 1 then
-    Q77_WHY_GENERIC_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q77_WHY_GENERIC_O08 = 1 and length(strip(Q77_WHY_GENERIC_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q77_WHY_GENERIC but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q78_WHY_BRANDED_OTHER_TXT
-preproc
-  if Q78_WHY_BRANDED_O08 <> 1 then
-    Q78_WHY_BRANDED_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q78_WHY_BRANDED_O08 = 1 and length(strip(Q78_WHY_BRANDED_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q78_WHY_BRANDED but no text was entered. Please specify.");
-    reenter;
-  endif;
-
 PROC Q79_REG_SOURCE_OTHER_TXT
 preproc
-  if Q79_REG_SOURCE <> 4 then
+  if Q79_REG_SOURCE <> 10 then
     Q79_REG_SOURCE_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
     noinput;
   endif;
 postproc
-  if Q79_REG_SOURCE = 4 and length(strip(Q79_REG_SOURCE_OTHER_TXT)) = 0 then
+  if Q79_REG_SOURCE = 10 and length(strip(Q79_REG_SOURCE_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q79_REG_SOURCE but no text was entered. Please specify.");
     reenter;
   endif;
 
 PROC Q80_ASSIST_OTHER_TXT
 preproc
-  if Q80_ASSIST <> 4 then
+  if Q80_ASSIST <> 10 then
     Q80_ASSIST_OTHER_TXT = "";   { skip + clear: 'Other' not chosen -> field must not be enterable }
     noinput;
   endif;
 postproc
-  if Q80_ASSIST = 4 and length(strip(Q80_ASSIST_OTHER_TXT)) = 0 then
+  if Q80_ASSIST = 10 and length(strip(Q80_ASSIST_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q80_ASSIST but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q82_DIFFICULTY_REASONS_OTHER_TXT
-preproc
-  if Q82_DIFFICULTY_REASONS_O08 <> 1 then
-    Q82_DIFFICULTY_REASONS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q82_DIFFICULTY_REASONS_O08 = 1 and length(strip(Q82_DIFFICULTY_REASONS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q82_DIFFICULTY_REASONS but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q85_BENEFITS_OTHER_TXT
-preproc
-  if Q85_BENEFITS_O06 <> 1 then
-    Q85_BENEFITS_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q85_BENEFITS_O06 = 1 and length(strip(Q85_BENEFITS_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q85_BENEFITS but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q88_DIFF_PAYING_OTHER_TXT
-preproc
-  if Q88_DIFF_PAYING_O07 <> 1 then
-    Q88_DIFF_PAYING_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q88_DIFF_PAYING_O07 = 1 and length(strip(Q88_DIFF_PAYING_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q88_DIFF_PAYING but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q91_WHY_WENT_OTHER_TXT
-preproc
-  if Q91_WHY_WENT_O09 <> 1 then
-    Q91_WHY_WENT_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q91_WHY_WENT_O09 = 1 and length(strip(Q91_WHY_WENT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q91_WHY_WENT but no text was entered. Please specify.");
     reenter;
   endif;
 
@@ -1800,228 +2210,69 @@ postproc
     reenter;
   endif;
 
-PROC Q93_WHY_NOT_OTHER_TXT
+{ ---- Section N subtotals — init + auto-compute + protect (#9/#617, spec §4.9) ---- }
+PROC Q144_CEREALS_CONSUMED
 preproc
-  if Q93_WHY_NOT_O07 <> 1 then
-    Q93_WHY_NOT_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q93_WHY_NOT_O07 = 1 and length(strip(Q93_WHY_NOT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q93_WHY_NOT but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q94_TRANSPORT_OTHER_TXT
-preproc
-  if Q94_TRANSPORT_O12 <> 1 then
-    Q94_TRANSPORT_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q94_TRANSPORT_O12 = 1 and length(strip(Q94_TRANSPORT_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q94_TRANSPORT but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-{ ---- Section N subtotals — auto-compute + protect (#9, spec §4.9) ---- }
-PROC Q157_FOOD_SUBTOTAL_TOTAL_PHP
-preproc
-  Q157_FOOD_SUBTOTAL_TOTAL_PHP =
-    Q144_CEREALS_INKIND_PHP
-    + Q144_CEREALS_PURCHASED_PHP
-    + Q145_PULSES_INKIND_PHP
-    + Q145_PULSES_PURCHASED_PHP
-    + Q146_VEGETABLES_INKIND_PHP
-    + Q146_VEGETABLES_PURCHASED_PHP
-    + Q147_FRUITS_INKIND_PHP
-    + Q147_FRUITS_PURCHASED_PHP
-    + Q148_FISH_INKIND_PHP
-    + Q148_FISH_PURCHASED_PHP
-    + Q149_MEAT_INKIND_PHP
-    + Q149_MEAT_PURCHASED_PHP
-    + Q150_EGGS_INKIND_PHP
-    + Q150_EGGS_PURCHASED_PHP
-    + Q151_MILK_INKIND_PHP
-    + Q151_MILK_PURCHASED_PHP
-    + Q152_FATS_INKIND_PHP
-    + Q152_FATS_PURCHASED_PHP
-    + Q153_SUGAR_INKIND_PHP
-    + Q153_SUGAR_PURCHASED_PHP
-    + Q154_CONDIMENTS_INKIND_PHP
-    + Q154_CONDIMENTS_PURCHASED_PHP
-    + Q155_WATER_NA_INKIND_PHP
-    + Q155_WATER_NA_PURCHASED_PHP
-    + Q156_ALCOHOL_INKIND_PHP
-    + Q156_ALCOHOL_PURCHASED_PHP;
+  Q157_FOOD_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
   protect(Q157_FOOD_SUBTOTAL_TOTAL_PHP, true);
 
-PROC Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
+PROC Q158_RESTAURANT_CONSUMED
 preproc
-  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP =
-    Q173_HEALTH_INS_INKIND_PHP
-    + Q173_HEALTH_INS_PURCHASED_PHP
-    + Q174_OTHER_INS_INKIND_PHP
-    + Q174_OTHER_INS_PURCHASED_PHP
-    + Q175_INPATIENT_INKIND_PHP
-    + Q175_INPATIENT_PURCHASED_PHP
-    + Q176_EMERGENCY_TRANSPORT_INKIND_PHP
-    + Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP;
+  { #617 real Q157_FOOD_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
+  Q157_FOOD_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
+  if Q144_CEREALS_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q144_CEREALS_INKIND_PHP + Q144_CEREALS_PURCHASED_PHP; endif;
+  if Q145_PULSES_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q145_PULSES_INKIND_PHP + Q145_PULSES_PURCHASED_PHP; endif;
+  if Q146_VEGETABLES_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q146_VEGETABLES_INKIND_PHP + Q146_VEGETABLES_PURCHASED_PHP; endif;
+  if Q147_FRUITS_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q147_FRUITS_INKIND_PHP + Q147_FRUITS_PURCHASED_PHP; endif;
+  if Q148_FISH_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q148_FISH_INKIND_PHP + Q148_FISH_PURCHASED_PHP; endif;
+  if Q149_MEAT_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q149_MEAT_INKIND_PHP + Q149_MEAT_PURCHASED_PHP; endif;
+  if Q150_EGGS_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q150_EGGS_INKIND_PHP + Q150_EGGS_PURCHASED_PHP; endif;
+  if Q151_MILK_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q151_MILK_INKIND_PHP + Q151_MILK_PURCHASED_PHP; endif;
+  if Q152_FATS_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q152_FATS_INKIND_PHP + Q152_FATS_PURCHASED_PHP; endif;
+  if Q153_SUGAR_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q153_SUGAR_INKIND_PHP + Q153_SUGAR_PURCHASED_PHP; endif;
+  if Q154_CONDIMENTS_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q154_CONDIMENTS_INKIND_PHP + Q154_CONDIMENTS_PURCHASED_PHP; endif;
+  if Q155_WATER_NA_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q155_WATER_NA_INKIND_PHP + Q155_WATER_NA_PURCHASED_PHP; endif;
+  if Q156_ALCOHOL_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q156_ALCOHOL_INKIND_PHP + Q156_ALCOHOL_PURCHASED_PHP; endif;
+  protect(Q157_FOOD_SUBTOTAL_TOTAL_PHP, true);
+
+PROC Q173_HEALTH_INS_CONSUMED
+preproc
+  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
   protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP, true);
 
-PROC Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
+PROC Q178_PREVENTIVE_CONSUMED
 preproc
-  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP =
-    Q178_PREVENTIVE_INKIND_PHP
-    + Q178_PREVENTIVE_PURCHASED_PHP
-    + Q179_DIAGNOSTIC_INKIND_PHP
-    + Q179_DIAGNOSTIC_PURCHASED_PHP
-    + Q180_ASSISTIVE_INKIND_PHP
-    + Q180_ASSISTIVE_PURCHASED_PHP
-    + Q181_MEDICAL_PRODUCTS_INKIND_PHP
-    + Q181_MEDICAL_PRODUCTS_PURCHASED_PHP;
+  { #617 real Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
+  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
+  if Q173_HEALTH_INS_CONSUMED = 1 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q173_HEALTH_INS_INKIND_PHP + Q173_HEALTH_INS_PURCHASED_PHP; endif;
+  if Q174_OTHER_INS_CONSUMED = 1 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q174_OTHER_INS_INKIND_PHP + Q174_OTHER_INS_PURCHASED_PHP; endif;
+  if Q175_INPATIENT_CONSUMED = 1 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q175_INPATIENT_INKIND_PHP + Q175_INPATIENT_PURCHASED_PHP; endif;
+  if Q176_EMERGENCY_TRANSPORT_CONSUMED = 1 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q176_EMERGENCY_TRANSPORT_INKIND_PHP + Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP; endif;
+  protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP, true);
+  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
   protect(Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP, true);
 
-PROC Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
+PROC Q183_MEDICINES_CONSUMED
 preproc
-  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP =
-    Q183_MEDICINES_INKIND_PHP
-    + Q183_MEDICINES_PURCHASED_PHP
-    + Q184_OUTPATIENT_INKIND_PHP
-    + Q184_OUTPATIENT_PURCHASED_PHP;
+  { #617 real Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
+  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
+  if Q178_PREVENTIVE_CONSUMED = 1 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q178_PREVENTIVE_INKIND_PHP + Q178_PREVENTIVE_PURCHASED_PHP; endif;
+  if Q179_DIAGNOSTIC_CONSUMED = 1 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q179_DIAGNOSTIC_INKIND_PHP + Q179_DIAGNOSTIC_PURCHASED_PHP; endif;
+  if Q180_ASSISTIVE_CONSUMED = 1 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q180_ASSISTIVE_INKIND_PHP + Q180_ASSISTIVE_PURCHASED_PHP; endif;
+  if Q181_MEDICAL_PRODUCTS_CONSUMED = 1 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q181_MEDICAL_PRODUCTS_INKIND_PHP + Q181_MEDICAL_PRODUCTS_PURCHASED_PHP; endif;
+  protect(Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP, true);
+  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
+  protect(Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP, true);
+
+PROC Q186_CURRENT_INCOME
+preproc
+  { #617 real Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
+  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
+  if Q183_MEDICINES_CONSUMED = 1 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q183_MEDICINES_INKIND_PHP + Q183_MEDICINES_PURCHASED_PHP; endif;
+  if Q184_OUTPATIENT_CONSUMED = 1 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q184_OUTPATIENT_INKIND_PHP + Q184_OUTPATIENT_PURCHASED_PHP; endif;
   protect(Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP, true);
 
 { ---- Select-all validation — >=1 option ticked (auto-derived from dcf) ---- }
-PROC Q102_VISIT_REASON_O08
-postproc
-  if not (Q102_VISIT_REASON_O01 = 1 or Q102_VISIT_REASON_O02 = 1 or Q102_VISIT_REASON_O03 = 1 or Q102_VISIT_REASON_O04 = 1 or Q102_VISIT_REASON_O05 = 1 or Q102_VISIT_REASON_O06 = 1 or Q102_VISIT_REASON_O07 = 1 or Q102_VISIT_REASON_O08 = 1) then
-    errmsg("Select at least one option for Q102_VISIT_REASON before continuing.");
-    reenter;
-  endif;
-
-PROC Q103_CARE_TYPE_O05
-postproc
-  if not (Q103_CARE_TYPE_O01 = 1 or Q103_CARE_TYPE_O02 = 1 or Q103_CARE_TYPE_O03 = 1 or Q103_CARE_TYPE_O04 = 1 or Q103_CARE_TYPE_O05 = 1) then
-    errmsg("Select at least one option for Q103_CARE_TYPE before continuing.");
-    reenter;
-  endif;
-
-PROC Q106_FORGONE_WHY_O08
-postproc
-  if not (Q106_FORGONE_WHY_O01 = 1 or Q106_FORGONE_WHY_O02 = 1 or Q106_FORGONE_WHY_O03 = 1 or Q106_FORGONE_WHY_O04 = 1 or Q106_FORGONE_WHY_O05 = 1 or Q106_FORGONE_WHY_O06 = 1 or Q106_FORGONE_WHY_O07 = 1 or Q106_FORGONE_WHY_O08 = 1) then
-    errmsg("Select at least one option for Q106_FORGONE_WHY before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q106_FORGONE_WHY_O07 = 1) and (Q106_FORGONE_WHY_O01 = 1 or Q106_FORGONE_WHY_O02 = 1 or Q106_FORGONE_WHY_O03 = 1 or Q106_FORGONE_WHY_O04 = 1 or Q106_FORGONE_WHY_O05 = 1 or Q106_FORGONE_WHY_O06 = 1 or Q106_FORGONE_WHY_O08 = 1) then
-    errmsg("Q106_FORGONE_WHY: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q107_OTHER_ACTIONS_O07
-postproc
-  if not (Q107_OTHER_ACTIONS_O01 = 1 or Q107_OTHER_ACTIONS_O02 = 1 or Q107_OTHER_ACTIONS_O03 = 1 or Q107_OTHER_ACTIONS_O04 = 1 or Q107_OTHER_ACTIONS_O05 = 1 or Q107_OTHER_ACTIONS_O06 = 1 or Q107_OTHER_ACTIONS_O07 = 1) then
-    errmsg("Select at least one option for Q107_OTHER_ACTIONS before continuing.");
-    reenter;
-  endif;
-
-PROC Q109_TYPE_O12
-postproc
-  if not (Q109_TYPE_O01 = 1 or Q109_TYPE_O02 = 1 or Q109_TYPE_O03 = 1 or Q109_TYPE_O04 = 1 or Q109_TYPE_O05 = 1 or Q109_TYPE_O06 = 1 or Q109_TYPE_O07 = 1 or Q109_TYPE_O08 = 1 or Q109_TYPE_O09 = 1 or Q109_TYPE_O10 = 1 or Q109_TYPE_O11 = 1 or Q109_TYPE_O12 = 1) then
-    errmsg("Select at least one option for Q109_TYPE before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q109_TYPE_O11 = 1) and (Q109_TYPE_O01 = 1 or Q109_TYPE_O02 = 1 or Q109_TYPE_O03 = 1 or Q109_TYPE_O04 = 1 or Q109_TYPE_O05 = 1 or Q109_TYPE_O06 = 1 or Q109_TYPE_O07 = 1 or Q109_TYPE_O08 = 1 or Q109_TYPE_O09 = 1 or Q109_TYPE_O10 = 1 or Q109_TYPE_O12 = 1) then
-    errmsg("Q109_TYPE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q113_WHY_NOT_O07
-postproc
-  if not (Q113_WHY_NOT_O01 = 1 or Q113_WHY_NOT_O02 = 1 or Q113_WHY_NOT_O03 = 1 or Q113_WHY_NOT_O04 = 1 or Q113_WHY_NOT_O05 = 1 or Q113_WHY_NOT_O06 = 1 or Q113_WHY_NOT_O07 = 1) then
-    errmsg("Select at least one option for Q113_WHY_NOT before continuing.");
-    reenter;
-  endif;
-
-PROC Q121_WHY_HOSPITAL_O09
-postproc
-  if not (Q121_WHY_HOSPITAL_O01 = 1 or Q121_WHY_HOSPITAL_O02 = 1 or Q121_WHY_HOSPITAL_O03 = 1 or Q121_WHY_HOSPITAL_O04 = 1 or Q121_WHY_HOSPITAL_O05 = 1 or Q121_WHY_HOSPITAL_O06 = 1 or Q121_WHY_HOSPITAL_O07 = 1 or Q121_WHY_HOSPITAL_O08 = 1 or Q121_WHY_HOSPITAL_O09 = 1) then
-    errmsg("Select at least one option for Q121_WHY_HOSPITAL before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q121_WHY_HOSPITAL_O08 = 1) and (Q121_WHY_HOSPITAL_O01 = 1 or Q121_WHY_HOSPITAL_O02 = 1 or Q121_WHY_HOSPITAL_O03 = 1 or Q121_WHY_HOSPITAL_O04 = 1 or Q121_WHY_HOSPITAL_O05 = 1 or Q121_WHY_HOSPITAL_O06 = 1 or Q121_WHY_HOSPITAL_O07 = 1 or Q121_WHY_HOSPITAL_O09 = 1) then
-    errmsg("Q121_WHY_HOSPITAL: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q127_NBB_SOURCE_O08
-postproc
-  if not (Q127_NBB_SOURCE_O01 = 1 or Q127_NBB_SOURCE_O02 = 1 or Q127_NBB_SOURCE_O03 = 1 or Q127_NBB_SOURCE_O04 = 1 or Q127_NBB_SOURCE_O05 = 1 or Q127_NBB_SOURCE_O06 = 1 or Q127_NBB_SOURCE_O07 = 1 or Q127_NBB_SOURCE_O08 = 1) then
-    errmsg("Select at least one option for Q127_NBB_SOURCE before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q127_NBB_SOURCE_O07 = 1) and (Q127_NBB_SOURCE_O01 = 1 or Q127_NBB_SOURCE_O02 = 1 or Q127_NBB_SOURCE_O03 = 1 or Q127_NBB_SOURCE_O04 = 1 or Q127_NBB_SOURCE_O05 = 1 or Q127_NBB_SOURCE_O06 = 1 or Q127_NBB_SOURCE_O08 = 1) then
-    errmsg("Q127_NBB_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q128_NBB_UNDERSTAND_O09
-postproc
-  if not (Q128_NBB_UNDERSTAND_O01 = 1 or Q128_NBB_UNDERSTAND_O02 = 1 or Q128_NBB_UNDERSTAND_O03 = 1 or Q128_NBB_UNDERSTAND_O04 = 1 or Q128_NBB_UNDERSTAND_O05 = 1 or Q128_NBB_UNDERSTAND_O06 = 1 or Q128_NBB_UNDERSTAND_O07 = 1 or Q128_NBB_UNDERSTAND_O08 = 1 or Q128_NBB_UNDERSTAND_O09 = 1) then
-    errmsg("Select at least one option for Q128_NBB_UNDERSTAND before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q128_NBB_UNDERSTAND_O06 = 1) and (Q128_NBB_UNDERSTAND_O01 = 1 or Q128_NBB_UNDERSTAND_O02 = 1 or Q128_NBB_UNDERSTAND_O03 = 1 or Q128_NBB_UNDERSTAND_O04 = 1 or Q128_NBB_UNDERSTAND_O05 = 1 or Q128_NBB_UNDERSTAND_O07 = 1 or Q128_NBB_UNDERSTAND_O08 = 1 or Q128_NBB_UNDERSTAND_O09 = 1) then
-    errmsg("Q128_NBB_UNDERSTAND: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q133_ZBB_SOURCE_O08
-postproc
-  if not (Q133_ZBB_SOURCE_O01 = 1 or Q133_ZBB_SOURCE_O02 = 1 or Q133_ZBB_SOURCE_O03 = 1 or Q133_ZBB_SOURCE_O04 = 1 or Q133_ZBB_SOURCE_O05 = 1 or Q133_ZBB_SOURCE_O06 = 1 or Q133_ZBB_SOURCE_O07 = 1 or Q133_ZBB_SOURCE_O08 = 1) then
-    errmsg("Select at least one option for Q133_ZBB_SOURCE before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q133_ZBB_SOURCE_O07 = 1) and (Q133_ZBB_SOURCE_O01 = 1 or Q133_ZBB_SOURCE_O02 = 1 or Q133_ZBB_SOURCE_O03 = 1 or Q133_ZBB_SOURCE_O04 = 1 or Q133_ZBB_SOURCE_O05 = 1 or Q133_ZBB_SOURCE_O06 = 1 or Q133_ZBB_SOURCE_O08 = 1) then
-    errmsg("Q133_ZBB_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q134_ZBB_UNDERSTAND_O09
-postproc
-  if not (Q134_ZBB_UNDERSTAND_O01 = 1 or Q134_ZBB_UNDERSTAND_O02 = 1 or Q134_ZBB_UNDERSTAND_O03 = 1 or Q134_ZBB_UNDERSTAND_O04 = 1 or Q134_ZBB_UNDERSTAND_O05 = 1 or Q134_ZBB_UNDERSTAND_O06 = 1 or Q134_ZBB_UNDERSTAND_O07 = 1 or Q134_ZBB_UNDERSTAND_O08 = 1 or Q134_ZBB_UNDERSTAND_O09 = 1) then
-    errmsg("Select at least one option for Q134_ZBB_UNDERSTAND before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q134_ZBB_UNDERSTAND_O06 = 1) and (Q134_ZBB_UNDERSTAND_O01 = 1 or Q134_ZBB_UNDERSTAND_O02 = 1 or Q134_ZBB_UNDERSTAND_O03 = 1 or Q134_ZBB_UNDERSTAND_O04 = 1 or Q134_ZBB_UNDERSTAND_O05 = 1 or Q134_ZBB_UNDERSTAND_O07 = 1 or Q134_ZBB_UNDERSTAND_O08 = 1 or Q134_ZBB_UNDERSTAND_O09 = 1) then
-    errmsg("Q134_ZBB_UNDERSTAND: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q137_MAIFIP_SOURCE_O08
-postproc
-  if not (Q137_MAIFIP_SOURCE_O01 = 1 or Q137_MAIFIP_SOURCE_O02 = 1 or Q137_MAIFIP_SOURCE_O03 = 1 or Q137_MAIFIP_SOURCE_O04 = 1 or Q137_MAIFIP_SOURCE_O05 = 1 or Q137_MAIFIP_SOURCE_O06 = 1 or Q137_MAIFIP_SOURCE_O07 = 1 or Q137_MAIFIP_SOURCE_O08 = 1) then
-    errmsg("Select at least one option for Q137_MAIFIP_SOURCE before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q137_MAIFIP_SOURCE_O07 = 1) and (Q137_MAIFIP_SOURCE_O01 = 1 or Q137_MAIFIP_SOURCE_O02 = 1 or Q137_MAIFIP_SOURCE_O03 = 1 or Q137_MAIFIP_SOURCE_O04 = 1 or Q137_MAIFIP_SOURCE_O05 = 1 or Q137_MAIFIP_SOURCE_O06 = 1 or Q137_MAIFIP_SOURCE_O08 = 1) then
-    errmsg("Q137_MAIFIP_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q141_BILL_ITEMS_O07
-postproc
-  if not (Q141_BILL_ITEMS_O01 = 1 or Q141_BILL_ITEMS_O02 = 1 or Q141_BILL_ITEMS_O03 = 1 or Q141_BILL_ITEMS_O04 = 1 or Q141_BILL_ITEMS_O05 = 1 or Q141_BILL_ITEMS_O06 = 1 or Q141_BILL_ITEMS_O07 = 1) then
-    errmsg("Select at least one option for Q141_BILL_ITEMS before continuing.");
-    reenter;
-  endif;
-
-PROC Q143_HOW_PAID_O10
-postproc
-  if not (Q143_HOW_PAID_O01 = 1 or Q143_HOW_PAID_O02 = 1 or Q143_HOW_PAID_O03 = 1 or Q143_HOW_PAID_O04 = 1 or Q143_HOW_PAID_O05 = 1 or Q143_HOW_PAID_O06 = 1 or Q143_HOW_PAID_O07 = 1 or Q143_HOW_PAID_O08 = 1 or Q143_HOW_PAID_O09 = 1 or Q143_HOW_PAID_O10 = 1) then
-    errmsg("Select at least one option for Q143_HOW_PAID before continuing.");
-    reenter;
-  endif;
-
 PROC Q196_FOREGONE_O08
 postproc
   if not (Q196_FOREGONE_O01 = 1 or Q196_FOREGONE_O02 = 1 or Q196_FOREGONE_O03 = 1 or Q196_FOREGONE_O04 = 1 or Q196_FOREGONE_O05 = 1 or Q196_FOREGONE_O06 = 1 or Q196_FOREGONE_O07 = 1 or Q196_FOREGONE_O08 = 1) then
@@ -2036,206 +2287,6 @@ postproc
     reenter;
   endif;
 
-PROC Q52_UHC_SOURCE_O08
-postproc
-  if not (Q52_UHC_SOURCE_O01 = 1 or Q52_UHC_SOURCE_O02 = 1 or Q52_UHC_SOURCE_O03 = 1 or Q52_UHC_SOURCE_O04 = 1 or Q52_UHC_SOURCE_O05 = 1 or Q52_UHC_SOURCE_O06 = 1 or Q52_UHC_SOURCE_O07 = 1 or Q52_UHC_SOURCE_O08 = 1) then
-    errmsg("Select at least one option for Q52_UHC_SOURCE before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q52_UHC_SOURCE_O07 = 1) and (Q52_UHC_SOURCE_O01 = 1 or Q52_UHC_SOURCE_O02 = 1 or Q52_UHC_SOURCE_O03 = 1 or Q52_UHC_SOURCE_O04 = 1 or Q52_UHC_SOURCE_O05 = 1 or Q52_UHC_SOURCE_O06 = 1 or Q52_UHC_SOURCE_O08 = 1) then
-    errmsg("Q52_UHC_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q53_UHC_UNDERSTAND_O06
-postproc
-  if not (Q53_UHC_UNDERSTAND_O01 = 1 or Q53_UHC_UNDERSTAND_O02 = 1 or Q53_UHC_UNDERSTAND_O03 = 1 or Q53_UHC_UNDERSTAND_O04 = 1 or Q53_UHC_UNDERSTAND_O05 = 1 or Q53_UHC_UNDERSTAND_O06 = 1) then
-    errmsg("Select at least one option for Q53_UHC_UNDERSTAND before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q53_UHC_UNDERSTAND_O05 = 1) and (Q53_UHC_UNDERSTAND_O01 = 1 or Q53_UHC_UNDERSTAND_O02 = 1 or Q53_UHC_UNDERSTAND_O03 = 1 or Q53_UHC_UNDERSTAND_O04 = 1 or Q53_UHC_UNDERSTAND_O06 = 1) then
-    errmsg("Q53_UHC_UNDERSTAND: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q55_YAKAP_SOURCE_O08
-postproc
-  if not (Q55_YAKAP_SOURCE_O01 = 1 or Q55_YAKAP_SOURCE_O02 = 1 or Q55_YAKAP_SOURCE_O03 = 1 or Q55_YAKAP_SOURCE_O04 = 1 or Q55_YAKAP_SOURCE_O05 = 1 or Q55_YAKAP_SOURCE_O06 = 1 or Q55_YAKAP_SOURCE_O07 = 1 or Q55_YAKAP_SOURCE_O08 = 1) then
-    errmsg("Select at least one option for Q55_YAKAP_SOURCE before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q55_YAKAP_SOURCE_O07 = 1) and (Q55_YAKAP_SOURCE_O01 = 1 or Q55_YAKAP_SOURCE_O02 = 1 or Q55_YAKAP_SOURCE_O03 = 1 or Q55_YAKAP_SOURCE_O04 = 1 or Q55_YAKAP_SOURCE_O05 = 1 or Q55_YAKAP_SOURCE_O06 = 1 or Q55_YAKAP_SOURCE_O08 = 1) then
-    errmsg("Q55_YAKAP_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q56_YAKAP_UNDERSTAND_O07
-postproc
-  if not (Q56_YAKAP_UNDERSTAND_O01 = 1 or Q56_YAKAP_UNDERSTAND_O02 = 1 or Q56_YAKAP_UNDERSTAND_O03 = 1 or Q56_YAKAP_UNDERSTAND_O04 = 1 or Q56_YAKAP_UNDERSTAND_O05 = 1 or Q56_YAKAP_UNDERSTAND_O06 = 1 or Q56_YAKAP_UNDERSTAND_O07 = 1) then
-    errmsg("Select at least one option for Q56_YAKAP_UNDERSTAND before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q56_YAKAP_UNDERSTAND_O05 = 1 or Q56_YAKAP_UNDERSTAND_O06 = 1) and (Q56_YAKAP_UNDERSTAND_O01 = 1 or Q56_YAKAP_UNDERSTAND_O02 = 1 or Q56_YAKAP_UNDERSTAND_O03 = 1 or Q56_YAKAP_UNDERSTAND_O04 = 1 or Q56_YAKAP_UNDERSTAND_O07 = 1) then
-    errmsg("Q56_YAKAP_UNDERSTAND: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q58_BUCAS_SOURCE_O08
-postproc
-  if not (Q58_BUCAS_SOURCE_O01 = 1 or Q58_BUCAS_SOURCE_O02 = 1 or Q58_BUCAS_SOURCE_O03 = 1 or Q58_BUCAS_SOURCE_O04 = 1 or Q58_BUCAS_SOURCE_O05 = 1 or Q58_BUCAS_SOURCE_O06 = 1 or Q58_BUCAS_SOURCE_O07 = 1 or Q58_BUCAS_SOURCE_O08 = 1) then
-    errmsg("Select at least one option for Q58_BUCAS_SOURCE before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q58_BUCAS_SOURCE_O07 = 1) and (Q58_BUCAS_SOURCE_O01 = 1 or Q58_BUCAS_SOURCE_O02 = 1 or Q58_BUCAS_SOURCE_O03 = 1 or Q58_BUCAS_SOURCE_O04 = 1 or Q58_BUCAS_SOURCE_O05 = 1 or Q58_BUCAS_SOURCE_O06 = 1 or Q58_BUCAS_SOURCE_O08 = 1) then
-    errmsg("Q58_BUCAS_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q59_BUCAS_UNDERSTAND_O05
-postproc
-  if not (Q59_BUCAS_UNDERSTAND_O01 = 1 or Q59_BUCAS_UNDERSTAND_O02 = 1 or Q59_BUCAS_UNDERSTAND_O03 = 1 or Q59_BUCAS_UNDERSTAND_O04 = 1 or Q59_BUCAS_UNDERSTAND_O05 = 1) then
-    errmsg("Select at least one option for Q59_BUCAS_UNDERSTAND before continuing.");
-    reenter;
-  endif;
-
-PROC Q61_BUCAS_SERVICES_O07
-postproc
-  if not (Q61_BUCAS_SERVICES_O01 = 1 or Q61_BUCAS_SERVICES_O02 = 1 or Q61_BUCAS_SERVICES_O03 = 1 or Q61_BUCAS_SERVICES_O04 = 1 or Q61_BUCAS_SERVICES_O05 = 1 or Q61_BUCAS_SERVICES_O06 = 1 or Q61_BUCAS_SERVICES_O07 = 1) then
-    errmsg("Select at least one option for Q61_BUCAS_SERVICES before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q61_BUCAS_SERVICES_O06 = 1) and (Q61_BUCAS_SERVICES_O01 = 1 or Q61_BUCAS_SERVICES_O02 = 1 or Q61_BUCAS_SERVICES_O03 = 1 or Q61_BUCAS_SERVICES_O04 = 1 or Q61_BUCAS_SERVICES_O05 = 1 or Q61_BUCAS_SERVICES_O07 = 1) then
-    errmsg("Q61_BUCAS_SERVICES: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q65_CONDITIONS_O20
-postproc
-  if not (Q65_CONDITIONS_O01 = 1 or Q65_CONDITIONS_O02 = 1 or Q65_CONDITIONS_O03 = 1 or Q65_CONDITIONS_O04 = 1 or Q65_CONDITIONS_O05 = 1 or Q65_CONDITIONS_O06 = 1 or Q65_CONDITIONS_O07 = 1 or Q65_CONDITIONS_O08 = 1 or Q65_CONDITIONS_O09 = 1 or Q65_CONDITIONS_O10 = 1 or Q65_CONDITIONS_O11 = 1 or Q65_CONDITIONS_O12 = 1 or Q65_CONDITIONS_O13 = 1 or Q65_CONDITIONS_O14 = 1 or Q65_CONDITIONS_O15 = 1 or Q65_CONDITIONS_O16 = 1 or Q65_CONDITIONS_O17 = 1 or Q65_CONDITIONS_O18 = 1 or Q65_CONDITIONS_O19 = 1 or Q65_CONDITIONS_O20 = 1) then
-    errmsg("Select at least one option for Q65_CONDITIONS before continuing.");
-    reenter;
-  endif;
-
-PROC Q66_WHERE_BUY_O08
-postproc
-  if not (Q66_WHERE_BUY_O01 = 1 or Q66_WHERE_BUY_O02 = 1 or Q66_WHERE_BUY_O03 = 1 or Q66_WHERE_BUY_O04 = 1 or Q66_WHERE_BUY_O05 = 1 or Q66_WHERE_BUY_O06 = 1 or Q66_WHERE_BUY_O07 = 1 or Q66_WHERE_BUY_O08 = 1) then
-    errmsg("Select at least one option for Q66_WHERE_BUY before continuing.");
-    reenter;
-  endif;
-
-PROC Q70_GAMOT_SOURCE_O08
-postproc
-  if not (Q70_GAMOT_SOURCE_O01 = 1 or Q70_GAMOT_SOURCE_O02 = 1 or Q70_GAMOT_SOURCE_O03 = 1 or Q70_GAMOT_SOURCE_O04 = 1 or Q70_GAMOT_SOURCE_O05 = 1 or Q70_GAMOT_SOURCE_O06 = 1 or Q70_GAMOT_SOURCE_O07 = 1 or Q70_GAMOT_SOURCE_O08 = 1) then
-    errmsg("Select at least one option for Q70_GAMOT_SOURCE before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q70_GAMOT_SOURCE_O07 = 1) and (Q70_GAMOT_SOURCE_O01 = 1 or Q70_GAMOT_SOURCE_O02 = 1 or Q70_GAMOT_SOURCE_O03 = 1 or Q70_GAMOT_SOURCE_O04 = 1 or Q70_GAMOT_SOURCE_O05 = 1 or Q70_GAMOT_SOURCE_O06 = 1 or Q70_GAMOT_SOURCE_O08 = 1) then
-    errmsg("Q70_GAMOT_SOURCE: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q71_GAMOT_UNDERSTAND_O06
-postproc
-  if not (Q71_GAMOT_UNDERSTAND_O01 = 1 or Q71_GAMOT_UNDERSTAND_O02 = 1 or Q71_GAMOT_UNDERSTAND_O03 = 1 or Q71_GAMOT_UNDERSTAND_O04 = 1 or Q71_GAMOT_UNDERSTAND_O05 = 1 or Q71_GAMOT_UNDERSTAND_O06 = 1) then
-    errmsg("Select at least one option for Q71_GAMOT_UNDERSTAND before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q71_GAMOT_UNDERSTAND_O05 = 1) and (Q71_GAMOT_UNDERSTAND_O01 = 1 or Q71_GAMOT_UNDERSTAND_O02 = 1 or Q71_GAMOT_UNDERSTAND_O03 = 1 or Q71_GAMOT_UNDERSTAND_O04 = 1 or Q71_GAMOT_UNDERSTAND_O06 = 1) then
-    errmsg("Q71_GAMOT_UNDERSTAND: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q74_WHERE_REST_O10
-postproc
-  if not (Q74_WHERE_REST_O01 = 1 or Q74_WHERE_REST_O02 = 1 or Q74_WHERE_REST_O03 = 1 or Q74_WHERE_REST_O04 = 1 or Q74_WHERE_REST_O05 = 1 or Q74_WHERE_REST_O06 = 1 or Q74_WHERE_REST_O07 = 1 or Q74_WHERE_REST_O08 = 1 or Q74_WHERE_REST_O09 = 1 or Q74_WHERE_REST_O10 = 1) then
-    errmsg("Select at least one option for Q74_WHERE_REST before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q74_WHERE_REST_O09 = 1) and (Q74_WHERE_REST_O01 = 1 or Q74_WHERE_REST_O02 = 1 or Q74_WHERE_REST_O03 = 1 or Q74_WHERE_REST_O04 = 1 or Q74_WHERE_REST_O05 = 1 or Q74_WHERE_REST_O06 = 1 or Q74_WHERE_REST_O07 = 1 or Q74_WHERE_REST_O08 = 1 or Q74_WHERE_REST_O10 = 1) then
-    errmsg("Q74_WHERE_REST: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q77_WHY_GENERIC_O08
-postproc
-  if not (Q77_WHY_GENERIC_O01 = 1 or Q77_WHY_GENERIC_O02 = 1 or Q77_WHY_GENERIC_O03 = 1 or Q77_WHY_GENERIC_O04 = 1 or Q77_WHY_GENERIC_O05 = 1 or Q77_WHY_GENERIC_O06 = 1 or Q77_WHY_GENERIC_O07 = 1 or Q77_WHY_GENERIC_O08 = 1) then
-    errmsg("Select at least one option for Q77_WHY_GENERIC before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q77_WHY_GENERIC_O06 = 1 or Q77_WHY_GENERIC_O07 = 1) and (Q77_WHY_GENERIC_O01 = 1 or Q77_WHY_GENERIC_O02 = 1 or Q77_WHY_GENERIC_O03 = 1 or Q77_WHY_GENERIC_O04 = 1 or Q77_WHY_GENERIC_O05 = 1 or Q77_WHY_GENERIC_O08 = 1) then
-    errmsg("Q77_WHY_GENERIC: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q78_WHY_BRANDED_O08
-postproc
-  if not (Q78_WHY_BRANDED_O01 = 1 or Q78_WHY_BRANDED_O02 = 1 or Q78_WHY_BRANDED_O03 = 1 or Q78_WHY_BRANDED_O04 = 1 or Q78_WHY_BRANDED_O05 = 1 or Q78_WHY_BRANDED_O06 = 1 or Q78_WHY_BRANDED_O07 = 1 or Q78_WHY_BRANDED_O08 = 1) then
-    errmsg("Select at least one option for Q78_WHY_BRANDED before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q78_WHY_BRANDED_O06 = 1 or Q78_WHY_BRANDED_O07 = 1) and (Q78_WHY_BRANDED_O01 = 1 or Q78_WHY_BRANDED_O02 = 1 or Q78_WHY_BRANDED_O03 = 1 or Q78_WHY_BRANDED_O04 = 1 or Q78_WHY_BRANDED_O05 = 1 or Q78_WHY_BRANDED_O08 = 1) then
-    errmsg("Q78_WHY_BRANDED: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q82_DIFFICULTY_REASONS_O08
-postproc
-  if not (Q82_DIFFICULTY_REASONS_O01 = 1 or Q82_DIFFICULTY_REASONS_O02 = 1 or Q82_DIFFICULTY_REASONS_O03 = 1 or Q82_DIFFICULTY_REASONS_O04 = 1 or Q82_DIFFICULTY_REASONS_O05 = 1 or Q82_DIFFICULTY_REASONS_O06 = 1 or Q82_DIFFICULTY_REASONS_O07 = 1 or Q82_DIFFICULTY_REASONS_O08 = 1) then
-    errmsg("Select at least one option for Q82_DIFFICULTY_REASONS before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q82_DIFFICULTY_REASONS_O07 = 1) and (Q82_DIFFICULTY_REASONS_O01 = 1 or Q82_DIFFICULTY_REASONS_O02 = 1 or Q82_DIFFICULTY_REASONS_O03 = 1 or Q82_DIFFICULTY_REASONS_O04 = 1 or Q82_DIFFICULTY_REASONS_O05 = 1 or Q82_DIFFICULTY_REASONS_O06 = 1 or Q82_DIFFICULTY_REASONS_O08 = 1) then
-    errmsg("Q82_DIFFICULTY_REASONS: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q85_BENEFITS_O06
-postproc
-  if not (Q85_BENEFITS_O01 = 1 or Q85_BENEFITS_O02 = 1 or Q85_BENEFITS_O03 = 1 or Q85_BENEFITS_O04 = 1 or Q85_BENEFITS_O05 = 1 or Q85_BENEFITS_O06 = 1) then
-    errmsg("Select at least one option for Q85_BENEFITS before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q85_BENEFITS_O04 = 1 or Q85_BENEFITS_O05 = 1) and (Q85_BENEFITS_O01 = 1 or Q85_BENEFITS_O02 = 1 or Q85_BENEFITS_O03 = 1 or Q85_BENEFITS_O06 = 1) then
-    errmsg("Q85_BENEFITS: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q88_DIFF_PAYING_O07
-postproc
-  if not (Q88_DIFF_PAYING_O01 = 1 or Q88_DIFF_PAYING_O02 = 1 or Q88_DIFF_PAYING_O03 = 1 or Q88_DIFF_PAYING_O04 = 1 or Q88_DIFF_PAYING_O05 = 1 or Q88_DIFF_PAYING_O06 = 1 or Q88_DIFF_PAYING_O07 = 1) then
-    errmsg("Select at least one option for Q88_DIFF_PAYING before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q88_DIFF_PAYING_O06 = 1) and (Q88_DIFF_PAYING_O01 = 1 or Q88_DIFF_PAYING_O02 = 1 or Q88_DIFF_PAYING_O03 = 1 or Q88_DIFF_PAYING_O04 = 1 or Q88_DIFF_PAYING_O05 = 1 or Q88_DIFF_PAYING_O07 = 1) then
-    errmsg("Q88_DIFF_PAYING: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q91_WHY_WENT_O09
-postproc
-  if not (Q91_WHY_WENT_O01 = 1 or Q91_WHY_WENT_O02 = 1 or Q91_WHY_WENT_O03 = 1 or Q91_WHY_WENT_O04 = 1 or Q91_WHY_WENT_O05 = 1 or Q91_WHY_WENT_O06 = 1 or Q91_WHY_WENT_O07 = 1 or Q91_WHY_WENT_O08 = 1 or Q91_WHY_WENT_O09 = 1) then
-    errmsg("Select at least one option for Q91_WHY_WENT before continuing.");
-    reenter;
-  endif;
-
-PROC Q93_WHY_NOT_O07
-postproc
-  if not (Q93_WHY_NOT_O01 = 1 or Q93_WHY_NOT_O02 = 1 or Q93_WHY_NOT_O03 = 1 or Q93_WHY_NOT_O04 = 1 or Q93_WHY_NOT_O05 = 1 or Q93_WHY_NOT_O06 = 1 or Q93_WHY_NOT_O07 = 1) then
-    errmsg("Select at least one option for Q93_WHY_NOT before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q93_WHY_NOT_O06 = 1) and (Q93_WHY_NOT_O01 = 1 or Q93_WHY_NOT_O02 = 1 or Q93_WHY_NOT_O03 = 1 or Q93_WHY_NOT_O04 = 1 or Q93_WHY_NOT_O05 = 1 or Q93_WHY_NOT_O07 = 1) then
-    errmsg("Q93_WHY_NOT: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q94_TRANSPORT_O12
-postproc
-  if not (Q94_TRANSPORT_O01 = 1 or Q94_TRANSPORT_O02 = 1 or Q94_TRANSPORT_O03 = 1 or Q94_TRANSPORT_O04 = 1 or Q94_TRANSPORT_O05 = 1 or Q94_TRANSPORT_O06 = 1 or Q94_TRANSPORT_O07 = 1 or Q94_TRANSPORT_O08 = 1 or Q94_TRANSPORT_O09 = 1 or Q94_TRANSPORT_O10 = 1 or Q94_TRANSPORT_O11 = 1 or Q94_TRANSPORT_O12 = 1) then
-    errmsg("Select at least one option for Q94_TRANSPORT before continuing.");
-    reenter;
-  endif;
-
 { ---- Range + cross-field validations (spec §3.1-§3.12) ---- }
 PROC Q18_INCOME_AMOUNT
 postproc
@@ -2244,10 +2295,17 @@ postproc
     reenter;
   endif;
 
-PROC Q67_TIME_TO_PHARMACY
+PROC Q67_TRAVEL_HH
 postproc
-  if Q67_TIME_TO_PHARMACY < 0 or Q67_TIME_TO_PHARMACY > 1440 then
-    errmsg("Q67_TIME_TO_PHARMACY must be between 0 and 1440.");
+  if Q67_TRAVEL_HH < 0 or Q67_TRAVEL_HH > 24 then
+    errmsg("Q67_TRAVEL_HH must be between 0 and 24.");
+    reenter;
+  endif;
+
+PROC Q67_TRAVEL_MM
+postproc
+  if Q67_TRAVEL_MM < 0 or Q67_TRAVEL_MM > 59 then
+    errmsg("Q67_TRAVEL_MM must be between 0 and 59.");
     reenter;
   endif;
 
@@ -2273,6 +2331,12 @@ postproc
   if DATE_FINAL_VISIT < DATE_FIRST_VISITED then
     errmsg("Final-visit date cannot be earlier than the first-visit date.");
     reenter;
+  endif;
+
+PROC Q138_MOST_EXPENSIVE
+preproc
+  if Q129_HH_CONFINED <> 1 then   { bill-recall (Q138-143) is for confined HHs only }
+    skip to Q144_CEREALS_CONSUMED;
   endif;
 
 { ============================================================================

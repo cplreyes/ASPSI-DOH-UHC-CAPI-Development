@@ -1,0 +1,30 @@
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+casekey 01 02 800 01 001
+shot c_at_Q144
+note Q144 consumed=Yes, purchased=100, inkind=0
+type 1
+type 100
+key {ENTER}
+type 0
+key {ENTER}
+note Q145..Q155 NOT consumed (11 items)
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+type 2
+note Q156 (LAST food item) CONSUMED=Yes, purchased=200, inkind=50
+type 1
+type 200
+key {ENTER}
+type 50
+key {ENTER}
+note exits food block -> Q157 (init 0, no NOTAPPL error) -> Q158 preproc computes + DEBUG errmsg (expect 350)
+shot c_at_Q158_debug_errmsg
