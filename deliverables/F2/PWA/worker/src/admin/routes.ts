@@ -34,6 +34,8 @@ import {
   handleVersion,
   handleKillSwitchGet,
   handleKillSwitchSet,
+  handleBroadcastGet,
+  handleBroadcastSet,
   type ListFilters,
   type ListResponsesData,
   type ResponseRow,
@@ -50,6 +52,8 @@ import {
   type FormRevisionsData,
   type KillSwitchGetAsCallable,
   type KillSwitchSetAsCallable,
+  type BroadcastGetAsCallable,
+  type BroadcastSetAsCallable,
 } from './handlers/data';
 import {
   handleReissueToken,
@@ -144,6 +148,7 @@ const SETTINGS_BY_ID_RE = /^\/admin\/api\/dashboards\/apps\/data-settings\/([A-Z
 const SETTINGS_RUN_NOW_RE = /^\/admin\/api\/dashboards\/apps\/data-settings\/([A-Za-z0-9_\-]+)\/run-now\/?$/;
 const APPS_QUOTA_RE = /^\/admin\/api\/dashboards\/apps\/quota\/?$/;
 const KILL_SWITCH_RE = /^\/admin\/api\/dashboards\/apps\/kill-switch\/?$/;
+const BROADCAST_RE = /^\/admin\/api\/dashboards\/apps\/broadcast\/?$/;
 
 /**
  * Build RbacOpts that's stable for one request. Most rbac-protected handlers
@@ -844,6 +849,42 @@ export async function adminRouter(req: Request, env: Env, ctx?: ExecutionContext
         );
       const r = await handleKillSwitchSet(req, asCall);
       auditMutation(auditFn, r, auth, ipHash, 'admin_kill_switch_set', 'kill_switch');
+      return withRequestId(r, requestId);
+    }
+  }
+
+  // Broadcast message (M12d) — GET reads the current banner text, PATCH sets it.
+  // Same dash_apps gate + audit + generic AS config get/set as the kill-switch.
+  if (BROADCAST_RE.test(url.pathname)) {
+    const auth = await requirePerm(req, 'dash_apps', buildRbacOpts(env, requestId));
+    if (!auth.ok) {
+      return withRequestId(rbacFailureResponse(auth.status, auth.errorCode), requestId);
+    }
+    if (req.method === 'GET') {
+      const asCall: BroadcastGetAsCallable = () =>
+        callAppsScript<{ config: Record<string, string> }>(
+          env.APPS_SCRIPT_URL,
+          env.APPS_SCRIPT_HMAC,
+          'admin_config_get',
+          {},
+          requestId,
+          env.F2_AUTH,
+        );
+      const r = await handleBroadcastGet(asCall);
+      return withRequestId(r, requestId);
+    }
+    if (req.method === 'PATCH') {
+      const asCall: BroadcastSetAsCallable = (payload) =>
+        callAppsScript<{ key: string; value: string }>(
+          env.APPS_SCRIPT_URL,
+          env.APPS_SCRIPT_HMAC,
+          'admin_config_set',
+          payload,
+          requestId,
+          env.F2_AUTH,
+        );
+      const r = await handleBroadcastSet(req, asCall);
+      auditMutation(auditFn, r, auth, ipHash, 'admin_broadcast_set', 'broadcast_message');
       return withRequestId(r, requestId);
     }
   }

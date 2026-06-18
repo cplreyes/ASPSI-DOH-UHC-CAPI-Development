@@ -36,7 +36,7 @@
     /* Warning — ochre. Used for storage-quota warnings, near-stale drafts,
      * the lock-notification strip, the broadcast banner, and Review-section
      * 'warn' severity alerts. */
-    --warning: 36.3 62.3% 47.8%; /* #C68A2E */
+    --warning: 36.3 62.3% 34%; /* #8D6221 — darkened ochre, 4.89:1 on paper (WCAG AA, E6-PWA-009) */
     --warning-foreground: 85.7 25.9% 94.7%; /* paper */
 
     /* Highlight — DOH yellow inner rim. Used very sparingly (save toasts only).
@@ -62,10 +62,10 @@
     --ring: 155 55.1% 36.7%;
 
     --primary: 155 55.1% 36.7%; /* #2A9166 — emerald shifted brighter for dark */
-    --primary-foreground: 90 20% 86.3%;
+    --primary-foreground: 132 14.3% 6.9%; /* graphite ground — dark text on emerald CTA, 4.74:1 (WCAG AA, E6-PWA-009) */
 
     --destructive: 1.7 62.7% 56.9%; /* #D6504C */
-    --destructive-foreground: 90 20% 86.3%;
+    --destructive-foreground: 132 14.3% 6.9%; /* graphite ground — dark text on cherry CTA, 4.53:1 (WCAG AA, E6-PWA-009) */
 
     --warning: 35 70% 58%; /* shifted brighter for dark mode */
     --warning-foreground: 132 14.3% 6.9%; /* graphite ground */
