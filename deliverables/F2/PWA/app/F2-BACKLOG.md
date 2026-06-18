@@ -14,17 +14,17 @@
 
 | Thing | State |
 |---|---|
-| **Prod** | `v2.1.0` live at https://f2-pwa.pages.dev (HCW Survey + Admin Portal, all 7 PH languages) |
+| **Prod** | `v2.1.0` live at https://f2-pwa.pages.dev (HCW Survey + Admin Portal, all 7 PH languages). **Broadcast editor + a11y/perf CI gates shipped to prod 2026-06-18** (#711). |
 | **Staging** | https://f2-pwa-staging.pages.dev (project `f2-pwa-staging`, branch `staging`) |
 | **Admin Portal** | v2.0+ live; Users dashboard, RBAC + persona switching, JWT/`password_must_change`, `last_login_at`, kill-switch, DLQ requeue, bulk-import, files+folders+rename all shipped. |
-| **⚠️ Worker deploy gap** | **CI's version-stamped Worker deploy is failing** — `CLOUDFLARE_API_TOKEN` lacks `Workers Scripts: Edit` (error 10000). Pages (frontend) deploys fine; **any new/changed Worker route will NOT reach staging until the token is fixed or the Worker is deployed manually (`wrangler deploy`).** Blocks the broadcast-editor + all backend features. *(Carl's fix.)* |
+| **✅ Worker deploy gap — RESOLVED 2026-06-18** | `CLOUDFLARE_API_TOKEN` now carries `Workers Scripts: Edit`; the version-stamped Worker deploy passes. Both `staging` (`f2-pwa-worker-staging`) and `main` (`f2-pwa-worker`) auto-deploy the Worker on every push, and the deploy now **fails loud** on a Worker error (the temporary `continue-on-error` guard was removed, #623 → staging / #704 → main). |
 | **⚠️ English-only mode** | **Temporarily ON** in both prod + staging (`VITE_ENGLISH_ONLY` in `.env.production`, 2026-06-16, Shan screenshot request). The language switcher is hidden until this is reverted. |
 | **Open F2 GitHub issues** | 5 Survey bugs (`epic:f2-pwa`) — Section A. 3 of them now fix-on-staging (this session). |
 
 ## What's actually actionable (post-audit)
 
 - **Buildable now, frontend/CI-only (fully shippable via Pages):** _none open_ — E6-PWA-009 (a11y: axe + contrast + Lighthouse gates) and E6-PWA-010 (perf: bundle-size + Lighthouse gates) both shipped 2026-06-17.
-- **Code-complete, Worker-deploy-gated to go live** (last M12d piece): **broadcast_message admin editor** — built + wired + tested across all layers (2026-06-17); the new Worker route only answers once the Worker redeploys (CF token fix), so the editor self-hides on staging until then.
+- **Live (2026-06-18):** **broadcast_message admin editor** shipped to **prod + staging** (#711); the Worker route answers (verified 401 on both workers), so the editor renders for `dash_apps` admins. Last M12d piece — done.
 - **Blocked on Carl/ASPSI inputs:** #543 + #528 (a staging token) · DESIGN-005 (DOH brand-book PDF) · FacilityMasterList real rows + M8/M9 facility flags (real facility data incl. BUCAS/GAMOT) · E4-INT-003 (ASPSI sign-offs).
 - **Not started:** E4-INT-002 Looker dashboard.
 
@@ -108,7 +108,7 @@ Ordered by severity / blocking impact.
 
 - [x] **E4-APRT-046 — Files: Create Folder** — ✅ **DONE end-to-end** (`Files.tsx` + worker `apps.ts`/`routes.ts` + AS `AdminFiles.js` + tests).
 - [x] **E4-APRT-047 — Files: Rename** — ✅ **DONE end-to-end** (inline rename + worker PATCH + AS RPC + tests).
-- [x] **Admin mutations (was M12d)** — ✅ **all code shipped;** the broadcast editor only awaits the Worker deploy to go live:
+- [x] **Admin mutations (was M12d)** — ✅ **all shipped + live** (broadcast editor live on prod + staging since 2026-06-18):
   - [x] **Kill-switch toggle** — ✅ DONE (`DataSettings.tsx` + worker `/kill-switch` + AS + a11y/E2E/backend tests).
   - [x] **Requeue-from-DLQ** — ✅ DONE (`DLQTab.tsx` Replay/Delete + worker + AS + a11y test).
   - [x] **`admin_users_change_password` + bulk-import** — ✅ DONE (`ChangePasswordPage` + `BulkImportModal` + worker handlers + 8-case test suite).
@@ -118,9 +118,9 @@ Ordered by severity / blocking impact.
     (`BROADCAST_RE` + `handleBroadcastGet/Set` in `routes.ts`/`handlers/data.ts` — dash_apps-gated, audited
     `admin_broadcast_set`, 280-char cap, empty clears), and AS dispatch (`admin_config_get/set` →
     `adminConfigGet/Set`, `broadcast_message` seeded in `Schema.js` `F2_CONFIG_DEFAULTS`) all in place and
-    tested (FE 4 + worker 23 + backend 22 green). **Still Worker-deploy-gated:** the new route only answers
-    once the Worker redeploys (CF token fix) — until then the editor self-hides. Removes the "ops edits the
-    Config sheet directly" workaround.
+    tested (FE 4 + worker 23 + backend 22 green). **LIVE on prod + staging (2026-06-18, #711)** — the Worker
+    route answers (verified 401 on both `f2-pwa-worker` + `f2-pwa-worker-staging`), so the editor renders for
+    `dash_apps` admins. Removes the "ops edits the Config sheet directly" workaround.
 - [x] **Admin Portal design-review MINORs** — ✅ **DONE.** All 15 MINOR-tier findings shipped in the
   v2.0.1 patch bundle (E4-APRT-049a..e), verified in UAT R3.
 
@@ -129,9 +129,10 @@ Ordered by severity / blocking impact.
 - [x] **E4-PWA-015 — Worker PBKDF2 at 100k** — ✅ **DONE** (`worker/src/admin/auth.ts:18,65,109` — floor 10k / ceil 100k, tested).
 - [x] **E4-PWA-010 — Secrets rotation policy doc** — ✅ **DONE** (`docs/superpowers/runbooks/2026-05-12-f2-secrets-rotation.md`, v2.0.2 / PR #276 / #172 — JWT, HMAC, AS deploy ID).
 - [x] **E4-PWA-011 — Backup + restore runbook** — ✅ **DONE** (`docs/superpowers/runbooks/2026-05-12-f2-pwa-backup-restore.md`, v2.0.2 / PR #276 — Sheet + R2 + KV).
-- [ ] **⚠️ Worker CI deploy token** — fix `CLOUDFLARE_API_TOKEN` to include `Workers Scripts: Edit`
-  (error 10000) so the version-stamped Worker deploy stops failing. **Unblocks the broadcast
-  editor + every future backend route.** *(Carl — Cloudflare dashboard.)*
+- [x] **Worker CI deploy token** — ✅ **DONE (2026-06-18).** `CLOUDFLARE_API_TOKEN` now carries
+  `Workers Scripts: Edit`; the version-stamped Worker deploy passes on both `staging` + `main` (verified by
+  clean `f2-pwa-worker-staging` + `f2-pwa-worker` deploys). The prod Worker had been silently stale under
+  the old guard — this deploy brought it current. Guard removed (#623/#704) so a future failure is loud.
 - [ ] **Admin password rotation (prod side)** — `worker/scripts/hash-admin-password.mjs` →
   `wrangler secret put ADMIN_PASSWORD_HASH` (staging done; prod pending).
 
@@ -157,8 +158,10 @@ Ordered by severity / blocking impact.
   (`scripts/check-bundle-budget.mjs` in `npm run build` — gzip floors: eager first-paint ≤ 250 KB,
   admin ≤ 150 KB, any chunk ≤ 350 KB) and the **Lighthouse-score gate** (`@lhci/cli`, `lighthouse`
   job in `ci.yml`) asserting perf/LCP/CLS/TBT against a served build on every push/PR
-  (`PERFORMANCE.md` → "Lighthouse-score gate"). CLS is a hard `error`; perf/LCP/TBT are `warn` pending
-  a few green CI runs to establish the runner baseline, then promoted to `error`.
+  (`PERFORMANCE.md` → "Lighthouse-score gate"). a11y + CLS are hard `error`; perf/LCP/TBT are `warn` **by
+  design** (they sit within the ±10pt noise band of their budgets). The job now prints observed CI numbers
+  each run (`scripts/lhci-summary.mjs`, 2026-06-18); promote a metric to `error` only once it shows
+  comfortable margin.
 
 ## G. Deferred / not committed (slot in only if pilot demands)
 
@@ -172,6 +175,12 @@ Ordered by severity / blocking impact.
 - **a11y + perf CI gates (2026-06-17, staging):** WCAG-AA contrast fix (`343b1a0` — all 20 token
   pairs ≥ AA, gate exceptions removed) + full-page **Lighthouse-score gate** (`@lhci/cli`, `lighthouse`
   job in `ci.yml`; a11y + CLS hard-gated, perf/LCP/TBT warn). Closes **E6-PWA-009 + E6-PWA-010**.
+- **Worker-deploy gap resolved + prod promotion (2026-06-18):** `CLOUDFLARE_API_TOKEN` gained
+  `Workers Scripts: Edit` → staging + prod Workers auto-deploy again (the prod Worker had been silently
+  stale). Shipped the UAT-independent F2 batch to **prod** via #711 (a11y/perf gates + broadcast editor +
+  admin success-body fix); broadcast route live on prod + staging (401 verified). The deploy-failure guard
+  was removed (#623 staging / #704 main) so a bad Worker deploy now fails the run. Lighthouse CI now prints
+  observed numbers each run (`scripts/lhci-summary.mjs`). Survey fixes #539/#524/#587 held on **#710** pending UAT.
 - **Already shipped but were stale-listed as TODO (v2.0.1/v2.0.2):** DESIGN-004 fonts,
   E4-APRT-046 Create Folder, E4-APRT-047 Rename, kill-switch, DLQ requeue, change-password,
   bulk-import, admin design MINORs, E4-PWA-015 PBKDF2, E4-PWA-010 secrets runbook,
