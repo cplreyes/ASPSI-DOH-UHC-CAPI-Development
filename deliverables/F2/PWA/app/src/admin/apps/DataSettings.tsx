@@ -194,6 +194,9 @@ export function DataSettings({ apiBaseUrl, fetchImpl }: DataSettingsProps): JSX.
       {/* Kill-switch section */}
       <KillSwitchSection apiBaseUrl={apiBaseUrl} authOpts={authOpts} />
 
+      {/* Broadcast message editor (M12d) — self-hides until the worker route exists */}
+      <BroadcastSection apiBaseUrl={apiBaseUrl} authOpts={authOpts} />
+
       <div className="flex flex-col gap-3">
       <div className="flex items-baseline justify-between">
         <h3 className="font-serif text-lg font-medium tracking-tight">Scheduled Exports</h3>
@@ -571,6 +574,150 @@ function KillSwitchSection({
           onConfirm={() => void doToggle(confirmPending)}
           onCancel={() => setConfirmPending(null)}
         />
+      ) : null}
+    </div>
+  );
+}
+
+// ----- Broadcast message editor (M12d) ---------------------------------------
+// Sets the app-config `broadcast_message` (shown to every respondent via
+// BroadcastBanner) without ops hand-editing the Config sheet. Mirrors the
+// kill-switch's GET/PATCH pattern. Self-hides (renders null) when the route
+// 404s — i.e. the Worker isn't deployed yet — but surfaces any other load
+// failure instead of vanishing, so a transient backend error stays visible.
+
+type BroadcastLoad =
+  | { kind: 'loading' }
+  | { kind: 'absent' } // route 404s (Worker not deployed) → render null
+  | { kind: 'ready'; current: string }
+  | { kind: 'loadError'; message: string };
+
+export function BroadcastSection({
+  apiBaseUrl,
+  authOpts,
+}: {
+  apiBaseUrl: string;
+  authOpts: () => AdminFetchOptions;
+}): JSX.Element | null {
+  const [load, setLoad] = useState<BroadcastLoad>({ kind: 'loading' });
+  const [draft, setDraft] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const r = await adminFetch<{ broadcast_message?: string }>(
+        `${apiBaseUrl}/admin/api/dashboards/apps/broadcast`,
+        {},
+        authOpts(),
+      );
+      if (cancelled) return;
+      if (r.ok) {
+        // Coerce a missing/non-string field to '' — the response is untrusted.
+        const msg = r.data.broadcast_message ?? '';
+        setLoad({ kind: 'ready', current: msg });
+        setDraft(msg);
+      } else if (r.error.code === 'E_NOT_FOUND') {
+        // Worker broadcast route not deployed yet (M12d deploy-gate) → hide.
+        setLoad({ kind: 'absent' });
+      } else {
+        // Route exists but the GET failed (AS down, perms, network). Show it
+        // rather than silently disappearing, the way the kill-switch does.
+        setLoad({
+          kind: 'loadError',
+          message: r.error.message || 'Failed to load the broadcast message.',
+        });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [apiBaseUrl, authOpts]);
+
+  if (load.kind === 'loading' || load.kind === 'absent') return null;
+
+  if (load.kind === 'loadError') {
+    return (
+      <div className="flex flex-col gap-2 border-b border-hairline pb-5">
+        <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+          Broadcast message
+        </span>
+        <p role="alert" className="text-sm text-error">
+          {load.message}
+        </p>
+      </div>
+    );
+  }
+
+  const current = load.current;
+  const dirty = draft.trim() !== current.trim();
+
+  async function save(): Promise<void> {
+    setSaving(true);
+    setSaved(false);
+    setSaveError(null);
+    try {
+      const r = await adminFetch<{ broadcast_message?: string }>(
+        `${apiBaseUrl}/admin/api/dashboards/apps/broadcast`,
+        { method: 'PATCH', body: JSON.stringify({ broadcast_message: draft.trim() }) },
+        authOpts(),
+      );
+      if (r.ok) {
+        const msg = r.data.broadcast_message ?? '';
+        setLoad({ kind: 'ready', current: msg });
+        setDraft(msg);
+        setSaved(true);
+      } else {
+        setSaveError(r.error.message || 'Save failed.');
+      }
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="flex flex-col gap-2 border-b border-hairline pb-5">
+      <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+        Broadcast message
+      </span>
+      <p className="text-xs text-muted-foreground">
+        Shown as a banner to every respondent in the HCW PWA. Leave empty to hide the banner.
+        Propagates within ~30 s on the next config refresh.
+      </p>
+      <textarea
+        value={draft}
+        maxLength={280}
+        rows={2}
+        disabled={saving}
+        onChange={(e) => {
+          setDraft(e.target.value);
+          setSaved(false);
+        }}
+        className="border border-hairline bg-transparent px-2 py-1 text-sm"
+        aria-label="Broadcast message"
+        placeholder="e.g. Survey closes Friday 5 PM — sync before then."
+      />
+      <div className="flex items-center gap-3">
+        <Button
+          type="button"
+          variant="outline"
+          disabled={saving || !dirty}
+          onClick={() => void save()}
+          className="border-foreground px-3 py-1 font-mono text-xs uppercase tracking-wider hover:bg-foreground hover:text-background disabled:opacity-50"
+        >
+          {saving ? 'Saving…' : 'Save'}
+        </Button>
+        {saved && !dirty ? (
+          <span className="font-mono text-[10px] uppercase tracking-wider text-primary">Saved</span>
+        ) : null}
+        <span className="ml-auto font-mono text-[10px] text-muted-foreground">{draft.length}/280</span>
+      </div>
+      {saveError ? (
+        <p role="alert" className="text-sm text-error">
+          {saveError}
+        </p>
       ) : null}
     </div>
   );

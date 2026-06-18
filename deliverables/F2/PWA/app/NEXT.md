@@ -1,5 +1,11 @@
 # Next step (future-Carl)
 
+> [!important] SUPERSEDED 2026-06-16 — see **[`F2-BACKLOG.md`](./F2-BACKLOG.md)** for the
+> current, sectioned remaining-work checklist (Survey + Admin Portal). Everything below is
+> **historical** (frozen at the April UAT R1/R2 era, pre-v2.0.0 / pre-Admin-Portal): the
+> deploy commands here are outdated (deploy is now push-to-`staging`/`main` → CI →
+> CF Pages auto-deploy), the staging URL hash is stale, and R3's #16/#17/#18 have shipped.
+
 **Current phase:** Round 1 + Round 2 fully closed 2026-04-25. v1.1.0 + v1.1.1 milestones complete. Round 3 (v1.2.0) is queued with 3 UX features: "I don't know" exclusivity (#16), "All of the above" auto-select (#17), scale-question matrix view (#18).
 
 **Closed batches:**

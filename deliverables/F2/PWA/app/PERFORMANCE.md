@@ -58,7 +58,59 @@ Notes:
 | Admin Portal | 0.85 | ≤ 4.0 s | ≤ 200 ms | ≤ 0.1 |
 | Bundle size (gzipped, single chunk) | — | — | ≤ 350 KB | — |
 
-Floor values are intentionally below current baseline — they're regression triggers, not aspirational targets. If a future release drops below any floor, a perf-regression issue gets filed automatically (TODO: wire to CI in #275 follow-up).
+Floor values are intentionally below current baseline — they're regression triggers, not aspirational targets.
+
+### Bundle-size gate (E6-PWA-010 — wired to CI 2026-06-16)
+
+`scripts/check-bundle-budget.mjs` runs as the last step of `npm run build` (after
+`check-bundle-secrets`), so CI and Cloudflare Pages **fail the build** on a gzip
+regression past these budgets:
+
+| Budget | Limit (gzip) | Current (2026-06-16) | Why |
+|---|---|---|---|
+| Eager first-paint JS (`index` + `vendor`) | ≤ 250 KB | 185 KB | What HCW field tablets download at boot — the tight, important one |
+| `admin` chunk (lazy) | ≤ 150 KB | 105 KB | Looser — only admins load it; never on the respondent path |
+| Largest single chunk | ≤ 350 KB | 176 KB (vendor) | Documented per-chunk ceiling |
+
+Budgets carry ~35-45% headroom over current so ordinary feature growth doesn't
+trip the gate. If an increase is intentional, raise the limit in the script and
+update the "Current" column here. (The Lighthouse *score* floors above are now
+CI-gated too — see the next section — so both the byte-level budget and the
+rendered-score budget fail CI on regression.)
+
+### Lighthouse-score gate (E6-PWA-009 / E6-PWA-010 — wired to CI 2026-06-17)
+
+The bundle-size gate is byte-level; this one is *score*-level. A dedicated
+`lighthouse` job in `.github/workflows/ci.yml` builds, serves `dist/` with
+`vite preview`, and runs **Lighthouse (headless Chrome) ×3** via `@lhci/cli`
+(config: [`lighthouserc.cjs`](./lighthouserc.cjs)) on the two surfaces reachable
+**without auth** — HCW enrollment (`/`) and admin login (`/admin/login`). It
+closes the score-level blind spot the unit gates can't see (axe disables
+`color-contrast`; nothing else measures LCP/CLS/TBT on a real render).
+
+| Assertion | Tier | Threshold | Local median 2026-06-17 (HCW / admin) |
+|---|---|---|---|
+| `categories:accessibility` | **error** | = 1.0 | 1.0 / 1.0 |
+| `cumulative-layout-shift` | **error** | ≤ 0.1 | 0.001 / 0.000 |
+| `categories:performance` | warn | ≥ 0.85 | 0.91 / 0.86 |
+| `categories:best-practices` | warn | ≥ 0.9 | 1.0 / 1.0 |
+| `largest-contentful-paint` | warn | ≤ 4000 ms | 2780 / 3470 ms |
+| `total-blocking-time` | warn | ≤ 300 ms | 147 / 94 ms |
+
+**Why two tiers.** The `error` assertions are host-independent — perfect
+accessibility (already held; also backed by the axe component tests + the
+contrast gate) and near-zero layout shift — so a failure is a real regression,
+not runner noise. The `warn` assertions are CPU-bound throughput metrics that
+swing with the CI runner under Lighthouse's simulated mobile throttling: admin
+perf is already **0.86** (a hair above the 0.85 floor) and admin LCP **3.47 s**
+(13% under the 4 s ceiling), so hard-gating them would flake. They stay
+visible-but-non-blocking until a few green CI runs establish the real runner
+baseline — **promotion path:** once observed, tighten the `warn`s to `error` in
+`lighthouserc.cjs`.
+
+**Deferred:** deep authed surfaces (post-enrollment survey sections, admin
+dashboards) need a live session token (blocked on #543/#528) — same limitation
+as the a11y audit. The gate covers the two public entry points today.
 
 ## Re-measurement
 
@@ -103,6 +155,9 @@ A11y unaffected — both surfaces still score 1.0 / 100.
 
 ## Known regressions / follow-ups
 
-- **CI perf gate** (deferred): no automated regression detection today. Adding a Lighthouse CI step against staging on every PR would catch perf drops at the PR level instead of post-deploy.
-- **Authenticated-state perf** (deferred): same as the a11y audit limitation — Lighthouse against post-login dashboards needs cookie-injection setup. Tracked alongside [#273](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/273) (E6-PWA-009b).
+- **CI perf gate** — ✅ **DONE (2026-06-17).** The `lighthouse` job in `ci.yml`
+  runs `@lhci/cli` against a served build on every push/PR to `main`/`staging`,
+  asserting the budgets above (see "Lighthouse-score gate"). Catches regressions
+  at the PR level instead of post-deploy.
+- **Authenticated-state perf** (deferred): same as the a11y audit limitation — Lighthouse against post-login dashboards needs cookie-injection setup. Tracked alongside [#273](https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues/273) (E6-PWA-009b). The CI gate covers the two public surfaces today.
 - **Vendor chunk split** (deferred): the `vendor-*.js` chunk at 582 KB raw still trips Vite's chunkSizeWarningLimit (500 KB). Could be sub-split into `vendor-react`, `vendor-forms`, etc., but diminishing returns once the admin lazy-load is in place. Re-evaluate if HCW LCP regresses below 0.85 in a future measurement.
