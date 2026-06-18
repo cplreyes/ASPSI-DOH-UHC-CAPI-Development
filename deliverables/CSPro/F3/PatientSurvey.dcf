@@ -47966,62 +47966,61 @@
               "length": 120
             },
             {
-              "name": "Q129_WHY_NO_MAIFIP_O01",
+              "name": "Q129_WHY_NO_MAIFIP",
               "labels": [
                 {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Not eligible",
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                   "language": "EN"
                 },
                 {
-                  "text": "Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? \u2014 Hindi kwalipikado",
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                   "language": "FIL"
                 },
                 {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Not eligible",
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                   "language": "BCL"
                 },
                 {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Not eligible",
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                   "language": "BIS"
                 },
                 {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Not eligible",
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                   "language": "CEB"
                 },
                 {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Not eligible",
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                   "language": "WAR"
                 }
               ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
+              "contentType": "alpha",
+              "length": 8,
               "valueSets": [
                 {
-                  "name": "Q129_WHY_NO_MAIFIP_O01_VS1",
+                  "name": "Q129_WHY_NO_MAIFIP_VS1",
                   "labels": [
                     {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Not eligible",
+                      "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                       "language": "EN"
                     },
                     {
-                      "text": "Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? \u2014 Hindi kwalipikado",
+                      "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                       "language": "FIL"
                     },
                     {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Not eligible",
+                      "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                       "language": "BCL"
                     },
                     {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Not eligible",
+                      "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                       "language": "BIS"
                     },
                     {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Not eligible",
+                      "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                       "language": "CEB"
                     },
                     {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Not eligible",
+                      "text": "129. Why did you not avail of MAIFIP during this last confinement?",
                       "language": "WAR"
                     }
                   ],
@@ -48029,459 +48028,132 @@
                     {
                       "labels": [
                         {
-                          "text": "Yes",
+                          "text": "Not eligible",
                           "language": "EN"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Not eligible",
                           "language": "FIL"
                         },
                         {
-                          "text": "Iyo",
+                          "text": "Not eligible",
                           "language": "BCL"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Not eligible",
                           "language": "BIS"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Not eligible",
                           "language": "CEB"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Not eligible",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "1"
+                          "value": "01"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Too complicated",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Too complicated",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Too complicated",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Too complicated",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Too complicated",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Too complicated",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q129_WHY_NO_MAIFIP_O02",
-              "labels": [
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Too complicated",
-                  "language": "EN"
-                },
-                {
-                  "text": "Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? \u2014 Masyadong komplikado",
-                  "language": "FIL"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Too complicated",
-                  "language": "BCL"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Too complicated",
-                  "language": "BIS"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Too complicated",
-                  "language": "CEB"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Too complicated",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q129_WHY_NO_MAIFIP_O02_VS1",
-                  "labels": [
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Too complicated",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? \u2014 Masyadong komplikado",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Too complicated",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Too complicated",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Too complicated",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Too complicated",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "02"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "I don't like to stay in basic ward",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "I don't like to stay in basic ward",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "I don't like to stay in basic ward",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "I don't like to stay in basic ward",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "I don't like to stay in basic ward",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "I don't like to stay in basic ward",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q129_WHY_NO_MAIFIP_O03",
-              "labels": [
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 I don't like to stay in basic ward",
-                  "language": "EN"
-                },
-                {
-                  "text": "Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? \u2014 Ayaw ko sa basic ward",
-                  "language": "FIL"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 I don't like to stay in basic ward",
-                  "language": "BCL"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 I don't like to stay in basic ward",
-                  "language": "BIS"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 I don't like to stay in basic ward",
-                  "language": "CEB"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 I don't like to stay in basic ward",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q129_WHY_NO_MAIFIP_O03_VS1",
-                  "labels": [
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 I don't like to stay in basic ward",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? \u2014 Ayaw ko sa basic ward",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 I don't like to stay in basic ward",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 I don't like to stay in basic ward",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 I don't like to stay in basic ward",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 I don't like to stay in basic ward",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "03"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "There is no available basic ward",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "There is no available basic ward",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "There is no available basic ward",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "There is no available basic ward",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "There is no available basic ward",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "There is no available basic ward",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q129_WHY_NO_MAIFIP_O04",
-              "labels": [
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 There is no available basic ward",
-                  "language": "EN"
-                },
-                {
-                  "text": "Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? \u2014 Walang available na basic ward",
-                  "language": "FIL"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 There is no available basic ward",
-                  "language": "BCL"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 There is no available basic ward",
-                  "language": "BIS"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 There is no available basic ward",
-                  "language": "CEB"
-                },
-                {
-                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 There is no available basic ward",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q129_WHY_NO_MAIFIP_O04_VS1",
-                  "labels": [
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 There is no available basic ward",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? \u2014 Walang available na basic ward",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 There is no available basic ward",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 There is no available basic ward",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 There is no available basic ward",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 There is no available basic ward",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
+                          "value": "04"
                         }
                       ]
                     }

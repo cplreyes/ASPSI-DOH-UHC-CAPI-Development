@@ -85,6 +85,8 @@ CHECKBOX = {"Q148_CONDITIONS",
             "Q160_WHY_GENERIC", "Q161_WHY_BRANDED", "Q163_CARE_TYPE",
             # F3 #481 Q128 MAIFIP OOP items select_all -> Check Box (added None + Other).
             "Q128_MAIFIP_OOP_ITEMS",
+            # F3 #700 Q129 MAIFIP why-not-avail select_all -> Check Box.
+            "Q129_WHY_NO_MAIFIP",
             # F4 #529 conversions (17 'Household Survey' select_all -> Check Box).
             # Note: Q53/Q58/Q121 names overlap F3's set but are distinct fields per
             # instrument (this is a single shared name set keyed only by field name;

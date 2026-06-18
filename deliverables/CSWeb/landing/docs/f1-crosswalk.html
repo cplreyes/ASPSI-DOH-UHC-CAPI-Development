@@ -1336,10 +1336,266 @@
           </div>
         </div>
 
+        <div class="xsection">E. Awareness on Expanded Health Programs (BUCAS &amp; GAMOT)</div>
+
+        <p class="banner" style="margin-top:0">
+          Section E — <strong>Q101–Q117, paper pages 19–20</strong> — has two
+          halves: <b>BUCAS</b> (Bagong Urgent Care and Ambulatory Service,
+          Q101–Q107) and <b>GAMOT</b> (Guaranteed and Accessible Medications for
+          Outpatient Treatment, Q108–Q117, including medicine stock-outs). All
+          standard controls — Yes/No, single-select, free-text — shown with the
+          matching real CAPI screen; the check-box lists use the same tick-list
+          control flagged in Section C.
+        </p>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q101–Q102</span>
+            <span class="qtitle">BUCAS · awareness &amp; center</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">101. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS)? &nbsp;·&nbsp; 102. Do you have a BUCAS Center?</p>
+              <ul class="opts radio">
+                <li>Q101: Yes · No</li>
+                <li>Q102: Yes · No · I don’t know</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — Q101 (heard of BUCAS) and Q102 (have a BUCAS center) render as Yes / No single-selects like the ones shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Yes / No</b> single-selects (Q102 adds “I don’t know”). <b>A “No / Don’t know” on Q102 opens Q103</b> (the reason field).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q103</span>
+            <span class="qtitle">BUCAS · reason for no center</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">103. If none, what is the primary reason?</p>
+              <ul class="opts radio">
+                <li>Proposal not yet submitted</li>
+                <li>Limited information on establishment process</li>
+                <li>Did not meet standard requirements</li>
+                <li>Awaiting assessment or approval</li>
+                <li>Other (specify) · Not applicable</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — Q103's primary-reason options render as a single-select list like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Single-select</b> + “Other (specify)” text. <b>Appears only when the facility has no BUCAS center</b> (Q102 ≠ Yes); otherwise hidden.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q104–Q105</span>
+            <span class="qtitle">BUCAS · services &amp; utilization factors</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">104. What services does your BUCAS Center offer? &nbsp;·&nbsp; 105. Main factors affecting BUCAS utilization?</p>
+              <ul class="opts">
+                <li>Q104: Urgent care · Minor surgery · Diagnostics/lab · Reproductive &amp; special health · Other</li>
+                <li>Q105: Patient awareness · Location/access · Referral patterns · PhilHealth coverage · Staff/services · Other</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <div class="capi-shot" role="img" aria-label="CSEntry check-box multi-select screen — screenshot pending">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="6" height="6" rx="1"/><rect x="3" y="14" width="6" height="6" rx="1"/><path d="M4.5 7l1 1 2-2M13 7h7M13 17h7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="ph">Screenshot pending</span>
+              </div>
+              <p class="capi-cap"><b>Check-box multi-select</b> (tick all that apply) — same control flagged at Q34, Section C. <b>Both appear only when a BUCAS center exists</b> (Q102 = Yes).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q106–Q107</span>
+            <span class="qtitle">BUCAS · resources &amp; impact</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">106. What resources do you need to sustain the BUCAS center? &nbsp;·&nbsp; 107. Does the BUCAS Center decongest your facility of patients?</p>
+              <div class="field-line"></div>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q1-name.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q1-name.png" alt="CSEntry free-text entry control — Q106 (resources needed) is a free-text field like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q106 is a <b>free-text</b> field (shown); Q107 is a <b>Yes / No</b> single-select.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q108–Q109</span>
+            <span class="qtitle">GAMOT · awareness &amp; accreditation</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">108. Have you heard about the GAMOT (Guaranteed and Accessible Medications for Outpatient Treatment) package? &nbsp;·&nbsp; 109. Is your facility an accredited GAMOT provider?</p>
+              <ul class="opts radio">
+                <li>Yes · No (each)</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — Q108 (heard of GAMOT) and Q109 (accredited GAMOT provider) render as Yes / No single-selects" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Yes / No</b> single-selects. <b>A “No” on Q109 opens Q110</b> (the reason field).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q110–Q111</span>
+            <span class="qtitle">GAMOT · reason &amp; utilization factors</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">110. If not accredited, what is the primary reason? &nbsp;·&nbsp; 111. Main factors affecting GAMOT utilization?</p>
+              <ul class="opts radio">
+                <li>Q110: Application not yet submitted · Limited info on process · Did not meet requirements · Awaiting approval · Other · N/A</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — Q110's reason options render as a single-select list like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q110 is a <b>single-select</b> + “Other” (shown), <b>opening only when Q109 = No</b>. Q111 is a <b>check-box multi-select</b> (same control flagged at Q34).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q112–Q116</span>
+            <span class="qtitle">GAMOT · medicine stock-outs</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">112. In the past 3 months, any stock-out of tracer essential medicines? &nbsp;·&nbsp; 113. Which medicines? &nbsp;·&nbsp; 114. How many days did it last? &nbsp;·&nbsp; 115. On average, how many months? &nbsp;·&nbsp; 116. Did you do anything to address it?</p>
+              <ul class="opts radio">
+                <li>Q114: &lt;30 days · 31–60 days · &gt;60 days</li>
+                <li>Q116: Yes · No · Did not experience stock-outs</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control — the stock-out duration/average/response questions (Q114-Q116) render as single-select lists like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap">Q112 is a <b>Yes / No</b>, Q113 a <b>free-text</b> medicine list, and Q114–Q116 are <b>single-selects</b> (shown). <b>Q113–Q116 open only when Q112 = Yes</b> (a stock-out occurred).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q117</span>
+            <span class="qtitle">GAMOT · stock-out response</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">117. If yes, what did you do to address the medicine stock-outs?</p>
+              <ul class="opts">
+                <li>Resorted to alternative procurement</li>
+                <li>Active inventory monitoring</li>
+                <li>Improve forecasting and quantification</li>
+                <li>Other (specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <div class="capi-shot" role="img" aria-label="CSEntry check-box multi-select screen — screenshot pending">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="6" height="6" rx="1"/><rect x="3" y="14" width="6" height="6" rx="1"/><path d="M4.5 7l1 1 2-2M4.5 17l1 1 2-2M13 7h7M13 17h7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="ph">Screenshot pending</span>
+              </div>
+              <p class="capi-cap"><b>Check-box multi-select</b> (same control flagged at Q34). <b>Appears only when Q116 = Yes</b> (the facility addressed the stock-out).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed pages ↔ CAPI screens (Section E)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p19.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p19.png"
+                  alt="Page 19 of the printed F1 Facility Head questionnaire — the start of Section E, BUCAS and GAMOT awareness, with Q101 through Q111"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 19 — the opening of Section E (BUCAS Q101–Q107 and the start
+                of GAMOT). The section spans <b>printed pages 19–20</b>; tap to
+                open full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-capi-c-uhc-entry.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-capi-c-uhc-entry.png"
+                  alt="CSEntry Yes/No control on the tablet — Section E opens with the BUCAS / GAMOT awareness Yes/No questions, rendered like this"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Section E opens with the BUCAS / GAMOT awareness Yes/No questions
+                — the same single-select control shown here. The check-box lists
+                are the one control still awaiting a tablet capture.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <p class="banner" style="margin-top:22px">
           This “end of section” block is the new pattern you asked for: at the
           close of <strong>every</strong> section, the real printed page(s) sit
-          beside the matching CAPI screens. Sections E–H follow in this same
+          beside the matching CAPI screens. Sections F–H follow in this same
           format — the paper pages are ready to render now; the tablet
           screenshots drop in after the emulator capture.
         </p>

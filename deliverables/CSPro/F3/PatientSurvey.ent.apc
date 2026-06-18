@@ -556,13 +556,12 @@ PROC Q126_MAIFIP_AVAILED
 preproc
   if PATIENT_TYPE <> 2 then  skip to Q130_REDUCED_SPEND; endif;  { #479: skip Q126-Q129 for outpatient }
 postproc
-  if Q126_MAIFIP_AVAILED = 2 then  skip to Q129_WHY_NO_MAIFIP_O01; endif;  { #482: didn't avail -> ask why-not (skip Q127/Q128) }
+  if Q126_MAIFIP_AVAILED = 2 then  skip to Q129_WHY_NO_MAIFIP; endif;  { #482/#700: didn't avail -> ask why-not (skip Q127/Q128); target is the Check Box base }
 
 { ---- Q129 'why not avail MAIFIP' (#482): only for those who did NOT avail (Q126=No=2).
-  Reached directly when Q126=No; on the Q126=Yes path (after Q127/Q128) skip it to Q130. ---- }
-PROC Q129_WHY_NO_MAIFIP_O01
-preproc
-  if Q126_MAIFIP_AVAILED <> 2 then  skip to Q130_REDUCED_SPEND; endif;
+  Reached directly when Q126=No; on the Q126=Yes path (after Q127/Q128) skip it to Q130.
+  #700: Q129 is now a Check Box base; this gate is folded into its checkbox PROC via
+  CHECKBOX_CONVERT. The old PROC Q129_WHY_NO_MAIFIP_O01 field no longer exists. ---- }
 
 { ---- Section L: not referred -> end of survey. Route to the closing Result-of-Visit +
   Verification Photo. Do NOT endlevel here: the photo form is the LAST form, so ending
@@ -871,6 +870,18 @@ preproc
 postproc
   if pos("99", Q128_MAIFIP_OOP_ITEMS) > 0 and length(strip(Q128_MAIFIP_OOP_ITEMS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q128 - please specify.");
+    reenter;
+  endif;
+
+PROC Q129_WHY_NO_MAIFIP
+preproc
+  if Q126_MAIFIP_AVAILED <> 2 then   { #482/#700: only for those who did NOT avail MAIFIP
+                                        (Q126=No=2); the Q126=Yes path skips Q129 to Q130. }
+    skip to Q130_REDUCED_SPEND;
+  endif;
+postproc
+  if length(strip(Q129_WHY_NO_MAIFIP)) = 0 then
+    errmsg("Select at least one option for Q129 before continuing.");
     reenter;
   endif;
 
@@ -2099,17 +2110,6 @@ postproc
   endif;
 
 { ---- Select-all validation — >=1 option ticked (auto-derived from dcf) ---- }
-PROC Q129_WHY_NO_MAIFIP_O04
-postproc
-  if not (Q129_WHY_NO_MAIFIP_O01 = 1 or Q129_WHY_NO_MAIFIP_O02 = 1 or Q129_WHY_NO_MAIFIP_O03 = 1 or Q129_WHY_NO_MAIFIP_O04 = 1) then
-    errmsg("Select at least one option for Q129_WHY_NO_MAIFIP before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q129_WHY_NO_MAIFIP_O04 = 1) and (Q129_WHY_NO_MAIFIP_O01 = 1 or Q129_WHY_NO_MAIFIP_O02 = 1 or Q129_WHY_NO_MAIFIP_O03 = 1) then
-    errmsg("Q129_WHY_NO_MAIFIP: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
 PROC Q92_PAY_08
 postproc
   if not (Q92_PAY_03 = 1 or Q92_PAY_04 = 1 or Q92_PAY_05 = 1 or Q92_PAY_06 = 1 or Q92_PAY_07 = 1 or Q92_PAY_08 = 1) then

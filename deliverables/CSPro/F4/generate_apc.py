@@ -704,7 +704,11 @@ SKIP_RULES = [
     # here) AND presented or declined a card (Q9=1 or Q9=2). #523 scenarios A (Q8Y,Q9Y) and
     # C (Q8Y,Q9N) -> show Q10; Q9=3 (refused to present card) -> Q11. (Scenario B (Q8N,*) now
     # exits earlier at the Q8=No rule above, so the Q9 gate no longer needs the Q8 term.)
-    ("Q9_PWD_CARD",          "Q9_PWD_CARD <> 1 and Q9_PWD_CARD <> 2", "Q11_EDUCATION"),
+    # #698: Q10 reads "Based on the PRESENTED PWD card, what type…" — it is unanswerable
+    # unless a card was actually presented (Q9 = 1). So Q9 = 2 (card not available) and
+    # Q9 = 3 (refused to present) both skip Q10 -> Q11. (Adjusts the #523 branch that let
+    # Q9 = 2 fall through to Q10, which contradicted Q10's own "presented card" wording.)
+    ("Q9_PWD_CARD",          "Q9_PWD_CARD <> 1",            "Q11_EDUCATION"),
     ("Q14_IP_MEMBER",        "Q14_IP_MEMBER = 2",           "Q16_4PS"),
     # Section C roster — PhilHealth-registration detail
     ("Q45_PHILHEALTH_REG",   "Q45_PHILHEALTH_REG = 2 or Q45_PHILHEALTH_REG = 55",      "Q48_NAME_FIRST"),  # #563: No(02) OR I-don't-know(55) skip Q46 (Q46 is Yes-only per spec)
@@ -785,6 +789,12 @@ SKIP_RULES = [
     # forego" item) -> Q197. Only Q195 = "None" (1) falls through to Q196. (Already
     # documented in generate_dcf Section O comment; the routing skip was missing.)
     ("Q195_INCOME_PCT",      "Q195_INCOME_PCT <> 1",        "Q197_DELAYED_CARE"),
+    # Section Q end-of-survey skips (final section — nothing substantive follows Q202;
+    # SURVEY_TEAM_LEADER_S_NAME is the first case-end admin field).
+    # #702: Q200 = "Refused to answer" (4) -> end the respondent questions (skip Q201/Q202).
+    ("Q200_REDUCED_SPEND",   "Q200_REDUCED_SPEND = 4",      "SURVEY_TEAM_LEADER_S_NAME"),
+    # #703: Q201 = "Not worried at all" (4) -> no worry-reasons to give -> skip Q202.
+    ("Q201_WORRIED",         "Q201_WORRIED = 4",            "SURVEY_TEAM_LEADER_S_NAME"),
 ]
 
 BILL_VALIDATION = """\

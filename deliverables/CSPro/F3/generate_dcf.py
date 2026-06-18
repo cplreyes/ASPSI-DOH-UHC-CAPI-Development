@@ -1421,9 +1421,9 @@ def build_section_i():
         *checkbox_multiselect("Q128_MAIFIP_OOP_ITEMS",   # #481: select_all -> Check Box (tick-all)
                     "128. Which items did you have to pay for out-of-pocket?",
                     _cb_codes(Q128_OOP_ITEMS), with_other_txt=True),
-        *select_all("Q129_WHY_NO_MAIFIP",
+        *checkbox_multiselect("Q129_WHY_NO_MAIFIP",   # #700: select_all -> Check Box (tick-all)
                     "129. Why did you not avail of MAIFIP during this last confinement?",
-                    Q129_WHY_NO_MAIFIP),
+                    _cb_codes(Q129_WHY_NO_MAIFIP), with_other_txt=False),
         select_one("Q130_REDUCED_SPEND",
                    "130. Have you or your household had to reduce spending on things you need "
                    "(such as food, housing, or utilities) because of this health expenditure "

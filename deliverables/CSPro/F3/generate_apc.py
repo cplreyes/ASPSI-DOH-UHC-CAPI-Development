@@ -547,13 +547,12 @@ PROC Q126_MAIFIP_AVAILED
 preproc
   if PATIENT_TYPE <> 2 then  skip to Q130_REDUCED_SPEND; endif;  { #479: skip Q126-Q129 for outpatient }
 postproc
-  if Q126_MAIFIP_AVAILED = 2 then  skip to Q129_WHY_NO_MAIFIP_O01; endif;  { #482: didn't avail -> ask why-not (skip Q127/Q128) }
+  if Q126_MAIFIP_AVAILED = 2 then  skip to Q129_WHY_NO_MAIFIP; endif;  { #482/#700: didn't avail -> ask why-not (skip Q127/Q128); target is the Check Box base }
 
 { ---- Q129 'why not avail MAIFIP' (#482): only for those who did NOT avail (Q126=No=2).
-  Reached directly when Q126=No; on the Q126=Yes path (after Q127/Q128) skip it to Q130. ---- }
-PROC Q129_WHY_NO_MAIFIP_O01
-preproc
-  if Q126_MAIFIP_AVAILED <> 2 then  skip to Q130_REDUCED_SPEND; endif;
+  Reached directly when Q126=No; on the Q126=Yes path (after Q127/Q128) skip it to Q130.
+  #700: Q129 is now a Check Box base; this gate is folded into its checkbox PROC via
+  CHECKBOX_CONVERT. The old PROC Q129_WHY_NO_MAIFIP_O01 field no longer exists. ---- }
 
 { ---- Section L: not referred -> end of survey. Route to the closing Result-of-Visit +
   Verification Photo. Do NOT endlevel here: the photo form is the LAST form, so ending
@@ -673,6 +672,7 @@ CHECKBOX_BASES = {
     "Q149_WHERE_BUY", "Q153_GAMOT_SOURCE", "Q154_GAMOT_UNDERSTAND", "Q157_WHERE_REST",
     "Q160_WHY_GENERIC", "Q161_WHY_BRANDED", "Q163_CARE_TYPE",
     "Q128_MAIFIP_OOP_ITEMS",   # #481 select_all -> Check Box (+ None/Other)
+    "Q129_WHY_NO_MAIFIP",   # #700 select_all -> Check Box (tick-all)
 }
 
 CHECKBOX_CONVERT = [
@@ -748,6 +748,11 @@ CHECKBOX_CONVERT = [
      "    skip to Q162_REFERRED;\n  endif;"),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q163_CARE_TYPE",           True,  True,  None),  # #696: 'None of the above' (90) exclusive; 'Other (Specify)' (99)
     ("Q128_MAIFIP_OOP_ITEMS",    True,  True,  None),  # #481: 'None' (90) exclusive; 'Other (specify)' (99). Reached only when Q127=Yes (Q127=No skips Q128 -> Q130)
+    # Q129 inherits the not-availed gate that used to live on Q129_WHY_NO_MAIFIP_O01 (#482).
+    ("Q129_WHY_NO_MAIFIP",       False, False,
+     "  if Q126_MAIFIP_AVAILED <> 2 then   { #482/#700: only for those who did NOT avail MAIFIP\n"
+     "                                        (Q126=No=2); the Q126=Yes path skips Q129 to Q130. }\n"
+     "    skip to Q130_REDUCED_SPEND;\n  endif;"),   # 4 substantive reasons; no Other / no None-IDK
 ]
 
 
@@ -1024,7 +1029,6 @@ def main():
                "Q64_FACILITY_NAME", "Q66_SAME_AS_USUAL",   # EXTRA_PROCS (#418/#419 Q63 block)
                "Q45_CATEGORY", "Q60_SCHED_TELECON_OK", "Q62_CONSULT_TELECON_OK",  # EXTRA_PROCS (#402/#415/#417 gates)
                # #673: Q93_LABS_O17 gone — Q93 is now a Check Box base (in CHECKBOX_COVERED); None exclusivity + Q94-skip folded into its checkbox PROC.
-               "Q129_WHY_NO_MAIFIP_O01",   # EXTRA_PROCS (#482 why-not-avail gate)
                "Q122_ZBB_INFORMED", "Q126_MAIFIP_AVAILED",   # EXTRA_PROCS (#476/#479 confinement gates)
                "Q148_CONDITIONS", "Q148_CONDITIONS_OTHER_TXT", "Q148_MEDICINES_TXT",  # EXTRA_PROCS (Q148 Check Box)
                "Q147_MEDS_LIST", "Q155_GAMOT_GOT_MEDS", "Q156_GAMOT_MEDS_LIST",   # EXTRA_PROCS (Wave 4 #490/#498)

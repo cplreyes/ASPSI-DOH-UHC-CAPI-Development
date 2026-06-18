@@ -6618,23 +6618,30 @@ Text=202. Do any of the following reasons describe why you are worried about you
   
 [Block]
 Name=DG_BLK_224
-Label=Q200-Q201
+Label=Q200
 DisplayTogether=Yes
 Position=0
-Length=2
+Length=1
   
 [Block]
 Name=DG_BLK_225
-Label=Q202
+Label=Q201
 DisplayTogether=Yes
-Position=3
+Position=2
 Length=1
   
 [Block]
 Name=DG_BLK_226
 Label=Q202
 DisplayTogether=Yes
-Position=5
+Position=4
+Length=1
+  
+[Block]
+Name=DG_BLK_227
+Label=Q202
+DisplayTogether=Yes
+Position=6
 Length=1
   
 [EndGroup]

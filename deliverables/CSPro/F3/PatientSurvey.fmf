@@ -1020,7 +1020,7 @@ Label=I. Financial Risk
 
 Level=1
 
-Size=806,787
+Size=806,697
 
   
 
@@ -1062,13 +1062,7 @@ Item=Q128_MAIFIP_OOP_ITEMS
 
 Item=Q128_MAIFIP_OOP_ITEMS_OTHER_TXT
 
-Item=Q129_WHY_NO_MAIFIP_O01
-
-Item=Q129_WHY_NO_MAIFIP_O02
-
-Item=Q129_WHY_NO_MAIFIP_O03
-
-Item=Q129_WHY_NO_MAIFIP_O04
+Item=Q129_WHY_NO_MAIFIP
 
 Item=Q130_REDUCED_SPEND
 
@@ -15540,13 +15534,13 @@ Text=128. Which items did you have to pay for out-of-pocket? — Other (specify)
 
 [Field]
 
-Name=Q129_WHY_NO_MAIFIP_O01
+Name=Q129_WHY_NO_MAIFIP
 
 Position=350,597,365,617
 
-Item=Q129_WHY_NO_MAIFIP_O01,PATIENTSURVEY_DICT
+Item=Q129_WHY_NO_MAIFIP,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=14
 
@@ -15556,79 +15550,7 @@ Form=14
 
 Position=50,600,330,616
 
-Text=129. Why did you not avail of MAIFIP during this last confinement? — Not eligible
-
- 
-
-  
-
-[Field]
-
-Name=Q129_WHY_NO_MAIFIP_O02
-
-Position=350,627,365,647
-
-Item=Q129_WHY_NO_MAIFIP_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=14
-
-  
-
-[Text]
-
-Position=50,630,330,646
-
-Text=129. Why did you not avail of MAIFIP during this last confinement? — Too complicated
-
- 
-
-  
-
-[Field]
-
-Name=Q129_WHY_NO_MAIFIP_O03
-
-Position=350,657,365,677
-
-Item=Q129_WHY_NO_MAIFIP_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=14
-
-  
-
-[Text]
-
-Position=50,660,330,676
-
-Text=129. Why did you not avail of MAIFIP during this last confinement? — I don't like to stay in basic ward
-
- 
-
-  
-
-[Field]
-
-Name=Q129_WHY_NO_MAIFIP_O04
-
-Position=350,687,365,707
-
-Item=Q129_WHY_NO_MAIFIP_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=14
-
-  
-
-[Text]
-
-Position=50,690,330,706
-
-Text=129. Why did you not avail of MAIFIP during this last confinement? — There is no available basic ward
+Text=129. Why did you not avail of MAIFIP during this last confinement?
 
  
 
@@ -15638,7 +15560,7 @@ Text=129. Why did you not avail of MAIFIP during this last confinement? — Ther
 
 Name=Q130_REDUCED_SPEND
 
-Position=350,717,365,737
+Position=350,627,365,647
 
 Item=Q130_REDUCED_SPEND,PATIENTSURVEY_DICT
 
@@ -15650,7 +15572,7 @@ Form=14
 
 [Text]
 
-Position=50,720,330,736
+Position=50,630,330,646
 
 Text=130. Have you or your household had to reduce spending on things you need (such as food, housing, or utilities) because of this health expenditure in the last 1 month?
 
@@ -15934,7 +15856,7 @@ DisplayTogether=Yes
 
 Position=38
 
-Length=4
+Length=1
 
   
 
@@ -15946,7 +15868,7 @@ Label=Q130
 
 DisplayTogether=Yes
 
-Position=43
+Position=40
 
 Length=1
 
