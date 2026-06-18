@@ -7,6 +7,11 @@ import { describe, expect, it } from 'vitest';
 import {
   handleListResponses,
   handleGetResponseById,
+  handleKillSwitchGet,
+  handleKillSwitchSet,
+  handleBroadcastGet,
+  handleBroadcastSet,
+  BROADCAST_MAX_LEN,
   type ListResponsesData,
   type ResponseRow,
 } from '../../../src/admin/handlers/data';
@@ -124,5 +129,135 @@ describe('handleGetResponseById', () => {
   it('returns 400 when id is empty', async () => {
     const r = await handleGetResponseById('', () => asOk(ROW));
     expect(r.status).toBe(400);
+  });
+});
+
+// ----- Broadcast message (M12d) ---------------------------------------------
+
+describe('handleBroadcastGet', () => {
+  it('returns the current broadcast_message from config', async () => {
+    const r = await handleBroadcastGet(() =>
+      asOk({ config: { broadcast_message: 'Sync by 5 PM', kill_switch: 'false' } }),
+    );
+    expect(r.status).toBe(200);
+    const body = await r.json();
+    expect(body).toEqual({ broadcast_message: 'Sync by 5 PM' });
+  });
+
+  it('defaults to an empty string when the key is absent', async () => {
+    const r = await handleBroadcastGet(() => asOk({ config: {} }));
+    const body = (await r.json()) as { broadcast_message: string };
+    expect(body.broadcast_message).toBe('');
+  });
+
+  it('502s when Apps Script is unavailable', async () => {
+    const r = await handleBroadcastGet(() => asErr('E_BACKEND', 'down'));
+    expect(r.status).toBe(502);
+  });
+});
+
+describe('handleBroadcastSet', () => {
+  function req(body: unknown): Request {
+    return new Request('https://x/admin/api/dashboards/apps/broadcast', {
+      method: 'PATCH',
+      body: JSON.stringify(body),
+    });
+  }
+
+  it('sets broadcast_message via the generic config-set and echoes the trimmed value', async () => {
+    let captured: { key: string; value: string } | null = null;
+    const r = await handleBroadcastSet(req({ broadcast_message: '  Survey closes Friday  ' }), (p) => {
+      captured = p;
+      return asOk({ key: p.key, value: p.value });
+    });
+    expect(r.status).toBe(200);
+    expect(captured).toEqual({ key: 'broadcast_message', value: 'Survey closes Friday' });
+    const body = (await r.json()) as { broadcast_message: string };
+    expect(body.broadcast_message).toBe('Survey closes Friday');
+  });
+
+  it('allows clearing the banner with an empty string', async () => {
+    let captured: { key: string; value: string } | null = null;
+    const r = await handleBroadcastSet(req({ broadcast_message: '' }), (p) => {
+      captured = p;
+      return asOk({ key: p.key, value: p.value });
+    });
+    expect(r.status).toBe(200);
+    expect(captured).toEqual({ key: 'broadcast_message', value: '' });
+  });
+
+  it('400s when broadcast_message is not a string', async () => {
+    const r = await handleBroadcastSet(req({ broadcast_message: 123 }), () =>
+      asOk({ key: '', value: '' }),
+    );
+    expect(r.status).toBe(400);
+  });
+
+  it('400s when broadcast_message exceeds the length cap', async () => {
+    const r = await handleBroadcastSet(req({ broadcast_message: 'x'.repeat(BROADCAST_MAX_LEN + 1) }), () =>
+      asOk({ key: '', value: '' }),
+    );
+    expect(r.status).toBe(400);
+  });
+
+  it('502s when Apps Script rejects the write', async () => {
+    const r = await handleBroadcastSet(req({ broadcast_message: 'hi' }), () => asErr('E_BACKEND', 'down'));
+    expect(r.status).toBe(502);
+  });
+});
+
+// ----- Kill switch — regression for the double-wrap fix -----------------------
+// These pin the unwrapped success-body convention. Before the fix the handlers
+// returned { ok:true, data:{ kill_switch } }, so KillSwitchSection read
+// r.data.kill_switch as undefined and the admin toggle always showed OFF.
+
+describe('handleKillSwitchGet', () => {
+  it('returns an unwrapped { kill_switch: true } body when config has "true"', async () => {
+    const r = await handleKillSwitchGet(() => asOk({ config: { kill_switch: 'true' } }));
+    expect(r.status).toBe(200);
+    const body = await r.json();
+    expect(body).toEqual({ kill_switch: true });
+  });
+
+  it('coerces any non-"true" value to false', async () => {
+    const r = await handleKillSwitchGet(() => asOk({ config: { kill_switch: 'false' } }));
+    const body = await r.json();
+    expect(body).toEqual({ kill_switch: false });
+  });
+
+  it('502s when Apps Script is unavailable', async () => {
+    const r = await handleKillSwitchGet(() => asErr('E_BACKEND', 'down'));
+    expect(r.status).toBe(502);
+  });
+});
+
+describe('handleKillSwitchSet', () => {
+  function req(body: unknown): Request {
+    return new Request('https://x/admin/api/dashboards/apps/kill-switch', {
+      method: 'PATCH',
+      body: JSON.stringify(body),
+    });
+  }
+
+  it('persists the flag and returns an unwrapped { kill_switch } body', async () => {
+    let captured: { key: string; value: string } | null = null;
+    const r = await handleKillSwitchSet(req({ kill_switch: true }), (p) => {
+      captured = p;
+      return asOk({ key: p.key, value: p.value });
+    });
+    expect(r.status).toBe(200);
+    expect(captured).toEqual({ key: 'kill_switch', value: 'true' });
+    const body = await r.json();
+    expect(body).toEqual({ kill_switch: true });
+  });
+
+  it('400s when kill_switch is not a boolean', async () => {
+    const r = await handleKillSwitchSet(req({ kill_switch: 'yes' }), () => asOk({ key: '', value: '' }));
+    expect(r.status).toBe(400);
+  });
+
+  it('502s when Apps Script rejects the write', async () => {
+    const r = await handleKillSwitchSet(req({ kill_switch: false }), () => asErr('E_BACKEND', 'down'));
+    expect(r.status).toBe(502);
   });
 });

@@ -25,6 +25,12 @@ dist-ssr
 
 lighthouse-pwa.json
 
+# Lighthouse CI (local + CI run artifacts)
+.lighthouseci
+lighthouse-a11y.html
+lighthouse-a11y-admin.html
+lh-perf-*.json
+
 # Playwright e2e artifacts
 test-results
 playwright-report

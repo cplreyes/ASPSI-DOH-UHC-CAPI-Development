@@ -77,3 +77,36 @@ jobs:
 
       - name: Unit tests (vitest run)
         run: npm test -- --run
+
+  lighthouse:
+    name: lighthouse — a11y + perf score gate (public surfaces)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: deliverables/F2/PWA/app
+    # vite's production env-guard (assertRequiredEnv in vite.config.ts) fires on
+    # BOTH `vite build` and `vite preview`, so VITE_F2_PROXY_URL has to be set for
+    # the whole job — the lhci-spawned preview server needs it too, not just the
+    # build step. The staging Worker origin is public; real deploys read the secret.
+    env:
+      VITE_F2_PROXY_URL: https://f2-pwa-worker.hcw.workers.dev
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: deliverables/F2/PWA/app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Build the static dist lhci serves with `vite preview`. ubuntu-latest ships
+      # google-chrome-stable; lhci's chrome-launcher finds it, and the config's
+      # --no-sandbox flag covers the CI container. Gate config: lighthouserc.cjs.
+      - name: Build
+        run: npm run build
+
+      - name: Lighthouse CI (a11y + perf score gate)
+        run: npx lhci autorun --config=./lighthouserc.cjs
