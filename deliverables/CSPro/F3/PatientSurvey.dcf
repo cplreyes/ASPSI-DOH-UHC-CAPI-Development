@@ -24839,62 +24839,61 @@
               ]
             },
             {
-              "name": "Q92_PAY_01",
+              "name": "Q92_SOURCES",
               "labels": [
                 {
-                  "text": "92. Cost of consultation \u2014 Out-of-pocket",
+                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                   "language": "EN"
                 },
                 {
-                  "text": "Magkano ang binayaran sa konsultasyon? \u2014 Mula sa sariling pera",
+                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                   "language": "FIL"
                 },
                 {
-                  "text": "92. Cost of consultation \u2014 Out-of-pocket",
+                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                   "language": "BCL"
                 },
                 {
-                  "text": "92. Cost of consultation \u2014 Out-of-pocket",
+                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Gikan sa kaugalingong bulsa",
+                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Kalugaringon nga gastos",
+                  "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                   "language": "WAR"
                 }
               ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
+              "contentType": "alpha",
+              "length": 16,
               "valueSets": [
                 {
-                  "name": "Q92_PAY_01_VS1",
+                  "name": "Q92_SOURCES_VS1",
                   "labels": [
                     {
-                      "text": "92. Cost of consultation \u2014 Out-of-pocket",
+                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                       "language": "EN"
                     },
                     {
-                      "text": "Magkano ang binayaran sa konsultasyon? \u2014 Mula sa sariling pera",
+                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                       "language": "FIL"
                     },
                     {
-                      "text": "92. Cost of consultation \u2014 Out-of-pocket",
+                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                       "language": "BCL"
                     },
                     {
-                      "text": "92. Cost of consultation \u2014 Out-of-pocket",
+                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                       "language": "BIS"
                     },
                     {
-                      "text": "Gikan sa kaugalingong bulsa",
+                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                       "language": "CEB"
                     },
                     {
-                      "text": "Kalugaringon nga gastos",
+                      "text": "92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)",
                       "language": "WAR"
                     }
                   ],
@@ -24902,66 +24901,661 @@
                     {
                       "labels": [
                         {
-                          "text": "Yes",
+                          "text": "Out-of-pocket",
                           "language": "EN"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Out-of-pocket",
                           "language": "FIL"
                         },
                         {
-                          "text": "Iyo",
+                          "text": "Out-of-pocket",
                           "language": "BCL"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Out-of-pocket",
                           "language": "BIS"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Out-of-pocket",
                           "language": "CEB"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Out-of-pocket",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "1"
+                          "value": "01"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Donation",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Donation",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Donation",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Donation",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Donation",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Donation",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Free/no cost",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Free/no cost",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Free/no cost",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Free/no cost",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Free/no cost",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Free/no cost",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In kind",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi alam",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dai aram",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala Kabalo",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala mahibalo",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Diri ako maaram",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Q92_PAY_ROSTER",
+          "labels": [
+            {
+              "text": "G. Cost of consultation \u2014 amount by source",
+              "language": "EN"
+            },
+            {
+              "text": "G. Cost of consultation \u2014 amount by source",
+              "language": "FIL"
+            },
+            {
+              "text": "G. Cost of consultation \u2014 amount by source",
+              "language": "BCL"
+            },
+            {
+              "text": "G. Cost of consultation \u2014 amount by source",
+              "language": "BIS"
+            },
+            {
+              "text": "G. Cost of consultation \u2014 amount by source",
+              "language": "CEB"
+            },
+            {
+              "text": "G. Cost of consultation \u2014 amount by source",
+              "language": "WAR"
+            }
+          ],
+          "recordType": "O",
+          "occurrences": {
+            "required": false,
+            "maximum": 8
+          },
+          "items": [
+            {
+              "name": "Q92_PAY_LINE",
+              "labels": [
+                {
+                  "text": "92. Payment row",
+                  "language": "EN"
+                },
+                {
+                  "text": "92. Payment row",
+                  "language": "FIL"
+                },
+                {
+                  "text": "92. Payment row",
+                  "language": "BCL"
+                },
+                {
+                  "text": "92. Payment row",
+                  "language": "BIS"
+                },
+                {
+                  "text": "92. Payment row",
+                  "language": "CEB"
+                },
+                {
+                  "text": "92. Payment row",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false
+            },
+            {
+              "name": "Q92_PAY_SRC",
+              "labels": [
+                {
+                  "text": "92. Payment source (auto-filled from the ticked sources)",
+                  "language": "EN"
+                },
+                {
+                  "text": "92. Payment source (auto-filled from the ticked sources)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "92. Payment source (auto-filled from the ticked sources)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "92. Payment source (auto-filled from the ticked sources)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "92. Payment source (auto-filled from the ticked sources)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "92. Payment source (auto-filled from the ticked sources)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q92_PAY_SRC_VS1",
+                  "labels": [
+                    {
+                      "text": "92. Payment source (auto-filled from the ticked sources)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "92. Payment source (auto-filled from the ticked sources)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "92. Payment source (auto-filled from the ticked sources)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "92. Payment source (auto-filled from the ticked sources)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "92. Payment source (auto-filled from the ticked sources)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "92. Payment source (auto-filled from the ticked sources)",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Out-of-pocket",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Out-of-pocket",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Out-of-pocket",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Out-of-pocket",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Out-of-pocket",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Out-of-pocket",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Donation",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Donation",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Free/no cost",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Free/no cost",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Free/no cost",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Free/no cost",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Free/no cost",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Free/no cost",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Free, charge to PhilHealth",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Free, charge to Private Insurance",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Free, charge to HMO",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "In kind",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In kind",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi alam",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dai aram",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala Kabalo",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala mahibalo",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Diri ako maaram",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
                         }
                       ]
                     }
@@ -24970,986 +25564,73 @@
               ]
             },
             {
-              "name": "Q92_PAY_01_AMT",
+              "name": "Q92_PAY_AMT",
               "labels": [
                 {
-                  "text": "92. Cost of consultation \u2014 Out-of-pocket (Amount in Pesos)",
+                  "text": "92. Amount paid for the consultation, by source (Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "Magkano ang binayaran sa konsultasyon? \u2014 Mula sa sariling pera",
+                  "text": "92. Amount paid for the consultation, by source (Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "92. Cost of consultation \u2014 Out-of-pocket (Amount in Pesos)",
+                  "text": "92. Amount paid for the consultation, by source (Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "92. Cost of consultation \u2014 Out-of-pocket (Amount in Pesos)",
+                  "text": "92. Amount paid for the consultation, by source (Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Gikan sa kaugalingong bulsa",
+                  "text": "92. Amount paid for the consultation, by source (Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "92. Cost of consultation \u2014 Out-of-pocket (Amount in Pesos)",
+                  "text": "92. Amount paid for the consultation, by source (Pesos)",
                   "language": "WAR"
                 }
               ],
               "contentType": "numeric",
               "length": 8,
               "zeroFill": false
+            }
+          ]
+        },
+        {
+          "name": "G_OUTPATIENT_CARE_2",
+          "labels": [
+            {
+              "text": "G. Outpatient Care (cont.)",
+              "language": "EN"
             },
             {
-              "name": "Q92_PAY_02",
-              "labels": [
-                {
-                  "text": "92. Cost of consultation \u2014 Donation",
-                  "language": "EN"
-                },
-                {
-                  "text": "Magkano ang binayaran sa konsultasyon? \u2014 Donasyon",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Donasyon/Tinao",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Donasyon",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Donasyon",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Donasyon",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q92_PAY_02_VS1",
-                  "labels": [
-                    {
-                      "text": "92. Cost of consultation \u2014 Donation",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Magkano ang binayaran sa konsultasyon? \u2014 Donasyon",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Donasyon/Tinao",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Donasyon",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Donasyon",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Donasyon",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "text": "G. Outpatient Care (cont.)",
+              "language": "FIL"
             },
             {
-              "name": "Q92_PAY_02_AMT",
-              "labels": [
-                {
-                  "text": "92. Cost of consultation \u2014 Donation (Amount in Pesos)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Magkano ang binayaran sa konsultasyon? \u2014 Donasyon",
-                  "language": "FIL"
-                },
-                {
-                  "text": "92. Cost of consultation \u2014 Donation (Amount in Pesos)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "92. Cost of consultation \u2014 Donation (Amount in Pesos)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Donasyon",
-                  "language": "CEB"
-                },
-                {
-                  "text": "92. Cost of consultation \u2014 Donation (Amount in Pesos)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 8,
-              "zeroFill": false
+              "text": "G. Outpatient Care (cont.)",
+              "language": "BCL"
             },
             {
-              "name": "Q92_PAY_03",
-              "labels": [
-                {
-                  "text": "92. Cost of consultation \u2014 Free/no cost",
-                  "language": "EN"
-                },
-                {
-                  "text": "Magkano ang binayaran sa konsultasyon? \u2014 Libre/Walang bayad",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Libre/Wara ginastos",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Libre / walay bayad",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Libre/walay bayad",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Libre/ waray bayad",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q92_PAY_03_VS1",
-                  "labels": [
-                    {
-                      "text": "92. Cost of consultation \u2014 Free/no cost",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Magkano ang binayaran sa konsultasyon? \u2014 Libre/Walang bayad",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Libre/Wara ginastos",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Libre / walay bayad",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Libre/walay bayad",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Libre/ waray bayad",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "text": "G. Outpatient Care (cont.)",
+              "language": "BIS"
             },
             {
-              "name": "Q92_PAY_04",
-              "labels": [
-                {
-                  "text": "92. Cost of consultation \u2014 Free, charge to PhilHealth",
-                  "language": "EN"
-                },
-                {
-                  "text": "Magkano ang binayaran sa konsultasyon? \u2014 Libre, sagot ng PhilHealth",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Libre, charge sa Philhealth",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Libre, charge sa PhilHealth",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Libre, gisingil sa PhilHealth",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Libre, babaydan hit Philhealth",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q92_PAY_04_VS1",
-                  "labels": [
-                    {
-                      "text": "92. Cost of consultation \u2014 Free, charge to PhilHealth",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Magkano ang binayaran sa konsultasyon? \u2014 Libre, sagot ng PhilHealth",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Libre, charge sa Philhealth",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Libre, charge sa PhilHealth",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Libre, gisingil sa PhilHealth",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Libre, babaydan hit Philhealth",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "text": "G. Outpatient Care (cont.)",
+              "language": "CEB"
             },
             {
-              "name": "Q92_PAY_05",
-              "labels": [
-                {
-                  "text": "92. Cost of consultation \u2014 Free, charge to Private Insurance",
-                  "language": "EN"
-                },
-                {
-                  "text": "Magkano ang binayaran sa konsultasyon? \u2014 Libre, sagot ng pribadong insurance",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Libre, charge sa Insurance",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Libre, charge sa Private Insurance",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Libre, gisingil sa Private Insurance",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Libre, babaydan hit Pribado nga Insurance",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q92_PAY_05_VS1",
-                  "labels": [
-                    {
-                      "text": "92. Cost of consultation \u2014 Free, charge to Private Insurance",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Magkano ang binayaran sa konsultasyon? \u2014 Libre, sagot ng pribadong insurance",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Libre, charge sa Insurance",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Libre, charge sa Private Insurance",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Libre, gisingil sa Private Insurance",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Libre, babaydan hit Pribado nga Insurance",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q92_PAY_06",
-              "labels": [
-                {
-                  "text": "92. Cost of consultation \u2014 Free, charge to HMO",
-                  "language": "EN"
-                },
-                {
-                  "text": "Magkano ang binayaran sa konsultasyon? \u2014 Libre, sagot ng HMO",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Libre, charge sa HMO",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Libre, charge sa HMO",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Libre, gisingil sa HMO",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Libre, babaydan hit HMO",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q92_PAY_06_VS1",
-                  "labels": [
-                    {
-                      "text": "92. Cost of consultation \u2014 Free, charge to HMO",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Magkano ang binayaran sa konsultasyon? \u2014 Libre, sagot ng HMO",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Libre, charge sa HMO",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Libre, charge sa HMO",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Libre, gisingil sa HMO",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Libre, babaydan hit HMO",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q92_PAY_07",
-              "labels": [
-                {
-                  "text": "92. Cost of consultation \u2014 In kind",
-                  "language": "EN"
-                },
-                {
-                  "text": "Magkano ang binayaran sa konsultasyon? \u2014 Hindi pera ang ibinayad",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Tabang kan ibang tawo",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Dili kwarta ang bayad",
-                  "language": "BIS"
-                },
-                {
-                  "text": "In kind / Hinatag nga butang",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Mga butang",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q92_PAY_07_VS1",
-                  "labels": [
-                    {
-                      "text": "92. Cost of consultation \u2014 In kind",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Magkano ang binayaran sa konsultasyon? \u2014 Hindi pera ang ibinayad",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Tabang kan ibang tawo",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Dili kwarta ang bayad",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "In kind / Hinatag nga butang",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Mga butang",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q92_PAY_08",
-              "labels": [
-                {
-                  "text": "92. Cost of consultation \u2014 Don't know",
-                  "language": "EN"
-                },
-                {
-                  "text": "Magkano ang binayaran sa konsultasyon? \u2014 Hindi ko alam",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Dai aram",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Wala kabalo",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Wala kahibalo",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Diri ako maaram",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q92_PAY_08_VS1",
-                  "labels": [
-                    {
-                      "text": "92. Cost of consultation \u2014 Don't know",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Magkano ang binayaran sa konsultasyon? \u2014 Hindi ko alam",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Dai aram",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Wala kabalo",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Wala kahibalo",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Diri ako maaram",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
+              "text": "G. Outpatient Care (cont.)",
+              "language": "WAR"
+            }
+          ],
+          "recordType": "P",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
             {
               "name": "Q93_LABS",
               "labels": [

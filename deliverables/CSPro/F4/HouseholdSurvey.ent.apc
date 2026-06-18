@@ -2383,12 +2383,6 @@ postproc
     reenter;
   endif;
 
-PROC Q138_MOST_EXPENSIVE
-preproc
-  if Q129_HH_CONFINED <> 1 then   { bill-recall (Q138-143) is for confined HHs only }
-    skip to Q144_CEREALS_CONSUMED;
-  endif;
-
 PROC Q73_GAMOT_MEDS_LIST
 postproc
   if length(strip(Q73_GAMOT_MEDS_LIST)) = 0 then

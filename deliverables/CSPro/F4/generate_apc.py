@@ -46,13 +46,12 @@ CUSTOM_VALIDATION = [
      "PROC DATE_FINAL_VISIT\npostproc\n"
      "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
      "    errmsg(\"Final-visit date cannot be earlier than the first-visit date.\");\n    reenter;\n  endif;"),
-    # #625/#626: now that Q129 = No/Don't-know routes to Q132 (ZBB awareness asked regardless of
-    # confinement), the bill-recall tail (Q138-Q143) must still be confinement-dependent -> gate it
-    # here so only Q129=Yes (confined) reaches it; everyone else skips to Section N.
-    ("Q138_MOST_EXPENSIVE",
-     "PROC Q138_MOST_EXPENSIVE\npreproc\n"
-     "  if Q129_HH_CONFINED <> 1 then   { bill-recall (Q138-143) is for confined HHs only }\n"
-     "    skip to Q144_CEREALS_CONSUMED;\n  endif;"),
+    # #699/#701 (Carl, 2026-06-18 — "do what the testers said"): the Q138 confinement gate
+    # (#625/#626: Q129 <> Yes -> skip Q138-143 to Q144) is REMOVED. Q138 reads "from your most
+    # recent VISIT, which charge was most expensive?" — testers expect Q138-Q143 to follow Q136/
+    # Q137 for everyone, not only confined HHs. The internal block gates (Q140=No -> Q142,
+    # Q142=No -> Q144) still apply. (If this should be reinstated for non-confined HHs, restore
+    # the Q138_MOST_EXPENSIVE preproc skip-on-Q129<>1.)
     # #644: Q73 (GAMOT meds list) is REQUIRED when reached. Spec F4-Skip-Logic-and-
     # Validations.md line 408: "Required when enabled, non-blank; HARD". Q73 is only
     # reached when Q72=Yes (Q72=No skips Q73 -> Q74), so a plain non-blank postproc check

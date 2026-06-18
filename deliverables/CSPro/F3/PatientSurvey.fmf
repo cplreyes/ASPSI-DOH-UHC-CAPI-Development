@@ -528,7 +528,7 @@ Label=G. Outpatient Care
 
 Level=1
 
-Size=806,3187
+Size=806,300
 
   
 
@@ -544,25 +544,51 @@ Item=Q90_NOT_CONFINED_OTHER_TXT
 
 Item=Q91_USUAL_OUTPATIENT
 
-Item=Q92_PAY_01
+Item=Q92_SOURCES
 
-Item=Q92_PAY_01_AMT
+  
 
-Item=Q92_PAY_02
+[EndForm]
 
-Item=Q92_PAY_02_AMT
+  
 
-Item=Q92_PAY_03
+[Form]
 
-Item=Q92_PAY_04
+Name=FORM012
 
-Item=Q92_PAY_05
+Label=G. Cost of consultation — amount by source
 
-Item=Q92_PAY_06
+Level=1
 
-Item=Q92_PAY_07
+Repeat=Q92_PAY_ROSTER
 
-Item=Q92_PAY_08
+Size=806,300
+
+  
+
+Item=Q92_PAY_LINE
+
+Item=Q92_PAY_SRC
+
+Item=Q92_PAY_AMT
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM013
+
+Label=G. Outpatient Care (cont.)
+
+Level=1
+
+Size=806,2707
+
+  
 
 Item=Q93_LABS
 
@@ -748,7 +774,7 @@ Item=Q104_WITHOUT_BUCAS_OTHER_TXT
 
 [Form]
 
-Name=FORM012
+Name=FORM014
 
 Label=H. Inpatient Care
 
@@ -1014,7 +1040,7 @@ Item=Q1142_OTHER_TXT
 
 [Form]
 
-Name=FORM013
+Name=FORM015
 
 Label=I. Financial Risk
 
@@ -1074,7 +1100,7 @@ Item=Q130_REDUCED_SPEND
 
 [Form]
 
-Name=FORM014
+Name=FORM016
 
 Label=J. Satisfaction
 
@@ -1120,7 +1146,7 @@ Item=Q144_QUALITY
 
 [Form]
 
-Name=FORM015
+Name=FORM017
 
 Label=K. Access to Medicines
 
@@ -1190,7 +1216,7 @@ Item=Q161_WHY_BRANDED_OTHER_TXT
 
 [Form]
 
-Name=FORM016
+Name=FORM018
 
 Label=L. Referrals
 
@@ -1252,7 +1278,7 @@ Item=Q178_SAT_REFERRAL
 
 [Form]
 
-Name=FORM017
+Name=FORM019
 
 Label=Closing - case end
 
@@ -1288,7 +1314,7 @@ Item=ENUM_RESULT_FINAL_VISIT
 
 [Form]
 
-Name=FORM018
+Name=FORM020
 
 Label=Case Verification Photo
 
@@ -6726,13 +6752,13 @@ Text=91. Do you usually avail consultation services for outpatient care?
 
 [Field]
 
-Name=Q92_PAY_01
+Name=Q92_SOURCES
 
 Position=350,207,365,227
 
-Item=Q92_PAY_01,PATIENTSURVEY_DICT
+Item=Q92_SOURCES,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=12
 
@@ -6742,2353 +6768,7 @@ Form=12
 
 Position=50,210,330,226
 
-Text=92. Cost of consultation — Out-of-pocket
-
- 
-
-  
-
-[Field]
-
-Name=Q92_PAY_01_AMT
-
-Position=350,237,760,257
-
-Item=Q92_PAY_01_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,240,330,256
-
-Text=92. Cost of consultation — Out-of-pocket (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q92_PAY_02
-
-Position=350,267,365,287
-
-Item=Q92_PAY_02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,270,330,286
-
-Text=92. Cost of consultation — Donation
-
- 
-
-  
-
-[Field]
-
-Name=Q92_PAY_02_AMT
-
-Position=350,297,760,317
-
-Item=Q92_PAY_02_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,300,330,316
-
-Text=92. Cost of consultation — Donation (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q92_PAY_03
-
-Position=350,327,365,347
-
-Item=Q92_PAY_03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,330,330,346
-
-Text=92. Cost of consultation — Free/no cost
-
- 
-
-  
-
-[Field]
-
-Name=Q92_PAY_04
-
-Position=350,357,365,377
-
-Item=Q92_PAY_04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,360,330,376
-
-Text=92. Cost of consultation — Free, charge to PhilHealth
-
- 
-
-  
-
-[Field]
-
-Name=Q92_PAY_05
-
-Position=350,387,365,407
-
-Item=Q92_PAY_05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,390,330,406
-
-Text=92. Cost of consultation — Free, charge to Private Insurance
-
- 
-
-  
-
-[Field]
-
-Name=Q92_PAY_06
-
-Position=350,417,365,437
-
-Item=Q92_PAY_06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,420,330,436
-
-Text=92. Cost of consultation — Free, charge to HMO
-
- 
-
-  
-
-[Field]
-
-Name=Q92_PAY_07
-
-Position=350,447,365,467
-
-Item=Q92_PAY_07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,450,330,466
-
-Text=92. Cost of consultation — In kind
-
- 
-
-  
-
-[Field]
-
-Name=Q92_PAY_08
-
-Position=350,477,365,497
-
-Item=Q92_PAY_08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,480,330,496
-
-Text=92. Cost of consultation — Don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS
-
-Position=350,507,365,527
-
-Item=Q93_LABS,PATIENTSURVEY_DICT
-
-DataCaptureType=CheckBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,510,330,526
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care?
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_OTHER_TXT
-
-Position=350,537,760,557
-
-Item=Q93_LABS_OTHER_TXT,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,540,330,556
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Other (specify) text
-
- 
-
-  
-
-[Field]
-
-Name=Q94_PAY_01
-
-Position=350,567,365,587
-
-Item=Q94_PAY_01,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,570,330,586
-
-Text=94. Cost of laboratory test/s — Out-of-pocket
-
- 
-
-  
-
-[Field]
-
-Name=Q94_PAY_01_AMT
-
-Position=350,597,760,617
-
-Item=Q94_PAY_01_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,600,330,616
-
-Text=94. Cost of laboratory test/s — Out-of-pocket (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q94_PAY_02
-
-Position=350,627,365,647
-
-Item=Q94_PAY_02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,630,330,646
-
-Text=94. Cost of laboratory test/s — Donation
-
- 
-
-  
-
-[Field]
-
-Name=Q94_PAY_03
-
-Position=350,657,365,677
-
-Item=Q94_PAY_03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,660,330,676
-
-Text=94. Cost of laboratory test/s — Free/no cost
-
- 
-
-  
-
-[Field]
-
-Name=Q94_PAY_04
-
-Position=350,687,365,707
-
-Item=Q94_PAY_04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,690,330,706
-
-Text=94. Cost of laboratory test/s — Free, charge to PhilHealth
-
- 
-
-  
-
-[Field]
-
-Name=Q94_PAY_05
-
-Position=350,717,365,737
-
-Item=Q94_PAY_05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,720,330,736
-
-Text=94. Cost of laboratory test/s — Free, charge to Private Insurance
-
- 
-
-  
-
-[Field]
-
-Name=Q94_PAY_06
-
-Position=350,747,365,767
-
-Item=Q94_PAY_06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,750,330,766
-
-Text=94. Cost of laboratory test/s — Free, charge to HMO
-
- 
-
-  
-
-[Field]
-
-Name=Q94_PAY_07
-
-Position=350,777,365,797
-
-Item=Q94_PAY_07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,780,330,796
-
-Text=94. Cost of laboratory test/s — In kind
-
- 
-
-  
-
-[Field]
-
-Name=Q94_PAY_08
-
-Position=350,807,365,827
-
-Item=Q94_PAY_08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,810,330,826
-
-Text=94. Cost of laboratory test/s — Don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q95_PRESCRIBED
-
-Position=350,837,365,857
-
-Item=Q95_PRESCRIBED,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,840,330,856
-
-Text=95. Were you prescribed medicine/s after your check-up?
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_01
-
-Position=350,867,365,887
-
-Item=Q96_PAY_01,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,870,330,886
-
-Text=96. Amount spent for prescribed medicines — Out-of-pocket
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_01_AMT
-
-Position=350,897,760,917
-
-Item=Q96_PAY_01_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,900,330,916
-
-Text=96. Amount spent for prescribed medicines — Out-of-pocket (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_02
-
-Position=350,927,365,947
-
-Item=Q96_PAY_02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,930,330,946
-
-Text=96. Amount spent for prescribed medicines — Free/no cost
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_03
-
-Position=350,957,365,977
-
-Item=Q96_PAY_03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,960,330,976
-
-Text=96. Amount spent for prescribed medicines — Free, charge to PhilHealth
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_04
-
-Position=350,987,365,1007
-
-Item=Q96_PAY_04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,990,330,1006
-
-Text=96. Amount spent for prescribed medicines — Free, charge to Private Insurance
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_05
-
-Position=350,1017,365,1037
-
-Item=Q96_PAY_05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1020,330,1036
-
-Text=96. Amount spent for prescribed medicines — Free, charge to HMO
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_06
-
-Position=350,1047,365,1067
-
-Item=Q96_PAY_06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1050,330,1066
-
-Text=96. Amount spent for prescribed medicines — In kind
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_06_AMT
-
-Position=350,1077,760,1097
-
-Item=Q96_PAY_06_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1080,330,1096
-
-Text=96. Amount spent for prescribed medicines — In kind (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_07
-
-Position=350,1107,365,1127
-
-Item=Q96_PAY_07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1110,330,1126
-
-Text=96. Amount spent for prescribed medicines — Donation
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_07_AMT
-
-Position=350,1137,760,1157
-
-Item=Q96_PAY_07_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1140,330,1156
-
-Text=96. Amount spent for prescribed medicines — Donation (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q96_PAY_08
-
-Position=350,1167,365,1187
-
-Item=Q96_PAY_08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1170,330,1186
-
-Text=96. Amount spent for prescribed medicines — Don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q97_FINAL_AMOUNT
-
-Position=350,1197,760,1217
-
-Item=Q97_FINAL_AMOUNT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1200,330,1216
-
-Text=97. What was the final amount you paid in cash for your outpatient care? (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q971_1
-
-Position=350,1227,365,1247
-
-Item=Q971_1,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1230,330,1246
-
-Text=97.1 Other items included in the bill — Consultation Fee
-
- 
-
-  
-
-[Field]
-
-Name=Q971_1_AMT
-
-Position=350,1257,760,1277
-
-Item=Q971_1_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1260,330,1276
-
-Text=97.1 Other items included in the bill — Consultation Fee (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q971_2
-
-Position=350,1287,365,1307
-
-Item=Q971_2,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1290,330,1306
-
-Text=97.1 Other items included in the bill — Medical equipment or supplies
-
- 
-
-  
-
-[Field]
-
-Name=Q971_2_AMT
-
-Position=350,1317,760,1337
-
-Item=Q971_2_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1320,330,1336
-
-Text=97.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q971_3
-
-Position=350,1347,365,1367
-
-Item=Q971_3,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1350,330,1366
-
-Text=97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)
-
- 
-
-  
-
-[Field]
-
-Name=Q971_3_AMT
-
-Position=350,1377,760,1397
-
-Item=Q971_3_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1380,330,1396
-
-Text=97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q971_4
-
-Position=350,1407,365,1427
-
-Item=Q971_4,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1410,330,1426
-
-Text=97.1 Other items included in the bill — Other expenses
-
- 
-
-  
-
-[Field]
-
-Name=Q971_4_AMT
-
-Position=350,1437,760,1457
-
-Item=Q971_4_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1440,330,1456
-
-Text=97.1 Other items included in the bill — Other expenses (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q971_OTHER_TXT
-
-Position=350,1467,760,1487
-
-Item=Q971_OTHER_TXT,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1470,330,1486
-
-Text=97.1 Other expenses — specify text
-
- 
-
-  
-
-[Field]
-
-Name=Q972_1
-
-Position=350,1497,365,1517
-
-Item=Q972_1,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1500,330,1516
-
-Text=97.2 Other expenses during OPD visit not in bill — a) Consultation Fee
-
- 
-
-  
-
-[Field]
-
-Name=Q972_1_AMT
-
-Position=350,1527,760,1547
-
-Item=Q972_1_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1530,330,1546
-
-Text=97.2 Other expenses during OPD visit not in bill — a) Consultation Fee (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q972_2
-
-Position=350,1557,365,1577
-
-Item=Q972_2,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1560,330,1576
-
-Text=97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure
-
- 
-
-  
-
-[Field]
-
-Name=Q972_2_AMT
-
-Position=350,1587,760,1607
-
-Item=Q972_2_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1590,330,1606
-
-Text=97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q972_3
-
-Position=350,1617,365,1637
-
-Item=Q972_3,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1620,330,1636
-
-Text=97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies
-
- 
-
-  
-
-[Field]
-
-Name=Q972_3_AMT
-
-Position=350,1647,760,1667
-
-Item=Q972_3_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1650,330,1666
-
-Text=97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q972_4
-
-Position=350,1677,365,1697
-
-Item=Q972_4,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1680,330,1696
-
-Text=97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs
-
- 
-
-  
-
-[Field]
-
-Name=Q972_4_AMT
-
-Position=350,1707,760,1727
-
-Item=Q972_4_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1710,330,1726
-
-Text=97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q972_5
-
-Position=350,1737,365,1757
-
-Item=Q972_5,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1740,330,1756
-
-Text=97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel
-
- 
-
-  
-
-[Field]
-
-Name=Q972_5_AMT
-
-Position=350,1767,760,1787
-
-Item=Q972_5_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1770,330,1786
-
-Text=97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q972_6
-
-Position=350,1797,365,1817
-
-Item=Q972_6,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1800,330,1816
-
-Text=97.2 Other expenses during OPD visit not in bill — f) Other expenses
-
- 
-
-  
-
-[Field]
-
-Name=Q972_6_AMT
-
-Position=350,1827,760,1847
-
-Item=Q972_6_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1830,330,1846
-
-Text=97.2 Other expenses during OPD visit not in bill — f) Other expenses (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q972_OTHER_TXT
-
-Position=350,1857,760,1877
-
-Item=Q972_OTHER_TXT,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1860,330,1876
-
-Text=97.2 Other expenses — specify text
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_01
-
-Position=350,1887,365,1907
-
-Item=Q98_PAY_01,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1890,330,1906
-
-Text=98. Used to pay for medical costs — Salary/income
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_01_AMT
-
-Position=350,1917,760,1937
-
-Item=Q98_PAY_01_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1920,330,1936
-
-Text=98. Used to pay for medical costs — Salary/income (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_02
-
-Position=350,1947,365,1967
-
-Item=Q98_PAY_02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1950,330,1966
-
-Text=98. Used to pay for medical costs — Loan/Mortgage
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_02_AMT
-
-Position=350,1977,760,1997
-
-Item=Q98_PAY_02_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1980,330,1996
-
-Text=98. Used to pay for medical costs — Loan/Mortgage (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_03
-
-Position=350,2007,365,2027
-
-Item=Q98_PAY_03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2010,330,2026
-
-Text=98. Used to pay for medical costs — Savings
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_03_AMT
-
-Position=350,2037,760,2057
-
-Item=Q98_PAY_03_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2040,330,2056
-
-Text=98. Used to pay for medical costs — Savings (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_04
-
-Position=350,2067,365,2087
-
-Item=Q98_PAY_04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2070,330,2086
-
-Text=98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_04_AMT
-
-Position=350,2097,760,2117
-
-Item=Q98_PAY_04_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2100,330,2116
-
-Text=98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_05
-
-Position=350,2127,365,2147
-
-Item=Q98_PAY_05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2130,330,2146
-
-Text=98. Used to pay for medical costs — Malasakit Center
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_05_AMT
-
-Position=350,2157,760,2177
-
-Item=Q98_PAY_05_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2160,330,2176
-
-Text=98. Used to pay for medical costs — Malasakit Center (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_06
-
-Position=350,2187,365,2207
-
-Item=Q98_PAY_06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2190,330,2206
-
-Text=98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_06_AMT
-
-Position=350,2217,760,2237
-
-Item=Q98_PAY_06_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2220,330,2236
-
-Text=98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_07
-
-Position=350,2247,365,2267
-
-Item=Q98_PAY_07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2250,330,2266
-
-Text=98. Used to pay for medical costs — Sale of Assets
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_07_AMT
-
-Position=350,2277,760,2297
-
-Item=Q98_PAY_07_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2280,330,2296
-
-Text=98. Used to pay for medical costs — Sale of Assets (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_08
-
-Position=350,2307,365,2327
-
-Item=Q98_PAY_08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2310,330,2326
-
-Text=98. Used to pay for medical costs — Paid by someone else
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_08_AMT
-
-Position=350,2337,760,2357
-
-Item=Q98_PAY_08_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2340,330,2356
-
-Text=98. Used to pay for medical costs — Paid by someone else (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_09
-
-Position=350,2367,365,2387
-
-Item=Q98_PAY_09,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2370,330,2386
-
-Text=98. Used to pay for medical costs — MAIFIP
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_09_AMT
-
-Position=350,2397,760,2417
-
-Item=Q98_PAY_09_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2400,330,2416
-
-Text=98. Used to pay for medical costs — MAIFIP (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_10
-
-Position=350,2427,365,2447
-
-Item=Q98_PAY_10,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2430,330,2446
-
-Text=98. Used to pay for medical costs — PhilHealth
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_10_AMT
-
-Position=350,2457,760,2477
-
-Item=Q98_PAY_10_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2460,330,2476
-
-Text=98. Used to pay for medical costs — PhilHealth (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_11
-
-Position=350,2487,365,2507
-
-Item=Q98_PAY_11,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2490,330,2506
-
-Text=98. Used to pay for medical costs — SSS
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_11_AMT
-
-Position=350,2517,760,2537
-
-Item=Q98_PAY_11_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2520,330,2536
-
-Text=98. Used to pay for medical costs — SSS (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_12
-
-Position=350,2547,365,2567
-
-Item=Q98_PAY_12,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2550,330,2566
-
-Text=98. Used to pay for medical costs — GSIS
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_12_AMT
-
-Position=350,2577,760,2597
-
-Item=Q98_PAY_12_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2580,330,2596
-
-Text=98. Used to pay for medical costs — GSIS (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_13
-
-Position=350,2607,365,2627
-
-Item=Q98_PAY_13,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2610,330,2626
-
-Text=98. Used to pay for medical costs — Private Insurance
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_13_AMT
-
-Position=350,2637,760,2657
-
-Item=Q98_PAY_13_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2640,330,2656
-
-Text=98. Used to pay for medical costs — Private Insurance (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_14
-
-Position=350,2667,365,2687
-
-Item=Q98_PAY_14,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2670,330,2686
-
-Text=98. Used to pay for medical costs — HMO
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_14_AMT
-
-Position=350,2697,760,2717
-
-Item=Q98_PAY_14_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2700,330,2716
-
-Text=98. Used to pay for medical costs — HMO (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_15
-
-Position=350,2727,365,2747
-
-Item=Q98_PAY_15,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2730,330,2746
-
-Text=98. Used to pay for medical costs — Other (specify)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_PAY_15_AMT
-
-Position=350,2757,760,2777
-
-Item=Q98_PAY_15_AMT,PATIENTSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2760,330,2776
-
-Text=98. Used to pay for medical costs — Other (specify) (Amount in Pesos)
-
- 
-
-  
-
-[Field]
-
-Name=Q98_OTHER_DONATION_TXT
-
-Position=350,2787,760,2807
-
-Item=Q98_OTHER_DONATION_TXT,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2790,330,2806
-
-Text=98. Other Donation/Charity/Assistance from Government Organization — specify text
-
- 
-
-  
-
-[Field]
-
-Name=Q98_OTHER_TXT
-
-Position=350,2817,760,2837
-
-Item=Q98_OTHER_TXT,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2820,330,2836
-
-Text=98. Other payment source — specify text
-
- 
-
-  
-
-[Field]
-
-Name=Q99_BUCAS_HEARD
-
-Position=350,2847,365,2867
-
-Item=Q99_BUCAS_HEARD,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2850,330,2866
-
-Text=99. Have you heard about Bagong Urgent Care and Ambulatory Services (BUCAS) center?
-
- 
-
-  
-
-[Field]
-
-Name=Q100_BUCAS_SOURCE
-
-Position=350,2877,365,2897
-
-Item=Q100_BUCAS_SOURCE,PATIENTSURVEY_DICT
-
-DataCaptureType=CheckBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2880,330,2896
-
-Text=100. If yes, what are your sources of information about this BUCAS center?
-
- 
-
-  
-
-[Field]
-
-Name=Q100_BUCAS_SOURCE_OTHER_TXT
-
-Position=350,2907,760,2927
-
-Item=Q100_BUCAS_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2910,330,2926
-
-Text=100. If yes, what are your sources of information about this BUCAS center? — Other (specify) text
-
- 
-
-  
-
-[Field]
-
-Name=Q101_BUCAS_UNDERSTAND
-
-Position=350,2937,365,2957
-
-Item=Q101_BUCAS_UNDERSTAND,PATIENTSURVEY_DICT
-
-DataCaptureType=CheckBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2940,330,2956
-
-Text=101. What is your understanding about a BUCAS center?
-
- 
-
-  
-
-[Field]
-
-Name=Q101_BUCAS_UNDERSTAND_OTHER_TXT
-
-Position=350,2967,760,2987
-
-Item=Q101_BUCAS_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,2970,330,2986
-
-Text=101. What is your understanding about a BUCAS center? — Other (specify) text
-
- 
-
-  
-
-[Field]
-
-Name=Q102_BUCAS_ACCESSED
-
-Position=350,2997,365,3017
-
-Item=Q102_BUCAS_ACCESSED,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3000,330,3016
-
-Text=102. Have you accessed the services in a BUCAS center?
-
- 
-
-  
-
-[Field]
-
-Name=Q103_BUCAS_SERVICES
-
-Position=350,3027,365,3047
-
-Item=Q103_BUCAS_SERVICES,PATIENTSURVEY_DICT
-
-DataCaptureType=CheckBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3030,330,3046
-
-Text=103. If yes, which service/s did you avail?
-
- 
-
-  
-
-[Field]
-
-Name=Q103_BUCAS_SERVICES_OTHER_TXT
-
-Position=350,3057,760,3077
-
-Item=Q103_BUCAS_SERVICES_OTHER_TXT,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3060,330,3076
-
-Text=103. If yes, which service/s did you avail? — Other (specify) text
-
- 
-
-  
-
-[Field]
-
-Name=Q104_WITHOUT_BUCAS
-
-Position=350,3087,365,3107
-
-Item=Q104_WITHOUT_BUCAS,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3090,330,3106
-
-Text=104. Without BUCAS Center, where would you have gone?
-
- 
-
-  
-
-[Field]
-
-Name=Q104_WITHOUT_BUCAS_OTHER_TXT
-
-Position=350,3117,760,3137
-
-Item=Q104_WITHOUT_BUCAS_OTHER_TXT,PATIENTSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3120,330,3136
-
-Text=104. Without BUCAS — Others specify text
+Text=92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)
 
  
 
@@ -9168,13 +6848,13 @@ Length=1
 
 Name=DG_BLK_100
 
-Label=Q91-Q92
+Label=Q91
 
 DisplayTogether=Yes
 
 Position=10
 
-Length=2
+Length=1
 
   
 
@@ -9186,9 +6866,2251 @@ Label=Q92
 
 DisplayTogether=Yes
 
-Position=13
+Position=12
 
 Length=1
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=Q92_PAY_ROSTER_FORM
+
+Label=G. Cost of consultation — amount by source
+
+Form=13
+
+Type=Record
+
+TypeName=Q92_PAY_ROSTER
+
+Max=8
+
+  
+
+[Field]
+
+Name=Q92_PAY_LINE
+
+Position=350,27,760,47
+
+Item=Q92_PAY_LINE,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=13
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=92. Payment row
+
+ 
+
+  
+
+[Field]
+
+Name=Q92_PAY_SRC
+
+Position=350,57,365,77
+
+Item=Q92_PAY_SRC,PATIENTSURVEY_DICT
+
+DataCaptureType=DropDown
+
+Form=13
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=92. Payment source (auto-filled from the ticked sources)
+
+ 
+
+  
+
+[Field]
+
+Name=Q92_PAY_AMT
+
+Position=350,87,760,107
+
+Item=Q92_PAY_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=13
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=92. Amount paid for the consultation, by source (Pesos)
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
+Name=G_OUTPATIENT_CARE_2_FORM
+
+Label=G. Outpatient Care (cont.)
+
+Form=14
+
+Max=1
+
+  
+
+[Field]
+
+Name=Q93_LABS
+
+Position=350,27,365,47
+
+Item=Q93_LABS,PATIENTSURVEY_DICT
+
+DataCaptureType=CheckBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=93. Did you have any of the following laboratory tests done during your outpatient care?
+
+ 
+
+  
+
+[Field]
+
+Name=Q93_LABS_OTHER_TXT
+
+Position=350,57,760,77
+
+Item=Q93_LABS_OTHER_TXT,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Other (specify) text
+
+ 
+
+  
+
+[Field]
+
+Name=Q94_PAY_01
+
+Position=350,87,365,107
+
+Item=Q94_PAY_01,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=94. Cost of laboratory test/s — Out-of-pocket
+
+ 
+
+  
+
+[Field]
+
+Name=Q94_PAY_01_AMT
+
+Position=350,117,760,137
+
+Item=Q94_PAY_01_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=94. Cost of laboratory test/s — Out-of-pocket (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q94_PAY_02
+
+Position=350,147,365,167
+
+Item=Q94_PAY_02,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,150,330,166
+
+Text=94. Cost of laboratory test/s — Donation
+
+ 
+
+  
+
+[Field]
+
+Name=Q94_PAY_03
+
+Position=350,177,365,197
+
+Item=Q94_PAY_03,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,180,330,196
+
+Text=94. Cost of laboratory test/s — Free/no cost
+
+ 
+
+  
+
+[Field]
+
+Name=Q94_PAY_04
+
+Position=350,207,365,227
+
+Item=Q94_PAY_04,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,210,330,226
+
+Text=94. Cost of laboratory test/s — Free, charge to PhilHealth
+
+ 
+
+  
+
+[Field]
+
+Name=Q94_PAY_05
+
+Position=350,237,365,257
+
+Item=Q94_PAY_05,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,240,330,256
+
+Text=94. Cost of laboratory test/s — Free, charge to Private Insurance
+
+ 
+
+  
+
+[Field]
+
+Name=Q94_PAY_06
+
+Position=350,267,365,287
+
+Item=Q94_PAY_06,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,270,330,286
+
+Text=94. Cost of laboratory test/s — Free, charge to HMO
+
+ 
+
+  
+
+[Field]
+
+Name=Q94_PAY_07
+
+Position=350,297,365,317
+
+Item=Q94_PAY_07,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,300,330,316
+
+Text=94. Cost of laboratory test/s — In kind
+
+ 
+
+  
+
+[Field]
+
+Name=Q94_PAY_08
+
+Position=350,327,365,347
+
+Item=Q94_PAY_08,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,330,330,346
+
+Text=94. Cost of laboratory test/s — Don't know
+
+ 
+
+  
+
+[Field]
+
+Name=Q95_PRESCRIBED
+
+Position=350,357,365,377
+
+Item=Q95_PRESCRIBED,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,360,330,376
+
+Text=95. Were you prescribed medicine/s after your check-up?
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_01
+
+Position=350,387,365,407
+
+Item=Q96_PAY_01,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,390,330,406
+
+Text=96. Amount spent for prescribed medicines — Out-of-pocket
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_01_AMT
+
+Position=350,417,760,437
+
+Item=Q96_PAY_01_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,420,330,436
+
+Text=96. Amount spent for prescribed medicines — Out-of-pocket (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_02
+
+Position=350,447,365,467
+
+Item=Q96_PAY_02,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,450,330,466
+
+Text=96. Amount spent for prescribed medicines — Free/no cost
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_03
+
+Position=350,477,365,497
+
+Item=Q96_PAY_03,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,480,330,496
+
+Text=96. Amount spent for prescribed medicines — Free, charge to PhilHealth
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_04
+
+Position=350,507,365,527
+
+Item=Q96_PAY_04,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,510,330,526
+
+Text=96. Amount spent for prescribed medicines — Free, charge to Private Insurance
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_05
+
+Position=350,537,365,557
+
+Item=Q96_PAY_05,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,540,330,556
+
+Text=96. Amount spent for prescribed medicines — Free, charge to HMO
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_06
+
+Position=350,567,365,587
+
+Item=Q96_PAY_06,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,570,330,586
+
+Text=96. Amount spent for prescribed medicines — In kind
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_06_AMT
+
+Position=350,597,760,617
+
+Item=Q96_PAY_06_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,600,330,616
+
+Text=96. Amount spent for prescribed medicines — In kind (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_07
+
+Position=350,627,365,647
+
+Item=Q96_PAY_07,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,630,330,646
+
+Text=96. Amount spent for prescribed medicines — Donation
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_07_AMT
+
+Position=350,657,760,677
+
+Item=Q96_PAY_07_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,660,330,676
+
+Text=96. Amount spent for prescribed medicines — Donation (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q96_PAY_08
+
+Position=350,687,365,707
+
+Item=Q96_PAY_08,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,690,330,706
+
+Text=96. Amount spent for prescribed medicines — Don't know
+
+ 
+
+  
+
+[Field]
+
+Name=Q97_FINAL_AMOUNT
+
+Position=350,717,760,737
+
+Item=Q97_FINAL_AMOUNT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,720,330,736
+
+Text=97. What was the final amount you paid in cash for your outpatient care? (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q971_1
+
+Position=350,747,365,767
+
+Item=Q971_1,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,750,330,766
+
+Text=97.1 Other items included in the bill — Consultation Fee
+
+ 
+
+  
+
+[Field]
+
+Name=Q971_1_AMT
+
+Position=350,777,760,797
+
+Item=Q971_1_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,780,330,796
+
+Text=97.1 Other items included in the bill — Consultation Fee (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q971_2
+
+Position=350,807,365,827
+
+Item=Q971_2,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,810,330,826
+
+Text=97.1 Other items included in the bill — Medical equipment or supplies
+
+ 
+
+  
+
+[Field]
+
+Name=Q971_2_AMT
+
+Position=350,837,760,857
+
+Item=Q971_2_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,840,330,856
+
+Text=97.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q971_3
+
+Position=350,867,365,887
+
+Item=Q971_3,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,870,330,886
+
+Text=97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)
+
+ 
+
+  
+
+[Field]
+
+Name=Q971_3_AMT
+
+Position=350,897,760,917
+
+Item=Q971_3_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,900,330,916
+
+Text=97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q971_4
+
+Position=350,927,365,947
+
+Item=Q971_4,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,930,330,946
+
+Text=97.1 Other items included in the bill — Other expenses
+
+ 
+
+  
+
+[Field]
+
+Name=Q971_4_AMT
+
+Position=350,957,760,977
+
+Item=Q971_4_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,960,330,976
+
+Text=97.1 Other items included in the bill — Other expenses (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q971_OTHER_TXT
+
+Position=350,987,760,1007
+
+Item=Q971_OTHER_TXT,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,990,330,1006
+
+Text=97.1 Other expenses — specify text
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_1
+
+Position=350,1017,365,1037
+
+Item=Q972_1,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1020,330,1036
+
+Text=97.2 Other expenses during OPD visit not in bill — a) Consultation Fee
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_1_AMT
+
+Position=350,1047,760,1067
+
+Item=Q972_1_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1050,330,1066
+
+Text=97.2 Other expenses during OPD visit not in bill — a) Consultation Fee (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_2
+
+Position=350,1077,365,1097
+
+Item=Q972_2,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1080,330,1096
+
+Text=97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_2_AMT
+
+Position=350,1107,760,1127
+
+Item=Q972_2_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1110,330,1126
+
+Text=97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_3
+
+Position=350,1137,365,1157
+
+Item=Q972_3,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1140,330,1156
+
+Text=97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_3_AMT
+
+Position=350,1167,760,1187
+
+Item=Q972_3_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1170,330,1186
+
+Text=97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_4
+
+Position=350,1197,365,1217
+
+Item=Q972_4,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1200,330,1216
+
+Text=97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_4_AMT
+
+Position=350,1227,760,1247
+
+Item=Q972_4_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1230,330,1246
+
+Text=97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_5
+
+Position=350,1257,365,1277
+
+Item=Q972_5,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1260,330,1276
+
+Text=97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_5_AMT
+
+Position=350,1287,760,1307
+
+Item=Q972_5_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1290,330,1306
+
+Text=97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_6
+
+Position=350,1317,365,1337
+
+Item=Q972_6,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1320,330,1336
+
+Text=97.2 Other expenses during OPD visit not in bill — f) Other expenses
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_6_AMT
+
+Position=350,1347,760,1367
+
+Item=Q972_6_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1350,330,1366
+
+Text=97.2 Other expenses during OPD visit not in bill — f) Other expenses (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q972_OTHER_TXT
+
+Position=350,1377,760,1397
+
+Item=Q972_OTHER_TXT,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1380,330,1396
+
+Text=97.2 Other expenses — specify text
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_01
+
+Position=350,1407,365,1427
+
+Item=Q98_PAY_01,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1410,330,1426
+
+Text=98. Used to pay for medical costs — Salary/income
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_01_AMT
+
+Position=350,1437,760,1457
+
+Item=Q98_PAY_01_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1440,330,1456
+
+Text=98. Used to pay for medical costs — Salary/income (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_02
+
+Position=350,1467,365,1487
+
+Item=Q98_PAY_02,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1470,330,1486
+
+Text=98. Used to pay for medical costs — Loan/Mortgage
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_02_AMT
+
+Position=350,1497,760,1517
+
+Item=Q98_PAY_02_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1500,330,1516
+
+Text=98. Used to pay for medical costs — Loan/Mortgage (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_03
+
+Position=350,1527,365,1547
+
+Item=Q98_PAY_03,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1530,330,1546
+
+Text=98. Used to pay for medical costs — Savings
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_03_AMT
+
+Position=350,1557,760,1577
+
+Item=Q98_PAY_03_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1560,330,1576
+
+Text=98. Used to pay for medical costs — Savings (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_04
+
+Position=350,1587,365,1607
+
+Item=Q98_PAY_04,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1590,330,1606
+
+Text=98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_04_AMT
+
+Position=350,1617,760,1637
+
+Item=Q98_PAY_04_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1620,330,1636
+
+Text=98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_05
+
+Position=350,1647,365,1667
+
+Item=Q98_PAY_05,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1650,330,1666
+
+Text=98. Used to pay for medical costs — Malasakit Center
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_05_AMT
+
+Position=350,1677,760,1697
+
+Item=Q98_PAY_05_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1680,330,1696
+
+Text=98. Used to pay for medical costs — Malasakit Center (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_06
+
+Position=350,1707,365,1727
+
+Item=Q98_PAY_06,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1710,330,1726
+
+Text=98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_06_AMT
+
+Position=350,1737,760,1757
+
+Item=Q98_PAY_06_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1740,330,1756
+
+Text=98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_07
+
+Position=350,1767,365,1787
+
+Item=Q98_PAY_07,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1770,330,1786
+
+Text=98. Used to pay for medical costs — Sale of Assets
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_07_AMT
+
+Position=350,1797,760,1817
+
+Item=Q98_PAY_07_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1800,330,1816
+
+Text=98. Used to pay for medical costs — Sale of Assets (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_08
+
+Position=350,1827,365,1847
+
+Item=Q98_PAY_08,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1830,330,1846
+
+Text=98. Used to pay for medical costs — Paid by someone else
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_08_AMT
+
+Position=350,1857,760,1877
+
+Item=Q98_PAY_08_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1860,330,1876
+
+Text=98. Used to pay for medical costs — Paid by someone else (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_09
+
+Position=350,1887,365,1907
+
+Item=Q98_PAY_09,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1890,330,1906
+
+Text=98. Used to pay for medical costs — MAIFIP
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_09_AMT
+
+Position=350,1917,760,1937
+
+Item=Q98_PAY_09_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1920,330,1936
+
+Text=98. Used to pay for medical costs — MAIFIP (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_10
+
+Position=350,1947,365,1967
+
+Item=Q98_PAY_10,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1950,330,1966
+
+Text=98. Used to pay for medical costs — PhilHealth
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_10_AMT
+
+Position=350,1977,760,1997
+
+Item=Q98_PAY_10_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,1980,330,1996
+
+Text=98. Used to pay for medical costs — PhilHealth (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_11
+
+Position=350,2007,365,2027
+
+Item=Q98_PAY_11,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2010,330,2026
+
+Text=98. Used to pay for medical costs — SSS
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_11_AMT
+
+Position=350,2037,760,2057
+
+Item=Q98_PAY_11_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2040,330,2056
+
+Text=98. Used to pay for medical costs — SSS (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_12
+
+Position=350,2067,365,2087
+
+Item=Q98_PAY_12,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2070,330,2086
+
+Text=98. Used to pay for medical costs — GSIS
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_12_AMT
+
+Position=350,2097,760,2117
+
+Item=Q98_PAY_12_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2100,330,2116
+
+Text=98. Used to pay for medical costs — GSIS (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_13
+
+Position=350,2127,365,2147
+
+Item=Q98_PAY_13,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2130,330,2146
+
+Text=98. Used to pay for medical costs — Private Insurance
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_13_AMT
+
+Position=350,2157,760,2177
+
+Item=Q98_PAY_13_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2160,330,2176
+
+Text=98. Used to pay for medical costs — Private Insurance (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_14
+
+Position=350,2187,365,2207
+
+Item=Q98_PAY_14,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2190,330,2206
+
+Text=98. Used to pay for medical costs — HMO
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_14_AMT
+
+Position=350,2217,760,2237
+
+Item=Q98_PAY_14_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2220,330,2236
+
+Text=98. Used to pay for medical costs — HMO (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_15
+
+Position=350,2247,365,2267
+
+Item=Q98_PAY_15,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2250,330,2266
+
+Text=98. Used to pay for medical costs — Other (specify)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_PAY_15_AMT
+
+Position=350,2277,760,2297
+
+Item=Q98_PAY_15_AMT,PATIENTSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2280,330,2296
+
+Text=98. Used to pay for medical costs — Other (specify) (Amount in Pesos)
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_OTHER_DONATION_TXT
+
+Position=350,2307,760,2327
+
+Item=Q98_OTHER_DONATION_TXT,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2310,330,2326
+
+Text=98. Other Donation/Charity/Assistance from Government Organization — specify text
+
+ 
+
+  
+
+[Field]
+
+Name=Q98_OTHER_TXT
+
+Position=350,2337,760,2357
+
+Item=Q98_OTHER_TXT,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2340,330,2356
+
+Text=98. Other payment source — specify text
+
+ 
+
+  
+
+[Field]
+
+Name=Q99_BUCAS_HEARD
+
+Position=350,2367,365,2387
+
+Item=Q99_BUCAS_HEARD,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2370,330,2386
+
+Text=99. Have you heard about Bagong Urgent Care and Ambulatory Services (BUCAS) center?
+
+ 
+
+  
+
+[Field]
+
+Name=Q100_BUCAS_SOURCE
+
+Position=350,2397,365,2417
+
+Item=Q100_BUCAS_SOURCE,PATIENTSURVEY_DICT
+
+DataCaptureType=CheckBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2400,330,2416
+
+Text=100. If yes, what are your sources of information about this BUCAS center?
+
+ 
+
+  
+
+[Field]
+
+Name=Q100_BUCAS_SOURCE_OTHER_TXT
+
+Position=350,2427,760,2447
+
+Item=Q100_BUCAS_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2430,330,2446
+
+Text=100. If yes, what are your sources of information about this BUCAS center? — Other (specify) text
+
+ 
+
+  
+
+[Field]
+
+Name=Q101_BUCAS_UNDERSTAND
+
+Position=350,2457,365,2477
+
+Item=Q101_BUCAS_UNDERSTAND,PATIENTSURVEY_DICT
+
+DataCaptureType=CheckBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2460,330,2476
+
+Text=101. What is your understanding about a BUCAS center?
+
+ 
+
+  
+
+[Field]
+
+Name=Q101_BUCAS_UNDERSTAND_OTHER_TXT
+
+Position=350,2487,760,2507
+
+Item=Q101_BUCAS_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2490,330,2506
+
+Text=101. What is your understanding about a BUCAS center? — Other (specify) text
+
+ 
+
+  
+
+[Field]
+
+Name=Q102_BUCAS_ACCESSED
+
+Position=350,2517,365,2537
+
+Item=Q102_BUCAS_ACCESSED,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2520,330,2536
+
+Text=102. Have you accessed the services in a BUCAS center?
+
+ 
+
+  
+
+[Field]
+
+Name=Q103_BUCAS_SERVICES
+
+Position=350,2547,365,2567
+
+Item=Q103_BUCAS_SERVICES,PATIENTSURVEY_DICT
+
+DataCaptureType=CheckBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2550,330,2566
+
+Text=103. If yes, which service/s did you avail?
+
+ 
+
+  
+
+[Field]
+
+Name=Q103_BUCAS_SERVICES_OTHER_TXT
+
+Position=350,2577,760,2597
+
+Item=Q103_BUCAS_SERVICES_OTHER_TXT,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2580,330,2596
+
+Text=103. If yes, which service/s did you avail? — Other (specify) text
+
+ 
+
+  
+
+[Field]
+
+Name=Q104_WITHOUT_BUCAS
+
+Position=350,2607,365,2627
+
+Item=Q104_WITHOUT_BUCAS,PATIENTSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2610,330,2626
+
+Text=104. Without BUCAS Center, where would you have gone?
+
+ 
+
+  
+
+[Field]
+
+Name=Q104_WITHOUT_BUCAS_OTHER_TXT
+
+Position=350,2637,760,2657
+
+Item=Q104_WITHOUT_BUCAS_OTHER_TXT,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=14
+
+  
+
+[Text]
+
+Position=50,2640,330,2656
+
+Text=104. Without BUCAS — Others specify text
+
+ 
 
   
 
@@ -9196,11 +9118,11 @@ Length=1
 
 Name=DG_BLK_102
 
-Label=Q92
+Label=Q93
 
 DisplayTogether=Yes
 
-Position=15
+Position=0
 
 Length=1
 
@@ -9210,7 +9132,77 @@ Length=1
 
 Name=DG_BLK_103
 
-Label=Q92
+Label=Q93
+
+DisplayTogether=Yes
+
+Position=2
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_104
+
+Label=Q94
+
+DisplayTogether=Yes
+
+Position=4
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_105
+
+Label=Q94
+
+DisplayTogether=Yes
+
+Position=6
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_106
+
+Label=Q94
+
+DisplayTogether=Yes
+
+Position=8
+
+Length=5
+
+  
+
+[Block]
+
+Name=DG_BLK_107
+
+Label=Q94
+
+DisplayTogether=Yes
+
+Position=14
+
+Length=2
+
+  
+
+[Block]
+
+Name=DG_BLK_108
+
+Label=Q95
 
 DisplayTogether=Yes
 
@@ -9222,83 +9214,13 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_104
+Name=DG_BLK_109
 
-Label=Q92
+Label=Q96
 
 DisplayTogether=Yes
 
 Position=19
-
-Length=5
-
-  
-
-[Block]
-
-Name=DG_BLK_105
-
-Label=Q92
-
-DisplayTogether=Yes
-
-Position=25
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_106
-
-Label=Q93
-
-DisplayTogether=Yes
-
-Position=27
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_107
-
-Label=Q93
-
-DisplayTogether=Yes
-
-Position=29
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_108
-
-Label=Q94
-
-DisplayTogether=Yes
-
-Position=31
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_109
-
-Label=Q94
-
-DisplayTogether=Yes
-
-Position=33
 
 Length=1
 
@@ -9308,13 +9230,13 @@ Length=1
 
 Name=DG_BLK_110
 
-Label=Q94
+Label=Q96
 
 DisplayTogether=Yes
 
-Position=35
+Position=21
 
-Length=5
+Length=1
 
   
 
@@ -9322,13 +9244,13 @@ Length=5
 
 Name=DG_BLK_111
 
-Label=Q94
+Label=Q96
 
 DisplayTogether=Yes
 
-Position=41
+Position=23
 
-Length=2
+Length=5
 
   
 
@@ -9336,11 +9258,11 @@ Length=2
 
 Name=DG_BLK_112
 
-Label=Q95
+Label=Q96
 
 DisplayTogether=Yes
 
-Position=44
+Position=29
 
 Length=1
 
@@ -9354,7 +9276,7 @@ Label=Q96
 
 DisplayTogether=Yes
 
-Position=46
+Position=31
 
 Length=1
 
@@ -9368,7 +9290,7 @@ Label=Q96
 
 DisplayTogether=Yes
 
-Position=48
+Position=33
 
 Length=1
 
@@ -9382,21 +9304,7 @@ Label=Q96
 
 DisplayTogether=Yes
 
-Position=50
-
-Length=5
-
-  
-
-[Block]
-
-Name=DG_BLK_116
-
-Label=Q96
-
-DisplayTogether=Yes
-
-Position=56
+Position=35
 
 Length=1
 
@@ -9404,13 +9312,27 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_117
+Name=DG_BLK_116
 
-Label=Q96
+Label=Q97
 
 DisplayTogether=Yes
 
-Position=58
+Position=37
+
+Length=2
+
+  
+
+[Block]
+
+Name=DG_BLK_117
+
+Label=Q97
+
+DisplayTogether=Yes
+
+Position=40
 
 Length=1
 
@@ -9420,11 +9342,11 @@ Length=1
 
 Name=DG_BLK_118
 
-Label=Q96
+Label=Q97
 
 DisplayTogether=Yes
 
-Position=60
+Position=42
 
 Length=1
 
@@ -9434,11 +9356,11 @@ Length=1
 
 Name=DG_BLK_119
 
-Label=Q96
+Label=Q97
 
 DisplayTogether=Yes
 
-Position=62
+Position=44
 
 Length=1
 
@@ -9452,9 +9374,9 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=64
+Position=46
 
-Length=2
+Length=1
 
   
 
@@ -9466,7 +9388,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=67
+Position=48
 
 Length=1
 
@@ -9480,7 +9402,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=69
+Position=50
 
 Length=1
 
@@ -9494,7 +9416,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=71
+Position=52
 
 Length=1
 
@@ -9508,7 +9430,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=73
+Position=54
 
 Length=1
 
@@ -9522,7 +9444,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=75
+Position=56
 
 Length=1
 
@@ -9536,7 +9458,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=77
+Position=58
 
 Length=1
 
@@ -9550,7 +9472,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=79
+Position=60
 
 Length=1
 
@@ -9564,7 +9486,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=81
+Position=62
 
 Length=1
 
@@ -9578,7 +9500,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=83
+Position=64
 
 Length=1
 
@@ -9592,7 +9514,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=85
+Position=66
 
 Length=1
 
@@ -9606,7 +9528,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=87
+Position=68
 
 Length=1
 
@@ -9620,7 +9542,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=89
+Position=70
 
 Length=1
 
@@ -9634,7 +9556,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=91
+Position=72
 
 Length=1
 
@@ -9648,7 +9570,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=93
+Position=74
 
 Length=1
 
@@ -9662,7 +9584,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=95
+Position=76
 
 Length=1
 
@@ -9676,7 +9598,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=97
+Position=78
 
 Length=1
 
@@ -9690,7 +9612,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=99
+Position=80
 
 Length=1
 
@@ -9700,11 +9622,11 @@ Length=1
 
 Name=DG_BLK_138
 
-Label=Q97
+Label=Q98
 
 DisplayTogether=Yes
 
-Position=101
+Position=82
 
 Length=1
 
@@ -9714,11 +9636,11 @@ Length=1
 
 Name=DG_BLK_139
 
-Label=Q97
+Label=Q98
 
 DisplayTogether=Yes
 
-Position=103
+Position=84
 
 Length=1
 
@@ -9728,11 +9650,11 @@ Length=1
 
 Name=DG_BLK_140
 
-Label=Q97
+Label=Q98
 
 DisplayTogether=Yes
 
-Position=105
+Position=86
 
 Length=1
 
@@ -9742,11 +9664,11 @@ Length=1
 
 Name=DG_BLK_141
 
-Label=Q97
+Label=Q98
 
 DisplayTogether=Yes
 
-Position=107
+Position=88
 
 Length=1
 
@@ -9760,7 +9682,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=109
+Position=90
 
 Length=1
 
@@ -9774,7 +9696,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=111
+Position=92
 
 Length=1
 
@@ -9788,7 +9710,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=113
+Position=94
 
 Length=1
 
@@ -9802,7 +9724,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=115
+Position=96
 
 Length=1
 
@@ -9816,7 +9738,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=117
+Position=98
 
 Length=1
 
@@ -9830,7 +9752,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=119
+Position=100
 
 Length=1
 
@@ -9844,7 +9766,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=121
+Position=102
 
 Length=1
 
@@ -9858,7 +9780,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=123
+Position=104
 
 Length=1
 
@@ -9872,7 +9794,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=125
+Position=106
 
 Length=1
 
@@ -9886,7 +9808,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=127
+Position=108
 
 Length=1
 
@@ -9900,7 +9822,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=129
+Position=110
 
 Length=1
 
@@ -9914,7 +9836,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=131
+Position=112
 
 Length=1
 
@@ -9928,7 +9850,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=133
+Position=114
 
 Length=1
 
@@ -9942,7 +9864,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=135
+Position=116
 
 Length=1
 
@@ -9956,7 +9878,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=137
+Position=118
 
 Length=1
 
@@ -9970,7 +9892,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=139
+Position=120
 
 Length=1
 
@@ -9984,7 +9906,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=141
+Position=122
 
 Length=1
 
@@ -9998,7 +9920,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=143
+Position=124
 
 Length=1
 
@@ -10012,7 +9934,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=145
+Position=126
 
 Length=1
 
@@ -10026,7 +9948,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=147
+Position=128
 
 Length=1
 
@@ -10040,7 +9962,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=149
+Position=130
 
 Length=1
 
@@ -10054,7 +9976,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=151
+Position=132
 
 Length=1
 
@@ -10068,7 +9990,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=153
+Position=134
 
 Length=1
 
@@ -10082,7 +10004,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=155
+Position=136
 
 Length=1
 
@@ -10096,7 +10018,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=157
+Position=138
 
 Length=1
 
@@ -10110,7 +10032,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=159
+Position=140
 
 Length=1
 
@@ -10124,7 +10046,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=161
+Position=142
 
 Length=1
 
@@ -10138,7 +10060,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=163
+Position=144
 
 Length=1
 
@@ -10148,11 +10070,11 @@ Length=1
 
 Name=DG_BLK_170
 
-Label=Q98
+Label=Q99
 
 DisplayTogether=Yes
 
-Position=165
+Position=146
 
 Length=1
 
@@ -10162,11 +10084,11 @@ Length=1
 
 Name=DG_BLK_171
 
-Label=Q98
+Label=Q100
 
 DisplayTogether=Yes
 
-Position=167
+Position=148
 
 Length=1
 
@@ -10176,11 +10098,11 @@ Length=1
 
 Name=DG_BLK_172
 
-Label=Q98
+Label=Q100
 
 DisplayTogether=Yes
 
-Position=169
+Position=150
 
 Length=1
 
@@ -10190,11 +10112,11 @@ Length=1
 
 Name=DG_BLK_173
 
-Label=Q98
+Label=Q101
 
 DisplayTogether=Yes
 
-Position=171
+Position=152
 
 Length=1
 
@@ -10204,11 +10126,11 @@ Length=1
 
 Name=DG_BLK_174
 
-Label=Q99
+Label=Q101
 
 DisplayTogether=Yes
 
-Position=173
+Position=154
 
 Length=1
 
@@ -10218,11 +10140,11 @@ Length=1
 
 Name=DG_BLK_175
 
-Label=Q100
+Label=Q102
 
 DisplayTogether=Yes
 
-Position=175
+Position=156
 
 Length=1
 
@@ -10232,11 +10154,11 @@ Length=1
 
 Name=DG_BLK_176
 
-Label=Q100
+Label=Q103
 
 DisplayTogether=Yes
 
-Position=177
+Position=158
 
 Length=1
 
@@ -10246,11 +10168,11 @@ Length=1
 
 Name=DG_BLK_177
 
-Label=Q101
+Label=Q103
 
 DisplayTogether=Yes
 
-Position=179
+Position=160
 
 Length=1
 
@@ -10260,11 +10182,11 @@ Length=1
 
 Name=DG_BLK_178
 
-Label=Q101
+Label=Q104
 
 DisplayTogether=Yes
 
-Position=181
+Position=162
 
 Length=1
 
@@ -10274,67 +10196,11 @@ Length=1
 
 Name=DG_BLK_179
 
-Label=Q102
-
-DisplayTogether=Yes
-
-Position=183
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_180
-
-Label=Q103
-
-DisplayTogether=Yes
-
-Position=185
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_181
-
-Label=Q103
-
-DisplayTogether=Yes
-
-Position=187
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_182
-
 Label=Q104
 
 DisplayTogether=Yes
 
-Position=189
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_183
-
-Label=Q104
-
-DisplayTogether=Yes
-
-Position=191
+Position=164
 
 Length=1
 
@@ -10352,7 +10218,7 @@ Name=H_INPATIENT_CARE_FORM
 
 Label=H. Inpatient Care
 
-Form=13
+Form=15
 
 Max=1
 
@@ -10368,7 +10234,7 @@ Item=Q105_REASON,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10394,7 +10260,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10418,7 +10284,7 @@ Item=Q106_NIGHTS,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10442,7 +10308,7 @@ Item=Q106_DAYS,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10466,7 +10332,7 @@ Item=Q107_PAY_01,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10490,7 +10356,7 @@ Item=Q107_PAY_01_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10514,7 +10380,7 @@ Item=Q107_PAY_02,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10538,7 +10404,7 @@ Item=Q107_PAY_02_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10562,7 +10428,7 @@ Item=Q107_PAY_03,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10586,7 +10452,7 @@ Item=Q107_PAY_03_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10610,7 +10476,7 @@ Item=Q107_PAY_04,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10634,7 +10500,7 @@ Item=Q107_PAY_04_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10658,7 +10524,7 @@ Item=Q107_PAY_05,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10682,7 +10548,7 @@ Item=Q107_PAY_05_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10706,7 +10572,7 @@ Item=Q107_PAY_06,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10730,7 +10596,7 @@ Item=Q107_PAY_06_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10754,7 +10620,7 @@ Item=Q107_PAY_07,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10778,7 +10644,7 @@ Item=Q107_PAY_07_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10802,7 +10668,7 @@ Item=Q107_PAY_08,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10826,7 +10692,7 @@ Item=Q107_PAY_08_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10850,7 +10716,7 @@ Item=Q107_PAY_09,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10874,7 +10740,7 @@ Item=Q107_PAY_09_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10898,7 +10764,7 @@ Item=Q107_PAY_10,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10922,7 +10788,7 @@ Item=Q107_PAY_10_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10948,7 +10814,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -10972,7 +10838,7 @@ Item=Q108_MEDS_OUTSIDE,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -10996,7 +10862,7 @@ Item=Q109_PAY_01,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11020,7 +10886,7 @@ Item=Q109_PAY_01_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11044,7 +10910,7 @@ Item=Q109_PAY_02,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11068,7 +10934,7 @@ Item=Q109_PAY_02_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11092,7 +10958,7 @@ Item=Q109_PAY_03,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11116,7 +10982,7 @@ Item=Q109_PAY_03_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11140,7 +11006,7 @@ Item=Q109_PAY_04,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11164,7 +11030,7 @@ Item=Q109_PAY_04_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11188,7 +11054,7 @@ Item=Q109_PAY_05,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11212,7 +11078,7 @@ Item=Q109_PAY_05_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11236,7 +11102,7 @@ Item=Q109_PAY_06,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11260,7 +11126,7 @@ Item=Q109_PAY_06_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11284,7 +11150,7 @@ Item=Q109_PAY_07,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11308,7 +11174,7 @@ Item=Q109_PAY_07_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11332,7 +11198,7 @@ Item=Q109_PAY_08,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11356,7 +11222,7 @@ Item=Q109_PAY_08_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11380,7 +11246,7 @@ Item=Q109_PAY_09,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11404,7 +11270,7 @@ Item=Q109_PAY_09_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11430,7 +11296,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11454,7 +11320,7 @@ Item=Q110_LAB_OUTSIDE,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11480,7 +11346,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11504,7 +11370,7 @@ Item=Q112_PAY_01,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11528,7 +11394,7 @@ Item=Q112_PAY_01_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11552,7 +11418,7 @@ Item=Q112_PAY_02,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11576,7 +11442,7 @@ Item=Q112_PAY_02_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11600,7 +11466,7 @@ Item=Q112_PAY_03,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11624,7 +11490,7 @@ Item=Q112_PAY_03_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11648,7 +11514,7 @@ Item=Q112_PAY_04,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11672,7 +11538,7 @@ Item=Q112_PAY_04_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11696,7 +11562,7 @@ Item=Q112_PAY_05,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11720,7 +11586,7 @@ Item=Q112_PAY_05_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11744,7 +11610,7 @@ Item=Q112_PAY_06,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11768,7 +11634,7 @@ Item=Q112_PAY_06_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11792,7 +11658,7 @@ Item=Q112_PAY_07,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11816,7 +11682,7 @@ Item=Q112_PAY_07_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11840,7 +11706,7 @@ Item=Q112_PAY_08,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11864,7 +11730,7 @@ Item=Q112_PAY_08_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11888,7 +11754,7 @@ Item=Q112_PAY_09,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11912,7 +11778,7 @@ Item=Q112_PAY_09_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11938,7 +11804,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -11962,7 +11828,7 @@ Item=Q113_PAY_01,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -11986,7 +11852,7 @@ Item=Q113_PAY_01_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12010,7 +11876,7 @@ Item=Q113_PAY_02,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12034,7 +11900,7 @@ Item=Q113_PAY_02_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12058,7 +11924,7 @@ Item=Q113_PAY_03,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12082,7 +11948,7 @@ Item=Q113_PAY_03_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12106,7 +11972,7 @@ Item=Q113_PAY_04,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12130,7 +11996,7 @@ Item=Q113_PAY_04_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12154,7 +12020,7 @@ Item=Q113_PAY_05,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12178,7 +12044,7 @@ Item=Q113_PAY_05_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12202,7 +12068,7 @@ Item=Q113_PAY_06,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12226,7 +12092,7 @@ Item=Q113_PAY_06_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12250,7 +12116,7 @@ Item=Q113_PAY_07,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12274,7 +12140,7 @@ Item=Q113_PAY_07_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12298,7 +12164,7 @@ Item=Q113_PAY_08,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12322,7 +12188,7 @@ Item=Q113_PAY_08_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12346,7 +12212,7 @@ Item=Q113_PAY_09,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12370,7 +12236,7 @@ Item=Q113_PAY_09_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12394,7 +12260,7 @@ Item=Q113_PAY_10,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12418,7 +12284,7 @@ Item=Q113_PAY_10_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12442,7 +12308,7 @@ Item=Q113_PAY_11,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12466,7 +12332,7 @@ Item=Q113_PAY_11_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12490,7 +12356,7 @@ Item=Q113_PAY_12,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12514,7 +12380,7 @@ Item=Q113_PAY_12_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12538,7 +12404,7 @@ Item=Q113_PAY_13,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12562,7 +12428,7 @@ Item=Q113_PAY_13_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12588,7 +12454,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12612,7 +12478,7 @@ Item=Q114_NO_PH,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=13
+Form=15
 
   
 
@@ -12638,7 +12504,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12662,7 +12528,7 @@ Item=Q115_FINAL_CASH,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12686,7 +12552,7 @@ Item=Q1141_1,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12710,7 +12576,7 @@ Item=Q1141_1_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12734,7 +12600,7 @@ Item=Q1141_2,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12758,7 +12624,7 @@ Item=Q1141_2_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12782,7 +12648,7 @@ Item=Q1141_3,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12806,7 +12672,7 @@ Item=Q1141_3_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12830,7 +12696,7 @@ Item=Q1141_4,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12854,7 +12720,7 @@ Item=Q1141_4_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12878,7 +12744,7 @@ Item=Q1141_5,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12902,7 +12768,7 @@ Item=Q1141_5_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12926,7 +12792,7 @@ Item=Q1141_6,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -12950,7 +12816,7 @@ Item=Q1141_6_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -12976,7 +12842,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -13000,7 +12866,7 @@ Item=Q1142_1,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -13024,7 +12890,7 @@ Item=Q1142_1_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -13048,7 +12914,7 @@ Item=Q1142_2,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -13072,7 +12938,7 @@ Item=Q1142_2_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -13096,7 +12962,7 @@ Item=Q1142_3,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -13120,7 +12986,7 @@ Item=Q1142_3_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -13144,7 +13010,7 @@ Item=Q1142_4,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -13168,7 +13034,7 @@ Item=Q1142_4_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -13192,7 +13058,7 @@ Item=Q1142_5,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -13216,7 +13082,7 @@ Item=Q1142_5_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -13240,7 +13106,7 @@ Item=Q1142_6,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -13264,7 +13130,7 @@ Item=Q1142_6_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -13288,7 +13154,7 @@ Item=Q1142_7,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=15
 
   
 
@@ -13312,7 +13178,7 @@ Item=Q1142_7_AMT,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -13338,7 +13204,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=15
 
   
 
@@ -13354,7 +13220,7 @@ Text=115.2 Other expenses — specify text
 
 [Block]
 
-Name=DG_BLK_184
+Name=DG_BLK_180
 
 Label=Q105
 
@@ -13368,7 +13234,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_185
+Name=DG_BLK_181
 
 Label=Q105
 
@@ -13382,7 +13248,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_186
+Name=DG_BLK_182
 
 Label=Q106-Q107
 
@@ -13396,7 +13262,7 @@ Length=3
 
 [Block]
 
-Name=DG_BLK_187
+Name=DG_BLK_183
 
 Label=Q107
 
@@ -13410,7 +13276,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_188
+Name=DG_BLK_184
 
 Label=Q107
 
@@ -13424,7 +13290,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_189
+Name=DG_BLK_185
 
 Label=Q107
 
@@ -13438,7 +13304,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_190
+Name=DG_BLK_186
 
 Label=Q107
 
@@ -13452,7 +13318,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_191
+Name=DG_BLK_187
 
 Label=Q107
 
@@ -13466,7 +13332,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_192
+Name=DG_BLK_188
 
 Label=Q107
 
@@ -13480,7 +13346,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_193
+Name=DG_BLK_189
 
 Label=Q107
 
@@ -13494,7 +13360,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_194
+Name=DG_BLK_190
 
 Label=Q107
 
@@ -13508,7 +13374,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_195
+Name=DG_BLK_191
 
 Label=Q107
 
@@ -13522,7 +13388,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_196
+Name=DG_BLK_192
 
 Label=Q107
 
@@ -13536,7 +13402,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_197
+Name=DG_BLK_193
 
 Label=Q107
 
@@ -13550,7 +13416,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_198
+Name=DG_BLK_194
 
 Label=Q107
 
@@ -13564,7 +13430,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_199
+Name=DG_BLK_195
 
 Label=Q107
 
@@ -13578,7 +13444,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_200
+Name=DG_BLK_196
 
 Label=Q107
 
@@ -13592,7 +13458,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_201
+Name=DG_BLK_197
 
 Label=Q107
 
@@ -13606,7 +13472,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_202
+Name=DG_BLK_198
 
 Label=Q107
 
@@ -13620,7 +13486,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_203
+Name=DG_BLK_199
 
 Label=Q107
 
@@ -13634,7 +13500,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_204
+Name=DG_BLK_200
 
 Label=Q107
 
@@ -13648,7 +13514,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_205
+Name=DG_BLK_201
 
 Label=Q107
 
@@ -13662,7 +13528,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_206
+Name=DG_BLK_202
 
 Label=Q107
 
@@ -13676,7 +13542,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_207
+Name=DG_BLK_203
 
 Label=Q108
 
@@ -13690,7 +13556,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_208
+Name=DG_BLK_204
 
 Label=Q109
 
@@ -13704,7 +13570,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_209
+Name=DG_BLK_205
 
 Label=Q109
 
@@ -13718,7 +13584,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_210
+Name=DG_BLK_206
 
 Label=Q109
 
@@ -13732,7 +13598,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_211
+Name=DG_BLK_207
 
 Label=Q109
 
@@ -13746,7 +13612,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_212
+Name=DG_BLK_208
 
 Label=Q109
 
@@ -13760,7 +13626,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_213
+Name=DG_BLK_209
 
 Label=Q109
 
@@ -13774,7 +13640,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_214
+Name=DG_BLK_210
 
 Label=Q109
 
@@ -13788,7 +13654,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_215
+Name=DG_BLK_211
 
 Label=Q109
 
@@ -13802,7 +13668,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_216
+Name=DG_BLK_212
 
 Label=Q109
 
@@ -13816,7 +13682,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_217
+Name=DG_BLK_213
 
 Label=Q109
 
@@ -13830,7 +13696,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_218
+Name=DG_BLK_214
 
 Label=Q109
 
@@ -13844,7 +13710,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_219
+Name=DG_BLK_215
 
 Label=Q109
 
@@ -13858,7 +13724,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_220
+Name=DG_BLK_216
 
 Label=Q109
 
@@ -13872,7 +13738,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_221
+Name=DG_BLK_217
 
 Label=Q109
 
@@ -13886,7 +13752,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_222
+Name=DG_BLK_218
 
 Label=Q109
 
@@ -13900,7 +13766,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_223
+Name=DG_BLK_219
 
 Label=Q109
 
@@ -13914,7 +13780,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_224
+Name=DG_BLK_220
 
 Label=Q109
 
@@ -13928,7 +13794,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_225
+Name=DG_BLK_221
 
 Label=Q109
 
@@ -13942,7 +13808,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_226
+Name=DG_BLK_222
 
 Label=Q109
 
@@ -13956,7 +13822,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_227
+Name=DG_BLK_223
 
 Label=Q110
 
@@ -13970,7 +13836,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_228
+Name=DG_BLK_224
 
 Label=Q111-Q112
 
@@ -13984,7 +13850,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_229
+Name=DG_BLK_225
 
 Label=Q112
 
@@ -13998,7 +13864,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_230
+Name=DG_BLK_226
 
 Label=Q112
 
@@ -14012,7 +13878,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_231
+Name=DG_BLK_227
 
 Label=Q112
 
@@ -14026,7 +13892,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_232
+Name=DG_BLK_228
 
 Label=Q112
 
@@ -14040,7 +13906,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_233
+Name=DG_BLK_229
 
 Label=Q112
 
@@ -14054,7 +13920,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_234
+Name=DG_BLK_230
 
 Label=Q112
 
@@ -14068,7 +13934,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_235
+Name=DG_BLK_231
 
 Label=Q112
 
@@ -14082,7 +13948,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_236
+Name=DG_BLK_232
 
 Label=Q112
 
@@ -14096,7 +13962,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_237
+Name=DG_BLK_233
 
 Label=Q112
 
@@ -14110,7 +13976,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_238
+Name=DG_BLK_234
 
 Label=Q112
 
@@ -14124,7 +13990,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_239
+Name=DG_BLK_235
 
 Label=Q112
 
@@ -14138,7 +14004,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_240
+Name=DG_BLK_236
 
 Label=Q112
 
@@ -14152,7 +14018,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_241
+Name=DG_BLK_237
 
 Label=Q112
 
@@ -14166,7 +14032,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_242
+Name=DG_BLK_238
 
 Label=Q112
 
@@ -14180,7 +14046,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_243
+Name=DG_BLK_239
 
 Label=Q112
 
@@ -14194,7 +14060,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_244
+Name=DG_BLK_240
 
 Label=Q112
 
@@ -14208,7 +14074,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_245
+Name=DG_BLK_241
 
 Label=Q112
 
@@ -14222,7 +14088,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_246
+Name=DG_BLK_242
 
 Label=Q112
 
@@ -14236,7 +14102,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_247
+Name=DG_BLK_243
 
 Label=Q113
 
@@ -14250,7 +14116,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_248
+Name=DG_BLK_244
 
 Label=Q113
 
@@ -14264,7 +14130,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_249
+Name=DG_BLK_245
 
 Label=Q113
 
@@ -14278,7 +14144,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_250
+Name=DG_BLK_246
 
 Label=Q113
 
@@ -14292,7 +14158,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_251
+Name=DG_BLK_247
 
 Label=Q113
 
@@ -14306,7 +14172,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_252
+Name=DG_BLK_248
 
 Label=Q113
 
@@ -14320,7 +14186,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_253
+Name=DG_BLK_249
 
 Label=Q113
 
@@ -14334,7 +14200,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_254
+Name=DG_BLK_250
 
 Label=Q113
 
@@ -14348,7 +14214,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_255
+Name=DG_BLK_251
 
 Label=Q113
 
@@ -14362,7 +14228,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_256
+Name=DG_BLK_252
 
 Label=Q113
 
@@ -14376,7 +14242,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_257
+Name=DG_BLK_253
 
 Label=Q113
 
@@ -14390,7 +14256,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_258
+Name=DG_BLK_254
 
 Label=Q113
 
@@ -14404,7 +14270,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_259
+Name=DG_BLK_255
 
 Label=Q113
 
@@ -14418,7 +14284,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_260
+Name=DG_BLK_256
 
 Label=Q113
 
@@ -14432,7 +14298,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_261
+Name=DG_BLK_257
 
 Label=Q113
 
@@ -14446,7 +14312,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_262
+Name=DG_BLK_258
 
 Label=Q113
 
@@ -14460,7 +14326,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_263
+Name=DG_BLK_259
 
 Label=Q113
 
@@ -14474,7 +14340,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_264
+Name=DG_BLK_260
 
 Label=Q113
 
@@ -14488,7 +14354,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_265
+Name=DG_BLK_261
 
 Label=Q113
 
@@ -14502,7 +14368,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_266
+Name=DG_BLK_262
 
 Label=Q113
 
@@ -14516,7 +14382,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_267
+Name=DG_BLK_263
 
 Label=Q113
 
@@ -14530,7 +14396,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_268
+Name=DG_BLK_264
 
 Label=Q113
 
@@ -14544,7 +14410,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_269
+Name=DG_BLK_265
 
 Label=Q113
 
@@ -14558,7 +14424,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_270
+Name=DG_BLK_266
 
 Label=Q113
 
@@ -14572,7 +14438,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_271
+Name=DG_BLK_267
 
 Label=Q113
 
@@ -14586,7 +14452,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_272
+Name=DG_BLK_268
 
 Label=Q113
 
@@ -14600,7 +14466,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_273
+Name=DG_BLK_269
 
 Label=Q113
 
@@ -14614,7 +14480,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_274
+Name=DG_BLK_270
 
 Label=Q114
 
@@ -14628,7 +14494,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_275
+Name=DG_BLK_271
 
 Label=Q114
 
@@ -14642,7 +14508,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_276
+Name=DG_BLK_272
 
 Label=Q115
 
@@ -14656,7 +14522,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_277
+Name=DG_BLK_273
 
 Label=Q115
 
@@ -14670,7 +14536,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_278
+Name=DG_BLK_274
 
 Label=Q115
 
@@ -14684,7 +14550,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_279
+Name=DG_BLK_275
 
 Label=Q115
 
@@ -14698,7 +14564,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_280
+Name=DG_BLK_276
 
 Label=Q115
 
@@ -14712,7 +14578,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_281
+Name=DG_BLK_277
 
 Label=Q115
 
@@ -14726,7 +14592,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_282
+Name=DG_BLK_278
 
 Label=Q115
 
@@ -14740,7 +14606,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_283
+Name=DG_BLK_279
 
 Label=Q115
 
@@ -14754,7 +14620,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_284
+Name=DG_BLK_280
 
 Label=Q115
 
@@ -14768,7 +14634,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_285
+Name=DG_BLK_281
 
 Label=Q115
 
@@ -14782,7 +14648,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_286
+Name=DG_BLK_282
 
 Label=Q115
 
@@ -14796,7 +14662,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_287
+Name=DG_BLK_283
 
 Label=Q115
 
@@ -14810,7 +14676,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_288
+Name=DG_BLK_284
 
 Label=Q115
 
@@ -14824,7 +14690,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_289
+Name=DG_BLK_285
 
 Label=Q115
 
@@ -14838,7 +14704,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_290
+Name=DG_BLK_286
 
 Label=Q115
 
@@ -14852,7 +14718,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_291
+Name=DG_BLK_287
 
 Label=Q115
 
@@ -14866,7 +14732,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_292
+Name=DG_BLK_288
 
 Label=Q115
 
@@ -14880,7 +14746,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_293
+Name=DG_BLK_289
 
 Label=Q115
 
@@ -14894,7 +14760,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_294
+Name=DG_BLK_290
 
 Label=Q115
 
@@ -14908,7 +14774,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_295
+Name=DG_BLK_291
 
 Label=Q115
 
@@ -14922,7 +14788,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_296
+Name=DG_BLK_292
 
 Label=Q115
 
@@ -14936,7 +14802,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_297
+Name=DG_BLK_293
 
 Label=Q115
 
@@ -14950,7 +14816,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_298
+Name=DG_BLK_294
 
 Label=Q115
 
@@ -14964,7 +14830,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_299
+Name=DG_BLK_295
 
 Label=Q115
 
@@ -14978,7 +14844,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_300
+Name=DG_BLK_296
 
 Label=Q115
 
@@ -14992,7 +14858,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_301
+Name=DG_BLK_297
 
 Label=Q115
 
@@ -15006,7 +14872,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_302
+Name=DG_BLK_298
 
 Label=Q115
 
@@ -15020,7 +14886,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_303
+Name=DG_BLK_299
 
 Label=Q115
 
@@ -15034,7 +14900,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_304
+Name=DG_BLK_300
 
 Label=Q115
 
@@ -15058,7 +14924,7 @@ Name=I_FINANCIAL_RISK_FORM
 
 Label=I. Financial Risk
 
-Form=14
+Form=16
 
 Max=1
 
@@ -15074,7 +14940,7 @@ Item=Q116_NBB_HEARD,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=16
 
   
 
@@ -15098,7 +14964,7 @@ Item=Q117_NBB_SOURCE,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=16
 
   
 
@@ -15124,7 +14990,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=16
 
   
 
@@ -15148,7 +15014,7 @@ Item=Q118_NBB_UNDERSTAND,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=16
 
   
 
@@ -15174,7 +15040,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=16
 
   
 
@@ -15198,7 +15064,7 @@ Item=Q119_ZBB_HEARD,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=16
 
   
 
@@ -15222,7 +15088,7 @@ Item=Q120_ZBB_SOURCE,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=16
 
   
 
@@ -15248,7 +15114,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=16
 
   
 
@@ -15272,7 +15138,7 @@ Item=Q121_ZBB_UNDERSTAND,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=16
 
   
 
@@ -15298,7 +15164,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=16
 
   
 
@@ -15322,7 +15188,7 @@ Item=Q122_ZBB_INFORMED,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=16
 
   
 
@@ -15346,7 +15212,7 @@ Item=Q123_ZBB_EXTENT,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=16
 
   
 
@@ -15370,7 +15236,7 @@ Item=Q124_MAIFIP_HEARD,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=16
 
   
 
@@ -15394,7 +15260,7 @@ Item=Q125_MAIFIP_SOURCE,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=16
 
   
 
@@ -15420,7 +15286,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=16
 
   
 
@@ -15444,7 +15310,7 @@ Item=Q126_MAIFIP_AVAILED,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=16
 
   
 
@@ -15468,7 +15334,7 @@ Item=Q127_MAIFIP_OOP,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=16
 
   
 
@@ -15492,7 +15358,7 @@ Item=Q128_MAIFIP_OOP_ITEMS,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=16
 
   
 
@@ -15518,7 +15384,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=16
 
   
 
@@ -15542,7 +15408,7 @@ Item=Q129_WHY_NO_MAIFIP,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=16
 
   
 
@@ -15566,7 +15432,7 @@ Item=Q130_REDUCED_SPEND,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=16
 
   
 
@@ -15582,7 +15448,7 @@ Text=130. Have you or your household had to reduce spending on things you need (
 
 [Block]
 
-Name=DG_BLK_305
+Name=DG_BLK_301
 
 Label=Q116
 
@@ -15596,7 +15462,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_306
+Name=DG_BLK_302
 
 Label=Q117
 
@@ -15610,7 +15476,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_307
+Name=DG_BLK_303
 
 Label=Q117
 
@@ -15624,7 +15490,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_308
+Name=DG_BLK_304
 
 Label=Q118
 
@@ -15638,7 +15504,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_309
+Name=DG_BLK_305
 
 Label=Q118
 
@@ -15652,7 +15518,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_310
+Name=DG_BLK_306
 
 Label=Q119
 
@@ -15666,7 +15532,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_311
+Name=DG_BLK_307
 
 Label=Q120
 
@@ -15680,7 +15546,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_312
+Name=DG_BLK_308
 
 Label=Q120
 
@@ -15694,7 +15560,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_313
+Name=DG_BLK_309
 
 Label=Q121
 
@@ -15708,7 +15574,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_314
+Name=DG_BLK_310
 
 Label=Q121
 
@@ -15722,7 +15588,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_315
+Name=DG_BLK_311
 
 Label=Q122
 
@@ -15736,7 +15602,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_316
+Name=DG_BLK_312
 
 Label=Q123
 
@@ -15750,7 +15616,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_317
+Name=DG_BLK_313
 
 Label=Q124
 
@@ -15764,7 +15630,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_318
+Name=DG_BLK_314
 
 Label=Q125
 
@@ -15778,7 +15644,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_319
+Name=DG_BLK_315
 
 Label=Q125
 
@@ -15792,7 +15658,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_320
+Name=DG_BLK_316
 
 Label=Q126
 
@@ -15806,7 +15672,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_321
+Name=DG_BLK_317
 
 Label=Q127
 
@@ -15820,7 +15686,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_322
+Name=DG_BLK_318
 
 Label=Q128
 
@@ -15834,7 +15700,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_323
+Name=DG_BLK_319
 
 Label=Q128
 
@@ -15848,7 +15714,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_324
+Name=DG_BLK_320
 
 Label=Q129
 
@@ -15862,7 +15728,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_325
+Name=DG_BLK_321
 
 Label=Q130
 
@@ -15886,7 +15752,7 @@ Name=J_SATISFACTION_FORM
 
 Label=J. Satisfaction
 
-Form=15
+Form=17
 
 Max=1
 
@@ -15902,7 +15768,7 @@ Item=Q131_AMEN_WAITING,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -15926,7 +15792,7 @@ Item=Q132_AMEN_BATHROOMS,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -15950,7 +15816,7 @@ Item=Q133_AMEN_CONSULT_ROOMS,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -15974,7 +15840,7 @@ Item=Q134_AMEN_ROOMS,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -15998,7 +15864,7 @@ Item=Q135_SAT_OVERALL_TIME,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -16022,7 +15888,7 @@ Item=Q136_STAFF_COURTESY,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -16046,7 +15912,7 @@ Item=Q137_STAFF_LISTEN,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -16070,7 +15936,7 @@ Item=Q138_STAFF_EXPLAIN,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -16094,7 +15960,7 @@ Item=Q139_STAFF_DECIDE,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -16118,7 +15984,7 @@ Item=Q140_STAFF_CONSENT,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -16142,7 +16008,7 @@ Item=Q141_CONFIDENTIALITY,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -16166,7 +16032,7 @@ Item=Q142_PRIVACY,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -16190,7 +16056,7 @@ Item=Q143_RECOMMEND,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -16214,7 +16080,7 @@ Item=Q144_QUALITY,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=17
 
   
 
@@ -16230,7 +16096,7 @@ Text=144. How would the patient rate the quality of care you received at [facili
 
 [Block]
 
-Name=DG_BLK_326
+Name=DG_BLK_322
 
 Label=Q131-Q135
 
@@ -16244,7 +16110,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_327
+Name=DG_BLK_323
 
 Label=Q136-Q140
 
@@ -16258,7 +16124,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_328
+Name=DG_BLK_324
 
 Label=Q141-Q144
 
@@ -16282,7 +16148,7 @@ Name=K_ACCESS_MEDICINES_FORM
 
 Label=K. Access to Medicines
 
-Form=16
+Form=18
 
 Max=1
 
@@ -16298,7 +16164,7 @@ Item=Q145_PURCHASE_FREQ,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=18
 
   
 
@@ -16322,7 +16188,7 @@ Item=Q146_RX_OR_OTC,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=18
 
   
 
@@ -16348,7 +16214,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16372,7 +16238,7 @@ Item=Q148_CONDITIONS,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=18
 
   
 
@@ -16398,7 +16264,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16424,7 +16290,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16448,7 +16314,7 @@ Item=Q149_WHERE_BUY,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=18
 
   
 
@@ -16474,7 +16340,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16498,7 +16364,7 @@ Item=Q150_TRAVEL_HH,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16522,7 +16388,7 @@ Item=Q150_TRAVEL_MM,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16546,7 +16412,7 @@ Item=Q151_PHARM_EASE,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=18
 
   
 
@@ -16570,7 +16436,7 @@ Item=Q152_GAMOT_HEARD,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=18
 
   
 
@@ -16594,7 +16460,7 @@ Item=Q153_GAMOT_SOURCE,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=18
 
   
 
@@ -16620,7 +16486,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16644,7 +16510,7 @@ Item=Q154_GAMOT_UNDERSTAND,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=18
 
   
 
@@ -16670,7 +16536,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16694,7 +16560,7 @@ Item=Q155_GAMOT_GOT_MEDS,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=18
 
   
 
@@ -16720,7 +16586,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16744,7 +16610,7 @@ Item=Q157_WHERE_REST,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=18
 
   
 
@@ -16770,7 +16636,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16794,7 +16660,7 @@ Item=Q158_BRAND_GEN_KNOW,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=18
 
   
 
@@ -16818,7 +16684,7 @@ Item=Q159_BRAND_GEN_BOUGHT,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=18
 
   
 
@@ -16842,7 +16708,7 @@ Item=Q160_WHY_GENERIC,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=18
 
   
 
@@ -16868,7 +16734,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16892,7 +16758,7 @@ Item=Q161_WHY_BRANDED,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=18
 
   
 
@@ -16918,7 +16784,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=18
 
   
 
@@ -16934,7 +16800,7 @@ Text=161. If branded, why did you buy branded medicine? — Other (specify) text
 
 [Block]
 
-Name=DG_BLK_329
+Name=DG_BLK_325
 
 Label=Q145
 
@@ -16948,7 +16814,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_330
+Name=DG_BLK_326
 
 Label=Q146-Q147
 
@@ -16962,7 +16828,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_331
+Name=DG_BLK_327
 
 Label=Q148
 
@@ -16976,7 +16842,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_332
+Name=DG_BLK_328
 
 Label=Q148
 
@@ -16990,7 +16856,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_333
+Name=DG_BLK_329
 
 Label=Q148
 
@@ -17004,7 +16870,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_334
+Name=DG_BLK_330
 
 Label=Q149
 
@@ -17018,7 +16884,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_335
+Name=DG_BLK_331
 
 Label=Q149
 
@@ -17032,7 +16898,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_336
+Name=DG_BLK_332
 
 Label=Q150-Q151
 
@@ -17046,7 +16912,7 @@ Length=3
 
 [Block]
 
-Name=DG_BLK_337
+Name=DG_BLK_333
 
 Label=Q152
 
@@ -17060,7 +16926,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_338
+Name=DG_BLK_334
 
 Label=Q153
 
@@ -17074,7 +16940,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_339
+Name=DG_BLK_335
 
 Label=Q153
 
@@ -17088,7 +16954,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_340
+Name=DG_BLK_336
 
 Label=Q154
 
@@ -17102,7 +16968,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_341
+Name=DG_BLK_337
 
 Label=Q154
 
@@ -17116,7 +16982,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_342
+Name=DG_BLK_338
 
 Label=Q155
 
@@ -17130,7 +16996,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_343
+Name=DG_BLK_339
 
 Label=Q156
 
@@ -17144,7 +17010,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_344
+Name=DG_BLK_340
 
 Label=Q157
 
@@ -17158,7 +17024,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_345
+Name=DG_BLK_341
 
 Label=Q157
 
@@ -17172,7 +17038,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_346
+Name=DG_BLK_342
 
 Label=Q158
 
@@ -17186,7 +17052,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_347
+Name=DG_BLK_343
 
 Label=Q159
 
@@ -17200,7 +17066,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_348
+Name=DG_BLK_344
 
 Label=Q160
 
@@ -17214,7 +17080,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_349
+Name=DG_BLK_345
 
 Label=Q160
 
@@ -17228,7 +17094,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_350
+Name=DG_BLK_346
 
 Label=Q161
 
@@ -17242,7 +17108,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_351
+Name=DG_BLK_347
 
 Label=Q161
 
@@ -17266,7 +17132,7 @@ Name=L_REFERRALS_FORM
 
 Label=L. Referrals
 
-Form=17
+Form=19
 
 Max=1
 
@@ -17282,7 +17148,7 @@ Item=Q162_REFERRED,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17306,7 +17172,7 @@ Item=Q163_CARE_TYPE,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=17
+Form=19
 
   
 
@@ -17332,7 +17198,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=17
+Form=19
 
   
 
@@ -17356,7 +17222,7 @@ Item=Q164_SPECIALIST,PATIENTSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=17
+Form=19
 
   
 
@@ -17382,7 +17248,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=17
+Form=19
 
   
 
@@ -17406,7 +17272,7 @@ Item=Q165_HOW_REFERRED,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17432,7 +17298,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=17
+Form=19
 
   
 
@@ -17456,7 +17322,7 @@ Item=Q166_DISCUSSED_OPTIONS,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17480,7 +17346,7 @@ Item=Q167_HELPED_APPT,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17504,7 +17370,7 @@ Item=Q168_WROTE_INFO,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17528,7 +17394,7 @@ Item=Q169_VISITED,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17552,7 +17418,7 @@ Item=Q170_FOLLOWUP,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17576,7 +17442,7 @@ Item=Q171_WHY_NOT,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=17
+Form=19
 
   
 
@@ -17602,7 +17468,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=17
+Form=19
 
   
 
@@ -17626,7 +17492,7 @@ Item=Q172_PCP_REFERRAL,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17650,7 +17516,7 @@ Item=Q173_PCP_KNOWS,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17674,7 +17540,7 @@ Item=Q174_PCP_DISCUSSED,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17698,7 +17564,7 @@ Item=Q175_PCP_HELPED_APPT,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17722,7 +17588,7 @@ Item=Q176_PCP_WROTE_INFO,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17746,7 +17612,7 @@ Item=Q177_WHY_HOSPITAL,PATIENTSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=17
+Form=19
 
   
 
@@ -17772,7 +17638,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=17
+Form=19
 
   
 
@@ -17796,7 +17662,7 @@ Item=Q178_SAT_REFERRAL,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=19
 
   
 
@@ -17812,7 +17678,7 @@ Text=178. Overall, how would you rate your experience with the referral process?
 
 [Block]
 
-Name=DG_BLK_352
+Name=DG_BLK_348
 
 Label=Q162
 
@@ -17826,7 +17692,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_353
+Name=DG_BLK_349
 
 Label=Q163
 
@@ -17840,7 +17706,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_354
+Name=DG_BLK_350
 
 Label=Q163
 
@@ -17854,7 +17720,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_355
+Name=DG_BLK_351
 
 Label=Q164
 
@@ -17868,7 +17734,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_356
+Name=DG_BLK_352
 
 Label=Q164
 
@@ -17882,7 +17748,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_357
+Name=DG_BLK_353
 
 Label=Q165
 
@@ -17896,7 +17762,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_358
+Name=DG_BLK_354
 
 Label=Q165
 
@@ -17910,7 +17776,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_359
+Name=DG_BLK_355
 
 Label=Q166-Q169
 
@@ -17924,7 +17790,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_360
+Name=DG_BLK_356
 
 Label=Q170
 
@@ -17938,7 +17804,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_361
+Name=DG_BLK_357
 
 Label=Q171
 
@@ -17952,7 +17818,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_362
+Name=DG_BLK_358
 
 Label=Q171
 
@@ -17966,7 +17832,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_363
+Name=DG_BLK_359
 
 Label=Q172
 
@@ -17980,7 +17846,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_364
+Name=DG_BLK_360
 
 Label=Q173-Q176
 
@@ -17994,7 +17860,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_365
+Name=DG_BLK_361
 
 Label=Q177
 
@@ -18008,7 +17874,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_366
+Name=DG_BLK_362
 
 Label=Q177
 
@@ -18022,7 +17888,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_367
+Name=DG_BLK_363
 
 Label=Q178
 
@@ -18046,7 +17912,7 @@ Name=FIELD_CONTROL_FORM_3
 
 Label=Closing - case end
 
-Form=18
+Form=20
 
 Max=1
 
@@ -18064,7 +17930,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=20
 
   
 
@@ -18090,7 +17956,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=20
 
   
 
@@ -18116,7 +17982,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=20
 
   
 
@@ -18142,7 +18008,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=20
 
   
 
@@ -18166,7 +18032,7 @@ Item=DATE_FIRST_VISITED,PATIENTSURVEY_DICT
 
 DataCaptureType=Date,YYYYMMDD
 
-Form=18
+Form=20
 
   
 
@@ -18190,7 +18056,7 @@ Item=DATE_FINAL_VISIT,PATIENTSURVEY_DICT
 
 DataCaptureType=Date,YYYYMMDD
 
-Form=18
+Form=20
 
   
 
@@ -18214,7 +18080,7 @@ Item=TOTAL_NUMBER_OF_VISITS,PATIENTSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=18
+Form=20
 
   
 
@@ -18238,7 +18104,7 @@ Item=ENUM_RESULT_FIRST_VISIT,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=20
 
   
 
@@ -18262,7 +18128,7 @@ Item=ENUM_RESULT_FINAL_VISIT,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=20
 
   
 
@@ -18316,7 +18182,7 @@ Name=REC_CASE_VERIFICATION_FORM
 
 Label=Case Verification Photo
 
-Form=19
+Form=21
 
 Max=1
 
@@ -18334,7 +18200,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=19
+Form=21
 
   
 
@@ -18358,7 +18224,7 @@ Item=CAPTURE_VERIFICATION_PHOTO,PATIENTSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=21
 
   
 

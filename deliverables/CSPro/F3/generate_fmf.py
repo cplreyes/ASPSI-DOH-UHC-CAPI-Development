@@ -105,6 +105,12 @@ FORM_PLAN = [
      [("F_HEALTH_SEEKING", None)]),
     ("G. Outpatient Care",
      [("G_OUTPATIENT_CARE", None)]),
+    # Option B (pilot): the Q92 payment roster renders as its own grid form between the
+    # Q92_SOURCES tick-list (end of G) and Q93 (start of G-cont).
+    ("G. Cost of consultation — amount by source",
+     [("Q92_PAY_ROSTER", None)]),
+    ("G. Outpatient Care (cont.)",
+     [("G_OUTPATIENT_CARE_2", None)]),
     ("H. Inpatient Care",
      [("H_INPATIENT_CARE", None)]),
     ("I. Financial Risk",
@@ -156,11 +162,17 @@ def _form_height(n_items):
     return max(300, TOP_Y + n_items * ROW_H + 40)
 
 
-def _emit_form(lines, form_num, label, item_names, height):
+def _emit_form(lines, form_num, label, item_names, height, roster=None):
     lines.append("[Form]")
     lines.append(f"Name=FORM{form_num:03d}")
     lines.append(f"Label={label}")
     lines.append("Level=1")
+    if roster:
+        # Mark the form as repeating over the roster record (ported from F4 2026-06-18).
+        # Without this Repeat= line CSEntry rejects the forms<->dictionary reconcile
+        # ("open in Designer, make changes, save"); the [Group] Type=Record alone is
+        # not enough. Verified on F4 against the Designer-reconciled FMF.
+        lines.append(f"Repeat={roster['type_name']}")
     lines.append(f"Size={FORM_W},{height}")
     lines.append("  ")
     for name in item_names:
@@ -170,13 +182,20 @@ def _emit_form(lines, form_num, label, item_names, height):
     lines.append("  ")
 
 
-def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name):
+def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name, roster=None):
     lines.append("[Group]")
     lines.append("Required=Yes")
     lines.append(f"Name={group_sym}")
     lines.append(f"Label={label}")
     lines.append(f"Form={form_one_based}")
-    lines.append("Max=1")
+    if roster:
+        # Repeating roster group (ported from F4): Type=Record + TypeName + Max=<occ>
+        # makes Designer/CSEntry render the record's fields as a grid (one row/occurrence).
+        lines.append("Type=Record")
+        lines.append(f"TypeName={roster['type_name']}")
+        lines.append(f"Max={roster['max']}")
+    else:
+        lines.append("Max=1")
     if not item_objs:
         lines.append("[EndGroup]")
         lines.append("  ")
@@ -209,7 +228,8 @@ def _emit_group(lines, group_sym, label, form_one_based, item_objs, dict_name):
         lines.append(f"Text={text}")
         lines.append(" ")
         lines.append("  ")
-    _emit_blocks(lines, item_objs)
+    if not roster:   # rosters render as a grid; never auto-blocked into DisplayTogether
+        _emit_blocks(lines, item_objs)
     lines.append("[EndGroup]")
     lines.append("  ")
 
@@ -237,6 +257,7 @@ NAMED_BLOCKS = [
 _NO_AUTOGROUP_RECORDS = {
     "FIELD_CONTROL", "PATIENT_GEO_ID",
     "REC_FACILITY_CAPTURE", "REC_PATIENT_HOME_CAPTURE", "REC_CASE_VERIFICATION",
+    "Q92_PAY_ROSTER",   # Option B (pilot): emitted as a roster grid, never auto-blocked
 }
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
 # Single alpha fields rendered as a CSPro Check Box (one-question multi-select tick-list).
@@ -266,6 +287,8 @@ _CHECKBOX_FIELDS = {
     "Q128_MAIFIP_OOP_ITEMS",
     # #700 Section I MAIFIP why-not-avail select_all -> Check Box.
     "Q129_WHY_NO_MAIFIP",
+    # Option B (pilot): the Q92 payment-source tick-list that drives the Q92_PAY_ROSTER.
+    "Q92_SOURCES",
 }
 _CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share the checkbox screen
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen
@@ -404,6 +427,12 @@ def build_fmf():
     records_by_name = {r["name"]: r for r in level["records"]}
     id_item_names = [it["name"] for it in level["ids"]["items"]]
 
+    def _roster_info(record_name):
+        """A repeating record (occurrences.maximum > 1) -> roster grid; else None."""
+        occ = records_by_name[record_name].get("occurrences") or {}
+        mx = occ.get("maximum", 1) if isinstance(occ, dict) else 1
+        return {"type_name": record_name, "max": mx} if (mx and mx > 1) else None
+
     referenced = {rec for _, parts in FORM_PLAN for rec, _ in parts}
     missing = referenced - set(records_by_name)
     if missing:
@@ -422,7 +451,8 @@ def build_fmf():
     id_objs = list(level["ids"]["items"])
     _ = id_item_names
     forms.append({"num": 0, "label": "Case Key (Facility + Patient ID)", "group_sym": "IDS0_FORM",
-                  "form_item_names": [it["name"] for it in id_objs], "group_item_objs": id_objs})
+                  "form_item_names": [it["name"] for it in id_objs], "group_item_objs": id_objs,
+                  "roster": None})
     used_group_syms.add("IDS0_FORM")
     # FORM001.. - planned forms. (The empty level-1 "container" record/form was
     # removed 2026-06-08 — it was a vestigial item-less record that CSEntry never
@@ -437,7 +467,8 @@ def build_fmf():
         forms.append({"num": idx, "label": label,
                       "group_sym": _group_symbol(primary, used_group_syms),
                       "form_item_names": [it["name"] for it in objs],
-                      "group_item_objs": objs})
+                      "group_item_objs": objs,
+                      "roster": _roster_info(primary)})
 
     lines = []
     lines.append("[FormFile]")
@@ -455,7 +486,7 @@ def build_fmf():
     # Visual [Form] blocks
     for f in forms:
         _emit_form(lines, f["num"], f["label"], f["form_item_names"],
-                   _form_height(len(f["group_item_objs"])))
+                   _form_height(len(f["group_item_objs"])), roster=f["roster"])
 
     # Logical structure: one [Level], one [Group] per form
     lines.append("[Level]")
@@ -464,7 +495,7 @@ def build_fmf():
     lines.append("  ")
     for f in forms:
         _emit_group(lines, f["group_sym"], f["label"], f["num"] + 1,
-                    f["group_item_objs"], dict_name)
+                    f["group_item_objs"], dict_name, roster=f["roster"])
 
     # Orphan check
     orphans = []

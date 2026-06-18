@@ -67,6 +67,31 @@ def _cb_codes(options):
     return out
 
 
+def _build_payment_roster(record_name, label, q_no, payment_src, amt_codes,
+                          record_type, src_label, amt_label):
+    """Option B payment-matrix roster (pilot 2026-06-18). One occurrence per ticked
+    source code from the question's CheckBox field; renders as a grid (source | amount).
+    Fields:
+      <q>_PAY_LINE  numeric 1  — auto = curocc(); auto-ends the roster (apc preproc).
+      <q>_PAY_SRC   numeric 2  — auto-set to the curocc()-th ticked source, protected.
+      <q>_PAY_AMT   numeric 8  — peso amount; the apc preproc protects+zeroes it for
+                                 source codes NOT in amt_codes (so only money sources
+                                 prompt an amount; free / charged-to-X / DK rows are 0).
+    max_occurs = number of sources. The driving CheckBox field (<q>_SOURCES) lives in
+    the host section record; this roster record is spliced into the dictionary's record
+    list immediately after it so the grid renders right after the tick-list.
+    `amt_codes` is carried for documentation/symmetry; the apc owns the gate logic."""
+    items = [
+        numeric(f"Q{q_no}_PAY_LINE", f"{q_no}. Payment row", length=1),
+        select_one(f"Q{q_no}_PAY_SRC", src_label, payment_src, length=2),
+        numeric(f"Q{q_no}_PAY_AMT", amt_label, length=8),
+    ]
+    # required=False: if (defensively) no source is ticked the apc endgroups at
+    # occurrence 1, leaving 0 rows — required=True would then hard-block at endlevel.
+    return record(record_name, label, record_type, items,
+                  max_occurs=len(payment_src), required=False)
+
+
 # ============================================================
 # FIELD CONTROL — paper FC block + PATIENT_TYPE (OP/IP routing gate)
 # ============================================================
@@ -1038,17 +1063,19 @@ def build_section_g():
         yes_no("Q91_USUAL_OUTPATIENT",
                "91. Do you usually avail consultation services for outpatient care?"),
     ]
-    # Q92 consultation cost — payment-source matrix.
-    # #446: only amount-bearing options carry an 'Amount in Pesos' box — per the paper that's
-    # Out-of-pocket(01) + Donation(02). Free/charged-to-X/In-kind/Don't-know are Yes/No only
-    # (a 'Free' option that demanded an amount was the reported data-quality bug). The kept
-    # amounts stay gated on their Yes flag by amount_required_procs (#553: No -> amount 0 + skip).
+    # Q92 consultation cost — Option B ROSTER redesign (pilot, 2026-06-18).
+    # WAS a flat 8-source Yes/No matrix + per-source _AMT (#446). NOW a single CheckBox
+    # "which sources paid" (Q92_SOURCES) feeding a repeating roster (Q92_PAY_ROSTER —
+    # one row per ticked source, amount inline). Only Out-of-pocket(01) + Donation(02)
+    # carry an amount; the roster's apc preproc protects+zeroes the amount for every
+    # other source code. The roster record is spliced into the dictionary record list
+    # right after this (split) record — see the return below.
     Q92_AMT_CODES = {"01", "02"}
-    for label, code in Q92_PAYMENT_SRC:
-        items.append(yes_no(f"Q92_PAY_{code}", f"92. Cost of consultation — {label}"))
-        if code in Q92_AMT_CODES:
-            items.append(numeric(f"Q92_PAY_{code}_AMT",
-                                 f"92. Cost of consultation — {label} (Amount in Pesos)", length=8))
+    items.extend(checkbox_multiselect(
+        "Q92_SOURCES",
+        "92. Which of the following did you use to pay for the cost of consultation? "
+        "(Tick all that apply.)",
+        Q92_PAYMENT_SRC, with_other_txt=False))
     items.extend([
         *checkbox_multiselect("Q93_LABS",   # #673: select_all -> Check Box (tick-all)
                     "93. Did you have any of the following laboratory tests done during your outpatient care?",
@@ -1135,8 +1162,22 @@ def build_section_g():
         alpha("Q104_WITHOUT_BUCAS_OTHER_TXT",
               "104. Without BUCAS — Others specify text", length=120),
     ])
-    return record("G_OUTPATIENT_CARE",
-                  "G. Outpatient Care", "I", items)
+    # Option B split (pilot): a CSPro 8 roster is a repeating RECORD that renders as its
+    # own form, so a mid-section roster forces the host record to split. G = up to
+    # Q92_SOURCES, then the Q92_PAY_ROSTER grid, then G-cont = Q93..Q104. Returns a LIST;
+    # build_f3_dictionary unpacks it (records 'O' + 'P' are unused recordType letters).
+    split_at = next(i for i, it in enumerate(items)
+                    if it["name"] == "Q92_SOURCES") + 1
+    return [
+        record("G_OUTPATIENT_CARE", "G. Outpatient Care", "I", items[:split_at]),
+        _build_payment_roster(
+            "Q92_PAY_ROSTER", "G. Cost of consultation — amount by source", 92,
+            Q92_PAYMENT_SRC, Q92_AMT_CODES, "O",
+            "92. Payment source (auto-filled from the ticked sources)",
+            "92. Amount paid for the consultation, by source (Pesos)"),
+        record("G_OUTPATIENT_CARE_2", "G. Outpatient Care (cont.)", "P",
+               items[split_at:]),
+    ]
 
 
 # ============================================================
@@ -1884,7 +1925,7 @@ def build_f3_dictionary():
         build_section_d(),
         build_section_e(),
         build_section_f(),
-        build_section_g(),
+        *build_section_g(),   # Option B: G splits into G / Q92_PAY_ROSTER / G-cont
         build_section_h(),
         build_section_i(),
         build_section_j(),

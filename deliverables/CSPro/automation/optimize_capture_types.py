@@ -87,6 +87,9 @@ CHECKBOX = {"Q148_CONDITIONS",
             "Q128_MAIFIP_OOP_ITEMS",
             # F3 #700 Q129 MAIFIP why-not-avail select_all -> Check Box.
             "Q129_WHY_NO_MAIFIP",
+            # F3 Option B (pilot 2026-06-18): Q92 payment-source tick-list driving the
+            # Q92_PAY_ROSTER amount grid.
+            "Q92_SOURCES",
             # F4 #529 conversions (17 'Household Survey' select_all -> Check Box).
             # Note: Q53/Q58/Q121 names overlap F3's set but are distinct fields per
             # instrument (this is a single shared name set keyed only by field name;

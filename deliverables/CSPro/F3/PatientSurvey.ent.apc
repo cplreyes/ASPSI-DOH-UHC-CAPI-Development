@@ -15,6 +15,25 @@ numeric geoFound;
 numeric currentYear;
 numeric currentMonth;
 
+{ Option B (Q92 roster pilot): sum the consultation out-of-pocket amount from the
+  Q92_PAY_ROSTER (replaces the old flat Q92_PAY_01_AMT field). Defined as a function
+  so the Q97 reconciliation soft-check stays a single expression with no local
+  declarations (it is merged into Q97's range-check PROC). }
+function q92_oop()
+  { CSPro user functions declare no return type; the value is returned by assigning
+    to the function name (mirrors the inlined PSGC-Cascade helpers). Accumulate into a
+    local, then assign once at the end (avoid reading the function name mid-body). }
+  numeric i;
+  numeric total;
+  total = 0;
+  do i = 1 while i <= count(Q92_PAY_ROSTER)
+    if Q92_PAY_SRC(i) = 1 then
+      total = total + Q92_PAY_AMT(i);
+    endif;
+  enddo;
+  q92_oop = total;
+end;
+
 { Shared helpers inlined into this single PROC GLOBAL (PSGC-Cascade first so its
   ROOT_PSGC_PARENT declaration precedes all functions). #include can't be used:
   CSPro forbids it inside a PROC, and CSEntry forbids code before the first PROC.
@@ -1584,6 +1603,60 @@ postproc
   endif;
 
 
+{ ---- Q92 consultation-cost payment roster (Option B pilot) ---- }
+PROC Q92_SOURCES
+postproc
+  numeric nck; numeric kx;
+  nck = 0;
+  do kx = 1 while kx <= 8
+    if pos(edit("99", kx), Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  enddo;
+  if nck = 0 then
+    errmsg("92. No payment source ticked — confirm before continuing.");
+  endif;
+
+PROC Q92_PAY_LINE
+preproc
+  { Build one roster row per ticked source (canonical order 01..08). The curocc()-th
+    ticked source -> Q92_PAY_SRC (protected); auto-end once past the last ticked
+    source. Only Out-of-pocket(1)+Donation(2) carry an amount; all other sources are
+    fixed to 0 + protected. Re-runs on back-navigation (preproc), so protect/amount
+    re-apply correctly. }
+  numeric nsel; numeric kk; numeric seen;
+  nsel = 0;
+  do kk = 1 while kk <= 8
+    if pos(edit("99", kk), Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  enddo;
+  if curocc() > nsel then
+    endgroup;
+  endif;
+  seen = 0;
+  do kk = 1 while kk <= 8
+    if pos(edit("99", kk), Q92_SOURCES) > 0 then
+      seen = seen + 1;
+      if seen = curocc() then
+        Q92_PAY_SRC = kk;
+      endif;
+    endif;
+  enddo;
+  protect(Q92_PAY_SRC, true);
+  if Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2 then
+    protect(Q92_PAY_AMT, false);
+  else
+    Q92_PAY_AMT = 0;
+    protect(Q92_PAY_AMT, true);
+  endif;
+  Q92_PAY_LINE = curocc();
+  noinput;
+
+PROC Q92_PAY_AMT
+postproc
+  if Q92_PAY_AMT < 0 then
+    errmsg("92. Amount cannot be negative.");
+    reenter;
+  endif;
+
+
 { ---- Skip logic (spec 2) ---- }
 PROC Q1_IS_PATIENT
 postproc
@@ -2110,17 +2183,6 @@ postproc
   endif;
 
 { ---- Select-all validation — >=1 option ticked (auto-derived from dcf) ---- }
-PROC Q92_PAY_08
-postproc
-  if not (Q92_PAY_03 = 1 or Q92_PAY_04 = 1 or Q92_PAY_05 = 1 or Q92_PAY_06 = 1 or Q92_PAY_07 = 1 or Q92_PAY_08 = 1) then
-    errmsg("Select at least one option for Q92_PAY before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q92_PAY_08 = 1) and (Q92_PAY_03 = 1 or Q92_PAY_04 = 1 or Q92_PAY_05 = 1 or Q92_PAY_06 = 1 or Q92_PAY_07 = 1) then
-    errmsg("Q92_PAY: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
 PROC Q94_PAY_08
 postproc
   if not (Q94_PAY_02 = 1 or Q94_PAY_03 = 1 or Q94_PAY_04 = 1 or Q94_PAY_05 = 1 or Q94_PAY_06 = 1 or Q94_PAY_07 = 1 or Q94_PAY_08 = 1) then
@@ -2792,30 +2854,6 @@ postproc
     reenter;
   endif;
 
-PROC Q92_PAY_01_AMT
-preproc
-  if Q92_PAY_01 <> 1 then
-    Q92_PAY_01_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q92_PAY_01 = 1 and (Q92_PAY_01_AMT = 0 or Q92_PAY_01_AMT = notappl) then
-    errmsg("'Q92_PAY_01' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q92_PAY_02_AMT
-preproc
-  if Q92_PAY_02 <> 1 then
-    Q92_PAY_02_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q92_PAY_02 = 1 and (Q92_PAY_02_AMT = 0 or Q92_PAY_02_AMT = notappl) then
-    errmsg("'Q92_PAY_02' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
 PROC Q94_PAY_01_AMT
 preproc
   if Q94_PAY_01 <> 1 then
@@ -3238,9 +3276,9 @@ postproc
     errmsg("Q97_FINAL_AMOUNT must be between 0 and 99999999.");
     reenter;
   endif;
-  if Q97_FINAL_AMOUNT > 0 and (Q92_PAY_01_AMT + Q94_PAY_01_AMT + Q96_PAY_01_AMT) > 0
-     and (Q97_FINAL_AMOUNT < (Q92_PAY_01_AMT + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 0.9
-          or Q97_FINAL_AMOUNT > (Q92_PAY_01_AMT + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 1.1) then
+  if Q97_FINAL_AMOUNT > 0 and (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) > 0
+     and (Q97_FINAL_AMOUNT < (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 0.9
+          or Q97_FINAL_AMOUNT > (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 1.1) then
     errmsg("Q97 final amount differs by more than 10 percent from the out-of-pocket lines (Q92/Q94/Q96) — confirm.");
   endif;
 

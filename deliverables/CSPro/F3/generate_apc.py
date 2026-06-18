@@ -110,11 +110,79 @@ SOFT_CROSS = [
      "     or Q115_FINAL_CASH > Q107_PAY_01_AMT * 1.1) then\n"
      "    errmsg(\"Q115 final cash differs by more than 10 percent from the out-of-pocket bill line (Q107) — confirm.\");\n  endif;"),
     ("Q97_FINAL_AMOUNT",
-     "  if Q97_FINAL_AMOUNT > 0 and (Q92_PAY_01_AMT + Q94_PAY_01_AMT + Q96_PAY_01_AMT) > 0\n"
-     "     and (Q97_FINAL_AMOUNT < (Q92_PAY_01_AMT + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 0.9\n"
-     "          or Q97_FINAL_AMOUNT > (Q92_PAY_01_AMT + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 1.1) then\n"
+     # Option B (pilot): Q92 out-of-pocket is now a roster row, summed via q92_oop()
+     # (was the flat Q92_PAY_01_AMT). Q94/Q96 stay flat until the fan-out converts them.
+     "  if Q97_FINAL_AMOUNT > 0 and (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) > 0\n"
+     "     and (Q97_FINAL_AMOUNT < (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 0.9\n"
+     "          or Q97_FINAL_AMOUNT > (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 1.1) then\n"
      "    errmsg(\"Q97 final amount differs by more than 10 percent from the out-of-pocket lines (Q92/Q94/Q96) — confirm.\");\n  endif;"),
 ]
+
+
+# ============================================================
+# Q92 payment roster (Option B redesign — pilot 2026-06-18)
+# ============================================================
+# The flat 8-source Yes/No matrix + per-source _AMT became a CheckBox (Q92_SOURCES)
+# feeding a repeating roster (Q92_PAY_ROSTER). One occurrence per ticked source code,
+# auto-built from the CheckBox in canonical order (01..08). Q92_PAY_SRC is auto-set +
+# protected; only Out-of-pocket(1) + Donation(2) carry an amount, every other source's
+# amount is fixed to 0 and protected. `edit("99", k)` -> "0k" and pos() membership are
+# the established CheckBox-field idioms in this generator (codes are fixed 2-char, so
+# pos() cannot false-match across the 2-char boundary for codes 01..08).
+Q92_ROSTER_PROCS = """\
+{ ---- Q92 consultation-cost payment roster (Option B pilot) ---- }
+PROC Q92_SOURCES
+postproc
+  numeric nck; numeric kx;
+  nck = 0;
+  do kx = 1 while kx <= 8
+    if pos(edit("99", kx), Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  enddo;
+  if nck = 0 then
+    errmsg("92. No payment source ticked — confirm before continuing.");
+  endif;
+
+PROC Q92_PAY_LINE
+preproc
+  { Build one roster row per ticked source (canonical order 01..08). The curocc()-th
+    ticked source -> Q92_PAY_SRC (protected); auto-end once past the last ticked
+    source. Only Out-of-pocket(1)+Donation(2) carry an amount; all other sources are
+    fixed to 0 + protected. Re-runs on back-navigation (preproc), so protect/amount
+    re-apply correctly. }
+  numeric nsel; numeric kk; numeric seen;
+  nsel = 0;
+  do kk = 1 while kk <= 8
+    if pos(edit("99", kk), Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  enddo;
+  if curocc() > nsel then
+    endgroup;
+  endif;
+  seen = 0;
+  do kk = 1 while kk <= 8
+    if pos(edit("99", kk), Q92_SOURCES) > 0 then
+      seen = seen + 1;
+      if seen = curocc() then
+        Q92_PAY_SRC = kk;
+      endif;
+    endif;
+  enddo;
+  protect(Q92_PAY_SRC, true);
+  if Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2 then
+    protect(Q92_PAY_AMT, false);
+  else
+    Q92_PAY_AMT = 0;
+    protect(Q92_PAY_AMT, true);
+  endif;
+  Q92_PAY_LINE = curocc();
+  noinput;
+
+PROC Q92_PAY_AMT
+postproc
+  if Q92_PAY_AMT < 0 then
+    errmsg("92. Amount cannot be negative.");
+    reenter;
+  endif;
+"""
 
 
 def inject_soft(parts, field, body):
@@ -176,6 +244,25 @@ numeric geoFull;
 numeric geoFound;
 numeric currentYear;
 numeric currentMonth;
+
+{ Option B (Q92 roster pilot): sum the consultation out-of-pocket amount from the
+  Q92_PAY_ROSTER (replaces the old flat Q92_PAY_01_AMT field). Defined as a function
+  so the Q97 reconciliation soft-check stays a single expression with no local
+  declarations (it is merged into Q97's range-check PROC). }
+function q92_oop()
+  { CSPro user functions declare no return type; the value is returned by assigning
+    to the function name (mirrors the inlined PSGC-Cascade helpers). Accumulate into a
+    local, then assign once at the end (avoid reading the function name mid-body). }
+  numeric i;
+  numeric total;
+  total = 0;
+  do i = 1 while i <= count(Q92_PAY_ROSTER)
+    if Q92_PAY_SRC(i) = 1 then
+      total = total + Q92_PAY_AMT(i);
+    endif;
+  enddo;
+  q92_oop = total;
+end;
 
 { Shared helpers inlined into this single PROC GLOBAL (PSGC-Cascade first so its
   ROOT_PSGC_PARENT declaration precedes all functions). #include can't be used:
@@ -1021,7 +1108,7 @@ def skip_proc(field, cond, target):
 
 def main():
     parts = [HEADER, "", CONTROL_PROCS, "", BRANCHING, "", EXTRA_PROCS, "",
-             VALIDATION_PROCS, ""]
+             VALIDATION_PROCS, "", Q92_ROSTER_PROCS, ""]   # Q92 roster (Option B pilot)
     covered = {"Q88_WHY_VISIT", "Q105_REASON",                    # branching PROCs
                "Q63_HAS_USUAL_FACILITY", "Q77_KON_REGISTERED",
                "Q159_BRAND_GEN_BOUGHT", "Q162_REFERRED",  # EXTRA_PROCS (#529: Q46_BENEFITS_O01 gone — Q46 is now a Check Box, gate folded into its checkbox PROC)
@@ -1039,6 +1126,7 @@ def main():
                # bespoke PROCs from CHECKBOX_MULTISELECT_PROCS (added below) — seed them
                # into `covered` so the dcf-driven other-specify / select-all auto-gens
                # never mis-fire on the alpha checkbox field or its gated text.
+               "Q92_SOURCES", "Q92_PAY_LINE", "Q92_PAY_SRC", "Q92_PAY_AMT",  # Q92 roster (Option B pilot)
                *CHECKBOX_COVERED}
 
     parts.append("{ ---- Skip logic (spec 2) ---- }")
