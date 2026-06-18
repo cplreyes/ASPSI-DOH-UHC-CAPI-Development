@@ -754,7 +754,9 @@ def build_section_g():
         ("Branded",                        "1"),  # proceed to Q78
         ("Generic",                        "2"),
         ("Both branded and generic",       "3"),
-        ("Don't know the difference",      "4"),  # proceed to Q79
+        # #646: 'Don't know the difference' (code 4) REMOVED — it contradicts Q75=Yes
+        # (Q76 is only asked when the respondent KNOWS the difference). Its old exit
+        # routing (code 4 -> Q79) is folded into code 9 below in PROC Q76_BRAND_OR_GEN.
         ("Not applicable",                 "9"),  # proceed to Q79
     ]
     Q77_WHY_GENERIC = [
@@ -764,7 +766,8 @@ def build_section_g():
         ("Given for free",                             "4"),
         ("More or as effective as branded medicine",   "5"),
         ("I don't know",                               "6"),
-        ("Not applicable",                             "7"),
+        # #647: 'Not applicable' REMOVED — Q77 is only reached when the respondent
+        # bought generic (Q76 = Generic/Both), so a 'Not applicable' tick is contradictory.
         ("Other (Specify)",                            "8"),
     ]
     Q78_WHY_BRANDED = [
@@ -774,7 +777,9 @@ def build_section_g():
         ("Given for free",                                  "4"),
         ("Prefer branded over generic option",              "5"),
         ("I don't know",                                    "6"),
-        ("Not applicable",                                  "7"),
+        # #648: 'Not applicable' REMOVED — Q78 is only reached when the respondent
+        # bought branded (Q76 = Branded/Both), so a 'Not applicable' tick is contradictory.
+        # (The Q78 prompt's enumerator note is DOH-authored content — left unchanged; flagged.)
         ("Other (Specify)",                                 "8"),
     ]
     items = [
@@ -1278,18 +1283,21 @@ NBB_ZBB_MAIFIP_INFO_SOURCE = [
     ("Other (Specify)",        "8"),
 ]
 
-# Source order preserved verbatim from Apr 20 Q128/Q134 (9 options, read in
-# two columns left-then-right per PDF layout).
+# Source order from Apr 20 Q128/Q134 (9 options). #659/#663: 'I don't know' and
+# 'Other (Specify)' moved to the END for display (questionnaire convention; the tester
+# asked for them last). Codes are remapped by _cb_codes (real options -> 01.. by order,
+# 'I don't know' -> 90, 'Other (Specify)' -> 99), and the relative order of the 7 real
+# options is unchanged, so their 01..07 codes are identical to before — display-only.
 NBB_ZBB_UNDERSTANDING = [
     ("Patient does not pay any hospital bill",              "1"),
     ("Bills are settled between the hospital and PhilHealth","2"),
     ("PhilHealth will cover cost of treatment",             "3"),
     ("Patients should not be charged extra fees",           "4"),
     ("Medicine and service are already included",           "5"),
-    ("I don't know",                                        "6"),
     ("No cash payment required upon discharge",             "7"),
-    ("Other (Specify)",                                     "8"),
     ("Applies only to certain patients or hospitals",       "9"),
+    ("I don't know",                                        "6"),
+    ("Other (Specify)",                                     "8"),
 ]
 
 
@@ -1350,6 +1358,12 @@ def build_section_m():
         ("Laboratory Tests",  "2"),
         ("Medical Supplies",  "3"),
         ("Doctor's Fee",      "4"),
+        # #666: add standard 'Other (Specify)' for charges outside the four listed
+        # (e.g. diagnostic procedures, surgery). length-1 select_one -> high single-digit
+        # code 9 (project convention for 1-digit fields; cf. Q5/Q10 'Other' = 8). The
+        # gated Q138_MOST_EXPENSIVE_OTHER_TXT alpha (added below) is auto-wired by
+        # other_specify_procs (gate: Q138_MOST_EXPENSIVE = 9).
+        ("Other (Specify)",   "9"),
     ]
     Q141_BILL_ITEMS = [
         ("Rooms <for inpatients only>",         "1"),
@@ -1394,6 +1408,8 @@ def build_section_m():
         select_one("Q138_MOST_EXPENSIVE",
                    "138. From your most recent visit, which among the charges was the most expensive?",
                    Q138_MOST_EXPENSIVE, length=1),
+        alpha("Q138_MOST_EXPENSIVE_OTHER_TXT",
+              "138. Most expensive charge — Other (specify) text", length=120),
         numeric("Q139_FINAL_AMOUNT_PHP",
                 "139. From your most recent visit, what was the final amount you paid in cash at the hospital cashier upon discharge? (PHP)",
                 length=8),
@@ -1670,6 +1686,11 @@ def build_section_q():
         ("Loss of income",                                                                                              "1"),
         ("Healthcare costs related to coronavirus (COVID-19)",                                                          "2"),
         ("Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)", "3"),
+        # #686: add standard 'Other (Specify)' so a respondent worried for a reason
+        # outside the three listed can still answer (CAPI previously rejected NO-to-all).
+        # _cb_codes maps this to 99; the gated Q202_WORRY_REASONS_OTHER_TXT box is emitted
+        # by with_other_txt=True below and wired by CHECKBOX_CONVERT (has_other=True).
+        ("Other (Specify)",                                                                                             "99"),
     ]
     items = [
         select_one("Q200_REDUCED_SPEND",
@@ -1680,7 +1701,7 @@ def build_section_q():
                    Q201_WORRIED, length=1),
         *checkbox_multiselect("Q202_WORRY_REASONS",   # #668: select_all -> Check Box (tick-all)
                     "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
-                    _cb_codes(Q202_REASONS), with_other_txt=False),
+                    _cb_codes(Q202_REASONS), with_other_txt=True),  # #686: add 'Other (Specify)' (-> 99) + gated text box
     ]
     return record("Q_FINANCIAL_ANXIETY", "Q. Anxiety about Household Finances", "S", items)
 

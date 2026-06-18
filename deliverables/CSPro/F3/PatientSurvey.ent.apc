@@ -496,7 +496,7 @@ postproc
 PROC Q77_KON_REGISTERED
 postproc
   if Q77_KON_REGISTERED = 2    then  skip to Q82_KON_WHY_NOT_REG; endif;  { Not registered -> reasons. #671: Q82 is now the Check Box base (was _O01) }
-  if Q77_KON_REGISTERED in 3,4 then  skip to Q83_VISIT_REASON;    endif;  { Never heard / IDK -> exit E }
+  if Q77_KON_REGISTERED = 4    then  skip to Q83_VISIT_REASON;    endif;  { #430: 'never heard'(3) removed; only IDK(4) exits E }
 
 { #389/#671: the "why NOT registered" gate (registered patient falls through Q78-Q81 into
   Q82 -> skip to Section F) now lives in the Q82_KON_WHY_NOT_REG checkbox PROC's `gate`
@@ -852,6 +852,28 @@ postproc
     reenter;
   endif;
 
+PROC Q128_MAIFIP_OOP_ITEMS
+postproc
+  if length(strip(Q128_MAIFIP_OOP_ITEMS)) = 0 then
+    errmsg("Select at least one option for Q128 before continuing.");
+    reenter;
+  endif;
+  if pos("90", Q128_MAIFIP_OOP_ITEMS) > 0 and length(strip(Q128_MAIFIP_OOP_ITEMS)) > 2 then
+    errmsg("Q128: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
+
+PROC Q128_MAIFIP_OOP_ITEMS_OTHER_TXT
+preproc
+  if pos("99", Q128_MAIFIP_OOP_ITEMS) = 0 then
+    Q128_MAIFIP_OOP_ITEMS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q128_MAIFIP_OOP_ITEMS) > 0 and length(strip(Q128_MAIFIP_OOP_ITEMS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q128 - please specify.");
+    reenter;
+  endif;
+
 PROC Q149_WHERE_BUY
 postproc
   if length(strip(Q149_WHERE_BUY)) = 0 then
@@ -920,6 +942,9 @@ postproc
   if length(strip(Q157_WHERE_REST)) = 0 then
     errmsg("Select at least one option for Q157 before continuing.");
     reenter;
+  endif;
+  if pos("90", Q157_WHERE_REST) > 0 and length(strip(Q157_WHERE_REST)) > 2 then
+    errmsg("Q157: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
   endif;
 
 PROC Q157_WHERE_REST_OTHER_TXT
@@ -1383,6 +1408,18 @@ postproc
     reenter;
   endif;
 
+PROC Q86_VISIT_EVENTS_OTHER_TXT
+preproc
+  if pos("99", Q86_VISIT_EVENTS) = 0 then
+    Q86_VISIT_EVENTS_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q86_VISIT_EVENTS) > 0 and length(strip(Q86_VISIT_EVENTS_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q86 - please specify.");
+    reenter;
+  endif;
+
 PROC Q87_OTHER_ACTIONS
 postproc
   if length(strip(Q87_OTHER_ACTIONS)) = 0 then
@@ -1476,6 +1513,11 @@ postproc
 
 PROC Q18_INCOME_BRACKET
 postproc
+  { #398: 'Don't know' (99) — respondent can't even estimate household income.
+    No bracket amount is required; bypass the bracket<->amount reconciliation. }
+  if Q18_INCOME_BRACKET = 99 then
+    exit;
+  endif;
   { bracket must contain Q18_INCOME_AMOUNT — #631: 11 contiguous 50k bands }
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;
@@ -1719,7 +1761,7 @@ postproc
   endif;
 
 { ---- 'Other (specify)' enforcement — UHC9 dual-other (spec 4) ---- }
-{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 64 items) ---- }
+{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 66 items) ---- }
 PROC Q104_WITHOUT_BUCAS_OTHER_TXT
 preproc
   if Q104_WITHOUT_BUCAS <> 6 then
@@ -2057,13 +2099,6 @@ postproc
   endif;
 
 { ---- Select-all validation — >=1 option ticked (auto-derived from dcf) ---- }
-PROC Q128_MAIFIP_OOP_ITEMS_O04
-postproc
-  if not (Q128_MAIFIP_OOP_ITEMS_O01 = 1 or Q128_MAIFIP_OOP_ITEMS_O02 = 1 or Q128_MAIFIP_OOP_ITEMS_O03 = 1 or Q128_MAIFIP_OOP_ITEMS_O04 = 1) then
-    errmsg("Select at least one option for Q128_MAIFIP_OOP_ITEMS before continuing.");
-    reenter;
-  endif;
-
 PROC Q129_WHY_NO_MAIFIP_O04
 postproc
   if not (Q129_WHY_NO_MAIFIP_O01 = 1 or Q129_WHY_NO_MAIFIP_O02 = 1 or Q129_WHY_NO_MAIFIP_O03 = 1 or Q129_WHY_NO_MAIFIP_O04 = 1) then
@@ -3307,7 +3342,7 @@ postproc
   if Q29_SEC_CLASS = 1 and Q18_INCOME_BRACKET >= 1 and Q18_INCOME_BRACKET <= 2 then
     errmsg("Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.");
   endif;
-  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 then
+  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 and Q18_INCOME_BRACKET <= 11 then
     errmsg("Q29 = socio-economic Class D/E but income is in a high bracket — confirm.");
   endif;
 

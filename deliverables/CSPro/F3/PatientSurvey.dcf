@@ -7717,6 +7717,39 @@
                           "value": "11"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi alam",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dai aram",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala Kabalo",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala mahibalo",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Diri ako maaram",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -15543,39 +15576,6 @@
                           "value": "4"
                         }
                       ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "None",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Wala",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Wara",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Wala",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Wala",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Waray",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "5"
-                        }
-                      ]
                     }
                   ]
                 }
@@ -20576,39 +20576,6 @@
                     {
                       "labels": [
                         {
-                          "text": "I've never heard of it",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi ko pa ito narinig",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dai ko pa ini nadadangog",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Wala pa gyud ko kadungog ani",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Wala ko nakadungog ana",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Waray pa gud ako makabati hini",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "3"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "I don't know",
                           "language": "EN"
                         },
@@ -23132,7 +23099,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 20,
+              "length": 22,
               "valueSets": [
                 {
                   "name": "Q86_VISIT_EVENTS_VS1",
@@ -23492,10 +23459,74 @@
                           "value": "10"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Uban pa (I-specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (Ispecify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
                     }
                   ]
                 }
               ]
+            },
+            {
+              "name": "Q86_VISIT_EVENTS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "86. Which of the following happened during the patient's most recent visit? \u2014 Other (specify) text",
+                  "language": "EN"
+                },
+                {
+                  "text": "86. Which of the following happened during the patient's most recent visit? \u2014 Other (specify) text",
+                  "language": "FIL"
+                },
+                {
+                  "text": "86. Which of the following happened during the patient's most recent visit? \u2014 Other (specify) text",
+                  "language": "BCL"
+                },
+                {
+                  "text": "86. Which of the following happened during the patient's most recent visit? \u2014 Other (specify) text",
+                  "language": "BIS"
+                },
+                {
+                  "text": "86. Which of the following happened during the patient's most recent visit? \u2014 Other (specify) text",
+                  "language": "CEB"
+                },
+                {
+                  "text": "86. Which of the following happened during the patient's most recent visit? \u2014 Other (specify) text",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
             },
             {
               "name": "Q87_OTHER_ACTIONS",
@@ -47642,62 +47673,61 @@
               ]
             },
             {
-              "name": "Q128_MAIFIP_OOP_ITEMS_O01",
+              "name": "Q128_MAIFIP_OOP_ITEMS",
               "labels": [
                 {
-                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Drugs",
+                  "text": "128. Which items did you have to pay for out-of-pocket?",
                   "language": "EN"
                 },
                 {
-                  "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa? \u2014 Drugs",
+                  "text": "128. Which items did you have to pay for out-of-pocket?",
                   "language": "FIL"
                 },
                 {
-                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Drugs",
+                  "text": "128. Which items did you have to pay for out-of-pocket?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Tambal",
+                  "text": "128. Which items did you have to pay for out-of-pocket?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Tambal",
+                  "text": "128. Which items did you have to pay for out-of-pocket?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Mga medisina",
+                  "text": "128. Which items did you have to pay for out-of-pocket?",
                   "language": "WAR"
                 }
               ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
+              "contentType": "alpha",
+              "length": 12,
               "valueSets": [
                 {
-                  "name": "Q128_MAIFIP_OOP_ITEMS_O01_VS1",
+                  "name": "Q128_MAIFIP_OOP_ITEMS_VS1",
                   "labels": [
                     {
-                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Drugs",
+                      "text": "128. Which items did you have to pay for out-of-pocket?",
                       "language": "EN"
                     },
                     {
-                      "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa? \u2014 Drugs",
+                      "text": "128. Which items did you have to pay for out-of-pocket?",
                       "language": "FIL"
                     },
                     {
-                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Drugs",
+                      "text": "128. Which items did you have to pay for out-of-pocket?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Tambal",
+                      "text": "128. Which items did you have to pay for out-of-pocket?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Tambal",
+                      "text": "128. Which items did you have to pay for out-of-pocket?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Mga medisina",
+                      "text": "128. Which items did you have to pay for out-of-pocket?",
                       "language": "WAR"
                     }
                   ],
@@ -47705,66 +47735,198 @@
                     {
                       "labels": [
                         {
-                          "text": "Yes",
+                          "text": "Drugs",
                           "language": "EN"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Drugs",
                           "language": "FIL"
                         },
                         {
-                          "text": "Iyo",
+                          "text": "Drugs",
                           "language": "BCL"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Drugs",
                           "language": "BIS"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Drugs",
                           "language": "CEB"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Drugs",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "1"
+                          "value": "01"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Laboratory",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Laboratory",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Laboratory",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Laboratory",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Laboratory",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Laboratory",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Professional Fees",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Professional Fees",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Professional Fees",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Professional Fees",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Professional Fees",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Professional Fees",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Accommodation",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Accommodation",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Accommodation",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Accommodation",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Accommodation",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Accommodation",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Wala",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Wara",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Waray",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "90"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Uban pa (I-specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (Ispecify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
                         }
                       ]
                     }
@@ -47773,397 +47935,35 @@
               ]
             },
             {
-              "name": "Q128_MAIFIP_OOP_ITEMS_O02",
+              "name": "Q128_MAIFIP_OOP_ITEMS_OTHER_TXT",
               "labels": [
                 {
-                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Laboratory",
+                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Other (specify) text",
                   "language": "EN"
                 },
                 {
-                  "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa? \u2014 Laboratory",
+                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Other (specify) text",
                   "language": "FIL"
                 },
                 {
-                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Laboratory",
+                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Other (specify) text",
                   "language": "BCL"
                 },
                 {
-                  "text": "Laboratoryo",
+                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Other (specify) text",
                   "language": "BIS"
                 },
                 {
-                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Laboratory",
+                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Other (specify) text",
                   "language": "CEB"
                 },
                 {
-                  "text": "Laboratoryo",
+                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Other (specify) text",
                   "language": "WAR"
                 }
               ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q128_MAIFIP_OOP_ITEMS_O02_VS1",
-                  "labels": [
-                    {
-                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Laboratory",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa? \u2014 Laboratory",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Laboratory",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Laboratoryo",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Laboratory",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Laboratoryo",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q128_MAIFIP_OOP_ITEMS_O03",
-              "labels": [
-                {
-                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Professional Fees",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa? \u2014 Professional Fees",
-                  "language": "FIL"
-                },
-                {
-                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Professional Fees",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Bayad sa Doktor",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Propesyonal nga bayad",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Propesyonal nga bayad",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q128_MAIFIP_OOP_ITEMS_O03_VS1",
-                  "labels": [
-                    {
-                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Professional Fees",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa? \u2014 Professional Fees",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Professional Fees",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Bayad sa Doktor",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Propesyonal nga bayad",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Propesyonal nga bayad",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q128_MAIFIP_OOP_ITEMS_O04",
-              "labels": [
-                {
-                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Accommodation",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa? \u2014 Accommodation",
-                  "language": "FIL"
-                },
-                {
-                  "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Accommodation",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Gitulgan",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Kapuy-an",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Akomodasyon",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q128_MAIFIP_OOP_ITEMS_O04_VS1",
-                  "labels": [
-                    {
-                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Accommodation",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin ang mga kinailangan mong bayaran mula sa sariling bulsa? \u2014 Accommodation",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "128. Which items did you have to pay for out-of-pocket? \u2014 Accommodation",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Gitulgan",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Kapuy-an",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Akomodasyon",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "contentType": "alpha",
+              "length": 120
             },
             {
               "name": "Q129_WHY_NO_MAIFIP_O01",
@@ -55016,7 +54816,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 18,
+              "length": 20,
               "valueSets": [
                 {
                   "name": "Q157_WHERE_REST_VS1",
@@ -55308,6 +55108,39 @@
                       "pairs": [
                         {
                           "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None \u2014 got all medicines from the GAMOT Package",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "None \u2014 got all medicines from the GAMOT Package",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "None \u2014 got all medicines from the GAMOT Package",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "None \u2014 got all medicines from the GAMOT Package",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "None \u2014 got all medicines from the GAMOT Package",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "None \u2014 got all medicines from the GAMOT Package",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "90"
                         }
                       ]
                     },
@@ -60516,39 +60349,6 @@
                       "pairs": [
                         {
                           "value": "5"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Not applicable",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi naaangkop",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae angkop",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili applicable",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili angay",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire aplikado",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "6"
                         }
                       ]
                     }

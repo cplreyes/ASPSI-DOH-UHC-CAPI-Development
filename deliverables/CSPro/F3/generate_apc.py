@@ -99,9 +99,11 @@ SOFT_CROSS = [
      # #631: re-mapped to the new 11-band income value set, preserving the original peso
      # intent (low ~under 100k; high ~100k+). SOFT confirm only. ASPSI may recalibrate the
      # socio-economic-class income thresholds against the updated brackets.
+     # #398: 'Don't know' income (99) is out-of-range — bound the high-bracket test to the
+     # 11 real bands so a DK answer doesn't false-trip the Class D/E "high bracket" warn.
      "  if Q29_SEC_CLASS = 1 and Q18_INCOME_BRACKET >= 1 and Q18_INCOME_BRACKET <= 2 then\n"
      "    errmsg(\"Q29 = socio-economic Class A/B but income is in the lowest bracket — confirm.\");\n  endif;\n"
-     "  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 then\n"
+     "  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 and Q18_INCOME_BRACKET <= 11 then\n"
      "    errmsg(\"Q29 = socio-economic Class D/E but income is in a high bracket — confirm.\");\n  endif;"),
     ("Q115_FINAL_CASH",
      "  if Q107_PAY_01_AMT > 0 and (Q115_FINAL_CASH < Q107_PAY_01_AMT * 0.9\n"
@@ -485,7 +487,7 @@ postproc
 PROC Q77_KON_REGISTERED
 postproc
   if Q77_KON_REGISTERED = 2    then  skip to Q82_KON_WHY_NOT_REG; endif;  { Not registered -> reasons. #671: Q82 is now the Check Box base (was _O01) }
-  if Q77_KON_REGISTERED in 3,4 then  skip to Q83_VISIT_REASON;    endif;  { Never heard / IDK -> exit E }
+  if Q77_KON_REGISTERED = 4    then  skip to Q83_VISIT_REASON;    endif;  { #430: 'never heard'(3) removed; only IDK(4) exits E }
 
 { #389/#671: the "why NOT registered" gate (registered patient falls through Q78-Q81 into
   Q82 -> skip to Section F) now lives in the Q82_KON_WHY_NOT_REG checkbox PROC's `gate`
@@ -670,6 +672,7 @@ CHECKBOX_BASES = {
     # #696 Section K/L select_all -> Check Box (tick-all)
     "Q149_WHERE_BUY", "Q153_GAMOT_SOURCE", "Q154_GAMOT_UNDERSTAND", "Q157_WHERE_REST",
     "Q160_WHY_GENERIC", "Q161_WHY_BRANDED", "Q163_CARE_TYPE",
+    "Q128_MAIFIP_OOP_ITEMS",   # #481 select_all -> Check Box (+ None/Other)
 }
 
 CHECKBOX_CONVERT = [
@@ -717,7 +720,7 @@ CHECKBOX_CONVERT = [
      "  { #435/#673: 'No condition - Regular check-up only' (19) should stand alone — warn if combined (mirrors Q148) }\n"
      "  if pos(\"19\", Q85_CONDITIONS) > 0 and length(strip(Q85_CONDITIONS)) > 2 then\n"
      "    errmsg(\"'No condition - Regular check-up only' was ticked with other condition(s) — it should usually be the only choice. Please review.\");\n  endif;"),  # 'Other (Specify)' (99)
-    ("Q86_VISIT_EVENTS",         False, False, None),  # #673: no Other / no None-IDK
+    ("Q86_VISIT_EVENTS",         True,  False, None),  # #438: + 'Other (Specify)' (99) escape; no None/IDK
     ("Q87_OTHER_ACTIONS",        True,  False, None),  # #673: 'Did not seek other forms of care'(6) is substantive (not 90); 'Other (Specify)' (99)
     ("Q90_NOT_CONFINED",         True,  False, None),  # #673: 'Other (specify)' (99); no None/IDK
     # Q93 'None'(90) -> skip the Q94 lab-cost matrix (was PROC Q93_LABS_O17 skip, #448/#673).
@@ -736,7 +739,7 @@ CHECKBOX_CONVERT = [
     ("Q149_WHERE_BUY",           True,  False, None),  # #696: 'Other (specify)' (99); no None/IDK
     ("Q153_GAMOT_SOURCE",        True,  True,  None),  # #696 SOURCE_8: 'I don't know' (90); 'Other (Specify)' (99). Reached when Q152=Yes
     ("Q154_GAMOT_UNDERSTAND",    True,  True,  None),  # #696: 'I don't know' (90); 'Other (specify)' (99)
-    ("Q157_WHERE_REST",          True,  False, None),  # #696: 'Other (Specify)' (99); no None/IDK
+    ("Q157_WHERE_REST",          True,  True,  None),  # #696/#500: 'None — got all from GAMOT' (90) exclusive; 'Other (Specify)' (99)
     ("Q160_WHY_GENERIC",         True,  True,  None),  # #696: 'I don't know' (90); 'Other (Specify)' (99). Gated by surrounding Q159 routing (Q159=1 skips it; Q161 preproc gate handles generic-only)
     # Q161 inherits the branded-only gate that used to live on Q161_WHY_BRANDED_O01 (#503).
     ("Q161_WHY_BRANDED",         True,  True,
@@ -744,6 +747,7 @@ CHECKBOX_CONVERT = [
      "                                                                        Branded(1)/Both(3); Generic(2) falls through Q160 -> gate out to Section L. }\n"
      "    skip to Q162_REFERRED;\n  endif;"),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q163_CARE_TYPE",           True,  True,  None),  # #696: 'None of the above' (90) exclusive; 'Other (Specify)' (99)
+    ("Q128_MAIFIP_OOP_ITEMS",    True,  True,  None),  # #481: 'None' (90) exclusive; 'Other (specify)' (99). Reached only when Q127=Yes (Q127=No skips Q128 -> Q130)
 ]
 
 
@@ -836,6 +840,11 @@ postproc
 
 PROC Q18_INCOME_BRACKET
 postproc
+  { #398: 'Don't know' (99) — respondent can't even estimate household income.
+    No bracket amount is required; bypass the bracket<->amount reconciliation. }
+  if Q18_INCOME_BRACKET = 99 then
+    exit;
+  endif;
   { bracket must contain Q18_INCOME_AMOUNT — #631: 11 contiguous 50k bands }
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;

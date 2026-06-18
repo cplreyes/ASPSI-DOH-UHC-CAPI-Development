@@ -300,6 +300,12 @@ SECTION_INTROS = {
 }
 
 _QNUM = re.compile(r"^Q(\d{1,3})_")
+# Sub-question pattern: Q<n>_<m>_...  e.g. Q141_1_NO_RECEIPT_AMT_PHP, Q2_1_AGE, Q89_1_*.
+# These are decimal sub-items (Q141.1, Q2.1, Q89.1), NOT the parent question Q<n>, so they
+# must NOT inherit the parent's enumerator instruction (#667: Q141_1 wrongly showed the
+# Q141 receipt note). _QNUM still captures the parent int for SECTION_INTRO placement, but
+# the INSTRUCTIONS note is suppressed for sub-questions below.
+_SUBQ = re.compile(r"^Q\d{1,3}_\d+_")
 
 
 def _esc(t):
@@ -321,7 +327,9 @@ def question_extras(nm, intro_used):
             intro_used.add(tgt)
             break
     instr = INSTRUCTIONS.get(q)
-    if instr and not nm.endswith("_TXT"):
+    # #667: suppress the parent question's instruction note on decimal sub-questions
+    # (Q<n>_<m>_…, e.g. Q141_1_NO_RECEIPT_AMT_PHP) and on free-text *_TXT capture fields.
+    if instr and not nm.endswith("_TXT") and not _SUBQ.match(nm):
         post = f'<p class="instruction">{_esc(instr)}</p>'
     return pre, post
 

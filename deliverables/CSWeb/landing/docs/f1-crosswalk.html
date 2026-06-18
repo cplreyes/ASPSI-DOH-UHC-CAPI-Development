@@ -649,11 +649,10 @@
             </div>
             <div class="xcol capi">
               <h4>On the tablet (CAPI)</h4>
-              <div class="capi-shot" role="img" aria-label="CSEntry single-select screen — screenshot pending">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="3"/><circle cx="8" cy="16" r="3"/><path d="M13 8h7M13 16h7" stroke-linecap="round"/></svg>
-                <span class="ph">Screenshot pending</span>
-              </div>
-              <p class="capi-cap">Single-select.</p>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry Facility Profile screen — Q7 ownership single-select (Public / Private) with Q8 service-capacity level shown directly below" loading="lazy" />
+              </a>
+              <p class="capi-cap">Single-select — Public / Private. (Service-capacity level follows on the same screen, shown below.)</p>
             </div>
           </div>
         </div>
@@ -676,11 +675,10 @@
             </div>
             <div class="xcol capi">
               <h4>On the tablet (CAPI)</h4>
-              <div class="capi-shot" role="img" aria-label="CSEntry single-select screen — screenshot pending">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="7" r="2.5"/><circle cx="8" cy="14" r="2.5"/><path d="M13 7h7M13 14h7" stroke-linecap="round"/></svg>
-                <span class="ph">Screenshot pending</span>
-              </div>
-              <p class="capi-cap">Single-select.</p>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry service-capacity single-select — Primary Care Facility / Level 1 / Level 2 / Level 3 Hospital, shown below the ownership question" loading="lazy" />
+              </a>
+              <p class="capi-cap">Single-select — Primary Care Facility / Level 1–3 Hospital.</p>
             </div>
           </div>
           <div class="xnote">
@@ -716,13 +714,623 @@
             </div>
             <div class="xpage-col capi">
               <h4>The same on the tablet (CAPI)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry screen sequence for Sections A–B — screenshots pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-capi-b-facility-profile.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-capi-b-facility-profile.png"
+                  alt="CSEntry tablet screen for Section B Facility Profile — the section tree on the left shows Field Control, Geographic ID, Section A and Section B all completed, with the ownership and service-capacity questions on the right"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                The matching run of CSEntry screens on the tablet — the section
+                tree (left) shows Field Control → Geographic ID → Section A →
+                Section B completed, the same flow as the printed page.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xsection">C. Universal Health Care (UHC) Implementation</div>
+
+        <p class="banner" style="margin-top:0">
+          Section C is the long one — <strong>Q9–Q50, paper pages 4–12</strong>.
+          Most of it is a single repeated question shape — the “UHC attribution”
+          pattern — asked about ~20 different facility changes. Below, the
+          distinctive questions are shown individually; the repeated pattern is
+          shown <strong>once</strong>, with the full list of questions that use
+          it.
+        </p>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q9–Q10</span>
+            <span class="qtitle">UHC awareness &amp; primary-care packages</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">9. Have you heard about Universal Health Care (UHC) prior to this survey?</p>
+              <ul class="opts radio">
+                <li>Yes</li>
+                <li>No</li>
+              </ul>
+              <p class="qtext" style="margin-top:12px">10. Does the facility have primary care packages?</p>
+              <ul class="opts radio">
+                <li>Yes</li>
+                <li>No</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Section C opening screen — Q9 (heard of UHC) and Q10 (has primary care packages) as Yes / No single-selects, with the section tree on the left" loading="lazy" />
+              </a>
+              <p class="capi-cap">Two Yes / No single-selects on one screen — the section’s entry point.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Skip gate.</b> Q11 (below) only opens when <b>Q10 = Yes</b> — on paper it’s a written “if yes” instruction; in CAPI the field is hidden until the gate is met.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q11</span>
+            <span class="qtitle">Primary-package implementation status</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">11. If yes, specify its implementation status relative to the UHC Act.</p>
+              <ul class="opts radio">
+                <li>Implemented as a direct result of the UHC Act (i.e. YAKAP/Konsulta)</li>
+                <li>Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act</li>
+                <li>Newly implemented or improved independent of UHC Act</li>
+                <li>Not yet implemented but planned within the next 1-2 years</li>
+                <li>Other (specify)</li>
+                <li>I don’t know</li>
+                <li>Not applicable</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select screen — a vertical list of fixed options with one tappable per question; Q11's status options render in this same single-select control" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Single-select</b>, 7 options + an “Other (specify)” text box that opens when “Other” is picked. <b>Appears only when Q10 = Yes</b> — otherwise the field is hidden. <i>(Shown: the matching single-select control; this exact screen renders with Q11’s package-status options.)</i></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q13 · Q16</span>
+            <span class="qtitle">Public-health &amp; health-promotion units</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">13. Do you have a public health unit at this facility?</p>
+              <ul class="opts radio">
+                <li>Yes</li>
+                <li>No</li>
+                <li>Not applicable</li>
+              </ul>
+              <p class="field-label" style="margin-top:8px">16. <em>Do you have a health promotion unit at this facility?</em> — same Yes / No / Not applicable shape.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <p class="capi-cap">Yes / No / Not&nbsp;applicable single-select — same control as Q9/Q10 above. A “Yes” on Q13 opens the unit-creation attribution (Q14) and unit-role select (Q15); a “Yes” on Q16 opens Q17/Q18.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q15 · Q18</span>
+            <span class="qtitle">Main role of the unit</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">15. What is the main role of the public health unit?</p>
+              <ul class="opts radio">
+                <li>Health promotion and education</li>
+                <li>Disease surveillance report</li>
+                <li>Referral and patient navigation</li>
+                <li>Alignment with national public health programs</li>
+                <li>Other (specify)</li>
+                <li>I don’t know</li>
+                <li>Not applicable</li>
+              </ul>
+              <p class="field-label" style="margin-top:8px">18. <em>Main role of the health promotion unit?</em> — same single-select shape, with its own option list.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <p class="capi-cap">Single-select + “Other (specify)”, rendered like Q11 above. Each opens only when its parent unit question (Q13 / Q16) is answered “Yes”.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q32</span>
+            <span class="qtitle">Data submission to DOH / PhilHealth</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">32. Does your facility currently submit health and financial data to the DOH Information System and/or the PhilHealth Dashboard?</p>
+              <ul class="opts radio">
+                <li>Yes, to DOH Information System only</li>
+                <li>Yes, to PhilHealth Dashboard only</li>
+                <li>Yes, to both DOH Information System and PhilHealth Dashboard</li>
+                <li>No, we are not submitting these data</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <p class="capi-cap">Single-select, 4 options — rendered like Q11 above.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q33</span>
+            <span class="qtitle">Submission frequency</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">33. If yes, how frequent has your facility submit these data?</p>
+              <ul class="opts radio">
+                <li>Weekly</li>
+                <li>Monthly</li>
+                <li>Quarterly</li>
+                <li>Semi-annually</li>
+                <li>Annually</li>
+                <li>Other (specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <p class="capi-cap">Single-select + “Other (specify)” text box. Opens only when Q32 is any “Yes”.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q34</span>
+            <span class="qtitle">Reports used for decision-making</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">34. Which of the submitted reports are actually used for decision-making?</p>
+              <ul class="opts">
+                <li>OPD/IPD census and morbidity reports</li>
+                <li>Maternal, newborn, child, and adolescent health (MNCAH) reports</li>
+                <li>Notifiable diseases / surveillance reports</li>
+                <li>Expenditure and budget utilization reports</li>
+                <li>PhilHealth claims and reimbursement reports</li>
+                <li>YAKAP/Konsulta utilization reports</li>
+                <li>… and 6 more, incl. “Other (specify)”</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <div class="capi-shot" role="img" aria-label="CSEntry check-box multi-select screen — screenshot pending">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="6" height="6" rx="1"/><rect x="3" y="14" width="6" height="6" rx="1"/><path d="M4.5 7l1 1 2-2M13 7h7M13 17h7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="ph">Screenshot pending</span>
+              </div>
+              <p class="capi-cap"><b>Check-box multi-select</b> — tick all that apply, on one screen. A real CAPI difference: on paper this is a free list of boxes; in CAPI it’s one true multi-select field with mutually-exclusive “I don’t know” / “Other” rules enforced on the spot.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q35 · Q37</span>
+            <span class="qtitle">Changes since 2019 (staffing, referral)</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">35. Have there been changes in the facility staffing since 2019?</p>
+              <ul class="opts radio">
+                <li>Yes</li>
+                <li>No</li>
+              </ul>
+              <p class="field-label" style="margin-top:8px">37. <em>Have there been changes in the referral system since 2019?</em> — same Yes / No shape.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <p class="capi-cap">Yes / No single-select. A “Yes” opens its matching attribution question — Q35 → Q36 (staffing), Q37 → Q38 (referral) — both in the pattern below.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q49 · Q50</span>
+            <span class="qtitle">Quality &amp; access challenges</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">49. What are the major challenges to improving the <b>quality</b> of patient care in your local area? &nbsp;·&nbsp; 50. … the <b>accessibility</b> of patient care?</p>
+              <ul class="opts">
+                <li>Limited resources (personnel, equipment, supplies, funding)</li>
+                <li>Challenging quality standards</li>
+                <li>Healthcare decisions made by LGUs not the facility</li>
+                <li>Lack of specific healthcare skills</li>
+                <li>… and 6 more, incl. “I don’t know” / “Other (specify)”</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <div class="capi-shot" role="img" aria-label="CSEntry check-box multi-select screen — screenshot pending">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="6" height="6" rx="1"/><rect x="3" y="14" width="6" height="6" rx="1"/><path d="M4.5 7l1 1 2-2M4.5 17l1 1 2-2M13 7h7M13 17h7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span class="ph">Screenshot pending</span>
+              </div>
+              <p class="capi-cap">Both use the same 10-option <b>check-box multi-select</b> (quality vs. accessibility). “I don’t know” and “Other” are mutually exclusive with the rest.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow" style="border:1px solid var(--primary);border-radius:var(--radius-lg);overflow:hidden">
+          <div class="xrow-head" style="background:var(--primary);color:#fff">
+            <span class="qbadge" style="background:#fff;color:var(--primary-dark)">×22</span>
+            <span class="qtitle" style="color:#fff">The “UHC attribution” pattern</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>The repeated question</h4>
+              <p class="qtext">“Has [<em>some facility change</em>] been implemented since the UHC Act was passed in 2019 — and was it a result of the UHC Act?” &nbsp;Always the same 9 answers:</p>
+              <ul class="opts radio">
+                <li>Yes, this was implemented as a direct result of the UHC Act</li>
+                <li>Yes, this was pre-existing, but it has significantly improved due to the UHC Act</li>
+                <li>Yes, this has been implemented or improved recently, but not due to the UHC Act</li>
+                <li>Yes, other reason (specify)</li>
+                <li>No, this has not been implemented yet, but we plan to in the next 1-2 years</li>
+                <li>No, and we have no plans to do this in the next 1-2 years</li>
+                <li>No, other reason (specify)</li>
+                <li>I don’t know</li>
+                <li>Not applicable</li>
+              </ul>
+              <p class="field-label" style="margin-top:10px"><b>Used by 22 questions:</b> Q12, Q14, Q17, Q19, Q21, Q23, Q25, Q27, Q29, Q31, Q36, Q38, Q39, Q40, Q41, Q42, Q43, Q44, Q45, Q46, Q47, Q48 — covering licensing, units, new roles/departments, buildings, rooms, equipment, supplies, EMR, staffing, referrals, MoU/MoA, NBB, ZBB, co-payment, ward allocation, clinical guidelines, licensing standards, accreditation, service protocols and quality measures.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry UHC attribution screen — Q12 DOH primary-care licensing shown with its nine fixed answer options, the same answer set reused by all 22 attribution questions" loading="lazy" />
+              </a>
+              <p class="capi-cap">One screen, nine fixed options — the same control for all 22. Shown here for Q12 (DOH primary-care licensing).</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Free-text follow-ups.</b> A “Yes” on several of these opens a “what was it?” text field — new roles (Q20), new departments (Q22), buildings (Q24), rooms (Q26), equipment (Q28), supplies (Q30). In CAPI those fields stay hidden until the “Yes” is chosen.</span>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed pages ↔ CAPI screens (Section C)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p04.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p04.png"
+                  alt="Page 4 of the printed F1 Facility Head questionnaire — the start of Section C, UHC Implementation, with Q9 through Q14"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 4 — the opening of Section C (Q9–Q14). The section runs
+                across <b>printed pages 4–12</b>; tap to open this page full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-capi-c-uhc-entry.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-capi-c-uhc-entry.png"
+                  alt="CSEntry Section C screen on the tablet — the section tree on the left shows C. UHC Implementation open, with Q9 and Q10 on the right"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                The same section on the tablet — the left-hand tree shows
+                “C. Universal Health Care (UHC) Implementation” open, the run of
+                C screens flowing one question at a time.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xsection">D. YAKAP / Konsulta Package</div>
+
+        <p class="banner" style="margin-top:0">
+          Section D — <strong>Q51–Q100, paper pages 12–18</strong> — forks at
+          Q51. An <b>accredited</b> YAKAP/Konsulta provider answers the
+          operations questions (Q52–Q78); a <b>non-accredited</b> one skips
+          straight to the intent questions (Q79–Q84); the costing &amp; payment
+          questions (Q85–Q100) close the section for everyone. The nine “why was
+          it difficult to comply” questions (Q66–Q74) share one shape, shown
+          once. Every control type here already appears with a real tablet
+          screen in Sections A–C — the captions point to the matching one.
+        </p>
+
+        <div class="xrow" style="border:1px solid var(--primary);border-radius:var(--radius-lg);overflow:hidden">
+          <div class="xrow-head" style="background:var(--primary);color:#fff">
+            <span class="qbadge" style="background:#fff;color:var(--primary-dark)">Q51</span>
+            <span class="qtitle" style="color:#fff">The accreditation gate — the section forks here</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">51. Are you currently an accredited YAKAP/Konsulta provider?</p>
+              <ul class="opts radio">
+                <li>Yes&nbsp; → answer Q52–Q78 (accredited operations)</li>
+                <li>No&nbsp; → skip to Q79–Q84 (intent to accredit)</li>
+              </ul>
+              <p class="field-label" style="margin-top:8px">Either way, Q85–Q100 (costing, payments, expansion) are asked of everyone.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — Q51 renders as a single Yes / No like the questions shown here" loading="lazy" />
+              </a>
+              <p class="capi-cap">A single <b>Yes / No</b> that re-routes the whole section. <b>Appears first in Section D</b>; its answer decides whether Q52–Q78 (accredited) or Q79–Q84 (non-accredited) follow. <i>(Shown: the matching Yes/No control.)</i></p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Form-level skip.</b> On paper the interviewer follows printed “if&nbsp;not&nbsp;accredited, proceed to Q79” arrows by hand. In CAPI the entire accredited block (Q52–Q78) is shown or skipped automatically from this one answer — no chance of running the wrong path.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q52–Q57</span>
+            <span class="qtitle">Accredited · setup &amp; capitation</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">52. If yes, since when? <span class="field-label">Month __ / Year ____</span> &nbsp;·&nbsp; 53. Which services are in the YAKAP/Konsulta package? &nbsp;·&nbsp; 54–56. Can you register individuals / whole families / only both together? &nbsp;·&nbsp; 57. Capitation amount of the package?</p>
+              <ul class="opts">
+                <li>Q53 (package): Pap smear, Mammogram, Lipid profile, Chest X-ray … <i>+ “All of the above” / “Other”</i></li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry number-pad entry control — the date (Q52) and capitation amount (Q57) use this number-pad" loading="lazy" />
+              </a>
+              <p class="capi-cap">Mixed controls (shown: the <b>number-pad</b>, used for the Q52 date and Q57 capitation amount). <b>All appear only when Q51 = Yes.</b> Q53 is a <b>check-box multi-select</b> (see the pattern below); Q54–Q56 are <b>Yes / No / Don’t-know</b> single-selects.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q58–Q64</span>
+            <span class="qtitle">Accredited · performance &amp; payments</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">58. Performance indicators for the 2nd tranche? &nbsp;·&nbsp; 59. Do you know how often payments arrive? &nbsp;·&nbsp; 60. How often should you be paid? &nbsp;·&nbsp; 61. Delays in tranches? (+ reasons) &nbsp;·&nbsp; 62. Typical interval between tranches? &nbsp;·&nbsp; 63. Days waited for accreditation? &nbsp;·&nbsp; 64. Why did you apply?</p>
+              <ul class="opts radio">
+                <li>Q60 frequency: Monthly · Quarterly · Semi-annually · Annually</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — the frequency/interval/wait buckets (Q60/Q62/Q63) render as single-selects like the ones shown here" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Single-selects</b> for the frequency/interval/wait buckets (shown). <b>All in the Q51 = Yes branch.</b> Q59/Q61 are <b>Yes / No</b> gates, Q61.1 a free-text reason, and Q58 &amp; Q64 are <b>check-box multi-selects</b> (pattern below).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow" style="border:1px solid var(--primary);border-radius:var(--radius-lg);overflow:hidden">
+          <div class="xrow-head" style="background:var(--primary);color:#fff">
+            <span class="qbadge" style="background:#fff;color:var(--primary-dark)">Q65 + ×9</span>
+            <span class="qtitle" style="color:#fff">The “why was it difficult to comply” pattern</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>The repeated question</h4>
+              <p class="qtext">65. Which requirements were difficult to comply with for accreditation? <span class="field-label">(check-box list of 10 — preventive services, laboratory, medicines, infrastructure, equipment, HR, health information system, documents, DOH licensing …)</span></p>
+              <p class="qtext" style="margin-top:10px">Then, for <b>each requirement ticked in Q65</b>, the same follow-up is asked — “<em>Why was it difficult to comply with this?</em>” — with the same set of reasons:</p>
+              <ul class="opts">
+                <li>Not enough budget / too expensive</li>
+                <li>… the shared “why difficult” reason list, + “Other (specify)”</li>
+              </ul>
+              <p class="field-label" style="margin-top:10px"><b>Q66–Q74</b> are these nine follow-ups (preventive, lab, medicines, infrastructure, equipment, HR, health-info-system, documents, DOH licensing).</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <p class="capi-cap"><b>Check-box multi-selects</b> (like Q34/Q49, Section C). The CAPI difference: each of Q66–Q74 only appears if its requirement was ticked in Q65 — on paper all nine are printed and the interviewer hand-skips the ones that don’t apply.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Field-level gating.</b> Nine display-logic toggles driven by Q65’s ticks — the form shows only the follow-ups that matter for this facility.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q75–Q78</span>
+            <span class="qtitle">Accredited · patient enrollment</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">75. Whose responsibility is it to enroll patients? &nbsp;·&nbsp; 76. Which enrollment initiatives do you run? &nbsp;·&nbsp; 77. Any challenges enrolling patients? &nbsp;·&nbsp; 78. What challenges?</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <p class="capi-cap"><b>Check-box multi-selects</b> for Q75/Q76/Q78 (like Q34, Section C), gated by a <b>Yes / No</b> on Q77.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q79–Q84</span>
+            <span class="qtitle">Non-accredited path · intent to accredit</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">79. Why are you not accredited? &nbsp;·&nbsp; 80. Are you intending to become a provider? &nbsp;·&nbsp; 81. Would you know how to start? &nbsp;·&nbsp; 82–84. Deciding factor / what went wrong / process challenges.</p>
+              <ul class="opts radio">
+                <li>Q80: Yes, already in process · Yes, not yet · No, decided not to · No, tried and failed · No, haven’t thought about it · I don’t know</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control — Q80 'intending to accredit' renders as a single-select list like the one shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Reached only when Q51 = No.</b> Shown: the <b>single-select</b> control used for Q80 (intent). The row also has a <b>check-box multi-select</b> (Q79), a <b>Yes / No</b> (Q81), and <b>free-text</b> boxes (Q82–Q84).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q85–Q87</span>
+            <span class="qtitle">Both paths · catchment &amp; patient counts</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">85. What is the facility’s catchment area? &nbsp;·&nbsp; 86. How many patients in it are <b>eligible</b> to register? &nbsp;·&nbsp; 87. How many eligible patients are <b>already registered</b>?</p>
+              <div class="field-line"></div>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q5-q6-tenure.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q5-q6-tenure.png" alt="CSEntry number-pad entries — the eligible (Q86) and registered (Q87) patient counts use number-pad fields like the two shown here" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Asked of everyone.</b> Shown: two <b>number-pad</b> entries (the Q86 eligible and Q87 registered counts render like these); Q85 catchment is <b>free-text</b>. The app blocks entry if Q87 &gt; Q86 — see the validation note below.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Consistency check.</b> The app enforces <b>registered ≤ eligible</b> (Q87 ≤ Q86) on the spot — a cross-field rule the paper form can’t catch until data entry.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q88–Q92</span>
+            <span class="qtitle">Both paths · costing viability</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">88. Is the Php&nbsp;1,700 per-capita rate enough? &nbsp;·&nbsp; 89. Did you do a costing exercise? &nbsp;·&nbsp; 90. Did it show Php&nbsp;1,700 was viable? &nbsp;·&nbsp; 91–92. Minimum acceptable capitation value (as a provider / to consider becoming one).</p>
+              <ul class="opts radio">
+                <li>Q88–Q90: Yes · No · I don’t know</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No-style single-select — Q88-Q90 costing-viability questions render as Yes / No / Don't-know single-selects like these" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Asked of everyone.</b> Shown: the <b>Yes / No / Don’t-know</b> single-select control (Q88–Q90). Q91/Q92 are two <b>number-pad</b> peso amounts.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q93–Q100</span>
+            <span class="qtitle">Both paths · fees, payments, expansion</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">93. Charge additional capitation fees? → 94. Why? &nbsp;·&nbsp; 95. Already received payments? → 96. Why not? &nbsp;·&nbsp; 97. Challenges getting payments? → 98. What challenges? &nbsp;·&nbsp; 99. What would you expand next? → 100. Additional features.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control — the gate questions Q93/Q95/Q97 render as Yes/No or single-selects like the ones shown" loading="lazy" />
+              </a>
+              <p class="capi-cap"><b>Asked of everyone.</b> A run of <b>gate → detail</b> pairs (shown: the single-select gate control): a Yes / No or single-select opens a <b>check-box multi-select</b> of reasons (Q94, Q96, Q98, Q99), closing with a <b>free-text</b> Q100. Each detail field appears only when its gate is answered.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed pages ↔ CAPI screens (Section D)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p12.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p12.png"
+                  alt="Page 12 of the printed F1 Facility Head questionnaire — the start of Section D, YAKAP/Konsulta, with the Q51 accreditation gate and Q52–Q56"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 12 — the start of Section D, with the Q51 accreditation gate
+                that forks the section. Section D runs across <b>printed pages
+                12–18</b>; tap to open full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <div class="flow-ph" role="img" aria-label="CSEntry screen sequence for Section D — screenshots pending">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M9 6h6M9 9h6M10 18h4" stroke-linecap="round"/></svg>
                 <span class="ph">Screen sequence pending</span>
               </div>
               <p class="pcap">
-                The run of CSEntry screens covering these sections, captured on
-                the tablet — added here once the emulator capture is done.
+                The CSEntry run for Section D — the Q51 gate and the accredited /
+                non-accredited branches — drops in here once captured. Every
+                control type is already shown live in Sections A–C above.
               </p>
             </div>
           </div>
@@ -731,7 +1339,7 @@
         <p class="banner" style="margin-top:22px">
           This “end of section” block is the new pattern you asked for: at the
           close of <strong>every</strong> section, the real printed page(s) sit
-          beside the matching CAPI screens. Sections C–H follow in this same
+          beside the matching CAPI screens. Sections E–H follow in this same
           format — the paper pages are ready to render now; the tablet
           screenshots drop in after the emulator capture.
         </p>

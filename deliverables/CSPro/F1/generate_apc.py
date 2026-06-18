@@ -654,16 +654,28 @@ postproc
       reenter;
     endif;
   endif;""",
+    "Q91_MIN_CAP_VALUE_ACC": """\
+PROC Q91_MIN_CAP_VALUE_ACC
+postproc
+  { #533 soft check: Q91 is the minimum per-capita rate the facility would accept, asked
+    after the costing/enough questions imply PHP 1,700 may be insufficient. A minimum BELOW
+    the current PHP 1,700 PhilHealth max is unusual — confirm rather than block. Q91 is only
+    ever a skip TARGET (never a source), so a bespoke postproc here drops no routing. }
+  if Q91_MIN_CAP_VALUE_ACC > 0 and Q91_MIN_CAP_VALUE_ACC < 1700 then
+    if accept("Q91 minimum acceptable capitation (%d PHP) is below the PHP 1,700 PhilHealth max — confirm?", "Yes", "No") <> 1 then
+      reenter;
+    endif;
+  endif;""",
     # 4.9 Q121 DOH-licensing-difficulty (Section F). #385 / #567.
     # As of #567 (parts 1 & 2) Q121 is a single Check Box field (no per-option _O##
     # fields), so the former per-option PROCs below are GONE:
     #   - O14 "None of the above" -> skip-to-Q135: now IMPLICIT. 'None' recodes to 90
     #     and is exclusive, so no O01-O13 codes are present and every Q122-134 display
     #     gate `pos("0N", Q121_DOH_LIC_DIFFICULT) = 0` fires -> the cluster skips to Q135.
-    #   - O10/O11/O12 (hospital-only) + O13 (PCF-only) `noinput` visibility gates were
-    #     #567 part 3 (PCF/hospital category visibility) — OUT OF SCOPE for this task.
-    #     They depended on per-option fields that no longer exist, so they are dropped
-    #     (NOT reimplemented on the single Check Box field). Q121 select->=1 +
+    #   - O10/O11/O12 (hospital-only) + O13 (PCF-only) visibility (#567 part 3 / #385)
+    #     are now RE-ESTABLISHED on the single Check Box field via a dynamic value set
+    #     (setvalueset on Q8_SERVICE_LEVEL) instead of the old per-option `noinput` —
+    #     see the Q121 entry + note in CHECKBOX_CONVERT_A below. Q121 select->=1 +
     #     exclusivity('None'=90) come from CHECKBOX_CONVERT_A / _gen_checkbox_proc.
 }
 
@@ -739,6 +751,10 @@ postproc
   { exclusivity (soft warn): 'I don't know' (09) should stand alone }
   if pos("09", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
     errmsg("Q53: 'I don't know' is usually the only choice — please review the options ticked.");
+  endif;
+  { #526 exclusivity (soft warn): 'All of the above' (08) implies every item — it should stand alone }
+  if pos("08", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
+    errmsg("Q53: 'All of the above' was ticked with other option(s) — it should be the only choice. Please review.");
   endif;""",
     "Q53_YK_PACKAGE_OTHER_TXT": """\
 PROC Q53_YK_PACKAGE_OTHER_TXT
@@ -874,10 +890,25 @@ CHECKBOX_CONVERT_A = [
     # CHECKBOX_BASES), so Q121 here just gets its own select->=1 + exclusivity warn.
     # The old select_all O14 ('None') -> skip-to-Q135 is now implicit: ticking 'None'
     # (90) means no O01-O13 codes are present, so EVERY Q122-134 gate `pos("0N",...)=0`
-    # fires and the whole cluster is skipped to Q135. (The per-option hospital/PCF
-    # visibility O10-O13 gates were #567 part 3 — out of scope; dropped with the
-    # _O## fields, NOT reimplemented.)
-    ("Q121_DOH_LIC_DIFFICULT",      False, True, None),
+    # fires and the whole cluster is skipped to Q135.
+    #
+    # #385: per-option hospital-only / PCF-only visibility (#567 part 3) IS now
+    # re-established — not via per-option `noinput` (those fields no longer exist on a
+    # single Check Box), but via a dynamic value set swapped in Q121's preproc
+    # (spec §4.9 pattern). The two facility-specific value sets are defined on the field
+    # in generate_dcf.py: _PCF_VS1 drops the hospital-only options (codes 10/11/12),
+    # _HOSP_VS1 drops the PCF-only option (code 13); both keep 'None' (90). The gate is
+    # keyed on Q8_SERVICE_LEVEL (1 = Primary Care Facility; 2/3/4 = Level 1/2/3 Hospital).
+    # A PCF therefore never sees the hospital-only ticks and a hospital never sees the
+    # PCF-only tick, going forward — and on back-nav the value set is re-applied on
+    # preproc re-entry, so the irrelevant options stay hidden either direction.
+    ("Q121_DOH_LIC_DIFFICULT",      False, True,
+     "  { #385 facility-type-aware option visibility (spec §4.9) }\n"
+     "  if Q8_SERVICE_LEVEL = 1 then   { Primary Care Facility }\n"
+     "    setvalueset(Q121_DOH_LIC_DIFFICULT, Q121_DOH_LIC_DIFFICULT_PCF_VS1);\n"
+     "  else                           { Level 1/2/3 Hospital }\n"
+     "    setvalueset(Q121_DOH_LIC_DIFFICULT, Q121_DOH_LIC_DIFFICULT_HOSP_VS1);\n"
+     "  endif;"),
     # NOTE: Q122-134 are deliberately NOT listed here. Exactly like Q66-74 (gated by
     # Q65), the per-topic "why" Check Box fields get their full PROC — display gate
     # `pos("0N", Q121_DOH_LIC_DIFFICULT) = 0` + select->=1 + 'Other (specify)' gate —

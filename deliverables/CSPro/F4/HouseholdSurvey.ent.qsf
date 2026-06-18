@@ -2350,17 +2350,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>89.1. What is the name of the facility?</p><p class="instruction">Note to enumerator [do not read]: This section is for Access to a primary care provider. Ask all questions in this section unless a skip rule applies.</p>
+            <p>89.1. What is the name of the facility?</p>
           FIL: |
-            <p>Ano ang pangalan ng pasilidad?</p><p class="instruction">Note to enumerator [do not read]: This section is for Access to a primary care provider. Ask all questions in this section unless a skip rule applies.</p>
+            <p>Ano ang pangalan ng pasilidad?</p>
           BCL: |
-            <p>Anong ngaran kan pasilidad?</p><p class="instruction">Note to enumerator [do not read]: This section is for Access to a primary care provider. Ask all questions in this section unless a skip rule applies.</p>
+            <p>Anong ngaran kan pasilidad?</p>
           BIS: |
-            <p>Unsay ngalan sa pasilidad?</p><p class="instruction">Note to enumerator [do not read]: This section is for Access to a primary care provider. Ask all questions in this section unless a skip rule applies.</p>
+            <p>Unsay ngalan sa pasilidad?</p>
           CEB: |
-            <p>Unsa ang pangalan sa pasilidad?</p><p class="instruction">Note to enumerator [do not read]: This section is for Access to a primary care provider. Ask all questions in this section unless a skip rule applies.</p>
+            <p>Unsa ang pangalan sa pasilidad?</p>
           WAR: |
-            <p>Ano an ngaran han pasilidad?</p><p class="instruction">Note to enumerator [do not read]: This section is for Access to a primary care provider. Ask all questions in this section unless a skip rule applies.</p>
+            <p>Ano an ngaran han pasilidad?</p>
   - name: HOUSEHOLDSURVEY_DICT.Q90_IS_USUAL_FOR_GENERAL
     conditions:
       - questionText:
@@ -3381,6 +3381,21 @@ questions:
             <p>Sa imong pinakabag-o nga pagbisita, unsa sa mga bayranan ang pinakamahal?</p>
           WAR: |
             <p>Tikang han imo pinakabag-o nga pagbisita, hain ha mga pagbayad an pinakamahal?</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q138_MOST_EXPENSIVE_OTHER_TXT
+    conditions:
+      - questionText:
+          EN: |
+            <p>138. Most expensive charge — Other (specify) text</p>
+          FIL: |
+            <p>138. Most expensive charge — Other (specify) text</p>
+          BCL: |
+            <p>138. Most expensive charge — Other (specify) text</p>
+          BIS: |
+            <p>138. Most expensive charge — Other (specify) text</p>
+          CEB: |
+            <p>138. Most expensive charge — Other (specify) text</p>
+          WAR: |
+            <p>138. Most expensive charge — Other (specify) text</p>
   - name: HOUSEHOLDSURVEY_DICT.Q139_FINAL_AMOUNT_PHP
     conditions:
       - questionText:
@@ -3445,17 +3460,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)</p><p class="instruction">IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO RECEIPT WAS PROVIDED, READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)</p>
           FIL: |
-            <p>Mula sa iyong pinakahuling pagbisita, magkano ang siningil para sa mga serbisyong walang resibo na ibinigay (hal. professional fees)?</p><p class="instruction">IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO RECEIPT WAS PROVIDED, READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Mula sa iyong pinakahuling pagbisita, magkano ang siningil para sa mga serbisyong walang resibo na ibinigay (hal. professional fees)?</p>
           BCL: |
-            <p>Sa pinaka huri mong pagduman sa ospital, narumduman mo pa kun pira an saimong binayadan na warang tinaong resibo sa ibang serbisyo hal. Professional Fees</p><p class="instruction">IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO RECEIPT WAS PROVIDED, READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa pinaka huri mong pagduman sa ospital, narumduman mo pa kun pira an saimong binayadan na warang tinaong resibo sa ibang serbisyo hal. Professional Fees</p>
           BIS: |
-            <p>Base sa imong pinakaulahing pagbisita, pila ang gisingil para sa mga serbisyo nga walay resibo, sama sa professional fees?</p><p class="instruction">IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO RECEIPT WAS PROVIDED, READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Base sa imong pinakaulahing pagbisita, pila ang gisingil para sa mga serbisyo nga walay resibo, sama sa professional fees?</p>
           CEB: |
-            <p>Sa imong bag-o nga pagbisita, pila ang gibayran para sa mga serbisyo nga walay resibo nga gihatag sama sa Professional fees</p><p class="instruction">IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO RECEIPT WAS PROVIDED, READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Sa imong bag-o nga pagbisita, pila ang gibayran para sa mga serbisyo nga walay resibo nga gihatag sama sa Professional fees</p>
           WAR: |
-            <p>Tikang han iyo bag-o nga pagbisita, pira an ginsukot para han mga serbisyo nga waray mga resibo nga iginhatag. Mga bayad ha propesyon</p><p class="instruction">IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO RECEIPT WAS PROVIDED, READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY.</p>
+            <p>Tikang han iyo bag-o nga pagbisita, pira an ginsukot para han mga serbisyo nga waray mga resibo nga iginhatag. Mga bayad ha propesyon</p>
   - name: HOUSEHOLDSURVEY_DICT.Q142_RECALL_PAYMENT
     conditions:
       - questionText:
@@ -5436,141 +5451,36 @@ questions:
             <p>Unsa nga bahin sa binuwan nga kita sa inyong panimalay ang andam ninyong igahin para sa pag-atiman sa panglawas kung kini makapakunhod sa wala damha nga gasto sa medikal?</p>
           WAR: |
             <p>Ano nga bahin han binulan nga kita han iyo panimalay an iyo karuyag ig-bilin para ha pag-ataman han kahimsog kon makakaiban ito han diri ginlalaoman nga mga gastos ha medisina?</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q196_FOREGONE_O01
+  - name: HOUSEHOLDSURVEY_DICT.Q196_FOREGONE
     conditions:
       - questionText:
           EN: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Doctor/consultation visit</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?</p>
           FIL: |
-            <p>Pagbisita sa doktor / konsultasyon</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?</p>
           BCL: |
-            <p>Pagbisita sa doctor o consultation</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?</p>
           BIS: |
-            <p>Pagbisita sa doktor / konsultasyon</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?</p>
           CEB: |
-            <p>Bisita sa doktor/konsultasyon</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?</p>
           WAR: |
-            <p>Pagbisita ha doktor/konsultasyon</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q196_FOREGONE_O02
-    conditions:
-      - questionText:
-          EN: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Medicines or treatments</p>
-          FIL: |
-            <p>Mga gamot o gamutan</p>
-          BCL: |
-            <p>bulong o mga treatments</p>
-          BIS: |
-            <p>Mga tambal o treatment</p>
-          CEB: |
-            <p>Tambal o pagpatambal</p>
-          WAR: |
-            <p>Mga medisina o mga pagtambal</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q196_FOREGONE_O03
-    conditions:
-      - questionText:
-          EN: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Laboratory tests / diagnostics</p>
-          FIL: |
-            <p>Mga laboratory test / diagnostic</p>
-          BCL: |
-            <p>Laboratory tests / diagnostics</p>
-          BIS: |
-            <p>Laboratory tests / diagnostics</p>
-          CEB: |
-            <p>Laboratory tests / diagnostics</p>
-          WAR: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Laboratory tests / diagnostics</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q196_FOREGONE_O04
-    conditions:
-      - questionText:
-          EN: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Hospital admission / inpatient care</p>
-          FIL: |
-            <p>Pagpasok sa ospital / inpatient care</p>
-          BCL: |
-            <p>Hospital admission / inpatient care</p>
-          BIS: |
-            <p>Pagpa-admit sa ospital / inpatient care</p>
-          CEB: |
-            <p>Pagpa-admit sa ospital / inpatient care</p>
-          WAR: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Hospital admission / inpatient care</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q196_FOREGONE_O05
-    conditions:
-      - questionText:
-          EN: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Preventive care (e.g., vaccinations, check-ups)</p>
-          FIL: |
-            <p>Preventive care (hal. bakuna, check-up)</p>
-          BCL: |
-            <p>Preventive care (e.g., vaccinations, check-ups)</p>
-          BIS: |
-            <p>Preventive care (pananglitan: bakuna, check-up)</p>
-          CEB: |
-            <p>Preventive care (pananglitan, pagpabakuna, check-up)</p>
-          WAR: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Preventive care (e.g., vaccinations, check-ups)</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q196_FOREGONE_O06
-    conditions:
-      - questionText:
-          EN: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Dental care</p>
-          FIL: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Dental care</p>
-          BCL: |
-            <p>Dental care</p>
-          BIS: |
-            <p>Dental care</p>
-          CEB: |
-            <p>Dental care</p>
-          WAR: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Dental care</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q196_FOREGONE_O07
-    conditions:
-      - questionText:
-          EN: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (please specify)</p>
-          FIL: |
-            <p>Iba pa (pakispecify)</p>
-          BCL: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (please specify)</p>
-          BIS: |
-            <p>Uban pa (palihug ispecify)</p>
-          CEB: |
-            <p>Uban pa (palihug isulti)</p>
-          WAR: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (please specify)</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q196_FOREGONE_O08
-    conditions:
-      - questionText:
-          EN: |
-            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — We do not forego care</p>
-          FIL: |
-            <p>Hindi kami nagpapaliban o hindi tumitigil sa pagkuha ng pangangalagang pangkalusugan</p>
-          BCL: |
-            <p>Dai man kami kaan</p>
-          BIS: |
-            <p>Wala kami naglikay o nagpahunong sa pag-atiman</p>
-          CEB: |
-            <p>Dili mi maglikay sa pag-atiman</p>
-          WAR: |
-            <p>Diri namon gin-papabaya-an an pag-ataman</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?</p>
   - name: HOUSEHOLDSURVEY_DICT.Q196_FOREGONE_OTHER_TXT
     conditions:
       - questionText:
           EN: |
-            <p>196. Other (please specify) — text</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (specify) text</p>
           FIL: |
-            <p>196. Other (please specify) — text</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (specify) text</p>
           BCL: |
-            <p>196. Other (please specify) — text</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (specify) text</p>
           BIS: |
-            <p>196. Other (please specify) — text</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (specify) text</p>
           CEB: |
-            <p>196. Other (please specify) — text</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (specify) text</p>
           WAR: |
-            <p>196. Other (please specify) — text</p>
+            <p>196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (specify) text</p>
   - name: HOUSEHOLDSURVEY_DICT.Q197_DELAYED_CARE
     conditions:
       - questionText:
@@ -5661,49 +5571,34 @@ questions:
             <p>Unsa ka kabalaka bahin sa pinansyal nga kahimtang sa inyong panimalay sa sunod nga 1 ka bulan?</p>
           WAR: |
             <p>Mationan-o ka kabaraka ha panalapi han imo panimalay ha masunod nga 1 ka bulan?</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q202_WORRY_REASONS_O01
+  - name: HOUSEHOLDSURVEY_DICT.Q202_WORRY_REASONS
     conditions:
       - questionText:
           EN: |
-            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Loss of income</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?</p>
           FIL: |
-            <p>Pagkawala ng kita</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?</p>
           BCL: |
-            <p>Nawaraan ki kita</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?</p>
           BIS: |
-            <p>Pagkawala sa kita</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?</p>
           CEB: |
-            <p>Pagkawala sa kita</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?</p>
           WAR: |
-            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Loss of income</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q202_WORRY_REASONS_O02
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q202_WORRY_REASONS_OTHER_TXT
     conditions:
       - questionText:
           EN: |
-            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Healthcare costs related to coronavirus (COVID-19)</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Other (specify) text</p>
           FIL: |
-            <p>Gastusing pangkalusugan na may kaugnayan sa coronavirus (COVID-19)</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Other (specify) text</p>
           BCL: |
-            <p>An healthcare cost ay relates sa coronavirus (COVID-19)</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Other (specify) text</p>
           BIS: |
-            <p>Mga gasto sa healthcare nga may kalabutan sa coronavirus (COVID-19)</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Other (specify) text</p>
           CEB: |
-            <p>Gasto sa pag-atiman sa panglawas nga may kalabotan sa coronavirus (COVID-19)</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Other (specify) text</p>
           WAR: |
-            <p>Mga gastos ha pag-ataman han panlawas nga may kalabutan ha coronavirus (COVID-19)</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q202_WORRY_REASONS_O03
-    conditions:
-      - questionText:
-          EN: |
-            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)</p>
-          FIL: |
-            <p>Gastusing pangkalusugan na HINDI kaugnay ng coronavirus (COVID-19) (kabilang ang paggamot sa iba pang sakit, karamdaman, pinsala, o sintomas)</p>
-          BCL: |
-            <p>An healthcare cost ay bako related sa coronavirus (COVID-19) (kasabay an iba pang disease, hilang, injuries o kaya iba pang symptomas)</p>
-          BIS: |
-            <p>Mga gasto sa healthcare nga dili kalabutan sa coronavirus (COVID-19) (lakip ang pagtambal sa ubang sakit, balatian, kadaot, o sintomas)</p>
-          CEB: |
-            <p>Gasto sa pag-atiman sa panglawas nga WALAY kalabotan sa coronavirus (COVID-19) (apil ang pagtambal sa ubang mga sakit, balatian, samad, o sintomas)</p>
-          WAR: |
-            <p>Mga gastos ha pag-ataman han panlawas nga WARAY kalabutan han coronavirus (COVID-19) (lakip an pagtambal han iba nga mga sakit, balatian, samad, o sintomas)</p>
+            <p>202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Other (specify) text</p>
 ...

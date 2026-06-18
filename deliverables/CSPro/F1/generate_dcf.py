@@ -799,9 +799,34 @@ def build_section_f():
                             Q119_WHEN))
     items.append(select_one("Q120_LIC_DAYS",
                             "120. How many days did it take you to receive the license?", Q120_DAYS))
+    # #385: Q121 is now a single Check Box field, but its options are facility-type
+    # specific (confirmed against the printed F1 questionnaire & spec §4.9):
+    #   - codes 10/11/12 (National laws & DOH issuances, Emergency cart contents,
+    #     Add-on services) are HOSPITAL-ONLY  -> hide for a PCF (Q8_SERVICE_LEVEL = 1)
+    #   - code 13 (Public access to price information) is PCF-ONLY -> hide for a hospital
+    #   - code 90 (None of the above) is the exclusive option -> keep in BOTH sets.
+    # Because Q121 is one Check Box (no per-option _O## fields to `noinput`), the correct
+    # CSPro pattern is a dynamic value set swapped at Q121's preproc via setvalueset()
+    # keyed on Q8_SERVICE_LEVEL (the apc gate lives in generate_apc.py's CHECKBOX_CONVERT_A).
+    # We keep the default _VS1 (all 14 options) as valueSets[0] so the field length (28)
+    # and verify_questions' first-value-set scan are unchanged, and append two
+    # facility-specific value sets the apc selects between.
+    _q121_coded = _cb_codes(Q121_DIFFICULT)
+    Q121_HOSPITAL_ONLY = {"10", "11", "12"}   # National laws, Emergency cart, Add-on services
+    Q121_PCF_ONLY = {"13"}                     # Public access to price information
     items.extend(checkbox_multiselect("Q121_DOH_LIC_DIFFICULT",
                             "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
-                            _cb_codes(Q121_DIFFICULT), with_other_txt=False))
+                            _q121_coded, with_other_txt=False))
+    _q121_field = items[-1]   # the Check Box alpha field checkbox_multiselect just appended
+    _q121_label = "121. Which of the following requirements were difficult to comply with in the DOH licensing process?"
+    # PCF set: drop the hospital-only options (10/11/12); keep PCF-only (13) + exclusive (90).
+    _q121_field["valueSets"].append(_value_set(
+        "Q121_DOH_LIC_DIFFICULT_PCF", _q121_label,
+        [(t, c) for t, c in _q121_coded if c not in Q121_HOSPITAL_ONLY]))
+    # Hospital set: drop the PCF-only option (13); keep hospital-only (10/11/12) + exclusive (90).
+    _q121_field["valueSets"].append(_value_set(
+        "Q121_DOH_LIC_DIFFICULT_HOSP", _q121_label,
+        [(t, c) for t, c in _q121_coded if c not in Q121_PCF_ONLY]))
     # Q122-Q134 = thirteen "why difficult for X" Check Box multi-selects, gated on Q121.
     Q122_134_TOPICS = [
         ("Q122_WHY_DIFF_PT_RIGHTS",  "122. Why was it difficult to comply with the following? Patient rights and organization ethics"),

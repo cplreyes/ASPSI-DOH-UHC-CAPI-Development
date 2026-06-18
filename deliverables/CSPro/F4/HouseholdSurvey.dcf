@@ -18562,39 +18562,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Don't know the difference",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi alam ang pagkakaiba",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dai ko aram na may pagkakaiba palan",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Wala kahibalo sa kalainan",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Wala kahibalo sa kalahian",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire maaram an pag kakaiba",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "4"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "Not applicable",
                           "language": "EN"
                         },
@@ -18658,7 +18625,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 16,
+              "length": 14,
               "valueSets": [
                 {
                   "name": "Q77_WHY_GENERIC_VS1",
@@ -18890,39 +18857,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Not applicable",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi naaangkop",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae angkop",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili applicable",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili angay",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire aplikado",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "Other (Specify)",
                           "language": "EN"
                         },
@@ -19017,7 +18951,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 16,
+              "length": 14,
               "valueSets": [
                 {
                   "name": "Q78_WHY_BRANDED_VS1",
@@ -19243,39 +19177,6 @@
                       "pairs": [
                         {
                           "value": "90"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Not applicable",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi naaangkop",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae angkop",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili applicable",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili angay",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire aplikado",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "06"
                         }
                       ]
                     },
@@ -31694,39 +31595,6 @@
                     {
                       "labels": [
                         {
-                          "text": "I don't know",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi ko alam",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dai ko aram",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Wala kabalo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Wala ko kahibalo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire ako maaram",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "90"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "No cash payment required upon discharge",
                           "language": "EN"
                         },
@@ -31760,39 +31628,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Other (Specify)",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iba pa (tukuyin)",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Other (Specify)",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Other (Specify)",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Uban pa (Isulti)",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Iba pa (ispecify)",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "99"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "Applies only to certain patients or hospitals",
                           "language": "EN"
                         },
@@ -31820,6 +31655,72 @@
                       "pairs": [
                         {
                           "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi ko alam",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dai ko aram",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala kabalo",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala ko kahibalo",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Dire ako maaram",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "90"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other (Specify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other (Specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (Isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
                         }
                       ]
                     }
@@ -33137,39 +33038,6 @@
                     {
                       "labels": [
                         {
-                          "text": "I don't know",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi ko alam",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dai ko aram",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Wala kabalo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Wala ko kahibalo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire ako maaram",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "90"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "No cash payment required upon discharge",
                           "language": "EN"
                         },
@@ -33203,39 +33071,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Other (Specify)",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Iba pa (tukuyin)",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Other (Specify)",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Other (Specify)",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Uban pa (Isulti)",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Iba pa (ispecify)",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "99"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "Applies only to certain patients or hospitals",
                           "language": "EN"
                         },
@@ -33263,6 +33098,72 @@
                       "pairs": [
                         {
                           "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi ko alam",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dai ko aram",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala kabalo",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala ko kahibalo",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Dire ako maaram",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "90"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other (Specify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other (Specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (Isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
                         }
                       ]
                     }
@@ -34180,10 +34081,74 @@
                           "value": "4"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other (Specify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other (Specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (Isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "9"
+                        }
+                      ]
                     }
                   ]
                 }
               ]
+            },
+            {
+              "name": "Q138_MOST_EXPENSIVE_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "138. Most expensive charge \u2014 Other (specify) text",
+                  "language": "EN"
+                },
+                {
+                  "text": "138. Most expensive charge \u2014 Other (specify) text",
+                  "language": "FIL"
+                },
+                {
+                  "text": "138. Most expensive charge \u2014 Other (specify) text",
+                  "language": "BCL"
+                },
+                {
+                  "text": "138. Most expensive charge \u2014 Other (specify) text",
+                  "language": "BIS"
+                },
+                {
+                  "text": "138. Most expensive charge \u2014 Other (specify) text",
+                  "language": "CEB"
+                },
+                {
+                  "text": "138. Most expensive charge \u2014 Other (specify) text",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
             },
             {
               "name": "Q139_FINAL_AMOUNT_PHP",
@@ -45854,7 +45819,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 6,
+              "length": 8,
               "valueSets": [
                 {
                   "name": "Q202_WORRY_REASONS_VS1",
@@ -45983,10 +45948,74 @@
                           "value": "03"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (Specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other (Specify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other (Specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (Isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
                     }
                   ]
                 }
               ]
+            },
+            {
+              "name": "Q202_WORRY_REASONS_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Other (specify) text",
+                  "language": "EN"
+                },
+                {
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Other (specify) text",
+                  "language": "FIL"
+                },
+                {
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Other (specify) text",
+                  "language": "BCL"
+                },
+                {
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Other (specify) text",
+                  "language": "BIS"
+                },
+                {
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Other (specify) text",
+                  "language": "CEB"
+                },
+                {
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Other (specify) text",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
             }
           ]
         }

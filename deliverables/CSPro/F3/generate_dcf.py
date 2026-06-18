@@ -238,6 +238,7 @@ def build_section_b():
         ("400,000 - 449,999", "09"),
         ("450,000 - 499,999", "10"),
         ("500,000 and above", "11"),
+        ("Don't know",        "99"),   # #398: respondent doesn't know even the estimate; out-of-range so the bracket<->amount + SEC cross-checks bypass it
     ]
     Q23_WATER = [
         ("Faucet inside the house", "1"),
@@ -584,7 +585,8 @@ def build_section_e():
         ("Specialty Care Provider/ Specialist",     "2"),
         ("Both",                                    "3"),
         ("Other (specify)",                         "4"),
-        ("None",                                    "5"),
+        # #412: 'None' removed — Q53=No (no PCP) already skips Q54 (SKIP_RULES: Q53_HAS_PCP=2
+        # -> Q63), so a 'None' here only invited data inconsistency (PCP-type=None vs Q53=Yes).
     ]
     COMM_MODES = [
         ("Face-to-face",      "1"),
@@ -670,7 +672,8 @@ def build_section_e():
     Q77_KON_REGISTERED = [
         ("Yes",                         "1"),
         ("No",                          "2"),  # proceed to Q82
-        ("I've never heard of it",      "3"),  # proceed to Q83
+        # #430: 'I've never heard of it' (3) removed — Q77 is only reached when Q74=Yes (has
+        # heard of YAKAP/Konsulta); the not-heard path is already routed by Q74=No -> Q83.
         ("I don't know",                "4"),  # proceed to Q83
     ]
     Q78_WHEN_REG = [
@@ -852,6 +855,7 @@ def build_section_f():
         ("Had any minor procedure/surgery done",                                              "08"),
         ("Picked up medical certificate/other administration",                                "09"),
         ("Was admitted for confinement",                                                      "10"),
+        ("Other (Specify)",                                                                   "99"),   # #438: none-of-the-above escape (e.g. came for a consult but couldn't see the doctor)
     ]
     Q87_OTHER_ACTIONS = [
         ("Visited other healthcare facility",                                                 "1"),
@@ -882,7 +886,7 @@ def build_section_f():
                     _cb_codes(Q85_CONDITIONS), with_other_txt=True),
         *checkbox_multiselect("Q86_VISIT_EVENTS",   # #673: select_all -> Check Box (tick-all)
                     "86. Which of the following happened during the patient's most recent visit?",
-                    _cb_codes(Q86_VISIT_EVENTS)),
+                    _cb_codes(Q86_VISIT_EVENTS), with_other_txt=True),   # #438: + 'Other (Specify)'
         *checkbox_multiselect("Q87_OTHER_ACTIONS",   # #673: select_all -> Check Box (tick-all)
                     "87. Apart from this visit, has the patient done anything else to improve "
                     "his/her health condition or address his/her health concern?",
@@ -1362,6 +1366,11 @@ def build_section_i():
         ("Laboratory",         "2"),
         ("Professional Fees",  "3"),
         ("Accommodation",      "4"),
+        # #481: codes below are remapped by _cb_codes for the Check Box conversion
+        # ('None' -> exclusive 90, 'Other (specify)' -> 99); the literal codes here
+        # are placeholders the conversion overwrites.
+        ("None",               "5"),   # nothing paid out-of-pocket -> exclusive (90)
+        ("Other (specify)",    "6"),   # -> 99 with a gated _OTHER_TXT
     ]
     Q129_WHY_NO_MAIFIP = [
         ("Not eligible",                            "1"),
@@ -1409,9 +1418,9 @@ def build_section_i():
                "126. Did you avail of MAIFIP in this last confinement?"),
         yes_no("Q127_MAIFIP_OOP",
                "127. If you availed MAIFIP, did you have to make any out-of-pocket payment?"),
-        *select_all("Q128_MAIFIP_OOP_ITEMS",
+        *checkbox_multiselect("Q128_MAIFIP_OOP_ITEMS",   # #481: select_all -> Check Box (tick-all)
                     "128. Which items did you have to pay for out-of-pocket?",
-                    Q128_OOP_ITEMS),
+                    _cb_codes(Q128_OOP_ITEMS), with_other_txt=True),
         *select_all("Q129_WHY_NO_MAIFIP",
                     "129. Why did you not avail of MAIFIP during this last confinement?",
                     Q129_WHY_NO_MAIFIP),
@@ -1567,6 +1576,10 @@ def build_section_k():
         ("Received from LGU for free",                 "6"),
         ("Received from public hospital for free",     "7"),
         ("Received from private hospital for free",    "8"),
+        # #500: escape for respondents who obtained ALL their medicines from GAMOT, so there
+        # is no "rest" to source elsewhere. Worded as 'None…' so _cb_codes maps it to the
+        # exclusive code 90 (can't be ticked alongside a real source).
+        ("None — got all medicines from the GAMOT Package", "10"),
         ("Other (Specify)",                            "9"),
     ]
     Q159_BRANDED_GENERIC = [
@@ -1754,7 +1767,8 @@ def build_section_l():
         ("Neither Satisfied nor Dissatisfied","3"),
         ("Dissatisfied",                      "4"),
         ("Very Dissatisfied",                 "5"),
-        ("Not applicable",                    "6"),
+        # #514: 'Not applicable' (6) removed — Q178 is only reached when there WAS a referral
+        # (Q162=Yes gates Section L), so the referral-satisfaction question always applies.
     ]
     items = [
         yes_no("Q162_REFERRED",

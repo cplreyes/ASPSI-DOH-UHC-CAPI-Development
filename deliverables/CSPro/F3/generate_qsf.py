@@ -162,7 +162,7 @@ INSTRUCTIONS = {
     **dict.fromkeys([36, 37, 46, 65, 67, 76, 101, 117, 118, 120, 121, 125,
                      171, 177], _DNR_ALL),
     **dict.fromkeys([153, 154, 155, 156], _GAMOT_AREA),
-    97: _RECEIPT,  # #559: dropped 114 — Q114 (why no PhilHealth) is a reasons select-all, the receipt/amount note does not belong there (not on the paper questionnaire).
+    971: _RECEIPT,  # #455: the receipt/"select all that apply" note belongs on Q97.1 (the Q971_* bill-items battery), NOT on Q97 (Q97_FINAL_AMOUNT, a single cash figure). Re-keyed 97 -> 971 so _QNUM attaches it to the Q971_* fields. (#559: also not on Q114, a reasons select-all.)
     **dict.fromkeys([14], _PWD_CARD),
     4: ("Note to enumerator [do not read]: This section is for the Patient "
         "Profile. Ask all questions in this section unless a skip rule applies."),

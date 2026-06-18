@@ -34837,6 +34837,964 @@
                       ]
                     }
                   ]
+                },
+                {
+                  "name": "Q121_DOH_LIC_DIFFICULT_PCF_VS1",
+                  "labels": [
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "WAR"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "HIL"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Patient care",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Leadership and management",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Human resource management",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Information management",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Improving performance",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Physical plant",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Public access to price information (PCF only)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Public access to price information (PCF only)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Public access to price information (PCF only)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Public access to price information (PCF only)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Public access to price information (PCF only)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Public access to price information (PCF only)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Public access to price information (PCF only)",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "13"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None of the above",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "90"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Q121_DOH_LIC_DIFFICULT_HOSP_VS1",
+                  "labels": [
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "WAR"
+                    },
+                    {
+                      "text": "121. Which of the following requirements were difficult to comply with in the DOH licensing process?",
+                      "language": "HIL"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Patient rights and organization ethics",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Patient care",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Patient care",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Leadership and management",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Leadership and management",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Human resource management",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Human resource management",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Information management",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Information management",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Safe practice and environment",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Improving performance",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Improving performance",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Physical plant",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Physical plant",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Equipment and instruments",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "National laws and DOH issuances (hospitals only)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "National laws and DOH issuances (hospitals only)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "National laws and DOH issuances (hospitals only)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "National laws and DOH issuances (hospitals only)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "National laws and DOH issuances (hospitals only)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "National laws and DOH issuances (hospitals only)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "National laws and DOH issuances (hospitals only)",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Emergency cart contents (hospitals only)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Emergency cart contents (hospitals only)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Emergency cart contents (hospitals only)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Emergency cart contents (hospitals only)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Emergency cart contents (hospitals only)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Emergency cart contents (hospitals only)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Emergency cart contents (hospitals only)",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "11"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Add-on services (hospitals only)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Add-on services (hospitals only)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Add-on services (hospitals only)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Add-on services (hospitals only)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Add-on services (hospitals only)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Add-on services (hospitals only)",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "Add-on services (hospitals only)",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "12"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None of the above",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "WAR"
+                        },
+                        {
+                          "text": "None of the above",
+                          "language": "HIL"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "90"
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             },

@@ -53,6 +53,15 @@ CUSTOM_VALIDATION = [
      "PROC Q138_MOST_EXPENSIVE\npreproc\n"
      "  if Q129_HH_CONFINED <> 1 then   { bill-recall (Q138-143) is for confined HHs only }\n"
      "    skip to Q144_CEREALS_CONSUMED;\n  endif;"),
+    # #644: Q73 (GAMOT meds list) is REQUIRED when reached. Spec F4-Skip-Logic-and-
+    # Validations.md line 408: "Required when enabled, non-blank; HARD". Q73 is only
+    # reached when Q72=Yes (Q72=No skips Q73 -> Q74), so a plain non-blank postproc check
+    # is sufficient — if blank, errmsg + reenter.
+    ("Q73_GAMOT_MEDS_LIST",
+     "PROC Q73_GAMOT_MEDS_LIST\npostproc\n"
+     "  if length(strip(Q73_GAMOT_MEDS_LIST)) = 0 then\n"
+     "    errmsg(\"Q72 says medicines were obtained from the GAMOT Package. Please list at least one medicine in Q73 before continuing.\");\n"
+     "    reenter;\n  endif;"),
 ]
 
 HERE = Path(__file__).parent
@@ -357,6 +366,19 @@ postproc
     reenter;
   endif;
 
+PROC Q194_OTHER_SOURCE
+postproc
+  { #684: Q186-Q194 are nine independent Yes/No funding-source flags with no aggregate
+    check, so an all-'No' battery passes silently. A household that incurred health
+    expenses must have funded them somehow -> require at least one 'Yes'. Fires on the
+    last flag (Q194) so the whole battery is entered before the check. }
+  if Q186_CURRENT_INCOME = 2 and Q187_SAVINGS = 2 and Q188_SOLD_ASSETS = 2
+     and Q189_BORROW_FAMILY = 2 and Q190_BORROW_INST = 2 and Q191_REMITTANCE = 2
+     and Q192_GOVT_ASSIST = 2 and Q193_LGU_DONATION = 2 and Q194_OTHER_SOURCE = 2 then
+    errmsg("No funding source selected (Q186-Q194 are all 'No'). At least one source must be 'Yes' - how did the household pay for the health expenses? Please review.");
+    reenter;
+  endif;
+
 PROC Q194_OTHER_TXT
 preproc
   if Q194_OTHER_SOURCE <> 1 then
@@ -372,10 +394,12 @@ postproc
 { ---- Section G: branded/generic multi-branch (spec 2 Q76) ---- }
 PROC Q76_BRAND_OR_GEN
 postproc
-  { Q76 codes: 1 Branded / 2 Generic / 3 Both / 4 Don't know / 9 Not applicable.
+  { Q76 codes: 1 Branded / 2 Generic / 3 Both / 9 Not applicable.
+    (#646: 'Don't know the difference' code 4 removed — it contradicted Q75=Yes.
+    Its exit path is now carried solely by code 9.)
     Q77 (why-generic) asked for Generic+Both; Q78 (why-branded) for Branded+Both. (#536/#540) }
-  if Q76_BRAND_OR_GEN = 1    then  skip to Q78_WHY_BRANDED; endif;  { Branded only -> why-branded (skip Q77) }
-  if Q76_BRAND_OR_GEN in 4,9 then  skip to Q79_REG_SOURCE;  endif;  { Don't know (4) / Not applicable (9) -> exit Section G }
+  if Q76_BRAND_OR_GEN = 1 then  skip to Q78_WHY_BRANDED; endif;  { Branded only -> why-branded (skip Q77) }
+  if Q76_BRAND_OR_GEN = 9 then  skip to Q79_REG_SOURCE;  endif;  { Not applicable (9) -> exit Section G }
   { Generic (2) or Both (3) fall through to Q77 why-generic }
 
 { Q78_WHY_BRANDED is now a Check Box base (#578) — its branded-only preproc gate
@@ -459,9 +483,10 @@ CHECKBOX_CONVERT = [
     ("Q85_BENEFITS",             True,  True,  None),   # 'I don't know' (90) exclusive ('no benefits to being a member' stays an 01.. option, mirroring F3 Q46); 'Other (Specify)' (99)
     ("Q91_WHY_WENT",             True,  False, None),   # no None/IDK option; 'Other (Specify)' (99)
     ("Q93_WHY_NOT",              True,  True,
-     "  { #624: Q93 (why NO usual facility) only applies when Q89=No; the Q89=Yes/Q90=No path\n"
-     "    (Q91 -> Q92) falls through to here, so skip Q93. }\n"
-     "  if Q89_HAS_USUAL_FACILITY <> 2 then\n"
+     "  { #624/#650: Q93 (why NO usual facility) applies when Q89=No(2) OR Q89=I-don't-know(3)\n"
+     "    -- both mean no established usual facility. The Q89=Yes/Q90=No path (Q91 -> Q92)\n"
+     "    falls through to here, so skip Q93 for everyone EXCEPT the Q89 No/IDK respondents. }\n"
+     "  if Q89_HAS_USUAL_FACILITY <> 2 and Q89_HAS_USUAL_FACILITY <> 3 then\n"
      "    skip to Q94_TRANSPORT;\n"
      "  endif;"),                                 # 'I don't know' (90) exclusive — NOT 'I don't know where to go for care' (05); 'Other (Specify)' (99)
     ("Q94_TRANSPORT",            True,  False, None),   # no None/IDK option; 'Other (Specify)' (99)
@@ -491,7 +516,7 @@ CHECKBOX_CONVERT = [
     ("Q141_BILL_ITEMS",          False, False, None),   # #615: 'Other expenses' (07) is NOT a 'specif' option (no 99 gate); ungated Q141_BILL_ITEMS_OTHER_TXT kept as plain alpha
     ("Q143_HOW_PAID",            True,  False, None),   # #616: 'Other (Specify)' (10->99); no None/IDK exclusive; reached via Q142=Yes (Q142=No skips to Q144)
     ("Q196_FOREGONE",            True,  False, None),   # #638: 'Other (please specify)' (99); 'We do not forego care' (07) stays ordinary (no 90 exclusive). Reached only when Q195=None (#637 skip routes other Q195 answers to Q197)
-    ("Q202_WORRY_REASONS",       False, False, None),   # #668: 3 reasons, no Other / no None-IDK -> plain tick-all
+    ("Q202_WORRY_REASONS",       True,  False, None),   # #668: 3 reasons + #686 'Other (Specify)' (99, has_other) -> emit gated _OTHER_TXT; no None/IDK exclusive
 ]
 
 
@@ -691,7 +716,10 @@ SKIP_RULES = [
     # sourced them outside GAMOT). Was -> Q75 (skipped Q73+Q74); spec doc said Q75 but ASPSI
     # confirmed Q74 is the intended target. Q74 -> Q75 chains on naturally afterwards.
     ("Q72_GAMOT_OBTAINED",   "Q72_GAMOT_OBTAINED = 2",      "Q74_WHERE_REST"),
-    ("Q75_BRAND_GEN_KNOWS",  "Q75_BRAND_GEN_KNOWS = 2",     "Q79_REG_SOURCE"),    # exit Section G
+    # #538: REMOVED the Q75=No -> Q79 skip. Q75 ("know branded vs generic difference?") = No
+    # must now fall through to Q76 (was wrongly exiting Section G). Q76 still terminates the
+    # section on its own (PROC Q76_BRAND_OR_GEN: code 9 'Not applicable' -> Q79; Branded ->
+    # Q78; Generic/Both -> Q77 -> Q78 -> Q79). No replacement skip needed — natural fall-through.
     # Section H — PhilHealth / Insurance
     ("Q81_REG_DIFFICULTY",   "Q81_REG_DIFFICULTY = 2",      "Q83_KNOWS_ASSIST"),
     ("Q83_KNOWS_ASSIST",     "Q83_KNOWS_ASSIST = 2",        "Q85_BENEFITS"),   # #529: Q85 is now a Check Box base (was _O01)
@@ -705,7 +733,12 @@ SKIP_RULES = [
     ("Q57_BUCAS_HEARD",      "Q57_BUCAS_HEARD = 2",         "Q62_PURCHASE_FREQ"),
     ("Q60_BUCAS_ACCESSED",   "Q60_BUCAS_ACCESSED = 2",      "Q62_PURCHASE_FREQ"),
     # Section I primary-care routing
-    ("Q89_HAS_USUAL_FACILITY","Q89_HAS_USUAL_FACILITY = 2", "Q93_WHY_NOT"),       # #529: Q93 is now a Check Box base (was _O01)
+    # #650: Q89 (yes_no_dk) — route 'I don't know' (3) the SAME as 'No' (2): both mean
+    # the respondent has no established usual facility, so jump to Q93 (why-not) and skip
+    # Q90-Q92 / Q89.1 (which assume a Yes/known facility). Keeps the IDK option but stops it
+    # falling through to questions that presume a usual facility. (The Q93 preproc gate below
+    # is widened to admit the IDK path too, so Q93 is actually shown.)
+    ("Q89_HAS_USUAL_FACILITY","Q89_HAS_USUAL_FACILITY = 2 or Q89_HAS_USUAL_FACILITY = 3", "Q93_WHY_NOT"),  # #529/#650: Q93 is a Check Box base (was _O01)
     ("Q90_IS_USUAL_FOR_GENERAL","Q90_IS_USUAL_FOR_GENERAL = 1","Q94_TRANSPORT"),  # #529: Q94 is now a Check Box base (was _O01)
     # #654: REMOVED the Q97=No -> Q100 skip. Q97 ("do you know how to book/access care")
     # is independent of Q98/Q99 (phone-advice availability when the facility is open/closed);
@@ -1001,6 +1034,7 @@ def main():
                "Q1_IS_HH_HEAD",  # EXTRA_PROCS (#520 soft confirm)
                "Q76_BRAND_OR_GEN", "Q79_REG_SOURCE",  # EXTRA_PROCS (Q78_WHY_BRANDED now a Check Box base, covered via CHECKBOX_COVERED)
                "Q112_VISITED",  # EXTRA_PROCS (#590-593 Q112 referral-visit multi-branch)
+               "Q194_OTHER_SOURCE",  # EXTRA_PROCS (#684 >=1 funding-source aggregate check)
                "Q2_BIRTH_MONTH", "Q2_BIRTH_YEAR", "Q2_1_AGE", "Q19_HH_SIZE_TOTAL",
                "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q32_AGE", "Q39_CIVIL_STATUS",
                "Q18_INCOME_BRACKET",  # VALIDATION_PROCS

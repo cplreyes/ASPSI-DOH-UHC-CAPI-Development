@@ -244,7 +244,7 @@ Item=Q82_KON_WHY_NOT_REG_OTHER_TXT
 Name=FORM010
 Label=F. Health-Seeking
 Level=1
-Size=806,337
+Size=806,367
   
 Item=Q83_VISIT_REASON
 Item=Q83_VISIT_REASON_OTHER_TXT
@@ -253,6 +253,7 @@ Item=Q84_SERVICE_TYPE_OTHER_TXT
 Item=Q85_CONDITIONS
 Item=Q85_CONDITIONS_OTHER_TXT
 Item=Q86_VISIT_EVENTS
+Item=Q86_VISIT_EVENTS_OTHER_TXT
 Item=Q87_OTHER_ACTIONS
 Item=Q87_OTHER_ACTIONS_OTHER_TXT
   
@@ -508,7 +509,7 @@ Item=Q1142_OTHER_TXT
 Name=FORM013
 Label=I. Financial Risk
 Level=1
-Size=806,847
+Size=806,787
   
 Item=Q116_NBB_HEARD
 Item=Q117_NBB_SOURCE
@@ -527,10 +528,8 @@ Item=Q125_MAIFIP_SOURCE
 Item=Q125_MAIFIP_SOURCE_OTHER_TXT
 Item=Q126_MAIFIP_AVAILED
 Item=Q127_MAIFIP_OOP
-Item=Q128_MAIFIP_OOP_ITEMS_O01
-Item=Q128_MAIFIP_OOP_ITEMS_O02
-Item=Q128_MAIFIP_OOP_ITEMS_O03
-Item=Q128_MAIFIP_OOP_ITEMS_O04
+Item=Q128_MAIFIP_OOP_ITEMS
+Item=Q128_MAIFIP_OOP_ITEMS_OTHER_TXT
 Item=Q129_WHY_NO_MAIFIP_O01
 Item=Q129_WHY_NO_MAIFIP_O02
 Item=Q129_WHY_NO_MAIFIP_O03
@@ -3175,27 +3174,40 @@ Text=86. Which of the following happened during the patient's most recent visit?
  
   
 [Field]
+Name=Q86_VISIT_EVENTS_OTHER_TXT
+Position=350,237,760,257
+Item=Q86_VISIT_EVENTS_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=11
+  
+[Text]
+Position=50,240,330,256
+Text=86. Which of the following happened during the patient's most recent visit? — Other (specify) text
+ 
+  
+[Field]
 Name=Q87_OTHER_ACTIONS
-Position=350,237,365,257
+Position=350,267,365,287
 Item=Q87_OTHER_ACTIONS,PATIENTSURVEY_DICT
 DataCaptureType=CheckBox
 Form=11
   
 [Text]
-Position=50,240,330,256
+Position=50,270,330,286
 Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern?
  
   
 [Field]
 Name=Q87_OTHER_ACTIONS_OTHER_TXT
-Position=350,267,760,287
+Position=350,297,760,317
 Item=Q87_OTHER_ACTIONS_OTHER_TXT,PATIENTSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,270,330,286
+Position=50,300,330,316
 Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Other (specify) text
  
   
@@ -3250,7 +3262,7 @@ Length=1
   
 [Block]
 Name=DG_BLK_92
-Label=Q87
+Label=Q86
 DisplayTogether=Yes
 Position=14
 Length=1
@@ -3260,6 +3272,13 @@ Name=DG_BLK_93
 Label=Q87
 DisplayTogether=Yes
 Position=16
+Length=1
+  
+[Block]
+Name=DG_BLK_94
+Label=Q87
+DisplayTogether=Yes
+Position=18
 Length=1
   
 [EndGroup]
@@ -4531,623 +4550,623 @@ Text=104. Without BUCAS — Others specify text
  
   
 [Block]
-Name=DG_BLK_94
+Name=DG_BLK_95
 Label=Q88
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_95
+Name=DG_BLK_96
 Label=Q88
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_96
+Name=DG_BLK_97
 Label=Q89
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_97
+Name=DG_BLK_98
 Label=Q90
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_98
+Name=DG_BLK_99
 Label=Q90
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_99
+Name=DG_BLK_100
 Label=Q91-Q92
 DisplayTogether=Yes
 Position=10
 Length=2
   
 [Block]
-Name=DG_BLK_100
+Name=DG_BLK_101
 Label=Q92
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_101
+Name=DG_BLK_102
 Label=Q92
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_102
+Name=DG_BLK_103
 Label=Q92
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_103
+Name=DG_BLK_104
 Label=Q92
 DisplayTogether=Yes
 Position=19
 Length=5
   
 [Block]
-Name=DG_BLK_104
+Name=DG_BLK_105
 Label=Q92
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_105
+Name=DG_BLK_106
 Label=Q93
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_106
+Name=DG_BLK_107
 Label=Q93
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_107
+Name=DG_BLK_108
 Label=Q94
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_108
+Name=DG_BLK_109
 Label=Q94
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_109
+Name=DG_BLK_110
 Label=Q94
 DisplayTogether=Yes
 Position=35
 Length=5
   
 [Block]
-Name=DG_BLK_110
+Name=DG_BLK_111
 Label=Q94
 DisplayTogether=Yes
 Position=41
 Length=2
   
 [Block]
-Name=DG_BLK_111
+Name=DG_BLK_112
 Label=Q95
 DisplayTogether=Yes
 Position=44
 Length=1
   
 [Block]
-Name=DG_BLK_112
+Name=DG_BLK_113
 Label=Q96
 DisplayTogether=Yes
 Position=46
 Length=1
   
 [Block]
-Name=DG_BLK_113
+Name=DG_BLK_114
 Label=Q96
 DisplayTogether=Yes
 Position=48
 Length=1
   
 [Block]
-Name=DG_BLK_114
+Name=DG_BLK_115
 Label=Q96
 DisplayTogether=Yes
 Position=50
 Length=5
   
 [Block]
-Name=DG_BLK_115
+Name=DG_BLK_116
 Label=Q96
 DisplayTogether=Yes
 Position=56
 Length=1
   
 [Block]
-Name=DG_BLK_116
+Name=DG_BLK_117
 Label=Q96
 DisplayTogether=Yes
 Position=58
 Length=1
   
 [Block]
-Name=DG_BLK_117
+Name=DG_BLK_118
 Label=Q96
 DisplayTogether=Yes
 Position=60
 Length=1
   
 [Block]
-Name=DG_BLK_118
+Name=DG_BLK_119
 Label=Q96
 DisplayTogether=Yes
 Position=62
 Length=1
   
 [Block]
-Name=DG_BLK_119
+Name=DG_BLK_120
 Label=Q97
 DisplayTogether=Yes
 Position=64
 Length=2
   
 [Block]
-Name=DG_BLK_120
+Name=DG_BLK_121
 Label=Q97
 DisplayTogether=Yes
 Position=67
 Length=1
   
 [Block]
-Name=DG_BLK_121
+Name=DG_BLK_122
 Label=Q97
 DisplayTogether=Yes
 Position=69
 Length=1
   
 [Block]
-Name=DG_BLK_122
+Name=DG_BLK_123
 Label=Q97
 DisplayTogether=Yes
 Position=71
 Length=1
   
 [Block]
-Name=DG_BLK_123
+Name=DG_BLK_124
 Label=Q97
 DisplayTogether=Yes
 Position=73
 Length=1
   
 [Block]
-Name=DG_BLK_124
+Name=DG_BLK_125
 Label=Q97
 DisplayTogether=Yes
 Position=75
 Length=1
   
 [Block]
-Name=DG_BLK_125
+Name=DG_BLK_126
 Label=Q97
 DisplayTogether=Yes
 Position=77
 Length=1
   
 [Block]
-Name=DG_BLK_126
+Name=DG_BLK_127
 Label=Q97
 DisplayTogether=Yes
 Position=79
 Length=1
   
 [Block]
-Name=DG_BLK_127
+Name=DG_BLK_128
 Label=Q97
 DisplayTogether=Yes
 Position=81
 Length=1
   
 [Block]
-Name=DG_BLK_128
+Name=DG_BLK_129
 Label=Q97
 DisplayTogether=Yes
 Position=83
 Length=1
   
 [Block]
-Name=DG_BLK_129
+Name=DG_BLK_130
 Label=Q97
 DisplayTogether=Yes
 Position=85
 Length=1
   
 [Block]
-Name=DG_BLK_130
+Name=DG_BLK_131
 Label=Q97
 DisplayTogether=Yes
 Position=87
 Length=1
   
 [Block]
-Name=DG_BLK_131
+Name=DG_BLK_132
 Label=Q97
 DisplayTogether=Yes
 Position=89
 Length=1
   
 [Block]
-Name=DG_BLK_132
+Name=DG_BLK_133
 Label=Q97
 DisplayTogether=Yes
 Position=91
 Length=1
   
 [Block]
-Name=DG_BLK_133
+Name=DG_BLK_134
 Label=Q97
 DisplayTogether=Yes
 Position=93
 Length=1
   
 [Block]
-Name=DG_BLK_134
+Name=DG_BLK_135
 Label=Q97
 DisplayTogether=Yes
 Position=95
 Length=1
   
 [Block]
-Name=DG_BLK_135
+Name=DG_BLK_136
 Label=Q97
 DisplayTogether=Yes
 Position=97
 Length=1
   
 [Block]
-Name=DG_BLK_136
+Name=DG_BLK_137
 Label=Q97
 DisplayTogether=Yes
 Position=99
 Length=1
   
 [Block]
-Name=DG_BLK_137
+Name=DG_BLK_138
 Label=Q97
 DisplayTogether=Yes
 Position=101
 Length=1
   
 [Block]
-Name=DG_BLK_138
+Name=DG_BLK_139
 Label=Q97
 DisplayTogether=Yes
 Position=103
 Length=1
   
 [Block]
-Name=DG_BLK_139
+Name=DG_BLK_140
 Label=Q97
 DisplayTogether=Yes
 Position=105
 Length=1
   
 [Block]
-Name=DG_BLK_140
+Name=DG_BLK_141
 Label=Q97
 DisplayTogether=Yes
 Position=107
 Length=1
   
 [Block]
-Name=DG_BLK_141
+Name=DG_BLK_142
 Label=Q98
 DisplayTogether=Yes
 Position=109
 Length=1
   
 [Block]
-Name=DG_BLK_142
+Name=DG_BLK_143
 Label=Q98
 DisplayTogether=Yes
 Position=111
 Length=1
   
 [Block]
-Name=DG_BLK_143
+Name=DG_BLK_144
 Label=Q98
 DisplayTogether=Yes
 Position=113
 Length=1
   
 [Block]
-Name=DG_BLK_144
+Name=DG_BLK_145
 Label=Q98
 DisplayTogether=Yes
 Position=115
 Length=1
   
 [Block]
-Name=DG_BLK_145
+Name=DG_BLK_146
 Label=Q98
 DisplayTogether=Yes
 Position=117
 Length=1
   
 [Block]
-Name=DG_BLK_146
+Name=DG_BLK_147
 Label=Q98
 DisplayTogether=Yes
 Position=119
 Length=1
   
 [Block]
-Name=DG_BLK_147
+Name=DG_BLK_148
 Label=Q98
 DisplayTogether=Yes
 Position=121
 Length=1
   
 [Block]
-Name=DG_BLK_148
+Name=DG_BLK_149
 Label=Q98
 DisplayTogether=Yes
 Position=123
 Length=1
   
 [Block]
-Name=DG_BLK_149
+Name=DG_BLK_150
 Label=Q98
 DisplayTogether=Yes
 Position=125
 Length=1
   
 [Block]
-Name=DG_BLK_150
+Name=DG_BLK_151
 Label=Q98
 DisplayTogether=Yes
 Position=127
 Length=1
   
 [Block]
-Name=DG_BLK_151
+Name=DG_BLK_152
 Label=Q98
 DisplayTogether=Yes
 Position=129
 Length=1
   
 [Block]
-Name=DG_BLK_152
+Name=DG_BLK_153
 Label=Q98
 DisplayTogether=Yes
 Position=131
 Length=1
   
 [Block]
-Name=DG_BLK_153
+Name=DG_BLK_154
 Label=Q98
 DisplayTogether=Yes
 Position=133
 Length=1
   
 [Block]
-Name=DG_BLK_154
+Name=DG_BLK_155
 Label=Q98
 DisplayTogether=Yes
 Position=135
 Length=1
   
 [Block]
-Name=DG_BLK_155
+Name=DG_BLK_156
 Label=Q98
 DisplayTogether=Yes
 Position=137
 Length=1
   
 [Block]
-Name=DG_BLK_156
+Name=DG_BLK_157
 Label=Q98
 DisplayTogether=Yes
 Position=139
 Length=1
   
 [Block]
-Name=DG_BLK_157
+Name=DG_BLK_158
 Label=Q98
 DisplayTogether=Yes
 Position=141
 Length=1
   
 [Block]
-Name=DG_BLK_158
+Name=DG_BLK_159
 Label=Q98
 DisplayTogether=Yes
 Position=143
 Length=1
   
 [Block]
-Name=DG_BLK_159
+Name=DG_BLK_160
 Label=Q98
 DisplayTogether=Yes
 Position=145
 Length=1
   
 [Block]
-Name=DG_BLK_160
+Name=DG_BLK_161
 Label=Q98
 DisplayTogether=Yes
 Position=147
 Length=1
   
 [Block]
-Name=DG_BLK_161
+Name=DG_BLK_162
 Label=Q98
 DisplayTogether=Yes
 Position=149
 Length=1
   
 [Block]
-Name=DG_BLK_162
+Name=DG_BLK_163
 Label=Q98
 DisplayTogether=Yes
 Position=151
 Length=1
   
 [Block]
-Name=DG_BLK_163
+Name=DG_BLK_164
 Label=Q98
 DisplayTogether=Yes
 Position=153
 Length=1
   
 [Block]
-Name=DG_BLK_164
+Name=DG_BLK_165
 Label=Q98
 DisplayTogether=Yes
 Position=155
 Length=1
   
 [Block]
-Name=DG_BLK_165
+Name=DG_BLK_166
 Label=Q98
 DisplayTogether=Yes
 Position=157
 Length=1
   
 [Block]
-Name=DG_BLK_166
+Name=DG_BLK_167
 Label=Q98
 DisplayTogether=Yes
 Position=159
 Length=1
   
 [Block]
-Name=DG_BLK_167
+Name=DG_BLK_168
 Label=Q98
 DisplayTogether=Yes
 Position=161
 Length=1
   
 [Block]
-Name=DG_BLK_168
+Name=DG_BLK_169
 Label=Q98
 DisplayTogether=Yes
 Position=163
 Length=1
   
 [Block]
-Name=DG_BLK_169
+Name=DG_BLK_170
 Label=Q98
 DisplayTogether=Yes
 Position=165
 Length=1
   
 [Block]
-Name=DG_BLK_170
+Name=DG_BLK_171
 Label=Q98
 DisplayTogether=Yes
 Position=167
 Length=1
   
 [Block]
-Name=DG_BLK_171
+Name=DG_BLK_172
 Label=Q98
 DisplayTogether=Yes
 Position=169
 Length=1
   
 [Block]
-Name=DG_BLK_172
+Name=DG_BLK_173
 Label=Q98
 DisplayTogether=Yes
 Position=171
 Length=1
   
 [Block]
-Name=DG_BLK_173
+Name=DG_BLK_174
 Label=Q99
 DisplayTogether=Yes
 Position=173
 Length=1
   
 [Block]
-Name=DG_BLK_174
+Name=DG_BLK_175
 Label=Q100
 DisplayTogether=Yes
 Position=175
 Length=1
   
 [Block]
-Name=DG_BLK_175
+Name=DG_BLK_176
 Label=Q100
 DisplayTogether=Yes
 Position=177
 Length=1
   
 [Block]
-Name=DG_BLK_176
+Name=DG_BLK_177
 Label=Q101
 DisplayTogether=Yes
 Position=179
 Length=1
   
 [Block]
-Name=DG_BLK_177
+Name=DG_BLK_178
 Label=Q101
 DisplayTogether=Yes
 Position=181
 Length=1
   
 [Block]
-Name=DG_BLK_178
+Name=DG_BLK_179
 Label=Q102
 DisplayTogether=Yes
 Position=183
 Length=1
   
 [Block]
-Name=DG_BLK_179
+Name=DG_BLK_180
 Label=Q103
 DisplayTogether=Yes
 Position=185
 Length=1
   
 [Block]
-Name=DG_BLK_180
+Name=DG_BLK_181
 Label=Q103
 DisplayTogether=Yes
 Position=187
 Length=1
   
 [Block]
-Name=DG_BLK_181
+Name=DG_BLK_182
 Label=Q104
 DisplayTogether=Yes
 Position=189
 Length=1
   
 [Block]
-Name=DG_BLK_182
+Name=DG_BLK_183
 Label=Q104
 DisplayTogether=Yes
 Position=191
@@ -6660,847 +6679,847 @@ Text=115.2 Other expenses — specify text
  
   
 [Block]
-Name=DG_BLK_183
+Name=DG_BLK_184
 Label=Q105
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_184
+Name=DG_BLK_185
 Label=Q105
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_185
+Name=DG_BLK_186
 Label=Q106-Q107
 DisplayTogether=Yes
 Position=4
 Length=3
   
 [Block]
-Name=DG_BLK_186
+Name=DG_BLK_187
 Label=Q107
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_187
+Name=DG_BLK_188
 Label=Q107
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_188
+Name=DG_BLK_189
 Label=Q107
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_189
+Name=DG_BLK_190
 Label=Q107
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_190
+Name=DG_BLK_191
 Label=Q107
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_191
+Name=DG_BLK_192
 Label=Q107
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_192
+Name=DG_BLK_193
 Label=Q107
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_193
+Name=DG_BLK_194
 Label=Q107
 DisplayTogether=Yes
 Position=22
 Length=1
   
 [Block]
-Name=DG_BLK_194
+Name=DG_BLK_195
 Label=Q107
 DisplayTogether=Yes
 Position=24
 Length=1
   
 [Block]
-Name=DG_BLK_195
+Name=DG_BLK_196
 Label=Q107
 DisplayTogether=Yes
 Position=26
 Length=1
   
 [Block]
-Name=DG_BLK_196
+Name=DG_BLK_197
 Label=Q107
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_BLK_197
+Name=DG_BLK_198
 Label=Q107
 DisplayTogether=Yes
 Position=30
 Length=1
   
 [Block]
-Name=DG_BLK_198
+Name=DG_BLK_199
 Label=Q107
 DisplayTogether=Yes
 Position=32
 Length=1
   
 [Block]
-Name=DG_BLK_199
+Name=DG_BLK_200
 Label=Q107
 DisplayTogether=Yes
 Position=34
 Length=1
   
 [Block]
-Name=DG_BLK_200
+Name=DG_BLK_201
 Label=Q107
 DisplayTogether=Yes
 Position=36
 Length=1
   
 [Block]
-Name=DG_BLK_201
+Name=DG_BLK_202
 Label=Q107
 DisplayTogether=Yes
 Position=38
 Length=1
   
 [Block]
-Name=DG_BLK_202
+Name=DG_BLK_203
 Label=Q107
 DisplayTogether=Yes
 Position=40
 Length=1
   
 [Block]
-Name=DG_BLK_203
+Name=DG_BLK_204
 Label=Q107
 DisplayTogether=Yes
 Position=42
 Length=1
   
 [Block]
-Name=DG_BLK_204
+Name=DG_BLK_205
 Label=Q107
 DisplayTogether=Yes
 Position=44
 Length=1
   
 [Block]
-Name=DG_BLK_205
+Name=DG_BLK_206
 Label=Q107
 DisplayTogether=Yes
 Position=46
 Length=1
   
 [Block]
-Name=DG_BLK_206
+Name=DG_BLK_207
 Label=Q108
 DisplayTogether=Yes
 Position=48
 Length=1
   
 [Block]
-Name=DG_BLK_207
+Name=DG_BLK_208
 Label=Q109
 DisplayTogether=Yes
 Position=50
 Length=1
   
 [Block]
-Name=DG_BLK_208
+Name=DG_BLK_209
 Label=Q109
 DisplayTogether=Yes
 Position=52
 Length=1
   
 [Block]
-Name=DG_BLK_209
+Name=DG_BLK_210
 Label=Q109
 DisplayTogether=Yes
 Position=54
 Length=1
   
 [Block]
-Name=DG_BLK_210
+Name=DG_BLK_211
 Label=Q109
 DisplayTogether=Yes
 Position=56
 Length=1
   
 [Block]
-Name=DG_BLK_211
+Name=DG_BLK_212
 Label=Q109
 DisplayTogether=Yes
 Position=58
 Length=1
   
 [Block]
-Name=DG_BLK_212
+Name=DG_BLK_213
 Label=Q109
 DisplayTogether=Yes
 Position=60
 Length=1
   
 [Block]
-Name=DG_BLK_213
+Name=DG_BLK_214
 Label=Q109
 DisplayTogether=Yes
 Position=62
 Length=1
   
 [Block]
-Name=DG_BLK_214
+Name=DG_BLK_215
 Label=Q109
 DisplayTogether=Yes
 Position=64
 Length=1
   
 [Block]
-Name=DG_BLK_215
+Name=DG_BLK_216
 Label=Q109
 DisplayTogether=Yes
 Position=66
 Length=1
   
 [Block]
-Name=DG_BLK_216
+Name=DG_BLK_217
 Label=Q109
 DisplayTogether=Yes
 Position=68
 Length=1
   
 [Block]
-Name=DG_BLK_217
+Name=DG_BLK_218
 Label=Q109
 DisplayTogether=Yes
 Position=70
 Length=1
   
 [Block]
-Name=DG_BLK_218
+Name=DG_BLK_219
 Label=Q109
 DisplayTogether=Yes
 Position=72
 Length=1
   
 [Block]
-Name=DG_BLK_219
+Name=DG_BLK_220
 Label=Q109
 DisplayTogether=Yes
 Position=74
 Length=1
   
 [Block]
-Name=DG_BLK_220
+Name=DG_BLK_221
 Label=Q109
 DisplayTogether=Yes
 Position=76
 Length=1
   
 [Block]
-Name=DG_BLK_221
+Name=DG_BLK_222
 Label=Q109
 DisplayTogether=Yes
 Position=78
 Length=1
   
 [Block]
-Name=DG_BLK_222
+Name=DG_BLK_223
 Label=Q109
 DisplayTogether=Yes
 Position=80
 Length=1
   
 [Block]
-Name=DG_BLK_223
+Name=DG_BLK_224
 Label=Q109
 DisplayTogether=Yes
 Position=82
 Length=1
   
 [Block]
-Name=DG_BLK_224
+Name=DG_BLK_225
 Label=Q109
 DisplayTogether=Yes
 Position=84
 Length=1
   
 [Block]
-Name=DG_BLK_225
+Name=DG_BLK_226
 Label=Q109
 DisplayTogether=Yes
 Position=86
 Length=1
   
 [Block]
-Name=DG_BLK_226
+Name=DG_BLK_227
 Label=Q110
 DisplayTogether=Yes
 Position=88
 Length=1
   
 [Block]
-Name=DG_BLK_227
+Name=DG_BLK_228
 Label=Q111-Q112
 DisplayTogether=Yes
 Position=90
 Length=2
   
 [Block]
-Name=DG_BLK_228
+Name=DG_BLK_229
 Label=Q112
 DisplayTogether=Yes
 Position=93
 Length=1
   
 [Block]
-Name=DG_BLK_229
+Name=DG_BLK_230
 Label=Q112
 DisplayTogether=Yes
 Position=95
 Length=1
   
 [Block]
-Name=DG_BLK_230
+Name=DG_BLK_231
 Label=Q112
 DisplayTogether=Yes
 Position=97
 Length=1
   
 [Block]
-Name=DG_BLK_231
+Name=DG_BLK_232
 Label=Q112
 DisplayTogether=Yes
 Position=99
 Length=1
   
 [Block]
-Name=DG_BLK_232
+Name=DG_BLK_233
 Label=Q112
 DisplayTogether=Yes
 Position=101
 Length=1
   
 [Block]
-Name=DG_BLK_233
+Name=DG_BLK_234
 Label=Q112
 DisplayTogether=Yes
 Position=103
 Length=1
   
 [Block]
-Name=DG_BLK_234
+Name=DG_BLK_235
 Label=Q112
 DisplayTogether=Yes
 Position=105
 Length=1
   
 [Block]
-Name=DG_BLK_235
+Name=DG_BLK_236
 Label=Q112
 DisplayTogether=Yes
 Position=107
 Length=1
   
 [Block]
-Name=DG_BLK_236
+Name=DG_BLK_237
 Label=Q112
 DisplayTogether=Yes
 Position=109
 Length=1
   
 [Block]
-Name=DG_BLK_237
+Name=DG_BLK_238
 Label=Q112
 DisplayTogether=Yes
 Position=111
 Length=1
   
 [Block]
-Name=DG_BLK_238
+Name=DG_BLK_239
 Label=Q112
 DisplayTogether=Yes
 Position=113
 Length=1
   
 [Block]
-Name=DG_BLK_239
+Name=DG_BLK_240
 Label=Q112
 DisplayTogether=Yes
 Position=115
 Length=1
   
 [Block]
-Name=DG_BLK_240
+Name=DG_BLK_241
 Label=Q112
 DisplayTogether=Yes
 Position=117
 Length=1
   
 [Block]
-Name=DG_BLK_241
+Name=DG_BLK_242
 Label=Q112
 DisplayTogether=Yes
 Position=119
 Length=1
   
 [Block]
-Name=DG_BLK_242
+Name=DG_BLK_243
 Label=Q112
 DisplayTogether=Yes
 Position=121
 Length=1
   
 [Block]
-Name=DG_BLK_243
+Name=DG_BLK_244
 Label=Q112
 DisplayTogether=Yes
 Position=123
 Length=1
   
 [Block]
-Name=DG_BLK_244
+Name=DG_BLK_245
 Label=Q112
 DisplayTogether=Yes
 Position=125
 Length=1
   
 [Block]
-Name=DG_BLK_245
+Name=DG_BLK_246
 Label=Q112
 DisplayTogether=Yes
 Position=127
 Length=1
   
 [Block]
-Name=DG_BLK_246
+Name=DG_BLK_247
 Label=Q113
 DisplayTogether=Yes
 Position=129
 Length=1
   
 [Block]
-Name=DG_BLK_247
+Name=DG_BLK_248
 Label=Q113
 DisplayTogether=Yes
 Position=131
 Length=1
   
 [Block]
-Name=DG_BLK_248
+Name=DG_BLK_249
 Label=Q113
 DisplayTogether=Yes
 Position=133
 Length=1
   
 [Block]
-Name=DG_BLK_249
+Name=DG_BLK_250
 Label=Q113
 DisplayTogether=Yes
 Position=135
 Length=1
   
 [Block]
-Name=DG_BLK_250
+Name=DG_BLK_251
 Label=Q113
 DisplayTogether=Yes
 Position=137
 Length=1
   
 [Block]
-Name=DG_BLK_251
+Name=DG_BLK_252
 Label=Q113
 DisplayTogether=Yes
 Position=139
 Length=1
   
 [Block]
-Name=DG_BLK_252
+Name=DG_BLK_253
 Label=Q113
 DisplayTogether=Yes
 Position=141
 Length=1
   
 [Block]
-Name=DG_BLK_253
+Name=DG_BLK_254
 Label=Q113
 DisplayTogether=Yes
 Position=143
 Length=1
   
 [Block]
-Name=DG_BLK_254
+Name=DG_BLK_255
 Label=Q113
 DisplayTogether=Yes
 Position=145
 Length=1
   
 [Block]
-Name=DG_BLK_255
+Name=DG_BLK_256
 Label=Q113
 DisplayTogether=Yes
 Position=147
 Length=1
   
 [Block]
-Name=DG_BLK_256
+Name=DG_BLK_257
 Label=Q113
 DisplayTogether=Yes
 Position=149
 Length=1
   
 [Block]
-Name=DG_BLK_257
+Name=DG_BLK_258
 Label=Q113
 DisplayTogether=Yes
 Position=151
 Length=1
   
 [Block]
-Name=DG_BLK_258
+Name=DG_BLK_259
 Label=Q113
 DisplayTogether=Yes
 Position=153
 Length=1
   
 [Block]
-Name=DG_BLK_259
+Name=DG_BLK_260
 Label=Q113
 DisplayTogether=Yes
 Position=155
 Length=1
   
 [Block]
-Name=DG_BLK_260
+Name=DG_BLK_261
 Label=Q113
 DisplayTogether=Yes
 Position=157
 Length=1
   
 [Block]
-Name=DG_BLK_261
+Name=DG_BLK_262
 Label=Q113
 DisplayTogether=Yes
 Position=159
 Length=1
   
 [Block]
-Name=DG_BLK_262
+Name=DG_BLK_263
 Label=Q113
 DisplayTogether=Yes
 Position=161
 Length=1
   
 [Block]
-Name=DG_BLK_263
+Name=DG_BLK_264
 Label=Q113
 DisplayTogether=Yes
 Position=163
 Length=1
   
 [Block]
-Name=DG_BLK_264
+Name=DG_BLK_265
 Label=Q113
 DisplayTogether=Yes
 Position=165
 Length=1
   
 [Block]
-Name=DG_BLK_265
+Name=DG_BLK_266
 Label=Q113
 DisplayTogether=Yes
 Position=167
 Length=1
   
 [Block]
-Name=DG_BLK_266
+Name=DG_BLK_267
 Label=Q113
 DisplayTogether=Yes
 Position=169
 Length=1
   
 [Block]
-Name=DG_BLK_267
+Name=DG_BLK_268
 Label=Q113
 DisplayTogether=Yes
 Position=171
 Length=1
   
 [Block]
-Name=DG_BLK_268
+Name=DG_BLK_269
 Label=Q113
 DisplayTogether=Yes
 Position=173
 Length=1
   
 [Block]
-Name=DG_BLK_269
+Name=DG_BLK_270
 Label=Q113
 DisplayTogether=Yes
 Position=175
 Length=1
   
 [Block]
-Name=DG_BLK_270
+Name=DG_BLK_271
 Label=Q113
 DisplayTogether=Yes
 Position=177
 Length=1
   
 [Block]
-Name=DG_BLK_271
+Name=DG_BLK_272
 Label=Q113
 DisplayTogether=Yes
 Position=179
 Length=1
   
 [Block]
-Name=DG_BLK_272
+Name=DG_BLK_273
 Label=Q113
 DisplayTogether=Yes
 Position=181
 Length=1
   
 [Block]
-Name=DG_BLK_273
+Name=DG_BLK_274
 Label=Q114
 DisplayTogether=Yes
 Position=183
 Length=1
   
 [Block]
-Name=DG_BLK_274
+Name=DG_BLK_275
 Label=Q114
 DisplayTogether=Yes
 Position=185
 Length=1
   
 [Block]
-Name=DG_BLK_275
+Name=DG_BLK_276
 Label=Q115
 DisplayTogether=Yes
 Position=187
 Length=1
   
 [Block]
-Name=DG_BLK_276
+Name=DG_BLK_277
 Label=Q115
 DisplayTogether=Yes
 Position=189
 Length=1
   
 [Block]
-Name=DG_BLK_277
+Name=DG_BLK_278
 Label=Q115
 DisplayTogether=Yes
 Position=191
 Length=1
   
 [Block]
-Name=DG_BLK_278
+Name=DG_BLK_279
 Label=Q115
 DisplayTogether=Yes
 Position=193
 Length=1
   
 [Block]
-Name=DG_BLK_279
+Name=DG_BLK_280
 Label=Q115
 DisplayTogether=Yes
 Position=195
 Length=1
   
 [Block]
-Name=DG_BLK_280
+Name=DG_BLK_281
 Label=Q115
 DisplayTogether=Yes
 Position=197
 Length=1
   
 [Block]
-Name=DG_BLK_281
+Name=DG_BLK_282
 Label=Q115
 DisplayTogether=Yes
 Position=199
 Length=1
   
 [Block]
-Name=DG_BLK_282
+Name=DG_BLK_283
 Label=Q115
 DisplayTogether=Yes
 Position=201
 Length=1
   
 [Block]
-Name=DG_BLK_283
+Name=DG_BLK_284
 Label=Q115
 DisplayTogether=Yes
 Position=203
 Length=1
   
 [Block]
-Name=DG_BLK_284
+Name=DG_BLK_285
 Label=Q115
 DisplayTogether=Yes
 Position=205
 Length=1
   
 [Block]
-Name=DG_BLK_285
+Name=DG_BLK_286
 Label=Q115
 DisplayTogether=Yes
 Position=207
 Length=1
   
 [Block]
-Name=DG_BLK_286
+Name=DG_BLK_287
 Label=Q115
 DisplayTogether=Yes
 Position=209
 Length=1
   
 [Block]
-Name=DG_BLK_287
+Name=DG_BLK_288
 Label=Q115
 DisplayTogether=Yes
 Position=211
 Length=1
   
 [Block]
-Name=DG_BLK_288
+Name=DG_BLK_289
 Label=Q115
 DisplayTogether=Yes
 Position=213
 Length=1
   
 [Block]
-Name=DG_BLK_289
+Name=DG_BLK_290
 Label=Q115
 DisplayTogether=Yes
 Position=215
 Length=1
   
 [Block]
-Name=DG_BLK_290
+Name=DG_BLK_291
 Label=Q115
 DisplayTogether=Yes
 Position=217
 Length=1
   
 [Block]
-Name=DG_BLK_291
+Name=DG_BLK_292
 Label=Q115
 DisplayTogether=Yes
 Position=219
 Length=1
   
 [Block]
-Name=DG_BLK_292
+Name=DG_BLK_293
 Label=Q115
 DisplayTogether=Yes
 Position=221
 Length=1
   
 [Block]
-Name=DG_BLK_293
+Name=DG_BLK_294
 Label=Q115
 DisplayTogether=Yes
 Position=223
 Length=1
   
 [Block]
-Name=DG_BLK_294
+Name=DG_BLK_295
 Label=Q115
 DisplayTogether=Yes
 Position=225
 Length=1
   
 [Block]
-Name=DG_BLK_295
+Name=DG_BLK_296
 Label=Q115
 DisplayTogether=Yes
 Position=227
 Length=1
   
 [Block]
-Name=DG_BLK_296
+Name=DG_BLK_297
 Label=Q115
 DisplayTogether=Yes
 Position=229
 Length=1
   
 [Block]
-Name=DG_BLK_297
+Name=DG_BLK_298
 Label=Q115
 DisplayTogether=Yes
 Position=231
 Length=1
   
 [Block]
-Name=DG_BLK_298
+Name=DG_BLK_299
 Label=Q115
 DisplayTogether=Yes
 Position=233
 Length=1
   
 [Block]
-Name=DG_BLK_299
+Name=DG_BLK_300
 Label=Q115
 DisplayTogether=Yes
 Position=235
 Length=1
   
 [Block]
-Name=DG_BLK_300
+Name=DG_BLK_301
 Label=Q115
 DisplayTogether=Yes
 Position=237
 Length=1
   
 [Block]
-Name=DG_BLK_301
+Name=DG_BLK_302
 Label=Q115
 DisplayTogether=Yes
 Position=239
 Length=1
   
 [Block]
-Name=DG_BLK_302
+Name=DG_BLK_303
 Label=Q115
 DisplayTogether=Yes
 Position=241
 Length=1
   
 [Block]
-Name=DG_BLK_303
+Name=DG_BLK_304
 Label=Q115
 DisplayTogether=Yes
 Position=243
@@ -7725,251 +7744,235 @@ Text=127. If you availed MAIFIP, did you have to make any out-of-pocket payment?
  
   
 [Field]
-Name=Q128_MAIFIP_OOP_ITEMS_O01
+Name=Q128_MAIFIP_OOP_ITEMS
 Position=350,537,365,557
-Item=Q128_MAIFIP_OOP_ITEMS_O01,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q128_MAIFIP_OOP_ITEMS,PATIENTSURVEY_DICT
+DataCaptureType=CheckBox
 Form=14
   
 [Text]
 Position=50,540,330,556
-Text=128. Which items did you have to pay for out-of-pocket? — Drugs
+Text=128. Which items did you have to pay for out-of-pocket?
  
   
 [Field]
-Name=Q128_MAIFIP_OOP_ITEMS_O02
-Position=350,567,365,587
-Item=Q128_MAIFIP_OOP_ITEMS_O02,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
+Name=Q128_MAIFIP_OOP_ITEMS_OTHER_TXT
+Position=350,567,760,587
+Item=Q128_MAIFIP_OOP_ITEMS_OTHER_TXT,PATIENTSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
 Form=14
   
 [Text]
 Position=50,570,330,586
-Text=128. Which items did you have to pay for out-of-pocket? — Laboratory
- 
-  
-[Field]
-Name=Q128_MAIFIP_OOP_ITEMS_O03
-Position=350,597,365,617
-Item=Q128_MAIFIP_OOP_ITEMS_O03,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,600,330,616
-Text=128. Which items did you have to pay for out-of-pocket? — Professional Fees
- 
-  
-[Field]
-Name=Q128_MAIFIP_OOP_ITEMS_O04
-Position=350,627,365,647
-Item=Q128_MAIFIP_OOP_ITEMS_O04,PATIENTSURVEY_DICT
-DataCaptureType=RadioButton
-Form=14
-  
-[Text]
-Position=50,630,330,646
-Text=128. Which items did you have to pay for out-of-pocket? — Accommodation
+Text=128. Which items did you have to pay for out-of-pocket? — Other (specify) text
  
   
 [Field]
 Name=Q129_WHY_NO_MAIFIP_O01
-Position=350,657,365,677
+Position=350,597,365,617
 Item=Q129_WHY_NO_MAIFIP_O01,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,660,330,676
+Position=50,600,330,616
 Text=129. Why did you not avail of MAIFIP during this last confinement? — Not eligible
  
   
 [Field]
 Name=Q129_WHY_NO_MAIFIP_O02
-Position=350,687,365,707
+Position=350,627,365,647
 Item=Q129_WHY_NO_MAIFIP_O02,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,690,330,706
+Position=50,630,330,646
 Text=129. Why did you not avail of MAIFIP during this last confinement? — Too complicated
  
   
 [Field]
 Name=Q129_WHY_NO_MAIFIP_O03
-Position=350,717,365,737
+Position=350,657,365,677
 Item=Q129_WHY_NO_MAIFIP_O03,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,720,330,736
+Position=50,660,330,676
 Text=129. Why did you not avail of MAIFIP during this last confinement? — I don't like to stay in basic ward
  
   
 [Field]
 Name=Q129_WHY_NO_MAIFIP_O04
-Position=350,747,365,767
+Position=350,687,365,707
 Item=Q129_WHY_NO_MAIFIP_O04,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,750,330,766
+Position=50,690,330,706
 Text=129. Why did you not avail of MAIFIP during this last confinement? — There is no available basic ward
  
   
 [Field]
 Name=Q130_REDUCED_SPEND
-Position=350,777,365,797
+Position=350,717,365,737
 Item=Q130_REDUCED_SPEND,PATIENTSURVEY_DICT
 DataCaptureType=RadioButton
 Form=14
   
 [Text]
-Position=50,780,330,796
+Position=50,720,330,736
 Text=130. Have you or your household had to reduce spending on things you need (such as food, housing, or utilities) because of this health expenditure in the last 1 month?
  
   
 [Block]
-Name=DG_BLK_304
+Name=DG_BLK_305
 Label=Q116
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_305
+Name=DG_BLK_306
 Label=Q117
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_306
+Name=DG_BLK_307
 Label=Q117
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_307
+Name=DG_BLK_308
 Label=Q118
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_308
+Name=DG_BLK_309
 Label=Q118
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_309
+Name=DG_BLK_310
 Label=Q119
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_310
+Name=DG_BLK_311
 Label=Q120
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_311
+Name=DG_BLK_312
 Label=Q120
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_312
+Name=DG_BLK_313
 Label=Q121
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_313
+Name=DG_BLK_314
 Label=Q121
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_314
+Name=DG_BLK_315
 Label=Q122
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_315
+Name=DG_BLK_316
 Label=Q123
 DisplayTogether=Yes
 Position=22
 Length=1
   
 [Block]
-Name=DG_BLK_316
+Name=DG_BLK_317
 Label=Q124
 DisplayTogether=Yes
 Position=24
 Length=1
   
 [Block]
-Name=DG_BLK_317
+Name=DG_BLK_318
 Label=Q125
 DisplayTogether=Yes
 Position=26
 Length=1
   
 [Block]
-Name=DG_BLK_318
+Name=DG_BLK_319
 Label=Q125
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_BLK_319
+Name=DG_BLK_320
 Label=Q126
 DisplayTogether=Yes
 Position=30
 Length=1
   
 [Block]
-Name=DG_BLK_320
+Name=DG_BLK_321
 Label=Q127
 DisplayTogether=Yes
 Position=32
 Length=1
   
 [Block]
-Name=DG_BLK_321
+Name=DG_BLK_322
 Label=Q128
 DisplayTogether=Yes
 Position=34
-Length=4
-  
-[Block]
-Name=DG_BLK_322
-Label=Q129
-DisplayTogether=Yes
-Position=39
-Length=4
+Length=1
   
 [Block]
 Name=DG_BLK_323
+Label=Q128
+DisplayTogether=Yes
+Position=36
+Length=1
+  
+[Block]
+Name=DG_BLK_324
+Label=Q129
+DisplayTogether=Yes
+Position=38
+Length=4
+  
+[Block]
+Name=DG_BLK_325
 Label=Q130
 DisplayTogether=Yes
-Position=44
+Position=43
 Length=1
   
 [EndGroup]
@@ -8150,21 +8153,21 @@ Text=144. How would the patient rate the quality of care you received at [facili
  
   
 [Block]
-Name=DG_BLK_324
+Name=DG_BLK_326
 Label=Q131-Q135
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_BLK_325
+Name=DG_BLK_327
 Label=Q136-Q140
 DisplayTogether=Yes
 Position=6
 Length=5
   
 [Block]
-Name=DG_BLK_326
+Name=DG_BLK_328
 Label=Q141-Q144
 DisplayTogether=Yes
 Position=12
@@ -8502,161 +8505,161 @@ Text=161. If branded, why did you buy branded medicine? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_327
+Name=DG_BLK_329
 Label=Q145
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_328
+Name=DG_BLK_330
 Label=Q146-Q147
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_BLK_329
+Name=DG_BLK_331
 Label=Q148
 DisplayTogether=Yes
 Position=5
 Length=1
   
 [Block]
-Name=DG_BLK_330
+Name=DG_BLK_332
 Label=Q148
 DisplayTogether=Yes
 Position=7
 Length=1
   
 [Block]
-Name=DG_BLK_331
+Name=DG_BLK_333
 Label=Q148
 DisplayTogether=Yes
 Position=9
 Length=1
   
 [Block]
-Name=DG_BLK_332
+Name=DG_BLK_334
 Label=Q149
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_333
+Name=DG_BLK_335
 Label=Q149
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_334
+Name=DG_BLK_336
 Label=Q150-Q151
 DisplayTogether=Yes
 Position=15
 Length=3
   
 [Block]
-Name=DG_BLK_335
+Name=DG_BLK_337
 Label=Q152
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_336
+Name=DG_BLK_338
 Label=Q153
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_BLK_337
+Name=DG_BLK_339
 Label=Q153
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_338
+Name=DG_BLK_340
 Label=Q154
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_339
+Name=DG_BLK_341
 Label=Q154
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_340
+Name=DG_BLK_342
 Label=Q155
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_341
+Name=DG_BLK_343
 Label=Q156
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_342
+Name=DG_BLK_344
 Label=Q157
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_343
+Name=DG_BLK_345
 Label=Q157
 DisplayTogether=Yes
 Position=35
 Length=1
   
 [Block]
-Name=DG_BLK_344
+Name=DG_BLK_346
 Label=Q158
 DisplayTogether=Yes
 Position=37
 Length=1
   
 [Block]
-Name=DG_BLK_345
+Name=DG_BLK_347
 Label=Q159
 DisplayTogether=Yes
 Position=39
 Length=1
   
 [Block]
-Name=DG_BLK_346
+Name=DG_BLK_348
 Label=Q160
 DisplayTogether=Yes
 Position=41
 Length=1
   
 [Block]
-Name=DG_BLK_347
+Name=DG_BLK_349
 Label=Q160
 DisplayTogether=Yes
 Position=43
 Length=1
   
 [Block]
-Name=DG_BLK_348
+Name=DG_BLK_350
 Label=Q161
 DisplayTogether=Yes
 Position=45
 Length=1
   
 [Block]
-Name=DG_BLK_349
+Name=DG_BLK_351
 Label=Q161
 DisplayTogether=Yes
 Position=47
@@ -8941,112 +8944,112 @@ Text=178. Overall, how would you rate your experience with the referral process?
  
   
 [Block]
-Name=DG_BLK_350
+Name=DG_BLK_352
 Label=Q162
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_351
+Name=DG_BLK_353
 Label=Q163
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_352
+Name=DG_BLK_354
 Label=Q163
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_353
+Name=DG_BLK_355
 Label=Q164
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_354
+Name=DG_BLK_356
 Label=Q164
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_355
+Name=DG_BLK_357
 Label=Q165
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_356
+Name=DG_BLK_358
 Label=Q165
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_357
+Name=DG_BLK_359
 Label=Q166-Q169
 DisplayTogether=Yes
 Position=14
 Length=4
   
 [Block]
-Name=DG_BLK_358
+Name=DG_BLK_360
 Label=Q170
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_359
+Name=DG_BLK_361
 Label=Q171
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_BLK_360
+Name=DG_BLK_362
 Label=Q171
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_361
+Name=DG_BLK_363
 Label=Q172
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_362
+Name=DG_BLK_364
 Label=Q173-Q176
 DisplayTogether=Yes
 Position=27
 Length=4
   
 [Block]
-Name=DG_BLK_363
+Name=DG_BLK_365
 Label=Q177
 DisplayTogether=Yes
 Position=32
 Length=1
   
 [Block]
-Name=DG_BLK_364
+Name=DG_BLK_366
 Label=Q177
 DisplayTogether=Yes
 Position=34
 Length=1
   
 [Block]
-Name=DG_BLK_365
+Name=DG_BLK_367
 Label=Q178
 DisplayTogether=Yes
 Position=36

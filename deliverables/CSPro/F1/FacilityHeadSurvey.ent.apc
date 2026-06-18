@@ -500,6 +500,13 @@ postproc
   endif;
 
 PROC Q121_DOH_LIC_DIFFICULT
+preproc
+  { #385 facility-type-aware option visibility (spec §4.9) }
+  if Q8_SERVICE_LEVEL = 1 then   { Primary Care Facility }
+    setvalueset(Q121_DOH_LIC_DIFFICULT, Q121_DOH_LIC_DIFFICULT_PCF_VS1);
+  else                           { Level 1/2/3 Hospital }
+    setvalueset(Q121_DOH_LIC_DIFFICULT, Q121_DOH_LIC_DIFFICULT_HOSP_VS1);
+  endif;
 postproc
   if length(strip(Q121_DOH_LIC_DIFFICULT)) = 0 then
     errmsg("Select at least one option for Q121 before continuing.");
@@ -916,6 +923,10 @@ postproc
   if pos("09", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
     errmsg("Q53: 'I don't know' is usually the only choice — please review the options ticked.");
   endif;
+  { #526 exclusivity (soft warn): 'All of the above' (08) implies every item — it should stand alone }
+  if pos("08", Q53_YK_PACKAGE) > 0 and length(strip(Q53_YK_PACKAGE)) > 2 then
+    errmsg("Q53: 'All of the above' was ticked with other option(s) — it should be the only choice. Please review.");
+  endif;
 
 PROC Q53_YK_PACKAGE_OTHER_TXT
 preproc
@@ -1139,6 +1150,18 @@ PROC Q90_COSTING_VIABLE
 postproc
   if Q90_COSTING_VIABLE = 2 then     skip to Q91_MIN_CAP_VALUE_ACC; endif;  { No -> Q91 }
   if Q90_COSTING_VIABLE in 1,3 then  skip to Q93_CHARGE_ADDL_CAP;   endif;  { Yes / Don't know -> Q93 }
+
+PROC Q91_MIN_CAP_VALUE_ACC
+postproc
+  { #533 soft check: Q91 is the minimum per-capita rate the facility would accept, asked
+    after the costing/enough questions imply PHP 1,700 may be insufficient. A minimum BELOW
+    the current PHP 1,700 PhilHealth max is unusual — confirm rather than block. Q91 is only
+    ever a skip TARGET (never a source), so a bespoke postproc here drops no routing. }
+  if Q91_MIN_CAP_VALUE_ACC > 0 and Q91_MIN_CAP_VALUE_ACC < 1700 then
+    if accept("Q91 minimum acceptable capitation (%d PHP) is below the PHP 1,700 PhilHealth max — confirm?", "Yes", "No") <> 1 then
+      reenter;
+    endif;
+  endif;
 
 PROC Q92_MIN_CAP_VALUE_NONACC
 preproc

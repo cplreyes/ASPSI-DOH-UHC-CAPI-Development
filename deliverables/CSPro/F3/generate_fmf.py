@@ -262,6 +262,8 @@ _CHECKBOX_FIELDS = {
     # #696 Section K/L select_all -> Check Box (tick-all).
     "Q149_WHERE_BUY", "Q153_GAMOT_SOURCE", "Q154_GAMOT_UNDERSTAND", "Q157_WHERE_REST",
     "Q160_WHY_GENERIC", "Q161_WHY_BRANDED", "Q163_CARE_TYPE",
+    # #481 Section I select_all -> Check Box (+ None/Other).
+    "Q128_MAIFIP_OOP_ITEMS",
 }
 _CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share the checkbox screen
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen

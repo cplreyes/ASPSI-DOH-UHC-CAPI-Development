@@ -688,7 +688,7 @@ Label=M. ZBB / MAIFIP / Bill-Recall
 
 Level=1
 
-Size=806,607
+Size=806,637
 
   
 
@@ -711,6 +711,8 @@ Item=Q137_MAIFIP_SOURCE
 Item=Q137_MAIFIP_SOURCE_OTHER_TXT
 
 Item=Q138_MOST_EXPENSIVE
+
+Item=Q138_MOST_EXPENSIVE_OTHER_TXT
 
 Item=Q139_FINAL_AMOUNT_PHP
 
@@ -1075,6 +1077,8 @@ Item=Q200_REDUCED_SPEND
 Item=Q201_WORRIED
 
 Item=Q202_WORRY_REASONS
+
+Item=Q202_WORRY_REASONS_OTHER_TXT
 
   
 
@@ -5044,13 +5048,13 @@ Length=1
 
 Name=DG_BLK_56
 
-Label=Q75
+Label=Q75-Q76
 
 DisplayTogether=Yes
 
 Position=35
 
-Length=1
+Length=2
 
   
 
@@ -5058,11 +5062,11 @@ Length=1
 
 Name=DG_BLK_57
 
-Label=Q76
+Label=Q77
 
 DisplayTogether=Yes
 
-Position=37
+Position=38
 
 Length=1
 
@@ -5076,7 +5080,7 @@ Label=Q77
 
 DisplayTogether=Yes
 
-Position=39
+Position=40
 
 Length=1
 
@@ -5086,11 +5090,11 @@ Length=1
 
 Name=DG_BLK_59
 
-Label=Q77
+Label=Q78
 
 DisplayTogether=Yes
 
-Position=41
+Position=42
 
 Length=1
 
@@ -5104,21 +5108,7 @@ Label=Q78
 
 DisplayTogether=Yes
 
-Position=43
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_61
-
-Label=Q78
-
-DisplayTogether=Yes
-
-Position=45
+Position=44
 
 Length=1
 
@@ -5516,7 +5506,7 @@ Text=88. Why did you find it difficult? — Other (specify) text
 
 [Block]
 
-Name=DG_BLK_62
+Name=DG_BLK_61
 
 Label=Q79
 
@@ -5530,7 +5520,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_63
+Name=DG_BLK_62
 
 Label=Q79
 
@@ -5544,7 +5534,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_64
+Name=DG_BLK_63
 
 Label=Q80
 
@@ -5558,7 +5548,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_65
+Name=DG_BLK_64
 
 Label=Q80
 
@@ -5572,7 +5562,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_66
+Name=DG_BLK_65
 
 Label=Q81
 
@@ -5586,7 +5576,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_67
+Name=DG_BLK_66
 
 Label=Q82
 
@@ -5600,7 +5590,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_68
+Name=DG_BLK_67
 
 Label=Q82
 
@@ -5614,7 +5604,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_69
+Name=DG_BLK_68
 
 Label=Q83
 
@@ -5628,7 +5618,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_70
+Name=DG_BLK_69
 
 Label=Q84
 
@@ -5642,7 +5632,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_71
+Name=DG_BLK_70
 
 Label=Q85
 
@@ -5656,7 +5646,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_72
+Name=DG_BLK_71
 
 Label=Q85
 
@@ -5670,7 +5660,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_73
+Name=DG_BLK_72
 
 Label=Q86
 
@@ -5684,7 +5674,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_74
+Name=DG_BLK_73
 
 Label=Q87
 
@@ -5698,7 +5688,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_75
+Name=DG_BLK_74
 
 Label=Q88
 
@@ -5712,7 +5702,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_76
+Name=DG_BLK_75
 
 Label=Q88
 
@@ -6162,7 +6152,7 @@ Text=100. When you have to visit your primary care facility, do you have to take
 
 [Block]
 
-Name=DG_BLK_77
+Name=DG_BLK_76
 
 Label=Q89
 
@@ -6176,7 +6166,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_78
+Name=DG_BLK_77
 
 Label=Q89-Q90
 
@@ -6190,7 +6180,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_79
+Name=DG_BLK_78
 
 Label=Q91
 
@@ -6204,7 +6194,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_80
+Name=DG_BLK_79
 
 Label=Q91
 
@@ -6218,7 +6208,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_81
+Name=DG_BLK_80
 
 Label=Q92
 
@@ -6232,7 +6222,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_82
+Name=DG_BLK_81
 
 Label=Q92
 
@@ -6246,7 +6236,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_83
+Name=DG_BLK_82
 
 Label=Q93
 
@@ -6260,7 +6250,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_84
+Name=DG_BLK_83
 
 Label=Q93
 
@@ -6274,7 +6264,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_85
+Name=DG_BLK_84
 
 Label=Q94
 
@@ -6288,7 +6278,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_86
+Name=DG_BLK_85
 
 Label=Q94
 
@@ -6302,7 +6292,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_87
+Name=DG_BLK_86
 
 Label=Q95-Q99
 
@@ -6316,7 +6306,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_88
+Name=DG_BLK_87
 
 Label=Q100
 
@@ -6646,7 +6636,7 @@ Text=107. Did you or your household members do any other actions to improve your
 
 [Block]
 
-Name=DG_BLK_89
+Name=DG_BLK_88
 
 Label=Q101
 
@@ -6660,7 +6650,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_90
+Name=DG_BLK_89
 
 Label=Q101
 
@@ -6674,7 +6664,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_91
+Name=DG_BLK_90
 
 Label=Q102
 
@@ -6688,7 +6678,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_92
+Name=DG_BLK_91
 
 Label=Q102
 
@@ -6702,7 +6692,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_93
+Name=DG_BLK_92
 
 Label=Q103
 
@@ -6716,7 +6706,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_94
+Name=DG_BLK_93
 
 Label=Q103
 
@@ -6730,7 +6720,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_95
+Name=DG_BLK_94
 
 Label=Q104-Q105
 
@@ -6744,7 +6734,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_96
+Name=DG_BLK_95
 
 Label=Q106
 
@@ -6758,7 +6748,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_97
+Name=DG_BLK_96
 
 Label=Q106
 
@@ -6772,7 +6762,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_98
+Name=DG_BLK_97
 
 Label=Q107
 
@@ -6786,7 +6776,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_99
+Name=DG_BLK_98
 
 Label=Q107
 
@@ -7380,7 +7370,7 @@ Text=125. Overall, how would you rate your experience with the referral process?
 
 [Block]
 
-Name=DG_BLK_100
+Name=DG_BLK_99
 
 Label=Q108
 
@@ -7394,7 +7384,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_101
+Name=DG_BLK_100
 
 Label=Q109
 
@@ -7408,7 +7398,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_102
+Name=DG_BLK_101
 
 Label=Q109
 
@@ -7422,7 +7412,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_103
+Name=DG_BLK_102
 
 Label=Q110
 
@@ -7436,7 +7426,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_104
+Name=DG_BLK_103
 
 Label=Q110
 
@@ -7450,7 +7440,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_105
+Name=DG_BLK_104
 
 Label=Q111
 
@@ -7464,7 +7454,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_106
+Name=DG_BLK_105
 
 Label=Q111
 
@@ -7478,7 +7468,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_107
+Name=DG_BLK_106
 
 Label=Q112
 
@@ -7492,7 +7482,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_108
+Name=DG_BLK_107
 
 Label=Q113
 
@@ -7506,7 +7496,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_109
+Name=DG_BLK_108
 
 Label=Q113
 
@@ -7520,7 +7510,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_110
+Name=DG_BLK_109
 
 Label=Q114-Q118
 
@@ -7534,7 +7524,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_111
+Name=DG_BLK_110
 
 Label=Q119
 
@@ -7548,7 +7538,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_112
+Name=DG_BLK_111
 
 Label=Q120
 
@@ -7562,7 +7552,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_113
+Name=DG_BLK_112
 
 Label=Q121
 
@@ -7576,7 +7566,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_114
+Name=DG_BLK_113
 
 Label=Q121
 
@@ -7590,7 +7580,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_115
+Name=DG_BLK_114
 
 Label=Q122-Q125
 
@@ -7818,7 +7808,7 @@ Text=131. During your hospitalization in a DOH-retained hospital, did you or you
 
 [Block]
 
-Name=DG_BLK_116
+Name=DG_BLK_115
 
 Label=Q126
 
@@ -7832,7 +7822,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_117
+Name=DG_BLK_116
 
 Label=Q127
 
@@ -7846,7 +7836,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_118
+Name=DG_BLK_117
 
 Label=Q127
 
@@ -7860,7 +7850,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_119
+Name=DG_BLK_118
 
 Label=Q128
 
@@ -7874,7 +7864,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_120
+Name=DG_BLK_119
 
 Label=Q128
 
@@ -7888,7 +7878,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_121
+Name=DG_BLK_120
 
 Label=Q129
 
@@ -7902,7 +7892,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_122
+Name=DG_BLK_121
 
 Label=Q130-Q131
 
@@ -8180,11 +8170,13 @@ Text=138. From your most recent visit, which among the charges was the most expe
 
 [Field]
 
-Name=Q139_FINAL_AMOUNT_PHP
+Name=Q138_MOST_EXPENSIVE_OTHER_TXT
 
 Position=350,327,760,347
 
-Item=Q139_FINAL_AMOUNT_PHP,HOUSEHOLDSURVEY_DICT
+Item=Q138_MOST_EXPENSIVE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
@@ -8196,6 +8188,30 @@ Form=16
 
 Position=50,330,330,346
 
+Text=138. Most expensive charge — Other (specify) text
+
+ 
+
+  
+
+[Field]
+
+Name=Q139_FINAL_AMOUNT_PHP
+
+Position=350,357,760,377
+
+Item=Q139_FINAL_AMOUNT_PHP,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=16
+
+  
+
+[Text]
+
+Position=50,360,330,376
+
 Text=139. From your most recent visit, what was the final amount you paid in cash at the hospital cashier upon discharge? (PHP)
 
  
@@ -8206,7 +8222,7 @@ Text=139. From your most recent visit, what was the final amount you paid in cas
 
 Name=Q140_RECALL_BREAKDOWN
 
-Position=350,357,365,377
+Position=350,387,365,407
 
 Item=Q140_RECALL_BREAKDOWN,HOUSEHOLDSURVEY_DICT
 
@@ -8218,7 +8234,7 @@ Form=16
 
 [Text]
 
-Position=50,360,330,376
+Position=50,390,330,406
 
 Text=140. From your most recent visit, do you recall the breakdown of the bill?
 
@@ -8230,7 +8246,7 @@ Text=140. From your most recent visit, do you recall the breakdown of the bill?
 
 Name=Q141_BILL_ITEMS
 
-Position=350,387,365,407
+Position=350,417,365,437
 
 Item=Q141_BILL_ITEMS,HOUSEHOLDSURVEY_DICT
 
@@ -8242,7 +8258,7 @@ Form=16
 
 [Text]
 
-Position=50,390,330,406
+Position=50,420,330,436
 
 Text=141. From your most recent visit, which of the following were included in the bill?
 
@@ -8254,7 +8270,7 @@ Text=141. From your most recent visit, which of the following were included in t
 
 Name=Q141_BILL_ITEMS_OTHER_TXT
 
-Position=350,417,760,437
+Position=350,447,760,467
 
 Item=Q141_BILL_ITEMS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 
@@ -8268,7 +8284,7 @@ Form=16
 
 [Text]
 
-Position=50,420,330,436
+Position=50,450,330,466
 
 Text=141. Bill items — Other expenses (Specify) text
 
@@ -8280,7 +8296,7 @@ Text=141. Bill items — Other expenses (Specify) text
 
 Name=Q141_1_NO_RECEIPT_AMT_PHP
 
-Position=350,447,760,467
+Position=350,477,760,497
 
 Item=Q141_1_NO_RECEIPT_AMT_PHP,HOUSEHOLDSURVEY_DICT
 
@@ -8292,7 +8308,7 @@ Form=16
 
 [Text]
 
-Position=50,450,330,466
+Position=50,480,330,496
 
 Text=141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP)
 
@@ -8304,7 +8320,7 @@ Text=141.1. From your recent visit, how much was charged for services with no re
 
 Name=Q142_RECALL_PAYMENT
 
-Position=350,477,365,497
+Position=350,507,365,527
 
 Item=Q142_RECALL_PAYMENT,HOUSEHOLDSURVEY_DICT
 
@@ -8316,7 +8332,7 @@ Form=16
 
 [Text]
 
-Position=50,480,330,496
+Position=50,510,330,526
 
 Text=142. From your most recent visit, do you recall how you paid for your bill?
 
@@ -8328,7 +8344,7 @@ Text=142. From your most recent visit, do you recall how you paid for your bill?
 
 Name=Q143_HOW_PAID
 
-Position=350,507,365,527
+Position=350,537,365,557
 
 Item=Q143_HOW_PAID,HOUSEHOLDSURVEY_DICT
 
@@ -8340,7 +8356,7 @@ Form=16
 
 [Text]
 
-Position=50,510,330,526
+Position=50,540,330,556
 
 Text=143. From your most recent visit, how did you pay?
 
@@ -8352,7 +8368,7 @@ Text=143. From your most recent visit, how did you pay?
 
 Name=Q143_HOW_PAID_OTHER_TXT
 
-Position=350,537,760,557
+Position=350,567,760,587
 
 Item=Q143_HOW_PAID_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 
@@ -8366,7 +8382,7 @@ Form=16
 
 [Text]
 
-Position=50,540,330,556
+Position=50,570,330,586
 
 Text=143. From your most recent visit, how did you pay? — Other (specify) text
 
@@ -8376,7 +8392,7 @@ Text=143. From your most recent visit, how did you pay? — Other (specify) text
 
 [Block]
 
-Name=DG_BLK_123
+Name=DG_BLK_122
 
 Label=Q132
 
@@ -8390,7 +8406,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_124
+Name=DG_BLK_123
 
 Label=Q133
 
@@ -8404,7 +8420,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_125
+Name=DG_BLK_124
 
 Label=Q133
 
@@ -8418,7 +8434,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_126
+Name=DG_BLK_125
 
 Label=Q134
 
@@ -8432,7 +8448,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_127
+Name=DG_BLK_126
 
 Label=Q134
 
@@ -8446,7 +8462,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_128
+Name=DG_BLK_127
 
 Label=Q135
 
@@ -8460,7 +8476,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_129
+Name=DG_BLK_128
 
 Label=Q136
 
@@ -8474,7 +8490,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_130
+Name=DG_BLK_129
 
 Label=Q137
 
@@ -8488,7 +8504,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_131
+Name=DG_BLK_130
 
 Label=Q137
 
@@ -8502,7 +8518,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_132
+Name=DG_BLK_131
 
 Label=Q138
 
@@ -8516,13 +8532,27 @@ Length=1
 
 [Block]
 
+Name=DG_BLK_132
+
+Label=Q138
+
+DisplayTogether=Yes
+
+Position=20
+
+Length=1
+
+  
+
+[Block]
+
 Name=DG_BLK_133
 
 Label=Q139-Q140
 
 DisplayTogether=Yes
 
-Position=20
+Position=22
 
 Length=2
 
@@ -8536,7 +8566,7 @@ Label=Q141
 
 DisplayTogether=Yes
 
-Position=23
+Position=25
 
 Length=1
 
@@ -8550,7 +8580,7 @@ Label=Q141
 
 DisplayTogether=Yes
 
-Position=25
+Position=27
 
 Length=1
 
@@ -8564,7 +8594,7 @@ Label=Q141
 
 DisplayTogether=Yes
 
-Position=27
+Position=29
 
 Length=1
 
@@ -8578,7 +8608,7 @@ Label=Q142
 
 DisplayTogether=Yes
 
-Position=29
+Position=31
 
 Length=1
 
@@ -8592,7 +8622,7 @@ Label=Q143
 
 DisplayTogether=Yes
 
-Position=31
+Position=33
 
 Length=1
 
@@ -8606,7 +8636,7 @@ Label=Q143
 
 DisplayTogether=Yes
 
-Position=33
+Position=35
 
 Length=1
 
@@ -13178,6 +13208,32 @@ Text=202. Do any of the following reasons describe why you are worried about you
 
   
 
+[Field]
+
+Name=Q202_WORRY_REASONS_OTHER_TXT
+
+Position=350,117,760,137
+
+Item=Q202_WORRY_REASONS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=20
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Other (specify) text
+
+ 
+
+  
+
 [Block]
 
 Name=DG_BLK_224
@@ -13201,6 +13257,20 @@ Label=Q202
 DisplayTogether=Yes
 
 Position=3
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_226
+
+Label=Q202
+
+DisplayTogether=Yes
+
+Position=5
 
 Length=1
 
