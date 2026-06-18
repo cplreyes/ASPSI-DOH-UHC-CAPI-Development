@@ -16173,7 +16173,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "19"
+                          "value": "90"
                         }
                       ]
                     },
@@ -44346,62 +44346,61 @@
               ]
             },
             {
-              "name": "Q196_FOREGONE_O01",
+              "name": "Q196_FOREGONE",
               "labels": [
                 {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Doctor/consultation visit",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                   "language": "EN"
                 },
                 {
-                  "text": "Pagbisita sa doktor / konsultasyon",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                   "language": "FIL"
                 },
                 {
-                  "text": "Pagbisita sa doctor o consultation",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Pagbisita sa doktor / konsultasyon",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Bisita sa doktor/konsultasyon",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Pagbisita ha doktor/konsultasyon",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                   "language": "WAR"
                 }
               ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
+              "contentType": "alpha",
+              "length": 16,
               "valueSets": [
                 {
-                  "name": "Q196_FOREGONE_O01_VS1",
+                  "name": "Q196_FOREGONE_VS1",
                   "labels": [
                     {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Doctor/consultation visit",
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                       "language": "EN"
                     },
                     {
-                      "text": "Pagbisita sa doktor / konsultasyon",
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                       "language": "FIL"
                     },
                     {
-                      "text": "Pagbisita sa doctor o consultation",
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Pagbisita sa doktor / konsultasyon",
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Bisita sa doktor/konsultasyon",
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Pagbisita ha doktor/konsultasyon",
+                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
                       "language": "WAR"
                     }
                   ],
@@ -44409,983 +44408,264 @@
                     {
                       "labels": [
                         {
-                          "text": "Yes",
+                          "text": "Doctor/consultation visit",
                           "language": "EN"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Doctor/consultation visit",
                           "language": "FIL"
                         },
                         {
-                          "text": "Iyo",
+                          "text": "Doctor/consultation visit",
                           "language": "BCL"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Doctor/consultation visit",
                           "language": "BIS"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Doctor/consultation visit",
                           "language": "CEB"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Doctor/consultation visit",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "1"
+                          "value": "01"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Medicines or treatments",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Medicines or treatments",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Medicines or treatments",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Medicines or treatments",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Medicines or treatments",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Medicines or treatments",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q196_FOREGONE_O02",
-              "labels": [
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Medicines or treatments",
-                  "language": "EN"
-                },
-                {
-                  "text": "Mga gamot o gamutan",
-                  "language": "FIL"
-                },
-                {
-                  "text": "bulong o mga treatments",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Mga tambal o treatment",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Tambal o pagpatambal",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Mga medisina o mga pagtambal",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q196_FOREGONE_O02_VS1",
-                  "labels": [
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Medicines or treatments",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Mga gamot o gamutan",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "bulong o mga treatments",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Mga tambal o treatment",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Tambal o pagpatambal",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Mga medisina o mga pagtambal",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "02"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Laboratory tests / diagnostics",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Laboratory tests / diagnostics",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Laboratory tests / diagnostics",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Laboratory tests / diagnostics",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Laboratory tests / diagnostics",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Laboratory tests / diagnostics",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q196_FOREGONE_O03",
-              "labels": [
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Laboratory tests / diagnostics",
-                  "language": "EN"
-                },
-                {
-                  "text": "Mga laboratory test / diagnostic",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Laboratory tests / diagnostics",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Laboratory tests / diagnostics",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Laboratory tests / diagnostics",
-                  "language": "CEB"
-                },
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Laboratory tests / diagnostics",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q196_FOREGONE_O03_VS1",
-                  "labels": [
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Laboratory tests / diagnostics",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Mga laboratory test / diagnostic",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Laboratory tests / diagnostics",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Laboratory tests / diagnostics",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Laboratory tests / diagnostics",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Laboratory tests / diagnostics",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "03"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Hospital admission / inpatient care",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Hospital admission / inpatient care",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Hospital admission / inpatient care",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Hospital admission / inpatient care",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Hospital admission / inpatient care",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Hospital admission / inpatient care",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q196_FOREGONE_O04",
-              "labels": [
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Hospital admission / inpatient care",
-                  "language": "EN"
-                },
-                {
-                  "text": "Pagpasok sa ospital / inpatient care",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Hospital admission / inpatient care",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Pagpa-admit sa ospital / inpatient care",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Pagpa-admit sa ospital / inpatient care",
-                  "language": "CEB"
-                },
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Hospital admission / inpatient care",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q196_FOREGONE_O04_VS1",
-                  "labels": [
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Hospital admission / inpatient care",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Pagpasok sa ospital / inpatient care",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Hospital admission / inpatient care",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Pagpa-admit sa ospital / inpatient care",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Pagpa-admit sa ospital / inpatient care",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Hospital admission / inpatient care",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "04"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Preventive care (e.g., vaccinations, check-ups)",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Preventive care (e.g., vaccinations, check-ups)",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Preventive care (e.g., vaccinations, check-ups)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Preventive care (e.g., vaccinations, check-ups)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Preventive care (e.g., vaccinations, check-ups)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Preventive care (e.g., vaccinations, check-ups)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q196_FOREGONE_O05",
-              "labels": [
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Preventive care (e.g., vaccinations, check-ups)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Preventive care (hal. bakuna, check-up)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Preventive care (e.g., vaccinations, check-ups)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Preventive care (pananglitan: bakuna, check-up)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Preventive care (pananglitan, pagpabakuna, check-up)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Preventive care (e.g., vaccinations, check-ups)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q196_FOREGONE_O05_VS1",
-                  "labels": [
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Preventive care (e.g., vaccinations, check-ups)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Preventive care (hal. bakuna, check-up)",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Preventive care (e.g., vaccinations, check-ups)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Preventive care (pananglitan: bakuna, check-up)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Preventive care (pananglitan, pagpabakuna, check-up)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Preventive care (e.g., vaccinations, check-ups)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "05"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Dental care",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Dental care",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Dental care",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Dental care",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Dental care",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Dental care",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q196_FOREGONE_O06",
-              "labels": [
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Dental care",
-                  "language": "EN"
-                },
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Dental care",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Dental care",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Dental care",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Dental care",
-                  "language": "CEB"
-                },
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Dental care",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q196_FOREGONE_O06_VS1",
-                  "labels": [
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Dental care",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Dental care",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Dental care",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Dental care",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Dental care",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Dental care",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "06"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Other (please specify)",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Other (please specify)",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Other (please specify)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Other (please specify)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Other (please specify)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Other (please specify)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q196_FOREGONE_O07",
-              "labels": [
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (please specify)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Iba pa (pakispecify)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (please specify)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Uban pa (palihug ispecify)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Uban pa (palihug isulti)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (please specify)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q196_FOREGONE_O07_VS1",
-                  "labels": [
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (please specify)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Iba pa (pakispecify)",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (please specify)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Uban pa (palihug ispecify)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Uban pa (palihug isulti)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (please specify)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "99"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "We do not forego care",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "We do not forego care",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "We do not forego care",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "We do not forego care",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "We do not forego care",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "We do not forego care",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q196_FOREGONE_O08",
-              "labels": [
-                {
-                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 We do not forego care",
-                  "language": "EN"
-                },
-                {
-                  "text": "Hindi kami nagpapaliban o hindi tumitigil sa pagkuha ng pangangalagang pangkalusugan",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Dai man kami kaan",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Wala kami naglikay o nagpahunong sa pag-atiman",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Dili mi maglikay sa pag-atiman",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Diri namon gin-papabaya-an an pag-ataman",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q196_FOREGONE_O08_VS1",
-                  "labels": [
-                    {
-                      "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 We do not forego care",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Hindi kami nagpapaliban o hindi tumitigil sa pagkuha ng pangangalagang pangkalusugan",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Dai man kami kaan",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Wala kami naglikay o nagpahunong sa pag-atiman",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Dili mi maglikay sa pag-atiman",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Diri namon gin-papabaya-an an pag-ataman",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
+                          "value": "07"
                         }
                       ]
                     }
@@ -45397,27 +44677,27 @@
               "name": "Q196_FOREGONE_OTHER_TXT",
               "labels": [
                 {
-                  "text": "196. Other (please specify) \u2014 text",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (specify) text",
                   "language": "EN"
                 },
                 {
-                  "text": "196. Other (please specify) \u2014 text",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (specify) text",
                   "language": "FIL"
                 },
                 {
-                  "text": "196. Other (please specify) \u2014 text",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (specify) text",
                   "language": "BCL"
                 },
                 {
-                  "text": "196. Other (please specify) \u2014 text",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (specify) text",
                   "language": "BIS"
                 },
                 {
-                  "text": "196. Other (please specify) \u2014 text",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (specify) text",
                   "language": "CEB"
                 },
                 {
-                  "text": "196. Other (please specify) \u2014 text",
+                  "text": "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? \u2014 Other (specify) text",
                   "language": "WAR"
                 }
               ],
@@ -46546,62 +45826,61 @@
               ]
             },
             {
-              "name": "Q202_WORRY_REASONS_O01",
+              "name": "Q202_WORRY_REASONS",
               "labels": [
                 {
-                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Loss of income",
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                   "language": "EN"
                 },
                 {
-                  "text": "Pagkawala ng kita",
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                   "language": "FIL"
                 },
                 {
-                  "text": "Nawaraan ki kita",
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Pagkawala sa kita",
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Pagkawala sa kita",
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                   "language": "CEB"
                 },
                 {
-                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Loss of income",
+                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                   "language": "WAR"
                 }
               ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
+              "contentType": "alpha",
+              "length": 6,
               "valueSets": [
                 {
-                  "name": "Q202_WORRY_REASONS_O01_VS1",
+                  "name": "Q202_WORRY_REASONS_VS1",
                   "labels": [
                     {
-                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Loss of income",
+                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                       "language": "EN"
                     },
                     {
-                      "text": "Pagkawala ng kita",
+                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                       "language": "FIL"
                     },
                     {
-                      "text": "Nawaraan ki kita",
+                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Pagkawala sa kita",
+                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Pagkawala sa kita",
+                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                       "language": "CEB"
                     },
                     {
-                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Loss of income",
+                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
                       "language": "WAR"
                     }
                   ],
@@ -46609,328 +45888,99 @@
                     {
                       "labels": [
                         {
-                          "text": "Yes",
+                          "text": "Loss of income",
                           "language": "EN"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Loss of income",
                           "language": "FIL"
                         },
                         {
-                          "text": "Iyo",
+                          "text": "Loss of income",
                           "language": "BCL"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Loss of income",
                           "language": "BIS"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Loss of income",
                           "language": "CEB"
                         },
                         {
-                          "text": "Oo",
+                          "text": "Loss of income",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "1"
+                          "value": "01"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Healthcare costs related to coronavirus (COVID-19)",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Healthcare costs related to coronavirus (COVID-19)",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Healthcare costs related to coronavirus (COVID-19)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Healthcare costs related to coronavirus (COVID-19)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Healthcare costs related to coronavirus (COVID-19)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Healthcare costs related to coronavirus (COVID-19)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q202_WORRY_REASONS_O02",
-              "labels": [
-                {
-                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Healthcare costs related to coronavirus (COVID-19)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Gastusing pangkalusugan na may kaugnayan sa coronavirus (COVID-19)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "An healthcare cost ay relates sa coronavirus (COVID-19)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Mga gasto sa healthcare nga may kalabutan sa coronavirus (COVID-19)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Gasto sa pag-atiman sa panglawas nga may kalabotan sa coronavirus (COVID-19)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Mga gastos ha pag-ataman han panlawas nga may kalabutan ha coronavirus (COVID-19)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q202_WORRY_REASONS_O02_VS1",
-                  "labels": [
-                    {
-                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Healthcare costs related to coronavirus (COVID-19)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Gastusing pangkalusugan na may kaugnayan sa coronavirus (COVID-19)",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "An healthcare cost ay relates sa coronavirus (COVID-19)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Mga gasto sa healthcare nga may kalabutan sa coronavirus (COVID-19)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Gasto sa pag-atiman sa panglawas nga may kalabotan sa coronavirus (COVID-19)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Mga gastos ha pag-ataman han panlawas nga may kalabutan ha coronavirus (COVID-19)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "02"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dae",
+                          "text": "Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Dili",
+                          "text": "Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire",
+                          "text": "Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q202_WORRY_REASONS_O03",
-              "labels": [
-                {
-                  "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Gastusing pangkalusugan na HINDI kaugnay ng coronavirus (COVID-19) (kabilang ang paggamot sa iba pang sakit, karamdaman, pinsala, o sintomas)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "An healthcare cost ay bako related sa coronavirus (COVID-19) (kasabay an iba pang disease, hilang, injuries o kaya iba pang symptomas)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Mga gasto sa healthcare nga dili kalabutan sa coronavirus (COVID-19) (lakip ang pagtambal sa ubang sakit, balatian, kadaot, o sintomas)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Gasto sa pag-atiman sa panglawas nga WALAY kalabotan sa coronavirus (COVID-19) (apil ang pagtambal sa ubang mga sakit, balatian, samad, o sintomas)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Mga gastos ha pag-ataman han panlawas nga WARAY kalabutan han coronavirus (COVID-19) (lakip an pagtambal han iba nga mga sakit, balatian, samad, o sintomas)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q202_WORRY_REASONS_O03_VS1",
-                  "labels": [
-                    {
-                      "text": "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? \u2014 Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Gastusing pangkalusugan na HINDI kaugnay ng coronavirus (COVID-19) (kabilang ang paggamot sa iba pang sakit, karamdaman, pinsala, o sintomas)",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "An healthcare cost ay bako related sa coronavirus (COVID-19) (kasabay an iba pang disease, hilang, injuries o kaya iba pang symptomas)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Mga gasto sa healthcare nga dili kalabutan sa coronavirus (COVID-19) (lakip ang pagtambal sa ubang sakit, balatian, kadaot, o sintomas)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Gasto sa pag-atiman sa panglawas nga WALAY kalabotan sa coronavirus (COVID-19) (apil ang pagtambal sa ubang mga sakit, balatian, samad, o sintomas)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "Mga gastos ha pag-ataman han panlawas nga WARAY kalabutan han coronavirus (COVID-19) (lakip an pagtambal han iba nga mga sakit, balatian, samad, o sintomas)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dae",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Dili",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Dire",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
+                          "value": "03"
                         }
                       ]
                     }

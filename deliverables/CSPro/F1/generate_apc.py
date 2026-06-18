@@ -273,6 +273,8 @@ CHECKBOX_BASES = {
     "Q104_BUCAS_SERVICES", "Q105_BUCAS_FACTORS", "Q111_GAMOT_FACTORS",
     # Section E/G DO-NOT-READ select-all -> Check Box (this task)
     "Q117_ADDR_STOCKOUT_HOW", "Q151_LGU_NOT_SAT_WHY", "Q162_NOT_SATISFIED_WHY",
+    # #636 Section C: Q34 reports-used select_all -> single Check Box (PAPI tick-all).
+    "Q34_DATA_REPORTS_USED",
     # #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box.
     # (#586: Q144 re-converted to Check Box per the tester's PAPI screenshot showing
     # checkboxes — undoing the #576 single-select revert. Q160 stays single select_one:
@@ -831,6 +833,14 @@ CHECKBOX_CONVERT_A = [
     ("Q117_ADDR_STOCKOUT_HOW",      True, False, None),
     ("Q151_LGU_NOT_SAT_WHY",        True, True,  None),
     ("Q162_NOT_SATISFIED_WHY",      True, False, None),
+    # #636 Section C: Q34 reports-used select_all -> single Check Box. has_other =
+    # 'Other (specify)' (12th option, recoded 99). exclusive = False: no standalone
+    # 'None'/'I don't know' option (so _cb_codes produces no 90 code). The Q32->Q34
+    # gate is unchanged: Q32's postproc routes Q32=4 ('No, not submitting') -> Q35,
+    # skipping Q33+Q34; Q32 in {1,2,3} flows through Q33 -> Q34 normally. That skip-to
+    # ref targets Q35_STAFFING_CHANGED (the question AFTER Q34), never a Q34_..._O01
+    # field, so nothing to repoint -> gate=None.
+    ("Q34_DATA_REPORTS_USED",       True, False, None),
     # #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box. has_other =
     # every one carries an 'Other (specify)' (code 99). exclusive = the list has a
     # standalone option _cb_codes recodes to 90 ('None of the above' for Q137/Q140;

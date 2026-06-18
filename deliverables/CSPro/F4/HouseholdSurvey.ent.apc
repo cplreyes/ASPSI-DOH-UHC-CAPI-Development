@@ -616,7 +616,9 @@ postproc
     errmsg("Select at least one option for Q113 before continuing.");
     reenter;
   endif;
+  if pos("99", Q113_WHY_NOT) = 0 then
   skip to Q126_NBB_HEARD;   { after why-not -> Section L NBB (skip Q114-Q125 referral-experience tail) }
+  endif;
 
 PROC Q113_WHY_NOT_OTHER_TXT
 preproc
@@ -629,6 +631,7 @@ postproc
     errmsg("'Other (specify)' was ticked for Q113 - please specify.");
     reenter;
   endif;
+  skip to Q126_NBB_HEARD;   { after why-not -> Section L NBB (skip Q114-Q125 referral-experience tail) }
 
 PROC Q121_WHY_HOSPITAL
 postproc
@@ -788,6 +791,32 @@ postproc
     reenter;
   endif;
 
+PROC Q196_FOREGONE
+postproc
+  if length(strip(Q196_FOREGONE)) = 0 then
+    errmsg("Select at least one option for Q196 before continuing.");
+    reenter;
+  endif;
+
+PROC Q196_FOREGONE_OTHER_TXT
+preproc
+  if pos("99", Q196_FOREGONE) = 0 then
+    Q196_FOREGONE_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q196_FOREGONE) > 0 and length(strip(Q196_FOREGONE_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q196 - please specify.");
+    reenter;
+  endif;
+
+PROC Q202_WORRY_REASONS
+postproc
+  if length(strip(Q202_WORRY_REASONS)) = 0 then
+    errmsg("Select at least one option for Q202 before continuing.");
+    reenter;
+  endif;
+
 PROC Q52_UHC_SOURCE
 postproc
   if length(strip(Q52_UHC_SOURCE)) = 0 then
@@ -944,6 +973,9 @@ postproc
   if length(strip(Q65_CONDITIONS)) = 0 then
     errmsg("Select at least one option for Q65 before continuing.");
     reenter;
+  endif;
+  if pos("90", Q65_CONDITIONS) > 0 and length(strip(Q65_CONDITIONS)) > 2 then
+    errmsg("Q65: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
   endif;
 
 PROC Q65_CONDITIONS_OTHER_TXT
@@ -1429,12 +1461,6 @@ postproc
     skip to Q94_TRANSPORT;
   endif;
 
-PROC Q97_KNOWS_BOOKING
-postproc
-  if Q97_KNOWS_BOOKING = 2 then
-    skip to Q100_LEAVE_WORK_SCHOOL;
-  endif;
-
 PROC Q105_FORGONE_CARE
 postproc
   if Q105_FORGONE_CARE = 2 then
@@ -1493,6 +1519,12 @@ PROC Q142_RECALL_PAYMENT
 postproc
   if Q142_RECALL_PAYMENT = 2 then
     skip to Q144_CEREALS_CONSUMED;
+  endif;
+
+PROC Q195_INCOME_PCT
+postproc
+  if Q195_INCOME_PCT <> 1 then
+    skip to Q197_DELAYED_CARE;
   endif;
 
 { ---- #169 Section N expenditure consumed-gate (dcf-driven) ---- }
@@ -2102,18 +2134,6 @@ postproc
     reenter;
   endif;
 
-PROC Q196_FOREGONE_OTHER_TXT
-preproc
-  if Q196_FOREGONE_O07 <> 1 then
-    Q196_FOREGONE_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q196_FOREGONE_O07 = 1 and length(strip(Q196_FOREGONE_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q196_FOREGONE but no text was entered. Please specify.");
-    reenter;
-  endif;
-
 PROC Q199_WTP_OTHER_TXT
 preproc
   if Q199_WTP_CONSULT <> 9 then
@@ -2235,7 +2255,7 @@ preproc
   if Q156_ALCOHOL_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q156_ALCOHOL_INKIND_PHP + Q156_ALCOHOL_PURCHASED_PHP; endif;
   protect(Q157_FOOD_SUBTOTAL_TOTAL_PHP, true);
 
-PROC Q173_HEALTH_INS_CONSUMED
+PROC Q175_INPATIENT_CONSUMED
 preproc
   Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
   protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP, true);
@@ -2244,8 +2264,6 @@ PROC Q178_PREVENTIVE_CONSUMED
 preproc
   { #617 real Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
   Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
-  if Q173_HEALTH_INS_CONSUMED = 1 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q173_HEALTH_INS_INKIND_PHP + Q173_HEALTH_INS_PURCHASED_PHP; endif;
-  if Q174_OTHER_INS_CONSUMED = 1 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q174_OTHER_INS_INKIND_PHP + Q174_OTHER_INS_PURCHASED_PHP; endif;
   if Q175_INPATIENT_CONSUMED = 1 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q175_INPATIENT_INKIND_PHP + Q175_INPATIENT_PURCHASED_PHP; endif;
   if Q176_EMERGENCY_TRANSPORT_CONSUMED = 1 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q176_EMERGENCY_TRANSPORT_INKIND_PHP + Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP; endif;
   protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP, true);
@@ -2273,20 +2291,6 @@ preproc
   protect(Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP, true);
 
 { ---- Select-all validation — >=1 option ticked (auto-derived from dcf) ---- }
-PROC Q196_FOREGONE_O08
-postproc
-  if not (Q196_FOREGONE_O01 = 1 or Q196_FOREGONE_O02 = 1 or Q196_FOREGONE_O03 = 1 or Q196_FOREGONE_O04 = 1 or Q196_FOREGONE_O05 = 1 or Q196_FOREGONE_O06 = 1 or Q196_FOREGONE_O07 = 1 or Q196_FOREGONE_O08 = 1) then
-    errmsg("Select at least one option for Q196_FOREGONE before continuing.");
-    reenter;
-  endif;
-
-PROC Q202_WORRY_REASONS_O03
-postproc
-  if not (Q202_WORRY_REASONS_O01 = 1 or Q202_WORRY_REASONS_O02 = 1 or Q202_WORRY_REASONS_O03 = 1) then
-    errmsg("Select at least one option for Q202_WORRY_REASONS before continuing.");
-    reenter;
-  endif;
-
 { ---- Range + cross-field validations (spec §3.1-§3.12) ---- }
 PROC Q18_INCOME_AMOUNT
 postproc

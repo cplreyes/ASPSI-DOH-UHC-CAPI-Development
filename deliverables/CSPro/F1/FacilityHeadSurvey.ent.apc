@@ -813,6 +813,25 @@ postproc
     skip to Q35_STAFFING_CHANGED;
   endif;
 
+PROC Q34_DATA_REPORTS_USED
+postproc
+  if length(strip(Q34_DATA_REPORTS_USED)) = 0 then
+    errmsg("Select at least one option for Q34 before continuing.");
+    reenter;
+  endif;
+
+PROC Q34_DATA_REPORTS_USED_OTHER_TXT
+preproc
+  if pos("99", Q34_DATA_REPORTS_USED) = 0 then
+    Q34_DATA_REPORTS_USED_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q34_DATA_REPORTS_USED) > 0 and length(strip(Q34_DATA_REPORTS_USED_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q34 - please specify.");
+    reenter;
+  endif;
+
 PROC Q3_AGE
 postproc
   if Q3_AGE <> notappl and Q3_AGE < 18 then
@@ -2583,18 +2602,6 @@ preproc
 postproc
   if (Q33_DATA_FREQ = 6) and length(strip(Q33_OTHER_TXT)) = 0 then
     errmsg("An 'other' option was selected for Q33. Please specify.");
-    reenter;
-  endif;
-
-PROC Q34_DATA_REPORTS_USED_OTHER_TXT
-preproc
-  if Q34_DATA_REPORTS_USED_O12 <> 1 then
-    Q34_DATA_REPORTS_USED_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked }
-    noinput;
-  endif;
-postproc
-  if Q34_DATA_REPORTS_USED_O12 = 1 and length(strip(Q34_DATA_REPORTS_USED_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q34. Please specify.");
     reenter;
   endif;
 

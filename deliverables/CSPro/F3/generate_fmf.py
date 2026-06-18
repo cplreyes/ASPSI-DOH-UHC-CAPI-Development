@@ -249,6 +249,19 @@ _CHECKBOX_FIELDS = {
     "Q67_WHY_THIS_FACILITY", "Q76_KON_UNDERSTAND", "Q101_BUCAS_UNDERSTAND",
     "Q117_NBB_SOURCE", "Q118_NBB_UNDERSTAND", "Q120_ZBB_SOURCE", "Q121_ZBB_UNDERSTAND",
     "Q171_WHY_NOT", "Q177_WHY_HOSPITAL", "Q125_MAIFIP_SOURCE",   # #560
+    # #635/#639/#640 Section D select_all -> Check Box (Q42/Q50/Q52 were converted in
+    # generate_dcf/apc but never added to a fmf checkbox list, so optimize_capture_types
+    # was demoting them to single-select DropDown — a multi-select data-loss regression).
+    "Q42_DIFFICULTY", "Q50_DIFFICULTY_PAYING", "Q52_PLANS",
+    # #669/#670/#671/#673 Section E/F/G select_all -> Check Box (tick-all).
+    "Q59_SCHED_COMM", "Q61_CONSULT_COMM", "Q70_USUAL_TRANSPORT", "Q73_NEAREST_TRANSPORT",
+    "Q75_KON_SOURCE", "Q82_KON_WHY_NOT_REG", "Q85_CONDITIONS", "Q86_VISIT_EVENTS",
+    "Q87_OTHER_ACTIONS", "Q90_NOT_CONFINED", "Q93_LABS",
+    # #690/#694 Section G/H select_all -> Check Box (tick-all).
+    "Q100_BUCAS_SOURCE", "Q103_BUCAS_SERVICES", "Q114_NO_PH",
+    # #696 Section K/L select_all -> Check Box (tick-all).
+    "Q149_WHERE_BUY", "Q153_GAMOT_SOURCE", "Q154_GAMOT_UNDERSTAND", "Q157_WHERE_REST",
+    "Q160_WHY_GENERIC", "Q161_WHY_BRANDED", "Q163_CARE_TYPE",
 }
 _CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share the checkbox screen
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen

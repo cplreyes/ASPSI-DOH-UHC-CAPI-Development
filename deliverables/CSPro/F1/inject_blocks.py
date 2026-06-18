@@ -69,6 +69,8 @@ _CHECKBOX_FIELDS = {"Q49_QUALITY_CHALL", "Q50_ACCESS_CHALL",
                     "Q104_BUCAS_SERVICES", "Q105_BUCAS_FACTORS", "Q111_GAMOT_FACTORS",
                     # Section E/G DO-NOT-READ select-all -> Check Box
                     "Q117_ADDR_STOCKOUT_HOW", "Q151_LGU_NOT_SAT_WHY", "Q162_NOT_SATISFIED_WHY",
+                    # #636 Section C: Q34 reports-used select_all -> single Check Box.
+                    "Q34_DATA_REPORTS_USED",
                     # #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box.
                     # (#586: Q144 re-added as Check Box per PAPI; Q160 stays single.)
                     "Q144_DIFFICULT_REASON",

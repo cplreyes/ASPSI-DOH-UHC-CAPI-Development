@@ -52,7 +52,12 @@ def _cb_codes(options):
         norm = re.sub(r"\s+", " ", low).strip().rstrip(".").strip()
         norm = re.sub(r"^i\s+", "", norm)
         is_dont_know = norm in ("don't know", "dont know")
-        if "specif" in low or low.startswith("other"):
+        # #673: match the 'Other (specify)' box by the 'specif' marker ONLY — NOT by a bare
+        # 'other' prefix. A substantive option that merely STARTS with 'Other' (Q85 'Other
+        # infection (e.g. urine, skin...)') is not the specify box; the old startswith('other')
+        # test collided it onto code 99, duplicating the Other-specify code and mis-firing the
+        # pos("99", base) _OTHER_TXT gate. Every real Other-specify box contains 'specify'.
+        if "specif" in low:
             out.append((text, "99"))
         elif low.startswith(("none", "no initiative")) or is_dont_know:
             out.append((text, "90"))
@@ -530,8 +535,9 @@ def build_section_d():
               "40. Who assisted — Other (specify) text", length=120),
         yes_no("Q41_REG_DIFFICULTY",
                "41. Did you have any difficulties in the registration process?"),
-        *select_all("Q42_DIFFICULTY",
-                    "42. What did you find difficult about the process?", Q42_DIFFICULTY),
+        *checkbox_multiselect("Q42_DIFFICULTY",   # #635: select_all -> Check Box (tick-all)
+                    "42. What did you find difficult about the process?",
+                    _cb_codes(Q42_DIFFICULTY), with_other_txt=True),
         yes_no("Q43_KNOWS_ASSIST",
                "43. Would you know where to go to seek assistance during registration?"),
         select_one("Q44_WHERE_ASSIST",
@@ -555,12 +561,14 @@ def build_section_d():
                    "48. Do you pay PhilHealth premiums every month?", Q48_PAY, length=1),
         yes_no("Q49_PREMIUM_DIFFICULT",
                "49. Do you find it difficult to pay your PhilHealth premium every month?"),
-        *select_all("Q50_DIFFICULTY_PAYING",
-                    "50. Why did you find it difficult?", Q50_DIFFICULTY_PAYING),
+        *checkbox_multiselect("Q50_DIFFICULTY_PAYING",   # #639: select_all -> Check Box (tick-all)
+                    "50. Why did you find it difficult?",
+                    _cb_codes(Q50_DIFFICULTY_PAYING), with_other_txt=True),
         yes_no("Q51_OTHER_INSURANCE",
                "51. Are you registered with another health insurance plan?"),
-        *select_all("Q52_PLANS",
-                    "52. Which health insurance plan/s are you enrolled in?", Q52_PLANS),
+        *checkbox_multiselect("Q52_PLANS",   # #640: select_all -> Check Box (tick-all)
+                    "52. Which health insurance plan/s are you enrolled in?",
+                    _cb_codes(Q52_PLANS), with_other_txt=True),
     ])
     return record("D_PHILHEALTH_REG",
                   "D. PhilHealth Registration and Health Insurance", "F", items)
@@ -703,14 +711,14 @@ def build_section_e():
                 "58. Wait time to set appointment with main primary care provider — Days", length=3),
         numeric("Q58_WAIT_MINUTES",
                 "58. Wait time to set appointment with main primary care provider — Minutes", length=4),
-        *select_all("Q59_SCHED_COMM",
+        *checkbox_multiselect("Q59_SCHED_COMM",   # #669: select_all -> Check Box (tick-all)
                     "59. What mode/s of communication was/were available to you when scheduling a "
-                    "consultation with your main primary care provider?", COMM_MODES),
+                    "consultation with your main primary care provider?", _cb_codes(COMM_MODES)),
         yes_no("Q60_SCHED_TELECON_OK",
                "60. If teleconsultation was available, did you succeed in using the teleconsult? (scheduling)"),
-        *select_all("Q61_CONSULT_COMM",
+        *checkbox_multiselect("Q61_CONSULT_COMM",   # #669: select_all -> Check Box (tick-all)
                     "61. What mode/s of communication was/were available to you when consulting with "
-                    "your main primary care provider?", COMM_MODES),
+                    "your main primary care provider?", _cb_codes(COMM_MODES)),
         yes_no("Q62_CONSULT_TELECON_OK",
                "62. If teleconsultation was available, did you succeed in using the teleconsult? (consultation)"),
         yes_no("Q63_HAS_USUAL_FACILITY",
@@ -740,9 +748,9 @@ def build_section_e():
         numeric("Q69_USUAL_TRAVEL_MM",
                 "69. How long does it take you to travel to the health facility you usually go to — Minutes",
                 length=2),
-        *select_all("Q70_USUAL_TRANSPORT",
+        *checkbox_multiselect("Q70_USUAL_TRANSPORT",   # #670: select_all -> Check Box (tick-all)
                     "70. What mode/s of transportation do you use when travelling to the health facility "
-                    "that you usually go to?", TRANSPORT),
+                    "that you usually go to?", _cb_codes(TRANSPORT), with_other_txt=True),
         select_one("Q71_NEAREST_TYPE",
                    "71. What is the type of the primary care facility nearest to your house?",
                    Q71_NEAREST_TYPE, length=1),
@@ -754,14 +762,14 @@ def build_section_e():
         numeric("Q72_NEAREST_TRAVEL_MM",
                 "72. How long does it take you to travel from your house when going to the nearest "
                 "primary care facility? — Minutes", length=2),
-        *select_all("Q73_NEAREST_TRANSPORT",
+        *checkbox_multiselect("Q73_NEAREST_TRANSPORT",   # #670: select_all -> Check Box (tick-all)
                     "73. What mode/s of transportation do you use when travelling to the nearest "
-                    "primary care facility?", TRANSPORT),
+                    "primary care facility?", _cb_codes(TRANSPORT), with_other_txt=True),
         yes_no("Q74_KON_HEARD",
                "74. Have you heard of the term \"YAKAP/ Konsulta package\"?"),
-        *select_all("Q75_KON_SOURCE",
+        *checkbox_multiselect("Q75_KON_SOURCE",   # #671: select_all -> Check Box (tick-all)
                     "75. What are your sources of information about the YAKAP/Konsulta package?",
-                    Q75_KON_SOURCE),
+                    _cb_codes(Q75_KON_SOURCE), with_other_txt=True),
         *checkbox_multiselect("Q76_KON_UNDERSTAND",
                     "76. What is your understanding about the YAKAP/Konsulta package?",
                     _cb_codes(Q76_KON_UNDERSTAND), with_other_txt=True),
@@ -778,9 +786,9 @@ def build_section_e():
                "YAKAP/Konsulta package provider?"),
         yes_no("Q81_KON_APPT_CHECKUP",
                "81. Was that appointment for a general check-up (i.e. not related to an illness or injury)?"),
-        *select_all("Q82_KON_WHY_NOT_REG",
+        *checkbox_multiselect("Q82_KON_WHY_NOT_REG",   # #671: select_all -> Check Box (tick-all)
                     "82. Why are you NOT registered with a YAKAP/Konsulta package provider?",
-                    Q82_WHY_NOT_REG),
+                    _cb_codes(Q82_WHY_NOT_REG), with_other_txt=True),
     ]
     return record("E_PRIMARY_CARE",
                   "E. Primary Care Utilization", "G", items)
@@ -869,15 +877,16 @@ def build_section_f():
                    Q84_SERVICE, length=1),
         alpha("Q84_SERVICE_TYPE_OTHER_TXT",
               "84. Service type — Other (specify) text", length=120),
-        *select_all("Q85_CONDITIONS",
+        *checkbox_multiselect("Q85_CONDITIONS",   # #673: select_all -> Check Box (tick-all)
                     "85. What condition/s do/es the patient usually visit the facility for?",
-                    Q85_CONDITIONS),
-        *select_all("Q86_VISIT_EVENTS",
+                    _cb_codes(Q85_CONDITIONS), with_other_txt=True),
+        *checkbox_multiselect("Q86_VISIT_EVENTS",   # #673: select_all -> Check Box (tick-all)
                     "86. Which of the following happened during the patient's most recent visit?",
-                    Q86_VISIT_EVENTS),
-        *select_all("Q87_OTHER_ACTIONS",
+                    _cb_codes(Q86_VISIT_EVENTS)),
+        *checkbox_multiselect("Q87_OTHER_ACTIONS",   # #673: select_all -> Check Box (tick-all)
                     "87. Apart from this visit, has the patient done anything else to improve "
-                    "his/her health condition or address his/her health concern?", Q87_OTHER_ACTIONS),
+                    "his/her health condition or address his/her health concern?",
+                    _cb_codes(Q87_OTHER_ACTIONS), with_other_txt=True),
     ]
     return record("F_HEALTH_SEEKING",
                   "F. Patient's Health-Seeking Behavior", "H", items)
@@ -1019,9 +1028,9 @@ def build_section_g():
               "88. Why visit — Other (specify) text", length=120),
         yes_no("Q89_ADVISED_ADMIT",
                "89. Were you advised for hospitalization / to be admitted in the hospital?"),
-        *select_all("Q90_NOT_CONFINED",
+        *checkbox_multiselect("Q90_NOT_CONFINED",   # #673: select_all -> Check Box (tick-all)
                     "90. What were the reasons why you were not confined/ admitted in a hospital/clinic?",
-                    Q90_NOT_CONFINED),
+                    _cb_codes(Q90_NOT_CONFINED), with_other_txt=True),
         yes_no("Q91_USUAL_OUTPATIENT",
                "91. Do you usually avail consultation services for outpatient care?"),
     ]
@@ -1037,11 +1046,12 @@ def build_section_g():
             items.append(numeric(f"Q92_PAY_{code}_AMT",
                                  f"92. Cost of consultation — {label} (Amount in Pesos)", length=8))
     items.extend([
-        *select_all("Q93_LABS",
+        *checkbox_multiselect("Q93_LABS",   # #673: select_all -> Check Box (tick-all)
                     "93. Did you have any of the following laboratory tests done during your outpatient care?",
-                    Q93_LABS),
-        alpha("Q93_LABS_OTHER_TXT",
-              "93. Lab tests — Other, specify text", length=120),
+                    _cb_codes(Q93_LABS), with_other_txt=True),
+        # NOTE: checkbox_multiselect(with_other_txt=True) auto-emits Q93_LABS_OTHER_TXT
+        # (gated on pos("99", base)); the old standalone alpha("Q93_LABS_OTHER_TXT") was
+        # removed to avoid a duplicate dcf item (#673).
     ])
     # Q94 lab test cost — payment-source matrix (aggregate; spec asks per-test roster).
     # #451: only Out-of-pocket(01) carries an 'Amount in Pesos' box (per the paper); all
@@ -1104,17 +1114,17 @@ def build_section_g():
     items.extend([
         yes_no("Q99_BUCAS_HEARD",
                "99. Have you heard about Bagong Urgent Care and Ambulatory Services (BUCAS) center?"),
-        *select_all("Q100_BUCAS_SOURCE",
+        *checkbox_multiselect("Q100_BUCAS_SOURCE",   # #690: select_all -> Check Box (tick-all)
                     "100. If yes, what are your sources of information about this BUCAS center?",
-                    Q100_BUCAS_SOURCE),
+                    _cb_codes(Q100_BUCAS_SOURCE), with_other_txt=True),
         *checkbox_multiselect("Q101_BUCAS_UNDERSTAND",
                     "101. What is your understanding about a BUCAS center?",
                     _cb_codes(Q101_BUCAS_UNDERSTAND), with_other_txt=True),
         yes_no("Q102_BUCAS_ACCESSED",
                "102. Have you accessed the services in a BUCAS center?"),
-        *select_all("Q103_BUCAS_SERVICES",
+        *checkbox_multiselect("Q103_BUCAS_SERVICES",   # #690: select_all -> Check Box (tick-all)
                     "103. If yes, which service/s did you avail?",
-                    Q103_BUCAS_SERVICES),
+                    _cb_codes(Q103_BUCAS_SERVICES), with_other_txt=True),
         select_one("Q104_WITHOUT_BUCAS",
                    "104. Without BUCAS Center, where would you have gone?",
                    Q104_ALT, length=1),
@@ -1257,9 +1267,9 @@ def build_section_h():
     items.append(alpha("Q113_PAY_OTHER_TXT",
                        "113. Hospital bill payment — Other specify text", length=120))
     items.extend([
-        *select_all("Q114_NO_PH",
+        *checkbox_multiselect("Q114_NO_PH",   # #694: select_all -> Check Box (tick-all)
                     "114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)",
-                    Q114_NO_PH),
+                    _cb_codes(Q114_NO_PH), with_other_txt=True),
     ])
     # Q115 final cash first, then the 115.1/115.2 breakdowns sit UNDER it (#517 — mirrors
     # the outpatient side, where Q97 total precedes Q97.1/Q97.2).
@@ -1603,9 +1613,9 @@ def build_section_k():
         alpha("Q148_MEDICINES_TXT",
               "Which medicine(s) do you take for the condition(s) selected above?",
               length=240),
-        *select_all("Q149_WHERE_BUY",
+        *checkbox_multiselect("Q149_WHERE_BUY",   # #696: select_all -> Check Box (tick-all)
                     "149. Where do you usually buy or receive your medicines? "
-                    "Select all that apply.", Q149_WHERE_BUY),
+                    "Select all that apply.", _cb_codes(Q149_WHERE_BUY), with_other_txt=True),
         numeric("Q150_TRAVEL_HH",
                 "150. Travel time from home to nearest pharmacy — hours (HH)", length=2),
         numeric("Q150_TRAVEL_MM",
@@ -1617,31 +1627,31 @@ def build_section_k():
                "152. Have you heard of the Guaranteed and Accessible Medications for "
                "Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's "
                "YAKAP/Konsulta or primary care benefit package?"),
-        *select_all("Q153_GAMOT_SOURCE",
+        *checkbox_multiselect("Q153_GAMOT_SOURCE",   # #696: select_all -> Check Box (tick-all)
                     "153. If yes, what are your sources of information for GAMOT Package?",
-                    Q153_GAMOT_SRC),
-        *select_all("Q154_GAMOT_UNDERSTAND",
+                    _cb_codes(Q153_GAMOT_SRC), with_other_txt=True),
+        *checkbox_multiselect("Q154_GAMOT_UNDERSTAND",   # #696: select_all -> Check Box (tick-all)
                     "154. What is your understanding of the GAMOT Package?",
-                    Q154_GAMOT_UNDERSTAND),
+                    _cb_codes(Q154_GAMOT_UNDERSTAND), with_other_txt=True),
         yes_no("Q155_GAMOT_GOT_MEDS",
                "155. Did you get the medicines from the GAMOT Package during the past 6 months?"),
         alpha("Q156_GAMOT_MEDS_LIST",
               "156. What are the medications that you obtained from the GAMOT Package? [LIST]",
               length=240),
-        *select_all("Q157_WHERE_REST",
+        *checkbox_multiselect("Q157_WHERE_REST",   # #696: select_all -> Check Box (tick-all)
                     "157. Where did you get the rest of the medicines? Select all that apply.",
-                    Q157_WHERE_REST),
+                    _cb_codes(Q157_WHERE_REST), with_other_txt=True),
         yes_no("Q158_BRAND_GEN_KNOW",
                "158. Do you know the difference between a 'branded' and a 'generic' medicine?"),
         select_one("Q159_BRAND_GEN_BOUGHT",
                    "159. Was/were the medicine/s you bought outside of GAMOT pharmacy "
                    "branded or generic?", Q159_BRANDED_GENERIC, length=1),
-        *select_all("Q160_WHY_GENERIC",
+        *checkbox_multiselect("Q160_WHY_GENERIC",   # #696: select_all -> Check Box (tick-all)
                     "160. If generic, why did you buy generic medicine?",
-                    Q160_WHY_GENERIC),
-        *select_all("Q161_WHY_BRANDED",
+                    _cb_codes(Q160_WHY_GENERIC), with_other_txt=True),
+        *checkbox_multiselect("Q161_WHY_BRANDED",   # #696: select_all -> Check Box (tick-all)
                     "161. If branded, why did you buy branded medicine?",
-                    Q161_WHY_BRANDED),
+                    _cb_codes(Q161_WHY_BRANDED), with_other_txt=True),
     ]
     return record("K_ACCESS_MEDICINES", "K. Access to Medicines", "M", items)
 
@@ -1751,9 +1761,9 @@ def build_section_l():
                "162. Based on your most recent visit/confinement at [facility_name_input], "
                "did a healthcare worker refer you to another facility or specialist for "
                "further care or specialized care?"),
-        *select_all("Q163_CARE_TYPE",
+        *checkbox_multiselect("Q163_CARE_TYPE",   # #696: select_all -> Check Box (tick-all)
                     "163. What type of care was the referral for?",
-                    Q163_CARE_TYPE),
+                    _cb_codes(Q163_CARE_TYPE), with_other_txt=True),
         select_one("Q164_SPECIALIST",
                    "164. What kind of specialist did they recommend?",
                    Q164_SPECIALIST, length=2),

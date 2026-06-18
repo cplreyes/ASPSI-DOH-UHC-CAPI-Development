@@ -996,7 +996,7 @@ Label=O. Sources of Funds for Health
 
 Level=1
 
-Size=806,667
+Size=806,457
 
   
 
@@ -1022,21 +1022,7 @@ Item=Q194_OTHER_TXT
 
 Item=Q195_INCOME_PCT
 
-Item=Q196_FOREGONE_O01
-
-Item=Q196_FOREGONE_O02
-
-Item=Q196_FOREGONE_O03
-
-Item=Q196_FOREGONE_O04
-
-Item=Q196_FOREGONE_O05
-
-Item=Q196_FOREGONE_O06
-
-Item=Q196_FOREGONE_O07
-
-Item=Q196_FOREGONE_O08
+Item=Q196_FOREGONE
 
 Item=Q196_FOREGONE_OTHER_TXT
 
@@ -1088,11 +1074,7 @@ Item=Q200_REDUCED_SPEND
 
 Item=Q201_WORRIED
 
-Item=Q202_WORRY_REASONS_O01
-
-Item=Q202_WORRY_REASONS_O02
-
-Item=Q202_WORRY_REASONS_O03
+Item=Q202_WORRY_REASONS
 
   
 
@@ -6322,13 +6304,13 @@ Length=1
 
 Name=DG_BLK_87
 
-Label=Q95-Q97
+Label=Q95-Q99
 
 DisplayTogether=Yes
 
 Position=21
 
-Length=3
+Length=5
 
   
 
@@ -6336,25 +6318,11 @@ Length=3
 
 Name=DG_BLK_88
 
-Label=Q98-Q99
-
-DisplayTogether=Yes
-
-Position=25
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_89
-
 Label=Q100
 
 DisplayTogether=Yes
 
-Position=28
+Position=27
 
 Length=1
 
@@ -6678,7 +6646,7 @@ Text=107. Did you or your household members do any other actions to improve your
 
 [Block]
 
-Name=DG_BLK_90
+Name=DG_BLK_89
 
 Label=Q101
 
@@ -6692,7 +6660,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_91
+Name=DG_BLK_90
 
 Label=Q101
 
@@ -6706,7 +6674,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_92
+Name=DG_BLK_91
 
 Label=Q102
 
@@ -6720,7 +6688,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_93
+Name=DG_BLK_92
 
 Label=Q102
 
@@ -6734,7 +6702,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_94
+Name=DG_BLK_93
 
 Label=Q103
 
@@ -6748,7 +6716,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_95
+Name=DG_BLK_94
 
 Label=Q103
 
@@ -6762,7 +6730,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_96
+Name=DG_BLK_95
 
 Label=Q104-Q105
 
@@ -6776,7 +6744,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_97
+Name=DG_BLK_96
 
 Label=Q106
 
@@ -6790,7 +6758,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_98
+Name=DG_BLK_97
 
 Label=Q106
 
@@ -6804,7 +6772,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_99
+Name=DG_BLK_98
 
 Label=Q107
 
@@ -6818,7 +6786,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_100
+Name=DG_BLK_99
 
 Label=Q107
 
@@ -7412,7 +7380,7 @@ Text=125. Overall, how would you rate your experience with the referral process?
 
 [Block]
 
-Name=DG_BLK_101
+Name=DG_BLK_100
 
 Label=Q108
 
@@ -7426,7 +7394,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_102
+Name=DG_BLK_101
 
 Label=Q109
 
@@ -7440,7 +7408,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_103
+Name=DG_BLK_102
 
 Label=Q109
 
@@ -7454,7 +7422,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_104
+Name=DG_BLK_103
 
 Label=Q110
 
@@ -7468,7 +7436,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_105
+Name=DG_BLK_104
 
 Label=Q110
 
@@ -7482,7 +7450,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_106
+Name=DG_BLK_105
 
 Label=Q111
 
@@ -7496,7 +7464,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_107
+Name=DG_BLK_106
 
 Label=Q111
 
@@ -7510,7 +7478,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_108
+Name=DG_BLK_107
 
 Label=Q112
 
@@ -7524,7 +7492,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_109
+Name=DG_BLK_108
 
 Label=Q113
 
@@ -7538,7 +7506,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_110
+Name=DG_BLK_109
 
 Label=Q113
 
@@ -7552,7 +7520,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_111
+Name=DG_BLK_110
 
 Label=Q114-Q118
 
@@ -7566,7 +7534,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_112
+Name=DG_BLK_111
 
 Label=Q119
 
@@ -7580,7 +7548,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_113
+Name=DG_BLK_112
 
 Label=Q120
 
@@ -7594,7 +7562,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_114
+Name=DG_BLK_113
 
 Label=Q121
 
@@ -7608,7 +7576,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_115
+Name=DG_BLK_114
 
 Label=Q121
 
@@ -7622,7 +7590,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_116
+Name=DG_BLK_115
 
 Label=Q122-Q125
 
@@ -7850,7 +7818,7 @@ Text=131. During your hospitalization in a DOH-retained hospital, did you or you
 
 [Block]
 
-Name=DG_BLK_117
+Name=DG_BLK_116
 
 Label=Q126
 
@@ -7864,7 +7832,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_118
+Name=DG_BLK_117
 
 Label=Q127
 
@@ -7878,7 +7846,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_119
+Name=DG_BLK_118
 
 Label=Q127
 
@@ -7892,7 +7860,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_120
+Name=DG_BLK_119
 
 Label=Q128
 
@@ -7906,7 +7874,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_121
+Name=DG_BLK_120
 
 Label=Q128
 
@@ -7920,7 +7888,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_122
+Name=DG_BLK_121
 
 Label=Q129
 
@@ -7934,7 +7902,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_123
+Name=DG_BLK_122
 
 Label=Q130-Q131
 
@@ -8408,7 +8376,7 @@ Text=143. From your most recent visit, how did you pay? — Other (specify) text
 
 [Block]
 
-Name=DG_BLK_124
+Name=DG_BLK_123
 
 Label=Q132
 
@@ -8422,7 +8390,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_125
+Name=DG_BLK_124
 
 Label=Q133
 
@@ -8436,7 +8404,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_126
+Name=DG_BLK_125
 
 Label=Q133
 
@@ -8450,7 +8418,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_127
+Name=DG_BLK_126
 
 Label=Q134
 
@@ -8464,7 +8432,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_128
+Name=DG_BLK_127
 
 Label=Q134
 
@@ -8478,7 +8446,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_129
+Name=DG_BLK_128
 
 Label=Q135
 
@@ -8492,7 +8460,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_130
+Name=DG_BLK_129
 
 Label=Q136
 
@@ -8506,7 +8474,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_131
+Name=DG_BLK_130
 
 Label=Q137
 
@@ -8520,7 +8488,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_132
+Name=DG_BLK_131
 
 Label=Q137
 
@@ -8534,7 +8502,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_133
+Name=DG_BLK_132
 
 Label=Q138
 
@@ -8548,7 +8516,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_134
+Name=DG_BLK_133
 
 Label=Q139-Q140
 
@@ -8562,7 +8530,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_135
+Name=DG_BLK_134
 
 Label=Q141
 
@@ -8576,7 +8544,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_136
+Name=DG_BLK_135
 
 Label=Q141
 
@@ -8590,7 +8558,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_137
+Name=DG_BLK_136
 
 Label=Q141
 
@@ -8604,7 +8572,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_138
+Name=DG_BLK_137
 
 Label=Q142
 
@@ -8618,7 +8586,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_139
+Name=DG_BLK_138
 
 Label=Q143
 
@@ -8632,7 +8600,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_140
+Name=DG_BLK_139
 
 Label=Q143
 
@@ -11496,7 +11464,7 @@ Text=185. Total value of 183 and 184 (health, 1-month) — Auto-computed total (
 
 [Block]
 
-Name=DG_BLK_141
+Name=DG_BLK_140
 
 Label=Q144
 
@@ -11510,7 +11478,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_142
+Name=DG_BLK_141
 
 Label=Q144
 
@@ -11524,7 +11492,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_143
+Name=DG_BLK_142
 
 Label=Q145
 
@@ -11538,7 +11506,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_144
+Name=DG_BLK_143
 
 Label=Q145
 
@@ -11552,7 +11520,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_145
+Name=DG_BLK_144
 
 Label=Q146
 
@@ -11566,7 +11534,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_146
+Name=DG_BLK_145
 
 Label=Q146
 
@@ -11580,7 +11548,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_147
+Name=DG_BLK_146
 
 Label=Q147
 
@@ -11594,7 +11562,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_148
+Name=DG_BLK_147
 
 Label=Q147
 
@@ -11608,7 +11576,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_149
+Name=DG_BLK_148
 
 Label=Q148
 
@@ -11622,7 +11590,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_150
+Name=DG_BLK_149
 
 Label=Q148
 
@@ -11636,7 +11604,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_151
+Name=DG_BLK_150
 
 Label=Q149
 
@@ -11650,7 +11618,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_152
+Name=DG_BLK_151
 
 Label=Q149
 
@@ -11664,7 +11632,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_153
+Name=DG_BLK_152
 
 Label=Q150
 
@@ -11678,7 +11646,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_154
+Name=DG_BLK_153
 
 Label=Q150
 
@@ -11692,7 +11660,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_155
+Name=DG_BLK_154
 
 Label=Q151
 
@@ -11706,7 +11674,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_156
+Name=DG_BLK_155
 
 Label=Q151
 
@@ -11720,7 +11688,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_157
+Name=DG_BLK_156
 
 Label=Q152
 
@@ -11734,7 +11702,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_158
+Name=DG_BLK_157
 
 Label=Q152
 
@@ -11748,7 +11716,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_159
+Name=DG_BLK_158
 
 Label=Q153
 
@@ -11762,7 +11730,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_160
+Name=DG_BLK_159
 
 Label=Q153
 
@@ -11776,7 +11744,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_161
+Name=DG_BLK_160
 
 Label=Q154
 
@@ -11790,7 +11758,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_162
+Name=DG_BLK_161
 
 Label=Q154
 
@@ -11804,7 +11772,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_163
+Name=DG_BLK_162
 
 Label=Q155
 
@@ -11818,7 +11786,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_164
+Name=DG_BLK_163
 
 Label=Q155
 
@@ -11832,7 +11800,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_165
+Name=DG_BLK_164
 
 Label=Q156
 
@@ -11846,7 +11814,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_166
+Name=DG_BLK_165
 
 Label=Q156
 
@@ -11860,7 +11828,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_167
+Name=DG_BLK_166
 
 Label=Q158
 
@@ -11874,7 +11842,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_168
+Name=DG_BLK_167
 
 Label=Q158
 
@@ -11888,7 +11856,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_169
+Name=DG_BLK_168
 
 Label=Q159
 
@@ -11902,7 +11870,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_170
+Name=DG_BLK_169
 
 Label=Q159
 
@@ -11916,7 +11884,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_171
+Name=DG_BLK_170
 
 Label=Q160
 
@@ -11930,7 +11898,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_172
+Name=DG_BLK_171
 
 Label=Q160
 
@@ -11944,7 +11912,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_173
+Name=DG_BLK_172
 
 Label=Q161
 
@@ -11958,7 +11926,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_174
+Name=DG_BLK_173
 
 Label=Q161
 
@@ -11972,7 +11940,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_175
+Name=DG_BLK_174
 
 Label=Q162
 
@@ -11986,7 +11954,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_176
+Name=DG_BLK_175
 
 Label=Q162
 
@@ -12000,7 +11968,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_177
+Name=DG_BLK_176
 
 Label=Q163
 
@@ -12014,7 +11982,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_178
+Name=DG_BLK_177
 
 Label=Q163
 
@@ -12028,7 +11996,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_179
+Name=DG_BLK_178
 
 Label=Q164
 
@@ -12042,7 +12010,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_180
+Name=DG_BLK_179
 
 Label=Q164
 
@@ -12056,7 +12024,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_181
+Name=DG_BLK_180
 
 Label=Q165
 
@@ -12070,7 +12038,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_182
+Name=DG_BLK_181
 
 Label=Q165
 
@@ -12084,7 +12052,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_183
+Name=DG_BLK_182
 
 Label=Q166
 
@@ -12098,7 +12066,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_184
+Name=DG_BLK_183
 
 Label=Q166
 
@@ -12112,7 +12080,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_185
+Name=DG_BLK_184
 
 Label=Q167
 
@@ -12126,7 +12094,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_186
+Name=DG_BLK_185
 
 Label=Q167
 
@@ -12140,7 +12108,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_187
+Name=DG_BLK_186
 
 Label=Q168
 
@@ -12154,7 +12122,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_188
+Name=DG_BLK_187
 
 Label=Q168
 
@@ -12168,7 +12136,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_189
+Name=DG_BLK_188
 
 Label=Q169
 
@@ -12182,7 +12150,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_190
+Name=DG_BLK_189
 
 Label=Q169
 
@@ -12196,7 +12164,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_191
+Name=DG_BLK_190
 
 Label=Q170
 
@@ -12210,7 +12178,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_192
+Name=DG_BLK_191
 
 Label=Q170
 
@@ -12224,7 +12192,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_193
+Name=DG_BLK_192
 
 Label=Q171
 
@@ -12238,7 +12206,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_194
+Name=DG_BLK_193
 
 Label=Q171
 
@@ -12252,7 +12220,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_195
+Name=DG_BLK_194
 
 Label=Q172
 
@@ -12266,7 +12234,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_196
+Name=DG_BLK_195
 
 Label=Q172
 
@@ -12280,7 +12248,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_197
+Name=DG_BLK_196
 
 Label=Q173
 
@@ -12294,7 +12262,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_198
+Name=DG_BLK_197
 
 Label=Q173
 
@@ -12308,7 +12276,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_199
+Name=DG_BLK_198
 
 Label=Q174
 
@@ -12322,7 +12290,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_200
+Name=DG_BLK_199
 
 Label=Q174
 
@@ -12336,7 +12304,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_201
+Name=DG_BLK_200
 
 Label=Q175
 
@@ -12350,7 +12318,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_202
+Name=DG_BLK_201
 
 Label=Q175
 
@@ -12364,7 +12332,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_203
+Name=DG_BLK_202
 
 Label=Q176
 
@@ -12378,7 +12346,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_204
+Name=DG_BLK_203
 
 Label=Q176
 
@@ -12392,7 +12360,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_205
+Name=DG_BLK_204
 
 Label=Q178
 
@@ -12406,7 +12374,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_206
+Name=DG_BLK_205
 
 Label=Q178
 
@@ -12420,7 +12388,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_207
+Name=DG_BLK_206
 
 Label=Q179
 
@@ -12434,7 +12402,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_208
+Name=DG_BLK_207
 
 Label=Q179
 
@@ -12448,7 +12416,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_209
+Name=DG_BLK_208
 
 Label=Q180
 
@@ -12462,7 +12430,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_210
+Name=DG_BLK_209
 
 Label=Q180
 
@@ -12476,7 +12444,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_211
+Name=DG_BLK_210
 
 Label=Q181
 
@@ -12490,7 +12458,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_212
+Name=DG_BLK_211
 
 Label=Q181
 
@@ -12504,7 +12472,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_213
+Name=DG_BLK_212
 
 Label=Q183
 
@@ -12518,7 +12486,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_214
+Name=DG_BLK_213
 
 Label=Q183
 
@@ -12532,7 +12500,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_215
+Name=DG_BLK_214
 
 Label=Q184
 
@@ -12546,7 +12514,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_216
+Name=DG_BLK_215
 
 Label=Q184
 
@@ -12844,13 +12812,13 @@ Text=195. What portion of your household's monthly income would you be willing t
 
 [Field]
 
-Name=Q196_FOREGONE_O01
+Name=Q196_FOREGONE
 
 Position=350,357,365,377
 
-Item=Q196_FOREGONE_O01,HOUSEHOLDSURVEY_DICT
+Item=Q196_FOREGONE,HOUSEHOLDSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=18
 
@@ -12860,175 +12828,7 @@ Form=18
 
 Position=50,360,330,376
 
-Text=196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Doctor/consultation visit
-
- 
-
-  
-
-[Field]
-
-Name=Q196_FOREGONE_O02
-
-Position=350,387,365,407
-
-Item=Q196_FOREGONE_O02,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=18
-
-  
-
-[Text]
-
-Position=50,390,330,406
-
-Text=196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Medicines or treatments
-
- 
-
-  
-
-[Field]
-
-Name=Q196_FOREGONE_O03
-
-Position=350,417,365,437
-
-Item=Q196_FOREGONE_O03,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=18
-
-  
-
-[Text]
-
-Position=50,420,330,436
-
-Text=196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Laboratory tests / diagnostics
-
- 
-
-  
-
-[Field]
-
-Name=Q196_FOREGONE_O04
-
-Position=350,447,365,467
-
-Item=Q196_FOREGONE_O04,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=18
-
-  
-
-[Text]
-
-Position=50,450,330,466
-
-Text=196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Hospital admission / inpatient care
-
- 
-
-  
-
-[Field]
-
-Name=Q196_FOREGONE_O05
-
-Position=350,477,365,497
-
-Item=Q196_FOREGONE_O05,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=18
-
-  
-
-[Text]
-
-Position=50,480,330,496
-
-Text=196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Preventive care (e.g., vaccinations, check-ups)
-
- 
-
-  
-
-[Field]
-
-Name=Q196_FOREGONE_O06
-
-Position=350,507,365,527
-
-Item=Q196_FOREGONE_O06,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=18
-
-  
-
-[Text]
-
-Position=50,510,330,526
-
-Text=196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Dental care
-
- 
-
-  
-
-[Field]
-
-Name=Q196_FOREGONE_O07
-
-Position=350,537,365,557
-
-Item=Q196_FOREGONE_O07,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=18
-
-  
-
-[Text]
-
-Position=50,540,330,556
-
-Text=196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (please specify)
-
- 
-
-  
-
-[Field]
-
-Name=Q196_FOREGONE_O08
-
-Position=350,567,365,587
-
-Item=Q196_FOREGONE_O08,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=18
-
-  
-
-[Text]
-
-Position=50,570,330,586
-
-Text=196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — We do not forego care
+Text=196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?
 
  
 
@@ -13038,7 +12838,7 @@ Text=196. If your household chooses not to spend on health care for financial re
 
 Name=Q196_FOREGONE_OTHER_TXT
 
-Position=350,597,760,617
+Position=350,387,760,407
 
 Item=Q196_FOREGONE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 
@@ -13052,9 +12852,9 @@ Form=18
 
 [Text]
 
-Position=50,600,330,616
+Position=50,390,330,406
 
-Text=196. Other (please specify) — text
+Text=196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego? — Other (specify) text
 
  
 
@@ -13062,7 +12862,7 @@ Text=196. Other (please specify) — text
 
 [Block]
 
-Name=DG_BLK_217
+Name=DG_BLK_216
 
 Label=Q186-Q190
 
@@ -13076,7 +12876,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_218
+Name=DG_BLK_217
 
 Label=Q191-Q194
 
@@ -13090,7 +12890,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_219
+Name=DG_BLK_218
 
 Label=Q194
 
@@ -13104,7 +12904,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_220
+Name=DG_BLK_219
 
 Label=Q195
 
@@ -13118,7 +12918,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_221
+Name=DG_BLK_220
 
 Label=Q196
 
@@ -13126,19 +12926,19 @@ DisplayTogether=Yes
 
 Position=15
 
-Length=8
+Length=1
 
   
 
 [Block]
 
-Name=DG_BLK_222
+Name=DG_BLK_221
 
 Label=Q196
 
 DisplayTogether=Yes
 
-Position=24
+Position=17
 
 Length=1
 
@@ -13262,7 +13062,7 @@ Text=199. Other (Specify) — text
 
 [Block]
 
-Name=DG_BLK_223
+Name=DG_BLK_222
 
 Label=Q197-Q199
 
@@ -13276,7 +13076,7 @@ Length=3
 
 [Block]
 
-Name=DG_BLK_224
+Name=DG_BLK_223
 
 Label=Q199
 
@@ -13356,13 +13156,13 @@ Text=201. How worried are you about your household's finances in the next 1 mont
 
 [Field]
 
-Name=Q202_WORRY_REASONS_O01
+Name=Q202_WORRY_REASONS
 
 Position=350,87,365,107
 
-Item=Q202_WORRY_REASONS_O01,HOUSEHOLDSURVEY_DICT
+Item=Q202_WORRY_REASONS,HOUSEHOLDSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=20
 
@@ -13372,55 +13172,7 @@ Form=20
 
 Position=50,90,330,106
 
-Text=202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Loss of income
-
- 
-
-  
-
-[Field]
-
-Name=Q202_WORRY_REASONS_O02
-
-Position=350,117,365,137
-
-Item=Q202_WORRY_REASONS_O02,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=20
-
-  
-
-[Text]
-
-Position=50,120,330,136
-
-Text=202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Healthcare costs related to coronavirus (COVID-19)
-
- 
-
-  
-
-[Field]
-
-Name=Q202_WORRY_REASONS_O03
-
-Position=350,147,365,167
-
-Item=Q202_WORRY_REASONS_O03,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=20
-
-  
-
-[Text]
-
-Position=50,150,330,166
-
-Text=202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month? — Healthcare costs NOT related to coronavirus (COVID-19) (including to treat other diseases, illnesses, injuries, or symptoms)
+Text=202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?
 
  
 
@@ -13428,7 +13180,7 @@ Text=202. Do any of the following reasons describe why you are worried about you
 
 [Block]
 
-Name=DG_BLK_225
+Name=DG_BLK_224
 
 Label=Q200-Q201
 
@@ -13442,7 +13194,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_226
+Name=DG_BLK_225
 
 Label=Q202
 
@@ -13450,7 +13202,7 @@ DisplayTogether=Yes
 
 Position=3
 
-Length=3
+Length=1
 
   
 

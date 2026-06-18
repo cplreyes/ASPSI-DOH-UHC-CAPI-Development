@@ -44,6 +44,8 @@ CHECKBOX = {"Q148_CONDITIONS",
             "Q104_BUCAS_SERVICES", "Q105_BUCAS_FACTORS", "Q111_GAMOT_FACTORS",
             # F1 Section E/G DO-NOT-READ select-all -> Check Box
             "Q117_ADDR_STOCKOUT_HOW", "Q151_LGU_NOT_SAT_WHY", "Q162_NOT_SATISFIED_WHY",
+            # F1 #636 Section C: Q34 reports-used select_all -> single Check Box.
+            "Q34_DATA_REPORTS_USED",
             # F1 #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box.
             # (#586: Q144_DIFFICULT_REASON re-converted to Check Box per the tester's
             # PAPI screenshot. Q160_EXTERNAL_SERVICES_GO stays single select_one —
@@ -67,6 +69,20 @@ CHECKBOX = {"Q148_CONDITIONS",
             "Q67_WHY_THIS_FACILITY", "Q76_KON_UNDERSTAND", "Q101_BUCAS_UNDERSTAND",
             "Q117_NBB_SOURCE", "Q118_NBB_UNDERSTAND", "Q120_ZBB_SOURCE",
             "Q121_ZBB_UNDERSTAND", "Q171_WHY_NOT", "Q177_WHY_HOSPITAL", "Q125_MAIFIP_SOURCE",
+            # F3 #635/#639/#640 Section D conversions (Q42/Q50/Q52 were converted in the
+            # generators but never listed here, so the >=7-option ones were being demoted to
+            # single-select DropDown — multi-select data-loss; same regression class as the
+            # F1 batch noted above).
+            "Q42_DIFFICULTY", "Q50_DIFFICULTY_PAYING", "Q52_PLANS",
+            # F3 #669/#670/#671/#673 Section E/F/G select_all -> Check Box (tick-all).
+            "Q59_SCHED_COMM", "Q61_CONSULT_COMM", "Q70_USUAL_TRANSPORT", "Q73_NEAREST_TRANSPORT",
+            "Q75_KON_SOURCE", "Q82_KON_WHY_NOT_REG", "Q85_CONDITIONS", "Q86_VISIT_EVENTS",
+            "Q87_OTHER_ACTIONS", "Q90_NOT_CONFINED", "Q93_LABS",
+            # F3 #690/#694 Section G/H select_all -> Check Box (tick-all).
+            "Q100_BUCAS_SOURCE", "Q103_BUCAS_SERVICES", "Q114_NO_PH",
+            # F3 #696 Section K/L select_all -> Check Box (tick-all).
+            "Q149_WHERE_BUY", "Q153_GAMOT_SOURCE", "Q154_GAMOT_UNDERSTAND", "Q157_WHERE_REST",
+            "Q160_WHY_GENERIC", "Q161_WHY_BRANDED", "Q163_CARE_TYPE",
             # F4 #529 conversions (17 'Household Survey' select_all -> Check Box).
             # Note: Q53/Q58/Q121 names overlap F3's set but are distinct fields per
             # instrument (this is a single shared name set keyed only by field name;
@@ -86,7 +102,8 @@ CHECKBOX = {"Q148_CONDITIONS",
             "Q74_WHERE_REST", "Q77_WHY_GENERIC", "Q78_WHY_BRANDED", "Q82_DIFFICULTY_REASONS",
             "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
             "Q107_OTHER_ACTIONS", "Q109_TYPE",
-            "Q141_BILL_ITEMS", "Q143_HOW_PAID"}   # #615/#616 Section M bill
+            "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill
+            "Q196_FOREGONE", "Q202_WORRY_REASONS"}   # #638/#668 Section O/Q tick-all (keep CheckBox, don't demote)
 DROPDOWN_MIN = 7   # >= this many coded options -> dropdown instead of radio
 
 

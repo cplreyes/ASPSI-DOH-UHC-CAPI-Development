@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>F1 Facility Head — Paper ↔ CAPI Comparison · UHC Survey Year 2</title>
+    <meta
+      name="description"
+      content="Side-by-side comparison of the paper Facility Head (F1) questionnaire and its CAPI (CSEntry) version, question by question, with notes where the tablet version differs. Format pilot."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#006b3f" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23006b3f'/%3E%3Cpath d='M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z' fill='%23e5b23b'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/assets/docs.css" />
+    <style>
+      /* Crosswalk-specific layout (reused later for F3/F4/F2) */
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin: 18px 0 4px;
+        padding: 14px 16px;
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius);
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .legend b {
+        color: var(--ink);
+      }
+      .xsection {
+        margin: 34px 0 6px;
+        padding-bottom: 6px;
+        border-bottom: 2px solid var(--primary);
+        font-size: 19px;
+        font-weight: 700;
+        color: var(--primary-dark);
+        letter-spacing: -0.01em;
+      }
+      .xrow {
+        border: 1px solid var(--hairline-strong);
+        border-radius: var(--radius-lg);
+        background: var(--surface);
+        box-shadow: var(--shadow-sm);
+        margin: 16px 0;
+        overflow: hidden;
+      }
+      .xrow-head {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--paper);
+        border-bottom: 1px solid var(--hairline);
+      }
+      .qbadge {
+        flex: none;
+        font-size: 12.5px;
+        font-weight: 700;
+        color: #fff;
+        background: var(--primary);
+        border-radius: 999px;
+        padding: 2px 10px;
+      }
+      .qtitle {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .xcols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .xcol {
+        padding: 16px;
+      }
+      .xcol.paper {
+        border-right: 1px solid var(--hairline);
+      }
+      .xcol h4 {
+        margin: 0 0 10px;
+        font-size: 11.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .qtext {
+        font-size: 15px;
+        margin: 0 0 10px;
+      }
+      .opts {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .opts li {
+        position: relative;
+        padding-left: 26px;
+        margin: 0 0 6px;
+        font-size: 14.5px;
+      }
+      .opts li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 15px;
+        height: 15px;
+        border: 1.5px solid var(--hairline-strong);
+        border-radius: 3px;
+        background: #fff;
+      }
+      .opts.radio li::before {
+        border-radius: 50%;
+      }
+      .field-line {
+        border-bottom: 1.5px dotted var(--hairline-strong);
+        min-height: 22px;
+        margin: 4px 0 10px;
+      }
+      .field-label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      /* CAPI screenshot slot (placeholder until captured) */
+      .capi-shot {
+        border: 2px dashed var(--hairline-strong);
+        border-radius: var(--radius);
+        background: repeating-linear-gradient(
+          135deg,
+          #fbfcf9,
+          #fbfcf9 10px,
+          #f4f7f0 10px,
+          #f4f7f0 20px
+        );
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 6px;
+        padding: 18px;
+        color: var(--muted);
+      }
+      .capi-shot svg {
+        opacity: 0.5;
+      }
+      .capi-shot .ph {
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .capi-shot img {
+        max-width: 260px;
+        width: 100%;
+        height: auto;
+        border-radius: 6px;
+        border: 1px solid var(--hairline-strong);
+      }
+      .capi-shot-link {
+        display: block;
+        line-height: 0;
+      }
+      .capi-img {
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--hairline-strong);
+        border-radius: 6px;
+        background: #fff;
+      }
+      .capi-cap {
+        font-size: 13.5px;
+        color: var(--muted);
+        margin: 10px 0 0;
+      }
+      .xnote {
+        display: flex;
+        gap: 9px;
+        padding: 11px 16px;
+        background: rgba(229, 178, 59, 0.09);
+        border-top: 1px solid var(--hairline);
+        font-size: 13.5px;
+        color: var(--ink);
+      }
+      .xnote b {
+        color: var(--primary-dark);
+      }
+      .xnote .tag {
+        flex: none;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #8a6500;
+      }
+      /* End-of-section: the real printed page ↔ the CAPI screen-page */
+      .xpage {
+        border: 1px solid var(--primary);
+        border-radius: var(--radius-lg);
+        background: var(--surface);
+        box-shadow: var(--shadow-md);
+        margin: 22px 0 8px;
+        overflow: hidden;
+      }
+      .xpage-head {
+        padding: 12px 16px;
+        background: var(--primary);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .xpage-cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      .xpage-col {
+        padding: 16px;
+      }
+      .xpage-col.paper {
+        border-right: 1px solid var(--hairline);
+      }
+      .xpage-col h4 {
+        margin: 0 0 10px;
+        font-size: 11.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .page-img-link {
+        display: block;
+        line-height: 0;
+      }
+      .page-img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--hairline-strong);
+        border-radius: 6px;
+        background: #fff;
+      }
+      .flow-ph {
+        border: 2px dashed var(--hairline-strong);
+        border-radius: 6px;
+        background: repeating-linear-gradient(
+          135deg,
+          #fbfcf9,
+          #fbfcf9 10px,
+          #f4f7f0 10px,
+          #f4f7f0 20px
+        );
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 8px;
+        padding: 28px 18px;
+        color: var(--muted);
+      }
+      .flow-ph svg {
+        opacity: 0.5;
+      }
+      .flow-ph .ph {
+        font-size: 12.5px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .pcap {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 9px 0 0;
+      }
+
+      @media (max-width: 680px) {
+        .xcols,
+        .xpage-cols {
+          grid-template-columns: 1fr;
+        }
+        .xcol.paper,
+        .xpage-col.paper {
+          border-right: none;
+          border-bottom: 1px solid var(--hairline);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="accent-bar"></div>
+
+    <div class="topbar">
+      <div class="container">
+        <div class="topbar-brand">
+          <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" rx="8" fill="#006b3f" />
+            <path
+              d="M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z"
+              fill="#e5b23b"
+            />
+          </svg>
+          <div>
+            <div class="topbar-org">UHC Survey Year 2</div>
+            <div class="topbar-sub">Paper ↔ CAPI · F1 Facility Head</div>
+          </div>
+        </div>
+        <a class="home-link" href="/help.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 12H6M11 6l-6 6 6 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Back to help
+        </a>
+      </div>
+    </div>
+
+    <main id="main">
+      <div class="container">
+        <p class="page-eyebrow">Instrument comparison · F1 Facility Head</p>
+        <h1>Paper questionnaire ↔ CAPI version</h1>
+        <p class="lede">
+          Each survey question shown two ways: the printed Facility Head (F1)
+          questionnaire on the left, and how it appears in the CSEntry app on the
+          tablet on the right — with notes wherever the tablet version works
+          differently.
+        </p>
+        <p class="banner">
+          <strong>Format pilot.</strong> This shows the front matter and the
+          first sections so the layout can be approved. The tablet screenshots
+          are being captured and will replace the placeholder panels; every other
+          section follows in the same format once this is signed off.
+        </p>
+
+        <div class="legend">
+          <span><b>Left:</b> the paper questionnaire, wording verbatim.</span>
+          <span><b>Right:</b> the CSEntry (tablet) screen.</span>
+          <span><b>Amber note:</b> where CAPI differs from paper.</span>
+        </div>
+
+        <div class="xsection">Informed Consent</div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            Printed pages ↔ CAPI screens — Informed Consent
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed pages</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p01.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p01.png"
+                  alt="Page 1 of the F1 questionnaire — Informed Consent Form, Part I: information about the study"
+                  loading="lazy"
+                />
+              </a>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p02.png"
+                target="_blank"
+                rel="noopener"
+                style="margin-top: 12px"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p02.png"
+                  alt="Page 2 of the F1 questionnaire — Part II: Certificate of Consent with signature lines"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Pages 1–2 — the consent script read aloud (Part I) and the signed
+                Certificate of Consent (Part II). Tap a page to open it full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <div class="flow-ph" role="img" aria-label="CSEntry consent screen — screenshots pending">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>
+                <span class="ph">Screen sequence pending</span>
+              </div>
+              <p class="pcap">
+                The enumerator reads the same consent script on screen; consent
+                is recorded with a tap, which unlocks the questionnaire.
+              </p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Consent gates the interview.</b> Instead of a wet signature, consent is recorded on screen — choosing to decline ends the interview cleanly and no further questions are asked.</span>
+          </div>
+        </div>
+
+        <div class="xsection">Front matter — control &amp; identification</div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Cover</span>
+            <span class="qtitle">Questionnaire Number</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">Questionnaire No: ____________</p>
+              <p class="field-label">A blank box the enumerator writes by hand.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-questionnaire-number.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-questionnaire-number.png" alt="CSEntry Questionnaire Number entry screen — a left navigation tree (Case Key, Field Control, Geographic ID, Facility GPS, Section A) and the 12-digit Questionnaire Number field on the right" loading="lazy" />
+              </a>
+              <p class="capi-cap">
+                The live CSEntry screen — note the section navigation tree on the
+                left. The 12-digit number is entered here (Region → Province/HUC
+                → City/Municipality → Facility No. → Case sequence).
+              </p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Auto-fill.</b> Once the facility code is entered, the app fills in the facility’s <b>name and address</b> from the official facility list and protects them — no hand-writing, no wrong-facility mistakes.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Field control</span>
+            <span class="qtitle">Visit metadata &amp; result</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">Survey Team Leader’s Name; Enumerator’s Name; Field Validated by; Field Edited by; Date First Visited; Date of Final Visit; Total number of visits; <b>Resulta</b> (1 Completed · 2 Postponed · 3 Refused · 4 Incomplete).</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-field-control.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-field-control.png" alt="CSEntry Field Control screen showing Survey Team Leader's Name and Enumerator's Name fields with the section tree on the left" loading="lazy" />
+              </a>
+              <p class="capi-cap">The live Field Control form — team leader and enumerator names, dates, and result, entered on screen.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span>Dates use a date picker; the result is chosen from a list (no mis-keyed codes).</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Geo ID</span>
+            <span class="qtitle">Health facility &amp; geographic identification</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">Classification:</p>
+              <ul class="opts">
+                <li>UHC IS</li>
+                <li>Non-UHC IS</li>
+              </ul>
+              <p class="qtext" style="margin-top:10px">Region · Province/HUC · City/Municipality · Barangay (written in). Location: Latitude ____ Longitude ____.</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-geo-classification.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-geo-classification.png" alt="CSEntry Classification screen (UHC IS / Non-UHC IS) with Region, Province and City already filled in the section tree from the questionnaire number" loading="lazy" />
+              </a>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-geo-barangay.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-geo-barangay.png" alt="CSEntry Barangay selection — a long single-select list of barangays filtered to the chosen city/municipality" loading="lazy" />
+              </a>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-facility-gps.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-facility-gps.png" alt="CSEntry Facility GPS fields — latitude, longitude, altitude, accuracy, satellites and read time captured by the tablet" loading="lazy" />
+              </a>
+              <p class="capi-cap">Region/Province/City/Barangay are dependent drop-downs — each choice filters the next (the PSGC cascade). The first three are pre-filled from the questionnaire number; the enumerator only picks the barangay. GPS is then captured automatically into the fields shown.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>GPS is automatic.</b> Latitude/Longitude are captured by the tablet’s GPS at the facility — the enumerator doesn’t type coordinates. Geography is chosen from filtered lists, so an invalid code can’t be entered.</span>
+          </div>
+        </div>
+
+        <div class="xsection">A. Facility Head Profile</div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q1</span>
+            <span class="qtitle">Respondent’s name</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">1. What is your name? (Last Name, First Name, Middle Initial, Ext)</p>
+              <div class="field-line"></div>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q1-name.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q1-name.png" alt="CSEntry respondent name text-entry screen with the on-screen keyboard" loading="lazy" />
+              </a>
+              <p class="capi-cap">A text field with the on-screen keyboard.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q2</span>
+            <span class="qtitle">Official designation</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">2. What is your official designation at this health facility?</p>
+              <ul class="opts">
+                <li>Rural Health Unit / Health Center Head</li>
+                <li>Hospital Administrator</li>
+                <li>Administrative Officer / Assistant</li>
+                <li>Physician · Nurse · Midwife</li>
+                <li>Chief of Hospital</li>
+                <li>Municipal / City Health Officer</li>
+                <li>Medical Director · Medical Officer · Rural Health Physician</li>
+                <li>… (full option list)</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q2-designation.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q2-designation.png" alt="CSEntry official designation screen — a tap-to-open drop-down of facility roles, shown with the age and sex questions below" loading="lazy" />
+              </a>
+              <p class="capi-cap">Pick one from a drop-down. (Age and sex follow on the same form, shown below.)</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span>A long option list like this was set to a <b>drop-down</b> in the mobile redesign (easier to scan on a tablet than a long column of radio buttons).</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q3</span>
+            <span class="qtitle">Age</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">3. How old are you (in years), as of your last birthday?</p>
+              <div class="field-line"></div>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry demographics screen — age entered on a number pad, with the sex single-select shown directly below" loading="lazy" />
+              </a>
+              <p class="capi-cap">Number-pad entry. (Sex follows on the same screen, shown below.)</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Range check.</b> The app rejects an out-of-range age on the spot, so it can’t be miswritten.</span>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q4</span>
+            <span class="qtitle">Sex assigned at birth</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">4. What is your sex assigned at birth?</p>
+              <ul class="opts radio">
+                <li>Male</li>
+                <li>Female</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry sex single-select screen — Male / Female radio options, shown below the age question" loading="lazy" />
+              </a>
+              <p class="capi-cap">Single-select — tap one option (Male / Female).</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q5–Q6</span>
+            <span class="qtitle">Tenure (years &amp; months)</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">5. In your current position, how many months/years have you worked at this health facility? &nbsp;·&nbsp; 6. How many years have you worked in a health-related position?</p>
+              <p class="field-label">Number of Years ____ &nbsp; Number of Months ____ (each question).</p>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q5-q6-tenure.png" target="_blank" rel="noopener">
+                <img class="capi-img" src="/docs/img/f1-capi-q5-q6-tenure.png" alt="CSEntry tenure screens — Number of Years and Number of Months as separate number entries for current-position and health-career tenure" loading="lazy" />
+              </a>
+              <p class="capi-cap">Years and months as separate number entries.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span><b>Consistency checks.</b> Tenure can’t exceed the respondent’s age or health-career length — the app warns if the numbers don’t line up.</span>
+          </div>
+        </div>
+
+        <div class="xsection">B. Facility Profile</div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q7</span>
+            <span class="qtitle">Type of ownership</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">7. What type of ownership is this hospital?</p>
+              <ul class="opts radio">
+                <li>Public</li>
+                <li>Private</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <div class="capi-shot" role="img" aria-label="CSEntry single-select screen — screenshot pending">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="3"/><circle cx="8" cy="16" r="3"/><path d="M13 8h7M13 16h7" stroke-linecap="round"/></svg>
+                <span class="ph">Screenshot pending</span>
+              </div>
+              <p class="capi-cap">Single-select.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q8</span>
+            <span class="qtitle">Service capacity level</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">8. What is the facility’s service capacity level?</p>
+              <ul class="opts radio">
+                <li>Primary Care Facility</li>
+                <li>Level 1 Hospital</li>
+                <li>Level 2 Hospital</li>
+                <li>Level 3 Hospital</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <div class="capi-shot" role="img" aria-label="CSEntry single-select screen — screenshot pending">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="7" r="2.5"/><circle cx="8" cy="14" r="2.5"/><path d="M13 7h7M13 14h7" stroke-linecap="round"/></svg>
+                <span class="ph">Screenshot pending</span>
+              </div>
+              <p class="capi-cap">Single-select.</p>
+            </div>
+          </div>
+          <div class="xnote">
+            <span class="tag">CAPI differs</span>
+            <span>This answer drives later <b>skip logic</b> — hospital-only questions appear or hide automatically based on the level chosen here.</span>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">
+            End of section — printed page ↔ CAPI screens (Sections A–B)
+          </div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed page</h4>
+              <a
+                class="page-img-link"
+                href="/docs/img/f1-paper-p03.png"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  class="page-img"
+                  src="/docs/img/f1-paper-p03.png"
+                  alt="Page 3 of the printed F1 Facility Head questionnaire: Field Control, Health Facility and Geographic Identification, Section A Facility Head Profile, and Section B Facility Profile"
+                  loading="lazy"
+                />
+              </a>
+              <p class="pcap">
+                Page 3 of the printed questionnaire — Field Control, Geographic
+                ID, Section A, and Section B. Tap to open full size.
+              </p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>The same on the tablet (CAPI)</h4>
+              <div class="flow-ph" role="img" aria-label="CSEntry screen sequence for Sections A–B — screenshots pending">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
+                <span class="ph">Screen sequence pending</span>
+              </div>
+              <p class="pcap">
+                The run of CSEntry screens covering these sections, captured on
+                the tablet — added here once the emulator capture is done.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p class="banner" style="margin-top:22px">
+          This “end of section” block is the new pattern you asked for: at the
+          close of <strong>every</strong> section, the real printed page(s) sit
+          beside the matching CAPI screens. Sections C–H follow in this same
+          format — the paper pages are ready to render now; the tablet
+          screenshots drop in after the emulator capture.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p class="foot-org">
+          Asian Social Project Services, Inc. (ASPSI) — for the Department of
+          Health (DOH)
+        </p>
+        <p class="foot-meta">
+          UHC Survey Year 2 · F1 paper ↔ CAPI comparison (pilot)
+          <span class="dot">·</span>
+          <a href="/help.html">Help</a>
+          <span class="dot">·</span>
+          <a href="/">Home</a>
+          <span class="dot">·</span>
+          &copy; 2026
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

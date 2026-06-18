@@ -61,7 +61,9 @@ def _cb_codes(options):
         # all checkbox bases), so this is a no-op for the 17 prior conversions.
         if "specif" in low:
             out.append((text, "99"))
-        elif low.startswith(("none", "no initiative")) or is_dont_know:
+        elif low.startswith(("none", "no initiative", "no condition")) or is_dont_know:
+            # #642: 'No condition - Regular check-up only' (Q65) is a standalone exclusive
+            # -> 90 (only F4 option starting with 'no condition'); enforced via Q65 exclusive=True.
             out.append((text, "90"))
         else:
             n += 1
@@ -1602,11 +1604,13 @@ def build_section_o():
         select_one("Q195_INCOME_PCT",
                    "195. What portion of your household's monthly income would you be willing to set aside for health care if it reduced unexpected medical expenses?",
                    Q195_INCOME_PCT, length=1),
-        *select_all("Q196_FOREGONE",
+        # #638: convert Q196 from Yes/No-per-option (select_all) to a single tick-all
+        # Check Box for PAPI consistency. 'Other (please specify)' -> 99 (with_other_txt
+        # auto-emits Q196_FOREGONE_OTHER_TXT); 'We do not forego care' stays an ordinary
+        # 01.. option (not 90-coded — no exclusivity enforced, mirroring Q65_CONDITIONS).
+        *checkbox_multiselect("Q196_FOREGONE",
                     "196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?",
-                    Q196_FOREGONE_CARE),
-        alpha("Q196_FOREGONE_OTHER_TXT",
-              "196. Other (please specify) — text", length=120),
+                    _cb_codes(Q196_FOREGONE_CARE), with_other_txt=True),
     ]
     return record("O_SOURCES_OF_FUNDS", "O. Sources of Funds for Health", "Q", items)
 
@@ -1674,9 +1678,9 @@ def build_section_q():
         select_one("Q201_WORRIED",
                    "201. How worried are you about your household's finances in the next 1 month?",
                    Q201_WORRIED, length=1),
-        *select_all("Q202_WORRY_REASONS",
+        *checkbox_multiselect("Q202_WORRY_REASONS",   # #668: select_all -> Check Box (tick-all)
                     "202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?",
-                    Q202_REASONS, with_other_txt=False),
+                    _cb_codes(Q202_REASONS), with_other_txt=False),
     ]
     return record("Q_FINANCIAL_ANXIETY", "Q. Anxiety about Household Finances", "S", items)
 

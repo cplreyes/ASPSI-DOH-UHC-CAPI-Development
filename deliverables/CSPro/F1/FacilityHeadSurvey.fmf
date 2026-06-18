@@ -153,18 +153,7 @@ Item=Q31_EMR_USE_NO_OTHER_TXT
 Item=Q32_DATA_SUBMIT
 Item=Q33_DATA_FREQ
 Item=Q33_OTHER_TXT
-Item=Q34_DATA_REPORTS_USED_O01
-Item=Q34_DATA_REPORTS_USED_O02
-Item=Q34_DATA_REPORTS_USED_O03
-Item=Q34_DATA_REPORTS_USED_O04
-Item=Q34_DATA_REPORTS_USED_O05
-Item=Q34_DATA_REPORTS_USED_O06
-Item=Q34_DATA_REPORTS_USED_O07
-Item=Q34_DATA_REPORTS_USED_O08
-Item=Q34_DATA_REPORTS_USED_O09
-Item=Q34_DATA_REPORTS_USED_O10
-Item=Q34_DATA_REPORTS_USED_O11
-Item=Q34_DATA_REPORTS_USED_O12
+Item=Q34_DATA_REPORTS_USED
 Item=Q34_DATA_REPORTS_USED_OTHER_TXT
 Item=Q35_STAFFING_CHANGED
 Item=Q36_STAFFING_UHC
@@ -1650,149 +1639,16 @@ Text=33. If yes, how frequent has your facility submit these data? — Other (sp
   
   
 [Field]
-Name=Q34_DATA_REPORTS_USED_O01
+Name=Q34_DATA_REPORTS_USED
 Position=1695,1497,1710,1517
-Item=Q34_DATA_REPORTS_USED_O01,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
+Item=Q34_DATA_REPORTS_USED,FACILITYHEADSURVEY_DICT
+DataCaptureType=CheckBox
 Form=7
   
 [Text]
 Position=50,1500,778,1516
-Text=34. Which of the submitted reports are actually used for decision-making? — OPD/IPD census and morbidity reports
+Text=34. Which of the submitted reports are actually used for decision-making?
  
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O02
-Position=1695,1527,1710,1547
-Item=Q34_DATA_REPORTS_USED_O02,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1530,952,1546
-Text=34. Which of the submitted reports are actually used for decision-making? — Maternal, newborn, child, and adolescent health (MNCAH) reports
- 
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O03
-Position=1695,1557,1710,1577
-Item=Q34_DATA_REPORTS_USED_O03,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1560,793,1576
-Text=34. Which of the submitted reports are actually used for decision-making? — Notifiable diseases / surveillance reports
- 
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O04
-Position=1695,1587,1710,1607
-Item=Q34_DATA_REPORTS_USED_O04,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1590,805,1606
-Text=34. Which of the submitted reports are actually used for decision-making? — Expenditure and budget utilization reports
- 
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O05
-Position=1695,1617,1710,1637
-Item=Q34_DATA_REPORTS_USED_O05,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1620,824,1636
-Text=34. Which of the submitted reports are actually used for decision-making? — PhilHealth claims and reimbursement reports
- 
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O06
-Position=1695,1647,1710,1667
-Item=Q34_DATA_REPORTS_USED_O06,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1650,755,1666
-Text=34. Which of the submitted reports are actually used for decision-making? — YAKAP/Konsulta utilization reports
- 
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O07
-Position=1695,1677,1710,1697
-Item=Q34_DATA_REPORTS_USED_O07,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1680,690,1696
-Text=34. Which of the submitted reports are actually used for decision-making? — NBB compliance reports
- 
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O08
-Position=1695,1707,1710,1727
-Item=Q34_DATA_REPORTS_USED_O08,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1710,769,1726
-Text=34. Which of the submitted reports are actually used for decision-making? — ZBB compliance / monitoring reports
- 
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O09
-Position=1695,1737,1710,1757
-Item=Q34_DATA_REPORTS_USED_O09,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1740,769,1756
-Text=34. Which of the submitted reports are actually used for decision-making? — HRH staffing and deployment reports
- 
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O10
-Position=1695,1767,1710,1787
-Item=Q34_DATA_REPORTS_USED_O10,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1770,827,1786
-Text=34. Which of the submitted reports are actually used for decision-making? — Medicines availability and stock status reports
- 
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O11
-Position=1695,1797,1710,1817
-Item=Q34_DATA_REPORTS_USED_O11,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1800,843,1816
-Text=34. Which of the submitted reports are actually used for decision-making? — Facility performance scorecards / quality reports
- 
-  
-[Field]
-Name=Q34_DATA_REPORTS_USED_O12
-Position=1695,1827,1710,1847
-Item=Q34_DATA_REPORTS_USED_O12,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=7
-  
-[Text]
-Position=50,1830,628,1846
-Text=34. Which of the submitted reports are actually used for decision-making? — Other (specify)
- 
-  
   
 [Field]
 Name=Q34_DATA_REPORTS_USED_OTHER_TXT
@@ -2719,307 +2575,307 @@ Name=DG_C_UHC_IMPLEMENTATION_FORM_52
 Label=Q34
 DisplayTogether=Yes
 Position=97
-Length=12
+Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_53
 Label=Q34
 DisplayTogether=Yes
-Position=110
+Position=99
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_54
 Label=Q35
 DisplayTogether=Yes
-Position=112
+Position=101
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_55
 Label=Q36
 DisplayTogether=Yes
-Position=114
+Position=103
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_56
 Label=Q36
 DisplayTogether=Yes
-Position=116
+Position=105
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_57
 Label=Q36
 DisplayTogether=Yes
-Position=118
+Position=107
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_58
 Label=Q37
 DisplayTogether=Yes
-Position=120
+Position=109
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_59
 Label=Q38
 DisplayTogether=Yes
-Position=122
+Position=111
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_60
 Label=Q38
 DisplayTogether=Yes
-Position=124
+Position=113
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_61
 Label=Q38
 DisplayTogether=Yes
-Position=126
+Position=115
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_62
 Label=Q39
 DisplayTogether=Yes
-Position=128
+Position=117
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_63
 Label=Q39
 DisplayTogether=Yes
-Position=130
+Position=119
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_64
 Label=Q39
 DisplayTogether=Yes
-Position=132
+Position=121
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_65
 Label=Q40
 DisplayTogether=Yes
-Position=134
+Position=123
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_66
 Label=Q40
 DisplayTogether=Yes
-Position=136
+Position=125
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_67
 Label=Q40
 DisplayTogether=Yes
-Position=138
+Position=127
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_68
 Label=Q41
 DisplayTogether=Yes
-Position=140
+Position=129
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_69
 Label=Q41
 DisplayTogether=Yes
-Position=142
+Position=131
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_70
 Label=Q41
 DisplayTogether=Yes
-Position=144
+Position=133
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_71
 Label=Q42
 DisplayTogether=Yes
-Position=146
+Position=135
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_72
 Label=Q42
 DisplayTogether=Yes
-Position=148
+Position=137
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_73
 Label=Q42
 DisplayTogether=Yes
-Position=150
+Position=139
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_74
 Label=Q43
 DisplayTogether=Yes
-Position=152
+Position=141
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_75
 Label=Q43
 DisplayTogether=Yes
-Position=154
+Position=143
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_76
 Label=Q43
 DisplayTogether=Yes
-Position=156
+Position=145
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_77
 Label=Q44
 DisplayTogether=Yes
-Position=158
+Position=147
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_78
 Label=Q44
 DisplayTogether=Yes
-Position=160
+Position=149
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_79
 Label=Q44
 DisplayTogether=Yes
-Position=162
+Position=151
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_80
 Label=Q45
 DisplayTogether=Yes
-Position=164
+Position=153
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_81
 Label=Q45
 DisplayTogether=Yes
-Position=166
+Position=155
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_82
 Label=Q45
 DisplayTogether=Yes
-Position=168
+Position=157
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_83
 Label=Q46
 DisplayTogether=Yes
-Position=170
+Position=159
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_84
 Label=Q46
 DisplayTogether=Yes
-Position=172
+Position=161
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_85
 Label=Q46
 DisplayTogether=Yes
-Position=174
+Position=163
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_86
 Label=Q47
 DisplayTogether=Yes
-Position=176
+Position=165
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_87
 Label=Q47
 DisplayTogether=Yes
-Position=178
+Position=167
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_88
 Label=Q47
 DisplayTogether=Yes
-Position=180
+Position=169
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_89
 Label=Q48
 DisplayTogether=Yes
-Position=182
+Position=171
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_90
 Label=Q48
 DisplayTogether=Yes
-Position=184
+Position=173
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_91
 Label=Q48
 DisplayTogether=Yes
-Position=186
+Position=175
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_92
 Label=Q49
 DisplayTogether=Yes
-Position=188
+Position=177
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_93
 Label=Q49
 DisplayTogether=Yes
-Position=190
+Position=179
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_94
 Label=Q50
 DisplayTogether=Yes
-Position=192
+Position=181
 Length=1
   
 [Block]
 Name=DG_C_UHC_IMPLEMENTATION_FORM_95
 Label=Q50
 DisplayTogether=Yes
-Position=194
+Position=183
 Length=1
   
 [EndGroup]

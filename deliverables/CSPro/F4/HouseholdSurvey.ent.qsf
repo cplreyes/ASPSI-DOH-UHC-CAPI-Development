@@ -5275,17 +5275,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>186. Current income of any household members</p>
+            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>186. Current income of any household members</p>
           FIL: |
-            <p>Kasalukuyang kita ng sinumang miyembro ng sambahayan</p>
+            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kasalukuyang kita ng sinumang miyembro ng sambahayan</p>
           BCL: |
-            <p>Kita kan kada household members</p>
+            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kita kan kada household members</p>
           BIS: |
-            <p>Kasamtangang kita sa bisan kinsang miyembro sa panimalay</p>
+            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kasamtangang kita sa bisan kinsang miyembro sa panimalay</p>
           CEB: |
-            <p>Kasamtangang kita sa bisan kinsang miyembro sa panimalay</p>
+            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kasamtangang kita sa bisan kinsang miyembro sa panimalay</p>
           WAR: |
-            <p>Yana nga kita han bisan hin-o nga miyembro han panimalay</p>
+            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Yana nga kita han bisan hin-o nga miyembro han panimalay</p>
   - name: HOUSEHOLDSURVEY_DICT.Q187_SAVINGS
     conditions:
       - questionText:

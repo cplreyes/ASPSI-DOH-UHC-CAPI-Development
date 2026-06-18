@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Help & Documentation — UHC Survey Year 2 · ASPSI × DOH</title>
+    <meta
+      name="description"
+      content="How to use the ASPSI | DOH UHC Survey Year 2 platform: signing in, the CSWeb monitoring tabs, tablet data collection and sync with CSEntry, and troubleshooting. For authorized project personnel."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#006b3f" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23006b3f'/%3E%3Cpath d='M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z' fill='%23e5b23b'/%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        --primary: #006b3f;
+        --primary-dark: #00532f;
+        --primary-tint: rgba(0, 107, 63, 0.1);
+        --paper: #f2f5ee;
+        --surface: #ffffff;
+        --ink: #16201a;
+        --muted: #51604f;
+        --hairline: #c4cdb9;
+        --hairline-strong: #aab69b;
+        --gold: #e5b23b;
+        --radius: 6px;
+        --radius-lg: 12px;
+        --shadow-sm: 0 1px 2px rgba(22, 32, 26, 0.06),
+          0 1px 3px rgba(22, 32, 26, 0.05);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        display: flex;
+        flex-direction: column;
+        min-height: 100dvh;
+      }
+      .skip-link {
+        position: absolute;
+        left: 16px;
+        top: -48px;
+        z-index: 100;
+        background: var(--primary);
+        color: #fff;
+        padding: 10px 16px;
+        border-radius: var(--radius);
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: top 0.15s ease;
+      }
+      .skip-link:focus {
+        top: 16px;
+        outline: 3px solid var(--gold);
+        outline-offset: 2px;
+      }
+      .accent-bar {
+        height: 5px;
+        background: linear-gradient(
+          90deg,
+          var(--gold) 0 38%,
+          var(--primary) 38% 100%
+        );
+      }
+      .container {
+        width: 100%;
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .topbar {
+        border-bottom: 1px solid var(--hairline);
+        background: var(--surface);
+      }
+      .topbar .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 14px;
+        padding-bottom: 14px;
+      }
+      .topbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .topbar-brand svg {
+        flex: none;
+      }
+      .topbar-org {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--ink);
+        line-height: 1.25;
+      }
+      .topbar-sub {
+        font-size: 12.5px;
+        color: var(--muted);
+      }
+      .home-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--primary);
+        text-decoration: none;
+        white-space: nowrap;
+        padding: 8px 10px;
+        border-radius: var(--radius);
+      }
+      .home-link:hover {
+        background: var(--primary-tint);
+      }
+      .home-link:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 2px;
+      }
+
+      main {
+        padding: 44px 0 24px;
+      }
+      .page-eyebrow {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--primary);
+        margin: 0 0 12px;
+      }
+      h1 {
+        font-size: clamp(28px, 4.6vw, 38px);
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        margin: 0 0 14px;
+      }
+      .lede {
+        font-size: 18px;
+        color: var(--muted);
+        max-width: 62ch;
+        margin: 0 0 8px;
+      }
+
+      /* On-page contents */
+      .toc {
+        margin: 28px 0 8px;
+        padding: 16px 18px;
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+      }
+      .toc h2 {
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0 0 10px;
+      }
+      .toc ol {
+        margin: 0;
+        padding-left: 20px;
+        columns: 2;
+        column-gap: 28px;
+        font-size: 15px;
+      }
+      .toc li {
+        margin: 0 0 6px;
+        break-inside: avoid;
+      }
+      .toc a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      section.doc {
+        scroll-margin-top: 16px;
+        padding: 26px 0 4px;
+        border-top: 1px solid var(--hairline);
+        margin-top: 26px;
+      }
+      section.doc:first-of-type {
+        border-top: none;
+        margin-top: 12px;
+      }
+      h2.sec {
+        font-size: 22px;
+        letter-spacing: -0.01em;
+        margin: 0 0 12px;
+      }
+      h3 {
+        font-size: 16.5px;
+        margin: 22px 0 8px;
+      }
+      p,
+      li {
+        font-size: 15.5px;
+      }
+      p {
+        margin: 0 0 12px;
+      }
+      ul,
+      ol.steps {
+        margin: 0 0 14px;
+        padding-left: 22px;
+      }
+      ul li,
+      ol.steps li {
+        margin: 0 0 7px;
+      }
+      strong {
+        font-weight: 600;
+        color: var(--ink);
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+          monospace;
+        font-size: 0.9em;
+        background: var(--primary-tint);
+        color: var(--primary-dark);
+        padding: 1.5px 6px;
+        border-radius: 4px;
+        word-break: break-all;
+      }
+      .tabs {
+        list-style: none;
+        margin: 0 0 14px;
+        padding: 0;
+      }
+      .tabs li {
+        display: flex;
+        gap: 10px;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--hairline);
+      }
+      .tabs li:last-child {
+        border-bottom: none;
+      }
+      .tabs .tname {
+        flex: none;
+        width: 130px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .callout {
+        background: var(--surface);
+        border: 1px solid var(--hairline-strong);
+        border-left: 4px solid var(--gold);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        margin: 16px 0;
+        font-size: 14.5px;
+        color: var(--muted);
+      }
+      .callout strong {
+        color: var(--ink);
+      }
+
+      .guide-list {
+        list-style: none;
+        margin: 4px 0 0;
+        padding: 0;
+        display: grid;
+        gap: 12px;
+      }
+      .guide-list a {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--hairline-strong);
+        border-left: 4px solid var(--primary);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        text-decoration: none;
+        box-shadow: var(--shadow-sm);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      .guide-list a:hover {
+        border-color: var(--primary);
+        box-shadow: 0 6px 16px rgba(22, 32, 26, 0.08);
+      }
+      .guide-list a:focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 2px;
+      }
+      .guide-list .g-title {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 3px;
+      }
+      .guide-list .g-sub {
+        display: block;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      footer {
+        margin-top: auto;
+        border-top: 1px solid var(--hairline);
+        background: var(--surface);
+      }
+      footer .container {
+        padding-top: 24px;
+        padding-bottom: 30px;
+      }
+      .foot-org {
+        font-size: 14.5px;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 0 0 6px;
+      }
+      .foot-meta {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 0;
+      }
+      .foot-meta a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .foot-meta a:hover {
+        text-decoration: underline;
+      }
+      .dot {
+        margin: 0 8px;
+        color: var(--hairline-strong);
+      }
+
+      @media (max-width: 640px) {
+        .toc ol {
+          columns: 1;
+        }
+        .tabs li {
+          flex-direction: column;
+          gap: 2px;
+        }
+        .tabs .tname {
+          width: auto;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="accent-bar"></div>
+
+    <div class="topbar">
+      <div class="container">
+        <div class="topbar-brand">
+          <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" rx="8" fill="#006b3f" />
+            <path
+              d="M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z"
+              fill="#e5b23b"
+            />
+          </svg>
+          <div>
+            <div class="topbar-org">UHC Survey Year 2</div>
+            <div class="topbar-sub">Help &amp; documentation</div>
+          </div>
+        </div>
+        <a class="home-link" href="/">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 12H6M11 6l-6 6 6 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Back to home
+        </a>
+      </div>
+    </div>
+
+    <main id="main">
+      <div class="container">
+        <p class="page-eyebrow">Universal Health Care Survey · Year 2</p>
+        <h1>Help &amp; documentation</h1>
+        <p class="lede">
+          How to sign in, monitor fieldwork in CSWeb, and collect and sync data
+          on a tablet. For authorized project personnel — enumerators,
+          supervisors, and DOH monitors.
+        </p>
+
+        <nav class="toc" aria-label="On this page">
+          <h2>On this page</h2>
+          <ol>
+            <li><a href="#guides">Step-by-step guides</a></li>
+            <li><a href="#systems">The two systems</a></li>
+            <li><a href="#signin">Signing in</a></li>
+            <li><a href="#csweb">Using CSWeb</a></li>
+            <li><a href="#tablet">Collecting on a tablet</a></li>
+            <li><a href="#sync">Syncing data</a></li>
+            <li><a href="#trouble">Troubleshooting</a></li>
+            <li><a href="#support">Support</a></li>
+          </ol>
+        </nav>
+
+        <section class="doc" id="guides">
+          <h2 class="sec">Step-by-step guides</h2>
+          <p>
+            Full walkthroughs for the people who run and take the surveys:
+          </p>
+          <ul class="guide-list">
+            <li>
+              <a href="/docs/enumerator-guide.html">
+                <span class="g-title">CSEntry on your tablet — enumerator guide</span>
+                <span class="g-sub">For field enumerators (F1 · F3 · F4): install, connect, download the survey, run an interview, and sync.</span>
+              </a>
+            </li>
+            <li>
+              <a href="/docs/hcw-guide.html">
+                <span class="g-title">Healthcare Worker survey — how to complete it</span>
+                <span class="g-sub">For healthcare workers (F2, self-administered): opening the link, answering, finishing, and privacy.</span>
+              </a>
+            </li>
+            <li>
+              <a href="/docs/f1-crosswalk.html">
+                <span class="g-title">F1 Facility Head — paper ↔ CAPI comparison</span>
+                <span class="g-sub">Each question both ways: the paper questionnaire next to its CSEntry screen, with notes where the tablet version differs. Tablet screenshots being added.</span>
+              </a>
+            </li>
+            <li>
+              <a href="/docs/f3-crosswalk.html">
+                <span class="g-title">F3 Patient — paper ↔ CAPI comparison</span>
+                <span class="g-sub">Every section of the printed Patient questionnaire beside its CSEntry screens. Paper staged; screenshots being added.</span>
+              </a>
+            </li>
+            <li>
+              <a href="/docs/f4-crosswalk.html">
+                <span class="g-title">F4 Household — paper ↔ CAPI comparison</span>
+                <span class="g-sub">Every section of the printed Household questionnaire (incl. roster + expenditure grids) beside its CSEntry screens. Paper staged; screenshots being added.</span>
+              </a>
+            </li>
+            <li>
+              <a href="/docs/f2-crosswalk.html">
+                <span class="g-title">F2 Healthcare Worker — paper ↔ web (PWA) comparison <em>(complete)</em></span>
+                <span class="g-sub">Every section of the printed HCW questionnaire beside the real self-administered web (PWA) screen. Fully captured — the first complete crosswalk.</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section class="doc" id="systems">
+          <h2 class="sec">The two systems</h2>
+          <p>
+            The platform has two separate systems, one per group of instruments.
+            Each has its own sign-in.
+          </p>
+          <ul>
+            <li>
+              <strong>CSWeb</strong> — the server for the
+              <strong>Facility Head (F1)</strong>,
+              <strong>Patient (F3)</strong>, and
+              <strong>Household (F4)</strong> surveys. Enumerators collect these
+              on Android tablets in CSEntry; supervisors and monitors watch the
+              data arrive here.
+            </li>
+            <li>
+              <strong>HCW Admin Portal</strong> — administration for the
+              self-administered <strong>Healthcare Worker (F2)</strong> survey,
+              which respondents fill in on the web.
+            </li>
+          </ul>
+        </section>
+
+        <section class="doc" id="signin">
+          <h2 class="sec">Signing in</h2>
+          <p>
+            From the <a href="/">home page</a>, choose your system. Each system
+            uses <strong>separate credentials</strong> — a CSWeb account does not
+            work on the HCW portal, and vice versa.
+          </p>
+          <ul>
+            <li>
+              <strong>CSWeb:</strong> open
+              <code>csweb.asiansocial.org</code> and sign in with the username
+              and password issued to you.
+            </li>
+            <li>
+              <strong>Enumerators</strong> use the same CSWeb account inside the
+              CSEntry app on the tablet (see “Collecting on a tablet”).
+            </li>
+          </ul>
+          <div class="callout">
+            <strong>Don’t have an account?</strong> Accounts are issued by your
+            survey coordinator. Contact them rather than sharing a login —
+            each person needs their own.
+          </div>
+        </section>
+
+        <section class="doc" id="csweb">
+          <h2 class="sec">Using CSWeb (monitoring)</h2>
+          <p>
+            After signing in to CSWeb, the left menu has the tabs you’ll use to
+            follow fieldwork:
+          </p>
+          <ul class="tabs">
+            <li>
+              <span class="tname">Data</span>
+              <span>Browse the cases that have synced from the tablets, per
+                instrument. Open a case to see its answers.</span>
+            </li>
+            <li>
+              <span class="tname">Sync Report</span>
+              <span>A running count of uploaded cases by facility. Pick an
+                instrument from the sub-menu; the table lists each questionnaire
+                number with its facility name and total, and “View case” opens
+                the record.</span>
+            </li>
+            <li>
+              <span class="tname">Map Report</span>
+              <span>Plots cases that captured a GPS fix on a map of the
+                Philippines — useful for confirming coverage by area.</span>
+            </li>
+            <li>
+              <span class="tname">Apps</span>
+              <span>The CAPI applications that enumerators download to their
+                tablets. New questionnaire versions are published here.</span>
+            </li>
+          </ul>
+          <p>
+            <strong>Users</strong>, <strong>Roles</strong>, and
+            <strong>Settings</strong> are for administrators — managing accounts
+            and access. Most field and monitoring staff won’t need them.
+          </p>
+        </section>
+
+        <section class="doc" id="tablet">
+          <h2 class="sec">Collecting on a tablet (enumerators)</h2>
+          <ol class="steps">
+            <li>
+              Install <strong>CSEntry</strong> from Google Play (publisher
+              <em>U.S. Census Bureau</em>, free). Allow
+              <strong>Location</strong> and <strong>Camera</strong> when asked —
+              both are needed for GPS and verification photos.
+            </li>
+            <li>
+              In CSEntry, add your survey from the server. Server address:
+              <code>https://csweb.asiansocial.org/csweb/api</code>. Sign in with
+              your own CSWeb account and download your instrument
+              (FacilityHeadSurvey, PatientSurvey, or HouseholdSurvey).
+            </li>
+            <li>
+              Run interviews. Cases save on the device, so you can work without a
+              connection and sync later.
+            </li>
+            <li>
+              Keep the app current: <strong>⋮ menu → Update Installed
+              Applications</strong> when you have internet, so you always run the
+              latest questionnaire.
+            </li>
+          </ol>
+        </section>
+
+        <section class="doc" id="sync">
+          <h2 class="sec">Syncing data</h2>
+          <p>
+            Syncing sends your new and changed cases to the server. Do it
+            whenever you have a stable connection — at least once at the end of
+            each field day.
+          </p>
+          <ol class="steps">
+            <li>
+              From your survey’s case list, choose
+              <strong>Synchronize</strong> (the circular-arrows icon).
+            </li>
+            <li>Sign in with your own account if prompted.</li>
+            <li>
+              Wait for <strong>“Sync complete / success.”</strong> Only new or
+              changed cases are sent, so it’s quick.
+            </li>
+          </ol>
+          <p>
+            Your supervisor or monitor can then confirm the case appears in
+            <strong>CSWeb → Sync Report</strong>, and — if the GPS got a real
+            outdoor fix — that a pin shows on the <strong>Map</strong>. An indoor
+            case may have a blank GPS; that’s expected.
+          </p>
+        </section>
+
+        <section class="doc" id="trouble">
+          <h2 class="sec">Troubleshooting</h2>
+          <ul>
+            <li>
+              <strong>Can’t connect or download:</strong> check your internet,
+              and type the server address exactly, including
+              <code>https://</code> and <code>/csweb/api</code>.
+            </li>
+            <li>
+              <strong>Login fails:</strong> re-type the username in lowercase
+              with no spaces, and confirm the password.
+            </li>
+            <li>
+              <strong>Screens look old</strong> (one question per screen):
+              you’re on an older version — <strong>⋮ → Update Installed
+              Applications</strong>, or remove and re-add the app.
+            </li>
+            <li>
+              <strong>GPS won’t read:</strong> move near a window or step
+              outside, and make sure Location is allowed and switched on. Indoors
+              it may time out and stay blank — note it and continue.
+            </li>
+            <li>
+              <strong>Camera won’t open:</strong> allow Camera in
+              Settings → Apps → CSEntry → Permissions.
+            </li>
+            <li>
+              <strong>Sync fails:</strong> confirm internet, re-enter your
+              account, and retry. If it still fails, capture a screenshot of the
+              error for your coordinator.
+            </li>
+          </ul>
+        </section>
+
+        <section class="doc" id="support">
+          <h2 class="sec">Support</h2>
+          <p>
+            For account credentials, field issues, or anything not covered here,
+            contact your <strong>survey coordinator or team supervisor</strong>.
+            When reporting a problem, a screenshot or photo of the screen and the
+            questionnaire number involved helps us resolve it faster.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p class="foot-org">
+          Asian Social Project Services, Inc. (ASPSI) — for the Department of
+          Health (DOH)
+        </p>
+        <p class="foot-meta">
+          UHC Survey Year 2 · CAPI / CSPro · CSWeb
+          <span class="dot">·</span>
+          <a href="/">Home</a>
+          <span class="dot">·</span>
+          <a href="https://www.asiansocial.org/" rel="noopener">asiansocial.org</a>
+          <span class="dot">·</span>
+          &copy; 2026
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

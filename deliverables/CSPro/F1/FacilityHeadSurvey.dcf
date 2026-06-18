@@ -10978,70 +10978,69 @@
               "length": 120
             },
             {
-              "name": "Q34_DATA_REPORTS_USED_O01",
+              "name": "Q34_DATA_REPORTS_USED",
               "labels": [
                 {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 OPD/IPD census and morbidity reports",
+                  "text": "34. Which of the submitted reports are actually used for decision-making?",
                   "language": "EN"
                 },
                 {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 OPD/IPD census and morbidity reports",
+                  "text": "34. Which of the submitted reports are actually used for decision-making?",
                   "language": "FIL"
                 },
                 {
-                  "text": "OPD/IPD census asin morbidity reports",
+                  "text": "34. Which of the submitted reports are actually used for decision-making?",
                   "language": "BCL"
                 },
                 {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 OPD/IPD census and morbidity reports",
+                  "text": "34. Which of the submitted reports are actually used for decision-making?",
                   "language": "BIS"
                 },
                 {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 OPD/IPD census and morbidity reports",
+                  "text": "34. Which of the submitted reports are actually used for decision-making?",
                   "language": "CEB"
                 },
                 {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 OPD/IPD census and morbidity reports",
+                  "text": "34. Which of the submitted reports are actually used for decision-making?",
                   "language": "WAR"
                 },
                 {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 OPD/IPD census and morbidity reports",
+                  "text": "34. Which of the submitted reports are actually used for decision-making?",
                   "language": "HIL"
                 }
               ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
+              "contentType": "alpha",
+              "length": 24,
               "valueSets": [
                 {
-                  "name": "Q34_DATA_REPORTS_USED_O01_VS1",
+                  "name": "Q34_DATA_REPORTS_USED_VS1",
                   "labels": [
                     {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 OPD/IPD census and morbidity reports",
+                      "text": "34. Which of the submitted reports are actually used for decision-making?",
                       "language": "EN"
                     },
                     {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 OPD/IPD census and morbidity reports",
+                      "text": "34. Which of the submitted reports are actually used for decision-making?",
                       "language": "FIL"
                     },
                     {
-                      "text": "OPD/IPD census asin morbidity reports",
+                      "text": "34. Which of the submitted reports are actually used for decision-making?",
                       "language": "BCL"
                     },
                     {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 OPD/IPD census and morbidity reports",
+                      "text": "34. Which of the submitted reports are actually used for decision-making?",
                       "language": "BIS"
                     },
                     {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 OPD/IPD census and morbidity reports",
+                      "text": "34. Which of the submitted reports are actually used for decision-making?",
                       "language": "CEB"
                     },
                     {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 OPD/IPD census and morbidity reports",
+                      "text": "34. Which of the submitted reports are actually used for decision-making?",
                       "language": "WAR"
                     },
                     {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 OPD/IPD census and morbidity reports",
+                      "text": "34. Which of the submitted reports are actually used for decision-making?",
                       "language": "HIL"
                     }
                   ],
@@ -11049,1691 +11048,444 @@
                     {
                       "labels": [
                         {
-                          "text": "Yes",
+                          "text": "OPD/IPD census and morbidity reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Oo",
+                          "text": "OPD/IPD census and morbidity reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Iyo",
+                          "text": "OPD/IPD census and morbidity reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Oo",
+                          "text": "OPD/IPD census and morbidity reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Oo",
+                          "text": "OPD/IPD census and morbidity reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Oo",
+                          "text": "OPD/IPD census and morbidity reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Huo",
+                          "text": "OPD/IPD census and morbidity reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "1"
+                          "value": "01"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Maternal, newborn, child, and adolescent health (MNCAH) reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Maternal, newborn, child, and adolescent health (MNCAH) reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "Maternal, newborn, child, and adolescent health (MNCAH) reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Maternal, newborn, child, and adolescent health (MNCAH) reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Maternal, newborn, child, and adolescent health (MNCAH) reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "Maternal, newborn, child, and adolescent health (MNCAH) reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Maternal, newborn, child, and adolescent health (MNCAH) reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O02",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Maternal, bagong aki, child, asin adolescent health (MNCAH) reports",
-                  "language": "BCL"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                  "language": "BIS"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O02_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Maternal, bagong aki, child, asin adolescent health (MNCAH) reports",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Maternal, newborn, child, and adolescent health (MNCAH) reports",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "02"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Notifiable diseases / surveillance reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Notifiable diseases / surveillance reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "Notifiable diseases / surveillance reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Notifiable diseases / surveillance reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Notifiable diseases / surveillance reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "Notifiable diseases / surveillance reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Notifiable diseases / surveillance reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O03",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Notifiable diseases / surveillance reports",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Notifiable diseases / surveillance reports",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Notifiable diseases/ surveilance reports",
-                  "language": "BCL"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Notifiable diseases / surveillance reports",
-                  "language": "BIS"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Notifiable diseases / surveillance reports",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Notifiable diseases / surveillance reports",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Notifiable diseases / surveillance reports",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O03_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Notifiable diseases / surveillance reports",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Notifiable diseases / surveillance reports",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Notifiable diseases/ surveilance reports",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Notifiable diseases / surveillance reports",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Notifiable diseases / surveillance reports",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Notifiable diseases / surveillance reports",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Notifiable diseases / surveillance reports",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "03"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Expenditure and budget utilization reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Expenditure and budget utilization reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "Expenditure and budget utilization reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Expenditure and budget utilization reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Expenditure and budget utilization reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "Expenditure and budget utilization reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Expenditure and budget utilization reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O04",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Expenditure and budget utilization reports",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Expenditure and budget utilization reports",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Expenditure asin budget utilization reports",
-                  "language": "BCL"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Expenditure and budget utilization reports",
-                  "language": "BIS"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Expenditure and budget utilization reports",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Expenditure and budget utilization reports",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Expenditure and budget utilization reports",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O04_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Expenditure and budget utilization reports",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Expenditure and budget utilization reports",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Expenditure asin budget utilization reports",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Expenditure and budget utilization reports",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Expenditure and budget utilization reports",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Expenditure and budget utilization reports",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Expenditure and budget utilization reports",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "04"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "PhilHealth claims and reimbursement reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "PhilHealth claims and reimbursement reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "PhilHealth claims and reimbursement reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "PhilHealth claims and reimbursement reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "PhilHealth claims and reimbursement reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "PhilHealth claims and reimbursement reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "PhilHealth claims and reimbursement reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O05",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 PhilHealth claims and reimbursement reports",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 PhilHealth claims and reimbursement reports",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Philhealth claims asin reimbursement reports",
-                  "language": "BCL"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 PhilHealth claims and reimbursement reports",
-                  "language": "BIS"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 PhilHealth claims and reimbursement reports",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 PhilHealth claims and reimbursement reports",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 PhilHealth claims and reimbursement reports",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O05_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 PhilHealth claims and reimbursement reports",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 PhilHealth claims and reimbursement reports",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Philhealth claims asin reimbursement reports",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 PhilHealth claims and reimbursement reports",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 PhilHealth claims and reimbursement reports",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 PhilHealth claims and reimbursement reports",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 PhilHealth claims and reimbursement reports",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "05"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "YAKAP/Konsulta utilization reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O06",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 YAKAP/Konsulta utilization reports",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 YAKAP/Konsulta utilization reports",
-                  "language": "FIL"
-                },
-                {
-                  "text": "YAKAP/Konsulta utilization reports",
-                  "language": "BCL"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 YAKAP/Konsulta utilization reports",
-                  "language": "BIS"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 YAKAP/Konsulta utilization reports",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 YAKAP/Konsulta utilization reports",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 YAKAP/Konsulta utilization reports",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O06_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 YAKAP/Konsulta utilization reports",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 YAKAP/Konsulta utilization reports",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "YAKAP/Konsulta utilization reports",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 YAKAP/Konsulta utilization reports",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 YAKAP/Konsulta utilization reports",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 YAKAP/Konsulta utilization reports",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 YAKAP/Konsulta utilization reports",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "06"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "NBB compliance reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "NBB compliance reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "NBB compliance reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "NBB compliance reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "NBB compliance reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "NBB compliance reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "NBB compliance reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O07",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 NBB compliance reports",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 NBB compliance reports",
-                  "language": "FIL"
-                },
-                {
-                  "text": "NBB compliance",
-                  "language": "BCL"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 NBB compliance reports",
-                  "language": "BIS"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 NBB compliance reports",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 NBB compliance reports",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 NBB compliance reports",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O07_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 NBB compliance reports",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 NBB compliance reports",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "NBB compliance",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 NBB compliance reports",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 NBB compliance reports",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 NBB compliance reports",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 NBB compliance reports",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "07"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "ZBB compliance / monitoring reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "ZBB compliance / monitoring reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "ZBB compliance / monitoring reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "ZBB compliance / monitoring reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "ZBB compliance / monitoring reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "ZBB compliance / monitoring reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "ZBB compliance / monitoring reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O08",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 ZBB compliance / monitoring reports",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 ZBB compliance / monitoring reports",
-                  "language": "FIL"
-                },
-                {
-                  "text": "ZBB compliance/monitoring reports",
-                  "language": "BCL"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 ZBB compliance / monitoring reports",
-                  "language": "BIS"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 ZBB compliance / monitoring reports",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 ZBB compliance / monitoring reports",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 ZBB compliance / monitoring reports",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O08_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 ZBB compliance / monitoring reports",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 ZBB compliance / monitoring reports",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "ZBB compliance/monitoring reports",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 ZBB compliance / monitoring reports",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 ZBB compliance / monitoring reports",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 ZBB compliance / monitoring reports",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 ZBB compliance / monitoring reports",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "08"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "HRH staffing and deployment reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "HRH staffing and deployment reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "HRH staffing and deployment reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "HRH staffing and deployment reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "HRH staffing and deployment reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "HRH staffing and deployment reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "HRH staffing and deployment reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O09",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 HRH staffing and deployment reports",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 HRH staffing and deployment reports",
-                  "language": "FIL"
-                },
-                {
-                  "text": "HRH staffing asin deployment reports",
-                  "language": "BCL"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 HRH staffing and deployment reports",
-                  "language": "BIS"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 HRH staffing and deployment reports",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 HRH staffing and deployment reports",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 HRH staffing and deployment reports",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O09_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 HRH staffing and deployment reports",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 HRH staffing and deployment reports",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "HRH staffing asin deployment reports",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 HRH staffing and deployment reports",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 HRH staffing and deployment reports",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 HRH staffing and deployment reports",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 HRH staffing and deployment reports",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "09"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Medicines availability and stock status reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Medicines availability and stock status reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "Medicines availability and stock status reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Medicines availability and stock status reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Medicines availability and stock status reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "Medicines availability and stock status reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Medicines availability and stock status reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O10",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Medicines availability and stock status reports",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Medicines availability and stock status reports",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Availability nin medisina asin stock status reports",
-                  "language": "BCL"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Medicines availability and stock status reports",
-                  "language": "BIS"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Medicines availability and stock status reports",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Medicines availability and stock status reports",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Medicines availability and stock status reports",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O10_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Medicines availability and stock status reports",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Medicines availability and stock status reports",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Availability nin medisina asin stock status reports",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Medicines availability and stock status reports",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Medicines availability and stock status reports",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Medicines availability and stock status reports",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Medicines availability and stock status reports",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "10"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Facility performance scorecards / quality reports",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Facility performance scorecards / quality reports",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "Facility performance scorecards / quality reports",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Facility performance scorecards / quality reports",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Facility performance scorecards / quality reports",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "Facility performance scorecards / quality reports",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Facility performance scorecards / quality reports",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O11",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Facility performance scorecards / quality reports",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Facility performance scorecards / quality reports",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Facility performance scorecards/quality reports",
-                  "language": "BCL"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Facility performance scorecards / quality reports",
-                  "language": "BIS"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Facility performance scorecards / quality reports",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Facility performance scorecards / quality reports",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Facility performance scorecards / quality reports",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O11_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Facility performance scorecards / quality reports",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Facility performance scorecards / quality reports",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Facility performance scorecards/quality reports",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Facility performance scorecards / quality reports",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Facility performance scorecards / quality reports",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Facility performance scorecards / quality reports",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Facility performance scorecards / quality reports",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
+                          "value": "11"
                         }
                       ]
                     },
                     {
                       "labels": [
                         {
-                          "text": "No",
+                          "text": "Other (specify)",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi",
+                          "text": "Iba pa (tukuyin)",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai",
+                          "text": "Iba pa (ispecify)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Uban pa (I-specify)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Uban pa (Isulti)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Diri",
+                          "text": "Iba pa (ispecify)",
                           "language": "WAR"
                         },
                         {
-                          "text": "Wala",
+                          "text": "Iban pa (ispecify)",
                           "language": "HIL"
                         }
                       ],
                       "pairs": [
                         {
-                          "value": "2"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "name": "Q34_DATA_REPORTS_USED_O12",
-              "labels": [
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Other (specify)",
-                  "language": "EN"
-                },
-                {
-                  "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Iba pa (tukuyin)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Iba pa (ispecify)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Uban pa (I-specify)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Uban pa (Isulti)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Other (specify)",
-                  "language": "WAR"
-                },
-                {
-                  "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Other (specify)",
-                  "language": "HIL"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 1,
-              "zeroFill": false,
-              "valueSets": [
-                {
-                  "name": "Q34_DATA_REPORTS_USED_O12_VS1",
-                  "labels": [
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Other (specify)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "Alin sa mga isinumiteng ulat ang aktwal na ginagamit sa paggawa ng desisyon? \u2014 Iba pa (tukuyin)",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "Iba pa (ispecify)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "Uban pa (I-specify)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "Uban pa (Isulti)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Other (specify)",
-                      "language": "WAR"
-                    },
-                    {
-                      "text": "34. Which of the submitted reports are actually used for decision-making? \u2014 Other (specify)",
-                      "language": "HIL"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Yes",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Iyo",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Oo",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Huo",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "1"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "No",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dai",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Wala",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Wala",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Diri",
-                          "language": "WAR"
-                        },
-                        {
-                          "text": "Wala",
-                          "language": "HIL"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "2"
+                          "value": "99"
                         }
                       ]
                     }

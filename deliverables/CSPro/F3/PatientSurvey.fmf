@@ -316,7 +316,7 @@ Label=D. PhilHealth Registration
 
 Level=1
 
-Size=806,1417
+Size=806,847
 
   
 
@@ -332,21 +332,7 @@ Item=Q40_WHO_ASSISTED_OTHER_TXT
 
 Item=Q41_REG_DIFFICULTY
 
-Item=Q42_DIFFICULTY_O01
-
-Item=Q42_DIFFICULTY_O02
-
-Item=Q42_DIFFICULTY_O03
-
-Item=Q42_DIFFICULTY_O04
-
-Item=Q42_DIFFICULTY_O05
-
-Item=Q42_DIFFICULTY_O06
-
-Item=Q42_DIFFICULTY_O07
-
-Item=Q42_DIFFICULTY_O08
+Item=Q42_DIFFICULTY
 
 Item=Q42_DIFFICULTY_OTHER_TXT
 
@@ -376,37 +362,13 @@ Item=Q48_PREMIUM_PAY
 
 Item=Q49_PREMIUM_DIFFICULT
 
-Item=Q50_DIFFICULTY_PAYING_O01
-
-Item=Q50_DIFFICULTY_PAYING_O02
-
-Item=Q50_DIFFICULTY_PAYING_O03
-
-Item=Q50_DIFFICULTY_PAYING_O04
-
-Item=Q50_DIFFICULTY_PAYING_O05
-
-Item=Q50_DIFFICULTY_PAYING_O06
-
-Item=Q50_DIFFICULTY_PAYING_O07
+Item=Q50_DIFFICULTY_PAYING
 
 Item=Q50_DIFFICULTY_PAYING_OTHER_TXT
 
 Item=Q51_OTHER_INSURANCE
 
-Item=Q52_PLANS_O01
-
-Item=Q52_PLANS_O02
-
-Item=Q52_PLANS_O03
-
-Item=Q52_PLANS_O04
-
-Item=Q52_PLANS_O05
-
-Item=Q52_PLANS_O06
-
-Item=Q52_PLANS_O07
+Item=Q52_PLANS
 
 Item=Q52_PLANS_OTHER_TXT
 
@@ -424,7 +386,7 @@ Label=E. Primary Care + YAKAP/Konsulta
 
 Level=1
 
-Size=806,2767
+Size=806,1357
 
   
 
@@ -444,27 +406,11 @@ Item=Q58_WAIT_DAYS
 
 Item=Q58_WAIT_MINUTES
 
-Item=Q59_SCHED_COMM_O01
-
-Item=Q59_SCHED_COMM_O02
-
-Item=Q59_SCHED_COMM_O03
-
-Item=Q59_SCHED_COMM_O04
-
-Item=Q59_SCHED_COMM_O05
+Item=Q59_SCHED_COMM
 
 Item=Q60_SCHED_TELECON_OK
 
-Item=Q61_CONSULT_COMM_O01
-
-Item=Q61_CONSULT_COMM_O02
-
-Item=Q61_CONSULT_COMM_O03
-
-Item=Q61_CONSULT_COMM_O04
-
-Item=Q61_CONSULT_COMM_O05
+Item=Q61_CONSULT_COMM
 
 Item=Q62_CONSULT_TELECON_OK
 
@@ -490,29 +436,7 @@ Item=Q69_USUAL_TRAVEL_HH
 
 Item=Q69_USUAL_TRAVEL_MM
 
-Item=Q70_USUAL_TRANSPORT_O01
-
-Item=Q70_USUAL_TRANSPORT_O02
-
-Item=Q70_USUAL_TRANSPORT_O03
-
-Item=Q70_USUAL_TRANSPORT_O04
-
-Item=Q70_USUAL_TRANSPORT_O05
-
-Item=Q70_USUAL_TRANSPORT_O06
-
-Item=Q70_USUAL_TRANSPORT_O07
-
-Item=Q70_USUAL_TRANSPORT_O08
-
-Item=Q70_USUAL_TRANSPORT_O09
-
-Item=Q70_USUAL_TRANSPORT_O10
-
-Item=Q70_USUAL_TRANSPORT_O11
-
-Item=Q70_USUAL_TRANSPORT_O12
+Item=Q70_USUAL_TRANSPORT
 
 Item=Q70_USUAL_TRANSPORT_OTHER_TXT
 
@@ -524,49 +448,13 @@ Item=Q72_NEAREST_TRAVEL_HH
 
 Item=Q72_NEAREST_TRAVEL_MM
 
-Item=Q73_NEAREST_TRANSPORT_O01
-
-Item=Q73_NEAREST_TRANSPORT_O02
-
-Item=Q73_NEAREST_TRANSPORT_O03
-
-Item=Q73_NEAREST_TRANSPORT_O04
-
-Item=Q73_NEAREST_TRANSPORT_O05
-
-Item=Q73_NEAREST_TRANSPORT_O06
-
-Item=Q73_NEAREST_TRANSPORT_O07
-
-Item=Q73_NEAREST_TRANSPORT_O08
-
-Item=Q73_NEAREST_TRANSPORT_O09
-
-Item=Q73_NEAREST_TRANSPORT_O10
-
-Item=Q73_NEAREST_TRANSPORT_O11
-
-Item=Q73_NEAREST_TRANSPORT_O12
+Item=Q73_NEAREST_TRANSPORT
 
 Item=Q73_NEAREST_TRANSPORT_OTHER_TXT
 
 Item=Q74_KON_HEARD
 
-Item=Q75_KON_SOURCE_O01
-
-Item=Q75_KON_SOURCE_O02
-
-Item=Q75_KON_SOURCE_O03
-
-Item=Q75_KON_SOURCE_O04
-
-Item=Q75_KON_SOURCE_O05
-
-Item=Q75_KON_SOURCE_O06
-
-Item=Q75_KON_SOURCE_O07
-
-Item=Q75_KON_SOURCE_O08
+Item=Q75_KON_SOURCE
 
 Item=Q75_KON_SOURCE_OTHER_TXT
 
@@ -584,27 +472,7 @@ Item=Q80_KON_KNOWS_BOOKING
 
 Item=Q81_KON_APPT_CHECKUP
 
-Item=Q82_KON_WHY_NOT_REG_O01
-
-Item=Q82_KON_WHY_NOT_REG_O02
-
-Item=Q82_KON_WHY_NOT_REG_O03
-
-Item=Q82_KON_WHY_NOT_REG_O04
-
-Item=Q82_KON_WHY_NOT_REG_O05
-
-Item=Q82_KON_WHY_NOT_REG_O06
-
-Item=Q82_KON_WHY_NOT_REG_O07
-
-Item=Q82_KON_WHY_NOT_REG_O08
-
-Item=Q82_KON_WHY_NOT_REG_O09
-
-Item=Q82_KON_WHY_NOT_REG_O10
-
-Item=Q82_KON_WHY_NOT_REG_O11
+Item=Q82_KON_WHY_NOT_REG
 
 Item=Q82_KON_WHY_NOT_REG_OTHER_TXT
 
@@ -622,7 +490,7 @@ Label=F. Health-Seeking
 
 Level=1
 
-Size=806,1357
+Size=806,337
 
   
 
@@ -634,81 +502,13 @@ Item=Q84_SERVICE_TYPE
 
 Item=Q84_SERVICE_TYPE_OTHER_TXT
 
-Item=Q85_CONDITIONS_O01
-
-Item=Q85_CONDITIONS_O02
-
-Item=Q85_CONDITIONS_O03
-
-Item=Q85_CONDITIONS_O04
-
-Item=Q85_CONDITIONS_O05
-
-Item=Q85_CONDITIONS_O06
-
-Item=Q85_CONDITIONS_O07
-
-Item=Q85_CONDITIONS_O08
-
-Item=Q85_CONDITIONS_O09
-
-Item=Q85_CONDITIONS_O10
-
-Item=Q85_CONDITIONS_O11
-
-Item=Q85_CONDITIONS_O12
-
-Item=Q85_CONDITIONS_O13
-
-Item=Q85_CONDITIONS_O14
-
-Item=Q85_CONDITIONS_O15
-
-Item=Q85_CONDITIONS_O16
-
-Item=Q85_CONDITIONS_O17
-
-Item=Q85_CONDITIONS_O18
-
-Item=Q85_CONDITIONS_O19
-
-Item=Q85_CONDITIONS_O20
+Item=Q85_CONDITIONS
 
 Item=Q85_CONDITIONS_OTHER_TXT
 
-Item=Q86_VISIT_EVENTS_O01
+Item=Q86_VISIT_EVENTS
 
-Item=Q86_VISIT_EVENTS_O02
-
-Item=Q86_VISIT_EVENTS_O03
-
-Item=Q86_VISIT_EVENTS_O04
-
-Item=Q86_VISIT_EVENTS_O05
-
-Item=Q86_VISIT_EVENTS_O06
-
-Item=Q86_VISIT_EVENTS_O07
-
-Item=Q86_VISIT_EVENTS_O08
-
-Item=Q86_VISIT_EVENTS_O09
-
-Item=Q86_VISIT_EVENTS_O10
-
-Item=Q87_OTHER_ACTIONS_O01
-
-Item=Q87_OTHER_ACTIONS_O02
-
-Item=Q87_OTHER_ACTIONS_O03
-
-Item=Q87_OTHER_ACTIONS_O04
-
-Item=Q87_OTHER_ACTIONS_O05
-
-Item=Q87_OTHER_ACTIONS_O06
-
-Item=Q87_OTHER_ACTIONS_O07
+Item=Q87_OTHER_ACTIONS
 
 Item=Q87_OTHER_ACTIONS_OTHER_TXT
 
@@ -726,7 +526,7 @@ Label=G. Outpatient Care
 
 Level=1
 
-Size=806,4237
+Size=806,3187
 
   
 
@@ -736,19 +536,7 @@ Item=Q88_WHY_VISIT_OTHER_TXT
 
 Item=Q89_ADVISED_ADMIT
 
-Item=Q90_NOT_CONFINED_O01
-
-Item=Q90_NOT_CONFINED_O02
-
-Item=Q90_NOT_CONFINED_O03
-
-Item=Q90_NOT_CONFINED_O04
-
-Item=Q90_NOT_CONFINED_O05
-
-Item=Q90_NOT_CONFINED_O06
-
-Item=Q90_NOT_CONFINED_O07
+Item=Q90_NOT_CONFINED
 
 Item=Q90_NOT_CONFINED_OTHER_TXT
 
@@ -774,39 +562,7 @@ Item=Q92_PAY_07
 
 Item=Q92_PAY_08
 
-Item=Q93_LABS_O01
-
-Item=Q93_LABS_O02
-
-Item=Q93_LABS_O03
-
-Item=Q93_LABS_O04
-
-Item=Q93_LABS_O05
-
-Item=Q93_LABS_O06
-
-Item=Q93_LABS_O07
-
-Item=Q93_LABS_O08
-
-Item=Q93_LABS_O09
-
-Item=Q93_LABS_O10
-
-Item=Q93_LABS_O11
-
-Item=Q93_LABS_O12
-
-Item=Q93_LABS_O13
-
-Item=Q93_LABS_O14
-
-Item=Q93_LABS_O15
-
-Item=Q93_LABS_O16
-
-Item=Q93_LABS_O17
+Item=Q93_LABS
 
 Item=Q93_LABS_OTHER_TXT
 
@@ -964,21 +720,7 @@ Item=Q98_OTHER_TXT
 
 Item=Q99_BUCAS_HEARD
 
-Item=Q100_BUCAS_SOURCE_O01
-
-Item=Q100_BUCAS_SOURCE_O02
-
-Item=Q100_BUCAS_SOURCE_O03
-
-Item=Q100_BUCAS_SOURCE_O04
-
-Item=Q100_BUCAS_SOURCE_O05
-
-Item=Q100_BUCAS_SOURCE_O06
-
-Item=Q100_BUCAS_SOURCE_O07
-
-Item=Q100_BUCAS_SOURCE_O08
+Item=Q100_BUCAS_SOURCE
 
 Item=Q100_BUCAS_SOURCE_OTHER_TXT
 
@@ -988,19 +730,7 @@ Item=Q101_BUCAS_UNDERSTAND_OTHER_TXT
 
 Item=Q102_BUCAS_ACCESSED
 
-Item=Q103_BUCAS_SERVICES_O01
-
-Item=Q103_BUCAS_SERVICES_O02
-
-Item=Q103_BUCAS_SERVICES_O03
-
-Item=Q103_BUCAS_SERVICES_O04
-
-Item=Q103_BUCAS_SERVICES_O05
-
-Item=Q103_BUCAS_SERVICES_O06
-
-Item=Q103_BUCAS_SERVICES_O07
+Item=Q103_BUCAS_SERVICES
 
 Item=Q103_BUCAS_SERVICES_OTHER_TXT
 
@@ -1022,7 +752,7 @@ Label=H. Inpatient Care
 
 Level=1
 
-Size=806,3967
+Size=806,3787
 
   
 
@@ -1212,19 +942,7 @@ Item=Q113_PAY_13_AMT
 
 Item=Q113_PAY_OTHER_TXT
 
-Item=Q114_NO_PH_O01
-
-Item=Q114_NO_PH_O02
-
-Item=Q114_NO_PH_O03
-
-Item=Q114_NO_PH_O04
-
-Item=Q114_NO_PH_O05
-
-Item=Q114_NO_PH_O06
-
-Item=Q114_NO_PH_O07
+Item=Q114_NO_PH
 
 Item=Q114_NO_PH_OTHER_TXT
 
@@ -1416,7 +1134,7 @@ Label=K. Access to Medicines
 
 Level=1
 
-Size=806,2017
+Size=806,847
 
   
 
@@ -1432,21 +1150,7 @@ Item=Q148_CONDITIONS_OTHER_TXT
 
 Item=Q148_MEDICINES_TXT
 
-Item=Q149_WHERE_BUY_O01
-
-Item=Q149_WHERE_BUY_O02
-
-Item=Q149_WHERE_BUY_O03
-
-Item=Q149_WHERE_BUY_O04
-
-Item=Q149_WHERE_BUY_O05
-
-Item=Q149_WHERE_BUY_O06
-
-Item=Q149_WHERE_BUY_O07
-
-Item=Q149_WHERE_BUY_O08
+Item=Q149_WHERE_BUY
 
 Item=Q149_WHERE_BUY_OTHER_TXT
 
@@ -1458,35 +1162,11 @@ Item=Q151_PHARM_EASE
 
 Item=Q152_GAMOT_HEARD
 
-Item=Q153_GAMOT_SOURCE_O01
-
-Item=Q153_GAMOT_SOURCE_O02
-
-Item=Q153_GAMOT_SOURCE_O03
-
-Item=Q153_GAMOT_SOURCE_O04
-
-Item=Q153_GAMOT_SOURCE_O05
-
-Item=Q153_GAMOT_SOURCE_O06
-
-Item=Q153_GAMOT_SOURCE_O07
-
-Item=Q153_GAMOT_SOURCE_O08
+Item=Q153_GAMOT_SOURCE
 
 Item=Q153_GAMOT_SOURCE_OTHER_TXT
 
-Item=Q154_GAMOT_UNDERSTAND_O01
-
-Item=Q154_GAMOT_UNDERSTAND_O02
-
-Item=Q154_GAMOT_UNDERSTAND_O03
-
-Item=Q154_GAMOT_UNDERSTAND_O04
-
-Item=Q154_GAMOT_UNDERSTAND_O05
-
-Item=Q154_GAMOT_UNDERSTAND_O06
+Item=Q154_GAMOT_UNDERSTAND
 
 Item=Q154_GAMOT_UNDERSTAND_OTHER_TXT
 
@@ -1494,23 +1174,7 @@ Item=Q155_GAMOT_GOT_MEDS
 
 Item=Q156_GAMOT_MEDS_LIST
 
-Item=Q157_WHERE_REST_O01
-
-Item=Q157_WHERE_REST_O02
-
-Item=Q157_WHERE_REST_O03
-
-Item=Q157_WHERE_REST_O04
-
-Item=Q157_WHERE_REST_O05
-
-Item=Q157_WHERE_REST_O06
-
-Item=Q157_WHERE_REST_O07
-
-Item=Q157_WHERE_REST_O08
-
-Item=Q157_WHERE_REST_O09
+Item=Q157_WHERE_REST
 
 Item=Q157_WHERE_REST_OTHER_TXT
 
@@ -1518,35 +1182,11 @@ Item=Q158_BRAND_GEN_KNOW
 
 Item=Q159_BRAND_GEN_BOUGHT
 
-Item=Q160_WHY_GENERIC_O01
-
-Item=Q160_WHY_GENERIC_O02
-
-Item=Q160_WHY_GENERIC_O03
-
-Item=Q160_WHY_GENERIC_O04
-
-Item=Q160_WHY_GENERIC_O05
-
-Item=Q160_WHY_GENERIC_O06
-
-Item=Q160_WHY_GENERIC_O07
+Item=Q160_WHY_GENERIC
 
 Item=Q160_WHY_GENERIC_OTHER_TXT
 
-Item=Q161_WHY_BRANDED_O01
-
-Item=Q161_WHY_BRANDED_O02
-
-Item=Q161_WHY_BRANDED_O03
-
-Item=Q161_WHY_BRANDED_O04
-
-Item=Q161_WHY_BRANDED_O05
-
-Item=Q161_WHY_BRANDED_O06
-
-Item=Q161_WHY_BRANDED_O07
+Item=Q161_WHY_BRANDED
 
 Item=Q161_WHY_BRANDED_OTHER_TXT
 
@@ -1564,35 +1204,13 @@ Label=L. Referrals
 
 Level=1
 
-Size=806,1057
+Size=806,727
 
   
 
 Item=Q162_REFERRED
 
-Item=Q163_CARE_TYPE_O01
-
-Item=Q163_CARE_TYPE_O02
-
-Item=Q163_CARE_TYPE_O03
-
-Item=Q163_CARE_TYPE_O04
-
-Item=Q163_CARE_TYPE_O05
-
-Item=Q163_CARE_TYPE_O06
-
-Item=Q163_CARE_TYPE_O07
-
-Item=Q163_CARE_TYPE_O08
-
-Item=Q163_CARE_TYPE_O09
-
-Item=Q163_CARE_TYPE_O10
-
-Item=Q163_CARE_TYPE_O11
-
-Item=Q163_CARE_TYPE_O12
+Item=Q163_CARE_TYPE
 
 Item=Q163_CARE_TYPE_OTHER_TXT
 
@@ -4194,13 +3812,13 @@ Text=41. Did you have any difficulties in the registration process?
 
 [Field]
 
-Name=Q42_DIFFICULTY_O01
+Name=Q42_DIFFICULTY
 
 Position=350,207,365,227
 
-Item=Q42_DIFFICULTY_O01,PATIENTSURVEY_DICT
+Item=Q42_DIFFICULTY,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=9
 
@@ -4210,175 +3828,7 @@ Form=9
 
 Position=50,210,330,226
 
-Text=42. What did you find difficult about the process? — Unclear process
-
- 
-
-  
-
-[Field]
-
-Name=Q42_DIFFICULTY_O02
-
-Position=350,237,365,257
-
-Item=Q42_DIFFICULTY_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,240,330,256
-
-Text=42. What did you find difficult about the process? — Took a long time
-
- 
-
-  
-
-[Field]
-
-Name=Q42_DIFFICULTY_O03
-
-Position=350,267,365,287
-
-Item=Q42_DIFFICULTY_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,270,330,286
-
-Text=42. What did you find difficult about the process? — Did not know where to ask for help
-
- 
-
-  
-
-[Field]
-
-Name=Q42_DIFFICULTY_O04
-
-Position=350,297,365,317
-
-Item=Q42_DIFFICULTY_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,300,330,316
-
-Text=42. What did you find difficult about the process? — Had to travel a long way
-
- 
-
-  
-
-[Field]
-
-Name=Q42_DIFFICULTY_O05
-
-Position=350,327,365,347
-
-Item=Q42_DIFFICULTY_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,330,330,346
-
-Text=42. What did you find difficult about the process? — No valid ID
-
- 
-
-  
-
-[Field]
-
-Name=Q42_DIFFICULTY_O06
-
-Position=350,357,365,377
-
-Item=Q42_DIFFICULTY_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,360,330,376
-
-Text=42. What did you find difficult about the process? — Did not know the required documents to register
-
- 
-
-  
-
-[Field]
-
-Name=Q42_DIFFICULTY_O07
-
-Position=350,387,365,407
-
-Item=Q42_DIFFICULTY_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,390,330,406
-
-Text=42. What did you find difficult about the process? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q42_DIFFICULTY_O08
-
-Position=350,417,365,437
-
-Item=Q42_DIFFICULTY_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,420,330,436
-
-Text=42. What did you find difficult about the process? — Other (Specify)
+Text=42. What did you find difficult about the process?
 
  
 
@@ -4388,7 +3838,7 @@ Text=42. What did you find difficult about the process? — Other (Specify)
 
 Name=Q42_DIFFICULTY_OTHER_TXT
 
-Position=350,447,760,467
+Position=350,237,760,257
 
 Item=Q42_DIFFICULTY_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -4402,7 +3852,7 @@ Form=9
 
 [Text]
 
-Position=50,450,330,466
+Position=50,240,330,256
 
 Text=42. What did you find difficult about the process? — Other (specify) text
 
@@ -4414,7 +3864,7 @@ Text=42. What did you find difficult about the process? — Other (specify) text
 
 Name=Q43_KNOWS_ASSIST
 
-Position=350,477,365,497
+Position=350,267,365,287
 
 Item=Q43_KNOWS_ASSIST,PATIENTSURVEY_DICT
 
@@ -4426,7 +3876,7 @@ Form=9
 
 [Text]
 
-Position=50,480,330,496
+Position=50,270,330,286
 
 Text=43. Would you know where to go to seek assistance during registration?
 
@@ -4438,7 +3888,7 @@ Text=43. Would you know where to go to seek assistance during registration?
 
 Name=Q44_WHERE_ASSIST
 
-Position=350,507,365,527
+Position=350,297,365,317
 
 Item=Q44_WHERE_ASSIST,PATIENTSURVEY_DICT
 
@@ -4450,7 +3900,7 @@ Form=9
 
 [Text]
 
-Position=50,510,330,526
+Position=50,300,330,316
 
 Text=44. Where would you go to seek assistance?
 
@@ -4462,7 +3912,7 @@ Text=44. Where would you go to seek assistance?
 
 Name=Q44_WHERE_ASSIST_OTHER_TXT
 
-Position=350,537,760,557
+Position=350,327,760,347
 
 Item=Q44_WHERE_ASSIST_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -4476,7 +3926,7 @@ Form=9
 
 [Text]
 
-Position=50,540,330,556
+Position=50,330,330,346
 
 Text=44. Where to seek assistance — Other (specify) text
 
@@ -4488,7 +3938,7 @@ Text=44. Where to seek assistance — Other (specify) text
 
 Name=Q45_CATEGORY
 
-Position=350,567,365,587
+Position=350,357,365,377
 
 Item=Q45_CATEGORY,PATIENTSURVEY_DICT
 
@@ -4500,7 +3950,7 @@ Form=9
 
 [Text]
 
-Position=50,570,330,586
+Position=50,360,330,376
 
 Text=45. What category of member are you?
 
@@ -4512,7 +3962,7 @@ Text=45. What category of member are you?
 
 Name=Q45_CATEGORY_OTHER_TXT
 
-Position=350,597,760,617
+Position=350,387,760,407
 
 Item=Q45_CATEGORY_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -4526,7 +3976,7 @@ Form=9
 
 [Text]
 
-Position=50,600,330,616
+Position=50,390,330,406
 
 Text=45. Category — Other (specify) text
 
@@ -4538,7 +3988,7 @@ Text=45. Category — Other (specify) text
 
 Name=Q46_BENEFITS
 
-Position=350,627,365,647
+Position=350,417,365,437
 
 Item=Q46_BENEFITS,PATIENTSURVEY_DICT
 
@@ -4550,7 +4000,7 @@ Form=9
 
 [Text]
 
-Position=50,630,330,646
+Position=50,420,330,436
 
 Text=46. What are some of the benefits that come with being a PhilHealth member?
 
@@ -4562,7 +4012,7 @@ Text=46. What are some of the benefits that come with being a PhilHealth member?
 
 Name=Q46_BENEFITS_OTHER_TXT
 
-Position=350,657,760,677
+Position=350,447,760,467
 
 Item=Q46_BENEFITS_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -4576,7 +4026,7 @@ Form=9
 
 [Text]
 
-Position=50,660,330,676
+Position=50,450,330,466
 
 Text=46. What are some of the benefits that come with being a PhilHealth member? — Other (specify) text
 
@@ -4588,7 +4038,7 @@ Text=46. What are some of the benefits that come with being a PhilHealth member?
 
 Name=Q47_PHYSICIAN_CHECKUP
 
-Position=350,687,365,707
+Position=350,477,365,497
 
 Item=Q47_PHYSICIAN_CHECKUP,PATIENTSURVEY_DICT
 
@@ -4600,7 +4050,7 @@ Form=9
 
 [Text]
 
-Position=50,690,330,706
+Position=50,480,330,496
 
 Text=47. Awareness of PhilHealth package — Physician check-up
 
@@ -4612,7 +4062,7 @@ Text=47. Awareness of PhilHealth package — Physician check-up
 
 Name=Q47_DIAGNOSTIC_TESTS
 
-Position=350,717,365,737
+Position=350,507,365,527
 
 Item=Q47_DIAGNOSTIC_TESTS,PATIENTSURVEY_DICT
 
@@ -4624,7 +4074,7 @@ Form=9
 
 [Text]
 
-Position=50,720,330,736
+Position=50,510,330,526
 
 Text=47. Awareness of PhilHealth package — Diagnostic tests (e.g. laboratory tests and imaging)
 
@@ -4636,7 +4086,7 @@ Text=47. Awareness of PhilHealth package — Diagnostic tests (e.g. laboratory t
 
 Name=Q47_HOSPITAL_CONF
 
-Position=350,747,365,767
+Position=350,537,365,557
 
 Item=Q47_HOSPITAL_CONF,PATIENTSURVEY_DICT
 
@@ -4648,7 +4098,7 @@ Form=9
 
 [Text]
 
-Position=50,750,330,766
+Position=50,540,330,556
 
 Text=47. Awareness of PhilHealth package — Hospital confinement
 
@@ -4660,7 +4110,7 @@ Text=47. Awareness of PhilHealth package — Hospital confinement
 
 Name=Q47_OUTPATIENT_DRUGS
 
-Position=350,777,365,797
+Position=350,567,365,587
 
 Item=Q47_OUTPATIENT_DRUGS,PATIENTSURVEY_DICT
 
@@ -4672,7 +4122,7 @@ Form=9
 
 [Text]
 
-Position=50,780,330,796
+Position=50,570,330,586
 
 Text=47. Awareness of PhilHealth package — Outpatient drugs
 
@@ -4684,7 +4134,7 @@ Text=47. Awareness of PhilHealth package — Outpatient drugs
 
 Name=Q48_PREMIUM_PAY
 
-Position=350,807,365,827
+Position=350,597,365,617
 
 Item=Q48_PREMIUM_PAY,PATIENTSURVEY_DICT
 
@@ -4696,7 +4146,7 @@ Form=9
 
 [Text]
 
-Position=50,810,330,826
+Position=50,600,330,616
 
 Text=48. Do you pay PhilHealth premiums every month?
 
@@ -4708,7 +4158,7 @@ Text=48. Do you pay PhilHealth premiums every month?
 
 Name=Q49_PREMIUM_DIFFICULT
 
-Position=350,837,365,857
+Position=350,627,365,647
 
 Item=Q49_PREMIUM_DIFFICULT,PATIENTSURVEY_DICT
 
@@ -4720,7 +4170,7 @@ Form=9
 
 [Text]
 
-Position=50,840,330,856
+Position=50,630,330,646
 
 Text=49. Do you find it difficult to pay your PhilHealth premium every month?
 
@@ -4730,37 +4180,13 @@ Text=49. Do you find it difficult to pay your PhilHealth premium every month?
 
 [Field]
 
-Name=Q50_DIFFICULTY_PAYING_O01
+Name=Q50_DIFFICULTY_PAYING
 
-Position=350,867,365,887
+Position=350,657,365,677
 
-Item=Q50_DIFFICULTY_PAYING_O01,PATIENTSURVEY_DICT
+Item=Q50_DIFFICULTY_PAYING,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,870,330,886
-
-Text=50. Why did you find it difficult? — Cannot afford the premium
-
- 
-
-  
-
-[Field]
-
-Name=Q50_DIFFICULTY_PAYING_O02
-
-Position=350,897,365,917
-
-Item=Q50_DIFFICULTY_PAYING_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=9
 
@@ -4768,129 +4194,9 @@ Form=9
 
 [Text]
 
-Position=50,900,330,916
+Position=50,660,330,676
 
-Text=50. Why did you find it difficult? — Payment options are inconvenient
-
- 
-
-  
-
-[Field]
-
-Name=Q50_DIFFICULTY_PAYING_O03
-
-Position=350,927,365,947
-
-Item=Q50_DIFFICULTY_PAYING_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,930,330,946
-
-Text=50. Why did you find it difficult? — No time to pay
-
- 
-
-  
-
-[Field]
-
-Name=Q50_DIFFICULTY_PAYING_O04
-
-Position=350,957,365,977
-
-Item=Q50_DIFFICULTY_PAYING_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,960,330,976
-
-Text=50. Why did you find it difficult? — Don't see value in paying
-
- 
-
-  
-
-[Field]
-
-Name=Q50_DIFFICULTY_PAYING_O05
-
-Position=350,987,365,1007
-
-Item=Q50_DIFFICULTY_PAYING_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,990,330,1006
-
-Text=50. Why did you find it difficult? — System of PhilHealth is unreliable/usually down
-
- 
-
-  
-
-[Field]
-
-Name=Q50_DIFFICULTY_PAYING_O06
-
-Position=350,1017,365,1037
-
-Item=Q50_DIFFICULTY_PAYING_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,1020,330,1036
-
-Text=50. Why did you find it difficult? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q50_DIFFICULTY_PAYING_O07
-
-Position=350,1047,365,1067
-
-Item=Q50_DIFFICULTY_PAYING_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,1050,330,1066
-
-Text=50. Why did you find it difficult? — Other (Specify)
+Text=50. Why did you find it difficult?
 
  
 
@@ -4900,7 +4206,7 @@ Text=50. Why did you find it difficult? — Other (Specify)
 
 Name=Q50_DIFFICULTY_PAYING_OTHER_TXT
 
-Position=350,1077,760,1097
+Position=350,687,760,707
 
 Item=Q50_DIFFICULTY_PAYING_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -4914,7 +4220,7 @@ Form=9
 
 [Text]
 
-Position=50,1080,330,1096
+Position=50,690,330,706
 
 Text=50. Why did you find it difficult? — Other (specify) text
 
@@ -4926,7 +4232,7 @@ Text=50. Why did you find it difficult? — Other (specify) text
 
 Name=Q51_OTHER_INSURANCE
 
-Position=350,1107,365,1127
+Position=350,717,365,737
 
 Item=Q51_OTHER_INSURANCE,PATIENTSURVEY_DICT
 
@@ -4938,7 +4244,7 @@ Form=9
 
 [Text]
 
-Position=50,1110,330,1126
+Position=50,720,330,736
 
 Text=51. Are you registered with another health insurance plan?
 
@@ -4948,37 +4254,13 @@ Text=51. Are you registered with another health insurance plan?
 
 [Field]
 
-Name=Q52_PLANS_O01
+Name=Q52_PLANS
 
-Position=350,1137,365,1157
+Position=350,747,365,767
 
-Item=Q52_PLANS_O01,PATIENTSURVEY_DICT
+Item=Q52_PLANS,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,1140,330,1156
-
-Text=52. Which health insurance plan/s are you enrolled in? — GSIS
-
- 
-
-  
-
-[Field]
-
-Name=Q52_PLANS_O02
-
-Position=350,1167,365,1187
-
-Item=Q52_PLANS_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=9
 
@@ -4986,129 +4268,9 @@ Form=9
 
 [Text]
 
-Position=50,1170,330,1186
+Position=50,750,330,766
 
-Text=52. Which health insurance plan/s are you enrolled in? — SSS
-
- 
-
-  
-
-[Field]
-
-Name=Q52_PLANS_O03
-
-Position=350,1197,365,1217
-
-Item=Q52_PLANS_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,1200,330,1216
-
-Text=52. Which health insurance plan/s are you enrolled in? — Private Insurance
-
- 
-
-  
-
-[Field]
-
-Name=Q52_PLANS_O04
-
-Position=350,1227,365,1247
-
-Item=Q52_PLANS_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,1230,330,1246
-
-Text=52. Which health insurance plan/s are you enrolled in? — HMO
-
- 
-
-  
-
-[Field]
-
-Name=Q52_PLANS_O05
-
-Position=350,1257,365,1277
-
-Item=Q52_PLANS_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,1260,330,1276
-
-Text=52. Which health insurance plan/s are you enrolled in? — Pag-ibig
-
- 
-
-  
-
-[Field]
-
-Name=Q52_PLANS_O06
-
-Position=350,1287,365,1307
-
-Item=Q52_PLANS_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,1290,330,1306
-
-Text=52. Which health insurance plan/s are you enrolled in? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q52_PLANS_O07
-
-Position=350,1317,365,1337
-
-Item=Q52_PLANS_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=9
-
-  
-
-[Text]
-
-Position=50,1320,330,1336
-
-Text=52. Which health insurance plan/s are you enrolled in? — Others (specify)
+Text=52. Which health insurance plan/s are you enrolled in?
 
  
 
@@ -5118,7 +4280,7 @@ Text=52. Which health insurance plan/s are you enrolled in? — Others (specify)
 
 Name=Q52_PLANS_OTHER_TXT
 
-Position=350,1347,760,1367
+Position=350,777,760,797
 
 Item=Q52_PLANS_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -5132,7 +4294,7 @@ Form=9
 
 [Text]
 
-Position=50,1350,330,1366
+Position=50,780,330,796
 
 Text=52. Which health insurance plan/s are you enrolled in? — Other (specify) text
 
@@ -5234,7 +4396,7 @@ DisplayTogether=Yes
 
 Position=12
 
-Length=8
+Length=1
 
   
 
@@ -5246,7 +4408,7 @@ Label=Q42
 
 DisplayTogether=Yes
 
-Position=21
+Position=14
 
 Length=1
 
@@ -5260,7 +4422,7 @@ Label=Q43
 
 DisplayTogether=Yes
 
-Position=23
+Position=16
 
 Length=1
 
@@ -5274,7 +4436,7 @@ Label=Q44
 
 DisplayTogether=Yes
 
-Position=25
+Position=18
 
 Length=1
 
@@ -5288,7 +4450,7 @@ Label=Q44
 
 DisplayTogether=Yes
 
-Position=27
+Position=20
 
 Length=1
 
@@ -5302,7 +4464,7 @@ Label=Q45
 
 DisplayTogether=Yes
 
-Position=29
+Position=22
 
 Length=1
 
@@ -5316,7 +4478,7 @@ Label=Q45
 
 DisplayTogether=Yes
 
-Position=31
+Position=24
 
 Length=1
 
@@ -5330,7 +4492,7 @@ Label=Q46
 
 DisplayTogether=Yes
 
-Position=33
+Position=26
 
 Length=1
 
@@ -5344,7 +4506,7 @@ Label=Q46
 
 DisplayTogether=Yes
 
-Position=35
+Position=28
 
 Length=1
 
@@ -5358,7 +4520,7 @@ Label=Q47-Q48
 
 DisplayTogether=Yes
 
-Position=37
+Position=30
 
 Length=5
 
@@ -5372,7 +4534,7 @@ Label=Q49
 
 DisplayTogether=Yes
 
-Position=43
+Position=36
 
 Length=1
 
@@ -5386,9 +4548,9 @@ Label=Q50
 
 DisplayTogether=Yes
 
-Position=45
+Position=38
 
-Length=7
+Length=1
 
   
 
@@ -5400,7 +4562,7 @@ Label=Q50
 
 DisplayTogether=Yes
 
-Position=53
+Position=40
 
 Length=1
 
@@ -5414,7 +4576,7 @@ Label=Q51
 
 DisplayTogether=Yes
 
-Position=55
+Position=42
 
 Length=1
 
@@ -5428,9 +4590,9 @@ Label=Q52
 
 DisplayTogether=Yes
 
-Position=57
+Position=44
 
-Length=7
+Length=1
 
   
 
@@ -5442,7 +4604,7 @@ Label=Q52
 
 DisplayTogether=Yes
 
-Position=65
+Position=46
 
 Length=1
 
@@ -5662,13 +4824,13 @@ Text=58. Wait time to set appointment with main primary care provider — Minute
 
 [Field]
 
-Name=Q59_SCHED_COMM_O01
+Name=Q59_SCHED_COMM
 
 Position=350,267,365,287
 
-Item=Q59_SCHED_COMM_O01,PATIENTSURVEY_DICT
+Item=Q59_SCHED_COMM,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=10
 
@@ -5678,103 +4840,7 @@ Form=10
 
 Position=50,270,330,286
 
-Text=59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? — Face-to-face
-
- 
-
-  
-
-[Field]
-
-Name=Q59_SCHED_COMM_O02
-
-Position=350,297,365,317
-
-Item=Q59_SCHED_COMM_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,300,330,316
-
-Text=59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? — Teleconsultation
-
- 
-
-  
-
-[Field]
-
-Name=Q59_SCHED_COMM_O03
-
-Position=350,327,365,347
-
-Item=Q59_SCHED_COMM_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,330,330,346
-
-Text=59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? — Landline
-
- 
-
-  
-
-[Field]
-
-Name=Q59_SCHED_COMM_O04
-
-Position=350,357,365,377
-
-Item=Q59_SCHED_COMM_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,360,330,376
-
-Text=59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? — Cellphone
-
- 
-
-  
-
-[Field]
-
-Name=Q59_SCHED_COMM_O05
-
-Position=350,387,365,407
-
-Item=Q59_SCHED_COMM_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,390,330,406
-
-Text=59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider? — Video Conference
+Text=59. What mode/s of communication was/were available to you when scheduling a consultation with your main primary care provider?
 
  
 
@@ -5784,7 +4850,7 @@ Text=59. What mode/s of communication was/were available to you when scheduling 
 
 Name=Q60_SCHED_TELECON_OK
 
-Position=350,417,365,437
+Position=350,297,365,317
 
 Item=Q60_SCHED_TELECON_OK,PATIENTSURVEY_DICT
 
@@ -5796,7 +4862,7 @@ Form=10
 
 [Text]
 
-Position=50,420,330,436
+Position=50,300,330,316
 
 Text=60. If teleconsultation was available, did you succeed in using the teleconsult? (scheduling)
 
@@ -5806,37 +4872,13 @@ Text=60. If teleconsultation was available, did you succeed in using the telecon
 
 [Field]
 
-Name=Q61_CONSULT_COMM_O01
+Name=Q61_CONSULT_COMM
 
-Position=350,447,365,467
+Position=350,327,365,347
 
-Item=Q61_CONSULT_COMM_O01,PATIENTSURVEY_DICT
+Item=Q61_CONSULT_COMM,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,450,330,466
-
-Text=61. What mode/s of communication was/were available to you when consulting with your main primary care provider? — Face-to-face
-
- 
-
-  
-
-[Field]
-
-Name=Q61_CONSULT_COMM_O02
-
-Position=350,477,365,497
-
-Item=Q61_CONSULT_COMM_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=10
 
@@ -5844,81 +4886,9 @@ Form=10
 
 [Text]
 
-Position=50,480,330,496
+Position=50,330,330,346
 
-Text=61. What mode/s of communication was/were available to you when consulting with your main primary care provider? — Teleconsultation
-
- 
-
-  
-
-[Field]
-
-Name=Q61_CONSULT_COMM_O03
-
-Position=350,507,365,527
-
-Item=Q61_CONSULT_COMM_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,510,330,526
-
-Text=61. What mode/s of communication was/were available to you when consulting with your main primary care provider? — Landline
-
- 
-
-  
-
-[Field]
-
-Name=Q61_CONSULT_COMM_O04
-
-Position=350,537,365,557
-
-Item=Q61_CONSULT_COMM_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,540,330,556
-
-Text=61. What mode/s of communication was/were available to you when consulting with your main primary care provider? — Cellphone
-
- 
-
-  
-
-[Field]
-
-Name=Q61_CONSULT_COMM_O05
-
-Position=350,567,365,587
-
-Item=Q61_CONSULT_COMM_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,570,330,586
-
-Text=61. What mode/s of communication was/were available to you when consulting with your main primary care provider? — Video Conference
+Text=61. What mode/s of communication was/were available to you when consulting with your main primary care provider?
 
  
 
@@ -5928,7 +4898,7 @@ Text=61. What mode/s of communication was/were available to you when consulting 
 
 Name=Q62_CONSULT_TELECON_OK
 
-Position=350,597,365,617
+Position=350,357,365,377
 
 Item=Q62_CONSULT_TELECON_OK,PATIENTSURVEY_DICT
 
@@ -5940,7 +4910,7 @@ Form=10
 
 [Text]
 
-Position=50,600,330,616
+Position=50,360,330,376
 
 Text=62. If teleconsultation was available, did you succeed in using the teleconsult? (consultation)
 
@@ -5952,7 +4922,7 @@ Text=62. If teleconsultation was available, did you succeed in using the telecon
 
 Name=Q63_HAS_USUAL_FACILITY
 
-Position=350,627,365,647
+Position=350,387,365,407
 
 Item=Q63_HAS_USUAL_FACILITY,PATIENTSURVEY_DICT
 
@@ -5964,7 +4934,7 @@ Form=10
 
 [Text]
 
-Position=50,630,330,646
+Position=50,390,330,406
 
 Text=63. In the past 12 months, do you have a clinic, or health center that you usually go to?
 
@@ -5976,7 +4946,7 @@ Text=63. In the past 12 months, do you have a clinic, or health center that you 
 
 Name=Q64_FACILITY_NAME
 
-Position=350,657,760,677
+Position=350,417,760,437
 
 Item=Q64_FACILITY_NAME,PATIENTSURVEY_DICT
 
@@ -5990,7 +4960,7 @@ Form=10
 
 [Text]
 
-Position=50,660,330,676
+Position=50,420,330,436
 
 Text=64. What is the name of the facility?
 
@@ -6002,7 +4972,7 @@ Text=64. What is the name of the facility?
 
 Name=Q65_WHY_NO_USUAL
 
-Position=350,687,365,707
+Position=350,447,365,467
 
 Item=Q65_WHY_NO_USUAL,PATIENTSURVEY_DICT
 
@@ -6014,7 +4984,7 @@ Form=10
 
 [Text]
 
-Position=50,690,330,706
+Position=50,450,330,466
 
 Text=65. If none, why do you not have a usual clinic, or health center that you usually go to?
 
@@ -6026,7 +4996,7 @@ Text=65. If none, why do you not have a usual clinic, or health center that you 
 
 Name=Q65_WHY_NO_USUAL_OTHER_TXT
 
-Position=350,717,760,737
+Position=350,477,760,497
 
 Item=Q65_WHY_NO_USUAL_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -6040,7 +5010,7 @@ Form=10
 
 [Text]
 
-Position=50,720,330,736
+Position=50,480,330,496
 
 Text=65. If none, why do you not have a usual clinic, or health center that you usually go to? — Other (specify) text
 
@@ -6052,7 +5022,7 @@ Text=65. If none, why do you not have a usual clinic, or health center that you 
 
 Name=Q66_SAME_AS_USUAL
 
-Position=350,747,365,767
+Position=350,507,365,527
 
 Item=Q66_SAME_AS_USUAL,PATIENTSURVEY_DICT
 
@@ -6064,7 +5034,7 @@ Form=10
 
 [Text]
 
-Position=50,750,330,766
+Position=50,510,330,526
 
 Text=66. Is [facility_name_input] the facility you usually go to for general health concerns?
 
@@ -6076,7 +5046,7 @@ Text=66. Is [facility_name_input] the facility you usually go to for general hea
 
 Name=Q67_WHY_THIS_FACILITY
 
-Position=350,777,365,797
+Position=350,537,365,557
 
 Item=Q67_WHY_THIS_FACILITY,PATIENTSURVEY_DICT
 
@@ -6088,7 +5058,7 @@ Form=10
 
 [Text]
 
-Position=50,780,330,796
+Position=50,540,330,556
 
 Text=67. Why did you go to this facility instead of your usual facility?
 
@@ -6100,7 +5070,7 @@ Text=67. Why did you go to this facility instead of your usual facility?
 
 Name=Q67_WHY_THIS_FACILITY_OTHER_TXT
 
-Position=350,807,760,827
+Position=350,567,760,587
 
 Item=Q67_WHY_THIS_FACILITY_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -6114,7 +5084,7 @@ Form=10
 
 [Text]
 
-Position=50,810,330,826
+Position=50,570,330,586
 
 Text=67. Why did you go to this facility instead of your usual facility? — Other (specify) text
 
@@ -6126,7 +5096,7 @@ Text=67. Why did you go to this facility instead of your usual facility? — Oth
 
 Name=Q68_USUAL_FAC_TYPE
 
-Position=350,837,365,857
+Position=350,597,365,617
 
 Item=Q68_USUAL_FAC_TYPE,PATIENTSURVEY_DICT
 
@@ -6138,7 +5108,7 @@ Form=10
 
 [Text]
 
-Position=50,840,330,856
+Position=50,600,330,616
 
 Text=68. What is the type of health facility that you usually go to?
 
@@ -6150,7 +5120,7 @@ Text=68. What is the type of health facility that you usually go to?
 
 Name=Q68_USUAL_FAC_TYPE_OTHER_TXT
 
-Position=350,867,760,887
+Position=350,627,760,647
 
 Item=Q68_USUAL_FAC_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -6164,7 +5134,7 @@ Form=10
 
 [Text]
 
-Position=50,870,330,886
+Position=50,630,330,646
 
 Text=68. Usual facility type — Other (specify) text
 
@@ -6176,7 +5146,7 @@ Text=68. Usual facility type — Other (specify) text
 
 Name=Q69_USUAL_TRAVEL_HH
 
-Position=350,897,760,917
+Position=350,657,760,677
 
 Item=Q69_USUAL_TRAVEL_HH,PATIENTSURVEY_DICT
 
@@ -6188,7 +5158,7 @@ Form=10
 
 [Text]
 
-Position=50,900,330,916
+Position=50,660,330,676
 
 Text=69. How long does it take you to travel to the health facility you usually go to — Hours
 
@@ -6200,7 +5170,7 @@ Text=69. How long does it take you to travel to the health facility you usually 
 
 Name=Q69_USUAL_TRAVEL_MM
 
-Position=350,927,760,947
+Position=350,687,760,707
 
 Item=Q69_USUAL_TRAVEL_MM,PATIENTSURVEY_DICT
 
@@ -6212,7 +5182,7 @@ Form=10
 
 [Text]
 
-Position=50,930,330,946
+Position=50,690,330,706
 
 Text=69. How long does it take you to travel to the health facility you usually go to — Minutes
 
@@ -6222,37 +5192,13 @@ Text=69. How long does it take you to travel to the health facility you usually 
 
 [Field]
 
-Name=Q70_USUAL_TRANSPORT_O01
+Name=Q70_USUAL_TRANSPORT
 
-Position=350,957,365,977
+Position=350,717,365,737
 
-Item=Q70_USUAL_TRANSPORT_O01,PATIENTSURVEY_DICT
+Item=Q70_USUAL_TRANSPORT,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,960,330,976
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Walk
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O02
-
-Position=350,987,365,1007
-
-Item=Q70_USUAL_TRANSPORT_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=10
 
@@ -6260,249 +5206,9 @@ Form=10
 
 [Text]
 
-Position=50,990,330,1006
+Position=50,720,330,736
 
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Bike
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O03
-
-Position=350,1017,365,1037
-
-Item=Q70_USUAL_TRANSPORT_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1020,330,1036
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Public Bus
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O04
-
-Position=350,1047,365,1067
-
-Item=Q70_USUAL_TRANSPORT_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1050,330,1066
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Jeepney
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O05
-
-Position=350,1077,365,1097
-
-Item=Q70_USUAL_TRANSPORT_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1080,330,1096
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Tricycle
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O06
-
-Position=350,1107,365,1127
-
-Item=Q70_USUAL_TRANSPORT_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1110,330,1126
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Car (including private taxi/cab)
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O07
-
-Position=350,1137,365,1157
-
-Item=Q70_USUAL_TRANSPORT_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1140,330,1156
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Motorcycle
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O08
-
-Position=350,1167,365,1187
-
-Item=Q70_USUAL_TRANSPORT_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1170,330,1186
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Boat
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O09
-
-Position=350,1197,365,1217
-
-Item=Q70_USUAL_TRANSPORT_O09,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1200,330,1216
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Taxi
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O10
-
-Position=350,1227,365,1247
-
-Item=Q70_USUAL_TRANSPORT_O10,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1230,330,1246
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Pedicab
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O11
-
-Position=350,1257,365,1277
-
-Item=Q70_USUAL_TRANSPORT_O11,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1260,330,1276
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — E-bike
-
- 
-
-  
-
-[Field]
-
-Name=Q70_USUAL_TRANSPORT_O12
-
-Position=350,1287,365,1307
-
-Item=Q70_USUAL_TRANSPORT_O12,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1290,330,1306
-
-Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Other (Specify)
+Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to?
 
  
 
@@ -6512,7 +5218,7 @@ Text=70. What mode/s of transportation do you use when travelling to the health 
 
 Name=Q70_USUAL_TRANSPORT_OTHER_TXT
 
-Position=350,1317,760,1337
+Position=350,747,760,767
 
 Item=Q70_USUAL_TRANSPORT_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -6526,7 +5232,7 @@ Form=10
 
 [Text]
 
-Position=50,1320,330,1336
+Position=50,750,330,766
 
 Text=70. What mode/s of transportation do you use when travelling to the health facility that you usually go to? — Other (specify) text
 
@@ -6538,7 +5244,7 @@ Text=70. What mode/s of transportation do you use when travelling to the health 
 
 Name=Q71_NEAREST_TYPE
 
-Position=350,1347,365,1367
+Position=350,777,365,797
 
 Item=Q71_NEAREST_TYPE,PATIENTSURVEY_DICT
 
@@ -6550,7 +5256,7 @@ Form=10
 
 [Text]
 
-Position=50,1350,330,1366
+Position=50,780,330,796
 
 Text=71. What is the type of the primary care facility nearest to your house?
 
@@ -6562,7 +5268,7 @@ Text=71. What is the type of the primary care facility nearest to your house?
 
 Name=Q71_NEAREST_TYPE_OTHER_TXT
 
-Position=350,1377,760,1397
+Position=350,807,760,827
 
 Item=Q71_NEAREST_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -6576,7 +5282,7 @@ Form=10
 
 [Text]
 
-Position=50,1380,330,1396
+Position=50,810,330,826
 
 Text=71. Nearest primary care facility type — Other (specify) text
 
@@ -6588,7 +5294,7 @@ Text=71. Nearest primary care facility type — Other (specify) text
 
 Name=Q72_NEAREST_TRAVEL_HH
 
-Position=350,1407,760,1427
+Position=350,837,760,857
 
 Item=Q72_NEAREST_TRAVEL_HH,PATIENTSURVEY_DICT
 
@@ -6600,7 +5306,7 @@ Form=10
 
 [Text]
 
-Position=50,1410,330,1426
+Position=50,840,330,856
 
 Text=72. How long does it take you to travel from your house when going to the nearest primary care facility? — Hours
 
@@ -6612,7 +5318,7 @@ Text=72. How long does it take you to travel from your house when going to the n
 
 Name=Q72_NEAREST_TRAVEL_MM
 
-Position=350,1437,760,1457
+Position=350,867,760,887
 
 Item=Q72_NEAREST_TRAVEL_MM,PATIENTSURVEY_DICT
 
@@ -6624,7 +5330,7 @@ Form=10
 
 [Text]
 
-Position=50,1440,330,1456
+Position=50,870,330,886
 
 Text=72. How long does it take you to travel from your house when going to the nearest primary care facility? — Minutes
 
@@ -6634,37 +5340,13 @@ Text=72. How long does it take you to travel from your house when going to the n
 
 [Field]
 
-Name=Q73_NEAREST_TRANSPORT_O01
+Name=Q73_NEAREST_TRANSPORT
 
-Position=350,1467,365,1487
+Position=350,897,365,917
 
-Item=Q73_NEAREST_TRANSPORT_O01,PATIENTSURVEY_DICT
+Item=Q73_NEAREST_TRANSPORT,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1470,330,1486
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Walk
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O02
-
-Position=350,1497,365,1517
-
-Item=Q73_NEAREST_TRANSPORT_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=10
 
@@ -6672,249 +5354,9 @@ Form=10
 
 [Text]
 
-Position=50,1500,330,1516
+Position=50,900,330,916
 
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Bike
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O03
-
-Position=350,1527,365,1547
-
-Item=Q73_NEAREST_TRANSPORT_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1530,330,1546
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Public Bus
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O04
-
-Position=350,1557,365,1577
-
-Item=Q73_NEAREST_TRANSPORT_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1560,330,1576
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Jeepney
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O05
-
-Position=350,1587,365,1607
-
-Item=Q73_NEAREST_TRANSPORT_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1590,330,1606
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Tricycle
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O06
-
-Position=350,1617,365,1637
-
-Item=Q73_NEAREST_TRANSPORT_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1620,330,1636
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Car (including private taxi/cab)
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O07
-
-Position=350,1647,365,1667
-
-Item=Q73_NEAREST_TRANSPORT_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1650,330,1666
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Motorcycle
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O08
-
-Position=350,1677,365,1697
-
-Item=Q73_NEAREST_TRANSPORT_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1680,330,1696
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Boat
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O09
-
-Position=350,1707,365,1727
-
-Item=Q73_NEAREST_TRANSPORT_O09,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1710,330,1726
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Taxi
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O10
-
-Position=350,1737,365,1757
-
-Item=Q73_NEAREST_TRANSPORT_O10,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1740,330,1756
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Pedicab
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O11
-
-Position=350,1767,365,1787
-
-Item=Q73_NEAREST_TRANSPORT_O11,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1770,330,1786
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — E-bike
-
- 
-
-  
-
-[Field]
-
-Name=Q73_NEAREST_TRANSPORT_O12
-
-Position=350,1797,365,1817
-
-Item=Q73_NEAREST_TRANSPORT_O12,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1800,330,1816
-
-Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Other (Specify)
+Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility?
 
  
 
@@ -6924,7 +5366,7 @@ Text=73. What mode/s of transportation do you use when travelling to the nearest
 
 Name=Q73_NEAREST_TRANSPORT_OTHER_TXT
 
-Position=350,1827,760,1847
+Position=350,927,760,947
 
 Item=Q73_NEAREST_TRANSPORT_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -6938,7 +5380,7 @@ Form=10
 
 [Text]
 
-Position=50,1830,330,1846
+Position=50,930,330,946
 
 Text=73. What mode/s of transportation do you use when travelling to the nearest primary care facility? — Other (specify) text
 
@@ -6950,7 +5392,7 @@ Text=73. What mode/s of transportation do you use when travelling to the nearest
 
 Name=Q74_KON_HEARD
 
-Position=350,1857,365,1877
+Position=350,957,365,977
 
 Item=Q74_KON_HEARD,PATIENTSURVEY_DICT
 
@@ -6962,7 +5404,7 @@ Form=10
 
 [Text]
 
-Position=50,1860,330,1876
+Position=50,960,330,976
 
 Text=74. Have you heard of the term "YAKAP/ Konsulta package"?
 
@@ -6972,37 +5414,13 @@ Text=74. Have you heard of the term "YAKAP/ Konsulta package"?
 
 [Field]
 
-Name=Q75_KON_SOURCE_O01
+Name=Q75_KON_SOURCE
 
-Position=350,1887,365,1907
+Position=350,987,365,1007
 
-Item=Q75_KON_SOURCE_O01,PATIENTSURVEY_DICT
+Item=Q75_KON_SOURCE,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1890,330,1906
-
-Text=75. What are your sources of information about the YAKAP/Konsulta package? — News
-
- 
-
-  
-
-[Field]
-
-Name=Q75_KON_SOURCE_O02
-
-Position=350,1917,365,1937
-
-Item=Q75_KON_SOURCE_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=10
 
@@ -7010,153 +5428,9 @@ Form=10
 
 [Text]
 
-Position=50,1920,330,1936
+Position=50,990,330,1006
 
-Text=75. What are your sources of information about the YAKAP/Konsulta package? — Legislation
-
- 
-
-  
-
-[Field]
-
-Name=Q75_KON_SOURCE_O03
-
-Position=350,1947,365,1967
-
-Item=Q75_KON_SOURCE_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1950,330,1966
-
-Text=75. What are your sources of information about the YAKAP/Konsulta package? — Social Media
-
- 
-
-  
-
-[Field]
-
-Name=Q75_KON_SOURCE_O04
-
-Position=350,1977,365,1997
-
-Item=Q75_KON_SOURCE_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,1980,330,1996
-
-Text=75. What are your sources of information about the YAKAP/Konsulta package? — Friends / Family
-
- 
-
-  
-
-[Field]
-
-Name=Q75_KON_SOURCE_O05
-
-Position=350,2007,365,2027
-
-Item=Q75_KON_SOURCE_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2010,330,2026
-
-Text=75. What are your sources of information about the YAKAP/Konsulta package? — Health center/facility
-
- 
-
-  
-
-[Field]
-
-Name=Q75_KON_SOURCE_O06
-
-Position=350,2037,365,2057
-
-Item=Q75_KON_SOURCE_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2040,330,2056
-
-Text=75. What are your sources of information about the YAKAP/Konsulta package? — LGU/Barangay
-
- 
-
-  
-
-[Field]
-
-Name=Q75_KON_SOURCE_O07
-
-Position=350,2067,365,2087
-
-Item=Q75_KON_SOURCE_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2070,330,2086
-
-Text=75. What are your sources of information about the YAKAP/Konsulta package? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q75_KON_SOURCE_O08
-
-Position=350,2097,365,2117
-
-Item=Q75_KON_SOURCE_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2100,330,2116
-
-Text=75. What are your sources of information about the YAKAP/Konsulta package? — Other (Specify)
+Text=75. What are your sources of information about the YAKAP/Konsulta package?
 
  
 
@@ -7166,7 +5440,7 @@ Text=75. What are your sources of information about the YAKAP/Konsulta package? 
 
 Name=Q75_KON_SOURCE_OTHER_TXT
 
-Position=350,2127,760,2147
+Position=350,1017,760,1037
 
 Item=Q75_KON_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -7180,7 +5454,7 @@ Form=10
 
 [Text]
 
-Position=50,2130,330,2146
+Position=50,1020,330,1036
 
 Text=75. What are your sources of information about the YAKAP/Konsulta package? — Other (specify) text
 
@@ -7192,7 +5466,7 @@ Text=75. What are your sources of information about the YAKAP/Konsulta package? 
 
 Name=Q76_KON_UNDERSTAND
 
-Position=350,2157,365,2177
+Position=350,1047,365,1067
 
 Item=Q76_KON_UNDERSTAND,PATIENTSURVEY_DICT
 
@@ -7204,7 +5478,7 @@ Form=10
 
 [Text]
 
-Position=50,2160,330,2176
+Position=50,1050,330,1066
 
 Text=76. What is your understanding about the YAKAP/Konsulta package?
 
@@ -7216,7 +5490,7 @@ Text=76. What is your understanding about the YAKAP/Konsulta package?
 
 Name=Q76_KON_UNDERSTAND_OTHER_TXT
 
-Position=350,2187,760,2207
+Position=350,1077,760,1097
 
 Item=Q76_KON_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -7230,7 +5504,7 @@ Form=10
 
 [Text]
 
-Position=50,2190,330,2206
+Position=50,1080,330,1096
 
 Text=76. What is your understanding about the YAKAP/Konsulta package? — Other (specify) text
 
@@ -7242,7 +5516,7 @@ Text=76. What is your understanding about the YAKAP/Konsulta package? — Other 
 
 Name=Q77_KON_REGISTERED
 
-Position=350,2217,365,2237
+Position=350,1107,365,1127
 
 Item=Q77_KON_REGISTERED,PATIENTSURVEY_DICT
 
@@ -7254,7 +5528,7 @@ Form=10
 
 [Text]
 
-Position=50,2220,330,2236
+Position=50,1110,330,1126
 
 Text=77. Are you registered with a YAKAP/Konsulta package provider?
 
@@ -7266,7 +5540,7 @@ Text=77. Are you registered with a YAKAP/Konsulta package provider?
 
 Name=Q78_KON_WHEN_REG
 
-Position=350,2247,365,2267
+Position=350,1137,365,1157
 
 Item=Q78_KON_WHEN_REG,PATIENTSURVEY_DICT
 
@@ -7278,7 +5552,7 @@ Form=10
 
 [Text]
 
-Position=50,2250,330,2266
+Position=50,1140,330,1156
 
 Text=78. When did you register with a YAKAP/Konsulta package provider?
 
@@ -7290,7 +5564,7 @@ Text=78. When did you register with a YAKAP/Konsulta package provider?
 
 Name=Q79_KON_HAD_APPT
 
-Position=350,2277,365,2297
+Position=350,1167,365,1187
 
 Item=Q79_KON_HAD_APPT,PATIENTSURVEY_DICT
 
@@ -7302,7 +5576,7 @@ Form=10
 
 [Text]
 
-Position=50,2280,330,2296
+Position=50,1170,330,1186
 
 Text=79. Since registering, have you had an appointment with your YAKAP/Konsulta package provider?
 
@@ -7314,7 +5588,7 @@ Text=79. Since registering, have you had an appointment with your YAKAP/Konsulta
 
 Name=Q80_KON_KNOWS_BOOKING
 
-Position=350,2307,365,2327
+Position=350,1197,365,1217
 
 Item=Q80_KON_KNOWS_BOOKING,PATIENTSURVEY_DICT
 
@@ -7326,7 +5600,7 @@ Form=10
 
 [Text]
 
-Position=50,2310,330,2326
+Position=50,1200,330,1216
 
 Text=80. When you have a health problem, do you know how to book an appointment at your YAKAP/Konsulta package provider?
 
@@ -7338,7 +5612,7 @@ Text=80. When you have a health problem, do you know how to book an appointment 
 
 Name=Q81_KON_APPT_CHECKUP
 
-Position=350,2337,365,2357
+Position=350,1227,365,1247
 
 Item=Q81_KON_APPT_CHECKUP,PATIENTSURVEY_DICT
 
@@ -7350,7 +5624,7 @@ Form=10
 
 [Text]
 
-Position=50,2340,330,2356
+Position=50,1230,330,1246
 
 Text=81. Was that appointment for a general check-up (i.e. not related to an illness or injury)?
 
@@ -7360,37 +5634,13 @@ Text=81. Was that appointment for a general check-up (i.e. not related to an ill
 
 [Field]
 
-Name=Q82_KON_WHY_NOT_REG_O01
+Name=Q82_KON_WHY_NOT_REG
 
-Position=350,2367,365,2387
+Position=350,1257,365,1277
 
-Item=Q82_KON_WHY_NOT_REG_O01,PATIENTSURVEY_DICT
+Item=Q82_KON_WHY_NOT_REG,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2370,330,2386
-
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Don't know what a YAKAP/Konsulta provider is
-
- 
-
-  
-
-[Field]
-
-Name=Q82_KON_WHY_NOT_REG_O02
-
-Position=350,2397,365,2417
-
-Item=Q82_KON_WHY_NOT_REG_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=10
 
@@ -7398,225 +5648,9 @@ Form=10
 
 [Text]
 
-Position=50,2400,330,2416
+Position=50,1260,330,1276
 
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Don't trust PhilHealth
-
- 
-
-  
-
-[Field]
-
-Name=Q82_KON_WHY_NOT_REG_O03
-
-Position=350,2427,365,2447
-
-Item=Q82_KON_WHY_NOT_REG_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2430,330,2446
-
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Don't know how to register
-
- 
-
-  
-
-[Field]
-
-Name=Q82_KON_WHY_NOT_REG_O04
-
-Position=350,2457,365,2477
-
-Item=Q82_KON_WHY_NOT_REG_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2460,330,2476
-
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Registration is confusing/time-consuming/inconvenient
-
- 
-
-  
-
-[Field]
-
-Name=Q82_KON_WHY_NOT_REG_O05
-
-Position=350,2487,365,2507
-
-Item=Q82_KON_WHY_NOT_REG_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2490,330,2506
-
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Intend to register but do not have found a time to do it.
-
- 
-
-  
-
-[Field]
-
-Name=Q82_KON_WHY_NOT_REG_O06
-
-Position=350,2517,365,2537
-
-Item=Q82_KON_WHY_NOT_REG_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2520,330,2536
-
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — YAKAP/Konsulta is not available in my local area
-
- 
-
-  
-
-[Field]
-
-Name=Q82_KON_WHY_NOT_REG_O07
-
-Position=350,2547,365,2567
-
-Item=Q82_KON_WHY_NOT_REG_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2550,330,2566
-
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Already have a usual primary care provider that I go to
-
- 
-
-  
-
-[Field]
-
-Name=Q82_KON_WHY_NOT_REG_O08
-
-Position=350,2577,365,2597
-
-Item=Q82_KON_WHY_NOT_REG_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2580,330,2596
-
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Don't have the required PhilHealth ID to register for YAKAP/Konsulta
-
- 
-
-  
-
-[Field]
-
-Name=Q82_KON_WHY_NOT_REG_O09
-
-Position=350,2607,365,2627
-
-Item=Q82_KON_WHY_NOT_REG_O09,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2610,330,2626
-
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Don't have the other requirements to register
-
- 
-
-  
-
-[Field]
-
-Name=Q82_KON_WHY_NOT_REG_O10
-
-Position=350,2637,365,2657
-
-Item=Q82_KON_WHY_NOT_REG_O10,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2640,330,2656
-
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q82_KON_WHY_NOT_REG_O11
-
-Position=350,2667,365,2687
-
-Item=Q82_KON_WHY_NOT_REG_O11,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=10
-
-  
-
-[Text]
-
-Position=50,2670,330,2686
-
-Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Other (specify)
+Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider?
 
  
 
@@ -7626,7 +5660,7 @@ Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — 
 
 Name=Q82_KON_WHY_NOT_REG_OTHER_TXT
 
-Position=350,2697,760,2717
+Position=350,1287,760,1307
 
 Item=Q82_KON_WHY_NOT_REG_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -7640,7 +5674,7 @@ Form=10
 
 [Text]
 
-Position=50,2700,330,2716
+Position=50,1290,330,1306
 
 Text=82. Why are you NOT registered with a YAKAP/Konsulta package provider? — Other (specify) text
 
@@ -7714,7 +5748,7 @@ DisplayTogether=Yes
 
 Position=12
 
-Length=5
+Length=1
 
   
 
@@ -7726,7 +5760,7 @@ Label=Q60
 
 DisplayTogether=Yes
 
-Position=18
+Position=14
 
 Length=1
 
@@ -7740,9 +5774,9 @@ Label=Q61
 
 DisplayTogether=Yes
 
-Position=20
+Position=16
 
-Length=5
+Length=1
 
   
 
@@ -7754,7 +5788,7 @@ Label=Q62
 
 DisplayTogether=Yes
 
-Position=26
+Position=18
 
 Length=1
 
@@ -7768,7 +5802,7 @@ Label=Q63
 
 DisplayTogether=Yes
 
-Position=28
+Position=20
 
 Length=1
 
@@ -7782,7 +5816,7 @@ Label=Q64
 
 DisplayTogether=Yes
 
-Position=30
+Position=22
 
 Length=1
 
@@ -7796,7 +5830,7 @@ Label=Q65
 
 DisplayTogether=Yes
 
-Position=32
+Position=24
 
 Length=1
 
@@ -7810,7 +5844,7 @@ Label=Q65
 
 DisplayTogether=Yes
 
-Position=34
+Position=26
 
 Length=1
 
@@ -7824,7 +5858,7 @@ Label=Q66
 
 DisplayTogether=Yes
 
-Position=36
+Position=28
 
 Length=1
 
@@ -7838,7 +5872,7 @@ Label=Q67
 
 DisplayTogether=Yes
 
-Position=38
+Position=30
 
 Length=1
 
@@ -7852,7 +5886,7 @@ Label=Q67
 
 DisplayTogether=Yes
 
-Position=40
+Position=32
 
 Length=1
 
@@ -7866,7 +5900,7 @@ Label=Q68
 
 DisplayTogether=Yes
 
-Position=42
+Position=34
 
 Length=1
 
@@ -7880,7 +5914,7 @@ Label=Q68
 
 DisplayTogether=Yes
 
-Position=44
+Position=36
 
 Length=1
 
@@ -7894,7 +5928,7 @@ Label=Q69
 
 DisplayTogether=Yes
 
-Position=46
+Position=38
 
 Length=2
 
@@ -7908,9 +5942,9 @@ Label=Q70
 
 DisplayTogether=Yes
 
-Position=49
+Position=41
 
-Length=12
+Length=1
 
   
 
@@ -7922,7 +5956,7 @@ Label=Q70
 
 DisplayTogether=Yes
 
-Position=62
+Position=43
 
 Length=1
 
@@ -7936,7 +5970,7 @@ Label=Q71
 
 DisplayTogether=Yes
 
-Position=64
+Position=45
 
 Length=1
 
@@ -7950,7 +5984,7 @@ Label=Q71
 
 DisplayTogether=Yes
 
-Position=66
+Position=47
 
 Length=1
 
@@ -7964,7 +5998,7 @@ Label=Q72
 
 DisplayTogether=Yes
 
-Position=68
+Position=49
 
 Length=2
 
@@ -7978,9 +6012,9 @@ Label=Q73
 
 DisplayTogether=Yes
 
-Position=71
+Position=52
 
-Length=12
+Length=1
 
   
 
@@ -7992,7 +6026,7 @@ Label=Q73
 
 DisplayTogether=Yes
 
-Position=84
+Position=54
 
 Length=1
 
@@ -8006,7 +6040,7 @@ Label=Q74
 
 DisplayTogether=Yes
 
-Position=86
+Position=56
 
 Length=1
 
@@ -8020,9 +6054,9 @@ Label=Q75
 
 DisplayTogether=Yes
 
-Position=88
+Position=58
 
-Length=8
+Length=1
 
   
 
@@ -8034,7 +6068,7 @@ Label=Q75
 
 DisplayTogether=Yes
 
-Position=97
+Position=60
 
 Length=1
 
@@ -8048,7 +6082,7 @@ Label=Q76
 
 DisplayTogether=Yes
 
-Position=99
+Position=62
 
 Length=1
 
@@ -8062,7 +6096,7 @@ Label=Q76
 
 DisplayTogether=Yes
 
-Position=101
+Position=64
 
 Length=1
 
@@ -8076,7 +6110,7 @@ Label=Q77
 
 DisplayTogether=Yes
 
-Position=103
+Position=66
 
 Length=1
 
@@ -8090,7 +6124,7 @@ Label=Q78-Q81
 
 DisplayTogether=Yes
 
-Position=105
+Position=68
 
 Length=4
 
@@ -8104,9 +6138,9 @@ Label=Q82
 
 DisplayTogether=Yes
 
-Position=110
+Position=73
 
-Length=11
+Length=1
 
   
 
@@ -8118,7 +6152,7 @@ Label=Q82
 
 DisplayTogether=Yes
 
-Position=122
+Position=75
 
 Length=1
 
@@ -8244,13 +6278,13 @@ Text=84. Service type — Other (specify) text
 
 [Field]
 
-Name=Q85_CONDITIONS_O01
+Name=Q85_CONDITIONS
 
 Position=350,147,365,167
 
-Item=Q85_CONDITIONS_O01,PATIENTSURVEY_DICT
+Item=Q85_CONDITIONS,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=11
 
@@ -8260,463 +6294,7 @@ Form=11
 
 Position=50,150,330,166
 
-Text=85. What condition/s do/es the patient usually visit the facility for? — Upper respiratory infection
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O02
-
-Position=350,177,365,197
-
-Item=Q85_CONDITIONS_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,180,330,196
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Hypertension
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O03
-
-Position=350,207,365,227
-
-Item=Q85_CONDITIONS_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,210,330,226
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Immunization
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O04
-
-Position=350,237,365,257
-
-Item=Q85_CONDITIONS_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,240,330,256
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Pregnancy or birth
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O05
-
-Position=350,267,365,287
-
-Item=Q85_CONDITIONS_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,270,330,286
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Flu
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O06
-
-Position=350,297,365,317
-
-Item=Q85_CONDITIONS_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,300,330,316
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Fever
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O07
-
-Position=350,327,365,347
-
-Item=Q85_CONDITIONS_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,330,330,346
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Joint and muscle pain
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O08
-
-Position=350,357,365,377
-
-Item=Q85_CONDITIONS_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,360,330,376
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Asthma or COPD (chronic breathing problem, not cancer)
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O09
-
-Position=350,387,365,407
-
-Item=Q85_CONDITIONS_O09,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,390,330,406
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Diabetes
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O10
-
-Position=350,417,365,437
-
-Item=Q85_CONDITIONS_O10,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,420,330,436
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Heart problem
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O11
-
-Position=350,447,365,467
-
-Item=Q85_CONDITIONS_O11,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,450,330,466
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Kidney problem /Dialysis
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O12
-
-Position=350,477,365,497
-
-Item=Q85_CONDITIONS_O12,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,480,330,496
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Cancer (any)
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O13
-
-Position=350,507,365,527
-
-Item=Q85_CONDITIONS_O13,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,510,330,526
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Gastro problem (vomiting, diarrhea etc.)
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O14
-
-Position=350,537,365,557
-
-Item=Q85_CONDITIONS_O14,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,540,330,556
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Other infection (e.g. urine, skin, other virus etc.)
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O15
-
-Position=350,567,365,587
-
-Item=Q85_CONDITIONS_O15,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,570,330,586
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Accident/injury (e.g. wound/broken bone)
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O16
-
-Position=350,597,365,617
-
-Item=Q85_CONDITIONS_O16,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,600,330,616
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Dental
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O17
-
-Position=350,627,365,647
-
-Item=Q85_CONDITIONS_O17,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,630,330,646
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — ENT (problem with ear/nose/throat)
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O18
-
-Position=350,657,365,677
-
-Item=Q85_CONDITIONS_O18,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,660,330,676
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Allergy
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O19
-
-Position=350,687,365,707
-
-Item=Q85_CONDITIONS_O19,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,690,330,706
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — No condition - Regular check-up only
-
- 
-
-  
-
-[Field]
-
-Name=Q85_CONDITIONS_O20
-
-Position=350,717,365,737
-
-Item=Q85_CONDITIONS_O20,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,720,330,736
-
-Text=85. What condition/s do/es the patient usually visit the facility for? — Other (Specify)
+Text=85. What condition/s do/es the patient usually visit the facility for?
 
  
 
@@ -8726,7 +6304,7 @@ Text=85. What condition/s do/es the patient usually visit the facility for? — 
 
 Name=Q85_CONDITIONS_OTHER_TXT
 
-Position=350,747,760,767
+Position=350,177,760,197
 
 Item=Q85_CONDITIONS_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -8740,7 +6318,7 @@ Form=11
 
 [Text]
 
-Position=50,750,330,766
+Position=50,180,330,196
 
 Text=85. What condition/s do/es the patient usually visit the facility for? — Other (specify) text
 
@@ -8750,13 +6328,13 @@ Text=85. What condition/s do/es the patient usually visit the facility for? — 
 
 [Field]
 
-Name=Q86_VISIT_EVENTS_O01
+Name=Q86_VISIT_EVENTS
 
-Position=350,777,365,797
+Position=350,207,365,227
 
-Item=Q86_VISIT_EVENTS_O01,PATIENTSURVEY_DICT
+Item=Q86_VISIT_EVENTS,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=11
 
@@ -8764,9 +6342,9 @@ Form=11
 
 [Text]
 
-Position=50,780,330,796
+Position=50,210,330,226
 
-Text=86. Which of the following happened during the patient's most recent visit? — Saw a doctor
+Text=86. Which of the following happened during the patient's most recent visit?
 
  
 
@@ -8774,37 +6352,13 @@ Text=86. Which of the following happened during the patient's most recent visit?
 
 [Field]
 
-Name=Q86_VISIT_EVENTS_O02
+Name=Q87_OTHER_ACTIONS
 
-Position=350,807,365,827
+Position=350,237,365,257
 
-Item=Q86_VISIT_EVENTS_O02,PATIENTSURVEY_DICT
+Item=Q87_OTHER_ACTIONS,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,810,330,826
-
-Text=86. Which of the following happened during the patient's most recent visit? — Saw a nurse/midwife
-
- 
-
-  
-
-[Field]
-
-Name=Q86_VISIT_EVENTS_O03
-
-Position=350,837,365,857
-
-Item=Q86_VISIT_EVENTS_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=11
 
@@ -8812,345 +6366,9 @@ Form=11
 
 [Text]
 
-Position=50,840,330,856
+Position=50,240,330,256
 
-Text=86. Which of the following happened during the patient's most recent visit? — Saw any other healthcare worker/member of medical staff
-
- 
-
-  
-
-[Field]
-
-Name=Q86_VISIT_EVENTS_O04
-
-Position=350,867,365,887
-
-Item=Q86_VISIT_EVENTS_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,870,330,886
-
-Text=86. Which of the following happened during the patient's most recent visit? — Had basic tests done (e.g. blood pressure check, height/weight)
-
- 
-
-  
-
-[Field]
-
-Name=Q86_VISIT_EVENTS_O05
-
-Position=350,897,365,917
-
-Item=Q86_VISIT_EVENTS_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,900,330,916
-
-Text=86. Which of the following happened during the patient's most recent visit? — Had any laboratory tests done (e.g. blood, urine sample)
-
- 
-
-  
-
-[Field]
-
-Name=Q86_VISIT_EVENTS_O06
-
-Position=350,927,365,947
-
-Item=Q86_VISIT_EVENTS_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,930,330,946
-
-Text=86. Which of the following happened during the patient's most recent visit? — Had any imaging done (e.g. ultrasound, Xray, CT)
-
- 
-
-  
-
-[Field]
-
-Name=Q86_VISIT_EVENTS_O07
-
-Position=350,957,365,977
-
-Item=Q86_VISIT_EVENTS_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,960,330,976
-
-Text=86. Which of the following happened during the patient's most recent visit? — Prescribed medication
-
- 
-
-  
-
-[Field]
-
-Name=Q86_VISIT_EVENTS_O08
-
-Position=350,987,365,1007
-
-Item=Q86_VISIT_EVENTS_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,990,330,1006
-
-Text=86. Which of the following happened during the patient's most recent visit? — Had any minor procedure/surgery done
-
- 
-
-  
-
-[Field]
-
-Name=Q86_VISIT_EVENTS_O09
-
-Position=350,1017,365,1037
-
-Item=Q86_VISIT_EVENTS_O09,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,1020,330,1036
-
-Text=86. Which of the following happened during the patient's most recent visit? — Picked up medical certificate/other administration
-
- 
-
-  
-
-[Field]
-
-Name=Q86_VISIT_EVENTS_O10
-
-Position=350,1047,365,1067
-
-Item=Q86_VISIT_EVENTS_O10,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,1050,330,1066
-
-Text=86. Which of the following happened during the patient's most recent visit? — Was admitted for confinement
-
- 
-
-  
-
-[Field]
-
-Name=Q87_OTHER_ACTIONS_O01
-
-Position=350,1077,365,1097
-
-Item=Q87_OTHER_ACTIONS_O01,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,1080,330,1096
-
-Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Visited other healthcare facility
-
- 
-
-  
-
-[Field]
-
-Name=Q87_OTHER_ACTIONS_O02
-
-Position=350,1107,365,1127
-
-Item=Q87_OTHER_ACTIONS_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,1110,330,1126
-
-Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Sought alternative care (Healthcare apart from medical doctors or the formal healthcare system; such as reflexology...
-
- 
-
-  
-
-[Field]
-
-Name=Q87_OTHER_ACTIONS_O03
-
-Position=350,1137,365,1157
-
-Item=Q87_OTHER_ACTIONS_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,1140,330,1156
-
-Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Sought telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)
-
- 
-
-  
-
-[Field]
-
-Name=Q87_OTHER_ACTIONS_O04
-
-Position=350,1167,365,1187
-
-Item=Q87_OTHER_ACTIONS_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,1170,330,1186
-
-Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Used home care (Healthcare services and support provided to individuals in their own homes)
-
- 
-
-  
-
-[Field]
-
-Name=Q87_OTHER_ACTIONS_O05
-
-Position=350,1197,365,1217
-
-Item=Q87_OTHER_ACTIONS_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,1200,330,1216
-
-Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Bought medicine from a pharmacy
-
- 
-
-  
-
-[Field]
-
-Name=Q87_OTHER_ACTIONS_O06
-
-Position=350,1227,365,1247
-
-Item=Q87_OTHER_ACTIONS_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,1230,330,1246
-
-Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Did not seek other forms of care
-
- 
-
-  
-
-[Field]
-
-Name=Q87_OTHER_ACTIONS_O07
-
-Position=350,1257,365,1277
-
-Item=Q87_OTHER_ACTIONS_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=11
-
-  
-
-[Text]
-
-Position=50,1260,330,1276
-
-Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Other (Specify)
+Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern?
 
  
 
@@ -9160,7 +6378,7 @@ Text=87. Apart from this visit, has the patient done anything else to improve hi
 
 Name=Q87_OTHER_ACTIONS_OTHER_TXT
 
-Position=350,1287,760,1307
+Position=350,267,760,287
 
 Item=Q87_OTHER_ACTIONS_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -9174,7 +6392,7 @@ Form=11
 
 [Text]
 
-Position=50,1290,330,1306
+Position=50,270,330,286
 
 Text=87. Apart from this visit, has the patient done anything else to improve his/her health condition or address his/her health concern? — Other (specify) text
 
@@ -9248,7 +6466,7 @@ DisplayTogether=Yes
 
 Position=8
 
-Length=20
+Length=1
 
   
 
@@ -9260,7 +6478,7 @@ Label=Q85
 
 DisplayTogether=Yes
 
-Position=29
+Position=10
 
 Length=1
 
@@ -9274,9 +6492,9 @@ Label=Q86
 
 DisplayTogether=Yes
 
-Position=31
+Position=12
 
-Length=10
+Length=1
 
   
 
@@ -9288,9 +6506,9 @@ Label=Q87
 
 DisplayTogether=Yes
 
-Position=42
+Position=14
 
-Length=7
+Length=1
 
   
 
@@ -9302,7 +6520,7 @@ Label=Q87
 
 DisplayTogether=Yes
 
-Position=50
+Position=16
 
 Length=1
 
@@ -9402,13 +6620,13 @@ Text=89. Were you advised for hospitalization / to be admitted in the hospital?
 
 [Field]
 
-Name=Q90_NOT_CONFINED_O01
+Name=Q90_NOT_CONFINED
 
 Position=350,117,365,137
 
-Item=Q90_NOT_CONFINED_O01,PATIENTSURVEY_DICT
+Item=Q90_NOT_CONFINED,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=12
 
@@ -9418,151 +6636,7 @@ Form=12
 
 Position=50,120,330,136
 
-Text=90. What were the reasons why you were not confined/ admitted in a hospital/clinic? — Facility is far
-
- 
-
-  
-
-[Field]
-
-Name=Q90_NOT_CONFINED_O02
-
-Position=350,147,365,167
-
-Item=Q90_NOT_CONFINED_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,150,330,166
-
-Text=90. What were the reasons why you were not confined/ admitted in a hospital/clinic? — No money
-
- 
-
-  
-
-[Field]
-
-Name=Q90_NOT_CONFINED_O03
-
-Position=350,177,365,197
-
-Item=Q90_NOT_CONFINED_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,180,330,196
-
-Text=90. What were the reasons why you were not confined/ admitted in a hospital/clinic? — Worried about treatment cost
-
- 
-
-  
-
-[Field]
-
-Name=Q90_NOT_CONFINED_O04
-
-Position=350,207,365,227
-
-Item=Q90_NOT_CONFINED_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,210,330,226
-
-Text=90. What were the reasons why you were not confined/ admitted in a hospital/clinic? — Home remedy is available
-
- 
-
-  
-
-[Field]
-
-Name=Q90_NOT_CONFINED_O05
-
-Position=350,237,365,257
-
-Item=Q90_NOT_CONFINED_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,240,330,256
-
-Text=90. What were the reasons why you were not confined/ admitted in a hospital/clinic? — Health facility is not PhilHealth accredited
-
- 
-
-  
-
-[Field]
-
-Name=Q90_NOT_CONFINED_O06
-
-Position=350,267,365,287
-
-Item=Q90_NOT_CONFINED_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,270,330,286
-
-Text=90. What were the reasons why you were not confined/ admitted in a hospital/clinic? — No need/regular check-up only
-
- 
-
-  
-
-[Field]
-
-Name=Q90_NOT_CONFINED_O07
-
-Position=350,297,365,317
-
-Item=Q90_NOT_CONFINED_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,300,330,316
-
-Text=90. What were the reasons why you were not confined/ admitted in a hospital/clinic? — Other (specify)
+Text=90. What were the reasons why you were not confined/ admitted in a hospital/clinic?
 
  
 
@@ -9572,7 +6646,7 @@ Text=90. What were the reasons why you were not confined/ admitted in a hospital
 
 Name=Q90_NOT_CONFINED_OTHER_TXT
 
-Position=350,327,760,347
+Position=350,147,760,167
 
 Item=Q90_NOT_CONFINED_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -9586,7 +6660,7 @@ Form=12
 
 [Text]
 
-Position=50,330,330,346
+Position=50,150,330,166
 
 Text=90. What were the reasons why you were not confined/ admitted in a hospital/clinic? — Other (specify) text
 
@@ -9598,7 +6672,7 @@ Text=90. What were the reasons why you were not confined/ admitted in a hospital
 
 Name=Q91_USUAL_OUTPATIENT
 
-Position=350,357,365,377
+Position=350,177,365,197
 
 Item=Q91_USUAL_OUTPATIENT,PATIENTSURVEY_DICT
 
@@ -9610,7 +6684,7 @@ Form=12
 
 [Text]
 
-Position=50,360,330,376
+Position=50,180,330,196
 
 Text=91. Do you usually avail consultation services for outpatient care?
 
@@ -9622,7 +6696,7 @@ Text=91. Do you usually avail consultation services for outpatient care?
 
 Name=Q92_PAY_01
 
-Position=350,387,365,407
+Position=350,207,365,227
 
 Item=Q92_PAY_01,PATIENTSURVEY_DICT
 
@@ -9634,7 +6708,7 @@ Form=12
 
 [Text]
 
-Position=50,390,330,406
+Position=50,210,330,226
 
 Text=92. Cost of consultation — Out-of-pocket
 
@@ -9646,7 +6720,7 @@ Text=92. Cost of consultation — Out-of-pocket
 
 Name=Q92_PAY_01_AMT
 
-Position=350,417,760,437
+Position=350,237,760,257
 
 Item=Q92_PAY_01_AMT,PATIENTSURVEY_DICT
 
@@ -9658,7 +6732,7 @@ Form=12
 
 [Text]
 
-Position=50,420,330,436
+Position=50,240,330,256
 
 Text=92. Cost of consultation — Out-of-pocket (Amount in Pesos)
 
@@ -9670,7 +6744,7 @@ Text=92. Cost of consultation — Out-of-pocket (Amount in Pesos)
 
 Name=Q92_PAY_02
 
-Position=350,447,365,467
+Position=350,267,365,287
 
 Item=Q92_PAY_02,PATIENTSURVEY_DICT
 
@@ -9682,7 +6756,7 @@ Form=12
 
 [Text]
 
-Position=50,450,330,466
+Position=50,270,330,286
 
 Text=92. Cost of consultation — Donation
 
@@ -9694,7 +6768,7 @@ Text=92. Cost of consultation — Donation
 
 Name=Q92_PAY_02_AMT
 
-Position=350,477,760,497
+Position=350,297,760,317
 
 Item=Q92_PAY_02_AMT,PATIENTSURVEY_DICT
 
@@ -9706,7 +6780,7 @@ Form=12
 
 [Text]
 
-Position=50,480,330,496
+Position=50,300,330,316
 
 Text=92. Cost of consultation — Donation (Amount in Pesos)
 
@@ -9718,7 +6792,7 @@ Text=92. Cost of consultation — Donation (Amount in Pesos)
 
 Name=Q92_PAY_03
 
-Position=350,507,365,527
+Position=350,327,365,347
 
 Item=Q92_PAY_03,PATIENTSURVEY_DICT
 
@@ -9730,7 +6804,7 @@ Form=12
 
 [Text]
 
-Position=50,510,330,526
+Position=50,330,330,346
 
 Text=92. Cost of consultation — Free/no cost
 
@@ -9742,7 +6816,7 @@ Text=92. Cost of consultation — Free/no cost
 
 Name=Q92_PAY_04
 
-Position=350,537,365,557
+Position=350,357,365,377
 
 Item=Q92_PAY_04,PATIENTSURVEY_DICT
 
@@ -9754,7 +6828,7 @@ Form=12
 
 [Text]
 
-Position=50,540,330,556
+Position=50,360,330,376
 
 Text=92. Cost of consultation — Free, charge to PhilHealth
 
@@ -9766,7 +6840,7 @@ Text=92. Cost of consultation — Free, charge to PhilHealth
 
 Name=Q92_PAY_05
 
-Position=350,567,365,587
+Position=350,387,365,407
 
 Item=Q92_PAY_05,PATIENTSURVEY_DICT
 
@@ -9778,7 +6852,7 @@ Form=12
 
 [Text]
 
-Position=50,570,330,586
+Position=50,390,330,406
 
 Text=92. Cost of consultation — Free, charge to Private Insurance
 
@@ -9790,7 +6864,7 @@ Text=92. Cost of consultation — Free, charge to Private Insurance
 
 Name=Q92_PAY_06
 
-Position=350,597,365,617
+Position=350,417,365,437
 
 Item=Q92_PAY_06,PATIENTSURVEY_DICT
 
@@ -9802,7 +6876,7 @@ Form=12
 
 [Text]
 
-Position=50,600,330,616
+Position=50,420,330,436
 
 Text=92. Cost of consultation — Free, charge to HMO
 
@@ -9814,7 +6888,7 @@ Text=92. Cost of consultation — Free, charge to HMO
 
 Name=Q92_PAY_07
 
-Position=350,627,365,647
+Position=350,447,365,467
 
 Item=Q92_PAY_07,PATIENTSURVEY_DICT
 
@@ -9826,7 +6900,7 @@ Form=12
 
 [Text]
 
-Position=50,630,330,646
+Position=50,450,330,466
 
 Text=92. Cost of consultation — In kind
 
@@ -9838,7 +6912,7 @@ Text=92. Cost of consultation — In kind
 
 Name=Q92_PAY_08
 
-Position=350,657,365,677
+Position=350,477,365,497
 
 Item=Q92_PAY_08,PATIENTSURVEY_DICT
 
@@ -9850,7 +6924,7 @@ Form=12
 
 [Text]
 
-Position=50,660,330,676
+Position=50,480,330,496
 
 Text=92. Cost of consultation — Don't know
 
@@ -9860,37 +6934,13 @@ Text=92. Cost of consultation — Don't know
 
 [Field]
 
-Name=Q93_LABS_O01
+Name=Q93_LABS
 
-Position=350,687,365,707
+Position=350,507,365,527
 
-Item=Q93_LABS_O01,PATIENTSURVEY_DICT
+Item=Q93_LABS,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,690,330,706
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — CBC with platelet count
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O02
-
-Position=350,717,365,737
-
-Item=Q93_LABS_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=12
 
@@ -9898,369 +6948,9 @@ Form=12
 
 [Text]
 
-Position=50,720,330,736
+Position=50,510,330,526
 
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Urinalysis
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O03
-
-Position=350,747,365,767
-
-Item=Q93_LABS_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,750,330,766
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Fecalysis
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O04
-
-Position=350,777,365,797
-
-Item=Q93_LABS_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,780,330,796
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Sputum Microscopy
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O05
-
-Position=350,807,365,827
-
-Item=Q93_LABS_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,810,330,826
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Fecal Occult Blood
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O06
-
-Position=350,837,365,857
-
-Item=Q93_LABS_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,840,330,856
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Pap smear
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O07
-
-Position=350,867,365,887
-
-Item=Q93_LABS_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,870,330,886
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Lipid profile
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O08
-
-Position=350,897,365,917
-
-Item=Q93_LABS_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,900,330,916
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — FBS
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O09
-
-Position=350,927,365,947
-
-Item=Q93_LABS_O09,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,930,330,946
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — OGTT (Oral glucose tolerance tests)
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O10
-
-Position=350,957,365,977
-
-Item=Q93_LABS_O10,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,960,330,976
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — ECG
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O11
-
-Position=350,987,365,1007
-
-Item=Q93_LABS_O11,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,990,330,1006
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Chest X-Ray
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O12
-
-Position=350,1017,365,1037
-
-Item=Q93_LABS_O12,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1020,330,1036
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Creatinine
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O13
-
-Position=350,1047,365,1067
-
-Item=Q93_LABS_O13,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1050,330,1066
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — HbA1c
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O14
-
-Position=350,1077,365,1097
-
-Item=Q93_LABS_O14,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1080,330,1096
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Abdominal ultrasound
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O15
-
-Position=350,1107,365,1127
-
-Item=Q93_LABS_O15,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1110,330,1126
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Dental Services
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O16
-
-Position=350,1137,365,1157
-
-Item=Q93_LABS_O16,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1140,330,1156
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Other, specify:
-
- 
-
-  
-
-[Field]
-
-Name=Q93_LABS_O17
-
-Position=350,1167,365,1187
-
-Item=Q93_LABS_O17,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,1170,330,1186
-
-Text=93. Did you have any of the following laboratory tests done during your outpatient care? — None
+Text=93. Did you have any of the following laboratory tests done during your outpatient care?
 
  
 
@@ -10270,7 +6960,7 @@ Text=93. Did you have any of the following laboratory tests done during your out
 
 Name=Q93_LABS_OTHER_TXT
 
-Position=350,1197,760,1217
+Position=350,537,760,557
 
 Item=Q93_LABS_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -10284,9 +6974,9 @@ Form=12
 
 [Text]
 
-Position=50,1200,330,1216
+Position=50,540,330,556
 
-Text=93. Lab tests — Other, specify text
+Text=93. Did you have any of the following laboratory tests done during your outpatient care? — Other (specify) text
 
  
 
@@ -10296,7 +6986,7 @@ Text=93. Lab tests — Other, specify text
 
 Name=Q94_PAY_01
 
-Position=350,1227,365,1247
+Position=350,567,365,587
 
 Item=Q94_PAY_01,PATIENTSURVEY_DICT
 
@@ -10308,7 +6998,7 @@ Form=12
 
 [Text]
 
-Position=50,1230,330,1246
+Position=50,570,330,586
 
 Text=94. Cost of laboratory test/s — Out-of-pocket
 
@@ -10320,7 +7010,7 @@ Text=94. Cost of laboratory test/s — Out-of-pocket
 
 Name=Q94_PAY_01_AMT
 
-Position=350,1257,760,1277
+Position=350,597,760,617
 
 Item=Q94_PAY_01_AMT,PATIENTSURVEY_DICT
 
@@ -10332,7 +7022,7 @@ Form=12
 
 [Text]
 
-Position=50,1260,330,1276
+Position=50,600,330,616
 
 Text=94. Cost of laboratory test/s — Out-of-pocket (Amount in Pesos)
 
@@ -10344,7 +7034,7 @@ Text=94. Cost of laboratory test/s — Out-of-pocket (Amount in Pesos)
 
 Name=Q94_PAY_02
 
-Position=350,1287,365,1307
+Position=350,627,365,647
 
 Item=Q94_PAY_02,PATIENTSURVEY_DICT
 
@@ -10356,7 +7046,7 @@ Form=12
 
 [Text]
 
-Position=50,1290,330,1306
+Position=50,630,330,646
 
 Text=94. Cost of laboratory test/s — Donation
 
@@ -10368,7 +7058,7 @@ Text=94. Cost of laboratory test/s — Donation
 
 Name=Q94_PAY_03
 
-Position=350,1317,365,1337
+Position=350,657,365,677
 
 Item=Q94_PAY_03,PATIENTSURVEY_DICT
 
@@ -10380,7 +7070,7 @@ Form=12
 
 [Text]
 
-Position=50,1320,330,1336
+Position=50,660,330,676
 
 Text=94. Cost of laboratory test/s — Free/no cost
 
@@ -10392,7 +7082,7 @@ Text=94. Cost of laboratory test/s — Free/no cost
 
 Name=Q94_PAY_04
 
-Position=350,1347,365,1367
+Position=350,687,365,707
 
 Item=Q94_PAY_04,PATIENTSURVEY_DICT
 
@@ -10404,7 +7094,7 @@ Form=12
 
 [Text]
 
-Position=50,1350,330,1366
+Position=50,690,330,706
 
 Text=94. Cost of laboratory test/s — Free, charge to PhilHealth
 
@@ -10416,7 +7106,7 @@ Text=94. Cost of laboratory test/s — Free, charge to PhilHealth
 
 Name=Q94_PAY_05
 
-Position=350,1377,365,1397
+Position=350,717,365,737
 
 Item=Q94_PAY_05,PATIENTSURVEY_DICT
 
@@ -10428,7 +7118,7 @@ Form=12
 
 [Text]
 
-Position=50,1380,330,1396
+Position=50,720,330,736
 
 Text=94. Cost of laboratory test/s — Free, charge to Private Insurance
 
@@ -10440,7 +7130,7 @@ Text=94. Cost of laboratory test/s — Free, charge to Private Insurance
 
 Name=Q94_PAY_06
 
-Position=350,1407,365,1427
+Position=350,747,365,767
 
 Item=Q94_PAY_06,PATIENTSURVEY_DICT
 
@@ -10452,7 +7142,7 @@ Form=12
 
 [Text]
 
-Position=50,1410,330,1426
+Position=50,750,330,766
 
 Text=94. Cost of laboratory test/s — Free, charge to HMO
 
@@ -10464,7 +7154,7 @@ Text=94. Cost of laboratory test/s — Free, charge to HMO
 
 Name=Q94_PAY_07
 
-Position=350,1437,365,1457
+Position=350,777,365,797
 
 Item=Q94_PAY_07,PATIENTSURVEY_DICT
 
@@ -10476,7 +7166,7 @@ Form=12
 
 [Text]
 
-Position=50,1440,330,1456
+Position=50,780,330,796
 
 Text=94. Cost of laboratory test/s — In kind
 
@@ -10488,7 +7178,7 @@ Text=94. Cost of laboratory test/s — In kind
 
 Name=Q94_PAY_08
 
-Position=350,1467,365,1487
+Position=350,807,365,827
 
 Item=Q94_PAY_08,PATIENTSURVEY_DICT
 
@@ -10500,7 +7190,7 @@ Form=12
 
 [Text]
 
-Position=50,1470,330,1486
+Position=50,810,330,826
 
 Text=94. Cost of laboratory test/s — Don't know
 
@@ -10512,7 +7202,7 @@ Text=94. Cost of laboratory test/s — Don't know
 
 Name=Q95_PRESCRIBED
 
-Position=350,1497,365,1517
+Position=350,837,365,857
 
 Item=Q95_PRESCRIBED,PATIENTSURVEY_DICT
 
@@ -10524,7 +7214,7 @@ Form=12
 
 [Text]
 
-Position=50,1500,330,1516
+Position=50,840,330,856
 
 Text=95. Were you prescribed medicine/s after your check-up?
 
@@ -10536,7 +7226,7 @@ Text=95. Were you prescribed medicine/s after your check-up?
 
 Name=Q96_PAY_01
 
-Position=350,1527,365,1547
+Position=350,867,365,887
 
 Item=Q96_PAY_01,PATIENTSURVEY_DICT
 
@@ -10548,7 +7238,7 @@ Form=12
 
 [Text]
 
-Position=50,1530,330,1546
+Position=50,870,330,886
 
 Text=96. Amount spent for prescribed medicines — Out-of-pocket
 
@@ -10560,7 +7250,7 @@ Text=96. Amount spent for prescribed medicines — Out-of-pocket
 
 Name=Q96_PAY_01_AMT
 
-Position=350,1557,760,1577
+Position=350,897,760,917
 
 Item=Q96_PAY_01_AMT,PATIENTSURVEY_DICT
 
@@ -10572,7 +7262,7 @@ Form=12
 
 [Text]
 
-Position=50,1560,330,1576
+Position=50,900,330,916
 
 Text=96. Amount spent for prescribed medicines — Out-of-pocket (Amount in Pesos)
 
@@ -10584,7 +7274,7 @@ Text=96. Amount spent for prescribed medicines — Out-of-pocket (Amount in Peso
 
 Name=Q96_PAY_02
 
-Position=350,1587,365,1607
+Position=350,927,365,947
 
 Item=Q96_PAY_02,PATIENTSURVEY_DICT
 
@@ -10596,7 +7286,7 @@ Form=12
 
 [Text]
 
-Position=50,1590,330,1606
+Position=50,930,330,946
 
 Text=96. Amount spent for prescribed medicines — Free/no cost
 
@@ -10608,7 +7298,7 @@ Text=96. Amount spent for prescribed medicines — Free/no cost
 
 Name=Q96_PAY_03
 
-Position=350,1617,365,1637
+Position=350,957,365,977
 
 Item=Q96_PAY_03,PATIENTSURVEY_DICT
 
@@ -10620,7 +7310,7 @@ Form=12
 
 [Text]
 
-Position=50,1620,330,1636
+Position=50,960,330,976
 
 Text=96. Amount spent for prescribed medicines — Free, charge to PhilHealth
 
@@ -10632,7 +7322,7 @@ Text=96. Amount spent for prescribed medicines — Free, charge to PhilHealth
 
 Name=Q96_PAY_04
 
-Position=350,1647,365,1667
+Position=350,987,365,1007
 
 Item=Q96_PAY_04,PATIENTSURVEY_DICT
 
@@ -10644,7 +7334,7 @@ Form=12
 
 [Text]
 
-Position=50,1650,330,1666
+Position=50,990,330,1006
 
 Text=96. Amount spent for prescribed medicines — Free, charge to Private Insurance
 
@@ -10656,7 +7346,7 @@ Text=96. Amount spent for prescribed medicines — Free, charge to Private Insur
 
 Name=Q96_PAY_05
 
-Position=350,1677,365,1697
+Position=350,1017,365,1037
 
 Item=Q96_PAY_05,PATIENTSURVEY_DICT
 
@@ -10668,7 +7358,7 @@ Form=12
 
 [Text]
 
-Position=50,1680,330,1696
+Position=50,1020,330,1036
 
 Text=96. Amount spent for prescribed medicines — Free, charge to HMO
 
@@ -10680,7 +7370,7 @@ Text=96. Amount spent for prescribed medicines — Free, charge to HMO
 
 Name=Q96_PAY_06
 
-Position=350,1707,365,1727
+Position=350,1047,365,1067
 
 Item=Q96_PAY_06,PATIENTSURVEY_DICT
 
@@ -10692,7 +7382,7 @@ Form=12
 
 [Text]
 
-Position=50,1710,330,1726
+Position=50,1050,330,1066
 
 Text=96. Amount spent for prescribed medicines — In kind
 
@@ -10704,7 +7394,7 @@ Text=96. Amount spent for prescribed medicines — In kind
 
 Name=Q96_PAY_06_AMT
 
-Position=350,1737,760,1757
+Position=350,1077,760,1097
 
 Item=Q96_PAY_06_AMT,PATIENTSURVEY_DICT
 
@@ -10716,7 +7406,7 @@ Form=12
 
 [Text]
 
-Position=50,1740,330,1756
+Position=50,1080,330,1096
 
 Text=96. Amount spent for prescribed medicines — In kind (Amount in Pesos)
 
@@ -10728,7 +7418,7 @@ Text=96. Amount spent for prescribed medicines — In kind (Amount in Pesos)
 
 Name=Q96_PAY_07
 
-Position=350,1767,365,1787
+Position=350,1107,365,1127
 
 Item=Q96_PAY_07,PATIENTSURVEY_DICT
 
@@ -10740,7 +7430,7 @@ Form=12
 
 [Text]
 
-Position=50,1770,330,1786
+Position=50,1110,330,1126
 
 Text=96. Amount spent for prescribed medicines — Donation
 
@@ -10752,7 +7442,7 @@ Text=96. Amount spent for prescribed medicines — Donation
 
 Name=Q96_PAY_07_AMT
 
-Position=350,1797,760,1817
+Position=350,1137,760,1157
 
 Item=Q96_PAY_07_AMT,PATIENTSURVEY_DICT
 
@@ -10764,7 +7454,7 @@ Form=12
 
 [Text]
 
-Position=50,1800,330,1816
+Position=50,1140,330,1156
 
 Text=96. Amount spent for prescribed medicines — Donation (Amount in Pesos)
 
@@ -10776,7 +7466,7 @@ Text=96. Amount spent for prescribed medicines — Donation (Amount in Pesos)
 
 Name=Q96_PAY_08
 
-Position=350,1827,365,1847
+Position=350,1167,365,1187
 
 Item=Q96_PAY_08,PATIENTSURVEY_DICT
 
@@ -10788,7 +7478,7 @@ Form=12
 
 [Text]
 
-Position=50,1830,330,1846
+Position=50,1170,330,1186
 
 Text=96. Amount spent for prescribed medicines — Don't know
 
@@ -10800,7 +7490,7 @@ Text=96. Amount spent for prescribed medicines — Don't know
 
 Name=Q97_FINAL_AMOUNT
 
-Position=350,1857,760,1877
+Position=350,1197,760,1217
 
 Item=Q97_FINAL_AMOUNT,PATIENTSURVEY_DICT
 
@@ -10812,7 +7502,7 @@ Form=12
 
 [Text]
 
-Position=50,1860,330,1876
+Position=50,1200,330,1216
 
 Text=97. What was the final amount you paid in cash for your outpatient care? (Amount in Pesos)
 
@@ -10824,7 +7514,7 @@ Text=97. What was the final amount you paid in cash for your outpatient care? (A
 
 Name=Q971_1
 
-Position=350,1887,365,1907
+Position=350,1227,365,1247
 
 Item=Q971_1,PATIENTSURVEY_DICT
 
@@ -10836,7 +7526,7 @@ Form=12
 
 [Text]
 
-Position=50,1890,330,1906
+Position=50,1230,330,1246
 
 Text=97.1 Other items included in the bill — Consultation Fee
 
@@ -10848,7 +7538,7 @@ Text=97.1 Other items included in the bill — Consultation Fee
 
 Name=Q971_1_AMT
 
-Position=350,1917,760,1937
+Position=350,1257,760,1277
 
 Item=Q971_1_AMT,PATIENTSURVEY_DICT
 
@@ -10860,7 +7550,7 @@ Form=12
 
 [Text]
 
-Position=50,1920,330,1936
+Position=50,1260,330,1276
 
 Text=97.1 Other items included in the bill — Consultation Fee (Amount in Pesos)
 
@@ -10872,7 +7562,7 @@ Text=97.1 Other items included in the bill — Consultation Fee (Amount in Pesos
 
 Name=Q971_2
 
-Position=350,1947,365,1967
+Position=350,1287,365,1307
 
 Item=Q971_2,PATIENTSURVEY_DICT
 
@@ -10884,7 +7574,7 @@ Form=12
 
 [Text]
 
-Position=50,1950,330,1966
+Position=50,1290,330,1306
 
 Text=97.1 Other items included in the bill — Medical equipment or supplies
 
@@ -10896,7 +7586,7 @@ Text=97.1 Other items included in the bill — Medical equipment or supplies
 
 Name=Q971_2_AMT
 
-Position=350,1977,760,1997
+Position=350,1317,760,1337
 
 Item=Q971_2_AMT,PATIENTSURVEY_DICT
 
@@ -10908,7 +7598,7 @@ Form=12
 
 [Text]
 
-Position=50,1980,330,1996
+Position=50,1320,330,1336
 
 Text=97.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)
 
@@ -10920,7 +7610,7 @@ Text=97.1 Other items included in the bill — Medical equipment or supplies (Am
 
 Name=Q971_3
 
-Position=350,2007,365,2027
+Position=350,1347,365,1367
 
 Item=Q971_3,PATIENTSURVEY_DICT
 
@@ -10932,7 +7622,7 @@ Form=12
 
 [Text]
 
-Position=50,2010,330,2026
+Position=50,1350,330,1366
 
 Text=97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)
 
@@ -10944,7 +7634,7 @@ Text=97.1 Other items included in the bill — Non-medical expenses (e.g. Hygien
 
 Name=Q971_3_AMT
 
-Position=350,2037,760,2057
+Position=350,1377,760,1397
 
 Item=Q971_3_AMT,PATIENTSURVEY_DICT
 
@@ -10956,7 +7646,7 @@ Form=12
 
 [Text]
 
-Position=50,2040,330,2056
+Position=50,1380,330,1396
 
 Text=97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)
 
@@ -10968,7 +7658,7 @@ Text=97.1 Other items included in the bill — Non-medical expenses (e.g. Hygien
 
 Name=Q971_4
 
-Position=350,2067,365,2087
+Position=350,1407,365,1427
 
 Item=Q971_4,PATIENTSURVEY_DICT
 
@@ -10980,7 +7670,7 @@ Form=12
 
 [Text]
 
-Position=50,2070,330,2086
+Position=50,1410,330,1426
 
 Text=97.1 Other items included in the bill — Other expenses
 
@@ -10992,7 +7682,7 @@ Text=97.1 Other items included in the bill — Other expenses
 
 Name=Q971_4_AMT
 
-Position=350,2097,760,2117
+Position=350,1437,760,1457
 
 Item=Q971_4_AMT,PATIENTSURVEY_DICT
 
@@ -11004,7 +7694,7 @@ Form=12
 
 [Text]
 
-Position=50,2100,330,2116
+Position=50,1440,330,1456
 
 Text=97.1 Other items included in the bill — Other expenses (Amount in Pesos)
 
@@ -11016,7 +7706,7 @@ Text=97.1 Other items included in the bill — Other expenses (Amount in Pesos)
 
 Name=Q971_OTHER_TXT
 
-Position=350,2127,760,2147
+Position=350,1467,760,1487
 
 Item=Q971_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -11030,7 +7720,7 @@ Form=12
 
 [Text]
 
-Position=50,2130,330,2146
+Position=50,1470,330,1486
 
 Text=97.1 Other expenses — specify text
 
@@ -11042,7 +7732,7 @@ Text=97.1 Other expenses — specify text
 
 Name=Q972_1
 
-Position=350,2157,365,2177
+Position=350,1497,365,1517
 
 Item=Q972_1,PATIENTSURVEY_DICT
 
@@ -11054,7 +7744,7 @@ Form=12
 
 [Text]
 
-Position=50,2160,330,2176
+Position=50,1500,330,1516
 
 Text=97.2 Other expenses during OPD visit not in bill — a) Consultation Fee
 
@@ -11066,7 +7756,7 @@ Text=97.2 Other expenses during OPD visit not in bill — a) Consultation Fee
 
 Name=Q972_1_AMT
 
-Position=350,2187,760,2207
+Position=350,1527,760,1547
 
 Item=Q972_1_AMT,PATIENTSURVEY_DICT
 
@@ -11078,7 +7768,7 @@ Form=12
 
 [Text]
 
-Position=50,2190,330,2206
+Position=50,1530,330,1546
 
 Text=97.2 Other expenses during OPD visit not in bill — a) Consultation Fee (Amount in Pesos)
 
@@ -11090,7 +7780,7 @@ Text=97.2 Other expenses during OPD visit not in bill — a) Consultation Fee (A
 
 Name=Q972_2
 
-Position=350,2217,365,2237
+Position=350,1557,365,1577
 
 Item=Q972_2,PATIENTSURVEY_DICT
 
@@ -11102,7 +7792,7 @@ Form=12
 
 [Text]
 
-Position=50,2220,330,2236
+Position=50,1560,330,1576
 
 Text=97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure
 
@@ -11114,7 +7804,7 @@ Text=97.2 Other expenses during OPD visit not in bill — b) Diagnostic or labor
 
 Name=Q972_2_AMT
 
-Position=350,2247,760,2267
+Position=350,1587,760,1607
 
 Item=Q972_2_AMT,PATIENTSURVEY_DICT
 
@@ -11126,7 +7816,7 @@ Form=12
 
 [Text]
 
-Position=50,2250,330,2266
+Position=50,1590,330,1606
 
 Text=97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure (Amount in Pesos)
 
@@ -11138,7 +7828,7 @@ Text=97.2 Other expenses during OPD visit not in bill — b) Diagnostic or labor
 
 Name=Q972_3
 
-Position=350,2277,365,2297
+Position=350,1617,365,1637
 
 Item=Q972_3,PATIENTSURVEY_DICT
 
@@ -11150,7 +7840,7 @@ Form=12
 
 [Text]
 
-Position=50,2280,330,2296
+Position=50,1620,330,1636
 
 Text=97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies
 
@@ -11162,7 +7852,7 @@ Text=97.2 Other expenses during OPD visit not in bill — c) Medical equipment o
 
 Name=Q972_3_AMT
 
-Position=350,2307,760,2327
+Position=350,1647,760,1667
 
 Item=Q972_3_AMT,PATIENTSURVEY_DICT
 
@@ -11174,7 +7864,7 @@ Form=12
 
 [Text]
 
-Position=50,2310,330,2326
+Position=50,1650,330,1666
 
 Text=97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies (Amount in Pesos)
 
@@ -11186,7 +7876,7 @@ Text=97.2 Other expenses during OPD visit not in bill — c) Medical equipment o
 
 Name=Q972_4
 
-Position=350,2337,365,2357
+Position=350,1677,365,1697
 
 Item=Q972_4,PATIENTSURVEY_DICT
 
@@ -11198,7 +7888,7 @@ Form=12
 
 [Text]
 
-Position=50,2340,330,2356
+Position=50,1680,330,1696
 
 Text=97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs
 
@@ -11210,7 +7900,7 @@ Text=97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs
 
 Name=Q972_4_AMT
 
-Position=350,2367,760,2387
+Position=350,1707,760,1727
 
 Item=Q972_4_AMT,PATIENTSURVEY_DICT
 
@@ -11222,7 +7912,7 @@ Form=12
 
 [Text]
 
-Position=50,2370,330,2386
+Position=50,1710,330,1726
 
 Text=97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs (Amount in Pesos)
 
@@ -11234,7 +7924,7 @@ Text=97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs 
 
 Name=Q972_5
 
-Position=350,2397,365,2417
+Position=350,1737,365,1757
 
 Item=Q972_5,PATIENTSURVEY_DICT
 
@@ -11246,7 +7936,7 @@ Form=12
 
 [Text]
 
-Position=50,2400,330,2416
+Position=50,1740,330,1756
 
 Text=97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel
 
@@ -11258,7 +7948,7 @@ Text=97.2 Other expenses during OPD visit not in bill — e) Non-medical expense
 
 Name=Q972_5_AMT
 
-Position=350,2427,760,2447
+Position=350,1767,760,1787
 
 Item=Q972_5_AMT,PATIENTSURVEY_DICT
 
@@ -11270,7 +7960,7 @@ Form=12
 
 [Text]
 
-Position=50,2430,330,2446
+Position=50,1770,330,1786
 
 Text=97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel (Amount in Pesos)
 
@@ -11282,7 +7972,7 @@ Text=97.2 Other expenses during OPD visit not in bill — e) Non-medical expense
 
 Name=Q972_6
 
-Position=350,2457,365,2477
+Position=350,1797,365,1817
 
 Item=Q972_6,PATIENTSURVEY_DICT
 
@@ -11294,7 +7984,7 @@ Form=12
 
 [Text]
 
-Position=50,2460,330,2476
+Position=50,1800,330,1816
 
 Text=97.2 Other expenses during OPD visit not in bill — f) Other expenses
 
@@ -11306,7 +7996,7 @@ Text=97.2 Other expenses during OPD visit not in bill — f) Other expenses
 
 Name=Q972_6_AMT
 
-Position=350,2487,760,2507
+Position=350,1827,760,1847
 
 Item=Q972_6_AMT,PATIENTSURVEY_DICT
 
@@ -11318,7 +8008,7 @@ Form=12
 
 [Text]
 
-Position=50,2490,330,2506
+Position=50,1830,330,1846
 
 Text=97.2 Other expenses during OPD visit not in bill — f) Other expenses (Amount in Pesos)
 
@@ -11330,7 +8020,7 @@ Text=97.2 Other expenses during OPD visit not in bill — f) Other expenses (Amo
 
 Name=Q972_OTHER_TXT
 
-Position=350,2517,760,2537
+Position=350,1857,760,1877
 
 Item=Q972_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -11344,7 +8034,7 @@ Form=12
 
 [Text]
 
-Position=50,2520,330,2536
+Position=50,1860,330,1876
 
 Text=97.2 Other expenses — specify text
 
@@ -11356,7 +8046,7 @@ Text=97.2 Other expenses — specify text
 
 Name=Q98_PAY_01
 
-Position=350,2547,365,2567
+Position=350,1887,365,1907
 
 Item=Q98_PAY_01,PATIENTSURVEY_DICT
 
@@ -11368,7 +8058,7 @@ Form=12
 
 [Text]
 
-Position=50,2550,330,2566
+Position=50,1890,330,1906
 
 Text=98. Used to pay for medical costs — Salary/income
 
@@ -11380,7 +8070,7 @@ Text=98. Used to pay for medical costs — Salary/income
 
 Name=Q98_PAY_01_AMT
 
-Position=350,2577,760,2597
+Position=350,1917,760,1937
 
 Item=Q98_PAY_01_AMT,PATIENTSURVEY_DICT
 
@@ -11392,7 +8082,7 @@ Form=12
 
 [Text]
 
-Position=50,2580,330,2596
+Position=50,1920,330,1936
 
 Text=98. Used to pay for medical costs — Salary/income (Amount in Pesos)
 
@@ -11404,7 +8094,7 @@ Text=98. Used to pay for medical costs — Salary/income (Amount in Pesos)
 
 Name=Q98_PAY_02
 
-Position=350,2607,365,2627
+Position=350,1947,365,1967
 
 Item=Q98_PAY_02,PATIENTSURVEY_DICT
 
@@ -11416,7 +8106,7 @@ Form=12
 
 [Text]
 
-Position=50,2610,330,2626
+Position=50,1950,330,1966
 
 Text=98. Used to pay for medical costs — Loan/Mortgage
 
@@ -11428,7 +8118,7 @@ Text=98. Used to pay for medical costs — Loan/Mortgage
 
 Name=Q98_PAY_02_AMT
 
-Position=350,2637,760,2657
+Position=350,1977,760,1997
 
 Item=Q98_PAY_02_AMT,PATIENTSURVEY_DICT
 
@@ -11440,7 +8130,7 @@ Form=12
 
 [Text]
 
-Position=50,2640,330,2656
+Position=50,1980,330,1996
 
 Text=98. Used to pay for medical costs — Loan/Mortgage (Amount in Pesos)
 
@@ -11452,7 +8142,7 @@ Text=98. Used to pay for medical costs — Loan/Mortgage (Amount in Pesos)
 
 Name=Q98_PAY_03
 
-Position=350,2667,365,2687
+Position=350,2007,365,2027
 
 Item=Q98_PAY_03,PATIENTSURVEY_DICT
 
@@ -11464,7 +8154,7 @@ Form=12
 
 [Text]
 
-Position=50,2670,330,2686
+Position=50,2010,330,2026
 
 Text=98. Used to pay for medical costs — Savings
 
@@ -11476,7 +8166,7 @@ Text=98. Used to pay for medical costs — Savings
 
 Name=Q98_PAY_03_AMT
 
-Position=350,2697,760,2717
+Position=350,2037,760,2057
 
 Item=Q98_PAY_03_AMT,PATIENTSURVEY_DICT
 
@@ -11488,7 +8178,7 @@ Form=12
 
 [Text]
 
-Position=50,2700,330,2716
+Position=50,2040,330,2056
 
 Text=98. Used to pay for medical costs — Savings (Amount in Pesos)
 
@@ -11500,7 +8190,7 @@ Text=98. Used to pay for medical costs — Savings (Amount in Pesos)
 
 Name=Q98_PAY_04
 
-Position=350,2727,365,2747
+Position=350,2067,365,2087
 
 Item=Q98_PAY_04,PATIENTSURVEY_DICT
 
@@ -11512,7 +8202,7 @@ Form=12
 
 [Text]
 
-Position=50,2730,330,2746
+Position=50,2070,330,2086
 
 Text=98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization
 
@@ -11524,7 +8214,7 @@ Text=98. Used to pay for medical costs — Donation/Charity/Assistance from Priv
 
 Name=Q98_PAY_04_AMT
 
-Position=350,2757,760,2777
+Position=350,2097,760,2117
 
 Item=Q98_PAY_04_AMT,PATIENTSURVEY_DICT
 
@@ -11536,7 +8226,7 @@ Form=12
 
 [Text]
 
-Position=50,2760,330,2776
+Position=50,2100,330,2116
 
 Text=98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization (Amount in Pesos)
 
@@ -11548,7 +8238,7 @@ Text=98. Used to pay for medical costs — Donation/Charity/Assistance from Priv
 
 Name=Q98_PAY_05
 
-Position=350,2787,365,2807
+Position=350,2127,365,2147
 
 Item=Q98_PAY_05,PATIENTSURVEY_DICT
 
@@ -11560,7 +8250,7 @@ Form=12
 
 [Text]
 
-Position=50,2790,330,2806
+Position=50,2130,330,2146
 
 Text=98. Used to pay for medical costs — Malasakit Center
 
@@ -11572,7 +8262,7 @@ Text=98. Used to pay for medical costs — Malasakit Center
 
 Name=Q98_PAY_05_AMT
 
-Position=350,2817,760,2837
+Position=350,2157,760,2177
 
 Item=Q98_PAY_05_AMT,PATIENTSURVEY_DICT
 
@@ -11584,7 +8274,7 @@ Form=12
 
 [Text]
 
-Position=50,2820,330,2836
+Position=50,2160,330,2176
 
 Text=98. Used to pay for medical costs — Malasakit Center (Amount in Pesos)
 
@@ -11596,7 +8286,7 @@ Text=98. Used to pay for medical costs — Malasakit Center (Amount in Pesos)
 
 Name=Q98_PAY_06
 
-Position=350,2847,365,2867
+Position=350,2187,365,2207
 
 Item=Q98_PAY_06,PATIENTSURVEY_DICT
 
@@ -11608,7 +8298,7 @@ Form=12
 
 [Text]
 
-Position=50,2850,330,2866
+Position=50,2190,330,2206
 
 Text=98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization
 
@@ -11620,7 +8310,7 @@ Text=98. Used to pay for medical costs — Other Donation/Charity/Assistance fro
 
 Name=Q98_PAY_06_AMT
 
-Position=350,2877,760,2897
+Position=350,2217,760,2237
 
 Item=Q98_PAY_06_AMT,PATIENTSURVEY_DICT
 
@@ -11632,7 +8322,7 @@ Form=12
 
 [Text]
 
-Position=50,2880,330,2896
+Position=50,2220,330,2236
 
 Text=98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)
 
@@ -11644,7 +8334,7 @@ Text=98. Used to pay for medical costs — Other Donation/Charity/Assistance fro
 
 Name=Q98_PAY_07
 
-Position=350,2907,365,2927
+Position=350,2247,365,2267
 
 Item=Q98_PAY_07,PATIENTSURVEY_DICT
 
@@ -11656,7 +8346,7 @@ Form=12
 
 [Text]
 
-Position=50,2910,330,2926
+Position=50,2250,330,2266
 
 Text=98. Used to pay for medical costs — Sale of Assets
 
@@ -11668,7 +8358,7 @@ Text=98. Used to pay for medical costs — Sale of Assets
 
 Name=Q98_PAY_07_AMT
 
-Position=350,2937,760,2957
+Position=350,2277,760,2297
 
 Item=Q98_PAY_07_AMT,PATIENTSURVEY_DICT
 
@@ -11680,7 +8370,7 @@ Form=12
 
 [Text]
 
-Position=50,2940,330,2956
+Position=50,2280,330,2296
 
 Text=98. Used to pay for medical costs — Sale of Assets (Amount in Pesos)
 
@@ -11692,7 +8382,7 @@ Text=98. Used to pay for medical costs — Sale of Assets (Amount in Pesos)
 
 Name=Q98_PAY_08
 
-Position=350,2967,365,2987
+Position=350,2307,365,2327
 
 Item=Q98_PAY_08,PATIENTSURVEY_DICT
 
@@ -11704,7 +8394,7 @@ Form=12
 
 [Text]
 
-Position=50,2970,330,2986
+Position=50,2310,330,2326
 
 Text=98. Used to pay for medical costs — Paid by someone else
 
@@ -11716,7 +8406,7 @@ Text=98. Used to pay for medical costs — Paid by someone else
 
 Name=Q98_PAY_08_AMT
 
-Position=350,2997,760,3017
+Position=350,2337,760,2357
 
 Item=Q98_PAY_08_AMT,PATIENTSURVEY_DICT
 
@@ -11728,7 +8418,7 @@ Form=12
 
 [Text]
 
-Position=50,3000,330,3016
+Position=50,2340,330,2356
 
 Text=98. Used to pay for medical costs — Paid by someone else (Amount in Pesos)
 
@@ -11740,7 +8430,7 @@ Text=98. Used to pay for medical costs — Paid by someone else (Amount in Pesos
 
 Name=Q98_PAY_09
 
-Position=350,3027,365,3047
+Position=350,2367,365,2387
 
 Item=Q98_PAY_09,PATIENTSURVEY_DICT
 
@@ -11752,7 +8442,7 @@ Form=12
 
 [Text]
 
-Position=50,3030,330,3046
+Position=50,2370,330,2386
 
 Text=98. Used to pay for medical costs — MAIFIP
 
@@ -11764,7 +8454,7 @@ Text=98. Used to pay for medical costs — MAIFIP
 
 Name=Q98_PAY_09_AMT
 
-Position=350,3057,760,3077
+Position=350,2397,760,2417
 
 Item=Q98_PAY_09_AMT,PATIENTSURVEY_DICT
 
@@ -11776,7 +8466,7 @@ Form=12
 
 [Text]
 
-Position=50,3060,330,3076
+Position=50,2400,330,2416
 
 Text=98. Used to pay for medical costs — MAIFIP (Amount in Pesos)
 
@@ -11788,7 +8478,7 @@ Text=98. Used to pay for medical costs — MAIFIP (Amount in Pesos)
 
 Name=Q98_PAY_10
 
-Position=350,3087,365,3107
+Position=350,2427,365,2447
 
 Item=Q98_PAY_10,PATIENTSURVEY_DICT
 
@@ -11800,7 +8490,7 @@ Form=12
 
 [Text]
 
-Position=50,3090,330,3106
+Position=50,2430,330,2446
 
 Text=98. Used to pay for medical costs — PhilHealth
 
@@ -11812,7 +8502,7 @@ Text=98. Used to pay for medical costs — PhilHealth
 
 Name=Q98_PAY_10_AMT
 
-Position=350,3117,760,3137
+Position=350,2457,760,2477
 
 Item=Q98_PAY_10_AMT,PATIENTSURVEY_DICT
 
@@ -11824,7 +8514,7 @@ Form=12
 
 [Text]
 
-Position=50,3120,330,3136
+Position=50,2460,330,2476
 
 Text=98. Used to pay for medical costs — PhilHealth (Amount in Pesos)
 
@@ -11836,7 +8526,7 @@ Text=98. Used to pay for medical costs — PhilHealth (Amount in Pesos)
 
 Name=Q98_PAY_11
 
-Position=350,3147,365,3167
+Position=350,2487,365,2507
 
 Item=Q98_PAY_11,PATIENTSURVEY_DICT
 
@@ -11848,7 +8538,7 @@ Form=12
 
 [Text]
 
-Position=50,3150,330,3166
+Position=50,2490,330,2506
 
 Text=98. Used to pay for medical costs — SSS
 
@@ -11860,7 +8550,7 @@ Text=98. Used to pay for medical costs — SSS
 
 Name=Q98_PAY_11_AMT
 
-Position=350,3177,760,3197
+Position=350,2517,760,2537
 
 Item=Q98_PAY_11_AMT,PATIENTSURVEY_DICT
 
@@ -11872,7 +8562,7 @@ Form=12
 
 [Text]
 
-Position=50,3180,330,3196
+Position=50,2520,330,2536
 
 Text=98. Used to pay for medical costs — SSS (Amount in Pesos)
 
@@ -11884,7 +8574,7 @@ Text=98. Used to pay for medical costs — SSS (Amount in Pesos)
 
 Name=Q98_PAY_12
 
-Position=350,3207,365,3227
+Position=350,2547,365,2567
 
 Item=Q98_PAY_12,PATIENTSURVEY_DICT
 
@@ -11896,7 +8586,7 @@ Form=12
 
 [Text]
 
-Position=50,3210,330,3226
+Position=50,2550,330,2566
 
 Text=98. Used to pay for medical costs — GSIS
 
@@ -11908,7 +8598,7 @@ Text=98. Used to pay for medical costs — GSIS
 
 Name=Q98_PAY_12_AMT
 
-Position=350,3237,760,3257
+Position=350,2577,760,2597
 
 Item=Q98_PAY_12_AMT,PATIENTSURVEY_DICT
 
@@ -11920,7 +8610,7 @@ Form=12
 
 [Text]
 
-Position=50,3240,330,3256
+Position=50,2580,330,2596
 
 Text=98. Used to pay for medical costs — GSIS (Amount in Pesos)
 
@@ -11932,7 +8622,7 @@ Text=98. Used to pay for medical costs — GSIS (Amount in Pesos)
 
 Name=Q98_PAY_13
 
-Position=350,3267,365,3287
+Position=350,2607,365,2627
 
 Item=Q98_PAY_13,PATIENTSURVEY_DICT
 
@@ -11944,7 +8634,7 @@ Form=12
 
 [Text]
 
-Position=50,3270,330,3286
+Position=50,2610,330,2626
 
 Text=98. Used to pay for medical costs — Private Insurance
 
@@ -11956,7 +8646,7 @@ Text=98. Used to pay for medical costs — Private Insurance
 
 Name=Q98_PAY_13_AMT
 
-Position=350,3297,760,3317
+Position=350,2637,760,2657
 
 Item=Q98_PAY_13_AMT,PATIENTSURVEY_DICT
 
@@ -11968,7 +8658,7 @@ Form=12
 
 [Text]
 
-Position=50,3300,330,3316
+Position=50,2640,330,2656
 
 Text=98. Used to pay for medical costs — Private Insurance (Amount in Pesos)
 
@@ -11980,7 +8670,7 @@ Text=98. Used to pay for medical costs — Private Insurance (Amount in Pesos)
 
 Name=Q98_PAY_14
 
-Position=350,3327,365,3347
+Position=350,2667,365,2687
 
 Item=Q98_PAY_14,PATIENTSURVEY_DICT
 
@@ -11992,7 +8682,7 @@ Form=12
 
 [Text]
 
-Position=50,3330,330,3346
+Position=50,2670,330,2686
 
 Text=98. Used to pay for medical costs — HMO
 
@@ -12004,7 +8694,7 @@ Text=98. Used to pay for medical costs — HMO
 
 Name=Q98_PAY_14_AMT
 
-Position=350,3357,760,3377
+Position=350,2697,760,2717
 
 Item=Q98_PAY_14_AMT,PATIENTSURVEY_DICT
 
@@ -12016,7 +8706,7 @@ Form=12
 
 [Text]
 
-Position=50,3360,330,3376
+Position=50,2700,330,2716
 
 Text=98. Used to pay for medical costs — HMO (Amount in Pesos)
 
@@ -12028,7 +8718,7 @@ Text=98. Used to pay for medical costs — HMO (Amount in Pesos)
 
 Name=Q98_PAY_15
 
-Position=350,3387,365,3407
+Position=350,2727,365,2747
 
 Item=Q98_PAY_15,PATIENTSURVEY_DICT
 
@@ -12040,7 +8730,7 @@ Form=12
 
 [Text]
 
-Position=50,3390,330,3406
+Position=50,2730,330,2746
 
 Text=98. Used to pay for medical costs — Other (specify)
 
@@ -12052,7 +8742,7 @@ Text=98. Used to pay for medical costs — Other (specify)
 
 Name=Q98_PAY_15_AMT
 
-Position=350,3417,760,3437
+Position=350,2757,760,2777
 
 Item=Q98_PAY_15_AMT,PATIENTSURVEY_DICT
 
@@ -12064,7 +8754,7 @@ Form=12
 
 [Text]
 
-Position=50,3420,330,3436
+Position=50,2760,330,2776
 
 Text=98. Used to pay for medical costs — Other (specify) (Amount in Pesos)
 
@@ -12076,7 +8766,7 @@ Text=98. Used to pay for medical costs — Other (specify) (Amount in Pesos)
 
 Name=Q98_OTHER_DONATION_TXT
 
-Position=350,3447,760,3467
+Position=350,2787,760,2807
 
 Item=Q98_OTHER_DONATION_TXT,PATIENTSURVEY_DICT
 
@@ -12090,7 +8780,7 @@ Form=12
 
 [Text]
 
-Position=50,3450,330,3466
+Position=50,2790,330,2806
 
 Text=98. Other Donation/Charity/Assistance from Government Organization — specify text
 
@@ -12102,7 +8792,7 @@ Text=98. Other Donation/Charity/Assistance from Government Organization — spec
 
 Name=Q98_OTHER_TXT
 
-Position=350,3477,760,3497
+Position=350,2817,760,2837
 
 Item=Q98_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -12116,7 +8806,7 @@ Form=12
 
 [Text]
 
-Position=50,3480,330,3496
+Position=50,2820,330,2836
 
 Text=98. Other payment source — specify text
 
@@ -12128,7 +8818,7 @@ Text=98. Other payment source — specify text
 
 Name=Q99_BUCAS_HEARD
 
-Position=350,3507,365,3527
+Position=350,2847,365,2867
 
 Item=Q99_BUCAS_HEARD,PATIENTSURVEY_DICT
 
@@ -12140,7 +8830,7 @@ Form=12
 
 [Text]
 
-Position=50,3510,330,3526
+Position=50,2850,330,2866
 
 Text=99. Have you heard about Bagong Urgent Care and Ambulatory Services (BUCAS) center?
 
@@ -12150,37 +8840,13 @@ Text=99. Have you heard about Bagong Urgent Care and Ambulatory Services (BUCAS)
 
 [Field]
 
-Name=Q100_BUCAS_SOURCE_O01
+Name=Q100_BUCAS_SOURCE
 
-Position=350,3537,365,3557
+Position=350,2877,365,2897
 
-Item=Q100_BUCAS_SOURCE_O01,PATIENTSURVEY_DICT
+Item=Q100_BUCAS_SOURCE,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3540,330,3556
-
-Text=100. If yes, what are your sources of information about this BUCAS center? — News
-
- 
-
-  
-
-[Field]
-
-Name=Q100_BUCAS_SOURCE_O02
-
-Position=350,3567,365,3587
-
-Item=Q100_BUCAS_SOURCE_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=12
 
@@ -12188,153 +8854,9 @@ Form=12
 
 [Text]
 
-Position=50,3570,330,3586
+Position=50,2880,330,2896
 
-Text=100. If yes, what are your sources of information about this BUCAS center? — Legislation
-
- 
-
-  
-
-[Field]
-
-Name=Q100_BUCAS_SOURCE_O03
-
-Position=350,3597,365,3617
-
-Item=Q100_BUCAS_SOURCE_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3600,330,3616
-
-Text=100. If yes, what are your sources of information about this BUCAS center? — Social Media
-
- 
-
-  
-
-[Field]
-
-Name=Q100_BUCAS_SOURCE_O04
-
-Position=350,3627,365,3647
-
-Item=Q100_BUCAS_SOURCE_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3630,330,3646
-
-Text=100. If yes, what are your sources of information about this BUCAS center? — Friends / Family
-
- 
-
-  
-
-[Field]
-
-Name=Q100_BUCAS_SOURCE_O05
-
-Position=350,3657,365,3677
-
-Item=Q100_BUCAS_SOURCE_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3660,330,3676
-
-Text=100. If yes, what are your sources of information about this BUCAS center? — Health center/facility
-
- 
-
-  
-
-[Field]
-
-Name=Q100_BUCAS_SOURCE_O06
-
-Position=350,3687,365,3707
-
-Item=Q100_BUCAS_SOURCE_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3690,330,3706
-
-Text=100. If yes, what are your sources of information about this BUCAS center? — LGU/Barangay
-
- 
-
-  
-
-[Field]
-
-Name=Q100_BUCAS_SOURCE_O07
-
-Position=350,3717,365,3737
-
-Item=Q100_BUCAS_SOURCE_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3720,330,3736
-
-Text=100. If yes, what are your sources of information about this BUCAS center? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q100_BUCAS_SOURCE_O08
-
-Position=350,3747,365,3767
-
-Item=Q100_BUCAS_SOURCE_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3750,330,3766
-
-Text=100. If yes, what are your sources of information about this BUCAS center? — Other (Specify)
+Text=100. If yes, what are your sources of information about this BUCAS center?
 
  
 
@@ -12344,7 +8866,7 @@ Text=100. If yes, what are your sources of information about this BUCAS center? 
 
 Name=Q100_BUCAS_SOURCE_OTHER_TXT
 
-Position=350,3777,760,3797
+Position=350,2907,760,2927
 
 Item=Q100_BUCAS_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -12358,7 +8880,7 @@ Form=12
 
 [Text]
 
-Position=50,3780,330,3796
+Position=50,2910,330,2926
 
 Text=100. If yes, what are your sources of information about this BUCAS center? — Other (specify) text
 
@@ -12370,7 +8892,7 @@ Text=100. If yes, what are your sources of information about this BUCAS center? 
 
 Name=Q101_BUCAS_UNDERSTAND
 
-Position=350,3807,365,3827
+Position=350,2937,365,2957
 
 Item=Q101_BUCAS_UNDERSTAND,PATIENTSURVEY_DICT
 
@@ -12382,7 +8904,7 @@ Form=12
 
 [Text]
 
-Position=50,3810,330,3826
+Position=50,2940,330,2956
 
 Text=101. What is your understanding about a BUCAS center?
 
@@ -12394,7 +8916,7 @@ Text=101. What is your understanding about a BUCAS center?
 
 Name=Q101_BUCAS_UNDERSTAND_OTHER_TXT
 
-Position=350,3837,760,3857
+Position=350,2967,760,2987
 
 Item=Q101_BUCAS_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -12408,7 +8930,7 @@ Form=12
 
 [Text]
 
-Position=50,3840,330,3856
+Position=50,2970,330,2986
 
 Text=101. What is your understanding about a BUCAS center? — Other (specify) text
 
@@ -12420,7 +8942,7 @@ Text=101. What is your understanding about a BUCAS center? — Other (specify) t
 
 Name=Q102_BUCAS_ACCESSED
 
-Position=350,3867,365,3887
+Position=350,2997,365,3017
 
 Item=Q102_BUCAS_ACCESSED,PATIENTSURVEY_DICT
 
@@ -12432,7 +8954,7 @@ Form=12
 
 [Text]
 
-Position=50,3870,330,3886
+Position=50,3000,330,3016
 
 Text=102. Have you accessed the services in a BUCAS center?
 
@@ -12442,37 +8964,13 @@ Text=102. Have you accessed the services in a BUCAS center?
 
 [Field]
 
-Name=Q103_BUCAS_SERVICES_O01
+Name=Q103_BUCAS_SERVICES
 
-Position=350,3897,365,3917
+Position=350,3027,365,3047
 
-Item=Q103_BUCAS_SERVICES_O01,PATIENTSURVEY_DICT
+Item=Q103_BUCAS_SERVICES,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3900,330,3916
-
-Text=103. If yes, which service/s did you avail? — Medical consultation for urgent or minor conditions
-
- 
-
-  
-
-[Field]
-
-Name=Q103_BUCAS_SERVICES_O02
-
-Position=350,3927,365,3947
-
-Item=Q103_BUCAS_SERVICES_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=12
 
@@ -12480,129 +8978,9 @@ Form=12
 
 [Text]
 
-Position=50,3930,330,3946
+Position=50,3030,330,3046
 
-Text=103. If yes, which service/s did you avail? — Outpatient or ambulatory care services
-
- 
-
-  
-
-[Field]
-
-Name=Q103_BUCAS_SERVICES_O03
-
-Position=350,3957,365,3977
-
-Item=Q103_BUCAS_SERVICES_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3960,330,3976
-
-Text=103. If yes, which service/s did you avail? — Basic diagnostic services (e.g., laboratory tests, X-ray)
-
- 
-
-  
-
-[Field]
-
-Name=Q103_BUCAS_SERVICES_O04
-
-Position=350,3987,365,4007
-
-Item=Q103_BUCAS_SERVICES_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,3990,330,4006
-
-Text=103. If yes, which service/s did you avail? — Minor procedures or treatments
-
- 
-
-  
-
-[Field]
-
-Name=Q103_BUCAS_SERVICES_O05
-
-Position=350,4017,365,4037
-
-Item=Q103_BUCAS_SERVICES_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,4020,330,4036
-
-Text=103. If yes, which service/s did you avail? — Referral to higher-level health facilities
-
- 
-
-  
-
-[Field]
-
-Name=Q103_BUCAS_SERVICES_O06
-
-Position=350,4047,365,4067
-
-Item=Q103_BUCAS_SERVICES_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,4050,330,4066
-
-Text=103. If yes, which service/s did you avail? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q103_BUCAS_SERVICES_O07
-
-Position=350,4077,365,4097
-
-Item=Q103_BUCAS_SERVICES_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=12
-
-  
-
-[Text]
-
-Position=50,4080,330,4096
-
-Text=103. If yes, which service/s did you avail? — Other (specify)
+Text=103. If yes, which service/s did you avail?
 
  
 
@@ -12612,7 +8990,7 @@ Text=103. If yes, which service/s did you avail? — Other (specify)
 
 Name=Q103_BUCAS_SERVICES_OTHER_TXT
 
-Position=350,4107,760,4127
+Position=350,3057,760,3077
 
 Item=Q103_BUCAS_SERVICES_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -12626,7 +9004,7 @@ Form=12
 
 [Text]
 
-Position=50,4110,330,4126
+Position=50,3060,330,3076
 
 Text=103. If yes, which service/s did you avail? — Other (specify) text
 
@@ -12638,7 +9016,7 @@ Text=103. If yes, which service/s did you avail? — Other (specify) text
 
 Name=Q104_WITHOUT_BUCAS
 
-Position=350,4137,365,4157
+Position=350,3087,365,3107
 
 Item=Q104_WITHOUT_BUCAS,PATIENTSURVEY_DICT
 
@@ -12650,7 +9028,7 @@ Form=12
 
 [Text]
 
-Position=50,4140,330,4156
+Position=50,3090,330,3106
 
 Text=104. Without BUCAS Center, where would you have gone?
 
@@ -12662,7 +9040,7 @@ Text=104. Without BUCAS Center, where would you have gone?
 
 Name=Q104_WITHOUT_BUCAS_OTHER_TXT
 
-Position=350,4167,760,4187
+Position=350,3117,760,3137
 
 Item=Q104_WITHOUT_BUCAS_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -12676,7 +9054,7 @@ Form=12
 
 [Text]
 
-Position=50,4170,330,4186
+Position=50,3120,330,3136
 
 Text=104. Without BUCAS — Others specify text
 
@@ -12736,7 +9114,7 @@ DisplayTogether=Yes
 
 Position=6
 
-Length=7
+Length=1
 
   
 
@@ -12748,7 +9126,7 @@ Label=Q90
 
 DisplayTogether=Yes
 
-Position=14
+Position=8
 
 Length=1
 
@@ -12762,7 +9140,7 @@ Label=Q91-Q92
 
 DisplayTogether=Yes
 
-Position=16
+Position=10
 
 Length=2
 
@@ -12776,7 +9154,7 @@ Label=Q92
 
 DisplayTogether=Yes
 
-Position=19
+Position=13
 
 Length=1
 
@@ -12790,7 +9168,7 @@ Label=Q92
 
 DisplayTogether=Yes
 
-Position=21
+Position=15
 
 Length=1
 
@@ -12804,7 +9182,7 @@ Label=Q92
 
 DisplayTogether=Yes
 
-Position=23
+Position=17
 
 Length=1
 
@@ -12818,7 +9196,7 @@ Label=Q92
 
 DisplayTogether=Yes
 
-Position=25
+Position=19
 
 Length=5
 
@@ -12832,7 +9210,7 @@ Label=Q92
 
 DisplayTogether=Yes
 
-Position=31
+Position=25
 
 Length=1
 
@@ -12846,9 +9224,9 @@ Label=Q93
 
 DisplayTogether=Yes
 
-Position=33
+Position=27
 
-Length=17
+Length=1
 
   
 
@@ -12860,7 +9238,7 @@ Label=Q93
 
 DisplayTogether=Yes
 
-Position=51
+Position=29
 
 Length=1
 
@@ -12874,7 +9252,7 @@ Label=Q94
 
 DisplayTogether=Yes
 
-Position=53
+Position=31
 
 Length=1
 
@@ -12888,7 +9266,7 @@ Label=Q94
 
 DisplayTogether=Yes
 
-Position=55
+Position=33
 
 Length=1
 
@@ -12902,7 +9280,7 @@ Label=Q94
 
 DisplayTogether=Yes
 
-Position=57
+Position=35
 
 Length=5
 
@@ -12916,7 +9294,7 @@ Label=Q94
 
 DisplayTogether=Yes
 
-Position=63
+Position=41
 
 Length=2
 
@@ -12930,7 +9308,7 @@ Label=Q95
 
 DisplayTogether=Yes
 
-Position=66
+Position=44
 
 Length=1
 
@@ -12944,7 +9322,7 @@ Label=Q96
 
 DisplayTogether=Yes
 
-Position=68
+Position=46
 
 Length=1
 
@@ -12958,7 +9336,7 @@ Label=Q96
 
 DisplayTogether=Yes
 
-Position=70
+Position=48
 
 Length=1
 
@@ -12972,7 +9350,7 @@ Label=Q96
 
 DisplayTogether=Yes
 
-Position=72
+Position=50
 
 Length=5
 
@@ -12986,7 +9364,7 @@ Label=Q96
 
 DisplayTogether=Yes
 
-Position=78
+Position=56
 
 Length=1
 
@@ -13000,7 +9378,7 @@ Label=Q96
 
 DisplayTogether=Yes
 
-Position=80
+Position=58
 
 Length=1
 
@@ -13014,7 +9392,7 @@ Label=Q96
 
 DisplayTogether=Yes
 
-Position=82
+Position=60
 
 Length=1
 
@@ -13028,7 +9406,7 @@ Label=Q96
 
 DisplayTogether=Yes
 
-Position=84
+Position=62
 
 Length=1
 
@@ -13042,7 +9420,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=86
+Position=64
 
 Length=2
 
@@ -13056,7 +9434,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=89
+Position=67
 
 Length=1
 
@@ -13070,7 +9448,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=91
+Position=69
 
 Length=1
 
@@ -13084,7 +9462,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=93
+Position=71
 
 Length=1
 
@@ -13098,7 +9476,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=95
+Position=73
 
 Length=1
 
@@ -13112,7 +9490,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=97
+Position=75
 
 Length=1
 
@@ -13126,7 +9504,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=99
+Position=77
 
 Length=1
 
@@ -13140,7 +9518,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=101
+Position=79
 
 Length=1
 
@@ -13154,7 +9532,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=103
+Position=81
 
 Length=1
 
@@ -13168,7 +9546,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=105
+Position=83
 
 Length=1
 
@@ -13182,7 +9560,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=107
+Position=85
 
 Length=1
 
@@ -13196,7 +9574,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=109
+Position=87
 
 Length=1
 
@@ -13210,7 +9588,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=111
+Position=89
 
 Length=1
 
@@ -13224,7 +9602,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=113
+Position=91
 
 Length=1
 
@@ -13238,7 +9616,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=115
+Position=93
 
 Length=1
 
@@ -13252,7 +9630,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=117
+Position=95
 
 Length=1
 
@@ -13266,7 +9644,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=119
+Position=97
 
 Length=1
 
@@ -13280,7 +9658,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=121
+Position=99
 
 Length=1
 
@@ -13294,7 +9672,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=123
+Position=101
 
 Length=1
 
@@ -13308,7 +9686,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=125
+Position=103
 
 Length=1
 
@@ -13322,7 +9700,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=127
+Position=105
 
 Length=1
 
@@ -13336,7 +9714,7 @@ Label=Q97
 
 DisplayTogether=Yes
 
-Position=129
+Position=107
 
 Length=1
 
@@ -13350,7 +9728,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=131
+Position=109
 
 Length=1
 
@@ -13364,7 +9742,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=133
+Position=111
 
 Length=1
 
@@ -13378,7 +9756,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=135
+Position=113
 
 Length=1
 
@@ -13392,7 +9770,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=137
+Position=115
 
 Length=1
 
@@ -13406,7 +9784,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=139
+Position=117
 
 Length=1
 
@@ -13420,7 +9798,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=141
+Position=119
 
 Length=1
 
@@ -13434,7 +9812,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=143
+Position=121
 
 Length=1
 
@@ -13448,7 +9826,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=145
+Position=123
 
 Length=1
 
@@ -13462,7 +9840,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=147
+Position=125
 
 Length=1
 
@@ -13476,7 +9854,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=149
+Position=127
 
 Length=1
 
@@ -13490,7 +9868,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=151
+Position=129
 
 Length=1
 
@@ -13504,7 +9882,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=153
+Position=131
 
 Length=1
 
@@ -13518,7 +9896,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=155
+Position=133
 
 Length=1
 
@@ -13532,7 +9910,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=157
+Position=135
 
 Length=1
 
@@ -13546,7 +9924,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=159
+Position=137
 
 Length=1
 
@@ -13560,7 +9938,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=161
+Position=139
 
 Length=1
 
@@ -13574,7 +9952,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=163
+Position=141
 
 Length=1
 
@@ -13588,7 +9966,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=165
+Position=143
 
 Length=1
 
@@ -13602,7 +9980,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=167
+Position=145
 
 Length=1
 
@@ -13616,7 +9994,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=169
+Position=147
 
 Length=1
 
@@ -13630,7 +10008,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=171
+Position=149
 
 Length=1
 
@@ -13644,7 +10022,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=173
+Position=151
 
 Length=1
 
@@ -13658,7 +10036,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=175
+Position=153
 
 Length=1
 
@@ -13672,7 +10050,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=177
+Position=155
 
 Length=1
 
@@ -13686,7 +10064,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=179
+Position=157
 
 Length=1
 
@@ -13700,7 +10078,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=181
+Position=159
 
 Length=1
 
@@ -13714,7 +10092,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=183
+Position=161
 
 Length=1
 
@@ -13728,7 +10106,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=185
+Position=163
 
 Length=1
 
@@ -13742,7 +10120,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=187
+Position=165
 
 Length=1
 
@@ -13756,7 +10134,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=189
+Position=167
 
 Length=1
 
@@ -13770,7 +10148,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=191
+Position=169
 
 Length=1
 
@@ -13784,7 +10162,7 @@ Label=Q98
 
 DisplayTogether=Yes
 
-Position=193
+Position=171
 
 Length=1
 
@@ -13798,7 +10176,7 @@ Label=Q99
 
 DisplayTogether=Yes
 
-Position=195
+Position=173
 
 Length=1
 
@@ -13812,9 +10190,9 @@ Label=Q100
 
 DisplayTogether=Yes
 
-Position=197
+Position=175
 
-Length=8
+Length=1
 
   
 
@@ -13826,7 +10204,7 @@ Label=Q100
 
 DisplayTogether=Yes
 
-Position=206
+Position=177
 
 Length=1
 
@@ -13840,7 +10218,7 @@ Label=Q101
 
 DisplayTogether=Yes
 
-Position=208
+Position=179
 
 Length=1
 
@@ -13854,7 +10232,7 @@ Label=Q101
 
 DisplayTogether=Yes
 
-Position=210
+Position=181
 
 Length=1
 
@@ -13868,7 +10246,7 @@ Label=Q102
 
 DisplayTogether=Yes
 
-Position=212
+Position=183
 
 Length=1
 
@@ -13882,9 +10260,9 @@ Label=Q103
 
 DisplayTogether=Yes
 
-Position=214
+Position=185
 
-Length=7
+Length=1
 
   
 
@@ -13896,7 +10274,7 @@ Label=Q103
 
 DisplayTogether=Yes
 
-Position=222
+Position=187
 
 Length=1
 
@@ -13910,7 +10288,7 @@ Label=Q104
 
 DisplayTogether=Yes
 
-Position=224
+Position=189
 
 Length=1
 
@@ -13924,7 +10302,7 @@ Label=Q104
 
 DisplayTogether=Yes
 
-Position=226
+Position=191
 
 Length=1
 
@@ -16194,13 +12572,13 @@ Text=113. Hospital bill payment — Other specify text
 
 [Field]
 
-Name=Q114_NO_PH_O01
+Name=Q114_NO_PH
 
 Position=350,2817,365,2837
 
-Item=Q114_NO_PH_O01,PATIENTSURVEY_DICT
+Item=Q114_NO_PH,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=13
 
@@ -16210,151 +12588,7 @@ Form=13
 
 Position=50,2820,330,2836
 
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — Not a PhilHealth member
-
- 
-
-  
-
-[Field]
-
-Name=Q114_NO_PH_O02
-
-Position=350,2847,365,2867
-
-Item=Q114_NO_PH_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=13
-
-  
-
-[Text]
-
-Position=50,2850,330,2866
-
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — PhilHealth member but not eligible for benefits
-
- 
-
-  
-
-[Field]
-
-Name=Q114_NO_PH_O03
-
-Position=350,2877,365,2897
-
-Item=Q114_NO_PH_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=13
-
-  
-
-[Text]
-
-Position=50,2880,330,2896
-
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — Probably used PhilHealth but cannot remember amount because benefit was deducted upon discharge from hospital
-
- 
-
-  
-
-[Field]
-
-Name=Q114_NO_PH_O04
-
-Position=350,2907,365,2927
-
-Item=Q114_NO_PH_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=13
-
-  
-
-[Text]
-
-Position=50,2910,330,2926
-
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — Too many requirements to comply with before can avail
-
- 
-
-  
-
-[Field]
-
-Name=Q114_NO_PH_O05
-
-Position=350,2937,365,2957
-
-Item=Q114_NO_PH_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=13
-
-  
-
-[Text]
-
-Position=50,2940,330,2956
-
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — Limited hospitalization benefits
-
- 
-
-  
-
-[Field]
-
-Name=Q114_NO_PH_O06
-
-Position=350,2967,365,2987
-
-Item=Q114_NO_PH_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=13
-
-  
-
-[Text]
-
-Position=50,2970,330,2986
-
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — Claims processing too long
-
- 
-
-  
-
-[Field]
-
-Name=Q114_NO_PH_O07
-
-Position=350,2997,365,3017
-
-Item=Q114_NO_PH_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=13
-
-  
-
-[Text]
-
-Position=50,3000,330,3016
-
-Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — Other (specify)
+Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113)
 
  
 
@@ -16364,7 +12598,7 @@ Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not a
 
 Name=Q114_NO_PH_OTHER_TXT
 
-Position=350,3027,760,3047
+Position=350,2847,760,2867
 
 Item=Q114_NO_PH_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -16378,7 +12612,7 @@ Form=13
 
 [Text]
 
-Position=50,3030,330,3046
+Position=50,2850,330,2866
 
 Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not availed in 113) — Other (specify) text
 
@@ -16390,7 +12624,7 @@ Text=114. Why did you not avail of PhilHealth benefits? (If PhilHealth was not a
 
 Name=Q115_FINAL_CASH
 
-Position=350,3057,760,3077
+Position=350,2877,760,2897
 
 Item=Q115_FINAL_CASH,PATIENTSURVEY_DICT
 
@@ -16402,7 +12636,7 @@ Form=13
 
 [Text]
 
-Position=50,3060,330,3076
+Position=50,2880,330,2896
 
 Text=115. What was the final amount you paid in cash at the hospital cashier upon discharge? (Amount in Pesos)
 
@@ -16414,7 +12648,7 @@ Text=115. What was the final amount you paid in cash at the hospital cashier upo
 
 Name=Q1141_1
 
-Position=350,3087,365,3107
+Position=350,2907,365,2927
 
 Item=Q1141_1,PATIENTSURVEY_DICT
 
@@ -16426,7 +12660,7 @@ Form=13
 
 [Text]
 
-Position=50,3090,330,3106
+Position=50,2910,330,2926
 
 Text=115.1 Other items included in the bill — Doctor's Professional Fee
 
@@ -16438,7 +12672,7 @@ Text=115.1 Other items included in the bill — Doctor's Professional Fee
 
 Name=Q1141_1_AMT
 
-Position=350,3117,760,3137
+Position=350,2937,760,2957
 
 Item=Q1141_1_AMT,PATIENTSURVEY_DICT
 
@@ -16450,7 +12684,7 @@ Form=13
 
 [Text]
 
-Position=50,3120,330,3136
+Position=50,2940,330,2956
 
 Text=115.1 Other items included in the bill — Doctor's Professional Fee (Amount in Pesos)
 
@@ -16462,7 +12696,7 @@ Text=115.1 Other items included in the bill — Doctor's Professional Fee (Amoun
 
 Name=Q1141_2
 
-Position=350,3147,365,3167
+Position=350,2967,365,2987
 
 Item=Q1141_2,PATIENTSURVEY_DICT
 
@@ -16474,7 +12708,7 @@ Form=13
 
 [Text]
 
-Position=50,3150,330,3166
+Position=50,2970,330,2986
 
 Text=115.1 Other items included in the bill — Medical equipment or supplies
 
@@ -16486,7 +12720,7 @@ Text=115.1 Other items included in the bill — Medical equipment or supplies
 
 Name=Q1141_2_AMT
 
-Position=350,3177,760,3197
+Position=350,2997,760,3017
 
 Item=Q1141_2_AMT,PATIENTSURVEY_DICT
 
@@ -16498,7 +12732,7 @@ Form=13
 
 [Text]
 
-Position=50,3180,330,3196
+Position=50,3000,330,3016
 
 Text=115.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)
 
@@ -16510,7 +12744,7 @@ Text=115.1 Other items included in the bill — Medical equipment or supplies (A
 
 Name=Q1141_3
 
-Position=350,3207,365,3227
+Position=350,3027,365,3047
 
 Item=Q1141_3,PATIENTSURVEY_DICT
 
@@ -16522,7 +12756,7 @@ Form=13
 
 [Text]
 
-Position=50,3210,330,3226
+Position=50,3030,330,3046
 
 Text=115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)
 
@@ -16534,7 +12768,7 @@ Text=115.1 Other items included in the bill — Non-medical expenses (e.g. Hygie
 
 Name=Q1141_3_AMT
 
-Position=350,3237,760,3257
+Position=350,3057,760,3077
 
 Item=Q1141_3_AMT,PATIENTSURVEY_DICT
 
@@ -16546,7 +12780,7 @@ Form=13
 
 [Text]
 
-Position=50,3240,330,3256
+Position=50,3060,330,3076
 
 Text=115.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)
 
@@ -16558,7 +12792,7 @@ Text=115.1 Other items included in the bill — Non-medical expenses (e.g. Hygie
 
 Name=Q1141_4
 
-Position=350,3267,365,3287
+Position=350,3087,365,3107
 
 Item=Q1141_4,PATIENTSURVEY_DICT
 
@@ -16570,7 +12804,7 @@ Form=13
 
 [Text]
 
-Position=50,3270,330,3286
+Position=50,3090,330,3106
 
 Text=115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility
 
@@ -16582,7 +12816,7 @@ Text=115.1 Other items included in the bill — Diagnostic or laboratory procedu
 
 Name=Q1141_4_AMT
 
-Position=350,3297,760,3317
+Position=350,3117,760,3137
 
 Item=Q1141_4_AMT,PATIENTSURVEY_DICT
 
@@ -16594,7 +12828,7 @@ Form=13
 
 [Text]
 
-Position=50,3300,330,3316
+Position=50,3120,330,3136
 
 Text=115.1 Other items included in the bill — Diagnostic or laboratory procedure inside the facility (Amount in Pesos)
 
@@ -16606,7 +12840,7 @@ Text=115.1 Other items included in the bill — Diagnostic or laboratory procedu
 
 Name=Q1141_5
 
-Position=350,3327,365,3347
+Position=350,3147,365,3167
 
 Item=Q1141_5,PATIENTSURVEY_DICT
 
@@ -16618,7 +12852,7 @@ Form=13
 
 [Text]
 
-Position=50,3330,330,3346
+Position=50,3150,330,3166
 
 Text=115.1 Other items included in the bill — Medicines or drugs inside the facility
 
@@ -16630,7 +12864,7 @@ Text=115.1 Other items included in the bill — Medicines or drugs inside the fa
 
 Name=Q1141_5_AMT
 
-Position=350,3357,760,3377
+Position=350,3177,760,3197
 
 Item=Q1141_5_AMT,PATIENTSURVEY_DICT
 
@@ -16642,7 +12876,7 @@ Form=13
 
 [Text]
 
-Position=50,3360,330,3376
+Position=50,3180,330,3196
 
 Text=115.1 Other items included in the bill — Medicines or drugs inside the facility (Amount in Pesos)
 
@@ -16654,7 +12888,7 @@ Text=115.1 Other items included in the bill — Medicines or drugs inside the fa
 
 Name=Q1141_6
 
-Position=350,3387,365,3407
+Position=350,3207,365,3227
 
 Item=Q1141_6,PATIENTSURVEY_DICT
 
@@ -16666,7 +12900,7 @@ Form=13
 
 [Text]
 
-Position=50,3390,330,3406
+Position=50,3210,330,3226
 
 Text=115.1 Other items included in the bill — Other expenses
 
@@ -16678,7 +12912,7 @@ Text=115.1 Other items included in the bill — Other expenses
 
 Name=Q1141_6_AMT
 
-Position=350,3417,760,3437
+Position=350,3237,760,3257
 
 Item=Q1141_6_AMT,PATIENTSURVEY_DICT
 
@@ -16690,7 +12924,7 @@ Form=13
 
 [Text]
 
-Position=50,3420,330,3436
+Position=50,3240,330,3256
 
 Text=115.1 Other items included in the bill — Other expenses (Amount in Pesos)
 
@@ -16702,7 +12936,7 @@ Text=115.1 Other items included in the bill — Other expenses (Amount in Pesos)
 
 Name=Q1141_OTHER_TXT
 
-Position=350,3447,760,3467
+Position=350,3267,760,3287
 
 Item=Q1141_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -16716,7 +12950,7 @@ Form=13
 
 [Text]
 
-Position=50,3450,330,3466
+Position=50,3270,330,3286
 
 Text=115.1 Other expenses — specify text
 
@@ -16728,7 +12962,7 @@ Text=115.1 Other expenses — specify text
 
 Name=Q1142_1
 
-Position=350,3477,365,3497
+Position=350,3297,365,3317
 
 Item=Q1142_1,PATIENTSURVEY_DICT
 
@@ -16740,7 +12974,7 @@ Form=13
 
 [Text]
 
-Position=50,3480,330,3496
+Position=50,3300,330,3316
 
 Text=115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility
 
@@ -16752,7 +12986,7 @@ Text=115.2 Other expenses during confinement not in bill — Medical equipment o
 
 Name=Q1142_1_AMT
 
-Position=350,3507,760,3527
+Position=350,3327,760,3347
 
 Item=Q1142_1_AMT,PATIENTSURVEY_DICT
 
@@ -16764,7 +12998,7 @@ Form=13
 
 [Text]
 
-Position=50,3510,330,3526
+Position=50,3330,330,3346
 
 Text=115.2 Other expenses during confinement not in bill — Medical equipment or supplies bought outside the facility (Amount in Pesos)
 
@@ -16776,7 +13010,7 @@ Text=115.2 Other expenses during confinement not in bill — Medical equipment o
 
 Name=Q1142_2
 
-Position=350,3537,365,3557
+Position=350,3357,365,3377
 
 Item=Q1142_2,PATIENTSURVEY_DICT
 
@@ -16788,7 +13022,7 @@ Form=13
 
 [Text]
 
-Position=50,3540,330,3556
+Position=50,3360,330,3376
 
 Text=115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary
 
@@ -16800,7 +13034,7 @@ Text=115.2 Other expenses during confinement not in bill — Payment made direct
 
 Name=Q1142_2_AMT
 
-Position=350,3567,760,3587
+Position=350,3387,760,3407
 
 Item=Q1142_2_AMT,PATIENTSURVEY_DICT
 
@@ -16812,7 +13046,7 @@ Form=13
 
 [Text]
 
-Position=50,3570,330,3586
+Position=50,3390,330,3406
 
 Text=115.2 Other expenses during confinement not in bill — Payment made directly to doctor/s and their secretary (Amount in Pesos)
 
@@ -16824,7 +13058,7 @@ Text=115.2 Other expenses during confinement not in bill — Payment made direct
 
 Name=Q1142_3
 
-Position=350,3597,365,3617
+Position=350,3417,365,3437
 
 Item=Q1142_3,PATIENTSURVEY_DICT
 
@@ -16836,7 +13070,7 @@ Form=13
 
 [Text]
 
-Position=50,3600,330,3616
+Position=50,3420,330,3436
 
 Text=115.2 Other expenses during confinement not in bill — Food
 
@@ -16848,7 +13082,7 @@ Text=115.2 Other expenses during confinement not in bill — Food
 
 Name=Q1142_3_AMT
 
-Position=350,3627,760,3647
+Position=350,3447,760,3467
 
 Item=Q1142_3_AMT,PATIENTSURVEY_DICT
 
@@ -16860,7 +13094,7 @@ Form=13
 
 [Text]
 
-Position=50,3630,330,3646
+Position=50,3450,330,3466
 
 Text=115.2 Other expenses during confinement not in bill — Food (Amount in Pesos)
 
@@ -16872,7 +13106,7 @@ Text=115.2 Other expenses during confinement not in bill — Food (Amount in Pes
 
 Name=Q1142_4
 
-Position=350,3657,365,3677
+Position=350,3477,365,3497
 
 Item=Q1142_4,PATIENTSURVEY_DICT
 
@@ -16884,7 +13118,7 @@ Form=13
 
 [Text]
 
-Position=50,3660,330,3676
+Position=50,3480,330,3496
 
 Text=115.2 Other expenses during confinement not in bill — Transportation
 
@@ -16896,7 +13130,7 @@ Text=115.2 Other expenses during confinement not in bill — Transportation
 
 Name=Q1142_4_AMT
 
-Position=350,3687,760,3707
+Position=350,3507,760,3527
 
 Item=Q1142_4_AMT,PATIENTSURVEY_DICT
 
@@ -16908,7 +13142,7 @@ Form=13
 
 [Text]
 
-Position=50,3690,330,3706
+Position=50,3510,330,3526
 
 Text=115.2 Other expenses during confinement not in bill — Transportation (Amount in Pesos)
 
@@ -16920,7 +13154,7 @@ Text=115.2 Other expenses during confinement not in bill — Transportation (Amo
 
 Name=Q1142_5
 
-Position=350,3717,365,3737
+Position=350,3537,365,3557
 
 Item=Q1142_5,PATIENTSURVEY_DICT
 
@@ -16932,7 +13166,7 @@ Form=13
 
 [Text]
 
-Position=50,3720,330,3736
+Position=50,3540,330,3556
 
 Text=115.2 Other expenses during confinement not in bill — Donation to the facility
 
@@ -16944,7 +13178,7 @@ Text=115.2 Other expenses during confinement not in bill — Donation to the fac
 
 Name=Q1142_5_AMT
 
-Position=350,3747,760,3767
+Position=350,3567,760,3587
 
 Item=Q1142_5_AMT,PATIENTSURVEY_DICT
 
@@ -16956,7 +13190,7 @@ Form=13
 
 [Text]
 
-Position=50,3750,330,3766
+Position=50,3570,330,3586
 
 Text=115.2 Other expenses during confinement not in bill — Donation to the facility (Amount in Pesos)
 
@@ -16968,7 +13202,7 @@ Text=115.2 Other expenses during confinement not in bill — Donation to the fac
 
 Name=Q1142_6
 
-Position=350,3777,365,3797
+Position=350,3597,365,3617
 
 Item=Q1142_6,PATIENTSURVEY_DICT
 
@@ -16980,7 +13214,7 @@ Form=13
 
 [Text]
 
-Position=50,3780,330,3796
+Position=50,3600,330,3616
 
 Text=115.2 Other expenses during confinement not in bill — Allowance for caregiver
 
@@ -16992,7 +13226,7 @@ Text=115.2 Other expenses during confinement not in bill — Allowance for careg
 
 Name=Q1142_6_AMT
 
-Position=350,3807,760,3827
+Position=350,3627,760,3647
 
 Item=Q1142_6_AMT,PATIENTSURVEY_DICT
 
@@ -17004,7 +13238,7 @@ Form=13
 
 [Text]
 
-Position=50,3810,330,3826
+Position=50,3630,330,3646
 
 Text=115.2 Other expenses during confinement not in bill — Allowance for caregiver (Amount in Pesos)
 
@@ -17016,7 +13250,7 @@ Text=115.2 Other expenses during confinement not in bill — Allowance for careg
 
 Name=Q1142_7
 
-Position=350,3837,365,3857
+Position=350,3657,365,3677
 
 Item=Q1142_7,PATIENTSURVEY_DICT
 
@@ -17028,7 +13262,7 @@ Form=13
 
 [Text]
 
-Position=50,3840,330,3856
+Position=50,3660,330,3676
 
 Text=115.2 Other expenses during confinement not in bill — Other (specify)
 
@@ -17040,7 +13274,7 @@ Text=115.2 Other expenses during confinement not in bill — Other (specify)
 
 Name=Q1142_7_AMT
 
-Position=350,3867,760,3887
+Position=350,3687,760,3707
 
 Item=Q1142_7_AMT,PATIENTSURVEY_DICT
 
@@ -17052,7 +13286,7 @@ Form=13
 
 [Text]
 
-Position=50,3870,330,3886
+Position=50,3690,330,3706
 
 Text=115.2 Other expenses during confinement not in bill — Other (specify) (Amount in Pesos)
 
@@ -17064,7 +13298,7 @@ Text=115.2 Other expenses during confinement not in bill — Other (specify) (Am
 
 Name=Q1142_OTHER_TXT
 
-Position=350,3897,760,3917
+Position=350,3717,760,3737
 
 Item=Q1142_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -17078,7 +13312,7 @@ Form=13
 
 [Text]
 
-Position=50,3900,330,3916
+Position=50,3720,330,3736
 
 Text=115.2 Other expenses — specify text
 
@@ -18356,7 +14590,7 @@ DisplayTogether=Yes
 
 Position=183
 
-Length=7
+Length=1
 
   
 
@@ -18368,7 +14602,7 @@ Label=Q114
 
 DisplayTogether=Yes
 
-Position=191
+Position=185
 
 Length=1
 
@@ -18382,7 +14616,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=193
+Position=187
 
 Length=1
 
@@ -18396,7 +14630,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=195
+Position=189
 
 Length=1
 
@@ -18410,7 +14644,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=197
+Position=191
 
 Length=1
 
@@ -18424,7 +14658,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=199
+Position=193
 
 Length=1
 
@@ -18438,7 +14672,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=201
+Position=195
 
 Length=1
 
@@ -18452,7 +14686,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=203
+Position=197
 
 Length=1
 
@@ -18466,7 +14700,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=205
+Position=199
 
 Length=1
 
@@ -18480,7 +14714,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=207
+Position=201
 
 Length=1
 
@@ -18494,7 +14728,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=209
+Position=203
 
 Length=1
 
@@ -18508,7 +14742,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=211
+Position=205
 
 Length=1
 
@@ -18522,7 +14756,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=213
+Position=207
 
 Length=1
 
@@ -18536,7 +14770,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=215
+Position=209
 
 Length=1
 
@@ -18550,7 +14784,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=217
+Position=211
 
 Length=1
 
@@ -18564,7 +14798,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=219
+Position=213
 
 Length=1
 
@@ -18578,7 +14812,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=221
+Position=215
 
 Length=1
 
@@ -18592,7 +14826,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=223
+Position=217
 
 Length=1
 
@@ -18606,7 +14840,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=225
+Position=219
 
 Length=1
 
@@ -18620,7 +14854,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=227
+Position=221
 
 Length=1
 
@@ -18634,7 +14868,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=229
+Position=223
 
 Length=1
 
@@ -18648,7 +14882,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=231
+Position=225
 
 Length=1
 
@@ -18662,7 +14896,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=233
+Position=227
 
 Length=1
 
@@ -18676,7 +14910,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=235
+Position=229
 
 Length=1
 
@@ -18690,7 +14924,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=237
+Position=231
 
 Length=1
 
@@ -18704,7 +14938,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=239
+Position=233
 
 Length=1
 
@@ -18718,7 +14952,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=241
+Position=235
 
 Length=1
 
@@ -18732,7 +14966,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=243
+Position=237
 
 Length=1
 
@@ -18746,7 +14980,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=245
+Position=239
 
 Length=1
 
@@ -18760,7 +14994,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=247
+Position=241
 
 Length=1
 
@@ -18774,7 +15008,7 @@ Label=Q115
 
 DisplayTogether=Yes
 
-Position=249
+Position=243
 
 Length=1
 
@@ -20278,13 +16512,13 @@ Text=Which medicine(s) do you take for the condition(s) selected above?
 
 [Field]
 
-Name=Q149_WHERE_BUY_O01
+Name=Q149_WHERE_BUY
 
 Position=350,207,365,227
 
-Item=Q149_WHERE_BUY_O01,PATIENTSURVEY_DICT
+Item=Q149_WHERE_BUY,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=16
 
@@ -20294,175 +16528,7 @@ Form=16
 
 Position=50,210,330,226
 
-Text=149. Where do you usually buy or receive your medicines? Select all that apply. — Public Hospital
-
- 
-
-  
-
-[Field]
-
-Name=Q149_WHERE_BUY_O02
-
-Position=350,237,365,257
-
-Item=Q149_WHERE_BUY_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,240,330,256
-
-Text=149. Where do you usually buy or receive your medicines? Select all that apply. — Private Hospital
-
- 
-
-  
-
-[Field]
-
-Name=Q149_WHERE_BUY_O03
-
-Position=350,267,365,287
-
-Item=Q149_WHERE_BUY_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,270,330,286
-
-Text=149. Where do you usually buy or receive your medicines? Select all that apply. — Chain Pharmacies (e.g. Mercury Drug, Watsons, TGP, Generika)
-
- 
-
-  
-
-[Field]
-
-Name=Q149_WHERE_BUY_O04
-
-Position=350,297,365,317
-
-Item=Q149_WHERE_BUY_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,300,330,316
-
-Text=149. Where do you usually buy or receive your medicines? Select all that apply. — Local pharmacies
-
- 
-
-  
-
-[Field]
-
-Name=Q149_WHERE_BUY_O05
-
-Position=350,327,365,347
-
-Item=Q149_WHERE_BUY_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,330,330,346
-
-Text=149. Where do you usually buy or receive your medicines? Select all that apply. — Online stores (e.g. Shopee, Lazada)
-
- 
-
-  
-
-[Field]
-
-Name=Q149_WHERE_BUY_O06
-
-Position=350,357,365,377
-
-Item=Q149_WHERE_BUY_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,360,330,376
-
-Text=149. Where do you usually buy or receive your medicines? Select all that apply. — Barangay Health Station
-
- 
-
-  
-
-[Field]
-
-Name=Q149_WHERE_BUY_O07
-
-Position=350,387,365,407
-
-Item=Q149_WHERE_BUY_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,390,330,406
-
-Text=149. Where do you usually buy or receive your medicines? Select all that apply. — Rural Health Unit or City Health Office
-
- 
-
-  
-
-[Field]
-
-Name=Q149_WHERE_BUY_O08
-
-Position=350,417,365,437
-
-Item=Q149_WHERE_BUY_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,420,330,436
-
-Text=149. Where do you usually buy or receive your medicines? Select all that apply. — Other (specify)
+Text=149. Where do you usually buy or receive your medicines? Select all that apply.
 
  
 
@@ -20472,7 +16538,7 @@ Text=149. Where do you usually buy or receive your medicines? Select all that ap
 
 Name=Q149_WHERE_BUY_OTHER_TXT
 
-Position=350,447,760,467
+Position=350,237,760,257
 
 Item=Q149_WHERE_BUY_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -20486,7 +16552,7 @@ Form=16
 
 [Text]
 
-Position=50,450,330,466
+Position=50,240,330,256
 
 Text=149. Where do you usually buy or receive your medicines? Select all that apply. — Other (specify) text
 
@@ -20498,7 +16564,7 @@ Text=149. Where do you usually buy or receive your medicines? Select all that ap
 
 Name=Q150_TRAVEL_HH
 
-Position=350,477,760,497
+Position=350,267,760,287
 
 Item=Q150_TRAVEL_HH,PATIENTSURVEY_DICT
 
@@ -20510,7 +16576,7 @@ Form=16
 
 [Text]
 
-Position=50,480,330,496
+Position=50,270,330,286
 
 Text=150. Travel time from home to nearest pharmacy — hours (HH)
 
@@ -20522,7 +16588,7 @@ Text=150. Travel time from home to nearest pharmacy — hours (HH)
 
 Name=Q150_TRAVEL_MM
 
-Position=350,507,760,527
+Position=350,297,760,317
 
 Item=Q150_TRAVEL_MM,PATIENTSURVEY_DICT
 
@@ -20534,7 +16600,7 @@ Form=16
 
 [Text]
 
-Position=50,510,330,526
+Position=50,300,330,316
 
 Text=150. Travel time from home to nearest pharmacy — minutes (MM)
 
@@ -20546,7 +16612,7 @@ Text=150. Travel time from home to nearest pharmacy — minutes (MM)
 
 Name=Q151_PHARM_EASE
 
-Position=350,537,365,557
+Position=350,327,365,347
 
 Item=Q151_PHARM_EASE,PATIENTSURVEY_DICT
 
@@ -20558,7 +16624,7 @@ Form=16
 
 [Text]
 
-Position=50,540,330,556
+Position=50,330,330,346
 
 Text=151. How easy is it for you to access a pharmacy or drugstore?
 
@@ -20570,7 +16636,7 @@ Text=151. How easy is it for you to access a pharmacy or drugstore?
 
 Name=Q152_GAMOT_HEARD
 
-Position=350,567,365,587
+Position=350,357,365,377
 
 Item=Q152_GAMOT_HEARD,PATIENTSURVEY_DICT
 
@@ -20582,7 +16648,7 @@ Form=16
 
 [Text]
 
-Position=50,570,330,586
+Position=50,360,330,376
 
 Text=152. Have you heard of the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's YAKAP/Konsulta or primary care benefit package?
 
@@ -20592,37 +16658,13 @@ Text=152. Have you heard of the Guaranteed and Accessible Medications for Outpat
 
 [Field]
 
-Name=Q153_GAMOT_SOURCE_O01
+Name=Q153_GAMOT_SOURCE
 
-Position=350,597,365,617
+Position=350,387,365,407
 
-Item=Q153_GAMOT_SOURCE_O01,PATIENTSURVEY_DICT
+Item=Q153_GAMOT_SOURCE,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,600,330,616
-
-Text=153. If yes, what are your sources of information for GAMOT Package? — News
-
- 
-
-  
-
-[Field]
-
-Name=Q153_GAMOT_SOURCE_O02
-
-Position=350,627,365,647
-
-Item=Q153_GAMOT_SOURCE_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=16
 
@@ -20630,153 +16672,9 @@ Form=16
 
 [Text]
 
-Position=50,630,330,646
+Position=50,390,330,406
 
-Text=153. If yes, what are your sources of information for GAMOT Package? — Legislation
-
- 
-
-  
-
-[Field]
-
-Name=Q153_GAMOT_SOURCE_O03
-
-Position=350,657,365,677
-
-Item=Q153_GAMOT_SOURCE_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,660,330,676
-
-Text=153. If yes, what are your sources of information for GAMOT Package? — Social Media
-
- 
-
-  
-
-[Field]
-
-Name=Q153_GAMOT_SOURCE_O04
-
-Position=350,687,365,707
-
-Item=Q153_GAMOT_SOURCE_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,690,330,706
-
-Text=153. If yes, what are your sources of information for GAMOT Package? — Friends / Family
-
- 
-
-  
-
-[Field]
-
-Name=Q153_GAMOT_SOURCE_O05
-
-Position=350,717,365,737
-
-Item=Q153_GAMOT_SOURCE_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,720,330,736
-
-Text=153. If yes, what are your sources of information for GAMOT Package? — Health center/facility
-
- 
-
-  
-
-[Field]
-
-Name=Q153_GAMOT_SOURCE_O06
-
-Position=350,747,365,767
-
-Item=Q153_GAMOT_SOURCE_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,750,330,766
-
-Text=153. If yes, what are your sources of information for GAMOT Package? — LGU/Barangay
-
- 
-
-  
-
-[Field]
-
-Name=Q153_GAMOT_SOURCE_O07
-
-Position=350,777,365,797
-
-Item=Q153_GAMOT_SOURCE_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,780,330,796
-
-Text=153. If yes, what are your sources of information for GAMOT Package? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q153_GAMOT_SOURCE_O08
-
-Position=350,807,365,827
-
-Item=Q153_GAMOT_SOURCE_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,810,330,826
-
-Text=153. If yes, what are your sources of information for GAMOT Package? — Other (Specify)
+Text=153. If yes, what are your sources of information for GAMOT Package?
 
  
 
@@ -20786,7 +16684,7 @@ Text=153. If yes, what are your sources of information for GAMOT Package? — Ot
 
 Name=Q153_GAMOT_SOURCE_OTHER_TXT
 
-Position=350,837,760,857
+Position=350,417,760,437
 
 Item=Q153_GAMOT_SOURCE_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -20800,7 +16698,7 @@ Form=16
 
 [Text]
 
-Position=50,840,330,856
+Position=50,420,330,436
 
 Text=153. If yes, what are your sources of information for GAMOT Package? — Other (specify) text
 
@@ -20810,37 +16708,13 @@ Text=153. If yes, what are your sources of information for GAMOT Package? — Ot
 
 [Field]
 
-Name=Q154_GAMOT_UNDERSTAND_O01
+Name=Q154_GAMOT_UNDERSTAND
 
-Position=350,867,365,887
+Position=350,447,365,467
 
-Item=Q154_GAMOT_UNDERSTAND_O01,PATIENTSURVEY_DICT
+Item=Q154_GAMOT_UNDERSTAND,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,870,330,886
-
-Text=154. What is your understanding of the GAMOT Package? — Provides free or affordable medicines for outpatients
-
- 
-
-  
-
-[Field]
-
-Name=Q154_GAMOT_UNDERSTAND_O02
-
-Position=350,897,365,917
-
-Item=Q154_GAMOT_UNDERSTAND_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=16
 
@@ -20848,105 +16722,9 @@ Form=16
 
 [Text]
 
-Position=50,900,330,916
+Position=50,450,330,466
 
-Text=154. What is your understanding of the GAMOT Package? — Ensures continuous availability of essential medicines
-
- 
-
-  
-
-[Field]
-
-Name=Q154_GAMOT_UNDERSTAND_O03
-
-Position=350,927,365,947
-
-Item=Q154_GAMOT_UNDERSTAND_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,930,330,946
-
-Text=154. What is your understanding of the GAMOT Package? — Helps reduce out-of-pocket expenses for medicines
-
- 
-
-  
-
-[Field]
-
-Name=Q154_GAMOT_UNDERSTAND_O04
-
-Position=350,957,365,977
-
-Item=Q154_GAMOT_UNDERSTAND_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,960,330,976
-
-Text=154. What is your understanding of the GAMOT Package? — Supports treatment of common illnesses and chronic conditions
-
- 
-
-  
-
-[Field]
-
-Name=Q154_GAMOT_UNDERSTAND_O05
-
-Position=350,987,365,1007
-
-Item=Q154_GAMOT_UNDERSTAND_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,990,330,1006
-
-Text=154. What is your understanding of the GAMOT Package? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q154_GAMOT_UNDERSTAND_O06
-
-Position=350,1017,365,1037
-
-Item=Q154_GAMOT_UNDERSTAND_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1020,330,1036
-
-Text=154. What is your understanding of the GAMOT Package? — Other (specify)
+Text=154. What is your understanding of the GAMOT Package?
 
  
 
@@ -20956,7 +16734,7 @@ Text=154. What is your understanding of the GAMOT Package? — Other (specify)
 
 Name=Q154_GAMOT_UNDERSTAND_OTHER_TXT
 
-Position=350,1047,760,1067
+Position=350,477,760,497
 
 Item=Q154_GAMOT_UNDERSTAND_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -20970,7 +16748,7 @@ Form=16
 
 [Text]
 
-Position=50,1050,330,1066
+Position=50,480,330,496
 
 Text=154. What is your understanding of the GAMOT Package? — Other (specify) text
 
@@ -20982,7 +16760,7 @@ Text=154. What is your understanding of the GAMOT Package? — Other (specify) t
 
 Name=Q155_GAMOT_GOT_MEDS
 
-Position=350,1077,365,1097
+Position=350,507,365,527
 
 Item=Q155_GAMOT_GOT_MEDS,PATIENTSURVEY_DICT
 
@@ -20994,7 +16772,7 @@ Form=16
 
 [Text]
 
-Position=50,1080,330,1096
+Position=50,510,330,526
 
 Text=155. Did you get the medicines from the GAMOT Package during the past 6 months?
 
@@ -21006,7 +16784,7 @@ Text=155. Did you get the medicines from the GAMOT Package during the past 6 mon
 
 Name=Q156_GAMOT_MEDS_LIST
 
-Position=350,1107,760,1127
+Position=350,537,760,557
 
 Item=Q156_GAMOT_MEDS_LIST,PATIENTSURVEY_DICT
 
@@ -21020,7 +16798,7 @@ Form=16
 
 [Text]
 
-Position=50,1110,330,1126
+Position=50,540,330,556
 
 Text=156. What are the medications that you obtained from the GAMOT Package? [LIST]
 
@@ -21030,37 +16808,13 @@ Text=156. What are the medications that you obtained from the GAMOT Package? [LI
 
 [Field]
 
-Name=Q157_WHERE_REST_O01
+Name=Q157_WHERE_REST
 
-Position=350,1137,365,1157
+Position=350,567,365,587
 
-Item=Q157_WHERE_REST_O01,PATIENTSURVEY_DICT
+Item=Q157_WHERE_REST,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1140,330,1156
-
-Text=157. Where did you get the rest of the medicines? Select all that apply. — Purchased from pharmacy
-
- 
-
-  
-
-[Field]
-
-Name=Q157_WHERE_REST_O02
-
-Position=350,1167,365,1187
-
-Item=Q157_WHERE_REST_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=16
 
@@ -21068,177 +16822,9 @@ Form=16
 
 [Text]
 
-Position=50,1170,330,1186
+Position=50,570,330,586
 
-Text=157. Where did you get the rest of the medicines? Select all that apply. — Purchased from public hospital
-
- 
-
-  
-
-[Field]
-
-Name=Q157_WHERE_REST_O03
-
-Position=350,1197,365,1217
-
-Item=Q157_WHERE_REST_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1200,330,1216
-
-Text=157. Where did you get the rest of the medicines? Select all that apply. — Purchased from private hospital
-
- 
-
-  
-
-[Field]
-
-Name=Q157_WHERE_REST_O04
-
-Position=350,1227,365,1247
-
-Item=Q157_WHERE_REST_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1230,330,1246
-
-Text=157. Where did you get the rest of the medicines? Select all that apply. — Purchased from primary care provider (PCP)
-
- 
-
-  
-
-[Field]
-
-Name=Q157_WHERE_REST_O05
-
-Position=350,1257,365,1277
-
-Item=Q157_WHERE_REST_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1260,330,1276
-
-Text=157. Where did you get the rest of the medicines? Select all that apply. — Received from PCP for free
-
- 
-
-  
-
-[Field]
-
-Name=Q157_WHERE_REST_O06
-
-Position=350,1287,365,1307
-
-Item=Q157_WHERE_REST_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1290,330,1306
-
-Text=157. Where did you get the rest of the medicines? Select all that apply. — Received from LGU for free
-
- 
-
-  
-
-[Field]
-
-Name=Q157_WHERE_REST_O07
-
-Position=350,1317,365,1337
-
-Item=Q157_WHERE_REST_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1320,330,1336
-
-Text=157. Where did you get the rest of the medicines? Select all that apply. — Received from public hospital for free
-
- 
-
-  
-
-[Field]
-
-Name=Q157_WHERE_REST_O08
-
-Position=350,1347,365,1367
-
-Item=Q157_WHERE_REST_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1350,330,1366
-
-Text=157. Where did you get the rest of the medicines? Select all that apply. — Received from private hospital for free
-
- 
-
-  
-
-[Field]
-
-Name=Q157_WHERE_REST_O09
-
-Position=350,1377,365,1397
-
-Item=Q157_WHERE_REST_O09,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1380,330,1396
-
-Text=157. Where did you get the rest of the medicines? Select all that apply. — Other (Specify)
+Text=157. Where did you get the rest of the medicines? Select all that apply.
 
  
 
@@ -21248,7 +16834,7 @@ Text=157. Where did you get the rest of the medicines? Select all that apply. �
 
 Name=Q157_WHERE_REST_OTHER_TXT
 
-Position=350,1407,760,1427
+Position=350,597,760,617
 
 Item=Q157_WHERE_REST_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -21262,7 +16848,7 @@ Form=16
 
 [Text]
 
-Position=50,1410,330,1426
+Position=50,600,330,616
 
 Text=157. Where did you get the rest of the medicines? Select all that apply. — Other (specify) text
 
@@ -21274,7 +16860,7 @@ Text=157. Where did you get the rest of the medicines? Select all that apply. �
 
 Name=Q158_BRAND_GEN_KNOW
 
-Position=350,1437,365,1457
+Position=350,627,365,647
 
 Item=Q158_BRAND_GEN_KNOW,PATIENTSURVEY_DICT
 
@@ -21286,7 +16872,7 @@ Form=16
 
 [Text]
 
-Position=50,1440,330,1456
+Position=50,630,330,646
 
 Text=158. Do you know the difference between a 'branded' and a 'generic' medicine?
 
@@ -21298,7 +16884,7 @@ Text=158. Do you know the difference between a 'branded' and a 'generic' medicin
 
 Name=Q159_BRAND_GEN_BOUGHT
 
-Position=350,1467,365,1487
+Position=350,657,365,677
 
 Item=Q159_BRAND_GEN_BOUGHT,PATIENTSURVEY_DICT
 
@@ -21310,7 +16896,7 @@ Form=16
 
 [Text]
 
-Position=50,1470,330,1486
+Position=50,660,330,676
 
 Text=159. Was/were the medicine/s you bought outside of GAMOT pharmacy branded or generic?
 
@@ -21320,37 +16906,13 @@ Text=159. Was/were the medicine/s you bought outside of GAMOT pharmacy branded o
 
 [Field]
 
-Name=Q160_WHY_GENERIC_O01
+Name=Q160_WHY_GENERIC
 
-Position=350,1497,365,1517
+Position=350,687,365,707
 
-Item=Q160_WHY_GENERIC_O01,PATIENTSURVEY_DICT
+Item=Q160_WHY_GENERIC,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1500,330,1516
-
-Text=160. If generic, why did you buy generic medicine? — Lower cost
-
- 
-
-  
-
-[Field]
-
-Name=Q160_WHY_GENERIC_O02
-
-Position=350,1527,365,1547
-
-Item=Q160_WHY_GENERIC_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=16
 
@@ -21358,129 +16920,9 @@ Form=16
 
 [Text]
 
-Position=50,1530,330,1546
+Position=50,690,330,706
 
-Text=160. If generic, why did you buy generic medicine? — Prescribed by doctor
-
- 
-
-  
-
-[Field]
-
-Name=Q160_WHY_GENERIC_O03
-
-Position=350,1557,365,1577
-
-Item=Q160_WHY_GENERIC_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1560,330,1576
-
-Text=160. If generic, why did you buy generic medicine? — Readily available
-
- 
-
-  
-
-[Field]
-
-Name=Q160_WHY_GENERIC_O04
-
-Position=350,1587,365,1607
-
-Item=Q160_WHY_GENERIC_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1590,330,1606
-
-Text=160. If generic, why did you buy generic medicine? — Given for free
-
- 
-
-  
-
-[Field]
-
-Name=Q160_WHY_GENERIC_O05
-
-Position=350,1617,365,1637
-
-Item=Q160_WHY_GENERIC_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1620,330,1636
-
-Text=160. If generic, why did you buy generic medicine? — More or as effective as branded medicine
-
- 
-
-  
-
-[Field]
-
-Name=Q160_WHY_GENERIC_O06
-
-Position=350,1647,365,1667
-
-Item=Q160_WHY_GENERIC_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1650,330,1666
-
-Text=160. If generic, why did you buy generic medicine? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q160_WHY_GENERIC_O07
-
-Position=350,1677,365,1697
-
-Item=Q160_WHY_GENERIC_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1680,330,1696
-
-Text=160. If generic, why did you buy generic medicine? — Other (Specify)
+Text=160. If generic, why did you buy generic medicine?
 
  
 
@@ -21490,7 +16932,7 @@ Text=160. If generic, why did you buy generic medicine? — Other (Specify)
 
 Name=Q160_WHY_GENERIC_OTHER_TXT
 
-Position=350,1707,760,1727
+Position=350,717,760,737
 
 Item=Q160_WHY_GENERIC_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -21504,7 +16946,7 @@ Form=16
 
 [Text]
 
-Position=50,1710,330,1726
+Position=50,720,330,736
 
 Text=160. If generic, why did you buy generic medicine? — Other (specify) text
 
@@ -21514,37 +16956,13 @@ Text=160. If generic, why did you buy generic medicine? — Other (specify) text
 
 [Field]
 
-Name=Q161_WHY_BRANDED_O01
+Name=Q161_WHY_BRANDED
 
-Position=350,1737,365,1757
+Position=350,747,365,767
 
-Item=Q161_WHY_BRANDED_O01,PATIENTSURVEY_DICT
+Item=Q161_WHY_BRANDED,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1740,330,1756
-
-Text=161. If branded, why did you buy branded medicine? — Branded medicine is more effective than generic
-
- 
-
-  
-
-[Field]
-
-Name=Q161_WHY_BRANDED_O02
-
-Position=350,1767,365,1787
-
-Item=Q161_WHY_BRANDED_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=16
 
@@ -21552,129 +16970,9 @@ Form=16
 
 [Text]
 
-Position=50,1770,330,1786
+Position=50,750,330,766
 
-Text=161. If branded, why did you buy branded medicine? — Not aware of generic option
-
- 
-
-  
-
-[Field]
-
-Name=Q161_WHY_BRANDED_O03
-
-Position=350,1797,365,1817
-
-Item=Q161_WHY_BRANDED_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1800,330,1816
-
-Text=161. If branded, why did you buy branded medicine? — Prescribed by doctor
-
- 
-
-  
-
-[Field]
-
-Name=Q161_WHY_BRANDED_O04
-
-Position=350,1827,365,1847
-
-Item=Q161_WHY_BRANDED_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1830,330,1846
-
-Text=161. If branded, why did you buy branded medicine? — Given for free
-
- 
-
-  
-
-[Field]
-
-Name=Q161_WHY_BRANDED_O05
-
-Position=350,1857,365,1877
-
-Item=Q161_WHY_BRANDED_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1860,330,1876
-
-Text=161. If branded, why did you buy branded medicine? — Prefer branded over generic option
-
- 
-
-  
-
-[Field]
-
-Name=Q161_WHY_BRANDED_O06
-
-Position=350,1887,365,1907
-
-Item=Q161_WHY_BRANDED_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1890,330,1906
-
-Text=161. If branded, why did you buy branded medicine? — I don't know
-
- 
-
-  
-
-[Field]
-
-Name=Q161_WHY_BRANDED_O07
-
-Position=350,1917,365,1937
-
-Item=Q161_WHY_BRANDED_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=16
-
-  
-
-[Text]
-
-Position=50,1920,330,1936
-
-Text=161. If branded, why did you buy branded medicine? — Other (Specify)
+Text=161. If branded, why did you buy branded medicine?
 
  
 
@@ -21684,7 +16982,7 @@ Text=161. If branded, why did you buy branded medicine? — Other (Specify)
 
 Name=Q161_WHY_BRANDED_OTHER_TXT
 
-Position=350,1947,760,1967
+Position=350,777,760,797
 
 Item=Q161_WHY_BRANDED_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -21698,7 +16996,7 @@ Form=16
 
 [Text]
 
-Position=50,1950,330,1966
+Position=50,780,330,796
 
 Text=161. If branded, why did you buy branded medicine? — Other (specify) text
 
@@ -21786,7 +17084,7 @@ DisplayTogether=Yes
 
 Position=11
 
-Length=8
+Length=1
 
   
 
@@ -21798,7 +17096,7 @@ Label=Q149
 
 DisplayTogether=Yes
 
-Position=20
+Position=13
 
 Length=1
 
@@ -21812,7 +17110,7 @@ Label=Q150-Q151
 
 DisplayTogether=Yes
 
-Position=22
+Position=15
 
 Length=3
 
@@ -21826,7 +17124,7 @@ Label=Q152
 
 DisplayTogether=Yes
 
-Position=26
+Position=19
 
 Length=1
 
@@ -21840,9 +17138,9 @@ Label=Q153
 
 DisplayTogether=Yes
 
-Position=28
+Position=21
 
-Length=8
+Length=1
 
   
 
@@ -21854,7 +17152,7 @@ Label=Q153
 
 DisplayTogether=Yes
 
-Position=37
+Position=23
 
 Length=1
 
@@ -21868,9 +17166,9 @@ Label=Q154
 
 DisplayTogether=Yes
 
-Position=39
+Position=25
 
-Length=6
+Length=1
 
   
 
@@ -21882,7 +17180,7 @@ Label=Q154
 
 DisplayTogether=Yes
 
-Position=46
+Position=27
 
 Length=1
 
@@ -21896,7 +17194,7 @@ Label=Q155
 
 DisplayTogether=Yes
 
-Position=48
+Position=29
 
 Length=1
 
@@ -21910,7 +17208,7 @@ Label=Q156
 
 DisplayTogether=Yes
 
-Position=50
+Position=31
 
 Length=1
 
@@ -21924,9 +17222,9 @@ Label=Q157
 
 DisplayTogether=Yes
 
-Position=52
+Position=33
 
-Length=9
+Length=1
 
   
 
@@ -21938,7 +17236,7 @@ Label=Q157
 
 DisplayTogether=Yes
 
-Position=62
+Position=35
 
 Length=1
 
@@ -21952,7 +17250,7 @@ Label=Q158
 
 DisplayTogether=Yes
 
-Position=64
+Position=37
 
 Length=1
 
@@ -21966,7 +17264,7 @@ Label=Q159
 
 DisplayTogether=Yes
 
-Position=66
+Position=39
 
 Length=1
 
@@ -21980,9 +17278,9 @@ Label=Q160
 
 DisplayTogether=Yes
 
-Position=68
+Position=41
 
-Length=7
+Length=1
 
   
 
@@ -21994,7 +17292,7 @@ Label=Q160
 
 DisplayTogether=Yes
 
-Position=76
+Position=43
 
 Length=1
 
@@ -22008,9 +17306,9 @@ Label=Q161
 
 DisplayTogether=Yes
 
-Position=78
+Position=45
 
-Length=7
+Length=1
 
   
 
@@ -22022,7 +17320,7 @@ Label=Q161
 
 DisplayTogether=Yes
 
-Position=86
+Position=47
 
 Length=1
 
@@ -22072,13 +17370,13 @@ Text=162. Based on your most recent visit/confinement at [facility_name_input], 
 
 [Field]
 
-Name=Q163_CARE_TYPE_O01
+Name=Q163_CARE_TYPE
 
 Position=350,57,365,77
 
-Item=Q163_CARE_TYPE_O01,PATIENTSURVEY_DICT
+Item=Q163_CARE_TYPE,PATIENTSURVEY_DICT
 
-DataCaptureType=RadioButton
+DataCaptureType=CheckBox
 
 Form=17
 
@@ -22088,271 +17386,7 @@ Form=17
 
 Position=50,60,330,76
 
-Text=163. What type of care was the referral for? — Outpatient care (Consultation, procedure, or treatment where the patient visits and leaves within the same day)
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O02
-
-Position=350,87,365,107
-
-Item=Q163_CARE_TYPE_O02,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,90,330,106
-
-Text=163. What type of care was the referral for? — Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O03
-
-Position=350,117,365,137
-
-Item=Q163_CARE_TYPE_O03,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,120,330,136
-
-Text=163. What type of care was the referral for? — Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O04
-
-Position=350,147,365,167
-
-Item=Q163_CARE_TYPE_O04,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,150,330,166
-
-Text=163. What type of care was the referral for? — Dental care (Medical care for your teeth, such as cleanings, fillings, etc.)
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O05
-
-Position=350,177,365,197
-
-Item=Q163_CARE_TYPE_O05,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,180,330,196
-
-Text=163. What type of care was the referral for? — Other facility visits (Care that is provided in a facility that is not a health center or hospital, such as independent diagnostic centers, TB dispensaries, etc.)
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O06
-
-Position=350,207,365,227
-
-Item=Q163_CARE_TYPE_O06,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,210,330,226
-
-Text=163. What type of care was the referral for? — Special therapy visits (Rehabilitation care or services, such as occupational therapy, physical therapy, psychological and behavioral rehabilitation, prosthetics and orthotics rehabilitation, or speech...
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O07
-
-Position=350,237,365,257
-
-Item=Q163_CARE_TYPE_O07,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,240,330,256
-
-Text=163. What type of care was the referral for? — Alternative care (Healthcare apart from medical doctors or the formal health care system; such as reflexology, acupuncture, massage therapy, herbal medicines, etc.)
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O08
-
-Position=350,267,365,287
-
-Item=Q163_CARE_TYPE_O08,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,270,330,286
-
-Text=163. What type of care was the referral for? — Outreach / medical missions (Care provided by the government or an NGO through an outreach or medical mission within a community)
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O09
-
-Position=350,297,365,317
-
-Item=Q163_CARE_TYPE_O09,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,300,330,316
-
-Text=163. What type of care was the referral for? — Home healthcare (Care that is administered at the patient's home, such as birth delivery, checkups, immunization, rehabilitation, etc.)
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O10
-
-Position=350,327,365,347
-
-Item=Q163_CARE_TYPE_O10,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,330,330,346
-
-Text=163. What type of care was the referral for? — Telemedicine (Remote diagnosis and treatment of patients by means of telecommunications technology)
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O11
-
-Position=350,357,365,377
-
-Item=Q163_CARE_TYPE_O11,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,360,330,376
-
-Text=163. What type of care was the referral for? — None of the above
-
- 
-
-  
-
-[Field]
-
-Name=Q163_CARE_TYPE_O12
-
-Position=350,387,365,407
-
-Item=Q163_CARE_TYPE_O12,PATIENTSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=17
-
-  
-
-[Text]
-
-Position=50,390,330,406
-
-Text=163. What type of care was the referral for? — Other (Specify)
+Text=163. What type of care was the referral for?
 
  
 
@@ -22362,7 +17396,7 @@ Text=163. What type of care was the referral for? — Other (Specify)
 
 Name=Q163_CARE_TYPE_OTHER_TXT
 
-Position=350,417,760,437
+Position=350,87,760,107
 
 Item=Q163_CARE_TYPE_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -22376,7 +17410,7 @@ Form=17
 
 [Text]
 
-Position=50,420,330,436
+Position=50,90,330,106
 
 Text=163. What type of care was the referral for? — Other (specify) text
 
@@ -22388,7 +17422,7 @@ Text=163. What type of care was the referral for? — Other (specify) text
 
 Name=Q164_SPECIALIST
 
-Position=350,447,365,467
+Position=350,117,365,137
 
 Item=Q164_SPECIALIST,PATIENTSURVEY_DICT
 
@@ -22400,7 +17434,7 @@ Form=17
 
 [Text]
 
-Position=50,450,330,466
+Position=50,120,330,136
 
 Text=164. What kind of specialist did they recommend?
 
@@ -22412,7 +17446,7 @@ Text=164. What kind of specialist did they recommend?
 
 Name=Q164_SPECIALIST_OTHER_TXT
 
-Position=350,477,760,497
+Position=350,147,760,167
 
 Item=Q164_SPECIALIST_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -22426,7 +17460,7 @@ Form=17
 
 [Text]
 
-Position=50,480,330,496
+Position=50,150,330,166
 
 Text=164. Specialist — Other (specify) text
 
@@ -22438,7 +17472,7 @@ Text=164. Specialist — Other (specify) text
 
 Name=Q165_HOW_REFERRED
 
-Position=350,507,365,527
+Position=350,177,365,197
 
 Item=Q165_HOW_REFERRED,PATIENTSURVEY_DICT
 
@@ -22450,7 +17484,7 @@ Form=17
 
 [Text]
 
-Position=50,510,330,526
+Position=50,180,330,196
 
 Text=165. How did they refer you to the doctor?
 
@@ -22462,7 +17496,7 @@ Text=165. How did they refer you to the doctor?
 
 Name=Q165_HOW_REFERRED_OTHER_TXT
 
-Position=350,537,760,557
+Position=350,207,760,227
 
 Item=Q165_HOW_REFERRED_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -22476,7 +17510,7 @@ Form=17
 
 [Text]
 
-Position=50,540,330,556
+Position=50,210,330,226
 
 Text=165. How referred — Other (specify) text
 
@@ -22488,7 +17522,7 @@ Text=165. How referred — Other (specify) text
 
 Name=Q166_DISCUSSED_OPTIONS
 
-Position=350,567,365,587
+Position=350,237,365,257
 
 Item=Q166_DISCUSSED_OPTIONS,PATIENTSURVEY_DICT
 
@@ -22500,7 +17534,7 @@ Form=17
 
 [Text]
 
-Position=50,570,330,586
+Position=50,240,330,256
 
 Text=166. Did they discuss with you the different places you could have gone to address your health problem?
 
@@ -22512,7 +17546,7 @@ Text=166. Did they discuss with you the different places you could have gone to 
 
 Name=Q167_HELPED_APPT
 
-Position=350,597,365,617
+Position=350,267,365,287
 
 Item=Q167_HELPED_APPT,PATIENTSURVEY_DICT
 
@@ -22524,7 +17558,7 @@ Form=17
 
 [Text]
 
-Position=50,600,330,616
+Position=50,270,330,286
 
 Text=167. Did they help you make the appointment for that visit?
 
@@ -22536,7 +17570,7 @@ Text=167. Did they help you make the appointment for that visit?
 
 Name=Q168_WROTE_INFO
 
-Position=350,627,365,647
+Position=350,297,365,317
 
 Item=Q168_WROTE_INFO,PATIENTSURVEY_DICT
 
@@ -22548,7 +17582,7 @@ Form=17
 
 [Text]
 
-Position=50,630,330,646
+Position=50,300,330,316
 
 Text=168. Did they write down any information for the specialist about the reason for that visit?
 
@@ -22560,7 +17594,7 @@ Text=168. Did they write down any information for the specialist about the reaso
 
 Name=Q169_VISITED
 
-Position=350,657,365,677
+Position=350,327,365,347
 
 Item=Q169_VISITED,PATIENTSURVEY_DICT
 
@@ -22572,7 +17606,7 @@ Form=17
 
 [Text]
 
-Position=50,660,330,676
+Position=50,330,330,346
 
 Text=169. Have you visited the referred hospital or facility after the referral was made?
 
@@ -22584,7 +17618,7 @@ Text=169. Have you visited the referred hospital or facility after the referral 
 
 Name=Q170_FOLLOWUP
 
-Position=350,687,365,707
+Position=350,357,365,377
 
 Item=Q170_FOLLOWUP,PATIENTSURVEY_DICT
 
@@ -22596,7 +17630,7 @@ Form=17
 
 [Text]
 
-Position=50,690,330,706
+Position=50,360,330,376
 
 Text=170. After your visit to the referral hospital/ specialist, did they follow up with you about what happened at the visit?
 
@@ -22608,7 +17642,7 @@ Text=170. After your visit to the referral hospital/ specialist, did they follow
 
 Name=Q171_WHY_NOT
 
-Position=350,717,365,737
+Position=350,387,365,407
 
 Item=Q171_WHY_NOT,PATIENTSURVEY_DICT
 
@@ -22620,7 +17654,7 @@ Form=17
 
 [Text]
 
-Position=50,720,330,736
+Position=50,390,330,406
 
 Text=171. Why are you NOT planning to visit?
 
@@ -22632,7 +17666,7 @@ Text=171. Why are you NOT planning to visit?
 
 Name=Q171_WHY_NOT_OTHER_TXT
 
-Position=350,747,760,767
+Position=350,417,760,437
 
 Item=Q171_WHY_NOT_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -22646,7 +17680,7 @@ Form=17
 
 [Text]
 
-Position=50,750,330,766
+Position=50,420,330,436
 
 Text=171. Why are you NOT planning to visit? — Other (specify) text
 
@@ -22658,7 +17692,7 @@ Text=171. Why are you NOT planning to visit? — Other (specify) text
 
 Name=Q172_PCP_REFERRAL
 
-Position=350,777,365,797
+Position=350,447,365,467
 
 Item=Q172_PCP_REFERRAL,PATIENTSURVEY_DICT
 
@@ -22670,7 +17704,7 @@ Form=17
 
 [Text]
 
-Position=50,780,330,796
+Position=50,450,330,466
 
 Text=172. Was the visit to [facility_name_input] a referral from your primary care facility?
 
@@ -22682,7 +17716,7 @@ Text=172. Was the visit to [facility_name_input] a referral from your primary ca
 
 Name=Q173_PCP_KNOWS
 
-Position=350,807,365,827
+Position=350,477,365,497
 
 Item=Q173_PCP_KNOWS,PATIENTSURVEY_DICT
 
@@ -22694,7 +17728,7 @@ Form=17
 
 [Text]
 
-Position=50,810,330,826
+Position=50,480,330,496
 
 Text=173. Does your primary care provider know that you made the visit?
 
@@ -22706,7 +17740,7 @@ Text=173. Does your primary care provider know that you made the visit?
 
 Name=Q174_PCP_DISCUSSED
 
-Position=350,837,365,857
+Position=350,507,365,527
 
 Item=Q174_PCP_DISCUSSED,PATIENTSURVEY_DICT
 
@@ -22718,7 +17752,7 @@ Form=17
 
 [Text]
 
-Position=50,840,330,856
+Position=50,510,330,526
 
 Text=174. Did your primary care provider discuss with you different places you could have gone to get help with your problem?
 
@@ -22730,7 +17764,7 @@ Text=174. Did your primary care provider discuss with you different places you c
 
 Name=Q175_PCP_HELPED_APPT
 
-Position=350,867,365,887
+Position=350,537,365,557
 
 Item=Q175_PCP_HELPED_APPT,PATIENTSURVEY_DICT
 
@@ -22742,7 +17776,7 @@ Form=17
 
 [Text]
 
-Position=50,870,330,886
+Position=50,540,330,556
 
 Text=175. Did your primary care provider (PCP) or someone working with your PCP help you make the appointment for that visit?
 
@@ -22754,7 +17788,7 @@ Text=175. Did your primary care provider (PCP) or someone working with your PCP 
 
 Name=Q176_PCP_WROTE_INFO
 
-Position=350,897,365,917
+Position=350,567,365,587
 
 Item=Q176_PCP_WROTE_INFO,PATIENTSURVEY_DICT
 
@@ -22766,7 +17800,7 @@ Form=17
 
 [Text]
 
-Position=50,900,330,916
+Position=50,570,330,586
 
 Text=176. Did your primary care provider write down any information for the specialist about the reason for that visit?
 
@@ -22778,7 +17812,7 @@ Text=176. Did your primary care provider write down any information for the spec
 
 Name=Q177_WHY_HOSPITAL
 
-Position=350,927,365,947
+Position=350,597,365,617
 
 Item=Q177_WHY_HOSPITAL,PATIENTSURVEY_DICT
 
@@ -22790,7 +17824,7 @@ Form=17
 
 [Text]
 
-Position=50,930,330,946
+Position=50,600,330,616
 
 Text=177. As it was not a referral, why did you decide to visit a hospital?
 
@@ -22802,7 +17836,7 @@ Text=177. As it was not a referral, why did you decide to visit a hospital?
 
 Name=Q177_WHY_HOSPITAL_OTHER_TXT
 
-Position=350,957,760,977
+Position=350,627,760,647
 
 Item=Q177_WHY_HOSPITAL_OTHER_TXT,PATIENTSURVEY_DICT
 
@@ -22816,7 +17850,7 @@ Form=17
 
 [Text]
 
-Position=50,960,330,976
+Position=50,630,330,646
 
 Text=177. As it was not a referral, why did you decide to visit a hospital? — Other (specify) text
 
@@ -22828,7 +17862,7 @@ Text=177. As it was not a referral, why did you decide to visit a hospital? — 
 
 Name=Q178_SAT_REFERRAL
 
-Position=350,987,365,1007
+Position=350,657,365,677
 
 Item=Q178_SAT_REFERRAL,PATIENTSURVEY_DICT
 
@@ -22840,7 +17874,7 @@ Form=17
 
 [Text]
 
-Position=50,990,330,1006
+Position=50,660,330,676
 
 Text=178. Overall, how would you rate your experience with the referral process?
 
@@ -22872,7 +17906,7 @@ DisplayTogether=Yes
 
 Position=2
 
-Length=12
+Length=1
 
   
 
@@ -22884,7 +17918,7 @@ Label=Q163
 
 DisplayTogether=Yes
 
-Position=15
+Position=4
 
 Length=1
 
@@ -22898,7 +17932,7 @@ Label=Q164
 
 DisplayTogether=Yes
 
-Position=17
+Position=6
 
 Length=1
 
@@ -22912,7 +17946,7 @@ Label=Q164
 
 DisplayTogether=Yes
 
-Position=19
+Position=8
 
 Length=1
 
@@ -22926,7 +17960,7 @@ Label=Q165
 
 DisplayTogether=Yes
 
-Position=21
+Position=10
 
 Length=1
 
@@ -22940,7 +17974,7 @@ Label=Q165
 
 DisplayTogether=Yes
 
-Position=23
+Position=12
 
 Length=1
 
@@ -22954,7 +17988,7 @@ Label=Q166-Q169
 
 DisplayTogether=Yes
 
-Position=25
+Position=14
 
 Length=4
 
@@ -22968,7 +18002,7 @@ Label=Q170
 
 DisplayTogether=Yes
 
-Position=30
+Position=19
 
 Length=1
 
@@ -22982,7 +18016,7 @@ Label=Q171
 
 DisplayTogether=Yes
 
-Position=32
+Position=21
 
 Length=1
 
@@ -22996,7 +18030,7 @@ Label=Q171
 
 DisplayTogether=Yes
 
-Position=34
+Position=23
 
 Length=1
 
@@ -23010,7 +18044,7 @@ Label=Q172
 
 DisplayTogether=Yes
 
-Position=36
+Position=25
 
 Length=1
 
@@ -23024,7 +18058,7 @@ Label=Q173-Q176
 
 DisplayTogether=Yes
 
-Position=38
+Position=27
 
 Length=4
 
@@ -23038,7 +18072,7 @@ Label=Q177
 
 DisplayTogether=Yes
 
-Position=43
+Position=32
 
 Length=1
 
@@ -23052,7 +18086,7 @@ Label=Q177
 
 DisplayTogether=Yes
 
-Position=45
+Position=34
 
 Length=1
 
@@ -23066,7 +18100,7 @@ Label=Q178
 
 DisplayTogether=Yes
 
-Position=47
+Position=36
 
 Length=1
 

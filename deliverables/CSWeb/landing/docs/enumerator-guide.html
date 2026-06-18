@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSEntry on Your Tablet — Enumerator Guide · UHC Survey Year 2</title>
+    <meta
+      name="description"
+      content="Step-by-step guide for field enumerators: installing CSEntry, connecting to the server, downloading the survey, running an interview, and syncing data. For the Facility Head (F1), Patient (F3), and Household (F4) instruments."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#006b3f" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23006b3f'/%3E%3Cpath d='M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z' fill='%23e5b23b'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/assets/docs.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="accent-bar"></div>
+
+    <div class="topbar">
+      <div class="container">
+        <div class="topbar-brand">
+          <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" rx="8" fill="#006b3f" />
+            <path
+              d="M11 26.5c2.6 2 5.2 3 7.8 3 2.4 0 3.8-1 3.8-2.6 0-1.6-1.3-2.3-4.4-3.1-3.9-1-6.6-2.4-6.6-5.9 0-3.3 2.7-5.6 6.8-5.6 2.4 0 4.6.6 6.6 1.8l-1.5 3.2c-1.8-1-3.5-1.5-5.2-1.5-2.1 0-3.2.9-3.2 2.2 0 1.5 1.4 2.1 4.4 2.9 4 1 6.6 2.5 6.6 6 0 3.5-2.8 6-7.4 6-3 0-5.9-1-8.4-2.9z"
+              fill="#e5b23b"
+            />
+          </svg>
+          <div>
+            <div class="topbar-org">UHC Survey Year 2</div>
+            <div class="topbar-sub">Enumerator guide · CSEntry</div>
+          </div>
+        </div>
+        <a class="home-link" href="/help.html">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M19 12H6M11 6l-6 6 6 6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Back to help
+        </a>
+      </div>
+    </div>
+
+    <main id="main">
+      <div class="container">
+        <p class="page-eyebrow">For field enumerators · F1 · F3 · F4</p>
+        <h1>CSEntry on your tablet — a step-by-step guide</h1>
+        <p class="lede">
+          A plain-language walkthrough of using the CSEntry app to collect the
+          DOH UHC Year 2 survey on an Android tablet. No technical background
+          needed — follow the steps in order.
+        </p>
+        <p class="banner">
+          Illustrated screenshots for each step are being added. The written
+          steps below are complete and current.
+        </p>
+
+        <article>
+          <section>
+            <h2>Before you start</h2>
+            <ul>
+              <li>An Android tablet issued by the field team (charged, with mobile data or Wi-Fi).</li>
+              <li>The <strong>CSEntry</strong> app installed (Step 1).</li>
+              <li>Your <strong>sync username and password</strong> — given by your supervisor; keep it private.</li>
+              <li>
+                The CSWeb server address:
+                <code>csweb.asiansocial.org/csweb</code>.
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>1. Installing CSEntry (one time)</h2>
+            <ol>
+              <li>Open the <strong>Google Play Store</strong>.</li>
+              <li>Search <strong>“CSEntry”</strong> (by the U.S. Census Bureau).</li>
+              <li>Tap <strong>Install</strong>, wait for it to finish, then <strong>Open</strong>.</li>
+            </ol>
+            <figure>
+              <img
+                src="/docs/img/01-csentry-terms-of-service.png"
+                alt="CSEntry first-launch Terms of Service screen with an Accept button"
+                loading="lazy"
+              />
+              <figcaption>
+                On first launch, CSEntry shows the Terms of Service — tap
+                <strong>Accept</strong>, then <strong>Allow</strong> the
+                location, camera, and storage permissions when prompted.
+              </figcaption>
+            </figure>
+            <figure>
+              <img
+                src="/docs/img/02-csentry-home-no-apps.png"
+                alt="The CSEntry home screen before any survey is added, reading 'There are no applications on your device'"
+                loading="lazy"
+              />
+              <figcaption>
+                The CSEntry home before any survey is added. You’ll add yours in
+                Steps 2–3.
+              </figcaption>
+            </figure>
+            <div class="callout">
+              If your tablet was pre-configured by the field team, CSEntry may
+              already be installed — skip to Step 2.
+            </div>
+          </section>
+
+          <section>
+            <h2>2. Connecting your tablet to the survey server (one time)</h2>
+            <p>This tells CSEntry where to download the survey from.</p>
+            <ol>
+              <li>In CSEntry, open the menu (☰) → <strong>Sync</strong> → <strong>Add server</strong> (or <strong>CSWeb settings</strong>).</li>
+              <li>Server URL: type <code>https://csweb.asiansocial.org/csweb</code>.</li>
+              <li>Enter your <strong>username</strong> and <strong>password</strong>.</li>
+              <li>Tap <strong>Save / Connect</strong>. A success message confirms the connection.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2>3. Downloading the survey (sync down)</h2>
+            <ol>
+              <li>Menu (☰) → <strong>Sync</strong>.</li>
+              <li>Choose the survey you’re assigned to: <strong>Facility Head (F1)</strong>, <strong>Patient (F3)</strong>, or <strong>Household (F4)</strong>.</li>
+              <li>Tap <strong>Get Application / Download</strong>. CSEntry downloads the questionnaire.</li>
+              <li>When it finishes, the survey appears on your CSEntry home screen.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2>4. Choosing your language</h2>
+            <p>
+              The survey runs in <strong>English</strong> plus the local dialects
+              that have been translated (Cebuano, Bisaya, Waray, Bicolano — and
+              Hiligaynon for F1). You can switch any time during an interview.
+            </p>
+            <ol>
+              <li>Open the survey → menu → <strong>Language</strong>.</li>
+              <li>Pick the language you’ll use with this respondent.</li>
+            </ol>
+            <div class="callout">
+              If a question hasn’t been translated yet, it shows in
+              <strong>English</strong> — that’s expected; just read it as-is.
+            </div>
+          </section>
+
+          <section>
+            <h2>5. Starting a new interview (a “case”)</h2>
+            <ol>
+              <li>On the survey home, tap <strong>Add / New case</strong>.</li>
+              <li>
+                Fill the <strong>ID block</strong> in order — these identify the
+                facility and the interview:
+                <code>Region → Province/HUC → City/Municipality → Facility No. → Case sequence</code>.
+                Each choice narrows the next (pick a region and only its
+                provinces appear — the <strong>PSGC cascade</strong>).
+              </li>
+            </ol>
+          </section>
+
+          <section>
+            <h2>6. Answering questions &amp; how the app moves</h2>
+            <ul>
+              <li><strong>One question per screen.</strong> Tap your answer (or type a number), then <strong>Next (→)</strong> to continue.</li>
+              <li><strong>Back (←)</strong> returns to the previous question if you need to fix an answer.</li>
+              <li><strong>Skip logic is automatic:</strong> the app only shows questions that apply. If a question is skipped, that’s correct — don’t worry that you “missed” it.</li>
+              <li><strong>Single-choice</strong> = pick one. <strong>Multi-choice</strong> = tap all that apply, then Next.</li>
+              <li><strong>“None of the above” / “I don’t know”</strong> behave specially on some questions (they clear other choices).</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>7. Special screens you’ll meet</h2>
+            <ul>
+              <li><strong>Consent:</strong> if the respondent declines, choose the refuse option — the app ends the interview cleanly.</li>
+              <li><strong>GPS:</strong> at the facility, the app captures location automatically — allow it a moment to get a fix.</li>
+              <li><strong>Photo (F1):</strong> take the verification photo when prompted.</li>
+              <li><strong>Roster (F4 Household):</strong> add one row per household member; you can edit or remove members.</li>
+              <li><strong>Expenditure grid (F4):</strong> enter the peso amounts in each box.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>8. When the app warns you</h2>
+            <ul>
+              <li><strong>Soft warning</strong> (yellow): the value looks unusual — check it; you <em>can</em> continue if it’s correct.</li>
+              <li><strong>Hard stop</strong> (red): the value isn’t allowed (e.g., age out of range) — you must fix it to continue.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>9. Pausing &amp; resuming</h2>
+            <ul>
+              <li>CSEntry <strong>auto-saves</strong> as you go. To stop mid-interview, just go <strong>Back</strong> to the case list — your answers are kept.</li>
+              <li>To resume: open the survey, tap the <strong>partial case</strong>, and continue where you left off.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>10. Finishing an interview</h2>
+            <ol>
+              <li>Answer the last question → the app asks to <strong>save</strong> the case.</li>
+              <li>Confirm the <strong>disposition</strong> (completed / refused / etc.) if prompted.</li>
+              <li>The case is now marked done on your case list.</li>
+            </ol>
+          </section>
+
+          <section>
+            <h2>11. Sending your work to the server (sync up) — do this daily</h2>
+            <ol>
+              <li>Connect to Wi-Fi or mobile data.</li>
+              <li>Menu (☰) → <strong>Sync</strong> → <strong>Send data / Upload</strong>.</li>
+              <li>Wait for “sync complete.” Your completed cases are now safely on the server.</li>
+            </ol>
+            <div class="callout">
+              <strong>Why daily:</strong> syncing backs up your work and lets
+              supervisors see progress. If your tablet is lost or breaks,
+              anything you’ve synced is safe.
+            </div>
+          </section>
+
+          <section>
+            <h2>12. If something goes wrong</h2>
+            <table>
+              <thead>
+                <tr><th>Problem</th><th>What to do</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Sync fails / “cannot reach server”</td>
+                  <td>Check internet; confirm the server URL <code>csweb.asiansocial.org/csweb</code>; try again. Your data is safe locally meanwhile.</td>
+                </tr>
+                <tr>
+                  <td>Forgot password</td>
+                  <td>Contact your supervisor — don’t share or guess.</td>
+                </tr>
+                <tr>
+                  <td>GPS won’t get a fix</td>
+                  <td>Step outside / near a window; wait 30–60 seconds; allow location permission.</td>
+                </tr>
+                <tr>
+                  <td>App froze</td>
+                  <td>Close and reopen CSEntry — auto-saved answers are kept.</td>
+                </tr>
+                <tr>
+                  <td>Wrong language</td>
+                  <td>Menu → Language → switch.</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section>
+            <h2>Do’s and don’ts</h2>
+            <div class="dd-grid">
+              <div class="col">
+                <h3>Do</h3>
+                <ul>
+                  <li>Sync up at the end of every day.</li>
+                  <li>Keep your login private.</li>
+                  <li>Trust the skip logic.</li>
+                </ul>
+              </div>
+              <div class="col">
+                <h3>Don’t</h3>
+                <ul>
+                  <li>Don’t share the tablet login.</li>
+                  <li>Don’t force answers past a red hard-stop.</li>
+                  <li>Don’t delete a case unless your supervisor says so.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p class="foot-org">
+          Asian Social Project Services, Inc. (ASPSI) — for the Department of
+          Health (DOH)
+        </p>
+        <p class="foot-meta">
+          UHC Survey Year 2 · Enumerator guide
+          <span class="dot">·</span>
+          <a href="/help.html">Help</a>
+          <span class="dot">·</span>
+          <a href="/">Home</a>
+          <span class="dot">·</span>
+          &copy; 2026
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

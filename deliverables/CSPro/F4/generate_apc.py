@@ -437,10 +437,12 @@ CHECKBOX_BASES = {
     "Q127_NBB_SOURCE", "Q128_NBB_UNDERSTAND", "Q133_ZBB_SOURCE", "Q134_ZBB_UNDERSTAND",
     "Q137_MAIFIP_SOURCE",
     "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill select_all -> Check Box
+    "Q196_FOREGONE",   # #638 Section O foregone-care select_all -> Check Box
     # #577-585/#588/#590-591: 10 more 'Household Survey' select_all -> Check Box (tick-all)
     "Q74_WHERE_REST", "Q77_WHY_GENERIC", "Q78_WHY_BRANDED", "Q82_DIFFICULTY_REASONS",
     "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
     "Q107_OTHER_ACTIONS", "Q109_TYPE",
+    "Q202_WORRY_REASONS",   # #668 Section Q finance-worry reasons select_all -> Check Box
 }
 
 CHECKBOX_CONVERT = [
@@ -452,7 +454,7 @@ CHECKBOX_CONVERT = [
     ("Q58_BUCAS_SOURCE",         True,  True,  None),   # 'I don't know' (90); 'Other (Specify)' (99)
     ("Q59_BUCAS_UNDERSTAND",     True,  False, None),   # no None/IDK option; 'Other (specify)' (99)
     ("Q61_BUCAS_SERVICES",       True,  True,  None),   # #570: 'I don't know' (90) exclusive; 'Other (specify)' (99)
-    ("Q65_CONDITIONS",           True,  False, None),   # #571: no 90-coded exclusive — 'No condition - Regular check-up only' stays an 01.. option (mirrors F3 Q46/Q85); 'Other (Specify)' (99) [the substantive 'Other infection' is now an 01.. option, no longer colliding on 99 — see _cb_codes fix]
+    ("Q65_CONDITIONS",           True,  True,  None),   # #642: 'No condition - Regular check-up only' is now 90-coded exclusive (was an ordinary option, tickable alongside real conditions — tester FAIL); soft-warn if combined with others. 'Other (Specify)' (99); substantive 'Other infection' stays 01.. (see _cb_codes 'specif' fix)
     ("Q66_WHERE_BUY",            True,  False, None),   # #568: no None/IDK option; 'Other (specify)' (99)
     ("Q85_BENEFITS",             True,  True,  None),   # 'I don't know' (90) exclusive ('no benefits to being a member' stays an 01.. option, mirroring F3 Q46); 'Other (Specify)' (99)
     ("Q91_WHY_WENT",             True,  False, None),   # no None/IDK option; 'Other (Specify)' (99)
@@ -488,6 +490,8 @@ CHECKBOX_CONVERT = [
     ("Q109_TYPE",                True,  True,  None),   # #588: 'None of the above' (11->90) exclusive; 'Other (Specify)' (12->99)
     ("Q141_BILL_ITEMS",          False, False, None),   # #615: 'Other expenses' (07) is NOT a 'specif' option (no 99 gate); ungated Q141_BILL_ITEMS_OTHER_TXT kept as plain alpha
     ("Q143_HOW_PAID",            True,  False, None),   # #616: 'Other (Specify)' (10->99); no None/IDK exclusive; reached via Q142=Yes (Q142=No skips to Q144)
+    ("Q196_FOREGONE",            True,  False, None),   # #638: 'Other (please specify)' (99); 'We do not forego care' (07) stays ordinary (no 90 exclusive). Reached only when Q195=None (#637 skip routes other Q195 answers to Q197)
+    ("Q202_WORRY_REASONS",       False, False, None),   # #668: 3 reasons, no Other / no None-IDK -> plain tick-all
 ]
 
 
@@ -511,10 +515,18 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
                  f'only choice - please review the options ticked.");',
                  "  endif;"]
     if postproc_tail:
-        body += [postproc_tail]
+        if has_other:
+            # #656: don't let the tail skip jump PAST the Other-specify box. When
+            # 'Other' is ticked, the base field must fall through to the _OTHER_TXT box
+            # (which re-runs the same tail after capturing the text); otherwise the
+            # unconditional skip fires first and the specify box never appears. Guard
+            # the base tail on 'Other' NOT ticked.
+            body += [f'  if pos("99", {base}) = 0 then', postproc_tail, "  endif;"]
+        else:
+            body += [postproc_tail]
     procs = {base: "\n".join(body)}
     if has_other:
-        procs[f"{base}_OTHER_TXT"] = (
+        other_body = (
             f"PROC {base}_OTHER_TXT\npreproc\n"
             f'  if pos("99", {base}) = 0 then\n'
             f'    {base}_OTHER_TXT = "";   {{ gated: \'Other (specify)\' not ticked -> not enterable }}\n'
@@ -523,6 +535,9 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
             f'    errmsg("\'Other (specify)\' was ticked for Q{qn} - please specify.");\n'
             "    reenter;\n  endif;"
         )
+        if postproc_tail:
+            other_body += "\n" + postproc_tail   # #656: continue to the tail target after Other text
+        procs[f"{base}_OTHER_TXT"] = other_body
     return procs
 
 
@@ -692,7 +707,10 @@ SKIP_RULES = [
     # Section I primary-care routing
     ("Q89_HAS_USUAL_FACILITY","Q89_HAS_USUAL_FACILITY = 2", "Q93_WHY_NOT"),       # #529: Q93 is now a Check Box base (was _O01)
     ("Q90_IS_USUAL_FOR_GENERAL","Q90_IS_USUAL_FOR_GENERAL = 1","Q94_TRANSPORT"),  # #529: Q94 is now a Check Box base (was _O01)
-    ("Q97_KNOWS_BOOKING",    "Q97_KNOWS_BOOKING = 2",       "Q100_LEAVE_WORK_SCHOOL"),
+    # #654: REMOVED the Q97=No -> Q100 skip. Q97 ("do you know how to book/access care")
+    # is independent of Q98/Q99 (phone-advice availability when the facility is open/closed);
+    # the paper shows no skip, so Q98/Q99 must be asked regardless of Q97. (Tester confirmed
+    # against the paper questionnaire.)
     # Section J — Health-Seeking Behavior (Q101-Q107). #544: Q105 "forgone care" = No
     # means there was no forgone care, so Q106 "why did you forgo" is N/A -> skip it to
     # Q107 (other actions). Spec (generate_dcf Section J): "Q105 No -> Q107 (bypass Q106)".
@@ -729,6 +747,11 @@ SKIP_RULES = [
     ("Q136_MAIFIP_HEARD",    "Q136_MAIFIP_HEARD = 2 or Q136_MAIFIP_HEARD = 3", "Q138_MOST_EXPENSIVE"),
     ("Q140_RECALL_BREAKDOWN","Q140_RECALL_BREAKDOWN = 2",   "Q142_RECALL_PAYMENT"),    # no breakdown -> skip Q141/Q141.1
     ("Q142_RECALL_PAYMENT",  "Q142_RECALL_PAYMENT = 2",     "Q144_CEREALS_CONSUMED"),  # no payment -> skip Q143 -> Section N
+    # Section O #637: Q195 = any willing-to-set-aside answer (Less than 1%/1-3%/4-6%/
+    # More than 6%/Don't know = codes 2-6) bypasses Q196 (the "what care would you
+    # forego" item) -> Q197. Only Q195 = "None" (1) falls through to Q196. (Already
+    # documented in generate_dcf Section O comment; the routing skip was missing.)
+    ("Q195_INCOME_PCT",      "Q195_INCOME_PCT <> 1",        "Q197_DELAYED_CARE"),
 ]
 
 BILL_VALIDATION = """\
@@ -786,7 +809,11 @@ def dcf_items_map():
 # non-food) sit between the food and 12-month-health panels and must be excluded.
 SUBTOTAL_PANELS = {
     "Q157_FOOD_SUBTOTAL_TOTAL_PHP":       (144, 156),
-    "Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP": (173, 176),
+    # #633: Q177 = "Total value of 175 and 176" per the questionnaire's own Q177 text
+    # + tester. Q173 (Health insurance) and Q174 (Other insurance) are NOT part of this
+    # 12-month health subtotal — they're standalone insurance items. (Spec doc line 550's
+    # "Q173..Q176" was a transcription error; the rendered Q177 label is authoritative.)
+    "Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP": (175, 176),
     "Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP":  (178, 181),
     "Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP":  (183, 184),
 }

@@ -1,0 +1,388 @@
+# F1 — Facility Head Survey — Complete Question List
+
+Every question the deployed app asks, in order, grouped by section — generated directly from the CSPro data dictionary so it matches the live instrument exactly. Question numbers follow the official questionnaire.
+
+## Field Control
+
+- **Survey Team Leader's Name**  _(text)_
+- **Enumerator's Name**  _(text)_
+- **Field Validated by**  _(text)_
+- **Field Edited by**  _(text)_
+- **Date First Visited the Facility (YYYYMMDD)**  _(number)_
+- **Date of Final Visit to the Facility (YYYYMMDD)**  _(number)_
+- **Total Number of Visits**  _(number)_
+- **Result of First Visit**  _(select one)_
+  - Completed · Postponed · Refused · Incomplete
+- **Result of Final Visit**  _(select one)_
+  - Completed · Postponed · Refused · Incomplete
+- **Language used for the interview**  _(text)_
+- **Region Code (PSGC)**  _(number)_
+- **Province / HUC Code (PSGC)**  _(number)_
+- **City / Municipality Code (PSGC)**  _(number)_
+- **Facility Number (within municipality)**  _(number)_
+- **Case Sequence (per-facility, per-instrument)**  _(number)_
+- **Region (from PSGC)**  _(text)_
+- **Province / HUC (from PSGC)**  _(text)_
+- **City / Municipality (from PSGC)**  _(text)_
+
+## Health Facility and Geographic Identification
+
+- **Classification**  _(select one)_
+  - UHC IS · Non-UHC IS
+- **Region**  _(select one)_
+  - (set at runtime)
+- **Province / HUC**  _(select one)_
+  - (set at runtime)
+- **City / Municipality**  _(select one)_
+  - (set at runtime)
+- **Barangay**  _(select one)_
+  - (set at runtime)
+- **Facility Name**  _(text)_
+- **Facility Address**  _(text)_
+
+## Facility GPS and Verification Photo
+
+- **GPS Latitude**  _(text)_
+- **GPS Longitude**  _(text)_
+- **GPS Altitude (m)**  _(text)_
+- **GPS Accuracy (m)**  _(number)_
+- **GPS Satellites**  _(number)_
+- **GPS Read Time (UTC)**  _(text)_
+- **Verification Photo Filename**  _(text)_
+- **Take Verification Photo**  _(select one)_
+  - Take verification photo
+
+## A. Facility Head Profile
+
+- **Respondent name and signature**  _(text)_
+- **Respondent position / office**  _(text)_
+- **Respondent email address**  _(text)_
+- **Respondent mobile number**  _(text)_
+- **1. What is your name? (Last Name, First Name, Middle Initial, Ext)**  _(text)_
+- **2. What is your official designation at this health facility?**  _(select one)_
+  - Rural / Urban Health Unit Head · Physician · Chief of Hospital · Medical Director · Hospital Administrator · Nurse · Municipal / City Health Officer · Medical Officer · Administrative Officer / Assistant · Midwife · Health Promotion / Nutrition Officer
+- **3. How old are you (in years), as of your last birthday?**  _(number)_
+- **4. What is your sex assigned at birth?**  _(select one)_
+  - Male · Female
+- **5. In your current position, how many months/years have you worked at this health facility? Number of Years**  _(number)_
+- **6. How many years have you worked in health-related position? Number of Years**  _(number)_
+
+## B. Facility Profile
+
+- **7. What type of ownership is this hospital?**  _(select one)_
+  - Public · Private
+- **8. What is the facility's service capacity level?**  _(select one)_
+  - Primary Care Facility · Level 1 Hospital · Level 2 Hospital · Level 3 Hospital
+
+## C. Universal Health Care (UHC) Implementation
+
+- **9. Have you heard about Universal Health Care (UHC) prior to this survey?**  _(select one)_
+  - Yes · No
+- **10. Does the facility have primary care packages?**  _(select one)_
+  - Yes · No
+- **11. If yes, specify its implementation status relative to the UHC Act.**  _(select one)_
+  - Implemented as a direct result of the UHC Act (i.e. YAKAP/Konsulta) · Pre-existing prior to UHC but subsequently enhanced or expanded due to UHC Act · Newly implemented or improved independent of UHC Act · Not yet implemented but planned within the next 1-2 years · Other (specify) · I don't know · Not applicable
+- **12. Has the facility applied for DOH primary care licensing since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **13. Do you have a public health unit at this facility?**  _(select one)_
+  - Yes · No · Not applicable
+- **14. If yes, has the creation of a public health unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **15. What is the main role of the public health unit?**  _(select one)_
+  - Health promotion and education · Disease surveillance report · Referral and patient navigation · Alignment with national public health programs · Other (specify) · I don't know · Not applicable
+- **16. Do you have a health promotion unit at this facility?**  _(select one)_
+  - Yes · No · Not applicable
+- **17. If yes, has the creation of a health promotion unit at this facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **18. What is the main role of the health promotion unit?**  _(select one)_
+  - Leading health education and awareness campaigns · Conducting and coordinating health screening and promotion · Advocacy and policy formation · Resource mobilization and fundraising · Other (specify) · I don't know
+- **19. Has the establishment of new roles in the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **20. What is/are the new role/s established in this facility?**  _(text)_
+- **21. Has the establishment of new departments in the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **22. What is/are the new department/s established in this facility?**  _(text)_
+- **23. Has the construction of new building/s in this health facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **24. What is/are the building/s being used for?**  _(text)_
+- **25. Has the construction of new rooms in this health facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **26. What are the rooms being used for?**  _(text)_
+- **27. Has the increase in equipment been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **28. If there was an increase in equipment, what are these pieces of equipment?**  _(text)_
+- **29. Has the increase in supplies been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **30. If there was an increase in supplies, what are these?**  _(text)_
+- **31. Has the use of electronic medical records at the facility been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **32. Does your facility currently submit health and financial data to the DOH Information System and/or the PhilHealth Dashboard?**  _(select one)_
+  - Yes, to DOH Information System only · Yes, to PhilHealth Dashboard only · Yes, to both DOH Information System and PhilHealth Dashboard · No, we are not submitting these data
+- **33. If yes, how frequent has your facility submit these data?**  _(select one)_
+  - Weekly · Monthly · Quarterly · Semi-annually · Annually · Other (specify)
+- **34. Which of the submitted reports are actually used for decision-making?**  _(select all that apply)_
+  - OPD/IPD census and morbidity reports · Maternal, newborn, child, and adolescent health (MNCAH) reports · Notifiable diseases / surveillance reports · Expenditure and budget utilization reports · PhilHealth claims and reimbursement reports · YAKAP/Konsulta utilization reports · NBB compliance reports · ZBB compliance / monitoring reports · HRH staffing and deployment reports · Medicines availability and stock status reports · Facility performance scorecards / quality reports · Other (specify)
+- **35. Have there been changes in the facility staffing since 2019?**  _(select one)_
+  - Yes · No
+- **36. Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **37. Have there been changes in the referral system since 2019?**  _(select one)_
+  - Yes · No
+- **38. Have the changes to the referral system (inbound or outbound) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **39. Has the Memorandum of Understanding (MoU) / Agreement (MoA) with other health facilities as part of the healthcare provider network been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **40. Has the no balance billing (NBB) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **41. Has the zero balance billing (ZBB) been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **42. Has the no co-payment policy been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **43. Has the health facility been implementing ward accommodation allocation since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **44. Have the improved clinical practice guidelines been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **45. Have the DOH licensing standards been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **46. Have the PhilHealth accreditation requirements been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **47. Have the service delivery protocols been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **48. Have the primary care quality measures been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?**  _(select one)_
+  - Yes, this was implemented as a direct result of the UHC Act · Yes, this was pre-existing, but it has significantly improved due to the UHC Act · Yes, this has been implemented or improved recently, but not due to the UHC Act · Yes, other reason (specify) · No, this has not been implemented yet, but we plan to in the next 1-2 years · No, and we have no plans to do this in the next 1-2 years · No, other reason (specify) · I don't know · Not applicable
+- **49. What are the major challenges to improving the quality of patient care in your local area?**  _(select one)_
+  - Limited resources (personnel, equipment, supplies, funding) · Challenging quality standards · Healthcare decisions made by LGUs not the facility · Lack of specific healthcare skills · Inadequate training of healthcare workers · Lack of patient awareness of UHC benefits · Limited accessibility of public healthcare facilities · Infrastructure not conducive for patient care · I don't know · Other (specify)
+- **50. What are the major challenges to improving the accessibility of patient care in your local area?**  _(select one)_
+  - Limited resources (personnel, equipment, supplies, funding) · Challenging quality standards · Healthcare decisions made by LGUs not the facility · Lack of specific healthcare skills · Inadequate training of healthcare workers · Lack of patient awareness of UHC benefits · Limited accessibility of public healthcare facilities · Infrastructure not conducive for patient care · I don't know · Other (specify)
+
+## D. YAKAP / Konsulta Package
+
+- **51. Are you currently an accredited YAKAP/Konsulta provider?**  _(select one)_
+  - Yes · No
+- **52. If yes, since when? Month**  _(number)_
+- **53. If accredited, which of the following are included in the YAKAP/Konsulta package?**  _(select one)_
+  - Pap smear · Mammogram · Lipid profile · Thyroid function test · Chest X-ray · Low-dose CT scan · Dental services · All of the above · I don't know · Other (specify)
+- **54. Is it possible to register individual patients to YAKAP/Konsulta at this facility?**  _(select one)_
+  - Yes · No · I don't know
+- **55. Is it possible to register whole families to YAKAP/Konsulta at this facility?**  _(select one)_
+  - Yes · No · I don't know
+- **56. Is it only possible to register both individual patients and their family members together to YAKAP/Konsulta at this facility?**  _(select one)_
+  - Yes · No · I don't know
+- **57. Based on your knowledge, what is the capitation amount of the YAKAP/Konsulta package? (Capitation is the amount per year per registered patient for delivering the YAKAP/Konsulta package services.)**  _(number)_
+- **58. What are the performance indicators you need to meet to receive the second tranche payment?**  _(select one)_
+  - Beneficiaries consulted a primary care doctor · Utilization of laboratory services · Beneficiaries received antibiotics as prescribed · Beneficiaries received NCD medicine as prescribed · No requirements · 1st patient encounter · I don't know · Other (specify)
+- **59. Do you know how often you can expect to receive payments from PhilHealth for the delivery of the YAKAP/Konsulta package?**  _(select one)_
+  - Yes · No
+- **60. How often should you be receiving payments?**  _(select one)_
+  - Monthly · Quarterly · Semi-annually · Annually
+- **61. Were there delays in receiving capitation tranches?**  _(select one)_
+  - Yes · No
+- **62. On average, how long is the typical time interval between tranches releases to the facility?**  _(select one)_
+  - Less than a month · 1-2 months · 3-4 months · 5-6 months · More than six months
+- **63. How many days did you wait from application submission to accreditation approval? [PENDING DESIGN: printed text says days, buckets are months]**  _(select one)_
+  - Less than a month · 1-2 months · 3-4 months · 5-6 months · More than six months
+- **64. Why did you apply to become a YAKAP/Konsulta provider?**  _(select all that apply)_
+  - Incentives (capitation/payment for registered patients) · Aligns with facility's mission · Encouraged by LGU · Mandated/required by DOH/UHC · To improve facility services · Other (specify)
+- **65. Which of the following requirements were difficult to comply with for accreditation?**  _(select all that apply)_
+  - Ability to conduct preventive/screening services and health education · Capability to provide laboratory and radiologic services · Capability to dispense required medicines · General Infrastructure · Equipment and Supplies · Human resource · Functional Health Information System · Documentary requirements · DOH licensing requirements · None of the above
+- **66. Why was it difficult to comply with the following? Ability to conduct preventive/screening services and health education**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Other (specify)
+- **67. Why was it difficult to comply with the following? Capability to provide services for required laboratory and radiologic services**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Other (specify)
+- **68. Why was it difficult to comply with the following? Capability to dispense required medicines**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Other (specify)
+- **69. Why was it difficult to comply with the following? General Infrastructure**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Other (specify)
+- **70. Why was it difficult to comply with the following? Equipment and Supplies**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Other (specify)
+- **71. Why was it difficult to comply with the following? Human resource**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Other (specify)
+- **72. Why was it difficult to comply with the following? Functional Health Information System**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Other (specify)
+- **73. Why was it difficult to comply with the following? Documentary requirements**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Other (specify)
+- **74. Why was it difficult to comply with the following? DOH Licensing requirements**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Other (specify)
+- **75. Based on your understanding, whose responsibility is it to enroll patients to YAKAP/Konsulta?**  _(select all that apply)_
+  - Patients' own initiative · Facility · LGU · Someone else · PhilHealth · I don't know · Other (specify)
+- **76. Which of the following initiatives are you doing to enroll patients in this facility to YAKAP/Konsulta?**  _(select all that apply)_
+  - On-site Enrollment · LGU Outreach · Facility Outreach · Barangay Health Workers (BHWs) Support · Information Campaigns · Local Health Insurance Offices (LHIO) / YAKAP caravans · Coordination with other government agencies and private sector · No initiatives · Other (specify)
+- **77. Did you experience any challenges in enrolling patients to YAKAP/Konsulta?**  _(select one)_
+  - Yes · No
+- **78. What are the challenges you have faced?**  _(select all that apply)_
+  - Lack of patient awareness · Lack of patient willingness · Lack of resources (manpower) · Competition with other health facilities · Technical / system issues of PhilHealth · Other (specify)
+- **79. If not YAKAP/ KONSULTA accredited, why are you not accredited?**  _(select all that apply)_
+  - Difficult process · No time · Ongoing application · Other (specify)
+- **80. Are you intending to become a YAKAP/Konsulta provider?**  _(select one)_
+  - Yes, already in process · Yes, not yet in process · No, decided not to · No, tried and failed · No, haven't thought about it yet · I don't know
+- **81. If you decide to apply today, would you know how to start the process?**  _(select one)_
+  - Yes · No
+- **82. What was the deciding factor not to apply?**  _(text)_
+- **83. What went wrong with the application?**  _(text)_
+- **84. What are some challenges in the process, if any?**  _(text)_
+- **85. What areas do you consider as the facility's catchment area/s?**  _(text)_
+- **86. How many patients in your catchment area are eligible to register to this YAKAP/Konsulta provider?**  _(number)_
+- **87. How many eligible patients in your catchment area are already registered to this YAKAP/Konsulta provider?**  _(number)_
+- **88. The maximum per capita rate for YAKAP/Konsulta is Php 1,700 across private and public facilities (40% after first patient encounter, 60% based on registered catchment population by December). Based on your practice, is this enough?**  _(select one)_
+  - Yes · No · I don't know
+- **89. Did you go through a costing exercise to figure out if this was viable for your facility?**  _(select one)_
+  - Yes · No · I don't know
+- **90. Did the costing exercise show that Php 1,700 was viable for your facility?**  _(select one)_
+  - Yes · No · I don't know
+- **91. What would be the minimum acceptable capitation value per patient per year for you as a YAKAP/Konsulta provider?**  _(number)_
+- **92. What would be the minimum acceptable capitation value per patient per year for you to consider being a YAKAP/Konsulta provider?**  _(number)_
+- **93. Does your facility charge additional capitation fees?**  _(select one)_
+  - Yes · No
+- **94. What is/are the reason/s for the facility to charge additional capitation fees?**  _(select all that apply)_
+  - Cover building maintenance, equipment, non-clinical staff · Patient care costs exceed predetermined fixed payment · Services excluded from capitation coverage · Provide preventive care not adequately compensated · Offset losses · Other (specify)
+- **95. Have you already received payments for patients enrolled?**  _(select one)_
+  - Yes, received all expected payments · Yes, received some but not all expected · No, have not received any expected payments · No, have not expected any payments yet
+- **96. Why not?**  _(select all that apply)_
+  - Delays in PhilHealth processing · Delays in facility's tracking of patient enrollment · Difficulties verifying patient enrollment (PhilHealth) · Facility not active in meeting payment criteria · Criteria for payments is unclear · I don't know · Other (specify)
+- **97. Did you face any challenges in getting these payments?**  _(select one)_
+  - Yes · No
+- **98. What were these challenges?**  _(select all that apply)_
+  - Delayed payment process · Unclear criteria for capitation · Difficult to meet criteria for capitation · PhilHealth process to apply for payments is difficult/unclear · I don't know · Other (specify)
+- **99. If you were to expand the YAKAP/Konsulta package, what would you expand next?**  _(select all that apply)_
+  - Current list of medicines and drugs · Current laboratory/diagnostic services · Additional features · I don't know · Other (specify)
+- **100. What additional features would you add?**  _(text)_
+
+## E. Awareness on Expanded Health Programs (BUCAS and GAMOT)
+
+- **101. Have you heard about the Bagong Urgent Care and Ambulatory Service (BUCAS)?**  _(select one)_
+  - Yes · No
+- **102. Do you have a BUCAS Center?**  _(select one)_
+  - Yes · No · I don't know
+- **103. If none, what is the primary reason?**  _(select one)_
+  - Proposal not yet submitted · Limited information on establishment process · Did not meet standard requirements · Awaiting assessment or approval · Other (specify) · Not applicable
+- **104. What are the available services offered by your BUCAS Center?**  _(select all that apply)_
+  - Urgent care and consultation · Minor surgical procedures · Diagnostic and laboratory services · Reproductive and special health services · Other (specify)
+- **105. In your assessment, what are the main factors affecting the utilization of BUCAS in your facility?**  _(select all that apply)_
+  - Patient awareness · Facility location and accessibility · Referral patterns · PhilHealth coverage and reimbursement · Availability of staff/services · Other (specify)
+- **106. What are the resources you need to support/sustain the BUCAS center?**  _(text)_
+- **107. Based on your experience, does the BUCAS Center decongest your health facility of patients?**  _(select one)_
+  - Yes · No
+- **108. Have you heard about the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) package?**  _(select one)_
+  - Yes · No
+- **109. Is your facility an accredited GAMOT provider?**  _(select one)_
+  - Yes · No
+- **110. If no, what is the primary reason?**  _(select one)_
+  - Application not yet submitted · Limited information on accreditation process · Did not meet accreditation requirements · Awaiting assessment or approval · Other (specify) · Not applicable
+- **111. In your assessment, what are the main factors affecting the utilization of the GAMOT Program in your facility?**  _(select all that apply)_
+  - Availability of GAMOT medicines · Pharmacy capacity · Patient awareness of the program · PhilHealth eligibility and reimbursement processes · Prescribing practices of physicians · Other (specify)
+- **112. In the past 3 months, has this facility experienced a stock-out (zero supply) of any tracer essential medicines?**  _(select one)_
+  - Yes · No
+- **113. What specific medicines? (antihypertensives, antibiotics, etc.)**  _(text)_
+- **114. How many days did the stock-out last?**  _(select one)_
+  - Less than 30 days · 31-60 days · More than 60 days
+- **115. On average, how many months do these stock-outs last?**  _(select one)_
+  - Less than a month · 1-2 months · 3-4 months · 5-6 months · More than 6 months
+- **116. Did you do anything to address the medicine stock-outs in the GAMOT Package?**  _(select one)_
+  - Yes · No · Did not experience stock outs of GAMOT meds
+- **117. If yes, what did you do to address the medicine stock-outs in the GAMOT Package?**  _(select all that apply)_
+  - Resorted to alternative procurement · Active inventory monitoring · Improve forecasting and quantification · Other (specify)
+
+## F. DOH Licensing: Status and Barriers
+
+- **118. Is this facility DOH licensed?**  _(select one)_
+  - Yes · No · No, but submitted requirements and waiting · I don't know what DOH licensing is
+- **119. When did you receive your DOH license from your most recent application?**  _(select one)_
+  - Within the last 1 to 3 months · Within the last 4 to 6 months · Over 6 months but within 1 year · More than 1 year ago · I don't know
+- **120. How many days did it take you to receive the license?**  _(select one)_
+  - Less than 30 days · 31-60 days · More than 60 days
+- **121. Which of the following requirements were difficult to comply with in the DOH licensing process?**  _(select all that apply)_
+  - Patient rights and organization ethics · Patient care · Leadership and management · Human resource management · Information management · Safe practice and environment · Improving performance · Physical plant · Equipment and instruments · National laws and DOH issuances (hospitals only) · Emergency cart contents (hospitals only) · Add-on services (hospitals only) · Public access to price information (PCF only) · None of the above
+- **122. Why was it difficult to comply with the following? Patient rights and organization ethics**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **123. Why was it difficult to comply with the following? Patient care**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **124. Why was it difficult to comply with the following? Leadership and management**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **125. Why was it difficult to comply with the following? Human resource management**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **126. Why was it difficult to comply with the following? Information management**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **127. Why was it difficult to comply with the following? Safe practice and environment**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **128. Why was it difficult to comply with the following? Improving performance**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **129. Why was it difficult to comply with the following? Physical plant**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **130. Why was it difficult to comply with the following? Public access to price information**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **131. Why was it difficult to comply with the following? Equipment and instruments**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **132. Why was it difficult to comply with the following? National laws and DOH issuances implemented in hospitals and other health facilities**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **133. Why was it difficult to comply with the following? Emergency Cart Contents**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+- **134. Why was it difficult to comply with the following? Add-on services**  _(select all that apply)_
+  - Not enough budget / too expensive · Time-consuming · Limited human resources · Legal processes · Compiling documentary requirements · Stringent standards · Lack of training · Lack of space · Other (specify)
+
+## G. Service Delivery Process
+
+- **135. Do you currently implement the "no balance billing" policy for your patients?**  _(select one)_
+  - Yes · No
+- **136. Are you able to implement it for all patients, to the best of your knowledge, for the last 6 months?**  _(select one)_
+  - Yes · No
+- **137. In your view, what are some of the barriers to implementing the no balance billing (NBB) policy?**  _(select all that apply)_
+  - Complying with no fees for basic/ward accommodation · Complying with prescribed allocation ratio (basic vs non-basic) · Patients do not go through the process of availing it · Insufficient PhilHealth support value · Insufficient other sources (MAIFIP, DSWD, PCSO) · PhilHealth delayed payment · None of the above · Other (specify)
+- **138. Do you currently implement the "Zero Balance Billing" policy for your patients?**  _(select one)_
+  - Yes · No
+- **139. If currently implementing ZBB, are you able to implement it for all patients, to the best of your knowledge, for the last six months?**  _(select one)_
+  - Yes · No
+- **140. In your view, what are some of the barriers to implementing the "zero balance billing" policy?**  _(select all that apply)_
+  - Complying with no fees for basic/ward accommodation · Complying with prescribed allocation ratio (basic vs non-basic) · Patients do not go through the process of availing it · Insufficient PhilHealth support value · Insufficient other sources (MAIFIP, DSWD, PCSO) · PhilHealth delayed payment · None of the above · Other (specify)
+- **141. Does the facility allow out-of-pocket (OOP) expenses for basic accommodation?**  _(select one)_
+  - Yes · No
+- **142. Why does the facility allow OOP expenses for basic accommodation? Specify your reason.**  _(text)_
+- **143. Which of the UHC benefits do you find most difficult to implement?**  _(select one)_
+  - PhilHealth/financial protection benefits · Establishment of health care provider networks (HCPNs / referral system) · Human resources for health reforms · Other (specify)
+- **144. Why is this difficult to implement?**  _(select all that apply)_
+  - UHC implementation heavily reliant on LGU decisions · Not enough funding/budget · Technical/system issues of PhilHealth · Other (specify)
+- **145. Has the facility been providing medical social welfare or assistance (e.g., through Malasakit Centers, MAIFIP)?**  _(select one)_
+  - Yes · No
+- **146. Why is the facility providing medical social welfare or assistance through Malasakit Centers or MAIFIP?**  _(select all that apply)_
+  - Streamline access to medical and financial aid for indigent patients · Reduce out-of-pocket expenses · Eliminate the need to travel to multiple government agencies · Foster a more compassionate approach to healthcare · Other (specify)
+- **147. Why is the facility not providing medical social welfare or assistance through Malasakit Centers or MAIFIP?**  _(select all that apply)_
+  - Limited budget · Stringent eligibility requirements · Incomplete documentation from patients · High patient volume / service bottlenecks · Other (specify)
+- **148. Do you receive any support from your LGU to implement UHC reforms?**  _(select one)_
+  - Yes · No
+- **149. What forms of support do you receive?**  _(select all that apply)_
+  - Financial assistance · Technical assistance · Medical supplies and equipment · Manpower support · Other (specify)
+- **150. Are you satisfied with the support you receive from your LGU?**  _(select one)_
+  - Yes · No
+- **151. Why not?**  _(select all that apply)_
+  - Insufficient · Hard to coordinate · Support given is not aligned with the needs · I don't know · Other (specify)
+- **152. How clear are the protocols regarding which decisions require Provincial Health Office approval versus those you can decide at the facility level?**  _(select one)_
+  - Very Clear · Clear · Neither · Unclear · Very Unclear
+- **153. Which specific protocol that you consider as unclear?**  _(text)_
+- **154. In the past 6 months, how many patients were referred to a higher-level facility within the referral network?**  _(number)_
+- **155. What are the most common ways you send referrals to higher level facilities/specialists?**  _(select all that apply)_
+  - Physical referral slip · E-referral · Referring facility calls receiving facility · Other (specify)
+- **156. What type of referral form do you use to send to higher level facilities?**  _(select all that apply)_
+  - DOH standard referral form · Facility's standard referral form · Province's standard referral form · City / LGU standard referral form · No standard referral form · Other (specify)
+- **157. Do you have a network of specialist providers to refer patients to, if needed?**  _(select one)_
+  - Yes · No · I've never heard of it · I don't know
+- **158. Considering all patients who come to your facility for the past 6 months, what is the proportion of patients referred by another facility compared to those who self-refer/walk-in?**  _(select one)_
+  - Almost all patients are referred, very few walk-in · Majority referred, some walk-in · Proportion of referrals about equal to walk-ins · Majority walk-in, some referred · Almost all walk-in, very few referred · Unsure about the typical ratio
+- **159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities?**  _(select all that apply)_
+  - Physical referral slip · E-referral · Referring facility calls receiving facility · Other (specify)
+- **160. Where do your patients go to get the services not available at this facility?**  _(select all that apply)_
+  - External laboratory · Other private facility · Other public facility · I don't know · Other (specify)
+- **161. How would you rate your satisfaction with your current referral system?**  _(select one)_
+  - Very Satisfied · Satisfied · Neither · Dissatisfied · Very Dissatisfied
+- **162. Why are you not satisfied with the current referral system?**  _(select all that apply)_
+  - Facilities overcrowded / do not accept our patient referrals · Referral process is slow · Poor coordination between facilities · Other (specify)
+
+## H. Human Resources for Health
+
+- **163. What challenges in human resources do you have?**  _(select all that apply)_
+  - Understaffing · Skills mismatch / lack of skills · Retention / high staff turnover · I don't know · Other (specify)
+- **164. What area do you find the most room for improvement in your staff?**  _(text)_
+- **165. What forms of professional development do you provide to your doctors?**  _(select all that apply)_
+  - Clinical audits · Surgical audits · Quality assurance meetings · Seminars, conferences, workshops · Independent professional development: scholarships · Independent professional development: research grants · LGU/DOH led workshops/initiatives · No forms of professional development are provided · Other (specify)
+- **166. What forms of professional development do you provide to your nurses?**  _(select all that apply)_
+  - Quality assurance meetings · Seminars, conferences, workshops · Independent professional development: scholarships · Independent professional development: research grants · LGU/DOH led workshops/initiatives · No forms of professional development are provided · Other (specify)
+
+*Total: 203 questions/fields across the instrument.*

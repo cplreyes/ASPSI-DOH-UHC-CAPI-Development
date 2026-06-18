@@ -291,6 +291,12 @@ SECTION_INTROS = {
           "health products and services in the past 12 months."),
     183: ("In the next section, we would like to know more about the funds "
           "that you use for health care."),
+    # #634: Section O (Sources of Funds, Q186-Q196) read-aloud lead-in for the
+    # financial-sources battery — was missing before Q186 (tester-supplied paper text).
+    186: ("In the last 12 months, which of the following financial sources did "
+          "your household use to pay out-of-pocket for any medical, dental "
+          "service with or without overnight stay, medicines, and health "
+          "products?"),
 }
 
 _QNUM = re.compile(r"^Q(\d{1,3})_")

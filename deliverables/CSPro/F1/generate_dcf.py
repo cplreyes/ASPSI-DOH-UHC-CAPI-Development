@@ -330,9 +330,9 @@ def build_section_c():
                             "33. If yes, how frequent has your facility submit these data?",
                             FREQUENCY))
     items.append(alpha("Q33_OTHER_TXT", "33. If yes, how frequent has your facility submit these data? — Other (specify) text", length=120))
-    items.extend(select_all("Q34_DATA_REPORTS_USED",
+    items.extend(checkbox_multiselect("Q34_DATA_REPORTS_USED",
                             "34. Which of the submitted reports are actually used for decision-making?",
-                            Q34_REPORTS))
+                            _cb_codes(Q34_REPORTS)))
     items.append(yes_no("Q35_STAFFING_CHANGED", "35. Have there been changes in the facility staffing since 2019?"))
     items.extend(uhc9_item("Q36_STAFFING_UHC",
                            "36. Have the changes in staffing been implemented since the UHC Act was passed in 2019 and was it a result of the UHC Act?"))

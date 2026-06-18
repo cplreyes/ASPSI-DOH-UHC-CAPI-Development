@@ -257,6 +257,7 @@ _CHECKBOX_FIELDS = {
     "Q88_DIFF_PAYING", "Q102_VISIT_REASON", "Q103_CARE_TYPE", "Q106_FORGONE_WHY",
     "Q107_OTHER_ACTIONS", "Q109_TYPE",
     "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill
+    "Q196_FOREGONE", "Q202_WORRY_REASONS",   # #638/#668 Section O/Q (without this they render as DropDown/RadioButton = single-select data loss)
 }
 MAX_CHUNK = 5
 _RUN_BLOCK_CAP = 22     # a real multi-select up to ~22 options is one checklist screen;
