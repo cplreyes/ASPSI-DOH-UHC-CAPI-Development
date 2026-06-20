@@ -58,6 +58,13 @@ _(to be finalized at Monday's lock)_
 
 _Auto-standup writes here daily via the `CAPI Scrum Daily Standup MD` scheduled task (08:30 MNL) + the SessionStart hook as intraday top-up._
 
+**Inter-sprint (2026-06-19 → 06-21) — Supervisor App + Cluster 5 + CSWeb dashboard shipped.** Significant out-of-sprint-board delivery at/after the S010 boundary (all committed + pushed to `main`):
+- **Cluster 5 (#515/#561)** — mid-interview break-off + off-form `CASE_DISPOSITION` completeness sentinel BUILT in the F3/F4 generators, deployed, and **device-confirmed on the itel** (withdraw → jump to closing → record → `endlevel` skips the photo → clean "Accept this case?"). Found+fixed a real device bug (verification-photo loop on a no-interview disposition). #515/#561 CLOSED. This is R4-adjacent closeout (Epic 3).
+- **Supervisor App Phase 1 (Review Layer)** — built + tested (14/14 pytest), a PII-light field-QA report (coverage/partials/flags) reusing the Cluster-5 disposition; C1 CSWeb access resolved to a scoped `supervisor-qa` role. **Phase 2 (Bluetooth hub)** spec + plan written, build deferred (D7). Epic 8 (E8-SUPERVISOR-001/-002).
+- **CSWeb reporting views + static sync dashboard** — LIVE at `csweb.asiansocial.org/docs/dashboard.html` (Epic 8, E8-BI-001).
+- **Board hygiene** — #712 + 9 Tagalog issues closed; open 40 → 31.
+- Product Backlog updated (Epic 8 now In Progress; new headline). _S010 retro still pending (carries the E0-SCRUM-SYNC drift-fix item — this stale `sprint-current.md` is itself the exhibit)._
+
 ## Retrospective — Sprint 010
 
 > 5-minute time-box. Four questions, fixed order. Written, not thought-through-only.

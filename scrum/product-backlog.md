@@ -6,7 +6,7 @@ data_programmer: Carl Patrick L. Reyes
 qa_tester: Shan (ASPSI, RA)
 contract: CSA signed 2025-12-15, effective 2025-11-14
 engagement_window: November 2025 – August 2026
-last_updated: 2026-06-07
+last_updated: 2026-06-21
 ---
 
 # Product Backlog — UHC Survey Year 2 CAPI Development
@@ -22,6 +22,15 @@ last_updated: 2026-06-07
 ## 1. Status at a Glance
 
 ### Headline (this week)
+
+**2026-06-21 (inter-sprint, post-S010) — Supervisor App Phase 1 BUILT; Cluster-5 break-off + disposition shipped (#515/#561); CSWeb reporting views + sync dashboard LIVE.** This week's deliverables (all committed + pushed to `main`):
+
+- **Cluster 5 (#515/#561) — mid-interview break-off + completeness disposition** shipped + **device-confirmed on F3 and F4.** A case-start "Interview status" control jumps a withdrawn/postponed case straight to the closing Result-of-Visit; an off-form `CASE_DISPOSITION` sentinel (0 In-Progress / 1 Completed / 2 Partial) makes complete-vs-partial filterable in exports even for a force-quit case. This is the **data backbone the Supervisor App reads.** Epic 3 / R4 closeout.
+- **Supervisor App Phase 1 (Review Layer) — BUILT + tested** (Epic 8, `E8-SUPERVISOR-001`): a read-only field-QA report (`deliverables/CSWeb/supervisor-app/`, stdlib Python, 14/14 pytest) → one PII-light HTML with coverage-vs-plan · partials/#561 · a 5-rule data-quality flag worklist. **C1 CSWeb access RESOLVED** — a scoped **`supervisor-qa`** role (dictionary-sync, no `data` dashboard); `supervisor-monitor` kept report-only/no-sync (RBAC pack §2, now 6 roles). **Phase 2 (Bluetooth sync hub)** spec + plan written, **build DEFERRED per D7** (`E8-SUPERVISOR-002`).
+- **CSWeb reporting views + static sync dashboard — LIVE** (Epic 8, `E8-BI-001`) at `csweb.asiansocial.org/docs/dashboard.html` — a `csweb_reports` DB of 12 SQL views over the F1/F3/F4 breakout DBs + a filterable Chart.js dashboard (Instrument/Region/Status/visit-date filters, Case-Status doughnut, 15-min refresh cron). A low-touch realization of the §5.4 dashboard intent.
+- **Board hygiene:** #712 (force-quit partial — inherent CSEntry behavior, not generator-fixable) + 9 pure-Tagalog issues closed with a "translations not yet available" note; open count **40 → 31**.
+
+> _Earlier headline (Sprint 009 era) retained below as historical record._
 
 **2026-06-07 — Sprint 009 active (Jun 8–12); PSA clearance gate Fri 2026-06-12 is the hard external constraint.** Current state across the project:
 
@@ -89,7 +98,7 @@ Comms infrastructure fully provisioned (project mailbox + Viber group both live,
 | **5** | Field Distribution & Device Management (tablets for CAPI; URL distribution + PWA install + reminder ops for F2) | **In Progress** — F2 distribution proven; CAPI tablet + PWA-pilot field-ops SOPs drafted | **Blocked-external:** tablet procurement (ASPSI ops) for on-device provisioning |
 | **6** | Testing and Pilot | **Mode-aware:** PWA tested (UAT R1–R3 closed). CAPI desk-test pending the Designer compile (runbook §3). | F1/F3/F4 CSEntry desk-test; **pretest blocked on SJREB clearance** (ASPSI/PI lane) |
 | **7** | Training and Documentation | **In Progress** — Survey Manual sections + enumerator/STL/HCW training decks + CSEntry enumerator field guide drafted | Fill the enumerator guide screenshots (post-compile + CSWeb sync); Kidd's review on Survey Manual |
-| **8** | Fieldwork Monitoring and Quality Control | Not Started (activates at fieldwork) — **BI dashboard blueprint + prototype drafted** | Stand up the cross-track BI dashboard v0 (CSWeb + F2 backend) |
+| **8** | Fieldwork Monitoring and Quality Control | **In Progress (pre-fieldwork tooling)** — **Supervisor App Phase 1 (Review Layer) BUILT + tested** (E8-SUPERVISOR-001); **CSWeb reporting views + static sync dashboard LIVE** (E8-BI-001); Supervisor App Phase 2 (Bluetooth hub) spec+plan, build deferred (E8-SUPERVISOR-002) | Wire the Supervisor App into the field SOP at fieldwork start; confirm the QA-supervisor roster (ASPSI) for the `supervisor-qa` role |
 | **9** | Data Management and Security | **Governance Active** — **Data-Privacy-and-Security-Plan drafted** | Finalize secure sync + backup strategy for both tracks |
 | **10** | Data Cleaning and Processing | Not Started — **shared codebook + harmonization ETL spec drafted** | Per-instrument batch-edit specs once data flows |
 | **11** | Analysis Support & Deliverables | Not Started | Interim tabulation template ahead of D4; CSV + Stata export pipeline |
@@ -368,9 +377,14 @@ Each epic below is a long-running workstream that spans its portion of the engag
 - **Slack-bot automation** (already live for F2) — issue events + daily 09:00 MNL digest + milestone-closed release notes auto-post to `#f2-pwa-uat`. Pattern replicable for CAPI rounds when fieldwork starts.
 - **Issue log** — single GitHub Issues backlog spans both tracks, distinguished by `track:capi` / `track:pwa` labels (or per-instrument labels).
 
-**Current state:** Not Started (activates at CAPI fieldwork kickoff). PWA-side automation scaffolding already in place (workflows + Slack bot live since 2026-04-25).
+**Current state:** **In Progress (pre-fieldwork tooling).** PWA-side automation scaffolding live since 2026-04-25. Three CAPI-side monitoring/QC items realized 2026-06-21 (below). Full field activation still waits on fieldwork kickoff.
 
-**Next milestone:** Cross-track BI dashboard scaffolded — pick the BI tool (Looker Studio recommended for low-touch ops + DOH familiarity) and stand up a v0 view backed by mock CSWeb + real F2 data.
+**What's realized (2026-06-21):**
+- **E8-SUPERVISOR-001 — Supervisor App Phase 1 (Review Layer): BUILT + tested.** A read-only field-QA report tool (`deliverables/CSWeb/supervisor-app/`, stdlib Python, 14/14 `pytest`) over pulled F1/F3/F4 cases → one **PII-light** HTML report with coverage-vs-plan, partials + disposition (#561), and a 5-rule data-quality flag worklist (no GPS / no photo-on-completed / stuck-partial / disposition-mismatch / consent-contradiction). Spec `docs/superpowers/specs/2026-06-20-supervisor-app-design.md`; plan `docs/superpowers/plans/2026-06-21-supervisor-app-phase1.md`. **Backbone = the Cluster-5 `CASE_DISPOSITION` sentinel** (Epic 3, #515/#561). **C1 CSWeb access RESOLVED:** the report's GET runs on **dictionary-sync, not the web `data` dashboard**, so a scoped **`supervisor-qa`** role (`report` + F1/F3/F4 dictionary sync) holds it; `supervisor-monitor` stays report-only/no-sync (RBAC pack §2 — now 6 roles). Remaining ASPSI input: the QA-supervisor names.
+- **E8-SUPERVISOR-002 — Supervisor App Phase 2 (Bluetooth Sync Hub): spec + plan written, build DEFERRED (D7).** Dual-path fallback (direct-to-CSWeb stays default; enumerator→Bluetooth→supervisor hub→CSWeb is the no-signal + same-day-safety-net path; conflict-free via upsert-by-12-digit-key); a login+menu role app (Khurshid pattern, enumerator vs supervisor); CSEntry built-in Bluetooth (PROC `syncdata`/`syncserver` rejected per #131). Spec `…/specs/2026-06-21-supervisor-app-phase2-bluetooth-design.md`; plan `…/plans/2026-06-21-supervisor-app-phase2-bluetooth.md`. Build held until F1/F3/F4 are near-zero UAT bugs; two device-spike gates precede any build.
+- **E8-BI-001 — CSWeb reporting views + static sync dashboard: LIVE.** A standalone `csweb_reports` DB of 12 SQL views over the F1/F3/F4 breakout DBs (`deliverables/CSWeb/gen-report-views.py`) + a static, filterable Chart.js dashboard (`deliverables/CSWeb/csweb-dashboard-gen.py`) at **`csweb.asiansocial.org/docs/dashboard.html`** — Instrument/Region/Status/visit-date filters, a Case-Status (Completed/Partial) doughnut per instrument, Chart.js vendored locally, 15-min refresh cron on the box. **Note (vs §5.4):** the §5.4 plan named Looker Studio; the realized build is a **static dashboard** (chosen for the box's ~1.7 GB RAM headroom — co-hosting Metabase/JVM risked OOM against live CSWeb). The `csweb_reports` views remain available for direct SQL/BI.
+
+**Next milestone:** Wire the Supervisor App into the field SOP at fieldwork start; confirm the QA-supervisor roster (ASPSI) to provision the `supervisor-qa` role; (when instruments stabilize) run the Phase-2 spike gates.
 
 **Ties to:** TOR Duty 8 (prepare survey data dashboard), TOR Duty 9 (technical support during CAPI survey), D4 (progress report on piloting), [Section 5: Cross-Track Integration](#5-cross-track-integration).
 
