@@ -6,24 +6,32 @@ syncing directly to CSWeb (Phase 1). See the spec:
 
 ## C1 — CSWeb supervisor role (one-time, server admin)
 
-The Supervisor App needs **case data** (dictionary GET / down-sync) to run the report
-and to open a case read-only for spot-check. The existing `supervisor-monitor` role
-(see `deliverables/CSWeb/CSWeb-User-Management-and-RBAC-Provisioning-Pack.md`) is
-**deliberately `report`-only with NO `data` download** — counts + geo, no full-PII rows —
-so widening it would change the PII posture for every field supervisor / cluster RA on it.
+The Supervisor App pulls cases via the **desktop Data Manager / Data Viewer** (GET → export
+to CSV), which is driven by CSWeb **dictionary-sync permission — NOT the web `data` dashboard**.
+CSWeb has only two permission axes (dashboards + per-dictionary sync) and no row-level
+filter, so a dictionary down-sync pulls *all* cases of that dictionary. See
+`deliverables/CSWeb/CSWeb-User-Management-and-RBAC-Provisioning-Pack.md` §1.
 
-**Therefore: provision a SEPARATE QA role** (e.g. `supervisor-qa`) granted **dictionary
-GET / down-sync** on `FACILITYHEADSURVEY_DICT`, `PATIENTSURVEY_DICT`, `HOUSEHOLDSURVEY_DICT`,
-and assign it ONLY to the supervisor(s) doing QA. Leave `supervisor-monitor` PII-free as
-designed.
+**Provision a dedicated `supervisor-qa` role** (decided 2026-06-21, least-privilege):
+- `supervisor-qa` = `report` dashboard **+ dictionary sync** on `FACILITYHEADSURVEY_DICT`,
+  `PATIENTSURVEY_DICT`, `HOUSEHOLDSURVEY_DICT`. Held ONLY by the designated QA supervisor(s).
+  This is the role the App's GET runs under.
+- `supervisor-monitor` stays `report`-**only with NO dictionary sync** — coverage Sync/Map
+  reports are server-side and need no sync, so the ~26 rank-and-file supervisors keep
+  monitoring but cannot bulk-pull full-PII case data. (This corrects the pack's earlier
+  ✅-sync grant on `supervisor-monitor`.)
 
-> **PII NOTE (decision for ASPSI):** pulling cases exposes respondent data. The HTML report
-> is PII-light, but the case-level spot-check shows PII. Confirm the QA supervisor(s) are
-> authorized for PII spot-check before enabling the GET role.
+No `data` web dashboard grant is required for any of this.
+
+> **PII NOTE (decision for ASPSI):** a dictionary down-sync exposes full respondent data
+> locally, and the case-level spot-check shows PII (the HTML report itself is PII-light).
+> Confirm the designated QA supervisor(s) are authorized for PII spot-check before assigning
+> the `supervisor-qa` role. The QA-supervisor roster is an ASPSI input (see pack §6).
 
 ## C5 — Tablet review (on-site, thin)
 
-On the supervisor tablet, CSEntry with the GET-enabled QA account:
+On the supervisor tablet, CSEntry signed in as the `supervisor-qa` account (the
+dictionary-sync role from C1):
 1. Sync → CSWeb → GET (pull latest).
 2. Open the app in review mode; the case list shows **partial cases with a red bar /
    distinct icon**. Open a case read-only to spot-check.

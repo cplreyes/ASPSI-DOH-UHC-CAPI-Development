@@ -126,11 +126,18 @@ review is the evening laptop pass at base. Phase-2 Bluetooth removes this limit.
 ## Components
 
 ### C1 — CSWeb supervisor sync role (+ PII governance)
-Extend the existing `supervisor-monitor` role with **dictionary GET / down-sync** on
-`FACILITYHEADSURVEY_DICT`, `PATIENTSURVEY_DICT`, `HOUSEHOLDSURVEY_DICT`. Accounts already
-exist (`fs-01…`, `ra-01…`). **Governance (D4):** routine report touches no PII; the only
-PII action is opening an individual case in spot-check, on a controlled device.
-**To confirm in planning:** supervisors are authorized for case-level PII spot-check (assumed yes for QA).
+**RESOLVED 2026-06-21 (supersedes the original "extend `supervisor-monitor`" wording below):**
+the down-sync runs on CSWeb **dictionary-sync permission, not the web `data` dashboard**, so
+provision a **dedicated `supervisor-qa` role** (`report` dashboard + dictionary sync on
+`FACILITYHEADSURVEY_DICT` / `PATIENTSURVEY_DICT` / `HOUSEHOLDSURVEY_DICT`) held only by the
+designated QA supervisor(s), and keep `supervisor-monitor` `report`-only with **no** sync.
+This scopes the bulk-PII pull to a named few rather than all ~26 supervisors. See the RBAC
+pack §2 (`CSWeb-User-Management-and-RBAC-Provisioning-Pack.md`) and the app README §C1.
+
+~~Extend the existing `supervisor-monitor` role with dictionary GET / down-sync on the three
+dicts.~~ **Governance (D4):** routine report touches no PII; the only PII action is opening an
+individual case in spot-check, on a controlled device. **Remaining ASPSI input:** the names of
+the designated QA supervisor(s), authorized for case-level PII spot-check (pack §6 item 4).
 
 ### C2 — Supervisor-QA batch application (the laptop engine, the build)
 A CSPro 8 batch/driver app, run by double-clicking a `.pff`, that reads the pulled F1/F3/F4

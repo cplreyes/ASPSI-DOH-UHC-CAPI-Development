@@ -31,18 +31,19 @@ CSWeb has **exactly two permission axes**, nothing richer (per `wiki/concepts/CS
 - **No time-window / limited-dataset permission.**
 - **Built-in roles ship as exactly two:** `Administrator` (all 5 dashboards + all dictionary sync) and `Standard User` (no dashboard / cannot log into web UI, but can sync dictionaries via CSEntry + deploy apps).
 
-> **Reconciliation with Privacy Plan §6.3.** §6.3 sketched "Enumerator: sync own cases only" and "STL: review team's cases" — neither is enforceable in CSWeb (no row-level filter). This pack achieves the *intent* differently: enumerators get **no dashboard at all** (they never see the web UI — they only sync from CSEntry), so "no bulk PII export" is enforced by withholding the `data` dashboard, not by row scoping. Supervisors get **`report` only** (aggregate coverage, no full-PII rows). True per-team/per-region scoping would require splitting into per-region dictionaries or doing it downstream in the BI layer — **not** worth it here.
+> **Reconciliation with Privacy Plan §6.3.** §6.3 sketched "Enumerator: sync own cases only" and "STL: review team's cases" — neither is enforceable in CSWeb (no row-level filter). This pack achieves the *intent* differently: enumerators get **no dashboard at all** (they never see the web UI — they only sync from CSEntry), so "no bulk PII export" is enforced by withholding the `data` dashboard, not by row scoping. Supervisors get **`report` only** (aggregate coverage, no full-PII rows) and **no dictionary sync**, so they cannot down-sync case data either. The one carve-out is the dedicated **`supervisor-qa`** role (§2), which adds dictionary sync for the **designated QA supervisor(s)** who run the Supervisor App — keeping the bulk-PII down-sync capability scoped to a named few rather than all ~26 supervisors. True per-team/per-region scoping would require splitting into per-region dictionaries or doing it downstream in the BI layer — **not** worth it here.
 
 ---
 
-## 2. Role design — five custom roles (least privilege)
+## 2. Role design — six custom roles (least privilege)
 
 Create these under the **Roles dashboard**. (Built-in role names can't be edited, so use custom roles for everything except the one server Administrator.)
 
 | Project role | CSWeb role to create | Dashboards | Dictionary sync (F1/F3/F4) | Logs into web UI? | Rationale |
 |---|---|---|---|---|---|
 | **Enumerator (SE)** | `field-sync` | *(none)* | ✅ sync | **No** — CSEntry only | Uploads own tablet's cases; no web UI = no bulk-PII exposure |
-| **Field/Cluster Supervisor (FS, RA)** | `supervisor-monitor` | `report` | ✅ sync | Yes | Coverage monitoring (Sync/Map reports — counts + geo, not full-PII rows); no `data` download |
+| **Field/Cluster Supervisor (FS, RA)** | `supervisor-monitor` | `report` | *(none)* | Yes | Coverage monitoring (Sync/Map reports — counts + geo, server-side; needs no sync); **no `data`, no case down-sync** |
+| **Field QA Supervisor (designated)** | `supervisor-qa` | `report` | ✅ sync | Yes | Runs the **Supervisor App** (`deliverables/CSWeb/supervisor-app/`): GET F1/F3/F4 via desktop Data Manager → CSV report + on-site tablet review. Scoped to the designated QA supervisor(s) so the bulk-PII down-sync is limited, not held by all ~26 supervisors (decided 2026-06-21) |
 | **Data Manager** | `data-manager` | `data` · `report` · `apps` | ✅ sync | Yes | Full review/export (audited) + app deploy. The export-approval point (§6.3 ⟨DECISION⟩) |
 | **Account Admin** | `account-admin` | `users` · `roles` | *(none)* | Yes | Provisions accounts; no data access (separation of duty from Data Manager) |
 | **Server Administrator** | built-in **`Administrator`** | all 5 | all | Yes | **Exactly one named holder** — break-glass; not a daily-use account |
@@ -67,6 +68,7 @@ Notes:
 | Enumerators | `field-sync` | ~100 |
 | Field supervisors | `supervisor-monitor` | ~20 |
 | Cluster RAs | `supervisor-monitor` | ~6 |
+| Field QA supervisors (designated) | `supervisor-qa` | a named subset of the ~26 FS/RA above (these hold `supervisor-qa` **instead of** `supervisor-monitor`) — roster TBD by ASPSI (§6) |
 | Data Manager (+ assistants) | `data-manager` | 1–3 |
 | Account Admin | `account-admin` | 1 |
 | Server Administrator | `Administrator` | 1 |
@@ -76,7 +78,7 @@ Notes:
 ## 4. Provisioning steps (on `csweb.asiansocial.org`)
 
 1. **Log in** as the built-in `admin` (the `<csweb-admin-password>` from the setup runbook).
-2. **Roles dashboard → create the 5 custom roles** in §2 (tick the dashboard boxes + the F1/F3/F4 dictionary sync per the table). *(Dictionaries must exist first — that's #235; create roles after the per-survey upload, or create roles now with dictionary boxes added once #235 lands.)*
+2. **Roles dashboard → create the 6 custom roles** in §2 (tick the dashboard boxes + the F1/F3/F4 dictionary sync per the table — note `supervisor-monitor` gets NO sync; `supervisor-qa` gets sync). *(Dictionaries must exist first — that's #235; create roles after the per-survey upload, or create roles now with dictionary boxes added once #235 lands.)*
 3. **Users dashboard → bulk import** `csweb-users-import-template.csv` (filled with the confirmed roster). CSV format CSWeb expects: `username, first name, last name, user role, password, email, phone` — tick the **header-row** checkbox on import. (First/last name must be **letters only**; password **≥ 8 chars**.)
 4. **Passwords:** generate a unique strong password per user (12+ chars), store in the password manager, distribute over a secure channel (not email-in-clear). CSWeb has no native forced-rotation — set a **rotation cadence** (e.g., at pretest start + mid-fieldwork) as a procedure.
 5. **Lock down the console:** restrict the CSWeb admin URL to known IPs/VPN where the host allows; confirm HTTPS-only (the live box has a valid LE cert).
@@ -86,9 +88,9 @@ Notes:
 
 ## 5. Closure evidence for #236
 
-- [ ] 5 custom roles created (screenshot of Roles dashboard).
+- [ ] 6 custom roles created (screenshot of Roles dashboard).
 - [ ] Roster CSV imported; user count matches the confirmed headcount.
-- [ ] Spot-check: an `field-sync` user **cannot** log into the web UI; a `supervisor-monitor` user sees `report` but **not** `data`; `data-manager` can export.
+- [ ] Spot-check: a `field-sync` user **cannot** log into the web UI; a `supervisor-monitor` user sees `report` but **not** `data` **and cannot down-sync** F1/F3/F4; a `supervisor-qa` user sees `report` and **can** down-sync (GET) F1/F3/F4 but has no `data` dashboard; `data-manager` can export.
 - [ ] Password policy applied; access-review cadence recorded in the Operations SOP.
 
 ---
@@ -98,5 +100,6 @@ Notes:
 1. **The actual personnel roster** (names + field IDs per cluster) — to fill the CSV. The Survey Manual headcount (6 RAs / 20 FS / 100 SE) is from the manual; **confirm it hasn't shifted** (this was also flagged as Survey-Manual open-question #4).
 2. **Who holds the built-in `Administrator`** (break-glass) and **who is `data-manager`** with export rights (the §6.3 export-approval owner).
 3. Whether assistant data managers need `data` (full export) or `report` (monitoring) only.
+4. **Which supervisor(s) get `supervisor-qa`** — the designated field-QA reviewers who run the Supervisor App (down-sync F1/F3/F4 for the coverage/partials/flags report + on-site read-only spot-check). Resolved 2026-06-21 to scope this to a named subset rather than all supervisors; the **names** are the remaining ASPSI input. Confirm they are authorized for PII spot-check (the down-sync exposes full case data locally).
 
 These are surfaced for your go/no-go and routing to ASPSI — not DOH-facing.
