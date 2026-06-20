@@ -113,3 +113,6 @@ deliverables/UHC-Survey-CAPI-Guide/
 deliverables/data-harmonization/etl/raw/
 deliverables/data-harmonization/etl/out/
 __pycache__/
+
+# Generated CSWeb data dumps — large + regenerable (area-name labels via gen-area-names-full-labels.py)
+deliverables/CSWeb/*.sql.gz
