@@ -2,11 +2,12 @@
 sprint: 010
 start: 2026-06-15
 end: 2026-06-19
-status: planning
+status: closed
 sprint_length: 1 week (5 working days)
 deliverable_anchor: UAT Round 4 closeout → field-ready sign-off posture · PhilHealth reinstatement build (F3/F4) · PSA gate outcome confirm
 created: 2026-06-13 — Mode D skeleton at the S009→S010 boundary
-locked: (pending — Mode A lock Mon 2026-06-15)
+locked: never formally locked (Mode A lock missed — see retro Q2); ran as the S010 skeleton
+closed: 2026-06-21 — retrospective filled from git/log evidence (2 days post-end, per retro Q2)
 ---
 
 # Sprint 010 — R4 closeout + PhilHealth reinstatement (+ PSA confirm) — SKELETON, lock Monday
@@ -71,11 +72,13 @@ _Auto-standup writes here daily via the `CAPI Scrum Daily Standup MD` scheduled 
 
 ### 1. Did the sprint goal land? (yes / partial / no — one line why)
 
-_TBD 2026-06-19._
+**Partial — and the real output was off-plan.** R4 closeout advanced hard (select_all→Check Box batches #690/#694/#696/#700, F1/F3/F4 skip-logic fixes #627–#632/#698/#702/#703, the Option-B Q92 consultation-cost roster pilot, F4 Section-C rebuild) but did **not** close — it ran straight past Friday into Jun 20–21; **PhilHealth reinstatement never built** (still blocked on the value-set PNGs); **PSA confirm still unrecorded** (3rd sprint); Goal B (#294/#336) untouched. What actually moved the project was unplanned: the `capi-multiselect` skill, the Option-B roster pilot, then an entire new sub-project (**Supervisor App** spec → Phase-1 build → Phase-2 spec/plan) + the **CSWeb sync dashboard**.
 
 ### 2. What surprised me? (process, not work — max 3 bullets)
 
-_TBD_
+- **The S009 retro's fix didn't take — the exact failure it targeted recurred.** E0-SCRUM-SYNC was *committed as a process change* but never *built*, so `sprint-current.md` sat as an unlocked S010 skeleton all week and this retro is being filled **two days late from git/log evidence** — the identical stale-snapshot pattern. Meta-lesson: a retro action that's only written down is theater; it has to be wired into the cadence/tooling or behavior doesn't change.
+- **"Off-plan is where the value is" didn't just repeat — it compounded (3rd sprint running).** The committed items (R4 close / PhilHealth / PSA) were overtaken by higher-value emergent work (multi-select skill, roster pilot, the whole Supervisor App). When the plan mis-predicts the work three sprints in a row, the planning *frame* is wrong, not the execution.
+- **"R4 closeout" has no closing condition.** Each fix surfaces new structure (checkbox → roster → Section-C rebuild → break-off/disposition), so UAT behaves like an open development stream, not a bug queue that converges. Calling it "closeout" mis-frames a workstream as a milestone.
 
 ### 3. Deadline exposure check — D2 / D3 / Tranche slip days this sprint
 
@@ -83,4 +86,4 @@ _Informational only (out of Data Programmer scope per CSA D1–D6)._
 
 ### 4. One thing to change in Sprint 011
 
-_TBD_
+**Build the scrum-sync fix instead of re-committing it, and re-frame UAT as a workstream not a milestone.** (a) Actually implement **E0-SCRUM-SYNC** — the 08:30 generator flags drift when `log.md` is newer than `sprint-current.md` by >2 days, and sprint-state is synced mid-week + at close (no more 2-days-late retros). (b) Stop planning "R4 closeout" — make it a standing **CAPI field-readiness** workstream with a thin committed slice + an explicit "emergent UAT/feature" capacity bucket, and define a real exit criterion (e.g. N consecutive days with no new tester-blocking finding) instead of "close R4." (c) **Name the valuable emergent work** (Supervisor App, multi-select) in the plan so it stops running as invisible capacity.
