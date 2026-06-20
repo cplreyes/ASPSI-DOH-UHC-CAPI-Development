@@ -168,6 +168,31 @@ def build_f3_field_control():
     extra = [
         numeric("PATIENT_TYPE", "Type of Patient", length=1,
                 value_set_options=[("Outpatient", "1"), ("Inpatient", "2")]),
+        # #515 break-off control — shares the case-start (PATIENT_TYPE) screen, so
+        # it sits in the case tree from the very first field. Its postproc routes a
+        # non-Continue choice straight to the closing Result-of-Visit, letting the
+        # enumerator end a withdrawn/postponed interview without walking every
+        # required question. Default "Continue" is set in logic (BREAKOFF preproc).
+        numeric("BREAKOFF",
+                "Interview status (leave as Continue unless ending the interview early)",
+                length=1,
+                value_set_options=[
+                    ("Continue interview",        "1"),
+                    ("Respondent withdrew",       "2"),
+                    ("Postponed / reschedule",    "3"),
+                    ("Stop — other (incomplete)", "4"),
+                ]),
+        # #561 completeness sentinel — OFF-FORM, set in logic only: 0 In progress at
+        # case open, 1 Completed when the Result-of-Visit finalises to a completed
+        # code, 2 Partial/broke-off otherwise. Lets the Supervisor App + CSWeb exports
+        # tell complete from partial even for a force-quit case (which never reaches
+        # the closing form, so it stays 0). See docs/.../supervisor-app-design.md.
+        numeric("CASE_DISPOSITION", "Case disposition (auto)", length=1,
+                value_set_options=[
+                    ("In progress",             "0"),
+                    ("Completed",               "1"),
+                    ("Partial / not completed", "2"),
+                ]),
     ]
     return build_field_control(survey_code="F3", extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Patient",

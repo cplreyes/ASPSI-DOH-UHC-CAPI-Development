@@ -32,6 +32,9 @@ KNOWN_OFFFORM = {
     # synced inside the case; binary items cannot be placed on a form, so it is
     # off-form by design (capture is driven from CAPTURE_VERIFICATION_PHOTO).
     "VERIFICATION_PHOTO_IMAGE",
+    # #561 completeness sentinel (F3): set in logic at case open / closing / break-off,
+    # never entered on a form — read by the Supervisor App to tell complete from partial.
+    "CASE_DISPOSITION",
 }
 
 

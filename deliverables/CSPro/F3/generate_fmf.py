@@ -68,7 +68,7 @@ FORM_W = 806
 # Sections G/H). All other case-start metadata removed 2026-06-12; LANGUAGE_USED
 # is off-form (set in the QUESTIONNAIRE_NUMBER postproc).
 FIELD_CONTROL_CASE_START = {
-    "PATIENT_TYPE",
+    "PATIENT_TYPE", "BREAKOFF",   # #515: break-off control on the case-start screen
 }
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
@@ -174,7 +174,7 @@ FORM_PLAN = [
 
 # Binary/computed items deliberately kept OFF every form (so the orphan check below
 # does not flag them). VERIFICATION_PHOTO_IMAGE holds the synced photo bytes.
-_OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE"}
+_OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE", "CASE_DISPOSITION"}  # #561: off-form completeness sentinel
 
 
 def _filter_items(items, spec):

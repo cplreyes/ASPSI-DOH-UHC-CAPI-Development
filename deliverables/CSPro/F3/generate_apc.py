@@ -646,6 +646,9 @@ CONTROL_PROCS = """\
 PROC QUESTIONNAIRE_NUMBER
 postproc
   LANGUAGE_USED = getlanguage();   { record interview language at case start (§15.E) }
+  if not (CASE_DISPOSITION in 1, 2) then
+    CASE_DISPOSITION = 0;   { #561: mark In Progress at case open; a force-quit case keeps 0 }
+  endif;
   REGION_CODE            = int(QUESTIONNAIRE_NUMBER / 10000000000);
   PROVINCE_HUC_CODE      = int(QUESTIONNAIRE_NUMBER / 100000000) % 100;
   CITY_MUNICIPALITY_CODE = int(QUESTIONNAIRE_NUMBER / 100000) % 1000;
@@ -1444,8 +1447,51 @@ def skip_proc(field, cond, target):
     return (f"PROC {field}\npostproc\n  if {cond} then\n    skip to {target};\n  endif;")
 
 
+DISPOSITION_PROCS = """\
+{ ---- #515 break-off + #561 disposition -------------------------------------------
+  BREAKOFF is the case-start "interview status" control (shares the PATIENT_TYPE
+  screen, so it is in the case tree from the first field, and the enumerator can tap
+  back to it mid-interview). Leaving it "Continue" (1) is a no-op. Any other choice
+  records the matching Result-of-Visit disposition and SKIPS straight to the closing
+  Result-of-Visit field (the proven Q162_REFERRED jump) — so a withdrawn / postponed /
+  stopped interview reaches the closing form without walking every required question
+  (R4 #515). CASE_DISPOSITION (off-form) is the completeness sentinel the Supervisor
+  App + CSWeb exports read (R4 #561): 0 In Progress (set at case open), 1 Completed,
+  2 Partial. }
+PROC BREAKOFF
+preproc
+  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue" }
+postproc
+  if BREAKOFF <> 1 then
+    if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 6; endif;   { Withdraw Participation/Consent }
+    if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Postponed }
+    if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Incomplete }
+    CASE_DISPOSITION = 2;   { partial / broke off }
+    skip to ENUM_RESULT_FINAL_VISIT;
+  endif;
+
+PROC ENUM_RESULT_FINAL_VISIT
+postproc
+  { #561: classify from the final Result-of-Visit. Completed codes 1/2/5 -> Completed;
+    3 Postponed, 4 Incomplete, 6 Withdraw -> Partial. }
+  if ENUM_RESULT_FINAL_VISIT in 1, 2, 5 then
+    CASE_DISPOSITION = 1;
+  else
+    CASE_DISPOSITION = 2;
+  endif;
+  { #515: a Postponed (3) / Withdraw (6) visit had no interview, so there is nothing to
+    photograph — end the case here instead of walking into the Verification Photo form,
+    whose trigger field would otherwise loop on an out-of-range stop (device-confirmed
+    2026-06-21). Codes 1/2/4/5 fall through to the photo as before (this matches the
+    CAPTURE_VERIFICATION_PHOTO gate exactly). }
+  if not (ENUM_RESULT_FINAL_VISIT in 1, 2, 4, 5) then
+    endlevel;   { statement form (no parens) — strict packager rejects endlevel() }
+  endif;
+"""
+
+
 def main():
-    parts = [HEADER, "", CONTROL_PROCS, "", BRANCHING, "", EXTRA_PROCS, "",
+    parts = [HEADER, "", CONTROL_PROCS, "", DISPOSITION_PROCS, "", BRANCHING, "", EXTRA_PROCS, "",
              VALIDATION_PROCS, "", Q92_ROSTER_PROCS, "",   # Q92 roster (Option B pilot)
              Q971_ROSTER_PROCS, "",   # Q97.1 CheckBox + roster (Option B Shape B)
              # Option B fan-out (2026-06-19): the remaining F3 cost-matrix cluster.
@@ -1453,7 +1499,8 @@ def main():
              Q972_ROSTER_PROCS, "", Q98_ROSTER_PROCS, "",         # Section G all-amount
              Q107_ROSTER_PROCS, "", Q109_ROSTER_PROCS, "",        # Section H all-amount
              Q112_ROSTER_PROCS, "", Q113_ROSTER_PROCS, ""]        # Section H all-amount
-    covered = {"Q88_WHY_VISIT", "Q105_REASON",                    # branching PROCs
+    covered = {"BREAKOFF", "ENUM_RESULT_FINAL_VISIT", "CASE_DISPOSITION",  # #515/#561 disposition PROCs
+               "Q88_WHY_VISIT", "Q105_REASON",                    # branching PROCs
                "Q63_HAS_USUAL_FACILITY", "Q77_KON_REGISTERED",
                "Q159_BRAND_GEN_BOUGHT", "Q162_REFERRED",  # EXTRA_PROCS (#529: Q46_BENEFITS_O01 gone — Q46 is now a Check Box, gate folded into its checkbox PROC)
                # #671: Q82_KON_WHY_NOT_REG_O01 gone — Q82 is now a Check Box base (in CHECKBOX_COVERED); not-registered gate folded into its checkbox PROC.

@@ -1049,6 +1049,367 @@
               ]
             },
             {
+              "name": "BREAKOFF",
+              "labels": [
+                {
+                  "text": "Interview status (leave as Continue unless ending the interview early)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Interview status (leave as Continue unless ending the interview early)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Interview status (leave as Continue unless ending the interview early)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Interview status (leave as Continue unless ending the interview early)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Interview status (leave as Continue unless ending the interview early)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Interview status (leave as Continue unless ending the interview early)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "BREAKOFF_VS1",
+                  "labels": [
+                    {
+                      "text": "Interview status (leave as Continue unless ending the interview early)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Interview status (leave as Continue unless ending the interview early)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Interview status (leave as Continue unless ending the interview early)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Interview status (leave as Continue unless ending the interview early)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Interview status (leave as Continue unless ending the interview early)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Interview status (leave as Continue unless ending the interview early)",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Continue interview",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Continue interview",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Continue interview",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Continue interview",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Continue interview",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Continue interview",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Respondent withdrew",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Respondent withdrew",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Respondent withdrew",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Respondent withdrew",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Respondent withdrew",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Respondent withdrew",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Postponed / reschedule",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Postponed / reschedule",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Postponed / reschedule",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Postponed / reschedule",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Postponed / reschedule",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Postponed / reschedule",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Stop \u2014 other (incomplete)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Stop \u2014 other (incomplete)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Stop \u2014 other (incomplete)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Stop \u2014 other (incomplete)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Stop \u2014 other (incomplete)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Stop \u2014 other (incomplete)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CASE_DISPOSITION",
+              "labels": [
+                {
+                  "text": "Case disposition (auto)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Case disposition (auto)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Case disposition (auto)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Case disposition (auto)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Case disposition (auto)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Case disposition (auto)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CASE_DISPOSITION_VS1",
+                  "labels": [
+                    {
+                      "text": "Case disposition (auto)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Case disposition (auto)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Case disposition (auto)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Case disposition (auto)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Case disposition (auto)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Case disposition (auto)",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "In progress",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "In progress",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "In progress",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "In progress",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "In progress",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "In progress",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "0"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Completed",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Natapos",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Completed",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Partial / not completed",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Partial / not completed",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Partial / not completed",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Partial / not completed",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Partial / not completed",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Partial / not completed",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "REGION_CODE",
               "labels": [
                 {

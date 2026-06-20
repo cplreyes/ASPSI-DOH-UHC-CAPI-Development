@@ -26,6 +26,7 @@ Level=1
 Size=806,300
   
 Item=PATIENT_TYPE
+Item=BREAKOFF
   
 [EndForm]
   
@@ -763,6 +764,18 @@ Form=2
 [Text]
 Position=50,30,330,46
 Text=Type of Patient
+ 
+  
+[Field]
+Name=BREAKOFF
+Position=350,57,365,77
+Item=BREAKOFF,PATIENTSURVEY_DICT
+DataCaptureType=RadioButton
+Form=2
+  
+[Text]
+Position=50,60,330,76
+Text=Interview status (leave as Continue unless ending the interview early)
  
   
 [EndGroup]

@@ -143,6 +143,9 @@ CONTROL_PROCS = """\
 PROC QUESTIONNAIRE_NUMBER
 postproc
   LANGUAGE_USED = getlanguage();   { record interview language at case start (§15.E) }
+  if not (CASE_DISPOSITION in 1, 2) then
+    CASE_DISPOSITION = 0;   { #561: mark In Progress at case open; a force-quit case keeps 0 }
+  endif;
   REGION_CODE            = int(QUESTIONNAIRE_NUMBER / 10000000000);
   PROVINCE_HUC_CODE      = int(QUESTIONNAIRE_NUMBER / 100000000) % 100;
   CITY_MUNICIPALITY_CODE = int(QUESTIONNAIRE_NUMBER / 100000) % 1000;
@@ -1167,11 +1170,52 @@ def skip_proc(field, cond, target):
     return f"PROC {field}\npostproc\n  if {cond} then\n    skip to {target};\n  endif;"
 
 
+DISPOSITION_PROCS = """\
+{ ---- #515 break-off + #561 disposition (F4) ----------------------------------------
+  BREAKOFF is the case-start "Interview status" control (its own first form, so it is in
+  the case tree from the first field, and the enumerator can tap back to it mid-interview).
+  Leaving it "Continue" (1) is a no-op. Any other choice records the matching Result-of-
+  Visit disposition and SKIPS to the closing Result-of-Visit field, so a withdrawn /
+  postponed / stopped visit reaches the closing form without walking every required
+  question (R4 #515). CASE_DISPOSITION (off-form) is the completeness sentinel the
+  Supervisor App + CSWeb exports read (R4 #561): 0 In Progress, 1 Completed, 2 Partial.
+  F4 result codes: 1 Completed, 2 Postponed, 3 Incomplete, 4 Withdraw. }
+PROC BREAKOFF
+preproc
+  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue" }
+postproc
+  if BREAKOFF <> 1 then
+    if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Withdraw Participation/Consent }
+    if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed }
+    if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Incomplete }
+    CASE_DISPOSITION = 2;   { partial / broke off }
+    skip to ENUM_RESULT_FINAL_VISIT;
+  endif;
+
+PROC ENUM_RESULT_FINAL_VISIT
+postproc
+  { #561: classify from the final Result-of-Visit. F4 Completed = code 1 only. }
+  if ENUM_RESULT_FINAL_VISIT = 1 then
+    CASE_DISPOSITION = 1;
+  else
+    CASE_DISPOSITION = 2;
+  endif;
+  { #515: a Postponed (2) / Withdraw (4) visit had no interview, so there is nothing to
+    photograph — end the case here instead of walking into the Verification Photo form,
+    whose trigger field would otherwise loop on an out-of-range stop. Codes 1/3 fall
+    through to the photo as before (this matches the CAPTURE_VERIFICATION_PHOTO gate). }
+  if not (ENUM_RESULT_FINAL_VISIT in 1, 3) then
+    endlevel;
+  endif;
+"""
+
+
 def main():
     names = dcf_item_names()
-    parts = [HEADER, "", CONTROL_PROCS, "", ROSTER_PROCS, "", PRIV_ROSTER_PROCS, "",
+    parts = [HEADER, "", CONTROL_PROCS, "", DISPOSITION_PROCS, "", ROSTER_PROCS, "", PRIV_ROSTER_PROCS, "",
              BILL_VALIDATION, "", EXTRA_PROCS, "", VALIDATION_PROCS, ""]
-    covered = {"MEMBER_LINE_NO", "Q34_RELATIONSHIP", "Q35_HAS_DISABILITY",
+    covered = {"BREAKOFF", "ENUM_RESULT_FINAL_VISIT", "CASE_DISPOSITION",  # #515/#561 disposition PROCs
+               "MEMBER_LINE_NO", "Q34_RELATIONSHIP", "Q35_HAS_DISABILITY",
                "Q36_SPECIFY_DISABILITY", "Q37_PWD_CARD",  # #604: Q36 now has a bespoke skip PROC
                "Q45_PHILHEALTH_REG",  # #563/#565: bespoke roster skip (ROSTER_PROCS)
                "PRIV_MEMBER_LINE_NO", "Q48_OTHER_INS_REG",  # #525/#612/#613: priv-ins 2nd pass

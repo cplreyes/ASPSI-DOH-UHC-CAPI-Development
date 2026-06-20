@@ -83,7 +83,30 @@ def _cb_codes(options):
 def build_f4_field_control():
     # HH_LISTING_NO removed 2026-06-12 (unnecessary input; the 12-digit
     # Questionnaire Number already identifies the case). FC = paper block only.
-    return build_field_control(survey_code="F4", extra_items=derived_geo_code_items(),
+    extra = [
+        # #515 break-off control — F4 has no Patient-Type case-start screen, so this gets
+        # its OWN "Interview status" form placed FIRST (see generate_fmf), making it
+        # reachable from the case tree at any point. Default "Continue" (BREAKOFF preproc);
+        # a non-Continue choice routes straight to the closing Result-of-Visit.
+        numeric("BREAKOFF",
+                "Interview status (leave as Continue unless ending the interview early)",
+                length=1,
+                value_set_options=[
+                    ("Continue interview",        "1"),
+                    ("Respondent withdrew",       "2"),
+                    ("Postponed / reschedule",    "3"),
+                    ("Stop — other (incomplete)", "4"),
+                ]),
+        # #561 completeness sentinel — off-form: 0 In progress at case open, 1 Completed
+        # when the Result-of-Visit finalises to Completed (F4 code 1), 2 Partial otherwise.
+        numeric("CASE_DISPOSITION", "Case disposition (auto)", length=1,
+                value_set_options=[
+                    ("In progress",             "0"),
+                    ("Completed",               "1"),
+                    ("Partial / not completed", "2"),
+                ]),
+    ]
+    return build_field_control(survey_code="F4", extra_items=extra + derived_geo_code_items(),
                                date_label_entity="the Household",
                                result_options=ENUM_RESULT_OPTIONS_F4)
 

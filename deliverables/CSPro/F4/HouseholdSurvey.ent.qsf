@@ -186,6 +186,36 @@ questions:
             <p>Language used for the interview</p>
           WAR: |
             <p>Language used for the interview</p>
+  - name: HOUSEHOLDSURVEY_DICT.BREAKOFF
+    conditions:
+      - questionText:
+          EN: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          FIL: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          BCL: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          BIS: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          CEB: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+          WAR: |
+            <p>Interview status (leave as Continue unless ending the interview early)</p>
+  - name: HOUSEHOLDSURVEY_DICT.CASE_DISPOSITION
+    conditions:
+      - questionText:
+          EN: |
+            <p>Case disposition (auto)</p>
+          FIL: |
+            <p>Case disposition (auto)</p>
+          BCL: |
+            <p>Case disposition (auto)</p>
+          BIS: |
+            <p>Case disposition (auto)</p>
+          CEB: |
+            <p>Case disposition (auto)</p>
+          WAR: |
+            <p>Case disposition (auto)</p>
   - name: HOUSEHOLDSURVEY_DICT.REGION_CODE
     conditions:
       - questionText:

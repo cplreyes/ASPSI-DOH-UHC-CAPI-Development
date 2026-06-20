@@ -59,6 +59,9 @@ FORM_W = 806
 # Case-start metadata form removed 2026-06-12 — all its items (interviewer ID,
 # timestamps, AAPOR, consent, HH listing) deleted; LANGUAGE_USED is off-form
 # (set in the QUESTIONNAIRE_NUMBER postproc). The FORM_PLAN no longer emits it.
+FIELD_CONTROL_CASE_START = {
+    "BREAKOFF",   # #515: break-off control on its own case-start screen
+}
 FIELD_CONTROL_CASE_END = {
     "SURVEY_TEAM_LEADER_S_NAME", "ENUMERATOR_S_NAME",
     "FIELD_VALIDATED_BY", "FIELD_EDITED_BY",
@@ -68,6 +71,8 @@ FIELD_CONTROL_CASE_END = {
 
 
 FORM_PLAN = [
+    ("Interview status",   # #515: break-off control, first form (case-tree reachable)
+     [("FIELD_CONTROL", {"names": FIELD_CONTROL_CASE_START})]),
     ("FC Geographic ID + HH GPS Capture",
      # Single-number redesign (2026-06-11): household region/province/city are
      # derived from QUESTIONNAIRE_NUMBER (off-form); show the read-only PSGC
@@ -129,7 +134,7 @@ FORM_PLAN = [
 
 # Binary/computed items deliberately kept OFF every form (so the orphan check below
 # does not flag them). VERIFICATION_PHOTO_IMAGE holds the synced photo bytes.
-_OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE"}
+_OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE", "CASE_DISPOSITION"}  # #561: off-form completeness sentinel
 
 
 def _filter_items(items, spec):
