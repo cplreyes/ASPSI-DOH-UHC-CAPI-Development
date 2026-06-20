@@ -112,8 +112,8 @@ FORM_PLAN = [
      [("Q92_PAY_ROSTER", None)]),
     ("G. Outpatient Care (cont.)",
      [("G_OUTPATIENT_CARE_2", None)]),
-    ("G. Cost of laboratory test/s — amount by source",
-     [("Q94_PAY_ROSTER", None)]),
+    ("G. Cost of laboratory tests — per test (Q94)",
+     [("Q94_LAB_ROSTER", None)]),
     ("G. Outpatient Care (cont. 2)",
      [("G_OUTPATIENT_CARE_3", None)]),
     ("G. Cost of prescribed medicines — amount by source",
@@ -306,7 +306,7 @@ _NO_AUTOGROUP_RECORDS = {
     "Q92_PAY_ROSTER",   # Option B (pilot): emitted as a roster grid, never auto-blocked
     "Q971_ROSTER",      # Option B Shape B (2026-06-19): Q97.1 roster grid, never auto-blocked
     # Option B fan-out (2026-06-19): the rest of the F3 cost-matrix cluster's roster grids.
-    "Q94_PAY_ROSTER", "Q96_PAY_ROSTER", "Q972_PAY_ROSTER", "Q98_PAY_ROSTER",   # Section G
+    "Q94_LAB_ROSTER", "Q96_PAY_ROSTER", "Q972_PAY_ROSTER", "Q98_PAY_ROSTER",   # Section G (Q94 per-lab #450)
     "Q107_PAY_ROSTER", "Q109_PAY_ROSTER", "Q112_PAY_ROSTER", "Q113_PAY_ROSTER", # Section H
 }
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
@@ -344,7 +344,7 @@ _CHECKBOX_FIELDS = {
     "Q971_SOURCES",
     # Option B fan-out (2026-06-19): the rest of the F3 cost-matrix cluster's tick-lists,
     # each driving its own roster amount grid (miss any here -> ships single-select = loss).
-    "Q94_SOURCES", "Q96_SOURCES", "Q972_SOURCES", "Q98_SOURCES",        # Section G
+    "Q96_SOURCES", "Q972_SOURCES", "Q98_SOURCES",        # Section G (Q94 now per-lab roster #450)
     "Q107_SOURCES", "Q109_SOURCES", "Q112_SOURCES", "Q113_SOURCES",     # Section H
 }
 _CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share the checkbox screen

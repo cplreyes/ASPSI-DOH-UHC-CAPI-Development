@@ -96,7 +96,7 @@ CHECKBOX = {"Q148_CONDITIONS",
             # F3 Option B fan-out (2026-06-19): the rest of the F3 cost-matrix cluster's
             # tick-lists driving their roster amount grids. Miss any here and optimize
             # demotes it to single-select DropDown = multi-select data loss (silent).
-            "Q94_SOURCES", "Q96_SOURCES", "Q972_SOURCES", "Q98_SOURCES",       # Section G
+            "Q96_SOURCES", "Q972_SOURCES", "Q98_SOURCES",       # Section G (Q94 now per-lab roster #450)
             "Q107_SOURCES", "Q109_SOURCES", "Q112_SOURCES", "Q113_SOURCES",    # Section H
             # F4 #529 conversions (17 'Household Survey' select_all -> Check Box).
             # Note: Q53/Q58/Q121 names overlap F3's set but are distinct fields per

@@ -2766,66 +2766,66 @@ questions:
             <p>93. Did you have any of the following laboratory tests done during your outpatient care? — Other (specify) text</p>
           WAR: |
             <p>93. Did you have any of the following laboratory tests done during your outpatient care? — Other (specify) text</p>
-  - name: PATIENTSURVEY_DICT.Q94_SOURCES
+  - name: PATIENTSURVEY_DICT.Q94_LAB_LINE
     conditions:
       - questionText:
           EN: |
-            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           FIL: |
-            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BCL: |
-            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BIS: |
-            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           CEB: |
-            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           WAR: |
-            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_LINE
+            <p>94. Lab payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+  - name: PATIENTSURVEY_DICT.Q94_LAB_CODE
     conditions:
       - questionText:
           EN: |
-            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           FIL: |
-            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BCL: |
-            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BIS: |
-            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           CEB: |
-            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           WAR: |
-            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_SRC
+            <p>94. Laboratory test (auto-filled from the tests ticked in Q93)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+  - name: PATIENTSURVEY_DICT.Q94_LAB_PAY
     conditions:
       - questionText:
           EN: |
-            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           FIL: |
-            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BCL: |
-            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BIS: |
-            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           CEB: |
-            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           WAR: |
-            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_AMT
+            <p>94. How was the cost of this laboratory test paid?</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+  - name: PATIENTSURVEY_DICT.Q94_LAB_AMT
     conditions:
       - questionText:
           EN: |
-            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           FIL: |
-            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BCL: |
-            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BIS: |
-            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           CEB: |
-            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           WAR: |
-            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid out-of-pocket for this laboratory test (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
   - name: PATIENTSURVEY_DICT.Q95_PRESCRIBED
     conditions:
       - questionText:

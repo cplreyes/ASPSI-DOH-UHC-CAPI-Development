@@ -406,9 +406,11 @@ def build_section_d():
         ("Less than a month", "1"), ("1-2 months", "2"), ("3-4 months", "3"),
         ("5-6 months", "4"), ("More than six months", "5"),
     ]
-    # Q63 — PENDING DESIGN days vs months. Default: months (matches printed buckets).
-    Q63_LABEL_SUFFIX = " [PENDING DESIGN: printed text says days, buckets are months]"
-    Q63_BUCKETS = Q62_TRANCHE_INTERVAL  # same shape until ASPSI confirms
+    # Q63 — resolved 2026-06-20 (#527) to MONTHS per the authoritative Apr-20 paper, which
+    # reads "How many month/s did you wait..." with months buckets (question text + buckets
+    # agree). The old "days" wording + [PENDING DESIGN] placeholder was a stale-version
+    # artifact (Apr-08) that was leaking on-screen to enumerators.
+    Q63_BUCKETS = Q62_TRANCHE_INTERVAL  # months buckets, matches the paper
 
     # checkbox_multiselect (#529): fixed-width 2-char codes, Other=99 (matches the
     # Q49/Q50/Q53/Q58 checkbox convention so pos("99",field) can't false-match).
@@ -546,7 +548,7 @@ def build_section_d():
                             "62. On average, how long is the typical time interval between tranches releases to the facility?",
                             Q62_TRANCHE_INTERVAL))
     items.append(select_one("Q63_ACCRED_WAIT",
-                            "63. How many days did you wait from application submission to accreditation approval?" + Q63_LABEL_SUFFIX,
+                            "63. How many month/s did you wait from application submission to accreditation approval?",
                             Q63_BUCKETS))
     items.extend(checkbox_multiselect("Q64_APPLY_REASON",
                             "64. Why did you apply to become a YAKAP/Konsulta provider?",

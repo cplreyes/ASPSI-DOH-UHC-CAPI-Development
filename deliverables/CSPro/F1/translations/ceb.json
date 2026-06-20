@@ -337,7 +337,6 @@
   "61. Were there delays in receiving capitation tranches?": "Aduna bay mga kalangay sa pagdawat sa capitation tranches?",
   "61.1. If yes, what was/were the reasons for the delay?": "Kung Oo, unsa man ang rason/mga rason para sa kalangay?",
   "62. On average, how long is the typical time interval between tranches releases to the facility?": "Kasagaran, unsa man kadugay ang time interval tali sa pag release sa tranches ngadto sa pasilidad?",
-  "63. How many days did you wait from application submission to accreditation approval? [PENDING DESIGN: printed text says days, buckets are months]": "Pila ka bulan ang inyo gihuwat gikan sa pag sumite sa application ngadto sa accreditation approval?",
   "64. Why did you apply to become a YAKAP/Konsulta provider? — Aligns with facility's mission": "Aligns with facility's mission (I.e. mga tumong sa UHC nahiuyon sa facility)",
   "64. Why did you apply to become a YAKAP/Konsulta provider? — Encouraged by LGU": "Gidasig sa LGU",
   "64. Why did you apply to become a YAKAP/Konsulta provider? — Incentives (capitation/payment for registered patients)": "Incentives (I.e. facilty makadawat ug capitation/payment para sa mga naka rehistro nga pasyente)",
@@ -567,5 +566,6 @@
   "Yes, this was pre-existing, but it has significantly improved due to the UHC Act": "Oo, kini anaa na, pero niuswag pag-ayo tungod sa UHC Act",
   "Yes, to DOH Information System only": "Oo, sa DOH Information System lang",
   "Yes, to PhilHealth Dashboard only": "Oo, sa PhilHealth Dashboard lang",
-  "Yes, to both DOH Information System and PhilHealth Dashboard": "Oo, pareho sa DOH Inoformation System ug PhilHealth Dashboard"
+  "Yes, to both DOH Information System and PhilHealth Dashboard": "Oo, pareho sa DOH Inoformation System ug PhilHealth Dashboard",
+  "63. How many month/s did you wait from application submission to accreditation approval?": "Pila ka bulan ang inyo gihuwat gikan sa pag sumite sa application ngadto sa accreditation approval?"
 }

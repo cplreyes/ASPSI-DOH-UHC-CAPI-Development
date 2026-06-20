@@ -485,6 +485,17 @@ postproc
     errmsg("Respondent is not the household head. Confirm they are a household decision-maker per the sampling protocol before continuing.");
   endif;
 
+{ ---- #664: Q135 (ZBB out-of-pocket) is asked ONLY if the most-recent hospitalization was in
+       a DOH-retained hospital — the paper labels it "[Ask only if they went to a DOH-retained
+       hospital]". Gate on Q130 = 2; otherwise skip to Q136. Parallels Q131 (NBB OOP), which the
+       #661 rule gates the same way. Q130 = notappl (not confined) also falls through the gate
+       (notappl <> 2 is true) -> Q135 correctly skipped. ---- }
+PROC Q135_ZBB_OOP
+preproc
+  if Q130_HOSPITAL_TYPE <> 2 then
+    skip to Q136_MAIFIP_HEARD;
+  endif;
+
 { ---- 'Other (specify)' enforcement -- Q50 roster insurance + Q194 funds (audit 2026-06-11) ---- }
 PROC Q50_PRIVATE_INS_OTHER_TXT
 preproc
@@ -1897,6 +1908,7 @@ postproc
 PROC Q167_HOUSING_CONSUMED
 postproc
   if Q167_HOUSING_CONSUMED = 2 then
+    errmsg("Housing should almost always have a value — actual rent if rented, or the estimated value of rent if owned. If the household has housing, go back and mark Yes and enter the amount.");
     Q167_HOUSING_PURCHASED_PHP = 0;   { item not consumed -> no spend }
     protect(Q167_HOUSING_PURCHASED_PHP, true);
     Q167_HOUSING_INKIND_PHP = 0;   { item not consumed -> no spend }

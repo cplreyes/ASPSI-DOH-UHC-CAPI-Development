@@ -4195,92 +4195,92 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Consumed by household in reference period?</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Consumed by household in reference period?</p>
           FIL: |
-            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>Paninigarilyo (hal. sigarilyo, sigarilyo na tabako, at vape), at/o mga produktong tabako na hindi sinisigarilyo (hal. chewing tobacco, betel nut)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>Paninigarilyo (hal. sigarilyo, sigarilyo na tabako, at vape), at/o mga produktong tabako na hindi sinisigarilyo (hal. chewing tobacco, betel nut)</p>
           BCL: |
-            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>Sigarilyo (hal. sigarilyo, cigars, asin vape), asin/or smokeless tobacco products (e.g., chewing tobacco, betel nut)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>Sigarilyo (hal. sigarilyo, cigars, asin vape), asin/or smokeless tobacco products (e.g., chewing tobacco, betel nut)</p>
           BIS: |
-            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>Panigarilyo (pananglitan: sigarilyo, tabako, vape) ug/o smokeless tobacco products (pananglitan: chewing tobacco, mama/betel nut)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>Panigarilyo (pananglitan: sigarilyo, tabako, vape) ug/o smokeless tobacco products (pananglitan: chewing tobacco, mama/betel nut)</p>
           CEB: |
-            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>Pagpanigarilyo (pananglitan, sigarilyo, tabako, ug vape), ug/o mga produkto sa tabako nga dili aso (pananglitan, chewing tobacco, mamaon)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>Pagpanigarilyo (pananglitan, sigarilyo, tabako, ug vape), ug/o mga produkto sa tabako nga dili aso (pananglitan, chewing tobacco, mamaon)</p>
           WAR: |
-            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>Pagsigarilyo (pananglitan, sigarilyo ngan vape), ngan/o waray aso nga mga produkto nga tabako (pananglitan, tabako nga gin-uuyam, betel nut)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>The next questions will focus on your household’s consumption of non-food and non-health expenses.</p><p>Pagsigarilyo (pananglitan, sigarilyo ngan vape), ngan/o waray aso nga mga produkto nga tabako (pananglitan, tabako nga gin-uuyam, betel nut)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q159_SMOKING_TOBACCO_PURCHASED_PHP
     conditions:
       - questionText:
           EN: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q159_SMOKING_TOBACCO_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q160_PERSONAL_CARE_CONSUMED
     conditions:
       - questionText:
           EN: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Consumed by household in reference period?</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Consumed by household in reference period?</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>Mga produktong pang-personal na pangangalaga (hal. shampoo, gupit)</p>
+            <p>Mga produktong pang-personal na pangangalaga (hal. shampoo, gupit)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>Mga personal care products (e.g., shampoo, haircut)</p>
+            <p>Mga personal care products (e.g., shampoo, haircut)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>Personal care products (pananglitan: shampoo, haircut)</p>
+            <p>Personal care products (pananglitan: shampoo, haircut)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>Mga produkto sa personal nga pag-atiman (pananglitan, shampoo, pagpagupit)</p>
+            <p>Mga produkto sa personal nga pag-atiman (pananglitan, shampoo, pagpagupit)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>Mga produkto ha pag-ataman han kalugaringon (pananglitan, shampoo, pag-arot)</p>
+            <p>Mga produkto ha pag-ataman han kalugaringon (pananglitan, shampoo, pag-arot)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q160_PERSONAL_CARE_PURCHASED_PHP
     conditions:
       - questionText:
           EN: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q160_PERSONAL_CARE_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q161_HOUSEHOLD_CLEAN_CONSUMED
     conditions:
       - questionText:
@@ -4555,182 +4555,182 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Consumed by household in reference period?</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Consumed by household in reference period?</p>
           FIL: |
-            <p>Pabahay (aktwal na renta, tinatayang halaga ng renta kung pag-aari)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>Pabahay (aktwal na renta, tinatayang halaga ng renta kung pag-aari)</p>
           BCL: |
-            <p>Paharong (parentahan, estimated value of rent if owned)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>Paharong (parentahan, estimated value of rent if owned)</p>
           BIS: |
-            <p>Housing (aktwal nga abang, o banabana nga kantidad sa abang kung kaugalingon ang balay)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>Housing (aktwal nga abang, o banabana nga kantidad sa abang kung kaugalingon ang balay)</p>
           CEB: |
-            <p>Balay (tinuod nga abang, banabana nga kantidad sa abang kung gipanag-iya)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>Balay (tinuod nga abang, banabana nga kantidad sa abang kung gipanag-iya)</p>
           WAR: |
-            <p>Pabalay (aktuwal nga mga arkila, ginbabanabana nga kantidad han arkila kon gintatag-iya)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>Pabalay (aktuwal nga mga arkila, ginbabanabana nga kantidad han arkila kon gintatag-iya)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q167_HOUSING_PURCHASED_PHP
     conditions:
       - questionText:
           EN: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q167_HOUSING_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q168_RECREATION_6M_CONSUMED
     conditions:
       - questionText:
           EN: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Consumed by household in reference period?</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Consumed by household in reference period?</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>Mga kagamitang pang-rekreasyon, pangkultura, pangrelihiyon, pampalakasan, at pang-aliwan</p>
+            <p>Mga kagamitang pang-rekreasyon, pangkultura, pangrelihiyon, pampalakasan, at pang-aliwan</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>Recreational, cultural, religious, sporting asin entertainment devices</p>
+            <p>Recreational, cultural, religious, sporting asin entertainment devices</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>Recreational, cultural, religious, sporting, ug entertainment devices</p>
+            <p>Recreational, cultural, religious, sporting, ug entertainment devices</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>Mga gamit para sa kalingawan, kultura, relihiyoso, isports ug alingawngaw</p>
+            <p>Mga gamit para sa kalingawan, kultura, relihiyoso, isports ug alingawngaw</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>Mga gamit ha paglingaw-lingaw, kultura, relihiyoso, isport ngan kaliawan</p>
+            <p>Mga gamit ha paglingaw-lingaw, kultura, relihiyoso, isport ngan kaliawan</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q168_RECREATION_6M_PURCHASED_PHP
     conditions:
       - questionText:
           EN: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q168_RECREATION_6M_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q169_CLOTHING_CONSUMED
     conditions:
       - questionText:
           EN: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Consumed by household in reference period?</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Consumed by household in reference period?</p>
           FIL: |
-            <p>Ready-made na damit, tela at materyales para sa damit, at sapatos kabilang ang mga gamit sa bahay tulad ng household textile, glassware, tableware, at household utensils kabilang ang pagkumpuni</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>Ready-made na damit, tela at materyales para sa damit, at sapatos kabilang ang mga gamit sa bahay tulad ng household textile, glassware, tableware, at household utensils kabilang ang pagkumpuni</p>
           BCL: |
-            <p>Ready-made na mga bado, fabric asin materyales para sa bado, asin footwear kasabay an household textile, glassware, table ware asin household utensils kasabay an pagpaayos</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>Ready-made na mga bado, fabric asin materyales para sa bado, asin footwear kasabay an household textile, glassware, table ware asin household utensils kasabay an pagpaayos</p>
           BIS: |
-            <p>Ready-made nga mga sinina, tela ug materyales para sa sinina, ug sapatos lakip ang household textile, glassware, tableware, ug household utensils lakip ang repairs</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>Ready-made nga mga sinina, tela ug materyales para sa sinina, ug sapatos lakip ang household textile, glassware, tableware, ug household utensils lakip ang repairs</p>
           CEB: |
-            <p>Andam na nga sinina, tela ug mga materyales para sa sinina, ug sapin apil ang mga tela sa panimalay, baso, kubyertos ug mga gamit sa panimalay apil ang mga pag-ayo</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>Andam na nga sinina, tela ug mga materyales para sa sinina, ug sapin apil ang mga tela sa panimalay, baso, kubyertos ug mga gamit sa panimalay apil ang mga pag-ayo</p>
           WAR: |
-            <p>Mga andam nga bado, tela ngan materyales para ha panapton, ngan sapatos upod na an mga tela ha balay, mga gamit ha salamin, mga gamit ha lamesa ngan mga gamit ha balay upod na an mga pag-ayad</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>Mga andam nga bado, tela ngan materyales para ha panapton, ngan sapatos upod na an mga tela ha balay, mga gamit ha salamin, mga gamit ha lamesa ngan mga gamit ha balay upod na an mga pag-ayad</p>
   - name: HOUSEHOLDSURVEY_DICT.Q169_CLOTHING_PURCHASED_PHP
     conditions:
       - questionText:
           EN: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q169_CLOTHING_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q170_EDUCATION_CONSUMED
     conditions:
       - questionText:
           EN: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Consumed by household in reference period?</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Consumed by household in reference period?</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>Mga serbisyong pang-edukasyon (hal. tuition at tutoring)</p>
+            <p>Mga serbisyong pang-edukasyon (hal. tuition at tutoring)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>Mga educational services (e.g., tuitions asin tutoring)</p>
+            <p>Mga educational services (e.g., tuitions asin tutoring)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>Mga serbisyo sa edukasyon (pananglitan: tuition ug tutoring)</p>
+            <p>Mga serbisyo sa edukasyon (pananglitan: tuition ug tutoring)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>Mga serbisyo sa edukasyon (pananglitan, tuition ug pagtudlo)</p>
+            <p>Mga serbisyo sa edukasyon (pananglitan, tuition ug pagtudlo)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>Mga serbisyo ha edukasyon (pananglitan, matrikula ngan pagtutdo)</p>
+            <p>Mga serbisyo ha edukasyon (pananglitan, matrikula ngan pagtutdo)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q170_EDUCATION_PURCHASED_PHP
     conditions:
       - questionText:
           EN: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q170_EDUCATION_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q171_ACCOMMODATION_CONSUMED
     conditions:
       - questionText:
@@ -5005,62 +5005,62 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
+            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
           FIL: |
-            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
+            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
           BCL: |
-            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
+            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
           BIS: |
-            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
+            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
           CEB: |
-            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
+            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
           WAR: |
-            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
+            <p>177. Total value of 175 and 176 (health, 12-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
   - name: HOUSEHOLDSURVEY_DICT.Q178_PREVENTIVE_CONSUMED
     conditions:
       - questionText:
           EN: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Consumed...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Consumed...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           FIL: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Consumed...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Consumed...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           BCL: |
-            <p>Preventive services arog kan immunization/vaccinations services asin iba pang preventive services (hal., tetanus toxoid para sa bados, asin routine immunization arog kan BCG kan well child visits) Dai kasabay an cost sa vaccine pansadiri, kun pwede...</p>
+            <p>Preventive services arog kan immunization/vaccinations services asin iba pang preventive services (hal., tetanus toxoid para sa bados, asin routine immunization arog kan BCG kan well child visits) Dai kasabay an cost sa vaccine pansadiri, kun pwede...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           BIS: |
-            <p>Preventive services sama sa immunization/vaccination services ug uban pang preventive services (pananglitan: tetanus toxoid para sa buntis, ug routine immunization sama sa BCG atol sa well-child visits). Kung mahimo, ayaw iapil ang gasto sa bakuna...</p>
+            <p>Preventive services sama sa immunization/vaccination services ug uban pang preventive services (pananglitan: tetanus toxoid para sa buntis, ug routine immunization sama sa BCG atol sa well-child visits). Kung mahimo, ayaw iapil ang gasto sa bakuna...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           CEB: |
-            <p>Mga serbisyo sa pagpugong sama sa mga serbisyo sa immunization/bakuna ug uban pang mga serbisyo sa pagpugong (pananglitan, tetanus toxoid para sa mga mabdos, ug regular nga immunization sama sa BCG atol sa well child visits) Ayaw apila ang gasto sa...</p>
+            <p>Mga serbisyo sa pagpugong sama sa mga serbisyo sa immunization/bakuna ug uban pang mga serbisyo sa pagpugong (pananglitan, tetanus toxoid para sa mga mabdos, ug regular nga immunization sama sa BCG atol sa well child visits) Ayaw apila ang gasto sa...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           WAR: |
-            <p>Mga serbisyo ha paglikay sugad han serbisyo ha pagbakuna/pagbakuna ngan iba pa nga serbisyo ha pagpugong (e.g., tetanus toxoid para ha mga burod, ngan rutina nga pagbakuna sugad han BCG durante han pagbisita ha maupay nga bata)</p>
+            <p>Mga serbisyo ha paglikay sugad han serbisyo ha pagbakuna/pagbakuna ngan iba pa nga serbisyo ha pagpugong (e.g., tetanus toxoid para ha mga burod, ngan rutina nga pagbakuna sugad han BCG durante han pagbisita ha maupay nga bata)</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q178_PREVENTIVE_PURCHASED_PHP
     conditions:
       - questionText:
           EN: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           FIL: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           BCL: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           BIS: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           CEB: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           WAR: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q178_PREVENTIVE_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           FIL: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           BCL: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           BIS: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           CEB: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
           WAR: |
-            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p><p class="instruction">For the next health products and services, the reference period is the past 6 MONTHS.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q179_DIAGNOSTIC_CONSUMED
     conditions:
       - questionText:
@@ -5200,62 +5200,62 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
+            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
           FIL: |
-            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
+            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
           BCL: |
-            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
+            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
           BIS: |
-            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
+            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
           CEB: |
-            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
+            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
           WAR: |
-            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
+            <p>182. Total value of 178 to 181 (health, 6-month) — Auto-computed total (PHP, [DO NOT ASK])</p>
   - name: HOUSEHOLDSURVEY_DICT.Q183_MEDICINES_CONSUMED
     conditions:
       - questionText:
           EN: |
-            <p>In the next section, we would like to know more about the funds that you use for health care.</p><p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Consumed by household in reference period?</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Consumed by household in reference period?</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           FIL: |
-            <p>In the next section, we would like to know more about the funds that you use for health care.</p><p>Mga gamot (branded, generic, herbal), bakuna, oral contraceptives, at iba pang pharmaceutical preparations, kabilang ang mga online na pagbili</p>
+            <p>Mga gamot (branded, generic, herbal), bakuna, oral contraceptives, at iba pang pharmaceutical preparations, kabilang ang mga online na pagbili</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           BCL: |
-            <p>In the next section, we would like to know more about the funds that you use for health care.</p><p>Mga bulong (branded, generic, herbal), vaccines, oral contraceptives, asin ibang pharmaceutical preparations, kasabay an online purchases</p>
+            <p>Mga bulong (branded, generic, herbal), vaccines, oral contraceptives, asin ibang pharmaceutical preparations, kasabay an online purchases</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           BIS: |
-            <p>In the next section, we would like to know more about the funds that you use for health care.</p><p>Mga tambal (branded, generic, herbal), bakuna, oral contraceptives, ug uban pang pharmaceutical preparations, lakip ang online purchases</p>
+            <p>Mga tambal (branded, generic, herbal), bakuna, oral contraceptives, ug uban pang pharmaceutical preparations, lakip ang online purchases</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           CEB: |
-            <p>In the next section, we would like to know more about the funds that you use for health care.</p><p>Mga tambal (branded, generic, herbal), mga bakuna, oral contraceptive, ug uban pang pharmaceutical nga preparasyon, apil ang online nga pagpalit</p>
+            <p>Mga tambal (branded, generic, herbal), mga bakuna, oral contraceptive, ug uban pang pharmaceutical nga preparasyon, apil ang online nga pagpalit</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           WAR: |
-            <p>In the next section, we would like to know more about the funds that you use for health care.</p><p>Mga medisina (may tatak, generic, herbal), mga bakuna, oral contraceptives, ngan iba pa nga mga preparasyon ha medisina, upod na an pagpalit ha Internet.</p>
+            <p>Mga medisina (may tatak, generic, herbal), mga bakuna, oral contraceptives, ngan iba pa nga mga preparasyon ha medisina, upod na an pagpalit ha Internet.</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q183_MEDICINES_PURCHASED_PHP
     conditions:
       - questionText:
           EN: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           FIL: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           BCL: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           BIS: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           CEB: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           WAR: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q183_MEDICINES_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           FIL: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           BCL: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           BIS: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           CEB: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
           WAR: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next health products and services, the reference period is the past MONTH.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q184_OUTPATIENT_CONSUMED
     conditions:
       - questionText:
@@ -5320,17 +5320,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>186. Current income of any household members</p>
+            <p>In the next section, we would like to know more about the funds that you use for health care. In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>186. Current income of any household members</p>
           FIL: |
-            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kasalukuyang kita ng sinumang miyembro ng sambahayan</p>
+            <p>In the next section, we would like to know more about the funds that you use for health care. In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kasalukuyang kita ng sinumang miyembro ng sambahayan</p>
           BCL: |
-            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kita kan kada household members</p>
+            <p>In the next section, we would like to know more about the funds that you use for health care. In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kita kan kada household members</p>
           BIS: |
-            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kasamtangang kita sa bisan kinsang miyembro sa panimalay</p>
+            <p>In the next section, we would like to know more about the funds that you use for health care. In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kasamtangang kita sa bisan kinsang miyembro sa panimalay</p>
           CEB: |
-            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kasamtangang kita sa bisan kinsang miyembro sa panimalay</p>
+            <p>In the next section, we would like to know more about the funds that you use for health care. In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Kasamtangang kita sa bisan kinsang miyembro sa panimalay</p>
           WAR: |
-            <p>In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Yana nga kita han bisan hin-o nga miyembro han panimalay</p>
+            <p>In the next section, we would like to know more about the funds that you use for health care. In the last 12 months, which of the following financial sources did your household use to pay out-of-pocket for any medical, dental service with or without overnight stay, medicines, and health products?</p><p>Yana nga kita han bisan hin-o nga miyembro han panimalay</p>
   - name: HOUSEHOLDSURVEY_DICT.Q187_SAVINGS
     conditions:
       - questionText:

@@ -41,9 +41,9 @@ function q94_oop()
   numeric i;
   numeric total;
   total = 0;
-  do i = 1 while i <= count(Q94_PAY_ROSTER)
-    if Q94_PAY_SRC(i) = 1 then
-      total = total + Q94_PAY_AMT(i);
+  do i = 1 while i <= count(Q94_LAB_ROSTER)
+    if Q94_LAB_PAY(i) = 1 then          { #450: per-lab roster — OOP(1) rows sum the amount }
+      total = total + Q94_LAB_AMT(i);
     endif;
   enddo;
   q94_oop = total;
@@ -1761,57 +1761,45 @@ postproc
   endif;
 
 
-{ ---- Q94 payment roster (Option B fan-out) ---- }
-PROC Q94_SOURCES
-postproc
-  { Require >=1 source ticked — the roster grid needs >=1 row. }
-  if length(strip(Q94_SOURCES)) = 0 then
-    errmsg("94. Tick at least one payment source for the laboratory test/s before continuing.");
-    reenter;
-  endif;
-
-PROC Q94_PAY_LINE
+{ ---- Q94 per-lab payment roster (#450) — one row per LABORATORY TEST ticked in Q93 ---- }
+PROC Q94_LAB_LINE
 preproc
-  { Build one row per ticked source (canonical order). The curocc()-th ticked
-    source -> Q94_PAY_SRC (auto + protected); end once past the last ticked source. Non-money rows
-    default amount 0 but stay enterable.
-    Re-runs on back-navigation. }
-  numeric nsel; numeric seen;
+  numeric nsel; numeric seen; numeric k; numeric n; numeric p;
+  { Count ticked labs by scanning Q93_LABS in aligned 2-char chunks (None=90 has no Q94 row).
+    n = number of ticked codes (each is 2 chars); the k-th chunk starts at position (k-1)*2+1.
+    Uses the proven `do k = 1 while ...` loop form (the counted `do .. to .. by` form parses
+    in the compile but is REJECTED by the stricter Publish packager — #450 build note). }
+  n = length(strip(Q93_LABS)) / 2;
   nsel = 0;
-  if pos("01", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("02", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("03", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("04", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("05", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("06", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("07", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("08", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
+  do k = 1 while k <= n
+    p = (k - 1) * 2 + 1;
+    if Q93_LABS[p:2] <> "90" then nsel = nsel + 1; endif;
+  enddo;
   if curocc() > nsel then endgroup; endif;
+  { The curocc()-th ticked lab -> Q94_LAB_CODE (auto + protected; its label shows in the grid). }
   seen = 0;
-  if pos("01", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 1; endif; endif;
-  if pos("02", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 2; endif; endif;
-  if pos("03", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 3; endif; endif;
-  if pos("04", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 4; endif; endif;
-  if pos("05", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 5; endif; endif;
-  if pos("06", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 6; endif; endif;
-  if pos("07", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 7; endif; endif;
-  if pos("08", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 8; endif; endif;
-  protect(Q94_PAY_SRC, true);
-  if Q94_PAY_SRC <> 1 then
-    Q94_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
-  endif;
-  Q94_PAY_LINE = curocc();
+  do k = 1 while k <= n
+    p = (k - 1) * 2 + 1;
+    if Q93_LABS[p:2] <> "90" then
+      seen = seen + 1;
+      if seen = curocc() then Q94_LAB_CODE = tonumber(Q93_LABS[p:2]); endif;
+    endif;
+  enddo;
+  protect(Q94_LAB_CODE, true);
+  Q94_LAB_LINE = curocc();
   noinput;
 
-PROC Q94_PAY_AMT
+PROC Q94_LAB_AMT
+preproc
+  { Only Out-of-pocket(1) carries an amount; every other payment type has no OOP cost. }
+  if Q94_LAB_PAY <> 1 then
+    Q94_LAB_AMT = 0;
+    noinput;
+  endif;
 postproc
-  if Q94_PAY_AMT < 0 then
+  if Q94_LAB_PAY = 1 and Q94_LAB_AMT < 0 then
     errmsg("94. Amount cannot be negative.");
     reenter;
-  endif;
-  if Q94_PAY_SRC <> 1 and Q94_PAY_AMT <> 0 then
-    errmsg("94. This source has no out-of-pocket cost — amount reset to 0.");
-    Q94_PAY_AMT = 0;
   endif;
 
 
@@ -1939,40 +1927,11 @@ preproc
     source -> Q98_PAY_SRC (auto + protected); end once past the last ticked source. Every row
     amount stays enterable (all sources carry an amount).
     Re-runs on back-navigation. }
-  numeric nsel; numeric seen;
-  nsel = 0;
-  if pos("01", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("02", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("03", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("04", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("05", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("06", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("07", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("08", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("09", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("10", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("11", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("12", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("13", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("14", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("15", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  numeric nsel; numeric pp;
+  nsel = length(strip(Q98_SOURCES)) / 2;
   if curocc() > nsel then endgroup; endif;
-  seen = 0;
-  if pos("01", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 1; endif; endif;
-  if pos("02", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 2; endif; endif;
-  if pos("03", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 3; endif; endif;
-  if pos("04", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 4; endif; endif;
-  if pos("05", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 5; endif; endif;
-  if pos("06", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 6; endif; endif;
-  if pos("07", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 7; endif; endif;
-  if pos("08", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 8; endif; endif;
-  if pos("09", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 9; endif; endif;
-  if pos("10", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 10; endif; endif;
-  if pos("11", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 11; endif; endif;
-  if pos("12", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 12; endif; endif;
-  if pos("13", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 13; endif; endif;
-  if pos("14", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 14; endif; endif;
-  if pos("15", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 15; endif; endif;
+  pp = (curocc() - 1) * 2 + 1;
+  Q98_PAY_SRC = tonumber(Q98_SOURCES[pp:2]);
   protect(Q98_PAY_SRC, true);
   Q98_PAY_LINE = curocc();
   noinput;
@@ -1986,24 +1945,48 @@ postproc
 
 PROC Q98_OTHER_DONATION_TXT
 preproc
-  if pos("06", Q98_SOURCES) = 0 then
+  numeric gk; numeric gn; numeric gp; numeric gt;
+  gt = 0; gn = length(strip(Q98_SOURCES)) / 2;
+  do gk = 1 while gk <= gn
+    gp = (gk - 1) * 2 + 1;
+    if Q98_SOURCES[gp:2] = "06" then gt = 1; endif;
+  enddo;
+  if gt = 0 then
     Q98_OTHER_DONATION_TXT = "";   { not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("06", Q98_SOURCES) > 0 and length(strip(Q98_OTHER_DONATION_TXT)) = 0 then
+  numeric hk; numeric hn; numeric hp; numeric ht;
+  ht = 0; hn = length(strip(Q98_SOURCES)) / 2;
+  do hk = 1 while hk <= hn
+    hp = (hk - 1) * 2 + 1;
+    if Q98_SOURCES[hp:2] = "06" then ht = 1; endif;
+  enddo;
+  if ht = 1 and length(strip(Q98_OTHER_DONATION_TXT)) = 0 then
     errmsg("'Other Donation/Charity/Assistance' was selected in Q98. Please specify.");
     reenter;
   endif;
 
 PROC Q98_OTHER_TXT
 preproc
-  if pos("15", Q98_SOURCES) = 0 then
+  numeric gk; numeric gn; numeric gp; numeric gt;
+  gt = 0; gn = length(strip(Q98_SOURCES)) / 2;
+  do gk = 1 while gk <= gn
+    gp = (gk - 1) * 2 + 1;
+    if Q98_SOURCES[gp:2] = "15" then gt = 1; endif;
+  enddo;
+  if gt = 0 then
     Q98_OTHER_TXT = "";   { not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("15", Q98_SOURCES) > 0 and length(strip(Q98_OTHER_TXT)) = 0 then
+  numeric hk; numeric hn; numeric hp; numeric ht;
+  ht = 0; hn = length(strip(Q98_SOURCES)) / 2;
+  do hk = 1 while hk <= hn
+    hp = (hk - 1) * 2 + 1;
+    if Q98_SOURCES[hp:2] = "15" then ht = 1; endif;
+  enddo;
+  if ht = 1 and length(strip(Q98_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was selected in Q98. Please specify.");
     reenter;
   endif;
@@ -2024,30 +2007,11 @@ preproc
     source -> Q107_PAY_SRC (auto + protected); end once past the last ticked source. Every row
     amount stays enterable (all sources carry an amount).
     Re-runs on back-navigation. }
-  numeric nsel; numeric seen;
-  nsel = 0;
-  if pos("01", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("02", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("03", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("04", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("05", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("06", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("07", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("08", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("09", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("10", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  numeric nsel; numeric pp;
+  nsel = length(strip(Q107_SOURCES)) / 2;
   if curocc() > nsel then endgroup; endif;
-  seen = 0;
-  if pos("01", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 1; endif; endif;
-  if pos("02", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 2; endif; endif;
-  if pos("03", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 3; endif; endif;
-  if pos("04", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 4; endif; endif;
-  if pos("05", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 5; endif; endif;
-  if pos("06", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 6; endif; endif;
-  if pos("07", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 7; endif; endif;
-  if pos("08", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 8; endif; endif;
-  if pos("09", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 9; endif; endif;
-  if pos("10", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 10; endif; endif;
+  pp = (curocc() - 1) * 2 + 1;
+  Q107_PAY_SRC = tonumber(Q107_SOURCES[pp:2]);
   protect(Q107_PAY_SRC, true);
   Q107_PAY_LINE = curocc();
   noinput;
@@ -2061,12 +2025,24 @@ postproc
 
 PROC Q107_PAY_OTHER_TXT
 preproc
-  if pos("10", Q107_SOURCES) = 0 then
+  numeric gk; numeric gn; numeric gp; numeric gt;
+  gt = 0; gn = length(strip(Q107_SOURCES)) / 2;
+  do gk = 1 while gk <= gn
+    gp = (gk - 1) * 2 + 1;
+    if Q107_SOURCES[gp:2] = "10" then gt = 1; endif;
+  enddo;
+  if gt = 0 then
     Q107_PAY_OTHER_TXT = "";   { not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("10", Q107_SOURCES) > 0 and length(strip(Q107_PAY_OTHER_TXT)) = 0 then
+  numeric hk; numeric hn; numeric hp; numeric ht;
+  ht = 0; hn = length(strip(Q107_SOURCES)) / 2;
+  do hk = 1 while hk <= hn
+    hp = (hk - 1) * 2 + 1;
+    if Q107_SOURCES[hp:2] = "10" then ht = 1; endif;
+  enddo;
+  if ht = 1 and length(strip(Q107_PAY_OTHER_TXT)) = 0 then
     errmsg("107. 'Other' was ticked — please specify.");
     reenter;
   endif;
@@ -2209,36 +2185,11 @@ preproc
     source -> Q113_PAY_SRC (auto + protected); end once past the last ticked source. Every row
     amount stays enterable (all sources carry an amount).
     Re-runs on back-navigation. }
-  numeric nsel; numeric seen;
-  nsel = 0;
-  if pos("01", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("02", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("03", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("04", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("05", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("06", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("07", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("08", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("09", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("10", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("11", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("12", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
-  if pos("13", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  numeric nsel; numeric pp;
+  nsel = length(strip(Q113_SOURCES)) / 2;
   if curocc() > nsel then endgroup; endif;
-  seen = 0;
-  if pos("01", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 1; endif; endif;
-  if pos("02", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 2; endif; endif;
-  if pos("03", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 3; endif; endif;
-  if pos("04", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 4; endif; endif;
-  if pos("05", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 5; endif; endif;
-  if pos("06", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 6; endif; endif;
-  if pos("07", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 7; endif; endif;
-  if pos("08", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 8; endif; endif;
-  if pos("09", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 9; endif; endif;
-  if pos("10", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 10; endif; endif;
-  if pos("11", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 11; endif; endif;
-  if pos("12", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 12; endif; endif;
-  if pos("13", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 13; endif; endif;
+  pp = (curocc() - 1) * 2 + 1;
+  Q113_PAY_SRC = tonumber(Q113_SOURCES[pp:2]);
   protect(Q113_PAY_SRC, true);
   Q113_PAY_LINE = curocc();
   noinput;
@@ -2252,12 +2203,24 @@ postproc
 
 PROC Q113_PAY_OTHER_TXT
 preproc
-  if pos("13", Q113_SOURCES) = 0 then
+  numeric gk; numeric gn; numeric gp; numeric gt;
+  gt = 0; gn = length(strip(Q113_SOURCES)) / 2;
+  do gk = 1 while gk <= gn
+    gp = (gk - 1) * 2 + 1;
+    if Q113_SOURCES[gp:2] = "13" then gt = 1; endif;
+  enddo;
+  if gt = 0 then
     Q113_PAY_OTHER_TXT = "";   { not ticked -> not enterable }
     noinput;
   endif;
 postproc
-  if pos("13", Q113_SOURCES) > 0 and length(strip(Q113_PAY_OTHER_TXT)) = 0 then
+  numeric hk; numeric hn; numeric hp; numeric ht;
+  ht = 0; hn = length(strip(Q113_SOURCES)) / 2;
+  do hk = 1 while hk <= hn
+    hp = (hk - 1) * 2 + 1;
+    if Q113_SOURCES[hp:2] = "13" then ht = 1; endif;
+  enddo;
+  if ht = 1 and length(strip(Q113_PAY_OTHER_TXT)) = 0 then
     errmsg("113. 'Other (specify)' was ticked — please specify.");
     reenter;
   endif;

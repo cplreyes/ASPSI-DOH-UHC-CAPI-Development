@@ -301,6 +301,11 @@ def build_roster_procs(q_no, q_label, sources, amt_codes,
     srcf = f"Q{q_no}_PAY_SRC"
     amtf = f"Q{q_no}_PAY_AMT"
     partial = bool(amt_codes) and len(amt_codes) < len(codes)
+    # 2-digit codes (>=10) make the per-code pos() population loop UNSAFE: pos("10", field)
+    # substring-matches "10" ACROSS a 2-char code boundary (ticking 01+02 packs to "0102" and
+    # falsely fires "10"). When any code reaches 2 digits, index the packed CheckBox in aligned
+    # 2-char chunks instead. (#450 cross-boundary fix class — Q98/Q107/Q113.)
+    two_digit = any(int(c) >= 10 for c in codes)
 
     L = [f"{{ ---- Q{q_no} payment roster (Option B fan-out) ---- }}",
          f"PROC {src}", "postproc",
@@ -315,15 +320,26 @@ def build_roster_procs(q_no, q_label, sources, amt_codes,
           + (" Non-money rows" if partial else " Every row"),
           ("    default amount 0 but stay enterable." if partial
            else "    amount stays enterable (all sources carry an amount)."),
-          "    Re-runs on back-navigation. }",
-          "  numeric nsel; numeric seen;", "  nsel = 0;"]
-    for c in codes:
-        L.append(f'  if pos("{c}", {src}) > 0 then nsel = nsel + 1; endif;')
-    L.append("  if curocc() > nsel then endgroup; endif;")
-    L.append("  seen = 0;")
-    for c in codes:
-        L.append(f'  if pos("{c}", {src}) > 0 then seen = seen + 1; '
-                 f"if seen = curocc() then {srcf} = {int(c)}; endif; endif;")
+          "    Re-runs on back-navigation. }"]
+    if two_digit:
+        # Aligned 2-char chunk indexing (2-digit-code-safe). Every ticked code => one row in
+        # packed order and there are NO excluded codes here, so the curocc()-th row's source is
+        # simply the curocc()-th chunk — no per-code loop needed. (do..while + [p:2] + tonumber
+        # are the only forms the strict Publish packager accepts; see the #450 build notes.)
+        L += ["  numeric nsel; numeric pp;",
+              f"  nsel = length(strip({src})) / 2;",
+              "  if curocc() > nsel then endgroup; endif;",
+              "  pp = (curocc() - 1) * 2 + 1;",
+              f"  {srcf} = tonumber({src}[pp:2]);"]
+    else:
+        L += ["  numeric nsel; numeric seen;", "  nsel = 0;"]
+        for c in codes:
+            L.append(f'  if pos("{c}", {src}) > 0 then nsel = nsel + 1; endif;')
+        L.append("  if curocc() > nsel then endgroup; endif;")
+        L.append("  seen = 0;")
+        for c in codes:
+            L.append(f'  if pos("{c}", {src}) > 0 then seen = seen + 1; '
+                     f"if seen = curocc() then {srcf} = {int(c)}; endif; endif;")
     L.append(f"  protect({srcf}, true);")
     if partial:
         cond = " and ".join(f"{srcf} <> {n}" for n in amt_nums)
@@ -343,23 +359,88 @@ def build_roster_procs(q_no, q_label, sources, amt_codes,
               f"    {amtf} = 0;", "  endif;"]
 
     for code, field, prompt in (gated_texts or []):
-        L += ["", f"PROC {field}", "preproc",
-              f'  if pos("{code}", {src}) = 0 then',
-              f'    {field} = "";   {{ not ticked -> not enterable }}',
-              "    noinput;", "  endif;", "postproc",
-              f'  if pos("{code}", {src}) > 0 and length(strip({field})) = 0 then',
-              f'    errmsg("{prompt}");',
-              "    reenter;", "  endif;"]
+        if two_digit:
+            # 2-digit-safe membership (chunk-scan) — same reason as the population loop:
+            # pos("{code}", …) could cross-boundary false-match (e.g. Q107 code "10" from 01+02).
+            L += ["", f"PROC {field}", "preproc",
+                  "  numeric gk; numeric gn; numeric gp; numeric gt;",
+                  f"  gt = 0; gn = length(strip({src})) / 2;",
+                  "  do gk = 1 while gk <= gn",
+                  "    gp = (gk - 1) * 2 + 1;",
+                  f'    if {src}[gp:2] = "{code}" then gt = 1; endif;',
+                  "  enddo;",
+                  "  if gt = 0 then",
+                  f'    {field} = "";   {{ not ticked -> not enterable }}',
+                  "    noinput;", "  endif;", "postproc",
+                  "  numeric hk; numeric hn; numeric hp; numeric ht;",
+                  f"  ht = 0; hn = length(strip({src})) / 2;",
+                  "  do hk = 1 while hk <= hn",
+                  "    hp = (hk - 1) * 2 + 1;",
+                  f'    if {src}[hp:2] = "{code}" then ht = 1; endif;',
+                  "  enddo;",
+                  f"  if ht = 1 and length(strip({field})) = 0 then",
+                  f'    errmsg("{prompt}");',
+                  "    reenter;", "  endif;"]
+        else:
+            L += ["", f"PROC {field}", "preproc",
+                  f'  if pos("{code}", {src}) = 0 then',
+                  f'    {field} = "";   {{ not ticked -> not enterable }}',
+                  "    noinput;", "  endif;", "postproc",
+                  f'  if pos("{code}", {src}) > 0 and length(strip({field})) = 0 then',
+                  f'    errmsg("{prompt}");',
+                  "    reenter;", "  endif;"]
     return "\n".join(L) + "\n"
 
 
-# The four NEW Section G roster conversions (Q92/Q971 stay hand-written above).
-Q94_ROSTER_PROCS = build_roster_procs(
-    94, "94", [("Out-of-pocket", "01"), ("Donation", "02"), ("Free/no cost", "03"),
-               ("Free, charge to PhilHealth", "04"), ("Free, charge to Private Insurance", "05"),
-               ("Free, charge to HMO", "06"), ("In kind", "07"), ("Don't know", "08")],
-    {"01"},
-    "94. Tick at least one payment source for the laboratory test/s before continuing.")
+# Q94 PER-LAB payment roster (#450, 2026-06-20). Hand-written — the by-source
+# build_roster_procs template doesn't fit: the row identity is the LAB ticked in Q93_LABS
+# (auto-set, name shown in the grid), the PAYMENT TYPE is ENTERED per lab, and the amount is
+# gated on the entered type (= Out-of-pocket). It also scans Q93_LABS in ALIGNED 2-char
+# chunks instead of pos(<code>, …): Q93's lab codes run 01..15, so a 2-digit code (10..15)
+# would substring-match ACROSS a code boundary under pos() — e.g. ticking 01+02 packs to
+# "0102" and pos("10", ..) would wrongly fire. Chunk scanning reads each ticked code exactly.
+Q94_LAB_ROSTER_PROCS = """\
+{ ---- Q94 per-lab payment roster (#450) — one row per LABORATORY TEST ticked in Q93 ---- }
+PROC Q94_LAB_LINE
+preproc
+  numeric nsel; numeric seen; numeric k; numeric n; numeric p;
+  { Count ticked labs by scanning Q93_LABS in aligned 2-char chunks (None=90 has no Q94 row).
+    n = number of ticked codes (each is 2 chars); the k-th chunk starts at position (k-1)*2+1.
+    Uses the proven `do k = 1 while ...` loop form (the counted `do .. to .. by` form parses
+    in the compile but is REJECTED by the stricter Publish packager — #450 build note). }
+  n = length(strip(Q93_LABS)) / 2;
+  nsel = 0;
+  do k = 1 while k <= n
+    p = (k - 1) * 2 + 1;
+    if Q93_LABS[p:2] <> "90" then nsel = nsel + 1; endif;
+  enddo;
+  if curocc() > nsel then endgroup; endif;
+  { The curocc()-th ticked lab -> Q94_LAB_CODE (auto + protected; its label shows in the grid). }
+  seen = 0;
+  do k = 1 while k <= n
+    p = (k - 1) * 2 + 1;
+    if Q93_LABS[p:2] <> "90" then
+      seen = seen + 1;
+      if seen = curocc() then Q94_LAB_CODE = tonumber(Q93_LABS[p:2]); endif;
+    endif;
+  enddo;
+  protect(Q94_LAB_CODE, true);
+  Q94_LAB_LINE = curocc();
+  noinput;
+
+PROC Q94_LAB_AMT
+preproc
+  { Only Out-of-pocket(1) carries an amount; every other payment type has no OOP cost. }
+  if Q94_LAB_PAY <> 1 then
+    Q94_LAB_AMT = 0;
+    noinput;
+  endif;
+postproc
+  if Q94_LAB_PAY = 1 and Q94_LAB_AMT < 0 then
+    errmsg("94. Amount cannot be negative.");
+    reenter;
+  endif;
+"""
 Q96_ROSTER_PROCS = build_roster_procs(
     96, "96", [("Out-of-pocket", "01"), ("Free/no cost", "02"),
                ("Free, charge to PhilHealth", "03"), ("Free, charge to Private Insurance", "04"),
@@ -494,9 +575,9 @@ function q94_oop()
   numeric i;
   numeric total;
   total = 0;
-  do i = 1 while i <= count(Q94_PAY_ROSTER)
-    if Q94_PAY_SRC(i) = 1 then
-      total = total + Q94_PAY_AMT(i);
+  do i = 1 while i <= count(Q94_LAB_ROSTER)
+    if Q94_LAB_PAY(i) = 1 then          { #450: per-lab roster — OOP(1) rows sum the amount }
+      total = total + Q94_LAB_AMT(i);
     endif;
   enddo;
   q94_oop = total;
@@ -1368,7 +1449,7 @@ def main():
              VALIDATION_PROCS, "", Q92_ROSTER_PROCS, "",   # Q92 roster (Option B pilot)
              Q971_ROSTER_PROCS, "",   # Q97.1 CheckBox + roster (Option B Shape B)
              # Option B fan-out (2026-06-19): the remaining F3 cost-matrix cluster.
-             Q94_ROSTER_PROCS, "", Q96_ROSTER_PROCS, "",          # Section G partial/all
+             Q94_LAB_ROSTER_PROCS, "", Q96_ROSTER_PROCS, "",      # Q94 per-lab (#450) + Q96
              Q972_ROSTER_PROCS, "", Q98_ROSTER_PROCS, "",         # Section G all-amount
              Q107_ROSTER_PROCS, "", Q109_ROSTER_PROCS, "",        # Section H all-amount
              Q112_ROSTER_PROCS, "", Q113_ROSTER_PROCS, ""]        # Section H all-amount
@@ -1402,7 +1483,7 @@ def main():
                # dcf-driven amount-required / other-specify / select-all auto-gens never
                # double-PROC them. (The Q9n_PAY_OTHER_TXT gates here are owned by the
                # roster blocks' gated_texts, NOT by other_specify_procs.)
-               "Q94_SOURCES",  "Q94_PAY_LINE",  "Q94_PAY_SRC",  "Q94_PAY_AMT",
+               "Q94_LAB_LINE", "Q94_LAB_CODE", "Q94_LAB_PAY", "Q94_LAB_AMT",  # #450 per-lab roster
                "Q96_SOURCES",  "Q96_PAY_LINE",  "Q96_PAY_SRC",  "Q96_PAY_AMT",
                "Q972_SOURCES", "Q972_PAY_LINE", "Q972_PAY_SRC", "Q972_PAY_AMT", "Q972_OTHER_TXT",
                "Q98_SOURCES",  "Q98_PAY_LINE",  "Q98_PAY_SRC",  "Q98_PAY_AMT",

@@ -394,19 +394,22 @@
             </div>
             <div class="xpage-col capi">
               <h4>The same on the tablet (CAPI)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry consent screen — screenshots pending">
+              <div class="flow-ph" role="img" aria-label="No on-screen consent step in CAPI — consent is handled on the printed sheet">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>
-                <span class="ph">Screen sequence pending</span>
+                <span class="ph">No on-screen consent step</span>
               </div>
               <p class="pcap">
-                The enumerator reads the same consent script on screen; consent
-                is recorded with a tap, which unlocks the questionnaire.
+                There is no consent screen in CAPI. The consent script is read
+                aloud from the <b>printed SJREB consent form</b> (kept off the
+                tablet); the respondent's consent or refusal is then recorded on
+                the tablet as the <b>Result of Visit</b> disposition in Field
+                Control — a "Refused" result ends the case.
               </p>
             </div>
           </div>
           <div class="xnote">
             <span class="tag">CAPI differs</span>
-            <span><b>Consent gates the interview.</b> Instead of a wet signature, consent is recorded on screen — choosing to decline ends the interview cleanly and no further questions are asked.</span>
+            <span><b>Consent is captured as the Result-of-Visit disposition, not an on-screen gate.</b> Per the 2026-06-12 design (matched to the paper Field Control layout), the separate "Informed consent given" field was removed from CAPI: the script stays on the printed sheet, and a <b>"Refused"</b> Result of Visit records a declined interview.</span>
           </div>
         </div>
 
@@ -1317,14 +1320,12 @@
             </div>
             <div class="xpage-col capi">
               <h4>The same on the tablet (CAPI)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry screen sequence for Section D — screenshots pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M9 6h6M9 9h6M10 18h4" stroke-linecap="round"/></svg>
-                <span class="ph">Screen sequence pending</span>
-              </div>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control on the tablet — the Q51 accreditation gate that opens Section D renders like this" loading="lazy" /></a>
               <p class="pcap">
-                The CSEntry run for Section D — the Q51 gate and the accredited /
-                non-accredited branches — drops in here once captured. Every
-                control type is already shown live in Sections A–C above.
+                The Q51 accreditation gate (shown as the Yes/No control) opens
+                Section D and forks it into the accredited / non-accredited
+                branches; every control type used in D is already shown live in
+                Sections A–C above.
               </p>
             </div>
           </div>

@@ -228,15 +228,19 @@ INSTRUCTIONS = {
           "this section unless a skip rule applies."),
     141: ("IF RESPONDENT PROVIDES A RECEIPT, SELECT ALL THAT APPLY. IF NO "
           "RECEIPT WAS PROVIDED, READ OPTIONS OUT LOUD. SELECT ALL THAT APPLY."),
-    159: ("For the next non-food items, the reference period is the past "
+    # Reference-period scripts attach to the FIRST item of each group (was wrongly on the
+    # LAST item of the PREVIOUS group — #678/#680/#681/#682/#683). Paper (Annex F4 Apr-20,
+    # Section N): Q159 Smoking = WEEK (no MONTH script); MONTH starts Q160; 6-MONTHS starts
+    # Q168; 12-MONTHS starts Q170; health 6-MONTHS starts Q178; health MONTH starts Q183.
+    160: ("For the next non-food items, the reference period is the past "
           "MONTH. This could include online purchases whenever applicable."),
-    167: ("For the next non-food items, the reference period is the past 6 "
+    168: ("For the next non-food items, the reference period is the past 6 "
           "MONTHS. This could include online purchases whenever applicable."),
-    169: ("For the next non-food items, the reference period is the past 12 "
+    170: ("For the next non-food items, the reference period is the past 12 "
           "MONTHS (1 YEAR). This could include online purchases whenever "
           "applicable."),
-    177: "For the next health products and services, the reference period is the past 6 MONTHS.",
-    182: "For the next health products and services, the reference period is the past MONTH.",
+    178: "For the next health products and services, the reference period is the past 6 MONTHS.",
+    183: "For the next health products and services, the reference period is the past MONTH.",
     197: ("For example, you felt you needed to see a medical provider, but "
           "waited until the symptoms were more serious because you were "
           "worried about the cost of the consultation or treatment, the "
@@ -289,14 +293,14 @@ SECTION_INTROS = {
           "non-food and non-health expenses."),
     175: ("We will now move on to your household’s consumption or use of "
           "health products and services in the past 12 months."),
-    183: ("In the next section, we would like to know more about the funds "
-          "that you use for health care."),
-    # #634: Section O (Sources of Funds, Q186-Q196) read-aloud lead-in for the
-    # financial-sources battery — was missing before Q186 (tester-supplied paper text).
-    186: ("In the last 12 months, which of the following financial sources did "
-          "your household use to pay out-of-pocket for any medical, dental "
-          "service with or without overnight stay, medicines, and health "
-          "products?"),
+    # #683.3: the "funds for health care" section transition belongs before Q186 (Section O),
+    # NOT before Q183 (which is a health-MONTH expenditure item). Merged here with the #634
+    # financial-sources battery lead-in — both are read once before Q186 per the paper.
+    186: ("In the next section, we would like to know more about the funds "
+          "that you use for health care. In the last 12 months, which of the "
+          "following financial sources did your household use to pay "
+          "out-of-pocket for any medical, dental service with or without "
+          "overnight stay, medicines, and health products?"),
 }
 
 _QNUM = re.compile(r"^Q(\d{1,3})_")

@@ -2694,7 +2694,7 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>63. How many days did you wait from application submission to accreditation approval? [PENDING DESIGN: printed text says days, buckets are months]</p>
+            <p>63. How many month/s did you wait from application submission to accreditation approval?</p>
           FIL: |
             <p>Ilang buwan ang inyong hinintay mula sa pagsusumite ng aplikasyon hanggang sa pag-apruba ng akreditasyon?</p>
           BCL: |

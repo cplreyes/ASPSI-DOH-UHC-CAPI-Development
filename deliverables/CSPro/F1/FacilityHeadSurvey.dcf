@@ -21061,7 +21061,7 @@
               "name": "Q63_ACCRED_WAIT",
               "labels": [
                 {
-                  "text": "63. How many days did you wait from application submission to accreditation approval? [PENDING DESIGN: printed text says days, buckets are months]",
+                  "text": "63. How many month/s did you wait from application submission to accreditation approval?",
                   "language": "EN"
                 },
                 {
@@ -21097,7 +21097,7 @@
                   "name": "Q63_ACCRED_WAIT_VS1",
                   "labels": [
                     {
-                      "text": "63. How many days did you wait from application submission to accreditation approval? [PENDING DESIGN: printed text says days, buckets are months]",
+                      "text": "63. How many month/s did you wait from application submission to accreditation approval?",
                       "language": "EN"
                     },
                     {

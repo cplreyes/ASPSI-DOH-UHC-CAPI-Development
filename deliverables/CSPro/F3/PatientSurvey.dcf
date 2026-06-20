@@ -26349,396 +26349,68 @@
               ],
               "contentType": "alpha",
               "length": 120
-            },
-            {
-              "name": "Q94_SOURCES",
-              "labels": [
-                {
-                  "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                  "language": "EN"
-                },
-                {
-                  "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                  "language": "FIL"
-                },
-                {
-                  "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                  "language": "BCL"
-                },
-                {
-                  "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                  "language": "BIS"
-                },
-                {
-                  "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                  "language": "CEB"
-                },
-                {
-                  "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 16,
-              "valueSets": [
-                {
-                  "name": "Q94_SOURCES_VS1",
-                  "labels": [
-                    {
-                      "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                      "language": "EN"
-                    },
-                    {
-                      "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                      "language": "FIL"
-                    },
-                    {
-                      "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                      "language": "BCL"
-                    },
-                    {
-                      "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                      "language": "BIS"
-                    },
-                    {
-                      "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                      "language": "CEB"
-                    },
-                    {
-                      "text": "94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)",
-                      "language": "WAR"
-                    }
-                  ],
-                  "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Out-of-pocket",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Out-of-pocket",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Out-of-pocket",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Out-of-pocket",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Out-of-pocket",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Out-of-pocket",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "01"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Donation",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Donation",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "02"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Free/no cost",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Free/no cost",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Free/no cost",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Free/no cost",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Free/no cost",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Free/no cost",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "03"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Free, charge to PhilHealth",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Free, charge to PhilHealth",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Free, charge to PhilHealth",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Free, charge to PhilHealth",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Free, charge to PhilHealth",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Free, charge to PhilHealth",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "04"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Free, charge to Private Insurance",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Free, charge to Private Insurance",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Free, charge to Private Insurance",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Free, charge to Private Insurance",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Free, charge to Private Insurance",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Free, charge to Private Insurance",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "05"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Free, charge to HMO",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Free, charge to HMO",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Free, charge to HMO",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Free, charge to HMO",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Free, charge to HMO",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Free, charge to HMO",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "07"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "Don't know",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Hindi alam",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Dai aram",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Wala Kabalo",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Wala mahibalo",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Diri ako maaram",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "08"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
             }
           ]
         },
         {
-          "name": "Q94_PAY_ROSTER",
+          "name": "Q94_LAB_ROSTER",
           "labels": [
             {
-              "text": "G. Cost of laboratory test/s \u2014 amount by source",
+              "text": "G. Cost of laboratory tests \u2014 per test (Q94)",
               "language": "EN"
             },
             {
-              "text": "G. Cost of laboratory test/s \u2014 amount by source",
+              "text": "G. Cost of laboratory tests \u2014 per test (Q94)",
               "language": "FIL"
             },
             {
-              "text": "G. Cost of laboratory test/s \u2014 amount by source",
+              "text": "G. Cost of laboratory tests \u2014 per test (Q94)",
               "language": "BCL"
             },
             {
-              "text": "G. Cost of laboratory test/s \u2014 amount by source",
+              "text": "G. Cost of laboratory tests \u2014 per test (Q94)",
               "language": "BIS"
             },
             {
-              "text": "G. Cost of laboratory test/s \u2014 amount by source",
+              "text": "G. Cost of laboratory tests \u2014 per test (Q94)",
               "language": "CEB"
             },
             {
-              "text": "G. Cost of laboratory test/s \u2014 amount by source",
+              "text": "G. Cost of laboratory tests \u2014 per test (Q94)",
               "language": "WAR"
             }
           ],
           "recordType": "S",
           "occurrences": {
             "required": false,
-            "maximum": 8
+            "maximum": 16
           },
           "items": [
             {
-              "name": "Q94_PAY_LINE",
+              "name": "Q94_LAB_LINE",
               "labels": [
                 {
-                  "text": "94. Payment row",
+                  "text": "94. Lab payment row",
                   "language": "EN"
                 },
                 {
-                  "text": "94. Payment row",
+                  "text": "94. Lab payment row",
                   "language": "FIL"
                 },
                 {
-                  "text": "94. Payment row",
+                  "text": "94. Lab payment row",
                   "language": "BCL"
                 },
                 {
-                  "text": "94. Payment row",
+                  "text": "94. Lab payment row",
                   "language": "BIS"
                 },
                 {
-                  "text": "94. Payment row",
+                  "text": "94. Lab payment row",
                   "language": "CEB"
                 },
                 {
-                  "text": "94. Payment row",
+                  "text": "94. Lab payment row",
                   "language": "WAR"
                 }
               ],
@@ -26747,30 +26419,30 @@
               "zeroFill": false
             },
             {
-              "name": "Q94_PAY_SRC",
+              "name": "Q94_LAB_CODE",
               "labels": [
                 {
-                  "text": "94. Payment source (auto-filled from the ticked sources)",
+                  "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                   "language": "EN"
                 },
                 {
-                  "text": "94. Payment source (auto-filled from the ticked sources)",
+                  "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                   "language": "FIL"
                 },
                 {
-                  "text": "94. Payment source (auto-filled from the ticked sources)",
+                  "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                   "language": "BCL"
                 },
                 {
-                  "text": "94. Payment source (auto-filled from the ticked sources)",
+                  "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                   "language": "BIS"
                 },
                 {
-                  "text": "94. Payment source (auto-filled from the ticked sources)",
+                  "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                   "language": "CEB"
                 },
                 {
-                  "text": "94. Payment source (auto-filled from the ticked sources)",
+                  "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                   "language": "WAR"
                 }
               ],
@@ -26779,30 +26451,623 @@
               "zeroFill": true,
               "valueSets": [
                 {
-                  "name": "Q94_PAY_SRC_VS1",
+                  "name": "Q94_LAB_CODE_VS1",
                   "labels": [
                     {
-                      "text": "94. Payment source (auto-filled from the ticked sources)",
+                      "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                       "language": "EN"
                     },
                     {
-                      "text": "94. Payment source (auto-filled from the ticked sources)",
+                      "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                       "language": "FIL"
                     },
                     {
-                      "text": "94. Payment source (auto-filled from the ticked sources)",
+                      "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                       "language": "BCL"
                     },
                     {
-                      "text": "94. Payment source (auto-filled from the ticked sources)",
+                      "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                       "language": "BIS"
                     },
                     {
-                      "text": "94. Payment source (auto-filled from the ticked sources)",
+                      "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
                       "language": "CEB"
                     },
                     {
-                      "text": "94. Payment source (auto-filled from the ticked sources)",
+                      "text": "94. Laboratory test (auto-filled from the tests ticked in Q93)",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "CBC with platelet count",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "CBC with platelet count",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "CBC with platelet count",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "CBC with platelet count",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "CBC with platelet count",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "CBC with platelet count",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Urinalysis",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Urinalysis",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Urinalysis",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Urinalysis",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Urinalysis",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Urinalysis",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Fecalysis",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Fecalysis",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Fecalysis",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Fecalysis",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Fecalysis",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Fecalysis",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Sputum Microscopy",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Sputum Microscopy",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Sputum Microscopy",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Sputum Microscopy",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Sputum Microscopy",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Sputum Microscopy",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Fecal Occult Blood",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Fecal Occult Blood",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Fecal Occult Blood",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Fecal Occult Blood",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Fecal Occult Blood",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Fecal Occult Blood",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Pap smear",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Pap smear",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Pap smear",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Pap smear",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Pap smear",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Pap smear",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Lipid profile",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Lipid profile",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Lipid profile",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Lipid profile",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Lipid profile",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Lipid profile",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "FBS",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "FBS",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "FBS",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "FBS",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "FBS",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "FBS",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "OGTT (Oral glucose tolerance tests)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "OGTT (Oral glucose tolerance tests)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "OGTT (Oral glucose tolerance tests)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "OGTT (Oral glucose tolerance tests)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "OGTT (Oral glucose tolerance tests)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "OGTT (Oral glucose tolerance tests)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "09"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "ECG",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "ECG",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "ECG",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "ECG",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "ECG",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "ECG",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "10"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Chest X-Ray",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Chest X-Ray",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Chest X-Ray",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Chest X-Ray",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Chest X-Ray",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Chest X-Ray",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "11"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Creatinine",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Creatinine",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Creatinine",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Creatinine",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Creatinine",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Creatinine",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "12"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "HbA1c",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "HbA1c",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "HbA1c",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "HbA1c",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "HbA1c",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "HbA1c",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "13"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Abdominal ultrasound",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Abdominal ultrasound",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Abdominal ultrasound",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Abdominal ultrasound",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Abdominal ultrasound",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Abdominal ultrasound",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "14"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Dental Services",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Dental Services",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dental Services",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Dental Services",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Dental Services",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Dental Services",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "15"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other, specify:",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Other, specify:",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other, specify:",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other, specify:",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Other, specify:",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Other, specify:",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q94_LAB_PAY",
+              "labels": [
+                {
+                  "text": "94. How was the cost of this laboratory test paid?",
+                  "language": "EN"
+                },
+                {
+                  "text": "94. How was the cost of this laboratory test paid?",
+                  "language": "FIL"
+                },
+                {
+                  "text": "94. How was the cost of this laboratory test paid?",
+                  "language": "BCL"
+                },
+                {
+                  "text": "94. How was the cost of this laboratory test paid?",
+                  "language": "BIS"
+                },
+                {
+                  "text": "94. How was the cost of this laboratory test paid?",
+                  "language": "CEB"
+                },
+                {
+                  "text": "94. How was the cost of this laboratory test paid?",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q94_LAB_PAY_VS1",
+                  "labels": [
+                    {
+                      "text": "94. How was the cost of this laboratory test paid?",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "94. How was the cost of this laboratory test paid?",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "94. How was the cost of this laboratory test paid?",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "94. How was the cost of this laboratory test paid?",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "94. How was the cost of this laboratory test paid?",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "94. How was the cost of this laboratory test paid?",
                       "language": "WAR"
                     }
                   ],
@@ -26843,27 +27108,27 @@
                     {
                       "labels": [
                         {
-                          "text": "Donation",
+                          "text": "Free/no cost",
                           "language": "EN"
                         },
                         {
-                          "text": "Donation",
+                          "text": "Free/no cost",
                           "language": "FIL"
                         },
                         {
-                          "text": "Donation",
+                          "text": "Free/no cost",
                           "language": "BCL"
                         },
                         {
-                          "text": "Donation",
+                          "text": "Free/no cost",
                           "language": "BIS"
                         },
                         {
-                          "text": "Donation",
+                          "text": "Free/no cost",
                           "language": "CEB"
                         },
                         {
-                          "text": "Donation",
+                          "text": "Free/no cost",
                           "language": "WAR"
                         }
                       ],
@@ -26876,27 +27141,27 @@
                     {
                       "labels": [
                         {
-                          "text": "Free/no cost",
+                          "text": "Free, charge to PhilHealth",
                           "language": "EN"
                         },
                         {
-                          "text": "Free/no cost",
+                          "text": "Free, charge to PhilHealth",
                           "language": "FIL"
                         },
                         {
-                          "text": "Free/no cost",
+                          "text": "Free, charge to PhilHealth",
                           "language": "BCL"
                         },
                         {
-                          "text": "Free/no cost",
+                          "text": "Free, charge to PhilHealth",
                           "language": "BIS"
                         },
                         {
-                          "text": "Free/no cost",
+                          "text": "Free, charge to PhilHealth",
                           "language": "CEB"
                         },
                         {
-                          "text": "Free/no cost",
+                          "text": "Free, charge to PhilHealth",
                           "language": "WAR"
                         }
                       ],
@@ -26909,27 +27174,27 @@
                     {
                       "labels": [
                         {
-                          "text": "Free, charge to PhilHealth",
+                          "text": "Free, charge to Private Insurance",
                           "language": "EN"
                         },
                         {
-                          "text": "Free, charge to PhilHealth",
+                          "text": "Free, charge to Private Insurance",
                           "language": "FIL"
                         },
                         {
-                          "text": "Free, charge to PhilHealth",
+                          "text": "Free, charge to Private Insurance",
                           "language": "BCL"
                         },
                         {
-                          "text": "Free, charge to PhilHealth",
+                          "text": "Free, charge to Private Insurance",
                           "language": "BIS"
                         },
                         {
-                          "text": "Free, charge to PhilHealth",
+                          "text": "Free, charge to Private Insurance",
                           "language": "CEB"
                         },
                         {
-                          "text": "Free, charge to PhilHealth",
+                          "text": "Free, charge to Private Insurance",
                           "language": "WAR"
                         }
                       ],
@@ -26942,27 +27207,27 @@
                     {
                       "labels": [
                         {
-                          "text": "Free, charge to Private Insurance",
+                          "text": "Free, charge to HMO",
                           "language": "EN"
                         },
                         {
-                          "text": "Free, charge to Private Insurance",
+                          "text": "Free, charge to HMO",
                           "language": "FIL"
                         },
                         {
-                          "text": "Free, charge to Private Insurance",
+                          "text": "Free, charge to HMO",
                           "language": "BCL"
                         },
                         {
-                          "text": "Free, charge to Private Insurance",
+                          "text": "Free, charge to HMO",
                           "language": "BIS"
                         },
                         {
-                          "text": "Free, charge to Private Insurance",
+                          "text": "Free, charge to HMO",
                           "language": "CEB"
                         },
                         {
-                          "text": "Free, charge to Private Insurance",
+                          "text": "Free, charge to HMO",
                           "language": "WAR"
                         }
                       ],
@@ -26975,66 +27240,33 @@
                     {
                       "labels": [
                         {
-                          "text": "Free, charge to HMO",
+                          "text": "In kind",
                           "language": "EN"
                         },
                         {
-                          "text": "Free, charge to HMO",
+                          "text": "In kind",
                           "language": "FIL"
                         },
                         {
-                          "text": "Free, charge to HMO",
+                          "text": "In kind",
                           "language": "BCL"
                         },
                         {
-                          "text": "Free, charge to HMO",
+                          "text": "In kind",
                           "language": "BIS"
                         },
                         {
-                          "text": "Free, charge to HMO",
+                          "text": "In kind",
                           "language": "CEB"
                         },
                         {
-                          "text": "Free, charge to HMO",
+                          "text": "In kind",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
                           "value": "06"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
-                          "text": "In kind",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "In kind",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "07"
                         }
                       ]
                     },
@@ -27067,7 +27299,7 @@
                       ],
                       "pairs": [
                         {
-                          "value": "08"
+                          "value": "07"
                         }
                       ]
                     }
@@ -27076,30 +27308,30 @@
               ]
             },
             {
-              "name": "Q94_PAY_AMT",
+              "name": "Q94_LAB_AMT",
               "labels": [
                 {
-                  "text": "94. Amount paid for the laboratory test/s, by source (Pesos)",
+                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
                   "language": "EN"
                 },
                 {
-                  "text": "94. Amount paid for the laboratory test/s, by source (Pesos)",
+                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
                   "language": "FIL"
                 },
                 {
-                  "text": "94. Amount paid for the laboratory test/s, by source (Pesos)",
+                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
                   "language": "BCL"
                 },
                 {
-                  "text": "94. Amount paid for the laboratory test/s, by source (Pesos)",
+                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
                   "language": "BIS"
                 },
                 {
-                  "text": "94. Amount paid for the laboratory test/s, by source (Pesos)",
+                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
                   "language": "CEB"
                 },
                 {
-                  "text": "94. Amount paid for the laboratory test/s, by source (Pesos)",
+                  "text": "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
                   "language": "WAR"
                 }
               ],

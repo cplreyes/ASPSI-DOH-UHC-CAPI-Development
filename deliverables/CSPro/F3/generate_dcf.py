@@ -93,6 +93,39 @@ def _build_payment_roster(record_name, label, q_no, payment_src, amt_codes,
                   max_occurs=len(payment_src), required=False)
 
 
+def _build_lab_payment_roster(record_name, label, record_type, lab_value_set,
+                              payment_type, max_labs, amt_length=8):
+    """Q94 per-lab payment roster (#450, 2026-06-20). Paper (Apr-20, p.13): "How much was
+    the cost of [laboratory test: ___]? To be asked for EACH lab test ticked in Q93." So the
+    roster repeats once per LAB ticked in Q93_LABS (not per payment source — the earlier
+    Q94_SOURCES build was the wrong axis). Row identity = the lab (auto-set from the
+    curocc()-th ticked Q93 lab, protected; the select_one label shows the test name in the
+    grid's first column). The PAYMENT TYPE is entered per lab; the amount is enterable only
+    for Out-of-pocket(01).
+    Fields:
+      Q94_LAB_LINE  numeric 1  — auto = curocc(); ends the roster (apc preproc).
+      Q94_LAB_CODE  numeric 2  — auto-set to the curocc()-th ticked Q93 lab code, protected.
+      Q94_LAB_PAY   numeric 2  — payment type for this lab (entered; select_one).
+      Q94_LAB_AMT   numeric N  — peso amount; apc gates entry to Out-of-pocket(01) only.
+    max_occurs = max selectable labs (Q93 codes 01..15 + Other 99; None excluded)."""
+    items = [
+        numeric("Q94_LAB_LINE", "94. Lab payment row", length=1),
+        select_one("Q94_LAB_CODE",
+                   "94. Laboratory test (auto-filled from the tests ticked in Q93)",
+                   lab_value_set, length=2),
+        select_one("Q94_LAB_PAY",
+                   "94. How was the cost of this laboratory test paid?",
+                   payment_type, length=2),
+        numeric("Q94_LAB_AMT",
+                "94. Amount paid out-of-pocket for this laboratory test (Pesos)",
+                length=amt_length),
+    ]
+    # required=False: if (defensively) only None is ticked the apc endgroups at occurrence
+    # 1, leaving 0 rows — required=True would then hard-block at endlevel.
+    return record(record_name, label, record_type, items,
+                  max_occurs=max_labs, required=False)
+
+
 def _split_host_with_rosters(host_base, host_label, host_type, items,
                              roster_specs, cont_types):
     """Fan-out helper (2026-06-19): split ONE host section's item list around every
@@ -1131,17 +1164,26 @@ def build_section_g():
         # (gated on pos("99", base)); the old standalone alpha("Q93_LABS_OTHER_TXT") was
         # removed to avoid a duplicate dcf item (#673).
     ])
-    # Q94 lab test cost — Option B ROSTER fan-out (#674, 2026-06-19). WAS a flat 8-source
-    # Yes/No matrix where only Out-of-pocket(01) carried an amount (#451). NOW a CheckBox
-    # (Q94_SOURCES, same 8 Q92_PAYMENT_SRC codes) feeding a roster (Q94_PAY_ROSTER); only
-    # code 01 carries an amount (PARTIAL — Q92 pattern), every other row defaults 0 but
-    # stays enterable. amt_codes={"01"}.
-    Q94_AMT_CODES = {"01"}
-    items.extend(checkbox_multiselect(
-        "Q94_SOURCES",
-        "94. Which of the following did you use to pay for the cost of laboratory test/s? "
-        "(Tick all that apply.)",
-        Q92_PAYMENT_SRC, with_other_txt=False))
+    # Q94 lab test cost — PER-LAB roster rebuild (#450, 2026-06-20). The Apr-20 paper (p.13)
+    # asks Q94 ONCE PER LAB ticked in Q93 ("How much was the cost of [laboratory test]? To be
+    # asked for each lab test ticked in Q93."), NOT one aggregate payment. The old Q94_SOURCES
+    # CheckBox (a by-source roster) was the wrong axis and is removed; Q94 is now
+    # Q94_LAB_ROSTER, driven by the Q93_LABS ticks and spliced in right after the Q93 block
+    # (see g_rosters below). Payment options per the paper (7 — no Donation; only OOP carries
+    # an amount).
+    Q94_PAYMENT_TYPE = [
+        ("Out-of-pocket",                     "01"),
+        ("Free/no cost",                      "02"),
+        ("Free, charge to PhilHealth",        "03"),
+        ("Free, charge to Private Insurance", "04"),
+        ("Free, charge to HMO",               "05"),
+        ("In kind",                           "06"),
+        ("Don't know",                        "07"),
+    ]
+    # Q94_LAB_CODE value set = the Q93 lab options recoded the same way as the Q93_LABS
+    # CheckBox (01..15 labs, Other 99; None 90 excluded — None has no Q94 row). The
+    # select_one label shows the test name in the roster's first column.
+    Q94_LAB_VALUE_SET = [(lbl, c) for lbl, c in _cb_codes(Q93_LABS) if c != "90"]
     items.extend([
         yes_no("Q95_PRESCRIBED",
                "95. Were you prescribed medicine/s after your check-up?"),
@@ -1238,11 +1280,12 @@ def build_section_g():
             Q92_PAYMENT_SRC, Q92_AMT_CODES, "O",
             "92. Payment source (auto-filled from the ticked sources)",
             "92. Amount paid for the consultation, by source (Pesos)"),
-        "Q94_SOURCES": _build_payment_roster(
-            "Q94_PAY_ROSTER", "G. Cost of laboratory test/s — amount by source", 94,
-            Q92_PAYMENT_SRC, Q94_AMT_CODES, "S",
-            "94. Payment source (auto-filled from the ticked sources)",
-            "94. Amount paid for the laboratory test/s, by source (Pesos)"),
+        # Q94 PER-LAB roster (#450): keyed on Q93_LABS_OTHER_TXT (the last item of the Q93
+        # block) so the grid renders AFTER Q93's Other-specify and before Q95. One row per
+        # ticked lab; reuses record type "S" (freed from the removed Q94_PAY_ROSTER).
+        "Q93_LABS_OTHER_TXT": _build_lab_payment_roster(
+            "Q94_LAB_ROSTER", "G. Cost of laboratory tests — per test (Q94)", "S",
+            Q94_LAB_VALUE_SET, Q94_PAYMENT_TYPE, max_labs=len(Q94_LAB_VALUE_SET)),
         "Q96_SOURCES": _build_payment_roster(
             "Q96_PAY_ROSTER", "G. Cost of prescribed medicines — amount by source", 96,
             Q96_MEDS_PAY, Q96_AMT_CODES, "T",

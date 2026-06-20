@@ -2967,7 +2967,7 @@ Form=7
   
 [Text]
 Position=50,990,1006,1006
-Text=63. How many days did you wait from application submission to accreditation approval? [PENDING DESIGN: printed text says days, buckets are months]
+Text=63. How many month/s did you wait from application submission to accreditation approval?
  
   
   
@@ -6105,7 +6105,7 @@ Form=11
   
 [Text]
 Position=50,540,813,556
-Text=166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits]
+Text=166. What forms of professional development do you provide to your nurses?
  
   
   
@@ -6119,7 +6119,7 @@ Form=11
   
 [Text]
 Position=50,750,953,766
-Text=166. What forms of professional development do you provide to your nurses? [PENDING DESIGN: printed list omits audits] — Other (specify) text
+Text=166. What forms of professional development do you provide to your nurses? — Other (specify) text
  
 [Block]
 Name=DG_H_HUMAN_RESOURCES_FORM_246

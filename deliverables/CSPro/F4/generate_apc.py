@@ -386,6 +386,17 @@ postproc
     errmsg("Respondent is not the household head. Confirm they are a household decision-maker per the sampling protocol before continuing.");
   endif;
 
+{ ---- #664: Q135 (ZBB out-of-pocket) is asked ONLY if the most-recent hospitalization was in
+       a DOH-retained hospital — the paper labels it "[Ask only if they went to a DOH-retained
+       hospital]". Gate on Q130 = 2; otherwise skip to Q136. Parallels Q131 (NBB OOP), which the
+       #661 rule gates the same way. Q130 = notappl (not confined) also falls through the gate
+       (notappl <> 2 is true) -> Q135 correctly skipped. ---- }
+PROC Q135_ZBB_OOP
+preproc
+  if Q130_HOSPITAL_TYPE <> 2 then
+    skip to Q136_MAIFIP_HEARD;
+  endif;
+
 { ---- 'Other (specify)' enforcement -- Q50 roster insurance + Q194 funds (audit 2026-06-11) ---- }
 PROC Q50_PRIVATE_INS_OTHER_TXT
 preproc
@@ -1071,6 +1082,14 @@ def expenditure_gate_procs(names):
         if not amts:
             continue
         not_consumed, consumed_branch = [], []
+        # #680.1 (Carl go/no-go 2026-06-20): every household has housing (actual rent if rented,
+        # imputed value if owned), so 'Not consumed' on Q167 Housing is almost always an error.
+        # Soft-warn the enumerator (errmsg continues — no reenter, in case there's a genuine
+        # reason). Fires in the not-consumed branch.
+        if base == "Q167_HOUSING":
+            not_consumed.append('    errmsg("Housing should almost always have a value — actual '
+                'rent if rented, or the estimated value of rent if owned. If the household has '
+                'housing, go back and mark Yes and enter the amount.");')
         for amt in amts:
             not_consumed.append(f"    {amt} = 0;   {{ item not consumed -> no spend }}")
             not_consumed.append(f"    protect({amt}, true);")
@@ -1165,6 +1184,7 @@ def main():
                # ungated free-text, exactly as it was under select_all.
                "Q141_BILL_ITEMS_OTHER_TXT",
                "Q1_IS_HH_HEAD",  # EXTRA_PROCS (#520 soft confirm)
+               "Q135_ZBB_OOP",  # EXTRA_PROCS (#664 DOH-retained gate)
                "Q76_BRAND_OR_GEN", "Q79_REG_SOURCE",  # EXTRA_PROCS (Q78_WHY_BRANDED now a Check Box base, covered via CHECKBOX_COVERED)
                "Q112_VISITED",  # EXTRA_PROCS (#590-593 Q112 referral-visit multi-branch)
                "Q194_OTHER_SOURCE",  # EXTRA_PROCS (#684 >=1 funding-source aggregate check)

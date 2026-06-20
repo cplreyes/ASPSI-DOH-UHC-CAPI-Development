@@ -301,7 +301,6 @@
   "61. Were there delays in receiving capitation tranches?": "May ara bala nga mga delays sa pagbaton sang capitation tranches?",
   "61.1. If yes, what was/were the reasons for the delay?": "Kon huo, ano ang mga rason sang pagka-delay?",
   "62. On average, how long is the typical time interval between tranches releases to the facility?": "Sa average, ano ang masami nga time interval sa tunga sang pag-release sang mga tranche sa pasilidad?",
-  "63. How many days did you wait from application submission to accreditation approval? [PENDING DESIGN: printed text says days, buckets are months]": "Pila ka adlaw ang ginpaabot ninyo halin sang pag-submit sang application tubtob nga naaprubahan ang accreditation?",
   "64. Why did you apply to become a YAKAP/Konsulta provider? — Aligns with facility's mission": "Nag-aangot sa misyon sang pasilidad (halimbawa, ang mga tinutuyo sang UHC kaangay sa pasilidad)",
   "64. Why did you apply to become a YAKAP/Konsulta provider? — Encouraged by LGU": "Ginapahamtang sang LGU",
   "64. Why did you apply to become a YAKAP/Konsulta provider? — Incentives (capitation/payment for registered patients)": "Insentibo (halimbawa, ang pasilidad nakabaton sang capitation/payment para sa mga narehistro nga pasyente)",
@@ -499,5 +498,6 @@
   "Yes, this was pre-existing, but it has significantly improved due to the UHC Act": "Huo, ini daan nga nag-exist, pero nag-ayo gid tungod sa UHC Act",
   "Yes, to DOH Information System only": "Huo, sa DOH Information System lang",
   "Yes, to PhilHealth Dashboard only": "Huo,sa PhilHealth Dashboard lang",
-  "Yes, to both DOH Information System and PhilHealth Dashboard": "Huo, sa DOH Information System kag PhilHealth Dashboard"
+  "Yes, to both DOH Information System and PhilHealth Dashboard": "Huo, sa DOH Information System kag PhilHealth Dashboard",
+  "63. How many month/s did you wait from application submission to accreditation approval?": "Pila ka adlaw ang ginpaabot ninyo halin sang pag-submit sang application tubtob nga naaprubahan ang accreditation?"
 }

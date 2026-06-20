@@ -323,7 +323,6 @@
   "61. Were there delays in receiving capitation tranches?": "Mayda ba mga paglangan ha pagkarawat han mga bahin han kapitasyon?",
   "61.1. If yes, what was/were the reasons for the delay?": "Kun oo, ano an mga rason han pagkaiha?",
   "62. On average, how long is the typical time interval between tranches releases to the facility?": "Ha aberids, gaano kaiha an tipikal nga lat-ang han oras ha butnga han mga bahin nga iginpapagawas ngadto ha pasilidad?",
-  "63. How many days did you wait from application submission to accreditation approval? [PENDING DESIGN: printed text says days, buckets are months]": "Pira ka bulan/mga bulan an imo ginhulat tikang han pagsumiter han aplikasyon ngadto han pag-aprobar han akreditasyon?",
   "64. Why did you apply to become a YAKAP/Konsulta provider? — Aligns with facility's mission": "Nakalinya ha misyon han pasilidad (i.e., an mga panuyo han UHC nakalinya ha pasilidad)",
   "64. Why did you apply to become a YAKAP/Konsulta provider? — Encouraged by LGU": "Gin-anghat han LGU",
   "64. Why did you apply to become a YAKAP/Konsulta provider? — Incentives (capitation/payment for registered patients)": "Mga insentibo (i.e., an pasilidad nakarawat hin kapitasyon/bayad para han mga nahirehistro nga pasyente)",
@@ -540,5 +539,6 @@
   "Yes, this was pre-existing, but it has significantly improved due to the UHC Act": "Oo, naeksister na ini hadto, pero nag-upay gud ini tungod han UHC Act",
   "Yes, to DOH Information System only": "Oo, ngadto la han systema hin impormasyon ha DOH la",
   "Yes, to PhilHealth Dashboard only": "Oo, ha PhilHealth Dashboard la",
-  "Yes, to both DOH Information System and PhilHealth Dashboard": "Oo, ha systema hin impormasyon ha DOH ngan PhilHealth Dashboard"
+  "Yes, to both DOH Information System and PhilHealth Dashboard": "Oo, ha systema hin impormasyon ha DOH ngan PhilHealth Dashboard",
+  "63. How many month/s did you wait from application submission to accreditation approval?": "Pira ka bulan/mga bulan an imo ginhulat tikang han pagsumiter han aplikasyon ngadto han pag-aprobar han akreditasyon?"
 }
