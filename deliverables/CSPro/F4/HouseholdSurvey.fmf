@@ -206,7 +206,7 @@ Level=1
 
 Repeat=C_HOUSEHOLD_ROSTER
 
-Size=806,757
+Size=806,697
 
   
 
@@ -246,15 +246,11 @@ Item=Q44_PAGIBIG
 
 Item=Q45_PHILHEALTH_REG
 
+Item=Q45_1_PIN_REG_DATE
+
 Item=Q46_MEMBER_CATEGORY
 
 Item=Q46_MEMBER_OTHER_TXT
-
-Item=Q48_NAME_FIRST
-
-Item=Q49_PRIVATE_INS
-
-Item=Q50_PRIVATE_INS_OTHER_TXT
 
   
 
@@ -286,6 +282,34 @@ Item=Q47_HH_HAS_PRIVATE_INS
 
 Name=FORM006
 
+Label=C. Private Insurance Q48-Q50 - REPEATING (Q47=Yes; piped names)
+
+Level=1
+
+Repeat=C_PRIVATE_INS_ROSTER
+
+Size=806,300
+
+  
+
+Item=PRIV_MEMBER_LINE_NO
+
+Item=Q48_OTHER_INS_REG
+
+Item=Q49_PRIVATE_INS
+
+Item=Q50_PRIVATE_INS_OTHER_TXT
+
+  
+
+[EndForm]
+
+  
+
+[Form]
+
+Name=FORM007
+
 Label=D. UHC Awareness
 
 Level=1
@@ -312,7 +336,7 @@ Item=Q53_UHC_UNDERSTAND_OTHER_TXT
 
 [Form]
 
-Name=FORM007
+Name=FORM008
 
 Label=E. YAKAP / Konsulta
 
@@ -340,7 +364,7 @@ Item=Q56_YAKAP_UNDERSTAND_OTHER_TXT
 
 [Form]
 
-Name=FORM008
+Name=FORM009
 
 Label=F. BUCAS Awareness
 
@@ -374,7 +398,7 @@ Item=Q61_BUCAS_SERVICES_OTHER_TXT
 
 [Form]
 
-Name=FORM009
+Name=FORM010
 
 Label=G. Access to Medicines
 
@@ -442,7 +466,7 @@ Item=Q78_WHY_BRANDED_OTHER_TXT
 
 [Form]
 
-Name=FORM010
+Name=FORM011
 
 Label=H. PhilHealth Registration
 
@@ -490,7 +514,7 @@ Item=Q88_DIFF_PAYING_OTHER_TXT
 
 [Form]
 
-Name=FORM011
+Name=FORM012
 
 Label=I. Primary Care
 
@@ -542,7 +566,7 @@ Item=Q100_LEAVE_WORK_SCHOOL
 
 [Form]
 
-Name=FORM012
+Name=FORM013
 
 Label=J. Health Seeking
 
@@ -584,7 +608,7 @@ Item=Q107_OTHER_ACTIONS_OTHER_TXT
 
 [Form]
 
-Name=FORM013
+Name=FORM014
 
 Label=K. Referrals
 
@@ -648,7 +672,7 @@ Item=Q125_SAT_REFERRAL_EXP
 
 [Form]
 
-Name=FORM014
+Name=FORM015
 
 Label=L. NBB Awareness
 
@@ -682,7 +706,7 @@ Item=Q131_NBB_OOP
 
 [Form]
 
-Name=FORM015
+Name=FORM016
 
 Label=M. ZBB / MAIFIP / Bill-Recall
 
@@ -738,7 +762,7 @@ Item=Q143_HOW_PAID_OTHER_TXT
 
 [Form]
 
-Name=FORM016
+Name=FORM017
 
 Label=N. Household Expenditures
 
@@ -992,7 +1016,7 @@ Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
 
 [Form]
 
-Name=FORM017
+Name=FORM018
 
 Label=O. Sources of Funds for Health
 
@@ -1036,7 +1060,7 @@ Item=Q196_FOREGONE_OTHER_TXT
 
 [Form]
 
-Name=FORM018
+Name=FORM019
 
 Label=P. Financial Risk
 
@@ -1062,7 +1086,7 @@ Item=Q199_WTP_OTHER_TXT
 
 [Form]
 
-Name=FORM019
+Name=FORM020
 
 Label=Q. Financial Anxiety
 
@@ -1088,7 +1112,7 @@ Item=Q202_WORRY_REASONS_OTHER_TXT
 
 [Form]
 
-Name=FORM020
+Name=FORM021
 
 Label=Closing - case end
 
@@ -1124,7 +1148,7 @@ Item=ENUM_RESULT_FINAL_VISIT
 
 [Form]
 
-Name=FORM021
+Name=FORM022
 
 Label=Case Verification Photo
 
@@ -3252,9 +3276,33 @@ Text=45. Currently registered with PhilHealth?
 
 [Field]
 
+Name=Q45_1_PIN_REG_DATE
+
+Position=350,567,760,587
+
+Item=Q45_1_PIN_REG_DATE,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=Date,YYYYMMDD
+
+Form=5
+
+  
+
+[Text]
+
+Position=50,570,330,586
+
+Text=45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)
+
+ 
+
+  
+
+[Field]
+
 Name=Q46_MEMBER_CATEGORY
 
-Position=350,567,365,587
+Position=350,597,365,617
 
 Item=Q46_MEMBER_CATEGORY,HOUSEHOLDSURVEY_DICT
 
@@ -3266,7 +3314,7 @@ Form=5
 
 [Text]
 
-Position=50,570,330,586
+Position=50,600,330,616
 
 Text=46. What is his/her membership category?
 
@@ -3278,7 +3326,7 @@ Text=46. What is his/her membership category?
 
 Name=Q46_MEMBER_OTHER_TXT
 
-Position=350,597,760,617
+Position=350,627,760,647
 
 Item=Q46_MEMBER_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 
@@ -3292,85 +3340,9 @@ Form=5
 
 [Text]
 
-Position=50,600,330,616
-
-Text=46. Member category — Other (specify) text
-
- 
-
-  
-
-[Field]
-
-Name=Q48_NAME_FIRST
-
-Position=350,627,760,647
-
-Item=Q48_NAME_FIRST,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=5
-
-  
-
-[Text]
-
 Position=50,630,330,646
 
-Text=48. Name (First Name Only) — private insurance roster
-
- 
-
-  
-
-[Field]
-
-Name=Q49_PRIVATE_INS
-
-Position=350,657,365,677
-
-Item=Q49_PRIVATE_INS,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=RadioButton
-
-Form=5
-
-  
-
-[Text]
-
-Position=50,660,330,676
-
-Text=49. Is (NAME) covered by a private health insurance either as a member or dependent? (Example: Maxicare, Intellicare, Pacific Cross Health Care)
-
- 
-
-  
-
-[Field]
-
-Name=Q50_PRIVATE_INS_OTHER_TXT
-
-Position=350,687,760,707
-
-Item=Q50_PRIVATE_INS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
-
-UseUnicodeTextBox=Yes
-
-DataCaptureType=TextBox
-
-Form=5
-
-  
-
-[Text]
-
-Position=50,690,330,706
-
-Text=50. Others (Specify)
+Text=46. Member category — Other (specify) text
 
  
 
@@ -3440,11 +3412,131 @@ Length=1
 
 Required=Yes
 
+Name=C_PRIVATE_INS_ROSTER_FORM
+
+Label=C. Private Insurance Q48-Q50 - REPEATING (Q47=Yes; piped names)
+
+Form=7
+
+Type=Record
+
+TypeName=C_PRIVATE_INS_ROSTER
+
+Max=20
+
+  
+
+[Field]
+
+Name=PRIV_MEMBER_LINE_NO
+
+Position=350,27,760,47
+
+Item=PRIV_MEMBER_LINE_NO,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=TextBox
+
+Form=7
+
+  
+
+[Text]
+
+Position=50,30,330,46
+
+Text=Household Member Line Number (private insurance)
+
+ 
+
+  
+
+[Field]
+
+Name=Q48_OTHER_INS_REG
+
+Position=350,57,365,77
+
+Item=Q48_OTHER_INS_REG,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=7
+
+  
+
+[Text]
+
+Position=50,60,330,76
+
+Text=48. Are you registered with another health insurance plan?
+
+ 
+
+  
+
+[Field]
+
+Name=Q49_PRIVATE_INS
+
+Position=350,87,365,107
+
+Item=Q49_PRIVATE_INS,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=RadioButton
+
+Form=7
+
+  
+
+[Text]
+
+Position=50,90,330,106
+
+Text=49. Is (NAME) covered by a private health insurance either as a member or dependent? (Example: Maxicare, Intellicare, Pacific Cross Health Care)
+
+ 
+
+  
+
+[Field]
+
+Name=Q50_PRIVATE_INS_OTHER_TXT
+
+Position=350,117,760,137
+
+Item=Q50_PRIVATE_INS_OTHER_TXT,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=7
+
+  
+
+[Text]
+
+Position=50,120,330,136
+
+Text=50. Others (Specify)
+
+ 
+
+  
+
+[EndGroup]
+
+  
+
+[Group]
+
+Required=Yes
+
 Name=D_UHC_AWARENESS_FORM
 
 Label=D. UHC Awareness
 
-Form=7
+Form=8
 
 Max=1
 
@@ -3460,7 +3552,7 @@ Item=Q51_UHC_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=7
+Form=8
 
   
 
@@ -3484,7 +3576,7 @@ Item=Q52_UHC_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=7
+Form=8
 
   
 
@@ -3510,7 +3602,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=7
+Form=8
 
   
 
@@ -3534,7 +3626,7 @@ Item=Q53_UHC_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=7
+Form=8
 
   
 
@@ -3560,7 +3652,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=7
+Form=8
 
   
 
@@ -3656,7 +3748,7 @@ Name=E_YAKAP_KONSULTA_FORM
 
 Label=E. YAKAP / Konsulta
 
-Form=8
+Form=9
 
 Max=1
 
@@ -3672,7 +3764,7 @@ Item=Q54_YAKAP_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=8
+Form=9
 
   
 
@@ -3696,7 +3788,7 @@ Item=Q55_YAKAP_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=8
+Form=9
 
   
 
@@ -3722,7 +3814,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=8
+Form=9
 
   
 
@@ -3746,7 +3838,7 @@ Item=Q56_YAKAP_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=8
+Form=9
 
   
 
@@ -3772,7 +3864,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=8
+Form=9
 
   
 
@@ -3868,7 +3960,7 @@ Name=F_BUCAS_AWARENESS_FORM
 
 Label=F. BUCAS Awareness
 
-Form=9
+Form=10
 
 Max=1
 
@@ -3884,7 +3976,7 @@ Item=Q57_BUCAS_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=9
+Form=10
 
   
 
@@ -3908,7 +4000,7 @@ Item=Q58_BUCAS_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=9
+Form=10
 
   
 
@@ -3934,7 +4026,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=9
+Form=10
 
   
 
@@ -3958,7 +4050,7 @@ Item=Q59_BUCAS_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=9
+Form=10
 
   
 
@@ -3984,7 +4076,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=9
+Form=10
 
   
 
@@ -4008,7 +4100,7 @@ Item=Q60_BUCAS_ACCESSED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=9
+Form=10
 
   
 
@@ -4032,7 +4124,7 @@ Item=Q61_BUCAS_SERVICES,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=9
+Form=10
 
   
 
@@ -4058,7 +4150,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=9
+Form=10
 
   
 
@@ -4196,7 +4288,7 @@ Name=G_ACCESS_MEDICINES_FORM
 
 Label=G. Access to Medicines
 
-Form=10
+Form=11
 
 Max=1
 
@@ -4212,7 +4304,7 @@ Item=Q62_PURCHASE_FREQ,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=10
+Form=11
 
   
 
@@ -4236,7 +4328,7 @@ Item=Q63_PRESCRIPTION_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=10
+Form=11
 
   
 
@@ -4262,7 +4354,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -4286,7 +4378,7 @@ Item=Q65_CONDITIONS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=10
+Form=11
 
   
 
@@ -4312,7 +4404,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -4336,7 +4428,7 @@ Item=Q66_WHERE_BUY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=10
+Form=11
 
   
 
@@ -4362,7 +4454,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -4386,7 +4478,7 @@ Item=Q67_TRAVEL_HH,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -4410,7 +4502,7 @@ Item=Q67_TRAVEL_MM,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -4434,7 +4526,7 @@ Item=Q68_PHARMACY_ACCESS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=10
+Form=11
 
   
 
@@ -4458,7 +4550,7 @@ Item=Q69_GAMOT_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=10
+Form=11
 
   
 
@@ -4482,7 +4574,7 @@ Item=Q70_GAMOT_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=10
+Form=11
 
   
 
@@ -4508,7 +4600,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -4532,7 +4624,7 @@ Item=Q71_GAMOT_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=10
+Form=11
 
   
 
@@ -4558,7 +4650,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -4582,7 +4674,7 @@ Item=Q72_GAMOT_OBTAINED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=10
+Form=11
 
   
 
@@ -4608,7 +4700,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -4632,7 +4724,7 @@ Item=Q74_WHERE_REST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=10
+Form=11
 
   
 
@@ -4658,7 +4750,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -4682,7 +4774,7 @@ Item=Q75_BRAND_GEN_KNOWS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=10
+Form=11
 
   
 
@@ -4706,7 +4798,7 @@ Item=Q76_BRAND_OR_GEN,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=10
+Form=11
 
   
 
@@ -4730,7 +4822,7 @@ Item=Q77_WHY_GENERIC,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=10
+Form=11
 
   
 
@@ -4756,7 +4848,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -4780,7 +4872,7 @@ Item=Q78_WHY_BRANDED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=10
+Form=11
 
   
 
@@ -4806,7 +4898,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=10
+Form=11
 
   
 
@@ -5126,7 +5218,7 @@ Name=H_PHILHEALTH_REG_FORM
 
 Label=H. PhilHealth Registration
 
-Form=11
+Form=12
 
 Max=1
 
@@ -5142,7 +5234,7 @@ Item=Q79_REG_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=11
+Form=12
 
   
 
@@ -5168,7 +5260,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=11
+Form=12
 
   
 
@@ -5192,7 +5284,7 @@ Item=Q80_ASSIST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=11
+Form=12
 
   
 
@@ -5218,7 +5310,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=11
+Form=12
 
   
 
@@ -5242,7 +5334,7 @@ Item=Q81_REG_DIFFICULTY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=11
+Form=12
 
   
 
@@ -5266,7 +5358,7 @@ Item=Q82_DIFFICULTY_REASONS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=11
+Form=12
 
   
 
@@ -5292,7 +5384,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=11
+Form=12
 
   
 
@@ -5316,7 +5408,7 @@ Item=Q83_KNOWS_ASSIST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=11
+Form=12
 
   
 
@@ -5342,7 +5434,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=11
+Form=12
 
   
 
@@ -5366,7 +5458,7 @@ Item=Q85_BENEFITS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=11
+Form=12
 
   
 
@@ -5392,7 +5484,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=11
+Form=12
 
   
 
@@ -5416,7 +5508,7 @@ Item=Q86_PREMIUM_PAY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=11
+Form=12
 
   
 
@@ -5440,7 +5532,7 @@ Item=Q87_PREMIUM_DIFFICULT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=11
+Form=12
 
   
 
@@ -5464,7 +5556,7 @@ Item=Q88_DIFF_PAYING,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=11
+Form=12
 
   
 
@@ -5490,7 +5582,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=11
+Form=12
 
   
 
@@ -5726,7 +5818,7 @@ Name=I_PRIMARY_CARE_FORM
 
 Label=I. Primary Care
 
-Form=12
+Form=13
 
 Max=1
 
@@ -5742,7 +5834,7 @@ Item=Q89_HAS_USUAL_FACILITY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=13
 
   
 
@@ -5768,7 +5860,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=13
 
   
 
@@ -5792,7 +5884,7 @@ Item=Q90_IS_USUAL_FOR_GENERAL,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=13
 
   
 
@@ -5816,7 +5908,7 @@ Item=Q91_WHY_WENT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=12
+Form=13
 
   
 
@@ -5842,7 +5934,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=13
 
   
 
@@ -5866,7 +5958,7 @@ Item=Q92_FACILITY_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=12
+Form=13
 
   
 
@@ -5892,7 +5984,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=13
 
   
 
@@ -5916,7 +6008,7 @@ Item=Q93_WHY_NOT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=12
+Form=13
 
   
 
@@ -5942,7 +6034,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=13
 
   
 
@@ -5966,7 +6058,7 @@ Item=Q94_TRANSPORT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=12
+Form=13
 
   
 
@@ -5992,7 +6084,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=12
+Form=13
 
   
 
@@ -6016,7 +6108,7 @@ Item=Q95_TRAVEL_TIME_MIN,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=12
+Form=13
 
   
 
@@ -6040,7 +6132,7 @@ Item=Q96_TRAVEL_COST_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=12
+Form=13
 
   
 
@@ -6064,7 +6156,7 @@ Item=Q97_KNOWS_BOOKING,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=13
 
   
 
@@ -6088,7 +6180,7 @@ Item=Q98_PHONE_ADVICE_OPEN,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=13
 
   
 
@@ -6112,7 +6204,7 @@ Item=Q99_PHONE_ADVICE_CLOSED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=13
 
   
 
@@ -6136,7 +6228,7 @@ Item=Q100_LEAVE_WORK_SCHOOL,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=12
+Form=13
 
   
 
@@ -6330,7 +6422,7 @@ Name=J_HEALTH_SEEKING_FORM
 
 Label=J. Health Seeking
 
-Form=13
+Form=14
 
 Max=1
 
@@ -6346,7 +6438,7 @@ Item=Q101_CHECKUP_FREQ,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=13
+Form=14
 
   
 
@@ -6372,7 +6464,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=14
 
   
 
@@ -6396,7 +6488,7 @@ Item=Q102_VISIT_REASON,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=13
+Form=14
 
   
 
@@ -6422,7 +6514,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=14
 
   
 
@@ -6446,7 +6538,7 @@ Item=Q103_CARE_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=13
+Form=14
 
   
 
@@ -6472,7 +6564,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=14
 
   
 
@@ -6496,7 +6588,7 @@ Item=Q104_PREVENTIVE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=14
 
   
 
@@ -6520,7 +6612,7 @@ Item=Q105_FORGONE_CARE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=13
+Form=14
 
   
 
@@ -6544,7 +6636,7 @@ Item=Q106_FORGONE_WHY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=13
+Form=14
 
   
 
@@ -6570,7 +6662,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=14
 
   
 
@@ -6594,7 +6686,7 @@ Item=Q107_OTHER_ACTIONS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=13
+Form=14
 
   
 
@@ -6620,7 +6712,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=13
+Form=14
 
   
 
@@ -6800,7 +6892,7 @@ Name=K_REFERRALS_FORM
 
 Label=K. Referrals
 
-Form=14
+Form=15
 
 Max=1
 
@@ -6816,7 +6908,7 @@ Item=Q108_REFERRED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -6840,7 +6932,7 @@ Item=Q109_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=15
 
   
 
@@ -6866,7 +6958,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=15
 
   
 
@@ -6890,7 +6982,7 @@ Item=Q110_SPECIALIST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=14
+Form=15
 
   
 
@@ -6916,7 +7008,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=15
 
   
 
@@ -6940,7 +7032,7 @@ Item=Q111_METHOD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -6966,7 +7058,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=15
 
   
 
@@ -6990,7 +7082,7 @@ Item=Q112_VISITED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7014,7 +7106,7 @@ Item=Q113_WHY_NOT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=15
 
   
 
@@ -7040,7 +7132,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=15
 
   
 
@@ -7064,7 +7156,7 @@ Item=Q114_DISCUSSED_PLACES,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7088,7 +7180,7 @@ Item=Q115_HELPED_APPT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7112,7 +7204,7 @@ Item=Q116_WROTE_INFO,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7136,7 +7228,7 @@ Item=Q117_SPECIALIST_FOLLOWUP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7160,7 +7252,7 @@ Item=Q118_SAT_REFERRAL_PROCESS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7184,7 +7276,7 @@ Item=Q119_PCF_REFERRAL,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7208,7 +7300,7 @@ Item=Q120_PCP_KNOWS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7232,7 +7324,7 @@ Item=Q121_WHY_HOSPITAL,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=14
+Form=15
 
   
 
@@ -7258,7 +7350,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=14
+Form=15
 
   
 
@@ -7282,7 +7374,7 @@ Item=Q122_PCP_DISCUSSED_PLACES,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7306,7 +7398,7 @@ Item=Q123_PCP_HELPED_APPT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7330,7 +7422,7 @@ Item=Q124_PCP_WROTE_INFO,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7354,7 +7446,7 @@ Item=Q125_SAT_REFERRAL_EXP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=14
+Form=15
 
   
 
@@ -7604,7 +7696,7 @@ Name=L_NBB_AWARENESS_FORM
 
 Label=L. NBB Awareness
 
-Form=15
+Form=16
 
 Max=1
 
@@ -7620,7 +7712,7 @@ Item=Q126_NBB_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=16
 
   
 
@@ -7644,7 +7736,7 @@ Item=Q127_NBB_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=15
+Form=16
 
   
 
@@ -7670,7 +7762,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=15
+Form=16
 
   
 
@@ -7694,7 +7786,7 @@ Item=Q128_NBB_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=15
+Form=16
 
   
 
@@ -7720,7 +7812,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=15
+Form=16
 
   
 
@@ -7744,7 +7836,7 @@ Item=Q129_HH_CONFINED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=16
 
   
 
@@ -7768,7 +7860,7 @@ Item=Q130_HOSPITAL_TYPE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=16
 
   
 
@@ -7792,7 +7884,7 @@ Item=Q131_NBB_OOP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=15
+Form=16
 
   
 
@@ -7894,13 +7986,27 @@ Length=1
 
 Name=DG_BLK_121
 
-Label=Q130-Q131
+Label=Q130
 
 DisplayTogether=Yes
 
 Position=12
 
-Length=2
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_122
+
+Label=Q131
+
+DisplayTogether=Yes
+
+Position=14
+
+Length=1
 
   
 
@@ -7916,7 +8022,7 @@ Name=M_ZBB_MAIFIP_BILL_FORM
 
 Label=M. ZBB / MAIFIP / Bill-Recall
 
-Form=16
+Form=17
 
 Max=1
 
@@ -7932,7 +8038,7 @@ Item=Q132_ZBB_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=17
 
   
 
@@ -7956,7 +8062,7 @@ Item=Q133_ZBB_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=17
 
   
 
@@ -7982,7 +8088,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=17
 
   
 
@@ -8006,7 +8112,7 @@ Item=Q134_ZBB_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=17
 
   
 
@@ -8032,7 +8138,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=17
 
   
 
@@ -8056,7 +8162,7 @@ Item=Q135_ZBB_OOP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=17
 
   
 
@@ -8080,7 +8186,7 @@ Item=Q136_MAIFIP_HEARD,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=17
 
   
 
@@ -8104,7 +8210,7 @@ Item=Q137_MAIFIP_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=17
 
   
 
@@ -8130,7 +8236,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=17
 
   
 
@@ -8154,7 +8260,7 @@ Item=Q138_MOST_EXPENSIVE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=17
 
   
 
@@ -8180,7 +8286,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=17
 
   
 
@@ -8204,7 +8310,7 @@ Item=Q139_FINAL_AMOUNT_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=16
+Form=17
 
   
 
@@ -8228,7 +8334,7 @@ Item=Q140_RECALL_BREAKDOWN,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=17
 
   
 
@@ -8252,7 +8358,7 @@ Item=Q141_BILL_ITEMS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=17
 
   
 
@@ -8278,7 +8384,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=17
 
   
 
@@ -8302,7 +8408,7 @@ Item=Q141_1_NO_RECEIPT_AMT_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=16
+Form=17
 
   
 
@@ -8326,7 +8432,7 @@ Item=Q142_RECALL_PAYMENT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=16
+Form=17
 
   
 
@@ -8350,7 +8456,7 @@ Item=Q143_HOW_PAID,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=16
+Form=17
 
   
 
@@ -8376,7 +8482,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=16
+Form=17
 
   
 
@@ -8392,7 +8498,7 @@ Text=143. From your most recent visit, how did you pay? — Other (specify) text
 
 [Block]
 
-Name=DG_BLK_122
+Name=DG_BLK_123
 
 Label=Q132
 
@@ -8406,7 +8512,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_123
+Name=DG_BLK_124
 
 Label=Q133
 
@@ -8420,7 +8526,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_124
+Name=DG_BLK_125
 
 Label=Q133
 
@@ -8434,7 +8540,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_125
+Name=DG_BLK_126
 
 Label=Q134
 
@@ -8448,7 +8554,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_126
+Name=DG_BLK_127
 
 Label=Q134
 
@@ -8462,7 +8568,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_127
+Name=DG_BLK_128
 
 Label=Q135
 
@@ -8476,7 +8582,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_128
+Name=DG_BLK_129
 
 Label=Q136
 
@@ -8490,7 +8596,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_129
+Name=DG_BLK_130
 
 Label=Q137
 
@@ -8504,7 +8610,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_130
+Name=DG_BLK_131
 
 Label=Q137
 
@@ -8518,7 +8624,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_131
+Name=DG_BLK_132
 
 Label=Q138
 
@@ -8532,7 +8638,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_132
+Name=DG_BLK_133
 
 Label=Q138
 
@@ -8546,7 +8652,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_133
+Name=DG_BLK_134
 
 Label=Q139-Q140
 
@@ -8560,7 +8666,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_134
+Name=DG_BLK_135
 
 Label=Q141
 
@@ -8574,7 +8680,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_135
+Name=DG_BLK_136
 
 Label=Q141
 
@@ -8588,7 +8694,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_136
+Name=DG_BLK_137
 
 Label=Q141
 
@@ -8602,7 +8708,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_137
+Name=DG_BLK_138
 
 Label=Q142
 
@@ -8616,7 +8722,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_138
+Name=DG_BLK_139
 
 Label=Q143
 
@@ -8630,7 +8736,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_139
+Name=DG_BLK_140
 
 Label=Q143
 
@@ -8654,7 +8760,7 @@ Name=N_HOUSEHOLD_EXPENDITURES_FORM
 
 Label=N. Household Expenditures
 
-Form=17
+Form=18
 
 Max=1
 
@@ -8670,7 +8776,7 @@ Item=Q144_CEREALS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -8694,7 +8800,7 @@ Item=Q144_CEREALS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -8702,7 +8808,7 @@ Form=17
 
 Position=50,60,330,76
 
-Text=144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP)
+Text=144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -8718,7 +8824,7 @@ Item=Q144_CEREALS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -8726,7 +8832,7 @@ Form=17
 
 Position=50,90,330,106
 
-Text=144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP)
+Text=144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -8742,7 +8848,7 @@ Item=Q145_PULSES_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -8766,7 +8872,7 @@ Item=Q145_PULSES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -8774,7 +8880,7 @@ Form=17
 
 Position=50,150,330,166
 
-Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP)
+Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -8790,7 +8896,7 @@ Item=Q145_PULSES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -8798,7 +8904,7 @@ Form=17
 
 Position=50,180,330,196
 
-Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP)
+Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -8814,7 +8920,7 @@ Item=Q146_VEGETABLES_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -8838,7 +8944,7 @@ Item=Q146_VEGETABLES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -8846,7 +8952,7 @@ Form=17
 
 Position=50,240,330,256
 
-Text=146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)
+Text=146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -8862,7 +8968,7 @@ Item=Q146_VEGETABLES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -8870,7 +8976,7 @@ Form=17
 
 Position=50,270,330,286
 
-Text=146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)
+Text=146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -8886,7 +8992,7 @@ Item=Q147_FRUITS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -8910,7 +9016,7 @@ Item=Q147_FRUITS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -8918,7 +9024,7 @@ Form=17
 
 Position=50,330,330,346
 
-Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)
+Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -8934,7 +9040,7 @@ Item=Q147_FRUITS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -8942,7 +9048,7 @@ Form=17
 
 Position=50,360,330,376
 
-Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)
+Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -8958,7 +9064,7 @@ Item=Q148_FISH_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -8982,7 +9088,7 @@ Item=Q148_FISH_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -8990,7 +9096,7 @@ Form=17
 
 Position=50,420,330,436
 
-Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)
+Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9006,7 +9112,7 @@ Item=Q148_FISH_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9014,7 +9120,7 @@ Form=17
 
 Position=50,450,330,466
 
-Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)
+Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9030,7 +9136,7 @@ Item=Q149_MEAT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9054,7 +9160,7 @@ Item=Q149_MEAT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9062,7 +9168,7 @@ Form=17
 
 Position=50,510,330,526
 
-Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)
+Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9078,7 +9184,7 @@ Item=Q149_MEAT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9086,7 +9192,7 @@ Form=17
 
 Position=50,540,330,556
 
-Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)
+Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9102,7 +9208,7 @@ Item=Q150_EGGS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9126,7 +9232,7 @@ Item=Q150_EGGS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9134,7 +9240,7 @@ Form=17
 
 Position=50,600,330,616
 
-Text=150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP)
+Text=150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9150,7 +9256,7 @@ Item=Q150_EGGS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9158,7 +9264,7 @@ Form=17
 
 Position=50,630,330,646
 
-Text=150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP)
+Text=150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9174,7 +9280,7 @@ Item=Q151_MILK_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9198,7 +9304,7 @@ Item=Q151_MILK_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9206,7 +9312,7 @@ Form=17
 
 Position=50,690,330,706
 
-Text=151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP)
+Text=151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9222,7 +9328,7 @@ Item=Q151_MILK_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9230,7 +9336,7 @@ Form=17
 
 Position=50,720,330,736
 
-Text=151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP)
+Text=151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9246,7 +9352,7 @@ Item=Q152_FATS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9270,7 +9376,7 @@ Item=Q152_FATS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9278,7 +9384,7 @@ Form=17
 
 Position=50,780,330,796
 
-Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP)
+Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9294,7 +9400,7 @@ Item=Q152_FATS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9302,7 +9408,7 @@ Form=17
 
 Position=50,810,330,826
 
-Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP)
+Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9318,7 +9424,7 @@ Item=Q153_SUGAR_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9342,7 +9448,7 @@ Item=Q153_SUGAR_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9350,7 +9456,7 @@ Form=17
 
 Position=50,870,330,886
 
-Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP)
+Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9366,7 +9472,7 @@ Item=Q153_SUGAR_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9374,7 +9480,7 @@ Form=17
 
 Position=50,900,330,916
 
-Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP)
+Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9390,7 +9496,7 @@ Item=Q154_CONDIMENTS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9414,7 +9520,7 @@ Item=Q154_CONDIMENTS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9422,7 +9528,7 @@ Form=17
 
 Position=50,960,330,976
 
-Text=154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP)
+Text=154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9438,7 +9544,7 @@ Item=Q154_CONDIMENTS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9446,7 +9552,7 @@ Form=17
 
 Position=50,990,330,1006
 
-Text=154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP)
+Text=154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9462,7 +9568,7 @@ Item=Q155_WATER_NA_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9486,7 +9592,7 @@ Item=Q155_WATER_NA_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9494,7 +9600,7 @@ Form=17
 
 Position=50,1050,330,1066
 
-Text=155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP)
+Text=155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9510,7 +9616,7 @@ Item=Q155_WATER_NA_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9518,7 +9624,7 @@ Form=17
 
 Position=50,1080,330,1096
 
-Text=155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP)
+Text=155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9534,7 +9640,7 @@ Item=Q156_ALCOHOL_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9558,7 +9664,7 @@ Item=Q156_ALCOHOL_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9566,7 +9672,7 @@ Form=17
 
 Position=50,1140,330,1156
 
-Text=156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP)
+Text=156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9582,7 +9688,7 @@ Item=Q156_ALCOHOL_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9590,7 +9696,7 @@ Form=17
 
 Position=50,1170,330,1186
 
-Text=156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP)
+Text=156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9606,7 +9712,7 @@ Item=Q157_FOOD_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9630,7 +9736,7 @@ Item=Q158_RESTAURANT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9654,7 +9760,7 @@ Item=Q158_RESTAURANT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9662,7 +9768,7 @@ Form=17
 
 Position=50,1260,330,1276
 
-Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP)
+Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9678,7 +9784,7 @@ Item=Q158_RESTAURANT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9686,7 +9792,7 @@ Form=17
 
 Position=50,1290,330,1306
 
-Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP)
+Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9702,7 +9808,7 @@ Item=Q159_SMOKING_TOBACCO_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9726,7 +9832,7 @@ Item=Q159_SMOKING_TOBACCO_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9734,7 +9840,7 @@ Form=17
 
 Position=50,1350,330,1366
 
-Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP)
+Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9750,7 +9856,7 @@ Item=Q159_SMOKING_TOBACCO_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9758,7 +9864,7 @@ Form=17
 
 Position=50,1380,330,1396
 
-Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP)
+Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9774,7 +9880,7 @@ Item=Q160_PERSONAL_CARE_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9798,7 +9904,7 @@ Item=Q160_PERSONAL_CARE_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9806,7 +9912,7 @@ Form=17
 
 Position=50,1440,330,1456
 
-Text=160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP)
+Text=160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9822,7 +9928,7 @@ Item=Q160_PERSONAL_CARE_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9830,7 +9936,7 @@ Form=17
 
 Position=50,1470,330,1486
 
-Text=160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP)
+Text=160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9846,7 +9952,7 @@ Item=Q161_HOUSEHOLD_CLEAN_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9870,7 +9976,7 @@ Item=Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9878,7 +9984,7 @@ Form=17
 
 Position=50,1530,330,1546
 
-Text=161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP)
+Text=161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9894,7 +10000,7 @@ Item=Q161_HOUSEHOLD_CLEAN_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9902,7 +10008,7 @@ Form=17
 
 Position=50,1560,330,1576
 
-Text=161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP)
+Text=161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9918,7 +10024,7 @@ Item=Q162_UTILITIES_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -9942,7 +10048,7 @@ Item=Q162_UTILITIES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9950,7 +10056,7 @@ Form=17
 
 Position=50,1620,330,1636
 
-Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP)
+Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -9966,7 +10072,7 @@ Item=Q162_UTILITIES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -9974,7 +10080,7 @@ Form=17
 
 Position=50,1650,330,1666
 
-Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP)
+Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -9990,7 +10096,7 @@ Item=Q163_TRANSPORT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10014,7 +10120,7 @@ Item=Q163_TRANSPORT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10022,7 +10128,7 @@ Form=17
 
 Position=50,1710,330,1726
 
-Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP)
+Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10038,7 +10144,7 @@ Item=Q163_TRANSPORT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10046,7 +10152,7 @@ Form=17
 
 Position=50,1740,330,1756
 
-Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP)
+Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't...
 
  
 
@@ -10062,7 +10168,7 @@ Item=Q164_TELECOM_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10086,7 +10192,7 @@ Item=Q164_TELECOM_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10094,7 +10200,7 @@ Form=17
 
 Position=50,1800,330,1816
 
-Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP)
+Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10110,7 +10216,7 @@ Item=Q164_TELECOM_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10118,7 +10224,7 @@ Form=17
 
 Position=50,1830,330,1846
 
-Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP)
+Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10134,7 +10240,7 @@ Item=Q165_RECREATION_1M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10158,7 +10264,7 @@ Item=Q165_RECREATION_1M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10166,7 +10272,7 @@ Form=17
 
 Position=50,1890,330,1906
 
-Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP)
+Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10182,7 +10288,7 @@ Item=Q165_RECREATION_1M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10190,7 +10296,7 @@ Form=17
 
 Position=50,1920,330,1936
 
-Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP)
+Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10206,7 +10312,7 @@ Item=Q166_POSTAL_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10230,7 +10336,7 @@ Item=Q166_POSTAL_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10238,7 +10344,7 @@ Form=17
 
 Position=50,1980,330,1996
 
-Text=166. Postal services — Amount spent purchasing (PHP)
+Text=166. Postal services — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10254,7 +10360,7 @@ Item=Q166_POSTAL_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10262,7 +10368,7 @@ Form=17
 
 Position=50,2010,330,2026
 
-Text=166. Postal services — Estimated value in-kind / received / own-produce (PHP)
+Text=166. Postal services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10278,7 +10384,7 @@ Item=Q167_HOUSING_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10302,7 +10408,7 @@ Item=Q167_HOUSING_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10310,7 +10416,7 @@ Form=17
 
 Position=50,2070,330,2086
 
-Text=167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP)
+Text=167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10326,7 +10432,7 @@ Item=Q167_HOUSING_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10334,7 +10440,7 @@ Form=17
 
 Position=50,2100,330,2116
 
-Text=167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP)
+Text=167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10350,7 +10456,7 @@ Item=Q168_RECREATION_6M_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10374,7 +10480,7 @@ Item=Q168_RECREATION_6M_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10382,7 +10488,7 @@ Form=17
 
 Position=50,2160,330,2176
 
-Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP)
+Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10398,7 +10504,7 @@ Item=Q168_RECREATION_6M_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10406,7 +10512,7 @@ Form=17
 
 Position=50,2190,330,2206
 
-Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP)
+Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10422,7 +10528,7 @@ Item=Q169_CLOTHING_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10446,7 +10552,7 @@ Item=Q169_CLOTHING_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10454,7 +10560,7 @@ Form=17
 
 Position=50,2250,330,2266
 
-Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP)
+Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10470,7 +10576,7 @@ Item=Q169_CLOTHING_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10478,7 +10584,7 @@ Form=17
 
 Position=50,2280,330,2296
 
-Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP)
+Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10494,7 +10600,7 @@ Item=Q170_EDUCATION_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10518,7 +10624,7 @@ Item=Q170_EDUCATION_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10526,7 +10632,7 @@ Form=17
 
 Position=50,2340,330,2356
 
-Text=170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP)
+Text=170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10542,7 +10648,7 @@ Item=Q170_EDUCATION_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10550,7 +10656,7 @@ Form=17
 
 Position=50,2370,330,2386
 
-Text=170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP)
+Text=170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10566,7 +10672,7 @@ Item=Q171_ACCOMMODATION_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10590,7 +10696,7 @@ Item=Q171_ACCOMMODATION_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10598,7 +10704,7 @@ Form=17
 
 Position=50,2430,330,2446
 
-Text=171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP)
+Text=171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10614,7 +10720,7 @@ Item=Q171_ACCOMMODATION_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10622,7 +10728,7 @@ Form=17
 
 Position=50,2460,330,2476
 
-Text=171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP)
+Text=171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10638,7 +10744,7 @@ Item=Q172_GARDEN_PETS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10662,7 +10768,7 @@ Item=Q172_GARDEN_PETS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10670,7 +10776,7 @@ Form=17
 
 Position=50,2520,330,2536
 
-Text=172. Garden and personal pets' products and services — Amount spent purchasing (PHP)
+Text=172. Garden and personal pets' products and services — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10686,7 +10792,7 @@ Item=Q172_GARDEN_PETS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10694,7 +10800,7 @@ Form=17
 
 Position=50,2550,330,2566
 
-Text=172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP)
+Text=172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10710,7 +10816,7 @@ Item=Q173_HEALTH_INS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10734,7 +10840,7 @@ Item=Q173_HEALTH_INS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10742,7 +10848,7 @@ Form=17
 
 Position=50,2610,330,2626
 
-Text=173. Health insurance — Amount spent purchasing (PHP)
+Text=173. Health insurance — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10758,7 +10864,7 @@ Item=Q173_HEALTH_INS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10766,7 +10872,7 @@ Form=17
 
 Position=50,2640,330,2656
 
-Text=173. Health insurance — Estimated value in-kind / received / own-produce (PHP)
+Text=173. Health insurance — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10782,7 +10888,7 @@ Item=Q174_OTHER_INS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10806,7 +10912,7 @@ Item=Q174_OTHER_INS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10814,7 +10920,7 @@ Form=17
 
 Position=50,2700,330,2716
 
-Text=174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP)
+Text=174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10830,7 +10936,7 @@ Item=Q174_OTHER_INS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10838,7 +10944,7 @@ Form=17
 
 Position=50,2730,330,2746
 
-Text=174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP)
+Text=174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10854,7 +10960,7 @@ Item=Q175_INPATIENT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10878,7 +10984,7 @@ Item=Q175_INPATIENT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10886,7 +10992,7 @@ Form=17
 
 Position=50,2790,330,2806
 
-Text=175. Inpatient care services — Amount spent purchasing (PHP)
+Text=175. Inpatient care services — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10902,7 +11008,7 @@ Item=Q175_INPATIENT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10910,7 +11016,7 @@ Form=17
 
 Position=50,2820,330,2836
 
-Text=175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP)
+Text=175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10926,7 +11032,7 @@ Item=Q176_EMERGENCY_TRANSPORT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -10950,7 +11056,7 @@ Item=Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10958,7 +11064,7 @@ Form=17
 
 Position=50,2880,330,2896
 
-Text=176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP)
+Text=176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -10974,7 +11080,7 @@ Item=Q176_EMERGENCY_TRANSPORT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -10982,7 +11088,7 @@ Form=17
 
 Position=50,2910,330,2926
 
-Text=176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP)
+Text=176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -10998,7 +11104,7 @@ Item=Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11022,7 +11128,7 @@ Item=Q178_PREVENTIVE_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -11046,7 +11152,7 @@ Item=Q178_PREVENTIVE_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11070,7 +11176,7 @@ Item=Q178_PREVENTIVE_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11094,7 +11200,7 @@ Item=Q179_DIAGNOSTIC_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -11118,7 +11224,7 @@ Item=Q179_DIAGNOSTIC_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11126,7 +11232,7 @@ Form=17
 
 Position=50,3090,330,3106
 
-Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP)
+Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -11142,7 +11248,7 @@ Item=Q179_DIAGNOSTIC_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11150,7 +11256,7 @@ Form=17
 
 Position=50,3120,330,3136
 
-Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP)
+Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -11166,7 +11272,7 @@ Item=Q180_ASSISTIVE_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -11190,7 +11296,7 @@ Item=Q180_ASSISTIVE_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11198,7 +11304,7 @@ Form=17
 
 Position=50,3180,330,3196
 
-Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP)
+Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -11214,7 +11320,7 @@ Item=Q180_ASSISTIVE_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11222,7 +11328,7 @@ Form=17
 
 Position=50,3210,330,3226
 
-Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP)
+Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP; enter...
 
  
 
@@ -11238,7 +11344,7 @@ Item=Q181_MEDICAL_PRODUCTS_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -11262,7 +11368,7 @@ Item=Q181_MEDICAL_PRODUCTS_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11270,7 +11376,7 @@ Form=17
 
 Position=50,3270,330,3286
 
-Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP)
+Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -11286,7 +11392,7 @@ Item=Q181_MEDICAL_PRODUCTS_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11294,7 +11400,7 @@ Form=17
 
 Position=50,3300,330,3316
 
-Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP)
+Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -11310,7 +11416,7 @@ Item=Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11334,7 +11440,7 @@ Item=Q183_MEDICINES_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -11358,7 +11464,7 @@ Item=Q183_MEDICINES_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11366,7 +11472,7 @@ Form=17
 
 Position=50,3390,330,3406
 
-Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP)
+Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -11382,7 +11488,7 @@ Item=Q183_MEDICINES_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11390,7 +11496,7 @@ Form=17
 
 Position=50,3420,330,3436
 
-Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP)
+Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -11406,7 +11512,7 @@ Item=Q184_OUTPATIENT_CONSUMED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=17
+Form=18
 
   
 
@@ -11430,7 +11536,7 @@ Item=Q184_OUTPATIENT_PURCHASED_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11438,7 +11544,7 @@ Form=17
 
 Position=50,3480,330,3496
 
-Text=184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP)
+Text=184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP; enter 99999999 if don't know)
 
  
 
@@ -11454,7 +11560,7 @@ Item=Q184_OUTPATIENT_INKIND_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11462,7 +11568,7 @@ Form=17
 
 Position=50,3510,330,3526
 
-Text=184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP)
+Text=184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
 
  
 
@@ -11478,7 +11584,7 @@ Item=Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=17
+Form=18
 
   
 
@@ -11494,7 +11600,7 @@ Text=185. Total value of 183 and 184 (health, 1-month) — Auto-computed total (
 
 [Block]
 
-Name=DG_BLK_140
+Name=DG_BLK_141
 
 Label=Q144
 
@@ -11502,21 +11608,7 @@ DisplayTogether=Yes
 
 Position=0
 
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_141
-
-Label=Q144
-
-DisplayTogether=Yes
-
-Position=3
-
-Length=1
+Length=3
 
   
 
@@ -11528,9 +11620,9 @@ Label=Q145
 
 DisplayTogether=Yes
 
-Position=5
+Position=4
 
-Length=2
+Length=3
 
   
 
@@ -11538,13 +11630,13 @@ Length=2
 
 Name=DG_BLK_143
 
-Label=Q145
+Label=Q146
 
 DisplayTogether=Yes
 
 Position=8
 
-Length=1
+Length=3
 
   
 
@@ -11552,13 +11644,13 @@ Length=1
 
 Name=DG_BLK_144
 
-Label=Q146
+Label=Q147
 
 DisplayTogether=Yes
 
-Position=10
+Position=12
 
-Length=2
+Length=3
 
   
 
@@ -11566,13 +11658,13 @@ Length=2
 
 Name=DG_BLK_145
 
-Label=Q146
+Label=Q148
 
 DisplayTogether=Yes
 
-Position=13
+Position=16
 
-Length=1
+Length=3
 
   
 
@@ -11580,13 +11672,13 @@ Length=1
 
 Name=DG_BLK_146
 
-Label=Q147
+Label=Q149
 
 DisplayTogether=Yes
 
-Position=15
+Position=20
 
-Length=2
+Length=3
 
   
 
@@ -11594,13 +11686,13 @@ Length=2
 
 Name=DG_BLK_147
 
-Label=Q147
+Label=Q150
 
 DisplayTogether=Yes
 
-Position=18
+Position=24
 
-Length=1
+Length=3
 
   
 
@@ -11608,13 +11700,13 @@ Length=1
 
 Name=DG_BLK_148
 
-Label=Q148
+Label=Q151
 
 DisplayTogether=Yes
 
-Position=20
+Position=28
 
-Length=2
+Length=3
 
   
 
@@ -11622,13 +11714,13 @@ Length=2
 
 Name=DG_BLK_149
 
-Label=Q148
+Label=Q152
 
 DisplayTogether=Yes
 
-Position=23
+Position=32
 
-Length=1
+Length=3
 
   
 
@@ -11636,13 +11728,13 @@ Length=1
 
 Name=DG_BLK_150
 
-Label=Q149
+Label=Q153
 
 DisplayTogether=Yes
 
-Position=25
+Position=36
 
-Length=2
+Length=3
 
   
 
@@ -11650,13 +11742,13 @@ Length=2
 
 Name=DG_BLK_151
 
-Label=Q149
+Label=Q154
 
 DisplayTogether=Yes
 
-Position=28
+Position=40
 
-Length=1
+Length=3
 
   
 
@@ -11664,13 +11756,13 @@ Length=1
 
 Name=DG_BLK_152
 
-Label=Q150
+Label=Q155
 
 DisplayTogether=Yes
 
-Position=30
+Position=44
 
-Length=2
+Length=3
 
   
 
@@ -11678,13 +11770,13 @@ Length=2
 
 Name=DG_BLK_153
 
-Label=Q150
+Label=Q156
 
 DisplayTogether=Yes
 
-Position=33
+Position=48
 
-Length=1
+Length=3
 
   
 
@@ -11692,13 +11784,13 @@ Length=1
 
 Name=DG_BLK_154
 
-Label=Q151
+Label=Q158
 
 DisplayTogether=Yes
 
-Position=35
+Position=53
 
-Length=2
+Length=3
 
   
 
@@ -11706,13 +11798,13 @@ Length=2
 
 Name=DG_BLK_155
 
-Label=Q151
+Label=Q159
 
 DisplayTogether=Yes
 
-Position=38
+Position=57
 
-Length=1
+Length=3
 
   
 
@@ -11720,13 +11812,13 @@ Length=1
 
 Name=DG_BLK_156
 
-Label=Q152
+Label=Q160
 
 DisplayTogether=Yes
 
-Position=40
+Position=61
 
-Length=2
+Length=3
 
   
 
@@ -11734,13 +11826,13 @@ Length=2
 
 Name=DG_BLK_157
 
-Label=Q152
+Label=Q161
 
 DisplayTogether=Yes
 
-Position=43
+Position=65
 
-Length=1
+Length=3
 
   
 
@@ -11748,13 +11840,13 @@ Length=1
 
 Name=DG_BLK_158
 
-Label=Q153
+Label=Q162
 
 DisplayTogether=Yes
 
-Position=45
+Position=69
 
-Length=2
+Length=3
 
   
 
@@ -11762,13 +11854,13 @@ Length=2
 
 Name=DG_BLK_159
 
-Label=Q153
+Label=Q163
 
 DisplayTogether=Yes
 
-Position=48
+Position=73
 
-Length=1
+Length=3
 
   
 
@@ -11776,13 +11868,13 @@ Length=1
 
 Name=DG_BLK_160
 
-Label=Q154
+Label=Q164
 
 DisplayTogether=Yes
 
-Position=50
+Position=77
 
-Length=2
+Length=3
 
   
 
@@ -11790,13 +11882,13 @@ Length=2
 
 Name=DG_BLK_161
 
-Label=Q154
+Label=Q165
 
 DisplayTogether=Yes
 
-Position=53
+Position=81
 
-Length=1
+Length=3
 
   
 
@@ -11804,13 +11896,13 @@ Length=1
 
 Name=DG_BLK_162
 
-Label=Q155
+Label=Q166
 
 DisplayTogether=Yes
 
-Position=55
+Position=85
 
-Length=2
+Length=3
 
   
 
@@ -11818,13 +11910,13 @@ Length=2
 
 Name=DG_BLK_163
 
-Label=Q155
+Label=Q167
 
 DisplayTogether=Yes
 
-Position=58
+Position=89
 
-Length=1
+Length=3
 
   
 
@@ -11832,13 +11924,13 @@ Length=1
 
 Name=DG_BLK_164
 
-Label=Q156
+Label=Q168
 
 DisplayTogether=Yes
 
-Position=60
+Position=93
 
-Length=2
+Length=3
 
   
 
@@ -11846,13 +11938,13 @@ Length=2
 
 Name=DG_BLK_165
 
-Label=Q156
+Label=Q169
 
 DisplayTogether=Yes
 
-Position=63
+Position=97
 
-Length=1
+Length=3
 
   
 
@@ -11860,13 +11952,13 @@ Length=1
 
 Name=DG_BLK_166
 
-Label=Q158
+Label=Q170
 
 DisplayTogether=Yes
 
-Position=66
+Position=101
 
-Length=2
+Length=3
 
   
 
@@ -11874,13 +11966,13 @@ Length=2
 
 Name=DG_BLK_167
 
-Label=Q158
+Label=Q171
 
 DisplayTogether=Yes
 
-Position=69
+Position=105
 
-Length=1
+Length=3
 
   
 
@@ -11888,13 +11980,13 @@ Length=1
 
 Name=DG_BLK_168
 
-Label=Q159
+Label=Q172
 
 DisplayTogether=Yes
 
-Position=71
+Position=109
 
-Length=2
+Length=3
 
   
 
@@ -11902,13 +11994,13 @@ Length=2
 
 Name=DG_BLK_169
 
-Label=Q159
+Label=Q173
 
 DisplayTogether=Yes
 
-Position=74
+Position=113
 
-Length=1
+Length=3
 
   
 
@@ -11916,13 +12008,13 @@ Length=1
 
 Name=DG_BLK_170
 
-Label=Q160
+Label=Q174
 
 DisplayTogether=Yes
 
-Position=76
+Position=117
 
-Length=2
+Length=3
 
   
 
@@ -11930,13 +12022,13 @@ Length=2
 
 Name=DG_BLK_171
 
-Label=Q160
+Label=Q175
 
 DisplayTogether=Yes
 
-Position=79
+Position=121
 
-Length=1
+Length=3
 
   
 
@@ -11944,13 +12036,13 @@ Length=1
 
 Name=DG_BLK_172
 
-Label=Q161
+Label=Q176
 
 DisplayTogether=Yes
 
-Position=81
+Position=125
 
-Length=2
+Length=3
 
   
 
@@ -11958,13 +12050,13 @@ Length=2
 
 Name=DG_BLK_173
 
-Label=Q161
+Label=Q178
 
 DisplayTogether=Yes
 
-Position=84
+Position=130
 
-Length=1
+Length=3
 
   
 
@@ -11972,13 +12064,13 @@ Length=1
 
 Name=DG_BLK_174
 
-Label=Q162
+Label=Q179
 
 DisplayTogether=Yes
 
-Position=86
+Position=134
 
-Length=2
+Length=3
 
   
 
@@ -11986,13 +12078,13 @@ Length=2
 
 Name=DG_BLK_175
 
-Label=Q162
+Label=Q180
 
 DisplayTogether=Yes
 
-Position=89
+Position=138
 
-Length=1
+Length=3
 
   
 
@@ -12000,13 +12092,13 @@ Length=1
 
 Name=DG_BLK_176
 
-Label=Q163
+Label=Q181
 
 DisplayTogether=Yes
 
-Position=91
+Position=142
 
-Length=2
+Length=3
 
   
 
@@ -12014,13 +12106,13 @@ Length=2
 
 Name=DG_BLK_177
 
-Label=Q163
+Label=Q183
 
 DisplayTogether=Yes
 
-Position=94
+Position=147
 
-Length=1
+Length=3
 
   
 
@@ -12028,531 +12120,13 @@ Length=1
 
 Name=DG_BLK_178
 
-Label=Q164
-
-DisplayTogether=Yes
-
-Position=96
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_179
-
-Label=Q164
-
-DisplayTogether=Yes
-
-Position=99
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_180
-
-Label=Q165
-
-DisplayTogether=Yes
-
-Position=101
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_181
-
-Label=Q165
-
-DisplayTogether=Yes
-
-Position=104
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_182
-
-Label=Q166
-
-DisplayTogether=Yes
-
-Position=106
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_183
-
-Label=Q166
-
-DisplayTogether=Yes
-
-Position=109
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_184
-
-Label=Q167
-
-DisplayTogether=Yes
-
-Position=111
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_185
-
-Label=Q167
-
-DisplayTogether=Yes
-
-Position=114
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_186
-
-Label=Q168
-
-DisplayTogether=Yes
-
-Position=116
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_187
-
-Label=Q168
-
-DisplayTogether=Yes
-
-Position=119
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_188
-
-Label=Q169
-
-DisplayTogether=Yes
-
-Position=121
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_189
-
-Label=Q169
-
-DisplayTogether=Yes
-
-Position=124
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_190
-
-Label=Q170
-
-DisplayTogether=Yes
-
-Position=126
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_191
-
-Label=Q170
-
-DisplayTogether=Yes
-
-Position=129
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_192
-
-Label=Q171
-
-DisplayTogether=Yes
-
-Position=131
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_193
-
-Label=Q171
-
-DisplayTogether=Yes
-
-Position=134
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_194
-
-Label=Q172
-
-DisplayTogether=Yes
-
-Position=136
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_195
-
-Label=Q172
-
-DisplayTogether=Yes
-
-Position=139
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_196
-
-Label=Q173
-
-DisplayTogether=Yes
-
-Position=141
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_197
-
-Label=Q173
-
-DisplayTogether=Yes
-
-Position=144
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_198
-
-Label=Q174
-
-DisplayTogether=Yes
-
-Position=146
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_199
-
-Label=Q174
-
-DisplayTogether=Yes
-
-Position=149
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_200
-
-Label=Q175
+Label=Q184
 
 DisplayTogether=Yes
 
 Position=151
 
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_201
-
-Label=Q175
-
-DisplayTogether=Yes
-
-Position=154
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_202
-
-Label=Q176
-
-DisplayTogether=Yes
-
-Position=156
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_203
-
-Label=Q176
-
-DisplayTogether=Yes
-
-Position=159
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_204
-
-Label=Q178
-
-DisplayTogether=Yes
-
-Position=162
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_205
-
-Label=Q178
-
-DisplayTogether=Yes
-
-Position=165
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_206
-
-Label=Q179
-
-DisplayTogether=Yes
-
-Position=167
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_207
-
-Label=Q179
-
-DisplayTogether=Yes
-
-Position=170
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_208
-
-Label=Q180
-
-DisplayTogether=Yes
-
-Position=172
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_209
-
-Label=Q180
-
-DisplayTogether=Yes
-
-Position=175
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_210
-
-Label=Q181
-
-DisplayTogether=Yes
-
-Position=177
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_211
-
-Label=Q181
-
-DisplayTogether=Yes
-
-Position=180
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_212
-
-Label=Q183
-
-DisplayTogether=Yes
-
-Position=183
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_213
-
-Label=Q183
-
-DisplayTogether=Yes
-
-Position=186
-
-Length=1
-
-  
-
-[Block]
-
-Name=DG_BLK_214
-
-Label=Q184
-
-DisplayTogether=Yes
-
-Position=188
-
-Length=2
-
-  
-
-[Block]
-
-Name=DG_BLK_215
-
-Label=Q184
-
-DisplayTogether=Yes
-
-Position=191
-
-Length=1
+Length=3
 
   
 
@@ -12568,7 +12142,7 @@ Name=O_SOURCES_OF_FUNDS_FORM
 
 Label=O. Sources of Funds for Health
 
-Form=18
+Form=19
 
 Max=1
 
@@ -12584,7 +12158,7 @@ Item=Q186_CURRENT_INCOME,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=19
 
   
 
@@ -12608,7 +12182,7 @@ Item=Q187_SAVINGS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=19
 
   
 
@@ -12632,7 +12206,7 @@ Item=Q188_SOLD_ASSETS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=19
 
   
 
@@ -12656,7 +12230,7 @@ Item=Q189_BORROW_FAMILY,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=19
 
   
 
@@ -12680,7 +12254,7 @@ Item=Q190_BORROW_INST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=19
 
   
 
@@ -12704,7 +12278,7 @@ Item=Q191_REMITTANCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=19
 
   
 
@@ -12728,7 +12302,7 @@ Item=Q192_GOVT_ASSIST,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=19
 
   
 
@@ -12752,7 +12326,7 @@ Item=Q193_LGU_DONATION,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=19
 
   
 
@@ -12776,7 +12350,7 @@ Item=Q194_OTHER_SOURCE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=19
 
   
 
@@ -12802,7 +12376,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=19
 
   
 
@@ -12826,7 +12400,7 @@ Item=Q195_INCOME_PCT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=18
+Form=19
 
   
 
@@ -12850,7 +12424,7 @@ Item=Q196_FOREGONE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=18
+Form=19
 
   
 
@@ -12876,7 +12450,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=18
+Form=19
 
   
 
@@ -12892,7 +12466,7 @@ Text=196. If your household chooses not to spend on health care for financial re
 
 [Block]
 
-Name=DG_BLK_216
+Name=DG_BLK_179
 
 Label=Q186-Q190
 
@@ -12906,7 +12480,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_217
+Name=DG_BLK_180
 
 Label=Q191-Q194
 
@@ -12920,7 +12494,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_218
+Name=DG_BLK_181
 
 Label=Q194
 
@@ -12934,7 +12508,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_219
+Name=DG_BLK_182
 
 Label=Q195
 
@@ -12948,7 +12522,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_220
+Name=DG_BLK_183
 
 Label=Q196
 
@@ -12962,7 +12536,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_221
+Name=DG_BLK_184
 
 Label=Q196
 
@@ -12986,7 +12560,7 @@ Name=P_FINANCIAL_RISK_FORM
 
 Label=P. Financial Risk
 
-Form=19
+Form=20
 
 Max=1
 
@@ -13002,7 +12576,7 @@ Item=Q197_DELAYED_CARE,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=20
 
   
 
@@ -13026,7 +12600,7 @@ Item=Q198_NOT_FOLLOWED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=19
+Form=20
 
   
 
@@ -13050,7 +12624,7 @@ Item=Q199_WTP_CONSULT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=DropDown
 
-Form=19
+Form=20
 
   
 
@@ -13076,7 +12650,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=19
+Form=20
 
   
 
@@ -13092,7 +12666,7 @@ Text=199. Other (Specify) — text
 
 [Block]
 
-Name=DG_BLK_222
+Name=DG_BLK_185
 
 Label=Q197-Q199
 
@@ -13106,7 +12680,7 @@ Length=3
 
 [Block]
 
-Name=DG_BLK_223
+Name=DG_BLK_186
 
 Label=Q199
 
@@ -13130,7 +12704,7 @@ Name=Q_FINANCIAL_ANXIETY_FORM
 
 Label=Q. Financial Anxiety
 
-Form=20
+Form=21
 
 Max=1
 
@@ -13146,7 +12720,7 @@ Item=Q200_REDUCED_SPEND,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=21
 
   
 
@@ -13170,7 +12744,7 @@ Item=Q201_WORRIED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=20
+Form=21
 
   
 
@@ -13194,7 +12768,7 @@ Item=Q202_WORRY_REASONS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=CheckBox
 
-Form=20
+Form=21
 
   
 
@@ -13220,7 +12794,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=20
+Form=21
 
   
 
@@ -13236,7 +12810,7 @@ Text=202. Do any of the following reasons describe why you are worried about you
 
 [Block]
 
-Name=DG_BLK_224
+Name=DG_BLK_187
 
 Label=Q200
 
@@ -13250,7 +12824,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_225
+Name=DG_BLK_188
 
 Label=Q201
 
@@ -13264,7 +12838,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_226
+Name=DG_BLK_189
 
 Label=Q202
 
@@ -13278,7 +12852,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_227
+Name=DG_BLK_190
 
 Label=Q202
 
@@ -13302,7 +12876,7 @@ Name=FIELD_CONTROL_FORM_2
 
 Label=Closing - case end
 
-Form=21
+Form=22
 
 Max=1
 
@@ -13320,7 +12894,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=21
+Form=22
 
   
 
@@ -13346,7 +12920,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=21
+Form=22
 
   
 
@@ -13372,7 +12946,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=21
+Form=22
 
   
 
@@ -13398,7 +12972,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=21
+Form=22
 
   
 
@@ -13422,7 +12996,7 @@ Item=DATE_FIRST_VISITED,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=Date,YYYYMMDD
 
-Form=21
+Form=22
 
   
 
@@ -13446,7 +13020,7 @@ Item=DATE_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=Date,YYYYMMDD
 
-Form=21
+Form=22
 
   
 
@@ -13470,7 +13044,7 @@ Item=TOTAL_NUMBER_OF_VISITS,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=TextBox
 
-Form=21
+Form=22
 
   
 
@@ -13494,7 +13068,7 @@ Item=ENUM_RESULT_FIRST_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=21
+Form=22
 
   
 
@@ -13518,7 +13092,7 @@ Item=ENUM_RESULT_FINAL_VISIT,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=21
+Form=22
 
   
 
@@ -13572,7 +13146,7 @@ Name=REC_CASE_VERIFICATION_FORM
 
 Label=Case Verification Photo
 
-Form=22
+Form=23
 
 Max=1
 
@@ -13590,7 +13164,7 @@ UseUnicodeTextBox=Yes
 
 DataCaptureType=TextBox
 
-Form=22
+Form=23
 
   
 
@@ -13614,7 +13188,7 @@ Item=CAPTURE_VERIFICATION_PHOTO,HOUSEHOLDSURVEY_DICT
 
 DataCaptureType=RadioButton
 
-Form=22
+Form=23
 
   
 

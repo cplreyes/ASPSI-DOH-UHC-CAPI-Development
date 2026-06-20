@@ -305,10 +305,20 @@ postproc
     skip to Q39_CIVIL_STATUS;
   endif;
 
+PROC Q45_PHILHEALTH_REG
+postproc
+  { #563/#565: Q46 (membership category) and Q45.1 (PIN registration date) are Yes-only.
+    No(02) OR I-don't-know(55) -> skip Q45.1 + Q46 -> next roster member. (Replaces the
+    old SKIP_RULES Q45 -> Q48_NAME_FIRST target, which is gone now that Q48-Q50 moved to
+    the C_PRIVATE_INS_ROSTER second pass.) Q45=Yes(01) -> fall through to Q45.1 -> Q46. }
+  if Q45_PHILHEALTH_REG = 2 or Q45_PHILHEALTH_REG = 55 then
+    skip to next;                    { 'next' = next C_HOUSEHOLD_ROSTER occurrence }
+  endif;
+
 PROC Q49_PRIVATE_INS
 postproc
   if Q49_PRIVATE_INS = 2 then        { no private insurance -> skip Q50, advance to next member }
-    skip to next;                    { 'next' = next roster occurrence; valid only inside the repeating group }
+    skip to next;                    { 'next' = next C_PRIVATE_INS_ROSTER occurrence }
   endif;
 
 PROC C_HOUSEHOLD_ROSTER_FORM
@@ -325,19 +335,43 @@ postproc
   endif;
 
 PROC Q47_HH_HAS_PRIVATE_INS
+postproc
+  { #612 (Carl go/no-go 2026-06-20): Q47 is the HH-level gate for the Q48-Q50 private-
+    insurance block, which now runs AFTER this gate as a separate per-member pass
+    (C_PRIVATE_INS_ROSTER). No(2) -> no private insurance in the HH -> skip the whole
+    Q48-Q50 block straight to Section D (Q51). Yes(1) -> fall through into the private-
+    insurance roster. (The old preproc auto-set Q47 by looking ahead at Q49 because
+    Q48-Q50 used to be entered BEFORE Q47; with Q47 asked first, that look-ahead is gone.) }
+  if Q47_HH_HAS_PRIVATE_INS <> 1 then
+    skip to Q51_UHC_HEARD;
+  endif;
+"""
+
+# Private-insurance second-pass roster loop (C_PRIVATE_INS_ROSTER, max 20) — #525/#612/#613.
+# Mirrors MEMBER_LINE_NO: auto-iterate to exactly the household-roster member count so the
+# enumerator never re-adds rows (the member name is piped, not re-entered). Reached only when
+# Q47 = Yes (the Q47 postproc above skips this whole record otherwise).
+PRIV_ROSTER_PROCS = """\
+{ ---- Private-insurance roster loop (C_PRIVATE_INS_ROSTER, max 20) ---- }
+PROC PRIV_MEMBER_LINE_NO
 preproc
-  { Auto-set to Yes if any roster member reported private insurance (soft) }
-  numeric anyPrivate = 0;
-  numeric i = 1;
-  do while i <= count(C_HOUSEHOLD_ROSTER)
-    if Q49_PRIVATE_INS(i) = 1 then
-      anyPrivate = 1;
-    endif;
-    i = i + 1;
-  enddo;
-  if anyPrivate = 1 then
-    Q47_HH_HAS_PRIVATE_INS = 1;
-    errmsg("Auto-set to Yes: a roster member has private insurance. Confirm.");
+  if curocc() > count(C_HOUSEHOLD_ROSTER) then
+    endgroup;                        { auto-end at the household-roster member count }
+  endif;
+  PRIV_MEMBER_LINE_NO = curocc();
+  noinput;
+
+PROC Q48_OTHER_INS_REG
+postproc
+  { #613.2 (Carl go/no-go 2026-06-20 — tester Marriz logic): being registered with another
+    health insurance plan implies coverage, so Q48 = Yes auto-sets Q49 = Yes (covered, as a
+    member) and jumps to Q50 (specify which). Q48 = No / Don't-know -> ask Q49 normally
+    (Yes = covered as a dependent / No = not covered). Q49's value set is Yes/No/DK (the paper
+    has no member-vs-dependent split), so the 'dependent' case is captured as Q49 = Yes when
+    Q48 <> Yes. }
+  if Q48_OTHER_INS_REG = 1 then
+    Q49_PRIVATE_INS = 1;
+    skip to Q50_PRIVATE_INS_OTHER_TXT;
   endif;
 """
 
@@ -417,20 +451,19 @@ postproc
   endif;
   { code 2 ("No, I'm not planning to") falls through to Q113 why-not }
 
-{ ---- Section H gate: skip entire Section H if NO roster member is PhilHealth-
-  registered (Q45 = Yes anywhere in the roster). Spec 2 Section H note. ---- }
+{ ---- Section H gate (#649, tester mmgarciano + paper Annex F4, 2026-06-20): Section H is
+  the RESPONDENT's own PhilHealth-registration EXPERIENCE ("Answer Q79-Q88 if THE RESPONDENT
+  is registered in PhilHealth in Q45"). So gate on the RESPONDENT's Q45, not "any member" —
+  if another household member is registered but the respondent is NOT, the respondent can't
+  speak to a registration experience they never had. The respondent is roster line 1 (the
+  apc's own first-roster-entry soft-check: "First roster entry is normally the respondent
+  (Self) or HH head"), so the gate reads Q45_PHILHEALTH_REG(1). ASSUMPTION flagged to ASPSI:
+  respondent = roster line 1; if respondents are identified some other way, change the index.
+  (Was: loop "any member Q45 = Yes" — wrong per the paper.) ---- }
 PROC Q79_REG_SOURCE
 preproc
-  numeric anyReg = 0;
-  numeric i = 1;
-  do while i <= count(C_HOUSEHOLD_ROSTER)
-    if Q45_PHILHEALTH_REG(i) = 1 then
-      anyReg = 1;
-    endif;
-    i = i + 1;
-  enddo;
-  if anyReg = 0 then
-    skip to Q89_HAS_USUAL_FACILITY;   { no registered member -> skip Section H to Section I }
+  if Q45_PHILHEALTH_REG(1) <> 1 then
+    skip to Q89_HAS_USUAL_FACILITY;   { respondent (roster line 1) not PhilHealth-registered -> skip Section H to Section I }
   endif;
 """
 
@@ -499,7 +532,7 @@ CHECKBOX_CONVERT = [
     ("Q70_GAMOT_SOURCE",         True,  True,  None),   # #573 'I don't know' (90); 'Other (Specify)' (99)
     ("Q71_GAMOT_UNDERSTAND",     True,  True,  None),   # #574 'I don't know' (90); 'Other (specify)' (99)
     # --- #577-585/#588/#590-591: 10 more tick-all conversions ---
-    ("Q74_WHERE_REST",           True,  False, None),   # #585: 'Not applicable' (09) is an ordinary 01.. option (NOT 90-coded by _cb_codes); 'Other (Specify)' (10->99)
+    ("Q74_WHERE_REST",           True,  True,  None),   # #645: 'Not applicable' is now 90-coded exclusive (was ordinary per #585 — tester FAIL: tickable alongside real sources; N/A means none apply); soft-warn if combined. 'Other (Specify)' (99)
     ("Q77_WHY_GENERIC",          True,  True,  None),   # #578: 'I don't know' (90) exclusive; 'Not applicable' stays 01..; 'Other (Specify)' (99). Q77 asked for Generic/Both (falls through Q76 postproc) — no preproc gate
     ("Q78_WHY_BRANDED",          True,  True,
      "  if Q76_BRAND_OR_GEN <> 1 and Q76_BRAND_OR_GEN <> 3 then   { only Branded (1) or Both (3) answer why-branded }\n"
@@ -510,7 +543,7 @@ CHECKBOX_CONVERT = [
     ("Q102_VISIT_REASON",        True,  False, None),   # #583: no None/IDK option; 'Other (Specify)' (99)
     ("Q103_CARE_TYPE",           True,  False, None),   # #583: no None/IDK option; 'Other (Specify)' (99)
     ("Q106_FORGONE_WHY",         True,  True,  None),   # #584: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Skip-target from Q105=2 (skip rule repointed to bare base)
-    ("Q107_OTHER_ACTIONS",       True,  False, None),   # #584: 'Did not seek other forms of care' (06) is substantive (NOT 90-coded); 'Other (Specify)' (99). Skip-target from Q105=2 chains here via the bare base
+    ("Q107_OTHER_ACTIONS",       True,  True,  None),   # #655: 'Did not seek other forms of care' is now 90-coded exclusive (was substantive per #584 — tester FAIL: tickable alongside real actions; if you sought nothing else, no action co-applies); soft-warn if combined. 'Other (Specify)' (99). Skip-target from Q105=2 chains via the bare base
     ("Q109_TYPE",                True,  True,  None),   # #588: 'None of the above' (11->90) exclusive; 'Other (Specify)' (12->99)
     ("Q141_BILL_ITEMS",          False, False, None),   # #615: 'Other expenses' (07) is NOT a 'specif' option (no 99 gate); ungated Q141_BILL_ITEMS_OTHER_TXT kept as plain alpha
     ("Q143_HOW_PAID",            True,  False, None),   # #616: 'Other (Specify)' (10->99); no None/IDK exclusive; reached via Q142=Yes (Q142=No skips to Q144)
@@ -709,8 +742,10 @@ SKIP_RULES = [
     # Q9 = 2 fall through to Q10, which contradicted Q10's own "presented card" wording.)
     ("Q9_PWD_CARD",          "Q9_PWD_CARD <> 1",            "Q11_EDUCATION"),
     ("Q14_IP_MEMBER",        "Q14_IP_MEMBER = 2",           "Q16_4PS"),
-    # Section C roster — PhilHealth-registration detail
-    ("Q45_PHILHEALTH_REG",   "Q45_PHILHEALTH_REG = 2 or Q45_PHILHEALTH_REG = 55",      "Q48_NAME_FIRST"),  # #563: No(02) OR I-don't-know(55) skip Q46 (Q46 is Yes-only per spec)
+    # Section C roster — PhilHealth-registration detail (#563/#565) is now a bespoke
+    # PROC Q45_PHILHEALTH_REG in ROSTER_PROCS (skip to next when <>Yes, jumping over the
+    # new Q45.1 PIN date + Q46 category) — the old "skip to Q48_NAME_FIRST" target is gone
+    # now that Q48-Q50 moved to the C_PRIVATE_INS_ROSTER second pass.
     # Section G — Access to Medicines
     ("Q62_PURCHASE_FREQ",    "Q62_PURCHASE_FREQ = 5",       "Q69_GAMOT_HEARD"),   # Never -> skip Rx/where/travel
     ("Q69_GAMOT_HEARD",      "Q69_GAMOT_HEARD = 2",         "Q75_BRAND_GEN_KNOWS"),
@@ -742,7 +777,15 @@ SKIP_RULES = [
     # falling through to questions that presume a usual facility. (The Q93 preproc gate below
     # is widened to admit the IDK path too, so Q93 is actually shown.)
     ("Q89_HAS_USUAL_FACILITY","Q89_HAS_USUAL_FACILITY = 2 or Q89_HAS_USUAL_FACILITY = 3", "Q93_WHY_NOT"),  # #529/#650: Q93 is a Check Box base (was _O01)
-    ("Q90_IS_USUAL_FOR_GENERAL","Q90_IS_USUAL_FOR_GENERAL = 1","Q94_TRANSPORT"),  # #529: Q94 is now a Check Box base (was _O01)
+    # #652 (Carl go/no-go 2026-06-20 #2 — OVERRIDE the paper to the tester's routing): Q90 "Is
+    # this the facility you usually go to for general health concerns?". The printed paper says
+    # No -> Q96, but that asks only travel COST while skipping transport (Q94) + travel-time
+    # (Q95) — internally inconsistent, since Q94/Q95/Q96 are one block about the nearest primary
+    # care facility. Per tester mmgarciano + Carl's call, Q90 = No now -> Q94 (skip Q91 why-went,
+    # Q92 type, Q93; ask the full Q94-Q96 PCF transport/time/cost block). Q90 = Yes still natural-
+    # flows to Q91 -> Q92 -> (Q93 self-skips) -> Q94. (Was -> Q96 per the paper; ASPSI to be
+    # notified that the build now departs from the printed Q90=No routing on purpose.)
+    ("Q90_IS_USUAL_FOR_GENERAL","Q90_IS_USUAL_FOR_GENERAL = 2","Q94_TRANSPORT"),
     # #654: REMOVED the Q97=No -> Q100 skip. Q97 ("do you know how to book/access care")
     # is independent of Q98/Q99 (phone-advice availability when the facility is open/closed);
     # the paper shows no skip, so Q98/Q99 must be asked regardless of Q97. (Tester confirmed
@@ -774,6 +817,13 @@ SKIP_RULES = [
     # gated separately at Q138 (CUSTOM_VALIDATION). Was "= 2 -> Q144" (followed spec line 180,
     # which contradicts the §M note; tester + note win). Q129=Yes(1) -> Q130 (NBB utilization).
     ("Q129_HH_CONFINED",     "Q129_HH_CONFINED = 2 or Q129_HH_CONFINED = 3", "Q132_ZBB_HEARD"),
+    # #661 (Carl go/no-go 2026-06-20 — NBB = DOH-retained-only): Q130 HOSPITAL_TYPE
+    # (1 Public / 2 DOH-retained hospital / 3 Private). Q131 (NBB out-of-pocket) is asked
+    # ONLY when the most-recent confinement was in a DOH-retained hospital (code 2). Public
+    # (1) and Private (3) skip Q131 -> Q132. (The questionnaire-spec "all public" reading was
+    # overridden by Carl's call to scope NBB to DOH-retained, matching the tester's report.)
+    # Q130 is a skip SOURCE, so the skip-aware fmf deriver also gives it its own screen.
+    ("Q130_HOSPITAL_TYPE",   "Q130_HOSPITAL_TYPE <> 2",     "Q132_ZBB_HEARD"),
     # Section M ZBB/MAIFIP awareness sub-blocks. #627: Q132 ZBB_HEARD (yes_no_dk 1/2/3)
     # = No(2) OR Don't-know(3) -> skip ZBB sources/understanding/OOP (Q133-Q135) to Q136
     # (spec §M line 190). #628: Q136 MAIFIP_HEARD = No/Don't-know -> skip Q137 sources to
@@ -877,6 +927,14 @@ def _subtotal_members(sub, items):
     return members
 
 
+# #677 (Carl go/no-go 2026-06-20): 'Don't know the amount' sentinel for Section N expenditure
+# amounts. The enumerator enters 99999999 (max for the length-8 _PURCHASED_PHP/_INKIND_PHP
+# fields) when the household can't estimate a value. It is non-zero (so it satisfies the
+# consumed-needs-an-amount validation) and is EXCLUDED from the subtotal sums below. Must match
+# the "enter 99999999 if don't know" hint in generate_dcf._expenditure_item.
+DK_AMOUNT = 99999999
+
+
 def _subtotal_compute_body(sub, items, indent="  "):
     """The accumulate + protect() statements for a Section N subtotal, ready to embed in
     the FOLLOWER field's preproc (the question right after the subtotal — see #617).
@@ -909,13 +967,15 @@ def _subtotal_compute_body(sub, items, indent="  "):
     lines = [f"{indent}{sub} = 0;   {{ #617: accumulate only CONSUMED items -> no notappl propagation }}"]
     for base in order:
         amts = by_base[base]
-        terms = " + ".join(amts)
         consumed = f"{base}_CONSUMED"
+        # #677 DK: add each amount only if it is NOT the 'don't know' sentinel (DK_AMOUNT),
+        # so an unknown amount never corrupts the subtotal.
+        adds = " ".join(f"if {a} <> {DK_AMOUNT} then {sub} = {sub} + {a}; endif;" for a in amts)
         if consumed in items:
-            lines.append(f"{indent}if {consumed} = 1 then {sub} = {sub} + {terms}; endif;")
+            lines.append(f"{indent}if {consumed} = 1 then {adds} endif;")
         else:
             # no consumed gate for this item -> it's always asked, so always add it
-            lines.append(f"{indent}{sub} = {sub} + {terms};")
+            lines.append(f"{indent}{adds}")
     lines.append(f"{indent}protect({sub}, true);")
     return "\n".join(lines)
 
@@ -975,30 +1035,92 @@ def subtotal_init_compute_procs(names, items):
 
 
 def expenditure_gate_procs(names):
-    """#169 (spec 4.9): for each *_CONSUMED, if not consumed (No=2) zero + skip
-    the matching *_PURCHASED_PHP and *_INKIND_PHP. dcf-driven so it scales to all
-    Section N expenditure rows automatically."""
+    """#169 (spec 4.9) — combined-view edition (#708/#709, 2026-06-19): for each
+    Section N item, gate its two amounts (*_PURCHASED_PHP, *_INKIND_PHP) from the
+    item's *_CONSUMED field, NOT from each amount's own preproc.
+
+    WHY this moved off the amount preprocs (was: set-0 + `skip to next`).
+    -------------------------------------------------------------------
+    #708/#709 put each item's {consumed / purchased / in-kind} triplet on ONE
+    DisplayTogether (DG) screen (see generate_fmf.derive_block_plan EXPENDITURE_TRIPLET
+    grouping). On a DG screen CSEntry renders EVERY member field regardless of skip
+    logic, and a `skip to` issued from a field on a combined screen is exactly the
+    gate-boundary the form deriver refuses to cross — the skip cannot meaningfully
+    "skip over" a sibling already rendered on the same screen and causes focus/exit
+    anomalies. The old gate's `skip to next` therefore cannot live inside a DG block.
+
+    DG-safe replacement (brief's recommended fallback): drive the gate from the
+    *_CONSUMED field's POSTPROC — a *visited* field (CONSUMED is the first field in the
+    block, always entered) — never from the protected amount's own preproc (#617 rule).
+    When not consumed (No=2): set each amount to a valid 0 and protect() it (read-only,
+    skipped for entry, but still rendered on the combined screen). When consumed (=1):
+    unprotect so the amount is enterable. The amount is always a valid 0, never notappl,
+    so the #617 'out of range - value is NOTAPPL' class of error cannot fire here, and
+    the subtotal compute (subtotal_init_compute_procs) — which sums only _CONSUMED = 1
+    items — is unaffected (it never reads a not-consumed amount).
+
+    Returns {consumed_field: postproc_text} where postproc_text begins with 'postproc'.
+    main() merges this with any preproc the same _CONSUMED field already carries (the
+    #617 subtotal-init preproc on each panel's first member) into ONE PROC block."""
     procs = {}
     have = set(names)
     bases = [n[: -len("_CONSUMED")] for n in names if n.endswith("_CONSUMED")]
     for base in bases:
-        for amt in (f"{base}_PURCHASED_PHP", f"{base}_INKIND_PHP"):
-            if amt not in have:
-                continue
-            # zero + skip past this amount field. `skip to next` is illegal outside a
-            # repeating group (CSEntry, verified 2026-06-08), so target the immediate
-            # next dcf field (chains correctly: PURCHASED -> INKIND -> next item).
-            idx = names.index(amt)
-            target = names[idx + 1] if idx + 1 < len(names) else None
-            skip = f"    skip to {target};\n" if target else ""
-            procs[amt] = (
-                f"PROC {amt}\n"
-                f"preproc\n"
-                f"  if {base}_CONSUMED = 2 then   {{ item not consumed -> no spend }}\n"
-                f"    {amt} = 0;\n"
-                f"{skip}"
-                f"  endif;"
-            )
+        consumed = f"{base}_CONSUMED"
+        amts = [a for a in (f"{base}_PURCHASED_PHP", f"{base}_INKIND_PHP") if a in have]
+        if not amts:
+            continue
+        not_consumed, consumed_branch = [], []
+        for amt in amts:
+            not_consumed.append(f"    {amt} = 0;   {{ item not consumed -> no spend }}")
+            not_consumed.append(f"    protect({amt}, true);")
+            consumed_branch.append(f"    protect({amt}, false);   {{ enterable when consumed }}")
+        body = (
+            "postproc\n"
+            f"  if {consumed} = 2 then\n"
+            + "\n".join(not_consumed) + "\n"
+            "  else\n"
+            + "\n".join(consumed_branch) + "\n"
+            "  endif;"
+        )
+        procs[consumed] = body
+    return procs
+
+
+def consumed_amount_validation_procs(names):
+    """#677 (Carl go/no-go 2026-06-20 — the tester's suggestion): a Section N item marked
+    "Consumed by HH" (=1) must have at least ONE of its amounts (*_PURCHASED_PHP spent
+    purchasing / *_INKIND_PHP value received in-kind/gift/own-produced) GREATER THAN 0 —
+    consumed-but-both-zero is contradictory, so don't let the interview advance past the
+    item. Hard-block (errmsg + reenter) on the item's LAST amount field, which is the
+    DisplayTogether block-exit field when consumed (#617 note), so the check fires once
+    both amounts are final. Layout-independent — keeps the #708/#709 combined view.
+
+    Pairs with expenditure_gate_procs: that one zeroes+protects the amounts when NOT
+    consumed (so this validation never trips on a not-consumed item — its amounts are a
+    protected 0 and the `{consumed} = 1` guard is false).
+
+    Returns {last_amount_field: postproc_text} ('postproc' header)."""
+    procs = {}
+    have = set(names)
+    bases = [n[: -len("_CONSUMED")] for n in names if n.endswith("_CONSUMED")]
+    for base in bases:
+        consumed = f"{base}_CONSUMED"
+        amts = [a for a in (f"{base}_PURCHASED_PHP", f"{base}_INKIND_PHP") if a in have]
+        if consumed not in have or not amts:
+            continue
+        last_amt = amts[-1]               # block-exit field when the item is consumed
+        zero_cond = " and ".join(f"{a} = 0" for a in amts)
+        procs[last_amt] = (
+            "postproc\n"
+            f"  if {consumed} = 1 and {zero_cond} then\n"
+            "    errmsg(\"This item is marked consumed by the household, so enter the amount "
+            "spent purchasing it and/or the estimated value if received in-kind, as a gift, "
+            "or own-produced — at least one must be greater than 0. If the household genuinely "
+            "does not know an amount, enter 99999999 for that amount.\");\n"
+            "    reenter;\n"
+            "  endif;"
+        )
     return procs
 
 
@@ -1028,10 +1150,12 @@ def skip_proc(field, cond, target):
 
 def main():
     names = dcf_item_names()
-    parts = [HEADER, "", CONTROL_PROCS, "", ROSTER_PROCS, "", BILL_VALIDATION, "",
-             EXTRA_PROCS, "", VALIDATION_PROCS, ""]
+    parts = [HEADER, "", CONTROL_PROCS, "", ROSTER_PROCS, "", PRIV_ROSTER_PROCS, "",
+             BILL_VALIDATION, "", EXTRA_PROCS, "", VALIDATION_PROCS, ""]
     covered = {"MEMBER_LINE_NO", "Q34_RELATIONSHIP", "Q35_HAS_DISABILITY",
                "Q36_SPECIFY_DISABILITY", "Q37_PWD_CARD",  # #604: Q36 now has a bespoke skip PROC
+               "Q45_PHILHEALTH_REG",  # #563/#565: bespoke roster skip (ROSTER_PROCS)
+               "PRIV_MEMBER_LINE_NO", "Q48_OTHER_INS_REG",  # #525/#612/#613: priv-ins 2nd pass
                "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER_FORM", "Q47_HH_HAS_PRIVATE_INS",
                "Q141_1_NO_RECEIPT_AMT_PHP",
                # #615: Q141_BILL_ITEMS is now a Check Box base whose 'Other expenses' (07)
@@ -1060,11 +1184,52 @@ def main():
         covered.add(field)
         parts.append(skip_proc(field, cond, target)); parts.append("")
 
-    parts.append("{ ---- #169 Section N expenditure consumed-gate (dcf-driven) ---- }")
-    for field, proc in sorted(expenditure_gate_procs(names).items()):
+    # #708/#709 combined-view: the Section N amount gate now lives in each item's
+    # *_CONSUMED POSTPROC (DG-safe: visited field, no `skip to` inside the DG block) and
+    # the #617 subtotal-init lives in some of those same *_CONSUMED PREPROCs. Build both
+    # dicts here and MERGE per field into one PROC block (preproc + postproc), so the
+    # panel-first-member fields (Q144/Q175/Q178/Q183) carry both sections without a
+    # duplicate-PROC collision. (gate_procs[field] = 'postproc\n...'; st_init full PROC
+    # strings — split out the preproc body for the merge.)
+    gate_procs = expenditure_gate_procs(names)
+    st_procs = subtotal_init_compute_procs(names, dcf_items_map())
+
+    def _preproc_body(proc_text):
+        # st_procs entries are 'PROC <field>\npreproc\n<body>' — return '<body>'.
+        return proc_text.split("\npreproc\n", 1)[1]
+
+    parts.append("{ ---- Section N consumed-gate (#169) + subtotal init/compute "
+                 "(#9/#617) — merged per _CONSUMED field (#708/#709 combined-view) ---- }")
+    handled_consumed = set()
+    for field, postproc_body in sorted(gate_procs.items()):
         if field in covered:
+            # a _CONSUMED field with a bespoke PROC elsewhere — should not happen for
+            # Section N, but skip defensively rather than emit a duplicate.
             continue
+        if field in st_procs:
+            preproc_body = _preproc_body(st_procs[field])
+            proc = f"PROC {field}\npreproc\n{preproc_body}\n{postproc_body}"
+            handled_consumed.add(field)
+        else:
+            proc = f"PROC {field}\n{postproc_body}"
         covered.add(field); parts.append(proc); parts.append("")
+
+    # Remaining subtotal procs whose field was NOT a gated _CONSUMED (the follower fields,
+    # and any _CONSUMED panel-first member with no amounts — none today). Emit standalone.
+    parts.append("{ ---- Section N subtotals — auto-compute + protect at follower (#9/#617, spec §4.9) ---- }")
+    for field, proc in sorted(st_procs.items()):
+        if field in handled_consumed:
+            continue
+        if field in covered:
+            raise SystemExit(f"#617 subtotal proc collides with an existing proc: {field}")
+        covered.add(field); parts.append(proc); parts.append("")
+
+    # #677: consumed-but-zero hard validation on each Section N item's last amount field.
+    parts.append("{ ---- Section N consumed-amount validation (#677): consumed item needs >=1 amount > 0 ---- }")
+    for field, postproc_body in sorted(consumed_amount_validation_procs(names).items()):
+        if field in covered:
+            raise SystemExit(f"#677 consumed-amount validation collides with an existing proc: {field}")
+        covered.add(field); parts.append(f"PROC {field}\n{postproc_body}"); parts.append("")
 
     parts.append("{ ---- 'Other (specify)' enforcement — UHC9 dual-other ---- }")
     for field, proc in sorted(uhc9_other_specify_procs(names).items()):
@@ -1081,16 +1246,8 @@ def main():
             continue
         covered.add(field); parts.append(proc); parts.append("")
 
-    # Section N auto-computed subtotals (#9 / #617): init=0 at each panel's first-member
-    # _CONSUMED (so the protected field is never notappl when validated) + real sum at the
-    # follower field (see subtotal_init_compute_procs). The protected subtotal itself gets
-    # NO proc — CSEntry skips it without running any preproc.
-    st_procs = subtotal_init_compute_procs(names, dcf_items_map())
-    parts.append("{ ---- Section N subtotals — init + auto-compute + protect (#9/#617, spec §4.9) ---- }")
-    for field, proc in sorted(st_procs.items()):
-        if field in covered:
-            raise SystemExit(f"#617 subtotal proc collides with an existing proc: {field}")
-        covered.add(field); parts.append(proc); parts.append("")
+    # (Section N subtotal procs are now emitted above, merged into / alongside the
+    # consumed-gate procs — see the #708/#709 combined-view block.)
 
     # Auto-derived select-all validation: >=1 option ticked.
     sa_procs, sa_bases = select_all_validation_procs(dcf_items_map())

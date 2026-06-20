@@ -28,6 +28,10 @@ KNOWN_OFFFORM = {
     "LANGUAGE_USED", "REGION_CODE", "PROVINCE_HUC_CODE", "CITY_MUNICIPALITY_CODE",
     "FACILITY_NO", "CASE_SEQ", "REGION", "PROVINCE_HUC", "CITY_MUNICIPALITY",
     "FACILITY_NAME", "FACILITY_ADDRESS",
+    # Binary Image item (#713 photo->CSWeb fix): bytes are captured in logic and
+    # synced inside the case; binary items cannot be placed on a form, so it is
+    # off-form by design (capture is driven from CAPTURE_VERIFICATION_PHOTO).
+    "VERIFICATION_PHOTO_IMAGE",
 }
 
 

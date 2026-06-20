@@ -106,72 +106,87 @@ SOFT_CROSS = [
      "  if Q29_SEC_CLASS = 3 and Q18_INCOME_BRACKET >= 3 and Q18_INCOME_BRACKET <= 11 then\n"
      "    errmsg(\"Q29 = socio-economic Class D/E but income is in a high bracket — confirm.\");\n  endif;"),
     ("Q115_FINAL_CASH",
-     "  if Q107_PAY_01_AMT > 0 and (Q115_FINAL_CASH < Q107_PAY_01_AMT * 0.9\n"
-     "     or Q115_FINAL_CASH > Q107_PAY_01_AMT * 1.1) then\n"
+     # Option B fan-out (#691): Q107 out-of-pocket is now a roster row, summed via
+     # q107_oop() (was the flat Q107_PAY_01_AMT).
+     "  if q107_oop() > 0 and (Q115_FINAL_CASH < q107_oop() * 0.9\n"
+     "     or Q115_FINAL_CASH > q107_oop() * 1.1) then\n"
      "    errmsg(\"Q115 final cash differs by more than 10 percent from the out-of-pocket bill line (Q107) — confirm.\");\n  endif;"),
     ("Q97_FINAL_AMOUNT",
-     # Option B (pilot): Q92 out-of-pocket is now a roster row, summed via q92_oop()
-     # (was the flat Q92_PAY_01_AMT). Q94/Q96 stay flat until the fan-out converts them.
-     "  if Q97_FINAL_AMOUNT > 0 and (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) > 0\n"
-     "     and (Q97_FINAL_AMOUNT < (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 0.9\n"
-     "          or Q97_FINAL_AMOUNT > (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 1.1) then\n"
+     # Option B (pilot + fan-out): Q92/Q94/Q96 out-of-pocket are all roster rows now,
+     # summed via q92_oop()/q94_oop()/q96_oop() (was the flat Q9n_PAY_01_AMT fields).
+     "  if Q97_FINAL_AMOUNT > 0 and (q92_oop() + q94_oop() + q96_oop()) > 0\n"
+     "     and (Q97_FINAL_AMOUNT < (q92_oop() + q94_oop() + q96_oop()) * 0.9\n"
+     "          or Q97_FINAL_AMOUNT > (q92_oop() + q94_oop() + q96_oop()) * 1.1) then\n"
      "    errmsg(\"Q97 final amount differs by more than 10 percent from the out-of-pocket lines (Q92/Q94/Q96) — confirm.\");\n  endif;"),
 ]
 
 
 # ============================================================
-# Q92 payment roster (Option B redesign — pilot 2026-06-18)
+# Q92 payment roster (Option B redesign — pilot; fixed 2026-06-19 after Marriz test)
 # ============================================================
 # The flat 8-source Yes/No matrix + per-source _AMT became a CheckBox (Q92_SOURCES)
-# feeding a repeating roster (Q92_PAY_ROSTER). One occurrence per ticked source code,
-# auto-built from the CheckBox in canonical order (01..08). Q92_PAY_SRC is auto-set +
-# protected; only Out-of-pocket(1) + Donation(2) carry an amount, every other source's
-# amount is fixed to 0 and protected. `edit("99", k)` -> "0k" and pos() membership are
-# the established CheckBox-field idioms in this generator (codes are fixed 2-char, so
-# pos() cannot false-match across the 2-char boundary for codes 01..08).
+# feeding a repeating roster (Q92_PAY_ROSTER). One occurrence per ticked source.
+# FIXES after the Marriz test video (checkbox jumped straight to Q93 — grid skipped):
+#   1. The roster record is now required=True (generate_dcf) so CSEntry auto-enters it;
+#      Q92_SOURCES hard-requires >=1 ticked so the required record always has >=1 row.
+#   2. Membership uses LITERAL 2-char pos() codes ("01".."08") — the proven CheckBox
+#      idiom in this generator — NOT edit("99",k) (an unverified format that may have
+#      yielded space-padded codes, leaving nsel=0 -> endgroup -> skipped grid).
+#   3. Q92_PAY_AMT is left ENTERABLE on every row (default 0 for non-money sources) so
+#      each occurrence has a stop — avoids a protected-only "zero-stop" row that could
+#      hang the roster. Only Out-of-pocket(1)/Donation(2) carry a real amount; the AMT
+#      postproc forces 0 back on any non-money source. Q92_PAY_SRC stays auto + protected.
 Q92_ROSTER_PROCS = """\
 { ---- Q92 consultation-cost payment roster (Option B pilot) ---- }
 PROC Q92_SOURCES
 postproc
-  numeric nck; numeric kx;
+  { Require >=1 source ticked — the roster is a required record and needs >=1 row. }
+  numeric nck;
   nck = 0;
-  do kx = 1 while kx <= 8
-    if pos(edit("99", kx), Q92_SOURCES) > 0 then nck = nck + 1; endif;
-  enddo;
+  if pos("01", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("02", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("03", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("04", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("05", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("06", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("07", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("08", Q92_SOURCES) > 0 then nck = nck + 1; endif;
   if nck = 0 then
-    errmsg("92. No payment source ticked — confirm before continuing.");
+    errmsg("92. Tick at least one payment source before continuing.");
+    reenter;
   endif;
 
 PROC Q92_PAY_LINE
 preproc
   { Build one roster row per ticked source (canonical order 01..08). The curocc()-th
-    ticked source -> Q92_PAY_SRC (protected); auto-end once past the last ticked
-    source. Only Out-of-pocket(1)+Donation(2) carry an amount; all other sources are
-    fixed to 0 + protected. Re-runs on back-navigation (preproc), so protect/amount
-    re-apply correctly. }
-  numeric nsel; numeric kk; numeric seen;
+    ticked source -> Q92_PAY_SRC (auto + protected); end once past the last ticked
+    source. Non-money sources default to amount 0 (still enterable, so the row has a
+    stop). Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
   nsel = 0;
-  do kk = 1 while kk <= 8
-    if pos(edit("99", kk), Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
-  enddo;
+  if pos("01", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("05", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("06", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("07", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("08", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
   if curocc() > nsel then
     endgroup;
   endif;
   seen = 0;
-  do kk = 1 while kk <= 8
-    if pos(edit("99", kk), Q92_SOURCES) > 0 then
-      seen = seen + 1;
-      if seen = curocc() then
-        Q92_PAY_SRC = kk;
-      endif;
-    endif;
-  enddo;
+  if pos("01", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 1; endif; endif;
+  if pos("02", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 2; endif; endif;
+  if pos("03", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 3; endif; endif;
+  if pos("04", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 4; endif; endif;
+  if pos("05", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 5; endif; endif;
+  if pos("06", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 6; endif; endif;
+  if pos("07", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 7; endif; endif;
+  if pos("08", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 8; endif; endif;
   protect(Q92_PAY_SRC, true);
-  if Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2 then
-    protect(Q92_PAY_AMT, false);
-  else
-    Q92_PAY_AMT = 0;
-    protect(Q92_PAY_AMT, true);
+  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 then
+    Q92_PAY_AMT = 0;   { non-money source -> default 0; still enterable so the row stops }
   endif;
   Q92_PAY_LINE = curocc();
   noinput;
@@ -182,7 +197,215 @@ postproc
     errmsg("92. Amount cannot be negative.");
     reenter;
   endif;
+  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_AMT <> 0 then
+    errmsg("92. This source has no out-of-pocket cost — amount reset to 0.");
+    Q92_PAY_AMT = 0;
+  endif;
 """
+
+
+# Q97.1 other-items-in-bill — Option B ROSTER (Shape B, 2026-06-19).
+# Supersedes the 2-form-flat layout. SCREEN 1: Q971_SOURCES CheckBox. SCREEN 2:
+# Q971_ROSTER grid (one row per ticked category; every row's amount is enterable —
+# no zeroing/gating because ALL Q97.1 categories carry an amount). SCREEN 3:
+# Q971_OTHER_TXT gated on pos("04", Q971_SOURCES) (after the grid, own screen).
+#
+# Rules (from the skill recipe):
+#   1. Gate from Q971_PAY_LINE preproc (a visited field) — never from a protected field.
+#   2. Literal pos("01".."04") — NEVER edit("99",k) (padded-code bug, see Q92 comment).
+#   3. Do NOT protect Q971_PAY_AMT — every row is enterable (protecting hangs the roster).
+#   4. Q971_PAY_SRC is auto-set + protected (correct — it's the source label, not an input).
+Q971_ROSTER_PROCS = """\
+{ ---- Q97.1 other-items-in-bill — CheckBox + roster (Option B Shape B) ---- }
+PROC Q971_SOURCES
+postproc
+  { Require >=1 item ticked. The roster proc (Q971_PAY_LINE preproc, a visited field)
+    handles population — gating here covers the >=1 requirement before the grid opens. }
+  if length(strip(Q971_SOURCES)) = 0 then
+    errmsg("97.1 Tick at least one item included in the bill (or correct Q97 if none).");
+    reenter;
+  endif;
+
+PROC Q971_PAY_LINE
+preproc
+  { Build one roster row per ticked category (canonical order 01..04). The curocc()-th
+    ticked category -> Q971_PAY_SRC (auto + protected); end once past the last ticked
+    category. Every row's amount stays ENTERABLE (no zeroing — all Q97.1 categories
+    carry an amount). Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
+  nsel = 0;
+  if pos("01", Q971_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q971_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q971_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q971_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if curocc() > nsel then endgroup; endif;
+  seen = 0;
+  if pos("01", Q971_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q971_PAY_SRC = 1; endif; endif;
+  if pos("02", Q971_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q971_PAY_SRC = 2; endif; endif;
+  if pos("03", Q971_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q971_PAY_SRC = 3; endif; endif;
+  if pos("04", Q971_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q971_PAY_SRC = 4; endif; endif;
+  protect(Q971_PAY_SRC, true);
+  Q971_PAY_LINE = curocc();
+  noinput;
+
+PROC Q971_PAY_AMT
+postproc
+  if Q971_PAY_AMT < 0 then
+    errmsg("97.1 Amount cannot be negative.");
+    reenter;
+  endif;
+
+PROC Q971_OTHER_TXT
+preproc
+  if pos("04", Q971_SOURCES) = 0 then
+    Q971_OTHER_TXT = "";   { 'Other expenses' (04) not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("04", Q971_SOURCES) > 0 and length(strip(Q971_OTHER_TXT)) = 0 then
+    errmsg("97.1 'Other expenses' was ticked — please specify.");
+    reenter;
+  endif;
+"""
+
+
+# ============================================================
+# Roster-proc generator (Option B fan-out, 2026-06-19)
+# ============================================================
+# Reproduces the proven, device-validated Q92 (PARTIAL) / Q971 (ALL-amount) patterns
+# for the rest of the F3 cost-matrix cluster. Q92/Q971 keep their hand-written constants
+# above (deployed verbatim); this generator emits the NEW conversions only.
+#
+# Footgun discipline (carried from Q92/Q971; see the skill §3/§6):
+#   - LITERAL pos("01".."NN") membership — one explicit line per option code. NEVER
+#     edit("99",k) (space-padded keys -> nsel=0 -> endgroup -> grid skipped).
+#   - Gate from the LINE preproc (a VISITED field), never a protected field's own preproc.
+#   - Do NOT protect the AMT field — every row stays enterable (protecting hangs the
+#     roster). PARTIAL matrices default non-money rows to 0 (still enterable); ALL-amount
+#     matrices leave every row enterable with no zeroing.
+def build_roster_procs(q_no, q_label, sources, amt_codes,
+                       require_msg, gated_texts=None):
+    """Emit the SOURCES/LINE/AMT (+ optional gated specify-text) PROCs for one
+    CheckBox->roster conversion.
+      q_no        question stem used in field names (Q<q_no>_SOURCES / _PAY_LINE / ...).
+      sources     [(label, "NN")] — the 2-char option codes (canonical order).
+      amt_codes   set of 2-char codes that carry a real amount. Empty set => ALL-amount
+                  (no zeroing). A strict subset => PARTIAL (Q92 pattern: non-money rows
+                  default 0 but stay enterable; the AMT postproc forces 0 back).
+      gated_texts [(code, field, prompt)] — specify-text fields gated on pos(code,SOURCES).
+    """
+    codes = [c for _, c in sources]
+    amt_nums = sorted(int(c) for c in amt_codes)
+    src = f"Q{q_no}_SOURCES"
+    line = f"Q{q_no}_PAY_LINE"
+    srcf = f"Q{q_no}_PAY_SRC"
+    amtf = f"Q{q_no}_PAY_AMT"
+    partial = bool(amt_codes) and len(amt_codes) < len(codes)
+
+    L = [f"{{ ---- Q{q_no} payment roster (Option B fan-out) ---- }}",
+         f"PROC {src}", "postproc",
+         "  { Require >=1 source ticked — the roster grid needs >=1 row. }"]
+    L.append(f"  if length(strip({src})) = 0 then")
+    L.append(f'    errmsg("{require_msg}");')
+    L += ["    reenter;", "  endif;", ""]
+
+    L += [f"PROC {line}", "preproc",
+          "  { Build one row per ticked source (canonical order). The curocc()-th ticked",
+          f"    source -> {srcf} (auto + protected); end once past the last ticked source."
+          + (" Non-money rows" if partial else " Every row"),
+          ("    default amount 0 but stay enterable." if partial
+           else "    amount stays enterable (all sources carry an amount)."),
+          "    Re-runs on back-navigation. }",
+          "  numeric nsel; numeric seen;", "  nsel = 0;"]
+    for c in codes:
+        L.append(f'  if pos("{c}", {src}) > 0 then nsel = nsel + 1; endif;')
+    L.append("  if curocc() > nsel then endgroup; endif;")
+    L.append("  seen = 0;")
+    for c in codes:
+        L.append(f'  if pos("{c}", {src}) > 0 then seen = seen + 1; '
+                 f"if seen = curocc() then {srcf} = {int(c)}; endif; endif;")
+    L.append(f"  protect({srcf}, true);")
+    if partial:
+        cond = " and ".join(f"{srcf} <> {n}" for n in amt_nums)
+        L += [f"  if {cond} then",
+              f"    {amtf} = 0;   {{ non-money source -> default 0; still enterable }}",
+              "  endif;"]
+    L += [f"  {line} = curocc();", "  noinput;", ""]
+
+    L += [f"PROC {amtf}", "postproc",
+          f"  if {amtf} < 0 then",
+          f'    errmsg("{q_no}. Amount cannot be negative.");',
+          "    reenter;", "  endif;"]
+    if partial:
+        cond = " and ".join(f"{srcf} <> {n}" for n in amt_nums)
+        L += [f"  if {cond} and {amtf} <> 0 then",
+              f'    errmsg("{q_no}. This source has no out-of-pocket cost — amount reset to 0.");',
+              f"    {amtf} = 0;", "  endif;"]
+
+    for code, field, prompt in (gated_texts or []):
+        L += ["", f"PROC {field}", "preproc",
+              f'  if pos("{code}", {src}) = 0 then',
+              f'    {field} = "";   {{ not ticked -> not enterable }}',
+              "    noinput;", "  endif;", "postproc",
+              f'  if pos("{code}", {src}) > 0 and length(strip({field})) = 0 then',
+              f'    errmsg("{prompt}");',
+              "    reenter;", "  endif;"]
+    return "\n".join(L) + "\n"
+
+
+# The four NEW Section G roster conversions (Q92/Q971 stay hand-written above).
+Q94_ROSTER_PROCS = build_roster_procs(
+    94, "94", [("Out-of-pocket", "01"), ("Donation", "02"), ("Free/no cost", "03"),
+               ("Free, charge to PhilHealth", "04"), ("Free, charge to Private Insurance", "05"),
+               ("Free, charge to HMO", "06"), ("In kind", "07"), ("Don't know", "08")],
+    {"01"},
+    "94. Tick at least one payment source for the laboratory test/s before continuing.")
+Q96_ROSTER_PROCS = build_roster_procs(
+    96, "96", [("Out-of-pocket", "01"), ("Free/no cost", "02"),
+               ("Free, charge to PhilHealth", "03"), ("Free, charge to Private Insurance", "04"),
+               ("Free, charge to HMO", "05"), ("In kind", "06"), ("Donation", "07"),
+               ("Don't know", "08")],
+    {"01", "06", "07"},
+    "96. Tick at least one payment source for the prescribed medicines before continuing.")
+Q972_ROSTER_PROCS = build_roster_procs(
+    972, "97.2", [(None, "01"), (None, "02"), (None, "03"),
+                  (None, "04"), (None, "05"), (None, "06")],
+    set(),   # all-amount
+    "97.2 Tick at least one expense item before continuing (or correct Q97 if none).",
+    gated_texts=[("06", "Q972_OTHER_TXT", "97.2 'Other expenses' was ticked — please specify.")])
+Q98_ROSTER_PROCS = build_roster_procs(
+    98, "98", [(None, f"{n:02d}") for n in range(1, 16)],
+    set(),   # all-amount
+    "98. Tick at least one source of money used to pay for the medical costs before continuing.",
+    gated_texts=[
+        ("06", "Q98_OTHER_DONATION_TXT",
+         "'Other Donation/Charity/Assistance' was selected in Q98. Please specify."),
+        ("15", "Q98_OTHER_TXT", "'Other (specify)' was selected in Q98. Please specify.")])
+
+# The four NEW Section H roster conversions (#691/#692/#693). All-amount, length-9 amounts
+# (the amount length lives in the dcf roster field; the apc logic is length-agnostic).
+# The Q113 PhilHealth-availed gate (Q114 skip) is re-pointed to pos("08", Q113_SOURCES)
+# in CHECKBOX_CONVERT below; the Q110=No skip target is re-pointed to Q113_SOURCES.
+Q107_ROSTER_PROCS = build_roster_procs(
+    107, "107", [(None, f"{n:02d}") for n in range(1, 11)],
+    set(),
+    "107. Tick at least one payment source for the total bill before continuing.",
+    gated_texts=[("10", "Q107_PAY_OTHER_TXT", "107. 'Other' was ticked — please specify.")])
+Q109_ROSTER_PROCS = build_roster_procs(
+    109, "109", [(None, f"{n:02d}") for n in range(1, 10)],
+    set(),
+    "109. Tick at least one payment source for the medicines bought outside before continuing.",
+    gated_texts=[("09", "Q109_PAY_OTHER_TXT", "109. 'Other' was ticked — please specify.")])
+Q112_ROSTER_PROCS = build_roster_procs(
+    112, "112", [(None, f"{n:02d}") for n in range(1, 10)],
+    set(),
+    "112. Tick at least one payment source for the services done outside before continuing.",
+    gated_texts=[("09", "Q112_PAY_OTHER_TXT", "112. 'Other' was ticked — please specify.")])
+Q113_ROSTER_PROCS = build_roster_procs(
+    113, "113", [(None, f"{n:02d}") for n in range(1, 14)],
+    set(),
+    "113. Tick at least one payment source for the hospital bill before continuing.",
+    gated_texts=[("13", "Q113_PAY_OTHER_TXT", "113. 'Other (specify)' was ticked — please specify.")])
 
 
 def inject_soft(parts, field, body):
@@ -262,6 +485,45 @@ function q92_oop()
     endif;
   enddo;
   q92_oop = total;
+end;
+
+{ Option B fan-out (#674/#675/#691): out-of-pocket (SRC code 1) sums from the Q94/Q96/Q107
+  rosters — same shape as q92_oop(), used in the Q97 / Q115 reconciliation soft-checks
+  (replace the old flat Q9n_PAY_01_AMT / Q107_PAY_01_AMT fields). }
+function q94_oop()
+  numeric i;
+  numeric total;
+  total = 0;
+  do i = 1 while i <= count(Q94_PAY_ROSTER)
+    if Q94_PAY_SRC(i) = 1 then
+      total = total + Q94_PAY_AMT(i);
+    endif;
+  enddo;
+  q94_oop = total;
+end;
+
+function q96_oop()
+  numeric i;
+  numeric total;
+  total = 0;
+  do i = 1 while i <= count(Q96_PAY_ROSTER)
+    if Q96_PAY_SRC(i) = 1 then
+      total = total + Q96_PAY_AMT(i);
+    endif;
+  enddo;
+  q96_oop = total;
+end;
+
+function q107_oop()
+  numeric i;
+  numeric total;
+  total = 0;
+  do i = 1 while i <= count(Q107_PAY_ROSTER)
+    if Q107_PAY_SRC(i) = 1 then
+      total = total + Q107_PAY_AMT(i);
+    endif;
+  enddo;
+  q107_oop = total;
 end;
 
 { Shared helpers inlined into this single PROC GLOBAL (PSGC-Cascade first so its
@@ -520,30 +782,10 @@ preproc
 
 # Multi-branch routing + end-of-survey + cross-field gate (spec 2 D-F/J-L).
 EXTRA_PROCS = """\
-{ ---- 'Other (specify)' enforcement -- Q98 payment-matrix others (audit 2026-06-11) ---- }
-PROC Q98_OTHER_DONATION_TXT
-preproc
-  if Q98_PAY_06 <> 1 then
-    Q98_OTHER_DONATION_TXT = "";   { skip + clear: this donation option not ticked }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_06 = 1 and length(strip(Q98_OTHER_DONATION_TXT)) = 0 then
-    errmsg("'Other Donation/Charity/Assistance' was selected in Q98. Please specify.");
-    reenter;
-  endif;
-
-PROC Q98_OTHER_TXT
-preproc
-  if Q98_PAY_15 <> 1 then
-    Q98_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_15 = 1 and length(strip(Q98_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected in Q98. Please specify.");
-    reenter;
-  endif;
+{ ---- Q98 payment-matrix 'Other (specify)' gates: Option B fan-out (#689, 2026-06-19)
+  re-pointed these from the old flat Q98_PAY_06 / Q98_PAY_15 flags (now removed) to
+  pos("06"/"15", Q98_SOURCES). The gated-text PROCs are emitted by Q98_ROSTER_PROCS
+  (build_roster_procs gated_texts=...), not here. ---- }
 
 { ---- #558/#694 (R4): Q114 (why no PhilHealth) gate ----
   Q114 is now a Check Box base (select_all -> tick-all); the PhilHealth-availed gate
@@ -583,7 +825,9 @@ postproc
 PROC Q159_BRAND_GEN_BOUGHT
 postproc
   if Q159_BRAND_GEN_BOUGHT = 1 then  skip to Q161_WHY_BRANDED; endif;  { Branded -> why-branded (#696: Q161 now a Check Box base; skip target is the base field, not _O01) }
-  if Q159_BRAND_GEN_BOUGHT = 4 then  skip to Q162_REFERRED;        endif;  { Don't know diff -> exit K }
+  { #618: Q159 = 'Don't know the difference' (4) routing REMOVED with the option — it
+    contradicted Q158=Yes (Q159 is Yes-only; Q158=No already skips to Q162), so code 4 can no
+    longer be entered. }
   if Q159_BRAND_GEN_BOUGHT = 5 then  skip to Q162_REFERRED;        endif;  { #501: N/A -> exit K to Section L start (Q162). Was Q164 (sanity #7); Q164 is a Q162=Yes follow-up, so the source's K->Q164 jump landed on an orphaned question. Tester (ASPSI) confirmed Q162. }
 
 { ---- Section D: non-members skip the benefits/premium block (Q46-Q50). #529: Q46 is now
@@ -808,7 +1052,19 @@ CHECKBOX_CONVERT = [
      "  if pos(\"19\", Q85_CONDITIONS) > 0 and length(strip(Q85_CONDITIONS)) > 2 then\n"
      "    errmsg(\"'No condition - Regular check-up only' was ticked with other condition(s) — it should usually be the only choice. Please review.\");\n  endif;"),  # 'Other (Specify)' (99)
     ("Q86_VISIT_EVENTS",         True,  False, None),  # #438: + 'Other (Specify)' (99) escape; no None/IDK
-    ("Q87_OTHER_ACTIONS",        True,  False, None),  # #673: 'Did not seek other forms of care'(6) is substantive (not 90); 'Other (Specify)' (99)
+    # Q87 'Did not seek other forms of care' is code 06 (a substantive option, NOT the
+    # generic exclusive 90), so the generic 90-exclusivity warn can't express it — pass a
+    # postextra block (mirrors the Q85 code-19 pattern above) that enforces it. #715 was
+    # marked Critical (a tester ticked 'Sought alternative care'(02) AND 'Did not seek other
+    # forms of care'(06) together — logically contradictory), so this is a HARD trap:
+    # errmsg + reenter forces the enumerator to leave 06 as the only choice. (No postproc
+    # auto-reset of the checkbox field — a postproc reassignment to a CheckBox is not a
+    # confirmed-clean re-render on CSEntry; hard error + reenter is the safe enforcement.)
+    ("Q87_OTHER_ACTIONS",        True,  False, None,
+     '  if pos("06", Q87_OTHER_ACTIONS) > 0 and length(strip(Q87_OTHER_ACTIONS)) > 2 then\n'
+     "    errmsg(\"Q87: 'Did not seek other forms of care' cannot be combined with any other "
+     'action — untick the others (or untick this) so only one applies, then continue.");\n'
+     "    reenter;\n  endif;"),   # #715: code 06 is exclusive (HARD); 'Other (Specify)' (99)
     ("Q90_NOT_CONFINED",         True,  False, None),  # #673: 'Other (specify)' (99); no None/IDK
     # Q93 'None'(90) -> skip the Q94 lab-cost matrix (was PROC Q93_LABS_O17 skip, #448/#673).
     ("Q93_LABS",                 True,  True,  None,
@@ -819,8 +1075,9 @@ CHECKBOX_CONVERT = [
     ("Q103_BUCAS_SERVICES",      True,  True,  None),  # #690: 'I don't know' (90); 'Other (specify)' (99). Reached only when Q102=Yes (Q102=No skips Q103 -> Q104)
     # Q114 inherits the PhilHealth-availed gate that used to live on Q114_NO_PH_O01 (#558).
     ("Q114_NO_PH",               True,  False,
-     "  if Q113_PAY_08 = 1 then   { #558/#694: PhilHealth WAS availed (Q113 PhilHealth row = Yes) -> skip the\n"
-     "                               why-not-availed reasons; go straight to the Q114.1 out-of-bill amount matrix. }\n"
+     '  if pos("08", Q113_SOURCES) > 0 then   { #558/#694 + Option B fan-out (#693): PhilHealth WAS availed\n'
+     "                               (Q113 PhilHealth source = code 08 ticked) -> skip the why-not-availed\n"
+     "                               reasons; go straight to the Q114.1 out-of-bill amount matrix. }\n"
      "    skip to Q1141_1;\n  endif;"),   # 'Other (specify)' (99); no None/IDK
     # ---- #696 Section K/L select_all -> Check Box (tick-all) ----
     ("Q149_WHERE_BUY",           True,  False, None),  # #696: 'Other (specify)' (99); no None/IDK
@@ -1026,14 +1283,14 @@ SKIP_RULES = [
     ("Q169_VISITED",         "Q169_VISITED in 2,3",          "Q171_WHY_NOT"),        # #529: Q171 is now the Check Box base (was _O01)
     ("Q172_PCP_REFERRAL",    "Q172_PCP_REFERRAL = 2",        "Q177_WHY_HOSPITAL"),   # #529: Q177 is now the Check Box base (was _O01)
     # Section G — Outpatient Care
-    ("Q89_ADVISED_ADMIT",  "Q89_ADVISED_ADMIT = 1",                       "Q91_USUAL_OUTPATIENT"),  # Yes -> Q91 (Q90 = why-not-confined)
+    ("Q89_ADVISED_ADMIT",  "Q89_ADVISED_ADMIT = 2",                       "Q91_USUAL_OUTPATIENT"),  # #688: No (NOT advised to admit) -> skip Q90 (why-not-confined is moot); Yes -> ASK Q90 (why not admitted despite advice). Inverted from the original =1 which was backwards.
     # Q93_LABS_O17 'None' routing now in EXTRA_PROCS (exclusivity warn must precede the skip, #448).
     ("Q95_PRESCRIBED",     "Q95_PRESCRIBED = 2",                          "Q97_FINAL_AMOUNT"),       # No prescription -> skip meds-cost matrix
     ("Q99_BUCAS_HEARD",    "Q99_BUCAS_HEARD = 2",                         "Q116_NBB_HEARD"),         # No -> end of Section G (sanity #9; skip Q100-104)
     ("Q102_BUCAS_ACCESSED","Q102_BUCAS_ACCESSED = 2",                     "Q104_WITHOUT_BUCAS"),     # No -> Q104 (skip Q103)
     # Section H — Inpatient Care
     ("Q108_MEDS_OUTSIDE",  "Q108_MEDS_OUTSIDE = 2",                       "Q110_LAB_OUTSIDE"),       # No -> skip meds-outside-cost
-    ("Q110_LAB_OUTSIDE",   "Q110_LAB_OUTSIDE = 2",                        "Q113_PAY_01"),            # No -> skip Q111/Q112 to PhilHealth pay matrix
+    ("Q110_LAB_OUTSIDE",   "Q110_LAB_OUTSIDE = 2",                        "Q113_SOURCES"),           # No -> skip Q111/Q112 to the hospital-bill pay matrix (Option B fan-out #693: was Q113_PAY_01)
     # Section I — Financial Risk Protection
     ("Q116_NBB_HEARD",     "Q116_NBB_HEARD in 2,3",                       "Q119_ZBB_HEARD"),         # No / IDK -> skip Q117,Q118
     ("Q119_ZBB_HEARD",     "Q119_ZBB_HEARD in 2,3",                       "Q124_MAIFIP_HEARD"),      # No / IDK -> skip Q120-123
@@ -1108,7 +1365,13 @@ def skip_proc(field, cond, target):
 
 def main():
     parts = [HEADER, "", CONTROL_PROCS, "", BRANCHING, "", EXTRA_PROCS, "",
-             VALIDATION_PROCS, "", Q92_ROSTER_PROCS, ""]   # Q92 roster (Option B pilot)
+             VALIDATION_PROCS, "", Q92_ROSTER_PROCS, "",   # Q92 roster (Option B pilot)
+             Q971_ROSTER_PROCS, "",   # Q97.1 CheckBox + roster (Option B Shape B)
+             # Option B fan-out (2026-06-19): the remaining F3 cost-matrix cluster.
+             Q94_ROSTER_PROCS, "", Q96_ROSTER_PROCS, "",          # Section G partial/all
+             Q972_ROSTER_PROCS, "", Q98_ROSTER_PROCS, "",         # Section G all-amount
+             Q107_ROSTER_PROCS, "", Q109_ROSTER_PROCS, "",        # Section H all-amount
+             Q112_ROSTER_PROCS, "", Q113_ROSTER_PROCS, ""]        # Section H all-amount
     covered = {"Q88_WHY_VISIT", "Q105_REASON",                    # branching PROCs
                "Q63_HAS_USUAL_FACILITY", "Q77_KON_REGISTERED",
                "Q159_BRAND_GEN_BOUGHT", "Q162_REFERRED",  # EXTRA_PROCS (#529: Q46_BENEFITS_O01 gone — Q46 is now a Check Box, gate folded into its checkbox PROC)
@@ -1127,6 +1390,27 @@ def main():
                # into `covered` so the dcf-driven other-specify / select-all auto-gens
                # never mis-fire on the alpha checkbox field or its gated text.
                "Q92_SOURCES", "Q92_PAY_LINE", "Q92_PAY_SRC", "Q92_PAY_AMT",  # Q92 roster (Option B pilot)
+               # Q97.1 (Option B Shape B roster): Q971_SOURCES CheckBox + the roster
+               # fields (LINE/SRC/AMT) + the gated Other-specify text are owned by
+               # Q971_ROSTER_PROCS (above) — seed them so amount_required_procs /
+               # other_specify_procs / select-all auto-gens never double-PROC them.
+               "Q971_SOURCES", "Q971_PAY_LINE", "Q971_PAY_SRC", "Q971_PAY_AMT",
+               "Q971_OTHER_TXT",
+               # Option B fan-out (2026-06-19): the rest of the F3 cost-matrix cluster.
+               # Each converted matrix's CheckBox + 3 roster fields are owned by its
+               # build_roster_procs() block; seed them (+ any gated specify-text) so the
+               # dcf-driven amount-required / other-specify / select-all auto-gens never
+               # double-PROC them. (The Q9n_PAY_OTHER_TXT gates here are owned by the
+               # roster blocks' gated_texts, NOT by other_specify_procs.)
+               "Q94_SOURCES",  "Q94_PAY_LINE",  "Q94_PAY_SRC",  "Q94_PAY_AMT",
+               "Q96_SOURCES",  "Q96_PAY_LINE",  "Q96_PAY_SRC",  "Q96_PAY_AMT",
+               "Q972_SOURCES", "Q972_PAY_LINE", "Q972_PAY_SRC", "Q972_PAY_AMT", "Q972_OTHER_TXT",
+               "Q98_SOURCES",  "Q98_PAY_LINE",  "Q98_PAY_SRC",  "Q98_PAY_AMT",
+               "Q98_OTHER_DONATION_TXT", "Q98_OTHER_TXT",
+               "Q107_SOURCES", "Q107_PAY_LINE", "Q107_PAY_SRC", "Q107_PAY_AMT", "Q107_PAY_OTHER_TXT",
+               "Q109_SOURCES", "Q109_PAY_LINE", "Q109_PAY_SRC", "Q109_PAY_AMT", "Q109_PAY_OTHER_TXT",
+               "Q112_SOURCES", "Q112_PAY_LINE", "Q112_PAY_SRC", "Q112_PAY_AMT", "Q112_PAY_OTHER_TXT",
+               "Q113_SOURCES", "Q113_PAY_LINE", "Q113_PAY_SRC", "Q113_PAY_AMT", "Q113_PAY_OTHER_TXT",
                *CHECKBOX_COVERED}
 
     parts.append("{ ---- Skip logic (spec 2) ---- }")
@@ -1178,17 +1462,12 @@ def main():
             continue
         covered.add(field); parts.append(proc); parts.append(""); am_emitted += 1
 
-    # Payment-matrix '>=1 row ticked' (#555/#556/#557). These three Section H matrices
-    # carry per-row amounts, so they are EXCLUDED from the generic select-all >=1 check
-    # (amount matrices can legitimately be all-zero elsewhere). But here the spec/tester
-    # require at least one payment source once the gate opens: Q109 (Q108=Yes, meds bought
-    # outside), Q112 (Q110=Yes, tests done outside), Q113 (the hospital bill, always asked).
-    # Emit the check on each matrix's LAST flag — all rows are entered by then.
-    paymatrix_atleast1 = {
-        "Q109_PAY": "at least one payment source for the medicines bought outside (Q109)",
-        "Q112_PAY": "at least one payment source for the tests done outside (Q112)",
-        "Q113_PAY": "at least one payment source for the hospital bill (Q113)",
-    }
+    # Payment-matrix '>=1 row ticked' (#555/#556/#557). Option B fan-out (#691/#692/#693,
+    # 2026-06-19): Q107/Q109/Q112/Q113 are now CheckBox -> roster, so their >=1-source
+    # requirement is enforced by the CheckBox SOURCES postproc (build_roster_procs) — NOT
+    # here. This dict is now empty (the flat _PAY_NN flag fields no longer exist; the loop
+    # below self-disables on len(flags) < 2). Kept as the seam for any future flat matrix.
+    paymatrix_atleast1 = {}
     pm_items = dcf_items_map()
     parts.append("{ ---- Payment-matrix '>=1 ticked' (#555/#556/#557) ---- }")
     pm_emitted = 0

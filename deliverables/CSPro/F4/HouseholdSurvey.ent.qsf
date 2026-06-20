@@ -1195,17 +1195,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>35. Do you identify as a person with a disability?</p>
+            <p>35. Do you identify as a person with a disability?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
           FIL: |
-            <p>Kinikilala ba ninyo ang sarili bilang isang taong may kapansanan?</p>
+            <p>Kinikilala ba ninyo ang sarili bilang isang taong may kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
           BCL: |
-            <p>May mental o pisikal ka bang kapansanan?</p>
+            <p>May mental o pisikal ka bang kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
           BIS: |
-            <p>Gi-ila ba nimo ang imong kaugalingon isip usa ka tawo nga adunay kapansanan?</p>
+            <p>Gi-ila ba nimo ang imong kaugalingon isip usa ka tawo nga adunay kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
           CEB: |
-            <p>Nagpaila ba ka isip usa ka tawo nga adunay kapansanan/PWD?</p>
+            <p>Nagpaila ba ka isip usa ka tawo nga adunay kapansanan/PWD?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
           WAR: |
-            <p>Nag-iidentify ka ba nga may kapansanan?</p>
+            <p>Nag-iidentify ka ba nga may kapansanan?</p><p class="instruction">If this is line 1 (the respondent): compare with their Section B disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q36_SPECIFY_DISABILITY
     conditions:
       - questionText:
@@ -1270,92 +1270,92 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>39. Civil Status</p>
+            <p>39. Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
           FIL: |
-            <p>39. Civil Status</p>
+            <p>39. Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
           BCL: |
-            <p>Civil Status</p>
+            <p>Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
           BIS: |
-            <p>Sibil nga Status</p>
+            <p>Sibil nga Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
           CEB: |
-            <p>Civil Status</p>
+            <p>Civil Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
           WAR: |
-            <p>Sibil nga kahimtang</p>
+            <p>Sibil nga kahimtang</p><p class="instruction">If this is line 1 (the respondent): should match their Section B civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q40_EDUCATION
     conditions:
       - questionText:
           EN: |
-            <p>40. Highest level of education completed</p>
+            <p>40. Highest level of education completed</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
           FIL: |
-            <p>40. Highest level of education completed</p>
+            <p>40. Highest level of education completed</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
           BCL: |
-            <p>Natapos sa Pagadal</p>
+            <p>Natapos sa Pagadal</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
           BIS: |
-            <p>Pinakataas nga Naabot sa Pag-eskwela</p>
+            <p>Pinakataas nga Naabot sa Pag-eskwela</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
           CEB: |
-            <p>Naabot nga edukasyon</p>
+            <p>Naabot nga edukasyon</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
           WAR: |
-            <p>Pinakahitaas nga edukasyon nga natapos</p>
+            <p>Pinakahitaas nga edukasyon nga natapos</p><p class="instruction">If this is line 1 (the respondent): should match their Section B education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q41_EMPLOYMENT
     conditions:
       - questionText:
           EN: |
-            <p>41. Employment Status</p>
+            <p>41. Employment Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
           FIL: |
-            <p>41. Employment Status</p>
+            <p>41. Employment Status</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
           BCL: |
-            <p>Estado kan trabaho</p>
+            <p>Estado kan trabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
           BIS: |
-            <p>Status sa Pagpanrabaho</p>
+            <p>Status sa Pagpanrabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
           CEB: |
-            <p>Status sa Trabaho</p>
+            <p>Status sa Trabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
           WAR: |
-            <p>Kahimtang han Trabaho</p>
+            <p>Kahimtang han Trabaho</p><p class="instruction">If this is line 1 (the respondent): should match their Section B employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q42_GSIS
     conditions:
       - questionText:
           EN: |
-            <p>42. Is (NAME) covered by GSIS either as a member or dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>42. Is ~~strip(Q30_NAME)~~ covered by GSIS either as a member or dependent?</p>
           FIL: |
-            <p>Si (NAME) ba ay sakop ng GSIS bilang miyembro o dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Si ~~strip(Q30_NAME)~~ ba ay sakop ng GSIS bilang miyembro o dependent?</p>
           BCL: |
-            <p>Si (Ngaran) ay covered ba kan GSIS o kaya an miembro o an dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Si (Ngaran) ay covered ba kan GSIS o kaya an miembro o an dependent?</p>
           BIS: |
-            <p>Sakop ba si (NGALAN) sa GSIS isip miyembro o dependente?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Sakop ba si (NGALAN) sa GSIS isip miyembro o dependente?</p>
           CEB: |
-            <p>Si (NGALAN) ba covered sa GSIS isip usa ka miyembro o dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Si (NGALAN) ba covered sa GSIS isip usa ka miyembro o dependent?</p>
           WAR: |
-            <p>Hi (NGARAN) nasasakop ba han GSIS komo miyembro o dependent/ dependente?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Hi (NGARAN) nasasakop ba han GSIS komo miyembro o dependent/ dependente?</p>
   - name: HOUSEHOLDSURVEY_DICT.Q43_SSS
     conditions:
       - questionText:
           EN: |
-            <p>43. Is (NAME) covered by SSS either as a member or dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>43. Is ~~strip(Q30_NAME)~~ covered by SSS either as a member or dependent?</p>
           FIL: |
-            <p>Si (NAME) ba ay sakop ng SSS bilang miyembro o dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Si ~~strip(Q30_NAME)~~ ba ay sakop ng SSS bilang miyembro o dependent?</p>
           BCL: |
-            <p>Si (Ngaran) ay covered ba kan SSS o kaya an miembro o an dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Si (Ngaran) ay covered ba kan SSS o kaya an miembro o an dependent?</p>
           BIS: |
-            <p>Sakop ba si (NGALAN) sa SSS isip miyembro o dependente?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Sakop ba si (NGALAN) sa SSS isip miyembro o dependente?</p>
           CEB: |
-            <p>Si (NGALAN) ba covered sa SSS isip usa ka miyembro o dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Si (NGALAN) ba covered sa SSS isip usa ka miyembro o dependent?</p>
           WAR: |
-            <p>Hi (NGARAN) nasasakop ba han SSS komo miyembro o dependent/ dependente?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Hi (NGARAN) nasasakop ba han SSS komo miyembro o dependent/ dependente?</p>
   - name: HOUSEHOLDSURVEY_DICT.Q44_PAGIBIG
     conditions:
       - questionText:
           EN: |
-            <p>44. Is (NAME) covered by Pag-ibig either as a member or dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>44. Is ~~strip(Q30_NAME)~~ covered by Pag-ibig either as a member or dependent?</p>
           FIL: |
-            <p>Si (NAME) ba ay sakop ng Pag-IBIG bilang miyembro o dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Si ~~strip(Q30_NAME)~~ ba ay sakop ng Pag-IBIG bilang miyembro o dependent?</p>
           BCL: |
-            <p>Si (Ngaran) ay covered ba kan Pagibig o kaya an miembro o an dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Si (Ngaran) ay covered ba kan Pagibig o kaya an miembro o an dependent?</p>
           BIS: |
-            <p>Sakop ba si (NGALAN) sa Pag-ibig isip miyembro o dependente?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Sakop ba si (NGALAN) sa Pag-ibig isip miyembro o dependente?</p>
           CEB: |
-            <p>Si (NGALAN) ba covered sa Pag-ibig isip usa ka miyembro o dependent?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Si (NGALAN) ba covered sa Pag-ibig isip usa ka miyembro o dependent?</p>
           WAR: |
-            <p>Hi (NGARAN) nasasakop ba han Pag-ibig komo miyembro o dependent/ dependente?</p>
+            <p class="instruction">Household member: ~~strip(Q30_NAME)~~ (Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p><p>Hi (NGARAN) nasasakop ba han Pag-ibig komo miyembro o dependent/ dependente?</p>
   - name: HOUSEHOLDSURVEY_DICT.Q45_PHILHEALTH_REG
     conditions:
       - questionText:
@@ -1371,6 +1371,21 @@ questions:
             <p>Rehistrado sa PhilHealth karon?</p>
           WAR: |
             <p>Ha pagkayana rehistrado ha PhilHealth?</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q45_1_PIN_REG_DATE
+    conditions:
+      - questionText:
+          EN: |
+            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+          FIL: |
+            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+          BCL: |
+            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+          BIS: |
+            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+          CEB: |
+            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+          WAR: |
+            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q46_MEMBER_CATEGORY
     conditions:
       - questionText:
@@ -1401,51 +1416,6 @@ questions:
             <p>46. Member category — Other (specify) text</p>
           WAR: |
             <p>46. Member category — Other (specify) text</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q48_NAME_FIRST
-    conditions:
-      - questionText:
-          EN: |
-            <p>48. Name (First Name Only) — private insurance roster</p>
-          FIL: |
-            <p>48. Name (First Name Only) — private insurance roster</p>
-          BCL: |
-            <p>48. Name (First Name Only) — private insurance roster</p>
-          BIS: |
-            <p>Pangalan Unang Pangalan lamang</p>
-          CEB: |
-            <p>Pangalan (Ngalan lamang)</p>
-          WAR: |
-            <p>48. Name (First Name Only) — private insurance roster</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q49_PRIVATE_INS
-    conditions:
-      - questionText:
-          EN: |
-            <p>49. Is (NAME) covered by a private health insurance either as a member or dependent? (Example: Maxicare, Intellicare, Pacific Cross Health Care)</p>
-          FIL: |
-            <p>Si (PANGALAN) ba ay sakop ng pribadong health insurance, bilang miyembro man o dependent? (Halimbawa: Maxicare, Intellicare, Pacific Cross Health Care)</p>
-          BCL: |
-            <p>Si (Ngaran) ay covered ba ki sarong pribadong health insurance o siya ay dependent? (hal. Maxicare, Intellicare, Pacific Cross Health Care)</p>
-          BIS: |
-            <p>Sakop ba si (NGALAN) sa pribadong health insurance isip miyembro o dependente? (Pananglitan: Maxicare, Intellicare, Pacific Cross Health Care)</p>
-          CEB: |
-            <p>Si (NGALAN) ba covered sa private health insurance isip usa ka miyembro o dependent? (Pananglitan: Maxicare, Intellicare, Pacific Cross Health Care)</p>
-          WAR: |
-            <p>Nasasakop ba an (NGARAN) hin pribado nga seguro ha panlawas komo miyembro o nadepende? (Pananglitan: Maxicare, Intellicare, Pag-ataman han Panglawas han Pacific Cross)</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q50_PRIVATE_INS_OTHER_TXT
-    conditions:
-      - questionText:
-          EN: |
-            <p>50. Others (Specify)</p>
-          FIL: |
-            <p>Iba pa (tukuyin)</p>
-          BCL: |
-            <p>50. Others (Specify)</p>
-          BIS: |
-            <p>50. Others (Specify)</p>
-          CEB: |
-            <p>Uban pa (Isulti)</p>
-          WAR: |
-            <p>50. Others (Specify)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q47_HH_HAS_PRIVATE_INS
     conditions:
       - questionText:
@@ -1461,6 +1431,66 @@ questions:
             <p>Aduna ba ka ug ubang miyembro sa inyong panimalay private insurance?</p>
           WAR: |
             <p>Mayda ka ba pribado nga insyurance o an iba nga miyembro han imo HH?</p>
+  - name: HOUSEHOLDSURVEY_DICT.PRIV_MEMBER_LINE_NO
+    conditions:
+      - questionText:
+          EN: |
+            <p>Household Member Line Number (private insurance)</p>
+          FIL: |
+            <p>Household Member Line Number (private insurance)</p>
+          BCL: |
+            <p>Household Member Line Number (private insurance)</p>
+          BIS: |
+            <p>Household Member Line Number (private insurance)</p>
+          CEB: |
+            <p>Household Member Line Number (private insurance)</p>
+          WAR: |
+            <p>Household Member Line Number (private insurance)</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q48_OTHER_INS_REG
+    conditions:
+      - questionText:
+          EN: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>48. Are you registered with another health insurance plan?</p>
+          FIL: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>48. Are you registered with another health insurance plan?</p>
+          BCL: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>48. Are you registered with another health insurance plan?</p>
+          BIS: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>48. Are you registered with another health insurance plan?</p>
+          CEB: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>48. Are you registered with another health insurance plan?</p>
+          WAR: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>48. Are you registered with another health insurance plan?</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q49_PRIVATE_INS
+    conditions:
+      - questionText:
+          EN: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>49. Is ~~strip(Q30_NAME(curocc()))~~ covered by a private health insurance either as a member or dependent? (Example: Maxicare, Intellicare, Pacific Cross Health Care)</p>
+          FIL: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>Si ~~strip(Q30_NAME(curocc()))~~ ba ay sakop ng pribadong health insurance, bilang miyembro man o dependent? (Halimbawa: Maxicare, Intellicare, Pacific Cross Health Care)</p>
+          BCL: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>Si (Ngaran) ay covered ba ki sarong pribadong health insurance o siya ay dependent? (hal. Maxicare, Intellicare, Pacific Cross Health Care)</p>
+          BIS: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>Sakop ba si (NGALAN) sa pribadong health insurance isip miyembro o dependente? (Pananglitan: Maxicare, Intellicare, Pacific Cross Health Care)</p>
+          CEB: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>Si (NGALAN) ba covered sa private health insurance isip usa ka miyembro o dependent? (Pananglitan: Maxicare, Intellicare, Pacific Cross Health Care)</p>
+          WAR: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>Nasasakop ba an (NGARAN) hin pribado nga seguro ha panlawas komo miyembro o nadepende? (Pananglitan: Maxicare, Intellicare, Pag-ataman han Panglawas han Pacific Cross)</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q50_PRIVATE_INS_OTHER_TXT
+    conditions:
+      - questionText:
+          EN: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>50. Others (Specify)</p>
+          FIL: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>Iba pa (tukuyin)</p>
+          BCL: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>50. Others (Specify)</p>
+          BIS: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>50. Others (Specify)</p>
+          CEB: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>Uban pa (Isulti)</p>
+          WAR: |
+            <p class="instruction">Household member: ~~strip(Q30_NAME(curocc()))~~ (Roster line ~~PRIV_MEMBER_LINE_NO~~)</p><p>50. Others (Specify)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q51_UHC_HEARD
     conditions:
       - questionText:
@@ -3535,32 +3565,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga cereal (bugas, harina, noodles, mais, ug iba pa)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q144_CEREALS_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga cereal (bugas, harina, noodles, mais, ug iba pa)</p>
+            <p>144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q145_PULSES_CONSUMED
     conditions:
       - questionText:
@@ -3580,32 +3610,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP)</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP)</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP)</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP)</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP)</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga liso, ugat, lamang-ugat, baloy (ngan mga saging na gin luluto), ngan mga mani.</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q145_PULSES_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga liso, ugat, lamang-ugat, baloy (ngan mga saging na gin luluto), ngan mga mani.</p>
+            <p>145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q146_VEGETABLES_CONSUMED
     conditions:
       - questionText:
@@ -3625,32 +3655,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga utanon (presko, uga, nawaray tubig, bagtik)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q146_VEGETABLES_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga utanon (presko, uga, nawaray tubig, bagtik)</p>
+            <p>146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q147_FRUITS_CONSUMED
     conditions:
       - questionText:
@@ -3670,32 +3700,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga prutas sa bisan ano nga porma (presko, uga, nawaray tubig, bagtik)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q147_FRUITS_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga prutas sa bisan ano nga porma (presko, uga, nawaray tubig, bagtik)</p>
+            <p>147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q148_FISH_CONSUMED
     conditions:
       - questionText:
@@ -3715,32 +3745,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Isda ngan iba pa nga seafood ha bisan anon ga porma (presko, uga, frozen, ngan iba pa)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q148_FISH_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Isda ngan iba pa nga seafood ha bisan anon ga porma (presko, uga, frozen, ngan iba pa)</p>
+            <p>148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q149_MEAT_CONSUMED
     conditions:
       - questionText:
@@ -3760,32 +3790,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Bisan ano nga klase hin karne ngan mga sulod ha bisan ano nga porma (presko, uga, gin-ubos hin tubig, bagtik)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q149_MEAT_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Bisan ano nga klase hin karne ngan mga sulod ha bisan ano nga porma (presko, uga, gin-ubos hin tubig, bagtik)</p>
+            <p>149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q150_EGGS_CONSUMED
     conditions:
       - questionText:
@@ -3805,32 +3835,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Bisan ano nga klase hin bunay (tikang ha manok, pato, pugo, ngan iba pa)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q150_EGGS_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Bisan ano nga klase hin bunay (tikang ha manok, pato, pugo, ngan iba pa)</p>
+            <p>150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q151_MILK_CONSUMED
     conditions:
       - questionText:
@@ -3850,32 +3880,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP)</p>
+            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP)</p>
+            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP)</p>
+            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP)</p>
+            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP)</p>
+            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Gatas ngan iba pa nga mga produkto tikang ha gatas, diri upod an mantikilya</p>
+            <p>151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q151_MILK_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Gatas ngan iba pa nga mga produkto tikang ha gatas, diri upod an mantikilya</p>
+            <p>151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q152_FATS_CONSUMED
     conditions:
       - questionText:
@@ -3895,32 +3925,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mantikilya, mantika, iba pa nga mga lana ngan tambok nga tikang ha hayop, ngan mga lana han utanon (lubi ngan linga)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q152_FATS_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mantikilya, mantika, iba pa nga mga lana ngan tambok nga tikang ha hayop, ngan mga lana han utanon (lubi ngan linga)</p>
+            <p>152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q153_SUGAR_CONSUMED
     conditions:
       - questionText:
@@ -3940,32 +3970,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Asukar, kalamay ngan iba pa nga asukar nga kendi ngan mga pan-on (upod na an mga paste hin nut)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q153_SUGAR_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Asukar, kalamay ngan iba pa nga asukar nga kendi ngan mga pan-on (upod na an mga paste hin nut)</p>
+            <p>153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q154_CONDIMENTS_CONSUMED
     conditions:
       - questionText:
@@ -3985,32 +4015,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP)</p>
+            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP)</p>
+            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP)</p>
+            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP)</p>
+            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP)</p>
+            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga panakot ngan iba pa nga panakot ngan iba pa nga andam na nga pagkaon.</p>
+            <p>154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q154_CONDIMENTS_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga panakot ngan iba pa nga panakot ngan iba pa nga andam na nga pagkaon.</p>
+            <p>154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q155_WATER_NA_CONSUMED
     conditions:
       - questionText:
@@ -4030,32 +4060,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Tubig ngan diri-alkohol nga irimnon (pananglitan, kape)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q155_WATER_NA_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Tubig ngan diri-alkohol nga irimnon (pananglitan, kape)</p>
+            <p>155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q156_ALCOHOL_CONSUMED
     conditions:
       - questionText:
@@ -4075,32 +4105,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP)</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP)</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP)</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP)</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP)</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga makahurubog nga irimnon (pananglitan, lokal ngan igin-import</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q156_ALCOHOL_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga makahurubog nga irimnon (pananglitan, lokal ngan igin-import</p>
+            <p>156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q157_FOOD_SUBTOTAL_TOTAL_PHP
     conditions:
       - questionText:
@@ -4135,32 +4165,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga pagkaon ngan mga meryenda ngan mga irimnon tikang ha mga restawran (pagkaon, pagdara, ngan pagdul-ong)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q158_RESTAURANT_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga pagkaon ngan mga meryenda ngan mga irimnon tikang ha mga restawran (pagkaon, pagdara, ngan pagdul-ong)</p>
+            <p>158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q159_SMOKING_TOBACCO_CONSUMED
     conditions:
       - questionText:
@@ -4180,32 +4210,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>Pagsigarilyo (pananglitan, sigarilyo ngan vape), ngan/o waray aso nga mga produkto nga tabako (pananglitan, tabako nga gin-uuyam, betel nut)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q159_SMOKING_TOBACCO_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>Pagsigarilyo (pananglitan, sigarilyo ngan vape), ngan/o waray aso nga mga produkto nga tabako (pananglitan, tabako nga gin-uuyam, betel nut)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
+            <p>159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past MONTH. This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q160_PERSONAL_CARE_CONSUMED
     conditions:
       - questionText:
@@ -4225,32 +4255,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga produkto ha pag-ataman han kalugaringon (pananglitan, shampoo, pag-arot)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q160_PERSONAL_CARE_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga produkto ha pag-ataman han kalugaringon (pananglitan, shampoo, pag-arot)</p>
+            <p>160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q161_HOUSEHOLD_CLEAN_CONSUMED
     conditions:
       - questionText:
@@ -4270,32 +4300,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP)</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP)</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP)</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP)</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP)</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga produkto ngan serbisyo ha paglimpyo ngan pagmintinar han panimalay upod na an mga panimalay.</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q161_HOUSEHOLD_CLEAN_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga produkto ngan serbisyo ha paglimpyo ngan pagmintinar han panimalay upod na an mga panimalay.</p>
+            <p>161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q162_UTILITIES_CONSUMED
     conditions:
       - questionText:
@@ -4315,32 +4345,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga utility sugad han kuryente, suplay han tubig, pagtirok hin basura ngan hugaw, ngan mga gasolina (upod na an gas)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q162_UTILITIES_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga utility sugad han kuryente, suplay han tubig, pagtirok hin basura ngan hugaw, ngan mga gasolina (upod na an gas)</p>
+            <p>162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q163_TRANSPORT_CONSUMED
     conditions:
       - questionText:
@@ -4360,32 +4390,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP)</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP)</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP)</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP)</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP)</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo ha transportasyon ha mga pasahero (jeepney, bus, tren, taxi, eroplano, bus ha eskwelahan) upod na an mga arkila ngan pagpalit ha online ngan mga gasolina ngan mga lubricant para ha personal nga sarakyan</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q163_TRANSPORT_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't...</p>
           FIL: |
-            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't...</p>
           BCL: |
-            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't...</p>
           BIS: |
-            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't...</p>
           CEB: |
-            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't...</p>
           WAR: |
-            <p>Mga serbisyo ha transportasyon ha mga pasahero (jeepney, bus, tren, taxi, eroplano, bus ha eskwelahan) upod na an mga arkila ngan pagpalit ha online ngan mga gasolina ngan mga lubricant para ha personal nga sarakyan</p>
+            <p>163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't...</p>
   - name: HOUSEHOLDSURVEY_DICT.Q164_TELECOM_CONSUMED
     conditions:
       - questionText:
@@ -4405,32 +4435,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP)</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP)</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP)</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP)</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP)</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Serbisyo han linya han telepono ngan mobile phone, WIFI access, cable TV ngan bisan ano nga iba pa nga serbisyo han komunikasyon ngan audio lakip na an pag-ayad ngan pagbutang</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q164_TELECOM_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Serbisyo han linya han telepono ngan mobile phone, WIFI access, cable TV ngan bisan ano nga iba pa nga serbisyo han komunikasyon ngan audio lakip na an pag-ayad ngan pagbutang</p>
+            <p>164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q165_RECREATION_1M_CONSUMED
     conditions:
       - questionText:
@@ -4450,32 +4480,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP)</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP)</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP)</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP)</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP)</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga gamit ha paglingaw-lingaw, kultura, relihiyoso, isport ngan kaliawan</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q165_RECREATION_1M_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga gamit ha paglingaw-lingaw, kultura, relihiyoso, isport ngan kaliawan</p>
+            <p>165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q166_POSTAL_CONSUMED
     conditions:
       - questionText:
@@ -4495,32 +4525,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>166. Postal services — Amount spent purchasing (PHP)</p>
+            <p>166. Postal services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>166. Postal services — Amount spent purchasing (PHP)</p>
+            <p>166. Postal services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>166. Postal services — Amount spent purchasing (PHP)</p>
+            <p>166. Postal services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>166. Postal services — Amount spent purchasing (PHP)</p>
+            <p>166. Postal services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>166. Postal services — Amount spent purchasing (PHP)</p>
+            <p>166. Postal services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo han pag dul-ong han nga gamit</p>
+            <p>166. Postal services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q166_POSTAL_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo han pag dul-ong han nga gamit</p>
+            <p>166. Postal services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q167_HOUSING_CONSUMED
     conditions:
       - questionText:
@@ -4540,32 +4570,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>Pabalay (aktuwal nga mga arkila, ginbabanabana nga kantidad han arkila kon gintatag-iya)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q167_HOUSING_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>Pabalay (aktuwal nga mga arkila, ginbabanabana nga kantidad han arkila kon gintatag-iya)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
+            <p>167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 6 MONTHS. This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q168_RECREATION_6M_CONSUMED
     conditions:
       - questionText:
@@ -4585,32 +4615,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga gamit ha paglingaw-lingaw, kultura, relihiyoso, isport ngan kaliawan</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q168_RECREATION_6M_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga gamit ha paglingaw-lingaw, kultura, relihiyoso, isport ngan kaliawan</p>
+            <p>168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q169_CLOTHING_CONSUMED
     conditions:
       - questionText:
@@ -4630,32 +4660,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>Mga andam nga bado, tela ngan materyales para ha panapton, ngan sapatos upod na an mga tela ha balay, mga gamit ha salamin, mga gamit ha lamesa ngan mga gamit ha balay upod na an mga pag-ayad</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q169_CLOTHING_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           FIL: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           BCL: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           BIS: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           CEB: |
-            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
           WAR: |
-            <p>Mga andam nga bado, tela ngan materyales para ha panapton, ngan sapatos upod na an mga tela ha balay, mga gamit ha salamin, mga gamit ha lamesa ngan mga gamit ha balay upod na an mga pag-ayad</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
+            <p>169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p><p class="instruction">For the next non-food items, the reference period is the past 12 MONTHS (1 YEAR). This could include online purchases whenever applicable.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q170_EDUCATION_CONSUMED
     conditions:
       - questionText:
@@ -4675,32 +4705,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo ha edukasyon (pananglitan, matrikula ngan pagtutdo)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q170_EDUCATION_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo ha edukasyon (pananglitan, matrikula ngan pagtutdo)</p>
+            <p>170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q171_ACCOMMODATION_CONSUMED
     conditions:
       - questionText:
@@ -4720,32 +4750,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo hin akomodasyon, upod na para hin edukasyonal nga establisimento (pananglitan, mga hotel)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q171_ACCOMMODATION_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo hin akomodasyon, upod na para hin edukasyonal nga establisimento (pananglitan, mga hotel)</p>
+            <p>171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q172_GARDEN_PETS_CONSUMED
     conditions:
       - questionText:
@@ -4765,32 +4795,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP)</p>
+            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP)</p>
+            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP)</p>
+            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP)</p>
+            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP)</p>
+            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga produkto ngan serbisyo ha hardin ngan personal nga mga alaga</p>
+            <p>172. Garden and personal pets' products and services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q172_GARDEN_PETS_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga produkto ngan serbisyo ha hardin ngan personal nga mga alaga</p>
+            <p>172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q173_HEALTH_INS_CONSUMED
     conditions:
       - questionText:
@@ -4810,32 +4840,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>173. Health insurance — Amount spent purchasing (PHP)</p>
+            <p>173. Health insurance — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>173. Health insurance — Amount spent purchasing (PHP)</p>
+            <p>173. Health insurance — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>173. Health insurance — Amount spent purchasing (PHP)</p>
+            <p>173. Health insurance — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>173. Health insurance — Amount spent purchasing (PHP)</p>
+            <p>173. Health insurance — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>173. Health insurance — Amount spent purchasing (PHP)</p>
+            <p>173. Health insurance — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Panlawas bga insyurance</p>
+            <p>173. Health insurance — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q173_HEALTH_INS_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Panlawas bga insyurance</p>
+            <p>173. Health insurance — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q174_OTHER_INS_CONSUMED
     conditions:
       - questionText:
@@ -4855,32 +4885,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Iba nga insyurance (pananglitan, para ha kinabuhingan aksidente, ngan pagbiyahe)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q174_OTHER_INS_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Iba nga insyurance (pananglitan, para ha kinabuhingan aksidente, ngan pagbiyahe)</p>
+            <p>174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q175_INPATIENT_CONSUMED
     conditions:
       - questionText:
@@ -4900,32 +4930,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>175. Inpatient care services — Amount spent purchasing (PHP)</p>
+            <p>175. Inpatient care services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>175. Inpatient care services — Amount spent purchasing (PHP)</p>
+            <p>175. Inpatient care services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>175. Inpatient care services — Amount spent purchasing (PHP)</p>
+            <p>175. Inpatient care services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>175. Inpatient care services — Amount spent purchasing (PHP)</p>
+            <p>175. Inpatient care services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>175. Inpatient care services — Amount spent purchasing (PHP)</p>
+            <p>175. Inpatient care services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo ha pag-ataman han mga pasyente nga aada ha ospital</p>
+            <p>175. Inpatient care services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q175_INPATIENT_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo ha pag-ataman han mga pasyente nga aada ha ospital</p>
+            <p>175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q176_EMERGENCY_TRANSPORT_CONSUMED
     conditions:
       - questionText:
@@ -4945,32 +4975,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP)</p>
+            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP)</p>
+            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP)</p>
+            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP)</p>
+            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP)</p>
+            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo ha emerhensya nga transportasyon ngan emerhensya nga pagluwas</p>
+            <p>176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q176_EMERGENCY_TRANSPORT_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga serbisyo ha emerhensya nga transportasyon ngan emerhensya nga pagluwas</p>
+            <p>176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP
     conditions:
       - questionText:
@@ -5015,7 +5045,7 @@ questions:
           CEB: |
             <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p>
           WAR: |
-            <p>Mga serbisyo ha paglikay sugad han serbisyo ha pagbakuna/pagbakuna ngan iba pa nga serbisyo ha pagpugong (e.g., tetanus toxoid para ha mga burod, ngan rutina nga pagbakuna sugad han BCG durante han pagbisita ha maupay nga bata)</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...</p>
   - name: HOUSEHOLDSURVEY_DICT.Q178_PREVENTIVE_INKIND_PHP
     conditions:
       - questionText:
@@ -5030,7 +5060,7 @@ questions:
           CEB: |
             <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p>
           WAR: |
-            <p>Mga serbisyo ha paglikay sugad han serbisyo ha pagbakuna/pagbakuna ngan iba pa nga serbisyo ha pagpugong (e.g., tetanus toxoid para ha mga burod, ngan rutina nga pagbakuna sugad han BCG durante han pagbisita ha maupay nga bata)</p>
+            <p>178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...</p>
   - name: HOUSEHOLDSURVEY_DICT.Q179_DIAGNOSTIC_CONSUMED
     conditions:
       - questionText:
@@ -5050,32 +5080,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP)</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP)</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP)</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP)</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP)</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>An mga pag-eksamin ngan ha laboratoryo, sugad han pag-eksamin ha dugo ngan x-ray, tungod hin iba nga mga hinungdan labot la han pag-ataman ha pagpugong.</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q179_DIAGNOSTIC_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>An mga pag-eksamin ngan ha laboratoryo, sugad han pag-eksamin ha dugo ngan x-ray, tungod hin iba nga mga hinungdan labot la han pag-ataman ha pagpugong.</p>
+            <p>179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q180_ASSISTIVE_CONSUMED
     conditions:
       - questionText:
@@ -5095,32 +5125,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP)</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP)</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP)</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP)</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP)</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga produkto nga nakakabulig ha panlawas para han pagkita (pananglitan, baso), pamati (pananglitan, mga bulig ha pamati), ngan pagkiwa (pananglitan, saklay, sapatos nga pantambal), upod na an pag-ayad, pagplete, ngan pagpalit ha internet.</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q180_ASSISTIVE_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP; enter...</p>
           FIL: |
-            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP; enter...</p>
           BCL: |
-            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP; enter...</p>
           BIS: |
-            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP; enter...</p>
           CEB: |
-            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP; enter...</p>
           WAR: |
-            <p>Mga produkto nga nakakabulig ha panlawas para han pagkita (pananglitan, baso), pamati (pananglitan, mga bulig ha pamati), ngan pagkiwa (pananglitan, saklay, sapatos nga pantambal), upod na an pag-ayad, pagplete, ngan pagpalit ha internet.</p>
+            <p>180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP; enter...</p>
   - name: HOUSEHOLDSURVEY_DICT.Q181_MEDICAL_PRODUCTS_CONSUMED
     conditions:
       - questionText:
@@ -5140,32 +5170,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP)</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP)</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP)</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP)</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP)</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga produkto medikal, (pananglitan, mga pag-eksamin ha antigen, mga metro han glucose, mga maskara), upod an mga pagpalit ha Internet.</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q181_MEDICAL_PRODUCTS_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga produkto medikal, (pananglitan, mga pag-eksamin ha antigen, mga metro han glucose, mga maskara), upod an mga pagpalit ha Internet.</p>
+            <p>181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP
     conditions:
       - questionText:
@@ -5200,32 +5230,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga medisina (may tatak, generic, herbal), mga bakuna, oral contraceptives, ngan iba pa nga mga preparasyon ha medisina, upod na an pagpalit ha Internet.</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q183_MEDICINES_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Mga medisina (may tatak, generic, herbal), mga bakuna, oral contraceptives, ngan iba pa nga mga preparasyon ha medisina, upod na an pagpalit ha Internet.</p>
+            <p>183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q184_OUTPATIENT_CONSUMED
     conditions:
       - questionText:
@@ -5245,32 +5275,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP)</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP)</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP)</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP)</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP)</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Gawas nga pasyente nga medikal ngan dental nga serbisyo, lakip na an online nga mga serbisyo, nga waray pagpa-ukoy hin gab-i.</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q184_OUTPATIENT_INKIND_PHP
     conditions:
       - questionText:
           EN: |
-            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           FIL: |
-            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BCL: |
-            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           BIS: |
-            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           CEB: |
-            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP)</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
           WAR: |
-            <p>Gawas nga pasyente nga medikal ngan dental nga serbisyo, lakip na an online nga mga serbisyo, nga waray pagpa-ukoy hin gab-i.</p>
+            <p>184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP
     conditions:
       - questionText:

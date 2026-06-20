@@ -68,15 +68,16 @@ def _cb_codes(options):
 
 
 def _build_payment_roster(record_name, label, q_no, payment_src, amt_codes,
-                          record_type, src_label, amt_label):
+                          record_type, src_label, amt_label, amt_length=8):
     """Option B payment-matrix roster (pilot 2026-06-18). One occurrence per ticked
     source code from the question's CheckBox field; renders as a grid (source | amount).
     Fields:
       <q>_PAY_LINE  numeric 1  — auto = curocc(); auto-ends the roster (apc preproc).
       <q>_PAY_SRC   numeric 2  — auto-set to the curocc()-th ticked source, protected.
-      <q>_PAY_AMT   numeric 8  — peso amount; the apc preproc protects+zeroes it for
-                                 source codes NOT in amt_codes (so only money sources
-                                 prompt an amount; free / charged-to-X / DK rows are 0).
+      <q>_PAY_AMT   numeric N  — peso amount; the apc preproc zeroes it for source codes
+                                 NOT in amt_codes (so only money sources prompt an amount;
+                                 free / charged-to-X / DK rows default 0 but stay enterable).
+    `amt_length` matches the matrix it replaces (Section G = 8, Section H bills = 9).
     max_occurs = number of sources. The driving CheckBox field (<q>_SOURCES) lives in
     the host section record; this roster record is spliced into the dictionary's record
     list immediately after it so the grid renders right after the tick-list.
@@ -84,12 +85,42 @@ def _build_payment_roster(record_name, label, q_no, payment_src, amt_codes,
     items = [
         numeric(f"Q{q_no}_PAY_LINE", f"{q_no}. Payment row", length=1),
         select_one(f"Q{q_no}_PAY_SRC", src_label, payment_src, length=2),
-        numeric(f"Q{q_no}_PAY_AMT", amt_label, length=8),
+        numeric(f"Q{q_no}_PAY_AMT", amt_label, length=amt_length),
     ]
     # required=False: if (defensively) no source is ticked the apc endgroups at
     # occurrence 1, leaving 0 rows — required=True would then hard-block at endlevel.
     return record(record_name, label, record_type, items,
                   max_occurs=len(payment_src), required=False)
+
+
+def _split_host_with_rosters(host_base, host_label, host_type, items,
+                             roster_specs, cont_types):
+    """Fan-out helper (2026-06-19): split ONE host section's item list around every
+    `_SOURCES` CheckBox in `roster_specs`, interleaving each roster record right after
+    its driving CheckBox — the generalisation of the hand-written Q92/Q97.1 split.
+
+    `roster_specs` maps a `_SOURCES` field name -> a built roster record dict (from
+    `_build_payment_roster`). The CheckBox itself stays in the host fragment that ends
+    at it; the roster grid renders next; the following items go into the next host
+    continuation fragment. `cont_types` is the list of free record-type letters for the
+    host continuation fragments (one per split AFTER the first). Returns the ordered
+    record list [host, roster, host_2, roster, host_3, ...]."""
+    # canonical positions of each split field, in item order
+    cuts = sorted((next(i for i, it in enumerate(items) if it["name"] == src) + 1, src)
+                  for src in roster_specs)
+    out, start, frag = [], 0, 0
+    for cut_at, src in cuts:
+        if frag == 0:
+            out.append(record(host_base, host_label, host_type, items[start:cut_at]))
+        else:
+            out.append(record(f"{host_base}_{frag + 1}", f"{host_label} (cont.{'' if frag == 1 else ' ' + str(frag)})",
+                              cont_types[frag - 1], items[start:cut_at]))
+        out.append(roster_specs[src])
+        start, frag = cut_at, frag + 1
+    # trailing fragment after the last roster
+    out.append(record(f"{host_base}_{frag + 1}", f"{host_label} (cont.{'' if frag == 1 else ' ' + str(frag)})",
+                      cont_types[frag - 1], items[start:]))
+    return out
 
 
 # ============================================================
@@ -244,6 +275,12 @@ def build_section_b():
         ("Pension",                                            "07"),
         ("Unemployed and looking for work",                    "08"),
         ("Unemployed and not looking for work",                "09"),
+        # #545 (Carl go/no-go 2026-06-20): 'Not Applicable' for patients with no income source
+        # — e.g. a minor / not-yet-working-age patient. Code 98 (special, outside the 1-5
+        # working-category range used by the Q16/Q17 employment-consistency check, so it does
+        # not affect that check). Q18 household-income still applies (household-level, not
+        # personal), so no Q18 skip is added.
+        ("Not Applicable",                                     "98"),
         ("I don't know",                                       "99"),
     ]
     # #631 (ASPSI updated questionnaire, 2026-06-17): income categories revised to
@@ -984,11 +1021,21 @@ def build_section_g():
         ("Donation",                             "07"),
         ("Don't know",                           "08"),
     ]
-    Q971_EXPENSES = [
-        ("Consultation Fee",                          "1"),
-        ("Medical equipment or supplies",             "2"),
-        ("Non-medical expenses (e.g. Hygiene kit)",   "3"),
-        ("Other expenses",                            "4"),
+    # Q97.1 — Option B (2-form flat) pilot (2026-06-19). WAS a per-option Yes/No +
+    # gated _AMT loop (one field per screen, ~8 screens). NOW a single CheckBox
+    # "tick all that apply" (Q971_SOURCES) on one screen, then the four amount boxes
+    # on ONE shared screen (non-ticked options protected+zeroed by the apc, NOT
+    # skipped — so no skip boundary fragments the amounts' DisplayTogether block).
+    # 2-char codes 01..04 so pos("0n", Q971_SOURCES) lines up with Q971_n_AMT; Other
+    # is 04 (kept numeric, NOT recoded to 99) so the n<->amount mapping is 1:1. The
+    # 'Other expenses' specify text (Q971_OTHER_TXT) is gated on pos("04",...) by a
+    # bespoke apc PROC and emitted AFTER the amounts so the four amounts stay a strictly
+    # consecutive run that the Q971_AMOUNTS named block can match.
+    Q971_SOURCES = [
+        ("Consultation Fee",                          "01"),
+        ("Medical equipment or supplies",             "02"),
+        ("Non-medical expenses (e.g. Hygiene kit)",   "03"),
+        ("Other expenses",                            "04"),
     ]
     Q972_EXPENSES = [
         ("a) Consultation Fee",                             "1"),
@@ -1084,58 +1131,74 @@ def build_section_g():
         # (gated on pos("99", base)); the old standalone alpha("Q93_LABS_OTHER_TXT") was
         # removed to avoid a duplicate dcf item (#673).
     ])
-    # Q94 lab test cost — payment-source matrix (aggregate; spec asks per-test roster).
-    # #451: only Out-of-pocket(01) carries an 'Amount in Pesos' box (per the paper); all
-    # other options are Yes/No only.
-    for label, code in Q92_PAYMENT_SRC:
-        items.append(yes_no(f"Q94_PAY_{code}",
-                            f"94. Cost of laboratory test/s — {label}"))
-        if code == "01":
-            items.append(numeric(f"Q94_PAY_{code}_AMT",
-                                 f"94. Cost of laboratory test/s — {label} (Amount in Pesos)", length=8))
+    # Q94 lab test cost — Option B ROSTER fan-out (#674, 2026-06-19). WAS a flat 8-source
+    # Yes/No matrix where only Out-of-pocket(01) carried an amount (#451). NOW a CheckBox
+    # (Q94_SOURCES, same 8 Q92_PAYMENT_SRC codes) feeding a roster (Q94_PAY_ROSTER); only
+    # code 01 carries an amount (PARTIAL — Q92 pattern), every other row defaults 0 but
+    # stays enterable. amt_codes={"01"}.
+    Q94_AMT_CODES = {"01"}
+    items.extend(checkbox_multiselect(
+        "Q94_SOURCES",
+        "94. Which of the following did you use to pay for the cost of laboratory test/s? "
+        "(Tick all that apply.)",
+        Q92_PAYMENT_SRC, with_other_txt=False))
     items.extend([
         yes_no("Q95_PRESCRIBED",
                "95. Were you prescribed medicine/s after your check-up?"),
     ])
-    # Q96 prescribed meds cost — payment-source matrix.
-    # #453: only Out-of-pocket(01) + In-kind(06) + Donation(07) carry an 'Amount in Pesos'
-    # box (per the paper); all other options are Yes/No only.
+    # Q96 prescribed meds cost — Option B ROSTER fan-out (#675, 2026-06-19). WAS a flat
+    # 8-source Yes/No matrix where only Out-of-pocket(01) + In-kind(06) + Donation(07)
+    # carried an amount (#453). NOW a CheckBox (Q96_SOURCES, the 8 Q96_MEDS_PAY codes)
+    # feeding a roster (Q96_PAY_ROSTER); PARTIAL — only codes 01/06/07 carry an amount
+    # (Q92 pattern), every other row defaults 0 but stays enterable.
     Q96_AMT_CODES = {"01", "06", "07"}
-    for label, code in Q96_MEDS_PAY:
-        items.append(yes_no(f"Q96_PAY_{code}",
-                            f"96. Amount spent for prescribed medicines — {label}"))
-        if code in Q96_AMT_CODES:
-            items.append(numeric(f"Q96_PAY_{code}_AMT",
-                                 f"96. Amount spent for prescribed medicines — {label} (Amount in Pesos)",
-                                 length=8))
+    items.extend(checkbox_multiselect(
+        "Q96_SOURCES",
+        "96. Which of the following did you use to pay for the prescribed medicines? "
+        "(Tick all that apply.)",
+        Q96_MEDS_PAY, with_other_txt=False))
     items.append(numeric("Q97_FINAL_AMOUNT",
                          "97. What was the final amount you paid in cash for your outpatient care? "
                          "(Amount in Pesos)", length=8))
-    # Q97.1 other expenses in bill — select all + amounts
-    for label, code in Q971_EXPENSES:
-        items.append(yes_no(f"Q971_{code}",
-                            f"97.1 Other items included in the bill — {label}"))
-        items.append(numeric(f"Q971_{code}_AMT",
-                             f"97.1 Other items included in the bill — {label} (Amount in Pesos)",
-                             length=8))
+    # Q97.1 other expenses in bill — Option B ROSTER (Shape B, 2026-06-19).
+    # Supersedes the undeployed 2-form-flat layout (4 flat Q971_n_AMT fields removed).
+    # SCREEN 1: Q971_SOURCES CheckBox (tick all that apply).
+    # SCREEN 2: Q971_ROSTER grid — one row per ticked category, all rows enterable for
+    # amount (every category carries an amount, so no zeroing/gating per row).
+    # SCREEN 3: Q971_OTHER_TXT gated on pos("04", Q971_SOURCES) (own screen after roster).
+    items.extend(checkbox_multiselect(
+        "Q971_SOURCES",
+        "97.1 Which other items were included in your outpatient bill? "
+        "(Tick all that apply.)",
+        Q971_SOURCES, with_other_txt=False))   # OTHER_TXT emitted after roster split
     items.append(alpha("Q971_OTHER_TXT",
                        "97.1 Other expenses — specify text", length=120))
-    # Q97.2 other expenses not in bill — select all + amounts
-    for label, code in Q972_EXPENSES:
-        items.append(yes_no(f"Q972_{code}",
-                            f"97.2 Other expenses during OPD visit not in bill — {label}"))
-        items.append(numeric(f"Q972_{code}_AMT",
-                             f"97.2 Other expenses during OPD visit not in bill — {label} (Amount in Pesos)",
-                             length=8))
+    # Q97.2 other expenses not in bill — Option B ROSTER fan-out (#689, 2026-06-19). WAS a
+    # flat 6-item Yes/No + per-item _AMT matrix (every item carried an amount). NOW a
+    # CheckBox (Q972_SOURCES) feeding a roster (Q972_PAY_ROSTER); ALL-amount (Q971 pattern,
+    # every ticked row enterable, no per-row gating). Codes widened 1->2 chars (01..06) so
+    # the roster's pos("0n", …) membership idiom lines up (the proven Q92/Q971 convention).
+    # 'f) Other expenses' (06) gates Q972_OTHER_TXT after the grid (own screen), mirroring
+    # Q971_OTHER_TXT on code 04.
+    Q972_SOURCES = [(label, f"{int(code):02d}") for label, code in Q972_EXPENSES]
+    items.extend(checkbox_multiselect(
+        "Q972_SOURCES",
+        "97.2 Which other expenses did you have during the OPD visit that were NOT in the "
+        "bill? (Tick all that apply.)",
+        Q972_SOURCES, with_other_txt=False))
     items.append(alpha("Q972_OTHER_TXT",
                        "97.2 Other expenses — specify text", length=120))
-    # Q98 15-source payment matrix
-    for label, code in Q98_SOURCES:
-        items.append(yes_no(f"Q98_PAY_{code}",
-                            f"98. Used to pay for medical costs — {label}"))
-        items.append(numeric(f"Q98_PAY_{code}_AMT",
-                             f"98. Used to pay for medical costs — {label} (Amount in Pesos)",
-                             length=8))
+    # Q98 sources of money for medical costs — Option B ROSTER fan-out (#689, 2026-06-19).
+    # WAS a flat 15-source Yes/No + per-source _AMT matrix (every source carried an amount).
+    # NOW a CheckBox (Q98_SOURCES) feeding a roster (Q98_PAY_ROSTER); ALL-amount (Q971
+    # pattern). Two gated specify texts follow the grid: Q98_OTHER_DONATION_TXT on code 06
+    # and Q98_OTHER_TXT on code 15 (re-pointed from the old Q98_PAY_06 / Q98_PAY_15 flags
+    # to pos("06"/"15", Q98_SOURCES) in the apc).
+    items.extend(checkbox_multiselect(
+        "Q98_SOURCES",
+        "98. Which of the following did you use to pay for the medical costs? "
+        "(Tick all that apply.)",
+        Q98_SOURCES, with_other_txt=False))
     items.append(alpha("Q98_OTHER_DONATION_TXT",
                        "98. Other Donation/Charity/Assistance from Government Organization — specify text",
                        length=120))
@@ -1162,22 +1225,52 @@ def build_section_g():
         alpha("Q104_WITHOUT_BUCAS_OTHER_TXT",
               "104. Without BUCAS — Others specify text", length=120),
     ])
-    # Option B split (pilot): a CSPro 8 roster is a repeating RECORD that renders as its
-    # own form, so a mid-section roster forces the host record to split. G = up to
-    # Q92_SOURCES, then the Q92_PAY_ROSTER grid, then G-cont = Q93..Q104. Returns a LIST;
-    # build_f3_dictionary unpacks it (records 'O' + 'P' are unused recordType letters).
-    split_at = next(i for i, it in enumerate(items)
-                    if it["name"] == "Q92_SOURCES") + 1
-    return [
-        record("G_OUTPATIENT_CARE", "G. Outpatient Care", "I", items[:split_at]),
-        _build_payment_roster(
+    # Option B fan-out (2026-06-19): SIX cost matrices in Section G are now CheckBox ->
+    # roster (Q92 consultation, Q94 lab, Q96 meds, Q97.1 other-in-bill, Q97.2 other-not-in-
+    # bill, Q98 sources-of-money). Each `_SOURCES` CheckBox splits the host record; its
+    # roster grid renders right after. `_split_host_with_rosters` interleaves them.
+    # Record types: Q92 keeps 'O' (deployed pilot); the rest use free letters. Host
+    # continuation fragments get a separate free-letter pool. (A-R, X-Z, plus O/P/Q/R from
+    # the old pilot were used; we reassign cleanly here.)
+    g_rosters = {
+        "Q92_SOURCES": _build_payment_roster(
             "Q92_PAY_ROSTER", "G. Cost of consultation — amount by source", 92,
             Q92_PAYMENT_SRC, Q92_AMT_CODES, "O",
             "92. Payment source (auto-filled from the ticked sources)",
             "92. Amount paid for the consultation, by source (Pesos)"),
-        record("G_OUTPATIENT_CARE_2", "G. Outpatient Care (cont.)", "P",
-               items[split_at:]),
-    ]
+        "Q94_SOURCES": _build_payment_roster(
+            "Q94_PAY_ROSTER", "G. Cost of laboratory test/s — amount by source", 94,
+            Q92_PAYMENT_SRC, Q94_AMT_CODES, "S",
+            "94. Payment source (auto-filled from the ticked sources)",
+            "94. Amount paid for the laboratory test/s, by source (Pesos)"),
+        "Q96_SOURCES": _build_payment_roster(
+            "Q96_PAY_ROSTER", "G. Cost of prescribed medicines — amount by source", 96,
+            Q96_MEDS_PAY, Q96_AMT_CODES, "T",
+            "96. Payment source (auto-filled from the ticked sources)",
+            "96. Amount spent for the prescribed medicines, by source (Pesos)"),
+        "Q971_SOURCES": _build_payment_roster(
+            "Q971_ROSTER", "G. Other items in outpatient bill — amount by category", 971,
+            Q971_SOURCES, set(),   # amt_codes=empty: every category carries an amount
+            "Q",
+            "97.1 Category (auto-filled from the ticked items)",
+            "97.1 Amount charged for this item (Pesos)"),
+        "Q972_SOURCES": _build_payment_roster(
+            "Q972_PAY_ROSTER", "G. Other expenses not in bill — amount by item", 972,
+            Q972_SOURCES, set(),   # all-amount: every ticked item carries an amount
+            "U",
+            "97.2 Expense item (auto-filled from the ticked items)",
+            "97.2 Amount for this expense (Pesos)"),
+        "Q98_SOURCES": _build_payment_roster(
+            "Q98_PAY_ROSTER", "G. Sources of money for medical costs — amount by source", 98,
+            Q98_SOURCES, set(),   # all-amount: every ticked source carries an amount
+            "V",
+            "98. Source of money (auto-filled from the ticked sources)",
+            "98. Amount from this source (Pesos)"),
+    }
+    # Host continuation fragments (one per split after the first): G_2..G_7 (6 needed).
+    return _split_host_with_rosters(
+        "G_OUTPATIENT_CARE", "G. Outpatient Care", "I", items, g_rosters,
+        cont_types=["P", "W", "a", "b", "c", "d"])
 
 
 # ============================================================
@@ -1267,25 +1360,29 @@ def build_section_h():
         numeric("Q106_DAYS",
                 "106. How long were you confined? — Days", length=3),
     ]
-    # Q107 total bill — 10-source payment matrix
-    for label, code in Q107_PAYMENT:
-        items.append(yes_no(f"Q107_PAY_{code}",
-                            f"107. Total bill for confinement — {label}"))
-        items.append(numeric(f"Q107_PAY_{code}_AMT",
-                             f"107. Total bill for confinement — {label} (Amount in Pesos)",
-                             length=9))
+    # Q107 total bill — Option B ROSTER fan-out (#691, 2026-06-19). WAS a flat 10-source
+    # Yes/No + per-source _AMT matrix (every source carried an amount). NOW a CheckBox
+    # (Q107_SOURCES) feeding a roster (Q107_PAY_ROSTER); ALL-amount (Q971 pattern, length-9
+    # peso amounts to match the bill scale). 'Other' (10) gates Q107_PAY_OTHER_TXT.
+    items.extend(checkbox_multiselect(
+        "Q107_SOURCES",
+        "107. Which of the following did you use to pay for the total bill for confinement? "
+        "(Tick all that apply.)",
+        Q107_PAYMENT, with_other_txt=False))
     items.append(alpha("Q107_PAY_OTHER_TXT",
                        "107. Total bill — Other, specify text", length=120))
     items.append(yes_no("Q108_MEDS_OUTSIDE",
                         "108. Other than the medicine/s indicated in the hospital bill, did the patient "
                         "buy medicine/s from any pharmacy/facility outside the hospital?"))
-    # Q109 meds outside — 9-source payment matrix
-    for label, code in Q109_PAYMENT:
-        items.append(yes_no(f"Q109_PAY_{code}",
-                            f"109. Amount paid for medicines outside the hospital — {label}"))
-        items.append(numeric(f"Q109_PAY_{code}_AMT",
-                             f"109. Amount paid for medicines outside the hospital — {label} "
-                             "(Amount in Pesos)", length=9))
+    # Q109 meds outside — Option B ROSTER fan-out (#692, 2026-06-19). WAS a flat 9-source
+    # Yes/No + per-source _AMT matrix. NOW a CheckBox (Q109_SOURCES) feeding a roster
+    # (Q109_PAY_ROSTER); ALL-amount (Q971 pattern, length-9). 'Other' (09) gates
+    # Q109_PAY_OTHER_TXT. The >=1-source requirement (#556) is the CheckBox's own >=1 gate.
+    items.extend(checkbox_multiselect(
+        "Q109_SOURCES",
+        "109. Which of the following did you use to pay for the medicines bought outside "
+        "the hospital? (Tick all that apply.)",
+        Q109_PAYMENT, with_other_txt=False))
     items.append(alpha("Q109_PAY_OTHER_TXT",
                        "109. Meds outside — Other, specify text", length=120))
     items.append(yes_no("Q110_LAB_OUTSIDE",
@@ -1293,22 +1390,28 @@ def build_section_h():
                         "the patient pay for other service/s outside the hospital?"))
     items.append(alpha("Q111_SERVICES_OUTSIDE",
                        "111. If yes, what are those services?", length=240))
-    # Q112 services outside — 9-source payment matrix
-    for label, code in Q109_PAYMENT:
-        items.append(yes_no(f"Q112_PAY_{code}",
-                            f"112. Amount paid for services outside the hospital — {label}"))
-        items.append(numeric(f"Q112_PAY_{code}_AMT",
-                             f"112. Amount paid for services outside the hospital — {label} "
-                             "(Amount in Pesos)", length=9))
+    # Q112 services outside — Option B ROSTER fan-out (#693, 2026-06-19). WAS a flat
+    # 9-source Yes/No + per-source _AMT matrix (same Q109_PAYMENT codes). NOW a CheckBox
+    # (Q112_SOURCES) feeding a roster (Q112_PAY_ROSTER); ALL-amount (Q971 pattern, length-9).
+    # 'Other' (09) gates Q112_PAY_OTHER_TXT. >=1 source = the CheckBox's own gate (#557).
+    items.extend(checkbox_multiselect(
+        "Q112_SOURCES",
+        "112. Which of the following did you use to pay for the services done outside the "
+        "hospital? (Tick all that apply.)",
+        Q109_PAYMENT, with_other_txt=False))
     items.append(alpha("Q112_PAY_OTHER_TXT",
                        "112. Services outside — Other, specify text", length=120))
-    # Q113 13-source hospital bill payment matrix
-    for label, code in Q113_SOURCES:
-        items.append(yes_no(f"Q113_PAY_{code}",
-                            f"113. Used to pay for hospital bill — {label}"))
-        items.append(numeric(f"Q113_PAY_{code}_AMT",
-                             f"113. Used to pay for hospital bill — {label} (Amount in Pesos)",
-                             length=9))
+    # Q113 hospital bill — Option B ROSTER fan-out (#693, 2026-06-19). WAS a flat 13-source
+    # Yes/No + per-source _AMT matrix. NOW a CheckBox (Q113_SOURCES) feeding a roster
+    # (Q113_PAY_ROSTER); ALL-amount (Q971 pattern, length-9). 'Other (specify)' (13) gates
+    # Q113_PAY_OTHER_TXT. PhilHealth row (08) still drives the Q114 skip — the apc now reads
+    # pos("08", Q113_SOURCES) instead of the removed Q113_PAY_08 flag; the Q110=No skip now
+    # targets Q113_SOURCES (was Q113_PAY_01). >=1 source = the CheckBox's own gate (#555).
+    items.extend(checkbox_multiselect(
+        "Q113_SOURCES",
+        "113. Which of the following did you use to pay for the hospital bill? "
+        "(Tick all that apply.)",
+        Q113_SOURCES, with_other_txt=False))
     items.append(alpha("Q113_PAY_OTHER_TXT",
                        "113. Hospital bill payment — Other specify text", length=120))
     items.extend([
@@ -1339,8 +1442,37 @@ def build_section_h():
                              "(Amount in Pesos)", length=9))
     items.append(alpha("Q1142_OTHER_TXT",
                        "115.2 Other expenses — specify text", length=120))
-    return record("H_INPATIENT_CARE",
-                  "H. Inpatient Care", "J", items)
+    # Option B fan-out (#691/#692/#693, 2026-06-19): FOUR Section H cost matrices are now
+    # CheckBox -> roster (Q107 total bill, Q109 meds outside, Q112 services outside, Q113
+    # hospital bill). Each `_SOURCES` CheckBox splits the host H record; its roster grid
+    # (length-9 peso amounts, all-amount) renders right after. The Q115/Q115.1/Q115.2
+    # tail stays a flat amount matrix (out of scope — Q1141/Q1142 not in the candidate
+    # list). Record types: rosters e/f/g/h; host continuation fragments i/j/k/l.
+    h_rosters = {
+        "Q107_SOURCES": _build_payment_roster(
+            "Q107_PAY_ROSTER", "H. Total bill for confinement — amount by source", 107,
+            Q107_PAYMENT, set(), "e",
+            "107. Payment source (auto-filled from the ticked sources)",
+            "107. Amount of the total bill, by source (Pesos)", amt_length=9),
+        "Q109_SOURCES": _build_payment_roster(
+            "Q109_PAY_ROSTER", "H. Medicines bought outside — amount by source", 109,
+            Q109_PAYMENT, set(), "f",
+            "109. Payment source (auto-filled from the ticked sources)",
+            "109. Amount paid for medicines outside, by source (Pesos)", amt_length=9),
+        "Q112_SOURCES": _build_payment_roster(
+            "Q112_PAY_ROSTER", "H. Services done outside — amount by source", 112,
+            Q109_PAYMENT, set(), "g",
+            "112. Payment source (auto-filled from the ticked sources)",
+            "112. Amount paid for services outside, by source (Pesos)", amt_length=9),
+        "Q113_SOURCES": _build_payment_roster(
+            "Q113_PAY_ROSTER", "H. Hospital bill — amount by source", 113,
+            Q113_SOURCES, set(), "h",
+            "113. Payment source (auto-filled from the ticked sources)",
+            "113. Amount paid for the hospital bill, by source (Pesos)", amt_length=9),
+    }
+    return _split_host_with_rosters(
+        "H_INPATIENT_CARE", "H. Inpatient Care", "J", items, h_rosters,
+        cont_types=["i", "j", "k", "l"])
 
 
 # ============================================================
@@ -1627,7 +1759,11 @@ def build_section_k():
         ("Branded",                   "1"),
         ("Generic",                   "2"),
         ("Both branded and generic",  "3"),
-        ("Don't know the difference", "4"),
+        # #618: 'Don't know the difference' (4) REMOVED — Q159 is reached ONLY when Q158=Yes
+        # (knows the branded/generic difference; Q158=No skips to Q162 per the paper), so a
+        # 'don't know the difference' answer here contradicts Q158. The Q159=4 -> Q162 routing
+        # in generate_apc is removed with it. Codes left non-contiguous (1,2,3,5) on purpose:
+        # 'Not applicable' stays 5 so no other Q159 routing/value reference shifts.
         ("Not applicable",            "5"),
     ]
     Q160_WHY_GENERIC = [
@@ -1925,8 +2061,8 @@ def build_f3_dictionary():
         build_section_d(),
         build_section_e(),
         build_section_f(),
-        *build_section_g(),   # Option B: G splits into G / Q92_PAY_ROSTER / G-cont
-        build_section_h(),
+        *build_section_g(),   # Option B fan-out: G splits around 6 cost-matrix rosters (Q92/Q94/Q96/Q97.1/Q97.2/Q98)
+        *build_section_h(),   # Option B fan-out: H splits around 4 cost-matrix rosters (Q107/Q109/Q112/Q113)
         build_section_i(),
         build_section_j(),
         build_section_k(),
@@ -1940,6 +2076,92 @@ def build_f3_dictionary():
     )
 
 
+# --- #714: facility-name placeholder -> neutral header wording (DCF labels) ---
+# The question stems carry a literal placeholder ([facility_name_input] and dialect
+# variants). generate_qsf.py pipes it to ~~FACILITY_NAME~~ in the QSF question text so
+# the captured facility name renders in the plain question-text line. But CSEntry renders
+# the DCF field LABEL as the BOLD header, and CSPro fills do NOT evaluate inside DCF labels
+# — so the raw placeholder was showing verbatim in bold (Q66 + the other facility questions:
+# Q88/Q143/Q144/Q162/Q172). Fix: neutralise the placeholder token in every DCF label
+# (English + each translated label), per-language, AFTER apply_translations so the English
+# source strings are untouched and the translation maps still key-match. The QSF keeps the
+# personalised ~~FACILITY_NAME~~ fill (generate_qsf.py unchanged) — so the bold header reads
+# neutrally and the plain prompt line still shows the real facility name.
+#
+# FLAG (Carl/ASPSI veto): these neutral noun-phrases are chosen substitutions, not source
+# wording. EN = "this facility"; dialect equivalents below. They preserve meaning ("Is THIS
+# facility the one you usually go to...") without naming the facility in the bold header.
+# Brackets are OPTIONAL: a translator dropped them in at least one place (FIL Q162 value
+# reads "...sa facility_name_input, may healthcare worker..." with NO brackets). The bare
+# snake_case tokens (facility_name_input / facility_ngaran_input) are machine identifiers,
+# never natural language, so matching them un-bracketed is safe; the bracketed dialect
+# phrases (e.g. [ngaran han pasilidad]) are only matched WITH brackets so the un-bracketed
+# Bikol/Waray noun phrase "ngaran han pasilidad" used as ordinary text (Q64 answer) is left
+# alone.
+_FACILITY_PLACEHOLDER_RE = re.compile(
+    r"\[?\b(?:facility[_ ]name[_ ]input|facility[_ ]ngaran[_ ]input)\b\]?"
+    r"|\[\s*(?:igbutang[_ ]an[_ ]ngaran[_ ]han[_ ]pasilidad"
+    r"|ngaran[_ ](?:han|kan)[_ ]pasilidad)\s*\]",
+    re.IGNORECASE,
+)
+_FACILITY_NEUTRAL = {
+    "EN":  "this facility",
+    "FIL": "ang pasilidad na ito",
+    "BCL": "an pasilidad na ini",
+    "BIS": "kini nga pasilidad",
+    "CEB": "kini nga pasilidad",
+    "WAR": "ini nga pasilidad",
+}
+
+
+# The token sat between an article/preposition and a following noun in some stems, so the
+# straight substitution leaves a redundant adjacency: EN "Is this facility the facility you
+# usually go to" (Q66) and a doubled article where the translated text already had one before
+# the token (FIL "ang ang pasilidad na ito", BCL "an an pasilidad na ini"). These cleanups
+# fix only the mechanical artifacts the substitution itself created — they do not otherwise
+# reword. (Dialect cleanups limited to the obvious doubled-article case; deeper dialect
+# polish is ASPSI's call — FLAGGED in the report.)
+_PLACEHOLDER_CLEANUPS = [
+    # EN Q66: "this facility the facility" -> "this the facility"  (=> "Is this the facility…")
+    (re.compile(r"\bthis facility the facility\b", re.IGNORECASE), "this the facility"),
+    # doubled articles created by the substitution (FIL "ang ang", BCL/WAR "an an")
+    (re.compile(r"\bang ang\b", re.IGNORECASE), "ang"),
+    (re.compile(r"\ban an\b", re.IGNORECASE), "an"),
+]
+
+
+def _neutralise_facility_placeholder(dictionary):
+    """Replace the facility-name placeholder token in every DCF label with a per-language
+    neutral noun-phrase (#714), then clean the mechanical adjacency artifacts the
+    substitution creates. Walks the assembled multi-language labels in place; leaves text
+    with no placeholder untouched. Returns the count of labels changed."""
+    changed = [0]
+
+    def walk(node):
+        if isinstance(node, dict):
+            labs = node.get("labels")
+            if isinstance(labs, list):
+                for lab in labs:
+                    if isinstance(lab, dict) and "text" in lab:
+                        txt = lab["text"]
+                        if _FACILITY_PLACEHOLDER_RE.search(txt):
+                            repl = _FACILITY_NEUTRAL.get(lab.get("language"), "this facility")
+                            new = _FACILITY_PLACEHOLDER_RE.sub(repl, txt)
+                            for rx, sub in _PLACEHOLDER_CLEANUPS:
+                                new = rx.sub(sub, new)
+                            lab["text"] = new
+                            changed[0] += 1
+            for k, v in node.items():
+                if k != "labels":
+                    walk(v)
+        elif isinstance(node, list):
+            for it in node:
+                walk(it)
+
+    walk(dictionary)
+    return changed[0]
+
+
 def main():
     out_path = Path(__file__).parent / "PatientSurvey.dcf"
     dictionary = build_f3_dictionary()
@@ -1947,6 +2169,10 @@ def main():
     # silently resets the .dcf to English). Auto-discovers locales by file
     # existence in translations/; F3 has bcl/bis/ceb/war (no hil/fil).
     dictionary = apply_translations(dictionary, Path(__file__).parent / "translations")
+    # #714: strip the facility-name placeholder from the bold-header DCF labels (must run
+    # AFTER apply_translations so it also cleans the translated labels).
+    n_fac = _neutralise_facility_placeholder(dictionary)
+    print(f"  #714: neutralised facility-name placeholder in {n_fac} label(s)")
     write_dcf(dictionary, out_path)
 
 

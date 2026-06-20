@@ -25,7 +25,7 @@
       <p class="page-eyebrow">Instrument comparison · F4 Household</p>
       <h1>Paper questionnaire ↔ CAPI (CSEntry tablet)</h1>
       <p class="lede">Each section of the printed Household (F4) questionnaire beside its CSEntry tablet screens — including the household roster and expenditure grids.</p>
-      <p class="banner"><strong>Prepared — screens being added.</strong> Every section's real printed page(s) are here, beside a panel for the matching CSEntry (tablet) screens. The screenshots are captured next and drop into each panel.</p>
+      <p class="banner"><strong>Detailed sections are being built, top-down.</strong> Each section shows the paper questions beside the matching CSEntry control, with a note on when each screen appears. The tablet images show the <em>identical</em> CSEntry controls. The <strong>check-box multi-select</strong>, the <strong>household roster</strong> and the <strong>expenditure grid</strong> are live captures from this instrument; the Yes/No, single-select, number-pad and text-field controls are shown from the F1 instrument — CSEntry renders each the same way in every survey.</p>
       <div class="legend">
         <span><b>Left:</b> the paper questionnaire.</span>
         <span><b>Right:</b> the CSEntry (tablet) screens.</span>
@@ -43,270 +43,1115 @@
             </div>
             <div class="xpage-col capi">
               <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="consent screen pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">Consent is recorded on screen and gates the rest of the interview.</p>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control — consent is recorded on screen as a Yes/No like the ones shown" loading="lazy" /></a>
+              <p class="pcap">Consent is recorded on screen as a <b>Yes / No</b> (shown) and <b>gates the rest of the interview</b> — a “No” ends it. The script text is read from the device, not free-typed.</p>
             </div>
           </div>
         </div>
-        <div class="xsection">A. Introduction & Consent · B. Respondent Profile</div>
+        <div class="xsection">A. Introduction and Consent</div>
+
+        <p class="banner" style="margin-top:0">Section A — <strong>Q1, paper pages 3–5</strong> — one confirmation question that the person you are interviewing is the household head before the survey body opens.</p>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q1</span>
+            <span class="qtitle">Household-head confirmation</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">1. Before we begin, to confirm, are you the household head?</p>
+              <ul class="opts radio"><li>Q1: Yes · No</li></ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select control" loading="lazy" /></a>
+              <p class="capi-cap">Yes/No single-select radio. <b>This is the consent/eligibility gate for the form — interviewer confirms the respondent is the household head before continuing into Section B.</b></p>
+            </div>
+          </div>
+        </div>
+
         <div class="xpage">
-          <div class="xpage-head">Printed pages ↔ CSEntry (tablet) — A. Introduction & Consent · B. Respondent Profile</div>
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — A</div>
           <div class="xpage-cols">
             <div class="xpage-col paper">
               <h4>The real printed pages</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p03.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p03.png" alt="Printed page 3" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p04.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p04.png" alt="Printed page 4" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p05.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p05.png" alt="Printed page 5" loading="lazy" /></a>
-              <p class="pcap">pages 3–5 of the printed questionnaire. Tap to open full size.</p>
+              <a class="page-img-link" href="/docs/img/f4-paper-p03.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p03.png" alt="Printed page 3 — F4 Introduction/Consent and Respondent Profile" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p04.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p04.png" alt="Printed page 4 — F4 Respondent Profile" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p05.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p05.png" alt="Printed page 5 — F4 Respondent Profile" loading="lazy" /></a>
+              <p class="pcap">Pages 3–5 — Introduction/Consent (A) and Respondent Profile (B). Tap to open full size.</p>
             </div>
             <div class="xpage-col capi">
               <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for A. Introduction & Consent · B. Respondent Profile — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
+              <a class="page-img-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control on the tablet" loading="lazy" /></a>
+              <p class="pcap">A single Yes/No tap confirms the household head before the profile questions open.</p>
             </div>
           </div>
         </div>
+
+        <div class="xsection">B. Respondent Profile</div>
+
+        <p class="banner" style="margin-top:0">Section B — <strong>Q2–Q29, paper pages 3–5</strong> — the respondent's demographics, identity, education, livelihood, household composition, and assets, with several gated PWD and "Other (specify)" follow-ups.</p>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Name · Q2 · Q2.1</span>
+            <span class="qtitle">Name, birth date &amp; age</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">Name: (Last Name, First Name, MI, Extension) &nbsp;·&nbsp; 2. In what month were you born? &nbsp;·&nbsp; 2. In what year were you born? &nbsp;·&nbsp; 2.1 Just to confirm, how old are you as of your last birthday (in years)?</p>
+              <ul class="opts text"><li>Name: free text · Month/Year/Age: numeric</li></ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry number-pad numeric entry control" loading="lazy" /></a>
+              <p class="capi-cap">Name is an alpha free-text field; birth month (2 digits), birth year (4 digits) and confirmed age (3 digits) are number-pad entries. <b>Age is captured as a cross-check against the birth year.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q3–Q6</span>
+            <span class="qtitle">Sex, LGBTQIA+, identity group &amp; civil status</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">3. What is your sex at birth? &nbsp;·&nbsp; 4. Are you part of the LGBTQIA+ community? &nbsp;·&nbsp; 5. Which group do you identify with? &nbsp;·&nbsp; 6. What is your civil status?</p>
+              <ul class="opts radio">
+                <li>Q3: Male · Female</li>
+                <li>Q4: Yes · No · Not Comfortable to Answer · Don't Know · Refused to answer</li>
+                <li>Q5: Lesbian · Gay · Bisexual · Transgender · Queer · Intersex · Asexual · Other (specify)</li>
+                <li>Q6: Single / Never Married · Married · Common law / Live-in · Widowed · Divorced · Separated · Annulled · Not reported</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control with a long option list" loading="lazy" /></a>
+              <p class="capi-cap">All four are single-select radios. <b>Q5's "Other (specify)" choice gates a free-text box; the Q4/Q5 prompts explicitly reassure the respondent it is fine not to answer.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q7–Q10</span>
+            <span class="qtitle">Disability identification (PWD gate)</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">7. Do you identify as a person with a disability? &nbsp;·&nbsp; 8. Would you like to specify the type of disability? &nbsp;·&nbsp; 9. May we view your PWD Identification Card? &nbsp;·&nbsp; 10. Based on the presented PWD Identification Card, what type of disability is indicated?</p>
+              <ul class="opts radio">
+                <li>Q7: Yes · No</li>
+                <li>Q8: Yes · No</li>
+                <li>Q9: Yes (card presented and verified) · No (card not available) · Respondent refused to present card</li>
+                <li>Q10: Physical (Orthopedic) · Visual · Hearing · Speech impairment · Intellectual · Psychosocial · Multiple disabilities · Other (specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control with a long option list" loading="lazy" /></a>
+              <p class="capi-cap">Q7/Q8 Yes/No, Q9/Q10 single-select. <b>This is a cascading gate: Q7=Yes opens Q8; Q8=Yes opens the PWD-card request (Q9); Q9 verified opens the disability-type list (Q10), whose "Other (specify)" gates a free-text box.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q11–Q13</span>
+            <span class="qtitle">Education, employment &amp; income source</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">11. What is the highest level of education you have attained? &nbsp;·&nbsp; 12. What is your employment status? &nbsp;·&nbsp; 13. What is your main source of income?</p>
+              <ul class="opts radio">
+                <li>Q11: Early Childhood (Pre-school) · Primary (G1–6) · Lower Secondary (G7–10) · Upper Secondary (G11–12) · Post-Secondary Non-Tertiary · Short-Cycle Tertiary · Bachelor · Master · Doctoral · No schooling … + Other (specify) · I don't know · Not applicable</li>
+                <li>Q12: Permanent job/own business · Short-term/seasonal/casual · Different jobs day to day · Unemployed looking · Unemployed not looking · Retired · I don't know · Not applicable</li>
+                <li>Q13: Private company · Private household · Government · With pay in own family business/farm · Self-employed no employee · Employer in own family business · Without pay in own family business/farm · Pension … + Unemployed (looking / not looking) · I don't know</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control with a long option list" loading="lazy" /></a>
+              <p class="capi-cap">Three long single-select lists (Q11 has 13 coded options). <b>Q11's "Other (specify)" gates a free-text box; long lists scroll on the tablet.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q14–Q17</span>
+            <span class="qtitle">IP membership, 4Ps &amp; healthcare decision-maker</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">14. Are you a member of an Indigenous People (IP) community (e.g., Igorot, Lumad, Mangyans)? &nbsp;·&nbsp; 15. If yes, which group? &nbsp;·&nbsp; 16. Is your household a beneficiary of the Pantawid Pamilyang Pilipino Program (4Ps)? &nbsp;·&nbsp; 17. Who takes the most responsibility for making healthcare decisions in your household?</p>
+              <ul class="opts radio">
+                <li>Q14: Yes · No</li>
+                <li>Q15: free text (IP group)</li>
+                <li>Q16: Yes · No</li>
+                <li>Q17: Me (respondent) · My father · My mother · My parents · My spouse/partner · My spouse/partner and I · My sibling · My grandfather · My grandmother · My uncle · My aunt · Other (specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control with a long option list" loading="lazy" /></a>
+              <p class="capi-cap">Q14/Q16 Yes/No, Q17 single-select; Q15 is alpha free text. <b>Q15 is gated by Q14=Yes (IP group only asked of IP members); Q17's "Other (specify)" gates a free-text box.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q18–Q21</span>
+            <span class="qtitle">Household income &amp; composition</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">18. In the past 6 months, what is your average monthly household income? Approximate amount (₱). &nbsp;·&nbsp; 18. Income bracket — tick the category for approximate household income. &nbsp;·&nbsp; 19. How many total individuals (incl. children) live in your house now? &nbsp;·&nbsp; 20. How many non-working-age children (below 18) live in your house now? &nbsp;·&nbsp; 21. How many senior citizens live in your house now?</p>
+              <ul class="opts radio">
+                <li>Q18 amount: numeric (₱)</li>
+                <li>Q18 bracket: Under 40,000 · 40,000–59,999 · 60,000–99,999 · 100,000–249,999 · 250,000–499,999 · 500,000 and over · Refuse to answer</li>
+                <li>Q19 / Q20 / Q21: numeric counts</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry number-pad numeric entry control" loading="lazy" /></a>
+              <p class="capi-cap">Q18 amount and Q19–Q21 counts are number-pad entries; the Q18 bracket is a single-select. <b>On paper the bracket prints out of order (after Q23); CAPI emits it in Q-number order. Q20 (children) and Q21 (seniors) should not exceed Q19 (total).</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q22–Q25</span>
+            <span class="qtitle">Electricity &amp; water supply</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">22. Do you have electricity in your household? &nbsp;·&nbsp; 23. What is the family's main source of water supply for daily use? &nbsp;·&nbsp; 24. Do you have your own faucet, or do you share with your community? &nbsp;·&nbsp; 25. Do you have your own tube/pipe, or do you share with your community?</p>
+              <ul class="opts radio">
+                <li>Q22: Yes · No</li>
+                <li>Q23: Faucet inside the house · Tubed/piped well · Dug well · Other (specify)</li>
+                <li>Q24: I/we have our own · I/we share with our community</li>
+                <li>Q25: I/we have our own · I/we share with our community</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q22 Yes/No, Q23–Q25 single-select. <b>Q23's "Other (specify)" gates a free-text box; Q24 (faucet share) is asked when Q23 = faucet, and Q25 (tube share) when Q23 = tubed/piped well.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head">
+            <span class="qbadge">Q26–Q29</span>
+            <span class="qtitle">Household assets &amp; socioeconomic class</span>
+          </div>
+          <div class="xcols">
+            <div class="xcol paper">
+              <h4>On paper</h4>
+              <p class="qtext">26. Does the family own a refrigerator/freezer? &nbsp;·&nbsp; 27. Does the family own a television set? &nbsp;·&nbsp; 28. Does the family own a washing machine? &nbsp;·&nbsp; 29. How would the socioeconomic class of your household be classified?</p>
+              <ul class="opts radio">
+                <li>Q26 / Q27 / Q28: Yes, I/we have · No, I/we don't have</li>
+                <li>Q29: Class A or B (professionals or business with several assets) · Class C (professionals with permanent/semi-permanent income and some assets) · Class D or E (semi-permanent/informal workers with little to no assets) · I don't know</li>
+              </ul>
+            </div>
+            <div class="xcol capi">
+              <h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select control with a long option list" loading="lazy" /></a>
+              <p class="capi-cap">Q26–Q28 are Yes/No asset single-selects; Q29 is a single-select with long descriptive class labels. <b>No skip logic — all four are asked of every respondent and close out the profile section.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — B</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper">
+              <h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p03.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p03.png" alt="Printed page 3 — F4 Introduction/Consent and Respondent Profile" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p04.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p04.png" alt="Printed page 4 — F4 Respondent Profile" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p05.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p05.png" alt="Printed page 5 — F4 Respondent Profile" loading="lazy" /></a>
+              <p class="pcap">Pages 3–5 — Introduction/Consent (A) and Respondent Profile (B). Tap to open full size.</p>
+            </div>
+            <div class="xpage-col capi">
+              <h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Profile questions render as single-select radios, number-pad numerics, and free-text boxes, with PWD and "Other (specify)" follow-ups gated on their triggers.</p>
+            </div>
+          </div>
+        </div>
+
         <div class="xsection">C. Household Characteristics (roster)</div>
-        <div class="xpage">
-          <div class="xpage-head">Printed pages ↔ CSEntry (tablet) — C. Household Characteristics (roster)</div>
-          <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed pages</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p06.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p06.png" alt="Printed page 6" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p07.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p07.png" alt="Printed page 7" loading="lazy" /></a>
-              <p class="pcap">pages 6–7 of the printed questionnaire. Tap to open full size.</p>
+        <p class="banner" style="margin-top:0">Section C — <strong>Q30–Q50, paper pages 6–7</strong> — a <strong>repeating household roster</strong>: the interviewer captures one full set of questions (name, presence, age, sex, relationship, disability, civil status, education, employment, and every insurance coverage) for <em>each</em> household member. On paper this is a wide grid filled row-by-row; on the tablet CSEntry walks member-by-member, looping the same screen-set up to 20 times (one occurrence per member). A single household-level gate (Q47) decides whether the private-insurance sub-roster (Q48–Q50) is asked at all.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q30–Q34</span><span class="qtitle">Household roster — who lives here</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext"><b>30.</b> Name (LAST NAME, FIRST NAME &amp; MIDDLE NAME, EXT)</p>
+              <p class="qtext"><b>31.</b> Is the HH member present or away?</p>
+              <ul class="opts radio"><li>Away</li><li>Present</li></ul>
+              <p class="qtext"><b>32.</b> Age (as of last birthday) — number</p>
+              <p class="qtext"><b>33.</b> Sex at birth</p>
+              <ul class="opts radio"><li>Male</li><li>Female</li></ul>
+              <p class="qtext"><b>34.</b> Relationship to Household Head</p>
+              <ul class="opts radio"><li>Head</li><li>Spouse/Partner</li><li>Son/Daughter</li><li>Brother/Sister</li><li>Son-In-Law/Daughter-In-Law</li><li>Grandson/Granddaughter</li><li>Father/Mother</li><li>Nephew/Niece</li><li>Cousin</li><li>Boarder</li><li>Domestic Helper</li><li>Non-relative</li></ul>
             </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for C. Household Characteristics (roster) — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-roster.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-roster.png" alt="CSEntry household roster — Q30 member name with the member field-set (loop driver) on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Each member gets a 2-digit line number, then name (free-text), presence, age (number-pad), sex and relationship (single-select). <b>This roster is the loop driver — CSEntry repeats this whole screen-set once per member (record C_HOUSEHOLD_ROSTER, max 20 occurrences), capturing one member fully before advancing to the next.</b></p>
+            </div>
+          </div>
+          <div class="xnote"><span class="tag">CAPI differs</span><span>On paper this is a grid the interviewer fills row-by-row across the page; on the tablet CSEntry walks member-by-member, presenting one member's full column of questions at a time before looping to the next member.</span></div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q35–Q38</span><span class="qtitle">Disability status &amp; PWD card</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext"><b>35.</b> Do you identify as a person with a disability?</p>
+              <ul class="opts radio"><li>No</li><li>Yes</li></ul>
+              <p class="qtext"><b>36.</b> Would you like to specify the type of disability?</p>
+              <ul class="opts radio"><li>No</li><li>Yes</li></ul>
+              <p class="qtext"><b>37.</b> May we view the patient's PWD Identification Card?</p>
+              <ul class="opts radio"><li>No</li><li>Yes</li><li>Respondent refused to present card</li></ul>
+              <p class="qtext"><b>38.</b> Based on the presented PWD Identification Card, what type of disability is indicated?</p>
+              <ul class="opts radio"><li>Physical disability (Orthopedic)</li><li>Visual disability</li><li>Hearing disability</li><li>Speech impairment</li><li>Intellectual disability</li><li>Psychosocial disability</li><li>Multiple disabilities</li><li>Other disability (specify)</li></ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Disability self-ID (Q35) is the gate: <b>only when a member is flagged as a PWD do the follow-ups (Q36 specify, Q37 card view, Q38 disability type) apply.</b> Q38's "Other (specify)" reveals a free-text box. All within the same per-member loop.</p>
             </div>
           </div>
         </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q39–Q41</span><span class="qtitle">Civil status, education, employment</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext"><b>39.</b> Civil Status</p>
+              <ul class="opts radio"><li>Single / Never Married</li><li>Married</li><li>Common law / Live-in</li><li>Widowed</li><li>Divorced</li><li>Separated</li><li>Annulled</li><li>Not reported</li></ul>
+              <p class="qtext"><b>40.</b> Highest level of education completed</p>
+              <ul class="opts radio"><li>Early Childhood Education (Pre-school)</li><li>Primary Education (Grade 1 to 6)</li><li>Lower Secondary Education (Grade 7 to 10)</li><li>Upper Secondary Education (Grade 11 to 12)</li><li>Post-Secondary Non-Tertiary Education (incl. Technical/Vocational w/ certificate)</li><li>Short-Cycle Tertiary Education or Equivalent (incl. Technical/Vocational w/ diploma)</li><li>Bachelor Level Education or Equivalent</li><li>Master Level Education or Equivalent</li><li>Doctoral Level Education or Equivalent</li><li>No schooling</li></ul>
+              <p class="qtext"><b>41.</b> Employment Status</p>
+              <ul class="opts radio"><li>Has a permanent job / own business</li><li>Has a short-term, seasonal, casual job/business</li><li>Worked on different jobs day to day per week</li><li>Unemployed and looking for work</li><li>Unemployed and not looking for work</li><li>Retired</li><li>I don't know</li><li>Not applicable</li></ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry long single-select list on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Three long single-select pick-lists (civil status, education's 10 levels, employment's 8 states). <b>Each is captured per member inside the same roster loop</b> — no skips, every member answers all three.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q42–Q46</span><span class="qtitle">Social insurance — GSIS, SSS, Pag-ibig, PhilHealth</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext"><b>42.</b> Is (NAME) covered by GSIS either as a member or dependent?</p>
+              <p class="qtext"><b>43.</b> Is (NAME) covered by SSS either as a member or dependent?</p>
+              <p class="qtext"><b>44.</b> Is (NAME) covered by Pag-ibig either as a member or dependent?</p>
+              <p class="qtext"><b>45.</b> Currently registered with PhilHealth?</p>
+              <ul class="opts radio"><li>Yes</li><li>No</li><li>I don't know</li></ul>
+              <p class="qtext"><b>46.</b> What is his/her membership category?</p>
+              <ul class="opts radio"><li>Formal economy</li><li>Informal economy</li><li>Indigent</li><li>Sponsored</li><li>Lifetime member</li><li>Senior citizen</li><li>Overseas Filipino Worker (OFW)</li><li>Qualified dependents</li><li>Dependent</li><li>Other (Specify)</li><li>I don't know</li></ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry short single-select on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q42–Q45 are Yes / No / I-don't-know single-selects; the member's name is piped into the prompt via a fill. <b>Q45 (PhilHealth registered) gates Q46 — the membership-category list only appears for registered members</b>, and its "Other (Specify)" reveals a free-text box. Still inside the per-member loop.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q47–Q50</span><span class="qtitle">Private health insurance (gated sub-roster)</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext"><b>47.</b> Do you or other members of your HH have private insurance? <em>(household-level — asked once)</em></p>
+              <ul class="opts radio"><li>No</li><li>Yes</li></ul>
+              <p class="qtext"><b>48.</b> Name (First Name Only)</p>
+              <p class="qtext"><b>49.</b> Is (NAME) covered by a private health insurance either as a member or dependent? (Example: Maxicare, Intellicare, Pacific Cross Health Care)</p>
+              <ul class="opts radio"><li>Yes</li><li>No</li><li>I don't know</li></ul>
+              <p class="qtext"><b>50.</b> Others (Specify)</p>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q47 is a single household-level Yes/No (its own non-repeating record C_HH_PRIVATE_INS_GATE). <b>It gates the whole Q48–Q50 sub-roster: only if Q47 = Yes does CSEntry collect, per member, first name (Q48), private-insurance coverage (Q49 Yes/No/DK), and an "Others (Specify)" text (Q50).</b></p>
+            </div>
+          </div>
+          <div class="xnote"><span class="tag">CAPI differs</span><span>The household-level Q47 lives in a separate one-time record so the A–S record-letter sequence stays stable; the paper grid simply asks it once at the top of the private-insurance block. When Q47 = No, CSEntry skips Q48–Q50 entirely for every member.</span></div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — C</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p06.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p06.png" alt="Printed page 6 — F4 Household roster" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p07.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p07.png" alt="Printed page 7 — F4 Household roster" loading="lazy" /></a>
+              <p class="pcap">Pages 6–7 — Household Characteristics (roster). Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f4-capi-roster.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-capi-roster.png" alt="CSEntry household roster member entry screen on the tablet" loading="lazy" /></a>
+              <p class="pcap">Live roster capture shown. <b>The household size drives a repeating roster</b> — CSEntry loops one screen-set per member (name, relationship, age, sex, disability, insurance, …), each member captured fully before moving to the next, up to 20 members.</p></div>
+          </div>
+        </div>
+
         <div class="xsection">D. Awareness on UHC</div>
-        <div class="xpage">
-          <div class="xpage-head">Printed page ↔ CSEntry (tablet) — D. Awareness on UHC</div>
-          <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed page</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p08.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p08.png" alt="Printed page 8" loading="lazy" /></a>
-              <p class="pcap">page 8 of the printed questionnaire. Tap to open full size.</p>
+        <p class="banner" style="margin-top:0">Section D — <strong>Q51–Q53, paper page 8</strong> — household-level awareness of Universal Health Care: whether the respondent has heard of UHC, and (if so) where they heard about it and what they understand it to mean.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q51–Q53</span><span class="qtitle">Heard of UHC · source · understanding</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext"><b>51.</b> Have you heard about Universal Health Care (UHC) prior to this survey?</p>
+              <ul class="opts radio"><li>No</li><li>Yes</li></ul>
+              <p class="qtext"><b>52.</b> What is your source of information about UHC? <em>(select all that apply)</em></p>
+              <ul class="opts check"><li>News</li><li>Legislation</li><li>Social Media</li><li>Friends / Family</li><li>Health center/facility</li><li>LGU/Barangay</li><li>I don't know</li><li>Other (Specify)</li></ul>
+              <p class="qtext"><b>53.</b> What is your understanding about UHC? <em>(select all that apply)</em></p>
+              <ul class="opts check"><li>Protection from financial risk / decreased out-of-pocket spending</li><li>Access to quality and affordable health care goods and services</li><li>Automatic enrollment into PhilHealth</li><li>Primary care provider for every Filipino</li><li>I don't know</li><li>Other (Specify)</li></ul>
             </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for D. Awareness on UHC — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
-            </div>
-          </div>
-        </div>
-        <div class="xsection">E. YAKAP/Konsulta · F. BUCAS Awareness</div>
-        <div class="xpage">
-          <div class="xpage-head">Printed page ↔ CSEntry (tablet) — E. YAKAP/Konsulta · F. BUCAS Awareness</div>
-          <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed page</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p09.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p09.png" alt="Printed page 9" loading="lazy" /></a>
-              <p class="pcap">page 9 of the printed questionnaire. Tap to open full size.</p>
-            </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for E. YAKAP/Konsulta · F. BUCAS Awareness — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select on the tablet" loading="lazy" /></a>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Q51 is a Yes/No single-select. <b>Q51 gates the rest: only when UHC was heard of do the two check-box multi-selects appear</b> — Q52 (source, 8 options) and Q53 (understanding, 6 options). Both are true check-box controls (tap multiple), and each "Other (Specify)" reveals a free-text box.</p>
             </div>
           </div>
+          <div class="xnote"><span class="tag">CAPI differs</span><span>Q52 and Q53 are genuine check-box multi-selects on the tablet (DataCaptureType = CheckBox), so several answers can be ticked at once; on paper they read as plain "select all that apply" lists.</span></div>
         </div>
+
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — D</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p08.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p08.png" alt="Printed page 8 — F4 Awareness on UHC" loading="lazy" /></a>
+              <p class="pcap">Page 8 — Awareness on Universal Health Care. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry single-select control on the tablet" loading="lazy" /></a>
+              <p class="pcap">A Yes/No gate (Q51) followed by two check-box multi-selects with optional free-text "Other" capture.</p></div>
+          </div>
+        </div>
+
+        <div class="xsection">E. YAKAP / Konsulta</div>
+        <p class="banner" style="margin-top:0">Section E — <strong>Q54–Q56, paper page 9</strong> — awareness, information sources, and understanding of the YAKAP/Konsulta package.</p>
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q54</span><span class="qtitle">Heard of YAKAP/Konsulta</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">54. Have you heard of the term "YAKAP/Konsulta package"?</p><ul class="opts radio"><li>Yes</li><li>No</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No control on the tablet" loading="lazy" /></a><p class="capi-cap">A single Yes/No toggle. <b>This is the gate for the whole section: if "No", the tablet skips Q55–Q56 and moves on.</b></p></div>
+          </div>
+        </div>
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q55</span><span class="qtitle">Sources of information</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">55. What are your sources of information about the YAKAP/Konsulta package?</p><ul class="opts checkbox"><li>News</li><li>Legislation</li><li>Social Media</li><li>Friends / Family</li><li>Health center/facility</li><li>LGU/Barangay</li><li>I don't know</li><li>Other (Specify) — with text box</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Check-box multi-select — tick all that apply. <b>Only shown when Q54 = Yes.</b> Ticking "Other (Specify)" opens a free-text box.</p></div>
+          </div>
+        </div>
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q56</span><span class="qtitle">Understanding of the package</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">56. What is your understanding about the YAKAP/Konsulta package?</p><ul class="opts checkbox"><li>Free primary care consultation (with a registered YAKAP/Konsulta provider)</li><li>Free health risk screening and assessment (with a registered YAKAP/Konsulta provider)</li><li>Free selected laboratory / diagnostics examination</li><li>Free selected drugs and medicines</li><li>There are no benefits in the package</li><li>I don't know</li><li>Other (Specify) — with text box</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Check-box multi-select — tick all that apply. <b>Only shown when Q54 = Yes.</b> Ticking "Other (Specify)" opens a free-text box.</p></div>
+          </div>
+        </div>
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed page ↔ CSEntry (tablet) — E</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed page</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p09.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p09.png" alt="Printed page 9 — F4 YAKAP/Konsulta and BUCAS Awareness" loading="lazy" /></a>
+              <p class="pcap">Page 9 — YAKAP/Konsulta (E) and BUCAS Awareness (F). Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No control on the tablet" loading="lazy" /></a>
+              <p class="pcap">A Yes/No gate (Q54) opens two check-box multi-selects (Q55, Q56), each with an Other-specify text box.</p></div>
+          </div>
+        </div>
+
+        <div class="xsection">F. BUCAS Awareness</div>
+        <p class="banner" style="margin-top:0">Section F — <strong>Q57–Q61, paper page 9</strong> — awareness, understanding, and utilization of Bagong Urgent Care and Ambulatory Service (BUCAS) centers.</p>
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q57–Q59</span><span class="qtitle">BUCAS awareness, sources & understanding</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">57. Have you heard about Bagong Urgent Care and Ambulatory Service (BUCAS) center?</p><ul class="opts radio"><li>Yes</li><li>No</li></ul><p class="qtext">58. If yes, what are your sources of information about this BUCAS center?</p><ul class="opts checkbox"><li>News</li><li>Legislation</li><li>Social Media</li><li>Friends / Family</li><li>Health center/facility</li><li>LGU/Barangay</li><li>I don't know</li><li>Other (Specify) — with text box</li></ul><p class="qtext">59. What is your understanding about a BUCAS center?</p><ul class="opts checkbox"><li>Provides urgent care for non-life-threatening/serious conditions</li><li>Offers outpatient and ambulatory health services</li><li>Helps reduce overcrowding in hospitals</li><li>Allows access to timely medical consultation and treatment</li><li>Other (specify) — with text box</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No control on the tablet" loading="lazy" /></a><p class="capi-cap">Q57 is a Yes/No gate; <b>if "No", the tablet skips Q58–Q59.</b> Q58 and Q59 are check-box multi-selects, each with an Other-specify text box. <b>This whole section applies only to respondents in areas with BUCAS; otherwise the tablet proceeds to Q62.</b></p></div>
+          </div>
+        </div>
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q60–Q61</span><span class="qtitle">BUCAS access & services availed</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">60. In the last six months, did you or any member of your HH accessed the services in a BUCAS center?</p><ul class="opts radio"><li>Yes</li><li>No</li></ul><p class="qtext">61. If yes, which of the services did you avail?</p><ul class="opts checkbox"><li>Medical consultation for urgent or minor conditions</li><li>Outpatient or ambulatory care services</li><li>Basic diagnostic services (e.g., laboratory tests, X-ray)</li><li>Minor procedures or treatments</li><li>Referral to higher-level health facilities</li><li>I don't know</li><li>Other (specify) — with text box</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No control on the tablet" loading="lazy" /></a><p class="capi-cap">Q60 is a Yes/No gate; <b>if "No", the tablet skips the Q61 services check-box.</b> Q61 is a check-box multi-select with an Other-specify text box.</p></div>
+          </div>
+        </div>
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed page ↔ CSEntry (tablet) — F</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed page</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p09.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p09.png" alt="Printed page 9 — F4 YAKAP/Konsulta and BUCAS Awareness" loading="lazy" /></a>
+              <p class="pcap">Page 9 — YAKAP/Konsulta (E) and BUCAS Awareness (F). Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Two Yes/No gates (Q57, Q60) each open follow-up check-box multi-selects (Q58/Q59 and Q61); the section is shown only in BUCAS areas.</p></div>
+          </div>
+        </div>
+
         <div class="xsection">G. Access to Medicines</div>
-        <div class="xpage">
-          <div class="xpage-head">Printed pages ↔ CSEntry (tablet) — G. Access to Medicines</div>
-          <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed pages</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p10.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p10.png" alt="Printed page 10" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p11.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p11.png" alt="Printed page 11" loading="lazy" /></a>
-              <p class="pcap">pages 10–11 of the printed questionnaire. Tap to open full size.</p>
+        <p class="banner" style="margin-top:0">Section G — <strong>Q62–Q78, paper pages 10–11</strong> — purchasing habits, conditions treated, where medicines are bought, pharmacy access, then the GAMOT outpatient-medicine sub-block and a branded-vs-generic chain.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q62–Q64</span><span class="qtitle">Purchase frequency, prescription type &amp; medication list</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">62. How often do you purchase or receive medicines? &nbsp;·&nbsp; 63. Was the most recent medicine purchased prescribed by a doctor or over-the-counter (OTC) medicine (no need for a prescription)? &nbsp;·&nbsp; 64. What are the medications that you or any member of your household usually take? (List all medicines taken for the health condition.)</p>
+              <ul class="opts radio">
+                <li>Q62: Weekly · Bi-weekly · Monthly · Rarely · Never</li>
+                <li>Q63: Prescribed by a doctor · Over-the-counter medicine · Purchased both prescribed medicine and OTC medicine · I don't know</li>
+                <li>Q64: free-text list (up to 500 chars)</li>
+              </ul>
             </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for G. Access to Medicines — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
-            </div>
-          </div>
-        </div>
-        <div class="xsection">H. PhilHealth Registration & Health Insurance</div>
-        <div class="xpage">
-          <div class="xpage-head">Printed page ↔ CSEntry (tablet) — H. PhilHealth Registration & Health Insurance</div>
-          <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed page</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p12.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p12.png" alt="Printed page 12" loading="lazy" /></a>
-              <p class="pcap">page 12 of the printed questionnaire. Tap to open full size.</p>
-            </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for H. PhilHealth Registration & Health Insurance — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q62/Q63 are single-select radio screens; Q64 is a free-text box. <b>Q62 = Never skips the rest of the buying questions and jumps ahead to Q69 (GAMOT awareness) — there is nothing to ask about a purchase that never happens.</b></p>
             </div>
           </div>
         </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q65–Q66</span><span class="qtitle">Conditions treated &amp; where medicines are bought</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">65. What are the medical conditions that you/your household member/s take the medicine/s for? &nbsp;·&nbsp; 66. Where do you usually buy or receive your medicines?</p>
+              <ul class="opts check">
+                <li>Q65: Upper respiratory infection · Hypertension · Immunization · Pregnancy or birth · Flu · Fever · Joint and muscle pain · Asthma or COPD · Diabetes · Heart problem · Kidney problem / Dialysis · Cancer (any) · Gastro problem · Other infection · Accident/injury · Dental · ENT · Allergy · No condition – Regular check-up only · Other (Specify)</li>
+                <li>Q66: Public Hospital · Private Hospital · Chain Pharmacies (Mercury Drug, Watsons, TGP, Generika) · Local pharmacies · Online stores (Shopee, Lazada) · Barangay Health Station · Rural Health Unit or City Health Office · Other (specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Both are check-box multi-selects (tick all that apply). <b>Ticking "Other" on either question opens its own Other-specify text box; leave it unticked and the box stays hidden.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q67–Q68</span><span class="qtitle">Travel time to pharmacy &amp; ease of access</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">67. How much time does it take to reach the nearest pharmacy from your home? (Hours / Minutes) &nbsp;·&nbsp; 68. How easy is it for you to access a pharmacy or drugstore?</p>
+              <ul class="opts radio">
+                <li>Q67: two number boxes — Hours (0–99) · Minutes (0–99)</li>
+                <li>Q68: Very difficult · Difficult · Neutral · Easy · Very easy</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry number-pad entry on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q67 is a pair of two-digit number-pad fields (hours then minutes); Q68 is a single-select scale. <b>No skips here — both are always asked when the buying block runs.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q69–Q71</span><span class="qtitle">GAMOT Package — awareness, info sources &amp; understanding</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">69. Have you heard of the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's YAKAP/Konsulta or primary care benefit package? &nbsp;·&nbsp; 70. If yes, what are your sources of information for GAMOT Package? &nbsp;·&nbsp; 71. What is your understanding of the GAMOT Package?</p>
+              <ul class="opts check">
+                <li>Q69: Yes · No</li>
+                <li>Q70: News · Legislation · Social Media · Friends / Family · Health center/facility · LGU/Barangay · I don't know · Other (Specify)</li>
+                <li>Q71: Provides free or affordable medicines for outpatients · Ensures continuous availability of essential medicines · Helps reduce out-of-pocket expenses for medicines · Supports treatment of common illnesses and chronic conditions · I don't know · Other (specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q69 is a Yes/No gate; Q70 and Q71 are check-box multi-selects. <b>Q69 = No skips the info-source and understanding questions (Q70–Q71) — sources/understanding only make sense once the respondent has heard of GAMOT.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q72–Q74</span><span class="qtitle">GAMOT medicines obtained &amp; where the rest came from</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">72. Did you get the medicines from the GAMOT Package during the past 6 months? &nbsp;·&nbsp; 73. What are the medications that you obtained from the GAMOT Package? [LIST] &nbsp;·&nbsp; 74. Where did you get the rest of the medicines?</p>
+              <ul class="opts check">
+                <li>Q72: Yes · No</li>
+                <li>Q73: free-text list (up to 500 chars)</li>
+                <li>Q74: Purchased from pharmacy · from public hospital · from private hospital · from primary care provider (PCP) · Received from PCP for free · from LGU for free · from public hospital for free · from private hospital for free · Not applicable · Other (Specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q72 is a Yes/No gate, Q73 a free-text list, Q74 a check-box multi-select with an Other-specify box. <b>Q72 = No skips Q73 (no GAMOT meds list to capture); Q74 then captures where the remaining medicines were sourced.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q75–Q76</span><span class="qtitle">Knows branded-vs-generic &amp; what was bought outside GAMOT</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">75. Do you know the difference between a 'branded' and a 'generic' medicine? &nbsp;·&nbsp; 76. Was/were the medicine/s you bought outside of GAMOT pharmacy branded or generic?</p>
+              <ul class="opts radio">
+                <li>Q75: Yes · No</li>
+                <li>Q76: Branded · Generic · Both branded and generic · Not applicable</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q75 is a Yes/No gate; Q76 is a single-select. <b>Q76 is only asked when Q75 = Yes (the "Don't know the difference" option was removed as contradictory, #646). Branded routes to Q78, Not applicable jumps to Q79.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q77–Q78</span><span class="qtitle">Why generic · why branded</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">77. If generic, why did you buy generic medicine? &nbsp;·&nbsp; 78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.)</p>
+              <ul class="opts check">
+                <li>Q77: Lower cost · Prescribed by doctor · Readily available · Given for free · More or as effective as branded medicine · I don't know · Other (Specify)</li>
+                <li>Q78: Branded medicine is more effective than generic · Not aware of generic option · Prescribed by doctor · Given for free · Prefer branded over generic option · I don't know · Other (Specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Both are check-box multi-selects with Other-specify boxes. <b>Q77 is asked only when Q76 = Generic / Both; Q78 only when Q76 = Branded / Both — the two why-questions are mutually gated on Q76 so each is skipped when it does not apply.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — G</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p10.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p10.png" alt="Printed page 10 — F4 Access to Medicines" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p11.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p11.png" alt="Printed page 11 — F4 Access to Medicines" loading="lazy" /></a>
+              <p class="pcap">Pages 10–11 — Access to Medicines. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Single-select gates (Q62, Q63, Q68, Q75, Q76) drive the skips; check-box multi-selects (Q65, Q66, Q70, Q71, Q74, Q77, Q78) capture all-that-apply.</p></div>
+          </div>
+        </div>
+
+        <div class="xsection">H. PhilHealth Registration and Health Insurance</div>
+        <p class="banner" style="margin-top:0">Section H — <strong>Q79–Q88, paper page 12</strong> — how the respondent learned to register, who assisted, registration difficulties, awareness of member benefits, and premium-payment behaviour. Asked once of the main respondent (gated on Q45 in Section C).</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q79–Q80</span><span class="qtitle">How they learned to register &amp; who assisted</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">79. How did you find out about how to register to PhilHealth? &nbsp;·&nbsp; 80. Who assisted you in the registration process?</p>
+              <ul class="opts radio">
+                <li>Q79: PhilHealth representative · LGU · Primary care provider · Other health care provider · Employer · No one / self-registered · Barangay Health Worker · Friends / Family · Health center/facility · Other (Specify)</li>
+                <li>Q80: same list as Q79 (PhilHealth representative … Other (Specify))</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select long-list screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Both are single-select long lists sharing the same option set; each carries its own Other-specify text box. <b>Picking "Other (Specify)" opens the box; the whole section is reached only when the respondent is registered with PhilHealth per Q45.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q81–Q82</span><span class="qtitle">Registration difficulty &amp; reasons</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">81. Did you have any difficulties in the registration process? &nbsp;·&nbsp; 82. What did you find difficult about the process?</p>
+              <ul class="opts check">
+                <li>Q81: Yes · No</li>
+                <li>Q82: Unclear process · Took a long time · Did not know where to ask for help · Had to travel a long way · No valid ID · Did not know the required documents to register · I don't know · Other (Specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q81 is a Yes/No gate; Q82 is a check-box multi-select with an Other-specify box. <b>Q81 = No skips Q82 — no difficulty reasons are collected when registration was not difficult.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q83–Q84</span><span class="qtitle">Knows where to seek help &amp; where</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">83. Would you know where to go to seek assistance in registration? &nbsp;·&nbsp; 84. Where would you go to seek assistance?</p>
+              <ul class="opts radio">
+                <li>Q83: Yes · No</li>
+                <li>Q84: free-text (up to 200 chars)</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-q1-name.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-q1-name.png" alt="CSEntry free-text entry on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q83 is a Yes/No gate; Q84 is a free-text box. <b>Q84 is only asked when Q83 = Yes — if they don't know where to go, there is no place to name.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q85</span><span class="qtitle">Awareness of PhilHealth member benefits</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">85. What are some of the benefits that come with being a PhilHealth member?</p>
+              <ul class="opts check">
+                <li>Q85: No balance billing for basic ward accommodation · Subsidized inpatient services · Subsidized outpatient services · There are no benefits to being a member · I don't know · Other (Specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Check-box multi-select (tick all known benefits) with an Other-specify box. <b>No gate — asked of every registered respondent; ticking "Other" reveals the text box.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q86–Q88</span><span class="qtitle">Premium payment, difficulty &amp; why</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4>
+              <p class="qtext">86. Do you and members of your HH pay PhilHealth premiums every month? &nbsp;·&nbsp; 87. Do you find it difficult to pay the PhilHealth premiums every month? &nbsp;·&nbsp; 88. Why did you find it difficult?</p>
+              <ul class="opts check">
+                <li>Q86: Yes, I pay directly · Yes, my employer pays · No, I do not pay premiums</li>
+                <li>Q87: Yes · No</li>
+                <li>Q88: Cannot afford the premium · Payment options are inconvenient · No time to pay · Don't see value in paying · System of PhilHealth is unreliable/usually down · I don't know · Other (Specify)</li>
+              </ul>
+            </div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q86 is a single-select, Q87 a Yes/No gate, Q88 a check-box multi-select with an Other-specify box. <b>Q87 = No skips Q88 — the "why difficult" reasons are only captured when paying premiums is found difficult.</b></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — H</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p12.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p12.png" alt="Printed page 12 — F4 PhilHealth Registration and Health Insurance" loading="lazy" /></a>
+              <p class="pcap">Page 12 — PhilHealth Registration and Health Insurance. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select long-list control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Single-select long lists (Q79, Q80) and Yes/No gates (Q81, Q83, Q87) drive the skips; check-box multi-selects (Q82, Q85, Q88) capture all-that-apply.</p></div>
+          </div>
+        </div>
+
         <div class="xsection">I. Primary Care Utilization</div>
+        <p class="banner" style="margin-top:0">Section I — <strong>Q89–Q100, paper page 13</strong> — where the household usually seeks primary care, why they went (or don't have a usual facility), how they get there, and how reachable/affordable that care is.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q89–Q90</span><span class="qtitle">Usual facility &amp; whether it's their general-health go-to</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">89. In the past 12 months, do you have a clinic, or health center that you usually go to? &nbsp;·&nbsp; 89.1. What is the name of the facility? &nbsp;·&nbsp; 90. Is this the facility you usually go to for general health concerns?</p><ul class="opts radio"><li>Q89: Yes · No · Don't know</li><li>Q89.1: free-text facility name (up to 120 chars)</li><li>Q90: Yes · No</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No control on the tablet" loading="lazy" /></a><p class="capi-cap">Q89 is a Yes/No/Don't-know single-select. <b>Q89.1 facility name and Q90 are gated by Q89 = Yes — if there's no usual facility, the interviewer skips to the why-not item (Q93).</b></p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q91–Q93</span><span class="qtitle">Why this facility, facility type, or why no usual facility</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">91. Why did you go to this facility? &nbsp;·&nbsp; 92. What is the type of facility that you usually go to? &nbsp;·&nbsp; 93. If not, why do you not have a usual clinic, or health center that you usually go to?</p><ul class="opts radio"><li>Q91 (tick all): more accessible than usual · service/specialist not at usual · recommended by friends/family · wanted to try another · prefer this one · referred by usual facility · usual closed today · trusted doctor transferred here · Other (Specify)</li><li>Q92 (one): YAKAP/Konsulta or primary care provider · Barangay Health Center · Rural Health Unit / Health Center · Public Hospital · Private Hospital · Private Clinic · Traditional Healer or Manghihilot/Albularyo · I don't know · Other (Specify)</li><li>Q93 (tick all): I don't get sick · recently moved into the area · it's expensive · I can treat myself · don't know where to go · I don't know · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry long single-select facility-type control on the tablet" loading="lazy" /></a><p class="capi-cap">Q92 facility type is a long single-select (shown). Q91 and Q93 are <b>check-box multi-selects, each with an Other-specify text box that opens only when "Other" is ticked. Q91 (why this facility) is asked when Q89/Q90 say they do have a usual facility; Q93 (why no usual facility) is the mirror branch for Q89 = No.</b></p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q94–Q96</span><span class="qtitle">Travel mode, time, and cost to the nearest facility</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">94. What mode/s of transportation do you use when travelling to the nearest primary care facility? &nbsp;·&nbsp; 95. How long does it take you to travel from your house … (one-way, minutes)? &nbsp;·&nbsp; 96. How much does it usually cost … (PHP, one-way)?</p><ul class="opts radio"><li>Q94 (tick all): Walk · Bike · Public Bus · Jeepney · Tricycle · Car (incl. private taxi/cab) · Motorcycle · Boat · Taxi · Pedicab · E-bike · Other (Specify)</li><li>Q95: minutes, number up to 3 digits</li><li>Q96: PHP, number up to 5 digits</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f4-capi-expenditure-grid.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-expenditure-grid.png" alt="CSEntry expenditure grid — one Amount-in-Pesos number-pad per line item (Q144 cereals shown) on the tablet" loading="lazy" /></a><p class="capi-cap">Q95 (minutes) and Q96 (PHP) are number-pad entries (shown). Q94 transport is a <b>check-box multi-select with an Other-specify text box gated on ticking "Other"; multiple modes can be selected for a single trip.</b></p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q97–Q100</span><span class="qtitle">Booking know-how, phone advice when open/closed, leave from work/school</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">97. When you have a health problem, do you know how to book an appointment at a primary care facility? &nbsp;·&nbsp; 98. When your primary care facility is open, can you get advice quickly over the phone …? &nbsp;·&nbsp; 99. When your primary care facility is closed, is there a phone number you can call …? &nbsp;·&nbsp; 100. When you have to visit your primary care facility, do you have to take a leave from work or school to go?</p><ul class="opts radio"><li>Q97: Yes · No</li><li>Q98 &amp; Q99: Yes · No · I haven't tried · I don't know</li><li>Q100: Yes · No · I haven't tried · I don't know · Not applicable</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry short single-select control on the tablet" loading="lazy" /></a><p class="capi-cap">Q97 is Yes/No; Q98–Q100 are short single-selects (shown). <b>Q100 adds a "Not applicable" code; these closing items are asked of all respondents with no further branching, ending Section I.</b></p></div>
+          </div>
+        </div>
+
         <div class="xpage">
-          <div class="xpage-head">Printed page ↔ CSEntry (tablet) — I. Primary Care Utilization</div>
+          <div class="xpage-head">End of section — printed page ↔ CSEntry (tablet) — I</div>
           <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed page</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p13.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p13.png" alt="Printed page 13" loading="lazy" /></a>
-              <p class="pcap">page 13 of the printed questionnaire. Tap to open full size.</p>
-            </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for I. Primary Care Utilization — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
+            <div class="xpage-col paper"><h4>The real printed page</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p13.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p13.png" alt="Printed page 13 — F4 Primary Care Utilization" loading="lazy" /></a>
+              <p class="pcap">Page 13 — Primary Care Utilization. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Mix of Yes/No, single-select, number-pad and check-box controls; usual-facility branch (Q89) drives the Q91 vs Q93 split.</p></div>
+          </div>
+        </div>
+
+        <div class="xsection">J. Household Members' Health-Seeking Behavior and Outcomes</div>
+        <p class="banner" style="margin-top:0">Section J — <strong>Q101–Q107, paper page 14</strong> — how often the household seeks check-ups, why they visit facilities, the forms of care used, preventive consults, and what they do when they forgo care.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q101–Q102</span><span class="qtitle">Check-up frequency &amp; reason for visiting a facility</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">101. How often do you/your household member have a general check-up on your health (i.e., when you feel healthy, without any specific illness)? &nbsp;·&nbsp; 102. What best describes why you/your household member will visit a health facility (e.g. RHU, health center, clinic, hospital)?</p><ul class="opts radio"><li>Q101 (one): More than once a year · Every year · Every 2–3 years · Every 4–5 years · No set time; only once or twice in my life · Never; only when sick · Other (Specify)</li><li>Q102 (tick all): Consultation for new health problem · Follow-up an ongoing problem · For tests/diagnostics only · For a general check-up · Health certificate/administrative reason · For immunizations/vaccinations · My doctor transferred here · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry long single-select control on the tablet" loading="lazy" /></a><p class="capi-cap">Q101 is a long single-select (shown) with an Other-specify text box. <b>Q102 is a check-box multi-select; its Other-specify text box opens only when "Other" is ticked.</b></p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q103</span><span class="qtitle">Forms of care accessed in the last 6 months</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">103. Have you accessed any of the following forms of care in the last 6 months?</p><ul class="opts radio"><li>Q103 (tick all): Outpatient care (visit and leave the same day) · Inpatient care (admitted at least one night) · Emergency care (immediate attention, usually in an ER) · Primary care consultation · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Q103 is a check-box multi-select with an Other-specify text box. <b>No skip — asked of all respondents; multiple care types may be ticked for the 6-month window.</b></p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q104–Q105</span><span class="qtitle">Preventive consult &amp; whether care was forgone</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">104. Have you ever consulted a physician for preventative reasons, such as to consult about your lifestyle, weight loss, stopping smoking, etc.? &nbsp;·&nbsp; 105. In the last 6 months, have you or any of your household members had a medical problem and chosen NOT to see a healthcare provider?</p><ul class="opts radio"><li>Q104: Yes · No</li><li>Q105: Yes · No</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No control on the tablet" loading="lazy" /></a><p class="capi-cap">Both are Yes/No single-selects (shown). <b>Q105 is the gate for Q106: Q105 = No skips Q106 ("why not") and jumps straight to Q107; only Q105 = Yes asks why care was forgone.</b></p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q106–Q107</span><span class="qtitle">Why care was forgone &amp; other actions taken</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">106. Why not? &nbsp;·&nbsp; 107. Did you or your household members do any other actions to improve your/their health condition or address your/their health concern?</p><ul class="opts radio"><li>Q106 (tick all): Not sick enough · It's too expensive · Could not take time off work · Could not get an appointment soon enough · No transportation available · Afraid to know my illness · I don't know · Other (Specify)</li><li>Q107 (tick all): Visited other healthcare facility · Sought alternative care (reflexology, acupuncture, herbal medicines, etc.) · Sought telemedicine · Used home care · Bought medicine from a pharmacy · Did not seek other forms of care · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Q106 and Q107 are check-box multi-selects, each with an Other-specify text box gated on "Other". <b>Q106 is reached only when Q105 = Yes; Q107 is then asked of everyone and closes Section J.</b></p></div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed page ↔ CSEntry (tablet) — J</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed page</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p14.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p14.png" alt="Printed page 14 — F4 Household Members' Health-Seeking Behavior" loading="lazy" /></a>
+              <p class="pcap">Page 14 — Household Members' Health-Seeking Behavior and Outcomes. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry single-select control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Single-selects (Q101), Yes/No (Q104–Q105) and check-box multi-selects (Q102/Q103/Q106/Q107); Q105 = Yes is the gate that exposes Q106.</p></div>
+          </div>
+        </div>
+
+        <div class="xsection">K. Experiences and Satisfaction with Referrals</div>
+        <p class="banner" style="margin-top:0">Section K — <strong>Q108–Q125, paper pages 15–17</strong> — whether a healthcare worker referred the respondent elsewhere, the type and method of referral, whether they followed through, and how satisfied they were with the referral process.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q108–Q110</span><span class="qtitle">Was there a referral, and for what?</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">108. In the past 6 months, did a healthcare worker refer you to another facility or specialist for further care or specialized care? &nbsp;·&nbsp; 109. What type of care was the referral for? &nbsp;·&nbsp; 110. What kind of specialist did they recommend?</p><ul class="opts radio"><li>Q108: Yes · No</li><li>Q109 (check all): Outpatient care · Emergency care · Inpatient care · Dental care · Other facility visits · Special therapy visits · Alternative care · Outreach / medical missions · Home healthcare · Telemedicine · None of the above · Other (Specify)</li><li>Q110: No specialty · Anesthesia · Dermatology · Emergency Medicine · Family Medicine · General Surgery · Internal Medicine · Neurology · Nuclear Medicine · Obstetrics and Gynecology · Occupational Medicine · Ophthalmology · Orthopedics · Otorhinolaryngology (ENT) · Pathology · Pediatrics · Physical and Rehabilitation Medicine · Psychiatry · Public health · Radiology · Research · I don't know · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q108 is a Yes/No gate. <b>If Q108 = No, the whole referral block (Q109–Q118) is skipped.</b> Q109 is a check-box multi-select (long specialist list at Q110 renders as a scrolling single-select); "Other (Specify)" on both opens a gated free-text box.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q111–Q113</span><span class="qtitle">Method, follow-through, and reasons for not going</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">111. How did they refer you to the doctor? &nbsp;·&nbsp; 112. Did you visit another facility after the referral? &nbsp;·&nbsp; 113. Why are you not planning to visit?</p><ul class="opts radio"><li>Q111: Physical referral slip · E-referral · Phone call from referring facility to receiving facility · I don't know · Other (Specify)</li><li>Q112: Yes · No, I'm not planning to · Not yet, but I'm planning to</li><li>Q113 (check all): Facility is too far · Do not trust the referred facility · No time · Worried about additional costs · Not needed · Don't know how to get to facility · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry short single-select screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q111 and Q112 are single-selects. <b>Q113 (a check-box multi-select) only appears when Q112 = "No, I'm not planning to"</b> — those who visited or plan to visit skip it. "Other (Specify)" opens a gated text field.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q114–Q118</span><span class="qtitle">Referral support and satisfaction</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">114. Did they discuss with you the different places you could have gone to get help with your problem? &nbsp;·&nbsp; 115. Did they help you make the appointment for that visit? &nbsp;·&nbsp; 116. Did they write down any information for the specialist about the reason for that visit? &nbsp;·&nbsp; 117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? &nbsp;·&nbsp; 118. Overall, how would you rate your satisfaction with the referral process?</p><ul class="opts radio"><li>Q114 / Q115 / Q116: Yes · No</li><li>Q117: Yes · No (only if Q112 = Yes)</li><li>Q118: Very Satisfied · Satisfied · Neither Satisfied nor Dissatisfied · Dissatisfied · Very Dissatisfied · Not applicable</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry 5-point rating scale on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q114–Q116 are Yes/No. <b>Q117 and Q118 only show when Q112 = Yes</b> (the respondent actually visited). Q118 is a 5-point rating scale with a "Not applicable" option.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q119–Q121</span><span class="qtitle">Non-referral visits — was the PCP involved?</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">119. Was the visit to the facility a referral from your primary care facility? &nbsp;·&nbsp; 120. Does your primary care provider know that you made the visit? &nbsp;·&nbsp; 121. As it was not a referral, why did you decide to visit a hospital?</p><ul class="opts radio"><li>Q119: Yes · No</li><li>Q120: Yes · No · I don't know</li><li>Q121 (check all): Referred by other specialist (doctor in another hospital) · Nearest facility to house · Facility is usual source of care · Facility is the only place that can perform a certain test · Referred by BHW/nurse/midwife/other community health professional · Referred by family / friends · Facility offers subsidized or free health services · I don't know · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No single-select screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q119 is Yes/No, Q120 is Yes/No/Don't-know. <b>Q121 (a check-box multi-select) is the "why not a referral" branch</b> for hospital visits that did not come from the primary care facility; "Other (Specify)" opens a gated text field.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q122–Q125</span><span class="qtitle">PCP coordination and overall experience</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">122. Did your primary care provider discuss with you different places you could have gone to get help with your problem? &nbsp;·&nbsp; 123. Did your primary care provider (PCP) or someone working with your PCP help you make the appointment for that visit? &nbsp;·&nbsp; 124. Did your primary care provider write down any information for the specialist about the reason for that visit? &nbsp;·&nbsp; 125. Overall, how would you rate your experience with the referral process?</p><ul class="opts radio"><li>Q122 / Q123 / Q124: Yes · No</li><li>Q125: Very Satisfied · Satisfied · Neither Satisfied nor Dissatisfied · Dissatisfied · Very Dissatisfied · Not applicable</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry 5-point rating scale on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q122–Q124 are Yes/No coordination items. <b>These sit on the non-referral branch (after Q119 = No)</b>, mirroring Q114–Q116. Q125 is the 5-point rating scale that closes the section.</p></div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — K</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p15.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p15.png" alt="Printed page 15 — F4 Referrals" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p16.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p16.png" alt="Printed page 16 — F4 Referrals" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p17.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p17.png" alt="Printed page 17 — F4 Referrals" loading="lazy" /></a>
+              <p class="pcap">Pages 15–17 — Experiences &amp; Satisfaction with Referrals. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select / rating control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Yes/No gates, single-selects, check-box multi-selects, and two 5-point satisfaction scales, with Q112/Q119 driving the referral vs non-referral branches.</p></div>
+          </div>
+        </div>
+
+        <div class="xsection">L. No Balance Billing (NBB) Awareness and Utilization</div>
+        <p class="banner" style="margin-top:0">Section L — <strong>Q126–Q131, paper pages 18–19</strong> — awareness of No Balance Billing, where they heard about it, what they understand it to mean, and whether anyone in the household paid out-of-pocket during a recent hospitalization.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q126–Q127</span><span class="qtitle">Heard of NBB, and from where</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">126. Have you heard of the No Balance Billing (NBB)? &nbsp;·&nbsp; 127. If yes, what are your sources of information about NBB?</p><ul class="opts radio"><li>Q126: Yes · No · I don't know</li><li>Q127 (check all): News · Legislation · Social Media · Friends / Family · Health center/facility · LGU/Barangay · I don't know · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No/Don't-know single-select screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q126 is a Yes/No/Don't-know gate. <b>If Q126 = No or I don't know, the tablet skips straight to Section M (Q132)</b>, bypassing Q127–Q131. Q127 is a check-box multi-select with a gated "Other (Specify)" text field.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q128</span><span class="qtitle">What NBB means to them</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">128. What is your understanding about NBB?</p><ul class="opts radio"><li>Q128 (check all): Patient does not pay any hospital bill · Bills are settled between the hospital and PhilHealth · PhilHealth will cover cost of treatment · Patients should not be charged extra fees · Medicine and service are already included · No cash payment required upon discharge · Applies only to certain patients or hospitals · I don't know · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Q128 is a check-box multi-select; the interviewer ticks every understanding the respondent gives. <b>It only appears when Q126 indicates awareness</b>; "Other (Specify)" opens a gated free-text box.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q129–Q131</span><span class="qtitle">Recent hospitalization and out-of-pocket payment</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">129. Were you or any of your household members confined in a hospital during the past 6 months? &nbsp;·&nbsp; 130. For the most recent hospitalization, what type of hospital? &nbsp;·&nbsp; 131. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under NBB?</p><ul class="opts radio"><li>Q129: Yes · No · I don't know</li><li>Q130: Public · DOH-retained hospital (sub-type of public hospital) · Private</li><li>Q131: Yes · No · I don't know</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-b-facility-profile.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-b-facility-profile.png" alt="CSEntry short single-select screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q129 is a Yes/No/Don't-know gate — <b>if Q129 = No or I don't know, the tablet jumps to Section M (Q132)</b>. Q130 is a 3-way single-select; <b>Q131 only fires when Q130 = DOH-retained hospital</b> (Public or Private bypass it).</p></div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — L</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p18.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p18.png" alt="Printed page 18 — F4 NBB Awareness" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p19.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p19.png" alt="Printed page 19 — F4 NBB Awareness" loading="lazy" /></a>
+              <p class="pcap">Pages 18–19 — No Balance Billing (NBB) Awareness and Utilization. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry single-select control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Yes/No/Don't-know awareness gate, check-box source and understanding lists, and a DOH-retained-only out-of-pocket follow-up.</p></div>
+          </div>
+        </div>
+
+        <div class="xsection">M. Zero Balance Billing (ZBB) Awareness + MAIFIP + Bill Breakdown</div>
+        <p class="banner" style="margin-top:0">Section M — <strong>Q132–Q143, paper pages 18–19</strong> — awareness of Zero Balance Billing and MAIFIP, plus a breakdown of the most recent hospital bill: most expensive charge, final amount paid, bill line items, and how it was paid.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q132–Q134</span><span class="qtitle">ZBB awareness, sources, and understanding</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">132. Have you heard of the Zero Balance Billing (ZBB)? &nbsp;·&nbsp; 133. If yes, what are your sources of information about ZBB? &nbsp;·&nbsp; 134. What is your understanding about ZBB?</p><ul class="opts radio"><li>Q132: Yes · No · I don't know</li><li>Q133 (check all): News · Legislation · Social Media · Friends / Family · Health center/facility · LGU/Barangay · I don't know · Other (Specify)</li><li>Q134 (check all): Patient does not pay any hospital bill · Bills are settled between the hospital and PhilHealth · PhilHealth will cover cost of treatment · Patients should not be charged extra fees · Medicine and service are already included · No cash payment required upon discharge · Applies only to certain patients or hospitals · I don't know · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No/Don't-know single-select screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q132 is a Yes/No/Don't-know gate. <b>If Q132 = No or I don't know, the tablet bypasses Q133–Q135 and jumps to Q136 (MAIFIP)</b>. Q133 and Q134 are check-box multi-selects, each with a gated "Other (Specify)" text field.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q135–Q137</span><span class="qtitle">ZBB out-of-pocket and MAIFIP awareness</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">135. During your hospitalization in a DOH-retained hospital, did you or your family pay anything out-of-pocket before being discharged that should have been covered under ZBB? &nbsp;·&nbsp; 136. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? &nbsp;·&nbsp; 137. What are your sources of information about MAIFIP?</p><ul class="opts radio"><li>Q135: Yes · No · I don't know</li><li>Q136: Yes · No · I don't know</li><li>Q137 (check all): News · Legislation · Social Media · Friends / Family · Health center/facility · LGU/Barangay · I don't know · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No/Don't-know single-select screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q135 is the ZBB out-of-pocket follow-up. Q136 is a Yes/No/Don't-know MAIFIP gate — <b>if Q136 = No or I don't know, the tablet skips Q137 and goes to Q138</b>. Q137 is a check-box multi-select with a gated "Other (Specify)" field.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q138–Q140</span><span class="qtitle">Most expensive charge, final amount, recall of breakdown</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">138. From your most recent visit, which among the charges was the most expensive? &nbsp;·&nbsp; 139. From your most recent visit, what was the final amount you paid in cash at the hospital cashier upon discharge? (PHP) &nbsp;·&nbsp; 140. From your most recent visit, do you recall the breakdown of the bill?</p><ul class="opts radio"><li>Q138: Medicine · Laboratory Tests · Medical Supplies · Doctor's Fee · Other (Specify)</li><li>Q139: ______ PHP (numeric, up to 8 digits)</li><li>Q140: Yes · No</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry number-pad entry screen on the tablet" loading="lazy" /></a>
+              <p class="capi-cap">Q138 is a single-select; "Other (Specify)" (code 9) opens a gated text box. Q139 is a number-pad PHP amount. <b>Q140 is a Yes/No gate</b> for whether the bill breakdown is recalled, feeding the Q141 line-item list.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q141–Q143</span><span class="qtitle">Bill line items, no-receipt amount, and how it was paid</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">141. From your most recent visit, which of the following were included in the bill? &nbsp;·&nbsp; 141.1. From your recent visit, how much was charged for services with no receipts provided (i.e. Professional fees)? (PHP) &nbsp;·&nbsp; 142. From your most recent visit, do you recall how you paid for your bill? &nbsp;·&nbsp; 143. From your most recent visit, how did you pay?</p><ul class="opts radio"><li>Q141 (check all): Rooms &lt;for inpatients only&gt; · Doctor's Fee · Diagnostic or laboratory procedure · Medical equipment or supplies · Medicines or drugs · Non-medical expenses (e.g. hygiene kit) · Other expenses</li><li>Q141.1: ______ PHP (numeric, up to 8 digits)</li><li>Q142: Yes · No</li><li>Q143 (check all): Own income/ household income · PhilHealth · Private insurance / HMO · Loan · Sale of assets · Donations from charities / NGOs · Donations from LGUs / LGU programs · National Government Agencies (DSWD, etc.) · Paid by someone else · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Q141 and Q143 are check-box multi-selects (Q141 "Other expenses" has its own free-text; Q143 "Other (Specify)" is gated). Q141.1 is a number-pad PHP amount. <b>Q142 is a Yes/No gate — if Q142 = No, the tablet skips Q143 (how-paid) and moves to the next section.</b></p></div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — M</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p18.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p18.png" alt="Printed page 18 — F4 ZBB / MAIFIP" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p19.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p19.png" alt="Printed page 19 — F4 ZBB / MAIFIP" loading="lazy" /></a>
+              <p class="pcap">Pages 18–19 — Zero Balance Billing (ZBB) Awareness, MAIFIP, and Bill Breakdown. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-q3-q4-demographics.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-q3-q4-demographics.png" alt="CSEntry number-pad / single-select control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Awareness gates (ZBB, MAIFIP), check-box source/understanding/bill-item lists, PHP number-pad amounts, and Yes/No recall gates driving the bill-breakdown branches.</p></div>
+          </div>
+        </div>
+
+        <div class="xsection">N. Household Expenditures (WHO/SHA)</div>
+        <p class="banner" style="margin-top:0">Section N — <strong>Q144–Q185, paper pages 20–24</strong> — the WHO System of Health Accounts (SHA) expenditure module: food, non-food, and health-product item lists, each line capturing whether the item was consumed and the peso amounts (purchased and in-kind) over the relevant recall period.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q144–Q158</span><span class="qtitle">Food items (last week) + restaurant meals</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">144. Cereals (rice, flour, noodles, corn, etc.) &nbsp;·&nbsp; 148. Fish and other seafoods &nbsp;·&nbsp; 149. Any kind of meat and offal &nbsp;·&nbsp; 155. Water and non-alcoholic beverages &nbsp;·&nbsp; 156. Alcoholic beverages &nbsp;·&nbsp; 157. Sub-total (food, last week) [DO NOT ASK] &nbsp;·&nbsp; 158. Meals, snacks and beverages from restaurants (dine-in, take-out, deliveries)</p><ul class="opts radio"><li>Per item: Consumed? Yes / No · Amount purchased (PHP) · Estimated value in-kind (PHP)</li><li>Q157: auto-computed sub-total (PHP) — interviewer does not ask</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f4-capi-expenditure-grid.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-expenditure-grid.png" alt="CSEntry expenditure grid — one Amount-in-Pesos number-pad per line item (Q144 cereals shown) on the tablet" loading="lazy" /></a><p class="capi-cap"><b>An expenditure grid — one Amount-in-Pesos number-pad per item</b>; the form walks the food item list (Q144–Q156, last-week recall), capturing for each a Consumed Yes/No gate then purchased and in-kind peso amounts. <b>Q157 sub-total is auto-computed (DO NOT ASK) and Q158 restaurant meals follows on the same recall</b>.</p></div>
+          </div>
+          <div class="xnote"><span class="tag">CAPI differs</span><span>On paper this is a long grid the interviewer fills row by row; in CAPI it is one number-pad per line item with running validation.</span></div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q159–Q174</span><span class="qtitle">Non-food &amp; non-health items (week / month / 6-month / year recalls)</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">159. Smoking and smokeless tobacco products (last week) &nbsp;·&nbsp; 162. Utilities — electricity, water, refuse/sewage, fuels (last month) &nbsp;·&nbsp; 163. Passenger transportation incl. personal-vehicle fuel (last month) &nbsp;·&nbsp; 167. Housing (actual rentals, estimated rent if owned) &nbsp;·&nbsp; 169. Ready-made clothing and footwear (last 6 months) &nbsp;·&nbsp; 170. Educational services (last 12 months) &nbsp;·&nbsp; 173. Health insurance &nbsp;·&nbsp; 174. Other insurance (life, accident, travel)</p><ul class="opts radio"><li>Per item: Consumed? Yes / No · Amount purchased (PHP) · Estimated value in-kind (PHP)</li><li>Recall period varies by block: Q159 last week · Q160–Q167 last month · Q168–Q169 last 6 months · Q170–Q174 last 12 months</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f4-capi-expenditure-grid.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-expenditure-grid.png" alt="CSEntry expenditure grid — one Amount-in-Pesos number-pad per line item (Q144 cereals shown) on the tablet" loading="lazy" /></a><p class="capi-cap"><b>An expenditure grid — one Amount-in-Pesos number-pad per item</b>; the form walks the non-food list across four recall windows (week → month → 6-month → year), capturing a Consumed gate plus purchased and in-kind peso amounts for each. <b>The reference period is fixed per block by the form, so the interviewer cannot mismatch a recall window</b>.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q175–Q182</span><span class="qtitle">Health products &amp; services (12-month &amp; 6-month recalls)</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">175. Inpatient care services &nbsp;·&nbsp; 176. Emergency transportation and rescue services &nbsp;·&nbsp; 177. Total of 175 &amp; 176 (health, 12-month) [DO NOT ASK] &nbsp;·&nbsp; 178. Preventive services (immunization/vaccination, excl. cost of vaccine) &nbsp;·&nbsp; 179. Diagnostic and laboratory tests &nbsp;·&nbsp; 180. Assistive products (vision, hearing, mobility) &nbsp;·&nbsp; 181. Medical products (antigen tests, glucose meters, masks) &nbsp;·&nbsp; 182. Total of 178–181 (health, 6-month) [DO NOT ASK]</p><ul class="opts radio"><li>Per item: Consumed? Yes / No · Amount purchased (PHP) · Estimated value in-kind (PHP)</li><li>Q177, Q182: auto-computed sub-totals (PHP) — not asked</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f4-capi-expenditure-grid.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-expenditure-grid.png" alt="CSEntry expenditure grid — one Amount-in-Pesos number-pad per line item (Q144 cereals shown) on the tablet" loading="lazy" /></a><p class="capi-cap"><b>An expenditure grid — one Amount-in-Pesos number-pad per item</b>; the form walks the 12-month health items (Q175–Q176) then the 6-month items (Q178–Q181), capturing a Consumed gate plus peso amounts. <b>Q177 and Q182 sub-totals are auto-computed (DO NOT ASK) and inserted by the form, not keyed by the interviewer</b>.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q183–Q185</span><span class="qtitle">Health products &amp; services (last month) + final sub-total</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, incl. online &nbsp;·&nbsp; 184. Outpatient medical and dental services, incl. online, without overnight stay &nbsp;·&nbsp; 185. Total of 183 &amp; 184 (health, 1-month) [DO NOT ASK]</p><ul class="opts radio"><li>Per item: Consumed? Yes / No · Amount purchased (PHP) · Estimated value in-kind (PHP)</li><li>Q185: auto-computed sub-total (PHP) — not asked</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f4-capi-expenditure-grid.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-expenditure-grid.png" alt="CSEntry expenditure grid — one Amount-in-Pesos number-pad per line item (Q144 cereals shown) on the tablet" loading="lazy" /></a><p class="capi-cap"><b>An expenditure grid — one Amount-in-Pesos number-pad per item</b>; the form captures the last-month health items (Q183 medicines, Q184 outpatient) with a Consumed gate plus peso amounts. <b>Q185 sub-total is auto-computed (DO NOT ASK), closing the SHA expenditure module</b>.</p></div>
+          </div>
+        </div>
+
+        <div class="xpage">
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — N</div>
+          <div class="xpage-cols">
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p20.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p20.png" alt="Printed page 20 — F4 Household Expenditures" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p21.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p21.png" alt="Printed page 21 — F4 Household Expenditures" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p22.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p22.png" alt="Printed page 22 — F4 Household Expenditures" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p23.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p23.png" alt="Printed page 23 — F4 Household Expenditures" loading="lazy" /></a>
+<a class="page-img-link" href="/docs/img/f4-paper-p24.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p24.png" alt="Printed page 24 — F4 Household Expenditures" loading="lazy" /></a>
+              <p class="pcap">Pages 20–24 — Household Expenditures. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f4-capi-expenditure-grid.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-capi-expenditure-grid.png" alt="CSEntry expenditure grid — Amount-in-Pesos number-pad per line item on the tablet" loading="lazy" /></a>
+              <p class="pcap">Number-pad control — one peso amount per line item, walked across the food / non-food / health-product lists with running validation.</p></div>
+          </div>
+        </div>
+
+        <div class="xsection">O. Sources of Funds for Health</div>
+        <p class="banner" style="margin-top:0">Section O — <strong>Q186–Q196, paper page 25</strong> — how the household funds health spending (a Yes/No battery), willingness to set income aside, and which care is foregone for financial reasons.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q186–Q194</span><span class="qtitle">Funding sources used (Yes/No battery)</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">186. Current income of any household members &nbsp;·&nbsp; 187. Savings, pension &nbsp;·&nbsp; 188. Selling of household assets or goods (housing, land, animals, jewelry, appliances, machines) &nbsp;·&nbsp; 189. Borrowing from friends or relatives outside the household &nbsp;·&nbsp; 190. Borrowing from institutions &nbsp;·&nbsp; 191. Remittance or money gift &nbsp;·&nbsp; 192. Government assistance (DSWD, local, etc.) &nbsp;·&nbsp; 193. Donation from LGUs &nbsp;·&nbsp; 194. Other (specify)</p><ul class="opts radio"><li>Each Q186–Q194: Yes · No</li><li>Q194 Other: free-text box if Yes</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No control on the tablet" loading="lazy" /></a><p class="capi-cap">A Yes/No tap per funding source (Q186–Q194). <b>Q194 "Other" opens a gated free-text box only when the interviewer taps Yes</b>.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q195–Q196</span><span class="qtitle">Willingness to set income aside + foregone care</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">195. What portion of your household's monthly income would you be willing to set aside for health care if it reduced unexpected medical expenses? &nbsp;·&nbsp; 196. If your household chooses not to spend on health care for financial reasons, what kind of care do you usually forego?</p><ul class="opts radio"><li>Q195: None · Less than 1% · 1-3% · 4-6% · More than 6% · Don't know</li><li>Q196 (tick all): Doctor/consultation visit · Medicines or treatments · Laboratory tests / diagnostics · Hospital admission / inpatient care · Preventive care · Dental care · Other (please specify) · We do not forego care</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap">Q195 is a single-select list (six income-portion bands). <b>Q196 is a tick-all check-box (#638, converted from per-option Yes/No); "Other (please specify)" maps to code 99 and opens a gated text box, and "We do not forego care" is an ordinary option (no exclusivity enforced)</b>. Skip logic: any Q195 answer except "None" jumps past Q196 to Q197; only Q195 = "None" falls through to Q196.</p>
             </div>
           </div>
         </div>
-        <div class="xsection">J. Household Members' Health-Seeking Behavior</div>
+
         <div class="xpage">
-          <div class="xpage-head">Printed page ↔ CSEntry (tablet) — J. Household Members' Health-Seeking Behavior</div>
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — O</div>
           <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed page</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p14.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p14.png" alt="Printed page 14" loading="lazy" /></a>
-              <p class="pcap">page 14 of the printed questionnaire. Tap to open full size.</p>
-            </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for J. Household Members' Health-Seeking Behavior — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
-            </div>
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p25.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p25.png" alt="Printed page 25 — F4 Sources of Funds for Health" loading="lazy" /></a>
+              <p class="pcap">Page 25 — Sources of Funds for Health. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Yes/No funding battery (Q186–Q194), a single-select band for Q195, and a tick-all check-box for Q196.</p></div>
           </div>
         </div>
-        <div class="xsection">K. Experiences & Satisfaction with Referrals</div>
-        <div class="xpage">
-          <div class="xpage-head">Printed pages ↔ CSEntry (tablet) — K. Experiences & Satisfaction with Referrals</div>
-          <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed pages</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p15.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p15.png" alt="Printed page 15" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p16.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p16.png" alt="Printed page 16" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p17.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p17.png" alt="Printed page 17" loading="lazy" /></a>
-              <p class="pcap">pages 15–17 of the printed questionnaire. Tap to open full size.</p>
-            </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for K. Experiences & Satisfaction with Referrals — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
-            </div>
+
+        <div class="xsection">P. Financial Risk Protection: Incidence of Reduced/Delayed Care</div>
+        <p class="banner" style="margin-top:0">Section P — <strong>Q197–Q199, paper page 25</strong> — whether care was delayed or advice not followed for financial reasons, plus willingness-to-pay for a consultation.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q197–Q198</span><span class="qtitle">Delayed care &amp; advice not followed (Yes/No)</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">197. In the last 6 months, have you or your household member delayed seeking care for financial reasons? &nbsp;·&nbsp; 198. In the last 6 months, have you or your household member seen a doctor and not fully followed their advice (e.g., to buy prescribed medicine, go for follow-up, get additional diagnostics) for financial reasons?</p><ul class="opts radio"><li>Q197: Yes · No</li><li>Q198: Yes · No</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-uhc-entry.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-uhc-entry.png" alt="CSEntry Yes/No control on the tablet" loading="lazy" /></a><p class="capi-cap">A Yes/No tap for each (Q197 delayed care, Q198 advice not followed). <b>Both are always asked — no skip gate between them</b>.</p></div>
           </div>
         </div>
-        <div class="xsection">L. NBB · M. ZBB Awareness & Utilization</div>
-        <div class="xpage">
-          <div class="xpage-head">Printed pages ↔ CSEntry (tablet) — L. NBB · M. ZBB Awareness & Utilization</div>
-          <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed pages</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p18.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p18.png" alt="Printed page 18" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p19.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p19.png" alt="Printed page 19" loading="lazy" /></a>
-              <p class="pcap">pages 18–19 of the printed questionnaire. Tap to open full size.</p>
-            </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for L. NBB · M. ZBB Awareness & Utilization — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
-            </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q199</span><span class="qtitle">Willingness-to-pay for a consultation</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">199. The usual price for a consultation ranges from Php 500 to Php 2,000. What is the highest amount you are willing to pay for a consultation?</p><ul class="opts radio"><li>Php 0 – Php 249 · Php 250 – Php 499 · Php 500 – Php 999 · Php 1,000 – Php 1249 · Php 1,250 – Php 1499 · Php 1,500 – Php 1749 · Php 1,750 – Php 1999 · Php 2,000 and above · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select list control on the tablet" loading="lazy" /></a><p class="capi-cap">A single-select list of nine price bands. <b>Selecting "Other (Specify)" opens a gated free-text box for the amount; the rest of the bands skip straight past it</b>.</p></div>
           </div>
         </div>
-        <div class="xsection">N. Household Expenditures (Food · Non-food · Health products)</div>
+
         <div class="xpage">
-          <div class="xpage-head">Printed pages ↔ CSEntry (tablet) — N. Household Expenditures (Food · Non-food · Health products)</div>
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — P</div>
           <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed pages</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p20.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p20.png" alt="Printed page 20" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p21.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p21.png" alt="Printed page 21" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p22.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p22.png" alt="Printed page 22" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p23.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p23.png" alt="Printed page 23" loading="lazy" /></a>
-<a class="page-img-link" href="/docs/img/f4-paper-p24.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p24.png" alt="Printed page 24" loading="lazy" /></a>
-              <p class="pcap">pages 20–24 of the printed questionnaire. Tap to open full size.</p>
-            </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for N. Household Expenditures (Food · Non-food · Health products) — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
-            </div>
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p25.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p25.png" alt="Printed page 25 — F4 Financial Risk Protection" loading="lazy" /></a>
+              <p class="pcap">Page 25 — Financial Risk Protection. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry single-select list control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Two Yes/No taps (Q197–Q198) and a single-select willingness-to-pay band list (Q199) with a gated Other box.</p></div>
           </div>
         </div>
-        <div class="xsection">O. Sources of Funds · P. Financial Risk Protection</div>
-        <div class="xpage">
-          <div class="xpage-head">Printed page ↔ CSEntry (tablet) — O. Sources of Funds · P. Financial Risk Protection</div>
-          <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed page</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p25.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p25.png" alt="Printed page 25" loading="lazy" /></a>
-              <p class="pcap">page 25 of the printed questionnaire. Tap to open full size.</p>
-            </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for O. Sources of Funds · P. Financial Risk Protection — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
-            </div>
-          </div>
-        </div>
+
         <div class="xsection">Q. Anxiety about Household Finances</div>
+        <p class="banner" style="margin-top:0">Section Q — <strong>Q200–Q202, paper page 26</strong> — the closing module on reduced spending, financial worry, and reasons for worry.</p>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q200–Q201</span><span class="qtitle">Reduced spending &amp; level of worry (rating scales)</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">200. Have you or your household had to reduce spending on things you need (such as food, housing, or utilities) because of this health expenditure in the last 1 month? &nbsp;·&nbsp; 201. How worried are you about your household's finances in the next 1 month?</p><ul class="opts radio"><li>Q200: Yes · No · Don't know · Refused to answer</li><li>Q201: Very worried · Somewhat worried · Not too worried · Not worried at all</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4><a class="capi-shot-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry rating-scale single-select control on the tablet" loading="lazy" /></a><p class="capi-cap">Each is a single-select rating scale. <b>Skip logic: Q200 "Refused to answer" ends the survey; Q201 "Not worried at all" ends the survey, bypassing Q202</b>.</p></div>
+          </div>
+        </div>
+
+        <div class="xrow">
+          <div class="xrow-head"><span class="qbadge">Q202</span><span class="qtitle">Reasons for worry (tick-all)</span></div>
+          <div class="xcols">
+            <div class="xcol paper"><h4>On paper</h4><p class="qtext">202. Do any of the following reasons describe why you are worried about your household's finances in the next 1 month?</p><ul class="opts radio"><li>Loss of income · Healthcare costs related to coronavirus (COVID-19) · Healthcare costs NOT related to coronavirus (COVID-19) · Other (Specify)</li></ul></div>
+            <div class="xcol capi"><h4>On the tablet (CAPI)</h4>
+              <a class="capi-shot-link" href="/docs/img/f4-capi-checkbox.png" target="_blank" rel="noopener"><img class="capi-img" src="/docs/img/f4-capi-checkbox.png" alt="CSEntry check-box multi-select &mdash; tick all that apply (live tablet capture; CSEntry renders this control identically across instruments)" loading="lazy" /></a>
+              <p class="capi-cap"><b>A tick-all check-box (#668, converted from select_all); "Other (Specify)" maps to code 99 (#686) and opens a gated text box</b>. Q202 is only reached when Q201 is more worried than "Not worried at all" — otherwise the survey has already ended.</p>
+            </div>
+          </div>
+        </div>
+
         <div class="xpage">
-          <div class="xpage-head">Printed page ↔ CSEntry (tablet) — Q. Anxiety about Household Finances</div>
+          <div class="xpage-head">End of section — printed pages ↔ CSEntry (tablet) — Q</div>
           <div class="xpage-cols">
-            <div class="xpage-col paper">
-              <h4>The real printed page</h4>
-              <a class="page-img-link" href="/docs/img/f4-paper-p26.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p26.png" alt="Printed page 26" loading="lazy" /></a>
-              <p class="pcap">page 26 of the printed questionnaire. Tap to open full size.</p>
-            </div>
-            <div class="xpage-col capi">
-              <h4>CSEntry (tablet)</h4>
-              <div class="flow-ph" role="img" aria-label="CSEntry (tablet) for Q. Anxiety about Household Finances — pending">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2" stroke-linecap="round"/></svg>
-                <span class="ph">Screens pending</span>
-              </div>
-              <p class="pcap">The run of CSEntry screens for this section, captured on the tablet.</p>
-            </div>
+            <div class="xpage-col paper"><h4>The real printed pages</h4>
+              <a class="page-img-link" href="/docs/img/f4-paper-p26.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f4-paper-p26.png" alt="Printed page 26 — F4 Anxiety about Household Finances" loading="lazy" /></a>
+              <p class="pcap">Page 26 — Anxiety about Household Finances. Tap to open full size.</p></div>
+            <div class="xpage-col capi"><h4>CSEntry (tablet)</h4>
+              <a class="page-img-link" href="/docs/img/f1-capi-c-attribution.png" target="_blank" rel="noopener"><img class="page-img" src="/docs/img/f1-capi-c-attribution.png" alt="CSEntry rating-scale single-select control on the tablet" loading="lazy" /></a>
+              <p class="pcap">Two single-select rating scales (Q200–Q201) with survey-ending skips, and a tick-all check-box for reasons (Q202).</p></div>
           </div>
         </div>
     </div></main>

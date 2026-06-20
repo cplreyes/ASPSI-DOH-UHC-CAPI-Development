@@ -103,16 +103,55 @@ FORM_PLAN = [
      [("E_PRIMARY_CARE", None)]),
     ("F. Health-Seeking",
      [("F_HEALTH_SEEKING", None)]),
+    # Option B fan-out (2026-06-19): Section G is split around SIX cost-matrix rosters.
+    # Each tick-list ends a host fragment; its roster grid renders next; then the next
+    # fragment. Order must match _split_host_with_rosters (Q92/Q94/Q96/Q97.1/Q97.2/Q98).
     ("G. Outpatient Care",
      [("G_OUTPATIENT_CARE", None)]),
-    # Option B (pilot): the Q92 payment roster renders as its own grid form between the
-    # Q92_SOURCES tick-list (end of G) and Q93 (start of G-cont).
     ("G. Cost of consultation — amount by source",
      [("Q92_PAY_ROSTER", None)]),
     ("G. Outpatient Care (cont.)",
      [("G_OUTPATIENT_CARE_2", None)]),
+    ("G. Cost of laboratory test/s — amount by source",
+     [("Q94_PAY_ROSTER", None)]),
+    ("G. Outpatient Care (cont. 2)",
+     [("G_OUTPATIENT_CARE_3", None)]),
+    ("G. Cost of prescribed medicines — amount by source",
+     [("Q96_PAY_ROSTER", None)]),
+    ("G. Outpatient Care (cont. 3)",
+     [("G_OUTPATIENT_CARE_4", None)]),
+    ("G. Other items in outpatient bill — amount by category",
+     [("Q971_ROSTER", None)]),
+    ("G. Outpatient Care (cont. 4)",
+     [("G_OUTPATIENT_CARE_5", None)]),
+    ("G. Other expenses not in bill — amount by item",
+     [("Q972_PAY_ROSTER", None)]),
+    ("G. Outpatient Care (cont. 5)",
+     [("G_OUTPATIENT_CARE_6", None)]),
+    ("G. Sources of money for medical costs — amount by source",
+     [("Q98_PAY_ROSTER", None)]),
+    ("G. Outpatient Care (cont. 6)",
+     [("G_OUTPATIENT_CARE_7", None)]),
+    # Option B fan-out (2026-06-19): Section H is split around FOUR cost-matrix rosters
+    # (Q107/Q109/Q112/Q113). Same interleave order as _split_host_with_rosters.
     ("H. Inpatient Care",
      [("H_INPATIENT_CARE", None)]),
+    ("H. Total bill for confinement — amount by source",
+     [("Q107_PAY_ROSTER", None)]),
+    ("H. Inpatient Care (cont.)",
+     [("H_INPATIENT_CARE_2", None)]),
+    ("H. Medicines bought outside — amount by source",
+     [("Q109_PAY_ROSTER", None)]),
+    ("H. Inpatient Care (cont. 2)",
+     [("H_INPATIENT_CARE_3", None)]),
+    ("H. Services done outside — amount by source",
+     [("Q112_PAY_ROSTER", None)]),
+    ("H. Inpatient Care (cont. 3)",
+     [("H_INPATIENT_CARE_4", None)]),
+    ("H. Hospital bill — amount by source",
+     [("Q113_PAY_ROSTER", None)]),
+    ("H. Inpatient Care (cont. 4)",
+     [("H_INPATIENT_CARE_5", None)]),
     ("I. Financial Risk",
      [("I_FINANCIAL_RISK", None)]),
     ("J. Satisfaction",
@@ -127,8 +166,15 @@ FORM_PLAN = [
     # photographs the completed visit, and the survey no longer opens with a
     # camera prompt. GPS stays early so it auto-locks while the form is worked.
     ("Case Verification Photo",
-     [("REC_CASE_VERIFICATION", None)]),
+     # VERIFICATION_PHOTO_IMAGE is a binary Image item (off-form by rule — binary
+     # items can't be placed on a form); the on-form trigger CAPTURE_VERIFICATION_PHOTO
+     # drives capture into it. Only the trigger + filename label go on the form.
+     [("REC_CASE_VERIFICATION", {"exclude": ["VERIFICATION_PHOTO_IMAGE"]})]),
 ]
+
+# Binary/computed items deliberately kept OFF every form (so the orphan check below
+# does not flag them). VERIFICATION_PHOTO_IMAGE holds the synced photo bytes.
+_OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE"}
 
 
 def _filter_items(items, spec):
@@ -258,6 +304,10 @@ _NO_AUTOGROUP_RECORDS = {
     "FIELD_CONTROL", "PATIENT_GEO_ID",
     "REC_FACILITY_CAPTURE", "REC_PATIENT_HOME_CAPTURE", "REC_CASE_VERIFICATION",
     "Q92_PAY_ROSTER",   # Option B (pilot): emitted as a roster grid, never auto-blocked
+    "Q971_ROSTER",      # Option B Shape B (2026-06-19): Q97.1 roster grid, never auto-blocked
+    # Option B fan-out (2026-06-19): the rest of the F3 cost-matrix cluster's roster grids.
+    "Q94_PAY_ROSTER", "Q96_PAY_ROSTER", "Q972_PAY_ROSTER", "Q98_PAY_ROSTER",   # Section G
+    "Q107_PAY_ROSTER", "Q109_PAY_ROSTER", "Q112_PAY_ROSTER", "Q113_PAY_ROSTER", # Section H
 }
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
 # Single alpha fields rendered as a CSPro Check Box (one-question multi-select tick-list).
@@ -289,6 +339,13 @@ _CHECKBOX_FIELDS = {
     "Q129_WHY_NO_MAIFIP",
     # Option B (pilot): the Q92 payment-source tick-list that drives the Q92_PAY_ROSTER.
     "Q92_SOURCES",
+    # Option B Shape B (capi-multiselect, 2026-06-19): the Q97.1 other-items tick-list
+    # driving the Q971_ROSTER amount grid (one row per ticked item).
+    "Q971_SOURCES",
+    # Option B fan-out (2026-06-19): the rest of the F3 cost-matrix cluster's tick-lists,
+    # each driving its own roster amount grid (miss any here -> ships single-select = loss).
+    "Q94_SOURCES", "Q96_SOURCES", "Q972_SOURCES", "Q98_SOURCES",        # Section G
+    "Q107_SOURCES", "Q109_SOURCES", "Q112_SOURCES", "Q113_SOURCES",     # Section H
 }
 _CHECKBOX_TRAILERS = ("_OTHER_TXT", "_MEDICINES_TXT")  # gated texts that share the checkbox screen
 MAX_CHUNK = 5                       # cap simple-question runs at ~5 per screen
@@ -504,7 +561,7 @@ def build_fmf():
             continue
         placed = record_items_consumed[rec_name]
         for it in rec["items"]:
-            if it["name"] not in placed:
+            if it["name"] not in placed and it["name"] not in _OFF_FORM_ITEMS:
                 orphans.append(f"{rec_name}.{it['name']}")
     if orphans:
         sys.stderr.write(f"WARNING: {len(orphans)} items not placed on any form:\n")

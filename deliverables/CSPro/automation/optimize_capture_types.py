@@ -90,6 +90,14 @@ CHECKBOX = {"Q148_CONDITIONS",
             # F3 Option B (pilot 2026-06-18): Q92 payment-source tick-list driving the
             # Q92_PAY_ROSTER amount grid.
             "Q92_SOURCES",
+            # F3 Option B Shape B (2026-06-19): Q97.1 other-items tick-list driving the
+            # Q971_ROSTER amount grid (else it ships single-select = multi-select data loss).
+            "Q971_SOURCES",
+            # F3 Option B fan-out (2026-06-19): the rest of the F3 cost-matrix cluster's
+            # tick-lists driving their roster amount grids. Miss any here and optimize
+            # demotes it to single-select DropDown = multi-select data loss (silent).
+            "Q94_SOURCES", "Q96_SOURCES", "Q972_SOURCES", "Q98_SOURCES",       # Section G
+            "Q107_SOURCES", "Q109_SOURCES", "Q112_SOURCES", "Q113_SOURCES",    # Section H
             # F4 #529 conversions (17 'Household Survey' select_all -> Check Box).
             # Note: Q53/Q58/Q121 names overlap F3's set but are distinct fields per
             # instrument (this is a single shared name set keyed only by field name;

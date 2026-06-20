@@ -82,6 +82,11 @@ FORM_PLAN = [
      [("C_HOUSEHOLD_ROSTER", None)]),
     ("C. HH Private Insurance Gate (Q47)",
      [("C_HH_PRIVATE_INS_GATE", None)]),
+    # #525/#612/#613: Q48-Q50 private-insurance block is a SEPARATE per-member pass
+    # asked only when Q47 = Yes (the Q47 postproc skips this whole form to Q51 otherwise).
+    # Member names are piped from the household roster (generate_qsf), not re-entered.
+    ("C. Private Insurance Q48-Q50 - REPEATING (Q47=Yes; piped names)",
+     [("C_PRIVATE_INS_ROSTER", None)]),
     ("D. UHC Awareness",
      [("D_UHC_AWARENESS", None)]),
     ("E. YAKAP / Konsulta",
@@ -116,8 +121,15 @@ FORM_PLAN = [
     # photographs the completed visit, and the survey no longer opens with a
     # camera prompt. HH GPS stays early so it auto-locks while the form is worked.
     ("Case Verification Photo",
-     [("REC_CASE_VERIFICATION", None)]),
+     # VERIFICATION_PHOTO_IMAGE is a binary Image item (off-form by rule — binary
+     # items can't be placed on a form); the on-form trigger CAPTURE_VERIFICATION_PHOTO
+     # drives capture into it. Only the trigger + filename label go on the form.
+     [("REC_CASE_VERIFICATION", {"exclude": ["VERIFICATION_PHOTO_IMAGE"]})]),
 ]
+
+# Binary/computed items deliberately kept OFF every form (so the orphan check below
+# does not flag them). VERIFICATION_PHOTO_IMAGE holds the synced photo bytes.
+_OFF_FORM_ITEMS = {"VERIFICATION_PHOTO_IMAGE"}
 
 
 def _filter_items(items, spec):
@@ -238,6 +250,7 @@ NAMED_BLOCKS = [
 # (emitted as a roster, never blocked) are NOT auto-grouped.
 _NO_AUTOGROUP_RECORDS = {
     "FIELD_CONTROL", "HOUSEHOLD_GEO_ID", "REC_CASE_VERIFICATION", "C_HOUSEHOLD_ROSTER",
+    "C_PRIVATE_INS_ROSTER",   # #525/#612/#613: emit as a roster, never auto-blocked
 }
 _MULTISELECT_RE = re.compile(r"^(.+?)_O\d+$")
 # Single alpha fields rendered as a CSPro Check Box (one-question multi-select tick-list).
@@ -259,6 +272,35 @@ _CHECKBOX_FIELDS = {
     "Q141_BILL_ITEMS", "Q143_HOW_PAID",   # #615/#616 Section M bill
     "Q196_FOREGONE", "Q202_WORRY_REASONS",   # #638/#668 Section O/Q (without this they render as DropDown/RadioButton = single-select data loss)
 }
+# #708/#709 combined-view: a Section N WHO/SHA expenditure item is the fixed triplet
+# {base}_CONSUMED, {base}_PURCHASED_PHP, {base}_INKIND_PHP (see generate_dcf
+# _expenditure_item). Testers want all three on ONE screen, but the gate that zeroes the
+# amounts when not consumed makes _PURCHASED_PHP a skip SOURCE, so the generic chunk loop
+# splits the triplet across pages (CONSUMED+PURCHASED on one screen, INKIND on the next).
+# _expenditure_triplet recognizes the triplet by name and forces it into ONE DG block,
+# bypassing the gate-split (mirrors how NAMED_BLOCKS force a fixed grouping). The amount
+# gate is DG-safe because it's now driven from the _CONSUMED POSTPROC with protect()+set-0
+# (no `skip to` inside the block) — see generate_apc.expenditure_gate_procs. The
+# *_SUBTOTAL_TOTAL_PHP fields are NOT part of a triplet and stay standalone (#617).
+_EXP_AMT_SUFFIXES = ("_PURCHASED_PHP", "_INKIND_PHP")
+
+
+def _expenditure_triplet(items, i):
+    """If items[i] is a {base}_CONSUMED immediately followed by {base}_PURCHASED_PHP and
+    {base}_INKIND_PHP (same base, contiguous), return the 3 item objs; else None."""
+    nm = items[i]["name"]
+    if not nm.endswith("_CONSUMED"):
+        return None
+    base = nm[: -len("_CONSUMED")]
+    if i + 3 > len(items):
+        return None
+    expected = [base + suf for suf in _EXP_AMT_SUFFIXES]
+    got = [items[i + 1]["name"], items[i + 2]["name"]]
+    if got != expected:
+        return None
+    return [items[i], items[i + 1], items[i + 2]]
+
+
 MAX_CHUNK = 5
 _RUN_BLOCK_CAP = 22     # a real multi-select up to ~22 options is one checklist screen;
                         # an amount matrix (run has _AMT siblings) or a longer run is chunked.
@@ -358,6 +400,17 @@ def derive_block_plan(dictionary, sources=frozenset(), targets=frozenset(), gate
                 # the value read-only, auto-advances), so the total is computed before its range is
                 # validated. The chunk-break below keeps neighbours off the same screen as it.
                 i += 1
+                continue
+            triplet = _expenditure_triplet(items, i)
+            if triplet:
+                # #708/#709: force the WHO/SHA expenditure triplet onto ONE DG screen,
+                # overriding the chunk loop's gate-split (the _PURCHASED_PHP skip-source
+                # would otherwise end the screen before _INKIND_PHP). The DG block is safe
+                # because the amount gate moved to the _CONSUMED postproc (protect()+set-0,
+                # no `skip to`); the subtotal fields are never part of a triplet and stay
+                # standalone above. Label by the item's Q-number.
+                emit(triplet, (_qnum(triplet[0]) and f"Q{_qnum(triplet[0])}") or None)
+                i += 3
                 continue
             ms = _MULTISELECT_RE.match(nm)
             if _is_gated_text(nm, gated) or nm in _CHECKBOX_FIELDS:
@@ -499,7 +552,7 @@ def build_fmf():
             continue
         placed = record_items_consumed[rec_name]
         for it in rec["items"]:
-            if it["name"] not in placed:
+            if it["name"] not in placed and it["name"] not in _OFF_FORM_ITEMS:
                 orphans.append(f"{rec_name}.{it['name']}")
     if orphans:
         sys.stderr.write(f"WARNING: {len(orphans)} items not placed on any form:\n")

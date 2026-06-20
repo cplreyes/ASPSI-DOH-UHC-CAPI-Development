@@ -191,6 +191,27 @@ def alpha(name, label, length=50):
     }
 
 
+def image(name, label):
+    """Binary Image dictionary item (CSPro 8.0 'Image' data type).
+
+    Captured in logic via ITEM.takePhoto() + ITEM.resample(); the JPG BYTES are
+    stored INSIDE the case, so they travel with the case during synchronization
+    and are downloadable from CSWeb (Data tab -> PFF -> Data Viewer thumbnail).
+    This is the supported path: loose Image.save("file.jpg") files are NOT synced
+    by CSWeb (case sync moves record items, not app-folder files) — the reason
+    R4 #713 saw "no picture retained by the system."
+
+    Binary items carry no fixed-width length/position (they are stored out of the
+    record) and CANNOT be placed on a form — drive capture from an on-form trigger
+    field's logic, and EXCLUDE this item from the .fmf form-field list.
+    """
+    return {
+        "name": name,
+        "labels": [{"text": label}],
+        "contentType": "image",
+    }
+
+
 def yes_no(name, label):
     return numeric(name, label, length=1, value_set_options=YES_NO)
 
@@ -390,28 +411,44 @@ def _gps_fields(prefix=""):
 
 
 def _photo_block(prefix=""):
-    """Verification-photo filename item + capture-trigger button.
+    """Verification-photo capture block: binary Image item + filename label + trigger.
 
-    The .app's onfocus handler calls `TakeVerificationPhoto()` from
-    shared/Capture-Helpers.apc, which launches the camera, resamples,
-    and saves the JPG to tablet storage. The saved filename is assigned
-    to the alpha item; CSWeb syncs the file itself via CSEntry's
-    attachment mechanism (not as a dictionary binary item — that class
-    is flagged experimental in CSPro 8.0 and avoided for MVP).
+    The on-form trigger field (CAPTURE_VERIFICATION_PHOTO) drives capture from its
+    onfocus handler via `TakeVerificationPhoto()` (shared/Capture-Helpers.apc), which
+    launches the camera, resamples, and stores the JPG BYTES into the binary Image
+    item VERIFICATION_PHOTO_IMAGE. Because the bytes live inside the case, they sync
+    to CSWeb and are downloadable there (Data Viewer thumbnail).
+
+    R4 #713 root cause: the previous design saved the photo to a LOOSE FILE on the
+    tablet and stored only the filename string — loose files are not synced by CSWeb,
+    so the image never reached the server. The binary Image item fixes that.
+
+    Item roles:
+    - VERIFICATION_PHOTO_IMAGE   binary Image, OFF-FORM (binary items can't be on a
+                                 form) — holds the actual photo, syncs to CSWeb.
+    - VERIFICATION_PHOTO_FILENAME alpha — human-readable label + the "already captured"
+                                 sentinel the trigger's onfocus guards on.
+    - CAPTURE_VERIFICATION_PHOTO  on-form numeric trigger whose onfocus fires capture.
+
+    NB: the .fmf form-field list MUST exclude VERIFICATION_PHOTO_IMAGE (F3/F4
+    generate_fmf use a {"exclude": [...]} spec; F1's static .fmf never references it),
+    and verify_questions treats it as a KNOWN_OFFFORM item.
 
     Parameters
     ----------
     prefix : str
-        Optional prefix. Default "" emits
+        Optional prefix. Default "" emits VERIFICATION_PHOTO_IMAGE +
         VERIFICATION_PHOTO_FILENAME + CAPTURE_VERIFICATION_PHOTO.
 
     Returns
     -------
     list of dict
-        [FILENAME_ALPHA, CAPTURE_TRIGGER]
+        [IMAGE_BINARY, FILENAME_ALPHA, CAPTURE_TRIGGER]
     """
     capture_vs = [("Take verification photo", "1")]
     return [
+        image(f"{prefix}VERIFICATION_PHOTO_IMAGE",
+              "Verification Photo (binary; syncs to CSWeb)"),
         alpha(f"{prefix}VERIFICATION_PHOTO_FILENAME",
               "Verification Photo Filename", length=120),
         numeric(f"{prefix}CAPTURE_VERIFICATION_PHOTO",

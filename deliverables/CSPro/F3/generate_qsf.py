@@ -281,19 +281,36 @@ _QNUM = re.compile(r"^Q(\d{1,3})_")
 # is the cover-level facility field, in scope for the whole case, so ~~FACILITY_NAME~~
 # renders the captured name in the prompt (every language). Double tilde = plain-text
 # fill (FACILITY_NAME has no HTML to preserve).
-_FACILITY_PLACEHOLDER_RE = re.compile(r"\[?\bfacility_name_input\b\]?", re.IGNORECASE)
+# #550: import the canonical facility-placeholder pattern from generate_dcf so the qsf FILL
+# and #714's bold-header NEUTRALIZATION recognise exactly the same tokens — crucially the
+# regional-dialect variants the translators used ([ngaran han/kan pasilidad], [igbutang an
+# ngaran han pasilidad], [FACILITY_NGARAN_INPUT]). This was an EN-only copy that had DRIFTED
+# from generate_dcf's pattern, so those dialect placeholders leaked literally into the
+# translated prompts instead of becoming the ~~FACILITY_NAME~~ fill. Single source of truth
+# now: add any new dialect variant in generate_dcf only and both paths pick it up.
+from generate_dcf import _FACILITY_PLACEHOLDER_RE
 # Patient-type piping (#485): the Section J script reads "...as an [inpatient] o/or
 # [outpatient]...". Pipe the captured PATIENT_TYPE value label (Outpatient/Inpatient)
-# via getvaluelabel so the enumerator sees the actual type. [date_formatted] is left
-# as-is (ambiguous which date field, and the tester asked only for facility + type).
+# via getvaluelabel so the enumerator sees the actual type.
 _PATIENT_TYPE_PAIR_RE = re.compile(
     r"\[inpatient\]\s*(?:o|or)\s*\[outpatient\]|\[outpatient\]\s*(?:o|or)\s*\[inpatient\]",
     re.IGNORECASE)
+# Date piping (#550 / Carl 2026-06-20): the Section J satisfaction intro reads "...we invited
+# you to participate in our survey on [date_formatted]". Pipe the SYSTEM (interview) date — it
+# is always available when the prompt renders (DATE_FINAL_VISIT is entered later, at case-end,
+# so it would be blank here) and matches the semantics (the invitation is happening today).
+# sysdate(format) returns an INTEGER, so wrap it in edit() to render a formatted string:
+# edit("99/99/9999", sysdate("MMDDYYYY")) -> "06/15/2026". NB: a fill's sysdate re-evaluates
+# whenever the case is viewed, so a reopened case shows the reopen date — acceptable for this
+# informational reminder line.
+_DATE_FORMATTED_RE = re.compile(r"\[?\bdate_formatted\b\]?", re.IGNORECASE)
+_DATE_FILL = '~~edit("99/99/9999", sysdate("MMDDYYYY"))~~'
 
 
 def _pipe_fills(text):
     text = _FACILITY_PLACEHOLDER_RE.sub("~~FACILITY_NAME~~", text)
     text = _PATIENT_TYPE_PAIR_RE.sub("~~getvaluelabel(PATIENT_TYPE)~~", text)
+    text = _DATE_FORMATTED_RE.sub(_DATE_FILL, text)
     return text
 
 
@@ -336,7 +353,13 @@ def build_extras(intro_q, instr, intro_here, lnm):
 
 
 def main():
-    d = json.loads(DCF.read_text(encoding="utf-8"))
+    # Build the dictionary from generate_dcf's builder + translations (placeholders INTACT),
+    # NOT from the written .dcf. #714 neutralizes [facility_name_input] -> "this facility" in the
+    # .dcf labels (for CSEntry's bold header, which can't render fills); but the qsf question text
+    # needs the raw placeholder so _pipe_fills can emit the ~~FACILITY_NAME~~ fill. Reading the
+    # neutralized .dcf dropped the facility fills (37 -> 8) on every regen — this decouples them.
+    from generate_dcf import build_f3_dictionary, apply_translations
+    d = apply_translations(build_f3_dictionary(), HERE / "translations")
     dict_name = d.get("name", "PATIENTSURVEY_DICT")
     langs = [(l["name"], l.get("label", l["name"]))
              for l in (d.get("languages") or [{"name": "EN", "label": "English"}])]
@@ -353,6 +376,8 @@ def main():
         for rec in lvl.get("records", []):
             for it in rec.get("items", []):
                 nm = it["name"]
+                if it.get("contentType") in ("image", "audio", "document", "geometry"):
+                    continue   # binary items: off-form, no question prompt (#713)
                 if nm in seen:
                     continue
                 seen.add(nm)

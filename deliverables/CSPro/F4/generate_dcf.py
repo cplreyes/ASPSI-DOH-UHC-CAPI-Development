@@ -61,9 +61,14 @@ def _cb_codes(options):
         # all checkbox bases), so this is a no-op for the 17 prior conversions.
         if "specif" in low:
             out.append((text, "99"))
-        elif low.startswith(("none", "no initiative", "no condition")) or is_dont_know:
-            # #642: 'No condition - Regular check-up only' (Q65) is a standalone exclusive
-            # -> 90 (only F4 option starting with 'no condition'); enforced via Q65 exclusive=True.
+        elif low.startswith(("none", "no initiative", "no condition",
+                              "not applicable", "did not seek")) or is_dont_know:
+            # #642: 'No condition - Regular check-up only' (Q65) standalone exclusive -> 90.
+            # #645: 'Not applicable' (Q74) and #655: 'Did not seek other forms of care' (Q107)
+            # are likewise standalone-exclusive — if N/A, or you sought no other care, no real
+            # option co-applies -> 90; enforced via each base's exclusive=True. Blast radius
+            # verified: within the F4 checkbox bases only Q74 carries 'not applicable' and only
+            # Q107 carries 'did not seek' (Q77's 'Not applicable' was removed in #647).
             out.append((text, "90"))
         else:
             n += 1
@@ -390,6 +395,12 @@ def build_section_c():
         ("Son/Daughter",                "03"),
         ("Brother/Sister",              "04"),
         ("Son-In-Law/Daughter-In-Law",  "05"),
+        # #602 (Carl go/no-go 2026-06-20): added parent- and sibling-in-law options. New
+        # codes 13/14 (appended, NOT renumbered) keep the existing 06-12 codes stable for
+        # already-collected/harmonization data; positioned here for grouped display next to
+        # the existing in-law option.
+        ("Father-In-Law/Mother-In-Law", "13"),
+        ("Brother-In-Law/Sister-In-Law","14"),
         ("Grandson/Granddaughter",      "06"),
         ("Father/Mother",               "07"),
         ("Nephew/Niece",                "08"),
@@ -518,19 +529,23 @@ def build_section_c():
         select_one("Q45_PHILHEALTH_REG",
                    "45. Currently registered with PhilHealth?",
                    YN_DK55, length=2),
+        # 45.1 (#565, Carl go/no-go 2026-06-20): per-member PhilHealth PIN registration
+        # date, asked ONLY when Q45 = Yes (the bespoke Q45 roster-skip in generate_apc jumps
+        # over Q45.1 + Q46 when Q45 <> Yes). Numeric YYYYMMDD -> optimize_capture_types gives
+        # it a calendar Date picker. NOTE: not present in the authoritative Apr 20 paper
+        # (Section C there is Q45 -> Q46); added on Carl's call from tester #565's revision.
+        numeric("Q45_1_PIN_REG_DATE",
+                "45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)",
+                length=8),
         select_one("Q46_MEMBER_CATEGORY",
                    "46. What is his/her membership category?",
                    Q46_MEMBER_CATEGORY, length=2),
         alpha("Q46_MEMBER_OTHER_TXT",
               "46. Member category — Other (specify) text", length=120),
-        # Private-insurance roster columns (Q48-Q50) — gated at HH level by Q47
-        alpha("Q48_NAME_FIRST",
-              "48. Name (First Name Only) — private insurance roster", length=80),
-        select_one("Q49_PRIVATE_INS",
-                   "49. Is (NAME) covered by a private health insurance either as a member or dependent? (Example: Maxicare, Intellicare, Pacific Cross Health Care)",
-                   YN_DK55, length=2),
-        alpha("Q50_PRIVATE_INS_OTHER_TXT",
-              "50. Others (Specify)", length=120),
+        # NOTE: the private-insurance block (Q48-Q50) moved OUT of this roster into its own
+        # record C_PRIVATE_INS_ROSTER (#525/#612/#613) — it is a SEPARATE per-member pass
+        # asked AFTER the Q47 HH-level gate, with the member name piped (no re-entry). The
+        # old Q48_NAME_FIRST name column is dropped (redundant with Q30_NAME, now piped).
     ]
     return record("C_HOUSEHOLD_ROSTER",
                   "C. Household Roster and Characteristics",
@@ -551,6 +566,49 @@ def build_section_c_gate():
     return record("C_HH_PRIVATE_INS_GATE",
                   "C. Household Private Insurance Gate (Q47)",
                   "T", items)
+
+
+# ------------------------------------------------------------
+# Q48-Q50 private-insurance block (#525/#612/#613, Carl go/no-go 2026-06-20).
+# The Apr 20 paper renders this as a SEPARATE per-member table (its own Name +
+# Roster # column, rows 1-10) asked AFTER the Q47 HH-level gate. Implemented as
+# its own repeating record so it is an INDEPENDENT second pass over the same
+# members (tester Marriz #612: ask Q30-Q46 for all members, then Q47, then loop
+# Q48-Q50 with PIPED names — no name re-entry). PRIV_MEMBER_LINE_NO auto-iterates
+# this roster to exactly count(C_HOUSEHOLD_ROSTER) (see generate_apc
+# PRIV_ROSTER_PROCS); the member name is piped from C_HOUSEHOLD_ROSTER.Q30_NAME
+# by occurrence in generate_qsf. The build previously mislabeled this block's name
+# column as "Q48"; the paper's real Q48 is "registered with another health insurance
+# plan?" (#525/#613.1), restored below as Q48_OTHER_INS_REG.
+# ------------------------------------------------------------
+
+def build_section_c_private_ins():
+    YN_DK55 = [
+        ("Yes",          "01"),
+        ("No",           "02"),
+        ("I don't know", "55"),
+    ]
+    items = [
+        numeric("PRIV_MEMBER_LINE_NO",
+                "Household Member Line Number (private insurance)",
+                length=2, zero_fill=True),
+        select_one("Q48_OTHER_INS_REG",
+                   "48. Are you registered with another health insurance plan?",
+                   YN_DK55, length=2),
+        select_one("Q49_PRIVATE_INS",
+                   "49. Is (NAME) covered by a private health insurance either as a member or dependent? (Example: Maxicare, Intellicare, Pacific Cross Health Care)",
+                   YN_DK55, length=2),
+        alpha("Q50_PRIVATE_INS_OTHER_TXT",
+              "50. Others (Specify)", length=120),
+    ]
+    # Record-type code MUST be unique across the dictionary (A-S used by the sections,
+    # T = the gate, Z = verification, E = C_HOUSEHOLD_ROSTER). "U" is the next free code —
+    # using "E" (copied from the household roster) trips CSPro's "Record type value is not
+    # unique" on publish (Designer silently auto-reconciles it on save, hiding it from a
+    # raw-generated dcf; see 2026-06-20 in-law regen).
+    return record("C_PRIVATE_INS_ROSTER",
+                  "C. Private Health Insurance (Q48-Q50) — per member",
+                  "U", items, max_occurs=20, required=False)
 
 
 # ============================================================
@@ -1452,14 +1510,20 @@ def build_section_m():
 # ============================================================
 
 def _expenditure_item(prefix, label):
-    """Standard SHA triplet: consumed Y/N, purchased PHP, in-kind PHP."""
+    """Standard SHA triplet: consumed Y/N, purchased PHP, in-kind PHP.
+
+    #677 (Carl go/no-go 2026-06-20): a 'Don't know the amount' path — the enumerator enters
+    the sentinel 99999999 (the max for the length-8 field; must match generate_apc.DK_AMOUNT)
+    when the household cannot estimate an amount. It satisfies the consumed-needs-an-amount
+    validation (it is non-zero) and is EXCLUDED from the Section N subtotal sums
+    (subtotal_init_compute_procs)."""
     return [
         yes_no(f"{prefix}_CONSUMED",
                f"{label} — Consumed by household in reference period?"),
         numeric(f"{prefix}_PURCHASED_PHP",
-                f"{label} — Amount spent purchasing (PHP)", length=8),
+                f"{label} — Amount spent purchasing (PHP; enter 99999999 if don't know)", length=8),
         numeric(f"{prefix}_INKIND_PHP",
-                f"{label} — Estimated value in-kind / received / own-produce (PHP)", length=8),
+                f"{label} — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)", length=8),
     ]
 
 
@@ -1717,8 +1781,9 @@ def build_f4_dictionary():
         build_f4_case_verification(),
         build_section_a(),
         build_section_b(),
-        build_section_c(),       # Repeating: max_occurs=20 (Q30-Q46, Q48-Q50)
+        build_section_c(),       # Repeating: max_occurs=20 (Q30-Q46 + Q45.1)
         build_section_c_gate(),  # Non-repeating: Q47 HH-level gate
+        build_section_c_private_ins(),  # Repeating: Q48-Q50 (Q47=Yes), piped names
         build_section_d(),
         build_section_e(),
         build_section_f(),

@@ -2045,7 +2045,7 @@ questions:
           CEB: |
             <p>Ang ~~FACILITY_NAME~~ ba ang pasilidad nga kasagaran nimong adtoan para sa kinatibuk-ang mga problema sa panglawas?</p>
           WAR: |
-            <p>An [ngaran_han_pasilidad] ba an pasilidad nga kasagaran mo ginkakadtoan para han pankabug-osan nga mga kabaraka ha panlawas?</p>
+            <p>An ~~FACILITY_NAME~~ ba an pasilidad nga kasagaran mo ginkakadtoan para han pankabug-osan nga mga kabaraka ha panlawas?</p>
   - name: PATIENTSURVEY_DICT.Q67_WHY_THIS_FACILITY
     conditions:
       - questionText:
@@ -2594,7 +2594,7 @@ questions:
           FIL: |
             <p>Para sa mga susunod na tanong, magtatanong kami tungkol sa pinakahuling outpatient visit ng pasyente.</p><p>Bakit ka bumisita sa ~~FACILITY_NAME~~ para sa konsultasyon, payo, o paggamot?</p>
           BCL: |
-            <p>For the following questions, we will ask about the patient’s most current outpatient visit.</p><p>Ngata ika nagbisita [FACILITY_NGARAN_INPUT] para sa consultation o treatment?</p>
+            <p>For the following questions, we will ask about the patient’s most current outpatient visit.</p><p>Ngata ika nagbisita ~~FACILITY_NAME~~ para sa consultation o treatment?</p>
           BIS: |
             <p>For the following questions, we will ask about the patient’s most current outpatient visit.</p><p>Ngano nga mibisita ka sa ~~FACILITY_NAME~~ para sa konsultasyon/tambag o pagtambal?</p>
           CEB: |
@@ -2676,156 +2676,66 @@ questions:
             <p>Kasagaran ba ka mugamit og serbisyo sa konsultasyon para sa outpatient care?</p>
           WAR: |
             <p>Kasagaran ba nga nakakagamit ka hin mga serbisyo ha konsultasyon para ha pag-ataman ha gawas han pasyente?</p>
-  - name: PATIENTSURVEY_DICT.Q92_PAY_01
+  - name: PATIENTSURVEY_DICT.Q92_SOURCES
     conditions:
       - questionText:
           EN: |
-            <p>92. Cost of consultation — Out-of-pocket</p>
+            <p>92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)</p>
           FIL: |
-            <p>Magkano ang binayaran sa konsultasyon? — Mula sa sariling pera</p>
+            <p>92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)</p>
           BCL: |
-            <p>92. Cost of consultation — Out-of-pocket</p>
+            <p>92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)</p>
           BIS: |
-            <p>92. Cost of consultation — Out-of-pocket</p>
+            <p>92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p>
+            <p>92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)</p>
           WAR: |
-            <p>Kalugaringon nga gastos</p>
-  - name: PATIENTSURVEY_DICT.Q92_PAY_01_AMT
+            <p>92. Which of the following did you use to pay for the cost of consultation? (Tick all that apply.)</p>
+  - name: PATIENTSURVEY_DICT.Q92_PAY_LINE
     conditions:
       - questionText:
           EN: |
-            <p>92. Cost of consultation — Out-of-pocket (Amount in Pesos)</p>
+            <p>92. Payment row</p>
           FIL: |
-            <p>Magkano ang binayaran sa konsultasyon? — Mula sa sariling pera</p>
+            <p>92. Payment row</p>
           BCL: |
-            <p>92. Cost of consultation — Out-of-pocket (Amount in Pesos)</p>
+            <p>92. Payment row</p>
           BIS: |
-            <p>92. Cost of consultation — Out-of-pocket (Amount in Pesos)</p>
+            <p>92. Payment row</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p>
+            <p>92. Payment row</p>
           WAR: |
-            <p>92. Cost of consultation — Out-of-pocket (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q92_PAY_02
+            <p>92. Payment row</p>
+  - name: PATIENTSURVEY_DICT.Q92_PAY_SRC
     conditions:
       - questionText:
           EN: |
-            <p>92. Cost of consultation — Donation</p>
+            <p>92. Payment source (auto-filled from the ticked sources)</p>
           FIL: |
-            <p>Magkano ang binayaran sa konsultasyon? — Donasyon</p>
+            <p>92. Payment source (auto-filled from the ticked sources)</p>
           BCL: |
-            <p>Donasyon/Tinao</p>
+            <p>92. Payment source (auto-filled from the ticked sources)</p>
           BIS: |
-            <p>Donasyon</p>
+            <p>92. Payment source (auto-filled from the ticked sources)</p>
           CEB: |
-            <p>Donasyon</p>
+            <p>92. Payment source (auto-filled from the ticked sources)</p>
           WAR: |
-            <p>Donasyon</p>
-  - name: PATIENTSURVEY_DICT.Q92_PAY_02_AMT
+            <p>92. Payment source (auto-filled from the ticked sources)</p>
+  - name: PATIENTSURVEY_DICT.Q92_PAY_AMT
     conditions:
       - questionText:
           EN: |
-            <p>92. Cost of consultation — Donation (Amount in Pesos)</p>
+            <p>92. Amount paid for the consultation, by source (Pesos)</p>
           FIL: |
-            <p>Magkano ang binayaran sa konsultasyon? — Donasyon</p>
+            <p>92. Amount paid for the consultation, by source (Pesos)</p>
           BCL: |
-            <p>92. Cost of consultation — Donation (Amount in Pesos)</p>
+            <p>92. Amount paid for the consultation, by source (Pesos)</p>
           BIS: |
-            <p>92. Cost of consultation — Donation (Amount in Pesos)</p>
+            <p>92. Amount paid for the consultation, by source (Pesos)</p>
           CEB: |
-            <p>Donasyon</p>
+            <p>92. Amount paid for the consultation, by source (Pesos)</p>
           WAR: |
-            <p>92. Cost of consultation — Donation (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q92_PAY_03
-    conditions:
-      - questionText:
-          EN: |
-            <p>92. Cost of consultation — Free/no cost</p>
-          FIL: |
-            <p>Magkano ang binayaran sa konsultasyon? — Libre/Walang bayad</p>
-          BCL: |
-            <p>Libre/Wara ginastos</p>
-          BIS: |
-            <p>Libre / walay bayad</p>
-          CEB: |
-            <p>Libre/walay bayad</p>
-          WAR: |
-            <p>Libre/ waray bayad</p>
-  - name: PATIENTSURVEY_DICT.Q92_PAY_04
-    conditions:
-      - questionText:
-          EN: |
-            <p>92. Cost of consultation — Free, charge to PhilHealth</p>
-          FIL: |
-            <p>Magkano ang binayaran sa konsultasyon? — Libre, sagot ng PhilHealth</p>
-          BCL: |
-            <p>Libre, charge sa Philhealth</p>
-          BIS: |
-            <p>Libre, charge sa PhilHealth</p>
-          CEB: |
-            <p>Libre, gisingil sa PhilHealth</p>
-          WAR: |
-            <p>Libre, babaydan hit Philhealth</p>
-  - name: PATIENTSURVEY_DICT.Q92_PAY_05
-    conditions:
-      - questionText:
-          EN: |
-            <p>92. Cost of consultation — Free, charge to Private Insurance</p>
-          FIL: |
-            <p>Magkano ang binayaran sa konsultasyon? — Libre, sagot ng pribadong insurance</p>
-          BCL: |
-            <p>Libre, charge sa Insurance</p>
-          BIS: |
-            <p>Libre, charge sa Private Insurance</p>
-          CEB: |
-            <p>Libre, gisingil sa Private Insurance</p>
-          WAR: |
-            <p>Libre, babaydan hit Pribado nga Insurance</p>
-  - name: PATIENTSURVEY_DICT.Q92_PAY_06
-    conditions:
-      - questionText:
-          EN: |
-            <p>92. Cost of consultation — Free, charge to HMO</p>
-          FIL: |
-            <p>Magkano ang binayaran sa konsultasyon? — Libre, sagot ng HMO</p>
-          BCL: |
-            <p>Libre, charge sa HMO</p>
-          BIS: |
-            <p>Libre, charge sa HMO</p>
-          CEB: |
-            <p>Libre, gisingil sa HMO</p>
-          WAR: |
-            <p>Libre, babaydan hit HMO</p>
-  - name: PATIENTSURVEY_DICT.Q92_PAY_07
-    conditions:
-      - questionText:
-          EN: |
-            <p>92. Cost of consultation — In kind</p>
-          FIL: |
-            <p>Magkano ang binayaran sa konsultasyon? — Hindi pera ang ibinayad</p>
-          BCL: |
-            <p>Tabang kan ibang tawo</p>
-          BIS: |
-            <p>Dili kwarta ang bayad</p>
-          CEB: |
-            <p>In kind / Hinatag nga butang</p>
-          WAR: |
-            <p>Mga butang</p>
-  - name: PATIENTSURVEY_DICT.Q92_PAY_08
-    conditions:
-      - questionText:
-          EN: |
-            <p>92. Cost of consultation — Don't know</p>
-          FIL: |
-            <p>Magkano ang binayaran sa konsultasyon? — Hindi ko alam</p>
-          BCL: |
-            <p>Dai aram</p>
-          BIS: |
-            <p>Wala kabalo</p>
-          CEB: |
-            <p>Wala kahibalo</p>
-          WAR: |
-            <p>Diri ako maaram</p>
+            <p>92. Amount paid for the consultation, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q93_LABS
     conditions:
       - questionText:
@@ -2856,141 +2766,66 @@ questions:
             <p>93. Did you have any of the following laboratory tests done during your outpatient care? — Other (specify) text</p>
           WAR: |
             <p>93. Did you have any of the following laboratory tests done during your outpatient care? — Other (specify) text</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_01
+  - name: PATIENTSURVEY_DICT.Q94_SOURCES
     conditions:
       - questionText:
           EN: |
-            <p>94. Cost of laboratory test/s — Out-of-pocket</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           FIL: |
-            <p>Magkano ang binayaran para sa laboratory test/s? — Mula sa sariling pera</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BCL: |
-            <p>94. Cost of laboratory test/s — Out-of-pocket</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BIS: |
-            <p>94. Cost of laboratory test/s — Out-of-pocket</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           WAR: |
-            <p>Kalugaringon nga gastos</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_01_AMT
+            <p>94. Which of the following did you use to pay for the cost of laboratory test/s? (Tick all that apply.)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+  - name: PATIENTSURVEY_DICT.Q94_PAY_LINE
     conditions:
       - questionText:
           EN: |
-            <p>94. Cost of laboratory test/s — Out-of-pocket (Amount in Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           FIL: |
-            <p>Magkano ang binayaran para sa laboratory test/s? — Mula sa sariling pera</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BCL: |
-            <p>94. Cost of laboratory test/s — Out-of-pocket (Amount in Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BIS: |
-            <p>94. Cost of laboratory test/s — Out-of-pocket (Amount in Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           WAR: |
-            <p>94. Cost of laboratory test/s — Out-of-pocket (Amount in Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_02
+            <p>94. Payment row</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+  - name: PATIENTSURVEY_DICT.Q94_PAY_SRC
     conditions:
       - questionText:
           EN: |
-            <p>94. Cost of laboratory test/s — Donation</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           FIL: |
-            <p>Magkano ang binayaran para sa laboratory test/s? — Donasyon</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BCL: |
-            <p>Donasyon/Tinao</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BIS: |
-            <p>Donasyon</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           CEB: |
-            <p>Donasyon</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           WAR: |
-            <p>Donasyon</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_03
+            <p>94. Payment source (auto-filled from the ticked sources)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+  - name: PATIENTSURVEY_DICT.Q94_PAY_AMT
     conditions:
       - questionText:
           EN: |
-            <p>94. Cost of laboratory test/s — Free/no cost</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           FIL: |
-            <p>Magkano ang binayaran para sa laboratory test/s? — Libre/Walang bayad</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BCL: |
-            <p>Libre/Wara ginastos</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           BIS: |
-            <p>Libre / walay bayad</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           CEB: |
-            <p>Libre/walay bayad</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
           WAR: |
-            <p>Libre/waray bayad</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_04
-    conditions:
-      - questionText:
-          EN: |
-            <p>94. Cost of laboratory test/s — Free, charge to PhilHealth</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          FIL: |
-            <p>Magkano ang binayaran para sa laboratory test/s? — Libre, sagot ng PhilHealth</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          BCL: |
-            <p>Libre, charge sa Philhealth</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          BIS: |
-            <p>Libre, charge sa PhilHealth</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          CEB: |
-            <p>Libre, gisingil sa PhilHealth</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          WAR: |
-            <p>Libre, bayad hit Philhealth</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_05
-    conditions:
-      - questionText:
-          EN: |
-            <p>94. Cost of laboratory test/s — Free, charge to Private Insurance</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          FIL: |
-            <p>Magkano ang binayaran para sa laboratory test/s? — Libre, sagot ng pribadong insurance</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          BCL: |
-            <p>Libre, charge sa Insurance</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          BIS: |
-            <p>Libre, charge sa Private Insurance</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          CEB: |
-            <p>Libre, gisingil sa Private Insurance</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          WAR: |
-            <p>Libre, bayad hit Pribado nga Insurance</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_06
-    conditions:
-      - questionText:
-          EN: |
-            <p>94. Cost of laboratory test/s — Free, charge to HMO</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          FIL: |
-            <p>Magkano ang binayaran para sa laboratory test/s? — Libre, sagot ng HMO</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          BCL: |
-            <p>Libre, charge sa HMO</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          BIS: |
-            <p>Libre, charge sa HMO</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          CEB: |
-            <p>Libre, gisingil sa HMO</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          WAR: |
-            <p>Libre, bayad hit HMO</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_07
-    conditions:
-      - questionText:
-          EN: |
-            <p>94. Cost of laboratory test/s — In kind</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          FIL: |
-            <p>Magkano ang binayaran para sa laboratory test/s? — Hindi pera ang ibinayad</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          BCL: |
-            <p>Tabang kan ibang tawo</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          BIS: |
-            <p>Dili kwarta ang bayad</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          CEB: |
-            <p>In kind / Hinatag nga butang</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          WAR: |
-            <p>Mga butang</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-  - name: PATIENTSURVEY_DICT.Q94_PAY_08
-    conditions:
-      - questionText:
-          EN: |
-            <p>94. Cost of laboratory test/s — Don't know</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          FIL: |
-            <p>Magkano ang binayaran para sa laboratory test/s? — Hindi alam</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          BCL: |
-            <p>Dai aram</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          BIS: |
-            <p>Wala kabalo</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          CEB: |
-            <p>Wala kahibalo</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
-          WAR: |
-            <p>Diri ako maaram</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
+            <p>94. Amount paid for the laboratory test/s, by source (Pesos)</p><p class="instruction">To be asked for each lab test ticked in Q93.</p>
   - name: PATIENTSURVEY_DICT.Q95_PRESCRIBED
     conditions:
       - questionText:
@@ -3006,171 +2841,66 @@ questions:
             <p>Giresetahan ba ka og tambal human sa imong check-up?</p>
           WAR: |
             <p>Ginresetahan ka ba hin medisina/mga medisina kahuman han imo pag-check-up?</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_01
+  - name: PATIENTSURVEY_DICT.Q96_SOURCES
     conditions:
       - questionText:
           EN: |
-            <p>96. Amount spent for prescribed medicines — Out-of-pocket</p>
+            <p>96. Which of the following did you use to pay for the prescribed medicines? (Tick all that apply.)</p>
           FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Mula sa sariling pera</p>
+            <p>96. Which of the following did you use to pay for the prescribed medicines? (Tick all that apply.)</p>
           BCL: |
-            <p>96. Amount spent for prescribed medicines — Out-of-pocket</p>
+            <p>96. Which of the following did you use to pay for the prescribed medicines? (Tick all that apply.)</p>
           BIS: |
-            <p>96. Amount spent for prescribed medicines — Out-of-pocket</p>
+            <p>96. Which of the following did you use to pay for the prescribed medicines? (Tick all that apply.)</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p>
+            <p>96. Which of the following did you use to pay for the prescribed medicines? (Tick all that apply.)</p>
           WAR: |
-            <p>Kalugaringon nga gastos</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_01_AMT
+            <p>96. Which of the following did you use to pay for the prescribed medicines? (Tick all that apply.)</p>
+  - name: PATIENTSURVEY_DICT.Q96_PAY_LINE
     conditions:
       - questionText:
           EN: |
-            <p>96. Amount spent for prescribed medicines — Out-of-pocket (Amount in Pesos)</p>
+            <p>96. Payment row</p>
           FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Mula sa sariling pera</p>
+            <p>96. Payment row</p>
           BCL: |
-            <p>96. Amount spent for prescribed medicines — Out-of-pocket (Amount in Pesos)</p>
+            <p>96. Payment row</p>
           BIS: |
-            <p>96. Amount spent for prescribed medicines — Out-of-pocket (Amount in Pesos)</p>
+            <p>96. Payment row</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p>
+            <p>96. Payment row</p>
           WAR: |
-            <p>96. Amount spent for prescribed medicines — Out-of-pocket (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_02
+            <p>96. Payment row</p>
+  - name: PATIENTSURVEY_DICT.Q96_PAY_SRC
     conditions:
       - questionText:
           EN: |
-            <p>96. Amount spent for prescribed medicines — Free/no cost</p>
+            <p>96. Payment source (auto-filled from the ticked sources)</p>
           FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Libre/Walang bayad</p>
+            <p>96. Payment source (auto-filled from the ticked sources)</p>
           BCL: |
-            <p>Libre/Wara ginastos</p>
+            <p>96. Payment source (auto-filled from the ticked sources)</p>
           BIS: |
-            <p>Libre / walay bayad</p>
+            <p>96. Payment source (auto-filled from the ticked sources)</p>
           CEB: |
-            <p>Libre/walay bayad</p>
+            <p>96. Payment source (auto-filled from the ticked sources)</p>
           WAR: |
-            <p>Libre/waray bayad</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_03
+            <p>96. Payment source (auto-filled from the ticked sources)</p>
+  - name: PATIENTSURVEY_DICT.Q96_PAY_AMT
     conditions:
       - questionText:
           EN: |
-            <p>96. Amount spent for prescribed medicines — Free, charge to PhilHealth</p>
+            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
           FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Libre, sagot ng PhilHealth</p>
+            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
           BCL: |
-            <p>Libre, charge sa Philhealth</p>
+            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
           BIS: |
-            <p>Libre, charge sa PhilHealth</p>
+            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
           CEB: |
-            <p>Libre, gisingil sa PhilHealth</p>
+            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
           WAR: |
-            <p>Libre, babaydan hit PhilHealth</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_04
-    conditions:
-      - questionText:
-          EN: |
-            <p>96. Amount spent for prescribed medicines — Free, charge to Private Insurance</p>
-          FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Libre, sagot ng pribadong insurance</p>
-          BCL: |
-            <p>Libre, charge sa Insurance</p>
-          BIS: |
-            <p>Libre, charge sa Private Insurance</p>
-          CEB: |
-            <p>Libre, gisingil sa Private Insurance</p>
-          WAR: |
-            <p>Libre, babaydan hit Pribado nga Insurance</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_05
-    conditions:
-      - questionText:
-          EN: |
-            <p>96. Amount spent for prescribed medicines — Free, charge to HMO</p>
-          FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Libre, sagot ng HMO</p>
-          BCL: |
-            <p>Libre, charge sa HMO</p>
-          BIS: |
-            <p>Libre, charge sa HMO</p>
-          CEB: |
-            <p>Libre, gisingil sa HMO</p>
-          WAR: |
-            <p>Libre, babaydan hit HMO</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_06
-    conditions:
-      - questionText:
-          EN: |
-            <p>96. Amount spent for prescribed medicines — In kind</p>
-          FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Hindi pera ang ibinayad</p>
-          BCL: |
-            <p>Tabang kan ibang tawo</p>
-          BIS: |
-            <p>Dili kwarta ang bayad</p>
-          CEB: |
-            <p>In kind / Hinatag nga butang</p>
-          WAR: |
-            <p>Mga butang</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_06_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>96. Amount spent for prescribed medicines — In kind (Amount in Pesos)</p>
-          FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Hindi pera ang ibinayad</p>
-          BCL: |
-            <p>96. Amount spent for prescribed medicines — In kind (Amount in Pesos)</p>
-          BIS: |
-            <p>96. Amount spent for prescribed medicines — In kind (Amount in Pesos)</p>
-          CEB: |
-            <p>In kind / Hinatag nga butang</p>
-          WAR: |
-            <p>96. Amount spent for prescribed medicines — In kind (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_07
-    conditions:
-      - questionText:
-          EN: |
-            <p>96. Amount spent for prescribed medicines — Donation</p>
-          FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Donasyon</p>
-          BCL: |
-            <p>Donasyon/Tinao</p>
-          BIS: |
-            <p>Donasyon</p>
-          CEB: |
-            <p>Donasyon</p>
-          WAR: |
-            <p>Donasyon</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_07_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>96. Amount spent for prescribed medicines — Donation (Amount in Pesos)</p>
-          FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Donasyon</p>
-          BCL: |
-            <p>96. Amount spent for prescribed medicines — Donation (Amount in Pesos)</p>
-          BIS: |
-            <p>96. Amount spent for prescribed medicines — Donation (Amount in Pesos)</p>
-          CEB: |
-            <p>Donasyon</p>
-          WAR: |
-            <p>96. Amount spent for prescribed medicines — Donation (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q96_PAY_08
-    conditions:
-      - questionText:
-          EN: |
-            <p>96. Amount spent for prescribed medicines — Don't know</p>
-          FIL: |
-            <p>Magkano ang nagastos para sa mga iniresetang gamot ng pasyente? — Hindi ko alam</p>
-          BCL: |
-            <p>Dai aram</p>
-          BIS: |
-            <p>Wala kabalo</p>
-          CEB: |
-            <p>Wala kahibalo</p>
-          WAR: |
-            <p>Diri ako maaram</p>
+            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q97_FINAL_AMOUNT
     conditions:
       - questionText:
@@ -3186,126 +2916,66 @@ questions:
             <p>Unsa ang katapusang kantidad nga imong gibayran og cash para sa imong outpatient care?</p>
           WAR: |
             <p>Ano an katapusan nga kantidad nga imo ginbayad nga cash para han imo pag-ataman ha gawas?</p>
-  - name: PATIENTSURVEY_DICT.Q971_1
+  - name: PATIENTSURVEY_DICT.Q971_SOURCES
     conditions:
       - questionText:
           EN: |
-            <p>97.1 Other items included in the bill — Consultation Fee</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Which other items were included in your outpatient bill? (Tick all that apply.)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           FIL: |
-            <p>Bayad sa konsulta</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Which other items were included in your outpatient bill? (Tick all that apply.)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BCL: |
-            <p>97.1 Other items included in the bill — Consultation Fee</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Which other items were included in your outpatient bill? (Tick all that apply.)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BIS: |
-            <p>Bayad sa Konsultasyon</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Which other items were included in your outpatient bill? (Tick all that apply.)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           CEB: |
-            <p>Bayad sa Konsultasyon</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Which other items were included in your outpatient bill? (Tick all that apply.)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           WAR: |
-            <p>Bayad han Konsultasyon</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-  - name: PATIENTSURVEY_DICT.Q971_1_AMT
+            <p>97.1 Which other items were included in your outpatient bill? (Tick all that apply.)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+  - name: PATIENTSURVEY_DICT.Q971_PAY_LINE
     conditions:
       - questionText:
           EN: |
-            <p>97.1 Other items included in the bill — Consultation Fee (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           FIL: |
-            <p>Bayad sa konsulta</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BCL: |
-            <p>97.1 Other items included in the bill — Consultation Fee (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BIS: |
-            <p>97.1 Other items included in the bill — Consultation Fee (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           CEB: |
-            <p>Bayad sa Konsultasyon</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           WAR: |
-            <p>97.1 Other items included in the bill — Consultation Fee (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-  - name: PATIENTSURVEY_DICT.Q971_2
+            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+  - name: PATIENTSURVEY_DICT.Q971_PAY_SRC
     conditions:
       - questionText:
           EN: |
-            <p>97.1 Other items included in the bill — Medical equipment or supplies</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Category (auto-filled from the ticked items)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           FIL: |
-            <p>Medikal na kagamitan o suplay</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Category (auto-filled from the ticked items)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BCL: |
-            <p>97.1 Other items included in the bill — Medical equipment or supplies</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Category (auto-filled from the ticked items)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BIS: |
-            <p>Medical equipment o supplies</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Category (auto-filled from the ticked items)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           CEB: |
-            <p>Medikal nga kagamitan o suplay</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Category (auto-filled from the ticked items)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           WAR: |
-            <p>Mga gamit o mga suplay ha medisina</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-  - name: PATIENTSURVEY_DICT.Q971_2_AMT
+            <p>97.1 Category (auto-filled from the ticked items)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+  - name: PATIENTSURVEY_DICT.Q971_PAY_AMT
     conditions:
       - questionText:
           EN: |
-            <p>97.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           FIL: |
-            <p>Medikal na kagamitan o suplay</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BCL: |
-            <p>97.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BIS: |
-            <p>97.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           CEB: |
-            <p>Medikal nga kagamitan o suplay</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           WAR: |
-            <p>97.1 Other items included in the bill — Medical equipment or supplies (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-  - name: PATIENTSURVEY_DICT.Q971_3
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          FIL: |
-            <p>97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          BCL: |
-            <p>97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          BIS: |
-            <p>Non-medical expenses (pananglitan: hygiene kit)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          CEB: |
-            <p>Dili medikal nga galastohan (pananglitan, hygiene kit)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          WAR: |
-            <p>Mga gastos nga diri medikal: (pananglitan, kit ha kalimpyo)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-  - name: PATIENTSURVEY_DICT.Q971_3_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          FIL: |
-            <p>97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          BCL: |
-            <p>97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          BIS: |
-            <p>97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          CEB: |
-            <p>Dili medikal nga galastohan (pananglitan, hygiene kit)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          WAR: |
-            <p>97.1 Other items included in the bill — Non-medical expenses (e.g. Hygiene kit) (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-  - name: PATIENTSURVEY_DICT.Q971_4
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.1 Other items included in the bill — Other expenses</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          FIL: |
-            <p>Iba pang mga gastos</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          BCL: |
-            <p>97.1 Other items included in the bill — Other expenses</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          BIS: |
-            <p>Uban pang gasto</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          CEB: |
-            <p>Uban pang galastohan</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          WAR: |
-            <p>Iba pa nga mga gastos</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-  - name: PATIENTSURVEY_DICT.Q971_4_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.1 Other items included in the bill — Other expenses (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          FIL: |
-            <p>Iba pang mga gastos</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          BCL: |
-            <p>97.1 Other items included in the bill — Other expenses (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          BIS: |
-            <p>97.1 Other items included in the bill — Other expenses (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          CEB: |
-            <p>Uban pang galastohan</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
-          WAR: |
-            <p>97.1 Other items included in the bill — Other expenses (Amount in Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
   - name: PATIENTSURVEY_DICT.Q971_OTHER_TXT
     conditions:
       - questionText:
@@ -3321,186 +2991,66 @@ questions:
             <p>Uban pa (isulti)</p>
           WAR: |
             <p>97.1 Other expenses — specify text</p>
-  - name: PATIENTSURVEY_DICT.Q972_1
+  - name: PATIENTSURVEY_DICT.Q972_SOURCES
     conditions:
       - questionText:
           EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — a) Consultation Fee</p>
+            <p>97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Tick all that apply.)</p>
           FIL: |
-            <p>Bayad sa konsulta</p>
+            <p>97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Tick all that apply.)</p>
           BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — a) Consultation Fee</p>
+            <p>97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Tick all that apply.)</p>
           BIS: |
-            <p>Bayad sa Konsultasyon</p>
+            <p>97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Tick all that apply.)</p>
           CEB: |
-            <p>Bayad sa Konsultasyon</p>
+            <p>97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Tick all that apply.)</p>
           WAR: |
-            <p>Bayad han Konsultasyon</p>
-  - name: PATIENTSURVEY_DICT.Q972_1_AMT
+            <p>97.2 Which other expenses did you have during the OPD visit that were NOT in the bill? (Tick all that apply.)</p>
+  - name: PATIENTSURVEY_DICT.Q972_PAY_LINE
     conditions:
       - questionText:
           EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — a) Consultation Fee (Amount in Pesos)</p>
+            <p>972. Payment row</p>
           FIL: |
-            <p>Bayad sa konsulta</p>
+            <p>972. Payment row</p>
           BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — a) Consultation Fee (Amount in Pesos)</p>
+            <p>972. Payment row</p>
           BIS: |
-            <p>97.2 Other expenses during OPD visit not in bill — a) Consultation Fee (Amount in Pesos)</p>
+            <p>972. Payment row</p>
           CEB: |
-            <p>Bayad sa Konsultasyon</p>
+            <p>972. Payment row</p>
           WAR: |
-            <p>97.2 Other expenses during OPD visit not in bill — a) Consultation Fee (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q972_2
+            <p>972. Payment row</p>
+  - name: PATIENTSURVEY_DICT.Q972_PAY_SRC
     conditions:
       - questionText:
           EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure</p>
+            <p>97.2 Expense item (auto-filled from the ticked items)</p>
           FIL: |
-            <p>Diagnostic o palaboratoryo</p>
+            <p>97.2 Expense item (auto-filled from the ticked items)</p>
           BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure</p>
+            <p>97.2 Expense item (auto-filled from the ticked items)</p>
           BIS: |
-            <p>Diagnostic o laboratory pamaagi</p>
+            <p>97.2 Expense item (auto-filled from the ticked items)</p>
           CEB: |
-            <p>Diagnostic o laboratory procedure</p>
+            <p>97.2 Expense item (auto-filled from the ticked items)</p>
           WAR: |
-            <p>Pamaagi han pag-eksamin o laboratoryo</p>
-  - name: PATIENTSURVEY_DICT.Q972_2_AMT
+            <p>97.2 Expense item (auto-filled from the ticked items)</p>
+  - name: PATIENTSURVEY_DICT.Q972_PAY_AMT
     conditions:
       - questionText:
           EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure (Amount in Pesos)</p>
+            <p>97.2 Amount for this expense (Pesos)</p>
           FIL: |
-            <p>Diagnostic o palaboratoryo</p>
+            <p>97.2 Amount for this expense (Pesos)</p>
           BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure (Amount in Pesos)</p>
+            <p>97.2 Amount for this expense (Pesos)</p>
           BIS: |
-            <p>97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure (Amount in Pesos)</p>
+            <p>97.2 Amount for this expense (Pesos)</p>
           CEB: |
-            <p>Diagnostic o laboratory procedure</p>
+            <p>97.2 Amount for this expense (Pesos)</p>
           WAR: |
-            <p>97.2 Other expenses during OPD visit not in bill — b) Diagnostic or laboratory procedure (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q972_3
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies</p>
-          FIL: |
-            <p>Medikal na kagamitan o suplay</p>
-          BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies</p>
-          BIS: |
-            <p>Gamit o suppy nga pang medikal</p>
-          CEB: |
-            <p>Medikal nga kagamitan o suplay</p>
-          WAR: |
-            <p>Mga gamit o mga suplay ha medisina</p>
-  - name: PATIENTSURVEY_DICT.Q972_3_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies (Amount in Pesos)</p>
-          FIL: |
-            <p>Medikal na kagamitan o suplay</p>
-          BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies (Amount in Pesos)</p>
-          BIS: |
-            <p>97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies (Amount in Pesos)</p>
-          CEB: |
-            <p>Medikal nga kagamitan o suplay</p>
-          WAR: |
-            <p>97.2 Other expenses during OPD visit not in bill — c) Medical equipment or supplies (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q972_4
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs</p>
-          FIL: |
-            <p>Mga gamot</p>
-          BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs</p>
-          BIS: |
-            <p>Mga tambal o medisina</p>
-          CEB: |
-            <p>Mga tambal o droga</p>
-          WAR: |
-            <p>Mga medisina o droga</p>
-  - name: PATIENTSURVEY_DICT.Q972_4_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs (Amount in Pesos)</p>
-          FIL: |
-            <p>Mga gamot</p>
-          BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs (Amount in Pesos)</p>
-          BIS: |
-            <p>97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs (Amount in Pesos)</p>
-          CEB: |
-            <p>Mga tambal o droga</p>
-          WAR: |
-            <p>97.2 Other expenses during OPD visit not in bill — d) Medicines or drugs (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q972_5
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel</p>
-          FIL: |
-            <p>Mga gastos na hindi medikal</p>
-          BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel</p>
-          BIS: |
-            <p>Non-medical expenses: plete/pamasahe</p>
-          CEB: |
-            <p>Dili medikal nga galastohan: biyahe</p>
-          WAR: |
-            <p>Mga gastos nga diri medikal: pagbiyahe</p>
-  - name: PATIENTSURVEY_DICT.Q972_5_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel (Amount in Pesos)</p>
-          FIL: |
-            <p>Mga gastos na hindi medikal</p>
-          BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel (Amount in Pesos)</p>
-          BIS: |
-            <p>97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel (Amount in Pesos)</p>
-          CEB: |
-            <p>Dili medikal nga galastohan: biyahe</p>
-          WAR: |
-            <p>97.2 Other expenses during OPD visit not in bill — e) Non-medical expenses: travel (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q972_6
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — f) Other expenses</p>
-          FIL: |
-            <p>Iba pang mga gastos</p>
-          BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — f) Other expenses</p>
-          BIS: |
-            <p>Uban pang gasto</p>
-          CEB: |
-            <p>Uban pang galastohan</p>
-          WAR: |
-            <p>Iba pa nga mga gastos</p>
-  - name: PATIENTSURVEY_DICT.Q972_6_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>97.2 Other expenses during OPD visit not in bill — f) Other expenses (Amount in Pesos)</p>
-          FIL: |
-            <p>Iba pang mga gastos</p>
-          BCL: |
-            <p>97.2 Other expenses during OPD visit not in bill — f) Other expenses (Amount in Pesos)</p>
-          BIS: |
-            <p>97.2 Other expenses during OPD visit not in bill — f) Other expenses (Amount in Pesos)</p>
-          CEB: |
-            <p>Uban pang galastohan</p>
-          WAR: |
-            <p>97.2 Other expenses during OPD visit not in bill — f) Other expenses (Amount in Pesos)</p>
+            <p>97.2 Amount for this expense (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q972_OTHER_TXT
     conditions:
       - questionText:
@@ -3516,456 +3066,66 @@ questions:
             <p>Uban pa (isulti)</p>
           WAR: |
             <p>97.2 Other expenses — specify text</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_01
+  - name: PATIENTSURVEY_DICT.Q98_SOURCES
     conditions:
       - questionText:
           EN: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).</p><p>98. Used to pay for medical costs — Salary/income</p>
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).</p><p>98. Which of the following did you use to pay for the medical costs? (Tick all that apply.)</p>
           FIL: |
-            <p>Nais naming malaman kung saan nanggaling ang pera na ipinanambayad sa mga gastusing medikal (IN ___, at ___) sa (URI NG PASILIDAD SA ___).</p><p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Sahod/Kita</p>
+            <p>Nais naming malaman kung saan nanggaling ang pera na ipinanambayad sa mga gastusing medikal (IN ___, at ___) sa (URI NG PASILIDAD SA ___).</p><p>98. Which of the following did you use to pay for the medical costs? (Tick all that apply.)</p>
           BCL: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).</p><p>Kita/Sahod</p>
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).</p><p>98. Which of the following did you use to pay for the medical costs? (Tick all that apply.)</p>
           BIS: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).</p><p>Sweldo/kita</p>
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).</p><p>98. Which of the following did you use to pay for the medical costs? (Tick all that apply.)</p>
           CEB: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).</p><p>Sweldo/kita</p>
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).</p><p>98. Which of the following did you use to pay for the medical costs? (Tick all that apply.)</p>
           WAR: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).</p><p>Sweldo/Kita</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_01_AMT
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE IN ___).</p><p>98. Which of the following did you use to pay for the medical costs? (Tick all that apply.)</p>
+  - name: PATIENTSURVEY_DICT.Q98_PAY_LINE
     conditions:
       - questionText:
           EN: |
-            <p>98. Used to pay for medical costs — Salary/income (Amount in Pesos)</p>
+            <p>98. Payment row</p>
           FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Sahod/Kita</p>
+            <p>98. Payment row</p>
           BCL: |
-            <p>98. Used to pay for medical costs — Salary/income (Amount in Pesos)</p>
+            <p>98. Payment row</p>
           BIS: |
-            <p>98. Used to pay for medical costs — Salary/income (Amount in Pesos)</p>
+            <p>98. Payment row</p>
           CEB: |
-            <p>Sweldo/kita</p>
+            <p>98. Payment row</p>
           WAR: |
-            <p>98. Used to pay for medical costs — Salary/income (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_02
+            <p>98. Payment row</p>
+  - name: PATIENTSURVEY_DICT.Q98_PAY_SRC
     conditions:
       - questionText:
           EN: |
-            <p>98. Used to pay for medical costs — Loan/Mortgage</p>
+            <p>98. Source of money (auto-filled from the ticked sources)</p>
           FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Utang/Nagsangla</p>
+            <p>98. Source of money (auto-filled from the ticked sources)</p>
           BCL: |
-            <p>Utang</p>
+            <p>98. Source of money (auto-filled from the ticked sources)</p>
           BIS: |
-            <p>Utang</p>
+            <p>98. Source of money (auto-filled from the ticked sources)</p>
           CEB: |
-            <p>Utang/sangla</p>
+            <p>98. Source of money (auto-filled from the ticked sources)</p>
           WAR: |
-            <p>Loan/Pautang</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_02_AMT
+            <p>98. Source of money (auto-filled from the ticked sources)</p>
+  - name: PATIENTSURVEY_DICT.Q98_PAY_AMT
     conditions:
       - questionText:
           EN: |
-            <p>98. Used to pay for medical costs — Loan/Mortgage (Amount in Pesos)</p>
+            <p>98. Amount from this source (Pesos)</p>
           FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Utang/Nagsangla</p>
+            <p>98. Amount from this source (Pesos)</p>
           BCL: |
-            <p>98. Used to pay for medical costs — Loan/Mortgage (Amount in Pesos)</p>
+            <p>98. Amount from this source (Pesos)</p>
           BIS: |
-            <p>98. Used to pay for medical costs — Loan/Mortgage (Amount in Pesos)</p>
+            <p>98. Amount from this source (Pesos)</p>
           CEB: |
-            <p>Utang/sangla</p>
+            <p>98. Amount from this source (Pesos)</p>
           WAR: |
-            <p>98. Used to pay for medical costs — Loan/Mortgage (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_03
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Savings</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Ipon</p>
-          BCL: |
-            <p>Ipon</p>
-          BIS: |
-            <p>Tinigom/Savings</p>
-          CEB: |
-            <p>Tinigom</p>
-          WAR: |
-            <p>Mga tinirok</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_03_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Savings (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Ipon</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — Savings (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — Savings (Amount in Pesos)</p>
-          CEB: |
-            <p>Tinigom</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — Savings (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_04
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Donation/Charity/Assistance from Private Organization</p>
-          BCL: |
-            <p>Donasyon</p>
-          BIS: |
-            <p>Donasyon/Charity/Assistance gikan sa Private Organization</p>
-          CEB: |
-            <p>Donasyon/Charity/Tabang gikan sa pribadong organisasyon</p>
-          WAR: |
-            <p>Donasyon/Charity/Ayuda tikang ha Pribado nga Organisasyon</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_04_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Donation/Charity/Assistance from Private Organization (Amount in Pesos)</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization (Amount in Pesos)</p>
-          CEB: |
-            <p>Donasyon/Charity/Tabang gikan sa pribadong organisasyon</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — Donation/Charity/Assistance from Private Organization (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_05
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Malasakit Center</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Malasakit Center</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — Malasakit Center</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — Malasakit Center</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — Malasakit Center</p>
-          WAR: |
-            <p>Sentro han Malasakit</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_05_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Malasakit Center (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Malasakit Center (Amount in Pesos)</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — Malasakit Center (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — Malasakit Center (Amount in Pesos)</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — Malasakit Center (Amount in Pesos)</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — Malasakit Center (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_06
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Other Donation/Charity/Assistance from Government Organization</p>
-          BCL: |
-            <p>Iba pang donasyon</p>
-          BIS: |
-            <p>Donasyon/Charity/Assistance gikan sa Gobyerno nga mga Organisasyon</p>
-          CEB: |
-            <p>Uban pang mga donasyon/Charity/Tabang gikan sa organisasyon sa gobyerno</p>
-          WAR: |
-            <p>Iba pa nga Donasyon/Charity/Ayuda tikang ha Organisasyon han Gobyerno</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_06_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)</p>
-          CEB: |
-            <p>Uban pang mga donasyon/Charity/Tabang gikan sa organisasyon sa gobyerno</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_07
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Sale of Assets</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Pagbebenta ng ari-arian</p>
-          BCL: |
-            <p>Benta kan mga ari arian</p>
-          BIS: |
-            <p>Pagbaligya og Assets/Kabtangan</p>
-          CEB: |
-            <p>Pagbaligya og mga kabtangan</p>
-          WAR: |
-            <p>Pagbaligya hin mga Panag-iya</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_07_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Sale of Assets (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Pagbebenta ng ari-arian</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — Sale of Assets (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — Sale of Assets (Amount in Pesos)</p>
-          CEB: |
-            <p>Pagbaligya og mga kabtangan</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — Sale of Assets (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_08
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Paid by someone else</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Binayaran ng ibang tao</p>
-          BCL: |
-            <p>Binayadan kan ibang tawo</p>
-          BIS: |
-            <p>Gibayran sa laing tawo</p>
-          CEB: |
-            <p>Gibayaran sa laing tawo</p>
-          WAR: |
-            <p>Ginbaydan hin iba</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_08_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Paid by someone else (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Binayaran ng ibang tao</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — Paid by someone else (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — Paid by someone else (Amount in Pesos)</p>
-          CEB: |
-            <p>Gibayaran sa laing tawo</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — Paid by someone else (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_09
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — MAIFIP</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — MAIFIP</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — MAIFIP</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — MAIFIP</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — MAIFIP</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — MAIFIP</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_09_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — MAIFIP (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — MAIFIP (Amount in Pesos)</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — MAIFIP (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — MAIFIP (Amount in Pesos)</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — MAIFIP (Amount in Pesos)</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — MAIFIP (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_10
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — PhilHealth</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — PhilHealth</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — PhilHealth</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — PhilHealth</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — PhilHealth</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — PhilHealth</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_10_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — PhilHealth (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — PhilHealth (Amount in Pesos)</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — PhilHealth (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — PhilHealth (Amount in Pesos)</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — PhilHealth (Amount in Pesos)</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — PhilHealth (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_11
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — SSS</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — SSS</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — SSS</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — SSS</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — SSS</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — SSS</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_11_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — SSS (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — SSS (Amount in Pesos)</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — SSS (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — SSS (Amount in Pesos)</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — SSS (Amount in Pesos)</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — SSS (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_12
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — GSIS</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — GSIS</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — GSIS</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — GSIS</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — GSIS</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — GSIS</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_12_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — GSIS (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — GSIS (Amount in Pesos)</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — GSIS (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — GSIS (Amount in Pesos)</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — GSIS (Amount in Pesos)</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — GSIS (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_13
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Private Insurance</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Pribadong Insurance</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — Private Insurance</p>
-          BIS: |
-            <p>Pribado nga Insurance</p>
-          CEB: |
-            <p>Pribado nga insurance</p>
-          WAR: |
-            <p>Pribado nga insurance</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_13_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Private Insurance (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Pribadong Insurance</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — Private Insurance (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — Private Insurance (Amount in Pesos)</p>
-          CEB: |
-            <p>Pribado nga insurance</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — Private Insurance (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_14
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — HMO</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — HMO</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — HMO</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — HMO</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — HMO</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — HMO</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_14_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — HMO (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — HMO (Amount in Pesos)</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — HMO (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — HMO (Amount in Pesos)</p>
-          CEB: |
-            <p>98. Used to pay for medical costs — HMO (Amount in Pesos)</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — HMO (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_15
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Other (specify)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Iba pa (tukuyin)</p>
-          BCL: |
-            <p>Iba pa (ispecify)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — Other (specify)</p>
-          CEB: |
-            <p>Uban pa (isulti)</p>
-          WAR: |
-            <p>Iba pa (Ispecify)</p>
-  - name: PATIENTSURVEY_DICT.Q98_PAY_15_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>98. Used to pay for medical costs — Other (specify) (Amount in Pesos)</p>
-          FIL: |
-            <p>Saan nanggaling ang pera na ipinambayad sa mga gastusing medikal? — Iba pa (tukuyin)</p>
-          BCL: |
-            <p>98. Used to pay for medical costs — Other (specify) (Amount in Pesos)</p>
-          BIS: |
-            <p>98. Used to pay for medical costs — Other (specify) (Amount in Pesos)</p>
-          CEB: |
-            <p>Uban pa (isulti)</p>
-          WAR: |
-            <p>98. Used to pay for medical costs — Other (specify) (Amount in Pesos)</p>
+            <p>98. Amount from this source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q98_OTHER_DONATION_TXT
     conditions:
       - questionText:
@@ -4206,306 +3366,66 @@ questions:
             <p>Adlaw</p>
           WAR: |
             <p>Adlaw</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_01
+  - name: PATIENTSURVEY_DICT.Q107_SOURCES
     conditions:
       - questionText:
           EN: |
-            <p>107. Total bill for confinement — Out-of-pocket</p>
+            <p>107. Which of the following did you use to pay for the total bill for confinement? (Tick all that apply.)</p>
           FIL: |
-            <p>Mula sa sariling pera</p>
+            <p>107. Which of the following did you use to pay for the total bill for confinement? (Tick all that apply.)</p>
           BCL: |
-            <p>107. Total bill for confinement — Out-of-pocket</p>
+            <p>107. Which of the following did you use to pay for the total bill for confinement? (Tick all that apply.)</p>
           BIS: |
-            <p>107. Total bill for confinement — Out-of-pocket</p>
+            <p>107. Which of the following did you use to pay for the total bill for confinement? (Tick all that apply.)</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p>
+            <p>107. Which of the following did you use to pay for the total bill for confinement? (Tick all that apply.)</p>
           WAR: |
-            <p>Kalugaringon nga gastos</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_01_AMT
+            <p>107. Which of the following did you use to pay for the total bill for confinement? (Tick all that apply.)</p>
+  - name: PATIENTSURVEY_DICT.Q107_PAY_LINE
     conditions:
       - questionText:
           EN: |
-            <p>107. Total bill for confinement — Out-of-pocket (Amount in Pesos)</p>
+            <p>107. Payment row</p>
           FIL: |
-            <p>Mula sa sariling pera</p>
+            <p>107. Payment row</p>
           BCL: |
-            <p>107. Total bill for confinement — Out-of-pocket (Amount in Pesos)</p>
+            <p>107. Payment row</p>
           BIS: |
-            <p>107. Total bill for confinement — Out-of-pocket (Amount in Pesos)</p>
+            <p>107. Payment row</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p>
+            <p>107. Payment row</p>
           WAR: |
-            <p>107. Total bill for confinement — Out-of-pocket (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_02
+            <p>107. Payment row</p>
+  - name: PATIENTSURVEY_DICT.Q107_PAY_SRC
     conditions:
       - questionText:
           EN: |
-            <p>107. Total bill for confinement — Free/no cost</p>
+            <p>107. Payment source (auto-filled from the ticked sources)</p>
           FIL: |
-            <p>Libre/Walang bayad</p>
+            <p>107. Payment source (auto-filled from the ticked sources)</p>
           BCL: |
-            <p>Libre/Wara ginastos</p>
+            <p>107. Payment source (auto-filled from the ticked sources)</p>
           BIS: |
-            <p>Libre / walay bayad</p>
+            <p>107. Payment source (auto-filled from the ticked sources)</p>
           CEB: |
-            <p>Libre/walay bayad</p>
+            <p>107. Payment source (auto-filled from the ticked sources)</p>
           WAR: |
-            <p>Libre/ waray bayad</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_02_AMT
+            <p>107. Payment source (auto-filled from the ticked sources)</p>
+  - name: PATIENTSURVEY_DICT.Q107_PAY_AMT
     conditions:
       - questionText:
           EN: |
-            <p>107. Total bill for confinement — Free/no cost (Amount in Pesos)</p>
+            <p>107. Amount of the total bill, by source (Pesos)</p>
           FIL: |
-            <p>Libre/Walang bayad</p>
+            <p>107. Amount of the total bill, by source (Pesos)</p>
           BCL: |
-            <p>107. Total bill for confinement — Free/no cost (Amount in Pesos)</p>
+            <p>107. Amount of the total bill, by source (Pesos)</p>
           BIS: |
-            <p>107. Total bill for confinement — Free/no cost (Amount in Pesos)</p>
+            <p>107. Amount of the total bill, by source (Pesos)</p>
           CEB: |
-            <p>Libre/walay bayad</p>
+            <p>107. Amount of the total bill, by source (Pesos)</p>
           WAR: |
-            <p>107. Total bill for confinement — Free/no cost (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_03
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Free, charge to PhilHealth</p>
-          FIL: |
-            <p>Libre, sagot ng PhilHealth</p>
-          BCL: |
-            <p>Libre, charge sa Philhealth</p>
-          BIS: |
-            <p>Libre, charge sa PhilHealth</p>
-          CEB: |
-            <p>Libre, gisingil sa PhilHealth</p>
-          WAR: |
-            <p>Libre, babaydan hit Philhealth</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_03_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Free, charge to PhilHealth (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng PhilHealth</p>
-          BCL: |
-            <p>107. Total bill for confinement — Free, charge to PhilHealth (Amount in Pesos)</p>
-          BIS: |
-            <p>107. Total bill for confinement — Free, charge to PhilHealth (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa PhilHealth</p>
-          WAR: |
-            <p>107. Total bill for confinement — Free, charge to PhilHealth (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_04
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Free, charge to Private Insurance</p>
-          FIL: |
-            <p>Libre, sagot ng pribadong insurance</p>
-          BCL: |
-            <p>Libre, charge sa Insurance</p>
-          BIS: |
-            <p>Libre, charge sa Private Insurance</p>
-          CEB: |
-            <p>Libre, gisingil sa Private Insurance</p>
-          WAR: |
-            <p>Libre, babaydan hit Pribado nga Insurance</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_04_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Free, charge to Private Insurance (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng pribadong insurance</p>
-          BCL: |
-            <p>107. Total bill for confinement — Free, charge to Private Insurance (Amount in Pesos)</p>
-          BIS: |
-            <p>107. Total bill for confinement — Free, charge to Private Insurance (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa Private Insurance</p>
-          WAR: |
-            <p>107. Total bill for confinement — Free, charge to Private Insurance (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_05
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Free, charge to HMO</p>
-          FIL: |
-            <p>Libre, sagot ng HMO</p>
-          BCL: |
-            <p>Libre, charge sa HMO</p>
-          BIS: |
-            <p>Libre, charge sa HMO</p>
-          CEB: |
-            <p>Libre, gisingil sa HMO</p>
-          WAR: |
-            <p>Libre, babaydan hit HMO</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_05_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Free, charge to HMO (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng HMO</p>
-          BCL: |
-            <p>107. Total bill for confinement — Free, charge to HMO (Amount in Pesos)</p>
-          BIS: |
-            <p>107. Total bill for confinement — Free, charge to HMO (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa HMO</p>
-          WAR: |
-            <p>107. Total bill for confinement — Free, charge to HMO (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_06
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Free, charge to MAIFIP</p>
-          FIL: |
-            <p>Libre, sagot ng MAIFIP</p>
-          BCL: |
-            <p>Libre, charge sa MAIFIP</p>
-          BIS: |
-            <p>Libre, charge sa MAIFIP</p>
-          CEB: |
-            <p>Libre, gisingil sa MAIFIP</p>
-          WAR: |
-            <p>Libre, babaydan hit MAIFIP</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_06_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Free, charge to MAIFIP (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng MAIFIP</p>
-          BCL: |
-            <p>107. Total bill for confinement — Free, charge to MAIFIP (Amount in Pesos)</p>
-          BIS: |
-            <p>107. Total bill for confinement — Free, charge to MAIFIP (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa MAIFIP</p>
-          WAR: |
-            <p>107. Total bill for confinement — Free, charge to MAIFIP (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_07
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Donation</p>
-          FIL: |
-            <p>Donasyon</p>
-          BCL: |
-            <p>Donasyon/Tinao</p>
-          BIS: |
-            <p>Donasyon</p>
-          CEB: |
-            <p>Donasyon</p>
-          WAR: |
-            <p>Donasyon</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_07_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Donation (Amount in Pesos)</p>
-          FIL: |
-            <p>Donasyon</p>
-          BCL: |
-            <p>107. Total bill for confinement — Donation (Amount in Pesos)</p>
-          BIS: |
-            <p>107. Total bill for confinement — Donation (Amount in Pesos)</p>
-          CEB: |
-            <p>Donasyon</p>
-          WAR: |
-            <p>107. Total bill for confinement — Donation (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_08
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — In kind</p>
-          FIL: |
-            <p>Hindi pera ang ibinayad</p>
-          BCL: |
-            <p>Tabang kan ibang tawo</p>
-          BIS: |
-            <p>Dili Kwarta</p>
-          CEB: |
-            <p>In kind / Hinatag nga butang</p>
-          WAR: |
-            <p>Mga Butang</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_08_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — In kind (Amount in Pesos)</p>
-          FIL: |
-            <p>Hindi pera ang ibinayad</p>
-          BCL: |
-            <p>107. Total bill for confinement — In kind (Amount in Pesos)</p>
-          BIS: |
-            <p>107. Total bill for confinement — In kind (Amount in Pesos)</p>
-          CEB: |
-            <p>In kind / Hinatag nga butang</p>
-          WAR: |
-            <p>107. Total bill for confinement — In kind (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_09
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Don't know</p>
-          FIL: |
-            <p>Hindi alam</p>
-          BCL: |
-            <p>Dai aram</p>
-          BIS: |
-            <p>Wala kabalo</p>
-          CEB: |
-            <p>Wala kahibalo</p>
-          WAR: |
-            <p>Dire ako maaram</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_09_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Don't know (Amount in Pesos)</p>
-          FIL: |
-            <p>Hindi alam</p>
-          BCL: |
-            <p>107. Total bill for confinement — Don't know (Amount in Pesos)</p>
-          BIS: |
-            <p>107. Total bill for confinement — Don't know (Amount in Pesos)</p>
-          CEB: |
-            <p>Wala kahibalo</p>
-          WAR: |
-            <p>107. Total bill for confinement — Don't know (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_10
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Other</p>
-          FIL: |
-            <p>Iba pa, Tukuyin</p>
-          BCL: |
-            <p>107. Total bill for confinement — Other</p>
-          BIS: |
-            <p>107. Total bill for confinement — Other</p>
-          CEB: |
-            <p>Uban pa, Isulti:</p>
-          WAR: |
-            <p>107. Total bill for confinement — Other</p>
-  - name: PATIENTSURVEY_DICT.Q107_PAY_10_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>107. Total bill for confinement — Other (Amount in Pesos)</p>
-          FIL: |
-            <p>Iba pa, Tukuyin</p>
-          BCL: |
-            <p>107. Total bill for confinement — Other (Amount in Pesos)</p>
-          BIS: |
-            <p>107. Total bill for confinement — Other (Amount in Pesos)</p>
-          CEB: |
-            <p>Uban pa, Isulti:</p>
-          WAR: |
-            <p>107. Total bill for confinement — Other (Amount in Pesos)</p>
+            <p>107. Amount of the total bill, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q107_PAY_OTHER_TXT
     conditions:
       - questionText:
@@ -4536,276 +3456,66 @@ questions:
             <p>Gawas sa mga tambal nga nakabutang sa hospital bill, nipalit ba ang pasyente og mga tambal sa pharmacy/pasilidad gawas sa ospital?</p>
           WAR: |
             <p>Labot la han medisina/mga medisina in iginpapakita ha hospital bill, pumalit ba an pasyente hin medisina/mga medisina ha bisan diin nga botika/pasilidad ha gawas han ospital?</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_01
+  - name: PATIENTSURVEY_DICT.Q109_SOURCES
     conditions:
       - questionText:
           EN: |
-            <p>109. Amount paid for medicines outside the hospital — Out-of-pocket</p>
+            <p>109. Which of the following did you use to pay for the medicines bought outside the hospital? (Tick all that apply.)</p>
           FIL: |
-            <p>Mula sa sariling pera</p>
+            <p>109. Which of the following did you use to pay for the medicines bought outside the hospital? (Tick all that apply.)</p>
           BCL: |
-            <p>109. Amount paid for medicines outside the hospital — Out-of-pocket</p>
+            <p>109. Which of the following did you use to pay for the medicines bought outside the hospital? (Tick all that apply.)</p>
           BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Out-of-pocket</p>
+            <p>109. Which of the following did you use to pay for the medicines bought outside the hospital? (Tick all that apply.)</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p>
+            <p>109. Which of the following did you use to pay for the medicines bought outside the hospital? (Tick all that apply.)</p>
           WAR: |
-            <p>Kalugaringon nga gastos</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_01_AMT
+            <p>109. Which of the following did you use to pay for the medicines bought outside the hospital? (Tick all that apply.)</p>
+  - name: PATIENTSURVEY_DICT.Q109_PAY_LINE
     conditions:
       - questionText:
           EN: |
-            <p>109. Amount paid for medicines outside the hospital — Out-of-pocket (Amount in Pesos)</p>
+            <p>109. Payment row</p>
           FIL: |
-            <p>Mula sa sariling pera</p>
+            <p>109. Payment row</p>
           BCL: |
-            <p>109. Amount paid for medicines outside the hospital — Out-of-pocket (Amount in Pesos)</p>
+            <p>109. Payment row</p>
           BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Out-of-pocket (Amount in Pesos)</p>
+            <p>109. Payment row</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p>
+            <p>109. Payment row</p>
           WAR: |
-            <p>109. Amount paid for medicines outside the hospital — Out-of-pocket (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_02
+            <p>109. Payment row</p>
+  - name: PATIENTSURVEY_DICT.Q109_PAY_SRC
     conditions:
       - questionText:
           EN: |
-            <p>109. Amount paid for medicines outside the hospital — Free/no cost</p>
+            <p>109. Payment source (auto-filled from the ticked sources)</p>
           FIL: |
-            <p>Libre/Walang bayad</p>
+            <p>109. Payment source (auto-filled from the ticked sources)</p>
           BCL: |
-            <p>Libre/Wara ginastos</p>
+            <p>109. Payment source (auto-filled from the ticked sources)</p>
           BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Free/no cost</p>
+            <p>109. Payment source (auto-filled from the ticked sources)</p>
           CEB: |
-            <p>Libre/walay bayad</p>
+            <p>109. Payment source (auto-filled from the ticked sources)</p>
           WAR: |
-            <p>Libre/ waray bayad</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_02_AMT
+            <p>109. Payment source (auto-filled from the ticked sources)</p>
+  - name: PATIENTSURVEY_DICT.Q109_PAY_AMT
     conditions:
       - questionText:
           EN: |
-            <p>109. Amount paid for medicines outside the hospital — Free/no cost (Amount in Pesos)</p>
+            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
           FIL: |
-            <p>Libre/Walang bayad</p>
+            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
           BCL: |
-            <p>109. Amount paid for medicines outside the hospital — Free/no cost (Amount in Pesos)</p>
+            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
           BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Free/no cost (Amount in Pesos)</p>
+            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
           CEB: |
-            <p>Libre/walay bayad</p>
+            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
           WAR: |
-            <p>109. Amount paid for medicines outside the hospital — Free/no cost (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_03
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to PhilHealth</p>
-          FIL: |
-            <p>Libre, sagot ng PhilHealth</p>
-          BCL: |
-            <p>Libre, charge sa Philhealth</p>
-          BIS: |
-            <p>Libre, charge sa PhilHealth</p>
-          CEB: |
-            <p>Libre, gisingil sa PhilHealth</p>
-          WAR: |
-            <p>Libre, babaydan hit Philhealth</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_03_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to PhilHealth (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng PhilHealth</p>
-          BCL: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to PhilHealth (Amount in Pesos)</p>
-          BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to PhilHealth (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa PhilHealth</p>
-          WAR: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to PhilHealth (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_04
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to Private Insurance</p>
-          FIL: |
-            <p>Libre, sagot ng pribadong insurance</p>
-          BCL: |
-            <p>Libre, charge sa Insurance</p>
-          BIS: |
-            <p>Libre, charge sa Private Insurance</p>
-          CEB: |
-            <p>Libre, gisingil sa Private Insurance</p>
-          WAR: |
-            <p>Libre, babaydan hit Pribado nga Insurance</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_04_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to Private Insurance (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng pribadong insurance</p>
-          BCL: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to Private Insurance (Amount in Pesos)</p>
-          BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to Private Insurance (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa Private Insurance</p>
-          WAR: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to Private Insurance (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_05
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to HMO</p>
-          FIL: |
-            <p>Libre, sagot ng HMO</p>
-          BCL: |
-            <p>Libre, charge sa HMO</p>
-          BIS: |
-            <p>Libre, charge sa HMO</p>
-          CEB: |
-            <p>Libre, gisingil sa HMO</p>
-          WAR: |
-            <p>Libre, babaydan hit HMO</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_05_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to HMO (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng HMO</p>
-          BCL: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to HMO (Amount in Pesos)</p>
-          BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to HMO (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa HMO</p>
-          WAR: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to HMO (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_06
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to MAIFIP</p>
-          FIL: |
-            <p>Libre, sagot ng MAIFIP</p>
-          BCL: |
-            <p>Libre, charge sa MAIFIP</p>
-          BIS: |
-            <p>Libre, charge sa MAIFIP</p>
-          CEB: |
-            <p>Libre, gisingil sa MAIFIP</p>
-          WAR: |
-            <p>Libre, babaydan hit MAIFIP</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_06_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to MAIFIP (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng MAIFIP</p>
-          BCL: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to MAIFIP (Amount in Pesos)</p>
-          BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to MAIFIP (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa MAIFIP</p>
-          WAR: |
-            <p>109. Amount paid for medicines outside the hospital — Free, charge to MAIFIP (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_07
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — In kind</p>
-          FIL: |
-            <p>Hindi pera ang ibinayad</p>
-          BCL: |
-            <p>Tabang kan ibang tawo</p>
-          BIS: |
-            <p>Dili Kwarta</p>
-          CEB: |
-            <p>In kind / Hinatag nga butang</p>
-          WAR: |
-            <p>Mga Butang</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_07_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — In kind (Amount in Pesos)</p>
-          FIL: |
-            <p>Hindi pera ang ibinayad</p>
-          BCL: |
-            <p>109. Amount paid for medicines outside the hospital — In kind (Amount in Pesos)</p>
-          BIS: |
-            <p>109. Amount paid for medicines outside the hospital — In kind (Amount in Pesos)</p>
-          CEB: |
-            <p>In kind / Hinatag nga butang</p>
-          WAR: |
-            <p>109. Amount paid for medicines outside the hospital — In kind (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_08
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Don't know</p>
-          FIL: |
-            <p>Hindi alam</p>
-          BCL: |
-            <p>Dai aram</p>
-          BIS: |
-            <p>Wala kabalo</p>
-          CEB: |
-            <p>Wala kahibalo</p>
-          WAR: |
-            <p>Dire ako maaram</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_08_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Don't know (Amount in Pesos)</p>
-          FIL: |
-            <p>Hindi alam</p>
-          BCL: |
-            <p>109. Amount paid for medicines outside the hospital — Don't know (Amount in Pesos)</p>
-          BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Don't know (Amount in Pesos)</p>
-          CEB: |
-            <p>Wala kahibalo</p>
-          WAR: |
-            <p>109. Amount paid for medicines outside the hospital — Don't know (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_09
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Other</p>
-          FIL: |
-            <p>Iba pa, Tukuyin</p>
-          BCL: |
-            <p>109. Amount paid for medicines outside the hospital — Other</p>
-          BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Other</p>
-          CEB: |
-            <p>Uban pa, Isulti:</p>
-          WAR: |
-            <p>109. Amount paid for medicines outside the hospital — Other</p>
-  - name: PATIENTSURVEY_DICT.Q109_PAY_09_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>109. Amount paid for medicines outside the hospital — Other (Amount in Pesos)</p>
-          FIL: |
-            <p>Iba pa, Tukuyin</p>
-          BCL: |
-            <p>109. Amount paid for medicines outside the hospital — Other (Amount in Pesos)</p>
-          BIS: |
-            <p>109. Amount paid for medicines outside the hospital — Other (Amount in Pesos)</p>
-          CEB: |
-            <p>Uban pa, Isulti:</p>
-          WAR: |
-            <p>109. Amount paid for medicines outside the hospital — Other (Amount in Pesos)</p>
+            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q109_PAY_OTHER_TXT
     conditions:
       - questionText:
@@ -4851,276 +3561,66 @@ questions:
             <p>Kung oo, unsa to nga mga serbisyo?</p>
           WAR: |
             <p>Kun oo, ano iton nga mga serbisyo?</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_01
+  - name: PATIENTSURVEY_DICT.Q112_SOURCES
     conditions:
       - questionText:
           EN: |
-            <p>112. Amount paid for services outside the hospital — Out-of-pocket</p>
+            <p>112. Which of the following did you use to pay for the services done outside the hospital? (Tick all that apply.)</p>
           FIL: |
-            <p>Mula sa sariling pera</p>
+            <p>112. Which of the following did you use to pay for the services done outside the hospital? (Tick all that apply.)</p>
           BCL: |
-            <p>112. Amount paid for services outside the hospital — Out-of-pocket</p>
+            <p>112. Which of the following did you use to pay for the services done outside the hospital? (Tick all that apply.)</p>
           BIS: |
-            <p>112. Amount paid for services outside the hospital — Out-of-pocket</p>
+            <p>112. Which of the following did you use to pay for the services done outside the hospital? (Tick all that apply.)</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p>
+            <p>112. Which of the following did you use to pay for the services done outside the hospital? (Tick all that apply.)</p>
           WAR: |
-            <p>Kalugaringon nga gastos</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_01_AMT
+            <p>112. Which of the following did you use to pay for the services done outside the hospital? (Tick all that apply.)</p>
+  - name: PATIENTSURVEY_DICT.Q112_PAY_LINE
     conditions:
       - questionText:
           EN: |
-            <p>112. Amount paid for services outside the hospital — Out-of-pocket (Amount in Pesos)</p>
+            <p>112. Payment row</p>
           FIL: |
-            <p>Mula sa sariling pera</p>
+            <p>112. Payment row</p>
           BCL: |
-            <p>112. Amount paid for services outside the hospital — Out-of-pocket (Amount in Pesos)</p>
+            <p>112. Payment row</p>
           BIS: |
-            <p>112. Amount paid for services outside the hospital — Out-of-pocket (Amount in Pesos)</p>
+            <p>112. Payment row</p>
           CEB: |
-            <p>Gikan sa kaugalingong bulsa</p>
+            <p>112. Payment row</p>
           WAR: |
-            <p>112. Amount paid for services outside the hospital — Out-of-pocket (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_02
+            <p>112. Payment row</p>
+  - name: PATIENTSURVEY_DICT.Q112_PAY_SRC
     conditions:
       - questionText:
           EN: |
-            <p>112. Amount paid for services outside the hospital — Free/no cost</p>
+            <p>112. Payment source (auto-filled from the ticked sources)</p>
           FIL: |
-            <p>Libre/Walang bayad</p>
+            <p>112. Payment source (auto-filled from the ticked sources)</p>
           BCL: |
-            <p>Libre/Wara ginastos</p>
+            <p>112. Payment source (auto-filled from the ticked sources)</p>
           BIS: |
-            <p>112. Amount paid for services outside the hospital — Free/no cost</p>
+            <p>112. Payment source (auto-filled from the ticked sources)</p>
           CEB: |
-            <p>Libre/walay bayad</p>
+            <p>112. Payment source (auto-filled from the ticked sources)</p>
           WAR: |
-            <p>Libre/ waray bayad</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_02_AMT
+            <p>112. Payment source (auto-filled from the ticked sources)</p>
+  - name: PATIENTSURVEY_DICT.Q112_PAY_AMT
     conditions:
       - questionText:
           EN: |
-            <p>112. Amount paid for services outside the hospital — Free/no cost (Amount in Pesos)</p>
+            <p>112. Amount paid for services outside, by source (Pesos)</p>
           FIL: |
-            <p>Libre/Walang bayad</p>
+            <p>112. Amount paid for services outside, by source (Pesos)</p>
           BCL: |
-            <p>112. Amount paid for services outside the hospital — Free/no cost (Amount in Pesos)</p>
+            <p>112. Amount paid for services outside, by source (Pesos)</p>
           BIS: |
-            <p>112. Amount paid for services outside the hospital — Free/no cost (Amount in Pesos)</p>
+            <p>112. Amount paid for services outside, by source (Pesos)</p>
           CEB: |
-            <p>Libre/walay bayad</p>
+            <p>112. Amount paid for services outside, by source (Pesos)</p>
           WAR: |
-            <p>112. Amount paid for services outside the hospital — Free/no cost (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_03
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to PhilHealth</p>
-          FIL: |
-            <p>Libre, sagot ng PhilHealth</p>
-          BCL: |
-            <p>Libre, charge sa Philhealth</p>
-          BIS: |
-            <p>Libre, charge sa PhilHealth</p>
-          CEB: |
-            <p>Libre, gisingil sa PhilHealth</p>
-          WAR: |
-            <p>Libre, babaydan hit Philhealth</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_03_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to PhilHealth (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng PhilHealth</p>
-          BCL: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to PhilHealth (Amount in Pesos)</p>
-          BIS: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to PhilHealth (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa PhilHealth</p>
-          WAR: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to PhilHealth (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_04
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to Private Insurance</p>
-          FIL: |
-            <p>Libre, sagot ng pribadong insurance</p>
-          BCL: |
-            <p>Libre, charge sa Insurance</p>
-          BIS: |
-            <p>Libre, charge sa Private Insurance</p>
-          CEB: |
-            <p>Libre, gisingil sa Private Insurance</p>
-          WAR: |
-            <p>Libre, babaydan hit Pribado nga Insurance</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_04_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to Private Insurance (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng pribadong insurance</p>
-          BCL: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to Private Insurance (Amount in Pesos)</p>
-          BIS: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to Private Insurance (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa Private Insurance</p>
-          WAR: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to Private Insurance (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_05
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to HMO</p>
-          FIL: |
-            <p>Libre, sagot ng HMO</p>
-          BCL: |
-            <p>Libre, charge sa HMO</p>
-          BIS: |
-            <p>Libre, charge sa HMO</p>
-          CEB: |
-            <p>Libre, gisingil sa HMO</p>
-          WAR: |
-            <p>Libre, babaydan hit HMO</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_05_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to HMO (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng HMO</p>
-          BCL: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to HMO (Amount in Pesos)</p>
-          BIS: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to HMO (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa HMO</p>
-          WAR: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to HMO (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_06
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to MAIFIP</p>
-          FIL: |
-            <p>Libre, sagot ng MAIFIP</p>
-          BCL: |
-            <p>Libre, charge sa MAIFIP</p>
-          BIS: |
-            <p>Libre, charge sa MAIFIP</p>
-          CEB: |
-            <p>Libre, gisingil sa MAIFIP</p>
-          WAR: |
-            <p>Libre, babaydan hit MAIFIP</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_06_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to MAIFIP (Amount in Pesos)</p>
-          FIL: |
-            <p>Libre, sagot ng MAIFIP</p>
-          BCL: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to MAIFIP (Amount in Pesos)</p>
-          BIS: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to MAIFIP (Amount in Pesos)</p>
-          CEB: |
-            <p>Libre, gisingil sa MAIFIP</p>
-          WAR: |
-            <p>112. Amount paid for services outside the hospital — Free, charge to MAIFIP (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_07
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — In kind</p>
-          FIL: |
-            <p>Hindi pera ang ibinayad</p>
-          BCL: |
-            <p>Tabang kan ibang tawo</p>
-          BIS: |
-            <p>Dili Kwarta</p>
-          CEB: |
-            <p>In kind / Hinatag nga butang</p>
-          WAR: |
-            <p>Mga Butang</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_07_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — In kind (Amount in Pesos)</p>
-          FIL: |
-            <p>Hindi pera ang ibinayad</p>
-          BCL: |
-            <p>112. Amount paid for services outside the hospital — In kind (Amount in Pesos)</p>
-          BIS: |
-            <p>112. Amount paid for services outside the hospital — In kind (Amount in Pesos)</p>
-          CEB: |
-            <p>In kind / Hinatag nga butang</p>
-          WAR: |
-            <p>112. Amount paid for services outside the hospital — In kind (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_08
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Don't know</p>
-          FIL: |
-            <p>Hindi alam</p>
-          BCL: |
-            <p>Dai aram</p>
-          BIS: |
-            <p>Wala kabalo</p>
-          CEB: |
-            <p>Wala ko kahibalo</p>
-          WAR: |
-            <p>Dire ako maaram</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_08_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Don't know (Amount in Pesos)</p>
-          FIL: |
-            <p>Hindi alam</p>
-          BCL: |
-            <p>112. Amount paid for services outside the hospital — Don't know (Amount in Pesos)</p>
-          BIS: |
-            <p>112. Amount paid for services outside the hospital — Don't know (Amount in Pesos)</p>
-          CEB: |
-            <p>Wala ko kahibalo</p>
-          WAR: |
-            <p>112. Amount paid for services outside the hospital — Don't know (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_09
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Other</p>
-          FIL: |
-            <p>Iba pa, Tukuyin</p>
-          BCL: |
-            <p>112. Amount paid for services outside the hospital — Other</p>
-          BIS: |
-            <p>112. Amount paid for services outside the hospital — Other</p>
-          CEB: |
-            <p>Uban pa, Isulti:</p>
-          WAR: |
-            <p>112. Amount paid for services outside the hospital — Other</p>
-  - name: PATIENTSURVEY_DICT.Q112_PAY_09_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>112. Amount paid for services outside the hospital — Other (Amount in Pesos)</p>
-          FIL: |
-            <p>Iba pa, Tukuyin</p>
-          BCL: |
-            <p>112. Amount paid for services outside the hospital — Other (Amount in Pesos)</p>
-          BIS: |
-            <p>112. Amount paid for services outside the hospital — Other (Amount in Pesos)</p>
-          CEB: |
-            <p>Uban pa, Isulti:</p>
-          WAR: |
-            <p>112. Amount paid for services outside the hospital — Other (Amount in Pesos)</p>
+            <p>112. Amount paid for services outside, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q112_PAY_OTHER_TXT
     conditions:
       - questionText:
@@ -5136,396 +3636,66 @@ questions:
             <p>Uban pa, Isulti:</p>
           WAR: |
             <p>112. Services outside — Other, specify text</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_01
+  - name: PATIENTSURVEY_DICT.Q113_SOURCES
     conditions:
       - questionText:
           EN: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>113. Used to pay for hospital bill — Salary/income</p>
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>113. Which of the following did you use to pay for the hospital bill? (Tick all that apply.)</p>
           FIL: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>Sahod/Kita</p>
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>113. Which of the following did you use to pay for the hospital bill? (Tick all that apply.)</p>
           BCL: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>Kita/Sahod</p>
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>113. Which of the following did you use to pay for the hospital bill? (Tick all that apply.)</p>
           BIS: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>Sweldo/kita</p>
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>113. Which of the following did you use to pay for the hospital bill? (Tick all that apply.)</p>
           CEB: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>Sweldo/kita</p>
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>113. Which of the following did you use to pay for the hospital bill? (Tick all that apply.)</p>
           WAR: |
-            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>Sweldo/Kita</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_01_AMT
+            <p>I would like to know where you got the money to pay for medical costs incurred (IN ___, and ____) at the (FACILITY TYPE INPUT).</p><p>113. Which of the following did you use to pay for the hospital bill? (Tick all that apply.)</p>
+  - name: PATIENTSURVEY_DICT.Q113_PAY_LINE
     conditions:
       - questionText:
           EN: |
-            <p>113. Used to pay for hospital bill — Salary/income (Amount in Pesos)</p>
+            <p>113. Payment row</p>
           FIL: |
-            <p>Sahod/Kita</p>
+            <p>113. Payment row</p>
           BCL: |
-            <p>113. Used to pay for hospital bill — Salary/income (Amount in Pesos)</p>
+            <p>113. Payment row</p>
           BIS: |
-            <p>113. Used to pay for hospital bill — Salary/income (Amount in Pesos)</p>
+            <p>113. Payment row</p>
           CEB: |
-            <p>Sweldo/kita</p>
+            <p>113. Payment row</p>
           WAR: |
-            <p>113. Used to pay for hospital bill — Salary/income (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_02
+            <p>113. Payment row</p>
+  - name: PATIENTSURVEY_DICT.Q113_PAY_SRC
     conditions:
       - questionText:
           EN: |
-            <p>113. Used to pay for hospital bill — Loan/Mortgage</p>
+            <p>113. Payment source (auto-filled from the ticked sources)</p>
           FIL: |
-            <p>Utang/Nagsanla ng ari-arian</p>
+            <p>113. Payment source (auto-filled from the ticked sources)</p>
           BCL: |
-            <p>Utang</p>
+            <p>113. Payment source (auto-filled from the ticked sources)</p>
           BIS: |
-            <p>Utang</p>
+            <p>113. Payment source (auto-filled from the ticked sources)</p>
           CEB: |
-            <p>Utang/sangla</p>
+            <p>113. Payment source (auto-filled from the ticked sources)</p>
           WAR: |
-            <p>Loan/ Pautang</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_02_AMT
+            <p>113. Payment source (auto-filled from the ticked sources)</p>
+  - name: PATIENTSURVEY_DICT.Q113_PAY_AMT
     conditions:
       - questionText:
           EN: |
-            <p>113. Used to pay for hospital bill — Loan/Mortgage (Amount in Pesos)</p>
+            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
           FIL: |
-            <p>Utang/Nagsanla ng ari-arian</p>
+            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
           BCL: |
-            <p>113. Used to pay for hospital bill — Loan/Mortgage (Amount in Pesos)</p>
+            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
           BIS: |
-            <p>113. Used to pay for hospital bill — Loan/Mortgage (Amount in Pesos)</p>
+            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
           CEB: |
-            <p>Utang/sangla</p>
+            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
           WAR: |
-            <p>113. Used to pay for hospital bill — Loan/Mortgage (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_03
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Savings</p>
-          FIL: |
-            <p>Ipon</p>
-          BCL: |
-            <p>Ipon</p>
-          BIS: |
-            <p>Tinigom/Savings</p>
-          CEB: |
-            <p>Tinigom</p>
-          WAR: |
-            <p>Mga tinirok</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_03_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Savings (Amount in Pesos)</p>
-          FIL: |
-            <p>Ipon</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — Savings (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — Savings (Amount in Pesos)</p>
-          CEB: |
-            <p>Tinigom</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — Savings (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_04
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Donation/Charity/Assistance from Private Organization</p>
-          FIL: |
-            <p>Tulong/Kawanggawa/Donasyon mula sa pribadong organisasyon</p>
-          BCL: |
-            <p>Donasyon</p>
-          BIS: |
-            <p>Donasyon/Charity/Assistance gikan sa Private Organization</p>
-          CEB: |
-            <p>Donasyon/Charity/Tabang gikan sa pribadong organisasyon</p>
-          WAR: |
-            <p>Donasyon/Charity/Ayuda tikang ha Pribado nga Organisasyon</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_04_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Donation/Charity/Assistance from Private Organization (Amount in Pesos)</p>
-          FIL: |
-            <p>Tulong/Kawanggawa/Donasyon mula sa pribadong organisasyon</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — Donation/Charity/Assistance from Private Organization (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — Donation/Charity/Assistance from Private Organization (Amount in Pesos)</p>
-          CEB: |
-            <p>Donasyon/Charity/Tabang gikan sa pribadong organisasyon</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — Donation/Charity/Assistance from Private Organization (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_05
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Malasakit Center</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — Malasakit Center</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — Malasakit Center</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — Malasakit Center</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — Malasakit Center</p>
-          WAR: |
-            <p>Sentro han Malasakit</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_05_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Malasakit Center (Amount in Pesos)</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — Malasakit Center (Amount in Pesos)</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — Malasakit Center (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — Malasakit Center (Amount in Pesos)</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — Malasakit Center (Amount in Pesos)</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — Malasakit Center (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_06
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Other Donation/Charity/Assistance from Government Organization</p>
-          FIL: |
-            <p>Ibang donasayon/Kawanggawa/Donasyon mula sa gobyerno o pampublikong organisasyon</p>
-          BCL: |
-            <p>Iba pang donasyon</p>
-          BIS: |
-            <p>Donasyon/Charity/Assistance gikan sa Gobyerno nga mga Organisasyon</p>
-          CEB: |
-            <p>Uban pang mga donasyon/Charity/Tabang gikan sa organisasyon sa gobyerno</p>
-          WAR: |
-            <p>Iba pa nga Donasyon/Charity/Ayuda tikang ha Organisasyon han Gobyerno</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_06_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)</p>
-          FIL: |
-            <p>Ibang donasayon/Kawanggawa/Donasyon mula sa gobyerno o pampublikong organisasyon</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)</p>
-          CEB: |
-            <p>Uban pang mga donasyon/Charity/Tabang gikan sa organisasyon sa gobyerno</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — Other Donation/Charity/Assistance from Government Organization (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_07
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — MAIFIP</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — MAIFIP</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — MAIFIP</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — MAIFIP</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — MAIFIP</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — MAIFIP</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_07_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — MAIFIP (Amount in Pesos)</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — MAIFIP (Amount in Pesos)</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — MAIFIP (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — MAIFIP (Amount in Pesos)</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — MAIFIP (Amount in Pesos)</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — MAIFIP (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_08
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — PhilHealth</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — PhilHealth</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — PhilHealth</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — PhilHealth</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — PhilHealth</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — PhilHealth</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_08_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — PhilHealth (Amount in Pesos)</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — PhilHealth (Amount in Pesos)</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — PhilHealth (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — PhilHealth (Amount in Pesos)</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — PhilHealth (Amount in Pesos)</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — PhilHealth (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_09
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — SSS</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — SSS</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — SSS</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — SSS</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — SSS</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — SSS</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_09_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — SSS (Amount in Pesos)</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — SSS (Amount in Pesos)</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — SSS (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — SSS (Amount in Pesos)</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — SSS (Amount in Pesos)</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — SSS (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_10
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — GSIS</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — GSIS</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — GSIS</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — GSIS</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — GSIS</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — GSIS</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_10_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — GSIS (Amount in Pesos)</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — GSIS (Amount in Pesos)</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — GSIS (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — GSIS (Amount in Pesos)</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — GSIS (Amount in Pesos)</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — GSIS (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_11
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Private Insurance</p>
-          FIL: |
-            <p>Pribadong Insurance</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — Private Insurance</p>
-          BIS: |
-            <p>Pribado nga Insurance</p>
-          CEB: |
-            <p>Pribado nga insurance</p>
-          WAR: |
-            <p>Pribado nga insurance</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_11_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Private Insurance (Amount in Pesos)</p>
-          FIL: |
-            <p>Pribadong Insurance</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — Private Insurance (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — Private Insurance (Amount in Pesos)</p>
-          CEB: |
-            <p>Pribado nga insurance</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — Private Insurance (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_12
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — HMO</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — HMO</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — HMO</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — HMO</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — HMO</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — HMO</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_12_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — HMO (Amount in Pesos)</p>
-          FIL: |
-            <p>113. Used to pay for hospital bill — HMO (Amount in Pesos)</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — HMO (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — HMO (Amount in Pesos)</p>
-          CEB: |
-            <p>113. Used to pay for hospital bill — HMO (Amount in Pesos)</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — HMO (Amount in Pesos)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_13
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Other (specify)</p>
-          FIL: |
-            <p>Iba pa (tukuyin)</p>
-          BCL: |
-            <p>Iba pa (ispecify)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — Other (specify)</p>
-          CEB: |
-            <p>Uban pa (isulti)</p>
-          WAR: |
-            <p>Iba pa (Ispecify)</p>
-  - name: PATIENTSURVEY_DICT.Q113_PAY_13_AMT
-    conditions:
-      - questionText:
-          EN: |
-            <p>113. Used to pay for hospital bill — Other (specify) (Amount in Pesos)</p>
-          FIL: |
-            <p>Iba pa (tukuyin)</p>
-          BCL: |
-            <p>113. Used to pay for hospital bill — Other (specify) (Amount in Pesos)</p>
-          BIS: |
-            <p>113. Used to pay for hospital bill — Other (specify) (Amount in Pesos)</p>
-          CEB: |
-            <p>Uban pa (isulti)</p>
-          WAR: |
-            <p>113. Used to pay for hospital bill — Other (specify) (Amount in Pesos)</p>
+            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q113_PAY_OTHER_TXT
     conditions:
       - questionText:
@@ -6291,66 +4461,21 @@ questions:
             <p>128. Which items did you have to pay for out-of-pocket? — Other (specify) text</p>
           WAR: |
             <p>128. Which items did you have to pay for out-of-pocket? — Other (specify) text</p>
-  - name: PATIENTSURVEY_DICT.Q129_WHY_NO_MAIFIP_O01
+  - name: PATIENTSURVEY_DICT.Q129_WHY_NO_MAIFIP
     conditions:
       - questionText:
           EN: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — Not eligible</p>
+            <p>129. Why did you not avail of MAIFIP during this last confinement?</p>
           FIL: |
-            <p>Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? — Hindi kwalipikado</p>
+            <p>129. Why did you not avail of MAIFIP during this last confinement?</p>
           BCL: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — Not eligible</p>
+            <p>129. Why did you not avail of MAIFIP during this last confinement?</p>
           BIS: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — Not eligible</p>
+            <p>129. Why did you not avail of MAIFIP during this last confinement?</p>
           CEB: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — Not eligible</p>
+            <p>129. Why did you not avail of MAIFIP during this last confinement?</p>
           WAR: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — Not eligible</p>
-  - name: PATIENTSURVEY_DICT.Q129_WHY_NO_MAIFIP_O02
-    conditions:
-      - questionText:
-          EN: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — Too complicated</p>
-          FIL: |
-            <p>Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? — Masyadong komplikado</p>
-          BCL: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — Too complicated</p>
-          BIS: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — Too complicated</p>
-          CEB: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — Too complicated</p>
-          WAR: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — Too complicated</p>
-  - name: PATIENTSURVEY_DICT.Q129_WHY_NO_MAIFIP_O03
-    conditions:
-      - questionText:
-          EN: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — I don't like to stay in basic ward</p>
-          FIL: |
-            <p>Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? — Ayaw ko sa basic ward</p>
-          BCL: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — I don't like to stay in basic ward</p>
-          BIS: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — I don't like to stay in basic ward</p>
-          CEB: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — I don't like to stay in basic ward</p>
-          WAR: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — I don't like to stay in basic ward</p>
-  - name: PATIENTSURVEY_DICT.Q129_WHY_NO_MAIFIP_O04
-    conditions:
-      - questionText:
-          EN: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — There is no available basic ward</p>
-          FIL: |
-            <p>Bakit hindi ka gumamit ng MAIFIP sa huling confinement mo? — Walang available na basic ward</p>
-          BCL: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — There is no available basic ward</p>
-          BIS: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — There is no available basic ward</p>
-          CEB: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — There is no available basic ward</p>
-          WAR: |
-            <p>129. Why did you not avail of MAIFIP during this last confinement? — There is no available basic ward</p>
+            <p>129. Why did you not avail of MAIFIP during this last confinement?</p>
   - name: PATIENTSURVEY_DICT.Q130_REDUCED_SPEND
     conditions:
       - questionText:
@@ -6370,17 +4495,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on [date_formatted].</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
           FIL: |
-            <p>Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa ~~FACILITY_NAME~~ bilang isang ~~getvaluelabel(PATIENT_TYPE)~~, kung saan inanyayahan kayong lumahok sa aming survey noong [date_formatted].</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
+            <p>Ang mga sumusunod na tanong ay may kaugnayan sa pinakahuling karanasan ng pasyente sa ~~FACILITY_NAME~~ bilang isang ~~getvaluelabel(PATIENT_TYPE)~~, kung saan inanyayahan kayong lumahok sa aming survey noong ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>131. Satisfaction with cleanliness and comfort — Waiting areas</p>
           BCL: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on [date_formatted].</p><p>Mga waiting area</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>Mga waiting area</p>
           BIS: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on [date_formatted].</p><p>Hulatanan</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>Hulatanan</p>
           CEB: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on [date_formatted].</p><p>Mga lugar-hulatanan</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>Mga lugar-hulatanan</p>
           WAR: |
-            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on [date_formatted].</p><p>Mga lugar hin paghulat</p>
+            <p>The following questions relate to the patient’s most recent experience with ~~FACILITY_NAME~~ as an ~~getvaluelabel(PATIENT_TYPE)~~, where we invited you to participate in our survey on ~~edit("99/99/9999", sysdate("MMDDYYYY"))~~.</p><p>Mga lugar hin paghulat</p>
   - name: PATIENTSURVEY_DICT.Q132_AMEN_BATHROOMS
     conditions:
       - questionText:
@@ -6560,7 +4685,7 @@ questions:
           CEB: |
             <p>Sa kinatibuk-an, irekomenda ba nimo ang ~~FACILITY_NAME~~ sa usa ka higala o paryente?</p>
           WAR: |
-            <p>Ha kabug-usan, magrerekomenda ka ba [ngaran han pasilidad] ha sangkay o paryente?</p>
+            <p>Ha kabug-usan, magrerekomenda ka ba ~~FACILITY_NAME~~ ha sangkay o paryente?</p>
   - name: PATIENTSURVEY_DICT.Q144_QUALITY
     conditions:
       - questionText:
@@ -6575,7 +4700,7 @@ questions:
           CEB: |
             <p>Unsaon sa pasyente pag-rate ang kalidad sa pag-atiman nga imong nadawat sa ~~FACILITY_NAME~~?</p>
           WAR: |
-            <p>Paonan-o ihahatag han pasyente an kalidad han pag-ataman nga imo nakarawat [ngaran han pasilidad]?</p>
+            <p>Paonan-o ihahatag han pasyente an kalidad han pag-ataman nga imo nakarawat ~~FACILITY_NAME~~?</p>
   - name: PATIENTSURVEY_DICT.Q145_PURCHASE_FREQ
     conditions:
       - questionText:
@@ -6974,13 +5099,13 @@ questions:
           FIL: |
             <p>Tatanungin namin ang karanasan at kasiyahan ng pasyente sa referral.</p><p>Batay sa naging huling bisita mo sa ~~FACILITY_NAME~~, may healthcare worker ba na nag-refer sa iyo sa ibang pasilidad o espesyalista para sa karagdagang pangangalaga o espesyalisadong pangangalaga?</p>
           BCL: |
-            <p>We will be asking about the patient’s experience and satisfaction on referrals.</p><p>Base saimong pinakahuring pagbisita o pagkaospital sa [ngaran kan pasilidad], igwa ba na healthcare worker an nagrefer saimo sa ibang pasilidad o specialista?</p>
+            <p>We will be asking about the patient’s experience and satisfaction on referrals.</p><p>Base saimong pinakahuring pagbisita o pagkaospital sa ~~FACILITY_NAME~~, igwa ba na healthcare worker an nagrefer saimo sa ibang pasilidad o specialista?</p>
           BIS: |
             <p>We will be asking about the patient’s experience and satisfaction on referrals.</p><p>Base sa imong pinakabag-o nga pagbisita/confinement sa ~~FACILITY_NAME~~, gi-refer ba ka sa usa ka healthcare worker ngadto sa laing pasilidad o espesyalista alang sa dugang o espesyal nga pag-atiman?</p>
           CEB: |
             <p>We will be asking about the patient’s experience and satisfaction on referrals.</p><p>Base sa imong pinakaulahing pagbisita/pagpa-admit sa ~~FACILITY_NAME~~, gi-refer ka ba sa usa ka healthcare worker ngadto sa laing pasilidad o espesyalista para sa dugang nga pag-atiman o espesyal nga pag-atiman?</p>
           WAR: |
-            <p>We will be asking about the patient’s experience and satisfaction on referrals.</p><p>Basi han imo pinakabag-o nga pagbisita/kaconfine ha [igbutang an ngaran han pasilidad], ginrefer ka ba ha usa nga trabahador han panlawas ngadto hin iba nga pasilidad o espesyalista para hin dugang mga pag-ataman?</p>
+            <p>We will be asking about the patient’s experience and satisfaction on referrals.</p><p>Basi han imo pinakabag-o nga pagbisita/kaconfine ha ~~FACILITY_NAME~~, ginrefer ka ba ha usa nga trabahador han panlawas ngadto hin iba nga pasilidad o espesyalista para hin dugang mga pag-ataman?</p>
   - name: PATIENTSURVEY_DICT.Q163_CARE_TYPE
     conditions:
       - questionText:
@@ -7190,7 +5315,7 @@ questions:
           CEB: |
             <p>Ang pagbisita ba sa ~~FACILITY_NAME~~ usa ka referral gikan sa imong primary care facility?</p>
           WAR: |
-            <p>An pagbisita ba ha [ngaran_han_pasilidad] in pagrefer tikang han iyo pasilidad han panguna nga pag-ataman?</p>
+            <p>An pagbisita ba ha ~~FACILITY_NAME~~ in pagrefer tikang han iyo pasilidad han panguna nga pag-ataman?</p>
   - name: PATIENTSURVEY_DICT.Q173_PCP_KNOWS
     conditions:
       - questionText:

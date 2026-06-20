@@ -308,6 +308,54 @@ _QNUM = re.compile(r"^Q(\d{1,3})_")
 _SUBQ = re.compile(r"^Q\d{1,3}_\d+_")
 
 
+# ------------------------------------------------------------------
+# Section C name-piping (#610/#613.3) + roster line-number context (#601/#614).
+# Per-member questions show the member's name piped from the household roster's Q30_NAME
+# so the enumerator never loses track of whose row it is. Q42-Q44 reference Q30_NAME in
+# their own occurrence; the Q48-Q50 private-insurance pass (C_PRIVATE_INS_ROSTER) references
+# the SAME household-roster member by occurrence. The paper "(NAME)" token is replaced inline.
+# Fills (~~expr~~) live ONLY in the question text (.qsf) and evaluate on-device; the dcf
+# label / bold header still shows "(NAME)" literally (pre-existing, not a regression).
+# ------------------------------------------------------------------
+# (NAME) English + (PANGALAN) Tagalog member-name placeholders, replaced inline with the fill.
+_NAME_TOKEN_RE = re.compile(r"\((?:NAME|PANGALAN)\)", re.IGNORECASE)
+_PIPE_HH = {"Q42_GSIS", "Q43_SSS", "Q44_PAGIBIG"}
+_PIPE_PRIV = {"Q48_OTHER_INS_REG", "Q49_PRIVATE_INS", "Q50_PRIVATE_INS_OTHER_TXT"}
+_HH_NAME_FILL = "~~strip(Q30_NAME)~~"
+_PRIV_NAME_FILL = "~~strip(Q30_NAME(curocc()))~~"
+
+# Roster line-1 (respondent) cross-check notes (#603/#606/#607/#609). For roster line 1
+# (the respondent), these per-member questions should match the respondent's own Section B
+# answers; show the prior answer as a blue note so the enumerator can cross-check without
+# paging back. getvaluelabel() prints the coded answer's label; fills evaluate on-device.
+# (Option (b) from the tester — a reminder note, not a hard cross-field warning.)
+_ROSTER_CROSSCHECK = {
+    "Q35_HAS_DISABILITY": ("If this is line 1 (the respondent): compare with their Section B "
+                           "disability answer Q7 — <b>~~getvaluelabel(Q7_IS_PWD)~~</b>."),
+    "Q39_CIVIL_STATUS":   ("If this is line 1 (the respondent): should match their Section B "
+                           "civil status Q6 — <b>~~getvaluelabel(Q6_CIVIL_STATUS)~~</b>."),
+    "Q40_EDUCATION":      ("If this is line 1 (the respondent): should match their Section B "
+                           "education Q11 — <b>~~getvaluelabel(Q11_EDUCATION)~~</b>."),
+    "Q41_EMPLOYMENT":     ("If this is line 1 (the respondent): should match their Section B "
+                           "employment Q12 — <b>~~getvaluelabel(Q12_EMPLOYMENT)~~</b>."),
+}
+
+
+def _pipe_member_name(nm, html):
+    """Prefix the roster member's name + line number and replace the inline '(NAME)' token
+    for the Section C per-member questions. Runs AFTER _html escaping so the ~~fill~~ is not
+    HTML-escaped (parens in '(NAME)' are not escaped either, so the inline sub still matches)."""
+    if nm in _PIPE_HH:
+        ctx = (f'<p class="instruction">Household member: {_HH_NAME_FILL} '
+               f'(Roster line ~~MEMBER_LINE_NO~~ — line 1 is the respondent)</p>')
+        return ctx + _NAME_TOKEN_RE.sub(_HH_NAME_FILL, html)
+    if nm in _PIPE_PRIV:
+        ctx = (f'<p class="instruction">Household member: {_PRIV_NAME_FILL} '
+               f'(Roster line ~~PRIV_MEMBER_LINE_NO~~)</p>')
+        return ctx + _NAME_TOKEN_RE.sub(_PRIV_NAME_FILL, html)
+    return html
+
+
 def _esc(t):
     return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
@@ -352,6 +400,8 @@ def main():
         for rec in lvl.get("records", []):
             for it in rec.get("items", []):
                 nm = it["name"]
+                if it.get("contentType") in ("image", "audio", "document", "geometry"):
+                    continue   # binary items: off-form, no question prompt (#713)
                 if nm in seen:
                     continue
                 seen.add(nm)
@@ -360,8 +410,12 @@ def main():
                 ov = OVERRIDES.get(nm)
                 pre, post = ("", "") if ov else question_extras(nm, intro_used)
                 lines += [f"  - name: {dict_name}.{nm}", "    conditions:", "      - questionText:"]
+                cc = _ROSTER_CROSSCHECK.get(nm)   # #603/#606/#607/#609 line-1 cross-check note
                 for lnm, _ in langs:
                     body = ov or (pre + _html(labmap.get(lnm) or en) + post)
+                    body = _pipe_member_name(nm, body)   # Section C name/line piping
+                    if cc:
+                        body = body + f'<p class="instruction">{cc}</p>'
                     lines += [f"          {lnm}: |", f"            {body}"]
                 n += 1
     lines.append("...")

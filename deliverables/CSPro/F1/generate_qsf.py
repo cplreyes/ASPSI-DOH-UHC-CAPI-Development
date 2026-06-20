@@ -238,6 +238,8 @@ def main():
         for rec in lvl.get("records", []):
             for it in rec.get("items", []):
                 nm = it["name"]
+                if it.get("contentType") in ("image", "audio", "document", "geometry"):
+                    continue   # binary items: off-form, no question prompt (#713)
                 if nm in seen:
                     continue
                 seen.add(nm)

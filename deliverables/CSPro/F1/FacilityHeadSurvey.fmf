@@ -21,24 +21,6 @@ Item=QUESTIONNAIRE_NUMBER
   
 [Form]
 Name=FORM001
-Label=Field Control
-Level=1
-Size=806,330
-  
-Item=SURVEY_TEAM_LEADER_S_NAME
-Item=ENUMERATOR_S_NAME
-Item=FIELD_VALIDATED_BY
-Item=FIELD_EDITED_BY
-Item=DATE_FIRST_VISITED_THE_FACILITY
-Item=DATE_OF_FINAL_VISIT_TO_THE_FACILITY
-Item=TOTAL_NUMBER_OF_VISITS
-Item=ENUM_RESULT_FIRST_VISIT
-Item=ENUM_RESULT_FINAL_VISIT
-  
-[EndForm]
-  
-[Form]
-Name=FORM002
 Label=Health Facility and Geographic Identification
 Level=1
 Size=806,300
@@ -52,7 +34,7 @@ Item=BARANGAY
 [EndForm]
   
 [Form]
-Name=FORM003
+Name=FORM002
 Label=Facility GPS
 Level=1
 Size=1222,300
@@ -67,7 +49,7 @@ Item=FACILITY_GPS_READTIME
 [EndForm]
   
 [Form]
-Name=FORM004
+Name=FORM003
 Label=A. Facility Head Profile
 Level=1
 Size=1154,390
@@ -88,7 +70,7 @@ Item=Q6_MONTHS_HEALTH
 [EndForm]
   
 [Form]
-Name=FORM005
+Name=FORM004
 Label=B. Facility Profile
 Level=1
 Size=806,300
@@ -99,7 +81,7 @@ Item=Q8_SERVICE_LEVEL
 [EndForm]
   
 [Form]
-Name=FORM006
+Name=FORM005
 Label=C. Universal Health Care (UHC) Implementation
 Level=1
 Size=2703,3690
@@ -201,7 +183,7 @@ Item=Q50_ACCESS_CHALL_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM007
+Name=FORM006
 Label=D. YAKAP / Konsulta Package
 Level=1
 Size=2438,5970
@@ -282,7 +264,7 @@ Item=Q100_ADDL_FEATURES
 [EndForm]
   
 [Form]
-Name=FORM008
+Name=FORM007
 Label=E. Awareness on Expanded Health Programs (BUCAS and GAMOT)
 Level=1
 Size=2500,1230
@@ -314,7 +296,7 @@ Item=Q117_ADDR_STOCKOUT_HOW_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM009
+Name=FORM008
 Label=F. DOH Licensing: Status and Barriers
 Level=1
 Size=2086,4440
@@ -353,7 +335,7 @@ Item=Q134_WHY_DIFF_ADDONS_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM010
+Name=FORM009
 Label=G. Service Delivery Process
 Level=1
 Size=2625,2790
@@ -402,7 +384,7 @@ Item=Q162_NOT_SATISFIED_WHY_OTHER_TXT
 [EndForm]
   
 [Form]
-Name=FORM011
+Name=FORM010
 Label=H. Human Resources for Health
 Level=1
 Size=2476,780
@@ -414,6 +396,24 @@ Item=Q165_PD_DOCTORS
 Item=Q165_PD_DOCTORS_OTHER_TXT
 Item=Q166_PD_NURSES
 Item=Q166_PD_NURSES_OTHER_TXT
+  
+[EndForm]
+  
+[Form]
+Name=FORM011
+Label=Field Control
+Level=1
+Size=806,330
+  
+Item=SURVEY_TEAM_LEADER_S_NAME
+Item=ENUMERATOR_S_NAME
+Item=FIELD_VALIDATED_BY
+Item=FIELD_EDITED_BY
+Item=DATE_FIRST_VISITED_THE_FACILITY
+Item=DATE_OF_FINAL_VISIT_TO_THE_FACILITY
+Item=TOTAL_NUMBER_OF_VISITS
+Item=ENUM_RESULT_FIRST_VISIT
+Item=ENUM_RESULT_FINAL_VISIT
   
 [EndForm]
   
@@ -454,145 +454,9 @@ Text=Questionnaire Number (12-digit: RR-PP-MMM-FF-CCC)
   
 [Group]
 Required=Yes
-Name=FIELD_CONTROL_FORM
-Label=Field Control
-Form=2
-Max=1
-  
-  
-[Field]
-Name=SURVEY_TEAM_LEADER_S_NAME
-Position=350,27,760,47
-Item=SURVEY_TEAM_LEADER_S_NAME,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,30,233,46
-Text=Survey Team Leader's Name
- 
-  
-[Field]
-Name=ENUMERATOR_S_NAME
-Position=350,57,760,77
-Item=ENUMERATOR_S_NAME,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,60,174,76
-Text=Enumerator's Name
- 
-  
-[Field]
-Name=FIELD_VALIDATED_BY
-Position=350,87,760,107
-Item=FIELD_VALIDATED_BY,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,90,166,106
-Text=Field Validated by
- 
-  
-[Field]
-Name=FIELD_EDITED_BY
-Position=350,117,760,137
-Item=FIELD_EDITED_BY,FACILITYHEADSURVEY_DICT
-UseUnicodeTextBox=Yes
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,120,145,136
-Text=Field Edited by
- 
-  
-  
-[Field]
-Name=DATE_FIRST_VISITED_THE_FACILITY
-Position=350,147,463,167
-Item=DATE_FIRST_VISITED_THE_FACILITY,FACILITYHEADSURVEY_DICT
-DataCaptureType=Date,YYYYMMDD
-Form=2
-  
-[Text]
-Position=50,150,315,166
-Text=Date First Visited the Facility (YYYYMMDD)
- 
-  
-[Field]
-Name=DATE_OF_FINAL_VISIT_TO_THE_FACILITY
-Position=350,177,463,197
-Item=DATE_OF_FINAL_VISIT_TO_THE_FACILITY,FACILITYHEADSURVEY_DICT
-DataCaptureType=Date,YYYYMMDD
-Form=2
-  
-[Text]
-Position=50,180,336,196
-Text=Date of Final Visit to the Facility (YYYYMMDD)
- 
-  
-[Field]
-Name=TOTAL_NUMBER_OF_VISITS
-Position=350,207,393,227
-Item=TOTAL_NUMBER_OF_VISITS,FACILITYHEADSURVEY_DICT
-DataCaptureType=TextBox
-Form=2
-  
-[Text]
-Position=50,210,189,226
-Text=Total Number of Visits
- 
-  
-[Field]
-Name=ENUM_RESULT_FIRST_VISIT
-Position=350,237,365,257
-Item=ENUM_RESULT_FIRST_VISIT,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,240,167,256
-Text=Result of First Visit
- 
-  
-[Field]
-Name=ENUM_RESULT_FINAL_VISIT
-Position=350,267,365,287
-Item=ENUM_RESULT_FINAL_VISIT,FACILITYHEADSURVEY_DICT
-DataCaptureType=RadioButton
-Form=2
-  
-[Text]
-Position=50,270,172,286
-Text=Result of Final Visit
- 
-[Block]
-Name=INTERVIEW_STAFF_BLOCK
-Label=Interview Staff
-DisplayTogether=Yes
-Position=0
-Length=4
-  
-[Block]
-Name=VISIT_RECORD_BLOCK
-Label=Facility Visit Record
-DisplayTogether=Yes
-Position=5
-Length=5
-  
-[EndGroup]
-  
-[Group]
-Required=Yes
 Name=HEALTH_FACILITY_AND_GEOGRAPHIC_IDENTIFICATION_FORM
 Label=Health Facility and Geographic Identification
-Form=3
+Form=2
 Max=1
   
 [Field]
@@ -600,7 +464,7 @@ Name=CLASSIFICATION
 Position=177,27,192,47
 Item=CLASSIFICATION,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=3
+Form=2
   
 [Text]
 Position=50,30,134,46
@@ -613,7 +477,7 @@ Position=177,57,700,77
 Item=REGION_NAME,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=3
+Form=2
   
 [Text]
 Position=50,60,95,76
@@ -626,7 +490,7 @@ Position=177,87,700,107
 Item=PROVINCE_NAME,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=3
+Form=2
   
 [Text]
 Position=50,90,145,106
@@ -639,7 +503,7 @@ Position=177,117,700,137
 Item=CITY_NAME,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=3
+Form=2
   
 [Text]
 Position=50,120,163,136
@@ -651,7 +515,7 @@ Name=BARANGAY
 Position=177,147,318,167
 Item=BARANGAY,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=3
+Form=2
   
 [Text]
 Position=50,150,111,166
@@ -663,7 +527,7 @@ Text=Barangay
 Required=Yes
 Name=REC_FACILITY_CAPTURE_FORM
 Label=Facility GPS
-Form=4
+Form=3
 Max=1
   
 [Field]
@@ -672,7 +536,7 @@ Position=242,27,348,47
 Item=FACILITY_GPS_LATITUDE,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=4
+Form=3
   
 [Text]
 Position=50,30,134,46
@@ -685,7 +549,7 @@ Position=242,57,348,77
 Item=FACILITY_GPS_LONGITUDE,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=4
+Form=3
   
 [Text]
 Position=50,60,146,76
@@ -698,7 +562,7 @@ Position=242,87,332,107
 Item=FACILITY_GPS_ALTITUDE,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=4
+Form=3
   
 [Text]
 Position=50,90,155,106
@@ -710,7 +574,7 @@ Name=FACILITY_GPS_ACCURACY
 Position=242,117,285,137
 Item=FACILITY_GPS_ACCURACY,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=4
+Form=3
   
 [Text]
 Position=50,120,164,136
@@ -722,7 +586,7 @@ Name=FACILITY_GPS_SATELLITES
 Position=242,147,271,167
 Item=FACILITY_GPS_SATELLITES,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=4
+Form=3
   
 [Text]
 Position=50,150,141,166
@@ -735,7 +599,7 @@ Position=242,177,404,197
 Item=FACILITY_GPS_READTIME,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=4
+Form=3
   
 [Text]
 Position=50,180,189,196
@@ -747,7 +611,7 @@ Text=GPS Read Time (UTC)
 Required=Yes
 Name=A_FACILITY_HEAD_PROFILE_FORM
 Label=A. Facility Head Profile
-Form=5
+Form=4
 Max=1
   
   
@@ -757,7 +621,7 @@ Position=760,27,1410,47
 Item=RESP_NAME,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=5
+Form=4
   
 [Text]
 Position=50,30,256,46
@@ -770,7 +634,7 @@ Position=760,57,1410,77
 Item=RESP_POSITION,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=5
+Form=4
   
 [Text]
 Position=50,60,226,76
@@ -783,7 +647,7 @@ Position=760,87,1250,107
 Item=RESP_EMAIL,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=5
+Form=4
   
 [Text]
 Position=50,90,218,106
@@ -796,7 +660,7 @@ Position=760,117,930,137
 Item=RESP_MOBILE,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=5
+Form=4
   
 [Text]
 Position=50,120,226,136
@@ -809,7 +673,7 @@ Position=760,147,1410,167
 Item=Q1_NAME,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=5
+Form=4
   
 [Text]
 Position=50,150,466,166
@@ -822,7 +686,7 @@ Name=Q2_FACILITY_ROLE
 Position=760,177,789,197
 Item=Q2_FACILITY_ROLE,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=5
+Form=4
   
 [Text]
 Position=50,180,409,196
@@ -834,7 +698,7 @@ Name=Q3_AGE
 Position=760,207,789,227
 Item=Q3_AGE,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=5
+Form=4
   
 [Text]
 Position=50,210,391,226
@@ -846,7 +710,7 @@ Name=Q4_SEX
 Position=760,237,775,257
 Item=Q4_SEX,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=5
+Form=4
   
 [Text]
 Position=50,240,287,256
@@ -858,7 +722,7 @@ Name=Q5_YEARS_AT_FACILITY
 Position=760,267,789,287
 Item=Q5_YEARS_AT_FACILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=5
+Form=4
   
 [Text]
 Position=50,270,736,286
@@ -870,7 +734,7 @@ Name=Q5_MONTHS_AT_FACILITY
 Position=760,297,789,317
 Item=Q5_MONTHS_AT_FACILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=5
+Form=4
   
 [Text]
 Position=50,300,746,316
@@ -883,7 +747,7 @@ Name=Q6_YEARS_HEALTH
 Position=760,327,789,347
 Item=Q6_YEARS_HEALTH,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=5
+Form=4
   
 [Text]
 Position=50,330,563,346
@@ -895,7 +759,7 @@ Name=Q6_MONTHS_HEALTH
 Position=760,357,789,377
 Item=Q6_MONTHS_HEALTH,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=5
+Form=4
   
 [Text]
 Position=50,360,573,376
@@ -928,7 +792,7 @@ Length=2
 Required=Yes
 Name=B_FACILITY_PROFILE_FORM
 Label=B. Facility Profile
-Form=6
+Form=5
 Max=1
   
   
@@ -937,7 +801,7 @@ Name=Q7_OWNERSHIP
 Position=354,27,369,47
 Item=Q7_OWNERSHIP,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=6
+Form=5
   
 [Text]
 Position=50,30,317,46
@@ -949,7 +813,7 @@ Name=Q8_SERVICE_LEVEL
 Position=354,57,369,77
 Item=Q8_SERVICE_LEVEL,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=6
+Form=5
   
 [Text]
 Position=50,60,340,76
@@ -968,7 +832,7 @@ Length=2
 Required=Yes
 Name=C_UHC_IMPLEMENTATION_FORM
 Label=C. Universal Health Care (UHC) Implementation
-Form=7
+Form=6
 Max=1
   
   
@@ -977,7 +841,7 @@ Name=Q9_UHC_HEARD
 Position=1695,27,1710,47
 Item=Q9_UHC_HEARD,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=6
   
 [Text]
 Position=50,30,515,46
@@ -989,7 +853,7 @@ Name=Q10_HAS_PRIMARY_PKG
 Position=1695,57,1710,77
 Item=Q10_HAS_PRIMARY_PKG,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=6
   
 [Text]
 Position=50,60,365,76
@@ -1002,7 +866,7 @@ Name=Q11_PRIMARY_PKG_STATUS
 Position=1695,87,1724,107
 Item=Q11_PRIMARY_PKG_STATUS,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,90,470,106
@@ -1016,7 +880,7 @@ Position=1695,117,2665,137
 Item=Q11_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,120,610,136
@@ -1029,7 +893,7 @@ Name=Q12_PCB_LICENSING
 Position=1695,147,1710,167
 Item=Q12_PCB_LICENSING,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,150,880,166
@@ -1043,7 +907,7 @@ Position=1695,177,2665,197
 Item=Q12_PCB_LICENSING_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,180,1048,196
@@ -1057,7 +921,7 @@ Position=1695,207,2665,227
 Item=Q12_PCB_LICENSING_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,210,1043,226
@@ -1070,7 +934,7 @@ Name=Q13_PUBLIC_HEALTH_UNIT
 Position=1695,237,1710,257
 Item=Q13_PUBLIC_HEALTH_UNIT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=6
   
 [Text]
 Position=50,240,374,256
@@ -1083,7 +947,7 @@ Name=Q14_PHU_CREATED
 Position=1695,267,1710,287
 Item=Q14_PHU_CREATED,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,270,1034,286
@@ -1097,7 +961,7 @@ Position=1695,297,2665,317
 Item=Q14_PHU_CREATED_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,300,1202,316
@@ -1111,7 +975,7 @@ Position=1695,327,2665,347
 Item=Q14_PHU_CREATED_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,330,1197,346
@@ -1124,7 +988,7 @@ Name=Q15_PHU_ROLE
 Position=1695,357,1724,377
 Item=Q15_PHU_ROLE,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,360,371,376
@@ -1138,7 +1002,7 @@ Position=1695,387,2665,407
 Item=Q15_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,390,511,406
@@ -1151,7 +1015,7 @@ Name=Q16_HEALTH_PROMO_UNIT
 Position=1695,417,1710,437
 Item=Q16_HEALTH_PROMO_UNIT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=6
   
 [Text]
 Position=50,420,400,436
@@ -1164,7 +1028,7 @@ Name=Q17_HPU_CREATED
 Position=1695,447,1710,467
 Item=Q17_HPU_CREATED,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,450,1060,466
@@ -1178,7 +1042,7 @@ Position=1695,477,2665,497
 Item=Q17_HPU_CREATED_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,480,1228,496
@@ -1192,7 +1056,7 @@ Position=1695,507,2665,527
 Item=Q17_HPU_CREATED_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,510,1223,526
@@ -1205,7 +1069,7 @@ Name=Q18_HPU_ROLE
 Position=1695,537,1724,557
 Item=Q18_HPU_ROLE,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=6
   
 [Text]
 Position=50,540,397,556
@@ -1219,7 +1083,7 @@ Position=1695,567,2665,587
 Item=Q18_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,570,537,586
@@ -1232,7 +1096,7 @@ Name=Q19_NEW_ROLES
 Position=1695,597,1710,617
 Item=Q19_NEW_ROLES,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,600,967,616
@@ -1246,7 +1110,7 @@ Position=1695,627,2665,647
 Item=Q19_NEW_ROLES_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,630,1135,646
@@ -1260,7 +1124,7 @@ Position=1695,657,2665,677
 Item=Q19_NEW_ROLES_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,660,1130,676
@@ -1274,7 +1138,7 @@ Position=1695,687,3625,707
 Item=Q20_NEW_ROLES_LIST,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,690,410,706
@@ -1287,7 +1151,7 @@ Name=Q21_NEW_DEPTS
 Position=1695,717,1710,737
 Item=Q21_NEW_DEPTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,720,1015,736
@@ -1301,7 +1165,7 @@ Position=1695,747,2665,767
 Item=Q21_NEW_DEPTS_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,750,1183,766
@@ -1315,7 +1179,7 @@ Position=1695,777,2665,797
 Item=Q21_NEW_DEPTS_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,780,1178,796
@@ -1329,7 +1193,7 @@ Position=1695,807,3625,827
 Item=Q22_NEW_DEPTS_LIST,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,810,458,826
@@ -1342,7 +1206,7 @@ Name=Q23_NEW_BUILDINGS
 Position=1695,837,1710,857
 Item=Q23_NEW_BUILDINGS,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,840,1033,856
@@ -1356,7 +1220,7 @@ Position=1695,867,2665,887
 Item=Q23_NEW_BUILDINGS_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,870,1201,886
@@ -1370,7 +1234,7 @@ Position=1695,897,2665,917
 Item=Q23_NEW_BUILDINGS_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,900,1196,916
@@ -1384,7 +1248,7 @@ Position=1695,927,3625,947
 Item=Q24_NEW_BUILDINGS_PURPOSE,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,930,337,946
@@ -1397,7 +1261,7 @@ Name=Q25_NEW_ROOMS
 Position=1695,957,1710,977
 Item=Q25_NEW_ROOMS,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,960,1010,976
@@ -1411,7 +1275,7 @@ Position=1695,987,2665,1007
 Item=Q25_NEW_ROOMS_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,990,1178,1006
@@ -1425,7 +1289,7 @@ Position=1695,1017,2665,1037
 Item=Q25_NEW_ROOMS_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1020,1173,1036
@@ -1439,7 +1303,7 @@ Position=1695,1047,3625,1067
 Item=Q26_NEW_ROOMS_PURPOSE,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1050,300,1066
@@ -1452,7 +1316,7 @@ Name=Q27_INC_EQUIPMENT
 Position=1695,1077,1710,1097
 Item=Q27_INC_EQUIPMENT,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,1080,853,1096
@@ -1466,7 +1330,7 @@ Position=1695,1107,2665,1127
 Item=Q27_INC_EQUIPMENT_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1110,1021,1126
@@ -1480,7 +1344,7 @@ Position=1695,1137,2665,1157
 Item=Q27_INC_EQUIPMENT_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1140,1016,1156
@@ -1494,7 +1358,7 @@ Position=1695,1167,3625,1187
 Item=Q28_INC_EQUIPMENT_LIST,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1170,555,1186
@@ -1507,7 +1371,7 @@ Name=Q29_INC_SUPPLIES
 Position=1695,1197,1710,1217
 Item=Q29_INC_SUPPLIES,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,1200,837,1216
@@ -1521,7 +1385,7 @@ Position=1695,1227,2665,1247
 Item=Q29_INC_SUPPLIES_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1230,1005,1246
@@ -1535,7 +1399,7 @@ Position=1695,1257,2665,1277
 Item=Q29_INC_SUPPLIES_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1260,1000,1276
@@ -1549,7 +1413,7 @@ Position=1695,1287,3625,1307
 Item=Q30_INC_SUPPLIES_LIST,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1290,406,1306
@@ -1562,7 +1426,7 @@ Name=Q31_EMR_USE
 Position=1695,1317,1710,1337
 Item=Q31_EMR_USE,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,1320,1008,1336
@@ -1576,7 +1440,7 @@ Position=1695,1347,2665,1367
 Item=Q31_EMR_USE_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1350,1176,1366
@@ -1590,7 +1454,7 @@ Position=1695,1377,2665,1397
 Item=Q31_EMR_USE_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1380,1171,1396
@@ -1603,7 +1467,7 @@ Name=Q32_DATA_SUBMIT
 Position=1695,1407,1724,1427
 Item=Q32_DATA_SUBMIT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=6
   
 [Text]
 Position=50,1410,868,1426
@@ -1616,7 +1480,7 @@ Name=Q33_DATA_FREQ
 Position=1695,1437,1724,1457
 Item=Q33_DATA_FREQ,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=6
   
 [Text]
 Position=50,1440,425,1456
@@ -1630,7 +1494,7 @@ Position=1695,1467,2665,1487
 Item=Q33_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1470,565,1486
@@ -1643,7 +1507,7 @@ Name=Q34_DATA_REPORTS_USED
 Position=1695,1497,1710,1517
 Item=Q34_DATA_REPORTS_USED,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1500,778,1516
@@ -1656,7 +1520,7 @@ Position=1695,1857,2665,1877
 Item=Q34_DATA_REPORTS_USED_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1860,656,1876
@@ -1669,7 +1533,7 @@ Name=Q35_STAFFING_CHANGED
 Position=1695,1887,1710,1907
 Item=Q35_STAFFING_CHANGED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=6
   
 [Text]
 Position=50,1890,447,1906
@@ -1682,7 +1546,7 @@ Name=Q36_STAFFING_UHC
 Position=1695,1917,1710,1937
 Item=Q36_STAFFING_UHC,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,1920,839,1936
@@ -1696,7 +1560,7 @@ Position=1695,1947,2665,1967
 Item=Q36_STAFFING_UHC_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1950,1007,1966
@@ -1710,7 +1574,7 @@ Position=1695,1977,2665,1997
 Item=Q36_STAFFING_UHC_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,1980,1002,1996
@@ -1723,7 +1587,7 @@ Name=Q37_REFERRAL_CHANGED
 Position=1695,2007,1710,2027
 Item=Q37_REFERRAL_CHANGED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=7
+Form=6
   
 [Text]
 Position=50,2010,449,2026
@@ -1736,7 +1600,7 @@ Name=Q38_REFERRAL_UHC
 Position=1695,2037,1710,2057
 Item=Q38_REFERRAL_UHC,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2040,1056,2056
@@ -1750,7 +1614,7 @@ Position=1695,2067,2665,2087
 Item=Q38_REFERRAL_UHC_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2070,1224,2086
@@ -1764,7 +1628,7 @@ Position=1695,2097,2665,2117
 Item=Q38_REFERRAL_UHC_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2100,1219,2116
@@ -1777,7 +1641,7 @@ Name=Q39_MOU_MOA
 Position=1695,2127,1710,2147
 Item=Q39_MOU_MOA,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2130,1513,2146
@@ -1791,7 +1655,7 @@ Position=1695,2157,2665,2177
 Item=Q39_MOU_MOA_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2160,1681,2176
@@ -1805,7 +1669,7 @@ Position=1695,2187,2665,2207
 Item=Q39_MOU_MOA_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2190,1676,2206
@@ -1818,7 +1682,7 @@ Name=Q40_NBB
 Position=1695,2217,1710,2237
 Item=Q40_NBB,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2220,865,2236
@@ -1832,7 +1696,7 @@ Position=1695,2247,2665,2267
 Item=Q40_NBB_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2250,1033,2266
@@ -1846,7 +1710,7 @@ Position=1695,2277,2665,2297
 Item=Q40_NBB_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2280,1028,2296
@@ -1859,7 +1723,7 @@ Name=Q41_ZBB
 Position=1695,2307,1710,2327
 Item=Q41_ZBB,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2310,875,2326
@@ -1873,7 +1737,7 @@ Position=1695,2337,2665,2357
 Item=Q41_ZBB_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2340,1043,2356
@@ -1887,7 +1751,7 @@ Position=1695,2367,2665,2387
 Item=Q41_ZBB_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2370,1038,2386
@@ -1900,7 +1764,7 @@ Name=Q42_NO_COPAY
 Position=1695,2397,1710,2417
 Item=Q42_NO_COPAY,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2400,847,2416
@@ -1914,7 +1778,7 @@ Position=1695,2427,2665,2447
 Item=Q42_NO_COPAY_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2430,1015,2446
@@ -1928,7 +1792,7 @@ Position=1695,2457,2665,2477
 Item=Q42_NO_COPAY_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2460,1010,2476
@@ -1941,7 +1805,7 @@ Name=Q43_WARD_ALLOC
 Position=1695,2487,1710,2507
 Item=Q43_WARD_ALLOC,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2490,1010,2506
@@ -1955,7 +1819,7 @@ Position=1695,2517,2665,2537
 Item=Q43_WARD_ALLOC_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2520,1178,2536
@@ -1969,7 +1833,7 @@ Position=1695,2547,2665,2567
 Item=Q43_WARD_ALLOC_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2550,1173,2566
@@ -1982,7 +1846,7 @@ Name=Q44_CPG
 Position=1695,2577,1710,2597
 Item=Q44_CPG,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2580,955,2596
@@ -1996,7 +1860,7 @@ Position=1695,2607,2665,2627
 Item=Q44_CPG_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2610,1123,2626
@@ -2010,7 +1874,7 @@ Position=1695,2637,2665,2657
 Item=Q44_CPG_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2640,1118,2656
@@ -2023,7 +1887,7 @@ Name=Q45_DOH_LIC_STD
 Position=1695,2667,1710,2687
 Item=Q45_DOH_LIC_STD,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2670,874,2686
@@ -2037,7 +1901,7 @@ Position=1695,2697,2665,2717
 Item=Q45_DOH_LIC_STD_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2700,1042,2716
@@ -2051,7 +1915,7 @@ Position=1695,2727,2665,2747
 Item=Q45_DOH_LIC_STD_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2730,1037,2746
@@ -2064,7 +1928,7 @@ Name=Q46_PHIC_ACCRED
 Position=1695,2757,1710,2777
 Item=Q46_PHIC_ACCRED,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2760,961,2776
@@ -2078,7 +1942,7 @@ Position=1695,2787,2665,2807
 Item=Q46_PHIC_ACCRED_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2790,1129,2806
@@ -2092,7 +1956,7 @@ Position=1695,2817,2665,2837
 Item=Q46_PHIC_ACCRED_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2820,1124,2836
@@ -2105,7 +1969,7 @@ Name=Q47_SVC_DELIVERY_PROT
 Position=1695,2847,1710,2867
 Item=Q47_SVC_DELIVERY_PROT,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2850,882,2866
@@ -2119,7 +1983,7 @@ Position=1695,2877,2665,2897
 Item=Q47_SVC_DELIVERY_PROT_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2880,1050,2896
@@ -2133,7 +1997,7 @@ Position=1695,2907,2665,2927
 Item=Q47_SVC_DELIVERY_PROT_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2910,1045,2926
@@ -2146,7 +2010,7 @@ Name=Q48_PCQM
 Position=1695,2937,1710,2957
 Item=Q48_PCQM,FACILITYHEADSURVEY_DICT
 DataCaptureType=DropDown
-Form=7
+Form=6
   
 [Text]
 Position=50,2940,913,2956
@@ -2160,7 +2024,7 @@ Position=1695,2967,2665,2987
 Item=Q48_PCQM_YES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,2970,1081,2986
@@ -2174,7 +2038,7 @@ Position=1695,2997,2665,3017
 Item=Q48_PCQM_NO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,3000,1076,3016
@@ -2187,7 +2051,7 @@ Name=Q49_QUALITY_CHALL
 Position=1695,3027,1976,3047
 Item=Q49_QUALITY_CHALL,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=7
+Form=6
   
 [Text]
 Position=50,3030,643,3046
@@ -2201,7 +2065,7 @@ Position=1695,3327,2665,3347
 Item=Q49_QUALITY_CHALL_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,3330,783,3346
@@ -2214,7 +2078,7 @@ Name=Q50_ACCESS_CHALL
 Position=1695,3357,1976,3377
 Item=Q50_ACCESS_CHALL,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=7
+Form=6
   
 [Text]
 Position=50,3360,677,3376
@@ -2228,7 +2092,7 @@ Position=1695,3657,2665,3677
 Item=Q50_ACCESS_CHALL_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=7
+Form=6
   
 [Text]
 Position=50,3660,817,3676
@@ -2884,7 +2748,7 @@ Length=1
 Required=Yes
 Name=D_YAKAP_KONSULTA_FORM
 Label=D. YAKAP / Konsulta Package
-Form=8
+Form=7
 Max=1
   
   
@@ -2893,7 +2757,7 @@ Name=Q51_YK_ACCRED
 Position=1564,27,1579,47
 Item=Q51_YK_ACCRED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,30,444,46
@@ -2906,7 +2770,7 @@ Name=Q52_YK_SINCE_MONTH
 Position=1564,57,1593,77
 Item=Q52_YK_SINCE_MONTH,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,60,236,76
@@ -2918,7 +2782,7 @@ Name=Q52_YK_SINCE_YEAR
 Position=1564,87,1621,107
 Item=Q52_YK_SINCE_YEAR,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,90,226,106
@@ -2931,7 +2795,7 @@ Name=Q53_YK_PACKAGE
 Position=1564,117,1845,137
 Item=Q53_YK_PACKAGE,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,120,597,136
@@ -2945,7 +2809,7 @@ Position=1564,417,2534,437
 Item=Q53_YK_PACKAGE_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,420,737,436
@@ -2958,7 +2822,7 @@ Name=Q54_YK_REG_INDIV
 Position=1564,447,1579,467
 Item=Q54_YK_REG_INDIV,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,450,558,466
@@ -2970,7 +2834,7 @@ Name=Q55_YK_REG_FAM
 Position=1564,477,1579,497
 Item=Q55_YK_REG_FAM,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,480,534,496
@@ -2982,7 +2846,7 @@ Name=Q56_YK_REG_BOTH
 Position=1564,507,1579,527
 Item=Q56_YK_REG_BOTH,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,510,845,526
@@ -2994,7 +2858,7 @@ Name=Q57_CAPITATION_AMT
 Position=1564,537,1649,557
 Item=Q57_CAPITATION_AMT,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,540,1348,556
@@ -3007,7 +2871,7 @@ Name=Q58_PERF_INDICATORS
 Position=1564,567,1789,587
 Item=Q58_PERF_INDICATORS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,570,679,586
@@ -3021,7 +2885,7 @@ Position=1564,807,2534,827
 Item=Q58_PERF_INDICATORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,810,819,826
@@ -3034,7 +2898,7 @@ Name=Q59_KNOW_PAY_FREQ
 Position=1564,837,1579,857
 Item=Q59_KNOW_PAY_FREQ,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,840,870,856
@@ -3047,7 +2911,7 @@ Name=Q60_PAY_FREQ
 Position=1564,867,1593,887
 Item=Q60_PAY_FREQ,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,870,365,886
@@ -3060,7 +2924,7 @@ Name=Q61_TRANCHE_DELAY
 Position=1564,897,1579,917
 Item=Q61_TRANCHE_DELAY,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,900,400,916
@@ -3074,7 +2938,7 @@ Position=1564,927,3494,947
 Item=Q61_DELAY_REASON,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,930,389,946
@@ -3087,7 +2951,7 @@ Name=Q62_TRANCHE_INTERVAL
 Position=1564,957,1593,977
 Item=Q62_TRANCHE_INTERVAL,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,960,649,976
@@ -3099,7 +2963,7 @@ Name=Q63_ACCRED_WAIT
 Position=1564,987,1593,1007
 Item=Q63_ACCRED_WAIT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,990,1006,1006
@@ -3112,7 +2976,7 @@ Name=Q64_APPLY_REASON
 Position=1564,1017,1733,1037
 Item=Q64_APPLY_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,1020,445,1036
@@ -3126,7 +2990,7 @@ Position=1564,1197,2534,1217
 Item=Q64_APPLY_REASON_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,1200,585,1216
@@ -3139,7 +3003,7 @@ Name=Q65_ACCRED_DIFFICULT
 Position=1564,1227,1845,1247
 Item=Q65_ACCRED_DIFFICULT,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,1230,603,1246
@@ -3152,7 +3016,7 @@ Name=Q66_WHY_DIFF_PREVENTIVE
 Position=1564,1527,1761,1547
 Item=Q66_WHY_DIFF_PREVENTIVE,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,1530,829,1546
@@ -3166,7 +3030,7 @@ Position=1564,1737,2534,1757
 Item=Q66_WHY_DIFF_PREVENTIVE_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,1740,969,1756
@@ -3179,7 +3043,7 @@ Name=Q67_WHY_DIFF_LAB
 Position=1564,1767,1761,1787
 Item=Q67_WHY_DIFF_LAB,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,1770,874,1786
@@ -3193,7 +3057,7 @@ Position=1564,1977,2534,1997
 Item=Q67_WHY_DIFF_LAB_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,1980,1014,1996
@@ -3206,7 +3070,7 @@ Name=Q68_WHY_DIFF_MEDS
 Position=1564,2007,1761,2027
 Item=Q68_WHY_DIFF_MEDS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,2010,655,2026
@@ -3220,7 +3084,7 @@ Position=1564,2217,2534,2237
 Item=Q68_WHY_DIFF_MEDS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,2220,795,2236
@@ -3233,7 +3097,7 @@ Name=Q69_WHY_DIFF_INFRA
 Position=1564,2247,1761,2267
 Item=Q69_WHY_DIFF_INFRA,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,2250,527,2266
@@ -3247,7 +3111,7 @@ Position=1564,2457,2534,2477
 Item=Q69_WHY_DIFF_INFRA_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,2460,667,2476
@@ -3260,7 +3124,7 @@ Name=Q70_WHY_DIFF_EQUIPMENT
 Position=1564,2487,1761,2507
 Item=Q70_WHY_DIFF_EQUIPMENT,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,2490,543,2506
@@ -3274,7 +3138,7 @@ Position=1564,2697,2534,2717
 Item=Q70_WHY_DIFF_EQUIPMENT_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,2700,683,2716
@@ -3287,7 +3151,7 @@ Name=Q71_WHY_DIFF_HR
 Position=1564,2727,1761,2747
 Item=Q71_WHY_DIFF_HR,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,2730,492,2746
@@ -3301,7 +3165,7 @@ Position=1564,2937,2534,2957
 Item=Q71_WHY_DIFF_HR_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,2940,632,2956
@@ -3314,7 +3178,7 @@ Name=Q72_WHY_DIFF_HIS
 Position=1564,2967,1761,2987
 Item=Q72_WHY_DIFF_HIS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,2970,627,2986
@@ -3328,7 +3192,7 @@ Position=1564,3177,2534,3197
 Item=Q72_WHY_DIFF_HIS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,3180,767,3196
@@ -3341,7 +3205,7 @@ Name=Q73_WHY_DIFF_DOCS
 Position=1564,3207,1761,3227
 Item=Q73_WHY_DIFF_DOCS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,3210,560,3226
@@ -3355,7 +3219,7 @@ Position=1564,3417,2534,3437
 Item=Q73_WHY_DIFF_DOCS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,3420,700,3436
@@ -3368,7 +3232,7 @@ Name=Q74_WHY_DIFF_DOH_LIC
 Position=1564,3447,1761,3467
 Item=Q74_WHY_DIFF_DOH_LIC,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,3450,569,3466
@@ -3382,7 +3246,7 @@ Position=1564,3657,2534,3677
 Item=Q74_WHY_DIFF_DOH_LIC_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,3660,709,3676
@@ -3395,7 +3259,7 @@ Name=Q75_ENROLL_RESPONSIBILITY
 Position=1564,3687,1761,3707
 Item=Q75_ENROLL_RESPONSIBILITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,3690,663,3706
@@ -3409,7 +3273,7 @@ Position=1564,3897,2534,3917
 Item=Q75_ENROLL_RESPONSIBILITY_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,3900,803,3916
@@ -3422,7 +3286,7 @@ Name=Q76_ENROLL_INITIATIVES
 Position=1564,3927,1817,3947
 Item=Q76_ENROLL_INITIATIVES,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,3930,702,3946
@@ -3436,7 +3300,7 @@ Position=1564,4197,2534,4217
 Item=Q76_ENROLL_INITIATIVES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4200,842,4216
@@ -3449,7 +3313,7 @@ Name=Q77_ENROLL_CHALL
 Position=1564,4227,1579,4247
 Item=Q77_ENROLL_CHALL,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,4230,558,4246
@@ -3462,7 +3326,7 @@ Name=Q78_ENROLL_CHALL_LIST
 Position=1564,4257,1733,4277
 Item=Q78_ENROLL_CHALL_LIST,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4260,336,4276
@@ -3476,7 +3340,7 @@ Position=1564,4437,2534,4457
 Item=Q78_ENROLL_CHALL_LIST_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4440,476,4456
@@ -3489,7 +3353,7 @@ Name=Q79_NOT_ACCRED_REASON
 Position=1564,4467,1677,4487
 Item=Q79_NOT_ACCRED_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4470,491,4486
@@ -3503,7 +3367,7 @@ Position=1564,4587,2534,4607
 Item=Q79_NOT_ACCRED_REASON_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4590,631,4606
@@ -3516,7 +3380,7 @@ Name=Q80_INTEND_ACCRED
 Position=1564,4617,1593,4637
 Item=Q80_INTEND_ACCRED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,4620,440,4636
@@ -3529,7 +3393,7 @@ Name=Q81_KNOW_HOW_START
 Position=1564,4647,1579,4667
 Item=Q81_KNOW_HOW_START,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,4650,522,4666
@@ -3543,7 +3407,7 @@ Position=1564,4677,3494,4697
 Item=Q82_DECIDED_NOT_REASON,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4680,344,4696
@@ -3557,7 +3421,7 @@ Position=1564,4707,3494,4727
 Item=Q83_TRIED_FAILED_REASON,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4710,322,4726
@@ -3571,7 +3435,7 @@ Position=1564,4737,3494,4757
 Item=Q84_PROCESS_CHALL,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4740,384,4756
@@ -3585,7 +3449,7 @@ Position=1564,4767,3494,4787
 Item=Q85_CATCHMENT_AREA,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4770,467,4786
@@ -3598,7 +3462,7 @@ Name=Q86_ELIGIBLE_PATIENTS
 Position=1564,4797,1663,4817
 Item=Q86_ELIGIBLE_PATIENTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4800,703,4816
@@ -3610,7 +3474,7 @@ Name=Q87_REGISTERED_PATIENTS
 Position=1564,4827,1663,4847
 Item=Q87_REGISTERED_PATIENTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4830,755,4846
@@ -3622,7 +3486,7 @@ Name=Q88_IS_1700_ENOUGH
 Position=1564,4857,1579,4877
 Item=Q88_IS_1700_ENOUGH,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,4860,1550,4876
@@ -3634,7 +3498,7 @@ Name=Q89_COSTING_DONE
 Position=1564,4887,1579,4907
 Item=Q89_COSTING_DONE,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,4890,610,4906
@@ -3647,7 +3511,7 @@ Name=Q90_COSTING_VIABLE
 Position=1564,4917,1579,4937
 Item=Q90_COSTING_VIABLE,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,4920,533,4936
@@ -3660,7 +3524,7 @@ Name=Q91_MIN_CAP_VALUE_ACC
 Position=1564,4947,1649,4967
 Item=Q91_MIN_CAP_VALUE_ACC,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4950,816,4966
@@ -3673,7 +3537,7 @@ Name=Q92_MIN_CAP_VALUE_NONACC
 Position=1564,4977,1649,4997
 Item=Q92_MIN_CAP_VALUE_NONACC,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,4980,912,4996
@@ -3686,7 +3550,7 @@ Name=Q93_CHARGE_ADDL_CAP
 Position=1564,5007,1579,5027
 Item=Q93_CHARGE_ADDL_CAP,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,5010,402,5026
@@ -3699,7 +3563,7 @@ Name=Q94_CHARGE_ADDL_CAP_REASONS
 Position=1564,5037,1733,5057
 Item=Q94_CHARGE_ADDL_CAP_REASONS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,5040,553,5056
@@ -3713,7 +3577,7 @@ Position=1564,5217,2534,5237
 Item=Q94_CHARGE_ADDL_CAP_REASONS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,5220,693,5236
@@ -3726,7 +3590,7 @@ Name=Q95_RECEIVED_PAYMENTS
 Position=1564,5247,1593,5267
 Item=Q95_RECEIVED_PAYMENTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,5250,447,5266
@@ -3739,7 +3603,7 @@ Name=Q96_NOT_RECEIVED_REASONS
 Position=1564,5277,1761,5297
 Item=Q96_NOT_RECEIVED_REASONS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,5280,132,5296
@@ -3753,7 +3617,7 @@ Position=1564,5487,2534,5507
 Item=Q96_NOT_RECEIVED_REASONS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,5490,272,5506
@@ -3766,7 +3630,7 @@ Name=Q97_PAYMENT_CHALL
 Position=1564,5517,1579,5537
 Item=Q97_PAYMENT_CHALL,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=8
+Form=7
   
 [Text]
 Position=50,5520,426,5536
@@ -3779,7 +3643,7 @@ Name=Q98_PAYMENT_CHALL_LIST
 Position=1564,5547,1733,5567
 Item=Q98_PAYMENT_CHALL_LIST,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,5550,260,5566
@@ -3793,7 +3657,7 @@ Position=1564,5727,2534,5747
 Item=Q98_PAYMENT_CHALL_LIST_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,5730,400,5746
@@ -3806,7 +3670,7 @@ Name=Q99_EXPAND_NEXT
 Position=1564,5757,1705,5777
 Item=Q99_EXPAND_NEXT,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=8
+Form=7
   
 [Text]
 Position=50,5760,601,5776
@@ -3820,7 +3684,7 @@ Position=1564,5907,2534,5927
 Item=Q99_EXPAND_NEXT_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,5910,741,5926
@@ -3834,7 +3698,7 @@ Position=1564,5937,3494,5957
 Item=Q100_ADDL_FEATURES,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=8
+Form=7
   
 [Text]
 Position=50,5940,341,5956
@@ -4294,7 +4158,7 @@ Length=1
 Required=Yes
 Name=E_BUCAS_GAMOT_FORM
 Label=E. Awareness on Expanded Health Programs (BUCAS and GAMOT)
-Form=9
+Form=8
 Max=1
   
   
@@ -4303,7 +4167,7 @@ Name=Q101_HEARD_BUCAS
 Position=1130,27,1145,47
 Item=Q101_HEARD_BUCAS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,30,598,46
@@ -4316,7 +4180,7 @@ Name=Q102_HAS_BUCAS
 Position=1130,57,1145,77
 Item=Q102_HAS_BUCAS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,60,273,76
@@ -4329,7 +4193,7 @@ Name=Q103_NO_BUCAS_REASON
 Position=1130,87,1159,107
 Item=Q103_NO_BUCAS_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,90,308,106
@@ -4343,7 +4207,7 @@ Position=1130,117,2100,137
 Item=Q103_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=8
   
 [Text]
 Position=50,120,403,136
@@ -4356,7 +4220,7 @@ Name=Q104_BUCAS_SERVICES
 Position=1130,147,1271,167
 Item=Q104_BUCAS_SERVICES,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=9
+Form=8
   
 [Text]
 Position=50,150,482,166
@@ -4370,7 +4234,7 @@ Position=1130,297,2100,317
 Item=Q104_BUCAS_SERVICES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=8
   
 [Text]
 Position=50,300,622,316
@@ -4383,7 +4247,7 @@ Name=Q105_BUCAS_FACTORS
 Position=1130,327,1299,347
 Item=Q105_BUCAS_FACTORS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=9
+Form=8
   
 [Text]
 Position=50,330,686,346
@@ -4397,7 +4261,7 @@ Position=1130,507,2100,527
 Item=Q105_BUCAS_FACTORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=8
   
 [Text]
 Position=50,510,826,526
@@ -4411,7 +4275,7 @@ Position=1130,537,3060,557
 Item=Q106_BUCAS_RESOURCES_NEEDED,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=8
   
 [Text]
 Position=50,540,529,556
@@ -4423,7 +4287,7 @@ Name=Q107_BUCAS_DECONGEST
 Position=1130,567,1145,587
 Item=Q107_BUCAS_DECONGEST,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,570,672,586
@@ -4436,7 +4300,7 @@ Name=Q108_HEARD_GAMOT
 Position=1130,597,1145,617
 Item=Q108_HEARD_GAMOT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,600,787,616
@@ -4449,7 +4313,7 @@ Name=Q109_GAMOT_ACCRED
 Position=1130,627,1145,647
 Item=Q109_GAMOT_ACCRED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,630,375,646
@@ -4462,7 +4326,7 @@ Name=Q110_NO_GAMOT_REASON
 Position=1130,657,1159,677
 Item=Q110_NO_GAMOT_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,660,292,676
@@ -4476,7 +4340,7 @@ Position=1130,687,2100,707
 Item=Q110_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=8
   
 [Text]
 Position=50,690,387,706
@@ -4489,7 +4353,7 @@ Name=Q111_GAMOT_FACTORS
 Position=1130,717,1299,737
 Item=Q111_GAMOT_FACTORS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=9
+Form=8
   
 [Text]
 Position=50,720,772,736
@@ -4503,7 +4367,7 @@ Position=1130,897,2100,917
 Item=Q111_GAMOT_FACTORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=8
   
 [Text]
 Position=50,900,912,916
@@ -4516,7 +4380,7 @@ Name=Q112_STOCKOUT
 Position=1130,927,1145,947
 Item=Q112_STOCKOUT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,930,770,946
@@ -4530,7 +4394,7 @@ Position=1130,957,3060,977
 Item=Q113_STOCKOUT_MEDS,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=8
   
 [Text]
 Position=50,960,468,976
@@ -4542,7 +4406,7 @@ Name=Q114_STOCKOUT_DURATION
 Position=1130,987,1159,1007
 Item=Q114_STOCKOUT_DURATION,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,990,321,1006
@@ -4554,7 +4418,7 @@ Name=Q115_STOCKOUT_AVG
 Position=1130,1017,1159,1037
 Item=Q115_STOCKOUT_AVG,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,1020,435,1036
@@ -4566,7 +4430,7 @@ Name=Q116_ADDR_STOCKOUT
 Position=1130,1047,1159,1067
 Item=Q116_ADDR_STOCKOUT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=9
+Form=8
   
 [Text]
 Position=50,1050,587,1066
@@ -4579,7 +4443,7 @@ Name=Q117_ADDR_STOCKOUT_HOW
 Position=1130,1077,1243,1097
 Item=Q117_ADDR_STOCKOUT_HOW,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=9
+Form=8
   
 [Text]
 Position=50,1080,603,1096
@@ -4593,7 +4457,7 @@ Position=1130,1197,2100,1217
 Item=Q117_ADDR_STOCKOUT_HOW_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=9
+Form=8
   
 [Text]
 Position=50,1200,743,1216
@@ -4738,7 +4602,7 @@ Length=1
 Required=Yes
 Name=F_DOH_LICENSING_FORM
 Label=F. DOH Licensing: Status and Barriers
-Form=10
+Form=9
 Max=1
   
   
@@ -4747,7 +4611,7 @@ Name=Q118_DOH_LICENSED
 Position=1211,27,1240,47
 Item=Q118_DOH_LICENSED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=9
   
 [Text]
 Position=50,30,258,46
@@ -4760,7 +4624,7 @@ Name=Q119_LIC_RECEIVED_WHEN
 Position=1211,57,1240,77
 Item=Q119_LIC_RECEIVED_WHEN,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=9
   
 [Text]
 Position=50,60,557,76
@@ -4772,7 +4636,7 @@ Name=Q120_LIC_DAYS
 Position=1211,87,1240,107
 Item=Q120_LIC_DAYS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=10
+Form=9
   
 [Text]
 Position=50,90,421,106
@@ -4785,7 +4649,7 @@ Name=Q121_DOH_LIC_DIFFICULT
 Position=1211,117,1604,137
 Item=Q121_DOH_LIC_DIFFICULT,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,120,687,136
@@ -4798,7 +4662,7 @@ Name=Q122_WHY_DIFF_PT_RIGHTS
 Position=1211,537,1464,557
 Item=Q122_WHY_DIFF_PT_RIGHTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,540,632,556
@@ -4812,7 +4676,7 @@ Position=1211,807,2181,827
 Item=Q122_WHY_DIFF_PT_RIGHTS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,810,772,826
@@ -4825,7 +4689,7 @@ Name=Q123_WHY_DIFF_PT_CARE
 Position=1211,837,1464,857
 Item=Q123_WHY_DIFF_PT_CARE,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,840,472,856
@@ -4839,7 +4703,7 @@ Position=1211,1107,2181,1127
 Item=Q123_WHY_DIFF_PT_CARE_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,1110,612,1126
@@ -4852,7 +4716,7 @@ Name=Q124_WHY_DIFF_LEADERSHIP
 Position=1211,1137,1464,1157
 Item=Q124_WHY_DIFF_LEADERSHIP,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,1140,582,1156
@@ -4866,7 +4730,7 @@ Position=1211,1407,2181,1427
 Item=Q124_WHY_DIFF_LEADERSHIP_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,1410,722,1426
@@ -4879,7 +4743,7 @@ Name=Q125_WHY_DIFF_HRM
 Position=1211,1437,1464,1457
 Item=Q125_WHY_DIFF_HRM,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,1440,587,1456
@@ -4893,7 +4757,7 @@ Position=1211,1707,2181,1727
 Item=Q125_WHY_DIFF_HRM_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,1710,727,1726
@@ -4906,7 +4770,7 @@ Name=Q126_WHY_DIFF_INFO_MGMT
 Position=1211,1737,1464,1757
 Item=Q126_WHY_DIFF_INFO_MGMT,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,1740,556,1756
@@ -4920,7 +4784,7 @@ Position=1211,2007,2181,2027
 Item=Q126_WHY_DIFF_INFO_MGMT_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,2010,696,2026
@@ -4933,7 +4797,7 @@ Name=Q127_WHY_DIFF_SAFE
 Position=1211,2037,1464,2057
 Item=Q127_WHY_DIFF_SAFE,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,2040,591,2056
@@ -4947,7 +4811,7 @@ Position=1211,2307,2181,2327
 Item=Q127_WHY_DIFF_SAFE_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,2310,731,2326
@@ -4960,7 +4824,7 @@ Name=Q128_WHY_DIFF_PERF
 Position=1211,2337,1464,2357
 Item=Q128_WHY_DIFF_PERF,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,2340,544,2356
@@ -4974,7 +4838,7 @@ Position=1211,2607,2181,2627
 Item=Q128_WHY_DIFF_PERF_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,2610,684,2626
@@ -4987,7 +4851,7 @@ Name=Q129_WHY_DIFF_PHYS_PLANT
 Position=1211,2637,1464,2657
 Item=Q129_WHY_DIFF_PHYS_PLANT,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,2640,484,2656
@@ -5001,7 +4865,7 @@ Position=1211,2907,2181,2927
 Item=Q129_WHY_DIFF_PHYS_PLANT_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,2910,624,2926
@@ -5014,7 +4878,7 @@ Name=Q130_WHY_DIFF_PRICE_INFO
 Position=1211,2937,1464,2957
 Item=Q130_WHY_DIFF_PRICE_INFO,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,2940,610,2956
@@ -5028,7 +4892,7 @@ Position=1211,3207,2181,3227
 Item=Q130_WHY_DIFF_PRICE_INFO_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,3210,750,3226
@@ -5041,7 +4905,7 @@ Name=Q131_WHY_DIFF_EQUIPMENT
 Position=1211,3237,1464,3257
 Item=Q131_WHY_DIFF_EQUIPMENT,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,3240,568,3256
@@ -5055,7 +4919,7 @@ Position=1211,3507,2181,3527
 Item=Q131_WHY_DIFF_EQUIPMENT_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,3510,708,3526
@@ -5068,7 +4932,7 @@ Name=Q132_WHY_DIFF_NAT_LAWS
 Position=1211,3537,1464,3557
 Item=Q132_WHY_DIFF_NAT_LAWS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,3540,936,3556
@@ -5082,7 +4946,7 @@ Position=1211,3807,2181,3827
 Item=Q132_WHY_DIFF_NAT_LAWS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,3810,1076,3826
@@ -5095,7 +4959,7 @@ Name=Q133_WHY_DIFF_EMERG_CART
 Position=1211,3837,1464,3857
 Item=Q133_WHY_DIFF_EMERG_CART,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,3840,555,3856
@@ -5109,7 +4973,7 @@ Position=1211,4107,2181,4127
 Item=Q133_WHY_DIFF_EMERG_CART_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,4110,695,4126
@@ -5122,7 +4986,7 @@ Name=Q134_WHY_DIFF_ADDONS
 Position=1211,4137,1464,4157
 Item=Q134_WHY_DIFF_ADDONS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=10
+Form=9
   
 [Text]
 Position=50,4140,495,4156
@@ -5136,7 +5000,7 @@ Position=1211,4407,2181,4427
 Item=Q134_WHY_DIFF_ADDONS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=10
+Form=9
   
 [Text]
 Position=50,4410,635,4426
@@ -5351,7 +5215,7 @@ Length=1
 Required=Yes
 Name=G_SERVICE_DELIVERY_FORM
 Label=G. Service Delivery Process
-Form=11
+Form=10
 Max=1
   
   
@@ -5360,7 +5224,7 @@ Name=Q135_NBB_CURR
 Position=1204,27,1219,47
 Item=Q135_NBB_CURR,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,30,567,46
@@ -5373,7 +5237,7 @@ Name=Q136_NBB_ALL_PATIENTS
 Position=1204,57,1219,77
 Item=Q136_NBB_ALL_PATIENTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,60,695,76
@@ -5386,7 +5250,7 @@ Name=Q137_NBB_BARRIERS
 Position=1204,87,1429,107
 Item=Q137_NBB_BARRIERS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,90,692,106
@@ -5400,7 +5264,7 @@ Position=1204,327,2174,347
 Item=Q137_NBB_BARRIERS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,330,832,346
@@ -5413,7 +5277,7 @@ Name=Q138_ZBB_CURR
 Position=1204,357,1219,377
 Item=Q138_ZBB_CURR,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,360,581,376
@@ -5426,7 +5290,7 @@ Name=Q139_ZBB_ALL_PATIENTS
 Position=1204,387,1219,407
 Item=Q139_ZBB_ALL_PATIENTS,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,390,902,406
@@ -5439,7 +5303,7 @@ Name=Q140_ZBB_BARRIERS
 Position=1204,417,1429,437
 Item=Q140_ZBB_BARRIERS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,420,677,436
@@ -5453,7 +5317,7 @@ Position=1204,657,2174,677
 Item=Q140_ZBB_BARRIERS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,660,817,676
@@ -5466,7 +5330,7 @@ Name=Q141_ALLOW_OOP_BASIC
 Position=1204,687,1219,707
 Item=Q141_ALLOW_OOP_BASIC,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,690,582,706
@@ -5480,7 +5344,7 @@ Position=1204,717,3134,737
 Item=Q142_OOP_REASON,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,720,653,736
@@ -5493,7 +5357,7 @@ Name=Q143_DIFFICULT_BENEFIT
 Position=1204,747,1233,767
 Item=Q143_DIFFICULT_BENEFIT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,750,500,766
@@ -5507,7 +5371,7 @@ Position=1204,777,2174,797
 Item=Q143_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,780,595,796
@@ -5520,7 +5384,7 @@ Name=Q144_DIFFICULT_REASON
 Position=1204,807,1233,827
 Item=Q144_DIFFICULT_REASON,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,810,294,826
@@ -5535,7 +5399,7 @@ Position=1204,837,2174,857
 Item=Q144_DIFFICULT_REASON_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,840,872,856
@@ -5548,7 +5412,7 @@ Name=Q145_MALASAKIT_PROVIDED
 Position=1204,957,1219,977
 Item=Q145_MALASAKIT_PROVIDED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,960,776,976
@@ -5561,7 +5425,7 @@ Name=Q146_MALASAKIT_WHY
 Position=1204,987,1345,1007
 Item=Q146_MALASAKIT_WHY,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,990,732,1006
@@ -5575,7 +5439,7 @@ Position=1204,1137,2174,1157
 Item=Q146_MALASAKIT_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1140,872,1156
@@ -5588,7 +5452,7 @@ Name=Q147_NO_MALASAKIT_WHY
 Position=1204,1167,1345,1187
 Item=Q147_NO_MALASAKIT_WHY,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1170,756,1186
@@ -5602,7 +5466,7 @@ Position=1204,1317,2174,1337
 Item=Q147_NO_MALASAKIT_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1320,896,1336
@@ -5615,7 +5479,7 @@ Name=Q148_LGU_SUPPORT
 Position=1204,1347,1219,1367
 Item=Q148_LGU_SUPPORT,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,1350,527,1366
@@ -5628,7 +5492,7 @@ Name=Q149_LGU_SUPPORT_FORMS
 Position=1204,1377,1345,1397
 Item=Q149_LGU_SUPPORT_FORMS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1380,324,1396
@@ -5642,7 +5506,7 @@ Position=1204,1527,2174,1547
 Item=Q149_LGU_SUPPORT_FORMS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1530,464,1546
@@ -5655,7 +5519,7 @@ Name=Q150_LGU_SATISFIED
 Position=1204,1557,1219,1577
 Item=Q150_LGU_SATISFIED,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,1560,472,1576
@@ -5668,7 +5532,7 @@ Name=Q151_LGU_NOT_SAT_WHY
 Position=1204,1587,1345,1607
 Item=Q151_LGU_NOT_SAT_WHY,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1590,139,1606
@@ -5682,7 +5546,7 @@ Position=1204,1737,2174,1757
 Item=Q151_LGU_NOT_SAT_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1740,279,1756
@@ -5695,7 +5559,7 @@ Name=Q152_PHO_PROTOCOL_CLARITY
 Position=1204,1767,1233,1787
 Item=Q152_PHO_PROTOCOL_CLARITY,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,1770,1001,1786
@@ -5709,7 +5573,7 @@ Position=1204,1797,3134,1817
 Item=Q153_UNCLEAR_PROTOCOL,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1800,418,1816
@@ -5722,7 +5586,7 @@ Name=Q154_NUM_REFERRED_OUT
 Position=1204,1827,1289,1847
 Item=Q154_NUM_REFERRED_OUT,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1830,760,1846
@@ -5735,7 +5599,7 @@ Name=Q155_SEND_REFERRAL_HOW
 Position=1204,1857,1317,1877
 Item=Q155_SEND_REFERRAL_HOW,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1860,638,1876
@@ -5749,7 +5613,7 @@ Position=1204,1977,2174,1997
 Item=Q155_SEND_REFERRAL_HOW_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,1980,778,1996
@@ -5762,7 +5626,7 @@ Name=Q156_REFERRAL_FORM_TYPE
 Position=1204,2007,1373,2027
 Item=Q156_REFERRAL_FORM_TYPE,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,2010,527,2026
@@ -5776,7 +5640,7 @@ Position=1204,2187,2174,2207
 Item=Q156_REFERRAL_FORM_TYPE_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,2190,667,2206
@@ -5789,7 +5653,7 @@ Name=Q157_SPECIALIST_NETWORK
 Position=1204,2217,1233,2237
 Item=Q157_SPECIALIST_NETWORK,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,2220,563,2236
@@ -5801,7 +5665,7 @@ Name=Q158_REF_PROPORTION
 Position=1204,2247,1233,2267
 Item=Q158_REF_PROPORTION,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,2250,1190,2266
@@ -5814,7 +5678,7 @@ Name=Q159_RECEIVE_REFERRAL_HOW
 Position=1204,2277,1317,2297
 Item=Q159_RECEIVE_REFERRAL_HOW,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,2280,865,2296
@@ -5828,7 +5692,7 @@ Position=1204,2397,2174,2417
 Item=Q159_RECEIVE_REFERRAL_HOW_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,2400,1005,2416
@@ -5841,7 +5705,7 @@ Name=Q160_EXTERNAL_SERVICES_GO
 Position=1204,2427,1233,2447
 Item=Q160_EXTERNAL_SERVICES_GO,FACILITYHEADSURVEY_DICT
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,2430,549,2446
@@ -5855,7 +5719,7 @@ Name=Q161_REF_SATISFACTION
 Position=1204,2607,1233,2627
 Item=Q161_REF_SATISFACTION,FACILITYHEADSURVEY_DICT
 DataCaptureType=RadioButton
-Form=11
+Form=10
   
 [Text]
 Position=50,2610,531,2626
@@ -5868,7 +5732,7 @@ Name=Q162_NOT_SATISFIED_WHY
 Position=1204,2637,1317,2657
 Item=Q162_NOT_SATISFIED_WHY,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=11
+Form=10
   
 [Text]
 Position=50,2640,449,2656
@@ -5882,7 +5746,7 @@ Position=1204,2757,2174,2777
 Item=Q162_NOT_SATISFIED_WHY_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=11
+Form=10
   
 [Text]
 Position=50,2760,589,2776
@@ -6160,7 +6024,7 @@ Length=1
 Required=Yes
 Name=H_HUMAN_RESOURCES_FORM
 Label=H. Human Resources for Health
-Form=12
+Form=11
 Max=1
   
   
@@ -6169,7 +6033,7 @@ Name=Q163_HR_CHALL
 Position=1202,27,1343,47
 Item=Q163_HR_CHALL,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=12
+Form=11
   
 [Text]
 Position=50,30,404,46
@@ -6183,7 +6047,7 @@ Position=1202,177,2172,197
 Item=Q163_HR_CHALL_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=12
+Form=11
   
 [Text]
 Position=50,180,544,196
@@ -6197,7 +6061,7 @@ Position=1202,207,3132,227
 Item=Q164_IMPROVEMENT_AREA,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=12
+Form=11
   
 [Text]
 Position=50,210,510,226
@@ -6210,7 +6074,7 @@ Name=Q165_PD_DOCTORS
 Position=1202,237,1455,257
 Item=Q165_PD_DOCTORS,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=12
+Form=11
   
 [Text]
 Position=50,240,540,256
@@ -6224,7 +6088,7 @@ Position=1202,507,2172,527
 Item=Q165_PD_DOCTORS_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=12
+Form=11
   
 [Text]
 Position=50,510,680,526
@@ -6237,7 +6101,7 @@ Name=Q166_PD_NURSES
 Position=1202,537,1399,557
 Item=Q166_PD_NURSES,FACILITYHEADSURVEY_DICT
 DataCaptureType=CheckBox
-Form=12
+Form=11
   
 [Text]
 Position=50,540,813,556
@@ -6251,7 +6115,7 @@ Position=1202,747,2172,767
 Item=Q166_PD_NURSES_OTHER_TXT,FACILITYHEADSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
-Form=12
+Form=11
   
 [Text]
 Position=50,750,953,766
@@ -6305,6 +6169,142 @@ Label=Q166
 DisplayTogether=Yes
 Position=12
 Length=1
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=FIELD_CONTROL_FORM
+Label=Field Control
+Form=12
+Max=1
+  
+  
+[Field]
+Name=SURVEY_TEAM_LEADER_S_NAME
+Position=350,27,760,47
+Item=SURVEY_TEAM_LEADER_S_NAME,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=12
+  
+[Text]
+Position=50,30,233,46
+Text=Survey Team Leader's Name
+ 
+  
+[Field]
+Name=ENUMERATOR_S_NAME
+Position=350,57,760,77
+Item=ENUMERATOR_S_NAME,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=12
+  
+[Text]
+Position=50,60,174,76
+Text=Enumerator's Name
+ 
+  
+[Field]
+Name=FIELD_VALIDATED_BY
+Position=350,87,760,107
+Item=FIELD_VALIDATED_BY,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=12
+  
+[Text]
+Position=50,90,166,106
+Text=Field Validated by
+ 
+  
+[Field]
+Name=FIELD_EDITED_BY
+Position=350,117,760,137
+Item=FIELD_EDITED_BY,FACILITYHEADSURVEY_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=12
+  
+[Text]
+Position=50,120,145,136
+Text=Field Edited by
+ 
+  
+  
+[Field]
+Name=DATE_FIRST_VISITED_THE_FACILITY
+Position=350,147,463,167
+Item=DATE_FIRST_VISITED_THE_FACILITY,FACILITYHEADSURVEY_DICT
+DataCaptureType=Date,YYYYMMDD
+Form=12
+  
+[Text]
+Position=50,150,315,166
+Text=Date First Visited the Facility (YYYYMMDD)
+ 
+  
+[Field]
+Name=DATE_OF_FINAL_VISIT_TO_THE_FACILITY
+Position=350,177,463,197
+Item=DATE_OF_FINAL_VISIT_TO_THE_FACILITY,FACILITYHEADSURVEY_DICT
+DataCaptureType=Date,YYYYMMDD
+Form=12
+  
+[Text]
+Position=50,180,336,196
+Text=Date of Final Visit to the Facility (YYYYMMDD)
+ 
+  
+[Field]
+Name=TOTAL_NUMBER_OF_VISITS
+Position=350,207,393,227
+Item=TOTAL_NUMBER_OF_VISITS,FACILITYHEADSURVEY_DICT
+DataCaptureType=TextBox
+Form=12
+  
+[Text]
+Position=50,210,189,226
+Text=Total Number of Visits
+ 
+  
+[Field]
+Name=ENUM_RESULT_FIRST_VISIT
+Position=350,237,365,257
+Item=ENUM_RESULT_FIRST_VISIT,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=12
+  
+[Text]
+Position=50,240,167,256
+Text=Result of First Visit
+ 
+  
+[Field]
+Name=ENUM_RESULT_FINAL_VISIT
+Position=350,267,365,287
+Item=ENUM_RESULT_FINAL_VISIT,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=12
+  
+[Text]
+Position=50,270,172,286
+Text=Result of Final Visit
+ 
+[Block]
+Name=INTERVIEW_STAFF_BLOCK
+Label=Interview Staff
+DisplayTogether=Yes
+Position=0
+Length=4
+  
+[Block]
+Name=VISIT_RECORD_BLOCK
+Label=Facility Visit Record
+DisplayTogether=Yes
+Position=5
+Length=5
   
 [EndGroup]
   

@@ -176,12 +176,28 @@ end;
 
 
 function TakeVerificationPhoto(string photoFile)
-    { Launches the Android camera, resamples to <= 1600 x 1200, and saves
-      the JPG to tablet storage under the given photoFile. Returns 1 on
-      success / 0 on cancel or error. The .app assigns `photoFile` to the
-      dictionary's *_VERIFICATION_PHOTO_FILENAME alpha item on success.
-      NB: the parameter is `photoFile`, not `filename` -- `filename` is a
-      CSPro reserved word and errors at compile (verified 2026-06-08). }
+    { Captures the verification photo INTO the binary Image dictionary item
+      VERIFICATION_PHOTO_IMAGE so the JPG bytes travel inside the case and sync
+      to CSWeb (downloadable from the CSWeb Data Viewer). Returns 1 on success /
+      0 on cancel or no-camera.
+
+      WHY (R4 #713): the previous version saved the photo to a LOOSE FILE via
+      Image.save(photoFile) and stored only the filename string in the case.
+      CSWeb syncs case RECORD ITEMS, not loose app-folder files, so the photo
+      never reached the server ("no picture retained by the system"). Storing the
+      bytes in a binary Image item is the supported way to sync a photo to CSWeb.
+
+      `photoFile` is no longer written to disk; the caller keeps it as the
+      human-readable label assigned to *_VERIFICATION_PHOTO_FILENAME (which also
+      serves as the "already captured" sentinel the trigger's onfocus guards on).
+      The parameter is kept so callers (F1/F3/F4 CAPTURE_VERIFICATION_PHOTO) need
+      no change. NB: it is `photoFile`, not `filename` -- `filename` is a CSPro
+      reserved word and errors at compile (verified 2026-06-08).
+
+      This references the dictionary item VERIFICATION_PHOTO_IMAGE by name, so
+      every app including this helper must declare it (cspro_helpers._photo_block
+      emits it). Binary items cannot be placed on a form, so the item is off-form
+      and capture is driven from the on-form CAPTURE_VERIFICATION_PHOTO trigger. }
 
     { Windows desktop (getos 10..19) has no camera. Skip silently so desk-test
       flows past the capture field with no modal. Android (20..29) captures. }
@@ -190,15 +206,13 @@ function TakeVerificationPhoto(string photoFile)
         exit;
     endif;
 
-    Image photo;
-
-    if not photo.takePhoto("Take a verification photo for this interview.") then
+    if not VERIFICATION_PHOTO_IMAGE.takePhoto("Take a verification photo for this interview.") then
         TakeVerificationPhoto = 0;
         exit;
     endif;
 
-    photo.resample(maxWidth := 1600, maxHeight := 1200);
-    photo.save(photoFile, quality := 85);
+    { Resample before sync so the embedded JPG stays small (<= 1600 x 1200). }
+    VERIFICATION_PHOTO_IMAGE.resample(maxWidth := 1600, maxHeight := 1200);
 
     TakeVerificationPhoto = 1;
 end;
@@ -386,10 +400,20 @@ postproc
     skip to Q39_CIVIL_STATUS;
   endif;
 
+PROC Q45_PHILHEALTH_REG
+postproc
+  { #563/#565: Q46 (membership category) and Q45.1 (PIN registration date) are Yes-only.
+    No(02) OR I-don't-know(55) -> skip Q45.1 + Q46 -> next roster member. (Replaces the
+    old SKIP_RULES Q45 -> Q48_NAME_FIRST target, which is gone now that Q48-Q50 moved to
+    the C_PRIVATE_INS_ROSTER second pass.) Q45=Yes(01) -> fall through to Q45.1 -> Q46. }
+  if Q45_PHILHEALTH_REG = 2 or Q45_PHILHEALTH_REG = 55 then
+    skip to next;                    { 'next' = next C_HOUSEHOLD_ROSTER occurrence }
+  endif;
+
 PROC Q49_PRIVATE_INS
 postproc
   if Q49_PRIVATE_INS = 2 then        { no private insurance -> skip Q50, advance to next member }
-    skip to next;                    { 'next' = next roster occurrence; valid only inside the repeating group }
+    skip to next;                    { 'next' = next C_PRIVATE_INS_ROSTER occurrence }
   endif;
 
 PROC C_HOUSEHOLD_ROSTER_FORM
@@ -406,19 +430,38 @@ postproc
   endif;
 
 PROC Q47_HH_HAS_PRIVATE_INS
+postproc
+  { #612 (Carl go/no-go 2026-06-20): Q47 is the HH-level gate for the Q48-Q50 private-
+    insurance block, which now runs AFTER this gate as a separate per-member pass
+    (C_PRIVATE_INS_ROSTER). No(2) -> no private insurance in the HH -> skip the whole
+    Q48-Q50 block straight to Section D (Q51). Yes(1) -> fall through into the private-
+    insurance roster. (The old preproc auto-set Q47 by looking ahead at Q49 because
+    Q48-Q50 used to be entered BEFORE Q47; with Q47 asked first, that look-ahead is gone.) }
+  if Q47_HH_HAS_PRIVATE_INS <> 1 then
+    skip to Q51_UHC_HEARD;
+  endif;
+
+
+{ ---- Private-insurance roster loop (C_PRIVATE_INS_ROSTER, max 20) ---- }
+PROC PRIV_MEMBER_LINE_NO
 preproc
-  { Auto-set to Yes if any roster member reported private insurance (soft) }
-  numeric anyPrivate = 0;
-  numeric i = 1;
-  do while i <= count(C_HOUSEHOLD_ROSTER)
-    if Q49_PRIVATE_INS(i) = 1 then
-      anyPrivate = 1;
-    endif;
-    i = i + 1;
-  enddo;
-  if anyPrivate = 1 then
-    Q47_HH_HAS_PRIVATE_INS = 1;
-    errmsg("Auto-set to Yes: a roster member has private insurance. Confirm.");
+  if curocc() > count(C_HOUSEHOLD_ROSTER) then
+    endgroup;                        { auto-end at the household-roster member count }
+  endif;
+  PRIV_MEMBER_LINE_NO = curocc();
+  noinput;
+
+PROC Q48_OTHER_INS_REG
+postproc
+  { #613.2 (Carl go/no-go 2026-06-20 — tester Marriz logic): being registered with another
+    health insurance plan implies coverage, so Q48 = Yes auto-sets Q49 = Yes (covered, as a
+    member) and jumps to Q50 (specify which). Q48 = No / Don't-know -> ask Q49 normally
+    (Yes = covered as a dependent / No = not covered). Q49's value set is Yes/No/DK (the paper
+    has no member-vs-dependent split), so the 'dependent' case is captured as Q49 = Yes when
+    Q48 <> Yes. }
+  if Q48_OTHER_INS_REG = 1 then
+    Q49_PRIVATE_INS = 1;
+    skip to Q50_PRIVATE_INS_OTHER_TXT;
   endif;
 
 
@@ -507,20 +550,19 @@ postproc
   endif;
   { code 2 ("No, I'm not planning to") falls through to Q113 why-not }
 
-{ ---- Section H gate: skip entire Section H if NO roster member is PhilHealth-
-  registered (Q45 = Yes anywhere in the roster). Spec 2 Section H note. ---- }
+{ ---- Section H gate (#649, tester mmgarciano + paper Annex F4, 2026-06-20): Section H is
+  the RESPONDENT's own PhilHealth-registration EXPERIENCE ("Answer Q79-Q88 if THE RESPONDENT
+  is registered in PhilHealth in Q45"). So gate on the RESPONDENT's Q45, not "any member" —
+  if another household member is registered but the respondent is NOT, the respondent can't
+  speak to a registration experience they never had. The respondent is roster line 1 (the
+  apc's own first-roster-entry soft-check: "First roster entry is normally the respondent
+  (Self) or HH head"), so the gate reads Q45_PHILHEALTH_REG(1). ASSUMPTION flagged to ASPSI:
+  respondent = roster line 1; if respondents are identified some other way, change the index.
+  (Was: loop "any member Q45 = Yes" — wrong per the paper.) ---- }
 PROC Q79_REG_SOURCE
 preproc
-  numeric anyReg = 0;
-  numeric i = 1;
-  do while i <= count(C_HOUSEHOLD_ROSTER)
-    if Q45_PHILHEALTH_REG(i) = 1 then
-      anyReg = 1;
-    endif;
-    i = i + 1;
-  enddo;
-  if anyReg = 0 then
-    skip to Q89_HAS_USUAL_FACILITY;   { no registered member -> skip Section H to Section I }
+  if Q45_PHILHEALTH_REG(1) <> 1 then
+    skip to Q89_HAS_USUAL_FACILITY;   { respondent (roster line 1) not PhilHealth-registered -> skip Section H to Section I }
   endif;
 
 { ---- #529 + #573/#574 + #577-585/#588/#590-591: select_all -> Check Box conversions — config-driven from CHECKBOX_CONVERT ---- }
@@ -589,6 +631,9 @@ postproc
   if length(strip(Q107_OTHER_ACTIONS)) = 0 then
     errmsg("Select at least one option for Q107 before continuing.");
     reenter;
+  endif;
+  if pos("90", Q107_OTHER_ACTIONS) > 0 and length(strip(Q107_OTHER_ACTIONS)) > 2 then
+    errmsg("Q107: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
   endif;
 
 PROC Q107_OTHER_ACTIONS_OTHER_TXT
@@ -1086,6 +1131,9 @@ postproc
     errmsg("Select at least one option for Q74 before continuing.");
     reenter;
   endif;
+  if pos("90", Q74_WHERE_REST) > 0 and length(strip(Q74_WHERE_REST)) > 2 then
+    errmsg("Q74: an exclusive option (None / I don't know) should be the only choice - please review the options ticked.");
+  endif;
 
 PROC Q74_WHERE_REST_OTHER_TXT
 preproc
@@ -1399,12 +1447,6 @@ postproc
     skip to Q16_4PS;
   endif;
 
-PROC Q45_PHILHEALTH_REG
-postproc
-  if Q45_PHILHEALTH_REG = 2 or Q45_PHILHEALTH_REG = 55 then
-    skip to Q48_NAME_FIRST;
-  endif;
-
 PROC Q62_PURCHASE_FREQ
 postproc
   if Q62_PURCHASE_FREQ = 5 then
@@ -1479,7 +1521,7 @@ postproc
 
 PROC Q90_IS_USUAL_FOR_GENERAL
 postproc
-  if Q90_IS_USUAL_FOR_GENERAL = 1 then
+  if Q90_IS_USUAL_FOR_GENERAL = 2 then
     skip to Q94_TRANSPORT;
   endif;
 
@@ -1516,6 +1558,12 @@ postproc
 PROC Q129_HH_CONFINED
 postproc
   if Q129_HH_CONFINED = 2 or Q129_HH_CONFINED = 3 then
+    skip to Q132_ZBB_HEARD;
+  endif;
+
+PROC Q130_HOSPITAL_TYPE
+postproc
+  if Q130_HOSPITAL_TYPE <> 2 then
     skip to Q132_ZBB_HEARD;
   endif;
 
@@ -1561,537 +1609,778 @@ postproc
     skip to SURVEY_TEAM_LEADER_S_NAME;
   endif;
 
-{ ---- #169 Section N expenditure consumed-gate (dcf-driven) ---- }
-PROC Q144_CEREALS_INKIND_PHP
+{ ---- Section N consumed-gate (#169) + subtotal init/compute (#9/#617) — merged per _CONSUMED field (#708/#709 combined-view) ---- }
+PROC Q144_CEREALS_CONSUMED
 preproc
-  if Q144_CEREALS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q144_CEREALS_INKIND_PHP = 0;
-    skip to Q145_PULSES_CONSUMED;
+  Q157_FOOD_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
+  protect(Q157_FOOD_SUBTOTAL_TOTAL_PHP, true);
+postproc
+  if Q144_CEREALS_CONSUMED = 2 then
+    Q144_CEREALS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q144_CEREALS_PURCHASED_PHP, true);
+    Q144_CEREALS_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q144_CEREALS_INKIND_PHP, true);
+  else
+    protect(Q144_CEREALS_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q144_CEREALS_INKIND_PHP, false);   { enterable when consumed }
   endif;
 
-PROC Q144_CEREALS_PURCHASED_PHP
+PROC Q145_PULSES_CONSUMED
+postproc
+  if Q145_PULSES_CONSUMED = 2 then
+    Q145_PULSES_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q145_PULSES_PURCHASED_PHP, true);
+    Q145_PULSES_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q145_PULSES_INKIND_PHP, true);
+  else
+    protect(Q145_PULSES_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q145_PULSES_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q146_VEGETABLES_CONSUMED
+postproc
+  if Q146_VEGETABLES_CONSUMED = 2 then
+    Q146_VEGETABLES_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q146_VEGETABLES_PURCHASED_PHP, true);
+    Q146_VEGETABLES_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q146_VEGETABLES_INKIND_PHP, true);
+  else
+    protect(Q146_VEGETABLES_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q146_VEGETABLES_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q147_FRUITS_CONSUMED
+postproc
+  if Q147_FRUITS_CONSUMED = 2 then
+    Q147_FRUITS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q147_FRUITS_PURCHASED_PHP, true);
+    Q147_FRUITS_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q147_FRUITS_INKIND_PHP, true);
+  else
+    protect(Q147_FRUITS_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q147_FRUITS_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q148_FISH_CONSUMED
+postproc
+  if Q148_FISH_CONSUMED = 2 then
+    Q148_FISH_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q148_FISH_PURCHASED_PHP, true);
+    Q148_FISH_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q148_FISH_INKIND_PHP, true);
+  else
+    protect(Q148_FISH_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q148_FISH_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q149_MEAT_CONSUMED
+postproc
+  if Q149_MEAT_CONSUMED = 2 then
+    Q149_MEAT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q149_MEAT_PURCHASED_PHP, true);
+    Q149_MEAT_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q149_MEAT_INKIND_PHP, true);
+  else
+    protect(Q149_MEAT_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q149_MEAT_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q150_EGGS_CONSUMED
+postproc
+  if Q150_EGGS_CONSUMED = 2 then
+    Q150_EGGS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q150_EGGS_PURCHASED_PHP, true);
+    Q150_EGGS_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q150_EGGS_INKIND_PHP, true);
+  else
+    protect(Q150_EGGS_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q150_EGGS_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q151_MILK_CONSUMED
+postproc
+  if Q151_MILK_CONSUMED = 2 then
+    Q151_MILK_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q151_MILK_PURCHASED_PHP, true);
+    Q151_MILK_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q151_MILK_INKIND_PHP, true);
+  else
+    protect(Q151_MILK_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q151_MILK_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q152_FATS_CONSUMED
+postproc
+  if Q152_FATS_CONSUMED = 2 then
+    Q152_FATS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q152_FATS_PURCHASED_PHP, true);
+    Q152_FATS_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q152_FATS_INKIND_PHP, true);
+  else
+    protect(Q152_FATS_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q152_FATS_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q153_SUGAR_CONSUMED
+postproc
+  if Q153_SUGAR_CONSUMED = 2 then
+    Q153_SUGAR_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q153_SUGAR_PURCHASED_PHP, true);
+    Q153_SUGAR_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q153_SUGAR_INKIND_PHP, true);
+  else
+    protect(Q153_SUGAR_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q153_SUGAR_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q154_CONDIMENTS_CONSUMED
+postproc
+  if Q154_CONDIMENTS_CONSUMED = 2 then
+    Q154_CONDIMENTS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q154_CONDIMENTS_PURCHASED_PHP, true);
+    Q154_CONDIMENTS_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q154_CONDIMENTS_INKIND_PHP, true);
+  else
+    protect(Q154_CONDIMENTS_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q154_CONDIMENTS_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q155_WATER_NA_CONSUMED
+postproc
+  if Q155_WATER_NA_CONSUMED = 2 then
+    Q155_WATER_NA_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q155_WATER_NA_PURCHASED_PHP, true);
+    Q155_WATER_NA_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q155_WATER_NA_INKIND_PHP, true);
+  else
+    protect(Q155_WATER_NA_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q155_WATER_NA_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q156_ALCOHOL_CONSUMED
+postproc
+  if Q156_ALCOHOL_CONSUMED = 2 then
+    Q156_ALCOHOL_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q156_ALCOHOL_PURCHASED_PHP, true);
+    Q156_ALCOHOL_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q156_ALCOHOL_INKIND_PHP, true);
+  else
+    protect(Q156_ALCOHOL_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q156_ALCOHOL_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q158_RESTAURANT_CONSUMED
 preproc
-  if Q144_CEREALS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q144_CEREALS_PURCHASED_PHP = 0;
-    skip to Q144_CEREALS_INKIND_PHP;
+  { #617 real Q157_FOOD_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
+  Q157_FOOD_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
+  if Q144_CEREALS_CONSUMED = 1 then if Q144_CEREALS_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q144_CEREALS_INKIND_PHP; endif; if Q144_CEREALS_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q144_CEREALS_PURCHASED_PHP; endif; endif;
+  if Q145_PULSES_CONSUMED = 1 then if Q145_PULSES_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q145_PULSES_INKIND_PHP; endif; if Q145_PULSES_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q145_PULSES_PURCHASED_PHP; endif; endif;
+  if Q146_VEGETABLES_CONSUMED = 1 then if Q146_VEGETABLES_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q146_VEGETABLES_INKIND_PHP; endif; if Q146_VEGETABLES_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q146_VEGETABLES_PURCHASED_PHP; endif; endif;
+  if Q147_FRUITS_CONSUMED = 1 then if Q147_FRUITS_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q147_FRUITS_INKIND_PHP; endif; if Q147_FRUITS_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q147_FRUITS_PURCHASED_PHP; endif; endif;
+  if Q148_FISH_CONSUMED = 1 then if Q148_FISH_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q148_FISH_INKIND_PHP; endif; if Q148_FISH_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q148_FISH_PURCHASED_PHP; endif; endif;
+  if Q149_MEAT_CONSUMED = 1 then if Q149_MEAT_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q149_MEAT_INKIND_PHP; endif; if Q149_MEAT_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q149_MEAT_PURCHASED_PHP; endif; endif;
+  if Q150_EGGS_CONSUMED = 1 then if Q150_EGGS_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q150_EGGS_INKIND_PHP; endif; if Q150_EGGS_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q150_EGGS_PURCHASED_PHP; endif; endif;
+  if Q151_MILK_CONSUMED = 1 then if Q151_MILK_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q151_MILK_INKIND_PHP; endif; if Q151_MILK_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q151_MILK_PURCHASED_PHP; endif; endif;
+  if Q152_FATS_CONSUMED = 1 then if Q152_FATS_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q152_FATS_INKIND_PHP; endif; if Q152_FATS_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q152_FATS_PURCHASED_PHP; endif; endif;
+  if Q153_SUGAR_CONSUMED = 1 then if Q153_SUGAR_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q153_SUGAR_INKIND_PHP; endif; if Q153_SUGAR_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q153_SUGAR_PURCHASED_PHP; endif; endif;
+  if Q154_CONDIMENTS_CONSUMED = 1 then if Q154_CONDIMENTS_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q154_CONDIMENTS_INKIND_PHP; endif; if Q154_CONDIMENTS_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q154_CONDIMENTS_PURCHASED_PHP; endif; endif;
+  if Q155_WATER_NA_CONSUMED = 1 then if Q155_WATER_NA_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q155_WATER_NA_INKIND_PHP; endif; if Q155_WATER_NA_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q155_WATER_NA_PURCHASED_PHP; endif; endif;
+  if Q156_ALCOHOL_CONSUMED = 1 then if Q156_ALCOHOL_INKIND_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q156_ALCOHOL_INKIND_PHP; endif; if Q156_ALCOHOL_PURCHASED_PHP <> 99999999 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q156_ALCOHOL_PURCHASED_PHP; endif; endif;
+  protect(Q157_FOOD_SUBTOTAL_TOTAL_PHP, true);
+postproc
+  if Q158_RESTAURANT_CONSUMED = 2 then
+    Q158_RESTAURANT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q158_RESTAURANT_PURCHASED_PHP, true);
+    Q158_RESTAURANT_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q158_RESTAURANT_INKIND_PHP, true);
+  else
+    protect(Q158_RESTAURANT_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q158_RESTAURANT_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q159_SMOKING_TOBACCO_CONSUMED
+postproc
+  if Q159_SMOKING_TOBACCO_CONSUMED = 2 then
+    Q159_SMOKING_TOBACCO_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q159_SMOKING_TOBACCO_PURCHASED_PHP, true);
+    Q159_SMOKING_TOBACCO_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q159_SMOKING_TOBACCO_INKIND_PHP, true);
+  else
+    protect(Q159_SMOKING_TOBACCO_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q159_SMOKING_TOBACCO_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q160_PERSONAL_CARE_CONSUMED
+postproc
+  if Q160_PERSONAL_CARE_CONSUMED = 2 then
+    Q160_PERSONAL_CARE_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q160_PERSONAL_CARE_PURCHASED_PHP, true);
+    Q160_PERSONAL_CARE_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q160_PERSONAL_CARE_INKIND_PHP, true);
+  else
+    protect(Q160_PERSONAL_CARE_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q160_PERSONAL_CARE_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q161_HOUSEHOLD_CLEAN_CONSUMED
+postproc
+  if Q161_HOUSEHOLD_CLEAN_CONSUMED = 2 then
+    Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP, true);
+    Q161_HOUSEHOLD_CLEAN_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q161_HOUSEHOLD_CLEAN_INKIND_PHP, true);
+  else
+    protect(Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q161_HOUSEHOLD_CLEAN_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q162_UTILITIES_CONSUMED
+postproc
+  if Q162_UTILITIES_CONSUMED = 2 then
+    Q162_UTILITIES_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q162_UTILITIES_PURCHASED_PHP, true);
+    Q162_UTILITIES_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q162_UTILITIES_INKIND_PHP, true);
+  else
+    protect(Q162_UTILITIES_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q162_UTILITIES_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q163_TRANSPORT_CONSUMED
+postproc
+  if Q163_TRANSPORT_CONSUMED = 2 then
+    Q163_TRANSPORT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q163_TRANSPORT_PURCHASED_PHP, true);
+    Q163_TRANSPORT_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q163_TRANSPORT_INKIND_PHP, true);
+  else
+    protect(Q163_TRANSPORT_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q163_TRANSPORT_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q164_TELECOM_CONSUMED
+postproc
+  if Q164_TELECOM_CONSUMED = 2 then
+    Q164_TELECOM_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q164_TELECOM_PURCHASED_PHP, true);
+    Q164_TELECOM_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q164_TELECOM_INKIND_PHP, true);
+  else
+    protect(Q164_TELECOM_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q164_TELECOM_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q165_RECREATION_1M_CONSUMED
+postproc
+  if Q165_RECREATION_1M_CONSUMED = 2 then
+    Q165_RECREATION_1M_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q165_RECREATION_1M_PURCHASED_PHP, true);
+    Q165_RECREATION_1M_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q165_RECREATION_1M_INKIND_PHP, true);
+  else
+    protect(Q165_RECREATION_1M_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q165_RECREATION_1M_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q166_POSTAL_CONSUMED
+postproc
+  if Q166_POSTAL_CONSUMED = 2 then
+    Q166_POSTAL_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q166_POSTAL_PURCHASED_PHP, true);
+    Q166_POSTAL_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q166_POSTAL_INKIND_PHP, true);
+  else
+    protect(Q166_POSTAL_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q166_POSTAL_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q167_HOUSING_CONSUMED
+postproc
+  if Q167_HOUSING_CONSUMED = 2 then
+    Q167_HOUSING_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q167_HOUSING_PURCHASED_PHP, true);
+    Q167_HOUSING_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q167_HOUSING_INKIND_PHP, true);
+  else
+    protect(Q167_HOUSING_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q167_HOUSING_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q168_RECREATION_6M_CONSUMED
+postproc
+  if Q168_RECREATION_6M_CONSUMED = 2 then
+    Q168_RECREATION_6M_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q168_RECREATION_6M_PURCHASED_PHP, true);
+    Q168_RECREATION_6M_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q168_RECREATION_6M_INKIND_PHP, true);
+  else
+    protect(Q168_RECREATION_6M_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q168_RECREATION_6M_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q169_CLOTHING_CONSUMED
+postproc
+  if Q169_CLOTHING_CONSUMED = 2 then
+    Q169_CLOTHING_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q169_CLOTHING_PURCHASED_PHP, true);
+    Q169_CLOTHING_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q169_CLOTHING_INKIND_PHP, true);
+  else
+    protect(Q169_CLOTHING_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q169_CLOTHING_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q170_EDUCATION_CONSUMED
+postproc
+  if Q170_EDUCATION_CONSUMED = 2 then
+    Q170_EDUCATION_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q170_EDUCATION_PURCHASED_PHP, true);
+    Q170_EDUCATION_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q170_EDUCATION_INKIND_PHP, true);
+  else
+    protect(Q170_EDUCATION_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q170_EDUCATION_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q171_ACCOMMODATION_CONSUMED
+postproc
+  if Q171_ACCOMMODATION_CONSUMED = 2 then
+    Q171_ACCOMMODATION_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q171_ACCOMMODATION_PURCHASED_PHP, true);
+    Q171_ACCOMMODATION_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q171_ACCOMMODATION_INKIND_PHP, true);
+  else
+    protect(Q171_ACCOMMODATION_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q171_ACCOMMODATION_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q172_GARDEN_PETS_CONSUMED
+postproc
+  if Q172_GARDEN_PETS_CONSUMED = 2 then
+    Q172_GARDEN_PETS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q172_GARDEN_PETS_PURCHASED_PHP, true);
+    Q172_GARDEN_PETS_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q172_GARDEN_PETS_INKIND_PHP, true);
+  else
+    protect(Q172_GARDEN_PETS_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q172_GARDEN_PETS_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q173_HEALTH_INS_CONSUMED
+postproc
+  if Q173_HEALTH_INS_CONSUMED = 2 then
+    Q173_HEALTH_INS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q173_HEALTH_INS_PURCHASED_PHP, true);
+    Q173_HEALTH_INS_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q173_HEALTH_INS_INKIND_PHP, true);
+  else
+    protect(Q173_HEALTH_INS_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q173_HEALTH_INS_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q174_OTHER_INS_CONSUMED
+postproc
+  if Q174_OTHER_INS_CONSUMED = 2 then
+    Q174_OTHER_INS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q174_OTHER_INS_PURCHASED_PHP, true);
+    Q174_OTHER_INS_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q174_OTHER_INS_INKIND_PHP, true);
+  else
+    protect(Q174_OTHER_INS_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q174_OTHER_INS_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q175_INPATIENT_CONSUMED
+preproc
+  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
+  protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP, true);
+postproc
+  if Q175_INPATIENT_CONSUMED = 2 then
+    Q175_INPATIENT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q175_INPATIENT_PURCHASED_PHP, true);
+    Q175_INPATIENT_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q175_INPATIENT_INKIND_PHP, true);
+  else
+    protect(Q175_INPATIENT_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q175_INPATIENT_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q176_EMERGENCY_TRANSPORT_CONSUMED
+postproc
+  if Q176_EMERGENCY_TRANSPORT_CONSUMED = 2 then
+    Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP, true);
+    Q176_EMERGENCY_TRANSPORT_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q176_EMERGENCY_TRANSPORT_INKIND_PHP, true);
+  else
+    protect(Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q176_EMERGENCY_TRANSPORT_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q178_PREVENTIVE_CONSUMED
+preproc
+  { #617 real Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
+  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
+  if Q175_INPATIENT_CONSUMED = 1 then if Q175_INPATIENT_INKIND_PHP <> 99999999 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q175_INPATIENT_INKIND_PHP; endif; if Q175_INPATIENT_PURCHASED_PHP <> 99999999 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q175_INPATIENT_PURCHASED_PHP; endif; endif;
+  if Q176_EMERGENCY_TRANSPORT_CONSUMED = 1 then if Q176_EMERGENCY_TRANSPORT_INKIND_PHP <> 99999999 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q176_EMERGENCY_TRANSPORT_INKIND_PHP; endif; if Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP <> 99999999 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP; endif; endif;
+  protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP, true);
+  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
+  protect(Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP, true);
+postproc
+  if Q178_PREVENTIVE_CONSUMED = 2 then
+    Q178_PREVENTIVE_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q178_PREVENTIVE_PURCHASED_PHP, true);
+    Q178_PREVENTIVE_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q178_PREVENTIVE_INKIND_PHP, true);
+  else
+    protect(Q178_PREVENTIVE_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q178_PREVENTIVE_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q179_DIAGNOSTIC_CONSUMED
+postproc
+  if Q179_DIAGNOSTIC_CONSUMED = 2 then
+    Q179_DIAGNOSTIC_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q179_DIAGNOSTIC_PURCHASED_PHP, true);
+    Q179_DIAGNOSTIC_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q179_DIAGNOSTIC_INKIND_PHP, true);
+  else
+    protect(Q179_DIAGNOSTIC_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q179_DIAGNOSTIC_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q180_ASSISTIVE_CONSUMED
+postproc
+  if Q180_ASSISTIVE_CONSUMED = 2 then
+    Q180_ASSISTIVE_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q180_ASSISTIVE_PURCHASED_PHP, true);
+    Q180_ASSISTIVE_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q180_ASSISTIVE_INKIND_PHP, true);
+  else
+    protect(Q180_ASSISTIVE_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q180_ASSISTIVE_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q181_MEDICAL_PRODUCTS_CONSUMED
+postproc
+  if Q181_MEDICAL_PRODUCTS_CONSUMED = 2 then
+    Q181_MEDICAL_PRODUCTS_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q181_MEDICAL_PRODUCTS_PURCHASED_PHP, true);
+    Q181_MEDICAL_PRODUCTS_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q181_MEDICAL_PRODUCTS_INKIND_PHP, true);
+  else
+    protect(Q181_MEDICAL_PRODUCTS_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q181_MEDICAL_PRODUCTS_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q183_MEDICINES_CONSUMED
+preproc
+  { #617 real Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
+  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
+  if Q178_PREVENTIVE_CONSUMED = 1 then if Q178_PREVENTIVE_INKIND_PHP <> 99999999 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q178_PREVENTIVE_INKIND_PHP; endif; if Q178_PREVENTIVE_PURCHASED_PHP <> 99999999 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q178_PREVENTIVE_PURCHASED_PHP; endif; endif;
+  if Q179_DIAGNOSTIC_CONSUMED = 1 then if Q179_DIAGNOSTIC_INKIND_PHP <> 99999999 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q179_DIAGNOSTIC_INKIND_PHP; endif; if Q179_DIAGNOSTIC_PURCHASED_PHP <> 99999999 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q179_DIAGNOSTIC_PURCHASED_PHP; endif; endif;
+  if Q180_ASSISTIVE_CONSUMED = 1 then if Q180_ASSISTIVE_INKIND_PHP <> 99999999 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q180_ASSISTIVE_INKIND_PHP; endif; if Q180_ASSISTIVE_PURCHASED_PHP <> 99999999 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q180_ASSISTIVE_PURCHASED_PHP; endif; endif;
+  if Q181_MEDICAL_PRODUCTS_CONSUMED = 1 then if Q181_MEDICAL_PRODUCTS_INKIND_PHP <> 99999999 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q181_MEDICAL_PRODUCTS_INKIND_PHP; endif; if Q181_MEDICAL_PRODUCTS_PURCHASED_PHP <> 99999999 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q181_MEDICAL_PRODUCTS_PURCHASED_PHP; endif; endif;
+  protect(Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP, true);
+  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
+  protect(Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP, true);
+postproc
+  if Q183_MEDICINES_CONSUMED = 2 then
+    Q183_MEDICINES_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q183_MEDICINES_PURCHASED_PHP, true);
+    Q183_MEDICINES_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q183_MEDICINES_INKIND_PHP, true);
+  else
+    protect(Q183_MEDICINES_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q183_MEDICINES_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+PROC Q184_OUTPATIENT_CONSUMED
+postproc
+  if Q184_OUTPATIENT_CONSUMED = 2 then
+    Q184_OUTPATIENT_PURCHASED_PHP = 0;   { item not consumed -> no spend }
+    protect(Q184_OUTPATIENT_PURCHASED_PHP, true);
+    Q184_OUTPATIENT_INKIND_PHP = 0;   { item not consumed -> no spend }
+    protect(Q184_OUTPATIENT_INKIND_PHP, true);
+  else
+    protect(Q184_OUTPATIENT_PURCHASED_PHP, false);   { enterable when consumed }
+    protect(Q184_OUTPATIENT_INKIND_PHP, false);   { enterable when consumed }
+  endif;
+
+{ ---- Section N subtotals — auto-compute + protect at follower (#9/#617, spec §4.9) ---- }
+PROC Q186_CURRENT_INCOME
+preproc
+  { #617 real Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
+  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
+  if Q183_MEDICINES_CONSUMED = 1 then if Q183_MEDICINES_INKIND_PHP <> 99999999 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q183_MEDICINES_INKIND_PHP; endif; if Q183_MEDICINES_PURCHASED_PHP <> 99999999 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q183_MEDICINES_PURCHASED_PHP; endif; endif;
+  if Q184_OUTPATIENT_CONSUMED = 1 then if Q184_OUTPATIENT_INKIND_PHP <> 99999999 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q184_OUTPATIENT_INKIND_PHP; endif; if Q184_OUTPATIENT_PURCHASED_PHP <> 99999999 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q184_OUTPATIENT_PURCHASED_PHP; endif; endif;
+  protect(Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP, true);
+
+{ ---- Section N consumed-amount validation (#677): consumed item needs >=1 amount > 0 ---- }
+PROC Q144_CEREALS_INKIND_PHP
+postproc
+  if Q144_CEREALS_CONSUMED = 1 and Q144_CEREALS_PURCHASED_PHP = 0 and Q144_CEREALS_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q145_PULSES_INKIND_PHP
-preproc
-  if Q145_PULSES_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q145_PULSES_INKIND_PHP = 0;
-    skip to Q146_VEGETABLES_CONSUMED;
-  endif;
-
-PROC Q145_PULSES_PURCHASED_PHP
-preproc
-  if Q145_PULSES_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q145_PULSES_PURCHASED_PHP = 0;
-    skip to Q145_PULSES_INKIND_PHP;
+postproc
+  if Q145_PULSES_CONSUMED = 1 and Q145_PULSES_PURCHASED_PHP = 0 and Q145_PULSES_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q146_VEGETABLES_INKIND_PHP
-preproc
-  if Q146_VEGETABLES_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q146_VEGETABLES_INKIND_PHP = 0;
-    skip to Q147_FRUITS_CONSUMED;
-  endif;
-
-PROC Q146_VEGETABLES_PURCHASED_PHP
-preproc
-  if Q146_VEGETABLES_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q146_VEGETABLES_PURCHASED_PHP = 0;
-    skip to Q146_VEGETABLES_INKIND_PHP;
+postproc
+  if Q146_VEGETABLES_CONSUMED = 1 and Q146_VEGETABLES_PURCHASED_PHP = 0 and Q146_VEGETABLES_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q147_FRUITS_INKIND_PHP
-preproc
-  if Q147_FRUITS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q147_FRUITS_INKIND_PHP = 0;
-    skip to Q148_FISH_CONSUMED;
-  endif;
-
-PROC Q147_FRUITS_PURCHASED_PHP
-preproc
-  if Q147_FRUITS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q147_FRUITS_PURCHASED_PHP = 0;
-    skip to Q147_FRUITS_INKIND_PHP;
+postproc
+  if Q147_FRUITS_CONSUMED = 1 and Q147_FRUITS_PURCHASED_PHP = 0 and Q147_FRUITS_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q148_FISH_INKIND_PHP
-preproc
-  if Q148_FISH_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q148_FISH_INKIND_PHP = 0;
-    skip to Q149_MEAT_CONSUMED;
-  endif;
-
-PROC Q148_FISH_PURCHASED_PHP
-preproc
-  if Q148_FISH_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q148_FISH_PURCHASED_PHP = 0;
-    skip to Q148_FISH_INKIND_PHP;
+postproc
+  if Q148_FISH_CONSUMED = 1 and Q148_FISH_PURCHASED_PHP = 0 and Q148_FISH_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q149_MEAT_INKIND_PHP
-preproc
-  if Q149_MEAT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q149_MEAT_INKIND_PHP = 0;
-    skip to Q150_EGGS_CONSUMED;
-  endif;
-
-PROC Q149_MEAT_PURCHASED_PHP
-preproc
-  if Q149_MEAT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q149_MEAT_PURCHASED_PHP = 0;
-    skip to Q149_MEAT_INKIND_PHP;
+postproc
+  if Q149_MEAT_CONSUMED = 1 and Q149_MEAT_PURCHASED_PHP = 0 and Q149_MEAT_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q150_EGGS_INKIND_PHP
-preproc
-  if Q150_EGGS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q150_EGGS_INKIND_PHP = 0;
-    skip to Q151_MILK_CONSUMED;
-  endif;
-
-PROC Q150_EGGS_PURCHASED_PHP
-preproc
-  if Q150_EGGS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q150_EGGS_PURCHASED_PHP = 0;
-    skip to Q150_EGGS_INKIND_PHP;
+postproc
+  if Q150_EGGS_CONSUMED = 1 and Q150_EGGS_PURCHASED_PHP = 0 and Q150_EGGS_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q151_MILK_INKIND_PHP
-preproc
-  if Q151_MILK_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q151_MILK_INKIND_PHP = 0;
-    skip to Q152_FATS_CONSUMED;
-  endif;
-
-PROC Q151_MILK_PURCHASED_PHP
-preproc
-  if Q151_MILK_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q151_MILK_PURCHASED_PHP = 0;
-    skip to Q151_MILK_INKIND_PHP;
+postproc
+  if Q151_MILK_CONSUMED = 1 and Q151_MILK_PURCHASED_PHP = 0 and Q151_MILK_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q152_FATS_INKIND_PHP
-preproc
-  if Q152_FATS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q152_FATS_INKIND_PHP = 0;
-    skip to Q153_SUGAR_CONSUMED;
-  endif;
-
-PROC Q152_FATS_PURCHASED_PHP
-preproc
-  if Q152_FATS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q152_FATS_PURCHASED_PHP = 0;
-    skip to Q152_FATS_INKIND_PHP;
+postproc
+  if Q152_FATS_CONSUMED = 1 and Q152_FATS_PURCHASED_PHP = 0 and Q152_FATS_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q153_SUGAR_INKIND_PHP
-preproc
-  if Q153_SUGAR_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q153_SUGAR_INKIND_PHP = 0;
-    skip to Q154_CONDIMENTS_CONSUMED;
-  endif;
-
-PROC Q153_SUGAR_PURCHASED_PHP
-preproc
-  if Q153_SUGAR_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q153_SUGAR_PURCHASED_PHP = 0;
-    skip to Q153_SUGAR_INKIND_PHP;
+postproc
+  if Q153_SUGAR_CONSUMED = 1 and Q153_SUGAR_PURCHASED_PHP = 0 and Q153_SUGAR_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q154_CONDIMENTS_INKIND_PHP
-preproc
-  if Q154_CONDIMENTS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q154_CONDIMENTS_INKIND_PHP = 0;
-    skip to Q155_WATER_NA_CONSUMED;
-  endif;
-
-PROC Q154_CONDIMENTS_PURCHASED_PHP
-preproc
-  if Q154_CONDIMENTS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q154_CONDIMENTS_PURCHASED_PHP = 0;
-    skip to Q154_CONDIMENTS_INKIND_PHP;
+postproc
+  if Q154_CONDIMENTS_CONSUMED = 1 and Q154_CONDIMENTS_PURCHASED_PHP = 0 and Q154_CONDIMENTS_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q155_WATER_NA_INKIND_PHP
-preproc
-  if Q155_WATER_NA_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q155_WATER_NA_INKIND_PHP = 0;
-    skip to Q156_ALCOHOL_CONSUMED;
-  endif;
-
-PROC Q155_WATER_NA_PURCHASED_PHP
-preproc
-  if Q155_WATER_NA_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q155_WATER_NA_PURCHASED_PHP = 0;
-    skip to Q155_WATER_NA_INKIND_PHP;
+postproc
+  if Q155_WATER_NA_CONSUMED = 1 and Q155_WATER_NA_PURCHASED_PHP = 0 and Q155_WATER_NA_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q156_ALCOHOL_INKIND_PHP
-preproc
-  if Q156_ALCOHOL_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q156_ALCOHOL_INKIND_PHP = 0;
-    skip to Q157_FOOD_SUBTOTAL_TOTAL_PHP;
-  endif;
-
-PROC Q156_ALCOHOL_PURCHASED_PHP
-preproc
-  if Q156_ALCOHOL_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q156_ALCOHOL_PURCHASED_PHP = 0;
-    skip to Q156_ALCOHOL_INKIND_PHP;
+postproc
+  if Q156_ALCOHOL_CONSUMED = 1 and Q156_ALCOHOL_PURCHASED_PHP = 0 and Q156_ALCOHOL_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q158_RESTAURANT_INKIND_PHP
-preproc
-  if Q158_RESTAURANT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q158_RESTAURANT_INKIND_PHP = 0;
-    skip to Q159_SMOKING_TOBACCO_CONSUMED;
-  endif;
-
-PROC Q158_RESTAURANT_PURCHASED_PHP
-preproc
-  if Q158_RESTAURANT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q158_RESTAURANT_PURCHASED_PHP = 0;
-    skip to Q158_RESTAURANT_INKIND_PHP;
+postproc
+  if Q158_RESTAURANT_CONSUMED = 1 and Q158_RESTAURANT_PURCHASED_PHP = 0 and Q158_RESTAURANT_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q159_SMOKING_TOBACCO_INKIND_PHP
-preproc
-  if Q159_SMOKING_TOBACCO_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q159_SMOKING_TOBACCO_INKIND_PHP = 0;
-    skip to Q160_PERSONAL_CARE_CONSUMED;
-  endif;
-
-PROC Q159_SMOKING_TOBACCO_PURCHASED_PHP
-preproc
-  if Q159_SMOKING_TOBACCO_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q159_SMOKING_TOBACCO_PURCHASED_PHP = 0;
-    skip to Q159_SMOKING_TOBACCO_INKIND_PHP;
+postproc
+  if Q159_SMOKING_TOBACCO_CONSUMED = 1 and Q159_SMOKING_TOBACCO_PURCHASED_PHP = 0 and Q159_SMOKING_TOBACCO_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q160_PERSONAL_CARE_INKIND_PHP
-preproc
-  if Q160_PERSONAL_CARE_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q160_PERSONAL_CARE_INKIND_PHP = 0;
-    skip to Q161_HOUSEHOLD_CLEAN_CONSUMED;
-  endif;
-
-PROC Q160_PERSONAL_CARE_PURCHASED_PHP
-preproc
-  if Q160_PERSONAL_CARE_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q160_PERSONAL_CARE_PURCHASED_PHP = 0;
-    skip to Q160_PERSONAL_CARE_INKIND_PHP;
+postproc
+  if Q160_PERSONAL_CARE_CONSUMED = 1 and Q160_PERSONAL_CARE_PURCHASED_PHP = 0 and Q160_PERSONAL_CARE_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q161_HOUSEHOLD_CLEAN_INKIND_PHP
-preproc
-  if Q161_HOUSEHOLD_CLEAN_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q161_HOUSEHOLD_CLEAN_INKIND_PHP = 0;
-    skip to Q162_UTILITIES_CONSUMED;
-  endif;
-
-PROC Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP
-preproc
-  if Q161_HOUSEHOLD_CLEAN_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP = 0;
-    skip to Q161_HOUSEHOLD_CLEAN_INKIND_PHP;
+postproc
+  if Q161_HOUSEHOLD_CLEAN_CONSUMED = 1 and Q161_HOUSEHOLD_CLEAN_PURCHASED_PHP = 0 and Q161_HOUSEHOLD_CLEAN_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q162_UTILITIES_INKIND_PHP
-preproc
-  if Q162_UTILITIES_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q162_UTILITIES_INKIND_PHP = 0;
-    skip to Q163_TRANSPORT_CONSUMED;
-  endif;
-
-PROC Q162_UTILITIES_PURCHASED_PHP
-preproc
-  if Q162_UTILITIES_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q162_UTILITIES_PURCHASED_PHP = 0;
-    skip to Q162_UTILITIES_INKIND_PHP;
+postproc
+  if Q162_UTILITIES_CONSUMED = 1 and Q162_UTILITIES_PURCHASED_PHP = 0 and Q162_UTILITIES_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q163_TRANSPORT_INKIND_PHP
-preproc
-  if Q163_TRANSPORT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q163_TRANSPORT_INKIND_PHP = 0;
-    skip to Q164_TELECOM_CONSUMED;
-  endif;
-
-PROC Q163_TRANSPORT_PURCHASED_PHP
-preproc
-  if Q163_TRANSPORT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q163_TRANSPORT_PURCHASED_PHP = 0;
-    skip to Q163_TRANSPORT_INKIND_PHP;
+postproc
+  if Q163_TRANSPORT_CONSUMED = 1 and Q163_TRANSPORT_PURCHASED_PHP = 0 and Q163_TRANSPORT_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q164_TELECOM_INKIND_PHP
-preproc
-  if Q164_TELECOM_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q164_TELECOM_INKIND_PHP = 0;
-    skip to Q165_RECREATION_1M_CONSUMED;
-  endif;
-
-PROC Q164_TELECOM_PURCHASED_PHP
-preproc
-  if Q164_TELECOM_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q164_TELECOM_PURCHASED_PHP = 0;
-    skip to Q164_TELECOM_INKIND_PHP;
+postproc
+  if Q164_TELECOM_CONSUMED = 1 and Q164_TELECOM_PURCHASED_PHP = 0 and Q164_TELECOM_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q165_RECREATION_1M_INKIND_PHP
-preproc
-  if Q165_RECREATION_1M_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q165_RECREATION_1M_INKIND_PHP = 0;
-    skip to Q166_POSTAL_CONSUMED;
-  endif;
-
-PROC Q165_RECREATION_1M_PURCHASED_PHP
-preproc
-  if Q165_RECREATION_1M_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q165_RECREATION_1M_PURCHASED_PHP = 0;
-    skip to Q165_RECREATION_1M_INKIND_PHP;
+postproc
+  if Q165_RECREATION_1M_CONSUMED = 1 and Q165_RECREATION_1M_PURCHASED_PHP = 0 and Q165_RECREATION_1M_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q166_POSTAL_INKIND_PHP
-preproc
-  if Q166_POSTAL_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q166_POSTAL_INKIND_PHP = 0;
-    skip to Q167_HOUSING_CONSUMED;
-  endif;
-
-PROC Q166_POSTAL_PURCHASED_PHP
-preproc
-  if Q166_POSTAL_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q166_POSTAL_PURCHASED_PHP = 0;
-    skip to Q166_POSTAL_INKIND_PHP;
+postproc
+  if Q166_POSTAL_CONSUMED = 1 and Q166_POSTAL_PURCHASED_PHP = 0 and Q166_POSTAL_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q167_HOUSING_INKIND_PHP
-preproc
-  if Q167_HOUSING_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q167_HOUSING_INKIND_PHP = 0;
-    skip to Q168_RECREATION_6M_CONSUMED;
-  endif;
-
-PROC Q167_HOUSING_PURCHASED_PHP
-preproc
-  if Q167_HOUSING_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q167_HOUSING_PURCHASED_PHP = 0;
-    skip to Q167_HOUSING_INKIND_PHP;
+postproc
+  if Q167_HOUSING_CONSUMED = 1 and Q167_HOUSING_PURCHASED_PHP = 0 and Q167_HOUSING_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q168_RECREATION_6M_INKIND_PHP
-preproc
-  if Q168_RECREATION_6M_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q168_RECREATION_6M_INKIND_PHP = 0;
-    skip to Q169_CLOTHING_CONSUMED;
-  endif;
-
-PROC Q168_RECREATION_6M_PURCHASED_PHP
-preproc
-  if Q168_RECREATION_6M_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q168_RECREATION_6M_PURCHASED_PHP = 0;
-    skip to Q168_RECREATION_6M_INKIND_PHP;
+postproc
+  if Q168_RECREATION_6M_CONSUMED = 1 and Q168_RECREATION_6M_PURCHASED_PHP = 0 and Q168_RECREATION_6M_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q169_CLOTHING_INKIND_PHP
-preproc
-  if Q169_CLOTHING_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q169_CLOTHING_INKIND_PHP = 0;
-    skip to Q170_EDUCATION_CONSUMED;
-  endif;
-
-PROC Q169_CLOTHING_PURCHASED_PHP
-preproc
-  if Q169_CLOTHING_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q169_CLOTHING_PURCHASED_PHP = 0;
-    skip to Q169_CLOTHING_INKIND_PHP;
+postproc
+  if Q169_CLOTHING_CONSUMED = 1 and Q169_CLOTHING_PURCHASED_PHP = 0 and Q169_CLOTHING_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q170_EDUCATION_INKIND_PHP
-preproc
-  if Q170_EDUCATION_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q170_EDUCATION_INKIND_PHP = 0;
-    skip to Q171_ACCOMMODATION_CONSUMED;
-  endif;
-
-PROC Q170_EDUCATION_PURCHASED_PHP
-preproc
-  if Q170_EDUCATION_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q170_EDUCATION_PURCHASED_PHP = 0;
-    skip to Q170_EDUCATION_INKIND_PHP;
+postproc
+  if Q170_EDUCATION_CONSUMED = 1 and Q170_EDUCATION_PURCHASED_PHP = 0 and Q170_EDUCATION_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q171_ACCOMMODATION_INKIND_PHP
-preproc
-  if Q171_ACCOMMODATION_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q171_ACCOMMODATION_INKIND_PHP = 0;
-    skip to Q172_GARDEN_PETS_CONSUMED;
-  endif;
-
-PROC Q171_ACCOMMODATION_PURCHASED_PHP
-preproc
-  if Q171_ACCOMMODATION_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q171_ACCOMMODATION_PURCHASED_PHP = 0;
-    skip to Q171_ACCOMMODATION_INKIND_PHP;
+postproc
+  if Q171_ACCOMMODATION_CONSUMED = 1 and Q171_ACCOMMODATION_PURCHASED_PHP = 0 and Q171_ACCOMMODATION_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q172_GARDEN_PETS_INKIND_PHP
-preproc
-  if Q172_GARDEN_PETS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q172_GARDEN_PETS_INKIND_PHP = 0;
-    skip to Q173_HEALTH_INS_CONSUMED;
-  endif;
-
-PROC Q172_GARDEN_PETS_PURCHASED_PHP
-preproc
-  if Q172_GARDEN_PETS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q172_GARDEN_PETS_PURCHASED_PHP = 0;
-    skip to Q172_GARDEN_PETS_INKIND_PHP;
+postproc
+  if Q172_GARDEN_PETS_CONSUMED = 1 and Q172_GARDEN_PETS_PURCHASED_PHP = 0 and Q172_GARDEN_PETS_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q173_HEALTH_INS_INKIND_PHP
-preproc
-  if Q173_HEALTH_INS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q173_HEALTH_INS_INKIND_PHP = 0;
-    skip to Q174_OTHER_INS_CONSUMED;
-  endif;
-
-PROC Q173_HEALTH_INS_PURCHASED_PHP
-preproc
-  if Q173_HEALTH_INS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q173_HEALTH_INS_PURCHASED_PHP = 0;
-    skip to Q173_HEALTH_INS_INKIND_PHP;
+postproc
+  if Q173_HEALTH_INS_CONSUMED = 1 and Q173_HEALTH_INS_PURCHASED_PHP = 0 and Q173_HEALTH_INS_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q174_OTHER_INS_INKIND_PHP
-preproc
-  if Q174_OTHER_INS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q174_OTHER_INS_INKIND_PHP = 0;
-    skip to Q175_INPATIENT_CONSUMED;
-  endif;
-
-PROC Q174_OTHER_INS_PURCHASED_PHP
-preproc
-  if Q174_OTHER_INS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q174_OTHER_INS_PURCHASED_PHP = 0;
-    skip to Q174_OTHER_INS_INKIND_PHP;
+postproc
+  if Q174_OTHER_INS_CONSUMED = 1 and Q174_OTHER_INS_PURCHASED_PHP = 0 and Q174_OTHER_INS_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q175_INPATIENT_INKIND_PHP
-preproc
-  if Q175_INPATIENT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q175_INPATIENT_INKIND_PHP = 0;
-    skip to Q176_EMERGENCY_TRANSPORT_CONSUMED;
-  endif;
-
-PROC Q175_INPATIENT_PURCHASED_PHP
-preproc
-  if Q175_INPATIENT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q175_INPATIENT_PURCHASED_PHP = 0;
-    skip to Q175_INPATIENT_INKIND_PHP;
+postproc
+  if Q175_INPATIENT_CONSUMED = 1 and Q175_INPATIENT_PURCHASED_PHP = 0 and Q175_INPATIENT_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q176_EMERGENCY_TRANSPORT_INKIND_PHP
-preproc
-  if Q176_EMERGENCY_TRANSPORT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q176_EMERGENCY_TRANSPORT_INKIND_PHP = 0;
-    skip to Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP;
-  endif;
-
-PROC Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP
-preproc
-  if Q176_EMERGENCY_TRANSPORT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP = 0;
-    skip to Q176_EMERGENCY_TRANSPORT_INKIND_PHP;
+postproc
+  if Q176_EMERGENCY_TRANSPORT_CONSUMED = 1 and Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP = 0 and Q176_EMERGENCY_TRANSPORT_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q178_PREVENTIVE_INKIND_PHP
-preproc
-  if Q178_PREVENTIVE_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q178_PREVENTIVE_INKIND_PHP = 0;
-    skip to Q179_DIAGNOSTIC_CONSUMED;
-  endif;
-
-PROC Q178_PREVENTIVE_PURCHASED_PHP
-preproc
-  if Q178_PREVENTIVE_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q178_PREVENTIVE_PURCHASED_PHP = 0;
-    skip to Q178_PREVENTIVE_INKIND_PHP;
+postproc
+  if Q178_PREVENTIVE_CONSUMED = 1 and Q178_PREVENTIVE_PURCHASED_PHP = 0 and Q178_PREVENTIVE_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q179_DIAGNOSTIC_INKIND_PHP
-preproc
-  if Q179_DIAGNOSTIC_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q179_DIAGNOSTIC_INKIND_PHP = 0;
-    skip to Q180_ASSISTIVE_CONSUMED;
-  endif;
-
-PROC Q179_DIAGNOSTIC_PURCHASED_PHP
-preproc
-  if Q179_DIAGNOSTIC_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q179_DIAGNOSTIC_PURCHASED_PHP = 0;
-    skip to Q179_DIAGNOSTIC_INKIND_PHP;
+postproc
+  if Q179_DIAGNOSTIC_CONSUMED = 1 and Q179_DIAGNOSTIC_PURCHASED_PHP = 0 and Q179_DIAGNOSTIC_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q180_ASSISTIVE_INKIND_PHP
-preproc
-  if Q180_ASSISTIVE_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q180_ASSISTIVE_INKIND_PHP = 0;
-    skip to Q181_MEDICAL_PRODUCTS_CONSUMED;
-  endif;
-
-PROC Q180_ASSISTIVE_PURCHASED_PHP
-preproc
-  if Q180_ASSISTIVE_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q180_ASSISTIVE_PURCHASED_PHP = 0;
-    skip to Q180_ASSISTIVE_INKIND_PHP;
+postproc
+  if Q180_ASSISTIVE_CONSUMED = 1 and Q180_ASSISTIVE_PURCHASED_PHP = 0 and Q180_ASSISTIVE_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q181_MEDICAL_PRODUCTS_INKIND_PHP
-preproc
-  if Q181_MEDICAL_PRODUCTS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q181_MEDICAL_PRODUCTS_INKIND_PHP = 0;
-    skip to Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP;
-  endif;
-
-PROC Q181_MEDICAL_PRODUCTS_PURCHASED_PHP
-preproc
-  if Q181_MEDICAL_PRODUCTS_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q181_MEDICAL_PRODUCTS_PURCHASED_PHP = 0;
-    skip to Q181_MEDICAL_PRODUCTS_INKIND_PHP;
+postproc
+  if Q181_MEDICAL_PRODUCTS_CONSUMED = 1 and Q181_MEDICAL_PRODUCTS_PURCHASED_PHP = 0 and Q181_MEDICAL_PRODUCTS_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q183_MEDICINES_INKIND_PHP
-preproc
-  if Q183_MEDICINES_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q183_MEDICINES_INKIND_PHP = 0;
-    skip to Q184_OUTPATIENT_CONSUMED;
-  endif;
-
-PROC Q183_MEDICINES_PURCHASED_PHP
-preproc
-  if Q183_MEDICINES_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q183_MEDICINES_PURCHASED_PHP = 0;
-    skip to Q183_MEDICINES_INKIND_PHP;
+postproc
+  if Q183_MEDICINES_CONSUMED = 1 and Q183_MEDICINES_PURCHASED_PHP = 0 and Q183_MEDICINES_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 PROC Q184_OUTPATIENT_INKIND_PHP
-preproc
-  if Q184_OUTPATIENT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q184_OUTPATIENT_INKIND_PHP = 0;
-    skip to Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP;
-  endif;
-
-PROC Q184_OUTPATIENT_PURCHASED_PHP
-preproc
-  if Q184_OUTPATIENT_CONSUMED = 2 then   { item not consumed -> no spend }
-    Q184_OUTPATIENT_PURCHASED_PHP = 0;
-    skip to Q184_OUTPATIENT_INKIND_PHP;
+postproc
+  if Q184_OUTPATIENT_CONSUMED = 1 and Q184_OUTPATIENT_PURCHASED_PHP = 0 and Q184_OUTPATIENT_INKIND_PHP = 0 then
+    errmsg("This item is marked consumed by the household, so enter the amount spent purchasing it and/or the estimated value if received in-kind, as a gift, or own-produced — at least one must be greater than 0. If the household genuinely does not know an amount, enter 99999999 for that amount.");
+    reenter;
   endif;
 
 { ---- 'Other (specify)' enforcement — UHC9 dual-other ---- }
@@ -2275,66 +2564,6 @@ postproc
     errmsg("'Other' was selected for Q92_FACILITY_TYPE but no text was entered. Please specify.");
     reenter;
   endif;
-
-{ ---- Section N subtotals — init + auto-compute + protect (#9/#617, spec §4.9) ---- }
-PROC Q144_CEREALS_CONSUMED
-preproc
-  Q157_FOOD_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
-  protect(Q157_FOOD_SUBTOTAL_TOTAL_PHP, true);
-
-PROC Q158_RESTAURANT_CONSUMED
-preproc
-  { #617 real Q157_FOOD_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
-  Q157_FOOD_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
-  if Q144_CEREALS_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q144_CEREALS_INKIND_PHP + Q144_CEREALS_PURCHASED_PHP; endif;
-  if Q145_PULSES_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q145_PULSES_INKIND_PHP + Q145_PULSES_PURCHASED_PHP; endif;
-  if Q146_VEGETABLES_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q146_VEGETABLES_INKIND_PHP + Q146_VEGETABLES_PURCHASED_PHP; endif;
-  if Q147_FRUITS_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q147_FRUITS_INKIND_PHP + Q147_FRUITS_PURCHASED_PHP; endif;
-  if Q148_FISH_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q148_FISH_INKIND_PHP + Q148_FISH_PURCHASED_PHP; endif;
-  if Q149_MEAT_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q149_MEAT_INKIND_PHP + Q149_MEAT_PURCHASED_PHP; endif;
-  if Q150_EGGS_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q150_EGGS_INKIND_PHP + Q150_EGGS_PURCHASED_PHP; endif;
-  if Q151_MILK_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q151_MILK_INKIND_PHP + Q151_MILK_PURCHASED_PHP; endif;
-  if Q152_FATS_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q152_FATS_INKIND_PHP + Q152_FATS_PURCHASED_PHP; endif;
-  if Q153_SUGAR_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q153_SUGAR_INKIND_PHP + Q153_SUGAR_PURCHASED_PHP; endif;
-  if Q154_CONDIMENTS_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q154_CONDIMENTS_INKIND_PHP + Q154_CONDIMENTS_PURCHASED_PHP; endif;
-  if Q155_WATER_NA_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q155_WATER_NA_INKIND_PHP + Q155_WATER_NA_PURCHASED_PHP; endif;
-  if Q156_ALCOHOL_CONSUMED = 1 then Q157_FOOD_SUBTOTAL_TOTAL_PHP = Q157_FOOD_SUBTOTAL_TOTAL_PHP + Q156_ALCOHOL_INKIND_PHP + Q156_ALCOHOL_PURCHASED_PHP; endif;
-  protect(Q157_FOOD_SUBTOTAL_TOTAL_PHP, true);
-
-PROC Q175_INPATIENT_CONSUMED
-preproc
-  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
-  protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP, true);
-
-PROC Q178_PREVENTIVE_CONSUMED
-preproc
-  { #617 real Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
-  Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
-  if Q175_INPATIENT_CONSUMED = 1 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q175_INPATIENT_INKIND_PHP + Q175_INPATIENT_PURCHASED_PHP; endif;
-  if Q176_EMERGENCY_TRANSPORT_CONSUMED = 1 then Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP = Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP + Q176_EMERGENCY_TRANSPORT_INKIND_PHP + Q176_EMERGENCY_TRANSPORT_PURCHASED_PHP; endif;
-  protect(Q177_HEALTH_12M_SUBTOTAL_TOTAL_PHP, true);
-  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
-  protect(Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP, true);
-
-PROC Q183_MEDICINES_CONSUMED
-preproc
-  { #617 real Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
-  Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
-  if Q178_PREVENTIVE_CONSUMED = 1 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q178_PREVENTIVE_INKIND_PHP + Q178_PREVENTIVE_PURCHASED_PHP; endif;
-  if Q179_DIAGNOSTIC_CONSUMED = 1 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q179_DIAGNOSTIC_INKIND_PHP + Q179_DIAGNOSTIC_PURCHASED_PHP; endif;
-  if Q180_ASSISTIVE_CONSUMED = 1 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q180_ASSISTIVE_INKIND_PHP + Q180_ASSISTIVE_PURCHASED_PHP; endif;
-  if Q181_MEDICAL_PRODUCTS_CONSUMED = 1 then Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP = Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP + Q181_MEDICAL_PRODUCTS_INKIND_PHP + Q181_MEDICAL_PRODUCTS_PURCHASED_PHP; endif;
-  protect(Q182_HEALTH_6M_SUBTOTAL_TOTAL_PHP, true);
-  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = 0;   { #617 init: protected subtotal must be valid (not notappl) when its block exits }
-  protect(Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP, true);
-
-PROC Q186_CURRENT_INCOME
-preproc
-  { #617 real Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP sum, now that the panel is complete }
-  Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = 0;   { #617: accumulate only CONSUMED items -> no notappl propagation }
-  if Q183_MEDICINES_CONSUMED = 1 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q183_MEDICINES_INKIND_PHP + Q183_MEDICINES_PURCHASED_PHP; endif;
-  if Q184_OUTPATIENT_CONSUMED = 1 then Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP = Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP + Q184_OUTPATIENT_INKIND_PHP + Q184_OUTPATIENT_PURCHASED_PHP; endif;
-  protect(Q185_HEALTH_1M_SUBTOTAL_TOTAL_PHP, true);
 
 { ---- Select-all validation — >=1 option ticked (auto-derived from dcf) ---- }
 { ---- Range + cross-field validations (spec §3.1-§3.12) ---- }

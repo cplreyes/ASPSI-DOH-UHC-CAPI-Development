@@ -130,7 +130,7 @@ All Q-numbers refer to the **Apr 20 printed questionnaire** (1–202); dcf item 
 
 ### Section H — PhilHealth Registration and Health Insurance
 
-> Section H applies when at least one HH member has `Q45_PHILHEALTH_REG = Yes` in the roster. If no members are PhilHealth-registered, skip entire Section H.
+> Section H applies when **THE RESPONDENT** (roster line 1) has `Q45_PHILHEALTH_REG = Yes`. Section H asks about the respondent's own PhilHealth-registration *experience* (paper Annex F4: "Answer Q79–Q88 if the respondent is registered in PhilHealth in Q45"), so if the RESPONDENT is not registered — even if other household members are — skip the entire Section H. (#649, 2026-06-20: corrected from the earlier "any member" reading, which contradicted the paper.)
 
 | Q | Condition | Skip to |
 |---|---|---|
@@ -419,7 +419,7 @@ Populated by `ReadGPSReading()` from `shared/Capture-Helpers.apc`; enumerator ta
 
 | Item | Rule | Severity |
 |---|---|---|
-| Section H enabled | At least one roster member has `Q45_PHILHEALTH_REG = Yes` | GATE |
+| Section H enabled | RESPONDENT (roster line 1) has `Q45_PHILHEALTH_REG = Yes` (#649) | GATE |
 | `Q79_REG_SOURCE` | Required, ∈ value set | HARD |
 | `Q79 = Other` | `Q79_REG_SOURCE_OTHER_TXT` required | HARD |
 | `Q80_ASSIST` | Required, ∈ value set | HARD |

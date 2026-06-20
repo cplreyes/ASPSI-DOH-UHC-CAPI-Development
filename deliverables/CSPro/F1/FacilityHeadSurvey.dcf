@@ -2116,6 +2116,40 @@
               "length": 19
             },
             {
+              "name": "VERIFICATION_PHOTO_IMAGE",
+              "labels": [
+                {
+                  "text": "Verification Photo (binary; syncs to CSWeb)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Verification Photo (binary; syncs to CSWeb)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Verification Photo (binary; syncs to CSWeb)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Verification Photo (binary; syncs to CSWeb)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Verification Photo (binary; syncs to CSWeb)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Verification Photo (binary; syncs to CSWeb)",
+                  "language": "WAR"
+                },
+                {
+                  "text": "Verification Photo (binary; syncs to CSWeb)",
+                  "language": "HIL"
+                }
+              ],
+              "contentType": "image"
+            },
+            {
               "name": "VERIFICATION_PHOTO_FILENAME",
               "labels": [
                 {

@@ -34,6 +34,45 @@ function q92_oop()
   q92_oop = total;
 end;
 
+{ Option B fan-out (#674/#675/#691): out-of-pocket (SRC code 1) sums from the Q94/Q96/Q107
+  rosters — same shape as q92_oop(), used in the Q97 / Q115 reconciliation soft-checks
+  (replace the old flat Q9n_PAY_01_AMT / Q107_PAY_01_AMT fields). }
+function q94_oop()
+  numeric i;
+  numeric total;
+  total = 0;
+  do i = 1 while i <= count(Q94_PAY_ROSTER)
+    if Q94_PAY_SRC(i) = 1 then
+      total = total + Q94_PAY_AMT(i);
+    endif;
+  enddo;
+  q94_oop = total;
+end;
+
+function q96_oop()
+  numeric i;
+  numeric total;
+  total = 0;
+  do i = 1 while i <= count(Q96_PAY_ROSTER)
+    if Q96_PAY_SRC(i) = 1 then
+      total = total + Q96_PAY_AMT(i);
+    endif;
+  enddo;
+  q96_oop = total;
+end;
+
+function q107_oop()
+  numeric i;
+  numeric total;
+  total = 0;
+  do i = 1 while i <= count(Q107_PAY_ROSTER)
+    if Q107_PAY_SRC(i) = 1 then
+      total = total + Q107_PAY_AMT(i);
+    endif;
+  enddo;
+  q107_oop = total;
+end;
+
 { Shared helpers inlined into this single PROC GLOBAL (PSGC-Cascade first so its
   ROOT_PSGC_PARENT declaration precedes all functions). #include can't be used:
   CSPro forbids it inside a PROC, and CSEntry forbids code before the first PROC.
@@ -196,12 +235,28 @@ end;
 
 
 function TakeVerificationPhoto(string photoFile)
-    { Launches the Android camera, resamples to <= 1600 x 1200, and saves
-      the JPG to tablet storage under the given photoFile. Returns 1 on
-      success / 0 on cancel or error. The .app assigns `photoFile` to the
-      dictionary's *_VERIFICATION_PHOTO_FILENAME alpha item on success.
-      NB: the parameter is `photoFile`, not `filename` -- `filename` is a
-      CSPro reserved word and errors at compile (verified 2026-06-08). }
+    { Captures the verification photo INTO the binary Image dictionary item
+      VERIFICATION_PHOTO_IMAGE so the JPG bytes travel inside the case and sync
+      to CSWeb (downloadable from the CSWeb Data Viewer). Returns 1 on success /
+      0 on cancel or no-camera.
+
+      WHY (R4 #713): the previous version saved the photo to a LOOSE FILE via
+      Image.save(photoFile) and stored only the filename string in the case.
+      CSWeb syncs case RECORD ITEMS, not loose app-folder files, so the photo
+      never reached the server ("no picture retained by the system"). Storing the
+      bytes in a binary Image item is the supported way to sync a photo to CSWeb.
+
+      `photoFile` is no longer written to disk; the caller keeps it as the
+      human-readable label assigned to *_VERIFICATION_PHOTO_FILENAME (which also
+      serves as the "already captured" sentinel the trigger's onfocus guards on).
+      The parameter is kept so callers (F1/F3/F4 CAPTURE_VERIFICATION_PHOTO) need
+      no change. NB: it is `photoFile`, not `filename` -- `filename` is a CSPro
+      reserved word and errors at compile (verified 2026-06-08).
+
+      This references the dictionary item VERIFICATION_PHOTO_IMAGE by name, so
+      every app including this helper must declare it (cspro_helpers._photo_block
+      emits it). Binary items cannot be placed on a form, so the item is off-form
+      and capture is driven from the on-form CAPTURE_VERIFICATION_PHOTO trigger. }
 
     { Windows desktop (getos 10..19) has no camera. Skip silently so desk-test
       flows past the capture field with no modal. Android (20..29) captures. }
@@ -210,15 +265,13 @@ function TakeVerificationPhoto(string photoFile)
         exit;
     endif;
 
-    Image photo;
-
-    if not photo.takePhoto("Take a verification photo for this interview.") then
+    if not VERIFICATION_PHOTO_IMAGE.takePhoto("Take a verification photo for this interview.") then
         TakeVerificationPhoto = 0;
         exit;
     endif;
 
-    photo.resample(maxWidth := 1600, maxHeight := 1200);
-    photo.save(photoFile, quality := 85);
+    { Resample before sync so the embedded JPG stays small (<= 1600 x 1200). }
+    VERIFICATION_PHOTO_IMAGE.resample(maxWidth := 1600, maxHeight := 1200);
 
     TakeVerificationPhoto = 1;
 end;
@@ -461,30 +514,10 @@ preproc
   endif;
 
 
-{ ---- 'Other (specify)' enforcement -- Q98 payment-matrix others (audit 2026-06-11) ---- }
-PROC Q98_OTHER_DONATION_TXT
-preproc
-  if Q98_PAY_06 <> 1 then
-    Q98_OTHER_DONATION_TXT = "";   { skip + clear: this donation option not ticked }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_06 = 1 and length(strip(Q98_OTHER_DONATION_TXT)) = 0 then
-    errmsg("'Other Donation/Charity/Assistance' was selected in Q98. Please specify.");
-    reenter;
-  endif;
-
-PROC Q98_OTHER_TXT
-preproc
-  if Q98_PAY_15 <> 1 then
-    Q98_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_15 = 1 and length(strip(Q98_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected in Q98. Please specify.");
-    reenter;
-  endif;
+{ ---- Q98 payment-matrix 'Other (specify)' gates: Option B fan-out (#689, 2026-06-19)
+  re-pointed these from the old flat Q98_PAY_06 / Q98_PAY_15 flags (now removed) to
+  pos("06"/"15", Q98_SOURCES). The gated-text PROCs are emitted by Q98_ROSTER_PROCS
+  (build_roster_procs gated_texts=...), not here. ---- }
 
 { ---- #558/#694 (R4): Q114 (why no PhilHealth) gate ----
   Q114 is now a Check Box base (select_all -> tick-all); the PhilHealth-availed gate
@@ -524,7 +557,9 @@ postproc
 PROC Q159_BRAND_GEN_BOUGHT
 postproc
   if Q159_BRAND_GEN_BOUGHT = 1 then  skip to Q161_WHY_BRANDED; endif;  { Branded -> why-branded (#696: Q161 now a Check Box base; skip target is the base field, not _O01) }
-  if Q159_BRAND_GEN_BOUGHT = 4 then  skip to Q162_REFERRED;        endif;  { Don't know diff -> exit K }
+  { #618: Q159 = 'Don't know the difference' (4) routing REMOVED with the option — it
+    contradicted Q158=Yes (Q159 is Yes-only; Q158=No already skips to Q162), so code 4 can no
+    longer be entered. }
   if Q159_BRAND_GEN_BOUGHT = 5 then  skip to Q162_REFERRED;        endif;  { #501: N/A -> exit K to Section L start (Q162). Was Q164 (sanity #7); Q164 is a Q162=Yes follow-up, so the source's K->Q164 jump landed on an orphaned question. Tester (ASPSI) confirmed Q162. }
 
 { ---- Section D: non-members skip the benefits/premium block (Q46-Q50). #529: Q46 is now
@@ -738,8 +773,9 @@ postproc
 
 PROC Q114_NO_PH
 preproc
-  if Q113_PAY_08 = 1 then   { #558/#694: PhilHealth WAS availed (Q113 PhilHealth row = Yes) -> skip the
-                               why-not-availed reasons; go straight to the Q114.1 out-of-bill amount matrix. }
+  if pos("08", Q113_SOURCES) > 0 then   { #558/#694 + Option B fan-out (#693): PhilHealth WAS availed
+                               (Q113 PhilHealth source = code 08 ticked) -> skip the why-not-availed
+                               reasons; go straight to the Q114.1 out-of-bill amount matrix. }
     skip to Q1141_1;
   endif;
 postproc
@@ -1456,6 +1492,10 @@ postproc
     errmsg("Select at least one option for Q87 before continuing.");
     reenter;
   endif;
+  if pos("06", Q87_OTHER_ACTIONS) > 0 and length(strip(Q87_OTHER_ACTIONS)) > 2 then
+    errmsg("Q87: 'Did not seek other forms of care' cannot be combined with any other action — untick the others (or untick this) so only one applies, then continue.");
+    reenter;
+  endif;
 
 PROC Q87_OTHER_ACTIONS_OTHER_TXT
 preproc
@@ -1606,45 +1646,53 @@ postproc
 { ---- Q92 consultation-cost payment roster (Option B pilot) ---- }
 PROC Q92_SOURCES
 postproc
-  numeric nck; numeric kx;
+  { Require >=1 source ticked — the roster is a required record and needs >=1 row. }
+  numeric nck;
   nck = 0;
-  do kx = 1 while kx <= 8
-    if pos(edit("99", kx), Q92_SOURCES) > 0 then nck = nck + 1; endif;
-  enddo;
+  if pos("01", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("02", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("03", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("04", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("05", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("06", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("07", Q92_SOURCES) > 0 then nck = nck + 1; endif;
+  if pos("08", Q92_SOURCES) > 0 then nck = nck + 1; endif;
   if nck = 0 then
-    errmsg("92. No payment source ticked — confirm before continuing.");
+    errmsg("92. Tick at least one payment source before continuing.");
+    reenter;
   endif;
 
 PROC Q92_PAY_LINE
 preproc
   { Build one roster row per ticked source (canonical order 01..08). The curocc()-th
-    ticked source -> Q92_PAY_SRC (protected); auto-end once past the last ticked
-    source. Only Out-of-pocket(1)+Donation(2) carry an amount; all other sources are
-    fixed to 0 + protected. Re-runs on back-navigation (preproc), so protect/amount
-    re-apply correctly. }
-  numeric nsel; numeric kk; numeric seen;
+    ticked source -> Q92_PAY_SRC (auto + protected); end once past the last ticked
+    source. Non-money sources default to amount 0 (still enterable, so the row has a
+    stop). Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
   nsel = 0;
-  do kk = 1 while kk <= 8
-    if pos(edit("99", kk), Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
-  enddo;
+  if pos("01", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("05", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("06", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("07", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("08", Q92_SOURCES) > 0 then nsel = nsel + 1; endif;
   if curocc() > nsel then
     endgroup;
   endif;
   seen = 0;
-  do kk = 1 while kk <= 8
-    if pos(edit("99", kk), Q92_SOURCES) > 0 then
-      seen = seen + 1;
-      if seen = curocc() then
-        Q92_PAY_SRC = kk;
-      endif;
-    endif;
-  enddo;
+  if pos("01", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 1; endif; endif;
+  if pos("02", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 2; endif; endif;
+  if pos("03", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 3; endif; endif;
+  if pos("04", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 4; endif; endif;
+  if pos("05", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 5; endif; endif;
+  if pos("06", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 6; endif; endif;
+  if pos("07", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 7; endif; endif;
+  if pos("08", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 8; endif; endif;
   protect(Q92_PAY_SRC, true);
-  if Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2 then
-    protect(Q92_PAY_AMT, false);
-  else
-    Q92_PAY_AMT = 0;
-    protect(Q92_PAY_AMT, true);
+  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 then
+    Q92_PAY_AMT = 0;   { non-money source -> default 0; still enterable so the row stops }
   endif;
   Q92_PAY_LINE = curocc();
   noinput;
@@ -1653,6 +1701,564 @@ PROC Q92_PAY_AMT
 postproc
   if Q92_PAY_AMT < 0 then
     errmsg("92. Amount cannot be negative.");
+    reenter;
+  endif;
+  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_AMT <> 0 then
+    errmsg("92. This source has no out-of-pocket cost — amount reset to 0.");
+    Q92_PAY_AMT = 0;
+  endif;
+
+
+{ ---- Q97.1 other-items-in-bill — CheckBox + roster (Option B Shape B) ---- }
+PROC Q971_SOURCES
+postproc
+  { Require >=1 item ticked. The roster proc (Q971_PAY_LINE preproc, a visited field)
+    handles population — gating here covers the >=1 requirement before the grid opens. }
+  if length(strip(Q971_SOURCES)) = 0 then
+    errmsg("97.1 Tick at least one item included in the bill (or correct Q97 if none).");
+    reenter;
+  endif;
+
+PROC Q971_PAY_LINE
+preproc
+  { Build one roster row per ticked category (canonical order 01..04). The curocc()-th
+    ticked category -> Q971_PAY_SRC (auto + protected); end once past the last ticked
+    category. Every row's amount stays ENTERABLE (no zeroing — all Q97.1 categories
+    carry an amount). Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
+  nsel = 0;
+  if pos("01", Q971_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q971_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q971_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q971_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if curocc() > nsel then endgroup; endif;
+  seen = 0;
+  if pos("01", Q971_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q971_PAY_SRC = 1; endif; endif;
+  if pos("02", Q971_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q971_PAY_SRC = 2; endif; endif;
+  if pos("03", Q971_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q971_PAY_SRC = 3; endif; endif;
+  if pos("04", Q971_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q971_PAY_SRC = 4; endif; endif;
+  protect(Q971_PAY_SRC, true);
+  Q971_PAY_LINE = curocc();
+  noinput;
+
+PROC Q971_PAY_AMT
+postproc
+  if Q971_PAY_AMT < 0 then
+    errmsg("97.1 Amount cannot be negative.");
+    reenter;
+  endif;
+
+PROC Q971_OTHER_TXT
+preproc
+  if pos("04", Q971_SOURCES) = 0 then
+    Q971_OTHER_TXT = "";   { 'Other expenses' (04) not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("04", Q971_SOURCES) > 0 and length(strip(Q971_OTHER_TXT)) = 0 then
+    errmsg("97.1 'Other expenses' was ticked — please specify.");
+    reenter;
+  endif;
+
+
+{ ---- Q94 payment roster (Option B fan-out) ---- }
+PROC Q94_SOURCES
+postproc
+  { Require >=1 source ticked — the roster grid needs >=1 row. }
+  if length(strip(Q94_SOURCES)) = 0 then
+    errmsg("94. Tick at least one payment source for the laboratory test/s before continuing.");
+    reenter;
+  endif;
+
+PROC Q94_PAY_LINE
+preproc
+  { Build one row per ticked source (canonical order). The curocc()-th ticked
+    source -> Q94_PAY_SRC (auto + protected); end once past the last ticked source. Non-money rows
+    default amount 0 but stay enterable.
+    Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
+  nsel = 0;
+  if pos("01", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("05", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("06", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("07", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("08", Q94_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if curocc() > nsel then endgroup; endif;
+  seen = 0;
+  if pos("01", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 1; endif; endif;
+  if pos("02", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 2; endif; endif;
+  if pos("03", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 3; endif; endif;
+  if pos("04", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 4; endif; endif;
+  if pos("05", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 5; endif; endif;
+  if pos("06", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 6; endif; endif;
+  if pos("07", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 7; endif; endif;
+  if pos("08", Q94_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q94_PAY_SRC = 8; endif; endif;
+  protect(Q94_PAY_SRC, true);
+  if Q94_PAY_SRC <> 1 then
+    Q94_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
+  endif;
+  Q94_PAY_LINE = curocc();
+  noinput;
+
+PROC Q94_PAY_AMT
+postproc
+  if Q94_PAY_AMT < 0 then
+    errmsg("94. Amount cannot be negative.");
+    reenter;
+  endif;
+  if Q94_PAY_SRC <> 1 and Q94_PAY_AMT <> 0 then
+    errmsg("94. This source has no out-of-pocket cost — amount reset to 0.");
+    Q94_PAY_AMT = 0;
+  endif;
+
+
+{ ---- Q96 payment roster (Option B fan-out) ---- }
+PROC Q96_SOURCES
+postproc
+  { Require >=1 source ticked — the roster grid needs >=1 row. }
+  if length(strip(Q96_SOURCES)) = 0 then
+    errmsg("96. Tick at least one payment source for the prescribed medicines before continuing.");
+    reenter;
+  endif;
+
+PROC Q96_PAY_LINE
+preproc
+  { Build one row per ticked source (canonical order). The curocc()-th ticked
+    source -> Q96_PAY_SRC (auto + protected); end once past the last ticked source. Non-money rows
+    default amount 0 but stay enterable.
+    Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
+  nsel = 0;
+  if pos("01", Q96_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q96_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q96_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q96_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("05", Q96_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("06", Q96_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("07", Q96_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("08", Q96_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if curocc() > nsel then endgroup; endif;
+  seen = 0;
+  if pos("01", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 1; endif; endif;
+  if pos("02", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 2; endif; endif;
+  if pos("03", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 3; endif; endif;
+  if pos("04", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 4; endif; endif;
+  if pos("05", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 5; endif; endif;
+  if pos("06", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 6; endif; endif;
+  if pos("07", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 7; endif; endif;
+  if pos("08", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 8; endif; endif;
+  protect(Q96_PAY_SRC, true);
+  if Q96_PAY_SRC <> 1 and Q96_PAY_SRC <> 6 and Q96_PAY_SRC <> 7 then
+    Q96_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
+  endif;
+  Q96_PAY_LINE = curocc();
+  noinput;
+
+PROC Q96_PAY_AMT
+postproc
+  if Q96_PAY_AMT < 0 then
+    errmsg("96. Amount cannot be negative.");
+    reenter;
+  endif;
+  if Q96_PAY_SRC <> 1 and Q96_PAY_SRC <> 6 and Q96_PAY_SRC <> 7 and Q96_PAY_AMT <> 0 then
+    errmsg("96. This source has no out-of-pocket cost — amount reset to 0.");
+    Q96_PAY_AMT = 0;
+  endif;
+
+
+{ ---- Q972 payment roster (Option B fan-out) ---- }
+PROC Q972_SOURCES
+postproc
+  { Require >=1 source ticked — the roster grid needs >=1 row. }
+  if length(strip(Q972_SOURCES)) = 0 then
+    errmsg("97.2 Tick at least one expense item before continuing (or correct Q97 if none).");
+    reenter;
+  endif;
+
+PROC Q972_PAY_LINE
+preproc
+  { Build one row per ticked source (canonical order). The curocc()-th ticked
+    source -> Q972_PAY_SRC (auto + protected); end once past the last ticked source. Every row
+    amount stays enterable (all sources carry an amount).
+    Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
+  nsel = 0;
+  if pos("01", Q972_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q972_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q972_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q972_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("05", Q972_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("06", Q972_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if curocc() > nsel then endgroup; endif;
+  seen = 0;
+  if pos("01", Q972_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q972_PAY_SRC = 1; endif; endif;
+  if pos("02", Q972_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q972_PAY_SRC = 2; endif; endif;
+  if pos("03", Q972_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q972_PAY_SRC = 3; endif; endif;
+  if pos("04", Q972_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q972_PAY_SRC = 4; endif; endif;
+  if pos("05", Q972_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q972_PAY_SRC = 5; endif; endif;
+  if pos("06", Q972_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q972_PAY_SRC = 6; endif; endif;
+  protect(Q972_PAY_SRC, true);
+  Q972_PAY_LINE = curocc();
+  noinput;
+
+PROC Q972_PAY_AMT
+postproc
+  if Q972_PAY_AMT < 0 then
+    errmsg("972. Amount cannot be negative.");
+    reenter;
+  endif;
+
+PROC Q972_OTHER_TXT
+preproc
+  if pos("06", Q972_SOURCES) = 0 then
+    Q972_OTHER_TXT = "";   { not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("06", Q972_SOURCES) > 0 and length(strip(Q972_OTHER_TXT)) = 0 then
+    errmsg("97.2 'Other expenses' was ticked — please specify.");
+    reenter;
+  endif;
+
+
+{ ---- Q98 payment roster (Option B fan-out) ---- }
+PROC Q98_SOURCES
+postproc
+  { Require >=1 source ticked — the roster grid needs >=1 row. }
+  if length(strip(Q98_SOURCES)) = 0 then
+    errmsg("98. Tick at least one source of money used to pay for the medical costs before continuing.");
+    reenter;
+  endif;
+
+PROC Q98_PAY_LINE
+preproc
+  { Build one row per ticked source (canonical order). The curocc()-th ticked
+    source -> Q98_PAY_SRC (auto + protected); end once past the last ticked source. Every row
+    amount stays enterable (all sources carry an amount).
+    Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
+  nsel = 0;
+  if pos("01", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("05", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("06", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("07", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("08", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("09", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("10", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("11", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("12", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("13", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("14", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("15", Q98_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if curocc() > nsel then endgroup; endif;
+  seen = 0;
+  if pos("01", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 1; endif; endif;
+  if pos("02", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 2; endif; endif;
+  if pos("03", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 3; endif; endif;
+  if pos("04", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 4; endif; endif;
+  if pos("05", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 5; endif; endif;
+  if pos("06", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 6; endif; endif;
+  if pos("07", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 7; endif; endif;
+  if pos("08", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 8; endif; endif;
+  if pos("09", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 9; endif; endif;
+  if pos("10", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 10; endif; endif;
+  if pos("11", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 11; endif; endif;
+  if pos("12", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 12; endif; endif;
+  if pos("13", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 13; endif; endif;
+  if pos("14", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 14; endif; endif;
+  if pos("15", Q98_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q98_PAY_SRC = 15; endif; endif;
+  protect(Q98_PAY_SRC, true);
+  Q98_PAY_LINE = curocc();
+  noinput;
+
+PROC Q98_PAY_AMT
+postproc
+  if Q98_PAY_AMT < 0 then
+    errmsg("98. Amount cannot be negative.");
+    reenter;
+  endif;
+
+PROC Q98_OTHER_DONATION_TXT
+preproc
+  if pos("06", Q98_SOURCES) = 0 then
+    Q98_OTHER_DONATION_TXT = "";   { not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("06", Q98_SOURCES) > 0 and length(strip(Q98_OTHER_DONATION_TXT)) = 0 then
+    errmsg("'Other Donation/Charity/Assistance' was selected in Q98. Please specify.");
+    reenter;
+  endif;
+
+PROC Q98_OTHER_TXT
+preproc
+  if pos("15", Q98_SOURCES) = 0 then
+    Q98_OTHER_TXT = "";   { not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("15", Q98_SOURCES) > 0 and length(strip(Q98_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was selected in Q98. Please specify.");
+    reenter;
+  endif;
+
+
+{ ---- Q107 payment roster (Option B fan-out) ---- }
+PROC Q107_SOURCES
+postproc
+  { Require >=1 source ticked — the roster grid needs >=1 row. }
+  if length(strip(Q107_SOURCES)) = 0 then
+    errmsg("107. Tick at least one payment source for the total bill before continuing.");
+    reenter;
+  endif;
+
+PROC Q107_PAY_LINE
+preproc
+  { Build one row per ticked source (canonical order). The curocc()-th ticked
+    source -> Q107_PAY_SRC (auto + protected); end once past the last ticked source. Every row
+    amount stays enterable (all sources carry an amount).
+    Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
+  nsel = 0;
+  if pos("01", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("05", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("06", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("07", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("08", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("09", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("10", Q107_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if curocc() > nsel then endgroup; endif;
+  seen = 0;
+  if pos("01", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 1; endif; endif;
+  if pos("02", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 2; endif; endif;
+  if pos("03", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 3; endif; endif;
+  if pos("04", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 4; endif; endif;
+  if pos("05", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 5; endif; endif;
+  if pos("06", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 6; endif; endif;
+  if pos("07", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 7; endif; endif;
+  if pos("08", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 8; endif; endif;
+  if pos("09", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 9; endif; endif;
+  if pos("10", Q107_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q107_PAY_SRC = 10; endif; endif;
+  protect(Q107_PAY_SRC, true);
+  Q107_PAY_LINE = curocc();
+  noinput;
+
+PROC Q107_PAY_AMT
+postproc
+  if Q107_PAY_AMT < 0 then
+    errmsg("107. Amount cannot be negative.");
+    reenter;
+  endif;
+
+PROC Q107_PAY_OTHER_TXT
+preproc
+  if pos("10", Q107_SOURCES) = 0 then
+    Q107_PAY_OTHER_TXT = "";   { not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("10", Q107_SOURCES) > 0 and length(strip(Q107_PAY_OTHER_TXT)) = 0 then
+    errmsg("107. 'Other' was ticked — please specify.");
+    reenter;
+  endif;
+
+
+{ ---- Q109 payment roster (Option B fan-out) ---- }
+PROC Q109_SOURCES
+postproc
+  { Require >=1 source ticked — the roster grid needs >=1 row. }
+  if length(strip(Q109_SOURCES)) = 0 then
+    errmsg("109. Tick at least one payment source for the medicines bought outside before continuing.");
+    reenter;
+  endif;
+
+PROC Q109_PAY_LINE
+preproc
+  { Build one row per ticked source (canonical order). The curocc()-th ticked
+    source -> Q109_PAY_SRC (auto + protected); end once past the last ticked source. Every row
+    amount stays enterable (all sources carry an amount).
+    Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
+  nsel = 0;
+  if pos("01", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("05", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("06", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("07", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("08", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("09", Q109_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if curocc() > nsel then endgroup; endif;
+  seen = 0;
+  if pos("01", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 1; endif; endif;
+  if pos("02", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 2; endif; endif;
+  if pos("03", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 3; endif; endif;
+  if pos("04", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 4; endif; endif;
+  if pos("05", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 5; endif; endif;
+  if pos("06", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 6; endif; endif;
+  if pos("07", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 7; endif; endif;
+  if pos("08", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 8; endif; endif;
+  if pos("09", Q109_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q109_PAY_SRC = 9; endif; endif;
+  protect(Q109_PAY_SRC, true);
+  Q109_PAY_LINE = curocc();
+  noinput;
+
+PROC Q109_PAY_AMT
+postproc
+  if Q109_PAY_AMT < 0 then
+    errmsg("109. Amount cannot be negative.");
+    reenter;
+  endif;
+
+PROC Q109_PAY_OTHER_TXT
+preproc
+  if pos("09", Q109_SOURCES) = 0 then
+    Q109_PAY_OTHER_TXT = "";   { not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("09", Q109_SOURCES) > 0 and length(strip(Q109_PAY_OTHER_TXT)) = 0 then
+    errmsg("109. 'Other' was ticked — please specify.");
+    reenter;
+  endif;
+
+
+{ ---- Q112 payment roster (Option B fan-out) ---- }
+PROC Q112_SOURCES
+postproc
+  { Require >=1 source ticked — the roster grid needs >=1 row. }
+  if length(strip(Q112_SOURCES)) = 0 then
+    errmsg("112. Tick at least one payment source for the services done outside before continuing.");
+    reenter;
+  endif;
+
+PROC Q112_PAY_LINE
+preproc
+  { Build one row per ticked source (canonical order). The curocc()-th ticked
+    source -> Q112_PAY_SRC (auto + protected); end once past the last ticked source. Every row
+    amount stays enterable (all sources carry an amount).
+    Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
+  nsel = 0;
+  if pos("01", Q112_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q112_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q112_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q112_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("05", Q112_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("06", Q112_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("07", Q112_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("08", Q112_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("09", Q112_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if curocc() > nsel then endgroup; endif;
+  seen = 0;
+  if pos("01", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 1; endif; endif;
+  if pos("02", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 2; endif; endif;
+  if pos("03", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 3; endif; endif;
+  if pos("04", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 4; endif; endif;
+  if pos("05", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 5; endif; endif;
+  if pos("06", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 6; endif; endif;
+  if pos("07", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 7; endif; endif;
+  if pos("08", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 8; endif; endif;
+  if pos("09", Q112_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q112_PAY_SRC = 9; endif; endif;
+  protect(Q112_PAY_SRC, true);
+  Q112_PAY_LINE = curocc();
+  noinput;
+
+PROC Q112_PAY_AMT
+postproc
+  if Q112_PAY_AMT < 0 then
+    errmsg("112. Amount cannot be negative.");
+    reenter;
+  endif;
+
+PROC Q112_PAY_OTHER_TXT
+preproc
+  if pos("09", Q112_SOURCES) = 0 then
+    Q112_PAY_OTHER_TXT = "";   { not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("09", Q112_SOURCES) > 0 and length(strip(Q112_PAY_OTHER_TXT)) = 0 then
+    errmsg("112. 'Other' was ticked — please specify.");
+    reenter;
+  endif;
+
+
+{ ---- Q113 payment roster (Option B fan-out) ---- }
+PROC Q113_SOURCES
+postproc
+  { Require >=1 source ticked — the roster grid needs >=1 row. }
+  if length(strip(Q113_SOURCES)) = 0 then
+    errmsg("113. Tick at least one payment source for the hospital bill before continuing.");
+    reenter;
+  endif;
+
+PROC Q113_PAY_LINE
+preproc
+  { Build one row per ticked source (canonical order). The curocc()-th ticked
+    source -> Q113_PAY_SRC (auto + protected); end once past the last ticked source. Every row
+    amount stays enterable (all sources carry an amount).
+    Re-runs on back-navigation. }
+  numeric nsel; numeric seen;
+  nsel = 0;
+  if pos("01", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("02", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("03", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("04", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("05", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("06", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("07", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("08", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("09", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("10", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("11", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("12", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if pos("13", Q113_SOURCES) > 0 then nsel = nsel + 1; endif;
+  if curocc() > nsel then endgroup; endif;
+  seen = 0;
+  if pos("01", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 1; endif; endif;
+  if pos("02", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 2; endif; endif;
+  if pos("03", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 3; endif; endif;
+  if pos("04", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 4; endif; endif;
+  if pos("05", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 5; endif; endif;
+  if pos("06", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 6; endif; endif;
+  if pos("07", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 7; endif; endif;
+  if pos("08", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 8; endif; endif;
+  if pos("09", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 9; endif; endif;
+  if pos("10", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 10; endif; endif;
+  if pos("11", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 11; endif; endif;
+  if pos("12", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 12; endif; endif;
+  if pos("13", Q113_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q113_PAY_SRC = 13; endif; endif;
+  protect(Q113_PAY_SRC, true);
+  Q113_PAY_LINE = curocc();
+  noinput;
+
+PROC Q113_PAY_AMT
+postproc
+  if Q113_PAY_AMT < 0 then
+    errmsg("113. Amount cannot be negative.");
+    reenter;
+  endif;
+
+PROC Q113_PAY_OTHER_TXT
+preproc
+  if pos("13", Q113_SOURCES) = 0 then
+    Q113_PAY_OTHER_TXT = "";   { not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("13", Q113_SOURCES) > 0 and length(strip(Q113_PAY_OTHER_TXT)) = 0 then
+    errmsg("113. 'Other (specify)' was ticked — please specify.");
     reenter;
   endif;
 
@@ -1786,7 +2392,7 @@ postproc
 
 PROC Q89_ADVISED_ADMIT
 postproc
-  if Q89_ADVISED_ADMIT = 1 then
+  if Q89_ADVISED_ADMIT = 2 then
     skip to Q91_USUAL_OUTPATIENT;
   endif;
 
@@ -1817,7 +2423,7 @@ postproc
 PROC Q110_LAB_OUTSIDE
 postproc
   if Q110_LAB_OUTSIDE = 2 then
-    skip to Q113_PAY_01;
+    skip to Q113_SOURCES;
   endif;
 
 PROC Q116_NBB_HEARD
@@ -1845,7 +2451,7 @@ postproc
   endif;
 
 { ---- 'Other (specify)' enforcement — UHC9 dual-other (spec 4) ---- }
-{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 66 items) ---- }
+{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 64 items) ---- }
 PROC Q104_WITHOUT_BUCAS_OTHER_TXT
 preproc
   if Q104_WITHOUT_BUCAS <> 6 then
@@ -1867,54 +2473,6 @@ preproc
 postproc
   if Q105_REASON = 5 and length(strip(Q105_REASON_OTHER_TXT)) = 0 then
     errmsg("'Other' was selected for Q105_REASON but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q107_PAY_OTHER_TXT
-preproc
-  if Q107_PAY_10 <> 1 then
-    Q107_PAY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_10 = 1 and length(strip(Q107_PAY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q107_PAY but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q109_PAY_OTHER_TXT
-preproc
-  if Q109_PAY_09 <> 1 then
-    Q109_PAY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q109_PAY_09 = 1 and length(strip(Q109_PAY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q109_PAY but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q112_PAY_OTHER_TXT
-preproc
-  if Q112_PAY_09 <> 1 then
-    Q112_PAY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q112_PAY_09 = 1 and length(strip(Q112_PAY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q112_PAY but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q113_PAY_OTHER_TXT
-preproc
-  if Q113_PAY_13 <> 1 then
-    Q113_PAY_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_13 = 1 and length(strip(Q113_PAY_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q113_PAY but no text was entered. Please specify.");
     reenter;
   endif;
 
@@ -2146,30 +2704,6 @@ postproc
     reenter;
   endif;
 
-PROC Q971_OTHER_TXT
-preproc
-  if Q971_1 <> 1 then
-    Q971_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q971_1 = 1 and length(strip(Q971_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q971 but no text was entered. Please specify.");
-    reenter;
-  endif;
-
-PROC Q972_OTHER_TXT
-preproc
-  if Q972_1 <> 1 then
-    Q972_OTHER_TXT = "";   { skip + clear: 'Other (specify)' not ticked -> field must not be enterable }
-    noinput;
-  endif;
-postproc
-  if Q972_1 = 1 and length(strip(Q972_OTHER_TXT)) = 0 then
-    errmsg("'Other (specify)' was selected for Q972 but no text was entered. Please specify.");
-    reenter;
-  endif;
-
 PROC Q9_GROUP_OTHER_TXT
 preproc
   if Q9_GROUP <> 8 then
@@ -2183,521 +2717,7 @@ postproc
   endif;
 
 { ---- Select-all validation — >=1 option ticked (auto-derived from dcf) ---- }
-PROC Q94_PAY_08
-postproc
-  if not (Q94_PAY_02 = 1 or Q94_PAY_03 = 1 or Q94_PAY_04 = 1 or Q94_PAY_05 = 1 or Q94_PAY_06 = 1 or Q94_PAY_07 = 1 or Q94_PAY_08 = 1) then
-    errmsg("Select at least one option for Q94_PAY before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q94_PAY_08 = 1) and (Q94_PAY_02 = 1 or Q94_PAY_03 = 1 or Q94_PAY_04 = 1 or Q94_PAY_05 = 1 or Q94_PAY_06 = 1 or Q94_PAY_07 = 1) then
-    errmsg("Q94_PAY: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
-PROC Q96_PAY_08
-postproc
-  if not (Q96_PAY_02 = 1 or Q96_PAY_03 = 1 or Q96_PAY_04 = 1 or Q96_PAY_05 = 1 or Q96_PAY_08 = 1) then
-    errmsg("Select at least one option for Q96_PAY before continuing.");
-    reenter;
-  endif;
-  { exclusivity (soft warning): an exclusive option should be the only answer }
-  if (Q96_PAY_08 = 1) and (Q96_PAY_02 = 1 or Q96_PAY_03 = 1 or Q96_PAY_04 = 1 or Q96_PAY_05 = 1) then
-    errmsg("Q96_PAY: an exclusive option (e.g. 'None' or 'Do not know') was ticked together with other answers. Please review - an exclusive option should be the only choice.");
-  endif;
-
 { ---- Payment-matrix amount-required (auto-derived from dcf) ---- }
-PROC Q107_PAY_01_AMT
-preproc
-  if Q107_PAY_01 <> 1 then
-    Q107_PAY_01_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_01 = 1 and (Q107_PAY_01_AMT = 0 or Q107_PAY_01_AMT = notappl) then
-    errmsg("'Q107_PAY_01' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q107_PAY_02_AMT
-preproc
-  if Q107_PAY_02 <> 1 then
-    Q107_PAY_02_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_02 = 1 and (Q107_PAY_02_AMT = 0 or Q107_PAY_02_AMT = notappl) then
-    errmsg("'Q107_PAY_02' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q107_PAY_03_AMT
-preproc
-  if Q107_PAY_03 <> 1 then
-    Q107_PAY_03_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_03 = 1 and (Q107_PAY_03_AMT = 0 or Q107_PAY_03_AMT = notappl) then
-    errmsg("'Q107_PAY_03' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q107_PAY_04_AMT
-preproc
-  if Q107_PAY_04 <> 1 then
-    Q107_PAY_04_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_04 = 1 and (Q107_PAY_04_AMT = 0 or Q107_PAY_04_AMT = notappl) then
-    errmsg("'Q107_PAY_04' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q107_PAY_05_AMT
-preproc
-  if Q107_PAY_05 <> 1 then
-    Q107_PAY_05_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_05 = 1 and (Q107_PAY_05_AMT = 0 or Q107_PAY_05_AMT = notappl) then
-    errmsg("'Q107_PAY_05' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q107_PAY_06_AMT
-preproc
-  if Q107_PAY_06 <> 1 then
-    Q107_PAY_06_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_06 = 1 and (Q107_PAY_06_AMT = 0 or Q107_PAY_06_AMT = notappl) then
-    errmsg("'Q107_PAY_06' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q107_PAY_07_AMT
-preproc
-  if Q107_PAY_07 <> 1 then
-    Q107_PAY_07_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_07 = 1 and (Q107_PAY_07_AMT = 0 or Q107_PAY_07_AMT = notappl) then
-    errmsg("'Q107_PAY_07' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q107_PAY_08_AMT
-preproc
-  if Q107_PAY_08 <> 1 then
-    Q107_PAY_08_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_08 = 1 and (Q107_PAY_08_AMT = 0 or Q107_PAY_08_AMT = notappl) then
-    errmsg("'Q107_PAY_08' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q107_PAY_09_AMT
-preproc
-  if Q107_PAY_09 <> 1 then
-    Q107_PAY_09_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_09 = 1 and (Q107_PAY_09_AMT = 0 or Q107_PAY_09_AMT = notappl) then
-    errmsg("'Q107_PAY_09' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q107_PAY_10_AMT
-preproc
-  if Q107_PAY_10 <> 1 then
-    Q107_PAY_10_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q107_PAY_10 = 1 and (Q107_PAY_10_AMT = 0 or Q107_PAY_10_AMT = notappl) then
-    errmsg("'Q107_PAY_10' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q109_PAY_01_AMT
-preproc
-  if Q109_PAY_01 <> 1 then
-    Q109_PAY_01_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q109_PAY_01 = 1 and (Q109_PAY_01_AMT = 0 or Q109_PAY_01_AMT = notappl) then
-    errmsg("'Q109_PAY_01' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q109_PAY_02_AMT
-preproc
-  if Q109_PAY_02 <> 1 then
-    Q109_PAY_02_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q109_PAY_02 = 1 and (Q109_PAY_02_AMT = 0 or Q109_PAY_02_AMT = notappl) then
-    errmsg("'Q109_PAY_02' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q109_PAY_03_AMT
-preproc
-  if Q109_PAY_03 <> 1 then
-    Q109_PAY_03_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q109_PAY_03 = 1 and (Q109_PAY_03_AMT = 0 or Q109_PAY_03_AMT = notappl) then
-    errmsg("'Q109_PAY_03' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q109_PAY_04_AMT
-preproc
-  if Q109_PAY_04 <> 1 then
-    Q109_PAY_04_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q109_PAY_04 = 1 and (Q109_PAY_04_AMT = 0 or Q109_PAY_04_AMT = notappl) then
-    errmsg("'Q109_PAY_04' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q109_PAY_05_AMT
-preproc
-  if Q109_PAY_05 <> 1 then
-    Q109_PAY_05_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q109_PAY_05 = 1 and (Q109_PAY_05_AMT = 0 or Q109_PAY_05_AMT = notappl) then
-    errmsg("'Q109_PAY_05' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q109_PAY_06_AMT
-preproc
-  if Q109_PAY_06 <> 1 then
-    Q109_PAY_06_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q109_PAY_06 = 1 and (Q109_PAY_06_AMT = 0 or Q109_PAY_06_AMT = notappl) then
-    errmsg("'Q109_PAY_06' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q109_PAY_07_AMT
-preproc
-  if Q109_PAY_07 <> 1 then
-    Q109_PAY_07_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q109_PAY_07 = 1 and (Q109_PAY_07_AMT = 0 or Q109_PAY_07_AMT = notappl) then
-    errmsg("'Q109_PAY_07' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q109_PAY_08_AMT
-preproc
-  if Q109_PAY_08 <> 1 then
-    Q109_PAY_08_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q109_PAY_08 = 1 and (Q109_PAY_08_AMT = 0 or Q109_PAY_08_AMT = notappl) then
-    errmsg("'Q109_PAY_08' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q109_PAY_09_AMT
-preproc
-  if Q109_PAY_09 <> 1 then
-    Q109_PAY_09_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q109_PAY_09 = 1 and (Q109_PAY_09_AMT = 0 or Q109_PAY_09_AMT = notappl) then
-    errmsg("'Q109_PAY_09' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q112_PAY_01_AMT
-preproc
-  if Q112_PAY_01 <> 1 then
-    Q112_PAY_01_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q112_PAY_01 = 1 and (Q112_PAY_01_AMT = 0 or Q112_PAY_01_AMT = notappl) then
-    errmsg("'Q112_PAY_01' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q112_PAY_02_AMT
-preproc
-  if Q112_PAY_02 <> 1 then
-    Q112_PAY_02_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q112_PAY_02 = 1 and (Q112_PAY_02_AMT = 0 or Q112_PAY_02_AMT = notappl) then
-    errmsg("'Q112_PAY_02' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q112_PAY_03_AMT
-preproc
-  if Q112_PAY_03 <> 1 then
-    Q112_PAY_03_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q112_PAY_03 = 1 and (Q112_PAY_03_AMT = 0 or Q112_PAY_03_AMT = notappl) then
-    errmsg("'Q112_PAY_03' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q112_PAY_04_AMT
-preproc
-  if Q112_PAY_04 <> 1 then
-    Q112_PAY_04_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q112_PAY_04 = 1 and (Q112_PAY_04_AMT = 0 or Q112_PAY_04_AMT = notappl) then
-    errmsg("'Q112_PAY_04' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q112_PAY_05_AMT
-preproc
-  if Q112_PAY_05 <> 1 then
-    Q112_PAY_05_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q112_PAY_05 = 1 and (Q112_PAY_05_AMT = 0 or Q112_PAY_05_AMT = notappl) then
-    errmsg("'Q112_PAY_05' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q112_PAY_06_AMT
-preproc
-  if Q112_PAY_06 <> 1 then
-    Q112_PAY_06_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q112_PAY_06 = 1 and (Q112_PAY_06_AMT = 0 or Q112_PAY_06_AMT = notappl) then
-    errmsg("'Q112_PAY_06' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q112_PAY_07_AMT
-preproc
-  if Q112_PAY_07 <> 1 then
-    Q112_PAY_07_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q112_PAY_07 = 1 and (Q112_PAY_07_AMT = 0 or Q112_PAY_07_AMT = notappl) then
-    errmsg("'Q112_PAY_07' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q112_PAY_08_AMT
-preproc
-  if Q112_PAY_08 <> 1 then
-    Q112_PAY_08_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q112_PAY_08 = 1 and (Q112_PAY_08_AMT = 0 or Q112_PAY_08_AMT = notappl) then
-    errmsg("'Q112_PAY_08' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q112_PAY_09_AMT
-preproc
-  if Q112_PAY_09 <> 1 then
-    Q112_PAY_09_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q112_PAY_09 = 1 and (Q112_PAY_09_AMT = 0 or Q112_PAY_09_AMT = notappl) then
-    errmsg("'Q112_PAY_09' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_01_AMT
-preproc
-  if Q113_PAY_01 <> 1 then
-    Q113_PAY_01_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_01 = 1 and (Q113_PAY_01_AMT = 0 or Q113_PAY_01_AMT = notappl) then
-    errmsg("'Q113_PAY_01' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_02_AMT
-preproc
-  if Q113_PAY_02 <> 1 then
-    Q113_PAY_02_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_02 = 1 and (Q113_PAY_02_AMT = 0 or Q113_PAY_02_AMT = notappl) then
-    errmsg("'Q113_PAY_02' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_03_AMT
-preproc
-  if Q113_PAY_03 <> 1 then
-    Q113_PAY_03_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_03 = 1 and (Q113_PAY_03_AMT = 0 or Q113_PAY_03_AMT = notappl) then
-    errmsg("'Q113_PAY_03' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_04_AMT
-preproc
-  if Q113_PAY_04 <> 1 then
-    Q113_PAY_04_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_04 = 1 and (Q113_PAY_04_AMT = 0 or Q113_PAY_04_AMT = notappl) then
-    errmsg("'Q113_PAY_04' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_05_AMT
-preproc
-  if Q113_PAY_05 <> 1 then
-    Q113_PAY_05_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_05 = 1 and (Q113_PAY_05_AMT = 0 or Q113_PAY_05_AMT = notappl) then
-    errmsg("'Q113_PAY_05' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_06_AMT
-preproc
-  if Q113_PAY_06 <> 1 then
-    Q113_PAY_06_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_06 = 1 and (Q113_PAY_06_AMT = 0 or Q113_PAY_06_AMT = notappl) then
-    errmsg("'Q113_PAY_06' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_07_AMT
-preproc
-  if Q113_PAY_07 <> 1 then
-    Q113_PAY_07_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_07 = 1 and (Q113_PAY_07_AMT = 0 or Q113_PAY_07_AMT = notappl) then
-    errmsg("'Q113_PAY_07' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_08_AMT
-preproc
-  if Q113_PAY_08 <> 1 then
-    Q113_PAY_08_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_08 = 1 and (Q113_PAY_08_AMT = 0 or Q113_PAY_08_AMT = notappl) then
-    errmsg("'Q113_PAY_08' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_09_AMT
-preproc
-  if Q113_PAY_09 <> 1 then
-    Q113_PAY_09_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_09 = 1 and (Q113_PAY_09_AMT = 0 or Q113_PAY_09_AMT = notappl) then
-    errmsg("'Q113_PAY_09' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_10_AMT
-preproc
-  if Q113_PAY_10 <> 1 then
-    Q113_PAY_10_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_10 = 1 and (Q113_PAY_10_AMT = 0 or Q113_PAY_10_AMT = notappl) then
-    errmsg("'Q113_PAY_10' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_11_AMT
-preproc
-  if Q113_PAY_11 <> 1 then
-    Q113_PAY_11_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_11 = 1 and (Q113_PAY_11_AMT = 0 or Q113_PAY_11_AMT = notappl) then
-    errmsg("'Q113_PAY_11' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_12_AMT
-preproc
-  if Q113_PAY_12 <> 1 then
-    Q113_PAY_12_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_12 = 1 and (Q113_PAY_12_AMT = 0 or Q113_PAY_12_AMT = notappl) then
-    errmsg("'Q113_PAY_12' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q113_PAY_13_AMT
-preproc
-  if Q113_PAY_13 <> 1 then
-    Q113_PAY_13_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q113_PAY_13 = 1 and (Q113_PAY_13_AMT = 0 or Q113_PAY_13_AMT = notappl) then
-    errmsg("'Q113_PAY_13' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
 PROC Q1141_1_AMT
 preproc
   if Q1141_1 <> 1 then
@@ -2854,376 +2874,7 @@ postproc
     reenter;
   endif;
 
-PROC Q94_PAY_01_AMT
-preproc
-  if Q94_PAY_01 <> 1 then
-    Q94_PAY_01_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q94_PAY_01 = 1 and (Q94_PAY_01_AMT = 0 or Q94_PAY_01_AMT = notappl) then
-    errmsg("'Q94_PAY_01' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q96_PAY_01_AMT
-preproc
-  if Q96_PAY_01 <> 1 then
-    Q96_PAY_01_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q96_PAY_01 = 1 and (Q96_PAY_01_AMT = 0 or Q96_PAY_01_AMT = notappl) then
-    errmsg("'Q96_PAY_01' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q96_PAY_06_AMT
-preproc
-  if Q96_PAY_06 <> 1 then
-    Q96_PAY_06_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q96_PAY_06 = 1 and (Q96_PAY_06_AMT = 0 or Q96_PAY_06_AMT = notappl) then
-    errmsg("'Q96_PAY_06' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q96_PAY_07_AMT
-preproc
-  if Q96_PAY_07 <> 1 then
-    Q96_PAY_07_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q96_PAY_07 = 1 and (Q96_PAY_07_AMT = 0 or Q96_PAY_07_AMT = notappl) then
-    errmsg("'Q96_PAY_07' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q971_1_AMT
-preproc
-  if Q971_1 <> 1 then
-    Q971_1_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q971_1 = 1 and (Q971_1_AMT = 0 or Q971_1_AMT = notappl) then
-    errmsg("'Q971_1' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q971_2_AMT
-preproc
-  if Q971_2 <> 1 then
-    Q971_2_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q971_2 = 1 and (Q971_2_AMT = 0 or Q971_2_AMT = notappl) then
-    errmsg("'Q971_2' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q971_3_AMT
-preproc
-  if Q971_3 <> 1 then
-    Q971_3_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q971_3 = 1 and (Q971_3_AMT = 0 or Q971_3_AMT = notappl) then
-    errmsg("'Q971_3' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q971_4_AMT
-preproc
-  if Q971_4 <> 1 then
-    Q971_4_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q971_4 = 1 and (Q971_4_AMT = 0 or Q971_4_AMT = notappl) then
-    errmsg("'Q971_4' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q972_1_AMT
-preproc
-  if Q972_1 <> 1 then
-    Q972_1_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q972_1 = 1 and (Q972_1_AMT = 0 or Q972_1_AMT = notappl) then
-    errmsg("'Q972_1' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q972_2_AMT
-preproc
-  if Q972_2 <> 1 then
-    Q972_2_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q972_2 = 1 and (Q972_2_AMT = 0 or Q972_2_AMT = notappl) then
-    errmsg("'Q972_2' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q972_3_AMT
-preproc
-  if Q972_3 <> 1 then
-    Q972_3_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q972_3 = 1 and (Q972_3_AMT = 0 or Q972_3_AMT = notappl) then
-    errmsg("'Q972_3' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q972_4_AMT
-preproc
-  if Q972_4 <> 1 then
-    Q972_4_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q972_4 = 1 and (Q972_4_AMT = 0 or Q972_4_AMT = notappl) then
-    errmsg("'Q972_4' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q972_5_AMT
-preproc
-  if Q972_5 <> 1 then
-    Q972_5_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q972_5 = 1 and (Q972_5_AMT = 0 or Q972_5_AMT = notappl) then
-    errmsg("'Q972_5' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q972_6_AMT
-preproc
-  if Q972_6 <> 1 then
-    Q972_6_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q972_6 = 1 and (Q972_6_AMT = 0 or Q972_6_AMT = notappl) then
-    errmsg("'Q972_6' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_01_AMT
-preproc
-  if Q98_PAY_01 <> 1 then
-    Q98_PAY_01_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_01 = 1 and (Q98_PAY_01_AMT = 0 or Q98_PAY_01_AMT = notappl) then
-    errmsg("'Q98_PAY_01' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_02_AMT
-preproc
-  if Q98_PAY_02 <> 1 then
-    Q98_PAY_02_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_02 = 1 and (Q98_PAY_02_AMT = 0 or Q98_PAY_02_AMT = notappl) then
-    errmsg("'Q98_PAY_02' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_03_AMT
-preproc
-  if Q98_PAY_03 <> 1 then
-    Q98_PAY_03_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_03 = 1 and (Q98_PAY_03_AMT = 0 or Q98_PAY_03_AMT = notappl) then
-    errmsg("'Q98_PAY_03' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_04_AMT
-preproc
-  if Q98_PAY_04 <> 1 then
-    Q98_PAY_04_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_04 = 1 and (Q98_PAY_04_AMT = 0 or Q98_PAY_04_AMT = notappl) then
-    errmsg("'Q98_PAY_04' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_05_AMT
-preproc
-  if Q98_PAY_05 <> 1 then
-    Q98_PAY_05_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_05 = 1 and (Q98_PAY_05_AMT = 0 or Q98_PAY_05_AMT = notappl) then
-    errmsg("'Q98_PAY_05' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_06_AMT
-preproc
-  if Q98_PAY_06 <> 1 then
-    Q98_PAY_06_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_06 = 1 and (Q98_PAY_06_AMT = 0 or Q98_PAY_06_AMT = notappl) then
-    errmsg("'Q98_PAY_06' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_07_AMT
-preproc
-  if Q98_PAY_07 <> 1 then
-    Q98_PAY_07_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_07 = 1 and (Q98_PAY_07_AMT = 0 or Q98_PAY_07_AMT = notappl) then
-    errmsg("'Q98_PAY_07' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_08_AMT
-preproc
-  if Q98_PAY_08 <> 1 then
-    Q98_PAY_08_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_08 = 1 and (Q98_PAY_08_AMT = 0 or Q98_PAY_08_AMT = notappl) then
-    errmsg("'Q98_PAY_08' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_09_AMT
-preproc
-  if Q98_PAY_09 <> 1 then
-    Q98_PAY_09_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_09 = 1 and (Q98_PAY_09_AMT = 0 or Q98_PAY_09_AMT = notappl) then
-    errmsg("'Q98_PAY_09' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_10_AMT
-preproc
-  if Q98_PAY_10 <> 1 then
-    Q98_PAY_10_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_10 = 1 and (Q98_PAY_10_AMT = 0 or Q98_PAY_10_AMT = notappl) then
-    errmsg("'Q98_PAY_10' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_11_AMT
-preproc
-  if Q98_PAY_11 <> 1 then
-    Q98_PAY_11_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_11 = 1 and (Q98_PAY_11_AMT = 0 or Q98_PAY_11_AMT = notappl) then
-    errmsg("'Q98_PAY_11' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_12_AMT
-preproc
-  if Q98_PAY_12 <> 1 then
-    Q98_PAY_12_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_12 = 1 and (Q98_PAY_12_AMT = 0 or Q98_PAY_12_AMT = notappl) then
-    errmsg("'Q98_PAY_12' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_13_AMT
-preproc
-  if Q98_PAY_13 <> 1 then
-    Q98_PAY_13_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_13 = 1 and (Q98_PAY_13_AMT = 0 or Q98_PAY_13_AMT = notappl) then
-    errmsg("'Q98_PAY_13' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_14_AMT
-preproc
-  if Q98_PAY_14 <> 1 then
-    Q98_PAY_14_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_14 = 1 and (Q98_PAY_14_AMT = 0 or Q98_PAY_14_AMT = notappl) then
-    errmsg("'Q98_PAY_14' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
-PROC Q98_PAY_15_AMT
-preproc
-  if Q98_PAY_15 <> 1 then
-    Q98_PAY_15_AMT = 0;   { #553: No-ticked row -> amount auto-set 0 (in range) + skip }
-    noinput;
-  endif;
-postproc
-  if Q98_PAY_15 = 1 and (Q98_PAY_15_AMT = 0 or Q98_PAY_15_AMT = notappl) then
-    errmsg("'Q98_PAY_15' was selected — enter its amount (must be greater than 0).");
-    reenter;
-  endif;
-
 { ---- Payment-matrix '>=1 ticked' (#555/#556/#557) ---- }
-PROC Q109_PAY_09
-postproc
-  if not (Q109_PAY_01 = 1 or Q109_PAY_02 = 1 or Q109_PAY_03 = 1 or Q109_PAY_04 = 1 or Q109_PAY_05 = 1 or Q109_PAY_06 = 1 or Q109_PAY_07 = 1 or Q109_PAY_08 = 1 or Q109_PAY_09 = 1) then
-    errmsg("Select at least one payment source for the medicines bought outside (Q109) before continuing — at least one option must be 'Yes'.");
-    reenter;
-  endif;
-
-PROC Q112_PAY_09
-postproc
-  if not (Q112_PAY_01 = 1 or Q112_PAY_02 = 1 or Q112_PAY_03 = 1 or Q112_PAY_04 = 1 or Q112_PAY_05 = 1 or Q112_PAY_06 = 1 or Q112_PAY_07 = 1 or Q112_PAY_08 = 1 or Q112_PAY_09 = 1) then
-    errmsg("Select at least one payment source for the tests done outside (Q112) before continuing — at least one option must be 'Yes'.");
-    reenter;
-  endif;
-
-PROC Q113_PAY_13
-postproc
-  if not (Q113_PAY_01 = 1 or Q113_PAY_02 = 1 or Q113_PAY_03 = 1 or Q113_PAY_04 = 1 or Q113_PAY_05 = 1 or Q113_PAY_06 = 1 or Q113_PAY_07 = 1 or Q113_PAY_08 = 1 or Q113_PAY_09 = 1 or Q113_PAY_10 = 1 or Q113_PAY_11 = 1 or Q113_PAY_12 = 1 or Q113_PAY_13 = 1) then
-    errmsg("Select at least one payment source for the hospital bill (Q113) before continuing — at least one option must be 'Yes'.");
-    reenter;
-  endif;
-
 { ---- Range + cross-field validations (spec §3.6-§3.13) ---- }
 PROC Q58_WAIT_DAYS
 postproc
@@ -3276,9 +2927,9 @@ postproc
     errmsg("Q97_FINAL_AMOUNT must be between 0 and 99999999.");
     reenter;
   endif;
-  if Q97_FINAL_AMOUNT > 0 and (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) > 0
-     and (Q97_FINAL_AMOUNT < (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 0.9
-          or Q97_FINAL_AMOUNT > (q92_oop() + Q94_PAY_01_AMT + Q96_PAY_01_AMT) * 1.1) then
+  if Q97_FINAL_AMOUNT > 0 and (q92_oop() + q94_oop() + q96_oop()) > 0
+     and (Q97_FINAL_AMOUNT < (q92_oop() + q94_oop() + q96_oop()) * 0.9
+          or Q97_FINAL_AMOUNT > (q92_oop() + q94_oop() + q96_oop()) * 1.1) then
     errmsg("Q97 final amount differs by more than 10 percent from the out-of-pocket lines (Q92/Q94/Q96) — confirm.");
   endif;
 
@@ -3298,8 +2949,8 @@ postproc
     errmsg("Q115_FINAL_CASH must be between 0 and 999999999.");
     reenter;
   endif;
-  if Q107_PAY_01_AMT > 0 and (Q115_FINAL_CASH < Q107_PAY_01_AMT * 0.9
-     or Q115_FINAL_CASH > Q107_PAY_01_AMT * 1.1) then
+  if q107_oop() > 0 and (Q115_FINAL_CASH < q107_oop() * 0.9
+     or Q115_FINAL_CASH > q107_oop() * 1.1) then
     errmsg("Q115 final cash differs by more than 10 percent from the out-of-pocket bill line (Q107) — confirm.");
   endif;
 
