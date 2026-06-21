@@ -1,30 +1,36 @@
 export type FormValues = Record<string, unknown>;
 type Predicate = (values: FormValues) => boolean;
 
-const SECTION_G_ROLES = new Set(['Physician/Doctor', 'Physician assistant', 'Dentist']);
+// #539: Section G is restricted to physicians and dentists only. The R2-#114
+// list also included 'Physician assistant'; the updated tester-guide spec
+// excludes it ("Only Physicians/Doctors, and Dentist should answer Section G").
+const SECTION_G_ROLES = new Set(['Physician/Doctor', 'Dentist']);
 
-// R2-#114: sections C/D/E are role-gated to patient-care roles. Pre-fix
-// shouldShowSection returned true for everything except G; tester saw
-// C/D/E visible to Pharmacist/Dispenser, Physician/Doctor, and Dentist
-// aide (1 of 3 should see them — Doctor only).
+// Sections C/D/E are role-gated to patient-care roles. shouldShowSection gates
+// C/D on SECTION_CDE_ROLES and E on SECTION_E_ROLES; the E2 (GAMOT) half adds
+// pharmacists/dispensers, who skip E1 (Q48–Q52) but answer E2 (Q53–Q55) via the
+// item-level gates below.
 //
-// Per UAT R2 tester guide spec:
-//   - C/D/E: admin, doctor, physician assistant, nurse, midwife, dentist,
-//            nutrition action officer/coordinator
-//   - E only (E2 GAMOT half): pharmacists/dispensers — they should skip
-//            E1 (Q48–Q52) but see E2 (Q53–Q55). Until #117 splits E1/E2,
-//            pharmacists see all of E (acceptable trade for v2.0.1; the
-//            E1 leak is #117's surface).
-//   - All other roles (Nursing assistant, Lab tech, Med tech, Dentist
-//            aide, BHW, Other): proceed straight to F.
-const SECTION_CDE_ROLES = new Set([
+// Per the updated tester-guide spec (#539 — supersedes the R2-#114 list):
+//   - C/D/E1: Administrator, Physician/Doctor, Nurse, Midwife, Dentist.
+//   - E2 only: Pharmacist/Dispenser (skip C/D/E1, answer the E2 GAMOT half).
+//   - None of C/D/E — proceed to F: Physician assistant, Nursing assistant,
+//            Laboratory technician, Medical/radiologic technologist, Health
+//            promotion officer, Nutrition action officer/coordinator, Physical
+//            Therapist, Dentist aide, Barangay Health Worker, Other.
+//
+// #539: 'Physician assistant' and 'Nutrition action officer/ coordinator' were
+// in the R2-#114 set; the new spec excludes both. They leaked C/D/E to those
+// two personas (Aidan re-test 2026-06-16) until removed here.
+// Exported so cross-field.ts (the C/D data-quality gate, GATE-05) shares one
+// source of truth and can't drift from the section gate — the drift that let
+// #539 slip in.
+export const SECTION_CDE_ROLES = new Set([
   'Administrator',
   'Physician/Doctor',
-  'Physician assistant',
   'Nurse',
   'Midwife',
   'Dentist',
-  'Nutrition action officer/ coordinator',
 ]);
 const SECTION_E_ROLES = new Set([...SECTION_CDE_ROLES, 'Pharmacist/Dispenser']);
 
