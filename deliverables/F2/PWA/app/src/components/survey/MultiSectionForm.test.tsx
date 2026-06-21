@@ -308,6 +308,112 @@ describe('<MultiSectionForm>', () => {
     );
   });
 
+  // #524: "answering a question automatically skips to the next section even
+  // though there are remaining questions to be answered" — reported on gate
+  // questions whose Yes-answer reveals required follow-ups (Q44→Q45-47,
+  // Q54→Q55, Q123→Q124/Q125), "more common toward the end of a section."
+  //
+  // This is the AUTO-ADVANCE path (the entryStatus useEffect), not the manual
+  // Next path the R2-#118 test covers. Mechanism check: answering the gate
+  // makes the section briefly *look* finished only if the revealed follow-ups
+  // aren't counted. They ARE counted — getSectionStatus filters by shouldShow
+  // (the gate reveals them) AND require:true, so the section stays 'incomplete'
+  // and auto-advance's `currentStatus !== 'complete'` guard returns. These two
+  // cases pin that: a Yes gate must NOT auto-skip; a No gate (no follow-ups)
+  // legitimately may. Section J / Q123 is the named gate and the last section.
+  const J_REQUIRED_MINUS_GATE = {
+    // Section A — landing-state requirements (so merged is well-formed)
+    Q1_1: 'Reyes',
+    Q1_2: 'Carl',
+    Q1_3: 'P',
+    Q2: 'Regular',
+    Q3: 'Female',
+    Q4: 30,
+    Q5: 'Nurse',
+    Q7: 'No',
+    Q9_1: 3,
+    Q9_2: 6,
+    Q10: 5,
+    Q11: 8,
+    // Section J — every visible required item answered EXCEPT the Q123 gate.
+    // Q114='Never' hides Q122 (predicate: Q114 !== 'Never'); Q124/Q125 stay
+    // hidden until Q123 is a "Yes,…".
+    Q98: 'Agree',
+    Q99: 'Agree',
+    Q100: 'Agree',
+    Q101: 'Agree',
+    Q102: 'Agree',
+    Q103: 'Agree',
+    Q104: 'Agree',
+    Q105: 'Agree',
+    Q106: 'Agree',
+    Q107: 'Agree',
+    Q109: 'None',
+    Q110: ['None'],
+    Q111: ['Supervisory trainings'],
+    Q112: ['Clinical audits'],
+    Q113: ['Clinical audits'],
+    Q114: 'Never',
+    Q115: 'Sometimes',
+    Q116: 'Sometimes',
+    Q117: 'Sometimes',
+    Q118: 'Sometimes',
+    Q119: 'Sometimes',
+    Q120: 'Sometimes',
+    Q121: 'Sometimes',
+  };
+
+  it('#524: answering a gate Yes (Q123) reveals required follow-ups and does NOT auto-skip', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(
+      <MultiSectionForm
+        initialValues={J_REQUIRED_MINUS_GATE}
+        initialIndex={9} // Section J
+        onAutosave={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+    expect(screen.getByRole('heading', { name: /Section J/ })).toBeInTheDocument();
+    // Q124/Q125 are hidden until the gate is a "Yes,…"
+    expect(screen.queryByText(/Why are you planning on leaving/)).toBeNull();
+
+    // Answer the gate "Yes" — reveals Q124 (required, multi, empty)
+    await user.click(screen.getByLabelText(/definite plans to leave/));
+
+    // The follow-up must appear (the gate's reveal works)…
+    await waitFor(() =>
+      expect(screen.getByText(/Why are you planning on leaving/)).toBeInTheDocument(),
+    );
+    // …and crucially the form must STILL be on Section J — no auto-skip past
+    // the freshly-revealed Q124/Q125. Settle the autosave (500ms) + any
+    // auto-advance timer (400ms) window, then re-assert.
+    await new Promise((r) => setTimeout(r, 1000));
+    expect(screen.getByRole('heading', { name: /Section J/ })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /Review your answers/i })).toBeNull();
+  });
+
+  it('#524 control: answering the same gate No (no follow-ups) DOES auto-advance', async () => {
+    const user = userEvent.setup();
+    renderWithProviders(
+      <MultiSectionForm
+        initialValues={J_REQUIRED_MINUS_GATE}
+        initialIndex={9} // Section J (last section → advances to Review)
+        onAutosave={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+    expect(screen.getByRole('heading', { name: /Section J/ })).toBeInTheDocument();
+
+    // "No, I haven't thought about it" — reveals nothing, so the section is now
+    // complete and the entryStatus useEffect auto-advances to the review screen.
+    await user.click(screen.getByLabelText(/^No, I haven.*thought about it/));
+
+    await waitFor(
+      () => expect(screen.getByRole('heading', { name: /Review your answers/i })).toBeInTheDocument(),
+      { timeout: 3000 },
+    );
+  });
+
   it('renders Section G Q75-Q81 as a single matrix table on tablet+', async () => {
     // Q5='Physician/Doctor' triggers Section G visibility (per shouldShowSection)
     // and reaches Section G with Q75-Q81 visible.
