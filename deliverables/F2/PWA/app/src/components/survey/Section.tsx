@@ -10,6 +10,7 @@ import { localized } from '@/i18n/localized';
 import { Question } from './Question';
 import { MatrixQuestion } from './MatrixQuestion';
 import { groupVisibleItems, isMatrixGroup } from './group-matrix';
+import { evaluateCrossField } from '@/lib/cross-field';
 
 function stripNulls(values: unknown): unknown {
   if (values === null || values === '') return undefined;
@@ -74,7 +75,26 @@ export function Section<T extends Record<string, unknown>>({
     const result = await baseResolver(stripNulls(values) as T, context, options);
     const errs = (result.errors ?? {}) as Record<string, unknown>;
     const hadErrors = Object.keys(errs).length > 0;
-    if (!hadErrors) return result;
+
+    // #587: error-severity cross-field findings (e.g. PROF-01 tenure ≥ age−20) are
+    // in-survey hard blocks (Myra 2026-05-21), not just review-time warnings. When
+    // THIS section owns every field a finding references, surface it as a form error
+    // so advance is blocked here and the message renders inline — not only at review.
+    const crossFieldErrors = (vals: unknown): Record<string, { type: string; message: string }> => {
+      const out: Record<string, { type: string; message: string }> = {};
+      for (const w of evaluateCrossField(vals as Parameters<typeof evaluateCrossField>[0])) {
+        if (w.severity !== 'error') continue;
+        if (!w.fields.every((f) => visibleKeys.has(f))) continue;
+        const message = t(w.message.key, w.message.values as Record<string, unknown>);
+        for (const f of w.fields) if (!out[f]) out[f] = { type: w.id, message };
+      }
+      return out;
+    };
+
+    if (!hadErrors) {
+      const cf = crossFieldErrors(result.values);
+      return (Object.keys(cf).length > 0 ? { values: {} as T, errors: cf } : result) as typeof result;
+    }
 
     for (const key of Object.keys(errs)) {
       if (!visibleKeys.has(key)) delete errs[key];
@@ -98,7 +118,10 @@ export function Section<T extends Record<string, unknown>>({
         if (sf.id in stripped) out[sf.id] = stripped[sf.id];
       }
     }
-    return { values: out as T, errors: {} } as typeof result;
+    const cf = crossFieldErrors(out);
+    return (Object.keys(cf).length > 0
+      ? { values: {} as T, errors: cf }
+      : { values: out as T, errors: {} }) as typeof result;
   };
 
   const methods = useForm<T>({
