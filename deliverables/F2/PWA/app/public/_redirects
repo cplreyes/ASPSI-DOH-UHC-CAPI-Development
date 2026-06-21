@@ -1,0 +1,9 @@
+# Cloudflare Pages SPA fallback.
+# Serve index.html (HTTP 200, no redirect) for any path that doesn't match a
+# built asset, so a COLD first-load of /enroll?token=... reaches the app even
+# before the service worker is installed. Pages matches real files first, so
+# /assets/*.js, /icons/*, etc. are still served directly; only unmatched routes
+# fall through here. The query string is preserved, so EnrollmentScreen prefills
+# from ?token=. /admin is served the same index.html and routed client-side in
+# App.tsx (App.tsx delegates /admin/* to the admin portal).
+/*    /index.html    200
