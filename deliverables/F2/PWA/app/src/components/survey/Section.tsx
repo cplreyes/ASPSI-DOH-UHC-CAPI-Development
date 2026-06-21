@@ -34,6 +34,10 @@ interface SectionProps<T extends Record<string, unknown>> {
   submitRef?: MutableRefObject<(() => void) | null>;
   onAutosave?: (values: Partial<T>) => void;
   onSubmit: (values: T) => void;
+  // Fired SYNCHRONOUSLY on every field change (not debounced like onAutosave).
+  // MultiSectionForm uses it to cancel a pending auto-advance so the user is
+  // never bounced to the next section mid-answer (#524).
+  onInteract?: () => void;
 }
 
 export function Section<T extends Record<string, unknown>>({
@@ -45,6 +49,7 @@ export function Section<T extends Record<string, unknown>>({
   submitRef,
   onAutosave,
   onSubmit,
+  onInteract,
 }: SectionProps<T>) {
   const { t } = useTranslation();
   const { locale } = useLocale();
@@ -108,9 +113,13 @@ export function Section<T extends Record<string, unknown>>({
   });
 
   useEffect(() => {
-    if (!onAutosave) return;
+    if (!onAutosave && !onInteract) return;
     let timer: ReturnType<typeof setTimeout> | null = null;
     const sub = methods.watch((values) => {
+      // Immediate, un-debounced: lets the parent cancel a pending auto-advance
+      // the instant the user touches a field, before the 500ms autosave lands.
+      onInteract?.();
+      if (!onAutosave) return;
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => onAutosave(values as Partial<T>), 500);
     });
@@ -118,7 +127,7 @@ export function Section<T extends Record<string, unknown>>({
       sub.unsubscribe();
       if (timer) clearTimeout(timer);
     };
-  }, [methods, onAutosave]);
+  }, [methods, onAutosave, onInteract]);
 
   const submit = methods.handleSubmit((values) => onSubmit(values as unknown as T));
 

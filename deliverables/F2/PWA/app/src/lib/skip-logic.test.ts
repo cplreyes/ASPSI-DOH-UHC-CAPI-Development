@@ -123,19 +123,19 @@ describe('shouldShow', () => {
       ).toBe(false);
     });
 
-    it('R2-#117: shows Q48 for the 7 CDE roles (admin, doctor, PA, nurse, midwife, dentist, nutrition)', () => {
-      const cdeRoles = [
-        'Administrator',
-        'Physician/Doctor',
-        'Physician assistant',
-        'Nurse',
-        'Midwife',
-        'Dentist',
-        'Nutrition action officer/ coordinator',
-      ];
+    it('shows Q48 (BUCAS gate) for the 5 patient-care CDE roles', () => {
+      const cdeRoles = ['Administrator', 'Physician/Doctor', 'Nurse', 'Midwife', 'Dentist'];
       for (const role of cdeRoles) {
         expect(shouldShow('E', 'Q48', { Q5: role })).toBe(true);
       }
+    });
+
+    // #539: Physician assistant and Nutrition action officer/coordinator were in
+    // the R2 CDE set; the updated spec excludes them, so the E1 BUCAS gate must
+    // hide Q48 for both.
+    it('#539: hides Q48 for Physician assistant and Nutrition action officer/coordinator', () => {
+      expect(shouldShow('E', 'Q48', { Q5: 'Physician assistant' })).toBe(false);
+      expect(shouldShow('E', 'Q48', { Q5: 'Nutrition action officer/ coordinator' })).toBe(false);
     });
   });
 
@@ -248,28 +248,29 @@ describe('shouldShow', () => {
   });
 });
 
-// R2-#114: prior to this regression-prevention block, shouldShowSection
-// only gated Section G; sections C/D/E always returned true regardless
-// of Q5 role. Tester (Shan, 2026-05-07 R2) saw C/D/E visible to all 3
-// personas tested (Pharmacist/Dispenser, Physician/Doctor, Dentist aide).
+// shouldShowSection gates which sections each Q5 role sees.
 //
-// Spec (per UAT R2 tester guide notes):
-//   C/D/E (full):      Administrator, Physician/Doctor, Physician
-//                      assistant, Nurse, Midwife, Dentist, Nutrition
-//                      action officer/coordinator
-//   E only (E2 half):  Pharmacist/Dispenser. Until #117 splits
-//                      E1 (Q48–Q52) from E2 (Q53–Q55), pharmacists
-//                      see all of E (the E1 leak is #117's surface).
-//   None of C/D/E:     all other roles (Nursing assistant, Lab tech,
-//                      Med tech, Dentist aide, BHW, etc.) — proceed to F.
+// Spec (updated tester-guide, #539 — supersedes the R2-#114 list):
+//   C/D/E1:           Administrator, Physician/Doctor, Nurse, Midwife, Dentist.
+//   E2 only:          Pharmacist/Dispenser — skips C/D/E1, answers E2 (Q53–Q55)
+//                     via the item-level gates; Section E shows for them.
+//   None of C/D/E:    Physician assistant, Nursing assistant, Lab tech, Med
+//                     tech, Health promotion officer, Nutrition action
+//                     officer/coordinator, Physical Therapist, Dentist aide,
+//                     BHW, Other — proceed to F.
+//   G:                Physician/Doctor, Dentist only.
+//
+// #539 (Aidan re-test 2026-06-16): Physician assistant and Nutrition action
+// officer/coordinator were leaking C/D/E from the R2 list; Physician assistant
+// was also leaking G. The fix removed all three from their respective sets.
 describe('shouldShowSection', () => {
-  describe('Section G — prescribing roles only (existing behavior)', () => {
+  describe('Section G — physicians and dentists only', () => {
     it('shows G for Physician/Doctor', () => {
       expect(shouldShowSection('G', { Q5: 'Physician/Doctor' })).toBe(true);
     });
 
-    it('shows G for Physician assistant', () => {
-      expect(shouldShowSection('G', { Q5: 'Physician assistant' })).toBe(true);
+    it('#539: hides G for Physician assistant', () => {
+      expect(shouldShowSection('G', { Q5: 'Physician assistant' })).toBe(false);
     });
 
     it('shows G for Dentist', () => {
@@ -293,20 +294,22 @@ describe('shouldShowSection', () => {
     it.each([
       'Administrator',
       'Physician/Doctor',
-      'Physician assistant',
       'Nurse',
       'Midwife',
       'Dentist',
-      'Nutrition action officer/ coordinator',
     ])('shows C for %s', (role) => {
       expect(shouldShowSection('C', { Q5: role })).toBe(true);
     });
 
     it.each([
       'Pharmacist/Dispenser',
+      'Physician assistant', // #539
       'Nursing assistant',
       'Laboratory technician',
       'Medical/ radiologic technologist',
+      'Health promotion officer',
+      'Nutrition action officer/ coordinator', // #539
+      'Physical Therapist',
       'Dentist aide',
       'Barangay Health Worker',
       'Other (specify)',
@@ -337,21 +340,25 @@ describe('shouldShowSection', () => {
     it.each([
       'Administrator',
       'Physician/Doctor',
-      'Physician assistant',
       'Nurse',
       'Midwife',
       'Dentist',
-      'Nutrition action officer/ coordinator',
-      'Pharmacist/Dispenser', // E2 GAMOT half — until #117 splits, sees all of E
+      'Pharmacist/Dispenser', // E2 GAMOT half — sees E (item gates hide E1 Q48–Q52)
     ])('shows E for %s', (role) => {
       expect(shouldShowSection('E', { Q5: role })).toBe(true);
     });
 
     it.each([
+      'Physician assistant', // #539
       'Nursing assistant',
       'Laboratory technician',
+      'Medical/ radiologic technologist',
+      'Health promotion officer',
+      'Nutrition action officer/ coordinator', // #539
+      'Physical Therapist',
       'Dentist aide',
       'Barangay Health Worker',
+      'Other (specify)',
     ])('hides E for %s', (role) => {
       expect(shouldShowSection('E', { Q5: role })).toBe(false);
     });
@@ -365,7 +372,7 @@ describe('shouldShowSection', () => {
     });
   });
 
-  describe('Three personas Shan tested (R2 #114 reproduction)', () => {
+  describe('Persona section-visibility (R2 #114 + #539)', () => {
     it('Pharmacist/Dispenser sees A,B,E,F,H,I,J — not C,D,G', () => {
       const v = { Q5: 'Pharmacist/Dispenser' };
       expect(shouldShowSection('A', v)).toBe(true);
@@ -394,6 +401,29 @@ describe('shouldShowSection', () => {
       expect(shouldShowSection('E', v)).toBe(false); // was the bug
       expect(shouldShowSection('F', v)).toBe(true);
       expect(shouldShowSection('G', v)).toBe(false);
+    });
+
+    // #539 (Aidan re-test 2026-06-16): these two roles leaked C/D/E.
+    it('#539: Physician assistant sees A,B,F,H,I,J — not C,D,E,G', () => {
+      const v = { Q5: 'Physician assistant' };
+      expect(shouldShowSection('C', v)).toBe(false);
+      expect(shouldShowSection('D', v)).toBe(false);
+      expect(shouldShowSection('E', v)).toBe(false);
+      expect(shouldShowSection('G', v)).toBe(false);
+      for (const id of ['A', 'B', 'F', 'H', 'I', 'J']) {
+        expect(shouldShowSection(id, v)).toBe(true);
+      }
+    });
+
+    it('#539: Nutrition action officer/coordinator sees A,B,F,H,I,J — not C,D,E,G', () => {
+      const v = { Q5: 'Nutrition action officer/ coordinator' };
+      expect(shouldShowSection('C', v)).toBe(false);
+      expect(shouldShowSection('D', v)).toBe(false);
+      expect(shouldShowSection('E', v)).toBe(false);
+      expect(shouldShowSection('G', v)).toBe(false);
+      for (const id of ['A', 'B', 'F', 'H', 'I', 'J']) {
+        expect(shouldShowSection(id, v)).toBe(true);
+      }
     });
   });
 });

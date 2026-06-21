@@ -22,11 +22,15 @@
  *           component tests + the contrast gate) and zero layout shift. These
  *           don't depend on the runner's CPU, so a failure is a real finding.
  *   warn  — throughput metrics (perf score, LCP, TBT) that vary with the CI
- *           runner's CPU under Lighthouse's simulated mobile throttling. Admin
- *           login's baseline TBT (190ms) already sits a hair under the 200ms
- *           budget, so a hard gate would flake. They surface in the run but
- *           don't block; promote to `error` once a few green runs establish the
- *           real CI baseline.
+ *           runner's CPU under Lighthouse's simulated mobile throttling. The
+ *           observed values sit WITHIN PERFORMANCE.md's documented ±10pt "noise"
+ *           band of their budgets (e.g. admin perf ~88 vs the 85 floor, admin
+ *           LCP ~3.5s vs the 4s ceiling), so a hard `error` at the budget would
+ *           flake against that very tolerance. This tier is intentional, not a
+ *           TODO. The lighthouse CI job now runs scripts/lhci-summary.mjs to
+ *           PRINT these numbers every run (lhci is silent on passing
+ *           assertions) — promote a metric to `error` only once that summary
+ *           shows comfortable margin over its budget across several runs.
  */
 module.exports = {
   ci: {
