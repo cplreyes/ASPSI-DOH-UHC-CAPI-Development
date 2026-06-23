@@ -10,7 +10,6 @@ import { localized } from '@/i18n/localized';
 import { Question } from './Question';
 import { MatrixQuestion } from './MatrixQuestion';
 import { groupVisibleItems, isMatrixGroup } from './group-matrix';
-import { evaluateCrossField } from '@/lib/cross-field';
 
 function stripNulls(values: unknown): unknown {
   if (values === null || values === '') return undefined;
@@ -35,6 +34,10 @@ interface SectionProps<T extends Record<string, unknown>> {
   submitRef?: MutableRefObject<(() => void) | null>;
   onAutosave?: (values: Partial<T>) => void;
   onSubmit: (values: T) => void;
+  // Fired SYNCHRONOUSLY on every field change (not debounced like onAutosave).
+  // MultiSectionForm uses it to cancel a pending auto-advance so the user is
+  // never bounced to the next section mid-answer (#524).
+  onInteract?: () => void;
 }
 
 export function Section<T extends Record<string, unknown>>({
@@ -46,6 +49,7 @@ export function Section<T extends Record<string, unknown>>({
   submitRef,
   onAutosave,
   onSubmit,
+  onInteract,
 }: SectionProps<T>) {
   const { t } = useTranslation();
   const { locale } = useLocale();
@@ -75,26 +79,7 @@ export function Section<T extends Record<string, unknown>>({
     const result = await baseResolver(stripNulls(values) as T, context, options);
     const errs = (result.errors ?? {}) as Record<string, unknown>;
     const hadErrors = Object.keys(errs).length > 0;
-
-    // #587: error-severity cross-field findings (e.g. PROF-01 tenure ≥ age−20) are
-    // in-survey hard blocks (Myra 2026-05-21), not just review-time warnings. When
-    // THIS section owns every field a finding references, surface it as a form error
-    // so advance is blocked here and the message renders inline — not only at review.
-    const crossFieldErrors = (vals: unknown): Record<string, { type: string; message: string }> => {
-      const out: Record<string, { type: string; message: string }> = {};
-      for (const w of evaluateCrossField(vals as Parameters<typeof evaluateCrossField>[0])) {
-        if (w.severity !== 'error') continue;
-        if (!w.fields.every((f) => visibleKeys.has(f))) continue;
-        const message = t(w.message.key, w.message.values as Record<string, unknown>);
-        for (const f of w.fields) if (!out[f]) out[f] = { type: w.id, message };
-      }
-      return out;
-    };
-
-    if (!hadErrors) {
-      const cf = crossFieldErrors(result.values);
-      return (Object.keys(cf).length > 0 ? { values: {} as T, errors: cf } : result) as typeof result;
-    }
+    if (!hadErrors) return result;
 
     for (const key of Object.keys(errs)) {
       if (!visibleKeys.has(key)) delete errs[key];
@@ -118,10 +103,7 @@ export function Section<T extends Record<string, unknown>>({
         if (sf.id in stripped) out[sf.id] = stripped[sf.id];
       }
     }
-    const cf = crossFieldErrors(out);
-    return (Object.keys(cf).length > 0
-      ? { values: {} as T, errors: cf }
-      : { values: out as T, errors: {} }) as typeof result;
+    return { values: out as T, errors: {} } as typeof result;
   };
 
   const methods = useForm<T>({
@@ -131,9 +113,13 @@ export function Section<T extends Record<string, unknown>>({
   });
 
   useEffect(() => {
-    if (!onAutosave) return;
+    if (!onAutosave && !onInteract) return;
     let timer: ReturnType<typeof setTimeout> | null = null;
     const sub = methods.watch((values) => {
+      // Immediate, un-debounced: lets the parent cancel a pending auto-advance
+      // the instant the user touches a field, before the 500ms autosave lands.
+      onInteract?.();
+      if (!onAutosave) return;
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => onAutosave(values as Partial<T>), 500);
     });
@@ -141,7 +127,7 @@ export function Section<T extends Record<string, unknown>>({
       sub.unsubscribe();
       if (timer) clearTimeout(timer);
     };
-  }, [methods, onAutosave]);
+  }, [methods, onAutosave, onInteract]);
 
   const submit = methods.handleSubmit((values) => onSubmit(values as unknown as T));
 

@@ -103,10 +103,17 @@ contrast gate) and near-zero layout shift — so a failure is a real regression,
 not runner noise. The `warn` assertions are CPU-bound throughput metrics that
 swing with the CI runner under Lighthouse's simulated mobile throttling: admin
 perf is already **0.86** (a hair above the 0.85 floor) and admin LCP **3.47 s**
-(13% under the 4 s ceiling), so hard-gating them would flake. They stay
-visible-but-non-blocking until a few green CI runs establish the real runner
-baseline — **promotion path:** once observed, tighten the `warn`s to `error` in
-`lighthouserc.cjs`.
+(13% under the 4 s ceiling), so hard-gating them would flake against this doc's
+own **±10pt = noise** tolerance. This tier is **intentional, not a TODO**.
+
+**Observability (2026-06-18):** lhci is silent on *passing* assertions, so the
+real CI-runner numbers were invisible. The lighthouse CI job now runs
+[`scripts/lhci-summary.mjs`](./scripts/lhci-summary.mjs) (with `if: always()`)
+to **print the observed scores + LCP/CLS/TBT per surface on every run** — the
+margin over each budget is now visible in the job log. **Promotion path:**
+tighten a `warn` to `error` in `lighthouserc.cjs` only once that summary shows
+comfortable margin over its budget across several runs (don't promote a metric
+that hovers within the ±10pt band).
 
 **Deferred:** deep authed surfaces (post-enrollment survey sections, admin
 dashboards) need a live session token (blocked on #543/#528) — same limitation

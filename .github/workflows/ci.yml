@@ -110,3 +110,11 @@ jobs:
 
       - name: Lighthouse CI (a11y + perf score gate)
         run: npx lhci autorun --config=./lighthouserc.cjs
+
+      # Surface the observed CI numbers (lhci is silent on passing assertions).
+      # always() so they print even when an assertion fails — and so the margin
+      # over each `warn` budget is visible when deciding whether to promote it
+      # to a hard `error`. See scripts/lhci-summary.mjs + PERFORMANCE.md.
+      - name: Lighthouse score summary (observed CI numbers)
+        if: always()
+        run: node scripts/lhci-summary.mjs

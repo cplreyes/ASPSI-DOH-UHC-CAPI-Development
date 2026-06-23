@@ -185,3 +185,15 @@ export function evaluateCrossField(values: FormValues): Warning[] {
 
   return out;
 }
+
+// #587: the error-severity cross-field findings whose fields belong to the
+// given section (by item/sub-field id). The review stage already hard-blocks
+// submission on error-severity findings; this lets MultiSectionForm fire the
+// same gate inline at section exit, so a respondent corrects e.g. an implausible
+// tenure (PROF-01) before leaving Section A rather than only being caught at
+// review. Pure (Set in, Warning[] out) so it unit-tests without the form.
+export function sectionBlockingErrors(values: FormValues, sectionFieldIds: Set<string>): Warning[] {
+  return evaluateCrossField(values).filter(
+    (w) => w.severity === 'error' && w.fields.some((f) => sectionFieldIds.has(f)),
+  );
+}
