@@ -705,8 +705,12 @@ def build_section_e():
         ("Specialty Care Provider/ Specialist",     "2"),
         ("Both",                                    "3"),
         ("Other (specify)",                         "4"),
-        # #412: 'None' removed — Q53=No (no PCP) already skips Q54 (SKIP_RULES: Q53_HAS_PCP=2
-        # -> Q63), so a 'None' here only invited data inconsistency (PCP-type=None vs Q53=Yes).
+        ("None",                                    "5"),
+        # #729 (tester/Carl, reverses #412): 'None' re-added as an explicit no-type escape.
+        # Appended as code 5 so "Other (specify)" stays code 4 (the dcf-driven other-specify
+        # gate on Q54_PCP_TYPE_OTHER_TXT is undisturbed). Q53=No still skips Q54->Q63; None here
+        # is for a Q53=Yes respondent who has no fitting provider type. No special routing —
+        # falls through to Q55 like the other answers.
     ]
     COMM_MODES = [
         ("Face-to-face",      "1"),
@@ -1273,6 +1277,9 @@ def build_section_g():
                        "98. Other payment source — specify text", length=120))
     # BUCAS block (Q99-104)
     items.extend([
+        # #464: area-type gate — Q99-Q104 apply only to areas WITH a BUCAS center; No -> skip the whole block (mirrors Q99=No -> Q116)
+        yes_no("AREA_HAS_BUCAS",
+               "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)"),
         yes_no("Q99_BUCAS_HEARD",
                "99. Have you heard about Bagong Urgent Care and Ambulatory Services (BUCAS) center?"),
         *checkbox_multiselect("Q100_BUCAS_SOURCE",   # #690: select_all -> Check Box (tick-all)
@@ -1651,8 +1658,8 @@ def build_section_i():
                    Q123_ZBB_EXTENT, length=1),
         select_one("Q124_MAIFIP_HEARD",
                    "124. Have you heard of the Medical Assistance for Indigent and "
-                   "Financially Incapacitated Patients (MAIFIP)? (SKIP IF ANSWERED MAIFIP IN Q113)",
-                   Q124_HEARD, length=1),
+                   "Financially Incapacitated Patients (MAIFIP)?",
+                   Q124_HEARD, length=1),  # #477: removed redundant "(SKIP IF ANSWERED MAIFIP IN Q113)" enumerator note — CAPI auto-handles the Q113 gate
         *checkbox_multiselect("Q125_MAIFIP_SOURCE",
                     "125. What are your sources of information about MAIFIP?", _cb_codes(SOURCE_8)),
         yes_no("Q126_MAIFIP_AVAILED",
@@ -1827,11 +1834,10 @@ def build_section_k():
         ("Branded",                   "1"),
         ("Generic",                   "2"),
         ("Both branded and generic",  "3"),
-        # #618: 'Don't know the difference' (4) REMOVED — Q159 is reached ONLY when Q158=Yes
-        # (knows the branded/generic difference; Q158=No skips to Q162 per the paper), so a
-        # 'don't know the difference' answer here contradicts Q158. The Q159=4 -> Q162 routing
-        # in generate_apc is removed with it. Codes left non-contiguous (1,2,3,5) on purpose:
-        # 'Not applicable' stays 5 so no other Q159 routing/value reference shifts.
+        # #732 (R5): 'Don't know the difference' (4) RESTORED to match the paper — the tester's
+        # PAPI screenshot lists it (-> Q162), reversing #618's removal. Carl 'do what the testers
+        # need': follow the paper's literal 5-option set + routing. Order = paper (DKD before NA).
+        ("Don't know the difference", "4"),
         ("Not applicable",            "5"),
     ]
     Q160_WHY_GENERIC = [
@@ -1868,9 +1874,8 @@ def build_section_k():
         *checkbox_multiselect("Q148_CONDITIONS",
                     "148. What are the medical conditions that you take the medicines for?",
                     Q148_CONDITIONS),
-        alpha("Q148_MEDICINES_TXT",
-              "Which medicine(s) do you take for the condition(s) selected above?",
-              length=240),
+        # #491: Q148_MEDICINES_TXT ("Which medicine(s)…for the condition(s) selected above?") removed —
+        # redundant with Q147 ("What are the medications that you usually take?"). ASPSI go/no-go via Carl 2026-06-21.
         *checkbox_multiselect("Q149_WHERE_BUY",   # #696: select_all -> Check Box (tick-all)
                     "149. Where do you usually buy or receive your medicines? "
                     "Select all that apply.", _cb_codes(Q149_WHERE_BUY), with_other_txt=True),
@@ -1881,6 +1886,9 @@ def build_section_k():
         select_one("Q151_PHARM_EASE",
                    "151. How easy is it for you to access a pharmacy or drugstore?",
                    Q151_EASE, length=1),
+        # #495: area-type gate — Q152-Q159 apply only to areas WITH GAMOT; No -> skip the block (mirrors Q152=No -> Q158)
+        yes_no("AREA_HAS_GAMOT",
+               "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)"),
         yes_no("Q152_GAMOT_HEARD",
                "152. Have you heard of the Guaranteed and Accessible Medications for "
                "Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's "

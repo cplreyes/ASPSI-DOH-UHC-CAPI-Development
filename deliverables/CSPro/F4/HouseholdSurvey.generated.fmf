@@ -194,8 +194,9 @@ Item=Q56_YAKAP_UNDERSTAND_OTHER_TXT
 Name=FORM010
 Label=F. BUCAS Awareness
 Level=1
-Size=806,307
+Size=806,337
   
+Item=AREA_HAS_BUCAS
 Item=Q57_BUCAS_HEARD
 Item=Q58_BUCAS_SOURCE
 Item=Q58_BUCAS_SOURCE_OTHER_TXT
@@ -211,7 +212,7 @@ Item=Q61_BUCAS_SERVICES_OTHER_TXT
 Name=FORM011
 Label=G. Access to Medicines
 Level=1
-Size=806,817
+Size=806,847
   
 Item=Q62_PURCHASE_FREQ
 Item=Q63_PRESCRIPTION_TYPE
@@ -223,6 +224,7 @@ Item=Q66_WHERE_BUY_OTHER_TXT
 Item=Q67_TRAVEL_HH
 Item=Q67_TRAVEL_MM
 Item=Q68_PHARMACY_ACCESS
+Item=AREA_HAS_GAMOT
 Item=Q69_GAMOT_HEARD
 Item=Q70_GAMOT_SOURCE
 Item=Q70_GAMOT_SOURCE_OTHER_TXT
@@ -1604,7 +1606,7 @@ Form=6
   
 [Text]
 Position=50,390,330,406
-Text=40. Highest level of education completed
+Text=40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)
  
   
 [Field]
@@ -2014,114 +2016,126 @@ Form=11
 Max=1
   
 [Field]
-Name=Q57_BUCAS_HEARD
+Name=AREA_HAS_BUCAS
 Position=350,27,365,47
-Item=Q57_BUCAS_HEARD,HOUSEHOLDSURVEY_DICT
+Item=AREA_HAS_BUCAS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=11
   
 [Text]
 Position=50,30,330,46
+Text=Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q57-Q61 apply only to areas with a BUCAS center.)
+ 
+  
+[Field]
+Name=Q57_BUCAS_HEARD
+Position=350,57,365,77
+Item=Q57_BUCAS_HEARD,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=11
+  
+[Text]
+Position=50,60,330,76
 Text=57. Have you heard about Bagong Urgent Care and Ambulatory Service (BUCAS) center?
  
   
 [Field]
 Name=Q58_BUCAS_SOURCE
-Position=350,57,365,77
+Position=350,87,365,107
 Item=Q58_BUCAS_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
 Form=11
   
 [Text]
-Position=50,60,330,76
+Position=50,90,330,106
 Text=58. If yes, what are your sources of information about this BUCAS center?
  
   
 [Field]
 Name=Q58_BUCAS_SOURCE_OTHER_TXT
-Position=350,87,760,107
+Position=350,117,760,137
 Item=Q58_BUCAS_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,90,330,106
+Position=50,120,330,136
 Text=58. If yes, what are your sources of information about this BUCAS center? — Other (specify) text
  
   
 [Field]
 Name=Q59_BUCAS_UNDERSTAND
-Position=350,117,365,137
+Position=350,147,365,167
 Item=Q59_BUCAS_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
 Form=11
   
 [Text]
-Position=50,120,330,136
+Position=50,150,330,166
 Text=59. What is your understanding about a BUCAS center?
  
   
 [Field]
 Name=Q59_BUCAS_UNDERSTAND_OTHER_TXT
-Position=350,147,760,167
+Position=350,177,760,197
 Item=Q59_BUCAS_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,150,330,166
+Position=50,180,330,196
 Text=59. What is your understanding about a BUCAS center? — Other (specify) text
  
   
 [Field]
 Name=Q60_BUCAS_ACCESSED
-Position=350,177,365,197
+Position=350,207,365,227
 Item=Q60_BUCAS_ACCESSED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=11
   
 [Text]
-Position=50,180,330,196
+Position=50,210,330,226
 Text=60. In the last six months, did you or any member of your HH accessed the services in a BUCAS center?
  
   
 [Field]
 Name=Q61_BUCAS_SERVICES
-Position=350,207,365,227
+Position=350,237,365,257
 Item=Q61_BUCAS_SERVICES,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
 Form=11
   
 [Text]
-Position=50,210,330,226
+Position=50,240,330,256
 Text=61. If yes, which of the services did you avail?
  
   
 [Field]
 Name=Q61_BUCAS_SERVICES_OTHER_TXT
-Position=350,237,760,257
+Position=350,267,760,287
 Item=Q61_BUCAS_SERVICES_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=11
   
 [Text]
-Position=50,240,330,256
+Position=50,270,330,286
 Text=61. If yes, which of the services did you avail? — Other (specify) text
  
   
 [Block]
 Name=DG_BLK_32
-Label=Q57
+Label=Questions
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
 Name=DG_BLK_33
-Label=Q58
+Label=Q57
 DisplayTogether=Yes
 Position=2
 Length=1
@@ -2135,7 +2149,7 @@ Length=1
   
 [Block]
 Name=DG_BLK_35
-Label=Q59
+Label=Q58
 DisplayTogether=Yes
 Position=6
 Length=1
@@ -2149,14 +2163,14 @@ Length=1
   
 [Block]
 Name=DG_BLK_37
-Label=Q60
+Label=Q59
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
 Name=DG_BLK_38
-Label=Q61
+Label=Q60
 DisplayTogether=Yes
 Position=12
 Length=1
@@ -2166,6 +2180,13 @@ Name=DG_BLK_39
 Label=Q61
 DisplayTogether=Yes
 Position=14
+Length=1
+  
+[Block]
+Name=DG_BLK_40
+Label=Q61
+DisplayTogether=Yes
+Position=16
 Length=1
   
 [EndGroup]
@@ -2301,336 +2322,355 @@ Text=68. How easy is it for you to access a pharmacy or drugstore?
  
   
 [Field]
-Name=Q69_GAMOT_HEARD
+Name=AREA_HAS_GAMOT
 Position=350,327,365,347
-Item=Q69_GAMOT_HEARD,HOUSEHOLDSURVEY_DICT
+Item=AREA_HAS_GAMOT,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=12
   
 [Text]
 Position=50,330,330,346
+Text=Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q69-Q76 apply only to areas with GAMOT.)
+ 
+  
+[Field]
+Name=Q69_GAMOT_HEARD
+Position=350,357,365,377
+Item=Q69_GAMOT_HEARD,HOUSEHOLDSURVEY_DICT
+DataCaptureType=RadioButton
+Form=12
+  
+[Text]
+Position=50,360,330,376
 Text=69. Have you heard of the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's YAKAP/Konsulta or primary care benefit package?
  
   
 [Field]
 Name=Q70_GAMOT_SOURCE
-Position=350,357,365,377
+Position=350,387,365,407
 Item=Q70_GAMOT_SOURCE,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
 Form=12
   
 [Text]
-Position=50,360,330,376
+Position=50,390,330,406
 Text=70. If yes, what are your sources of information for GAMOT Package?
  
   
 [Field]
 Name=Q70_GAMOT_SOURCE_OTHER_TXT
-Position=350,387,760,407
+Position=350,417,760,437
 Item=Q70_GAMOT_SOURCE_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,390,330,406
+Position=50,420,330,436
 Text=70. If yes, what are your sources of information for GAMOT Package? — Other (specify) text
  
   
 [Field]
 Name=Q71_GAMOT_UNDERSTAND
-Position=350,417,365,437
+Position=350,447,365,467
 Item=Q71_GAMOT_UNDERSTAND,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
 Form=12
   
 [Text]
-Position=50,420,330,436
+Position=50,450,330,466
 Text=71. What is your understanding of the GAMOT Package?
  
   
 [Field]
 Name=Q71_GAMOT_UNDERSTAND_OTHER_TXT
-Position=350,447,760,467
+Position=350,477,760,497
 Item=Q71_GAMOT_UNDERSTAND_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,450,330,466
+Position=50,480,330,496
 Text=71. What is your understanding of the GAMOT Package? — Other (specify) text
  
   
 [Field]
 Name=Q72_GAMOT_OBTAINED
-Position=350,477,365,497
+Position=350,507,365,527
 Item=Q72_GAMOT_OBTAINED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=12
   
 [Text]
-Position=50,480,330,496
+Position=50,510,330,526
 Text=72. Did you get the medicines from the GAMOT Package during the past 6 months?
  
   
 [Field]
 Name=Q73_GAMOT_MEDS_LIST
-Position=350,507,760,527
+Position=350,537,760,557
 Item=Q73_GAMOT_MEDS_LIST,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,510,330,526
+Position=50,540,330,556
 Text=73. What are the medications that you obtained from the GAMOT Package? [LIST]
  
   
 [Field]
 Name=Q74_WHERE_REST
-Position=350,537,365,557
+Position=350,567,365,587
 Item=Q74_WHERE_REST,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
 Form=12
   
 [Text]
-Position=50,540,330,556
+Position=50,570,330,586
 Text=74. Where did you get the rest of the medicines?
  
   
 [Field]
 Name=Q74_WHERE_REST_OTHER_TXT
-Position=350,567,760,587
+Position=350,597,760,617
 Item=Q74_WHERE_REST_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,570,330,586
+Position=50,600,330,616
 Text=74. Where did you get the rest of the medicines? — Other (specify) text
  
   
 [Field]
 Name=Q75_BRAND_GEN_KNOWS
-Position=350,597,365,617
+Position=350,627,365,647
 Item=Q75_BRAND_GEN_KNOWS,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=12
   
 [Text]
-Position=50,600,330,616
+Position=50,630,330,646
 Text=75. Do you know the difference between a 'branded' and a 'generic' medicine?
  
   
 [Field]
 Name=Q76_BRAND_OR_GEN
-Position=350,627,365,647
+Position=350,657,365,677
 Item=Q76_BRAND_OR_GEN,HOUSEHOLDSURVEY_DICT
 DataCaptureType=RadioButton
 Form=12
   
 [Text]
-Position=50,630,330,646
+Position=50,660,330,676
 Text=76. Was/were the medicine/s you bought outside of GAMOT pharmacy branded or generic?
  
   
 [Field]
 Name=Q77_WHY_GENERIC
-Position=350,657,365,677
+Position=350,687,365,707
 Item=Q77_WHY_GENERIC,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
 Form=12
   
 [Text]
-Position=50,660,330,676
+Position=50,690,330,706
 Text=77. If generic, why did you buy generic medicine?
  
   
 [Field]
 Name=Q77_WHY_GENERIC_OTHER_TXT
-Position=350,687,760,707
+Position=350,717,760,737
 Item=Q77_WHY_GENERIC_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,690,330,706
+Position=50,720,330,736
 Text=77. If generic, why did you buy generic medicine? — Other (specify) text
  
   
 [Field]
 Name=Q78_WHY_BRANDED
-Position=350,717,365,737
+Position=350,747,365,767
 Item=Q78_WHY_BRANDED,HOUSEHOLDSURVEY_DICT
 DataCaptureType=CheckBox
 Form=12
   
 [Text]
-Position=50,720,330,736
-Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.)
+Position=50,750,330,766
+Text=78. If branded, why did you buy branded medicine?
  
   
 [Field]
 Name=Q78_WHY_BRANDED_OTHER_TXT
-Position=350,747,760,767
+Position=350,777,760,797
 Item=Q78_WHY_BRANDED_OTHER_TXT,HOUSEHOLDSURVEY_DICT
 UseUnicodeTextBox=Yes
 DataCaptureType=TextBox
 Form=12
   
 [Text]
-Position=50,750,330,766
-Text=78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.) — Other (specify) text
+Position=50,780,330,796
+Text=78. If branded, why did you buy branded medicine? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_40
+Name=DG_BLK_41
 Label=Q62
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_41
+Name=DG_BLK_42
 Label=Q63-Q64
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_BLK_42
+Name=DG_BLK_43
 Label=Q65
 DisplayTogether=Yes
 Position=5
 Length=1
   
 [Block]
-Name=DG_BLK_43
+Name=DG_BLK_44
 Label=Q65
 DisplayTogether=Yes
 Position=7
 Length=1
   
 [Block]
-Name=DG_BLK_44
+Name=DG_BLK_45
 Label=Q66
 DisplayTogether=Yes
 Position=9
 Length=1
   
 [Block]
-Name=DG_BLK_45
+Name=DG_BLK_46
 Label=Q66
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_46
+Name=DG_BLK_47
 Label=Q67-Q68
 DisplayTogether=Yes
 Position=13
 Length=3
   
 [Block]
-Name=DG_BLK_47
-Label=Q69
+Name=DG_BLK_48
+Label=Questions
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_48
-Label=Q70
+Name=DG_BLK_49
+Label=Q69
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_49
+Name=DG_BLK_50
 Label=Q70
 DisplayTogether=Yes
 Position=21
 Length=1
   
 [Block]
-Name=DG_BLK_50
-Label=Q71
+Name=DG_BLK_51
+Label=Q70
 DisplayTogether=Yes
 Position=23
 Length=1
   
 [Block]
-Name=DG_BLK_51
+Name=DG_BLK_52
 Label=Q71
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_52
-Label=Q72
+Name=DG_BLK_53
+Label=Q71
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_53
-Label=Q73
+Name=DG_BLK_54
+Label=Q72
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_54
-Label=Q74
+Name=DG_BLK_55
+Label=Q73
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_55
+Name=DG_BLK_56
 Label=Q74
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_56
-Label=Q75-Q76
+Name=DG_BLK_57
+Label=Q74
 DisplayTogether=Yes
 Position=35
-Length=2
-  
-[Block]
-Name=DG_BLK_57
-Label=Q77
-DisplayTogether=Yes
-Position=38
 Length=1
   
 [Block]
 Name=DG_BLK_58
+Label=Q75-Q76
+DisplayTogether=Yes
+Position=37
+Length=2
+  
+[Block]
+Name=DG_BLK_59
 Label=Q77
 DisplayTogether=Yes
 Position=40
 Length=1
   
 [Block]
-Name=DG_BLK_59
-Label=Q78
+Name=DG_BLK_60
+Label=Q77
 DisplayTogether=Yes
 Position=42
 Length=1
   
 [Block]
-Name=DG_BLK_60
+Name=DG_BLK_61
 Label=Q78
 DisplayTogether=Yes
 Position=44
+Length=1
+  
+[Block]
+Name=DG_BLK_62
+Label=Q78
+DisplayTogether=Yes
+Position=46
 Length=1
   
 [EndGroup]
@@ -2829,105 +2869,105 @@ Text=88. Why did you find it difficult? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_61
+Name=DG_BLK_63
 Label=Q79
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_62
+Name=DG_BLK_64
 Label=Q79
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_63
+Name=DG_BLK_65
 Label=Q80
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_64
+Name=DG_BLK_66
 Label=Q80
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_65
+Name=DG_BLK_67
 Label=Q81
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_66
+Name=DG_BLK_68
 Label=Q82
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_67
+Name=DG_BLK_69
 Label=Q82
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_68
+Name=DG_BLK_70
 Label=Q83
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_69
+Name=DG_BLK_71
 Label=Q84
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_70
+Name=DG_BLK_72
 Label=Q85
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_71
+Name=DG_BLK_73
 Label=Q85
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_72
+Name=DG_BLK_74
 Label=Q86
 DisplayTogether=Yes
 Position=22
 Length=1
   
 [Block]
-Name=DG_BLK_73
+Name=DG_BLK_75
 Label=Q87
 DisplayTogether=Yes
 Position=24
 Length=1
   
 [Block]
-Name=DG_BLK_74
+Name=DG_BLK_76
 Label=Q88
 DisplayTogether=Yes
 Position=26
 Length=1
   
 [Block]
-Name=DG_BLK_75
+Name=DG_BLK_77
 Label=Q88
 DisplayTogether=Yes
 Position=28
@@ -3152,84 +3192,84 @@ Text=100. When you have to visit your primary care facility, do you have to take
  
   
 [Block]
-Name=DG_BLK_76
+Name=DG_BLK_78
 Label=Q89
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_77
+Name=DG_BLK_79
 Label=Q89-Q90
 DisplayTogether=Yes
 Position=2
 Length=2
   
 [Block]
-Name=DG_BLK_78
+Name=DG_BLK_80
 Label=Q91
 DisplayTogether=Yes
 Position=5
 Length=1
   
 [Block]
-Name=DG_BLK_79
+Name=DG_BLK_81
 Label=Q91
 DisplayTogether=Yes
 Position=7
 Length=1
   
 [Block]
-Name=DG_BLK_80
+Name=DG_BLK_82
 Label=Q92
 DisplayTogether=Yes
 Position=9
 Length=1
   
 [Block]
-Name=DG_BLK_81
+Name=DG_BLK_83
 Label=Q92
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_82
+Name=DG_BLK_84
 Label=Q93
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_83
+Name=DG_BLK_85
 Label=Q93
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_84
+Name=DG_BLK_86
 Label=Q94
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_85
+Name=DG_BLK_87
 Label=Q94
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_86
+Name=DG_BLK_88
 Label=Q95-Q99
 DisplayTogether=Yes
 Position=21
 Length=5
   
 [Block]
-Name=DG_BLK_87
+Name=DG_BLK_89
 Label=Q100
 DisplayTogether=Yes
 Position=27
@@ -3394,77 +3434,77 @@ Text=107. Did you or your household members do any other actions to improve your
  
   
 [Block]
-Name=DG_BLK_88
+Name=DG_BLK_90
 Label=Q101
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_89
+Name=DG_BLK_91
 Label=Q101
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_90
+Name=DG_BLK_92
 Label=Q102
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_91
+Name=DG_BLK_93
 Label=Q102
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_92
+Name=DG_BLK_94
 Label=Q103
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_93
+Name=DG_BLK_95
 Label=Q103
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_94
+Name=DG_BLK_96
 Label=Q104-Q105
 DisplayTogether=Yes
 Position=12
 Length=2
   
 [Block]
-Name=DG_BLK_95
+Name=DG_BLK_97
 Label=Q106
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_96
+Name=DG_BLK_98
 Label=Q106
 DisplayTogether=Yes
 Position=17
 Length=1
   
 [Block]
-Name=DG_BLK_97
+Name=DG_BLK_99
 Label=Q107
 DisplayTogether=Yes
 Position=19
 Length=1
   
 [Block]
-Name=DG_BLK_98
+Name=DG_BLK_100
 Label=Q107
 DisplayTogether=Yes
 Position=21
@@ -3660,7 +3700,7 @@ Form=16
   
 [Text]
 Position=50,450,330,466
-Text=118. Overall, how would you rate your satisfaction with the referral process? (Only if Q112=Yes)
+Text=118. Overall, how satisfied were you with the referral process — from being referred to the specialist or other facility through your visit there?
  
   
 [Field]
@@ -3761,112 +3801,112 @@ Text=125. Overall, how would you rate your experience with the referral process?
  
   
 [Block]
-Name=DG_BLK_99
+Name=DG_BLK_101
 Label=Q108
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_100
+Name=DG_BLK_102
 Label=Q109
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_101
+Name=DG_BLK_103
 Label=Q109
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_102
+Name=DG_BLK_104
 Label=Q110
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_103
+Name=DG_BLK_105
 Label=Q110
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_104
+Name=DG_BLK_106
 Label=Q111
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_105
+Name=DG_BLK_107
 Label=Q111
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_106
+Name=DG_BLK_108
 Label=Q112
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_107
+Name=DG_BLK_109
 Label=Q113
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_108
+Name=DG_BLK_110
 Label=Q113
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_109
+Name=DG_BLK_111
 Label=Q114-Q118
 DisplayTogether=Yes
 Position=20
 Length=5
   
 [Block]
-Name=DG_BLK_110
+Name=DG_BLK_112
 Label=Q119
 DisplayTogether=Yes
 Position=26
 Length=1
   
 [Block]
-Name=DG_BLK_111
+Name=DG_BLK_113
 Label=Q120
 DisplayTogether=Yes
 Position=28
 Length=1
   
 [Block]
-Name=DG_BLK_112
+Name=DG_BLK_114
 Label=Q121
 DisplayTogether=Yes
 Position=30
 Length=1
   
 [Block]
-Name=DG_BLK_113
+Name=DG_BLK_115
 Label=Q121
 DisplayTogether=Yes
 Position=32
 Length=1
   
 [Block]
-Name=DG_BLK_114
+Name=DG_BLK_116
 Label=Q122-Q125
 DisplayTogether=Yes
 Position=34
@@ -3980,56 +4020,56 @@ Text=131. During your hospitalization in a DOH-retained hospital, did you or you
  
   
 [Block]
-Name=DG_BLK_115
+Name=DG_BLK_117
 Label=Q126
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_116
+Name=DG_BLK_118
 Label=Q127
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_117
+Name=DG_BLK_119
 Label=Q127
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_118
+Name=DG_BLK_120
 Label=Q128
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_119
+Name=DG_BLK_121
 Label=Q128
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_120
+Name=DG_BLK_122
 Label=Q129
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_121
+Name=DG_BLK_123
 Label=Q130
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_122
+Name=DG_BLK_124
 Label=Q131
 DisplayTogether=Yes
 Position=14
@@ -4279,126 +4319,126 @@ Text=143. From your most recent visit, how did you pay? — Other (specify) text
  
   
 [Block]
-Name=DG_BLK_123
+Name=DG_BLK_125
 Label=Q132
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_124
+Name=DG_BLK_126
 Label=Q133
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_125
+Name=DG_BLK_127
 Label=Q133
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_126
+Name=DG_BLK_128
 Label=Q134
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_BLK_127
+Name=DG_BLK_129
 Label=Q134
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_BLK_128
+Name=DG_BLK_130
 Label=Q135
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_BLK_129
+Name=DG_BLK_131
 Label=Q136
 DisplayTogether=Yes
 Position=12
 Length=1
   
 [Block]
-Name=DG_BLK_130
+Name=DG_BLK_132
 Label=Q137
 DisplayTogether=Yes
 Position=14
 Length=1
   
 [Block]
-Name=DG_BLK_131
+Name=DG_BLK_133
 Label=Q137
 DisplayTogether=Yes
 Position=16
 Length=1
   
 [Block]
-Name=DG_BLK_132
+Name=DG_BLK_134
 Label=Q138
 DisplayTogether=Yes
 Position=18
 Length=1
   
 [Block]
-Name=DG_BLK_133
+Name=DG_BLK_135
 Label=Q138
 DisplayTogether=Yes
 Position=20
 Length=1
   
 [Block]
-Name=DG_BLK_134
+Name=DG_BLK_136
 Label=Q139-Q140
 DisplayTogether=Yes
 Position=22
 Length=2
   
 [Block]
-Name=DG_BLK_135
+Name=DG_BLK_137
 Label=Q141
 DisplayTogether=Yes
 Position=25
 Length=1
   
 [Block]
-Name=DG_BLK_136
+Name=DG_BLK_138
 Label=Q141
 DisplayTogether=Yes
 Position=27
 Length=1
   
 [Block]
-Name=DG_BLK_137
+Name=DG_BLK_139
 Label=Q141
 DisplayTogether=Yes
 Position=29
 Length=1
   
 [Block]
-Name=DG_BLK_138
+Name=DG_BLK_140
 Label=Q142
 DisplayTogether=Yes
 Position=31
 Length=1
   
 [Block]
-Name=DG_BLK_139
+Name=DG_BLK_141
 Label=Q143
 DisplayTogether=Yes
 Position=33
 Length=1
   
 [Block]
-Name=DG_BLK_140
+Name=DG_BLK_142
 Label=Q143
 DisplayTogether=Yes
 Position=35
@@ -4422,7 +4462,7 @@ Form=19
   
 [Text]
 Position=50,30,330,46
-Text=144. Cereals (rice, flour, noodles, corn, etc.) — Consumed by household in reference period?
+Text=144. Cereals (rice, flour, noodles, corn, etc.) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4434,7 +4474,7 @@ Form=19
   
 [Text]
 Position=50,60,330,76
-Text=144. Cereals (rice, flour, noodles, corn, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=144. Cereals (rice, flour, noodles, corn, etc.) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4446,7 +4486,7 @@ Form=19
   
 [Text]
 Position=50,90,330,106
-Text=144. Cereals (rice, flour, noodles, corn, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=144. Cereals (rice, flour, noodles, corn, etc.) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4458,7 +4498,7 @@ Form=19
   
 [Text]
 Position=50,120,330,136
-Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Consumed by household in reference period?
+Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4470,7 +4510,7 @@ Form=19
   
 [Text]
 Position=50,150,330,166
-Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4482,7 +4522,7 @@ Form=19
   
 [Text]
 Position=50,180,330,196
-Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if...
  
   
 [Field]
@@ -4494,7 +4534,7 @@ Form=19
   
 [Text]
 Position=50,210,330,226
-Text=146. Vegetables (fresh, dried, dehydrated, frozen) — Consumed by household in reference period?
+Text=146. Vegetables (fresh, dried, dehydrated, frozen) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4506,7 +4546,7 @@ Form=19
   
 [Text]
 Position=50,240,330,256
-Text=146. Vegetables (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=146. Vegetables (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4518,7 +4558,7 @@ Form=19
   
 [Text]
 Position=50,270,330,286
-Text=146. Vegetables (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=146. Vegetables (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4530,7 +4570,7 @@ Form=19
   
 [Text]
 Position=50,300,330,316
-Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — Consumed by household in reference period?
+Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4542,7 +4582,7 @@ Form=19
   
 [Text]
 Position=50,330,330,346
-Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4554,7 +4594,7 @@ Form=19
   
 [Text]
 Position=50,360,330,376
-Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4566,7 +4606,7 @@ Form=19
   
 [Text]
 Position=50,390,330,406
-Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Consumed by household in reference period?
+Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4578,7 +4618,7 @@ Form=19
   
 [Text]
 Position=50,420,330,436
-Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4590,7 +4630,7 @@ Form=19
   
 [Text]
 Position=50,450,330,466
-Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999...
  
   
 [Field]
@@ -4602,7 +4642,7 @@ Form=19
   
 [Text]
 Position=50,480,330,496
-Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Consumed by household in reference period?
+Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4614,7 +4654,7 @@ Form=19
   
 [Text]
 Position=50,510,330,526
-Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4626,7 +4666,7 @@ Form=19
   
 [Text]
 Position=50,540,330,556
-Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter...
  
   
 [Field]
@@ -4638,7 +4678,7 @@ Form=19
   
 [Text]
 Position=50,570,330,586
-Text=150. Any kind of egg (from chicken, duck, quail, etc.) — Consumed by household in reference period?
+Text=150. Any kind of egg (from chicken, duck, quail, etc.) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4650,7 +4690,7 @@ Form=19
   
 [Text]
 Position=50,600,330,616
-Text=150. Any kind of egg (from chicken, duck, quail, etc.) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=150. Any kind of egg (from chicken, duck, quail, etc.) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4662,7 +4702,7 @@ Form=19
   
 [Text]
 Position=50,630,330,646
-Text=150. Any kind of egg (from chicken, duck, quail, etc.) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=150. Any kind of egg (from chicken, duck, quail, etc.) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4674,7 +4714,7 @@ Form=19
   
 [Text]
 Position=50,660,330,676
-Text=151. Milk and other milk products, excluding butter — Consumed by household in reference period?
+Text=151. Milk and other milk products, excluding butter — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4686,7 +4726,7 @@ Form=19
   
 [Text]
 Position=50,690,330,706
-Text=151. Milk and other milk products, excluding butter — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=151. Milk and other milk products, excluding butter — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4698,7 +4738,7 @@ Form=19
   
 [Text]
 Position=50,720,330,736
-Text=151. Milk and other milk products, excluding butter — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=151. Milk and other milk products, excluding butter — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4710,7 +4750,7 @@ Form=19
   
 [Text]
 Position=50,750,330,766
-Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Consumed by household in reference period?
+Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4722,7 +4762,7 @@ Form=19
   
 [Text]
 Position=50,780,330,796
-Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4734,7 +4774,7 @@ Form=19
   
 [Text]
 Position=50,810,330,826
-Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine....
  
   
 [Field]
@@ -4746,7 +4786,7 @@ Form=19
   
 [Text]
 Position=50,840,330,856
-Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Consumed by household in reference period?
+Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4758,7 +4798,7 @@ Form=19
   
 [Text]
 Position=50,870,330,886
-Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4770,7 +4810,7 @@ Form=19
   
 [Text]
 Position=50,900,330,916
-Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter...
  
   
 [Field]
@@ -4782,7 +4822,7 @@ Form=19
   
 [Text]
 Position=50,930,330,946
-Text=154. Condiments and other spices and other ready-made meals — Consumed by household in reference period?
+Text=154. Condiments and other spices and other ready-made meals — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4794,7 +4834,7 @@ Form=19
   
 [Text]
 Position=50,960,330,976
-Text=154. Condiments and other spices and other ready-made meals — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=154. Condiments and other spices and other ready-made meals — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4806,7 +4846,7 @@ Form=19
   
 [Text]
 Position=50,990,330,1006
-Text=154. Condiments and other spices and other ready-made meals — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=154. Condiments and other spices and other ready-made meals — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4818,7 +4858,7 @@ Form=19
   
 [Text]
 Position=50,1020,330,1036
-Text=155. Water and non-alcoholic beverages (e.g., coffee) — Consumed by household in reference period?
+Text=155. Water and non-alcoholic beverages (e.g., coffee) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4830,7 +4870,7 @@ Form=19
   
 [Text]
 Position=50,1050,330,1066
-Text=155. Water and non-alcoholic beverages (e.g., coffee) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=155. Water and non-alcoholic beverages (e.g., coffee) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4842,7 +4882,7 @@ Form=19
   
 [Text]
 Position=50,1080,330,1096
-Text=155. Water and non-alcoholic beverages (e.g., coffee) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=155. Water and non-alcoholic beverages (e.g., coffee) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4854,7 +4894,7 @@ Form=19
   
 [Text]
 Position=50,1110,330,1126
-Text=156. Alcoholic beverages (e.g., local and imported) — Consumed by household in reference period?
+Text=156. Alcoholic beverages (e.g., local and imported) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4866,7 +4906,7 @@ Form=19
   
 [Text]
 Position=50,1140,330,1156
-Text=156. Alcoholic beverages (e.g., local and imported) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=156. Alcoholic beverages (e.g., local and imported) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4878,7 +4918,7 @@ Form=19
   
 [Text]
 Position=50,1170,330,1186
-Text=156. Alcoholic beverages (e.g., local and imported) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=156. Alcoholic beverages (e.g., local and imported) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4902,7 +4942,7 @@ Form=19
   
 [Text]
 Position=50,1230,330,1246
-Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Consumed by household in reference period?
+Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4914,7 +4954,7 @@ Form=19
   
 [Text]
 Position=50,1260,330,1276
-Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4926,7 +4966,7 @@ Form=19
   
 [Text]
 Position=50,1290,330,1306
-Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...
  
   
 [Field]
@@ -4938,7 +4978,7 @@ Form=19
   
 [Text]
 Position=50,1320,330,1336
-Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Consumed by household in reference period?
+Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — In the last week, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4950,7 +4990,7 @@ Form=19
   
 [Text]
 Position=50,1350,330,1366
-Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4962,7 +5002,7 @@ Form=19
   
 [Text]
 Position=50,1380,330,1396
-Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your...
  
   
 [Field]
@@ -4974,7 +5014,7 @@ Form=19
   
 [Text]
 Position=50,1410,330,1426
-Text=160. Personal care products (e.g., shampoo, haircut) — Consumed by household in reference period?
+Text=160. Personal care products (e.g., shampoo, haircut) — In the last month, did you or any member of your household consume this item?
  
   
 [Field]
@@ -4986,7 +5026,7 @@ Form=19
   
 [Text]
 Position=50,1440,330,1456
-Text=160. Personal care products (e.g., shampoo, haircut) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=160. Personal care products (e.g., shampoo, haircut) — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -4998,7 +5038,7 @@ Form=19
   
 [Text]
 Position=50,1470,330,1486
-Text=160. Personal care products (e.g., shampoo, haircut) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=160. Personal care products (e.g., shampoo, haircut) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5010,7 +5050,7 @@ Form=19
   
 [Text]
 Position=50,1500,330,1516
-Text=161. Household cleaning and maintenance products and services including domestic ones — Consumed by household in reference period?
+Text=161. Household cleaning and maintenance products and services including domestic ones — In the last month, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5022,7 +5062,7 @@ Form=19
   
 [Text]
 Position=50,1530,330,1546
-Text=161. Household cleaning and maintenance products and services including domestic ones — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=161. Household cleaning and maintenance products and services including domestic ones — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5034,7 +5074,7 @@ Form=19
   
 [Text]
 Position=50,1560,330,1576
-Text=161. Household cleaning and maintenance products and services including domestic ones — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=161. Household cleaning and maintenance products and services including domestic ones — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter...
  
   
 [Field]
@@ -5046,7 +5086,7 @@ Form=19
   
 [Text]
 Position=50,1590,330,1606
-Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Consumed by household in reference period?
+Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — In the last month, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5058,7 +5098,7 @@ Form=19
   
 [Text]
 Position=50,1620,330,1636
-Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5070,7 +5110,7 @@ Form=19
   
 [Text]
 Position=50,1650,330,1666
-Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is...
  
   
 [Field]
@@ -5082,7 +5122,7 @@ Form=19
   
 [Text]
 Position=50,1680,330,1696
-Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Consumed by household in reference period?
+Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — In the last month, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5094,7 +5134,7 @@ Form=19
   
 [Text]
 Position=50,1710,330,1726
-Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — During the last month, how much did your household spend to purchase this...
  
   
 [Field]
@@ -5106,7 +5146,7 @@ Form=19
   
 [Text]
 Position=50,1740,330,1756
-Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't...
+Text=163. Passenger transportation services (jeepney, bus, train, taxi, plane, school bus) including rentals and online purchases and fuels and lubricants for personal vehicle — During the last month, what was the total estimated value of this item that...
  
   
 [Field]
@@ -5118,7 +5158,7 @@ Form=19
   
 [Text]
 Position=50,1770,330,1786
-Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Consumed by household in reference period?
+Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — In the last month, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5130,7 +5170,7 @@ Form=19
   
 [Text]
 Position=50,1800,330,1816
-Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — During the last month, how much did your household spend to purchase this item? (PHP; enter...
  
   
 [Field]
@@ -5142,7 +5182,7 @@ Form=19
   
 [Text]
 Position=50,1830,330,1846
-Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — During the last month, what was the total estimated value of this item that you produced...
  
   
 [Field]
@@ -5154,7 +5194,7 @@ Form=19
   
 [Text]
 Position=50,1860,330,1876
-Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Consumed by household in reference period?
+Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — In the last month, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5166,7 +5206,7 @@ Form=19
   
 [Text]
 Position=50,1890,330,1906
-Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5178,7 +5218,7 @@ Form=19
   
 [Text]
 Position=50,1920,330,1936
-Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter...
  
   
 [Field]
@@ -5190,7 +5230,7 @@ Form=19
   
 [Text]
 Position=50,1950,330,1966
-Text=166. Postal services — Consumed by household in reference period?
+Text=166. Postal services — In the last month, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5202,7 +5242,7 @@ Form=19
   
 [Text]
 Position=50,1980,330,1996
-Text=166. Postal services — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=166. Postal services — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5214,7 +5254,7 @@ Form=19
   
 [Text]
 Position=50,2010,330,2026
-Text=166. Postal services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=166. Postal services — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5226,7 +5266,7 @@ Form=19
   
 [Text]
 Position=50,2040,330,2056
-Text=167. Housing (actual rentals, estimated value of rent if owned) — Consumed by household in reference period?
+Text=167. Housing (actual rentals, estimated value of rent if owned) — In the last month, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5238,7 +5278,7 @@ Form=19
   
 [Text]
 Position=50,2070,330,2086
-Text=167. Housing (actual rentals, estimated value of rent if owned) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=167. Housing (actual rentals, estimated value of rent if owned) — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5250,7 +5290,7 @@ Form=19
   
 [Text]
 Position=50,2100,330,2116
-Text=167. Housing (actual rentals, estimated value of rent if owned) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=167. Housing (actual rentals, estimated value of rent if owned) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5262,7 +5302,7 @@ Form=19
   
 [Text]
 Position=50,2130,330,2146
-Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Consumed by household in reference period?
+Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — In the last 6 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5274,7 +5314,7 @@ Form=19
   
 [Text]
 Position=50,2160,330,2176
-Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5286,7 +5326,7 @@ Form=19
   
 [Text]
 Position=50,2190,330,2206
-Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...
  
   
 [Field]
@@ -5298,7 +5338,7 @@ Form=19
   
 [Text]
 Position=50,2220,330,2236
-Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Consumed by household in reference period?
+Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — In the last 6 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5310,7 +5350,7 @@ Form=19
   
 [Text]
 Position=50,2250,330,2266
-Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — During the last 6 months, how much did your household spend to purchase this item?...
  
   
 [Field]
@@ -5322,7 +5362,7 @@ Form=19
   
 [Text]
 Position=50,2280,330,2296
-Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs — During the last 6 months, what was the total estimated value of this item that you...
  
   
 [Field]
@@ -5334,7 +5374,7 @@ Form=19
   
 [Text]
 Position=50,2310,330,2326
-Text=170. Educational services (e.g., tuitions and tutoring) — Consumed by household in reference period?
+Text=170. Educational services (e.g., tuitions and tutoring) — In the last 12 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5346,7 +5386,7 @@ Form=19
   
 [Text]
 Position=50,2340,330,2356
-Text=170. Educational services (e.g., tuitions and tutoring) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=170. Educational services (e.g., tuitions and tutoring) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5358,7 +5398,7 @@ Form=19
   
 [Text]
 Position=50,2370,330,2386
-Text=170. Educational services (e.g., tuitions and tutoring) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=170. Educational services (e.g., tuitions and tutoring) — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5370,7 +5410,7 @@ Form=19
   
 [Text]
 Position=50,2400,330,2416
-Text=171. Accommodation services, including for educational establishment (e.g., hotels) — Consumed by household in reference period?
+Text=171. Accommodation services, including for educational establishment (e.g., hotels) — In the last 12 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5382,7 +5422,7 @@ Form=19
   
 [Text]
 Position=50,2430,330,2446
-Text=171. Accommodation services, including for educational establishment (e.g., hotels) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=171. Accommodation services, including for educational establishment (e.g., hotels) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5394,7 +5434,7 @@ Form=19
   
 [Text]
 Position=50,2460,330,2476
-Text=171. Accommodation services, including for educational establishment (e.g., hotels) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=171. Accommodation services, including for educational establishment (e.g., hotels) — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP...
  
   
 [Field]
@@ -5406,7 +5446,7 @@ Form=19
   
 [Text]
 Position=50,2490,330,2506
-Text=172. Garden and personal pets' products and services — Consumed by household in reference period?
+Text=172. Garden and personal pets' products and services — In the last 12 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5418,7 +5458,7 @@ Form=19
   
 [Text]
 Position=50,2520,330,2536
-Text=172. Garden and personal pets' products and services — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=172. Garden and personal pets' products and services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5430,7 +5470,7 @@ Form=19
   
 [Text]
 Position=50,2550,330,2566
-Text=172. Garden and personal pets' products and services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=172. Garden and personal pets' products and services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5442,7 +5482,7 @@ Form=19
   
 [Text]
 Position=50,2580,330,2596
-Text=173. Health insurance — Consumed by household in reference period?
+Text=173. Health insurance — In the last 12 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5454,7 +5494,7 @@ Form=19
   
 [Text]
 Position=50,2610,330,2626
-Text=173. Health insurance — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=173. Health insurance — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5466,7 +5506,7 @@ Form=19
   
 [Text]
 Position=50,2640,330,2656
-Text=173. Health insurance — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=173. Health insurance — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5478,7 +5518,7 @@ Form=19
   
 [Text]
 Position=50,2670,330,2686
-Text=174. Other insurance (e.g., for life and accident, and travel) — Consumed by household in reference period?
+Text=174. Other insurance (e.g., for life and accident, and travel) — In the last 12 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5490,7 +5530,7 @@ Form=19
   
 [Text]
 Position=50,2700,330,2716
-Text=174. Other insurance (e.g., for life and accident, and travel) — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=174. Other insurance (e.g., for life and accident, and travel) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5502,7 +5542,7 @@ Form=19
   
 [Text]
 Position=50,2730,330,2746
-Text=174. Other insurance (e.g., for life and accident, and travel) — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=174. Other insurance (e.g., for life and accident, and travel) — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't...
  
   
 [Field]
@@ -5514,7 +5554,7 @@ Form=19
   
 [Text]
 Position=50,2760,330,2776
-Text=175. Inpatient care services — Consumed by household in reference period?
+Text=175. Inpatient care services — In the last 12 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5526,7 +5566,7 @@ Form=19
   
 [Text]
 Position=50,2790,330,2806
-Text=175. Inpatient care services — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=175. Inpatient care services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5538,7 +5578,7 @@ Form=19
   
 [Text]
 Position=50,2820,330,2836
-Text=175. Inpatient care services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=175. Inpatient care services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5550,7 +5590,7 @@ Form=19
   
 [Text]
 Position=50,2850,330,2866
-Text=176. Emergency transportation and emergency rescue services — Consumed by household in reference period?
+Text=176. Emergency transportation and emergency rescue services — In the last 12 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5562,7 +5602,7 @@ Form=19
   
 [Text]
 Position=50,2880,330,2896
-Text=176. Emergency transportation and emergency rescue services — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=176. Emergency transportation and emergency rescue services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5574,7 +5614,7 @@ Form=19
   
 [Text]
 Position=50,2910,330,2926
-Text=176. Emergency transportation and emergency rescue services — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=176. Emergency transportation and emergency rescue services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5598,7 +5638,7 @@ Form=19
   
 [Text]
 Position=50,2970,330,2986
-Text=178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Consumed...
+Text=178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — In the...
  
   
 [Field]
@@ -5610,7 +5650,7 @@ Form=19
   
 [Text]
 Position=50,3000,330,3016
-Text=178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Amount...
+Text=178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — During...
  
   
 [Field]
@@ -5622,7 +5662,7 @@ Form=19
   
 [Text]
 Position=50,3030,330,3046
-Text=178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — Estimated...
+Text=178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself. — During...
  
   
 [Field]
@@ -5634,7 +5674,7 @@ Form=19
   
 [Text]
 Position=50,3060,330,3076
-Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Consumed by household in reference period?
+Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — In the last 6 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5646,7 +5686,7 @@ Form=19
   
 [Text]
 Position=50,3090,330,3106
-Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5658,7 +5698,7 @@ Form=19
   
 [Text]
 Position=50,3120,330,3136
-Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best...
  
   
 [Field]
@@ -5670,7 +5710,7 @@ Form=19
   
 [Text]
 Position=50,3150,330,3166
-Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Consumed by household in reference period?
+Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — In the last 6 months, did you or any member of your...
  
   
 [Field]
@@ -5682,7 +5722,7 @@ Form=19
   
 [Text]
 Position=50,3180,330,3196
-Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — During the last 6 months, how much did your household spend...
  
   
 [Field]
@@ -5694,7 +5734,7 @@ Form=19
   
 [Text]
 Position=50,3210,330,3226
-Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — Estimated value in-kind / received / own-produce (PHP; enter...
+Text=180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases — During the last 6 months, what was the total estimated value...
  
   
 [Field]
@@ -5706,7 +5746,7 @@ Form=19
   
 [Text]
 Position=50,3240,330,3256
-Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Consumed by household in reference period?
+Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — In the last 6 months, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5718,7 +5758,7 @@ Form=19
   
 [Text]
 Position=50,3270,330,3286
-Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5730,7 +5770,7 @@ Form=19
   
 [Text]
 Position=50,3300,330,3316
-Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — During the last 6 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine....
  
   
 [Field]
@@ -5754,7 +5794,7 @@ Form=19
   
 [Text]
 Position=50,3360,330,3376
-Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Consumed by household in reference period?
+Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — In the last month, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5766,7 +5806,7 @@ Form=19
   
 [Text]
 Position=50,3390,330,3406
-Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't...
  
   
 [Field]
@@ -5778,7 +5818,7 @@ Form=19
   
 [Text]
 Position=50,3420,330,3436
-Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — During the last month, what was the total estimated value of this item that you produced, received in-kind...
  
   
 [Field]
@@ -5790,7 +5830,7 @@ Form=19
   
 [Text]
 Position=50,3450,330,3466
-Text=184. Outpatient medical and dental services, including online services, without overnight stay — Consumed by household in reference period?
+Text=184. Outpatient medical and dental services, including online services, without overnight stay — In the last month, did you or any member of your household consume this item?
  
   
 [Field]
@@ -5802,7 +5842,7 @@ Form=19
   
 [Text]
 Position=50,3480,330,3496
-Text=184. Outpatient medical and dental services, including online services, without overnight stay — Amount spent purchasing (PHP; enter 99999999 if don't know)
+Text=184. Outpatient medical and dental services, including online services, without overnight stay — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
  
   
 [Field]
@@ -5814,7 +5854,7 @@ Form=19
   
 [Text]
 Position=50,3510,330,3526
-Text=184. Outpatient medical and dental services, including online services, without overnight stay — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)
+Text=184. Outpatient medical and dental services, including online services, without overnight stay — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine....
  
   
 [Field]
@@ -5830,266 +5870,266 @@ Text=185. Total value of 183 and 184 (health, 1-month) — Auto-computed total (
  
   
 [Block]
-Name=DG_BLK_141
+Name=DG_BLK_143
 Label=Q144
 DisplayTogether=Yes
 Position=0
 Length=3
   
 [Block]
-Name=DG_BLK_142
+Name=DG_BLK_144
 Label=Q145
 DisplayTogether=Yes
 Position=4
 Length=3
   
 [Block]
-Name=DG_BLK_143
+Name=DG_BLK_145
 Label=Q146
 DisplayTogether=Yes
 Position=8
 Length=3
   
 [Block]
-Name=DG_BLK_144
+Name=DG_BLK_146
 Label=Q147
 DisplayTogether=Yes
 Position=12
 Length=3
   
 [Block]
-Name=DG_BLK_145
+Name=DG_BLK_147
 Label=Q148
 DisplayTogether=Yes
 Position=16
 Length=3
   
 [Block]
-Name=DG_BLK_146
+Name=DG_BLK_148
 Label=Q149
 DisplayTogether=Yes
 Position=20
 Length=3
   
 [Block]
-Name=DG_BLK_147
+Name=DG_BLK_149
 Label=Q150
 DisplayTogether=Yes
 Position=24
 Length=3
   
 [Block]
-Name=DG_BLK_148
+Name=DG_BLK_150
 Label=Q151
 DisplayTogether=Yes
 Position=28
 Length=3
   
 [Block]
-Name=DG_BLK_149
+Name=DG_BLK_151
 Label=Q152
 DisplayTogether=Yes
 Position=32
 Length=3
   
 [Block]
-Name=DG_BLK_150
+Name=DG_BLK_152
 Label=Q153
 DisplayTogether=Yes
 Position=36
 Length=3
   
 [Block]
-Name=DG_BLK_151
+Name=DG_BLK_153
 Label=Q154
 DisplayTogether=Yes
 Position=40
 Length=3
   
 [Block]
-Name=DG_BLK_152
+Name=DG_BLK_154
 Label=Q155
 DisplayTogether=Yes
 Position=44
 Length=3
   
 [Block]
-Name=DG_BLK_153
+Name=DG_BLK_155
 Label=Q156
 DisplayTogether=Yes
 Position=48
 Length=3
   
 [Block]
-Name=DG_BLK_154
+Name=DG_BLK_156
 Label=Q158
 DisplayTogether=Yes
 Position=53
 Length=3
   
 [Block]
-Name=DG_BLK_155
+Name=DG_BLK_157
 Label=Q159
 DisplayTogether=Yes
 Position=57
 Length=3
   
 [Block]
-Name=DG_BLK_156
+Name=DG_BLK_158
 Label=Q160
 DisplayTogether=Yes
 Position=61
 Length=3
   
 [Block]
-Name=DG_BLK_157
+Name=DG_BLK_159
 Label=Q161
 DisplayTogether=Yes
 Position=65
 Length=3
   
 [Block]
-Name=DG_BLK_158
+Name=DG_BLK_160
 Label=Q162
 DisplayTogether=Yes
 Position=69
 Length=3
   
 [Block]
-Name=DG_BLK_159
+Name=DG_BLK_161
 Label=Q163
 DisplayTogether=Yes
 Position=73
 Length=3
   
 [Block]
-Name=DG_BLK_160
+Name=DG_BLK_162
 Label=Q164
 DisplayTogether=Yes
 Position=77
 Length=3
   
 [Block]
-Name=DG_BLK_161
+Name=DG_BLK_163
 Label=Q165
 DisplayTogether=Yes
 Position=81
 Length=3
   
 [Block]
-Name=DG_BLK_162
+Name=DG_BLK_164
 Label=Q166
 DisplayTogether=Yes
 Position=85
 Length=3
   
 [Block]
-Name=DG_BLK_163
+Name=DG_BLK_165
 Label=Q167
 DisplayTogether=Yes
 Position=89
 Length=3
   
 [Block]
-Name=DG_BLK_164
+Name=DG_BLK_166
 Label=Q168
 DisplayTogether=Yes
 Position=93
 Length=3
   
 [Block]
-Name=DG_BLK_165
+Name=DG_BLK_167
 Label=Q169
 DisplayTogether=Yes
 Position=97
 Length=3
   
 [Block]
-Name=DG_BLK_166
+Name=DG_BLK_168
 Label=Q170
 DisplayTogether=Yes
 Position=101
 Length=3
   
 [Block]
-Name=DG_BLK_167
+Name=DG_BLK_169
 Label=Q171
 DisplayTogether=Yes
 Position=105
 Length=3
   
 [Block]
-Name=DG_BLK_168
+Name=DG_BLK_170
 Label=Q172
 DisplayTogether=Yes
 Position=109
 Length=3
   
 [Block]
-Name=DG_BLK_169
+Name=DG_BLK_171
 Label=Q173
 DisplayTogether=Yes
 Position=113
 Length=3
   
 [Block]
-Name=DG_BLK_170
+Name=DG_BLK_172
 Label=Q174
 DisplayTogether=Yes
 Position=117
 Length=3
   
 [Block]
-Name=DG_BLK_171
+Name=DG_BLK_173
 Label=Q175
 DisplayTogether=Yes
 Position=121
 Length=3
   
 [Block]
-Name=DG_BLK_172
+Name=DG_BLK_174
 Label=Q176
 DisplayTogether=Yes
 Position=125
 Length=3
   
 [Block]
-Name=DG_BLK_173
+Name=DG_BLK_175
 Label=Q178
 DisplayTogether=Yes
 Position=130
 Length=3
   
 [Block]
-Name=DG_BLK_174
+Name=DG_BLK_176
 Label=Q179
 DisplayTogether=Yes
 Position=134
 Length=3
   
 [Block]
-Name=DG_BLK_175
+Name=DG_BLK_177
 Label=Q180
 DisplayTogether=Yes
 Position=138
 Length=3
   
 [Block]
-Name=DG_BLK_176
+Name=DG_BLK_178
 Label=Q181
 DisplayTogether=Yes
 Position=142
 Length=3
   
 [Block]
-Name=DG_BLK_177
+Name=DG_BLK_179
 Label=Q183
 DisplayTogether=Yes
 Position=147
 Length=3
   
 [Block]
-Name=DG_BLK_178
+Name=DG_BLK_180
 Label=Q184
 DisplayTogether=Yes
 Position=151
@@ -6263,42 +6303,42 @@ Text=196. If your household chooses not to spend on health care for financial re
  
   
 [Block]
-Name=DG_BLK_179
+Name=DG_BLK_181
 Label=Q186-Q190
 DisplayTogether=Yes
 Position=0
 Length=5
   
 [Block]
-Name=DG_BLK_180
+Name=DG_BLK_182
 Label=Q191-Q194
 DisplayTogether=Yes
 Position=6
 Length=4
   
 [Block]
-Name=DG_BLK_181
+Name=DG_BLK_183
 Label=Q194
 DisplayTogether=Yes
 Position=11
 Length=1
   
 [Block]
-Name=DG_BLK_182
+Name=DG_BLK_184
 Label=Q195
 DisplayTogether=Yes
 Position=13
 Length=1
   
 [Block]
-Name=DG_BLK_183
+Name=DG_BLK_185
 Label=Q196
 DisplayTogether=Yes
 Position=15
 Length=1
   
 [Block]
-Name=DG_BLK_184
+Name=DG_BLK_186
 Label=Q196
 DisplayTogether=Yes
 Position=17
@@ -6363,14 +6403,14 @@ Text=199. Other (Specify) — text
  
   
 [Block]
-Name=DG_BLK_185
+Name=DG_BLK_187
 Label=Q197-Q199
 DisplayTogether=Yes
 Position=0
 Length=3
   
 [Block]
-Name=DG_BLK_186
+Name=DG_BLK_188
 Label=Q199
 DisplayTogether=Yes
 Position=4
@@ -6435,28 +6475,28 @@ Text=202. Do any of the following reasons describe why you are worried about you
  
   
 [Block]
-Name=DG_BLK_187
+Name=DG_BLK_189
 Label=Q200
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_BLK_188
+Name=DG_BLK_190
 Label=Q201
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_BLK_189
+Name=DG_BLK_191
 Label=Q202
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_BLK_190
+Name=DG_BLK_192
 Label=Q202
 DisplayTogether=Yes
 Position=6

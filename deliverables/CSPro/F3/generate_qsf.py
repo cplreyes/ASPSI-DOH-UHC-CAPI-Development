@@ -212,6 +212,8 @@ SECTION_INTROS = {
          "PhilHealth registration experience. We will also confirm their "
          "PhilHealth registration status and membership, and their "
          "registration to other health insurance."),
+    47: "Are you aware that there are PhilHealth packages for the following health services?",  # #404: verbatim Q47 stem from the paper questionnaire (battery had item labels but no question stem)
+    131: "How would you rate the cleanliness and comfort of the following amenities at this facility?",  # #486: verbatim Q131-134 stem from the paper questionnaire
     53: "We will now ask questions about the patient’s access to a primary care provider.",
     74: "We will now ask about the patient’s awareness of the YAKAP/Konsulta package.",
     83: ("We will now be asking about the patient’s actions taken for health "

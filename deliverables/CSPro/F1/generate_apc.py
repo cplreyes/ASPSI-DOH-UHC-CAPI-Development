@@ -277,9 +277,10 @@ CHECKBOX_BASES = {
     "Q34_DATA_REPORTS_USED",
     # #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box.
     # (#586: Q144 re-converted to Check Box per the tester's PAPI screenshot showing
-    # checkboxes — undoing the #576 single-select revert. Q160 stays single select_one:
-    # no PAPI evidence either way, flagged for ASPSI confirmation.)
-    "Q144_DIFFICULT_REASON",
+    # checkboxes — undoing the #576 single-select revert. #734: Q160 NOW converted too —
+    # the R5 tester supplied the PAPI screenshot (checkboxes) that the #576/#586 note said
+    # was missing, so the "flagged for ASPSI confirmation" hold is resolved, same basis as Q144.)
+    "Q144_DIFFICULT_REASON", "Q160_EXTERNAL_SERVICES_GO",
     "Q137_NBB_BARRIERS", "Q140_ZBB_BARRIERS", "Q146_MALASAKIT_WHY",
     "Q147_NO_MALASAKIT_WHY", "Q149_LGU_SUPPORT_FORMS", "Q155_SEND_REFERRAL_HOW",
     "Q156_REFERRAL_FORM_TYPE", "Q159_RECEIVE_REFERRAL_HOW", "Q163_HR_CHALL",
@@ -867,6 +868,12 @@ CHECKBOX_CONVERT_A = [
     # #586: Q144 re-converted to Check Box (PAPI shows checkboxes). Other-specify (code
     # 99) present; no exclusive None/IDK option -> exclusive=False. Not a skip target.
     ("Q144_DIFFICULT_REASON",       True, False, None),
+    # #734: Q160 'where do patients go for services not available' -> Check Box (PAPI shows
+    # checkboxes; resolves the #576/#586 flag). has_other=False: 'Other (specify)' is a plain
+    # tickable option (99) with NO _OTHER_TXT box (F1 hand-fmf can't auto-place a new text
+    # field; prior select_one had none either). 'I don't know' (90) is exclusive -> True.
+    # Terminal multi-select, no skip/gate.
+    ("Q160_EXTERNAL_SERVICES_GO",   False, True, None),
     ("Q137_NBB_BARRIERS",           True, True,  None),
     ("Q140_ZBB_BARRIERS",           True, True,  None),
     ("Q146_MALASAKIT_WHY",          True, False, None),

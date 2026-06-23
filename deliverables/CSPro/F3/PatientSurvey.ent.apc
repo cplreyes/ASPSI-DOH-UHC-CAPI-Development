@@ -246,9 +246,10 @@ function TakeVerificationPhoto(string photoFile)
       never reached the server ("no picture retained by the system"). Storing the
       bytes in a binary Image item is the supported way to sync a photo to CSWeb.
 
-      `photoFile` is no longer written to disk; the caller keeps it as the
-      human-readable label assigned to *_VERIFICATION_PHOTO_FILENAME (which also
-      serves as the "already captured" sentinel the trigger's onfocus guards on).
+      `photoFile` IS written to disk as of #727 (an ADDITIVE device-side copy via
+      Image.save below); the binary item above remains the CSWeb sync path. The caller
+      also keeps `photoFile` as the human-readable label assigned to
+      *_VERIFICATION_PHOTO_FILENAME (the "already captured" sentinel onfocus guards on).
       The parameter is kept so callers (F1/F3/F4 CAPTURE_VERIFICATION_PHOTO) need
       no change. NB: it is `photoFile`, not `filename` -- `filename` is a CSPro
       reserved word and errors at compile (verified 2026-06-08).
@@ -272,6 +273,18 @@ function TakeVerificationPhoto(string photoFile)
 
     { Resample before sync so the embedded JPG stays small (<= 1600 x 1200). }
     VERIFICATION_PHOTO_IMAGE.resample(maxWidth := 1600, maxHeight := 1200);
+
+    { #727 (Carl 2026-06-22): (1) show the captured photo to the enumerator right after
+      taking it (confirmation), and (2) save a copy into the device's shared *Pictures*
+      folder so it shows in the device Gallery. The CSWeb binary-Image sync (#713) is
+      unchanged. view() displays the image held by the object (CSPro 8 Users Guide p.541).
+      GALLERY: a bare-filename save goes to the app sandbox and is NOT gallery-visible — but
+      CSEntry requests LEGACY external storage (dumpsys-verified on the Itel:
+      requestLegacyExternalStorage + hasPreserveLegacyExternalStorage + WRITE_EXTERNAL_STORAGE
+      granted), so a raw write to /sdcard/Pictures IS indexed by MediaStore and appears in the
+      Gallery. Android-only: the getos() 10:19 guard above skips desktop (no /sdcard there). }
+    VERIFICATION_PHOTO_IMAGE.view();
+    VERIFICATION_PHOTO_IMAGE.save(pathconcat("/sdcard/Pictures", photoFile), quality := 85);
 
     TakeVerificationPhoto = 1;
 end;
@@ -601,10 +614,14 @@ postproc
 PROC Q159_BRAND_GEN_BOUGHT
 postproc
   if Q159_BRAND_GEN_BOUGHT = 1 then  skip to Q161_WHY_BRANDED; endif;  { Branded -> why-branded (#696: Q161 now a Check Box base; skip target is the base field, not _O01) }
-  { #618: Q159 = 'Don't know the difference' (4) routing REMOVED with the option — it
-    contradicted Q158=Yes (Q159 is Yes-only; Q158=No already skips to Q162), so code 4 can no
-    longer be entered. }
-  if Q159_BRAND_GEN_BOUGHT = 5 then  skip to Q162_REFERRED;        endif;  { #501: N/A -> exit K to Section L start (Q162). Was Q164 (sanity #7); Q164 is a Q162=Yes follow-up, so the source's K->Q164 jump landed on an orphaned question. Tester (ASPSI) confirmed Q162. }
+  { #732 (R5): 'Don't know the difference' (4) RESTORED to the paper -> Q162 (referral section
+    start), reversing #618. ASPSI tester wants the paper's literal option set + routing. }
+  if Q159_BRAND_GEN_BOUGHT = 4 then  skip to Q162_REFERRED;        endif;  { #732: Don't-know-the-difference -> Q162 (restored) }
+  { #731 (R5): 'Not applicable' (5) -> Q164 per the paper (tester screenshot + F3_clean
+    'Proceed to Q156' = field Q164_SPECIALIST, +8 numbering offset), reversing #501's Q162.
+    #501 had flagged Q164 as a Q162=Yes follow-up ("orphaned" landing); per Carl 'do what the
+    testers need', we follow the paper's literal routing — downstream-flow refinement is ASPSI's call. }
+  if Q159_BRAND_GEN_BOUGHT = 5 then  skip to Q164_SPECIALIST;      endif;  { #731: Not applicable -> Q164 (was Q162 #501) }
 
 { ---- Section D: non-members skip the benefits/premium block (Q46-Q50). #529: Q46 is now
   a Check Box field — this gate moved into the Q46_BENEFITS checkbox PROC's `gate` param
@@ -742,13 +759,6 @@ postproc
   if pos("99", Q148_CONDITIONS) > 0 and length(strip(Q148_CONDITIONS_OTHER_TXT)) = 0 then
     errmsg("'Other (specify)' was ticked for Q148 — please specify.");
     reenter;
-  endif;
-
-PROC Q148_MEDICINES_TXT
-preproc
-  if length(strip(Q148_CONDITIONS)) = 0 then
-    Q148_MEDICINES_TXT = "";   { gated: skipped until at least one condition is ticked }
-    noinput;
   endif;
 
 { ---- #529/#669/#670/#671/#673: select_all -> Check Box conversions — config-driven from CHECKBOX_CONVERT ---- }
@@ -2370,7 +2380,13 @@ postproc
 PROC Q145_PURCHASE_FREQ
 postproc
   if Q145_PURCHASE_FREQ = 5 then
-    skip to Q152_GAMOT_HEARD;
+    skip to AREA_HAS_GAMOT;
+  endif;
+
+PROC AREA_HAS_GAMOT
+postproc
+  if AREA_HAS_GAMOT = 2 then
+    skip to Q158_BRAND_GEN_KNOW;
   endif;
 
 PROC Q152_GAMOT_HEARD
@@ -2407,6 +2423,12 @@ PROC Q95_PRESCRIBED
 postproc
   if Q95_PRESCRIBED = 2 then
     skip to Q97_FINAL_AMOUNT;
+  endif;
+
+PROC AREA_HAS_BUCAS
+postproc
+  if AREA_HAS_BUCAS = 2 then
+    skip to Q116_NBB_HEARD;
   endif;
 
 PROC Q99_BUCAS_HEARD

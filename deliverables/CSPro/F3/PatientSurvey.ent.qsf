@@ -1660,17 +1660,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>47. Awareness of PhilHealth package — Physician check-up</p>
+            <p>Are you aware that there are PhilHealth packages for the following health services?</p><p>47. Awareness of PhilHealth package — Physician check-up</p>
           FIL: |
-            <p>Konsultasyon sa doktor</p>
+            <p>Are you aware that there are PhilHealth packages for the following health services?</p><p>Konsultasyon sa doktor</p>
           BCL: |
-            <p>47. Awareness of PhilHealth package — Physician check-up</p>
+            <p>Are you aware that there are PhilHealth packages for the following health services?</p><p>47. Awareness of PhilHealth package — Physician check-up</p>
           BIS: |
-            <p>47. Awareness of PhilHealth package — Physician check-up</p>
+            <p>Are you aware that there are PhilHealth packages for the following health services?</p><p>47. Awareness of PhilHealth package — Physician check-up</p>
           CEB: |
-            <p>Check-up sa doktor</p>
+            <p>Are you aware that there are PhilHealth packages for the following health services?</p><p>Check-up sa doktor</p>
           WAR: |
-            <p>Pag-eksamin han doktor</p>
+            <p>Are you aware that there are PhilHealth packages for the following health services?</p><p>Pag-eksamin han doktor</p>
   - name: PATIENTSURVEY_DICT.Q47_DIAGNOSTIC_TESTS
     conditions:
       - questionText:
@@ -3186,6 +3186,21 @@ questions:
             <p>Uban pa (isulti)</p>
           WAR: |
             <p>98. Other payment source — specify text</p>
+  - name: PATIENTSURVEY_DICT.AREA_HAS_BUCAS
+    conditions:
+      - questionText:
+          EN: |
+            <p>Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)</p>
+          FIL: |
+            <p>Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)</p>
+          BCL: |
+            <p>Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)</p>
+          BIS: |
+            <p>Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)</p>
+          CEB: |
+            <p>Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)</p>
+          WAR: |
+            <p>Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)</p>
   - name: PATIENTSURVEY_DICT.Q99_BUCAS_HEARD
     conditions:
       - questionText:
@@ -4390,17 +4405,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (SKIP IF ANSWERED MAIFIP IN Q113)</p>
+            <p>124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?</p>
           FIL: |
-            <p>Narinig mo na ba ang tungkol sa Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?</p>
+            <p>124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?</p>
           BCL: |
-            <p>Nadangog mo na ba an Medical Asistance for Indigent and Financially Incapacitated Patients?</p>
+            <p>124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?</p>
           BIS: |
-            <p>Nakadungog ka na ba bahin sa Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?</p>
+            <p>124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?</p>
           CEB: |
-            <p>Nakadungog na ba ka bahin sa Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (LAKTAWI KUNG NITUBAG OG MAIFIP SA Q113)</p>
+            <p>124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?</p>
           WAR: |
-            <p>Nabatian mo na ba an Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (LAKTAW KON GINBATON AN MAIFIP HA Q113)</p>
+            <p>124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?</p>
   - name: PATIENTSURVEY_DICT.Q125_MAIFIP_SOURCE
     conditions:
       - questionText:
@@ -4806,21 +4821,6 @@ questions:
             <p>Uban pa (isulti)</p>
           WAR: |
             <p>148. What are the medical conditions that you take the medicines for? — Other (specify) text</p>
-  - name: PATIENTSURVEY_DICT.Q148_MEDICINES_TXT
-    conditions:
-      - questionText:
-          EN: |
-            <p>Which medicine(s) do you take for the condition(s) selected above?</p>
-          FIL: |
-            <p>Which medicine(s) do you take for the condition(s) selected above?</p>
-          BCL: |
-            <p>Which medicine(s) do you take for the condition(s) selected above?</p>
-          BIS: |
-            <p>Which medicine(s) do you take for the condition(s) selected above?</p>
-          CEB: |
-            <p>Which medicine(s) do you take for the condition(s) selected above?</p>
-          WAR: |
-            <p>Which medicine(s) do you take for the condition(s) selected above?</p>
   - name: PATIENTSURVEY_DICT.Q149_WHERE_BUY
     conditions:
       - questionText:
@@ -4896,6 +4896,21 @@ questions:
             <p>Unsa kadali alang kanimo ang pag-adto sa botika o drugstore?</p>
           WAR: |
             <p>Ano kadali para haimo pag access ha botika?</p>
+  - name: PATIENTSURVEY_DICT.AREA_HAS_GAMOT
+    conditions:
+      - questionText:
+          EN: |
+            <p>Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)</p>
+          FIL: |
+            <p>Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)</p>
+          BCL: |
+            <p>Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)</p>
+          BIS: |
+            <p>Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)</p>
+          CEB: |
+            <p>Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)</p>
+          WAR: |
+            <p>Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)</p>
   - name: PATIENTSURVEY_DICT.Q152_GAMOT_HEARD
     conditions:
       - questionText:

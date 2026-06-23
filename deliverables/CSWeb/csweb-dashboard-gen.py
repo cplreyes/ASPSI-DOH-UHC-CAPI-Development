@@ -193,7 +193,7 @@ TEMPLATE = r"""<!doctype html>
   <div class="note">Counts exclude deleted cases. Filters recompute the charts in your browser. Empty/blank categories reflect minimal test cases in the current data — they populate as real fieldwork syncs. For the per-case list with facility labels, see the CSWeb <b>Sync Report</b>.</div>
   <div id="sections"></div>
 </main>
-<footer>Generated <span id="gen"></span> · auto-refreshes ~every 15 min · source: breakout DBs via <code>csweb_reports</code>.</footer>
+<footer>Generated <span id="gen"></span> · auto-refreshes ~every 15 min · source: breakout DBs via <code>csweb_reports</code> · see also the <a href="/docs/map.html" style="color:#006b3f">Map Report</a>.</footer>
 <script type="application/json" id="dash-data">__PAYLOAD__</script>
 <script>
 const P = JSON.parse(document.getElementById('dash-data').textContent);

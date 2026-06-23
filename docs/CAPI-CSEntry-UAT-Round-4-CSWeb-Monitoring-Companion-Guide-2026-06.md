@@ -11,7 +11,7 @@
 
 > **Why this round exists.** CSWeb has been stood up, the breakout cron is live, and the Sync Report works — but the whole pipeline has **never been operated as a live monitoring console during an actual CAPI survey run**. R4 rehearses exactly that: as the F1/F3/F4 testers interview and sync, the monitor confirms each case arrives, breaks out, plots (if it has a real GPS fix), and counts correctly — and that nothing is silently lost. It is the first time the **enumerator side and the monitoring side run together, live.**
 
-> **Scope of this guide.** Monitor-side only. The interviews that generate the data are in the three instrument tester guides. The two sides run **at the same time** — coordinate timing so you are watching real cases arrive, not just confirming an empty board. Everything here runs on the **live CSWeb** with the `010280001` test prefix segregating throwaway cases; you filter them out of any real view and purge after (teardown, §7).
+> **Scope of this guide.** Monitor-side only. The interviews that generate the data are in the three instrument tester guides. The two sides run **at the same time** — coordinate timing so you are watching real cases arrive, not just confirming an empty board. Everything here runs on the **live CSWeb** with the `040340002` test prefix segregating throwaway cases; you filter them out of any real view and purge after (teardown, §7).
 
 ---
 
@@ -38,7 +38,7 @@
 | **Server API (used by CSEntry to sync)** | `https://csweb.asiansocial.org/csweb/api` |
 | **Login (your own)** | field-sync `alytest` (Aly) / `aidan` (tablet) · **admins `shan` + `kidd` + `marriz`** (tablet **and** console) — see §2 · `setest` = coordinator fallback · passwords shared privately |
 | **What you're monitoring** | F1 `FacilityHeadSurvey` · F3 `PatientSurvey` · F4 `HouseholdSurvey` |
-| **Test-case prefix to filter on** | `010280001` (everything in R4 starts with this) · F1 = `…1xx`, F3 = `…5xx`, F4 = `…6xx` |
+| **Test-case prefix to filter on** | `040340002` (everything in R4 starts with this) · F1 = `…1xx`, F3 = `…5xx`, F4 = `…6xx` |
 | **Breakout** | 5-min `csweb:process-cases` cron → per-instrument breakout DBs |
 | **Reports** | **Sync Report** (cases in, by app) · **Map Report** (GPS pins) |
 | **Bug repo** | https://github.com/cplreyes/ASPSI-DOH-UHC-CAPI-Development/issues |
@@ -95,7 +95,7 @@ CSWeb has **two roles in use: Administrator** (full console **+** CSEntry sync) 
 2. **Confirm the three apps are present** on the server (F1 `FacilityHeadSurvey`, F3 `PatientSurvey`, F4 `HouseholdSurvey`) and show the **R4 deployment** (re-deployed 2026-06-12).
 3. **Confirm the breakout DBs exist** for each instrument and the **5-min cron** is processing (a previously-synced case should already be broken out; if the breakout lag is much longer than ~5 min, note it).
 4. **Open the Sync Report and Map Report** once so you know where they are before cases start arriving.
-5. **Set a filter mindset:** every R4 case starts `010280001` (F1 `1xx` / F3 `5xx` / F4 `6xx`). Anything else is not part of this dry-run.
+5. **Set a filter mindset:** every R4 case starts `040340002` (F1 `1xx` / F3 `5xx` / F4 `6xx`). Anything else is not part of this dry-run.
 
 ---
 
@@ -126,7 +126,7 @@ For anything wrong, decide if it's a **CSWeb / pipeline issue** (sync, breakout,
 **What you're rehearsing:** confirming the board is ready before enumerators go out.
 
 - **5A.1 (apps + version):** Confirm all three R4 apps are deployed and downloadable (ask an enumerator-side tester to add one from the server — that's their 5A.2; you confirm it served).
-- **5A.2 (clean baseline):** Note the **current case count per instrument** before the round so you can tell new R4 cases from anything pre-existing. Everything new should carry the `010280001` prefix.
+- **5A.2 (clean baseline):** Note the **current case count per instrument** before the round so you can tell new R4 cases from anything pre-existing. Everything new should carry the `040340002` prefix.
 - **5A.3 (breakout heartbeat):** Confirm the 5-min cron is alive (a freshly-synced case breaks out within ~5–10 min). If it's stalled, that's a pre-round blocker — flag to coordinator before opening.
 
 ### 5B — Live monitoring as cases arrive (the monitor leads; stakeholders watch)
@@ -172,7 +172,7 @@ Pick the **Instrument** the case belongs to (F1/F3/F4), and for the **scenario**
 **Instrument:** F1 / F3 / F4
 **Monitor:** ‹your name / initials›
 **Where on CSWeb:** Sync Report / Map Report / View case / breakout DB / counts
-**Case (QN):** 010280001 _ _ _
+**Case (QN):** 040340002 _ _ _
 **Expected:** [what should show / happen]
 **Actual:** [what showed / happened]
 **Reproduction steps / timing:** [include the sync time + when it appeared, if it's a lag/loss issue]
@@ -190,7 +190,7 @@ Tag the instrument's tracking issue (**#368 / #369 / #370**). Coordinator triage
 - **Daily check-in:** Coordinator posts to each instrument channel ~09:00 PHT — new findings (enumerator + monitor side), criticals, overnight fixes.
 - **Mid-round sync:** any pipeline-blocking critical (sync failing, breakout stalled, cases duplicating or lost, a wrong patient-type branch reaching the server) → same-day Slack huddle; don't wait for close.
 - **R4 close:** end of the sprint week. Coordinator reconciles **#368 / #369 / #370**; opens dispositioned (fix-now / next-sprint / route-to-survey-team / won't-fix-with-rationale).
-- **Teardown:** after close, coordinator removes the `010280001` test cases from CSWeb (and the breakout DBs) so the dry-run data doesn't pollute real fieldwork. Until then, **filter `010280001` out** of any real view.
+- **Teardown:** after close, coordinator removes the `040340002` test cases from CSWeb (and the breakout DBs) so the dry-run data doesn't pollute real fieldwork. Until then, **filter `040340002` out** of any real view.
 
 ---
 

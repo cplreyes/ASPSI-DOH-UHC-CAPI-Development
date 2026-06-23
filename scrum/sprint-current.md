@@ -44,6 +44,10 @@ locked: 2026-06-21 (Mode A, eve of kickoff) — committed set frozen below
 
 - [ ] **#294 verify-and-close + #336 disposition** — close-or-kill this 3rd-sprint carry. `status::todo` `priority::high` `estimate::2h`
 
+## Parked / planned (blocked — future sprint)
+
+- [ ] **E4-F2-ELESTIO** Migrate F2 Survey + Admin Portal off Cloudflare/Google to a dedicated Elestio instance (`hcw.asiansocial.org`). **Planning DONE 2026-06-22** — spec `docs/superpowers/specs/2026-06-22-f2-elestio-migration-design.md` (v0.2) + 19-task plan `docs/superpowers/plans/2026-06-22-f2-elestio-migration.md`. Decisions locked: full re-platform · separate Elestio instance · MySQL (CSWeb-style) · Node/Hono API (Worker ported, Apps-Script HMAC hop deleted) · single Docker Compose · clean-slate cutover; ~2 vCPU/4 GB, scale ~12–15k HCWs. **BLOCKED on provisioning** (Carl/ASPSI: instance + DNS + cost). Build Tasks 2–17 (schema/API/routes/tests) are runnable locally vs a Docker MySQL before the instance exists. `status::blocked` (provisioning) `priority::medium`
+
 ## Definition of Done — Sprint 011
 
 - [ ] **E0-SCRUM-SYNC built + proven** — a drift canary actually fires, and sprint-state is synced at close with no 2-day lag.

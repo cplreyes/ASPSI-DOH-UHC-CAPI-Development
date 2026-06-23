@@ -761,7 +761,8 @@ SKIP_RULES = [
     # new Q45.1 PIN date + Q46 category) — the old "skip to Q48_NAME_FIRST" target is gone
     # now that Q48-Q50 moved to the C_PRIVATE_INS_ROSTER second pass.
     # Section G — Access to Medicines
-    ("Q62_PURCHASE_FREQ",    "Q62_PURCHASE_FREQ = 5",       "Q69_GAMOT_HEARD"),   # Never -> skip Rx/where/travel
+    ("Q62_PURCHASE_FREQ",    "Q62_PURCHASE_FREQ = 5",       "AREA_HAS_GAMOT"),    # Never -> skip Rx/where/travel (land on GAMOT area-gate, #643)
+    ("AREA_HAS_GAMOT",       "AREA_HAS_GAMOT = 2",          "Q75_BRAND_GEN_KNOWS"), # #643: no GAMOT -> skip Q69-76 (mirrors Q69=No)
     ("Q69_GAMOT_HEARD",      "Q69_GAMOT_HEARD = 2",         "Q75_BRAND_GEN_KNOWS"),
     # #575 (ASPSI, 2026-06-17 — go-with-ASPSI): Q72 "obtained meds via GAMOT?" = No skips
     # only Q73 (the GAMOT meds list) but STILL asks Q74 "where did you get the rest" (you
@@ -775,13 +776,14 @@ SKIP_RULES = [
     # Section H — PhilHealth / Insurance
     ("Q81_REG_DIFFICULTY",   "Q81_REG_DIFFICULTY = 2",      "Q83_KNOWS_ASSIST"),
     ("Q83_KNOWS_ASSIST",     "Q83_KNOWS_ASSIST = 2",        "Q85_BENEFITS"),   # #529: Q85 is now a Check Box base (was _O01)
-    ("Q86_PREMIUM_PAY",      "Q86_PREMIUM_PAY = 2",         "Q89_HAS_USUAL_FACILITY"),
+    ("Q86_PREMIUM_PAY",      "Q86_PREMIUM_PAY = 3",         "Q89_HAS_USUAL_FACILITY"),  # #726: skip-to-Q89 only on code 3 "No, I do not pay premiums"; was =2 "Yes, my employer pays" (a YES/payer answer that must proceed to Q87)
     ("Q87_PREMIUM_DIFFICULT","Q87_PREMIUM_DIFFICULT = 2",   "Q89_HAS_USUAL_FACILITY"),
     # D-F awareness gates
     # value sets are Yes(1)/No(2) only — no "Don't know" code 3 here (matches F3's
     # UHC/KON/BUCAS heard gates which use "= 2"); the old "in 2,3" carried a dead 3.
     ("Q51_UHC_HEARD",        "Q51_UHC_HEARD = 2",           "Q54_YAKAP_HEARD"),
-    ("Q54_YAKAP_HEARD",      "Q54_YAKAP_HEARD = 2",         "Q57_BUCAS_HEARD"),
+    ("Q54_YAKAP_HEARD",      "Q54_YAKAP_HEARD = 2",         "AREA_HAS_BUCAS"),    # -> BUCAS area-gate (#641)
+    ("AREA_HAS_BUCAS",       "AREA_HAS_BUCAS = 2",          "Q62_PURCHASE_FREQ"), # #641: no BUCAS -> skip Q57-61 (mirrors Q57=No)
     ("Q57_BUCAS_HEARD",      "Q57_BUCAS_HEARD = 2",         "Q62_PURCHASE_FREQ"),
     ("Q60_BUCAS_ACCESSED",   "Q60_BUCAS_ACCESSED = 2",      "Q62_PURCHASE_FREQ"),
     # Section I primary-care routing

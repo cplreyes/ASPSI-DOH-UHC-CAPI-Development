@@ -1,7 +1,7 @@
 ---
 type: concept
-tags: [timetable, schedule, deliverables, inception-report, project-management]
-source_count: 1
+tags: [timetable, schedule, deliverables, inception-report, project-management, extension-request]
+source_count: 2
 ---
 
 # Timetable of Activities
@@ -35,6 +35,13 @@ The official UHC Survey Year 2 schedule, as defined in **Table 14** of the Revis
 | D4 | Approved documentation of training (training materials + summary report w/ pre & post assessment), Approved final report, summary data/results, codes for the UHC survey, and documentation of dissemination meetings | ~Aug 15, 2026 | Month 9 |
 
 See also [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Signed CSA Dec 15 2025]] for the deliverable-linked payment tranches and the 1%/day late penalty exposure tied to these dates.
+
+> [!warning] Proposed extension under preparation (2026-06-22)
+> At the [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - ASPSI Team Meeting 2026-06-22|2026-06-22 team meeting]] the team discussed requesting a **schedule extension**, with the **field-monitoring dashboard** (coverage per site, enumerator performance, lag/completion by region) as the **evidentiary basis** for the ask:
+> - **August 2026 — Training**
+> - **September 2026 — Rollout**
+>
+> This pushes the conduct + rollout **past the official project close of Aug 14, 2026** above. Recorded as a **proposed request, not an approved change** — the extension decision sits in the ASPSI/DOH lane (out of Data Programmer scope). Penalty exposure tied to the original dates lives in the signed CSA.
 
 ## A. Primary Activities
 

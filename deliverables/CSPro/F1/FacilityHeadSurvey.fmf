@@ -5704,7 +5704,7 @@ Text=159. Of those referred, which of the following are the most common ways you
 Name=Q160_EXTERNAL_SERVICES_GO
 Position=1204,2427,1233,2447
 Item=Q160_EXTERNAL_SERVICES_GO,FACILITYHEADSURVEY_DICT
-DataCaptureType=TextBox
+DataCaptureType=CheckBox
 Form=10
   
 [Text]
@@ -5999,23 +5999,30 @@ Length=1
   
 [Block]
 Name=DG_G_SERVICE_DELIVERY_FORM_243
-Label=Q160-Q161
+Label=Q160
 DisplayTogether=Yes
 Position=71
-Length=2
+Length=1
   
 [Block]
 Name=DG_G_SERVICE_DELIVERY_FORM_244
-Label=Q162
+Label=Q161
 DisplayTogether=Yes
-Position=74
+Position=73
 Length=1
   
 [Block]
 Name=DG_G_SERVICE_DELIVERY_FORM_245
 Label=Q162
 DisplayTogether=Yes
-Position=76
+Position=75
+Length=1
+  
+[Block]
+Name=DG_G_SERVICE_DELIVERY_FORM_246
+Label=Q162
+DisplayTogether=Yes
+Position=77
 Length=1
   
 [EndGroup]
@@ -6122,49 +6129,49 @@ Position=50,750,953,766
 Text=166. What forms of professional development do you provide to your nurses? — Other (specify) text
  
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_246
+Name=DG_H_HUMAN_RESOURCES_FORM_247
 Label=Q163
 DisplayTogether=Yes
 Position=0
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_247
+Name=DG_H_HUMAN_RESOURCES_FORM_248
 Label=Q163
 DisplayTogether=Yes
 Position=2
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_248
+Name=DG_H_HUMAN_RESOURCES_FORM_249
 Label=Q164
 DisplayTogether=Yes
 Position=4
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_249
+Name=DG_H_HUMAN_RESOURCES_FORM_250
 Label=Q165
 DisplayTogether=Yes
 Position=6
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_250
+Name=DG_H_HUMAN_RESOURCES_FORM_251
 Label=Q165
 DisplayTogether=Yes
 Position=8
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_251
+Name=DG_H_HUMAN_RESOURCES_FORM_252
 Label=Q166
 DisplayTogether=Yes
 Position=10
 Length=1
   
 [Block]
-Name=DG_H_HUMAN_RESOURCES_FORM_252
+Name=DG_H_HUMAN_RESOURCES_FORM_253
 Label=Q166
 DisplayTogether=Yes
 Position=12

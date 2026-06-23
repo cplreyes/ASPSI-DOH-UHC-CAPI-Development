@@ -48,9 +48,9 @@ CHECKBOX = {"Q148_CONDITIONS",
             "Q34_DATA_REPORTS_USED",
             # F1 #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box.
             # (#586: Q144_DIFFICULT_REASON re-converted to Check Box per the tester's
-            # PAPI screenshot. Q160_EXTERNAL_SERVICES_GO stays single select_one —
-            # no PAPI evidence either way, flagged for ASPSI confirmation.)
-            "Q144_DIFFICULT_REASON",
+            # PAPI screenshot. #734: Q160_EXTERNAL_SERVICES_GO NOW Check Box too — the R5
+            # tester supplied the PAPI screenshot the #576/#586 hold was waiting on.)
+            "Q144_DIFFICULT_REASON", "Q160_EXTERNAL_SERVICES_GO",
             "Q137_NBB_BARRIERS", "Q140_ZBB_BARRIERS", "Q146_MALASAKIT_WHY",
             "Q147_NO_MALASAKIT_WHY", "Q149_LGU_SUPPORT_FORMS", "Q155_SEND_REFERRAL_HOW",
             "Q156_REFERRAL_FORM_TYPE", "Q159_RECEIVE_REFERRAL_HOW", "Q163_HR_CHALL",

@@ -909,10 +909,14 @@ postproc
 PROC Q159_BRAND_GEN_BOUGHT
 postproc
   if Q159_BRAND_GEN_BOUGHT = 1 then  skip to Q161_WHY_BRANDED; endif;  { Branded -> why-branded (#696: Q161 now a Check Box base; skip target is the base field, not _O01) }
-  { #618: Q159 = 'Don't know the difference' (4) routing REMOVED with the option — it
-    contradicted Q158=Yes (Q159 is Yes-only; Q158=No already skips to Q162), so code 4 can no
-    longer be entered. }
-  if Q159_BRAND_GEN_BOUGHT = 5 then  skip to Q162_REFERRED;        endif;  { #501: N/A -> exit K to Section L start (Q162). Was Q164 (sanity #7); Q164 is a Q162=Yes follow-up, so the source's K->Q164 jump landed on an orphaned question. Tester (ASPSI) confirmed Q162. }
+  { #732 (R5): 'Don't know the difference' (4) RESTORED to the paper -> Q162 (referral section
+    start), reversing #618. ASPSI tester wants the paper's literal option set + routing. }
+  if Q159_BRAND_GEN_BOUGHT = 4 then  skip to Q162_REFERRED;        endif;  { #732: Don't-know-the-difference -> Q162 (restored) }
+  { #731 (R5): 'Not applicable' (5) -> Q164 per the paper (tester screenshot + F3_clean
+    'Proceed to Q156' = field Q164_SPECIALIST, +8 numbering offset), reversing #501's Q162.
+    #501 had flagged Q164 as a Q162=Yes follow-up ("orphaned" landing); per Carl 'do what the
+    testers need', we follow the paper's literal routing — downstream-flow refinement is ASPSI's call. }
+  if Q159_BRAND_GEN_BOUGHT = 5 then  skip to Q164_SPECIALIST;      endif;  { #731: Not applicable -> Q164 (was Q162 #501) }
 
 { ---- Section D: non-members skip the benefits/premium block (Q46-Q50). #529: Q46 is now
   a Check Box field — this gate moved into the Q46_BENEFITS checkbox PROC's `gate` param
@@ -1052,12 +1056,6 @@ postproc
     reenter;
   endif;
 
-PROC Q148_MEDICINES_TXT
-preproc
-  if length(strip(Q148_CONDITIONS)) = 0 then
-    Q148_MEDICINES_TXT = "";   { gated: skipped until at least one condition is ticked }
-    noinput;
-  endif;
 """
 
 
@@ -1360,7 +1358,8 @@ SKIP_RULES = [
     # Q66_SAME_AS_USUAL routing now lives in EXTRA_PROCS (Q63 usual-facility block, #418/#419).
     ("Q74_KON_HEARD",        "Q74_KON_HEARD = 2",            "Q83_VISIT_REASON"),
     # Section K — Access to Medicines
-    ("Q145_PURCHASE_FREQ",   "Q145_PURCHASE_FREQ = 5",       "Q152_GAMOT_HEARD"),        # Never -> skip meds-access
+    ("Q145_PURCHASE_FREQ",   "Q145_PURCHASE_FREQ = 5",       "AREA_HAS_GAMOT"),          # Never -> skip meds-access (land on the GAMOT area-gate, #495)
+    ("AREA_HAS_GAMOT",       "AREA_HAS_GAMOT = 2",           "Q158_BRAND_GEN_KNOW"),     # #495: area has no GAMOT -> skip Q152-159 (mirrors Q152=No)
     ("Q152_GAMOT_HEARD",     "Q152_GAMOT_HEARD = 2",         "Q158_BRAND_GEN_KNOW"),
     ("Q158_BRAND_GEN_KNOW",  "Q158_BRAND_GEN_KNOW = 2",      "Q162_REFERRED"),
     # Section L — Referrals
@@ -1370,6 +1369,7 @@ SKIP_RULES = [
     ("Q89_ADVISED_ADMIT",  "Q89_ADVISED_ADMIT = 2",                       "Q91_USUAL_OUTPATIENT"),  # #688: No (NOT advised to admit) -> skip Q90 (why-not-confined is moot); Yes -> ASK Q90 (why not admitted despite advice). Inverted from the original =1 which was backwards.
     # Q93_LABS_O17 'None' routing now in EXTRA_PROCS (exclusivity warn must precede the skip, #448).
     ("Q95_PRESCRIBED",     "Q95_PRESCRIBED = 2",                          "Q97_FINAL_AMOUNT"),       # No prescription -> skip meds-cost matrix
+    ("AREA_HAS_BUCAS",     "AREA_HAS_BUCAS = 2",                          "Q116_NBB_HEARD"),         # #464: area has no BUCAS -> skip Q99-104 (mirrors Q99=No)
     ("Q99_BUCAS_HEARD",    "Q99_BUCAS_HEARD = 2",                         "Q116_NBB_HEARD"),         # No -> end of Section G (sanity #9; skip Q100-104)
     ("Q102_BUCAS_ACCESSED","Q102_BUCAS_ACCESSED = 2",                     "Q104_WITHOUT_BUCAS"),     # No -> Q104 (skip Q103)
     # Section H — Inpatient Care
@@ -1508,7 +1508,7 @@ def main():
                "Q45_CATEGORY", "Q60_SCHED_TELECON_OK", "Q62_CONSULT_TELECON_OK",  # EXTRA_PROCS (#402/#415/#417 gates)
                # #673: Q93_LABS_O17 gone — Q93 is now a Check Box base (in CHECKBOX_COVERED); None exclusivity + Q94-skip folded into its checkbox PROC.
                "Q122_ZBB_INFORMED", "Q126_MAIFIP_AVAILED",   # EXTRA_PROCS (#476/#479 confinement gates)
-               "Q148_CONDITIONS", "Q148_CONDITIONS_OTHER_TXT", "Q148_MEDICINES_TXT",  # EXTRA_PROCS (Q148 Check Box)
+               "Q148_CONDITIONS", "Q148_CONDITIONS_OTHER_TXT",  # EXTRA_PROCS (Q148 Check Box) — #491: Q148_MEDICINES_TXT removed
                "Q147_MEDS_LIST", "Q155_GAMOT_GOT_MEDS", "Q156_GAMOT_MEDS_LIST",   # EXTRA_PROCS (Wave 4 #490/#498)
                "Q170_FOLLOWUP",  # EXTRA_PROCS (Wave 4 #508/#511; #503/#696: Q161_WHY_BRANDED_O01 gone — Q161 now a Check Box base, gate folded into its checkbox PROC; #529: Q177_WHY_HOSPITAL_O01 gone — same)
                "Q5_BIRTH_MONTH", "Q5_BIRTH_YEAR", "Q6_AGE", "Q18_INCOME_BRACKET",

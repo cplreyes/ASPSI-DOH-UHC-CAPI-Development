@@ -52,6 +52,7 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - CAPI Translations PSA Deadline (Myra 2026-05-13)]] — **Email, Myra → Carl, call-firmed.** PSA will not clear the survey without the **CAPI app + 7 translated versions**; hard internal deadline **2026-06-12**. Separate/later PSA stream from the manual+sampling submission; this one is Carl's. Carl confirmed alignment (quality not compromised).
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - Survey Tool Translation Delivery Status 2026-05-15]] — **Email thread, Aidan ↔ Myra, Carl cc'd.** Translation pipeline behind the 06-12 gate: Drive folder source-of-truth; per-language status; **7 distinct languages** (Bisaya ≠ Cebuano); QC/back-translation is the binding step; **Bisaya Household incomplete, Ilocano has no QC reviewer** (build-input risk, ASPSI-owned). Supersedes the 05-11 "6/7 done" snapshot.
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - HCW CAPI Comments Matrix (Myra answers 2026-05-21)]] — **Google Doc, Aidan → Myra, Carl+Merlyne+Marriz cc'd.** Marriz's 9 R3 questionnaire-design findings (GH `#303`/`#304`/`#305`/`#306`/`#307`/`#309`/`#310`/`#311`/`#312`) sent to Myra as a decision matrix; Myra answered same day. 3 approved-as-suggested, 2 approved with modification, 1 more restrictive than suggested, 2 different shape, 1 overrode Carl's suggestion (Q36 → multi-select), 1 not answered (Q36 past-tense wording). Top-of-doc decisions tighten the Q9-vs-Q4 rule to in-survey block at `tenure < age − 20`.
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/sources/Source - ASPSI Team Meeting 2026-06-22]] — Carl's stand-up + team discussion. **Last week:** F3/F4 stop/withdraw handling (Marriz's flag), Supervisor review tool v1, live CSWeb monitoring dashboard, UAT R5 opened (Jun 22–27). **This week:** continued tester-driven dev, align to the Survey Manual beyond the instruments-only MVP, Supervisor tool go-live, plan F2 Survey+Admin migration off Cloudflare (free-tier limits). 309 instrument issues resolved to date. **Headline outcome:** monitoring dashboard positioned as the **basis for an extension request — Aug Training, Sep Rollout** (pushes past the Aug 14 official close; proposed, not approved).
 
 ### Analyses
 
@@ -75,12 +76,13 @@ Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DO
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Merlyne Paunlagui]] — Survey Manager; methodological quality + pretest plan
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Juvy Chavez-Rocamora]] — Project Coordinator; formal DOH-facing submissions gate (Apr 14 matrices; Jan 30 IR)
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Shan Lait|Shan]] — CSPro CAPI app QA Tester; also participating in F2 PWA UAT Round 1
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/entities/Marriz]] — ASPSI Data Manager; recurring CAPI UAT tester (R3–R5); raises questionnaire-design / data-quality findings (flagged the F3/F4 stop/withdraw fix)
 
 ### Concepts
 
 **Project domain**
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/UHC Survey Year 2]] — Survey overview, modules, changes from Year 1
-- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Timetable of Activities]] — Table 14 from the Inception Report: 9-month schedule, deliverable dates, A/B/C activity breakdown
+- [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/Timetable of Activities]] — Table 14 from the Inception Report: 9-month schedule, deliverable dates, A/B/C activity breakdown. **+ proposed 2026-06-22 extension** (Aug Training / Sep Rollout) past the Aug 14 close, dashboard-evidenced
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/F2 Google Forms Track]] — **RETIRED 2026-04-17.** Historical record of the Google Forms track superseded by the PWA build. Reference only.
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/PSGC Value Sets]] — PSA 1Q 2026 PSGC (43,803 entries) externalized to `shared/psgc_*.dcf` lookups + `PSGC-Cascade.apc`; DCFs shrink 17 MB → ~1 MB
 - [[1_Projects/ASPSI-DOH-CAPI-CSPro-Development/wiki/concepts/GPS and Photo Capture]] — F1/F3/F4 auto-GPS metadata blocks + end-of-interview verification photo; shared `Capture-Helpers.apc`; F3→F1 linkage via `F3_FACILITY_ID`

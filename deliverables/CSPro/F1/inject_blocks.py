@@ -72,8 +72,9 @@ _CHECKBOX_FIELDS = {"Q49_QUALITY_CHALL", "Q50_ACCESS_CHALL",
                     # #636 Section C: Q34 reports-used select_all -> single Check Box.
                     "Q34_DATA_REPORTS_USED",
                     # #576 Carl 'finish F1': 11 more Section G/H select_all -> Check Box.
-                    # (#586: Q144 re-added as Check Box per PAPI; Q160 stays single.)
-                    "Q144_DIFFICULT_REASON",
+                    # (#586: Q144 re-added as Check Box per PAPI. #734: Q160 NOW Check Box too
+                    # — R5 tester supplied the PAPI screenshot the #576/#586 hold awaited.)
+                    "Q144_DIFFICULT_REASON", "Q160_EXTERNAL_SERVICES_GO",
                     "Q137_NBB_BARRIERS", "Q140_ZBB_BARRIERS", "Q146_MALASAKIT_WHY",
                     "Q147_NO_MALASAKIT_WHY", "Q149_LGU_SUPPORT_FORMS", "Q155_SEND_REFERRAL_HOW",
                     "Q156_REFERRAL_FORM_TYPE", "Q159_RECEIVE_REFERRAL_HOW", "Q163_HR_CHALL",

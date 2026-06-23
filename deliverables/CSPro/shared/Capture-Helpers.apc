@@ -90,9 +90,10 @@ function TakeVerificationPhoto(string photoFile)
       never reached the server ("no picture retained by the system"). Storing the
       bytes in a binary Image item is the supported way to sync a photo to CSWeb.
 
-      `photoFile` is no longer written to disk; the caller keeps it as the
-      human-readable label assigned to *_VERIFICATION_PHOTO_FILENAME (which also
-      serves as the "already captured" sentinel the trigger's onfocus guards on).
+      `photoFile` IS written to disk as of #727 (an ADDITIVE device-side copy via
+      Image.save below); the binary item above remains the CSWeb sync path. The caller
+      also keeps `photoFile` as the human-readable label assigned to
+      *_VERIFICATION_PHOTO_FILENAME (the "already captured" sentinel onfocus guards on).
       The parameter is kept so callers (F1/F3/F4 CAPTURE_VERIFICATION_PHOTO) need
       no change. NB: it is `photoFile`, not `filename` -- `filename` is a CSPro
       reserved word and errors at compile (verified 2026-06-08).
@@ -116,6 +117,18 @@ function TakeVerificationPhoto(string photoFile)
 
     { Resample before sync so the embedded JPG stays small (<= 1600 x 1200). }
     VERIFICATION_PHOTO_IMAGE.resample(maxWidth := 1600, maxHeight := 1200);
+
+    { #727 (Carl 2026-06-22): (1) show the captured photo to the enumerator right after
+      taking it (confirmation), and (2) save a copy into the device's shared *Pictures*
+      folder so it shows in the device Gallery. The CSWeb binary-Image sync (#713) is
+      unchanged. view() displays the image held by the object (CSPro 8 Users Guide p.541).
+      GALLERY: a bare-filename save goes to the app sandbox and is NOT gallery-visible — but
+      CSEntry requests LEGACY external storage (dumpsys-verified on the Itel:
+      requestLegacyExternalStorage + hasPreserveLegacyExternalStorage + WRITE_EXTERNAL_STORAGE
+      granted), so a raw write to /sdcard/Pictures IS indexed by MediaStore and appears in the
+      Gallery. Android-only: the getos() 10:19 guard above skips desktop (no /sdcard there). }
+    VERIFICATION_PHOTO_IMAGE.view();
+    VERIFICATION_PHOTO_IMAGE.save(pathconcat("/sdcard/Pictures", photoFile), quality := 85);
 
     TakeVerificationPhoto = 1;
 end;

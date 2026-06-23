@@ -534,7 +534,7 @@ def build_section_c():
         select_one("Q39_CIVIL_STATUS",
                    "39. Civil Status", Q39_CIVIL_STATUS, length=1),
         select_one("Q40_EDUCATION",
-                   "40. Highest level of education completed",
+                   "40. Highest level of education attended (the highest level the person reached, even if not completed — e.g. someone who reached Grade 2 is Primary)",  # #608: 'attended/reached', not 'completed' (ASPSI go/no-go via Carl 2026-06-21)
                    Q40_EDUCATION, length=2),
         select_one("Q41_EMPLOYMENT",
                    "41. Employment Status", Q41_EMPLOYMENT, length=1),
@@ -731,6 +731,9 @@ def build_section_f():
         ("Other (specify)",                                            "7"),
     ]
     items = [
+        # #641: area-type gate — Q57-Q61 apply only to areas WITH a BUCAS center; No -> skip the block (mirrors Q57=No -> Q62)
+        yes_no("AREA_HAS_BUCAS",
+               "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q57-Q61 apply only to areas with a BUCAS center.)"),
         yes_no("Q57_BUCAS_HEARD",
                "57. Have you heard about Bagong Urgent Care and Ambulatory Service (BUCAS) center?"),
         *checkbox_multiselect("Q58_BUCAS_SOURCE",
@@ -889,6 +892,9 @@ def build_section_g():
                    "68. How easy is it for you to access a pharmacy or drugstore?",
                    Q68_EASE, length=1),
         # GAMOT sub-block (Q69-Q74, Q76) — applies only in GAMOT areas
+        # #643: area-type gate — Q69-Q76 apply only to areas WITH GAMOT; No -> skip the block (mirrors Q69=No -> Q75)
+        yes_no("AREA_HAS_GAMOT",
+               "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q69-Q76 apply only to areas with GAMOT.)"),
         yes_no("Q69_GAMOT_HEARD",
                "69. Have you heard of the Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) Package, which is part of PhilHealth's YAKAP/Konsulta or primary care benefit package?"),
         *checkbox_multiselect("Q70_GAMOT_SOURCE",
@@ -914,7 +920,7 @@ def build_section_g():
                     "77. If generic, why did you buy generic medicine?",
                     _cb_codes(Q77_WHY_GENERIC), with_other_txt=True),
         *checkbox_multiselect("Q78_WHY_BRANDED",
-                    "78. If branded, why did you buy branded medicine? (Ask if answer in Q76 is branded and both branded and generic, otherwise skip.)",
+                    "78. If branded, why did you buy branded medicine?",  # #648: removed redundant "(Ask if Q76 is branded...)" note — CAPI auto-gates Q78 on the Q76 answer
                     _cb_codes(Q78_WHY_BRANDED), with_other_txt=True),
     ]
     return record("G_ACCESS_MEDICINES", "G. Access to Medicines", "I", items)
@@ -1325,7 +1331,7 @@ def build_section_k():
         yes_no("Q117_SPECIALIST_FOLLOWUP",
                "117. After you went to the specialist or special service, did they follow up with you about what happened at the visit? (Only if Q112=Yes)"),
         select_one("Q118_SAT_REFERRAL_PROCESS",
-                   "118. Overall, how would you rate your satisfaction with the referral process? (Only if Q112=Yes)",
+                   "118. Overall, how satisfied were you with the referral process — from being referred to the specialist or other facility through your visit there?",  # #658: name which referral (the Q109-Q112 referral journey); dropped the redundant "(Only if Q112=Yes)" — CAPI already gates Q118 on Q112=Yes
                    SATISFACTION_6PT_NA, length=1),
         yes_no("Q119_PCF_REFERRAL",
                "119. Was the visit to the facility a referral from your primary care facility?"),
@@ -1532,21 +1538,26 @@ def build_section_m():
 # marked [DO NOT ASK] in source — emitted as TOTAL_PHP fields for logic pass.
 # ============================================================
 
-def _expenditure_item(prefix, label):
+def _expenditure_item(prefix, label, period="the last week"):
     """Standard SHA triplet: consumed Y/N, purchased PHP, in-kind PHP.
 
     #677 (Carl go/no-go 2026-06-20): a 'Don't know the amount' path — the enumerator enters
     the sentinel 99999999 (the max for the length-8 field; must match generate_apc.DK_AMOUNT)
     when the household cannot estimate an amount. It satisfies the consumed-needs-an-amount
     validation (it is non-zero) and is EXCLUDED from the Section N subtotal sums
-    (subtotal_init_compute_procs)."""
+    (subtotal_init_compute_procs).
+
+    #738/#739/#740/#746/#747 (R5): the WHO/SHA reference period varies by block
+    (week / month / 6 months / 12 months). It is threaded in via `period` so each block
+    emits its paper-correct period instead of the prior hardcoded weekly wording."""
     return [
+        # #676/#738+: paper column wording; reference period varies per block (see callers).
         yes_no(f"{prefix}_CONSUMED",
-               f"{label} — Consumed by household in reference period?"),
+               f"{label} — In {period}, did you or any member of your household consume this item?"),
         numeric(f"{prefix}_PURCHASED_PHP",
-                f"{label} — Amount spent purchasing (PHP; enter 99999999 if don't know)", length=8),
+                f"{label} — During {period}, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)", length=8),
         numeric(f"{prefix}_INKIND_PHP",
-                f"{label} — Estimated value in-kind / received / own-produce (PHP; enter 99999999 if don't know)", length=8),
+                f"{label} — During {period}, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)", length=8),
     ]
 
 
@@ -1603,15 +1614,17 @@ def build_section_n():
         ("Q167_HOUSING",         "167. Housing (actual rentals, estimated value of rent if owned)"),
     ]
     for prefix, label in nonfood_monthly:
-        items.extend(_expenditure_item(prefix, label))
+        items.extend(_expenditure_item(prefix, label, "the last month"))
 
     # Last 6 MONTHS — Q168-Q169
     items.extend(_expenditure_item(
         "Q168_RECREATION_6M",
-        "168. Recreational, cultural, religious, sporting and entertainment devices (6-month)"))
+        "168. Recreational, cultural, religious, sporting and entertainment devices (6-month)",
+        "the last 6 months"))
     items.extend(_expenditure_item(
         "Q169_CLOTHING",
-        "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs"))
+        "169. Ready-made clothing, fabric and materials for clothing, and footwear including household textile, glassware, table ware and household utensils including repairs",
+        "the last 6 months"))
 
     # Last 12 MONTHS — Q170-Q174
     nonfood_annual = [
@@ -1622,15 +1635,15 @@ def build_section_n():
         ("Q174_OTHER_INS",      "174. Other insurance (e.g., for life and accident, and travel)"),
     ]
     for prefix, label in nonfood_annual:
-        items.extend(_expenditure_item(prefix, label))
+        items.extend(_expenditure_item(prefix, label, "the last 12 months"))
 
     # ----- E. Health Products and Services (Consumed last 12 MONTHS) — Q175-Q177 -----
     items.extend(_expenditure_item(
         "Q175_INPATIENT",
-        "175. Inpatient care services"))
+        "175. Inpatient care services", "the last 12 months"))
     items.extend(_expenditure_item(
         "Q176_EMERGENCY_TRANSPORT",
-        "176. Emergency transportation and emergency rescue services"))
+        "176. Emergency transportation and emergency rescue services", "the last 12 months"))
     items.extend(_computed_total(
         "Q177_HEALTH_12M_SUBTOTAL",
         "177. Total value of 175 and 176 (health, 12-month)"))
@@ -1638,16 +1651,20 @@ def build_section_n():
     # Health (Consumed last 6 MONTHS) — Q178-Q182
     items.extend(_expenditure_item(
         "Q178_PREVENTIVE",
-        "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself."))
+        "178. Preventive services such as immunization/vaccinations services and other preventive services (e.g., tetanus toxoid for pregnant women, and routine immunization such as BCG during well child visits). Exclude the cost of vaccine itself.",
+        "the last 6 months"))
     items.extend(_expenditure_item(
         "Q179_DIAGNOSTIC",
-        "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care"))
+        "179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care",
+        "the last 6 months"))
     items.extend(_expenditure_item(
         "Q180_ASSISTIVE",
-        "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases"))
+        "180. Assistive health products for vision (e.g., glasses), hearing (e.g., hearing aids), and mobility (e.g., crutches, therapeutic footwear), including repair, rental, and online purchases",
+        "the last 6 months"))
     items.extend(_expenditure_item(
         "Q181_MEDICAL_PRODUCTS",
-        "181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases"))
+        "181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases",
+        "the last 6 months"))
     items.extend(_computed_total(
         "Q182_HEALTH_6M_SUBTOTAL",
         "182. Total value of 178 to 181 (health, 6-month)"))
@@ -1655,10 +1672,12 @@ def build_section_n():
     # Health (Consumed last MONTH) — Q183-Q185
     items.extend(_expenditure_item(
         "Q183_MEDICINES",
-        "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases"))
+        "183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases",
+        "the last month"))
     items.extend(_expenditure_item(
         "Q184_OUTPATIENT",
-        "184. Outpatient medical and dental services, including online services, without overnight stay"))
+        "184. Outpatient medical and dental services, including online services, without overnight stay",
+        "the last month"))
     items.extend(_computed_total(
         "Q185_HEALTH_1M_SUBTOTAL",
         "185. Total value of 183 and 184 (health, 1-month)"))

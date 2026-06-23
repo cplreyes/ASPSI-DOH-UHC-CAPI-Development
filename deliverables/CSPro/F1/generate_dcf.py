@@ -699,7 +699,7 @@ def build_section_e():
     Q116_ADDR = [
         ("Yes",                                             "1"),
         ("No",                                              "2"),
-        ("Did not experience stock outs of GAMOT meds",     "3"),
+        ("Did not experience stock outs of medicines under the GAMOT package",     "3"),  # #737: full label per paper
     ]
     Q117_HOW = [
         ("Resorted to alternative procurement", "1"),
@@ -946,12 +946,18 @@ def build_section_g():
         ("Referring facility calls receiving facility",     "3"),
         ("Other (specify)",                                 "4"),
     ]
+    # #734 (R5): Q160 -> Check Box multi-select per the tester's PAPI screenshot showing
+    # checkboxes — resolves the #576/#586 "no PAPI evidence either way, flagged for ASPSI"
+    # hold on the same basis #586 used to convert Q144. Hand-coded, NOT _cb_codes: "Other
+    # private facility"/"Other public facility" legitimately start with "Other" and _cb_codes
+    # would mis-recode both to 99 (3-way collision). 'Other, (specify)' -> 99 (with_other_txt);
+    # 'I don't know' -> 90 (exclusive). Paper order: specify before I-don't-know.
     Q160_EXTERNAL = [
-        ("External laboratory",                             "1"),
-        ("Other private facility",                          "2"),
-        ("Other public facility",                           "3"),
-        ("I don't know",                                    "4"),
-        ("Other (specify)",                                 "5"),
+        ("External laboratory",     "01"),
+        ("Other private facility",  "02"),
+        ("Other public facility",   "03"),
+        ("Other (specify)",         "99"),
+        ("I don't know",            "90"),
     ]
     Q161_SATISFACTION = [
         ("Very Satisfied",  "1"),
@@ -1034,9 +1040,14 @@ def build_section_g():
     items.extend(checkbox_multiselect("Q159_RECEIVE_REFERRAL_HOW",
                             "159. Of those referred, which of the following are the most common ways you receive referrals from lower-level health facilities?",
                             _cb_codes(Q159_RECEIVE_REF)))
-    items.append(select_one("Q160_EXTERNAL_SERVICES_GO",
+    # with_other_txt=False: 'Other (specify)' stays a tickable checkbox option (99) with no
+    # companion free-text box — matching the prior select_one (which also captured no specify
+    # text). F1's hand-fmf + inject_blocks re-block EXISTING fields only; a new _OTHER_TXT item
+    # would orphan (UNREACHABLE) without a hand-added form field. Specify-text capture is a
+    # separate small follow-up if ASPSI wants it (#734 comment).
+    items.extend(checkbox_multiselect("Q160_EXTERNAL_SERVICES_GO",
                             "160. Where do your patients go to get the services not available at this facility?",
-                            Q160_EXTERNAL, length=2))
+                            Q160_EXTERNAL, with_other_txt=False))
     items.append(select_one("Q161_REF_SATISFACTION",
                             "161. How would you rate your satisfaction with your current referral system?",
                             Q161_SATISFACTION))

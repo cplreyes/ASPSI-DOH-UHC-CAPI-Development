@@ -16000,6 +16000,39 @@
                           "value": "4"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "None",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Wala",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Wara",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Waray",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -31262,6 +31295,137 @@
               "length": 120
             },
             {
+              "name": "AREA_HAS_BUCAS",
+              "labels": [
+                {
+                  "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "AREA_HAS_BUCAS_VS1",
+                  "labels": [
+                    {
+                      "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Does this area have a Bagong Urgent Care and Ambulatory Services (BUCAS) center? (Q99-Q104 apply only to areas with a BUCAS center.)",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Oo",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Iyo",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Oo",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Oo",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Oo",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dae",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Dili",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Dili",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Dire",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
               "name": "Q99_BUCAS_HEARD",
               "labels": [
                 {
@@ -42043,27 +42207,27 @@
               "name": "Q124_MAIFIP_HEARD",
               "labels": [
                 {
-                  "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (SKIP IF ANSWERED MAIFIP IN Q113)",
+                  "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                   "language": "EN"
                 },
                 {
-                  "text": "Narinig mo na ba ang tungkol sa Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
+                  "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                   "language": "FIL"
                 },
                 {
-                  "text": "Nadangog mo na ba an Medical Asistance for Indigent and Financially Incapacitated Patients?",
+                  "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                   "language": "BCL"
                 },
                 {
-                  "text": "Nakadungog ka na ba bahin sa Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
+                  "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                   "language": "BIS"
                 },
                 {
-                  "text": "Nakadungog na ba ka bahin sa Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (LAKTAWI KUNG NITUBAG OG MAIFIP SA Q113)",
+                  "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                   "language": "CEB"
                 },
                 {
-                  "text": "Nabatian mo na ba an Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (LAKTAW KON GINBATON AN MAIFIP HA Q113)",
+                  "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                   "language": "WAR"
                 }
               ],
@@ -42075,27 +42239,27 @@
                   "name": "Q124_MAIFIP_HEARD_VS1",
                   "labels": [
                     {
-                      "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (SKIP IF ANSWERED MAIFIP IN Q113)",
+                      "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                       "language": "EN"
                     },
                     {
-                      "text": "Narinig mo na ba ang tungkol sa Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
+                      "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                       "language": "FIL"
                     },
                     {
-                      "text": "Nadangog mo na ba an Medical Asistance for Indigent and Financially Incapacitated Patients?",
+                      "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                       "language": "BCL"
                     },
                     {
-                      "text": "Nakadungog ka na ba bahin sa Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
+                      "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                       "language": "BIS"
                     },
                     {
-                      "text": "Nakadungog na ba ka bahin sa Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (LAKTAWI KUNG NITUBAG OG MAIFIP SA Q113)",
+                      "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                       "language": "CEB"
                     },
                     {
-                      "text": "Nabatian mo na ba an Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)? (LAKTAW KON GINBATON AN MAIFIP HA Q113)",
+                      "text": "124. Have you heard of the Medical Assistance for Indigent and Financially Incapacitated Patients (MAIFIP)?",
                       "language": "WAR"
                     }
                   ],
@@ -47983,37 +48147,6 @@
               "length": 120
             },
             {
-              "name": "Q148_MEDICINES_TXT",
-              "labels": [
-                {
-                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
-                  "language": "EN"
-                },
-                {
-                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Which medicine(s) do you take for the condition(s) selected above?",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "alpha",
-              "length": 240
-            },
-            {
               "name": "Q149_WHERE_BUY",
               "labels": [
                 {
@@ -48659,6 +48792,137 @@
                       "pairs": [
                         {
                           "value": "5"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "AREA_HAS_GAMOT",
+              "labels": [
+                {
+                  "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "AREA_HAS_GAMOT_VS1",
+                  "labels": [
+                    {
+                      "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "Does this area have a Guaranteed and Accessible Medications for Outpatient Treatment (GAMOT) pharmacy/package? (Q152-Q159 apply only to areas with GAMOT.)",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Oo",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Iyo",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Oo",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Oo",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Oo",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dae",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Dili",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Dili",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Dire",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
                         }
                       ]
                     }
@@ -50324,6 +50588,39 @@
                       "pairs": [
                         {
                           "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know the difference",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi alam ang pagkakaiba",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dai ko aram na my pagkakaiba palan",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala kabalo sa kalainan",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala kahibalo sa kalahian",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Dire ako maaram han kaibahan",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
                         }
                       ]
                     },
