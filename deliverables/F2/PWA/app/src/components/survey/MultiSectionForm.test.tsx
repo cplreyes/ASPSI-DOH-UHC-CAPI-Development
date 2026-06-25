@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type * as React from 'react';
 import { LocaleProvider } from '@/i18n/locale-context';
@@ -51,6 +51,35 @@ describe('<MultiSectionForm>', () => {
     );
     // Q5='Nurse' is not a prescribing role → Section G hidden → 9 visible sections total
     expect(screen.getByText(/Section 2 of 9/)).toBeInTheDocument();
+  });
+
+  it('#587: blocks advance out of Section A on an implausible tenure (PROF-01) with an inline error', async () => {
+    renderWithProviders(
+      <MultiSectionForm
+        initialValues={{
+          Q1_1: 'Reyes',
+          Q1_2: 'Carl',
+          Q1_3: 'P',
+          Q2: 'Regular',
+          Q3: 'Female',
+          Q4: 30,
+          Q5: 'Nurse',
+          Q7: 'No',
+          Q9_1: 15, // age 30 → threshold age − 20 = 10; tenure 15 ≥ 10 → PROF-01 hard block
+          Q9_2: 6,
+          Q10: 5,
+          Q11: 8,
+        }}
+        onAutosave={vi.fn()}
+        onSubmit={vi.fn()}
+      />,
+    );
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    // The cross-field error fires inline at section exit — not only at review.
+    await waitFor(() =>
+      expect(screen.getByText(/must be less than your age/i)).toBeInTheDocument(),
+    );
+    expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
   });
 
   it('applies intra-section skip logic — Q8 appears when Q7 = Yes', async () => {
@@ -308,110 +337,66 @@ describe('<MultiSectionForm>', () => {
     );
   });
 
-  // #524: "answering a question automatically skips to the next section even
-  // though there are remaining questions to be answered" — reported on gate
-  // questions whose Yes-answer reveals required follow-ups (Q44→Q45-47,
-  // Q54→Q55, Q123→Q124/Q125), "more common toward the end of a section."
-  //
-  // This is the AUTO-ADVANCE path (the entryStatus useEffect), not the manual
-  // Next path the R2-#118 test covers. Mechanism check: answering the gate
-  // makes the section briefly *look* finished only if the revealed follow-ups
-  // aren't counted. They ARE counted — getSectionStatus filters by shouldShow
-  // (the gate reveals them) AND require:true, so the section stays 'incomplete'
-  // and auto-advance's `currentStatus !== 'complete'` guard returns. These two
-  // cases pin that: a Yes gate must NOT auto-skip; a No gate (no follow-ups)
-  // legitimately may. Section J / Q123 is the named gate and the last section.
-  const J_REQUIRED_MINUS_GATE = {
-    // Section A — landing-state requirements (so merged is well-formed)
-    Q1_1: 'Reyes',
-    Q1_2: 'Carl',
-    Q1_3: 'P',
-    Q2: 'Regular',
-    Q3: 'Female',
-    Q4: 30,
-    Q5: 'Nurse',
-    Q7: 'No',
-    Q9_1: 3,
-    Q9_2: 6,
-    Q10: 5,
-    Q11: 8,
-    // Section J — every visible required item answered EXCEPT the Q123 gate.
-    // Q114='Never' hides Q122 (predicate: Q114 !== 'Never'); Q124/Q125 stay
-    // hidden until Q123 is a "Yes,…".
-    Q98: 'Agree',
-    Q99: 'Agree',
-    Q100: 'Agree',
-    Q101: 'Agree',
-    Q102: 'Agree',
-    Q103: 'Agree',
-    Q104: 'Agree',
-    Q105: 'Agree',
-    Q106: 'Agree',
-    Q107: 'Agree',
-    Q109: 'None',
-    Q110: ['None'],
-    Q111: ['Supervisory trainings'],
-    Q112: ['Clinical audits'],
-    Q113: ['Clinical audits'],
-    Q114: 'Never',
-    Q115: 'Sometimes',
-    Q116: 'Sometimes',
-    Q117: 'Sometimes',
-    Q118: 'Sometimes',
-    Q119: 'Sometimes',
-    Q120: 'Sometimes',
-    Q121: 'Sometimes',
-  };
+  it('#524: continued interaction cancels a pending auto-advance (no mid-answer bounce)', async () => {
+    // Bug: once the visible-required set is filled the section reads "complete"
+    // and a 400ms auto-advance fires — but that 400ms is shorter than the 500ms
+    // autosave debounce, so a user still answering (adding multi-select options,
+    // or about to reveal a conditional required question) gets bounced to the
+    // next section. Fix: Section.onInteract fires synchronously on every field
+    // change and cancels the pending advance; it only re-schedules once input
+    // settles. Without the fix this test lands on Section B; with it, stays on A.
+    vi.useFakeTimers();
+    try {
+      renderWithProviders(
+        <MultiSectionForm
+          initialValues={{
+            // Section A — everything required except Q11 (last field) → A starts incomplete.
+            Q1_1: 'Reyes',
+            Q1_2: 'Carl',
+            Q1_3: 'P',
+            Q2: 'Regular',
+            Q3: 'Female',
+            Q4: 30,
+            Q5: 'Nurse',
+            Q7: 'No',
+            Q9_1: 3,
+            Q9_2: 6,
+            Q10: 5,
+          }}
+          onAutosave={vi.fn()}
+          onSubmit={vi.fn()}
+        />,
+      );
+      expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
 
-  it('#524: answering a gate Yes (Q123) reveals required follow-ups and does NOT auto-skip', async () => {
-    const user = userEvent.setup();
-    renderWithProviders(
-      <MultiSectionForm
-        initialValues={J_REQUIRED_MINUS_GATE}
-        initialIndex={9} // Section J
-        onAutosave={vi.fn()}
-        onSubmit={vi.fn()}
-      />,
-    );
-    expect(screen.getByRole('heading', { name: /Section J/ })).toBeInTheDocument();
-    // Q124/Q125 are hidden until the gate is a "Yes,…"
-    expect(screen.queryByText(/Why are you planning on leaving/)).toBeNull();
+      // Fill the last required field → after the 500ms autosave, A is complete
+      // and a 400ms auto-advance is scheduled. (fireEvent, not userEvent, to
+      // avoid the userEvent+fake-timers deadlock.)
+      await act(async () => {
+        fireEvent.change(screen.getByLabelText(/hours do you work/), { target: { value: '8' } });
+      });
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(500);
+      });
 
-    // Answer the gate "Yes" — reveals Q124 (required, multi, empty)
-    await user.click(screen.getByLabelText(/definite plans to leave/));
+      // The user keeps editing the section BEFORE the 400ms advance elapses.
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(150);
+      });
+      await act(async () => {
+        fireEvent.change(screen.getByLabelText(/days in a week/), { target: { value: '6' } });
+      }); // onInteract → cancels the pending advance
 
-    // The follow-up must appear (the gate's reveal works)…
-    await waitFor(() =>
-      expect(screen.getByText(/Why are you planning on leaving/)).toBeInTheDocument(),
-    );
-    // …and crucially the form must STILL be on Section J — no auto-skip past
-    // the freshly-revealed Q124/Q125. Settle the autosave (500ms) + any
-    // auto-advance timer (400ms) window, then re-assert.
-    await new Promise((r) => setTimeout(r, 1000));
-    expect(screen.getByRole('heading', { name: /Section J/ })).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { name: /Review your answers/i })).toBeNull();
-  });
+      // Let the original 400ms advance window fully elapse (150 + 300 > 400).
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(300);
+      });
 
-  it('#524 control: answering the same gate No (no follow-ups) DOES auto-advance', async () => {
-    const user = userEvent.setup();
-    renderWithProviders(
-      <MultiSectionForm
-        initialValues={J_REQUIRED_MINUS_GATE}
-        initialIndex={9} // Section J (last section → advances to Review)
-        onAutosave={vi.fn()}
-        onSubmit={vi.fn()}
-      />,
-    );
-    expect(screen.getByRole('heading', { name: /Section J/ })).toBeInTheDocument();
-
-    // "No, I haven't thought about it" — reveals nothing, so the section is now
-    // complete and the entryStatus useEffect auto-advances to the review screen.
-    await user.click(screen.getByLabelText(/^No, I haven.*thought about it/));
-
-    await waitFor(
-      () => expect(screen.getByRole('heading', { name: /Review your answers/i })).toBeInTheDocument(),
-      { timeout: 3000 },
-    );
+      // Still on Section A — the interaction canceled the pending auto-advance.
+      expect(screen.getByRole('heading', { name: /Section A/ })).toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('renders Section G Q75-Q81 as a single matrix table on tablet+', async () => {
