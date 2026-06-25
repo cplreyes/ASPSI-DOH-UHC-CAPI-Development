@@ -118,3 +118,5 @@ __pycache__/
 
 # Generated CSWeb data dumps — large + regenerable (area-name labels via gen-area-names-full-labels.py)
 deliverables/CSWeb/*.sql.gz
+.maptiler-key
+*.mbtiles

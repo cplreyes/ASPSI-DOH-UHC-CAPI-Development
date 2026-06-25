@@ -28,6 +28,26 @@ function launch_instrument(string pffPath)
   instr_pff.exec();
 end;
 
+function show_ea_map()
+  { N3 "View EA on Map" - offline EA/case map (C7 = PASS). setBaseMap loads the bundled
+    offline MBTiles (renders with NO signal); returns 0 if the file isn't on the device.
+    Markers are fixed Laguna/Binan EA reference points for now - the real EA + captured-case
+    markers wire in with a facility-coords lookup / the C2-collected case GPS. }
+  numeric ok;
+  Map ea_map;
+  ok = ea_map.setBaseMap("survey-basemap.mbtiles");
+  if ok = 0 then
+    errmsg("Offline base map not found on this device. Remove + re-add LoginApp from the server to install it.");
+  else
+    ea_map.addMarker(14.3400, 121.0800);   { test facility area - Binan, Laguna }
+    ea_map.addMarker(14.2840, 121.0680);   { EA reference point }
+    ea_map.zoomTo(14.3100, 121.0700, 12);  { CENTER the view on the EA / offline-tile coverage -
+                                             without this the map opens at the device GPS / world view
+                                             (outside the mbtiles bbox) and renders blank offline. }
+    ea_map.show();
+  endif;
+end;
+
 PROC MENUAPP_LEVEL
 preproc
   { Read the role handed over by LoginApp (loadsetting persists across apps). }
@@ -66,7 +86,7 @@ postproc
       errmsg("SURVEY INTERVIEW report - on-device entry point is live. Captured-vs-target coverage populates after Bluetooth collection (Phase-2B). A rich HTML report is a flagged follow-up.");
       reenter;
     elseif MENU_CHOICE = 4 then
-      errmsg("View EA on Map - pending Phase-2B: needs the C7 on-device-map spike.");
+      show_ea_map();
       reenter;
     elseif MENU_CHOICE = 5 then
       launch_instrument("../FacilityHeadSurvey/FacilityHeadSurvey.pff");
@@ -92,7 +112,7 @@ postproc
     elseif MENU_CHOICE = 15 then
       launch_instrument("../HouseholdSurvey/HouseholdSurvey.pff");
     elseif MENU_CHOICE = 16 then
-      errmsg("View EA on Map - pending Phase-2B: needs the C7 on-device-map spike.");
+      show_ea_map();
       reenter;
     elseif MENU_CHOICE = 17 then
       errmsg("MY INTERVIEWS report - on-device entry point is live. Your captured-vs-target coverage populates as you complete interviews (Phase-2B reporting). A rich HTML report is a flagged follow-up.");

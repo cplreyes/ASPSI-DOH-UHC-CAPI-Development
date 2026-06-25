@@ -36,6 +36,7 @@ BUNDLE = [
     "MenuApp.ent", "MenuApp.dcf", "MenuApp.fmf",
     "MenuApp.ent.apc", "MenuApp.ent.qsf", "MenuApp.ent.mgf", "MenuApp.pff",
     "UserRoster.dat",
+    "survey-basemap.mbtiles",   # N3 offline base map (Map.setBaseMap reads it from the app folder)
 ]
 OUT = Path(__file__).resolve().parent.parent / "automation" / "shots" / "deploy"
 

@@ -1,0 +1,12 @@
+{ MapSpike — C7 on-device map feasibility probe (throwaway, do not ship).
+  Validates the CSPro 8 Map API: declare a Map, add markers at captured-GPS-style
+  coordinates, and show it (online base map by default; offline needs a base-map file). }
+
+PROC GLOBAL
+
+PROC MS_GO
+postproc
+  Map m;
+  m.addMarker(14.5557, 121.0180);   { test point A — Metro Manila }
+  m.addMarker(14.2840, 121.0680);   { test point B — Binan, Laguna }
+  m.show();

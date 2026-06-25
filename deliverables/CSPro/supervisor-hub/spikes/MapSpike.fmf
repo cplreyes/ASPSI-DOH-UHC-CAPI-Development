@@ -1,0 +1,77 @@
+[FormFile]
+Version=CSPro 8.0
+Name=MAPSPIKE_FF
+Label=MapSpike
+DefaultTextFont=-013 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 Arial
+FieldEntryFont=0018 0000 0000 0000 0600 0000 0000 0000 0000 0000 0000 0000 0000 Courier New
+Type=SystemControlled
+  
+[Dictionaries]
+File=.\MapSpike.dcf
+  
+[Form]
+Name=FORM000
+Label=Case Key
+Level=1
+Size=806,300
+  
+Item=MS_SESSION
+  
+[EndForm]
+  
+[Form]
+Name=FORM001
+Label=Map
+Level=1
+Size=806,300
+  
+Item=MS_GO
+  
+[EndForm]
+  
+[Level]
+Name=MAPSPIKE_LEVEL
+Label=MapSpike Level
+  
+[Group]
+Required=Yes
+Name=IDS0_FORM
+Label=Case Key
+Form=1
+Max=1
+  
+[Field]
+Name=MS_SESSION
+Position=350,27,760,47
+Item=MS_SESSION,MAPSPIKE_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,30,330,46
+Text=Session
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=MS_REC_FORM
+Label=Map
+Form=2
+Max=1
+  
+[Field]
+Name=MS_GO
+Position=350,27,760,47
+Item=MS_GO,MAPSPIKE_DICT
+DataCaptureType=TextBox
+Form=2
+  
+[Text]
+Position=50,30,330,46
+Text=Show map (enter 1)
+ 
+  
+[EndGroup]
+  

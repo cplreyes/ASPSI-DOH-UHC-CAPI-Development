@@ -64,6 +64,8 @@ SPECS = {
     # (NO --build — they have no generate_*.py and must NOT get the PSGC-external .ent template).
     "LOGIN": {"dir": "supervisor-hub", "base": "LoginApp", "ent_name": "LOGINAPP", "has_fmf_gen": False},
     "MENU":  {"dir": "supervisor-hub", "base": "MenuApp",  "ent_name": "MENUAPP",  "has_fmf_gen": False},
+    # C7 map feasibility probe (throwaway; supervisor-hub/spikes/). Compile-only.
+    "MAPSPIKE": {"dir": "supervisor-hub/spikes", "base": "MapSpike", "ent_name": "MAPSPIKE", "has_fmf_gen": False},
 }
 
 
