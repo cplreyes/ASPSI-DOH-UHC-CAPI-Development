@@ -157,7 +157,7 @@ _GAMOT_AREA = "Enumerator: Applicable only to respondents in areas with GAMOT."
 
 INSTRUCTIONS = {
     **dict.fromkeys([8, 9, 10, 16, 34, 45, 48, 84, 123, 164, 165, 178], _READ_ONE),
-    **dict.fromkeys([15, 30, 39, 40, 41, 169], _DNR_ONE),
+    **dict.fromkeys([15, 39, 40, 41, 169], _DNR_ONE),   # #763: Q30 note omitted (per tester)
     **dict.fromkeys([42, 50, 52, 85, 86, 163], _READ_ALL),
     **dict.fromkeys([36, 37, 46, 65, 67, 76, 101, 117, 118, 120, 121, 125,
                      171, 177], _DNR_ALL),
@@ -170,8 +170,7 @@ INSTRUCTIONS = {
     18: ("Enumerator note: Tick the income category that corresponds to the "
          "respondent’s approximate household income."),
     29: "Please choose one from the options I will mention.",
-    31: (_DNR_ONE + " For enumerator: A list will be provided to ensure "
-         "accurate details."),
+    # #763: Q31 enumerator note omitted (per tester).
     35: ("Note to enumerator [do not read]: This section is for the Patient’s "
          "awareness on Universal Health Care. Ask all questions in this "
          "section unless a skip rule applies."),
@@ -184,6 +183,7 @@ INSTRUCTIONS = {
          "first contact healthcare provider (i.e., general practitioner "
          "doctor) for an undiagnosed concern or continuing care of varied "
          "medical conditions."),
+    64: "PROVIDE FULL NAME OF THE FACILITY, DO NOT ABBREVIATE.",   # #776: enumerator note on Q64 facility-name capture (per tester)
     71: ("An institution that primarily delivers primary care services or the "
          "initial-contact facility for coordinated care (e.g., RHU, health "
          "center, general practitioner clinic)."),
@@ -316,6 +316,22 @@ def _pipe_fills(text):
     return text
 
 
+# #750: in every payment roster the AMOUNT field sits below the auto-filled SOURCE field, so
+# when the enumerator is focused on the amount they can't see WHICH source/item it is for.
+# Prepend a context line piping the current row's source label (Q<n>_PAY_SRC, getvaluelabel)
+# so the amount prompt always names its source. Display-only — the protected _PAY_SRC field
+# stays the grid's identity column. Matches Q<n>_PAY_AMT only (Q94 per-lab shows the lab name).
+_PAY_AMT_RE = re.compile(r"^(Q\w+)_PAY_AMT$")
+
+
+def _pay_amt_source_context(nm):
+    m = _PAY_AMT_RE.match(nm)
+    if not m:
+        return ""
+    return (f'<p class="instruction">Payment source / item: '
+            f'<b>~~getvaluelabel({m.group(1)}_PAY_SRC)~~</b></p>')
+
+
 def _esc(t):
     return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
@@ -395,6 +411,7 @@ def main():
                         pre, post = build_extras(*extras, lnm)
                         body = pre + _html(labmap.get(lnm) or en) + post
                     body = _pipe_fills(body)
+                    body = _pay_amt_source_context(nm) + body   # #750 source/item context
                     lines += [f"          {lnm}: |", f"            {body}"]
                 n += 1
     lines.append("...")

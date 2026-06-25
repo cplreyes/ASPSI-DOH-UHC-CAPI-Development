@@ -1,19 +1,22 @@
 """Read a CSPro CSV export (one instrument) into normalized, PII-light Case records.
 
 CSPro's CSV export uses dictionary item names as column headers, so FIELD_MAP just
-names the items we read per instrument. Completeness comes from CASE_DISPOSITION
-(F3/F4, shipped 2026-06-21); F1 has no such field, so it falls back to the result code.
+names the items we read per instrument. Completeness comes from the CASE_DISPOSITION
+sentinel — now on all three instruments (F3/F4 shipped 2026-06-21, F1 added 2026-06-23
+via #744). When CASE_DISPOSITION is blank (a case collected before the sentinel shipped),
+_disposition falls back to the result code, so a mixed old/new population classifies right.
 
-Field names below are confirmed against the live dictionaries (2026-06-21):
+Field names below are confirmed against the live dictionaries (F1/F3/F4, 2026-06-23):
   - F4 GPS latitude item is `LATITUDE` (label "GPS Latitude") — there is no HH_GPS_LATITUDE.
   - F1's final-visit date item is `DATE_OF_FINAL_VISIT_TO_THE_FACILITY` (F3/F4 use DATE_FINAL_VISIT).
+  - F1 GPS latitude is `FACILITY_GPS_LATITUDE`; F1 now carries `CASE_DISPOSITION` + `BREAKOFF` (#744).
 """
 import csv
 from dataclasses import dataclass
 
 # Per-instrument item names (verified against F{1,3,4} .dcf, 2026-06-21).
 FIELD_MAP = {
-    "F1": {"disposition": None, "result": "ENUM_RESULT_FINAL_VISIT",
+    "F1": {"disposition": "CASE_DISPOSITION", "result": "ENUM_RESULT_FINAL_VISIT",
            "completed_codes": {"1"}, "gps_lat": "FACILITY_GPS_LATITUDE",
            "photo": "VERIFICATION_PHOTO_FILENAME", "early": "Q1_NAME",
            "date": "DATE_OF_FINAL_VISIT_TO_THE_FACILITY", "enumerator": "ENUMERATOR_S_NAME"},
@@ -50,15 +53,18 @@ def _facility_from_key(key):
 
 
 def _disposition(row, m):
-    """complete / partial / in_progress from CASE_DISPOSITION, else the result code."""
+    """complete / partial / in_progress from the CASE_DISPOSITION sentinel when it is
+    populated, else from the result code (handles cases collected before the sentinel
+    shipped, whose CASE_DISPOSITION is blank — see module docstring)."""
     if m["disposition"]:
         d = (row.get(m["disposition"]) or "").strip()
         if d == "1":
             return "complete"
-        if d == "0" or d == "":
+        if d == "0":
             return "in_progress"
-        return "partial"
-    # F1 fallback: no sentinel — use the result code
+        if d != "":            # 2 (or any other non-zero code) = partial / broke off
+            return "partial"
+        # d == "" -> sentinel not populated (pre-sentinel case); fall through to result code
     r = (row.get(m["result"]) or "").strip()
     if r in m["completed_codes"]:
         return "complete"

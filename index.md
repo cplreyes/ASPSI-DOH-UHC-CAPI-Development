@@ -1,6 +1,37 @@
+---
+title: ASPSI-DOH CAPI CSPro Development
+project: ASPSI-DOH-CAPI-CSPro-Development
+client: ASPSI / DOH (Department of Health)
+client_contact: ASPSI — Kidd · Myra (DOH interface)
+offering: CAPI-Development
+hat: CAPI / Survey Systems Lead
+due: 2026-08-14
+milestone: UAT Round 5 sign-off, then August training
+acceptance: UAT R5 in progress (Jun 22-27), 6 surfaces — F1/F3/F4 + F2 PWA + Admin + CSWeb
+status: UAT Round 5; contract close Aug 14 — extension (Aug training / Sep rollout) requested
+last_updated: 2026-06-24
+---
+
 # ASPSI-DOH CAPI CSPro Development
 
 Computer-Assisted Personal Interviewing (CAPI) system development for ASPSI | DOH using CSPro and CSEntry, covering survey questionnaire design through CSWeb deployment.
+
+## Delivery
+
+> Executive record per the [[2_Areas/IT-Standards/templates/Delivery-Standard|Delivery Standard]]. The full engine room is in `scrum/`; this rolls it up.
+
+### Commitments
+- [x] F1/F3/F4 + F2 instruments built & deployed to CSWeb   state::done
+- [ ] UAT Round 5 sign-off across 6 surfaces                 state::doing
+- [ ] Enumerator training (August)                           state::todo
+- [ ] National rollout (September)                           state::todo
+
+### Impediments
+- PhilHealth Q38/Q45 reinstatement   status::blocked  owner::ASPSI  next::send value-set PNGs  raised::2026-06-21
+- F2 off-Cloudflare → Elestio migration   status::blocked  owner::Carl/ASPSI  next::provision instance + DNS + cost sign-off  raised::2026-06-22
+
+### Accepted
+- 2026-05-04 — F2 PWA v2.0.0 (HCW Survey + Admin Portal) to production
 
 ## Project Structure
 

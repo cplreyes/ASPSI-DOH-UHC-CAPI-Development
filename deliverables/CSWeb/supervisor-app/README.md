@@ -68,13 +68,16 @@ Bluetooth hub removes the signal dependency.)
 | `disposition_mismatch` | Completed but the opening question is blank |
 | `consent_contradiction` | Withdraw/Refused result code but answers are present |
 
-## Field-name notes (verified against the live dictionaries, 2026-06-21)
+## Field-name notes (verified against the live dictionaries, 2026-06-23)
 
 - **F4** GPS latitude item is `LATITUDE` (label "GPS Latitude") — there is no `HH_GPS_LATITUDE`.
-- **F1** final-visit date item is `DATE_OF_FINAL_VISIT_TO_THE_FACILITY` (F3/F4 use `DATE_FINAL_VISIT`).
-- **F1** has no `CASE_DISPOSITION` (Cluster 5 covered F3/F4 only); F1 completeness is derived
-  from `ENUM_RESULT_FINAL_VISIT` (Completed = `1`). If ASPSI later wants F1 break-off, fan out
-  the Cluster-5 pattern to F1 first.
+- **F1** final-visit date item is `DATE_OF_FINAL_VISIT_TO_THE_FACILITY` (F3/F4 use `DATE_FINAL_VISIT`);
+  F1 GPS latitude is `FACILITY_GPS_LATITUDE`.
+- **All three instruments now carry `CASE_DISPOSITION`** — F3/F4 since Cluster 5 (2026-06-21),
+  **F1 added in #744 (2026-06-23)** along with `BREAKOFF`. The engine reads the sentinel
+  (`1`=complete, `2`=partial/broke-off, `0`=in-progress) and **falls back to the result code
+  only when `CASE_DISPOSITION` is blank** — i.e. for F1 cases collected before #744 shipped, so a
+  mixed old/new export still classifies correctly. (F1 Completed result code = `1`.)
 
 ## Notes
 

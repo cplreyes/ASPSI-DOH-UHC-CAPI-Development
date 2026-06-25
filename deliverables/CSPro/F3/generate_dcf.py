@@ -68,7 +68,8 @@ def _cb_codes(options):
 
 
 def _build_payment_roster(record_name, label, q_no, payment_src, amt_codes,
-                          record_type, src_label, amt_label, amt_length=8):
+                          record_type, src_label, amt_label, amt_length=8,
+                          display_no=None):
     """Option B payment-matrix roster (pilot 2026-06-18). One occurrence per ticked
     source code from the question's CheckBox field; renders as a grid (source | amount).
     Fields:
@@ -82,8 +83,12 @@ def _build_payment_roster(record_name, label, q_no, payment_src, amt_codes,
     the host section record; this roster record is spliced into the dictionary's record
     list immediately after it so the grid renders right after the tick-list.
     `amt_codes` is carried for documentation/symmetry; the apc owns the gate logic."""
+    # #751: field NAMES can't carry a dot, so the decimal questions use q_no 971/972;
+    # the DISPLAYED row number must read "97.1"/"97.2", not "971"/"972". display_no
+    # overrides the shown number (SRC/AMT labels already show it via src_label/amt_label).
+    disp = display_no if display_no is not None else str(q_no)
     items = [
-        numeric(f"Q{q_no}_PAY_LINE", f"{q_no}. Payment row", length=1),
+        numeric(f"Q{q_no}_PAY_LINE", f"{disp} Payment row", length=1),
         select_one(f"Q{q_no}_PAY_SRC", src_label, payment_src, length=2),
         numeric(f"Q{q_no}_PAY_AMT", amt_label, length=amt_length),
     ]
@@ -333,13 +338,15 @@ def build_section_b():
         ("Pension",                                            "07"),
         ("Unemployed and looking for work",                    "08"),
         ("Unemployed and not looking for work",                "09"),
+        ("I don't know",                                       "99"),
         # #545 (Carl go/no-go 2026-06-20): 'Not Applicable' for patients with no income source
         # — e.g. a minor / not-yet-working-age patient. Code 98 (special, outside the 1-5
         # working-category range used by the Q16/Q17 employment-consistency check, so it does
         # not affect that check). Q18 household-income still applies (household-level, not
         # personal), so no Q18 skip is added.
+        # #760: display "I don't know" before "Not Applicable" (match Q16 order, per tester);
+        # codes unchanged (NA=98, DK=99) so no data / consistency-check impact.
         ("Not Applicable",                                     "98"),
-        ("I don't know",                                       "99"),
     ]
     # #631 (ASPSI updated questionnaire, 2026-06-17): income categories revised to
     # 11 contiguous 50k bands (was 6 uneven bands). 2-digit codes (field length 2).
@@ -701,8 +708,9 @@ def build_section_d():
 
 def build_section_e():
     Q54_PROVIDER = [
-        ("General practitioner",                    "1"),
-        ("Specialty Care Provider/ Specialist",     "2"),
+        # #787 (R5): inline definitions appended per tester (codes unchanged -> no data impact).
+        ("General practitioner (a doctor who is qualified for medical practice)",                       "1"),
+        ("Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)", "2"),
         ("Both",                                    "3"),
         ("Other (specify)",                         "4"),
         ("None",                                    "5"),
@@ -796,8 +804,11 @@ def build_section_e():
     Q77_KON_REGISTERED = [
         ("Yes",                         "1"),
         ("No",                          "2"),  # proceed to Q82
-        # #430: 'I've never heard of it' (3) removed — Q77 is only reached when Q74=Yes (has
-        # heard of YAKAP/Konsulta); the not-heard path is already routed by Q74=No -> Q83.
+        # #770 (R5): 'I've never heard of it' (3) RESTORED to the paper value set + routes to Q83,
+        # reversing #430's removal. ASPSI tester re-requested it (matches spec §4 line 270).
+        # Note for ASPSI: Q77 is only reached when Q74=Yes (has heard of YAKAP/Konsulta), so (3) is
+        # logically redundant here — restored per tester + paper; downstream cleanup is ASPSI's call.
+        ("I've never heard of it",      "3"),  # proceed to Q83
         ("I don't know",                "4"),  # proceed to Q83
     ]
     Q78_WHEN_REG = [
@@ -1328,13 +1339,13 @@ def build_section_g():
             Q971_SOURCES, set(),   # amt_codes=empty: every category carries an amount
             "Q",
             "97.1 Category (auto-filled from the ticked items)",
-            "97.1 Amount charged for this item (Pesos)"),
+            "97.1 Amount charged for this item (Pesos)", display_no="97.1"),
         "Q972_SOURCES": _build_payment_roster(
             "Q972_PAY_ROSTER", "G. Other expenses not in bill — amount by item", 972,
             Q972_SOURCES, set(),   # all-amount: every ticked item carries an amount
             "U",
             "97.2 Expense item (auto-filled from the ticked items)",
-            "97.2 Amount for this expense (Pesos)"),
+            "97.2 Amount for this expense (Pesos)", display_no="97.2"),
         "Q98_SOURCES": _build_payment_roster(
             "Q98_PAY_ROSTER", "G. Sources of money for medical costs — amount by source", 98,
             Q98_SOURCES, set(),   # all-amount: every ticked source carries an amount
@@ -1625,6 +1636,7 @@ def build_section_i():
         ("Too complicated",                         "2"),
         ("I don't like to stay in basic ward",      "3"),
         ("There is no available basic ward",        "4"),
+        ("Other (specify)",                         "99"),   # #783: add Other-specify (the 'specif' marker -> _cb_codes maps to 99; with_other_txt below opens the text box)
     ]
     Q130_REDUCED_SPEND = [
         ("Yes",                "1"),
@@ -1671,7 +1683,7 @@ def build_section_i():
                     _cb_codes(Q128_OOP_ITEMS), with_other_txt=True),
         *checkbox_multiselect("Q129_WHY_NO_MAIFIP",   # #700: select_all -> Check Box (tick-all)
                     "129. Why did you not avail of MAIFIP during this last confinement?",
-                    _cb_codes(Q129_WHY_NO_MAIFIP), with_other_txt=False),
+                    _cb_codes(Q129_WHY_NO_MAIFIP), with_other_txt=True),   # #783: Other-specify text box enabled
         select_one("Q130_REDUCED_SPEND",
                    "130. Have you or your household had to reduce spending on things you need "
                    "(such as food, housing, or utilities) because of this health expenditure "
@@ -2127,7 +2139,7 @@ def build_f3_dictionary():
     # IS the facility reference; F3<->F1 joins on those shared fields. No separate item.
     records = [
         build_f3_field_control(),
-        build_geo_id("facility_and_patient"),
+        build_geo_id("facility_and_patient", structured_address=True),   # #784/#786 Option A: typed Street + derived Barangay/Municipality + assembled address
         build_f3_facility_capture(),
         build_f3_patient_home_capture(),
         build_f3_case_verification(),

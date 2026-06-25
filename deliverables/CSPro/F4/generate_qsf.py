@@ -18,6 +18,8 @@ import json
 import re
 from pathlib import Path
 
+from generate_dcf import build_f4_dictionary, apply_translations
+
 HERE = Path(__file__).parent
 DCF = HERE / "HouseholdSurvey.dcf"
 OUT = HERE / "HouseholdSurvey.ent.qsf"
@@ -173,8 +175,13 @@ INSTRUCTIONS = {
          "Please include those who are not living here now but will be back "
          "within six months, BUT do not include OFWs."),
     29: "Please choose one from the options I will mention.",
-    30: ("For the enumerator: please check that the total number is equal to "
-         "the number answered in Q19."),
+    30: ("Note to enumerator [do not read]: This section is for the "
+         "characteristics of the Household. The respondent can answer on behalf "
+         "of the household member. However, if the household member is present "
+         "during the interview, they may provide their answers. Ask all "
+         "questions in this section unless a skip rule applies. For the "
+         "enumerator: please check that the total number is equal to the number "
+         "answered in Q19."),
     51: ("Note to enumerator [do not read]: This section is for awareness of "
          "the Universal Health Care (UHC). Ask all questions in this section "
          "unless a skip rule applies."),
@@ -387,7 +394,15 @@ def question_extras(nm, intro_used):
 
 
 def main():
-    d = json.loads(DCF.read_text(encoding="utf-8"))
+    # Build the dictionary IN-MEMORY (full-length labels) instead of reading the on-disk
+    # HouseholdSurvey.dcf, whose labels write_dcf() caps at 255 chars via
+    # _truncate_long_labels. That 255 cap is correct for the dcf/fmf bold header, but the
+    # qsf inherited it and truncated long Section N prompts mid-sentence in the CAPI
+    # question-text bar (#741/#742/#745: Q152/159/162/163/164/168/169/171/178/179/180/181/
+    # 183/184 were cut at "— In the..."). The qsf question text has no length limit, so it
+    # carries the FULL prompt. Mirrors the #748 in-memory-build fix in generate_fmf.
+    d = build_f4_dictionary()
+    d = apply_translations(d, HERE / "translations")
     dict_name = d.get("name", "HOUSEHOLDSURVEY_DICT")
     langs = [(l["name"], l.get("label", l["name"]))
              for l in (d.get("languages") or [{"name": "EN", "label": "English"}])]

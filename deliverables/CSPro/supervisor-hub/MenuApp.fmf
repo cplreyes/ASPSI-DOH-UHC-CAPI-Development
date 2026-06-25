@@ -1,0 +1,91 @@
+[FormFile]
+Version=CSPro 8.0
+Name=MENUAPP_FF
+Label=MenuApp
+DefaultTextFont=-013 0000 0000 0000 0700 0000 0000 0000 0000 0000 0000 0000 0000 Arial
+FieldEntryFont=0018 0000 0000 0000 0600 0000 0000 0000 0000 0000 0000 0000 0000 Courier New
+Type=SystemControlled
+  
+[Dictionaries]
+File=.\MenuApp.dcf
+  
+[Form]
+Name=FORM000
+Label=Case Key
+Level=1
+Size=806,300
+  
+Item=MENU_SESSION
+  
+[EndForm]
+  
+[Form]
+Name=FORM001
+Label=Menu
+Level=1
+Size=806,300
+  
+Item=ROLE_SHOWN
+Item=MENU_CHOICE
+  
+[EndForm]
+  
+[Level]
+Name=MENUAPP_LEVEL
+Label=MenuApp Level
+  
+[Group]
+Required=Yes
+Name=IDS0_FORM
+Label=Case Key
+Form=1
+Max=1
+  
+[Field]
+Name=MENU_SESSION
+Position=350,27,760,47
+Item=MENU_SESSION,MENUAPP_DICT
+DataCaptureType=TextBox
+Form=1
+  
+[Text]
+Position=50,30,330,46
+Text=Session
+ 
+  
+[EndGroup]
+  
+[Group]
+Required=Yes
+Name=MENU_REC_FORM
+Label=Menu
+Form=2
+Max=1
+  
+[Field]
+Name=ROLE_SHOWN
+Position=350,27,760,47
+Item=ROLE_SHOWN,MENUAPP_DICT
+UseUnicodeTextBox=Yes
+DataCaptureType=TextBox
+Form=2
+  
+[Text]
+Position=50,30,330,46
+Text=Logged-in role
+ 
+  
+[Field]
+Name=MENU_CHOICE
+Position=350,57,365,77
+Item=MENU_CHOICE,MENUAPP_DICT
+DataCaptureType=RadioButton
+Form=2
+  
+[Text]
+Position=50,60,330,76
+Text=Choose an action
+ 
+  
+[EndGroup]
+  

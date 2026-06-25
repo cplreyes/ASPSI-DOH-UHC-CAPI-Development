@@ -28,7 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from generate_dcf import build_f3_dictionary
+from generate_dcf import build_f3_dictionary, _neutralise_facility_placeholder
 from cspro_helpers import _truncate_long_labels
 
 
@@ -474,6 +474,13 @@ def _emit_blocks(lines, item_objs):
 
 def build_fmf():
     dictionary = build_f3_dictionary()
+    # #748/#730: neutralise the facility-name placeholder in the fmf field labels too. The
+    # bold header (fmf label) can't render fills, so generate_dcf rewrites [facility_name_input]
+    # -> "this facility" in the .dcf; the fmf was built from the RAW dictionary, so 6 labels
+    # (Q66/Q88/Q143/Q144/Q162/Q172) still leaked the literal placeholder on device. Run before
+    # truncation so the neutralised text is what gets capped.
+    n_fac = _neutralise_facility_placeholder(dictionary)
+    print(f"  #748: neutralised facility placeholder in {n_fac} fmf label(s)")
     _truncate_long_labels(dictionary)  # match the .dcf's 255-char label cap (CSPro max)
     global _ACTIVE_BLOCK_PLAN
     sources, targets, gated = parse_apc()

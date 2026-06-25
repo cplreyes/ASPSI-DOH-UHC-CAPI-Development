@@ -270,3 +270,97 @@ cases (the hub is a copy), so collection adds redundancy without removing the or
   Note: Khurshid has **no** Bluetooth tutorial — his sync content is CSWeb-only.
 - Survey Solutions (World Bank) HQ/Supervisor/Interviewer model — supervisor app as offline
   temporary storage + assignment distribution. <https://docs.mysurvey.solutions/supervisor/supervisor-app/>
+
+---
+
+## ADDENDUM (2026-06-24) — Carl's role-menu design (authoritative menu UX) + 4 additions
+
+Carl pivoted "full-Phase-2 now" and supplied the authoritative **Supervisor / Enumerator menu**
+contents (the classic CSPro census field-ops menu). The menu UX is exactly the C1 login+menu app
+(Tasks 2/4/5); its data-exchange spine is the C2 hub (Tasks 1/6/7); on-hub QA is Task 8. **Four
+elements extend this spec and must be added to the plan:**
+
+**Supervisor menu:** (a) Assign Enumeration Area (Cluster) → **send EA to enumerator**; (b) Listing
+Data — receive from enumerator → **send cumulative listing to server** → **view listing report**;
+(c) Survey Interview — receive survey data → send to server → **view interview report**; (d) **View
+EA on Google Earth** — set map file / view location / view listing on map; (e) close.
+**Enumerator menu:** (a) Listing Exercise — **receive assigned EA** → start listing → send listing
+to supervisor → view listing report; (b) **receive assigned data (Patient)**; (c) Survey Interview —
+conduct → send to supervisor → view report; (d) View EA on map; (e) close.
+
+| # | New element | CSPro mechanism | Status / feasibility |
+|---|---|---|---|
+| N1 | **EA / Cluster assignment distribution** (supervisor assigns an EA + sends it; enumerator receives assigned EA / assigned patient-listing data) | An **assignment dictionary** (EA/cluster → enumerator + the patient pre-list) pushed supervisor→enumerator over the **same C2 transport** (Bluetooth/file), reverse direction. Mirrors Survey Solutions "assignment distribution". | **NEW — design needed.** Reuses C2; adds an assignment dict + the reverse push. Add as a Phase-B task. |
+| N2 | **Listing as a structured step** (listing exercise → listing report → "receive assigned data (Patient)" → interview) | The existing **F3 Patient Listing** app chain-launched from the menu; listing `.csdb` exchanged like any instrument; the listing feeds the patient pre-list that becomes the enumerator's assigned data (ties to N1). | **NEW wiring.** Listing app exists; needs menu wiring + the listing→assignment handoff. Add as a Phase-B task. |
+| N3 | **On-device map / "View EA on Google Earth"** (set map file, view own/assigned location + listing on a map) | CSPro logic **`view()`** on a generated map file (KML/HTML), or CSPro 8 **maps API / `showMap`-style** action over the captured GPS + a base map (the .kml the "Set Map File" step loads). Server-side counterpart already exists (CSWeb Map Report). | **NEW — FEASIBILITY SPIKE.** Verify what CSEntry can render on-device (offline KML/map). Add as a **3rd spike (C7)** alongside C1/C2. |
+| N4 | **Per-role on-device reports** (listing report / interview report shown on the device, per role) | Logic-generated **HTML + `view()`** on the device's own (or hub-collected) `.csdb` — the same `view()`+HTML mechanism proven in `Capture-Helpers.apc` and the Phase-3 SupervisorApp. Distinct from Phase-1's laptop report (which stays for the at-base pass). | **NEW.** Mechanism proven (Phase-3). Add as a Phase-B task; can reuse the Phase-1 metric definitions. |
+
+**Execution note (spike-first holds):** C1 (login/menu) + C2 (Bluetooth one-host-from-many) remain
+the gating spikes; **N3 adds a 3rd feasibility spike (on-device map)**. The full menu build (N1/N2/N4
++ the existing Phase-B tasks) is gated on the spikes. **C2's real-Bluetooth test needs TWO physical
+CSEntry devices** — only the itel is on hand; with one device we can only test the **manual
+file-share fallback** (itel + emulator), not true Bluetooth one-host-from-many. **Data-flow caveat
+unchanged:** the supervisor-as-hub path diverges from the DOH-approved Manual (SEs sync direct);
+dual-path keeps direct sync as default, but adopting the hub as primary needs ASPSI/DOH alignment.
+
+---
+
+## ADDENDUM-2 (2026-06-25) — Benchmark + exact menu structure (build target)
+
+Added when Carl confirmed "build the Enumerator/Supervisor menu features" and asked to benchmark +
+align the plans before building. The role menus above are a **proven 3-tier field-ops pattern**, not
+a bespoke design — this section records the benchmark and pins the exact menu items the build targets.
+
+### Benchmark — the menus replicate established field-ops apps
+
+| Menu element | Survey Solutions (World Bank) | Classic CSPro census app |
+|---|---|---|
+| Assign EA → send (supervisor) | Supervisor app — *assignment distribution* | "Assign EA / Cluster" |
+| Receive assigned EA / patient (enumerator) | Interviewer app — *download assignments* | "Receive assignment" |
+| Listing → report | Interviewer — *listing / enumeration* | "Listing operation" |
+| Interview → send → report | Interviewer — *interview + sync to supervisor* | "Enumeration" |
+| Receive → review → relay (supervisor) | Supervisor — *review + sync to HQ* | "Supervisor review + transmit" |
+| View EA on map | geo-assignments / boundary view | "Map / spatial" |
+
+**3-tier mapping:** **CSWeb = Headquarters · supervisor hub = Supervisor app · enumerator =
+Interviewer app.** This is the same topology Survey Solutions ships and the classic CSPro census
+enumeration menu uses.
+
+**Conscious divergence from Survey Solutions:** SuSo has a supervisor **reject / reassign**
+write-back channel; our design keeps QA **advisory-only** (D2) to preserve the conflict-free
+12-digit-key model. We adopt the *menu shape* but **not** the reject channel — by design.
+
+### Exact menu structure (the build target)
+
+Role-filtered with `setvalueset` (the v1 mechanism — enumerators see only their items). `MENU_CHOICE`
+value-set codes:
+
+**Supervisor (ROLE = `supervisor`):**
+
+| Code | Item | Action chain |
+|---|---|---|
+| 1 | **Assign Enumeration Area** | pick EA / cluster → push the assignment to the enumerator (N1, reverse C2 transport) |
+| 2 | **Listing Data** | receive listing from enumerator (C2) → relay cumulative listing to CSWeb (C3) → view listing report (N4) |
+| 3 | **Survey Interview** | receive survey data from enumerator (C2) → relay to CSWeb (C3) → view interview report (N4) |
+| 4 | **View EA on Map** | set map file / view EA + listing on map (N3) |
+| 5 | **Close** | exit to login |
+
+**Enumerator (ROLE = `enumerator`):**
+
+| Code | Item | Action chain |
+|---|---|---|
+| 1 | **Listing Exercise** | receive assigned EA (N1) → launch the listing app (N2) → send listing to supervisor (C2) → view listing report (N4) |
+| 2 | **Receive Assigned Data (Patient)** | receive the patient pre-list / assignment from the supervisor (N1) |
+| 3 | **Survey Interview** | conduct (launch F1/F3/F4 via PFF chain-launch) → send to supervisor (C2) → view interview report (N4) |
+| 4 | **View EA on Map** | view assigned EA + own location on map (N3) |
+| 5 | **Close** | exit to login |
+
+**Open design point (confirm at build):** whether the **supervisor** menu also keeps a direct
+"launch F1/F3/F4 for spot-check" entry (the v1 had F1/F3/F4 directly) in addition to the
+receive-and-relay flow above. Default proposal: fold spot-check launch under item 3 (or add it as a
+6th supervisor-only item) rather than drop it — supervisors still need read-only spot-checks.
+
+**What the v1 already has vs this target:** v1 = a flat 6-item launcher (F1/F3/F4 +
+Collect/Relay/QA-as-errmsg). This ADDENDUM-2 menu is the **restructure target** — see the Phase-2
+plan's "Menu restructure" task. The login + role-handoff + role-filter + return-to-menu plumbing
+underneath is already built and device-confirmed (C1 v1).

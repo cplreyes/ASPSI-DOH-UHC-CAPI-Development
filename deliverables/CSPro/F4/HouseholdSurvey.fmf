@@ -8950,7 +8950,7 @@ Form=19
 
 Position=50,60,330,76
 
-Text=144. Cereals (rice, flour, noodles, corn, etc.) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=144. Cereals (rice, flour, noodles, corn, etc.) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -8974,7 +8974,7 @@ Form=19
 
 Position=50,90,330,106
 
-Text=144. Cereals (rice, flour, noodles, corn, etc.) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=144. Cereals (rice, flour, noodles, corn, etc.) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
 
  
 
@@ -9022,7 +9022,7 @@ Form=19
 
 Position=50,150,330,166
 
-Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes...
 
  
 
@@ -9046,7 +9046,7 @@ Form=19
 
 Position=50,180,330,196
 
-Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if...
+Text=145. Pulses, roots, tubers, plantains, (and cooking bananas), and nuts — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't...
 
  
 
@@ -9094,7 +9094,7 @@ Form=19
 
 Position=50,240,330,256
 
-Text=146. Vegetables (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=146. Vegetables (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -9118,7 +9118,7 @@ Form=19
 
 Position=50,270,330,286
 
-Text=146. Vegetables (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=146. Vegetables (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
 
  
 
@@ -9166,7 +9166,7 @@ Form=19
 
 Position=50,330,330,346
 
-Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -9190,7 +9190,7 @@ Form=19
 
 Position=50,360,330,376
 
-Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=147. Fruits in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99...
 
  
 
@@ -9238,7 +9238,7 @@ Form=19
 
 Position=50,420,330,436
 
-Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these...
 
  
 
@@ -9262,7 +9262,7 @@ Form=19
 
 Position=50,450,330,466
 
-Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999...
+Text=148. Fish and other seafoods in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if...
 
  
 
@@ -9310,7 +9310,7 @@ Form=19
 
 Position=50,510,330,526
 
-Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read...
 
  
 
@@ -9334,7 +9334,7 @@ Form=19
 
 Position=50,540,330,556
 
-Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter...
+Text=149. Any kind of meat and offal in any form (fresh, dried, dehydrated, frozen) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if...
 
  
 
@@ -9382,7 +9382,7 @@ Form=19
 
 Position=50,600,330,616
 
-Text=150. Any kind of egg (from chicken, duck, quail, etc.) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=150. Any kind of egg (from chicken, duck, quail, etc.) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -9406,7 +9406,7 @@ Form=19
 
 Position=50,630,330,646
 
-Text=150. Any kind of egg (from chicken, duck, quail, etc.) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=150. Any kind of egg (from chicken, duck, quail, etc.) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if...
 
  
 
@@ -9454,7 +9454,7 @@ Form=19
 
 Position=50,690,330,706
 
-Text=151. Milk and other milk products, excluding butter — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=151. Milk and other milk products, excluding butter — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -9478,7 +9478,7 @@ Form=19
 
 Position=50,720,330,736
 
-Text=151. Milk and other milk products, excluding butter — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=151. Milk and other milk products, excluding butter — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
 
  
 
@@ -9526,7 +9526,7 @@ Form=19
 
 Position=50,780,330,796
 
-Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=152. Butter, lard, other animal-based oils and fats, and vegetable oils (coconut, palm, sesame) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer...
 
  
 
@@ -9598,7 +9598,7 @@ Form=19
 
 Position=50,870,330,886
 
-Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=153. Sugar, jaggery and other sugar confectionary and desserts (including nut pastes) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not...
 
  
 
@@ -9670,7 +9670,7 @@ Form=19
 
 Position=50,960,330,976
 
-Text=154. Condiments and other spices and other ready-made meals — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=154. Condiments and other spices and other ready-made meals — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -9694,7 +9694,7 @@ Form=19
 
 Position=50,990,330,1006
 
-Text=154. Condiments and other spices and other ready-made meals — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=154. Condiments and other spices and other ready-made meals — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99...
 
  
 
@@ -9742,7 +9742,7 @@ Form=19
 
 Position=50,1050,330,1066
 
-Text=155. Water and non-alcoholic beverages (e.g., coffee) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=155. Water and non-alcoholic beverages (e.g., coffee) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -9766,7 +9766,7 @@ Form=19
 
 Position=50,1080,330,1096
 
-Text=155. Water and non-alcoholic beverages (e.g., coffee) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=155. Water and non-alcoholic beverages (e.g., coffee) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
 
  
 
@@ -9814,7 +9814,7 @@ Form=19
 
 Position=50,1140,330,1156
 
-Text=156. Alcoholic beverages (e.g., local and imported) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=156. Alcoholic beverages (e.g., local and imported) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -9838,7 +9838,7 @@ Form=19
 
 Position=50,1170,330,1186
 
-Text=156. Alcoholic beverages (e.g., local and imported) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=156. Alcoholic beverages (e.g., local and imported) — During the last week, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
 
  
 
@@ -9910,7 +9910,7 @@ Form=19
 
 Position=50,1260,330,1276
 
-Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=158. Meals and snacks and beverages from restaurants (dine-in, take-out, and deliveries) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do...
 
  
 
@@ -9982,7 +9982,7 @@ Form=19
 
 Position=50,1350,330,1366
 
-Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=159. Smoking (e.g., cigarettes, cigars, and vape), and/or smokeless tobacco products (e.g., chewing tobacco, betel nut) — During the last week, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the...
 
  
 
@@ -10054,7 +10054,7 @@ Form=19
 
 Position=50,1440,330,1456
 
-Text=160. Personal care products (e.g., shampoo, haircut) — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=160. Personal care products (e.g., shampoo, haircut) — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -10078,7 +10078,7 @@ Form=19
 
 Position=50,1470,330,1486
 
-Text=160. Personal care products (e.g., shampoo, haircut) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=160. Personal care products (e.g., shampoo, haircut) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the...
 
  
 
@@ -10126,7 +10126,7 @@ Form=19
 
 Position=50,1530,330,1546
 
-Text=161. Household cleaning and maintenance products and services including domestic ones — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=161. Household cleaning and maintenance products and services including domestic ones — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not...
 
  
 
@@ -10198,7 +10198,7 @@ Form=19
 
 Position=50,1620,330,1636
 
-Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=162. Utilities like electricity, water supply, refuse and sewage collection, and fuels (including gas) — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
 
  
 
@@ -10342,7 +10342,7 @@ Form=19
 
 Position=50,1800,330,1816
 
-Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — During the last month, how much did your household spend to purchase this item? (PHP; enter...
+Text=164. Telephone line and mobile phone services, WIFI access, cable TV and any other communication and audio services including repairs and installations — During the last month, how much did your household spend to purchase this item? (PHP; enter -98...
 
  
 
@@ -10414,7 +10414,7 @@ Form=19
 
 Position=50,1890,330,1906
 
-Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=165. Recreational, cultural, religious, sporting and entertainment devices (monthly) — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not...
 
  
 
@@ -10486,7 +10486,7 @@ Form=19
 
 Position=50,1980,330,1996
 
-Text=166. Postal services — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=166. Postal services — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -10510,7 +10510,7 @@ Form=19
 
 Position=50,2010,330,2026
 
-Text=166. Postal services — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=166. Postal services — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer —...
 
  
 
@@ -10558,7 +10558,7 @@ Form=19
 
 Position=50,2070,330,2086
 
-Text=167. Housing (actual rentals, estimated value of rent if owned) — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=167. Housing (actual rentals, estimated value of rent if owned) — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -10582,7 +10582,7 @@ Form=19
 
 Position=50,2100,330,2116
 
-Text=167. Housing (actual rentals, estimated value of rent if owned) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=167. Housing (actual rentals, estimated value of rent if owned) — During the last month, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or...
 
  
 
@@ -10630,7 +10630,7 @@ Form=19
 
 Position=50,2160,330,2176
 
-Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=168. Recreational, cultural, religious, sporting and entertainment devices (6-month) — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do...
 
  
 
@@ -10774,7 +10774,7 @@ Form=19
 
 Position=50,2340,330,2356
 
-Text=170. Educational services (e.g., tuitions and tutoring) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=170. Educational services (e.g., tuitions and tutoring) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -10798,7 +10798,7 @@ Form=19
 
 Position=50,2370,330,2386
 
-Text=170. Educational services (e.g., tuitions and tutoring) — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=170. Educational services (e.g., tuitions and tutoring) — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99...
 
  
 
@@ -10846,7 +10846,7 @@ Form=19
 
 Position=50,2430,330,2446
 
-Text=171. Accommodation services, including for educational establishment (e.g., hotels) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=171. Accommodation services, including for educational establishment (e.g., hotels) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do...
 
  
 
@@ -10918,7 +10918,7 @@ Form=19
 
 Position=50,2520,330,2536
 
-Text=172. Garden and personal pets' products and services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=172. Garden and personal pets' products and services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -10942,7 +10942,7 @@ Form=19
 
 Position=50,2550,330,2566
 
-Text=172. Garden and personal pets' products and services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=172. Garden and personal pets' products and services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if...
 
  
 
@@ -10990,7 +10990,7 @@ Form=19
 
 Position=50,2610,330,2626
 
-Text=173. Health insurance — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=173. Health insurance — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -11014,7 +11014,7 @@ Form=19
 
 Position=50,2640,330,2656
 
-Text=173. Health insurance — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=173. Health insurance — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
 
  
 
@@ -11062,7 +11062,7 @@ Form=19
 
 Position=50,2700,330,2716
 
-Text=174. Other insurance (e.g., for life and accident, and travel) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=174. Other insurance (e.g., for life and accident, and travel) — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -11086,7 +11086,7 @@ Form=19
 
 Position=50,2730,330,2746
 
-Text=174. Other insurance (e.g., for life and accident, and travel) — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't...
+Text=174. Other insurance (e.g., for life and accident, and travel) — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know...
 
  
 
@@ -11134,7 +11134,7 @@ Form=19
 
 Position=50,2790,330,2806
 
-Text=175. Inpatient care services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=175. Inpatient care services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -11158,7 +11158,7 @@ Form=19
 
 Position=50,2820,330,2836
 
-Text=175. Inpatient care services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=175. Inpatient care services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses...
 
  
 
@@ -11206,7 +11206,7 @@ Form=19
 
 Position=50,2880,330,2896
 
-Text=176. Emergency transportation and emergency rescue services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=176. Emergency transportation and emergency rescue services — During the last 12 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)
 
  
 
@@ -11230,7 +11230,7 @@ Form=19
 
 Position=50,2910,330,2926
 
-Text=176. Emergency transportation and emergency rescue services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)
+Text=176. Emergency transportation and emergency rescue services — During the last 12 months, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or...
 
  
 
@@ -11374,7 +11374,7 @@ Form=19
 
 Position=50,3090,330,3106
 
-Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=179. Diagnostic and laboratory tests, such as blood tests and x-rays, for other reasons than preventive care — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent...
 
  
 
@@ -11518,7 +11518,7 @@ Form=19
 
 Position=50,3270,330,3286
 
-Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=181. Medical products (e.g., antigen tests, glucose meters, masks), including online purchases — During the last 6 months, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to...
 
  
 
@@ -11614,7 +11614,7 @@ Form=19
 
 Position=50,3390,330,3406
 
-Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't...
+Text=183. Medicines (branded, generic, herbal), vaccines, oral contraceptives, and other pharmaceutical preparations, including online purchases — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't...
 
  
 
@@ -11686,7 +11686,7 @@ Form=19
 
 Position=50,3480,330,3496
 
-Text=184. Outpatient medical and dental services, including online services, without overnight stay — During the last month, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)
+Text=184. Outpatient medical and dental services, including online services, without overnight stay — During the last month, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer...
 
  
 

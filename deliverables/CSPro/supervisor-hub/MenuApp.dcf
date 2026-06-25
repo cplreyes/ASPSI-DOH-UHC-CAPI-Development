@@ -1,0 +1,299 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "MENUAPP_DICT",
+  "labels": [
+    {
+      "text": "MenuApp"
+    }
+  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 1,
+    "length": 1
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": false
+  },
+  "relativePositions": true,
+  "levels": [
+    {
+      "name": "MENUAPP_LEVEL",
+      "labels": [
+        {
+          "text": "MenuApp Level"
+        }
+      ],
+      "ids": {
+        "items": [
+          {
+            "name": "MENU_SESSION",
+            "labels": [
+              {
+                "text": "Session"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 2,
+            "length": 1,
+            "zeroFill": true
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "MENU_REC",
+          "labels": [
+            {
+              "text": "Menu record"
+            }
+          ],
+          "recordType": "M",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "ROLE_SHOWN",
+              "labels": [
+                {
+                  "text": "Logged-in role"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 20
+            },
+            {
+              "name": "MENU_CHOICE",
+              "labels": [
+                {
+                  "text": "Choose an action"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "MENU_CHOICE_VS1",
+                  "labels": [
+                    {
+                      "text": "Supervisor menu"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Assign Enumeration Area"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Listing Data \u2014 view report"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Survey Interview \u2014 view report"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "View EA on Map"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Open F1 \u2014 Facility Head (review)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Open F3 \u2014 Patient (review)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Open F4 \u2014 Household (review)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Log out"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "MENU_CHOICE_VS2",
+                  "labels": [
+                    {
+                      "text": "Enumerator menu"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Listing Exercise"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "11"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Receive Assigned Data (Patient)"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "12"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Conduct F1 \u2014 Facility Head Interview"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "13"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Conduct F3 \u2014 Patient Interview"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "14"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Conduct F4 \u2014 Household Interview"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "15"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "View EA on Map"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "16"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "View my report"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "17"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Log out"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "18"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

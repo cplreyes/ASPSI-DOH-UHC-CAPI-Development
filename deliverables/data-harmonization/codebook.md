@@ -36,9 +36,11 @@ covers: F1 Facility Head, F2 Healthcare Worker (PWA), F3 Patient, F4 Household
 | Concept | Stata code | Where it comes from |
 |---|---|---|
 | Skipped due to skip-logic (item hidden) | `.a` | CSPro `NOTAPPL`; PWA `undefined` (item filtered by `shouldShow`) |
-| Refused | `.b` | CSPro `REFUSED`; PWA: not currently captured (see open item §15) |
-| Don't know | `.c` | Coded value `8` / `'I don't know'` / similar — see per-dimension recodes |
+| Refused | `.b` | CSPro `REFUSED`; **amount/continuous numeric fields: the value `-99` (#743)**; PWA: not currently captured (see open item §15) |
+| Don't know | `.c` | Categorical: coded value `8` / `98` / `'I don't know'` (see per-dimension recodes); **amount/continuous numeric fields: the value `-98` (#743)** |
 | Truly missing (data error) | `.` | Should be zero in clean output |
+
+**Amount-field missing-value sentinels (#743, adopted 2026-06-23).** Continuous/amount numeric items (PHP amounts, etc.) cannot use a categorical `8`/`98`, so they carry **negative sentinels**: `-98` = Don't know → `.c`, `-99` = Refused → `.b`. Negatives are unambiguous (no real amount is < 0). The ETL must recode `-98`/`-99` on these fields to the Stata extended-missing codes above (and never sum them). F4 Section N expenditure piloted first (CSEntry device-test of typed-negative entry pending); fan-out to the remaining F4 amount fields (Q18 income, Q199 willingness-to-pay) + F1/F3 follows confirmation. **Retires** the prior in-range `99999999` "don't know" sentinel.
 
 ### 0.3 Output formats
 

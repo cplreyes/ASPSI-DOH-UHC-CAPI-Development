@@ -132,6 +132,34 @@ def build_field_control():
                     ("Refused",    "3"),
                     ("Incomplete", "4"),
                 ]),
+        # #744 break-off control — ported from the F3/F4 Cluster-5 pattern. Lives on the
+        # FIRST interactive form (case-start, via inject_breakoff.py) so it sits in the
+        # case tree from the start and the enumerator can tap back to it mid-interview.
+        # Its postproc routes a non-Continue choice straight to the closing Result-of-
+        # Final-Visit, letting the enumerator end a withdrawn/postponed/stopped interview
+        # without walking every required question. Default "Continue" is set in logic
+        # (BREAKOFF preproc). The .fmf is hand-maintained for F1, so the form placement is
+        # done by inject_breakoff.py (run once, persists), NOT a generate_fmf.
+        numeric("BREAKOFF",
+                "Interview status (leave as Continue unless ending the interview early)",
+                length=1,
+                value_set_options=[
+                    ("Continue interview",        "1"),
+                    ("Respondent withdrew",       "2"),
+                    ("Postponed / reschedule",    "3"),
+                    ("Stop — other (incomplete)", "4"),
+                ]),
+        # #744/#561 completeness sentinel — OFF-FORM (not in the .fmf), set in logic only:
+        # 0 In progress at case open (PROC QUESTIONNAIRE_NUMBER), 1 Completed when the
+        # Result-of-Visit finalises to Completed, 2 Partial/broke-off otherwise. Lets the
+        # Supervisor App + CSWeb exports tell complete from partial even for a force-quit
+        # case (which never reaches the closing form, so it stays 0).
+        numeric("CASE_DISPOSITION", "Case disposition (auto)", length=1,
+                value_set_options=[
+                    ("In progress",             "0"),
+                    ("Completed",               "1"),
+                    ("Partial / not completed", "2"),
+                ]),
         # §15.E — language used for the interview (getlanguage() in the
         # QUESTIONNAIRE_NUMBER postproc; off-form, not enumerator input).
         alpha("LANGUAGE_USED",                  "Language used for the interview",              length=20),

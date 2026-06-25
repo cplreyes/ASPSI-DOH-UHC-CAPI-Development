@@ -1,0 +1,680 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "SUPERVISORAPP_DICT",
+  "labels": [
+    {
+      "text": "SupervisorApp",
+      "language": "EN"
+    }
+  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 1,
+    "length": 1
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": false
+  },
+  "relativePositions": true,
+  "levels": [
+    {
+      "name": "SUPERVISORAPP_LEVEL",
+      "labels": [
+        {
+          "text": "SupervisorApp Level",
+          "language": "EN"
+        }
+      ],
+      "ids": {
+        "items": [
+          {
+            "name": "FACILITY_CODE",
+            "labels": [
+              {
+                "text": "Facility Code (RRPPMMMFF)",
+                "language": "EN"
+              }
+            ],
+            "contentType": "numeric",
+            "start": 2,
+            "length": 9,
+            "zeroFill": true
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "VISIT_HEADER",
+          "labels": [
+            {
+              "text": "Facility visit header",
+              "language": "EN"
+            }
+          ],
+          "recordType": "H",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "FACILITY_NAME",
+              "labels": [
+                {
+                  "text": "Facility name",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 80
+            },
+            {
+              "name": "FS_OPERATOR_ID",
+              "labels": [
+                {
+                  "text": "Field Supervisor operator ID",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 20
+            }
+          ]
+        },
+        {
+          "name": "COURTESY_CALL",
+          "labels": [
+            {
+              "text": "Courtesy-call outcomes (once per facility)",
+              "language": "EN"
+            }
+          ],
+          "recordType": "C",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "CC_ENDORSEMENT_OBTAINED",
+              "labels": [
+                {
+                  "text": "Facility approval / endorsement obtained?",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CC_ENDORSEMENT_OBTAINED_VS1",
+                  "labels": [
+                    {
+                      "text": "Facility approval / endorsement obtained?",
+                      "language": "EN"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CC_HEAD_INTERVIEW_DATE",
+              "labels": [
+                {
+                  "text": "Facility-head interview scheduled (YYYYMMDD)",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": true
+            },
+            {
+              "name": "CC_FOCAL_PERSON_NAME",
+              "labels": [
+                {
+                  "text": "Focal person name",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 80
+            },
+            {
+              "name": "CC_DISCHARGE_CUTOFF",
+              "labels": [
+                {
+                  "text": "Usual discharge / billing cutoff time",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 40
+            },
+            {
+              "name": "CC_HCW_LIST_CAPTURED",
+              "labels": [
+                {
+                  "text": "Master HCW list captured?",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CC_HCW_LIST_CAPTURED_VS1",
+                  "labels": [
+                    {
+                      "text": "Master HCW list captured?",
+                      "language": "EN"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CC_HCW_LIST_COUNT",
+              "labels": [
+                {
+                  "text": "HCW master-list count",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 4,
+              "zeroFill": false
+            },
+            {
+              "name": "CC_QR_POSTER_POSTED",
+              "labels": [
+                {
+                  "text": "HCW Survey QR poster posted?",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CC_QR_POSTER_POSTED_VS1",
+                  "labels": [
+                    {
+                      "text": "HCW Survey QR poster posted?",
+                      "language": "EN"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "CC_PATIENT_LISTING_DATE",
+              "labels": [
+                {
+                  "text": "Patient-listing day scheduled (YYYYMMDD)",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 8,
+              "zeroFill": true
+            },
+            {
+              "name": "CC_WORKSTATION_ARRANGED",
+              "labels": [
+                {
+                  "text": "Temporary workstation arranged?",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CC_WORKSTATION_ARRANGED_VS1",
+                  "labels": [
+                    {
+                      "text": "Temporary workstation arranged?",
+                      "language": "EN"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Yes",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "VERIFICATION_PHOTO_IMAGE",
+              "labels": [
+                {
+                  "text": "Verification Photo (binary; syncs to CSWeb)",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "image"
+            },
+            {
+              "name": "VERIFICATION_PHOTO_FILENAME",
+              "labels": [
+                {
+                  "text": "Verification Photo Filename",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "CAPTURE_VERIFICATION_PHOTO",
+              "labels": [
+                {
+                  "text": "Take Verification Photo",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "CAPTURE_VERIFICATION_PHOTO_VS1",
+                  "labels": [
+                    {
+                      "text": "Take Verification Photo",
+                      "language": "EN"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Take verification photo",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "TOUCHPOINT",
+          "labels": [
+            {
+              "text": "Facility touchpoint log (repeating)",
+              "language": "EN"
+            }
+          ],
+          "recordType": "T",
+          "occurrences": {
+            "required": false,
+            "maximum": 30
+          },
+          "items": [
+            {
+              "name": "TP_LINE",
+              "labels": [
+                {
+                  "text": "Touchpoint row",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "TP_TYPE",
+              "labels": [
+                {
+                  "text": "Touchpoint type",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "TP_TYPE_VS1",
+                  "labels": [
+                    {
+                      "text": "Touchpoint type",
+                      "language": "EN"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Arrival",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Courtesy call",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Endorsement delivery",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Workstation arrangement",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Focal person assignment",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "HCW master-list capture",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Departure",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "7"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other",
+                          "language": "EN"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "8"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "TP_TIMESTAMP",
+              "labels": [
+                {
+                  "text": "Touchpoint timestamp (YYYYMMDD HHMM)",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 14
+            },
+            {
+              "name": "TP_GPS_LATITUDE",
+              "labels": [
+                {
+                  "text": "GPS Latitude",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 12
+            },
+            {
+              "name": "TP_GPS_LONGITUDE",
+              "labels": [
+                {
+                  "text": "GPS Longitude",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 12
+            },
+            {
+              "name": "TP_GPS_ALTITUDE",
+              "labels": [
+                {
+                  "text": "GPS Altitude (m)",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 10
+            },
+            {
+              "name": "TP_GPS_ACCURACY",
+              "labels": [
+                {
+                  "text": "GPS Accuracy (m)",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 3,
+              "zeroFill": false
+            },
+            {
+              "name": "TP_GPS_SATELLITES",
+              "labels": [
+                {
+                  "text": "GPS Satellites",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": false
+            },
+            {
+              "name": "TP_GPS_READTIME",
+              "labels": [
+                {
+                  "text": "GPS Read Time (UTC)",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 19
+            },
+            {
+              "name": "TP_OUTCOME_NOTE",
+              "labels": [
+                {
+                  "text": "Outcome / note",
+                  "language": "EN"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "name": "EN",
+      "label": "English"
+    }
+  ]
+}

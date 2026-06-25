@@ -2253,30 +2253,92 @@
               "length": 100
             },
             {
-              "name": "FACILITY_ADDRESS",
+              "name": "FACILITY_STREET",
               "labels": [
                 {
-                  "text": "Facility Address",
+                  "text": "Facility Address \u2014 Street Name / No.",
                   "language": "EN"
                 },
                 {
-                  "text": "Facility Address",
+                  "text": "Facility Address \u2014 Street Name / No.",
                   "language": "FIL"
                 },
                 {
-                  "text": "Facility Address",
+                  "text": "Facility Address \u2014 Street Name / No.",
                   "language": "BCL"
                 },
                 {
-                  "text": "Facility Address",
+                  "text": "Facility Address \u2014 Street Name / No.",
                   "language": "BIS"
                 },
                 {
-                  "text": "Facility Address",
+                  "text": "Facility Address \u2014 Street Name / No.",
                   "language": "CEB"
                 },
                 {
-                  "text": "Facility Address",
+                  "text": "Facility Address \u2014 Street Name / No.",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "BARANGAY_NAME",
+              "labels": [
+                {
+                  "text": "Barangay (from PSGC)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Barangay (from PSGC)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Barangay (from PSGC)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Barangay (from PSGC)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Barangay (from PSGC)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Barangay (from PSGC)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 80
+            },
+            {
+              "name": "FACILITY_ADDRESS",
+              "labels": [
+                {
+                  "text": "Facility Address (Street, Barangay, Municipality)",
+                  "language": "EN"
+                },
+                {
+                  "text": "Facility Address (Street, Barangay, Municipality)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "Facility Address (Street, Barangay, Municipality)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "Facility Address (Street, Barangay, Municipality)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "Facility Address (Street, Barangay, Municipality)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "Facility Address (Street, Barangay, Municipality)",
                   "language": "WAR"
                 }
               ],
@@ -7619,39 +7681,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Not Applicable",
-                          "language": "EN"
-                        },
-                        {
-                          "text": "Not Applicable",
-                          "language": "FIL"
-                        },
-                        {
-                          "text": "Not Applicable",
-                          "language": "BCL"
-                        },
-                        {
-                          "text": "Not Applicable",
-                          "language": "BIS"
-                        },
-                        {
-                          "text": "Not Applicable",
-                          "language": "CEB"
-                        },
-                        {
-                          "text": "Not Applicable",
-                          "language": "WAR"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "98"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "I don't know",
                           "language": "EN"
                         },
@@ -7679,6 +7708,39 @@
                       "pairs": [
                         {
                           "value": "99"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Not Applicable",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Not Applicable",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Not Applicable",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Not Applicable",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Not Applicable",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Not Applicable",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "98"
                         }
                       ]
                     }
@@ -15872,27 +15934,27 @@
                     {
                       "labels": [
                         {
-                          "text": "General practitioner",
+                          "text": "General practitioner (a doctor who is qualified for medical practice)",
                           "language": "EN"
                         },
                         {
-                          "text": "Pangkalahatang doktor",
+                          "text": "General practitioner (a doctor who is qualified for medical practice)",
                           "language": "FIL"
                         },
                         {
-                          "text": "General practitioner",
+                          "text": "General practitioner (a doctor who is qualified for medical practice)",
                           "language": "BCL"
                         },
                         {
-                          "text": "General practitioner",
+                          "text": "General practitioner (a doctor who is qualified for medical practice)",
                           "language": "BIS"
                         },
                         {
-                          "text": "General practitioner",
+                          "text": "General practitioner (a doctor who is qualified for medical practice)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Kabug-usan nga Doktor",
+                          "text": "General practitioner (a doctor who is qualified for medical practice)",
                           "language": "WAR"
                         }
                       ],
@@ -15905,27 +15967,27 @@
                     {
                       "labels": [
                         {
-                          "text": "Specialty Care Provider/ Specialist",
+                          "text": "Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)",
                           "language": "EN"
                         },
                         {
-                          "text": "Specialty care provider / Espesyalista",
+                          "text": "Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)",
                           "language": "FIL"
                         },
                         {
-                          "text": "Specialty Care Provider/ Specialist",
+                          "text": "Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)",
                           "language": "BCL"
                         },
                         {
-                          "text": "Specialty Care Provider/ Specialist",
+                          "text": "Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)",
                           "language": "BIS"
                         },
                         {
-                          "text": "Specialty Care Provider/Espesyalista",
+                          "text": "Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)",
                           "language": "CEB"
                         },
                         {
-                          "text": "Espesyal nga Tag-ataman/ Espesyalista",
+                          "text": "Specialty Care Provider/ Specialist (a doctor with more expertise in specific areas of health)",
                           "language": "WAR"
                         }
                       ],
@@ -21033,6 +21095,39 @@
                     {
                       "labels": [
                         {
+                          "text": "I've never heard of it",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Hindi ko pa ito narinig",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Dai ko pa ini nadadangog",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Wala pa gyud ko kadungog ani",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Wala ko nakadungog ana",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Waray pa gud ako makabati hini",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
                           "text": "I don't know",
                           "language": "EN"
                         },
@@ -25663,27 +25758,27 @@
               "name": "Q92_PAY_LINE",
               "labels": [
                 {
-                  "text": "92. Payment row",
+                  "text": "92 Payment row",
                   "language": "EN"
                 },
                 {
-                  "text": "92. Payment row",
+                  "text": "92 Payment row",
                   "language": "FIL"
                 },
                 {
-                  "text": "92. Payment row",
+                  "text": "92 Payment row",
                   "language": "BCL"
                 },
                 {
-                  "text": "92. Payment row",
+                  "text": "92 Payment row",
                   "language": "BIS"
                 },
                 {
-                  "text": "92. Payment row",
+                  "text": "92 Payment row",
                   "language": "CEB"
                 },
                 {
-                  "text": "92. Payment row",
+                  "text": "92 Payment row",
                   "language": "WAR"
                 }
               ],
@@ -28268,27 +28363,27 @@
               "name": "Q96_PAY_LINE",
               "labels": [
                 {
-                  "text": "96. Payment row",
+                  "text": "96 Payment row",
                   "language": "EN"
                 },
                 {
-                  "text": "96. Payment row",
+                  "text": "96 Payment row",
                   "language": "FIL"
                 },
                 {
-                  "text": "96. Payment row",
+                  "text": "96 Payment row",
                   "language": "BCL"
                 },
                 {
-                  "text": "96. Payment row",
+                  "text": "96 Payment row",
                   "language": "BIS"
                 },
                 {
-                  "text": "96. Payment row",
+                  "text": "96 Payment row",
                   "language": "CEB"
                 },
                 {
-                  "text": "96. Payment row",
+                  "text": "96 Payment row",
                   "language": "WAR"
                 }
               ],
@@ -28961,27 +29056,27 @@
               "name": "Q971_PAY_LINE",
               "labels": [
                 {
-                  "text": "971. Payment row",
+                  "text": "97.1 Payment row",
                   "language": "EN"
                 },
                 {
-                  "text": "971. Payment row",
+                  "text": "97.1 Payment row",
                   "language": "FIL"
                 },
                 {
-                  "text": "971. Payment row",
+                  "text": "97.1 Payment row",
                   "language": "BCL"
                 },
                 {
-                  "text": "971. Payment row",
+                  "text": "97.1 Payment row",
                   "language": "BIS"
                 },
                 {
-                  "text": "971. Payment row",
+                  "text": "97.1 Payment row",
                   "language": "CEB"
                 },
                 {
-                  "text": "971. Payment row",
+                  "text": "97.1 Payment row",
                   "language": "WAR"
                 }
               ],
@@ -29587,27 +29682,27 @@
               "name": "Q972_PAY_LINE",
               "labels": [
                 {
-                  "text": "972. Payment row",
+                  "text": "97.2 Payment row",
                   "language": "EN"
                 },
                 {
-                  "text": "972. Payment row",
+                  "text": "97.2 Payment row",
                   "language": "FIL"
                 },
                 {
-                  "text": "972. Payment row",
+                  "text": "97.2 Payment row",
                   "language": "BCL"
                 },
                 {
-                  "text": "972. Payment row",
+                  "text": "97.2 Payment row",
                   "language": "BIS"
                 },
                 {
-                  "text": "972. Payment row",
+                  "text": "97.2 Payment row",
                   "language": "CEB"
                 },
                 {
-                  "text": "972. Payment row",
+                  "text": "97.2 Payment row",
                   "language": "WAR"
                 }
               ],
@@ -30576,27 +30671,27 @@
               "name": "Q98_PAY_LINE",
               "labels": [
                 {
-                  "text": "98. Payment row",
+                  "text": "98 Payment row",
                   "language": "EN"
                 },
                 {
-                  "text": "98. Payment row",
+                  "text": "98 Payment row",
                   "language": "FIL"
                 },
                 {
-                  "text": "98. Payment row",
+                  "text": "98 Payment row",
                   "language": "BCL"
                 },
                 {
-                  "text": "98. Payment row",
+                  "text": "98 Payment row",
                   "language": "BIS"
                 },
                 {
-                  "text": "98. Payment row",
+                  "text": "98 Payment row",
                   "language": "CEB"
                 },
                 {
-                  "text": "98. Payment row",
+                  "text": "98 Payment row",
                   "language": "WAR"
                 }
               ],
@@ -33721,27 +33816,27 @@
               "name": "Q107_PAY_LINE",
               "labels": [
                 {
-                  "text": "107. Payment row",
+                  "text": "107 Payment row",
                   "language": "EN"
                 },
                 {
-                  "text": "107. Payment row",
+                  "text": "107 Payment row",
                   "language": "FIL"
                 },
                 {
-                  "text": "107. Payment row",
+                  "text": "107 Payment row",
                   "language": "BCL"
                 },
                 {
-                  "text": "107. Payment row",
+                  "text": "107 Payment row",
                   "language": "BIS"
                 },
                 {
-                  "text": "107. Payment row",
+                  "text": "107 Payment row",
                   "language": "CEB"
                 },
                 {
-                  "text": "107. Payment row",
+                  "text": "107 Payment row",
                   "language": "WAR"
                 }
               ],
@@ -34775,27 +34870,27 @@
               "name": "Q109_PAY_LINE",
               "labels": [
                 {
-                  "text": "109. Payment row",
+                  "text": "109 Payment row",
                   "language": "EN"
                 },
                 {
-                  "text": "109. Payment row",
+                  "text": "109 Payment row",
                   "language": "FIL"
                 },
                 {
-                  "text": "109. Payment row",
+                  "text": "109 Payment row",
                   "language": "BCL"
                 },
                 {
-                  "text": "109. Payment row",
+                  "text": "109 Payment row",
                   "language": "BIS"
                 },
                 {
-                  "text": "109. Payment row",
+                  "text": "109 Payment row",
                   "language": "CEB"
                 },
                 {
-                  "text": "109. Payment row",
+                  "text": "109 Payment row",
                   "language": "WAR"
                 }
               ],
@@ -35827,27 +35922,27 @@
               "name": "Q112_PAY_LINE",
               "labels": [
                 {
-                  "text": "112. Payment row",
+                  "text": "112 Payment row",
                   "language": "EN"
                 },
                 {
-                  "text": "112. Payment row",
+                  "text": "112 Payment row",
                   "language": "FIL"
                 },
                 {
-                  "text": "112. Payment row",
+                  "text": "112 Payment row",
                   "language": "BCL"
                 },
                 {
-                  "text": "112. Payment row",
+                  "text": "112 Payment row",
                   "language": "BIS"
                 },
                 {
-                  "text": "112. Payment row",
+                  "text": "112 Payment row",
                   "language": "CEB"
                 },
                 {
-                  "text": "112. Payment row",
+                  "text": "112 Payment row",
                   "language": "WAR"
                 }
               ],
@@ -36849,27 +36944,27 @@
               "name": "Q113_PAY_LINE",
               "labels": [
                 {
-                  "text": "113. Payment row",
+                  "text": "113 Payment row",
                   "language": "EN"
                 },
                 {
-                  "text": "113. Payment row",
+                  "text": "113 Payment row",
                   "language": "FIL"
                 },
                 {
-                  "text": "113. Payment row",
+                  "text": "113 Payment row",
                   "language": "BCL"
                 },
                 {
-                  "text": "113. Payment row",
+                  "text": "113 Payment row",
                   "language": "BIS"
                 },
                 {
-                  "text": "113. Payment row",
+                  "text": "113 Payment row",
                   "language": "CEB"
                 },
                 {
-                  "text": "113. Payment row",
+                  "text": "113 Payment row",
                   "language": "WAR"
                 }
               ],
@@ -43310,7 +43405,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 8,
+              "length": 10,
               "valueSets": [
                 {
                   "name": "Q129_WHY_NO_MAIFIP_VS1",
@@ -43472,10 +43567,74 @@
                           "value": "04"
                         }
                       ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Uban pa (I-specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (Ispecify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "99"
+                        }
+                      ]
                     }
                   ]
                 }
               ]
+            },
+            {
+              "name": "Q129_WHY_NO_MAIFIP_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Other (specify) text",
+                  "language": "EN"
+                },
+                {
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Other (specify) text",
+                  "language": "FIL"
+                },
+                {
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Other (specify) text",
+                  "language": "BCL"
+                },
+                {
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Other (specify) text",
+                  "language": "BIS"
+                },
+                {
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Other (specify) text",
+                  "language": "CEB"
+                },
+                {
+                  "text": "129. Why did you not avail of MAIFIP during this last confinement? \u2014 Other (specify) text",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
             },
             {
               "name": "Q130_REDUCED_SPEND",

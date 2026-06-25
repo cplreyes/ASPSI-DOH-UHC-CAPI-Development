@@ -30,6 +30,7 @@ Item=REGION_NAME
 Item=PROVINCE_NAME
 Item=CITY_NAME
 Item=BARANGAY
+Item=BREAKOFF
   
 [EndForm]
   
@@ -520,6 +521,17 @@ Form=2
 [Text]
 Position=50,150,111,166
 Text=Barangay
+ 
+[Field]
+Name=BREAKOFF
+Position=177,177,360,197
+Item=BREAKOFF,FACILITYHEADSURVEY_DICT
+DataCaptureType=RadioButton
+Form=2
+  
+[Text]
+Position=50,180,170,196
+Text=Interview status
  
 [EndGroup]
   

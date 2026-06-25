@@ -944,11 +944,14 @@ def _subtotal_members(sub, items):
 
 
 # #677 (Carl go/no-go 2026-06-20): 'Don't know the amount' sentinel for Section N expenditure
-# amounts. The enumerator enters 99999999 (max for the length-8 _PURCHASED_PHP/_INKIND_PHP
-# fields) when the household can't estimate a value. It is non-zero (so it satisfies the
-# consumed-needs-an-amount validation) and is EXCLUDED from the subtotal sums below. Must match
-# the "enter 99999999 if don't know" hint in generate_dcf._expenditure_item.
-DK_AMOUNT = 99999999
+# amounts. #743 (2026-06-23): the missing-amount sentinels are now NEGATIVE — -98 "don't know",
+# -99 "refuse to answer" — replacing the old in-range 99999999. Negatives are clearly out-of-range
+# for a peso amount (no spend is negative), so they can't be confused with a real value; they are
+# non-zero (so they satisfy the consumed-needs-an-amount validation) and are EXCLUDED from the
+# subtotal sums below. Must match the "-98/-99" hint in generate_dcf._expenditure_item, and the
+# harmonization codebook §0.2 recodes them -> Stata .c (don't know) / .b (refused).
+DK_AMOUNT = -98
+REFUSED_AMOUNT = -99
 
 
 def _subtotal_compute_body(sub, items, indent="  "):
@@ -984,9 +987,10 @@ def _subtotal_compute_body(sub, items, indent="  "):
     for base in order:
         amts = by_base[base]
         consumed = f"{base}_CONSUMED"
-        # #677 DK: add each amount only if it is NOT the 'don't know' sentinel (DK_AMOUNT),
-        # so an unknown amount never corrupts the subtotal.
-        adds = " ".join(f"if {a} <> {DK_AMOUNT} then {sub} = {sub} + {a}; endif;" for a in amts)
+        # #677/#743: add each amount only if it is NOT a missing-amount sentinel
+        # (DK_AMOUNT=-98 don't-know, REFUSED_AMOUNT=-99 refused), so an unknown/refused
+        # amount never corrupts the subtotal.
+        adds = " ".join(f"if {a} <> {DK_AMOUNT} and {a} <> {REFUSED_AMOUNT} then {sub} = {sub} + {a}; endif;" for a in amts)
         if consumed in items:
             lines.append(f"{indent}if {consumed} = 1 then {adds} endif;")
         else:
@@ -1098,6 +1102,13 @@ def expenditure_gate_procs(names):
         for amt in amts:
             not_consumed.append(f"    {amt} = 0;   {{ item not consumed -> no spend }}")
             not_consumed.append(f"    protect({amt}, true);")
+            # #755 (2026-06-23): pre-fill 0 so the enumerator can press Enter through an amount
+            # they have nothing to record for, instead of being forced to type 0. Clobber-safe:
+            # only set 0 when the field is NOT already a real value (>0) or a -98/-99 sentinel,
+            # so re-entering this item (back-nav) preserves what was entered. (A fresh notappl
+            # field is not > 0, so it falls through to 0 — the desired pre-fill; #617 notappl rule.)
+            consumed_branch.append(
+                f"    if {amt} <> {DK_AMOUNT} and {amt} <> {REFUSED_AMOUNT} and not ({amt} > 0) then {amt} = 0; endif;   {{ #755 pre-fill }}")
             consumed_branch.append(f"    protect({amt}, false);   {{ enterable when consumed }}")
         body = (
             "postproc\n"
@@ -1141,7 +1152,8 @@ def consumed_amount_validation_procs(names):
             "    errmsg(\"This item is marked consumed by the household, so enter the amount "
             "spent purchasing it and/or the estimated value if received in-kind, as a gift, "
             "or own-produced — at least one must be greater than 0. If the household genuinely "
-            "does not know an amount, enter 99999999 for that amount.\");\n"
+            "does not know an amount, enter -98; if they refuse to answer, enter -99 (do not "
+            "read those codes aloud).\");\n"
             "    reenter;\n"
             "  endif;"
         )

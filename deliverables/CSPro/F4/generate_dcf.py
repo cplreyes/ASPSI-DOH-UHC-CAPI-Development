@@ -1541,11 +1541,13 @@ def build_section_m():
 def _expenditure_item(prefix, label, period="the last week"):
     """Standard SHA triplet: consumed Y/N, purchased PHP, in-kind PHP.
 
-    #677 (Carl go/no-go 2026-06-20): a 'Don't know the amount' path — the enumerator enters
-    the sentinel 99999999 (the max for the length-8 field; must match generate_apc.DK_AMOUNT)
-    when the household cannot estimate an amount. It satisfies the consumed-needs-an-amount
-    validation (it is non-zero) and is EXCLUDED from the Section N subtotal sums
-    (subtotal_init_compute_procs).
+    #677 / #743 (Carl go/no-go 2026-06-23): missing-amount sentinels — the enumerator enters
+    -98 ("don't know the amount") or -99 ("refuse to answer"; do not read the codes aloud) when
+    no peso value can be recorded. These are negative, so they are clearly out-of-range for a
+    real amount (no spend is negative), they satisfy the consumed-needs-an-amount validation
+    (non-zero), and they are EXCLUDED from the Section N subtotal sums (subtotal_init_compute_procs).
+    Must match generate_apc.DK_AMOUNT / REFUSED_AMOUNT. (Replaced the old in-range 99999999
+    sentinel, #743.) The length-8 field holds them fine (a 2-digit negative needs ≤3 chars).
 
     #738/#739/#740/#746/#747 (R5): the WHO/SHA reference period varies by block
     (week / month / 6 months / 12 months). It is threaded in via `period` so each block
@@ -1555,9 +1557,9 @@ def _expenditure_item(prefix, label, period="the last week"):
         yes_no(f"{prefix}_CONSUMED",
                f"{label} — In {period}, did you or any member of your household consume this item?"),
         numeric(f"{prefix}_PURCHASED_PHP",
-                f"{label} — During {period}, how much did your household spend to purchase this item? (PHP; enter 99999999 if don't know)", length=8),
+                f"{label} — During {period}, how much did your household spend to purchase this item? (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)", length=8),
         numeric(f"{prefix}_INKIND_PHP",
-                f"{label} — During {period}, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter 99999999 if don't know)", length=8),
+                f"{label} — During {period}, what was the total estimated value of this item that you produced, received in-kind, and/or as gift? Your best estimate is fine. (PHP; enter -98 if don't know, or -99 if the respondent refuses to answer — do not read these codes aloud)", length=8),
     ]
 
 

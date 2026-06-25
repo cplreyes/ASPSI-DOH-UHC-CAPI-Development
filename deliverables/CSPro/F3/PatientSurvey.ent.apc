@@ -388,6 +388,43 @@ PROC BARANGAY
 onfocus
   FillBarangayValueSet(CITY_MUNICIPALITY);
 
+{ ---- #784/#786 (Option A): structured facility address ----
+  The enumerator types only the STREET line. The barangay name is derived from the
+  picked BARANGAY code, the municipality name (CITY_NAME) is already derived from the
+  Questionnaire Number above, and FACILITY_ADDRESS is assembled read-only as
+  "Street, Barangay, Municipality" — so nothing PSGC is re-selected (#786). Both derived
+  fields are computed HERE, in FACILITY_STREET's postproc (a visited field), because
+  BARANGAY_NAME + FACILITY_ADDRESS are protected and CSEntry skips a protected field's own
+  preproc (ref: protected-field preproc). }
+PROC FACILITY_STREET
+postproc
+  BARANGAY_NAME = "";
+  B_PARENT_CITY = CITY_MUNICIPALITY;
+  if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) <> 0 then
+    do varying numeric bi = 1 until bi > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
+      if B_CODE(bi) = BARANGAY then
+        BARANGAY_NAME = strip(B_NAME(bi));
+      endif;
+    enddo;
+  endif;
+  protect(BARANGAY_NAME, true);
+  FACILITY_ADDRESS = strip(FACILITY_STREET);
+  if length(strip(BARANGAY_NAME)) > 0 then
+    if length(strip(FACILITY_ADDRESS)) > 0 then
+      FACILITY_ADDRESS = strip(FACILITY_ADDRESS) + ", " + strip(BARANGAY_NAME);
+    else
+      FACILITY_ADDRESS = strip(BARANGAY_NAME);
+    endif;
+  endif;
+  if length(strip(CITY_NAME)) > 0 then
+    if length(strip(FACILITY_ADDRESS)) > 0 then
+      FACILITY_ADDRESS = strip(FACILITY_ADDRESS) + ", " + strip(CITY_NAME);
+    else
+      FACILITY_ADDRESS = strip(CITY_NAME);
+    endif;
+  endif;
+  protect(FACILITY_ADDRESS, true);
+
 { ---- PSGC cascade — patient geo-ID (P_* mirror) ---- }
 { patient-home geo cascade — inlined (P_* fields are F3-only; the shared
   PSGC-Cascade functions target the facility geo items REGION/PROVINCE_HUC/etc.,
@@ -605,7 +642,8 @@ postproc
 PROC Q77_KON_REGISTERED
 postproc
   if Q77_KON_REGISTERED = 2    then  skip to Q82_KON_WHY_NOT_REG; endif;  { Not registered -> reasons. #671: Q82 is now the Check Box base (was _O01) }
-  if Q77_KON_REGISTERED = 4    then  skip to Q83_VISIT_REASON;    endif;  { #430: 'never heard'(3) removed; only IDK(4) exits E }
+  if Q77_KON_REGISTERED = 3    then  skip to Q83_VISIT_REASON;    endif;  { #770: 'I've never heard of it'(3) RESTORED -> Q83 (reverses #430) }
+  if Q77_KON_REGISTERED = 4    then  skip to Q83_VISIT_REASON;    endif;  { IDK(4) exits Section E -> Q83 }
 
 { #389/#671: the "why NOT registered" gate (registered patient falls through Q78-Q81 into
   Q82 -> skip to Section F) now lives in the Q82_KON_WHY_NOT_REG checkbox PROC's `gate`
@@ -991,6 +1029,18 @@ preproc
 postproc
   if length(strip(Q129_WHY_NO_MAIFIP)) = 0 then
     errmsg("Select at least one option for Q129 before continuing.");
+    reenter;
+  endif;
+
+PROC Q129_WHY_NO_MAIFIP_OTHER_TXT
+preproc
+  if pos("99", Q129_WHY_NO_MAIFIP) = 0 then
+    Q129_WHY_NO_MAIFIP_OTHER_TXT = "";   { gated: 'Other (specify)' not ticked -> not enterable }
+    noinput;
+  endif;
+postproc
+  if pos("99", Q129_WHY_NO_MAIFIP) > 0 and length(strip(Q129_WHY_NO_MAIFIP_OTHER_TXT)) = 0 then
+    errmsg("'Other (specify)' was ticked for Q129 - please specify.");
     reenter;
   endif;
 
@@ -1761,6 +1811,10 @@ postproc
     errmsg("92. This source has no out-of-pocket cost — amount reset to 0.");
     Q92_PAY_AMT = 0;
   endif;
+  if (Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2) and Q92_PAY_AMT = 0 then
+    errmsg("92. Please enter an amount greater than 0 — you selected this as a paid source.");
+    reenter;
+  endif;
 
 
 { ---- Q97.1 other-items-in-bill — CheckBox + roster (Option B Shape B) ---- }
@@ -1855,6 +1909,10 @@ postproc
     errmsg("94. Amount cannot be negative.");
     reenter;
   endif;
+  if Q94_LAB_PAY = 1 and Q94_LAB_AMT = 0 then
+    errmsg("94. Please enter an amount greater than 0 — this test was paid out-of-pocket.");
+    reenter;
+  endif;
 
 
 { ---- Q96 payment roster (Option B fan-out) ---- }
@@ -1909,6 +1967,10 @@ postproc
     errmsg("96. This source has no out-of-pocket cost — amount reset to 0.");
     Q96_PAY_AMT = 0;
   endif;
+  if (Q96_PAY_SRC = 1 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 7) and Q96_PAY_AMT = 0 then
+    errmsg("96. Please enter an amount greater than 0 — you selected this as a paid source/item.");
+    reenter;
+  endif;
 
 
 { ---- Q972 payment roster (Option B fan-out) ---- }
@@ -1950,6 +2012,10 @@ PROC Q972_PAY_AMT
 postproc
   if Q972_PAY_AMT < 0 then
     errmsg("972. Amount cannot be negative.");
+    reenter;
+  endif;
+  if Q972_PAY_AMT = 0 then
+    errmsg("972. Please enter an amount greater than 0 — you selected this as a paid source/item.");
     reenter;
   endif;
 
@@ -1994,6 +2060,10 @@ PROC Q98_PAY_AMT
 postproc
   if Q98_PAY_AMT < 0 then
     errmsg("98. Amount cannot be negative.");
+    reenter;
+  endif;
+  if Q98_PAY_AMT = 0 then
+    errmsg("98. Please enter an amount greater than 0 — you selected this as a paid source/item.");
     reenter;
   endif;
 
@@ -2076,6 +2146,10 @@ postproc
     errmsg("107. Amount cannot be negative.");
     reenter;
   endif;
+  if Q107_PAY_AMT = 0 then
+    errmsg("107. Please enter an amount greater than 0 — you selected this as a paid source/item.");
+    reenter;
+  endif;
 
 PROC Q107_PAY_OTHER_TXT
 preproc
@@ -2149,6 +2223,10 @@ postproc
     errmsg("109. Amount cannot be negative.");
     reenter;
   endif;
+  if Q109_PAY_AMT = 0 then
+    errmsg("109. Please enter an amount greater than 0 — you selected this as a paid source/item.");
+    reenter;
+  endif;
 
 PROC Q109_PAY_OTHER_TXT
 preproc
@@ -2210,6 +2288,10 @@ postproc
     errmsg("112. Amount cannot be negative.");
     reenter;
   endif;
+  if Q112_PAY_AMT = 0 then
+    errmsg("112. Please enter an amount greater than 0 — you selected this as a paid source/item.");
+    reenter;
+  endif;
 
 PROC Q112_PAY_OTHER_TXT
 preproc
@@ -2252,6 +2334,10 @@ PROC Q113_PAY_AMT
 postproc
   if Q113_PAY_AMT < 0 then
     errmsg("113. Amount cannot be negative.");
+    reenter;
+  endif;
+  if Q113_PAY_AMT = 0 then
+    errmsg("113. Please enter an amount greater than 0 — you selected this as a paid source/item.");
     reenter;
   endif;
 
@@ -2377,6 +2463,12 @@ postproc
     skip to Q83_VISIT_REASON;
   endif;
 
+PROC Q80_KON_KNOWS_BOOKING
+postproc
+  if Q79_KON_HAD_APPT = 2 then
+    skip to Q83_VISIT_REASON;
+  endif;
+
 PROC Q145_PURCHASE_FREQ
 postproc
   if Q145_PURCHASE_FREQ = 5 then
@@ -2411,12 +2503,6 @@ PROC Q172_PCP_REFERRAL
 postproc
   if Q172_PCP_REFERRAL = 2 then
     skip to Q177_WHY_HOSPITAL;
-  endif;
-
-PROC Q89_ADVISED_ADMIT
-postproc
-  if Q89_ADVISED_ADMIT = 2 then
-    skip to Q91_USUAL_OUTPATIENT;
   endif;
 
 PROC Q95_PRESCRIBED
@@ -2480,7 +2566,7 @@ postproc
   endif;
 
 { ---- 'Other (specify)' enforcement — UHC9 dual-other (spec 4) ---- }
-{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 64 items) ---- }
+{ ---- 'Other (specify)' enforcement — single-choice + select-all (auto-derived from dcf: 65 items) ---- }
 PROC Q104_WITHOUT_BUCAS_OTHER_TXT
 preproc
   if Q104_WITHOUT_BUCAS <> 6 then

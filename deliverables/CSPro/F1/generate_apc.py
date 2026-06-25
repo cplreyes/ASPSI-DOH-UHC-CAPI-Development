@@ -418,6 +418,9 @@ PROC QUESTIONNAIRE_NUMBER
 postproc
   { 0. record the interview language at the true case start (§15.E) }
   LANGUAGE_USED = getlanguage();
+  { #744/#561: mark the case In Progress at case open; a force-quit case keeps 0.
+    Guarded so a reopened completed/partial case is not reset. }
+  if not (CASE_DISPOSITION in 1, 2) then CASE_DISPOSITION = 0; endif;
   { 1. decompose the within-parent codes }
   REGION_CODE            = int(QUESTIONNAIRE_NUMBER / 10000000000);
   PROVINCE_HUC_CODE      = int(QUESTIONNAIRE_NUMBER / 100000000) % 100;
@@ -1121,6 +1124,47 @@ postproc
 }
 BESPOKE_PROCS.update(ROUTING_PROCS)
 
+# --- #744 break-off + completeness disposition (ported from the F3/F4 Cluster-5 pattern).
+# BREAKOFF is the case-start "interview status" control (placed on the first interactive
+# form by inject_breakoff.py). Leaving it "Continue" (1) is a no-op; any other choice records
+# the matching Result-of-Final-Visit code and SKIPS straight to that closing field, so a
+# withdrawn / postponed / stopped interview reaches the closing form without walking every
+# required question. CASE_DISPOSITION (off-form) is the completeness sentinel the Supervisor
+# App + CSWeb exports read (0 In progress at case open, 1 Completed, 2 Partial). F1 result
+# codes: 1 Completed, 2 Postponed, 3 Refused, 4 Incomplete (the photo gate fires for 1/4 only).
+DISPOSITION_PROCS = {
+    "BREAKOFF": """\
+PROC BREAKOFF
+preproc
+  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue interview" }
+postproc
+  if BREAKOFF <> 1 then
+    if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Respondent withdrew -> Refused }
+    if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed / reschedule }
+    if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Stop - other -> Incomplete }
+    CASE_DISPOSITION = 2;   { partial / broke off }
+    skip to ENUM_RESULT_FINAL_VISIT;
+  endif;""",
+    "ENUM_RESULT_FINAL_VISIT": """\
+PROC ENUM_RESULT_FINAL_VISIT
+postproc
+  { #744/#561: classify completeness from the final Result-of-Visit. Completed(1) -> Completed;
+    Postponed(2) / Refused(3) / Incomplete(4) -> Partial. }
+  if ENUM_RESULT_FINAL_VISIT = 1 then
+    CASE_DISPOSITION = 1;
+  else
+    CASE_DISPOSITION = 2;
+  endif;
+  { A Postponed(2) / Refused(3) visit had no interview, so there is nothing to photograph -
+    end the case here instead of walking into the Verification Photo form (whose trigger
+    would otherwise loop on an out-of-range stop; F3/F4 device-confirmed 2026-06-21). Codes
+    1/4 fall through to the photo, matching the CAPTURE_VERIFICATION_PHOTO gate (in 1, 4). }
+  if not (ENUM_RESULT_FINAL_VISIT in 1, 4) then
+    endlevel;   { statement form (no parens) - strict packager rejects endlevel() }
+  endif;""",
+}
+BESPOKE_PROCS.update(DISPOSITION_PROCS)
+
 # --- Table-driven skip logic (spec §2). Each row: field PROC -> if <cond> skip.
 # Kept simple/dichotomous; complex multi-branch routing (Q80, Q90, Q102/Q109)
 # stays bespoke/TODO below. Fields already in BESPOKE_PROCS are skipped to avoid
@@ -1268,6 +1312,7 @@ def main():
 
     parts.append("{ ---- Skip logic (spec 2), table-driven ---- }")
     covered = set(BESPOKE_PROCS)
+    covered.add("CASE_DISPOSITION")   # #744 off-form sentinel, set in logic only — no PROC of its own
     for field, cond, target in SKIP_RULES:
         if field in covered:
             # field already owns a bespoke PROC — fold the skip in there instead

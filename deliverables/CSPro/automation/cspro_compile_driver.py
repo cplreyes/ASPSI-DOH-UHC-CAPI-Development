@@ -59,6 +59,11 @@ SPECS = {
     "F1": {"dir": "F1", "base": "FacilityHeadSurvey", "ent_name": "FACILITYHEADSURVEY", "has_fmf_gen": False},
     "F3": {"dir": "F3", "base": "PatientSurvey",       "ent_name": "PATIENTSURVEY",      "has_fmf_gen": True},
     "F4": {"dir": "F4", "base": "HouseholdSurvey",     "ent_name": "HOUSEHOLDSURVEY",    "has_fmf_gen": True},
+    "SV": {"dir": "SV", "base": "SupervisorApp",       "ent_name": "SUPERVISORAPP",      "has_fmf_gen": True},
+    # Phase-2 C1 spike apps (supervisor-hub/). Pre-authored by build_hub_apps.py; compile-only
+    # (NO --build — they have no generate_*.py and must NOT get the PSGC-external .ent template).
+    "LOGIN": {"dir": "supervisor-hub", "base": "LoginApp", "ent_name": "LOGINAPP", "has_fmf_gen": False},
+    "MENU":  {"dir": "supervisor-hub", "base": "MenuApp",  "ent_name": "MENUAPP",  "has_fmf_gen": False},
 }
 
 

@@ -70,7 +70,7 @@ Label=FC Geographic ID + F1 linkage
 
 Level=1
 
-Size=806,397
+Size=806,457
 
   
 
@@ -85,6 +85,10 @@ Item=CLASSIFICATION
 Item=BARANGAY
 
 Item=FACILITY_NAME
+
+Item=FACILITY_STREET
+
+Item=BARANGAY_NAME
 
 Item=FACILITY_ADDRESS
 
@@ -1160,7 +1164,7 @@ Label=I. Financial Risk
 
 Level=1
 
-Size=806,697
+Size=806,727
 
   
 
@@ -1203,6 +1207,8 @@ Item=Q128_MAIFIP_OOP_ITEMS
 Item=Q128_MAIFIP_OOP_ITEMS_OTHER_TXT
 
 Item=Q129_WHY_NO_MAIFIP
+
+Item=Q129_WHY_NO_MAIFIP_OTHER_TXT
 
 Item=Q130_REDUCED_SPEND
 
@@ -1732,11 +1738,11 @@ Text=Facility Name
 
 [Field]
 
-Name=FACILITY_ADDRESS
+Name=FACILITY_STREET
 
 Position=350,207,760,227
 
-Item=FACILITY_ADDRESS,PATIENTSURVEY_DICT
+Item=FACILITY_STREET,PATIENTSURVEY_DICT
 
 UseUnicodeTextBox=Yes
 
@@ -1750,7 +1756,59 @@ Form=3
 
 Position=50,210,330,226
 
-Text=Facility Address
+Text=Facility Address — Street Name / No.
+
+ 
+
+  
+
+[Field]
+
+Name=BARANGAY_NAME
+
+Position=350,237,760,257
+
+Item=BARANGAY_NAME,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=3
+
+  
+
+[Text]
+
+Position=50,240,330,256
+
+Text=Barangay (from PSGC)
+
+ 
+
+  
+
+[Field]
+
+Name=FACILITY_ADDRESS
+
+Position=350,267,760,287
+
+Item=FACILITY_ADDRESS,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=3
+
+  
+
+[Text]
+
+Position=50,270,330,286
+
+Text=Facility Address (Street, Barangay, Municipality)
 
  
 
@@ -1760,7 +1818,7 @@ Text=Facility Address
 
 Name=P_REGION
 
-Position=350,237,365,257
+Position=350,297,365,317
 
 Item=P_REGION,PATIENTSURVEY_DICT
 
@@ -1772,7 +1830,7 @@ Form=3
 
 [Text]
 
-Position=50,240,330,256
+Position=50,300,330,316
 
 Text=Patient Home Region
 
@@ -1784,7 +1842,7 @@ Text=Patient Home Region
 
 Name=P_PROVINCE_HUC
 
-Position=350,267,365,287
+Position=350,327,365,347
 
 Item=P_PROVINCE_HUC,PATIENTSURVEY_DICT
 
@@ -1796,7 +1854,7 @@ Form=3
 
 [Text]
 
-Position=50,270,330,286
+Position=50,330,330,346
 
 Text=Patient Home Province / HUC
 
@@ -1808,7 +1866,7 @@ Text=Patient Home Province / HUC
 
 Name=P_CITY_MUNICIPALITY
 
-Position=350,297,365,317
+Position=350,357,365,377
 
 Item=P_CITY_MUNICIPALITY,PATIENTSURVEY_DICT
 
@@ -1820,7 +1878,7 @@ Form=3
 
 [Text]
 
-Position=50,300,330,316
+Position=50,360,330,376
 
 Text=Patient Home City / Municipality
 
@@ -1832,7 +1890,7 @@ Text=Patient Home City / Municipality
 
 Name=P_BARANGAY
 
-Position=350,327,365,347
+Position=350,387,365,407
 
 Item=P_BARANGAY,PATIENTSURVEY_DICT
 
@@ -1844,7 +1902,7 @@ Form=3
 
 [Text]
 
-Position=50,330,330,346
+Position=50,390,330,406
 
 Text=Patient Home Barangay
 
@@ -5192,7 +5250,7 @@ Form=10
 
 Position=50,510,330,526
 
-Text=66. Is [facility_name_input] the facility you usually go to for general health concerns?
+Text=66. Is this the facility you usually go to for general health concerns?
 
  
 
@@ -6276,13 +6334,13 @@ Length=1
 
 Name=DG_BLK_82
 
-Label=Q78-Q81
+Label=Q78-Q80
 
 DisplayTogether=Yes
 
 Position=68
 
-Length=4
+Length=3
 
   
 
@@ -6290,11 +6348,11 @@ Length=4
 
 Name=DG_BLK_83
 
-Label=Q82
+Label=Q81
 
 DisplayTogether=Yes
 
-Position=73
+Position=72
 
 Length=1
 
@@ -6308,7 +6366,21 @@ Label=Q82
 
 DisplayTogether=Yes
 
-Position=75
+Position=74
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_85
+
+Label=Q82
+
+DisplayTogether=Yes
+
+Position=76
 
 Length=1
 
@@ -6584,7 +6656,7 @@ Text=87. Apart from this visit, has the patient done anything else to improve hi
 
 [Block]
 
-Name=DG_BLK_85
+Name=DG_BLK_86
 
 Label=Q83
 
@@ -6598,7 +6670,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_86
+Name=DG_BLK_87
 
 Label=Q83
 
@@ -6612,7 +6684,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_87
+Name=DG_BLK_88
 
 Label=Q84
 
@@ -6626,7 +6698,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_88
+Name=DG_BLK_89
 
 Label=Q84
 
@@ -6640,7 +6712,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_89
+Name=DG_BLK_90
 
 Label=Q85
 
@@ -6654,7 +6726,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_90
+Name=DG_BLK_91
 
 Label=Q85
 
@@ -6668,7 +6740,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_91
+Name=DG_BLK_92
 
 Label=Q86
 
@@ -6682,7 +6754,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_92
+Name=DG_BLK_93
 
 Label=Q86
 
@@ -6696,7 +6768,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_93
+Name=DG_BLK_94
 
 Label=Q87
 
@@ -6710,7 +6782,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_94
+Name=DG_BLK_95
 
 Label=Q87
 
@@ -6758,7 +6830,7 @@ Form=12
 
 Position=50,30,330,46
 
-Text=88. Why are you visiting [FACILITY_NAME_INPUT] for consultation/advice or treatment?
+Text=88. Why are you visiting this facility for consultation/advice or treatment?
 
  
 
@@ -6914,7 +6986,7 @@ Text=92. Which of the following did you use to pay for the cost of consultation?
 
 [Block]
 
-Name=DG_BLK_95
+Name=DG_BLK_96
 
 Label=Q88
 
@@ -6928,7 +7000,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_96
+Name=DG_BLK_97
 
 Label=Q88
 
@@ -6942,7 +7014,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_97
+Name=DG_BLK_98
 
 Label=Q89
 
@@ -6956,7 +7028,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_98
+Name=DG_BLK_99
 
 Label=Q90
 
@@ -6970,7 +7042,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_99
+Name=DG_BLK_100
 
 Label=Q90
 
@@ -6984,7 +7056,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_100
+Name=DG_BLK_101
 
 Label=Q91
 
@@ -6998,7 +7070,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_101
+Name=DG_BLK_102
 
 Label=Q92
 
@@ -7050,7 +7122,7 @@ Form=13
 
 Position=50,30,330,46
 
-Text=92. Payment row
+Text=92 Payment row
 
  
 
@@ -7174,7 +7246,7 @@ Text=93. Did you have any of the following laboratory tests done during your out
 
 [Block]
 
-Name=DG_BLK_102
+Name=DG_BLK_103
 
 Label=Q93
 
@@ -7188,7 +7260,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_103
+Name=DG_BLK_104
 
 Label=Q93
 
@@ -7386,7 +7458,7 @@ Text=96. Which of the following did you use to pay for the prescribed medicines?
 
 [Block]
 
-Name=DG_BLK_104
+Name=DG_BLK_105
 
 Label=Q95
 
@@ -7400,7 +7472,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_105
+Name=DG_BLK_106
 
 Label=Q96
 
@@ -7452,7 +7524,7 @@ Form=17
 
 Position=50,30,330,46
 
-Text=96. Payment row
+Text=96 Payment row
 
  
 
@@ -7574,7 +7646,7 @@ Text=97.1 Which other items were included in your outpatient bill? (Tick all tha
 
 [Block]
 
-Name=DG_BLK_106
+Name=DG_BLK_107
 
 Label=Q97
 
@@ -7588,7 +7660,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_107
+Name=DG_BLK_108
 
 Label=Q97
 
@@ -7640,7 +7712,7 @@ Form=19
 
 Position=50,30,330,46
 
-Text=971. Payment row
+Text=97.1 Payment row
 
  
 
@@ -7764,7 +7836,7 @@ Text=97.2 Which other expenses did you have during the OPD visit that were NOT i
 
 [Block]
 
-Name=DG_BLK_108
+Name=DG_BLK_109
 
 Label=Q97
 
@@ -7778,7 +7850,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_109
+Name=DG_BLK_110
 
 Label=Q97
 
@@ -7830,7 +7902,7 @@ Form=21
 
 Position=50,30,330,46
 
-Text=972. Payment row
+Text=97.2 Payment row
 
  
 
@@ -7954,7 +8026,7 @@ Text=98. Which of the following did you use to pay for the medical costs? (Tick 
 
 [Block]
 
-Name=DG_BLK_110
+Name=DG_BLK_111
 
 Label=Q97
 
@@ -7968,7 +8040,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_111
+Name=DG_BLK_112
 
 Label=Q98
 
@@ -8020,7 +8092,7 @@ Form=23
 
 Position=50,30,330,46
 
-Text=98. Payment row
+Text=98 Payment row
 
  
 
@@ -8418,7 +8490,7 @@ Text=104. Without BUCAS — Others specify text
 
 [Block]
 
-Name=DG_BLK_112
+Name=DG_BLK_113
 
 Label=Q98
 
@@ -8432,7 +8504,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_113
+Name=DG_BLK_114
 
 Label=Q98
 
@@ -8446,7 +8518,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_114
+Name=DG_BLK_115
 
 Label=Questions
 
@@ -8460,7 +8532,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_115
+Name=DG_BLK_116
 
 Label=Q99
 
@@ -8474,7 +8546,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_116
+Name=DG_BLK_117
 
 Label=Q100
 
@@ -8488,7 +8560,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_117
+Name=DG_BLK_118
 
 Label=Q100
 
@@ -8502,7 +8574,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_118
+Name=DG_BLK_119
 
 Label=Q101
 
@@ -8516,7 +8588,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_119
+Name=DG_BLK_120
 
 Label=Q101
 
@@ -8530,7 +8602,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_120
+Name=DG_BLK_121
 
 Label=Q102
 
@@ -8544,7 +8616,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_121
+Name=DG_BLK_122
 
 Label=Q103
 
@@ -8558,7 +8630,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_122
+Name=DG_BLK_123
 
 Label=Q103
 
@@ -8572,7 +8644,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_123
+Name=DG_BLK_124
 
 Label=Q104
 
@@ -8586,7 +8658,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_124
+Name=DG_BLK_125
 
 Label=Q104
 
@@ -8740,7 +8812,7 @@ Text=107. Which of the following did you use to pay for the total bill for confi
 
 [Block]
 
-Name=DG_BLK_125
+Name=DG_BLK_126
 
 Label=Q105
 
@@ -8754,7 +8826,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_126
+Name=DG_BLK_127
 
 Label=Q105
 
@@ -8768,7 +8840,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_127
+Name=DG_BLK_128
 
 Label=Q106
 
@@ -8782,7 +8854,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_128
+Name=DG_BLK_129
 
 Label=Q107
 
@@ -8834,7 +8906,7 @@ Form=26
 
 Position=50,30,330,46
 
-Text=107. Payment row
+Text=107 Payment row
 
  
 
@@ -8982,7 +9054,7 @@ Text=109. Which of the following did you use to pay for the medicines bought out
 
 [Block]
 
-Name=DG_BLK_129
+Name=DG_BLK_130
 
 Label=Q107
 
@@ -8996,7 +9068,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_130
+Name=DG_BLK_131
 
 Label=Q108
 
@@ -9010,7 +9082,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_131
+Name=DG_BLK_132
 
 Label=Q109
 
@@ -9062,7 +9134,7 @@ Form=28
 
 Position=50,30,330,46
 
-Text=109. Payment row
+Text=109 Payment row
 
  
 
@@ -9236,7 +9308,7 @@ Text=112. Which of the following did you use to pay for the services done outsid
 
 [Block]
 
-Name=DG_BLK_132
+Name=DG_BLK_133
 
 Label=Q109
 
@@ -9250,7 +9322,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_133
+Name=DG_BLK_134
 
 Label=Q110
 
@@ -9264,7 +9336,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_134
+Name=DG_BLK_135
 
 Label=Q111
 
@@ -9278,7 +9350,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_135
+Name=DG_BLK_136
 
 Label=Q112
 
@@ -9330,7 +9402,7 @@ Form=30
 
 Position=50,30,330,46
 
-Text=112. Payment row
+Text=112 Payment row
 
  
 
@@ -9454,7 +9526,7 @@ Text=113. Which of the following did you use to pay for the hospital bill? (Tick
 
 [Block]
 
-Name=DG_BLK_136
+Name=DG_BLK_137
 
 Label=Q112
 
@@ -9468,7 +9540,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_137
+Name=DG_BLK_138
 
 Label=Q113
 
@@ -9520,7 +9592,7 @@ Form=32
 
 Position=50,30,330,46
 
-Text=113. Payment row
+Text=113 Payment row
 
  
 
@@ -10370,7 +10442,7 @@ Text=115.2 Other expenses — specify text
 
 [Block]
 
-Name=DG_BLK_138
+Name=DG_BLK_139
 
 Label=Q113
 
@@ -10384,7 +10456,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_139
+Name=DG_BLK_140
 
 Label=Q114
 
@@ -10398,7 +10470,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_140
+Name=DG_BLK_141
 
 Label=Q114
 
@@ -10412,7 +10484,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_141
+Name=DG_BLK_142
 
 Label=Q115
 
@@ -10426,7 +10498,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_142
+Name=DG_BLK_143
 
 Label=Q115
 
@@ -10440,7 +10512,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_143
+Name=DG_BLK_144
 
 Label=Q115
 
@@ -10454,7 +10526,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_144
+Name=DG_BLK_145
 
 Label=Q115
 
@@ -10468,7 +10540,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_145
+Name=DG_BLK_146
 
 Label=Q115
 
@@ -10482,7 +10554,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_146
+Name=DG_BLK_147
 
 Label=Q115
 
@@ -10496,7 +10568,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_147
+Name=DG_BLK_148
 
 Label=Q115
 
@@ -10510,7 +10582,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_148
+Name=DG_BLK_149
 
 Label=Q115
 
@@ -10524,7 +10596,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_149
+Name=DG_BLK_150
 
 Label=Q115
 
@@ -10538,7 +10610,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_150
+Name=DG_BLK_151
 
 Label=Q115
 
@@ -10552,7 +10624,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_151
+Name=DG_BLK_152
 
 Label=Q115
 
@@ -10566,7 +10638,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_152
+Name=DG_BLK_153
 
 Label=Q115
 
@@ -10580,7 +10652,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_153
+Name=DG_BLK_154
 
 Label=Q115
 
@@ -10594,7 +10666,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_154
+Name=DG_BLK_155
 
 Label=Q115
 
@@ -10608,7 +10680,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_155
+Name=DG_BLK_156
 
 Label=Q115
 
@@ -10622,7 +10694,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_156
+Name=DG_BLK_157
 
 Label=Q115
 
@@ -10636,7 +10708,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_157
+Name=DG_BLK_158
 
 Label=Q115
 
@@ -10650,7 +10722,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_158
+Name=DG_BLK_159
 
 Label=Q115
 
@@ -10664,7 +10736,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_159
+Name=DG_BLK_160
 
 Label=Q115
 
@@ -10678,7 +10750,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_160
+Name=DG_BLK_161
 
 Label=Q115
 
@@ -10692,7 +10764,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_161
+Name=DG_BLK_162
 
 Label=Q115
 
@@ -10706,7 +10778,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_162
+Name=DG_BLK_163
 
 Label=Q115
 
@@ -10720,7 +10792,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_163
+Name=DG_BLK_164
 
 Label=Q115
 
@@ -10734,7 +10806,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_164
+Name=DG_BLK_165
 
 Label=Q115
 
@@ -10748,7 +10820,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_165
+Name=DG_BLK_166
 
 Label=Q115
 
@@ -10762,7 +10834,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_166
+Name=DG_BLK_167
 
 Label=Q115
 
@@ -10776,7 +10848,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_167
+Name=DG_BLK_168
 
 Label=Q115
 
@@ -10790,7 +10862,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_168
+Name=DG_BLK_169
 
 Label=Q115
 
@@ -10804,7 +10876,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_169
+Name=DG_BLK_170
 
 Label=Q115
 
@@ -11328,9 +11400,35 @@ Text=129. Why did you not avail of MAIFIP during this last confinement?
 
 [Field]
 
+Name=Q129_WHY_NO_MAIFIP_OTHER_TXT
+
+Position=350,627,760,647
+
+Item=Q129_WHY_NO_MAIFIP_OTHER_TXT,PATIENTSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=34
+
+  
+
+[Text]
+
+Position=50,630,330,646
+
+Text=129. Why did you not avail of MAIFIP during this last confinement? — Other (specify) text
+
+ 
+
+  
+
+[Field]
+
 Name=Q130_REDUCED_SPEND
 
-Position=350,627,365,647
+Position=350,657,365,677
 
 Item=Q130_REDUCED_SPEND,PATIENTSURVEY_DICT
 
@@ -11342,7 +11440,7 @@ Form=34
 
 [Text]
 
-Position=50,630,330,646
+Position=50,660,330,676
 
 Text=130. Have you or your household had to reduce spending on things you need (such as food, housing, or utilities) because of this health expenditure in the last 1 month?
 
@@ -11352,7 +11450,7 @@ Text=130. Have you or your household had to reduce spending on things you need (
 
 [Block]
 
-Name=DG_BLK_170
+Name=DG_BLK_171
 
 Label=Q116
 
@@ -11366,7 +11464,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_171
+Name=DG_BLK_172
 
 Label=Q117
 
@@ -11380,7 +11478,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_172
+Name=DG_BLK_173
 
 Label=Q117
 
@@ -11394,7 +11492,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_173
+Name=DG_BLK_174
 
 Label=Q118
 
@@ -11408,7 +11506,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_174
+Name=DG_BLK_175
 
 Label=Q118
 
@@ -11422,7 +11520,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_175
+Name=DG_BLK_176
 
 Label=Q119
 
@@ -11436,7 +11534,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_176
+Name=DG_BLK_177
 
 Label=Q120
 
@@ -11450,7 +11548,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_177
+Name=DG_BLK_178
 
 Label=Q120
 
@@ -11464,7 +11562,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_178
+Name=DG_BLK_179
 
 Label=Q121
 
@@ -11478,7 +11576,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_179
+Name=DG_BLK_180
 
 Label=Q121
 
@@ -11492,7 +11590,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_180
+Name=DG_BLK_181
 
 Label=Q122
 
@@ -11506,7 +11604,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_181
+Name=DG_BLK_182
 
 Label=Q123
 
@@ -11520,7 +11618,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_182
+Name=DG_BLK_183
 
 Label=Q124
 
@@ -11534,7 +11632,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_183
+Name=DG_BLK_184
 
 Label=Q125
 
@@ -11548,7 +11646,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_184
+Name=DG_BLK_185
 
 Label=Q125
 
@@ -11562,7 +11660,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_185
+Name=DG_BLK_186
 
 Label=Q126
 
@@ -11576,7 +11674,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_186
+Name=DG_BLK_187
 
 Label=Q127
 
@@ -11590,7 +11688,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_187
+Name=DG_BLK_188
 
 Label=Q128
 
@@ -11604,7 +11702,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_188
+Name=DG_BLK_189
 
 Label=Q128
 
@@ -11618,7 +11716,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_189
+Name=DG_BLK_190
 
 Label=Q129
 
@@ -11632,13 +11730,27 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_190
+Name=DG_BLK_191
+
+Label=Q129
+
+DisplayTogether=Yes
+
+Position=40
+
+Length=1
+
+  
+
+[Block]
+
+Name=DG_BLK_192
 
 Label=Q130
 
 DisplayTogether=Yes
 
-Position=40
+Position=42
 
 Length=1
 
@@ -11968,7 +12080,7 @@ Form=35
 
 Position=50,390,330,406
 
-Text=143. Overall, would you recommend [facility_name_input] to a friend or relative?
+Text=143. Overall, would you recommend this facility to a friend or relative?
 
  
 
@@ -11992,7 +12104,7 @@ Form=35
 
 Position=50,420,330,436
 
-Text=144. How would the patient rate the quality of care you received at [facility_name_input]?
+Text=144. How would the patient rate the quality of care you received at this facility?
 
  
 
@@ -12000,7 +12112,7 @@ Text=144. How would the patient rate the quality of care you received at [facili
 
 [Block]
 
-Name=DG_BLK_191
+Name=DG_BLK_193
 
 Label=Q131-Q135
 
@@ -12014,7 +12126,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_192
+Name=DG_BLK_194
 
 Label=Q136-Q140
 
@@ -12028,7 +12140,7 @@ Length=5
 
 [Block]
 
-Name=DG_BLK_193
+Name=DG_BLK_195
 
 Label=Q141-Q144
 
@@ -12702,7 +12814,7 @@ Text=161. If branded, why did you buy branded medicine? — Other (specify) text
 
 [Block]
 
-Name=DG_BLK_194
+Name=DG_BLK_196
 
 Label=Q145
 
@@ -12716,7 +12828,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_195
+Name=DG_BLK_197
 
 Label=Q146-Q147
 
@@ -12730,7 +12842,7 @@ Length=2
 
 [Block]
 
-Name=DG_BLK_196
+Name=DG_BLK_198
 
 Label=Q148
 
@@ -12744,7 +12856,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_197
+Name=DG_BLK_199
 
 Label=Q148
 
@@ -12758,7 +12870,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_198
+Name=DG_BLK_200
 
 Label=Q149
 
@@ -12772,7 +12884,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_199
+Name=DG_BLK_201
 
 Label=Q149
 
@@ -12786,7 +12898,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_200
+Name=DG_BLK_202
 
 Label=Q150-Q151
 
@@ -12800,7 +12912,7 @@ Length=3
 
 [Block]
 
-Name=DG_BLK_201
+Name=DG_BLK_203
 
 Label=Questions
 
@@ -12814,7 +12926,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_202
+Name=DG_BLK_204
 
 Label=Q152
 
@@ -12828,7 +12940,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_203
+Name=DG_BLK_205
 
 Label=Q153
 
@@ -12842,7 +12954,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_204
+Name=DG_BLK_206
 
 Label=Q153
 
@@ -12856,7 +12968,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_205
+Name=DG_BLK_207
 
 Label=Q154
 
@@ -12870,7 +12982,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_206
+Name=DG_BLK_208
 
 Label=Q154
 
@@ -12884,7 +12996,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_207
+Name=DG_BLK_209
 
 Label=Q155
 
@@ -12898,7 +13010,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_208
+Name=DG_BLK_210
 
 Label=Q156
 
@@ -12912,7 +13024,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_209
+Name=DG_BLK_211
 
 Label=Q157
 
@@ -12926,7 +13038,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_210
+Name=DG_BLK_212
 
 Label=Q157
 
@@ -12940,7 +13052,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_211
+Name=DG_BLK_213
 
 Label=Q158
 
@@ -12954,7 +13066,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_212
+Name=DG_BLK_214
 
 Label=Q159
 
@@ -12968,7 +13080,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_213
+Name=DG_BLK_215
 
 Label=Q160
 
@@ -12982,7 +13094,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_214
+Name=DG_BLK_216
 
 Label=Q160
 
@@ -12996,7 +13108,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_215
+Name=DG_BLK_217
 
 Label=Q161
 
@@ -13010,7 +13122,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_216
+Name=DG_BLK_218
 
 Label=Q161
 
@@ -13058,7 +13170,7 @@ Form=37
 
 Position=50,30,330,46
 
-Text=162. Based on your most recent visit/confinement at [facility_name_input], did a healthcare worker refer you to another facility or specialist for further care or specialized care?
+Text=162. Based on your most recent visit/confinement at this facility, did a healthcare worker refer you to another facility or specialist for further care or specialized care?
 
  
 
@@ -13402,7 +13514,7 @@ Form=37
 
 Position=50,450,330,466
 
-Text=172. Was the visit to [facility_name_input] a referral from your primary care facility?
+Text=172. Was the visit to this facility a referral from your primary care facility?
 
  
 
@@ -13580,7 +13692,7 @@ Text=178. Overall, how would you rate your experience with the referral process?
 
 [Block]
 
-Name=DG_BLK_217
+Name=DG_BLK_219
 
 Label=Q162
 
@@ -13594,7 +13706,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_218
+Name=DG_BLK_220
 
 Label=Q163
 
@@ -13608,7 +13720,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_219
+Name=DG_BLK_221
 
 Label=Q163
 
@@ -13622,7 +13734,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_220
+Name=DG_BLK_222
 
 Label=Q164
 
@@ -13636,7 +13748,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_221
+Name=DG_BLK_223
 
 Label=Q164
 
@@ -13650,7 +13762,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_222
+Name=DG_BLK_224
 
 Label=Q165
 
@@ -13664,7 +13776,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_223
+Name=DG_BLK_225
 
 Label=Q165
 
@@ -13678,7 +13790,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_224
+Name=DG_BLK_226
 
 Label=Q166-Q169
 
@@ -13692,7 +13804,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_225
+Name=DG_BLK_227
 
 Label=Q170
 
@@ -13706,7 +13818,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_226
+Name=DG_BLK_228
 
 Label=Q171
 
@@ -13720,7 +13832,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_227
+Name=DG_BLK_229
 
 Label=Q171
 
@@ -13734,7 +13846,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_228
+Name=DG_BLK_230
 
 Label=Q172
 
@@ -13748,7 +13860,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_229
+Name=DG_BLK_231
 
 Label=Q173-Q176
 
@@ -13762,7 +13874,7 @@ Length=4
 
 [Block]
 
-Name=DG_BLK_230
+Name=DG_BLK_232
 
 Label=Q177
 
@@ -13776,7 +13888,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_231
+Name=DG_BLK_233
 
 Label=Q177
 
@@ -13790,7 +13902,7 @@ Length=1
 
 [Block]
 
-Name=DG_BLK_232
+Name=DG_BLK_234
 
 Label=Q178
 

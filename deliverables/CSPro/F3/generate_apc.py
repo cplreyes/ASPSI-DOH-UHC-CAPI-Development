@@ -201,6 +201,10 @@ postproc
     errmsg("92. This source has no out-of-pocket cost — amount reset to 0.");
     Q92_PAY_AMT = 0;
   endif;
+  if (Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2) and Q92_PAY_AMT = 0 then
+    errmsg("92. Please enter an amount greater than 0 — you selected this as a paid source.");
+    reenter;
+  endif;
 """
 
 
@@ -284,7 +288,7 @@ postproc
 #     roster). PARTIAL matrices default non-money rows to 0 (still enterable); ALL-amount
 #     matrices leave every row enterable with no zeroing.
 def build_roster_procs(q_no, q_label, sources, amt_codes,
-                       require_msg, gated_texts=None):
+                       require_msg, gated_texts=None, require_positive=False):
     """Emit the SOURCES/LINE/AMT (+ optional gated specify-text) PROCs for one
     CheckBox->roster conversion.
       q_no        question stem used in field names (Q<q_no>_SOURCES / _PAY_LINE / ...).
@@ -357,6 +361,19 @@ def build_roster_procs(q_no, q_label, sources, amt_codes,
         L += [f"  if {cond} and {amtf} <> 0 then",
               f'    errmsg("{q_no}. This source has no out-of-pocket cost — amount reset to 0.");',
               f"    {amtf} = 0;", "  endif;"]
+    if require_positive:
+        # #749: a ticked PAID source must carry an amount > 0 — entering 0 for a selected
+        # paying source is a data-entry slip. Partial rosters gate only the money-code rows
+        # (non-money rows are forced to 0 just above and stay 0); all-amount rosters gate
+        # every row (every ticked source is, by definition, a paid source).
+        if partial:
+            money_cond = " or ".join(f"{srcf} = {n}" for n in amt_nums)
+            L += [f"  if ({money_cond}) and {amtf} = 0 then"]
+        else:
+            L += [f"  if {amtf} = 0 then"]
+        L += [f'    errmsg("{q_no}. Please enter an amount greater than 0 — you selected '
+              'this as a paid source/item.");',
+              "    reenter;", "  endif;"]
 
     for code, field, prompt in (gated_texts or []):
         if two_digit:
@@ -440,6 +457,10 @@ postproc
     errmsg("94. Amount cannot be negative.");
     reenter;
   endif;
+  if Q94_LAB_PAY = 1 and Q94_LAB_AMT = 0 then
+    errmsg("94. Please enter an amount greater than 0 — this test was paid out-of-pocket.");
+    reenter;
+  endif;
 """
 Q96_ROSTER_PROCS = build_roster_procs(
     96, "96", [("Out-of-pocket", "01"), ("Free/no cost", "02"),
@@ -447,13 +468,15 @@ Q96_ROSTER_PROCS = build_roster_procs(
                ("Free, charge to HMO", "05"), ("In kind", "06"), ("Donation", "07"),
                ("Don't know", "08")],
     {"01", "06", "07"},
-    "96. Tick at least one payment source for the prescribed medicines before continuing.")
+    "96. Tick at least one payment source for the prescribed medicines before continuing.",
+    require_positive=True)   # #749: OOP/in-kind/donation rows must be > 0
 Q972_ROSTER_PROCS = build_roster_procs(
     972, "97.2", [(None, "01"), (None, "02"), (None, "03"),
                   (None, "04"), (None, "05"), (None, "06")],
     set(),   # all-amount
     "97.2 Tick at least one expense item before continuing (or correct Q97 if none).",
-    gated_texts=[("06", "Q972_OTHER_TXT", "97.2 'Other expenses' was ticked — please specify.")])
+    gated_texts=[("06", "Q972_OTHER_TXT", "97.2 'Other expenses' was ticked — please specify.")],
+    require_positive=True)   # #749: every ticked expense item must be > 0
 Q98_ROSTER_PROCS = build_roster_procs(
     98, "98", [(None, f"{n:02d}") for n in range(1, 16)],
     set(),   # all-amount
@@ -461,7 +484,8 @@ Q98_ROSTER_PROCS = build_roster_procs(
     gated_texts=[
         ("06", "Q98_OTHER_DONATION_TXT",
          "'Other Donation/Charity/Assistance' was selected in Q98. Please specify."),
-        ("15", "Q98_OTHER_TXT", "'Other (specify)' was selected in Q98. Please specify.")])
+        ("15", "Q98_OTHER_TXT", "'Other (specify)' was selected in Q98. Please specify.")],
+    require_positive=True)   # #749: every ticked money source must be > 0
 
 # The four NEW Section H roster conversions (#691/#692/#693). All-amount, length-9 amounts
 # (the amount length lives in the dcf roster field; the apc logic is length-agnostic).
@@ -471,22 +495,26 @@ Q107_ROSTER_PROCS = build_roster_procs(
     107, "107", [(None, f"{n:02d}") for n in range(1, 11)],
     set(),
     "107. Tick at least one payment source for the total bill before continuing.",
-    gated_texts=[("10", "Q107_PAY_OTHER_TXT", "107. 'Other' was ticked — please specify.")])
+    gated_texts=[("10", "Q107_PAY_OTHER_TXT", "107. 'Other' was ticked — please specify.")],
+    require_positive=True)   # #757: every ticked payment source must be > 0
 Q109_ROSTER_PROCS = build_roster_procs(
     109, "109", [(None, f"{n:02d}") for n in range(1, 10)],
     set(),
     "109. Tick at least one payment source for the medicines bought outside before continuing.",
-    gated_texts=[("09", "Q109_PAY_OTHER_TXT", "109. 'Other' was ticked — please specify.")])
+    gated_texts=[("09", "Q109_PAY_OTHER_TXT", "109. 'Other' was ticked — please specify.")],
+    require_positive=True)   # #757: every ticked payment source must be > 0
 Q112_ROSTER_PROCS = build_roster_procs(
     112, "112", [(None, f"{n:02d}") for n in range(1, 10)],
     set(),
     "112. Tick at least one payment source for the services done outside before continuing.",
-    gated_texts=[("09", "Q112_PAY_OTHER_TXT", "112. 'Other' was ticked — please specify.")])
+    gated_texts=[("09", "Q112_PAY_OTHER_TXT", "112. 'Other' was ticked — please specify.")],
+    require_positive=True)   # #757: every ticked payment source must be > 0
 Q113_ROSTER_PROCS = build_roster_procs(
     113, "113", [(None, f"{n:02d}") for n in range(1, 14)],
     set(),
     "113. Tick at least one payment source for the hospital bill before continuing.",
-    gated_texts=[("13", "Q113_PAY_OTHER_TXT", "113. 'Other (specify)' was ticked — please specify.")])
+    gated_texts=[("13", "Q113_PAY_OTHER_TXT", "113. 'Other (specify)' was ticked — please specify.")],
+    require_positive=True)   # #757: every ticked payment source must be > 0
 
 
 def inject_soft(parts, field, body):
@@ -716,6 +744,43 @@ PROC BARANGAY
 onfocus
   FillBarangayValueSet(CITY_MUNICIPALITY);
 
+{ ---- #784/#786 (Option A): structured facility address ----
+  The enumerator types only the STREET line. The barangay name is derived from the
+  picked BARANGAY code, the municipality name (CITY_NAME) is already derived from the
+  Questionnaire Number above, and FACILITY_ADDRESS is assembled read-only as
+  "Street, Barangay, Municipality" — so nothing PSGC is re-selected (#786). Both derived
+  fields are computed HERE, in FACILITY_STREET's postproc (a visited field), because
+  BARANGAY_NAME + FACILITY_ADDRESS are protected and CSEntry skips a protected field's own
+  preproc (ref: protected-field preproc). }
+PROC FACILITY_STREET
+postproc
+  BARANGAY_NAME = "";
+  B_PARENT_CITY = CITY_MUNICIPALITY;
+  if loadcase(PSGC_BARANGAY_DICT, B_PARENT_CITY) <> 0 then
+    do varying numeric bi = 1 until bi > count(PSGC_BARANGAY_DICT.PSGC_BARANGAY_REC)
+      if B_CODE(bi) = BARANGAY then
+        BARANGAY_NAME = strip(B_NAME(bi));
+      endif;
+    enddo;
+  endif;
+  protect(BARANGAY_NAME, true);
+  FACILITY_ADDRESS = strip(FACILITY_STREET);
+  if length(strip(BARANGAY_NAME)) > 0 then
+    if length(strip(FACILITY_ADDRESS)) > 0 then
+      FACILITY_ADDRESS = strip(FACILITY_ADDRESS) + ", " + strip(BARANGAY_NAME);
+    else
+      FACILITY_ADDRESS = strip(BARANGAY_NAME);
+    endif;
+  endif;
+  if length(strip(CITY_NAME)) > 0 then
+    if length(strip(FACILITY_ADDRESS)) > 0 then
+      FACILITY_ADDRESS = strip(FACILITY_ADDRESS) + ", " + strip(CITY_NAME);
+    else
+      FACILITY_ADDRESS = strip(CITY_NAME);
+    endif;
+  endif;
+  protect(FACILITY_ADDRESS, true);
+
 { ---- PSGC cascade — patient geo-ID (P_* mirror) ---- }
 { patient-home geo cascade — inlined (P_* fields are F3-only; the shared
   PSGC-Cascade functions target the facility geo items REGION/PROVINCE_HUC/etc.,
@@ -900,7 +965,8 @@ postproc
 PROC Q77_KON_REGISTERED
 postproc
   if Q77_KON_REGISTERED = 2    then  skip to Q82_KON_WHY_NOT_REG; endif;  { Not registered -> reasons. #671: Q82 is now the Check Box base (was _O01) }
-  if Q77_KON_REGISTERED = 4    then  skip to Q83_VISIT_REASON;    endif;  { #430: 'never heard'(3) removed; only IDK(4) exits E }
+  if Q77_KON_REGISTERED = 3    then  skip to Q83_VISIT_REASON;    endif;  { #770: 'I've never heard of it'(3) RESTORED -> Q83 (reverses #430) }
+  if Q77_KON_REGISTERED = 4    then  skip to Q83_VISIT_REASON;    endif;  { IDK(4) exits Section E -> Q83 }
 
 { #389/#671: the "why NOT registered" gate (registered patient falls through Q78-Q81 into
   Q82 -> skip to Section F) now lives in the Q82_KON_WHY_NOT_REG checkbox PROC's `gate`
@@ -1175,10 +1241,10 @@ CHECKBOX_CONVERT = [
     ("Q163_CARE_TYPE",           True,  True,  None),  # #696: 'None of the above' (90) exclusive; 'Other (Specify)' (99)
     ("Q128_MAIFIP_OOP_ITEMS",    True,  True,  None),  # #481: 'None' (90) exclusive; 'Other (specify)' (99). Reached only when Q127=Yes (Q127=No skips Q128 -> Q130)
     # Q129 inherits the not-availed gate that used to live on Q129_WHY_NO_MAIFIP_O01 (#482).
-    ("Q129_WHY_NO_MAIFIP",       False, False,
+    ("Q129_WHY_NO_MAIFIP",       True,  False,
      "  if Q126_MAIFIP_AVAILED <> 2 then   { #482/#700: only for those who did NOT avail MAIFIP\n"
      "                                        (Q126=No=2); the Q126=Yes path skips Q129 to Q130. }\n"
-     "    skip to Q130_REDUCED_SPEND;\n  endif;"),   # 4 substantive reasons; no Other / no None-IDK
+     "    skip to Q130_REDUCED_SPEND;\n  endif;"),   # #783: Other-specify (99) added; no None-IDK. The checkbox PROC now emits the pos("99") _OTHER_TXT gate (suppresses the generic <>99 auto-gen).
 ]
 
 
@@ -1357,6 +1423,7 @@ SKIP_RULES = [
     ("Q53_HAS_PCP",          "Q53_HAS_PCP = 2",              "Q63_HAS_USUAL_FACILITY"),
     # Q66_SAME_AS_USUAL routing now lives in EXTRA_PROCS (Q63 usual-facility block, #418/#419).
     ("Q74_KON_HEARD",        "Q74_KON_HEARD = 2",            "Q83_VISIT_REASON"),
+    ("Q80_KON_KNOWS_BOOKING","Q79_KON_HAD_APPT = 2",         "Q83_VISIT_REASON"),   # #771: Q81 (appt check-up) is gated on Q79=Yes (spec §4 line 407 — "Q81 enabled when Q77=Yes AND Q79=Yes"). Q79=No -> skip Q81 -> Q83 (Q82 is Q77=No-only). The gate was missing, so Q81 wrongly showed after Q80 when Q79=No.
     # Section K — Access to Medicines
     ("Q145_PURCHASE_FREQ",   "Q145_PURCHASE_FREQ = 5",       "AREA_HAS_GAMOT"),          # Never -> skip meds-access (land on the GAMOT area-gate, #495)
     ("AREA_HAS_GAMOT",       "AREA_HAS_GAMOT = 2",           "Q158_BRAND_GEN_KNOW"),     # #495: area has no GAMOT -> skip Q152-159 (mirrors Q152=No)
@@ -1366,7 +1433,10 @@ SKIP_RULES = [
     ("Q169_VISITED",         "Q169_VISITED in 2,3",          "Q171_WHY_NOT"),        # #529: Q171 is now the Check Box base (was _O01)
     ("Q172_PCP_REFERRAL",    "Q172_PCP_REFERRAL = 2",        "Q177_WHY_HOSPITAL"),   # #529: Q177 is now the Check Box base (was _O01)
     # Section G — Outpatient Care
-    ("Q89_ADVISED_ADMIT",  "Q89_ADVISED_ADMIT = 2",                       "Q91_USUAL_OUTPATIENT"),  # #688: No (NOT advised to admit) -> skip Q90 (why-not-confined is moot); Yes -> ASK Q90 (why not admitted despite advice). Inverted from the original =1 which was backwards.
+    # #775 (R5): Q89 -> Q90 -> Q91 now proceeds UNCONDITIONALLY. The #688 skip (Q89=No -> skip Q90)
+    #   is REMOVED — tester + paper want no restriction (spec §3.8 note 10: "Q90 asked regardless of
+    #   Q89; source prints no skip between Q89 and Q90"). Reverses #688. The Q90 select-all HARD rule
+    #   "≥1 ticked when Q89=No" (spec line 511) is unaffected — it only fires when Q89=No.
     # Q93_LABS_O17 'None' routing now in EXTRA_PROCS (exclusivity warn must precede the skip, #448).
     ("Q95_PRESCRIBED",     "Q95_PRESCRIBED = 2",                          "Q97_FINAL_AMOUNT"),       # No prescription -> skip meds-cost matrix
     ("AREA_HAS_BUCAS",     "AREA_HAS_BUCAS = 2",                          "Q116_NBB_HEARD"),         # #464: area has no BUCAS -> skip Q99-104 (mirrors Q99=No)

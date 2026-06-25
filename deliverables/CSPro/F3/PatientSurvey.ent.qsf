@@ -1270,32 +1270,32 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>30. Is the patient member of Indigenous People (IP) community, like the Igorot, Lumad, Mangyans, etc.?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>30. Is the patient member of Indigenous People (IP) community, like the Igorot, Lumad, Mangyans, etc.?</p>
           FIL: |
-            <p>Ang pasyente ba ay miyembro ng komunidad ng Indigenous People (IP) gaya ng Igorot, Lumad, Mangyan, atbp.?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>Ang pasyente ba ay miyembro ng komunidad ng Indigenous People (IP) gaya ng Igorot, Lumad, Mangyan, atbp.?</p>
           BCL: |
-            <p>An pasyente ba ay miembro kan IP community, arog kan Igorot, Lumad, asin Mangyans at maski ano pa?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>An pasyente ba ay miembro kan IP community, arog kan Igorot, Lumad, asin Mangyans at maski ano pa?</p>
           BIS: |
-            <p>Miyembro ba ang pasyente sa Indigenous People (IP) community sama sa Igorot, Lumad, Mangyan, ug uban pa?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>Miyembro ba ang pasyente sa Indigenous People (IP) community sama sa Igorot, Lumad, Mangyan, ug uban pa?</p>
           CEB: |
-            <p>DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. Ang pasyente ba miyembro sa Indigenous People (IP) community, sama sa Igorot, Lumad, Mangyans, ug uban pa?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. Ang pasyente ba miyembro sa Indigenous People (IP) community, sama sa Igorot, Lumad, Mangyans, ug uban pa?</p>
           WAR: |
-            <p>An pasyente ba in miyembro han Indigenous People (IP), sugad han mga Igorot, Lumad, Mangyan, ngan iba pa?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
+            <p>An pasyente ba in miyembro han Indigenous People (IP), sugad han mga Igorot, Lumad, Mangyan, ngan iba pa?</p>
   - name: PATIENTSURVEY_DICT.Q31_IP_GROUP
     conditions:
       - questionText:
           EN: |
-            <p>31. If yes, which group? (Specify)</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>31. If yes, which group? (Specify)</p>
           FIL: |
-            <p>Kung Oo, anong grupo kabilang ang pasyente?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>Kung Oo, anong grupo kabilang ang pasyente?</p>
           BCL: |
-            <p>Kun iyo, anong grupo?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>Kun iyo, anong grupo?</p>
           BIS: |
-            <p>Kung oo, unsa nga grupo?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>Kung oo, unsa nga grupo?</p>
           CEB: |
-            <p>For enumerator: A list will be provided to ensure accurate details</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>For enumerator: A list will be provided to ensure accurate details</p>
           WAR: |
-            <p>DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
   - name: PATIENTSURVEY_DICT.Q32_4PS
     conditions:
       - questionText:
@@ -2020,17 +2020,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>64. What is the name of the facility?</p>
+            <p>64. What is the name of the facility?</p><p class="instruction">PROVIDE FULL NAME OF THE FACILITY, DO NOT ABBREVIATE.</p>
           FIL: |
-            <p>Ano ang pangalan ng pasilidad?</p>
+            <p>Ano ang pangalan ng pasilidad?</p><p class="instruction">PROVIDE FULL NAME OF THE FACILITY, DO NOT ABBREVIATE.</p>
           BCL: |
-            <p>Anong pangaran kan pasilidad na ini?</p>
+            <p>Anong pangaran kan pasilidad na ini?</p><p class="instruction">PROVIDE FULL NAME OF THE FACILITY, DO NOT ABBREVIATE.</p>
           BIS: |
-            <p>Unsay ngalan sa pasilidad?</p>
+            <p>Unsay ngalan sa pasilidad?</p><p class="instruction">PROVIDE FULL NAME OF THE FACILITY, DO NOT ABBREVIATE.</p>
           CEB: |
-            <p>Unsay pangalan sa pasilidad?</p>
+            <p>Unsay pangalan sa pasilidad?</p><p class="instruction">PROVIDE FULL NAME OF THE FACILITY, DO NOT ABBREVIATE.</p>
           WAR: |
-            <p>Ano an ngaran han pasilidad?</p>
+            <p>Ano an ngaran han pasilidad?</p><p class="instruction">PROVIDE FULL NAME OF THE FACILITY, DO NOT ABBREVIATE.</p>
   - name: PATIENTSURVEY_DICT.Q65_WHY_NO_USUAL
     conditions:
       - questionText:
@@ -2725,17 +2725,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>92. Payment row</p>
+            <p>92 Payment row</p>
           FIL: |
-            <p>92. Payment row</p>
+            <p>92 Payment row</p>
           BCL: |
-            <p>92. Payment row</p>
+            <p>92 Payment row</p>
           BIS: |
-            <p>92. Payment row</p>
+            <p>92 Payment row</p>
           CEB: |
-            <p>92. Payment row</p>
+            <p>92 Payment row</p>
           WAR: |
-            <p>92. Payment row</p>
+            <p>92 Payment row</p>
   - name: PATIENTSURVEY_DICT.Q92_PAY_SRC
     conditions:
       - questionText:
@@ -2755,17 +2755,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>92. Amount paid for the consultation, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q92_PAY_SRC)~~</b></p><p>92. Amount paid for the consultation, by source (Pesos)</p>
           FIL: |
-            <p>92. Amount paid for the consultation, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q92_PAY_SRC)~~</b></p><p>92. Amount paid for the consultation, by source (Pesos)</p>
           BCL: |
-            <p>92. Amount paid for the consultation, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q92_PAY_SRC)~~</b></p><p>92. Amount paid for the consultation, by source (Pesos)</p>
           BIS: |
-            <p>92. Amount paid for the consultation, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q92_PAY_SRC)~~</b></p><p>92. Amount paid for the consultation, by source (Pesos)</p>
           CEB: |
-            <p>92. Amount paid for the consultation, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q92_PAY_SRC)~~</b></p><p>92. Amount paid for the consultation, by source (Pesos)</p>
           WAR: |
-            <p>92. Amount paid for the consultation, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q92_PAY_SRC)~~</b></p><p>92. Amount paid for the consultation, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q93_LABS
     conditions:
       - questionText:
@@ -2890,17 +2890,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>96. Payment row</p>
+            <p>96 Payment row</p>
           FIL: |
-            <p>96. Payment row</p>
+            <p>96 Payment row</p>
           BCL: |
-            <p>96. Payment row</p>
+            <p>96 Payment row</p>
           BIS: |
-            <p>96. Payment row</p>
+            <p>96 Payment row</p>
           CEB: |
-            <p>96. Payment row</p>
+            <p>96 Payment row</p>
           WAR: |
-            <p>96. Payment row</p>
+            <p>96 Payment row</p>
   - name: PATIENTSURVEY_DICT.Q96_PAY_SRC
     conditions:
       - questionText:
@@ -2920,17 +2920,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q96_PAY_SRC)~~</b></p><p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
           FIL: |
-            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q96_PAY_SRC)~~</b></p><p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
           BCL: |
-            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q96_PAY_SRC)~~</b></p><p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
           BIS: |
-            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q96_PAY_SRC)~~</b></p><p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
           CEB: |
-            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q96_PAY_SRC)~~</b></p><p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
           WAR: |
-            <p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q96_PAY_SRC)~~</b></p><p>96. Amount spent for the prescribed medicines, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q97_FINAL_AMOUNT
     conditions:
       - questionText:
@@ -2965,17 +2965,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           FIL: |
-            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BCL: |
-            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BIS: |
-            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           CEB: |
-            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           WAR: |
-            <p>971. Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p>97.1 Payment row</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
   - name: PATIENTSURVEY_DICT.Q971_PAY_SRC
     conditions:
       - questionText:
@@ -2995,17 +2995,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q971_PAY_SRC)~~</b></p><p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           FIL: |
-            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q971_PAY_SRC)~~</b></p><p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BCL: |
-            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q971_PAY_SRC)~~</b></p><p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           BIS: |
-            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q971_PAY_SRC)~~</b></p><p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           CEB: |
-            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q971_PAY_SRC)~~</b></p><p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
           WAR: |
-            <p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q971_PAY_SRC)~~</b></p><p>97.1 Amount charged for this item (Pesos)</p><p class="instruction">If patient provides a receipt, select all that apply. If no receipt was provided, read options out loud. Select all that apply. If yes, indicate the amount spent.</p>
   - name: PATIENTSURVEY_DICT.Q971_OTHER_TXT
     conditions:
       - questionText:
@@ -3040,17 +3040,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>972. Payment row</p>
+            <p>97.2 Payment row</p>
           FIL: |
-            <p>972. Payment row</p>
+            <p>97.2 Payment row</p>
           BCL: |
-            <p>972. Payment row</p>
+            <p>97.2 Payment row</p>
           BIS: |
-            <p>972. Payment row</p>
+            <p>97.2 Payment row</p>
           CEB: |
-            <p>972. Payment row</p>
+            <p>97.2 Payment row</p>
           WAR: |
-            <p>972. Payment row</p>
+            <p>97.2 Payment row</p>
   - name: PATIENTSURVEY_DICT.Q972_PAY_SRC
     conditions:
       - questionText:
@@ -3070,17 +3070,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>97.2 Amount for this expense (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q972_PAY_SRC)~~</b></p><p>97.2 Amount for this expense (Pesos)</p>
           FIL: |
-            <p>97.2 Amount for this expense (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q972_PAY_SRC)~~</b></p><p>97.2 Amount for this expense (Pesos)</p>
           BCL: |
-            <p>97.2 Amount for this expense (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q972_PAY_SRC)~~</b></p><p>97.2 Amount for this expense (Pesos)</p>
           BIS: |
-            <p>97.2 Amount for this expense (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q972_PAY_SRC)~~</b></p><p>97.2 Amount for this expense (Pesos)</p>
           CEB: |
-            <p>97.2 Amount for this expense (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q972_PAY_SRC)~~</b></p><p>97.2 Amount for this expense (Pesos)</p>
           WAR: |
-            <p>97.2 Amount for this expense (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q972_PAY_SRC)~~</b></p><p>97.2 Amount for this expense (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q972_OTHER_TXT
     conditions:
       - questionText:
@@ -3115,17 +3115,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>98. Payment row</p>
+            <p>98 Payment row</p>
           FIL: |
-            <p>98. Payment row</p>
+            <p>98 Payment row</p>
           BCL: |
-            <p>98. Payment row</p>
+            <p>98 Payment row</p>
           BIS: |
-            <p>98. Payment row</p>
+            <p>98 Payment row</p>
           CEB: |
-            <p>98. Payment row</p>
+            <p>98 Payment row</p>
           WAR: |
-            <p>98. Payment row</p>
+            <p>98 Payment row</p>
   - name: PATIENTSURVEY_DICT.Q98_PAY_SRC
     conditions:
       - questionText:
@@ -3145,17 +3145,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>98. Amount from this source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q98_PAY_SRC)~~</b></p><p>98. Amount from this source (Pesos)</p>
           FIL: |
-            <p>98. Amount from this source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q98_PAY_SRC)~~</b></p><p>98. Amount from this source (Pesos)</p>
           BCL: |
-            <p>98. Amount from this source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q98_PAY_SRC)~~</b></p><p>98. Amount from this source (Pesos)</p>
           BIS: |
-            <p>98. Amount from this source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q98_PAY_SRC)~~</b></p><p>98. Amount from this source (Pesos)</p>
           CEB: |
-            <p>98. Amount from this source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q98_PAY_SRC)~~</b></p><p>98. Amount from this source (Pesos)</p>
           WAR: |
-            <p>98. Amount from this source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q98_PAY_SRC)~~</b></p><p>98. Amount from this source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q98_OTHER_DONATION_TXT
     conditions:
       - questionText:
@@ -3430,17 +3430,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>107. Payment row</p>
+            <p>107 Payment row</p>
           FIL: |
-            <p>107. Payment row</p>
+            <p>107 Payment row</p>
           BCL: |
-            <p>107. Payment row</p>
+            <p>107 Payment row</p>
           BIS: |
-            <p>107. Payment row</p>
+            <p>107 Payment row</p>
           CEB: |
-            <p>107. Payment row</p>
+            <p>107 Payment row</p>
           WAR: |
-            <p>107. Payment row</p>
+            <p>107 Payment row</p>
   - name: PATIENTSURVEY_DICT.Q107_PAY_SRC
     conditions:
       - questionText:
@@ -3460,17 +3460,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>107. Amount of the total bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q107_PAY_SRC)~~</b></p><p>107. Amount of the total bill, by source (Pesos)</p>
           FIL: |
-            <p>107. Amount of the total bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q107_PAY_SRC)~~</b></p><p>107. Amount of the total bill, by source (Pesos)</p>
           BCL: |
-            <p>107. Amount of the total bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q107_PAY_SRC)~~</b></p><p>107. Amount of the total bill, by source (Pesos)</p>
           BIS: |
-            <p>107. Amount of the total bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q107_PAY_SRC)~~</b></p><p>107. Amount of the total bill, by source (Pesos)</p>
           CEB: |
-            <p>107. Amount of the total bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q107_PAY_SRC)~~</b></p><p>107. Amount of the total bill, by source (Pesos)</p>
           WAR: |
-            <p>107. Amount of the total bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q107_PAY_SRC)~~</b></p><p>107. Amount of the total bill, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q107_PAY_OTHER_TXT
     conditions:
       - questionText:
@@ -3520,17 +3520,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>109. Payment row</p>
+            <p>109 Payment row</p>
           FIL: |
-            <p>109. Payment row</p>
+            <p>109 Payment row</p>
           BCL: |
-            <p>109. Payment row</p>
+            <p>109 Payment row</p>
           BIS: |
-            <p>109. Payment row</p>
+            <p>109 Payment row</p>
           CEB: |
-            <p>109. Payment row</p>
+            <p>109 Payment row</p>
           WAR: |
-            <p>109. Payment row</p>
+            <p>109 Payment row</p>
   - name: PATIENTSURVEY_DICT.Q109_PAY_SRC
     conditions:
       - questionText:
@@ -3550,17 +3550,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q109_PAY_SRC)~~</b></p><p>109. Amount paid for medicines outside, by source (Pesos)</p>
           FIL: |
-            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q109_PAY_SRC)~~</b></p><p>109. Amount paid for medicines outside, by source (Pesos)</p>
           BCL: |
-            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q109_PAY_SRC)~~</b></p><p>109. Amount paid for medicines outside, by source (Pesos)</p>
           BIS: |
-            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q109_PAY_SRC)~~</b></p><p>109. Amount paid for medicines outside, by source (Pesos)</p>
           CEB: |
-            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q109_PAY_SRC)~~</b></p><p>109. Amount paid for medicines outside, by source (Pesos)</p>
           WAR: |
-            <p>109. Amount paid for medicines outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q109_PAY_SRC)~~</b></p><p>109. Amount paid for medicines outside, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q109_PAY_OTHER_TXT
     conditions:
       - questionText:
@@ -3625,17 +3625,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>112. Payment row</p>
+            <p>112 Payment row</p>
           FIL: |
-            <p>112. Payment row</p>
+            <p>112 Payment row</p>
           BCL: |
-            <p>112. Payment row</p>
+            <p>112 Payment row</p>
           BIS: |
-            <p>112. Payment row</p>
+            <p>112 Payment row</p>
           CEB: |
-            <p>112. Payment row</p>
+            <p>112 Payment row</p>
           WAR: |
-            <p>112. Payment row</p>
+            <p>112 Payment row</p>
   - name: PATIENTSURVEY_DICT.Q112_PAY_SRC
     conditions:
       - questionText:
@@ -3655,17 +3655,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>112. Amount paid for services outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q112_PAY_SRC)~~</b></p><p>112. Amount paid for services outside, by source (Pesos)</p>
           FIL: |
-            <p>112. Amount paid for services outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q112_PAY_SRC)~~</b></p><p>112. Amount paid for services outside, by source (Pesos)</p>
           BCL: |
-            <p>112. Amount paid for services outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q112_PAY_SRC)~~</b></p><p>112. Amount paid for services outside, by source (Pesos)</p>
           BIS: |
-            <p>112. Amount paid for services outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q112_PAY_SRC)~~</b></p><p>112. Amount paid for services outside, by source (Pesos)</p>
           CEB: |
-            <p>112. Amount paid for services outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q112_PAY_SRC)~~</b></p><p>112. Amount paid for services outside, by source (Pesos)</p>
           WAR: |
-            <p>112. Amount paid for services outside, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q112_PAY_SRC)~~</b></p><p>112. Amount paid for services outside, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q112_PAY_OTHER_TXT
     conditions:
       - questionText:
@@ -3700,17 +3700,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>113. Payment row</p>
+            <p>113 Payment row</p>
           FIL: |
-            <p>113. Payment row</p>
+            <p>113 Payment row</p>
           BCL: |
-            <p>113. Payment row</p>
+            <p>113 Payment row</p>
           BIS: |
-            <p>113. Payment row</p>
+            <p>113 Payment row</p>
           CEB: |
-            <p>113. Payment row</p>
+            <p>113 Payment row</p>
           WAR: |
-            <p>113. Payment row</p>
+            <p>113 Payment row</p>
   - name: PATIENTSURVEY_DICT.Q113_PAY_SRC
     conditions:
       - questionText:
@@ -3730,17 +3730,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q113_PAY_SRC)~~</b></p><p>113. Amount paid for the hospital bill, by source (Pesos)</p>
           FIL: |
-            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q113_PAY_SRC)~~</b></p><p>113. Amount paid for the hospital bill, by source (Pesos)</p>
           BCL: |
-            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q113_PAY_SRC)~~</b></p><p>113. Amount paid for the hospital bill, by source (Pesos)</p>
           BIS: |
-            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q113_PAY_SRC)~~</b></p><p>113. Amount paid for the hospital bill, by source (Pesos)</p>
           CEB: |
-            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q113_PAY_SRC)~~</b></p><p>113. Amount paid for the hospital bill, by source (Pesos)</p>
           WAR: |
-            <p>113. Amount paid for the hospital bill, by source (Pesos)</p>
+            <p class="instruction">Payment source / item: <b>~~getvaluelabel(Q113_PAY_SRC)~~</b></p><p>113. Amount paid for the hospital bill, by source (Pesos)</p>
   - name: PATIENTSURVEY_DICT.Q113_PAY_OTHER_TXT
     conditions:
       - questionText:

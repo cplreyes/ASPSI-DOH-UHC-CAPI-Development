@@ -1,0 +1,112 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "ASSIGNMENT_DICT",
+  "labels": [
+    {
+      "text": "EA Assignment Lookup"
+    }
+  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 0,
+    "length": 0
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": true
+  },
+  "relativePositions": true,
+  "levels": [
+    {
+      "name": "ASSIGNMENT_DICT_LEVEL",
+      "labels": [
+        {
+          "text": "EA Assignment Lookup Level"
+        }
+      ],
+      "ids": {
+        "items": [
+          {
+            "name": "AS_FACILITY_CODE",
+            "labels": [
+              {
+                "text": "EA / Facility Code (9-digit RRPPMMMFF)"
+              }
+            ],
+            "contentType": "alpha",
+            "start": 1,
+            "length": 9
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "AS_REC",
+          "labels": [
+            {
+              "text": "Assignment record"
+            }
+          ],
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "AS_ENUMERATOR_ID",
+              "labels": [
+                {
+                  "text": "Assigned Enumerator ID"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 20
+            },
+            {
+              "name": "AS_INSTRUMENT",
+              "labels": [
+                {
+                  "text": "Instrument (F1/F3/F4)"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 4
+            },
+            {
+              "name": "AS_TARGET_COUNT",
+              "labels": [
+                {
+                  "text": "Target case count"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 4
+            },
+            {
+              "name": "AS_EA_NAME",
+              "labels": [
+                {
+                  "text": "EA / Facility name"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 50
+            },
+            {
+              "name": "AS_CLUSTER",
+              "labels": [
+                {
+                  "text": "Cluster"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 10
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

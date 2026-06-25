@@ -500,8 +500,37 @@ def _psgc_fields(prefix="", facility_derived=False):
     ]
 
 
-def build_geo_id(mode, extra_items=None, facility_derived=False):
+def _facility_name_address(structured=False):
+    """Facility name + address items.
+
+    structured=False — the legacy single free-text address (one blob).
+    structured=True (#784/#786, Option A) — a typed STREET line + two read-only
+    derived fields: BARANGAY_NAME (from the BARANGAY picker) and the assembled
+    FACILITY_ADDRESS ("Street, Barangay, Municipality"). The derive + assembly +
+    protect() live in shared/PSGC-Cascade.apc PROC BARANGAY; CITY_NAME
+    (municipality) is already populated there, so nothing is re-typed.
+    """
+    name = alpha("FACILITY_NAME", "Facility Name", length=100)
+    if not structured:
+        return [name, alpha("FACILITY_ADDRESS", "Facility Address", length=200)]
+    return [
+        name,
+        alpha("FACILITY_STREET",  "Facility Address — Street Name / No.",            length=120),
+        alpha("BARANGAY_NAME",    "Barangay (from PSGC)",                            length=80),
+        alpha("FACILITY_ADDRESS", "Facility Address (Street, Barangay, Municipality)", length=200),
+    ]
+
+
+def build_geo_id(mode, extra_items=None, facility_derived=False, structured_address=False):
     """Build a geographic identification record.
+
+    structured_address (#784/#786, Option A, 2026-06-25): when True the facility
+    address is captured as a typed STREET line plus a read-only assembled
+    FACILITY_ADDRESS ("Street, Barangay, Municipality"). Barangay + Municipality
+    are NOT re-typed — BARANGAY_NAME is derived from the BARANGAY picker and
+    CITY_NAME (municipality) already comes from the PSGC cascade in FIELD_CONTROL
+    (shared/PSGC-Cascade.apc owns the lookup + the assembly). Only the FACILITY
+    branches honour it; "household" is unaffected.
 
     facility_derived (2026-06-10 single-number redesign): when True the FACILITY
     PSGC region/province/city are derived from QUESTIONNAIRE_NUMBER and only the
@@ -540,10 +569,7 @@ def build_geo_id(mode, extra_items=None, facility_derived=False):
         items = (
             [classification_item]
             + _psgc_fields(facility_derived=facility_derived)
-            + [
-                alpha("FACILITY_NAME",    "Facility Name",    length=100),
-                alpha("FACILITY_ADDRESS", "Facility Address", length=200),
-            ]
+            + _facility_name_address(structured_address)
         )
         if extra_items:
             items.extend(extra_items)
@@ -560,10 +586,7 @@ def build_geo_id(mode, extra_items=None, facility_derived=False):
         items = (
             [classification_item]
             + _psgc_fields(facility_derived=facility_derived)
-            + [
-                alpha("FACILITY_NAME",    "Facility Name",    length=100),
-                alpha("FACILITY_ADDRESS", "Facility Address", length=200),
-            ]
+            + _facility_name_address(structured_address)
             + patient_psgc
         )
         if extra_items:

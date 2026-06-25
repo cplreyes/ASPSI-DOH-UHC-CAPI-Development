@@ -26,6 +26,7 @@ INSTRUMENTS = {
     "F1": "FacilityHeadSurvey",
     "F3": "PatientSurvey",
     "F4": "HouseholdSurvey",
+    "SV": "SupervisorApp",
 }
 PSGC = [f"psgc_{lvl}.{ext}" for lvl in ("region", "province", "city", "barangay")
         for ext in ("dcf", "dat")]

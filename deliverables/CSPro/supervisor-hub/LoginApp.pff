@@ -1,0 +1,10 @@
+[Run Information]
+Version=CSPro 8.0
+AppType=Entry
+
+[Files]
+Application=.\LoginApp.ent
+InputData=.\LoginApp.csdb
+
+[ExternalFiles]
+USER_ROSTER_DICT=.\UserRoster.dat

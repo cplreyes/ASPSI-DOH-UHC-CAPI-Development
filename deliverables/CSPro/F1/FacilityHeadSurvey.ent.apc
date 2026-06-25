@@ -260,6 +260,9 @@ PROC QUESTIONNAIRE_NUMBER
 postproc
   { 0. record the interview language at the true case start (§15.E) }
   LANGUAGE_USED = getlanguage();
+  { #744/#561: mark the case In Progress at case open; a force-quit case keeps 0.
+    Guarded so a reopened completed/partial case is not reset. }
+  if not (CASE_DISPOSITION in 1, 2) then CASE_DISPOSITION = 0; endif;
   { 1. decompose the within-parent codes }
   REGION_CODE            = int(QUESTIONNAIRE_NUMBER / 10000000000);
   PROVINCE_HUC_CODE      = int(QUESTIONNAIRE_NUMBER / 100000000) % 100;
@@ -402,11 +405,40 @@ onfocus
 
 
 { ---- Validations & cross-field checks (spec 4) ---- }
+PROC BREAKOFF
+preproc
+  if not (BREAKOFF in 1, 2, 3, 4) then BREAKOFF = 1; endif;   { default "Continue interview" }
+postproc
+  if BREAKOFF <> 1 then
+    if BREAKOFF = 2 then ENUM_RESULT_FINAL_VISIT = 3; endif;   { Respondent withdrew -> Refused }
+    if BREAKOFF = 3 then ENUM_RESULT_FINAL_VISIT = 2; endif;   { Postponed / reschedule }
+    if BREAKOFF = 4 then ENUM_RESULT_FINAL_VISIT = 4; endif;   { Stop - other -> Incomplete }
+    CASE_DISPOSITION = 2;   { partial / broke off }
+    skip to ENUM_RESULT_FINAL_VISIT;
+  endif;
+
 PROC DATE_OF_FINAL_VISIT_TO_THE_FACILITY
 postproc
   if DATE_OF_FINAL_VISIT_TO_THE_FACILITY <> notappl and DATE_FIRST_VISITED_THE_FACILITY <> notappl and DATE_OF_FINAL_VISIT_TO_THE_FACILITY < DATE_FIRST_VISITED_THE_FACILITY then
     errmsg("Final-visit date cannot be earlier than the first-visit date.");
     reenter;
+  endif;
+
+PROC ENUM_RESULT_FINAL_VISIT
+postproc
+  { #744/#561: classify completeness from the final Result-of-Visit. Completed(1) -> Completed;
+    Postponed(2) / Refused(3) / Incomplete(4) -> Partial. }
+  if ENUM_RESULT_FINAL_VISIT = 1 then
+    CASE_DISPOSITION = 1;
+  else
+    CASE_DISPOSITION = 2;
+  endif;
+  { A Postponed(2) / Refused(3) visit had no interview, so there is nothing to photograph -
+    end the case here instead of walking into the Verification Photo form (whose trigger
+    would otherwise loop on an out-of-range stop; F3/F4 device-confirmed 2026-06-21). Codes
+    1/4 fall through to the photo, matching the CAPTURE_VERIFICATION_PHOTO gate (in 1, 4). }
+  if not (ENUM_RESULT_FINAL_VISIT in 1, 4) then
+    endlevel;   { statement form (no parens) - strict packager rejects endlevel() }
   endif;
 
 PROC Q100_ADDL_FEATURES

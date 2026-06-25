@@ -1,0 +1,73 @@
+{
+  "software": "CSPro",
+  "version": 8.0,
+  "fileType": "dictionary",
+  "name": "LOGINAPP_DICT",
+  "labels": [
+    {
+      "text": "LoginApp"
+    }
+  ],
+  "readOptimization": true,
+  "recordType": {
+    "start": 1,
+    "length": 1
+  },
+  "defaults": {
+    "decimalMark": true,
+    "zeroFill": false
+  },
+  "relativePositions": true,
+  "levels": [
+    {
+      "name": "LOGINAPP_LEVEL",
+      "labels": [
+        {
+          "text": "LoginApp Level"
+        }
+      ],
+      "ids": {
+        "items": [
+          {
+            "name": "LOGIN_USERNAME",
+            "labels": [
+              {
+                "text": "Username"
+              }
+            ],
+            "contentType": "alpha",
+            "start": 2,
+            "length": 20
+          }
+        ]
+      },
+      "records": [
+        {
+          "name": "LOGIN_REC",
+          "labels": [
+            {
+              "text": "Login record"
+            }
+          ],
+          "recordType": "L",
+          "occurrences": {
+            "required": true,
+            "maximum": 1
+          },
+          "items": [
+            {
+              "name": "LOGIN_PASSWORD",
+              "labels": [
+                {
+                  "text": "Password"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
