@@ -167,8 +167,7 @@ INSTRUCTIONS = {
     12: ("If the respondent is studying - please put “No employment - not "
          "looking for work”. " + _READ_ONE),
     13: _READ_ONE + " IF MORE THAN ONE, ASK FOR THE MAIN SOURCE.",
-    15: (_DNR_ONE + " For enumerator: A list will be provided to ensure "
-         "accurate details."),
+    15: _DNR_ONE,   # #791: removed the custom "A list will be provided…" enumerator note per tester; standard read-instruction kept
     18: ("Enumerator note: Tick the income category that corresponds to the "
          "respondent’s approximate household income."),
     19: ("Please count yourself and all the people who usually live with you. "

@@ -41,12 +41,15 @@ ROSTER_ROWS = [
 # Role-filtered field-ops menus (spec ADDENDUM-2). Two value sets on MENU_CHOICE; the
 # menu app swaps to the logged-in role's set in onfocus (setvalueset). Codes are DISJOINT
 # across roles (supervisor 01-08, enumerator 11-18) so the postproc routes by code alone.
-# Items whose backend is spike-gated (Assign EA / Receive / Map / collect / relay) show a
-# precise "pending Phase-2B" message; the BUILT actions (open/conduct an instrument, log
-# out, the per-role on-device report ENTRY POINT) work now.
+# LISTING DESCOPED FROM v1 (Carl, 2026-06-25): the listing leg (supervisor "Listing Data"
+# 02 + enumerator "Listing Exercise" 11) is REMOVED because the PatientListing app it would
+# chain-launch was never built (blocked on the unauthored Survey Manual §3a auto-tag rule,
+# ASPSI's call). Hub v1 = assignment distribution (B4) + survey conduct/collect/relay
+# (B6/B7) + on-device report entry points + EA map. Codes 02 and 11 are intentionally left
+# UNUSED (gaps are invisible — displayCodesAlongsideLabels is off) to avoid renumbering the
+# postproc; listing items re-slot here if/when the listing app is unblocked.
 SUPERVISOR_MENU = [
     ("Assign Enumeration Area",            "01"),
-    ("Listing Data — view report",         "02"),
     ("Survey Interview — view report",     "03"),
     ("View EA on Map",                     "04"),
     ("Open F1 — Facility Head (review)",   "05"),
@@ -55,7 +58,6 @@ SUPERVISOR_MENU = [
     ("Log out",                            "08"),
 ]
 ENUMERATOR_MENU = [
-    ("Listing Exercise",                       "11"),
     ("Receive Assigned Data (Patient)",        "12"),
     ("Conduct F1 — Facility Head Interview",   "13"),
     ("Conduct F3 — Patient Interview",         "14"),
@@ -373,13 +375,40 @@ def build_assignment_dict():
     }
 
 
-def write_assignment_data(path):
+_ASSIGNMENT_WIDTHS = [9, 20, 4, 4, 50, 10]
+
+
+def _assignment_line(row):
     """Fixed-width: AS_FACILITY_CODE(9) AS_ENUMERATOR_ID(20) AS_INSTRUMENT(4)
     AS_TARGET_COUNT(4) AS_EA_NAME(50) AS_CLUSTER(10)."""
-    widths = [9, 20, 4, 4, 50, 10]
+    return "".join(v[:w].ljust(w) for v, w in zip(row, _ASSIGNMENT_WIDTHS)) + "\n"
+
+
+def write_assignment_data(path):
+    """Master assignment file (all EAs) — the supervisor's reference copy."""
     with Path(path).open("w", encoding="utf-8", newline="\n") as fh:
         for row in ASSIGNMENT_ROWS:
-            fh.write("".join(v[:w].ljust(w) for v, w in zip(row, widths)) + "\n")
+            fh.write(_assignment_line(row))
+
+
+def write_per_enumerator_assignments(folder):
+    """B4 (N1) — one AS_<operator_id>.dat per enumerator: the file each enumerator PULLS
+    from the supervisor over Bluetooth (syncfile GET) in "Receive Assigned Data". The
+    supervisor ships+serves them from its syncserver(Bluetooth) root (the app folder); the
+    enumerator GETs theirs by operator_id, so no cross-enumerator scan or known-EA-key is
+    needed. Also writes an empty MyAssignment.dat — the local file ASSIGNMENT_DICT is mapped
+    to (MenuApp.pff), which the received file overwrites on-device. Ships empty so the
+    external dict opens cleanly before the first receive."""
+    folder = Path(folder)
+    by_op = {}
+    for row in ASSIGNMENT_ROWS:
+        by_op.setdefault(row[1], []).append(row)
+    for opid, rows in by_op.items():
+        with (folder / f"AS_{opid}.dat").open("w", encoding="utf-8", newline="\n") as fh:
+            for row in rows:
+                fh.write(_assignment_line(row))
+    (folder / "MyAssignment.dat").write_text("", encoding="utf-8")
+    print(f"  Per-enumerator assignment files: {len(by_op)} (+ empty MyAssignment.dat)")
 
 
 # ----------------------------------------------------------------------------
@@ -421,9 +450,13 @@ MENU_APC = """\
   Do NOT hand-edit: edit build_hub_apps.py and rerun.
   Restructured 2026-06-25 (B1) to the spec ADDENDUM-2 Supervisor/Enumerator menus.
   BUILT actions: open/conduct an instrument (PFF chain-launch, OnExit back to menu),
-  log out (execpff back to LoginApp), and the per-role on-device report ENTRY POINT.
-  PENDING (spike-gated, shown as a precise message): Assign EA / Receive assigned /
-  Listing exchange (C2 Bluetooth spike); View EA on Map (C7 map spike).
+  log out (execpff back to LoginApp), the per-role on-device report ENTRY POINT,
+  View EA on Map (C7=PASS, offline MBTiles), and — B4 (N1), 2026-06-25 — Assign EA /
+  Receive Assigned Data over Bluetooth (syncserver/syncconnect+syncfile; C2-mechanism,
+  device-verify pending a dedicated session).
+  DESCOPED FROM v1 (Carl, 2026-06-25): the LISTING leg (supervisor 02 + enumerator 11) —
+  the PatientListing app it chain-launches was never built (§3a unauthored, ASPSI's call).
+  PENDING (gated): survey collect/relay (B6/B7) — build next on the C2 syncdata path.
   REPORT NOTE (B2/N4): the on-device report uses errmsg text (proven). A rich HTML
   report via view() is NOT yet feasibility-confirmed — Phase-3 view() displays a photo
   IMAGE, not generated HTML — so the HTML/live-coverage version is a flagged follow-up
@@ -466,6 +499,41 @@ function show_ea_map()
   endif;
 end;
 
+function receive_assignment()
+  { B4 (N1) — pull THIS enumerator's EA assignment from the supervisor over Bluetooth.
+    Transport = the C2-DEVICE-PROVEN syncconnect(Bluetooth) session, but with syncfile (the
+    assignment is a fixed-width TEXT lookup, NOT a CSPro DB, so syncdata does not apply -
+    syncfile moves any file type, GET/PUT, after syncconnect). The supervisor's "Assign EA"
+    runs syncserver(Bluetooth) and serves AS_<operator_id>.dat from its app folder; we GET
+    ours into MyAssignment.dat (the file ASSIGNMENT_DICT is mapped to in MenuApp.pff), reload
+    it with setfile, and show the assigned EA + target.
+    DEVICE-UNCONFIRMED bits (verify on the 2-tablet rig): syncfile over Bluetooth (C2 proved
+    syncdata; syncfile rides the same session per docs but is not yet device-run here), the
+    syncserver default file root, and the setfile reload of a just-overwritten external file. }
+  string opid;
+  string fromfile;
+  opid = loadsetting("hub_operator_id");
+  fromfile = "AS_" + strip(opid) + ".dat";
+  if syncconnect(Bluetooth) then
+    if syncfile(GET, fromfile, "MyAssignment.dat") then
+      syncdisconnect();
+      setfile(ASSIGNMENT_DICT, "MyAssignment.dat");   { reload the freshly-received file }
+      forcase ASSIGNMENT_DICT do
+        errmsg("Assignment received - EA " + strip(AS_FACILITY_CODE) + " (" + strip(AS_EA_NAME)
+               + "): instrument " + strip(AS_INSTRUMENT) + ", target " + strip(AS_TARGET_COUNT)
+               + ". Open it from the menu.");
+      enddo;
+    else
+      syncdisconnect();
+      errmsg("Connected to the supervisor, but no assignment file (" + fromfile
+               + ") was published for you. Ask the supervisor to run 'Assign Enumeration Area' first.");
+    endif;
+  else
+    errmsg("Bluetooth connect failed - no supervisor host found. Ask the supervisor to start "
+             + "'Assign Enumeration Area' first, then retry.");
+  endif;
+end;
+
 PROC MENUAPP_LEVEL
 preproc
   { Read the role handed over by LoginApp (loadsetting persists across apps). }
@@ -495,11 +563,18 @@ postproc
   if strip(m_role) = "supervisor" then
     { Supervisor menu (codes 01-08) }
     if MENU_CHOICE = 1 then
-      errmsg("Assign Enumeration Area - pending Phase-2B: needs the C2 Bluetooth spike (push the EA assignment to the enumerator).");
+      { B4 (N1) — publish EA assignments: become a passive Bluetooth host so each enumerator
+        can pull their AS_<id>.dat (syncfile GET). syncserver handles ONE client per call;
+        re-select this item for the next enumerator (one-host-from-many = repeat, the same
+        loop pattern C2 proved). The AS_*.dat files ship in the app folder = the syncserver
+        file root. }
+      errmsg("ASSIGN EA: starting the Bluetooth server to publish assignments. Keep this "
+               + "screen open; the enumerator now runs 'Receive Assigned Data'. Serves one "
+               + "enumerator per connection - re-select this item for the next enumerator.");
+      syncserver(Bluetooth);
+      errmsg("ASSIGN EA: an enumerator connected and pulled their assignment.");
       reenter;
-    elseif MENU_CHOICE = 2 then
-      errmsg("LISTING DATA report - on-device entry point is live. Assigned-vs-collected coverage populates after assignment distribution + Bluetooth collection (Phase-2B). A rich HTML report is a flagged follow-up.");
-      reenter;
+    { code 02 (Listing Data report) descoped from v1 — see SUPERVISOR_MENU note. }
     elseif MENU_CHOICE = 3 then
       errmsg("SURVEY INTERVIEW report - on-device entry point is live. Captured-vs-target coverage populates after Bluetooth collection (Phase-2B). A rich HTML report is a flagged follow-up.");
       reenter;
@@ -516,12 +591,9 @@ postproc
       execpff("LoginApp.pff", stop);
     endif;
   elseif strip(m_role) = "enumerator" then
-    { Enumerator menu (codes 11-18) }
-    if MENU_CHOICE = 11 then
-      errmsg("Listing Exercise - pending Phase-2B: needs the listing app + C2 send-to-supervisor.");
-      reenter;
-    elseif MENU_CHOICE = 12 then
-      errmsg("Receive Assigned Data (Patient) - pending Phase-2B: needs the C2 Bluetooth spike (assignment distribution).");
+    { Enumerator menu (codes 12-18; 11 Listing Exercise descoped from v1 — see ENUMERATOR_MENU note) }
+    if MENU_CHOICE = 12 then
+      receive_assignment();   { B4 (N1) — syncconnect(Bluetooth) + syncfile(GET) this enumerator's AS_<id>.dat }
       reenter;
     elseif MENU_CHOICE = 13 then
       launch_instrument("../FacilityHeadSurvey/FacilityHeadSurvey.pff");
@@ -579,10 +651,16 @@ def build_menu_app():
     _write(HERE / "MenuApp.ent.qsf", build_qsf(d, "MENUAPP_DICT"), bom=True)
     _write(HERE / "MenuApp.ent.apc", MENU_APC)
     _write(HERE / "MenuApp.ent.mgf", _mgf("MenuApp"))
+    # B4 — Assignment is declared EXTERNAL so the enumerator can read the AS_<id>.dat file
+    # pulled over Bluetooth (mapped to MyAssignment.dat in the .pff). The supervisor side
+    # just serves the AS_*.dat files via syncserver — it doesn't read the dict.
     ent = build_ent("MENUAPP", "MenuApp", "MenuApp.dcf", "MenuApp.fmf",
-                    "MenuApp.ent.qsf", "MenuApp.ent.apc", "MenuApp.ent.mgf")
+                    "MenuApp.ent.qsf", "MenuApp.ent.apc", "MenuApp.ent.mgf",
+                    externals=["Assignment.dcf"])
     _write(HERE / "MenuApp.ent", json.dumps(ent, indent=2))
-    _write(HERE / "MenuApp.pff", _pff("MenuApp.ent", "MenuApp.csdb"))
+    _write(HERE / "MenuApp.pff",
+           _pff("MenuApp.ent", "MenuApp.csdb",
+                externals={"ASSIGNMENT_DICT": "MyAssignment.dat"}))
 
 
 def build_roster():
@@ -598,6 +676,7 @@ def build_assignment():
     _truncate_long_labels(d)
     _write(HERE / "Assignment.dcf", json.dumps(d, indent=2))
     write_assignment_data(HERE / "Assignment.dat")
+    write_per_enumerator_assignments(HERE)   # B4 — per-enumerator AS_<id>.dat + MyAssignment.dat
     print(f"  Assignment rows: {len(ASSIGNMENT_ROWS)}")
 
 

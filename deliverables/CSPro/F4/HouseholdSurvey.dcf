@@ -1990,38 +1990,6 @@
               "length": 200
             },
             {
-              "name": "F4_PARENT_F3_CASE_SEQ",
-              "labels": [
-                {
-                  "text": "Parent F3 Patient Case Sequence",
-                  "language": "EN"
-                },
-                {
-                  "text": "Parent F3 Patient Case Sequence",
-                  "language": "FIL"
-                },
-                {
-                  "text": "Parent F3 Patient Case Sequence",
-                  "language": "BCL"
-                },
-                {
-                  "text": "Parent F3 Patient Case Sequence",
-                  "language": "BIS"
-                },
-                {
-                  "text": "Parent F3 Patient Case Sequence",
-                  "language": "CEB"
-                },
-                {
-                  "text": "Parent F3 Patient Case Sequence",
-                  "language": "WAR"
-                }
-              ],
-              "contentType": "numeric",
-              "length": 3,
-              "zeroFill": true
-            },
-            {
               "name": "LATITUDE",
               "labels": [
                 {
@@ -6641,27 +6609,27 @@
               "name": "Q18_INCOME_AMOUNT",
               "labels": [
                 {
-                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos).",
+                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
                   "language": "EN"
                 },
                 {
-                  "text": "Sa nakalipas na 6 na buwan, ano ang karaniwang buwanang kita ng sambahayan? Pakitukoy sa Philippine pesos.",
+                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
                   "language": "FIL"
                 },
                 {
-                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos).",
+                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
                   "language": "BCL"
                 },
                 {
-                  "text": "Sa miaging 6 ka bulan, pila ang kasagaran ninyong kinitaan sa panimalay matag bulan?",
+                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
                   "language": "BIS"
                 },
                 {
-                  "text": "Sa miaging 6 ka bulan, pila ang kasagarang binuwan nga kita sa inyong panimalay?",
+                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
                   "language": "CEB"
                 },
                 {
-                  "text": "Ha naglabay nga 6 ka bulan, ano an iyo average nga kita ha panimalay kada bulan? Alayon pag-espesipikar ha Pilipinas nga pesos",
+                  "text": "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer \u2014 do not read these codes aloud.)",
                   "language": "WAR"
                 }
               ],
@@ -8238,33 +8206,66 @@
                     {
                       "labels": [
                         {
-                          "text": "I don't know",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "EN"
                         },
                         {
-                          "text": "Hindi ko alam",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "FIL"
                         },
                         {
-                          "text": "Dai ko aram",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "BCL"
                         },
                         {
-                          "text": "Wala kabalo",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "BIS"
                         },
                         {
-                          "text": "Wala ko kahibalo",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "CEB"
                         },
                         {
-                          "text": "Dire ako maaram",
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
                           "language": "WAR"
                         }
                       ],
                       "pairs": [
                         {
                           "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
                         }
                       ]
                     }
@@ -11688,36 +11689,267 @@
               ]
             },
             {
-              "name": "Q45_1_PIN_REG_DATE",
+              "name": "Q45_1_PIN_REG_WHEN",
               "labels": [
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
                   "language": "EN"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
                   "language": "FIL"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
                   "language": "BCL"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
                   "language": "BIS"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
                   "language": "CEB"
                 },
                 {
-                  "text": "45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)",
+                  "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
                   "language": "WAR"
                 }
               ],
               "contentType": "numeric",
-              "length": 8,
-              "zeroFill": false
+              "length": 1,
+              "zeroFill": false,
+              "valueSets": [
+                {
+                  "name": "Q45_1_PIN_REG_WHEN_VS1",
+                  "labels": [
+                    {
+                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Within the past year",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Within the past year",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Within the past year",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Within the past year",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Within the past year",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Within the past year",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Within the last 2-3 years",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "2"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Within the last 4-5 years",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "3"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Over 5 years",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Over 5 years",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Over 5 years",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Over 5 years",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Over 5 years",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Over 5 years",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "4"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "I don't know [DO NOT READ OUT LOUD]",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "5"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Refuse to answer [DO NOT READ OUT LOUD]",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "6"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "name": "Q46_MEMBER_CATEGORY",
@@ -12172,6 +12404,399 @@
                 },
                 {
                   "text": "46. Member category \u2014 Other (specify) text",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "alpha",
+              "length": 120
+            },
+            {
+              "name": "Q45_2_WHY_NOT_REG",
+              "labels": [
+                {
+                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "language": "EN"
+                },
+                {
+                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "language": "FIL"
+                },
+                {
+                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "language": "BCL"
+                },
+                {
+                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "language": "BIS"
+                },
+                {
+                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "language": "CEB"
+                },
+                {
+                  "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                  "language": "WAR"
+                }
+              ],
+              "contentType": "numeric",
+              "length": 2,
+              "zeroFill": true,
+              "valueSets": [
+                {
+                  "name": "Q45_2_WHY_NOT_REG_VS1",
+                  "labels": [
+                    {
+                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "EN"
+                    },
+                    {
+                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "FIL"
+                    },
+                    {
+                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "BCL"
+                    },
+                    {
+                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "BIS"
+                    },
+                    {
+                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "CEB"
+                    },
+                    {
+                      "text": "45.2 Why are you not registered? (Only answer if 'No' in Q45 \u2014 to be answered by the main respondent only)",
+                      "language": "WAR"
+                    }
+                  ],
+                  "values": [
+                    {
+                      "labels": [
+                        {
+                          "text": "Difficult to register",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Difficult to register",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Difficult to register",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Difficult to register",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Difficult to register",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Difficult to register",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "01"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Don't see value in registering",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "02"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know how to register",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Don't know how to register",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Don't know how to register",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Don't know how to register",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Don't know how to register",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Don't know how to register",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "03"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Don't know what PhilHealth is",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "A family member is currently registered with PhilHealth",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "05"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Currently unemployed",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Currently unemployed",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Currently unemployed",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Currently unemployed",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Currently unemployed",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Currently unemployed",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "06"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No time to register",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "No time to register",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "No time to register",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "No time to register",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "No time to register",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "No time to register",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "07"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No valid ID to register",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "No valid ID to register",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "No valid ID to register",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "No valid ID to register",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "No valid ID to register",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "No valid ID to register",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "08"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "Other (specify)",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "Iba pa (tukuyin)",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "Other (specify)",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "Other (specify)",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "Uban pa (isulti)",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "Iba pa (ispecify)",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "88"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Q45_2_WHY_NOT_REG_OTHER_TXT",
+              "labels": [
+                {
+                  "text": "45.2 Why not registered \u2014 Other (specify) text",
+                  "language": "EN"
+                },
+                {
+                  "text": "45.2 Why not registered \u2014 Other (specify) text",
+                  "language": "FIL"
+                },
+                {
+                  "text": "45.2 Why not registered \u2014 Other (specify) text",
+                  "language": "BCL"
+                },
+                {
+                  "text": "45.2 Why not registered \u2014 Other (specify) text",
+                  "language": "BIS"
+                },
+                {
+                  "text": "45.2 Why not registered \u2014 Other (specify) text",
+                  "language": "CEB"
+                },
+                {
+                  "text": "45.2 Why not registered \u2014 Other (specify) text",
                   "language": "WAR"
                 }
               ],
@@ -26188,7 +26813,7 @@
                 }
               ],
               "contentType": "alpha",
-              "length": 10,
+              "length": 12,
               "valueSets": [
                 {
                   "name": "Q103_CARE_TYPE_VS1",
@@ -26348,6 +26973,39 @@
                       "pairs": [
                         {
                           "value": "04"
+                        }
+                      ]
+                    },
+                    {
+                      "labels": [
+                        {
+                          "text": "No, I haven't accessed any form of medical care",
+                          "language": "EN"
+                        },
+                        {
+                          "text": "No, I haven't accessed any form of medical care",
+                          "language": "FIL"
+                        },
+                        {
+                          "text": "No, I haven't accessed any form of medical care",
+                          "language": "BCL"
+                        },
+                        {
+                          "text": "No, I haven't accessed any form of medical care",
+                          "language": "BIS"
+                        },
+                        {
+                          "text": "No, I haven't accessed any form of medical care",
+                          "language": "CEB"
+                        },
+                        {
+                          "text": "No, I haven't accessed any form of medical care",
+                          "language": "WAR"
+                        }
+                      ],
+                      "pairs": [
+                        {
+                          "value": "90"
                         }
                       ]
                     },

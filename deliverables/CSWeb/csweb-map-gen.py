@@ -32,7 +32,7 @@ F4 household_geo_id.latitude/longitude + hh_gps_*. Coords are varchar(12) ->
 cast to decimal. questionnaire_number drops its leading zero -> LPAD(...,12,'0').
 Geo CODES are survey-internal (not PSGC) so area joins are by NAME.
 
-Refresh cron: */15 * * * * cd /opt/app && python3 /opt/csweb-map-gen.py >> /var/log/csweb-map.log 2>&1
+Refresh cron (tightened 2026-06-26, was */15): */2 * * * * flock -n /tmp/csweb-map.lock bash -c "cd /opt/app && python3 /opt/csweb-map-gen.py" >> /var/log/csweb-map.log 2>&1
 Vendored libs (no CDN JS): /docs/assets/{leaflet.css,leaflet.js,MarkerCluster*.css,leaflet.markercluster.js}.
 First built 2026-06-21 (v1); v2 + v3 same day.
 """
@@ -376,7 +376,7 @@ TEMPLATE = r"""<!doctype html>
   </span>
 </div>
 <div id="map"></div>
-<footer>Generated <span id="gen"></span> · auto-refreshes ~every 15 min · tiles © OpenStreetMap contributors · QA: low accuracy (&gt;<span id="tAcc"></span> m / &lt;<span id="tSat"></span> sat), duplicate respondent location, displacement (home &gt;<span id="tHome"></span> km from facility / facility off its cluster), wrong area (outside declared province) · admin areas © faeldon PH JSON maps (2011) · see also the <a href="/docs/dashboard.html">Sync Dashboard</a>.</footer>
+<footer>Generated <span id="gen"></span> · auto-refreshes ~every 2 min · tiles © OpenStreetMap contributors · QA: low accuracy (&gt;<span id="tAcc"></span> m / &lt;<span id="tSat"></span> sat), duplicate respondent location, displacement (home &gt;<span id="tHome"></span> km from facility / facility off its cluster), wrong area (outside declared province) · admin areas © faeldon PH JSON maps (2011) · see also the <a href="/docs/dashboard.html">Sync Dashboard</a>.</footer>
 <script type="application/json" id="map-data">__PAYLOAD__</script>
 <script>
 const P = JSON.parse(document.getElementById('map-data').textContent);

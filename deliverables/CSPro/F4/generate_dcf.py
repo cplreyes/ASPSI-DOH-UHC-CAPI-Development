@@ -62,7 +62,12 @@ def _cb_codes(options):
         if "specif" in low:
             out.append((text, "99"))
         elif low.startswith(("none", "no initiative", "no condition",
-                              "not applicable", "did not seek")) or is_dont_know:
+                              "not applicable", "did not seek",
+                              "no, i haven't accessed")) or is_dont_know:
+            # #800: Q103 "No, I haven't accessed any form of medical care" is the
+            # standalone "accessed nothing" answer -> exclusive 90. Prefix kept narrow
+            # ("no, i haven't accessed") so the select_one "No, I..." options elsewhere
+            # (premiums, planning-to) are untouched — those never pass through _cb_codes.
             # #642: 'No condition - Regular check-up only' (Q65) standalone exclusive -> 90.
             # #645: 'Not applicable' (Q74) and #655: 'Did not seek other forms of care' (Q107)
             # are likewise standalone-exclusive — if N/A, or you sought no other care, no real
@@ -120,11 +125,8 @@ def build_f4_geo_id():
     # LATITUDE/LONGITUDE + HH_GPS_* are auto-populated and protected (read-only)
     # by the PROC LATITUDE onfocus in generate_apc.py.
     return build_geo_id("household", extra_items=[
-        # F4->F3 linkage (adopted Questionnaire Numbering Convention): the parent
-        # patient's per-facility case sequence. The facility is shared via the
-        # id-block; this pins the specific F3 patient the household was walked from.
-        numeric("F4_PARENT_F3_CASE_SEQ", "Parent F3 Patient Case Sequence",
-                length=3, zero_fill=True),
+        # #790 (Carl, 2026-06-25): the F4->F3 parent-patient linkage field was REMOVED
+        # entirely (Option B) — no household-to-patient link captured.
         alpha(  "LATITUDE",          "GPS Latitude",         length=12),
         alpha(  "LONGITUDE",         "GPS Longitude",        length=12),
         alpha(  "HH_GPS_ALTITUDE",   "GPS Altitude (m)",     length=10),
@@ -289,7 +291,9 @@ def build_section_b():
         ("Class A or B (working professionals or with a business with several assets)",                            "1"),
         ("Class C (working professionals with permanent or semi-permanent income and some assets)",                "2"),
         ("Class D or E (semi-permanent workers or informal sector workers with little to no assets)",              "3"),
-        ("I don't know",                                                                                            "4"),
+        # #762/#792 missing-value standard: relabel DK + add Refuse, both [DO NOT READ OUT LOUD].
+        ("I don't know [DO NOT READ OUT LOUD]",                                                                     "4"),
+        ("Refuse to answer [DO NOT READ OUT LOUD]",                                                                 "5"),
     ]
     items = [
         alpha("RESPONDENT_NAME",
@@ -347,7 +351,7 @@ def build_section_b():
         alpha("Q17_DECISION_MAKER_OTHER_TXT",
               "17. Decision-maker — Other (specify) text", length=120),
         numeric("Q18_INCOME_AMOUNT",
-                "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos).",
+                "18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)",
                 length=9),
         select_one("Q18_INCOME_BRACKET",
                    "18. Income bracket — tick the category that corresponds to the approximate household income.",
@@ -489,6 +493,30 @@ def build_section_c():
         ("No",           "02"),
         ("I don't know", "55"),
     ]
+    # #794: Q45.1 changed from a YYYYMMDD date to a select-one "how long ago" timing
+    # question (tester screenshot). Missing-value standard: IDK + Refuse, both [DNR].
+    Q45_1_WHEN = [
+        ("Within the past year",        "1"),
+        ("Within the last 2-3 years",   "2"),
+        ("Within the last 4-5 years",   "3"),
+        ("Over 5 years",                "4"),
+        ("I don't know [DO NOT READ OUT LOUD]",       "5"),
+        ("Refuse to answer [DO NOT READ OUT LOUD]",   "6"),
+    ]
+    # #795: Q45.2 "Why are you not registered?" — ASPSI-supplied option list (2026-06-25
+    # image). Asked ONLY when Q45 = No(02). 88 = Other (specify); the bespoke Q45 postproc
+    # routes No -> Q45.2 and the Q45.2 preproc gate skips Yes/IDK members.
+    Q45_2_WHY_NOT = [
+        ("Difficult to register",                                    "01"),
+        ("Don't see value in registering",                           "02"),
+        ("Don't know how to register",                               "03"),
+        ("Don't know what PhilHealth is",                            "04"),
+        ("A family member is currently registered with PhilHealth",  "05"),
+        ("Currently unemployed",                                     "06"),
+        ("No time to register",                                      "07"),
+        ("No valid ID to register",                                  "08"),
+        ("Other (specify)",                                          "88"),
+    ]
     Q46_MEMBER_CATEGORY = [
         ("Formal economy",                  "01"),
         ("Informal economy",                "02"),
@@ -552,19 +580,34 @@ def build_section_c():
         select_one("Q45_PHILHEALTH_REG",
                    "45. Currently registered with PhilHealth?",
                    YN_DK55, length=2),
-        # 45.1 (#565, Carl go/no-go 2026-06-20): per-member PhilHealth PIN registration
-        # date, asked ONLY when Q45 = Yes (the bespoke Q45 roster-skip in generate_apc jumps
-        # over Q45.1 + Q46 when Q45 <> Yes). Numeric YYYYMMDD -> optimize_capture_types gives
-        # it a calendar Date picker. NOTE: not present in the authoritative Apr 20 paper
-        # (Section C there is Q45 -> Q46); added on Carl's call from tester #565's revision.
-        numeric("Q45_1_PIN_REG_DATE",
-                "45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)",
-                length=8),
+        # 45.1 (#565 origin; #794 2026-06-25 restructure): per-member PhilHealth PIN
+        # registration TIMING, asked ONLY when Q45 = Yes (the bespoke Q45 roster-skip in
+        # generate_apc jumps over Q45.1 + Q46 when Q45 <> Yes). Was a YYYYMMDD date; tester
+        # #794 changed it to a select-one "how long ago" (to be answered by the main
+        # respondent only). select_one(len 1, value-set) -> optimize gives a RadioButton,
+        # not the old Date picker (date detection is numeric-len-8-no-vset).
+        select_one("Q45_1_PIN_REG_WHEN",
+                   "45.1 When did you register and receive your PhilHealth PIN? "
+                   "(Only answer if 'Yes' in Q45 — to be answered by the main respondent only)",
+                   Q45_1_WHEN, length=1),
         select_one("Q46_MEMBER_CATEGORY",
                    "46. What is his/her membership category?",
                    Q46_MEMBER_CATEGORY, length=2),
         alpha("Q46_MEMBER_OTHER_TXT",
               "46. Member category — Other (specify) text", length=120),
+        # 45.2 (#795, ASPSI options supplied 2026-06-25): per-member "why not registered",
+        # asked ONLY when Q45 = No(02). Placed AFTER the Yes-only Q45.1/Q46 so the routing is:
+        #   Yes(01) -> Q45.1 -> Q46 -> (Q45.2 preproc skips to next member)
+        #   No(02)  -> (Q45 postproc skips Q45.1/Q46) -> Q45.2 -> next member
+        #   IDK(55) -> (Q45 postproc skips everything) -> next member
+        # To be answered by the main respondent only. Other(88) -> Q45_2_..._OTHER_TXT
+        # (gated by the auto-derived other-specify PROC, same as Q46_MEMBER_OTHER_TXT).
+        select_one("Q45_2_WHY_NOT_REG",
+                   "45.2 Why are you not registered? "
+                   "(Only answer if 'No' in Q45 — to be answered by the main respondent only)",
+                   Q45_2_WHY_NOT, length=2),
+        alpha("Q45_2_WHY_NOT_REG_OTHER_TXT",
+              "45.2 Why not registered — Other (specify) text", length=120),
         # NOTE: the private-insurance block (Q48-Q50) moved OUT of this roster into its own
         # record C_PRIVATE_INS_ROSTER (#525/#612/#613) — it is a SEPARATE per-member pass
         # asked AFTER the Q47 HH-level gate, with the member name piped (no re-entry). The
@@ -1160,6 +1203,11 @@ def build_section_j():
         ("Inpatient care (Care provided in hospital or another facility where the patient is admitted for at least one night)",  "2"),
         ("Emergency care (Care for serious illnesses or injuries that need immediate medical attention; usually provided in an emergency room or ER)", "3"),
         ("Primary care consultation", "4"),
+        # #800 (Critical): respondents who accessed NO care had no way to satisfy the
+        # tick-all "select >=1" rule and were stuck. Add the exclusive "accessed nothing"
+        # answer -> _cb_codes maps it to 90 (via the "no, i haven't accessed" prefix) and
+        # the base's exclusive=True soft-warns if it's combined with a real care type.
+        ("No, I haven't accessed any form of medical care", "90"),
         ("Other (Specify)",           "5"),
     ]
     Q106_FORGONE_WHY = [

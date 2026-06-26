@@ -3,33 +3,33 @@
   "version": 8.0,
   "fileType": "application",
   "type": "entry",
-  "name": "MENUAPP",
-  "label": "MenuApp",
+  "name": "SYNCSPIKE",
+  "label": "SyncSpike",
   "dictionaries": [
     {
       "type": "input",
-      "path": "MenuApp.dcf",
-      "parent": "MenuApp.fmf"
+      "path": "SyncSpike.dcf",
+      "parent": "SyncSpike.fmf"
     },
     {
       "type": "external",
-      "path": "Assignment.dcf"
+      "path": "PatientSurvey.dcf"
     }
   ],
   "forms": [
-    "MenuApp.fmf"
+    "SyncSpike.fmf"
   ],
   "questionText": [
-    "MenuApp.ent.qsf"
+    "SyncSpike.ent.qsf"
   ],
   "code": [
     {
       "type": "main",
-      "path": "MenuApp.ent.apc"
+      "path": "SyncSpike.ent.apc"
     }
   ],
   "messages": [
-    "MenuApp.ent.mgf"
+    "SyncSpike.ent.mgf"
   ],
   "logicSettings": {
     "version": 2.0,

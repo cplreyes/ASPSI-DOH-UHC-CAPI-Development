@@ -1,0 +1,10 @@
+[Run Information]
+Version=CSPro 8.0
+AppType=Entry
+
+[Files]
+Application=.\SyncSpike.ent
+InputData=.\SyncSpike.csdb
+
+[ExternalFiles]
+PATIENTSURVEY_DICT=.\PatientSurvey.csdb

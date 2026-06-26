@@ -2898,7 +2898,7 @@ Form=7
 
 Position=50,570,330,586
 
-Text=18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount
+Text=18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)
 
  
 

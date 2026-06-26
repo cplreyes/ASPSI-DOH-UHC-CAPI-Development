@@ -185,8 +185,8 @@ preproc
   if pos("07", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 7; endif; endif;
   if pos("08", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 8; endif; endif;
   protect(Q92_PAY_SRC, true);
-  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 then
-    Q92_PAY_AMT = 0;   { non-money source -> default 0; still enterable so the row stops }
+  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_SRC <> 7 then
+    Q92_PAY_AMT = 0;   { #781: non-money source -> default 0. In-kind(7) is a money source for Q92 per ASPSI (2026-06-25). Still enterable so the row stops. }
   endif;
   Q92_PAY_LINE = curocc();
   noinput;
@@ -197,12 +197,12 @@ postproc
     errmsg("92. Amount cannot be negative.");
     reenter;
   endif;
-  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_AMT <> 0 then
+  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_SRC <> 7 and Q92_PAY_AMT <> 0 then
     errmsg("92. This source has no out-of-pocket cost — amount reset to 0.");
     Q92_PAY_AMT = 0;
   endif;
-  if (Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2) and Q92_PAY_AMT = 0 then
-    errmsg("92. Please enter an amount greater than 0 — you selected this as a paid source.");
+  if (Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2 or Q92_PAY_SRC = 7) and Q92_PAY_AMT = 0 then
+    errmsg("92. Please enter an amount greater than 0 — you selected this as a paid source (in-kind valued in pesos).");
     reenter;
   endif;
 """
@@ -467,9 +467,13 @@ Q96_ROSTER_PROCS = build_roster_procs(
                ("Free, charge to PhilHealth", "03"), ("Free, charge to Private Insurance", "04"),
                ("Free, charge to HMO", "05"), ("In kind", "06"), ("Donation", "07"),
                ("Don't know", "08")],
-    {"01", "06", "07"},
+    # #779 (ASPSI clarification 2026-06-25): In-kind (06) is NOT a peso-amount source for Q96
+    # — per-question rule, not blanket. Dropped from amt_codes so In-kind becomes a non-money
+    # row (amount auto-0, stays enterable but no specify/positive requirement). OOP(01) +
+    # Donation(07) still carry a real amount.
+    {"01", "07"},
     "96. Tick at least one payment source for the prescribed medicines before continuing.",
-    require_positive=True)   # #749: OOP/in-kind/donation rows must be > 0
+    require_positive=True)   # #749/#779: OOP + donation rows must be > 0 (in-kind no longer required)
 Q972_ROSTER_PROCS = build_roster_procs(
     972, "97.2", [(None, "01"), (None, "02"), (None, "03"),
                   (None, "04"), (None, "05"), (None, "06")],
@@ -1083,7 +1087,16 @@ postproc
   earlier. Q161 is now a Check Box base; this gate is folded into the Q161_WHY_BRANDED
   checkbox PROC via CHECKBOX_CONVERT. The old PROC Q161_WHY_BRANDED_O01 field no longer exists. }
 
-{ #508: Q170 follow-up is reached only on Q169 = Yes (Q169 in 2,3 skips to Q171). After the
+{ #799: Q169 routing. 'No, I'm not planning to' (2) -> Q171 (why not visited). 'Not yet, but
+  I'm planning to' (3) -> Q172 (skip Q170 + Q171: they ARE planning to go, so 'why not' is moot).
+  'Yes' (1) falls through to Q170 (the only path that reaches it). Replaces the old single
+  'in 2,3 -> Q171' skip rule. }
+PROC Q169_VISITED
+postproc
+  if Q169_VISITED = 2 then  skip to Q171_WHY_NOT;      endif;
+  if Q169_VISITED = 3 then  skip to Q172_PCP_REFERRAL; endif;
+
+{ #508: Q170 follow-up is reached only on Q169 = Yes (codes 2/3 are routed away above). After the
   follow-up, the Yes path skips Q171 'why not visited' to Q172 (spec §4.15, explicit). }
 PROC Q170_FOLLOWUP
 postproc
@@ -1345,6 +1358,7 @@ postproc
   { bracket must contain Q18_INCOME_AMOUNT — #631: 11 contiguous 50k bands }
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;
+  if a = -98 or a = -99 then ok = 1; endif;   { #761: -98 don't-know / -99 refused -> no bracket cross-check }
   if Q18_INCOME_BRACKET = 1  and a < 50000 then ok = 1; endif;
   if Q18_INCOME_BRACKET = 2  and a >= 50000  and a <= 99999  then ok = 1; endif;
   if Q18_INCOME_BRACKET = 3  and a >= 100000 and a <= 149999 then ok = 1; endif;
@@ -1430,7 +1444,7 @@ SKIP_RULES = [
     ("Q152_GAMOT_HEARD",     "Q152_GAMOT_HEARD = 2",         "Q158_BRAND_GEN_KNOW"),
     ("Q158_BRAND_GEN_KNOW",  "Q158_BRAND_GEN_KNOW = 2",      "Q162_REFERRED"),
     # Section L — Referrals
-    ("Q169_VISITED",         "Q169_VISITED in 2,3",          "Q171_WHY_NOT"),        # #529: Q171 is now the Check Box base (was _O01)
+    # Q169_VISITED routing moved to a bespoke PROC in EXTRA_PROCS (#799: code 2 -> Q171, code 3 -> Q172).
     ("Q172_PCP_REFERRAL",    "Q172_PCP_REFERRAL = 2",        "Q177_WHY_HOSPITAL"),   # #529: Q177 is now the Check Box base (was _O01)
     # Section G — Outpatient Care
     # #775 (R5): Q89 -> Q90 -> Q91 now proceeds UNCONDITIONALLY. The #688 skip (Q89=No -> skip Q90)
@@ -1580,6 +1594,7 @@ def main():
                "Q122_ZBB_INFORMED", "Q126_MAIFIP_AVAILED",   # EXTRA_PROCS (#476/#479 confinement gates)
                "Q148_CONDITIONS", "Q148_CONDITIONS_OTHER_TXT",  # EXTRA_PROCS (Q148 Check Box) — #491: Q148_MEDICINES_TXT removed
                "Q147_MEDS_LIST", "Q155_GAMOT_GOT_MEDS", "Q156_GAMOT_MEDS_LIST",   # EXTRA_PROCS (Wave 4 #490/#498)
+               "Q169_VISITED",   # #799: bespoke routing PROC in EXTRA_PROCS (code 2 -> Q171, code 3 -> Q172)
                "Q170_FOLLOWUP",  # EXTRA_PROCS (Wave 4 #508/#511; #503/#696: Q161_WHY_BRANDED_O01 gone — Q161 now a Check Box base, gate folded into its checkbox PROC; #529: Q177_WHY_HOSPITAL_O01 gone — same)
                "Q5_BIRTH_MONTH", "Q5_BIRTH_YEAR", "Q6_AGE", "Q18_INCOME_BRACKET",
                "Q19_HH_SIZE", "Q20_HH_CHILDREN", "Q21_HH_SENIORS", "Q28_WASHER",  # VALIDATION_PROCS

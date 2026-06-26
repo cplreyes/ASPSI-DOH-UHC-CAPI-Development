@@ -37,6 +37,11 @@ BUNDLE = [
     "MenuApp.ent.apc", "MenuApp.ent.qsf", "MenuApp.ent.mgf", "MenuApp.pff",
     "UserRoster.dat",
     "survey-basemap.mbtiles",   # N3 offline base map (Map.setBaseMap reads it from the app folder)
+    # B4 (N1) assignment distribution: MenuApp.ent declares ASSIGNMENT_DICT external, so the
+    # dict + data must ship. MyAssignment.dat = the local file the enumerator's syncfile GET
+    # overwrites; the AS_<id>.dat per-enumerator files (added by glob below) are what the
+    # supervisor serves over Bluetooth.
+    "Assignment.dcf", "Assignment.dat", "MyAssignment.dat",
 ]
 OUT = Path(__file__).resolve().parent.parent / "automation" / "shots" / "deploy"
 
@@ -114,7 +119,10 @@ def main():
     if deploy_only:
         print("   deploy-only: bundle already staged; skipping Add files")
     else:
-        for fn in BUNDLE:
+        # the per-enumerator assignment files track the roster -> glob so the bundle
+        # can't drift when the roster changes (B4). Sorted for a stable order.
+        files = list(BUNDLE) + sorted(p.name for p in HERE.glob("AS_*.dat"))
+        for fn in files:
             src = HERE / fn
             if not src.exists():
                 print(f"   ! missing {src} -- skipped"); continue

@@ -311,10 +311,23 @@ postproc
 PROC Q45_PHILHEALTH_REG
 postproc
   { #563/#565: Q46 (membership category) and Q45.1 (PIN registration date) are Yes-only.
-    No(02) OR I-don't-know(55) -> skip Q45.1 + Q46 -> next roster member. (Replaces the
-    old SKIP_RULES Q45 -> Q48_NAME_FIRST target, which is gone now that Q48-Q50 moved to
-    the C_PRIVATE_INS_ROSTER second pass.) Q45=Yes(01) -> fall through to Q45.1 -> Q46. }
-  if Q45_PHILHEALTH_REG = 2 or Q45_PHILHEALTH_REG = 55 then
+    Q45=Yes(01) -> fall through to Q45.1 -> Q46. #795 (2026-06-25): No(02) now routes to the
+    new Q45.2 'why not registered' (skipping the Yes-only Q45.1/Q46); I-don't-know(55) still
+    skips ALL PhilHealth detail straight to the next member. }
+  if Q45_PHILHEALTH_REG = 2 then
+    skip to Q45_2_WHY_NOT_REG;       { #795: No -> ask 45.2 (why not registered) }
+  endif;
+  if Q45_PHILHEALTH_REG = 55 then
+    skip to next;                    { I-don't-know -> skip all PhilHealth detail -> next member }
+  endif;
+
+PROC Q45_2_WHY_NOT_REG
+preproc
+  { #795: only the 'No in Q45' branch answers 45.2. Yes/IDK members reach this field
+    physically (it sits after Q46), so skip them to the next roster member. No members
+    arrive here via the Q45 postproc skip with Q45=2, fall through, and answer. The
+    Other(88) specify text is gated by the auto-derived Q45_2_WHY_NOT_REG_OTHER_TXT PROC. }
+  if Q45_PHILHEALTH_REG <> 2 then
     skip to next;                    { 'next' = next C_HOUSEHOLD_ROSTER occurrence }
   endif;
 
@@ -555,7 +568,7 @@ CHECKBOX_CONVERT = [
     ("Q82_DIFFICULTY_REASONS",   True,  True,  None),   # #582: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Not a skip-target (Q81=No skips PAST it to Q83); falls through from Q81=Yes
     ("Q88_DIFF_PAYING",          True,  True,  None),   # #582: 'I don't know' (90) exclusive; 'Other (Specify)' (99)
     ("Q102_VISIT_REASON",        True,  False, None),   # #583: no None/IDK option; 'Other (Specify)' (99)
-    ("Q103_CARE_TYPE",           True,  False, None),   # #583: no None/IDK option; 'Other (Specify)' (99)
+    ("Q103_CARE_TYPE",           True,  True,  None),   # #800: added exclusive 'No, I haven't accessed any form of medical care' (90) so accessed-nothing respondents can satisfy 'select >=1'; soft-warn if combined. 'Other (Specify)' (99)
     ("Q106_FORGONE_WHY",         True,  True,  None),   # #584: 'I don't know' (90) exclusive; 'Other (Specify)' (99). Skip-target from Q105=2 (skip rule repointed to bare base)
     ("Q107_OTHER_ACTIONS",       True,  True,  None),   # #655: 'Did not seek other forms of care' is now 90-coded exclusive (was substantive per #584 — tester FAIL: tickable alongside real actions; if you sought nothing else, no action co-applies); soft-warn if combined. 'Other (Specify)' (99). Skip-target from Q105=2 chains via the bare base
     ("Q109_TYPE",                True,  True,  None),   # #588: 'None of the above' (11->90) exclusive; 'Other (Specify)' (12->99)
@@ -566,7 +579,7 @@ CHECKBOX_CONVERT = [
 ]
 
 
-def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None):
+def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None, extra_standalone=None):
     """Emit the bespoke PROC(s) for one converted Check Box base — select->=1 (hard),
     an optional exclusivity soft-warn (the 90-coded standalone option should stand alone),
     an optional preproc gate, an optional postproc tail (e.g. a `skip to` that fires
@@ -584,6 +597,14 @@ def _gen_checkbox_proc(base, has_other, exclusive, gate=None, postproc_tail=None
         body += [f'  if pos("90", {base}) > 0 and length(strip({base})) > 2 then',
                  f'    errmsg("Q{qn}: an exclusive option (None / I don\'t know) should be the '
                  f'only choice - please review the options ticked.");',
+                 "  endif;"]
+    # #798: named non-90 standalone options that must HARD-block when combined with anything
+    # else (e.g. Q85 "There are no benefits to being a member" — code 04).
+    for _code, _label in (extra_standalone or []):
+        body += [f'  if pos("{_code}", {base}) > 0 and length(strip({base})) > 2 then',
+                 f'    errmsg("Q{qn}: \'{_label}\' cannot be combined with other answers - '
+                 f'untick the others or untick this option.");',
+                 "    reenter;",
                  "  endif;"]
     if postproc_tail:
         if has_other:
@@ -620,10 +641,18 @@ CHECKBOX_POSTPROC_TAILS = {
     "Q113_WHY_NOT": "  skip to Q126_NBB_HEARD;   { after why-not -> Section L NBB (skip Q114-Q125 referral-experience tail) }",
 }
 
+# #798: named non-90 options that must HARD-block when ticked alongside anything else.
+# Q85 "There are no benefits to being a member" (code 04) — saying there are NO benefits
+# is contradictory with selecting specific benefits.
+CHECKBOX_EXTRA_STANDALONE = {
+    "Q85_BENEFITS": [("04", "There are no benefits to being a member")],
+}
+
 CHECKBOX_MULTISELECT_PROCS = {}
 for _b, _o, _x, _g in CHECKBOX_CONVERT:
     CHECKBOX_MULTISELECT_PROCS.update(
-        _gen_checkbox_proc(_b, _o, _x, _g, CHECKBOX_POSTPROC_TAILS.get(_b)))
+        _gen_checkbox_proc(_b, _o, _x, _g, CHECKBOX_POSTPROC_TAILS.get(_b),
+                           CHECKBOX_EXTRA_STANDALONE.get(_b)))
 
 # Append the generated Check Box PROCs to EXTRA_PROCS so they emit alongside the rest
 # and are seeded into `covered` (via CHECKBOX_COVERED).
@@ -716,6 +745,7 @@ PROC Q18_INCOME_BRACKET
 postproc
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;
+  if a = -98 or a = -99 then ok = 1; endif;   { #793: -98 don't-know / -99 refused -> no bracket cross-check }
   if Q18_INCOME_BRACKET = 1 and a < 40000 then ok = 1; endif;
   if Q18_INCOME_BRACKET = 2 and a >= 40000 and a <= 59999 then ok = 1; endif;
   if Q18_INCOME_BRACKET = 3 and a >= 60000 and a <= 99999 then ok = 1; endif;
@@ -1232,6 +1262,7 @@ def main():
                "MEMBER_LINE_NO", "Q34_RELATIONSHIP", "Q35_HAS_DISABILITY",
                "Q36_SPECIFY_DISABILITY", "Q37_PWD_CARD",  # #604: Q36 now has a bespoke skip PROC
                "Q45_PHILHEALTH_REG",  # #563/#565: bespoke roster skip (ROSTER_PROCS)
+               "Q45_2_WHY_NOT_REG",   # #795: bespoke roster gate (ROSTER_PROCS); _OTHER_TXT stays auto-gen
                "PRIV_MEMBER_LINE_NO", "Q48_OTHER_INS_REG",  # #525/#612/#613: priv-ins 2nd pass
                "Q49_PRIVATE_INS", "C_HOUSEHOLD_ROSTER_FORM", "Q47_HH_HAS_PRIVATE_INS",
                "Q141_1_NO_RECEIPT_AMT_PHP",
@@ -1343,7 +1374,10 @@ def main():
         if field in covered:
             continue
         covered.add(field)
-        parts.append(range_check_proc(field, lo, hi, hard=True, soft_over=soft))
+        # #793 missing-value standard: the household-income amount accepts -98/-99 sentinels.
+        # (Q199_WTP_CONSULT is a coded 1-9 field, not a free peso amount — no sentinels.)
+        allow_sent = field == "Q18_INCOME_AMOUNT"
+        parts.append(range_check_proc(field, lo, hi, hard=True, soft_over=soft, allow_sentinels=allow_sent))
         parts.append(""); rng_emitted += 1
     for field, proc in CUSTOM_VALIDATION:
         if field in covered:

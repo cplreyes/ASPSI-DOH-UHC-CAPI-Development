@@ -1162,12 +1162,19 @@ def select_all_validation_procs(items):
 # Range + amount-required validations (spec §3.x per-item rules)
 # ---------------------------------------------------------------------------
 
-def range_check_proc(field, lo, hi, hard=True, soft_over=None):
+def range_check_proc(field, lo, hi, hard=True, soft_over=None, allow_sentinels=False):
     """Numeric range check. HARD -> reenter; otherwise warn only. `soft_over`
-    adds a second soft warning when field exceeds that value (spec 'warn if >N')."""
+    adds a second soft warning when field exceeds that value (spec 'warn if >N').
+
+    allow_sentinels (#761/#793 missing-value standard): when True, the negative
+    missing-value codes -98 ("I don't know") and -99 ("Refuse to answer") are
+    exempt from the range check — used on money-amount fields so the enumerator
+    can record them without the 0..max range hard-blocking entry (#743 fix)."""
+    guard = "{field} <> -98 and {field} <> -99 and ".format(field=field) if allow_sentinels else ""
     lines = [f"PROC {field}", "postproc",
-             f"  if {field} < {lo} or {field} > {hi} then",
-             f"    errmsg(\"{field} must be between {lo} and {hi}.\");"]
+             f"  if {guard}({field} < {lo} or {field} > {hi}) then",
+             f"    errmsg(\"{field} must be between {lo} and {hi} (or -98 don't-know / -99 refused).\");" if allow_sentinels
+             else f"    errmsg(\"{field} must be between {lo} and {hi}.\");"]
     if hard:
         lines.append("    reenter;")
     lines.append("  endif;")

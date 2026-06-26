@@ -760,7 +760,16 @@ postproc
   earlier. Q161 is now a Check Box base; this gate is folded into the Q161_WHY_BRANDED
   checkbox PROC via CHECKBOX_CONVERT. The old PROC Q161_WHY_BRANDED_O01 field no longer exists. }
 
-{ #508: Q170 follow-up is reached only on Q169 = Yes (Q169 in 2,3 skips to Q171). After the
+{ #799: Q169 routing. 'No, I'm not planning to' (2) -> Q171 (why not visited). 'Not yet, but
+  I'm planning to' (3) -> Q172 (skip Q170 + Q171: they ARE planning to go, so 'why not' is moot).
+  'Yes' (1) falls through to Q170 (the only path that reaches it). Replaces the old single
+  'in 2,3 -> Q171' skip rule. }
+PROC Q169_VISITED
+postproc
+  if Q169_VISITED = 2 then  skip to Q171_WHY_NOT;      endif;
+  if Q169_VISITED = 3 then  skip to Q172_PCP_REFERRAL; endif;
+
+{ #508: Q170 follow-up is reached only on Q169 = Yes (codes 2/3 are routed away above). After the
   follow-up, the Yes path skips Q171 'why not visited' to Q172 (spec §4.15, explicit). }
 PROC Q170_FOLLOWUP
 postproc
@@ -1695,6 +1704,7 @@ postproc
   { bracket must contain Q18_INCOME_AMOUNT — #631: 11 contiguous 50k bands }
   numeric a = Q18_INCOME_AMOUNT;
   numeric ok = 0;
+  if a = -98 or a = -99 then ok = 1; endif;   { #761: -98 don't-know / -99 refused -> no bracket cross-check }
   if Q18_INCOME_BRACKET = 1  and a < 50000 then ok = 1; endif;
   if Q18_INCOME_BRACKET = 2  and a >= 50000  and a <= 99999  then ok = 1; endif;
   if Q18_INCOME_BRACKET = 3  and a >= 100000 and a <= 149999 then ok = 1; endif;
@@ -1795,8 +1805,8 @@ preproc
   if pos("07", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 7; endif; endif;
   if pos("08", Q92_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q92_PAY_SRC = 8; endif; endif;
   protect(Q92_PAY_SRC, true);
-  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 then
-    Q92_PAY_AMT = 0;   { non-money source -> default 0; still enterable so the row stops }
+  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_SRC <> 7 then
+    Q92_PAY_AMT = 0;   { #781: non-money source -> default 0. In-kind(7) is a money source for Q92 per ASPSI (2026-06-25). Still enterable so the row stops. }
   endif;
   Q92_PAY_LINE = curocc();
   noinput;
@@ -1807,12 +1817,12 @@ postproc
     errmsg("92. Amount cannot be negative.");
     reenter;
   endif;
-  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_AMT <> 0 then
+  if Q92_PAY_SRC <> 1 and Q92_PAY_SRC <> 2 and Q92_PAY_SRC <> 7 and Q92_PAY_AMT <> 0 then
     errmsg("92. This source has no out-of-pocket cost — amount reset to 0.");
     Q92_PAY_AMT = 0;
   endif;
-  if (Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2) and Q92_PAY_AMT = 0 then
-    errmsg("92. Please enter an amount greater than 0 — you selected this as a paid source.");
+  if (Q92_PAY_SRC = 1 or Q92_PAY_SRC = 2 or Q92_PAY_SRC = 7) and Q92_PAY_AMT = 0 then
+    errmsg("92. Please enter an amount greater than 0 — you selected this as a paid source (in-kind valued in pesos).");
     reenter;
   endif;
 
@@ -1951,7 +1961,7 @@ preproc
   if pos("07", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 7; endif; endif;
   if pos("08", Q96_SOURCES) > 0 then seen = seen + 1; if seen = curocc() then Q96_PAY_SRC = 8; endif; endif;
   protect(Q96_PAY_SRC, true);
-  if Q96_PAY_SRC <> 1 and Q96_PAY_SRC <> 6 and Q96_PAY_SRC <> 7 then
+  if Q96_PAY_SRC <> 1 and Q96_PAY_SRC <> 7 then
     Q96_PAY_AMT = 0;   { non-money source -> default 0; still enterable }
   endif;
   Q96_PAY_LINE = curocc();
@@ -1963,11 +1973,11 @@ postproc
     errmsg("96. Amount cannot be negative.");
     reenter;
   endif;
-  if Q96_PAY_SRC <> 1 and Q96_PAY_SRC <> 6 and Q96_PAY_SRC <> 7 and Q96_PAY_AMT <> 0 then
+  if Q96_PAY_SRC <> 1 and Q96_PAY_SRC <> 7 and Q96_PAY_AMT <> 0 then
     errmsg("96. This source has no out-of-pocket cost — amount reset to 0.");
     Q96_PAY_AMT = 0;
   endif;
-  if (Q96_PAY_SRC = 1 or Q96_PAY_SRC = 6 or Q96_PAY_SRC = 7) and Q96_PAY_AMT = 0 then
+  if (Q96_PAY_SRC = 1 or Q96_PAY_SRC = 7) and Q96_PAY_AMT = 0 then
     errmsg("96. Please enter an amount greater than 0 — you selected this as a paid source/item.");
     reenter;
   endif;
@@ -2493,12 +2503,6 @@ postproc
     skip to Q162_REFERRED;
   endif;
 
-PROC Q169_VISITED
-postproc
-  if Q169_VISITED in 2,3 then
-    skip to Q171_WHY_NOT;
-  endif;
-
 PROC Q172_PCP_REFERRAL
 postproc
   if Q172_PCP_REFERRAL = 2 then
@@ -2993,14 +2997,14 @@ postproc
 { ---- Range + cross-field validations (spec §3.6-§3.13) ---- }
 PROC Q58_WAIT_DAYS
 postproc
-  if Q58_WAIT_DAYS < 0 or Q58_WAIT_DAYS > 365 then
+  if (Q58_WAIT_DAYS < 0 or Q58_WAIT_DAYS > 365) then
     errmsg("Q58_WAIT_DAYS must be between 0 and 365.");
     reenter;
   endif;
 
 PROC Q58_WAIT_MINUTES
 postproc
-  if Q58_WAIT_MINUTES < 0 or Q58_WAIT_MINUTES > 1440 then
+  if (Q58_WAIT_MINUTES < 0 or Q58_WAIT_MINUTES > 1440) then
     errmsg("Q58_WAIT_MINUTES must be between 0 and 1440.");
     reenter;
   endif;
@@ -3010,35 +3014,35 @@ postproc
 
 PROC Q69_USUAL_TRAVEL_HH
 postproc
-  if Q69_USUAL_TRAVEL_HH < 0 or Q69_USUAL_TRAVEL_HH > 24 then
+  if (Q69_USUAL_TRAVEL_HH < 0 or Q69_USUAL_TRAVEL_HH > 24) then
     errmsg("Q69_USUAL_TRAVEL_HH must be between 0 and 24.");
     reenter;
   endif;
 
 PROC Q69_USUAL_TRAVEL_MM
 postproc
-  if Q69_USUAL_TRAVEL_MM < 0 or Q69_USUAL_TRAVEL_MM > 59 then
+  if (Q69_USUAL_TRAVEL_MM < 0 or Q69_USUAL_TRAVEL_MM > 59) then
     errmsg("Q69_USUAL_TRAVEL_MM must be between 0 and 59.");
     reenter;
   endif;
 
 PROC Q72_NEAREST_TRAVEL_HH
 postproc
-  if Q72_NEAREST_TRAVEL_HH < 0 or Q72_NEAREST_TRAVEL_HH > 24 then
+  if (Q72_NEAREST_TRAVEL_HH < 0 or Q72_NEAREST_TRAVEL_HH > 24) then
     errmsg("Q72_NEAREST_TRAVEL_HH must be between 0 and 24.");
     reenter;
   endif;
 
 PROC Q72_NEAREST_TRAVEL_MM
 postproc
-  if Q72_NEAREST_TRAVEL_MM < 0 or Q72_NEAREST_TRAVEL_MM > 59 then
+  if (Q72_NEAREST_TRAVEL_MM < 0 or Q72_NEAREST_TRAVEL_MM > 59) then
     errmsg("Q72_NEAREST_TRAVEL_MM must be between 0 and 59.");
     reenter;
   endif;
 
 PROC Q97_FINAL_AMOUNT
 postproc
-  if Q97_FINAL_AMOUNT < 0 or Q97_FINAL_AMOUNT > 99999999 then
+  if (Q97_FINAL_AMOUNT < 0 or Q97_FINAL_AMOUNT > 99999999) then
     errmsg("Q97_FINAL_AMOUNT must be between 0 and 99999999.");
     reenter;
   endif;
@@ -3050,7 +3054,7 @@ postproc
 
 PROC Q106_NIGHTS
 postproc
-  if Q106_NIGHTS < 0 or Q106_NIGHTS > 365 then
+  if (Q106_NIGHTS < 0 or Q106_NIGHTS > 365) then
     errmsg("Q106_NIGHTS must be between 0 and 365.");
     reenter;
   endif;
@@ -3060,7 +3064,7 @@ postproc
 
 PROC Q115_FINAL_CASH
 postproc
-  if Q115_FINAL_CASH < 0 or Q115_FINAL_CASH > 999999999 then
+  if (Q115_FINAL_CASH < 0 or Q115_FINAL_CASH > 999999999) then
     errmsg("Q115_FINAL_CASH must be between 0 and 999999999.");
     reenter;
   endif;
@@ -3071,14 +3075,14 @@ postproc
 
 PROC Q150_TRAVEL_HH
 postproc
-  if Q150_TRAVEL_HH < 0 or Q150_TRAVEL_HH > 24 then
+  if (Q150_TRAVEL_HH < 0 or Q150_TRAVEL_HH > 24) then
     errmsg("Q150_TRAVEL_HH must be between 0 and 24.");
     reenter;
   endif;
 
 PROC Q150_TRAVEL_MM
 postproc
-  if Q150_TRAVEL_MM < 0 or Q150_TRAVEL_MM > 59 then
+  if (Q150_TRAVEL_MM < 0 or Q150_TRAVEL_MM > 59) then
     errmsg("Q150_TRAVEL_MM must be between 0 and 59.");
     reenter;
   endif;

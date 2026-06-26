@@ -385,7 +385,9 @@ def build_section_b():
         ("Class A or B (working professionals or with a business with several assets)",       "1"),
         ("Class C (working professionals with permanent or semi-permanent income and some assets)", "2"),
         ("Class D or E (semi-permanent workers or informal sector workers with little to no assets)", "3"),
-        ("I don't know",                                                                       "4"),
+        # #762 missing-value standard: relabel DK + add Refuse, both [DO NOT READ OUT LOUD].
+        ("I don't know [DO NOT READ OUT LOUD]",                                                "4"),
+        ("Refuse to answer [DO NOT READ OUT LOUD]",                                            "5"),
     ]
     Q30_IP = [
         ("Yes", "1"),
@@ -454,7 +456,8 @@ def build_section_b():
                    Q17_INCOME_SOURCE, length=2),
         numeric("Q18_INCOME_AMOUNT",
                 "18. In the past 6 months, what is the patient's average monthly household income? "
-                "Please specify in Philippine pesos. — Approximate amount",
+                "Please specify in Philippine pesos. — Approximate amount "
+                "(enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)",
                 length=8),
         select_one("Q18_INCOME_BRACKET",
                    "18. Income category corresponding to the respondent's approximate household income",
@@ -1153,10 +1156,11 @@ def build_section_g():
         ("Other (specify)",                                                   "5"),
     ]
     Q103_BUCAS_SERVICES = [
-        ("Medical consultation for urgent or minor conditions",               "1"),
+        # #789: inline definitions appended per tester (codes unchanged -> no data impact).
+        ("Medical consultation for urgent or minor conditions (e.g., fevers, flu-like symptoms, Urinary tract infections (UTIs), sprains, small burns, etc.)", "1"),
         ("Outpatient or ambulatory care services",                            "2"),
         ("Basic diagnostic services (e.g., laboratory tests, X-ray)",         "3"),
-        ("Minor procedures or treatments",                                    "4"),
+        ("Minor procedures or treatments (e.g., wound suturing, biopsies, and other conditions requiring minimal anesthesia and a short recovery time)", "4"),
         ("Referral to higher-level health facilities",                        "5"),
         ("I don't know",                                                      "6"),
         ("Other (specify)",                                                   "7"),
@@ -1190,7 +1194,9 @@ def build_section_g():
     # carry an amount; the roster's apc preproc protects+zeroes the amount for every
     # other source code. The roster record is spliced into the dictionary record list
     # right after this (split) record — see the return below.
-    Q92_AMT_CODES = {"01", "02"}
+    # #781 (ASPSI 2026-06-25): In-kind(07) is a peso-amount source for Q92 — added to the
+    # money set (apc Q92_PAY_AMT gate owns the logic; this set is documentation-only).
+    Q92_AMT_CODES = {"01", "02", "07"}
     items.extend(checkbox_multiselect(
         "Q92_SOURCES",
         "92. Which of the following did you use to pay for the cost of consultation? "
@@ -1231,9 +1237,11 @@ def build_section_g():
     # Q96 prescribed meds cost — Option B ROSTER fan-out (#675, 2026-06-19). WAS a flat
     # 8-source Yes/No matrix where only Out-of-pocket(01) + In-kind(06) + Donation(07)
     # carried an amount (#453). NOW a CheckBox (Q96_SOURCES, the 8 Q96_MEDS_PAY codes)
-    # feeding a roster (Q96_PAY_ROSTER); PARTIAL — only codes 01/06/07 carry an amount
-    # (Q92 pattern), every other row defaults 0 but stays enterable.
-    Q96_AMT_CODES = {"01", "06", "07"}
+    # feeding a roster (Q96_PAY_ROSTER); PARTIAL — only codes 01/07 carry an amount
+    # (Q92 pattern), every other row defaults 0 but stays enterable. #779 (2026-06-25):
+    # In-kind(06) dropped from the amount set per ASPSI's per-question clarification — the
+    # apc (build_roster_procs amt_codes) owns the gate; this set is documentation-only.
+    Q96_AMT_CODES = {"01", "07"}
     items.extend(checkbox_multiselect(
         "Q96_SOURCES",
         "96. Which of the following did you use to pay for the prescribed medicines? "

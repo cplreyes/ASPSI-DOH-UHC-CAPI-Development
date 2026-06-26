@@ -10,9 +10,10 @@ filters recompute the charts in the browser. Categorical codes are labeled with
 CASE maps from the dcf value sets; facility names via csweb_reports.facility_names
 (breakout facility_name is NULL — Android auto-fill blocked).
 
-Refresh: host cron re-runs this (every 15 min). Deploy: scp to /opt/, cron:
-  */15 * * * * cd /opt/app && python3 /opt/csweb-dashboard-gen.py >> /var/log/csweb-dashboard.log 2>&1
-First built 2026-06-20; filters added 2026-06-20.
+Refresh: host cron re-runs this (every 2 min, flock-guarded, since 2026-06-26 —
+near-real-time for fieldwork; was every 15 min). Deploy: scp to /opt/, cron:
+  */2 * * * * flock -n /tmp/csweb-dashboard.lock bash -c "cd /opt/app && python3 /opt/csweb-dashboard-gen.py" >> /var/log/csweb-dashboard.log 2>&1
+First built 2026-06-20; filters added 2026-06-20; cadence tightened 2026-06-26.
 """
 import subprocess, json, datetime, html
 
@@ -193,7 +194,7 @@ TEMPLATE = r"""<!doctype html>
   <div class="note">Counts exclude deleted cases. Filters recompute the charts in your browser. Empty/blank categories reflect minimal test cases in the current data — they populate as real fieldwork syncs. For the per-case list with facility labels, see the CSWeb <b>Sync Report</b>.</div>
   <div id="sections"></div>
 </main>
-<footer>Generated <span id="gen"></span> · auto-refreshes ~every 15 min · source: breakout DBs via <code>csweb_reports</code> · see also the <a href="/docs/map.html" style="color:#006b3f">Map Report</a>.</footer>
+<footer>Generated <span id="gen"></span> · auto-refreshes ~every 2 min · source: breakout DBs via <code>csweb_reports</code> · see also the <a href="/docs/map.html" style="color:#006b3f">Map Report</a>.</footer>
 <script type="application/json" id="dash-data">__PAYLOAD__</script>
 <script>
 const P = JSON.parse(document.getElementById('dash-data').textContent);

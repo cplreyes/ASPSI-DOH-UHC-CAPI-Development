@@ -441,21 +441,51 @@ questions:
             <p>Facility Name</p>
           WAR: |
             <p>Facility Name</p>
+  - name: PATIENTSURVEY_DICT.FACILITY_STREET
+    conditions:
+      - questionText:
+          EN: |
+            <p>Facility Address — Street Name / No.</p>
+          FIL: |
+            <p>Facility Address — Street Name / No.</p>
+          BCL: |
+            <p>Facility Address — Street Name / No.</p>
+          BIS: |
+            <p>Facility Address — Street Name / No.</p>
+          CEB: |
+            <p>Facility Address — Street Name / No.</p>
+          WAR: |
+            <p>Facility Address — Street Name / No.</p>
+  - name: PATIENTSURVEY_DICT.BARANGAY_NAME
+    conditions:
+      - questionText:
+          EN: |
+            <p>Barangay (from PSGC)</p>
+          FIL: |
+            <p>Barangay (from PSGC)</p>
+          BCL: |
+            <p>Barangay (from PSGC)</p>
+          BIS: |
+            <p>Barangay (from PSGC)</p>
+          CEB: |
+            <p>Barangay (from PSGC)</p>
+          WAR: |
+            <p>Barangay (from PSGC)</p>
   - name: PATIENTSURVEY_DICT.FACILITY_ADDRESS
     conditions:
       - questionText:
           EN: |
-            <p>Facility Address</p>
+            <p>Facility Address (Street, Barangay, Municipality)</p>
           FIL: |
-            <p>Facility Address</p>
+            <p>Facility Address (Street, Barangay, Municipality)</p>
           BCL: |
-            <p>Facility Address</p>
+            <p>Facility Address (Street, Barangay, Municipality)</p>
           BIS: |
-            <p>Facility Address</p>
+            <p>Facility Address (Street, Barangay, Municipality)</p>
           CEB: |
-            <p>Facility Address</p>
+            <p>Facility Address (Street, Barangay, Municipality)</p>
           WAR: |
-            <p>Facility Address</p>
+            <p>Facility Address (Street, Barangay, Municipality)</p>
   - name: PATIENTSURVEY_DICT.P_REGION
     conditions:
       - questionText:
@@ -1060,17 +1090,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
           FIL: |
-            <p>Sa nakalipas na 6 na buwan, magkano ang karaniwang buwanang kita ng sambahayan ng pasyente? — Approximate amount</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
           BCL: |
-            <p>18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
           BIS: |
-            <p>Sa milabay nga 6 ka bulan, pila ang kasagarang binuwan nga kita sa panimalay sa pasyente? Palihug ispecify sa Philippine pesos. Gibanabana nga kantidad</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
           CEB: |
-            <p>Gibana-banang kantidad:</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
           WAR: |
-            <p>Gin-aabat nga kantidad/ tantya nga kantidad</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is the patient's average monthly household income? Please specify in Philippine pesos. — Approximate amount (enter -98 if the patient doesn't know, or -99 if they refuse to answer — do not read these codes aloud)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
   - name: PATIENTSURVEY_DICT.Q18_INCOME_BRACKET
     conditions:
       - questionText:
@@ -4521,6 +4551,21 @@ questions:
             <p>129. Why did you not avail of MAIFIP during this last confinement?</p>
           WAR: |
             <p>129. Why did you not avail of MAIFIP during this last confinement?</p>
+  - name: PATIENTSURVEY_DICT.Q129_WHY_NO_MAIFIP_OTHER_TXT
+    conditions:
+      - questionText:
+          EN: |
+            <p>129. Why did you not avail of MAIFIP during this last confinement? — Other (specify) text</p>
+          FIL: |
+            <p>129. Why did you not avail of MAIFIP during this last confinement? — Other (specify) text</p>
+          BCL: |
+            <p>129. Why did you not avail of MAIFIP during this last confinement? — Other (specify) text</p>
+          BIS: |
+            <p>129. Why did you not avail of MAIFIP during this last confinement? — Other (specify) text</p>
+          CEB: |
+            <p>129. Why did you not avail of MAIFIP during this last confinement? — Other (specify) text</p>
+          WAR: |
+            <p>129. Why did you not avail of MAIFIP during this last confinement? — Other (specify) text</p>
   - name: PATIENTSURVEY_DICT.Q130_REDUCED_SPEND
     conditions:
       - questionText:

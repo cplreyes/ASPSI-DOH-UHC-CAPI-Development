@@ -66,6 +66,8 @@ SPECS = {
     "MENU":  {"dir": "supervisor-hub", "base": "MenuApp",  "ent_name": "MENUAPP",  "has_fmf_gen": False},
     # C7 map feasibility probe (throwaway; supervisor-hub/spikes/). Compile-only.
     "MAPSPIKE": {"dir": "supervisor-hub/spikes", "base": "MapSpike", "ent_name": "MAPSPIKE", "has_fmf_gen": False},
+    # C2 Bluetooth peer-to-peer sync probe (throwaway; supervisor-hub/spikes/). Compile-only.
+    "SYNCSPIKE": {"dir": "supervisor-hub/spikes", "base": "SyncSpike", "ent_name": "SYNCSPIKE", "has_fmf_gen": False},
 }
 
 

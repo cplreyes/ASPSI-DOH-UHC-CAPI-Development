@@ -5,3 +5,6 @@ AppType=Entry
 [Files]
 Application=.\MenuApp.ent
 InputData=.\MenuApp.csdb
+
+[ExternalFiles]
+ASSIGNMENT_DICT=.\MyAssignment.dat

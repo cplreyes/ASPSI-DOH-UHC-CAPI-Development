@@ -426,21 +426,6 @@ questions:
             <p>Household Address</p>
           WAR: |
             <p>Household Address</p>
-  - name: HOUSEHOLDSURVEY_DICT.F4_PARENT_F3_CASE_SEQ
-    conditions:
-      - questionText:
-          EN: |
-            <p>Parent F3 Patient Case Sequence</p>
-          FIL: |
-            <p>Parent F3 Patient Case Sequence</p>
-          BCL: |
-            <p>Parent F3 Patient Case Sequence</p>
-          BIS: |
-            <p>Parent F3 Patient Case Sequence</p>
-          CEB: |
-            <p>Parent F3 Patient Case Sequence</p>
-          WAR: |
-            <p>Parent F3 Patient Case Sequence</p>
   - name: HOUSEHOLDSURVEY_DICT.LATITUDE
     conditions:
       - questionText:
@@ -865,17 +850,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>15. If yes, which group?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>15. If yes, which group?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           FIL: |
-            <p>15. If yes, which group?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>15. If yes, which group?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           BCL: |
-            <p>Kun iyo, sain na grupo?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>Kun iyo, sain na grupo?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           BIS: |
-            <p>Kung oo, unsang grupo?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>Kung oo, unsang grupo?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           CEB: |
-            <p>Kung oo, unsa nga grupo?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>Kung oo, unsa nga grupo?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
           WAR: |
-            <p>Kun oo, ano nga grupo?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY. For enumerator: A list will be provided to ensure accurate details.</p>
+            <p>Kun oo, ano nga grupo?</p><p class="instruction">DO NOT READ OPTIONS OUT LOUD. SELECT ONE ANSWER ONLY.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q16_4PS
     conditions:
       - questionText:
@@ -925,17 +910,17 @@ questions:
     conditions:
       - questionText:
           EN: |
-            <p>18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos).</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
           FIL: |
-            <p>Sa nakalipas na 6 na buwan, ano ang karaniwang buwanang kita ng sambahayan? Pakitukoy sa Philippine pesos.</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
           BCL: |
-            <p>18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos).</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
           BIS: |
-            <p>Sa miaging 6 ka bulan, pila ang kasagaran ninyong kinitaan sa panimalay matag bulan?</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
           CEB: |
-            <p>Sa miaging 6 ka bulan, pila ang kasagarang binuwan nga kita sa inyong panimalay?</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
           WAR: |
-            <p>Ha naglabay nga 6 ka bulan, ano an iyo average nga kita ha panimalay kada bulan? Alayon pag-espesipikar ha Pilipinas nga pesos</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
+            <p>18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)</p><p class="instruction">Enumerator note: Tick the income category that corresponds to the respondent’s approximate household income.</p>
   - name: HOUSEHOLDSURVEY_DICT.Q18_INCOME_BRACKET
     conditions:
       - questionText:
@@ -1401,21 +1386,21 @@ questions:
             <p>Rehistrado sa PhilHealth karon?</p>
           WAR: |
             <p>Ha pagkayana rehistrado ha PhilHealth?</p>
-  - name: HOUSEHOLDSURVEY_DICT.Q45_1_PIN_REG_DATE
+  - name: HOUSEHOLDSURVEY_DICT.Q45_1_PIN_REG_WHEN
     conditions:
       - questionText:
           EN: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
           FIL: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
           BCL: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
           BIS: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
           CEB: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
           WAR: |
-            <p>45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)</p>
+            <p>45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)</p>
   - name: HOUSEHOLDSURVEY_DICT.Q46_MEMBER_CATEGORY
     conditions:
       - questionText:
@@ -1446,6 +1431,36 @@ questions:
             <p>46. Member category — Other (specify) text</p>
           WAR: |
             <p>46. Member category — Other (specify) text</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q45_2_WHY_NOT_REG
+    conditions:
+      - questionText:
+          EN: |
+            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+          FIL: |
+            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+          BCL: |
+            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+          BIS: |
+            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+          CEB: |
+            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+          WAR: |
+            <p>45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)</p>
+  - name: HOUSEHOLDSURVEY_DICT.Q45_2_WHY_NOT_REG_OTHER_TXT
+    conditions:
+      - questionText:
+          EN: |
+            <p>45.2 Why not registered — Other (specify) text</p>
+          FIL: |
+            <p>45.2 Why not registered — Other (specify) text</p>
+          BCL: |
+            <p>45.2 Why not registered — Other (specify) text</p>
+          BIS: |
+            <p>45.2 Why not registered — Other (specify) text</p>
+          CEB: |
+            <p>45.2 Why not registered — Other (specify) text</p>
+          WAR: |
+            <p>45.2 Why not registered — Other (specify) text</p>
   - name: HOUSEHOLDSURVEY_DICT.Q47_HH_HAS_PRIVATE_INS
     conditions:
       - questionText:

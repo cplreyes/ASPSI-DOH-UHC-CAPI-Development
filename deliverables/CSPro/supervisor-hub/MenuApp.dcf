@@ -100,18 +100,6 @@
                     {
                       "labels": [
                         {
-                          "text": "Listing Data \u2014 view report"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "02"
-                        }
-                      ]
-                    },
-                    {
-                      "labels": [
-                        {
                           "text": "Survey Interview \u2014 view report"
                         }
                       ],
@@ -191,18 +179,6 @@
                     }
                   ],
                   "values": [
-                    {
-                      "labels": [
-                        {
-                          "text": "Listing Exercise"
-                        }
-                      ],
-                      "pairs": [
-                        {
-                          "value": "11"
-                        }
-                      ]
-                    },
                     {
                       "labels": [
                         {

@@ -68,7 +68,7 @@ Label=FC Geographic ID + HH GPS Capture
 
 Level=1
 
-Size=806,457
+Size=806,427
 
   
 
@@ -83,8 +83,6 @@ Item=CLASSIFICATION
 Item=BARANGAY
 
 Item=HH_ADDRESS
-
-Item=F4_PARENT_F3_CASE_SEQ
 
 Item=LATITUDE
 
@@ -226,7 +224,7 @@ Level=1
 
 Repeat=C_HOUSEHOLD_ROSTER
 
-Size=806,697
+Size=806,757
 
   
 
@@ -266,11 +264,15 @@ Item=Q44_PAGIBIG
 
 Item=Q45_PHILHEALTH_REG
 
-Item=Q45_1_PIN_REG_DATE
+Item=Q45_1_PIN_REG_WHEN
 
 Item=Q46_MEMBER_CATEGORY
 
 Item=Q46_MEMBER_OTHER_TXT
+
+Item=Q45_2_WHY_NOT_REG
+
+Item=Q45_2_WHY_NOT_REG_OTHER_TXT
 
   
 
@@ -1452,33 +1454,9 @@ Text=Household Address
 
 [Field]
 
-Name=F4_PARENT_F3_CASE_SEQ
-
-Position=350,207,760,227
-
-Item=F4_PARENT_F3_CASE_SEQ,HOUSEHOLDSURVEY_DICT
-
-DataCaptureType=TextBox
-
-Form=3
-
-  
-
-[Text]
-
-Position=50,210,330,226
-
-Text=Parent F3 Patient Case Sequence
-
- 
-
-  
-
-[Field]
-
 Name=LATITUDE
 
-Position=350,237,760,257
+Position=350,207,760,227
 
 Item=LATITUDE,HOUSEHOLDSURVEY_DICT
 
@@ -1492,7 +1470,7 @@ Form=3
 
 [Text]
 
-Position=50,240,330,256
+Position=50,210,330,226
 
 Text=GPS Latitude
 
@@ -1504,7 +1482,7 @@ Text=GPS Latitude
 
 Name=LONGITUDE
 
-Position=350,267,760,287
+Position=350,237,760,257
 
 Item=LONGITUDE,HOUSEHOLDSURVEY_DICT
 
@@ -1518,7 +1496,7 @@ Form=3
 
 [Text]
 
-Position=50,270,330,286
+Position=50,240,330,256
 
 Text=GPS Longitude
 
@@ -1530,7 +1508,7 @@ Text=GPS Longitude
 
 Name=HH_GPS_ALTITUDE
 
-Position=350,297,760,317
+Position=350,267,760,287
 
 Item=HH_GPS_ALTITUDE,HOUSEHOLDSURVEY_DICT
 
@@ -1544,7 +1522,7 @@ Form=3
 
 [Text]
 
-Position=50,300,330,316
+Position=50,270,330,286
 
 Text=GPS Altitude (m)
 
@@ -1556,7 +1534,7 @@ Text=GPS Altitude (m)
 
 Name=HH_GPS_ACCURACY
 
-Position=350,327,760,347
+Position=350,297,760,317
 
 Item=HH_GPS_ACCURACY,HOUSEHOLDSURVEY_DICT
 
@@ -1568,7 +1546,7 @@ Form=3
 
 [Text]
 
-Position=50,330,330,346
+Position=50,300,330,316
 
 Text=GPS Accuracy (m)
 
@@ -1580,7 +1558,7 @@ Text=GPS Accuracy (m)
 
 Name=HH_GPS_SATELLITES
 
-Position=350,357,760,377
+Position=350,327,760,347
 
 Item=HH_GPS_SATELLITES,HOUSEHOLDSURVEY_DICT
 
@@ -1592,7 +1570,7 @@ Form=3
 
 [Text]
 
-Position=50,360,330,376
+Position=50,330,330,346
 
 Text=GPS Satellites
 
@@ -1604,7 +1582,7 @@ Text=GPS Satellites
 
 Name=HH_GPS_READTIME
 
-Position=350,387,760,407
+Position=350,357,760,377
 
 Item=HH_GPS_READTIME,HOUSEHOLDSURVEY_DICT
 
@@ -1618,7 +1596,7 @@ Form=3
 
 [Text]
 
-Position=50,390,330,406
+Position=50,360,330,376
 
 Text=GPS Read Time (UTC)
 
@@ -2282,7 +2260,7 @@ Form=5
 
 Position=50,720,330,736
 
-Text=18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos).
+Text=18. In the past 6 months, what is your average monthly household income? Approximate amount (Philippine pesos). (Enter -98 if the respondent doesn't know, or -99 if the respondent refuses to answer — do not read these codes aloud.)
 
  
 
@@ -3342,13 +3320,13 @@ Text=45. Currently registered with PhilHealth?
 
 [Field]
 
-Name=Q45_1_PIN_REG_DATE
+Name=Q45_1_PIN_REG_WHEN
 
-Position=350,567,760,587
+Position=350,567,365,587
 
-Item=Q45_1_PIN_REG_DATE,HOUSEHOLDSURVEY_DICT
+Item=Q45_1_PIN_REG_WHEN,HOUSEHOLDSURVEY_DICT
 
-DataCaptureType=Date,YYYYMMDD
+DataCaptureType=RadioButton
 
 Form=6
 
@@ -3358,7 +3336,7 @@ Form=6
 
 Position=50,570,330,586
 
-Text=45.1 When did you register and receive your PhilHealth PIN? (YYYYMMDD)
+Text=45.1 When did you register and receive your PhilHealth PIN? (Only answer if 'Yes' in Q45 — to be answered by the main respondent only)
 
  
 
@@ -3409,6 +3387,56 @@ Form=6
 Position=50,630,330,646
 
 Text=46. Member category — Other (specify) text
+
+ 
+
+  
+
+[Field]
+
+Name=Q45_2_WHY_NOT_REG
+
+Position=350,657,365,677
+
+Item=Q45_2_WHY_NOT_REG,HOUSEHOLDSURVEY_DICT
+
+DataCaptureType=DropDown
+
+Form=6
+
+  
+
+[Text]
+
+Position=50,660,330,676
+
+Text=45.2 Why are you not registered? (Only answer if 'No' in Q45 — to be answered by the main respondent only)
+
+ 
+
+  
+
+[Field]
+
+Name=Q45_2_WHY_NOT_REG_OTHER_TXT
+
+Position=350,687,760,707
+
+Item=Q45_2_WHY_NOT_REG_OTHER_TXT,HOUSEHOLDSURVEY_DICT
+
+UseUnicodeTextBox=Yes
+
+DataCaptureType=TextBox
+
+Form=6
+
+  
+
+[Text]
+
+Position=50,690,330,706
+
+Text=45.2 Why not registered — Other (specify) text
 
  
 
