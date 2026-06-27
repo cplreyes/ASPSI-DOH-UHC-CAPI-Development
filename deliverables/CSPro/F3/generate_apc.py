@@ -65,6 +65,19 @@ CUSTOM_VALIDATION = [
      "PROC DATE_FINAL_VISIT\npostproc\n"
      "  if DATE_FINAL_VISIT < DATE_FIRST_VISITED then\n"
      "    errmsg(\"Final-visit date cannot be earlier than the first-visit date.\");\n    reenter;\n  endif;"),
+    # F3-LOGIC-01 (2026-06-27): spec 4.6/L480/L661 — if the patient ALREADY availed MAIFIP
+    # (Q113_SOURCES contains code 07), don't re-ask the awareness question: auto-set Q124=Yes +
+    # noinput so Q125-Q129 are reached. The dcf note had claimed CAPI auto-handles this, but the
+    # gate was never implemented. Postproc keeps the original No/IDK -> Q130 skip (so a genuine
+    # No/IDK who did NOT avail still skips the MAIFIP follow-up).
+    ("Q124_MAIFIP_HEARD",
+     "PROC Q124_MAIFIP_HEARD\npreproc\n"
+     "  if pos(\"07\", Q113_SOURCES) > 0 then\n"
+     "    Q124_MAIFIP_HEARD = 1;   { already availed MAIFIP in Q113 -> heard = Yes, not re-asked }\n"
+     "    noinput;\n  endif;\n"
+     "postproc\n"
+     "  if Q124_MAIFIP_HEARD in 2,3 then\n"
+     "    skip to Q130_REDUCED_SPEND;   { No / IDK (and did not avail) -> skip Q125-Q129 }\n  endif;"),
 ]
 
 # SOFT plausibility cross-field warnings (spec §3.5/3.6/3.7/3.9/3.10/3.12/3.13).
@@ -1485,7 +1498,8 @@ SKIP_RULES = [
     # Section I — Financial Risk Protection
     ("Q116_NBB_HEARD",     "Q116_NBB_HEARD in 2,3",                       "Q119_ZBB_HEARD"),         # No / IDK -> skip Q117,Q118
     ("Q119_ZBB_HEARD",     "Q119_ZBB_HEARD in 2,3",                       "Q124_MAIFIP_HEARD"),      # No / IDK -> skip Q120-123
-    ("Q124_MAIFIP_HEARD",  "Q124_MAIFIP_HEARD in 2,3",                    "Q130_REDUCED_SPEND"),     # No / IDK -> skip Q125-129
+    # Q124_MAIFIP_HEARD: moved to CUSTOM_VALIDATION (F3-LOGIC-01) — needs a preproc auto-set
+    # (MAIFIP already availed in Q113 -> Yes) merged with the No/IDK -> Q130 skip.
     # Q126_MAIFIP_AVAILED routing now in EXTRA_PROCS (inpatient gate #479 + #482 No->Q129).
     ("Q127_MAIFIP_OOP",    "Q127_MAIFIP_OOP = 2",                         "Q130_REDUCED_SPEND"),     # No -> skip Q128,Q129
 ]

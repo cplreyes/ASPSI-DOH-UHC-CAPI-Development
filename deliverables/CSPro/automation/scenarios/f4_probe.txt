@@ -1,0 +1,19 @@
+# PROBE: valid Laguna/Biñan key (04 03 403 02 001 -> first7 0403403 -> City of Biñan
+# C_CODE 0403403000). Goal: SEE the current post-questionnaire field sequence after the
+# 2026-06-11 geo-into-key redesign, so the real drives can be authored from observation.
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+casekey 04 03 403 02 001
+shot after_key
+key {ENTER}
+shot e1
+key {ENTER}
+shot e2
+key {ENTER}
+shot e3
+key {ENTER}
+shot e4
+key {ENTER}
+shot e5
+key {ENTER}
+shot e6

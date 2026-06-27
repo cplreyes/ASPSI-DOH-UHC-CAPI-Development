@@ -11,6 +11,10 @@ tags: [cspro, capi, skip-logic, validations, f4, household]
 
 # F4 Household Survey — Skip Logic and Validations Spec
 
+> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27)
+> This spec **trails the UAT-evolved generator** (F4-DOC-01). For current behavior read the inline comments in `deliverables/CSPro/F4/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — the departures below are intentional UAT closures.
+> Intentional, undocumented departures: `CONSENT_GIVEN` removed (→ BREAKOFF disposition); single 12-digit PSGC case key; **Q138–Q143 bill-recall asked of everyone** (#699/#701); Q195 is a 6-band % (not 0–100); Q105=No→Q107; Q90=No→Q94. One pending ASPSI ruling: **F4-VAL-01** Q141.1 no-receipt gate (recommend drop the gate; cap check stays).
+
 Source-of-truth for CSPro CAPI logic on `HouseholdSurvey.dcf`. Covers:
 
 1. **Sanity-check findings** — schema gaps and discrepancies between the Apr 20 questionnaire (Q1–Q202, 17 sections) and the current dcf (22 records / 623 items).

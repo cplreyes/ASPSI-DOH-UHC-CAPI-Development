@@ -12,6 +12,10 @@ tags: [cspro, capi, skip-logic, validations, f3]
 
 # F3 Patient Survey — Skip Logic and Validations Spec
 
+> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27)
+> This spec (reviewed 2026-04-21) **trails the UAT-evolved generator.** For current behavior read the inline comments in `deliverables/CSPro/F3/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — several departures are intentional UAT closures.
+> Known drift: **F3-QC-01** income table is stale (6 brackets) vs the shipped 11-band design (#631); **F3-QC-02** retired `CONSENT_GIVEN` terminator + `F3_FACILITY_ID` are correctly removed (→ BREAKOFF disposition / case-key + CSWeb sync); **F3-QC-03** Q169 code 3 now routes to **Q172** (not Q171, per #799).
+
 Source-of-truth for CSPro CAPI logic on `PatientSurvey.dcf`. Covers:
 
 1. **Sanity-check findings** — discrepancies between the Apr 20 questionnaire and the current dcf (18 records / 840 items).

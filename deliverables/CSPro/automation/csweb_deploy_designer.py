@@ -32,7 +32,7 @@ KEY = os.environ.get("DEPLOY_KEY", "F1")
 
 
 def _attach():
-    app = Application(backend="win32").connect(title_re=r"CSPro.*", timeout=20)
+    app = Application(backend="win32").connect(title_re=r"CSPro 8\.0 - \[.*\]", timeout=20)
     frames = [w for w in app.windows() if (w.window_text() or "").startswith("CSPro 8.0 - ")]
     main = max(frames, key=lambda w: (w.rectangle().width() * w.rectangle().height()))
     return app, main

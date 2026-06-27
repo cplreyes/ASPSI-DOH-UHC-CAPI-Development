@@ -1,0 +1,29 @@
+# PROBE2: map case-start tail (barangay -> address -> GPS -> photo -> Section A Q1 -> B).
+# Pickers need explicit `type <code>` (bare ENTER on a no-default picker = Out of range).
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 1
+shot breakoff_continue
+type 1
+shot classification_uhc
+note BARANGAY picker - try typing full B_CODE for Binan poblacion
+type 0403403001
+shot barangay_typed
+type TESTADDRESS BINAN
+key {ENTER}
+shot after_address
+key {ENTER}
+shot gps1
+key {ENTER}
+shot gps2
+key {ENTER}
+shot gps3
+key {ENTER}
+shot gps4
+type 1
+shot t1
+type 1
+shot t2
+type 1
+shot t3

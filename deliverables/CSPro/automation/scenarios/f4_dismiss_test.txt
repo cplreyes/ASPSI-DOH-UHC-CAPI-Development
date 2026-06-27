@@ -1,0 +1,33 @@
+# Confirm: error modal dismissed by clicking OK (not {ENTER}), then field re-enters.
+rmdata ../F4/desktest.csdb
+launch ../F4/HouseholdSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 1
+type 1
+type 0403403001
+type TESTADDRESS BINAN
+key {ENTER}
+type 14.25
+key {ENTER}
+type 121.08
+key {ENTER}
+type 10
+key {ENTER}
+type 5
+key {ENTER}
+type 8
+key {ENTER}
+type 20260627
+key {ENTER}
+type 1
+type JUANDELACRUZ
+key {ENTER}
+type 06
+type 1985
+type 010
+shot age_modal
+note dismiss via OK click (modal ~center-right); then reenter age 041
+click 1172 565
+shot after_ok_click
+type 041
+shot age_after_recover

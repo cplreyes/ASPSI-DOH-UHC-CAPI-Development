@@ -2594,12 +2594,6 @@ postproc
     skip to Q124_MAIFIP_HEARD;
   endif;
 
-PROC Q124_MAIFIP_HEARD
-postproc
-  if Q124_MAIFIP_HEARD in 2,3 then
-    skip to Q130_REDUCED_SPEND;
-  endif;
-
 PROC Q127_MAIFIP_OOP
 postproc
   if Q127_MAIFIP_OOP = 2 then
@@ -3146,6 +3140,17 @@ postproc
   if DATE_FINAL_VISIT < DATE_FIRST_VISITED then
     errmsg("Final-visit date cannot be earlier than the first-visit date.");
     reenter;
+  endif;
+
+PROC Q124_MAIFIP_HEARD
+preproc
+  if pos("07", Q113_SOURCES) > 0 then
+    Q124_MAIFIP_HEARD = 1;   { already availed MAIFIP in Q113 -> heard = Yes, not re-asked }
+    noinput;
+  endif;
+postproc
+  if Q124_MAIFIP_HEARD in 2,3 then
+    skip to Q130_REDUCED_SPEND;   { No / IDK (and did not avail) -> skip Q125-Q129 }
   endif;
 
 { ---- Soft plausibility cross-field warnings (spec §3.5-§3.13) ---- }

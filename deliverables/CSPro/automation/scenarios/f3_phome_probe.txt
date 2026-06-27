@@ -1,0 +1,19 @@
+# F3 patient-home cascade via row CLICKS (after the OOR error on P_REGION typed-code attempt).
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 1
+type 1
+type 1
+type 0403403001
+type RHU BINAN
+key {ENTER}
+type TEST ST BINAN
+key {ENTER}
+key {ENTER}
+key {ENTER}
+note P_REGION picker open -> click Region IV-A (CALABARZON) row
+click 1040 374
+shot ph_region_picked
+note P_PROVINCE picker should open (filtered) -> screenshot to read
+shot ph_province_open

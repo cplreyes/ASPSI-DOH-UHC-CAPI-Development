@@ -249,9 +249,17 @@ def uhc9_other_specify_procs(names, no_other_skip_targets=None):
 # parts 1 & 2), so the gate is `pos("0N", <gate_cb>) = 0` on the Check Box field.
 # Question number -> option index by POSITION, PRESERVED 1:1 from the original
 # select_all gating (Q66->Q65 O01 ... Q74->Q65 O09; Q122->Q121 O01 ... Q134->Q121 O13).
+# (qrange, gate_field, start, code_override). code_override maps a follow-up question
+# number -> the Q-gate option code it actually gates on, for batteries whose tail is
+# REORDERED vs the positional q-start+1 default.
 WHY_DIFF_GATES = [
-    (range(66, 75), "Q65_ACCRED_DIFFICULT", 66),   # Q66..Q74 -> Q65 O01..O09
-    (range(122, 135), "Q121_DOH_LIC_DIFFICULT", 122),  # Q122..Q134 -> Q121 O01..O13
+    (range(66, 75), "Q65_ACCRED_DIFFICULT", 66, None),   # Q66..Q74 -> Q65 opt 01..09 (positional — correct)
+    # F1-LOGIC-01 fix (2026-06-27): the Apr-20 paper REORDERS the Q121 follow-up tail, so
+    # positional mapping (Q130->09 ... Q134->13) was wrong and inverted the PCF-only/hospital-
+    # only gating. Correct per the option codes: Q130=price-info(13, PCF-only), Q131=equipment(09),
+    # Q132=national-laws(10), Q133=emergency-cart(11), Q134=add-ons(12). Q122-Q129 stay positional.
+    (range(122, 135), "Q121_DOH_LIC_DIFFICULT", 122,
+     {130: "13", 131: "09", 132: "10", 133: "11", 134: "12"}),
 ]
 
 
@@ -314,7 +322,7 @@ def why_difficult_gate_procs(names, checkbox_fields):
         q = qnum_of.get(n)
         if n.endswith("_O01") and q is not None and q not in primary:
             primary[q] = n                         # non-converted: the _O01 field
-    for qrange, gate_dict, start in WHY_DIFF_GATES:
+    for qrange, gate_dict, start, override in WHY_DIFF_GATES:
         gate_cb = gate_dict in checkbox_fields
         gateq = start - 1
         for q in qrange:
@@ -322,8 +330,9 @@ def why_difficult_gate_procs(names, checkbox_fields):
             if not field:
                 continue
             opt_idx = q - start + 1
-            cond = (f'pos("{opt_idx:02d}", {gate_dict}) = 0' if gate_cb
-                    else f"{gate_dict}_O{opt_idx:02d} <> 1")
+            code = (override or {}).get(q, f"{opt_idx:02d}")   # F1-LOGIC-01: reordered tail uses explicit code
+            cond = (f'pos("{code}", {gate_dict}) = 0' if gate_cb
+                    else f"{gate_dict}_O{int(code):02d} <> 1")
             idx = names.index(field)
             target = next((names[j] for j in range(idx + 1, len(names))
                            if qnum_of.get(names[j]) != q), None)
@@ -332,7 +341,7 @@ def why_difficult_gate_procs(names, checkbox_fields):
             if field in checkbox_fields:           # gate + validation on the Check Box
                 procs[field] = (
                     f"PROC {field}\npreproc\n"
-                    f"  if {cond} then   {{ Q{q} shown only if Q{gateq} difficulty {opt_idx} ticked }}\n"
+                    f"  if {cond} then   {{ Q{q} shown only if Q{gateq} difficulty option {code} ticked }}\n"
                     f"    skip to {target};\n  endif;\npostproc\n"
                     f"  if length(strip({field})) = 0 then\n"
                     f'    errmsg("Select at least one option for Q{q} before continuing.");\n'
@@ -352,7 +361,7 @@ def why_difficult_gate_procs(names, checkbox_fields):
             else:                                  # non-converted select_all -> _O01 gate
                 procs[field] = (
                     f"PROC {field}\npreproc\n"
-                    f"  if {cond} then   {{ Q{q} cluster shown only if {gate_dict}_O{opt_idx:02d} flagged Yes }}\n"
+                    f"  if {cond} then   {{ Q{q} cluster shown only if {gate_dict}_O{int(code):02d} flagged Yes }}\n"
                     f"    skip to {target};\n  endif;"
                 )
     return procs
@@ -635,6 +644,16 @@ postproc
   if Q52_YK_SINCE_YEAR = currentYear and Q52_YK_SINCE_MONTH > currentMonth then
     errmsg("Accreditation date is in the future. Reenter.");
     reenter;
+  endif;""",
+    # F1-VALID-01 (2026-06-27): Q86 eligible-patients had NO upper bound (9999999 was silently
+    # accepted, inflating the Q87<=Q86 ceiling). A single YAKAP/Konsulta provider's catchment
+    # eligible count above ~500k is implausible -> SOFT confirm (no reenter) so an obvious
+    # data-entry slip is surfaced without ever hard-blocking a genuinely large facility.
+    "Q86_ELIGIBLE_PATIENTS": """\
+PROC Q86_ELIGIBLE_PATIENTS
+postproc
+  if Q86_ELIGIBLE_PATIENTS > 500000 then
+    errmsg("Eligible patients (%d) is unusually high for one provider's catchment — please confirm.", Q86_ELIGIBLE_PATIENTS);
   endif;""",
     # 4.7 registered <= eligible (Section D) — #152 cross-field
     "Q87_REGISTERED_PATIENTS": """\

@@ -1,0 +1,26 @@
+# PROBE F3 case-start tail: PATIENT_TYPE, BREAKOFF, facility geo, patient-home geo, dates -> Q1.
+rmdata ../F3/desktest.csdb
+launch ../F3/PatientSurvey_desktest.pff
+casekey 04 03 403 02 001
+type 1
+shot patient_type
+type 1
+shot breakoff
+type 1
+shot classification
+type 0403403001
+shot fac_barangay
+type RHU BINAN
+key {ENTER}
+shot fac_name
+type TEST ST BINAN
+key {ENTER}
+shot fac_addr
+key {ENTER}
+shot f1
+key {ENTER}
+shot f2
+type 1
+shot f3
+type 0403403001
+shot f4

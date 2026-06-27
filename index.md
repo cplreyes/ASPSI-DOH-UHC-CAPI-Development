@@ -9,7 +9,10 @@ due: 2026-08-14
 milestone: UAT Round 5 sign-off, then August training
 acceptance: UAT R5 in progress (Jun 22-27), 6 surfaces — F1/F3/F4 + F2 PWA + Admin + CSWeb
 status: UAT Round 5; contract close Aug 14 — extension (Aug training / Sep rollout) requested
-last_updated: 2026-06-24
+state: active
+last_contact: 2026-06-26
+primary_sensor: "Slack (capi-scrum) + GitHub issues — not email (asiansocial.org invisible to personal Gmail)"
+last_updated: 2026-06-26
 ---
 
 # ASPSI-DOH CAPI CSPro Development

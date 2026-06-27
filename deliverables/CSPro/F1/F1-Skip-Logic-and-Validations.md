@@ -12,6 +12,10 @@ tags: [cspro, capi, skip-logic, validations, f1]
 
 # F1 Facility Head Survey — Skip Logic and Validations Spec
 
+> [!warning] SUPERSEDED — the generator is the source of truth (banner added 2026-06-27)
+> This spec (reviewed 2026-04-21) **trails the UAT-evolved generator.** For current behavior read the inline comments in `deliverables/CSPro/F1/generate_apc.py` / `generate_dcf.py` and the bound `.apc`. Do **not** "re-fix" code to match this doc — several departures are intentional UAT closures.
+> Known drift: **F1-QC-02** — §3.2 references `Q2_DESIGNATION` + `_OTHER_TXT`; the actual field is `Q2_FACILITY_ROLE` (11 options, no Other). Pending ASPSI rulings (do **not** change the build yet): **F1-LOGIC-02** Q152="Neither"(3) — §2 (fall through to Q153) vs §3.8 (skip) contradict; **F1-QC-01** Q63 stem "DAYS"→"month/s" + a 5th option (verbatim-wording sign-off).
+
 Source-of-truth for CSPro CAPI logic on `FacilityHeadSurvey.dcf`. Covers:
 
 1. **Sanity-check findings** — discrepancies between the Apr 20 questionnaire and the current dcf (12 records / 664 items).
